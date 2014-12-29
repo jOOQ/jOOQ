@@ -113,6 +113,7 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * @see DSL#condition(String)
      */
     @Support
+    @PlainSQL
     SelectConditionStep<R> and(String sql);
 
     /**
@@ -127,6 +128,7 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * @see DSL#condition(String, Object...)
      */
     @Support
+    @PlainSQL
     SelectConditionStep<R> and(String sql, Object... bindings);
 
     /**
@@ -141,6 +143,7 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * @see DSL#condition(String, QueryPart...)
      */
     @Support
+    @PlainSQL
     SelectConditionStep<R> and(String sql, QueryPart... parts);
 
     /**
@@ -197,6 +200,7 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * @see DSL#condition(String)
      */
     @Support
+    @PlainSQL
     SelectConditionStep<R> or(String sql);
 
     /**
@@ -211,6 +215,7 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * @see DSL#condition(String, Object...)
      */
     @Support
+    @PlainSQL
     SelectConditionStep<R> or(String sql, Object... bindings);
 
     /**
@@ -225,6 +230,7 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * @see DSL#condition(String, QueryPart...)
      */
     @Support
+    @PlainSQL
     SelectConditionStep<R> or(String sql, QueryPart... parts);
 
     /**

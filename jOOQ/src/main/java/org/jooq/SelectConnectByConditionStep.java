@@ -115,6 +115,7 @@ public interface SelectConnectByConditionStep<R extends Record> extends SelectSt
      * @see DSL#condition(String)
      */
     @Support({ CUBRID, ORACLE })
+    @PlainSQL
     SelectConnectByConditionStep<R> and(String sql);
 
     /**
@@ -129,6 +130,7 @@ public interface SelectConnectByConditionStep<R extends Record> extends SelectSt
      * @see DSL#condition(String, Object...)
      */
     @Support({ CUBRID, ORACLE })
+    @PlainSQL
     SelectConnectByConditionStep<R> and(String sql, Object... bindings);
 
     /**
@@ -143,6 +145,7 @@ public interface SelectConnectByConditionStep<R extends Record> extends SelectSt
      * @see DSL#condition(String, QueryPart...)
      */
     @Support({ CUBRID, ORACLE })
+    @PlainSQL
     SelectConnectByConditionStep<R> and(String sql, QueryPart... parts);
 
 }

@@ -90,6 +90,7 @@ public interface DeleteWhereStep<R extends Record> extends DeleteFinalStep<R> {
      * @see DSL#condition(String)
      */
     @Support
+    @PlainSQL
     DeleteConditionStep<R> where(String sql);
 
     /**
@@ -103,6 +104,7 @@ public interface DeleteWhereStep<R extends Record> extends DeleteFinalStep<R> {
      * @see DSL#condition(String, Object...)
      */
     @Support
+    @PlainSQL
     DeleteConditionStep<R> where(String sql, Object... bindings);
 
     /**
@@ -116,6 +118,7 @@ public interface DeleteWhereStep<R extends Record> extends DeleteFinalStep<R> {
      * @see DSL#condition(String, QueryPart...)
      */
     @Support
+    @PlainSQL
     DeleteConditionStep<R> where(String sql, QueryPart... parts);
 
     /**

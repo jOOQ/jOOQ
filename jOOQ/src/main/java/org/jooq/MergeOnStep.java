@@ -94,6 +94,7 @@ public interface MergeOnStep<R extends Record> {
      * @see DSL#condition(String)
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @PlainSQL
     MergeOnConditionStep<R> on(String sql);
 
     /**
@@ -107,6 +108,7 @@ public interface MergeOnStep<R extends Record> {
      * @see DSL#condition(String, Object...)
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @PlainSQL
     MergeOnConditionStep<R> on(String sql, Object... bindings);
 
     /**
@@ -120,5 +122,6 @@ public interface MergeOnStep<R extends Record> {
      * @see DSL#condition(String, QueryPart...)
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @PlainSQL
     MergeOnConditionStep<R> on(String sql, QueryPart... parts);
 }

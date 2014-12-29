@@ -74,6 +74,7 @@ public interface DivideByOnStep {
      * @see DSL#condition(String)
      */
     @Support
+    @PlainSQL
     DivideByOnConditionStep on(String sql);
 
     /**
@@ -87,6 +88,7 @@ public interface DivideByOnStep {
      * @see DSL#condition(String, Object...)
      */
     @Support
+    @PlainSQL
     DivideByOnConditionStep on(String sql, Object... bindings);
 
     /**
@@ -100,5 +102,6 @@ public interface DivideByOnStep {
      * @see DSL#condition(String, QueryPart...)
      */
     @Support
+    @PlainSQL
     DivideByOnConditionStep on(String sql, QueryPart... parts);
 }

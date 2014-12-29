@@ -113,6 +113,7 @@ public interface SelectConnectByStep<R extends Record> extends SelectGroupByStep
      * @see DSL#condition(String)
      */
     @Support({ CUBRID, INFORMIX, ORACLE })
+    @PlainSQL
     SelectConnectByConditionStep<R> connectBy(String sql);
 
     /**
@@ -126,6 +127,7 @@ public interface SelectConnectByStep<R extends Record> extends SelectGroupByStep
      * @see DSL#condition(String, Object...)
      */
     @Support({ CUBRID, INFORMIX, ORACLE })
+    @PlainSQL
     SelectConnectByConditionStep<R> connectBy(String sql, Object... bindings);
 
     /**
@@ -139,6 +141,7 @@ public interface SelectConnectByStep<R extends Record> extends SelectGroupByStep
      * @see DSL#condition(String, QueryPart...)
      */
     @Support({ CUBRID, INFORMIX, ORACLE })
+    @PlainSQL
     SelectConnectByConditionStep<R> connectBy(String sql, QueryPart... parts);
 
     /**
@@ -167,6 +170,7 @@ public interface SelectConnectByStep<R extends Record> extends SelectGroupByStep
      * @see DSL#condition(String)
      */
     @Support({ CUBRID, INFORMIX, ORACLE })
+    @PlainSQL
     SelectConnectByConditionStep<R> connectByNoCycle(String sql);
 
     /**
@@ -181,6 +185,7 @@ public interface SelectConnectByStep<R extends Record> extends SelectGroupByStep
      * @see DSL#condition(String, Object...)
      */
     @Support({ CUBRID, INFORMIX, ORACLE })
+    @PlainSQL
     SelectConnectByConditionStep<R> connectByNoCycle(String sql, Object... bindings);
 
     /**
@@ -195,5 +200,6 @@ public interface SelectConnectByStep<R extends Record> extends SelectGroupByStep
      * @see DSL#condition(String, QueryPart...)
      */
     @Support({ CUBRID, INFORMIX, ORACLE })
+    @PlainSQL
     SelectConnectByConditionStep<R> connectByNoCycle(String sql, QueryPart... parts);
 }

@@ -371,6 +371,7 @@ public interface DSLContext extends Scope {
      * @return A query wrapping the plain SQL
      */
     @Support
+    @PlainSQL
     Query query(String sql);
 
     /**
@@ -392,6 +393,7 @@ public interface DSLContext extends Scope {
      * @return A query wrapping the plain SQL
      */
     @Support
+    @PlainSQL
     Query query(String sql, Object... bindings);
 
     /**
@@ -421,6 +423,7 @@ public interface DSLContext extends Scope {
      * @return A query wrapping the plain SQL
      */
     @Support
+    @PlainSQL
     Query query(String sql, QueryPart... parts);
 
     /**
@@ -447,6 +450,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @PlainSQL
     Result<Record> fetch(String sql) throws DataAccessException;
 
     /**
@@ -477,6 +481,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @PlainSQL
     Result<Record> fetch(String sql, Object... bindings) throws DataAccessException;
 
     /**
@@ -507,6 +512,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @PlainSQL
     Result<Record> fetch(String sql, QueryPart... parts) throws DataAccessException;
 
     /**
@@ -539,6 +545,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @PlainSQL
     Cursor<Record> fetchLazy(String sql) throws DataAccessException;
 
     /**
@@ -575,6 +582,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @PlainSQL
     Cursor<Record> fetchLazy(String sql, Object... bindings) throws DataAccessException;
 
     /**
@@ -611,6 +619,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @PlainSQL
     Cursor<Record> fetchLazy(String sql, QueryPart... parts) throws DataAccessException;
 
     /**
@@ -634,6 +643,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @PlainSQL
     List<Result<Record>> fetchMany(String sql) throws DataAccessException;
 
     /**
@@ -661,6 +671,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @PlainSQL
     List<Result<Record>> fetchMany(String sql, Object... bindings) throws DataAccessException;
 
     /**
@@ -692,6 +703,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @PlainSQL
     List<Result<Record>> fetchMany(String sql, QueryPart... parts) throws DataAccessException;
 
     /**
@@ -717,6 +729,7 @@ public interface DSLContext extends Scope {
      * @throws InvalidResultException if the query returned more than one record
      */
     @Support
+    @PlainSQL
     Record fetchOne(String sql) throws DataAccessException, InvalidResultException;
 
     /**
@@ -747,6 +760,7 @@ public interface DSLContext extends Scope {
      * @throws InvalidResultException if the query returned more than one record
      */
     @Support
+    @PlainSQL
     Record fetchOne(String sql, Object... bindings) throws DataAccessException, InvalidResultException;
 
     /**
@@ -779,6 +793,7 @@ public interface DSLContext extends Scope {
      * @throws InvalidResultException if the query returned more than one record
      */
     @Support
+    @PlainSQL
     Record fetchOne(String sql, QueryPart... parts) throws DataAccessException, InvalidResultException;
 
     /**
@@ -806,6 +821,7 @@ public interface DSLContext extends Scope {
      *             or a record with more than one value.
      */
     @Support
+    @PlainSQL
     Object fetchValue(String sql) throws DataAccessException, InvalidResultException;
 
     /**
@@ -837,6 +853,7 @@ public interface DSLContext extends Scope {
      *             or a record with more than one value.
      */
     @Support
+    @PlainSQL
     Object fetchValue(String sql, Object... bindings) throws DataAccessException, InvalidResultException;
 
     /**
@@ -870,6 +887,7 @@ public interface DSLContext extends Scope {
      *             or a record with more than one value.
      */
     @Support
+    @PlainSQL
     Object fetchValue(String sql, QueryPart... parts) throws DataAccessException, InvalidResultException;
 
     /**
@@ -895,6 +913,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @PlainSQL
     List<?> fetchValues(String sql) throws DataAccessException;
 
     /**
@@ -924,6 +943,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @PlainSQL
     List<?> fetchValues(String sql, Object... bindings) throws DataAccessException;
 
     /**
@@ -955,6 +975,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @PlainSQL
     List<?> fetchValues(String sql, QueryPart... parts) throws DataAccessException;
 
     /**
@@ -970,6 +991,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @PlainSQL
     int execute(String sql) throws DataAccessException;
 
     /**
@@ -989,6 +1011,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @PlainSQL
     int execute(String sql, Object... bindings) throws DataAccessException;
 
     /**
@@ -1019,6 +1042,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
+    @PlainSQL
     int execute(String sql, QueryPart... parts) throws DataAccessException;
 
     /**
@@ -1063,6 +1087,7 @@ public interface DSLContext extends Scope {
      * @return An executable query
      */
     @Support
+    @PlainSQL
     ResultQuery<Record> resultQuery(String sql);
 
     /**
@@ -1109,6 +1134,7 @@ public interface DSLContext extends Scope {
      * @return A query wrapping the plain SQL
      */
     @Support
+    @PlainSQL
     ResultQuery<Record> resultQuery(String sql, Object... bindings);
 
     /**
@@ -1138,6 +1164,7 @@ public interface DSLContext extends Scope {
      * @return A query wrapping the plain SQL
      */
     @Support
+    @PlainSQL
     ResultQuery<Record> resultQuery(String sql, QueryPart... parts);
 
     // -------------------------------------------------------------------------

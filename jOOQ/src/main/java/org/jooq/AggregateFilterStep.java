@@ -85,6 +85,7 @@ public interface AggregateFilterStep<T> extends WindowBeforeOverStep<T> {
      * @see DSL#condition(String)
      */
     @Support
+    @PlainSQL
     WindowBeforeOverStep<T> filterWhere(String sql);
 
     /**
@@ -99,6 +100,7 @@ public interface AggregateFilterStep<T> extends WindowBeforeOverStep<T> {
      * @see DSL#condition(String, Object...)
      */
     @Support
+    @PlainSQL
     WindowBeforeOverStep<T> filterWhere(String sql, Object... bindings);
 
     /**
@@ -113,6 +115,7 @@ public interface AggregateFilterStep<T> extends WindowBeforeOverStep<T> {
      * @see DSL#condition(String, QueryPart...)
      */
     @Support
+    @PlainSQL
     WindowBeforeOverStep<T> filterWhere(String sql, QueryPart... parts);
 
 }

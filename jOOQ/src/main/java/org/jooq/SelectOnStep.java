@@ -113,6 +113,7 @@ public interface SelectOnStep<R extends Record> {
      * @see DSL#condition(String)
      */
     @Support
+    @PlainSQL
     SelectOnConditionStep<R> on(String sql);
 
     /**
@@ -126,6 +127,7 @@ public interface SelectOnStep<R extends Record> {
      * @see DSL#condition(String, Object...)
      */
     @Support
+    @PlainSQL
     SelectOnConditionStep<R> on(String sql, Object... bindings);
 
     /**
@@ -139,6 +141,7 @@ public interface SelectOnStep<R extends Record> {
      * @see DSL#condition(String, QueryPart...)
      */
     @Support
+    @PlainSQL
     SelectOnConditionStep<R> on(String sql, QueryPart... parts);
 
     /**

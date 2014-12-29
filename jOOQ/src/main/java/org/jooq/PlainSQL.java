@@ -40,12 +40,29 @@
  */
 package org.jooq;
 
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
 /**
- * A plain SQL {@link QueryPart}.
+ * This annotation marks all methods and types that allow for producing a
+ * {@link QueryPart} that generates "plain SQL" inside of an AST.
+ * <p>
+ * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must guarantee
+ * syntax integrity. You may also create the possibility of malicious SQL
+ * injection. Be sure to properly use bind variables and/or escape literals when
+ * concatenated into SQL clauses!
  *
  * @author Lukas Eder
  */
-@PlainSQL
-public interface SQL extends QueryPart {
+@Target({ ElementType.TYPE, ElementType.METHOD, ElementType.CONSTRUCTOR })
+@Retention(RUNTIME)
+@Documented
+@Inherited
+public @interface PlainSQL {
 
 }

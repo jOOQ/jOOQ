@@ -139,6 +139,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#join(String)
      */
     @Support
+    @PlainSQL
     SelectOnStep<R> join(String sql);
 
     /**
@@ -155,6 +156,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#join(String, Object...)
      */
     @Support
+    @PlainSQL
     SelectOnStep<R> join(String sql, Object... bindings);
 
     /**
@@ -171,6 +173,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#join(String, QueryPart...)
      */
     @Support
+    @PlainSQL
     SelectOnStep<R> join(String sql, QueryPart... parts);
 
     /**
@@ -211,6 +214,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#crossJoin(String)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @PlainSQL
     SelectJoinStep<R> crossJoin(String sql);
 
     /**
@@ -234,6 +238,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#crossJoin(String, Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @PlainSQL
     SelectJoinStep<R> crossJoin(String sql, Object... bindings);
 
     /**
@@ -257,6 +262,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#crossJoin(String, QueryPart...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @PlainSQL
     SelectJoinStep<R> crossJoin(String sql, QueryPart... parts);
 
     /**
@@ -283,6 +289,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#leftOuterJoin(String)
      */
     @Support
+    @PlainSQL
     SelectJoinPartitionByStep<R> leftOuterJoin(String sql);
 
     /**
@@ -299,6 +306,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#leftOuterJoin(String, Object...)
      */
     @Support
+    @PlainSQL
     SelectJoinPartitionByStep<R> leftOuterJoin(String sql, Object... bindings);
 
     /**
@@ -315,6 +323,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#leftOuterJoin(String, QueryPart...)
      */
     @Support
+    @PlainSQL
     SelectJoinPartitionByStep<R> leftOuterJoin(String sql, QueryPart... parts);
 
     /**
@@ -345,6 +354,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#rightOuterJoin(String)
      */
     @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @PlainSQL
     SelectJoinPartitionByStep<R> rightOuterJoin(String sql);
 
     /**
@@ -363,6 +373,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#rightOuterJoin(String, Object...)
      */
     @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @PlainSQL
     SelectJoinPartitionByStep<R> rightOuterJoin(String sql, Object... bindings);
 
     /**
@@ -381,6 +392,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#rightOuterJoin(String, QueryPart...)
      */
     @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @PlainSQL
     SelectJoinPartitionByStep<R> rightOuterJoin(String sql, QueryPart... parts);
 
     /**
@@ -411,6 +423,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#fullOuterJoin(String)
      */
     @Support({ DB2, FIREBIRD, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @PlainSQL
     SelectOnStep<R> fullOuterJoin(String sql);
 
     /**
@@ -429,6 +442,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#fullOuterJoin(String, Object...)
      */
     @Support({ DB2, FIREBIRD, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @PlainSQL
     SelectOnStep<R> fullOuterJoin(String sql, Object... bindings);
 
     /**
@@ -447,6 +461,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#fullOuterJoin(String, QueryPart...)
      */
     @Support({ DB2, FIREBIRD, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @PlainSQL
     SelectOnStep<R> fullOuterJoin(String sql, QueryPart... parts);
 
     /**
@@ -479,6 +494,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#naturalJoin(String)
      */
     @Support
+    @PlainSQL
     SelectJoinStep<R> naturalJoin(String sql);
 
     /**
@@ -498,6 +514,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#naturalJoin(String, Object...)
      */
     @Support
+    @PlainSQL
     SelectJoinStep<R> naturalJoin(String sql, Object... bindings);
 
     /**
@@ -517,6 +534,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#naturalJoin(String, QueryPart...)
      */
     @Support
+    @PlainSQL
     SelectJoinStep<R> naturalJoin(String sql, QueryPart... parts);
 
     /**
@@ -549,6 +567,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#naturalLeftOuterJoin(String)
      */
     @Support
+    @PlainSQL
     SelectJoinStep<R> naturalLeftOuterJoin(String sql);
 
     /**
@@ -568,6 +587,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#naturalLeftOuterJoin(String, Object...)
      */
     @Support
+    @PlainSQL
     SelectJoinStep<R> naturalLeftOuterJoin(String sql, Object... bindings);
 
     /**
@@ -587,6 +607,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#naturalLeftOuterJoin(String, QueryPart...)
      */
     @Support
+    @PlainSQL
     SelectJoinStep<R> naturalLeftOuterJoin(String sql, QueryPart... parts);
 
     /**
@@ -619,6 +640,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#naturalRightOuterJoin(String)
      */
     @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @PlainSQL
     SelectJoinStep<R> naturalRightOuterJoin(String sql);
 
     /**
@@ -638,6 +660,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#naturalRightOuterJoin(String, Object...)
      */
     @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @PlainSQL
     SelectJoinStep<R> naturalRightOuterJoin(String sql, Object... bindings);
 
     /**
@@ -657,6 +680,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#naturalRightOuterJoin(String, QueryPart...)
      */
     @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @PlainSQL
     SelectJoinStep<R> naturalRightOuterJoin(String sql, QueryPart... parts);
 
     // -------------------------------------------------------------------------
@@ -685,6 +709,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#crossApply(String)
      */
     @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    @PlainSQL
     SelectJoinStep<R> crossApply(String sql);
 
     /**
@@ -699,6 +724,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#crossApply(String, Object...)
      */
     @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    @PlainSQL
     SelectJoinStep<R> crossApply(String sql, Object... bindings);
 
     /**
@@ -713,6 +739,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#crossApply(String, QueryPart...)
      */
     @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    @PlainSQL
     SelectJoinStep<R> crossApply(String sql, QueryPart... parts);
 
     /**
@@ -735,6 +762,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#outerApply(String)
      */
     @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    @PlainSQL
     SelectJoinStep<R> outerApply(String sql);
 
     /**
@@ -749,6 +777,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#outerApply(String, Object...)
      */
     @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    @PlainSQL
     SelectJoinStep<R> outerApply(String sql, Object... bindings);
 
     /**
@@ -763,6 +792,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#outerApply(String, QueryPart...)
      */
     @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    @PlainSQL
     SelectJoinStep<R> outerApply(String sql, QueryPart... parts);
 
     /* [/pro] */

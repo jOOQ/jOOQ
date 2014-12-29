@@ -92,6 +92,7 @@ public interface UpdateWhereStep<R extends Record> extends UpdateFinalStep<R>, U
      * @see DSL#condition(String)
      */
     @Support
+    @PlainSQL
     UpdateConditionStep<R> where(String sql);
 
     /**
@@ -105,6 +106,7 @@ public interface UpdateWhereStep<R extends Record> extends UpdateFinalStep<R>, U
      * @see DSL#condition(String, Object...)
      */
     @Support
+    @PlainSQL
     UpdateConditionStep<R> where(String sql, Object... bindings);
 
     /**
@@ -118,6 +120,7 @@ public interface UpdateWhereStep<R extends Record> extends UpdateFinalStep<R>, U
      * @see DSL#condition(String, QueryPart...)
      */
     @Support
+    @PlainSQL
     UpdateConditionStep<R> where(String sql, QueryPart... parts);
 
     /**

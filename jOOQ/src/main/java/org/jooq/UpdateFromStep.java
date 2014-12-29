@@ -95,6 +95,7 @@ public interface UpdateFromStep<R extends Record> extends UpdateWhereStep<R> {
      * @see DSL#table(String)
      */
     @Support({ INGRES, POSTGRES, SQLSERVER, SYBASE })
+    @PlainSQL
     UpdateWhereStep<R> from(String sql);
 
     /**
@@ -108,6 +109,7 @@ public interface UpdateFromStep<R extends Record> extends UpdateWhereStep<R> {
      * @see DSL#table(String, Object...)
      */
     @Support({ INGRES, POSTGRES, SQLSERVER, SYBASE })
+    @PlainSQL
     UpdateWhereStep<R> from(String sql, Object... bindings);
 
     /**
@@ -121,5 +123,6 @@ public interface UpdateFromStep<R extends Record> extends UpdateWhereStep<R> {
      * @see DSL#table(String, QueryPart...)
      */
     @Support({ INGRES, POSTGRES, SQLSERVER, SYBASE })
+    @PlainSQL
     UpdateWhereStep<R> from(String sql, QueryPart... parts);
 }

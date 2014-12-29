@@ -79,6 +79,7 @@ public interface TableOnConditionStep extends Table<Record> {
      * @see DSL#condition(String)
      */
     @Support
+    @PlainSQL
     TableOnConditionStep and(String sql);
 
     /**
@@ -93,6 +94,7 @@ public interface TableOnConditionStep extends Table<Record> {
      * @see DSL#condition(String, Object...)
      */
     @Support
+    @PlainSQL
     TableOnConditionStep and(String sql, Object... bindings);
 
     /**
@@ -107,6 +109,7 @@ public interface TableOnConditionStep extends Table<Record> {
      * @see DSL#condition(String, QueryPart...)
      */
     @Support
+    @PlainSQL
     TableOnConditionStep and(String sql, QueryPart... parts);
 
     /**
@@ -163,6 +166,7 @@ public interface TableOnConditionStep extends Table<Record> {
      * @see DSL#condition(String)
      */
     @Support
+    @PlainSQL
     TableOnConditionStep or(String sql);
 
     /**
@@ -177,6 +181,7 @@ public interface TableOnConditionStep extends Table<Record> {
      * @see DSL#condition(String, Object...)
      */
     @Support
+    @PlainSQL
     TableOnConditionStep or(String sql, Object... bindings);
 
     /**
@@ -191,6 +196,7 @@ public interface TableOnConditionStep extends Table<Record> {
      * @see DSL#condition(String, QueryPart...)
      */
     @Support
+    @PlainSQL
     TableOnConditionStep or(String sql, QueryPart... parts);
 
     /**

@@ -164,6 +164,7 @@ import org.jooq.MergeUsingStep;
 import org.jooq.Name;
 import org.jooq.OrderedAggregateFunction;
 import org.jooq.Param;
+import org.jooq.PlainSQL;
 import org.jooq.QuantifiedSelect;
 import org.jooq.Query;
 import org.jooq.QueryPart;
@@ -5534,6 +5535,7 @@ public class DSL {
      * @return A query part wrapping the plain SQL
      */
     @Support
+    @PlainSQL
     public static SQL sql(String sql) {
         return sql(sql, new Object[0]);
     }
@@ -5557,6 +5559,7 @@ public class DSL {
      * @return A query part wrapping the plain SQL
      */
     @Support
+    @PlainSQL
     public static SQL sql(String sql, QueryPart... parts) {
         return sql(sql, (Object[]) parts);
     }
@@ -5578,6 +5581,7 @@ public class DSL {
      * @return A query part wrapping the plain SQL
      */
     @Support
+    @PlainSQL
     public static SQL sql(String sql, Object... bindings) {
         return new SQLImpl(sql, bindings);
     }
@@ -5600,6 +5604,7 @@ public class DSL {
      */
     @Deprecated
     @Support
+    @PlainSQL
     public static QueryPart queryPart(String sql) {
         return sql(sql);
     }
@@ -5625,6 +5630,7 @@ public class DSL {
      */
     @Deprecated
     @Support
+    @PlainSQL
     public static QueryPart queryPart(String sql, QueryPart... parts) {
         return sql(sql, parts);
     }
@@ -5648,6 +5654,7 @@ public class DSL {
      */
     @Deprecated
     @Support
+    @PlainSQL
     public static QueryPart queryPart(String sql, Object... bindings) {
         return sql(sql, bindings);
     }
@@ -5674,6 +5681,7 @@ public class DSL {
      * @return A query wrapping the plain SQL
      */
     @Support
+    @PlainSQL
     public static Query query(String sql) {
         return using(new DefaultConfiguration()).query(sql);
     }
@@ -5697,6 +5705,7 @@ public class DSL {
      * @return A query wrapping the plain SQL
      */
     @Support
+    @PlainSQL
     public static Query query(String sql, Object... bindings) {
         return using(new DefaultConfiguration()).query(sql, bindings);
     }
@@ -5728,6 +5737,7 @@ public class DSL {
      * @return A query wrapping the plain SQL
      */
     @Support
+    @PlainSQL
     public static Query query(String sql, QueryPart... parts) {
         return using(new DefaultConfiguration()).query(sql, parts);
     }
@@ -5774,6 +5784,7 @@ public class DSL {
      * @return An executable query
      */
     @Support
+    @PlainSQL
     public static ResultQuery<Record> resultQuery(String sql) {
         return using(new DefaultConfiguration()).resultQuery(sql);
     }
@@ -5822,6 +5833,7 @@ public class DSL {
      * @return A query wrapping the plain SQL
      */
     @Support
+    @PlainSQL
     public static ResultQuery<Record> resultQuery(String sql, Object... bindings) {
         return using(new DefaultConfiguration()).resultQuery(sql, bindings);
     }
@@ -5853,6 +5865,7 @@ public class DSL {
      * @return A query wrapping the plain SQL
      */
     @Support
+    @PlainSQL
     public static ResultQuery<Record> resultQuery(String sql, QueryPart... parts) {
         return using(new DefaultConfiguration()).resultQuery(sql, parts);
     }
@@ -5884,6 +5897,7 @@ public class DSL {
      * @return A table wrapping the plain SQL
      */
     @Support
+    @PlainSQL
     public static Table<Record> table(String sql) {
         return table(sql, new Object[0]);
     }
@@ -5918,6 +5932,7 @@ public class DSL {
      * @return A table wrapping the plain SQL
      */
     @Support
+    @PlainSQL
     public static Table<Record> table(String sql, Object... bindings) {
         return new SQLTable(sql(sql, bindings));
     }
@@ -5953,6 +5968,7 @@ public class DSL {
      * @return A table wrapping the plain SQL
      */
     @Support
+    @PlainSQL
     public static Table<Record> table(String sql, QueryPart... parts) {
         return table(sql, (Object[]) parts);
     }
@@ -5969,6 +5985,7 @@ public class DSL {
      * @return A field wrapping the plain SQL
      */
     @Support
+    @PlainSQL
     public static Sequence<BigInteger> sequence(String sql) {
         return sequence(sql, BigInteger.class);
     }
@@ -5986,6 +6003,7 @@ public class DSL {
      * @return A field wrapping the plain SQL
      */
     @Support
+    @PlainSQL
     public static <T extends Number> Sequence<T> sequence(String sql, Class<T> type) {
         return sequence(sql, getDataType(type));
     }
@@ -6003,6 +6021,7 @@ public class DSL {
      * @return A field wrapping the plain SQL
      */
     @Support
+    @PlainSQL
     public static <T extends Number> Sequence<T> sequence(String sql, DataType<T> type) {
         return new SequenceImpl<T>(sql, null, type, true);
     }
@@ -6030,6 +6049,7 @@ public class DSL {
      * @return A field wrapping the plain SQL
      */
     @Support
+    @PlainSQL
     public static Field<Object> field(String sql) {
         return field(sql, new Object[0]);
     }
@@ -6058,6 +6078,7 @@ public class DSL {
      * @return A field wrapping the plain SQL
      */
     @Support
+    @PlainSQL
     public static Field<Object> field(String sql, Object... bindings) {
         return field(sql, Object.class, bindings);
     }
@@ -6086,6 +6107,7 @@ public class DSL {
      * @return A field wrapping the plain SQL
      */
     @Support
+    @PlainSQL
     public static <T> Field<T> field(String sql, Class<T> type) {
         return field(sql, type, new Object[0]);
     }
@@ -6115,6 +6137,7 @@ public class DSL {
      * @return A field wrapping the plain SQL
      */
     @Support
+    @PlainSQL
     public static <T> Field<T> field(String sql, Class<T> type, Object... bindings) {
         return field(sql, getDataType(type), bindings);
     }
@@ -6143,6 +6166,7 @@ public class DSL {
      * @return A field wrapping the plain SQL
      */
     @Support
+    @PlainSQL
     public static <T> Field<T> field(String sql, DataType<T> type) {
         return field(sql, type, new Object[0]);
     }
@@ -6172,6 +6196,7 @@ public class DSL {
      * @return A field wrapping the plain SQL
      */
     @Support
+    @PlainSQL
     public static <T> Field<T> field(String sql, DataType<T> type, Object... bindings) {
         return new SQLField(type, sql(sql, bindings));
     }
@@ -6205,6 +6230,8 @@ public class DSL {
      *            {numbered placeholder} locations
      * @return A field wrapping the plain SQL
      */
+    @Support
+    @PlainSQL
     public static Field<Object> field(String sql, QueryPart... parts) {
         return field(sql, (Object[]) parts);
     }
@@ -6239,6 +6266,8 @@ public class DSL {
      *            {numbered placeholder} locations
      * @return A field wrapping the plain SQL
      */
+    @Support
+    @PlainSQL
     public static <T> Field<T> field(String sql, Class<T> type, QueryPart... parts) {
         return field(sql, getDataType(type), (Object[]) parts);
     }
@@ -6257,6 +6286,7 @@ public class DSL {
      * @param arguments The function arguments
      */
     @Support
+    @PlainSQL
     public static <T> Field<T> function(String name, Class<T> type, Field<?>... arguments) {
         return function(name, getDataType(type), nullSafe(arguments));
     }
@@ -6275,6 +6305,7 @@ public class DSL {
      * @param arguments The function arguments
      */
     @Support
+    @PlainSQL
     public static <T> Field<T> function(String name, DataType<T> type, Field<?>... arguments) {
         return new Function<T>(name, type, nullSafe(arguments));
     }
@@ -6324,6 +6355,7 @@ public class DSL {
      * @return A condition wrapping the plain SQL
      */
     @Support
+    @PlainSQL
     public static Condition condition(String sql) {
         return condition(sql, new Object[0]);
     }
@@ -6350,6 +6382,7 @@ public class DSL {
      * @return A condition wrapping the plain SQL
      */
     @Support
+    @PlainSQL
     public static Condition condition(String sql, Object... bindings) {
         return new SQLCondition(sql(sql, bindings));
     }
@@ -6379,6 +6412,7 @@ public class DSL {
      * @return A condition wrapping the plain SQL
      */
     @Support
+    @PlainSQL
     public static Condition condition(String sql, QueryPart... parts) {
         return condition(sql, (Object[]) parts);
     }

@@ -112,6 +112,7 @@ class FieldMapsForInsert extends AbstractQueryPart {
                 }
 
                 case ASE:
+                case HANA:
                 case INGRES:
                 case ORACLE:
                 /* [/pro] */

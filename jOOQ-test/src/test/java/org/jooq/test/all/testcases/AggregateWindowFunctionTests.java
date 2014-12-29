@@ -288,7 +288,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testAggregateFunction_MEDIAN() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, DB2, DERBY, FIREBIRD, H2, INFORMIX, INGRES, MARIADB, MYSQL, SQLITE, SQLSERVER);
+        assumeFamilyNotIn(ACCESS, ASE, DB2, DERBY, FIREBIRD, H2, HANA, INFORMIX, INGRES, MARIADB, MYSQL, SQLITE, SQLSERVER);
         assumeDialectNotIn(POSTGRES_9_3);
 
         assertEquals(2.5, create().fetchValue(select(median(TBook_ID())).from(TBook())).doubleValue());
@@ -377,7 +377,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testOrderedAggregateFunctions() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, SQLITE);
+        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, H2, HANA, HSQLDB, INGRES, MARIADB, MYSQL, SQLITE);
 
         Record8<BigDecimal, BigDecimal, Integer, Integer, Integer, Integer, Integer, Integer> result =
         create().select(
@@ -410,7 +410,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testInverseDistributionFunctions() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, SQLITE);
+        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, H2, HANA, HSQLDB, INGRES, MARIADB, MYSQL, SQLITE);
         assumeDialectNotIn(POSTGRES_9_3);
 
         Record2<BigDecimal, BigDecimal> result =
@@ -466,7 +466,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // [#1728] COUNT(DISTINCT expr1, expr2, ...)
         // -----------------------------------------
-        if (asList(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, INFORMIX, INGRES, ORACLE, SQLITE, SQLSERVER, SYBASE).contains(dialect().family())) {
+        if (asList(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, INFORMIX, INGRES, ORACLE, SQLITE, SQLSERVER, SYBASE).contains(dialect().family())) {
             log.info("SKIPPING", "Multi-expression COUNT(DISTINCT) test");
         }
         else {
@@ -478,7 +478,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testLinearRegressionFunctions() throws Exception {
-        assumeFamilyNotIn(ASE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, SQLITE, SQLSERVER);
+        assumeFamilyNotIn(ASE, CUBRID, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, SQLITE, SQLSERVER);
 
         // [#600] As aggregate functions
         Record record =

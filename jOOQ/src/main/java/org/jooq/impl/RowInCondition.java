@@ -52,6 +52,7 @@ import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
@@ -102,7 +103,7 @@ class RowInCondition extends AbstractCondition {
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {
-        if (asList(ACCESS, ASE, DB2, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE).contains(configuration.dialect().family())) {
+        if (asList(ACCESS, ASE, DB2, DERBY, FIREBIRD, HANA, INGRES, SQLSERVER, SQLITE, SYBASE).contains(configuration.dialect().family())) {
             List<Condition> conditions = new ArrayList<Condition>();
 
             for (Row row : right) {

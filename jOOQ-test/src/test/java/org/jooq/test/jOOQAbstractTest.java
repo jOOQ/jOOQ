@@ -564,7 +564,7 @@ public abstract class jOOQAbstractTest<
 
         if (!initialised) {
             initialised = true;
-            execute(getCreateScript());
+//            execute(getCreateScript());
             // execute(getLargeScript());
         }
 
@@ -2839,6 +2839,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testFunctionsOnStrings_REPLACE() throws Exception {
         new FunctionTests(this).testFunctionsOnStrings_REPLACE();
+    }
+
+    @Test
+    public void testFunctionsOnStrings_LENGTH() throws Exception {
+        new FunctionTests(this).testFunctionsOnStrings_LENGTH();
     }
 
     @Test

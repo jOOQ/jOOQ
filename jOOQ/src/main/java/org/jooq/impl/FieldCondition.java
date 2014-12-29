@@ -78,6 +78,7 @@ class FieldCondition extends AbstractCondition {
             /* [pro] */
             // These do
             case DB2:
+            case HANA:
             case INGRES:
             case ORACLE:
             case SQLSERVER:

@@ -50,6 +50,7 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
@@ -434,7 +435,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             else if (type == Boolean.class) {
 
                 // [#1153] Some dialects don't support boolean literals TRUE and FALSE
-                if (asList(ASE, DB2, FIREBIRD, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(family)) {
+                if (asList(ASE, DB2, FIREBIRD, HANA, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(family)) {
                     render.sql(((Boolean) val) ? "1" : "0");
                 }
                 /* [pro] */

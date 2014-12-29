@@ -69,6 +69,7 @@ class Pi extends AbstractFunction<BigDecimal> {
         switch (configuration.dialect().family()) {
             /* [pro] */
             case DB2:
+            case HANA:
             case INFORMIX:
             case ORACLE:
                 return DSL.asin(one()).mul(two());

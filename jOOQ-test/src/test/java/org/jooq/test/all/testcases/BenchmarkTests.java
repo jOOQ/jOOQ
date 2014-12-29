@@ -102,6 +102,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testBenchmarkNewRecord() throws Exception {
+        // No benchmarks to the cloud
+        assumeFamilyNotIn(HANA);
+
         DSLContext create = create();
 
         for (int i = 0; i < REPETITIONS_NEW_RECORD; i++) {
@@ -110,6 +113,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testBenchmarkRecordIntoWithoutAnnotations() throws Exception {
+        // No benchmarks to the cloud
+        assumeFamilyNotIn(HANA);
+
         Result<B> books = create().fetch(TBook());
 
         for (int i = 0; i < REPETITIONS_RECORD_INTO; i++) {
@@ -118,6 +124,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testBenchmarkRecordIntoWithAnnotations() throws Exception {
+        // No benchmarks to the cloud
+        assumeFamilyNotIn(HANA);
+
 //        System.out.print("X:");
 //        System.out.println(System.in.read());
 //        System.out.println(System.in.read());
@@ -138,6 +147,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testBenchmarkRecordIntoTableRecord() throws Exception {
+        // No benchmarks to the cloud
+        assumeFamilyNotIn(HANA);
 
         // This benchmark should heavily outperform the preceding one due to the optimisations done in [#2989]
         Result<B> books = create().fetch(TBook());
@@ -148,6 +159,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testBenchmarkFieldAccess() throws Exception {
+        // No benchmarks to the cloud
+        assumeFamilyNotIn(HANA);
+
         // This benchmark is inspired by a private contribution by Roberto Giacco
 
         B book = create().newRecord(TBook());
@@ -162,7 +176,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testBenchmarkSelect() throws Exception {
-        // TODO: Reactivate this. For now, it is simply too slow...
+        // No benchmarks to the cloud
         assumeFamilyNotIn(HANA);
 
         // This benchmark is contributed by "jjYBdx4IL" on GitHub:
@@ -192,6 +206,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testBenchmarkPlainSQL() throws Exception {
+        // No benchmarks to the cloud
+        assumeFamilyNotIn(HANA);
+
         Configuration configuration = create().configuration().derive(new ExecuteListenerProvider[0]);
         configuration.settings().setExecuteLogging(false);
         DSLContext create = create(configuration);

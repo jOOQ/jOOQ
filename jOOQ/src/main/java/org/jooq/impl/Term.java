@@ -80,6 +80,7 @@ enum Term {
                     return "8 * lengthb";
 
                 case DB2:
+                case HANA:
                 case INGRES:
                 case SYBASE:
                 /* [/pro] */
@@ -165,6 +166,7 @@ enum Term {
                     return "lengthb";
 
                 case DB2:
+                case HANA:
                 case INGRES:
                 case SYBASE:
                 /* [/pro] */

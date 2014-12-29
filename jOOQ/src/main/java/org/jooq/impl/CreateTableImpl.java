@@ -47,6 +47,7 @@ import static org.jooq.Clause.CREATE_TABLE_COLUMNS;
 import static org.jooq.Clause.CREATE_TABLE_NAME;
 import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
@@ -183,12 +184,33 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
            .visit(table)
            .end(CREATE_TABLE_NAME)
            .formatSeparator()
-           .keyword("as")
-           .formatSeparator()
-           .start(CREATE_TABLE_AS)
+           .keyword("as");
+
+        /* [pro] */
+        if (ctx.family() == HANA) {
+            ctx.sql(" (")
+               .formatIndentStart()
+               .formatNewLine();
+        }
+        else
+        /* [/pro] */
+        {
+            ctx.formatSeparator();
+        }
+
+        ctx.start(CREATE_TABLE_AS)
            .visit(select)
-           .end(CREATE_TABLE_AS)
-           .end(CREATE_TABLE);
+           .end(CREATE_TABLE_AS);
+
+        /* [pro] */
+        if (ctx.family() == HANA) {
+            ctx.formatIndentEnd()
+               .formatNewLine()
+               .sql(")");
+        }
+        /* [/pro] */
+
+        ctx.end(CREATE_TABLE);
     }
 
     private final void acceptSelectInto(Context<?> ctx) {

@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -1375,6 +1376,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             dialect() == DERBY ||
             dialect() == FIREBIRD ||
             dialect() == H2 ||
+            dialect() == HANA ||
             dialect() == MARIADB ||
             dialect() == MYSQL ||
             dialect() == SQLITE) {
@@ -1649,6 +1651,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             /* [pro] */
             case ACCESS:
             case ASE:
+            case HANA:
             case INGRES:
             case SQLSERVER:
             case SYBASE:

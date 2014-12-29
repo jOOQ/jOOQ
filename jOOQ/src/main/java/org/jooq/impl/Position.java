@@ -73,6 +73,7 @@ class Position extends AbstractFunction<Integer> {
                 return field("{locate}({0}, {1})", SQLDataType.INTEGER, search, in);
 
             /* [pro] */
+            case HANA:
             case INGRES:
             case SYBASE:
                 return field("{locate}({0}, {1})", SQLDataType.INTEGER, in, search);

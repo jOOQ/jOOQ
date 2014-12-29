@@ -179,6 +179,17 @@ class TruncDate<T extends java.util.Date> extends AbstractFunction<T> {
                 return field("{trunc}({0}, {1})", getDataType(), date, inline(keyword));
             }
 
+            // In HANA, currently, only DAY parts can be truncated by casting them to DATE
+            case HANA: {
+                switch (part) {
+                    case DAY:
+                        return date.cast(Date.class).cast(getDataType());
+
+                    default:
+                        return field("{trunc}({0}, {1})", getDataType(), date, inline(part.name()));
+                }
+            }
+
             case ORACLE: {
                 switch (part) {
                     case YEAR:   keyword = "YYYY";   break;

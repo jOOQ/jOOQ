@@ -43,6 +43,7 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.keyword;
+import static org.jooq.impl.DSL.sql;
 
 import java.sql.Date;
 
@@ -201,6 +202,25 @@ class DateAdd<T extends java.util.Date> extends AbstractFunction<T> {
                 }
 
                 return field("{dateadd}({0}, {1}, {2})", getDataType(), keyword(keyword), interval, date);
+            }
+
+            case HANA: {
+                String multiplier = null;
+
+                switch (datePart) {
+                    case YEAR:   keyword = "add_years";                        break;
+                    case MONTH:  keyword = "add_months";                       break;
+                    case DAY:    keyword = "add_days";                         break;
+                    case HOUR:   keyword = "add_seconds"; multiplier = "3600"; break;
+                    case MINUTE: keyword = "add_seconds"; multiplier = "60";   break;
+                    case SECOND: keyword = "add_seconds";                      break;
+                    default: throwUnsupported();
+                }
+
+                if (multiplier == null)
+                    return field("{0}({1}, {2})", getDataType(), keyword(keyword), date, interval);
+                else
+                    return field("{0}({1}, {2} * {3})", getDataType(), keyword(keyword), date, interval, sql(multiplier));
             }
 
             case INFORMIX: {

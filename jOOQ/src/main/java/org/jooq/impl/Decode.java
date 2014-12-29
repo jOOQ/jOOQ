@@ -76,7 +76,11 @@ class Decode<T, Z> extends AbstractFunction<Z> {
         switch (configuration.dialect().family()) {
 
             /* [pro] */
-            // Oracle actually has this function
+            // HANA and Oracle actually have this function
+            case HANA: {
+                return function("map", getDataType(), getArguments());
+            }
+
             case ORACLE: {
                 return function("decode", getDataType(), getArguments());
             }

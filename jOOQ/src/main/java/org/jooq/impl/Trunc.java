@@ -43,6 +43,7 @@ package org.jooq.impl;
 import static java.math.BigDecimal.TEN;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.zero;
 import static org.jooq.impl.Utils.extractVal;
@@ -111,7 +112,10 @@ class Trunc<T> extends AbstractFunction<T> {
                 return field("{trunc}({0}, {1})", SQLDataType.NUMERIC, field.cast(BigDecimal.class), decimals).cast(field.getDataType());
 
             /* [pro] */
-            // SQL Server's round function can be used to truncate.
+            // HANA and SQL Server's round function can be used to truncate.
+            case HANA:
+                return field("{round}({0}, {1}, {2})", field.getDataType(), field, decimals, keyword("round_down"));
+
             case SQLSERVER:
                 return field("{round}({0}, {1}, {2})", field.getDataType(), field, decimals, one());
 

@@ -492,6 +492,15 @@ class Expression<T> extends AbstractFunction<T> {
                     }
                 }
 
+                case HANA: {
+                    if (operator == ADD) {
+                        return field("{add_days}({0}, {1})", getDataType(), lhs, rhsAsNumber());
+                    }
+                    else {
+                        return field("{add_days}({0}, {1})", getDataType(), lhs, rhsAsNumber().neg());
+                    }
+                }
+
                 case ASE:
                 case SQLSERVER:
                 case SYBASE:

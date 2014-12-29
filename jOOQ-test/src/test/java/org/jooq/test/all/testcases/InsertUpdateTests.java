@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
@@ -77,6 +78,7 @@ import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.val;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assume.assumeNotNull;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -134,7 +136,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testInsertIntoView() throws Exception {
-        assumeFamilyNotIn(H2);
+        assumeFamilyNotIn(H2, HANA);
         jOOQAbstractTest.reset = false;
 
         assertEquals(1,
@@ -245,7 +247,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testInsertDefaultValues() throws Exception {
-        assumeFamilyNotIn(ACCESS, INFORMIX);
+        assumeFamilyNotIn(ACCESS, HANA, INFORMIX);
+        assumeNotNull(TTriggers());
         jOOQAbstractTest.reset = false;
 
         assertEquals(1,
@@ -258,7 +261,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testInsertDefaultValue() throws Exception {
-        assumeFamilyNotIn(ACCESS, INFORMIX, FIREBIRD);
+        assumeFamilyNotIn(ACCESS, HANA, INFORMIX, FIREBIRD);
         jOOQAbstractTest.reset = false;
 
         assertEquals(1,
@@ -287,7 +290,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testUpdateDefaultValue() throws Exception {
-        assumeFamilyNotIn(ACCESS, INFORMIX, FIREBIRD);
+        assumeFamilyNotIn(ACCESS, HANA, INFORMIX, FIREBIRD);
         jOOQAbstractTest.reset = false;
 
         assertEquals(4,
@@ -1041,7 +1044,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testMerge() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, H2, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE);
+        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, H2, HANA, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE);
 
         jOOQAbstractTest.reset = false;
 
@@ -1164,6 +1167,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             case DERBY:
             case FIREBIRD:
             case H2:
+            case HANA:
             case HSQLDB:
             case MARIADB:
             case MYSQL:

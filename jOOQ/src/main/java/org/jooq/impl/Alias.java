@@ -54,6 +54,7 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
@@ -143,7 +144,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
             // [#1801] Some databases do not support "derived column names".
             // They can be simulated by concatenating a dummy SELECT with no
             // results using UNION ALL
-            else if (fieldAliases != null && asList(ACCESS, H2, INGRES, MARIADB, MYSQL, ORACLE, SQLITE).contains(family)) {
+            else if (fieldAliases != null && asList(ACCESS, H2, HANA, INGRES, MARIADB, MYSQL, ORACLE, SQLITE).contains(family)) {
                 simulateDerivedColumnList = true;
 
                 SelectFieldList fields = new SelectFieldList();

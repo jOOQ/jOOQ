@@ -108,6 +108,9 @@ class DateDiff extends AbstractFunction<Integer> {
                 return function("days", getDataType(), date1).sub(
                        function("days", getDataType(), date2));
 
+            case HANA:
+                return field("{days_between}({0}, {1})", getDataType(), date2, date1);
+
             // Fall through to default
             case INGRES:
             /* [/pro] */

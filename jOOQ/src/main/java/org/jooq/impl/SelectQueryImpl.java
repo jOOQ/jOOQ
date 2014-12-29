@@ -67,6 +67,7 @@ import static org.jooq.SQLDialect.DB2_9;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
@@ -332,7 +333,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
             if (into != null
                     && context.data(DATA_OMIT_INTO_CLAUSE) == null
-                    && asList(CUBRID, DB2, DERBY, FIREBIRD, H2, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE).contains(family)) {
+                    && asList(CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE).contains(family)) {
 
                 context.data(DATA_OMIT_INTO_CLAUSE, true);
                 context.visit(DSL.createTable(into).as(this));

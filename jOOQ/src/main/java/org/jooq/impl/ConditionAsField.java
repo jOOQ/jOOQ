@@ -72,6 +72,7 @@ class ConditionAsField extends AbstractFunction<Boolean> {
             // are expected.
             /* [pro] */
             case DB2:
+            case HANA:
             case INGRES:
             case ORACLE:
             case SQLSERVER:

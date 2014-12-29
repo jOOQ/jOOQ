@@ -79,6 +79,7 @@ class Replace extends AbstractFunction<String> {
 
             case ACCESS:
             case DB2:
+            case HANA:
             case INGRES:
             case SQLSERVER:
             case SYBASE:

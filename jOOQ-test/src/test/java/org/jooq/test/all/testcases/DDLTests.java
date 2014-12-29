@@ -43,11 +43,13 @@ package org.jooq.test.all.testcases;
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
@@ -286,7 +288,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testAlterTableAlterType() throws Exception {
-        assumeFamilyNotIn(FIREBIRD, SQLITE);
+        assumeFamilyNotIn(FIREBIRD, HANA, SQLITE);
 
         try {
             // TODO: Re-use jOOQ API for this
@@ -434,7 +436,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assumeFamilyNotIn(SYBASE);
 
         try {
-            create().select(val("value").as("value")).into(table(name("t"))).execute();
+            create().select(inline("value").as("value")).into(table(name("t"))).execute();
             Result<Record> result = create().selectFrom(table(name("t"))).fetch();
 
             assertEquals(1, result.size());

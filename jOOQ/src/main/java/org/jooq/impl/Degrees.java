@@ -74,6 +74,7 @@ class Degrees extends AbstractFunction<BigDecimal> {
             case ACCESS:
                 return argument.coerce(BigDecimal.class).mul(inline(180)).div(pi());
 
+            case HANA:
             case INGRES:
             case ORACLE:
             /* [/pro] */

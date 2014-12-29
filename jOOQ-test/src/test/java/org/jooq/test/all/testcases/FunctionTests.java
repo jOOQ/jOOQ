@@ -43,6 +43,7 @@ package org.jooq.test.all.testcases;
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.SQLITE;
@@ -465,30 +466,24 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testFunctionsOnStrings_REPLACE() throws Exception {
+        assumeFamilyNotIn(DERBY);
 
+        // Standard String functions
+        Field<String> constant = val("abc");
+        Field<String> x = replace(constant, "b", "x");
+        Field<String> y = replace(constant, "b", "y");
+        Field<String> z = replace(constant, "b");
+        Record record = create().select(x, y, z).fetchOne();
+
+        assertEquals("axc", record.getValue(x));
+        assertEquals("ayc", record.getValue(y));
+        assertEquals("ac", record.getValue(z));
+    }
+
+    public void testFunctionsOnStrings_LENGTH() throws Exception {
         // Standard String functions
         SelectQuery<?> q = create().selectQuery();
         Field<String> constant = val("abc");
-
-        switch (dialect()) {
-
-            // DERBY does not have a replace function
-            case DERBY:
-                log.info("SKIPPING", "replace function test");
-                break;
-
-            // These two tests will validate #154
-            default: {
-                Field<String> x = replace(constant, "b", "x");
-                Field<String> y = replace(constant, "b", "y");
-                Field<String> z = replace(constant, "b");
-                Record record = create().select(x, y, z).fetchOne();
-
-                assertEquals("axc", record.getValue(x));
-                assertEquals("ayc", record.getValue(y));
-                assertEquals("ac", record.getValue(z));
-            }
-        }
 
         Field<Integer> length = length(constant);
         Field<Integer> charLength = charLength(constant);
@@ -645,6 +640,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         switch (dialect().family()) {
             /* [pro] */
             case DB2:
+            case HANA:
             case INGRES:
             case SYBASE:
             /* [/pro] */
@@ -713,6 +709,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             case DERBY:
             case FIREBIRD:
             case H2:
+            case HANA:
             case HSQLDB:
             case POSTGRES:
             case SQLITE:
@@ -1174,6 +1171,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         switch (dialect().family()) {
             /* [pro] */
             case ACCESS:
+            case HANA:
             case INGRES:
             /* [/pro] */
             case DERBY:

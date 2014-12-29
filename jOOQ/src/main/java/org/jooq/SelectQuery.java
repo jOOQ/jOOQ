@@ -79,7 +79,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param fields
      */
     @Support
-    void addSelect(Field<?>... fields);
+    void addSelect(SelectField<?>... fields);
 
     /**
      * Add a list of select fields.
@@ -87,7 +87,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param fields
      */
     @Support
-    void addSelect(Collection<? extends Field<?>> fields);
+    void addSelect(Collection<? extends SelectField<?>> fields);
 
     /**
      * Add "distinct" keyword to the select clause.
@@ -101,7 +101,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * This also sets the <code>distinct</code> flag to <code>true</code>
      */
     @Support({ POSTGRES })
-    void addDistinctOn(Field<?>... fields);
+    void addDistinctOn(SelectField<?>... fields);
 
     /**
      * Add a PostgreSQL-specific <code>DISTINCT ON (fields...)</code> clause.
@@ -109,7 +109,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * This also sets the <code>distinct</code> flag to <code>true</code>
      */
     @Support({ POSTGRES })
-    void addDistinctOn(Collection<? extends Field<?>> fields);
+    void addDistinctOn(Collection<? extends SelectField<?>> fields);
 
     /**
      * Add <code>INTO</code> clause to the <code>SELECT</code> statement.

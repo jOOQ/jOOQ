@@ -117,6 +117,7 @@ import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
@@ -932,6 +933,22 @@ final class Utils {
         }
 
         return result;
+    }
+
+    static final List<Field<?>> fields(Collection<? extends SelectField<?>> fields) {
+        List<Field<?>> result = new ArrayList<Field<?>>();
+
+        if (fields != null) {
+            for (SelectField<?> field : fields) {
+                result.add(DSL.field(field));
+            }
+        }
+
+        return result;
+    }
+
+    static final List<Field<?>> fields(SelectField<?>... fields) {
+        return fields == null ? fields(Collections.<SelectField<?>>emptyList()) : fields(Arrays.asList(fields));
     }
 
     static final <T> List<Field<T>> inline(T[] values) {

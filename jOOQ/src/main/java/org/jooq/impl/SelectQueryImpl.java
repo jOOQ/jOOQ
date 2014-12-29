@@ -125,6 +125,7 @@ import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
+import org.jooq.SelectField;
 import org.jooq.SelectQuery;
 import org.jooq.SortField;
 import org.jooq.Table;
@@ -157,7 +158,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
     private String                               hint;
     private String                               option;
     private boolean                              distinct;
-    private final QueryPartList<Field<?>>        distinctOn;
+    private final QueryPartList<SelectField<?>>  distinctOn;
     private boolean                              forUpdate;
     private final QueryPartList<Field<?>>        forUpdateOf;
     private final TableList                      forUpdateOfTables;
@@ -207,7 +208,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
         this.with = with;
         this.distinct = distinct;
-        this.distinctOn = new QueryPartList<Field<?>>();
+        this.distinctOn = new QueryPartList<SelectField<?>>();
         this.select = new SelectFieldList();
         this.from = new TableList();
         this.condition = new ConditionProviderImpl();
@@ -1329,12 +1330,12 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
     }
 
     @Override
-    public final void addSelect(Collection<? extends Field<?>> fields) {
-        getSelect0().addAll(fields);
+    public final void addSelect(Collection<? extends SelectField<?>> fields) {
+        getSelect0().addAll(Utils.fields(fields));
     }
 
     @Override
-    public final void addSelect(Field<?>... fields) {
+    public final void addSelect(SelectField<?>... fields) {
         addSelect(Arrays.asList(fields));
     }
 
@@ -1344,12 +1345,12 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
     }
 
     @Override
-    public final void addDistinctOn(Field<?>... fields) {
+    public final void addDistinctOn(SelectField<?>... fields) {
         addDistinctOn(Arrays.asList(fields));
     }
 
     @Override
-    public final void addDistinctOn(Collection<? extends Field<?>> fields) {
+    public final void addDistinctOn(Collection<? extends SelectField<?>> fields) {
         this.distinctOn.addAll(fields);
     }
 

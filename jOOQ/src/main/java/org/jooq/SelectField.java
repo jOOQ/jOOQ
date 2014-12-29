@@ -38,41 +38,62 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
+package org.jooq;
 
-package org.jooq.impl;
-
-import java.util.Collection;
-
-import org.jooq.Context;
-import org.jooq.Field;
-import org.jooq.SelectField;
 
 /**
+ * A <code>QueryPart</code> to be used exclusively in <code>SELECT</code>
+ * clauses
+ *
  * @author Lukas Eder
  */
-class SelectFieldList extends QueryPartList<Field<?>> {
+public interface SelectField<T> extends QueryPart {
 
-    private static final long serialVersionUID = 8850104968428500798L;
+    // ------------------------------------------------------------------------
+    // API
+    // ------------------------------------------------------------------------
 
-    SelectFieldList() {
-        super();
-    }
+    /**
+     * The name of the field.
+     * <p>
+     * The name is any of these:
+     * <ul>
+     * <li>The formal name of the field, if it is a <i>physical table/view
+     * field</i></li>
+     * <li>The alias of an <i>aliased field</i></li>
+     * <li>A generated / unspecified value for any other <i>expression</i></li>
+     * <li>The name of a parameter if it is a named {@link Param}</li>
+     * </ul>
+     */
+    String getName();
 
-    SelectFieldList(Collection<? extends SelectField<?>> wrappedList) {
-        super(Utils.fields(wrappedList));
-    }
+    /**
+     * The field's underlying {@link Converter}.
+     * <p>
+     * By default, all fields reference an identity-converter
+     * <code>Converter&lt;T, T></code>. Custom data types may be obtained by a
+     * custom {@link Converter} placed on the generated {@link TableField}.
+     */
+    Converter<?, T> getConverter();
 
-    SelectFieldList(SelectField<?>... wrappedList) {
-        super(Utils.fields(wrappedList));
-    }
+    /**
+     * The field's underlying {@link Binding}.
+     */
+    Binding<?, T> getBinding();
 
-    @Override
-    protected void toSQLEmptyList(Context<?> ctx) {
-        ctx.sql("*");
-    }
+    /**
+     * The Java type of the field.
+     */
+    Class<T> getType();
 
-    @Override
-    public final boolean declaresFields() {
-        return true;
-    }
+    /**
+     * The type of this field (might not be dialect-specific).
+     */
+    DataType<T> getDataType();
+
+    /**
+     * The dialect-specific type of this field.
+     */
+    DataType<T> getDataType(Configuration configuration);
+
 }

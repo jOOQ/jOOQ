@@ -1086,11 +1086,12 @@ public abstract class AbstractDatabase implements Database {
             /* [pro] */
             case HANA:
             /* [/pro] */
-            default:
                 // TODO: Is there any more robust way to recognise these?
                 // For instance, there could be a UDT that is called this way
                 return dataType.endsWith(" ARRAY");
         }
+
+        return false;
     }
 
     protected static final String fetchedSize(List<?> fetched, List<?> included) {

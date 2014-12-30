@@ -4748,9 +4748,21 @@
                                                     <type>java.time.LocalDateTime</type>
                                                     <converter>org.jooq.test.all.converters.LocalDateTimeConverter</converter>
                                                 </customType>
+                                                
+                                                <customType>
+                                                    <name>Serializable</name>
+                                                    <type>java.io.Serializable</type>
+                                                    <binding>org.jooq.test.all.bindings.SerializedBinding</binding>
+                                                </customType>
                                             </customTypes>
 
                                             <forcedTypes>
+                                                <forcedType>
+                                                    <name>Serializable</name>
+                                                    <expression>JAVA_IO_SERIALIZABLE</expression>
+                                                    <types>BLOB</types>
+                                                </forcedType>
+                                            
                                                 <forcedType>
                                                     <name>LocalDateTime</name>
                                                     <expression>.*2155.*</expression>

@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TExoticTypesRecord> {
 
-	private static final long serialVersionUID = -313982294;
+	private static final long serialVersionUID = 1098022157;
 
 	/**
 	 * The reference instance of <code>TEST.T_EXOTIC_TYPES</code>
@@ -33,6 +33,11 @@ public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.oracle.g
 	 * The column <code>TEST.T_EXOTIC_TYPES.UU</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TExoticTypesRecord, java.util.UUID> UU = createField("UU", org.jooq.impl.SQLDataType.UUID, this, "");
+
+	/**
+	 * The column <code>TEST.T_EXOTIC_TYPES.JAVA_IO_SERIALIZABLE</code>.
+	 */
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TExoticTypesRecord, java.io.Serializable> JAVA_IO_SERIALIZABLE = createField("JAVA_IO_SERIALIZABLE", org.jooq.impl.SQLDataType.BLOB, this, "", new org.jooq.test.all.bindings.SerializedBinding());
 
 	/**
 	 * Create a <code>TEST.T_EXOTIC_TYPES</code> table reference

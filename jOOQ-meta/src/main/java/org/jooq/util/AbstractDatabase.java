@@ -1087,7 +1087,9 @@ public abstract class AbstractDatabase implements Database {
             case HANA:
             /* [/pro] */
             default:
-                return dataType.endsWith("ARRAY");
+                // TODO: Is there any more robust way to recognise these?
+                // For instance, there could be a UDT that is called this way
+                return dataType.endsWith(" ARRAY");
         }
     }
 

@@ -11,19 +11,22 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_EXOTIC_TYPES", schema = "TEST")
 public class TExoticTypes implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1422990676;
+	private static final long serialVersionUID = -1967254348;
 
-	private java.lang.Integer id;
-	private java.util.UUID    uu;
+	private java.lang.Integer    id;
+	private java.util.UUID       uu;
+	private java.io.Serializable javaIoSerializable;
 
 	public TExoticTypes() {}
 
 	public TExoticTypes(
-		java.lang.Integer id,
-		java.util.UUID    uu
+		java.lang.Integer    id,
+		java.util.UUID       uu,
+		java.io.Serializable javaIoSerializable
 	) {
 		this.id = id;
 		this.uu = uu;
+		this.javaIoSerializable = javaIoSerializable;
 	}
 
 	@javax.persistence.Id
@@ -44,6 +47,15 @@ public class TExoticTypes implements java.io.Serializable {
 
 	public void setUu(java.util.UUID uu) {
 		this.uu = uu;
+	}
+
+	@javax.persistence.Column(name = "JAVA_IO_SERIALIZABLE")
+	public java.io.Serializable getJavaIoSerializable() {
+		return this.javaIoSerializable;
+	}
+
+	public void setJavaIoSerializable(java.io.Serializable javaIoSerializable) {
+		this.javaIoSerializable = javaIoSerializable;
 	}
 
 	@Override
@@ -67,6 +79,12 @@ public class TExoticTypes implements java.io.Serializable {
 		}
 		else if (!uu.equals(other.uu))
 			return false;
+		if (javaIoSerializable == null) {
+			if (other.javaIoSerializable != null)
+				return false;
+		}
+		else if (!javaIoSerializable.equals(other.javaIoSerializable))
+			return false;
 		return true;
 	}
 
@@ -76,6 +94,7 @@ public class TExoticTypes implements java.io.Serializable {
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((uu == null) ? 0 : uu.hashCode());
+		result = prime * result + ((javaIoSerializable == null) ? 0 : javaIoSerializable.hashCode());
 		return result;
 	}
 }

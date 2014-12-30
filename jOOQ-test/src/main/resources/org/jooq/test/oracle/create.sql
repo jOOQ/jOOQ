@@ -735,6 +735,8 @@ CREATE TABLE t_exotic_types (
   ID NUMBER(7) NOT NULL,
   UU CHAR(36),
   
+  JAVA_IO_SERIALIZABLE BLOB,
+  
   CONSTRAINT pk_t_exotic_types PRIMARY KEY(ID)
 )
 /

@@ -9,9 +9,9 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_EXOTIC_TYPES", schema = "TEST")
-public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TExoticTypesRecord> implements org.jooq.Record2<java.lang.Integer, java.util.UUID> {
+public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TExoticTypesRecord> implements org.jooq.Record3<java.lang.Integer, java.util.UUID, java.io.Serializable> {
 
-	private static final long serialVersionUID = 395362715;
+	private static final long serialVersionUID = 364536467;
 
 	/**
 	 * Setter for <code>TEST.T_EXOTIC_TYPES.ID</code>.
@@ -45,6 +45,21 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 		return (java.util.UUID) getValue(1);
 	}
 
+	/**
+	 * Setter for <code>TEST.T_EXOTIC_TYPES.JAVA_IO_SERIALIZABLE</code>.
+	 */
+	public void setJavaIoSerializable(java.io.Serializable value) {
+		setValue(2, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.T_EXOTIC_TYPES.JAVA_IO_SERIALIZABLE</code>.
+	 */
+	@javax.persistence.Column(name = "JAVA_IO_SERIALIZABLE")
+	public java.io.Serializable getJavaIoSerializable() {
+		return (java.io.Serializable) getValue(2);
+	}
+
 	// -------------------------------------------------------------------------
 	// Primary key information
 	// -------------------------------------------------------------------------
@@ -58,23 +73,23 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	// -------------------------------------------------------------------------
-	// Record2 type implementation
+	// Record3 type implementation
 	// -------------------------------------------------------------------------
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row2<java.lang.Integer, java.util.UUID> fieldsRow() {
-		return (org.jooq.Row2) super.fieldsRow();
+	public org.jooq.Row3<java.lang.Integer, java.util.UUID, java.io.Serializable> fieldsRow() {
+		return (org.jooq.Row3) super.fieldsRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row2<java.lang.Integer, java.util.UUID> valuesRow() {
-		return (org.jooq.Row2) super.valuesRow();
+	public org.jooq.Row3<java.lang.Integer, java.util.UUID, java.io.Serializable> valuesRow() {
+		return (org.jooq.Row3) super.valuesRow();
 	}
 
 	/**
@@ -97,6 +112,14 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * {@inheritDoc}
 	 */
 	@Override
+	public org.jooq.Field<java.io.Serializable> field3() {
+		return org.jooq.test.oracle.generatedclasses.test.tables.TExoticTypes.T_EXOTIC_TYPES.JAVA_IO_SERIALIZABLE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public java.lang.Integer value1() {
 		return getId();
 	}
@@ -107,6 +130,14 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@Override
 	public java.util.UUID value2() {
 		return getUu();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.io.Serializable value3() {
+		return getJavaIoSerializable();
 	}
 
 	/**
@@ -131,7 +162,16 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TExoticTypesRecord values(java.lang.Integer value1, java.util.UUID value2) {
+	public TExoticTypesRecord value3(java.io.Serializable value) {
+		setJavaIoSerializable(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TExoticTypesRecord values(java.lang.Integer value1, java.util.UUID value2, java.io.Serializable value3) {
 		return this;
 	}
 
@@ -149,10 +189,11 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	/**
 	 * Create a detached, initialised TExoticTypesRecord
 	 */
-	public TExoticTypesRecord(java.lang.Integer id, java.util.UUID uu) {
+	public TExoticTypesRecord(java.lang.Integer id, java.util.UUID uu, java.io.Serializable javaIoSerializable) {
 		super(org.jooq.test.oracle.generatedclasses.test.tables.TExoticTypes.T_EXOTIC_TYPES);
 
 		setValue(0, id);
 		setValue(1, uu);
+		setValue(2, javaIoSerializable);
 	}
 }

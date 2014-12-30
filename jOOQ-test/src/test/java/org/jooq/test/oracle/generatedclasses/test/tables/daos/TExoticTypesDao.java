@@ -51,4 +51,11 @@ public class TExoticTypesDao extends org.jooq.impl.DAOImpl<org.jooq.test.oracle.
 	public java.util.List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.TExoticTypes> fetchByUu(java.util.UUID... values) {
 		return fetch(org.jooq.test.oracle.generatedclasses.test.tables.TExoticTypes.T_EXOTIC_TYPES.UU, values);
 	}
+
+	/**
+	 * Fetch records that have <code>JAVA_IO_SERIALIZABLE IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.TExoticTypes> fetchByJavaIoSerializable(java.io.Serializable... values) {
+		return fetch(org.jooq.test.oracle.generatedclasses.test.tables.TExoticTypes.T_EXOTIC_TYPES.JAVA_IO_SERIALIZABLE, values);
+	}
 }

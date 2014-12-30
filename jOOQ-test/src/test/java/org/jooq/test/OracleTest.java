@@ -105,6 +105,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
@@ -1993,6 +1994,66 @@ public class OracleTest extends jOOQAbstractTest<
         UStreetTypeRecord record = new UStreetTypeRecord("street", "no", null, null, null);
         Result<Record> result = create().fetch("select " + record + " from dual");
         assertEquals(record, result.get(0).getValue(0));
+    }
+
+    @Test
+    public void testOraclePlainSQLUDTs() {
+        try {
+            create().execute("create type plain_sql_o1 as object(a int, b clob)");
+            create().execute("create type plain_sql_t1 as table of plain_sql_o1");
+            create().execute("create type plain_sql_o2 as object(x plain_sql_o1, y plain_sql_t1)");
+            create().execute("create type plain_sql_t2 as table of plain_sql_t1");
+
+            Result<Record> result = create().fetch(
+                " SELECT "
+              + "    cast(null as u_address_table),"
+              + "    u_address_table(),"
+              + "    u_address_table(null),"
+              + "    u_address_table(u_address_type(null, null, null, null, null, null, null, null)),"
+              + "    u_address_table(u_address_type(u_street_type('z', 'y', null, null, null), 'a', 'b', 'c', DATE '2000-01-01', 1, 'abc', 'xyz')),"
+              + "    u_address_table(u_address_type(u_street_type('z', 'y', u_number_array(1, 2, 3), 'abc', 'xyz'), 'a', 'b', 'c', DATE '2000-01-01', 1, 'abc', 'xyz'))"
+              + " FROM dual");
+        }
+        finally {
+            create().execute("drop type plain_sql_t2");
+            create().execute("drop type plain_sql_o2");
+            create().execute("drop type plain_sql_t1");
+            create().execute("drop type plain_sql_o1");
+        }
+    }
+
+    @Test
+    public void testOracleSerializedBinding() {
+        clean(T_EXOTIC_TYPES);
+
+        assertEquals(1,
+        create().insertInto(T_EXOTIC_TYPES, T_EXOTIC_TYPES.ID, T_EXOTIC_TYPES.JAVA_IO_SERIALIZABLE)
+                .values(1, null)
+                .execute());
+
+        assertEquals(1,
+        create().insertInto(T_EXOTIC_TYPES, T_EXOTIC_TYPES.ID, T_EXOTIC_TYPES.JAVA_IO_SERIALIZABLE)
+                .values(2, new S(1))
+                .execute());
+
+        Result<TExoticTypesRecord> result = create().selectFrom(T_EXOTIC_TYPES).orderBy(T_EXOTIC_TYPES.ID).fetch();
+
+        assertNull(result.get(0).getJavaIoSerializable());
+        assertEquals(1, ((S) result.get(1).getJavaIoSerializable()).value);
+    }
+
+    @SuppressWarnings("serial")
+    static class S implements Serializable {
+        int value;
+
+        S(int value) {
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return "S [value=" + value + "]";
+        }
     }
 }
 

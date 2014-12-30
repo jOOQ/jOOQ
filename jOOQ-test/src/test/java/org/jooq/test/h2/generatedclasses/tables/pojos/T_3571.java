@@ -3,13 +3,17 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
+
+import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_3571;
+
+
 /**
  * This is a POJO for table T_3571.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class T_3571 implements org.jooq.test.h2.generatedclasses.tables.interfaces.IT_3571 {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class T_3571 implements IT_3571 {
 
-	private static final long serialVersionUID = 1489538661;
+	private static final long serialVersionUID = -523425987;
 
 	private org.jooq.test.all.converters.T_3571 e1;
 	private org.jooq.test.all.converters.T_3571 e2;
@@ -82,7 +86,7 @@ public class T_3571 implements org.jooq.test.h2.generatedclasses.tables.interfac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IT_3571 from) {
+	public void from(IT_3571 from) {
 		setE1(from.getE1());
 		setE2(from.getE2());
 		setE3(from.getE3());
@@ -93,7 +97,7 @@ public class T_3571 implements org.jooq.test.h2.generatedclasses.tables.interfac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IT_3571> E into(E into) {
+	public <E extends IT_3571> E into(E into) {
 		into.from(this);
 		return into;
 	}

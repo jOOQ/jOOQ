@@ -3,31 +3,35 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
+
+import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2327UkOnly;
+
+
 /**
  * This is a POJO for table T_2327_UK_ONLY.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class T_2327UkOnly implements org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2327UkOnly {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class T_2327UkOnly implements IT_2327UkOnly {
 
-	private static final long serialVersionUID = 472642796;
+	private static final long serialVersionUID = -1601722250;
 
-	private java.lang.Integer id;
+	private Integer id;
 
 	public T_2327UkOnly() {}
 
 	public T_2327UkOnly(
-		java.lang.Integer id
+		Integer id
 	) {
 		this.id = id;
 	}
 
 	@Override
-	public java.lang.Integer getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public T_2327UkOnly setId(java.lang.Integer id) {
+	public T_2327UkOnly setId(Integer id) {
 		this.id = id;
 		return this;
 	}
@@ -40,7 +44,7 @@ public class T_2327UkOnly implements org.jooq.test.h2.generatedclasses.tables.in
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2327UkOnly from) {
+	public void from(IT_2327UkOnly from) {
 		setId(from.getId());
 	}
 
@@ -48,7 +52,7 @@ public class T_2327UkOnly implements org.jooq.test.h2.generatedclasses.tables.in
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2327UkOnly> E into(E into) {
+	public <E extends IT_2327UkOnly> E into(E into) {
 		into.from(this);
 		return into;
 	}

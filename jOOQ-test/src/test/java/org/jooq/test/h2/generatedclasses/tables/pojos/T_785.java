@@ -3,24 +3,28 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
+
+import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_785;
+
+
 /**
  * This is a POJO for table T_785.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class T_785 implements org.jooq.test.h2.generatedclasses.tables.interfaces.IT_785 {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class T_785 implements IT_785 {
 
-	private static final long serialVersionUID = 1113808880;
+	private static final long serialVersionUID = 1049595324;
 
-	private java.lang.Integer id;
-	private java.lang.String  name;
-	private java.lang.String  value;
+	private Integer id;
+	private String  name;
+	private String  value;
 
 	public T_785() {}
 
 	public T_785(
-		java.lang.Integer id,
-		java.lang.String  name,
-		java.lang.String  value
+		Integer id,
+		String  name,
+		String  value
 	) {
 		this.id = id;
 		this.name = name;
@@ -28,34 +32,34 @@ public class T_785 implements org.jooq.test.h2.generatedclasses.tables.interface
 	}
 
 	@Override
-	public java.lang.Integer getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public T_785 setId(java.lang.Integer id) {
+	public T_785 setId(Integer id) {
 		this.id = id;
 		return this;
 	}
 
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return this.name;
 	}
 
 	@Override
-	public T_785 setName(java.lang.String name) {
+	public T_785 setName(String name) {
 		this.name = name;
 		return this;
 	}
 
 	@Override
-	public java.lang.String getValue() {
+	public String getValue() {
 		return this.value;
 	}
 
 	@Override
-	public T_785 setValue(java.lang.String value) {
+	public T_785 setValue(String value) {
 		this.value = value;
 		return this;
 	}
@@ -68,7 +72,7 @@ public class T_785 implements org.jooq.test.h2.generatedclasses.tables.interface
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IT_785 from) {
+	public void from(IT_785 from) {
 		setId(from.getId());
 		setName(from.getName());
 		setValue(from.getValue());
@@ -78,7 +82,7 @@ public class T_785 implements org.jooq.test.h2.generatedclasses.tables.interface
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IT_785> E into(E into) {
+	public <E extends IT_785> E into(E into) {
 		into.from(this);
 		return into;
 	}

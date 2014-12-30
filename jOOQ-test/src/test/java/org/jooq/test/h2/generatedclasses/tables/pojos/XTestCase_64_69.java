@@ -3,45 +3,49 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
+
+import org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_64_69;
+
+
 /**
  * This is a POJO for table X_TEST_CASE_64_69.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class XTestCase_64_69 implements org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_64_69 {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class XTestCase_64_69 implements IXTestCase_64_69 {
 
-	private static final long serialVersionUID = 1809538171;
+	private static final long serialVersionUID = 539629255;
 
-	private java.lang.Integer id;
-	private java.lang.Integer unusedId;
+	private Integer id;
+	private Integer unusedId;
 
 	public XTestCase_64_69() {}
 
 	public XTestCase_64_69(
-		java.lang.Integer id,
-		java.lang.Integer unusedId
+		Integer id,
+		Integer unusedId
 	) {
 		this.id = id;
 		this.unusedId = unusedId;
 	}
 
 	@Override
-	public java.lang.Integer getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public XTestCase_64_69 setId(java.lang.Integer id) {
+	public XTestCase_64_69 setId(Integer id) {
 		this.id = id;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getUnusedId() {
+	public Integer getUnusedId() {
 		return this.unusedId;
 	}
 
 	@Override
-	public XTestCase_64_69 setUnusedId(java.lang.Integer unusedId) {
+	public XTestCase_64_69 setUnusedId(Integer unusedId) {
 		this.unusedId = unusedId;
 		return this;
 	}
@@ -54,7 +58,7 @@ public class XTestCase_64_69 implements org.jooq.test.h2.generatedclasses.tables
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_64_69 from) {
+	public void from(IXTestCase_64_69 from) {
 		setId(from.getId());
 		setUnusedId(from.getUnusedId());
 	}
@@ -63,7 +67,7 @@ public class XTestCase_64_69 implements org.jooq.test.h2.generatedclasses.tables
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_64_69> E into(E into) {
+	public <E extends IXTestCase_64_69> E into(E into) {
 		into.from(this);
 		return into;
 	}

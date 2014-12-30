@@ -3,45 +3,49 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
+
+import org.jooq.test.h2.generatedclasses.tables.interfaces.ITIdentityPk;
+
+
 /**
  * This is a POJO for table T_IDENTITY_PK.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TIdentityPk implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITIdentityPk {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class TIdentityPk implements ITIdentityPk {
 
-	private static final long serialVersionUID = 2015575063;
+	private static final long serialVersionUID = 53940973;
 
-	private java.lang.Integer id;
-	private java.lang.Integer val;
+	private Integer id;
+	private Integer val;
 
 	public TIdentityPk() {}
 
 	public TIdentityPk(
-		java.lang.Integer id,
-		java.lang.Integer val
+		Integer id,
+		Integer val
 	) {
 		this.id = id;
 		this.val = val;
 	}
 
 	@Override
-	public java.lang.Integer getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public TIdentityPk setId(java.lang.Integer id) {
+	public TIdentityPk setId(Integer id) {
 		this.id = id;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getVal() {
+	public Integer getVal() {
 		return this.val;
 	}
 
 	@Override
-	public TIdentityPk setVal(java.lang.Integer val) {
+	public TIdentityPk setVal(Integer val) {
 		this.val = val;
 		return this;
 	}
@@ -54,7 +58,7 @@ public class TIdentityPk implements org.jooq.test.h2.generatedclasses.tables.int
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITIdentityPk from) {
+	public void from(ITIdentityPk from) {
 		setId(from.getId());
 		setVal(from.getVal());
 	}
@@ -63,7 +67,7 @@ public class TIdentityPk implements org.jooq.test.h2.generatedclasses.tables.int
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITIdentityPk> E into(E into) {
+	public <E extends ITIdentityPk> E into(E into) {
 		into.from(this);
 		return into;
 	}

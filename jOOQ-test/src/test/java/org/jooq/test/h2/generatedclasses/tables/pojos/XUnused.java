@@ -3,50 +3,57 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
+import org.jooq.test.h2.generatedclasses.tables.interfaces.IXUnused;
+
+
 /**
  * This is a POJO for table X_UNUSED.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class XUnused implements org.jooq.test.h2.generatedclasses.tables.interfaces.IXUnused {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class XUnused implements IXUnused {
 
-	private static final long serialVersionUID = -226452209;
+	private static final long serialVersionUID = -2139631413;
 
-	private java.lang.Integer    id;
-	private java.lang.String     name;
-	private java.math.BigInteger bigInteger;
-	private java.lang.Integer    idRef;
-	private java.lang.String     nameRef;
-	private java.lang.Integer    class_;
-	private java.lang.Integer    fields;
-	private java.lang.Integer    table;
-	private java.lang.Integer    configuration;
-	private java.lang.Integer    uDT;
-	private java.lang.Integer    metaData;
-	private java.lang.Integer    values;
-	private java.lang.Integer    type0;
-	private java.lang.Integer    primaryKey;
-	private java.lang.Integer    primarykey;
-	private java.math.BigDecimal field_737;
+	private Integer    id;
+	private String     name;
+	private BigInteger bigInteger;
+	private Integer    idRef;
+	private String     nameRef;
+	private Integer    class_;
+	private Integer    fields;
+	private Integer    table;
+	private Integer    configuration;
+	private Integer    uDT;
+	private Integer    metaData;
+	private Integer    values;
+	private Integer    type0;
+	private Integer    primaryKey;
+	private Integer    primarykey;
+	private BigDecimal field_737;
 
 	public XUnused() {}
 
 	public XUnused(
-		java.lang.Integer    id,
-		java.lang.String     name,
-		java.math.BigInteger bigInteger,
-		java.lang.Integer    idRef,
-		java.lang.String     nameRef,
-		java.lang.Integer    class_,
-		java.lang.Integer    fields,
-		java.lang.Integer    table,
-		java.lang.Integer    configuration,
-		java.lang.Integer    uDT,
-		java.lang.Integer    metaData,
-		java.lang.Integer    values,
-		java.lang.Integer    type0,
-		java.lang.Integer    primaryKey,
-		java.lang.Integer    primarykey,
-		java.math.BigDecimal field_737
+		Integer    id,
+		String     name,
+		BigInteger bigInteger,
+		Integer    idRef,
+		String     nameRef,
+		Integer    class_,
+		Integer    fields,
+		Integer    table,
+		Integer    configuration,
+		Integer    uDT,
+		Integer    metaData,
+		Integer    values,
+		Integer    type0,
+		Integer    primaryKey,
+		Integer    primarykey,
+		BigDecimal field_737
 	) {
 		this.id = id;
 		this.name = name;
@@ -67,177 +74,177 @@ public class XUnused implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public java.lang.Integer getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public XUnused setId(java.lang.Integer id) {
+	public XUnused setId(Integer id) {
 		this.id = id;
 		return this;
 	}
 
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return this.name;
 	}
 
 	@Override
-	public XUnused setName(java.lang.String name) {
+	public XUnused setName(String name) {
 		this.name = name;
 		return this;
 	}
 
 	@Override
-	public java.math.BigInteger getBigInteger() {
+	public BigInteger getBigInteger() {
 		return this.bigInteger;
 	}
 
 	@Override
-	public XUnused setBigInteger(java.math.BigInteger bigInteger) {
+	public XUnused setBigInteger(BigInteger bigInteger) {
 		this.bigInteger = bigInteger;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getIdRef() {
+	public Integer getIdRef() {
 		return this.idRef;
 	}
 
 	@Override
-	public XUnused setIdRef(java.lang.Integer idRef) {
+	public XUnused setIdRef(Integer idRef) {
 		this.idRef = idRef;
 		return this;
 	}
 
 	@Override
-	public java.lang.String getNameRef() {
+	public String getNameRef() {
 		return this.nameRef;
 	}
 
 	@Override
-	public XUnused setNameRef(java.lang.String nameRef) {
+	public XUnused setNameRef(String nameRef) {
 		this.nameRef = nameRef;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getClass_() {
+	public Integer getClass_() {
 		return this.class_;
 	}
 
 	@Override
-	public XUnused setClass_(java.lang.Integer class_) {
+	public XUnused setClass_(Integer class_) {
 		this.class_ = class_;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getFields() {
+	public Integer getFields() {
 		return this.fields;
 	}
 
 	@Override
-	public XUnused setFields(java.lang.Integer fields) {
+	public XUnused setFields(Integer fields) {
 		this.fields = fields;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getTable_() {
+	public Integer getTable_() {
 		return this.table;
 	}
 
 	@Override
-	public XUnused setTable_(java.lang.Integer table) {
+	public XUnused setTable_(Integer table) {
 		this.table = table;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getConfiguration() {
+	public Integer getConfiguration() {
 		return this.configuration;
 	}
 
 	@Override
-	public XUnused setConfiguration(java.lang.Integer configuration) {
+	public XUnused setConfiguration(Integer configuration) {
 		this.configuration = configuration;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getUDT() {
+	public Integer getUDT() {
 		return this.uDT;
 	}
 
 	@Override
-	public XUnused setUDT(java.lang.Integer uDT) {
+	public XUnused setUDT(Integer uDT) {
 		this.uDT = uDT;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getMetaData() {
+	public Integer getMetaData() {
 		return this.metaData;
 	}
 
 	@Override
-	public XUnused setMetaData(java.lang.Integer metaData) {
+	public XUnused setMetaData(Integer metaData) {
 		this.metaData = metaData;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getValues() {
+	public Integer getValues() {
 		return this.values;
 	}
 
 	@Override
-	public XUnused setValues(java.lang.Integer values) {
+	public XUnused setValues(Integer values) {
 		this.values = values;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getType0() {
+	public Integer getType0() {
 		return this.type0;
 	}
 
 	@Override
-	public XUnused setType0(java.lang.Integer type0) {
+	public XUnused setType0(Integer type0) {
 		this.type0 = type0;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getPrimaryKey_() {
+	public Integer getPrimaryKey_() {
 		return this.primaryKey;
 	}
 
 	@Override
-	public XUnused setPrimaryKey_(java.lang.Integer primaryKey) {
+	public XUnused setPrimaryKey_(Integer primaryKey) {
 		this.primaryKey = primaryKey;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getPrimarykey() {
+	public Integer getPrimarykey() {
 		return this.primarykey;
 	}
 
 	@Override
-	public XUnused setPrimarykey(java.lang.Integer primarykey) {
+	public XUnused setPrimarykey(Integer primarykey) {
 		this.primarykey = primarykey;
 		return this;
 	}
 
 	@Override
-	public java.math.BigDecimal getField_737() {
+	public BigDecimal getField_737() {
 		return this.field_737;
 	}
 
 	@Override
-	public XUnused setField_737(java.math.BigDecimal field_737) {
+	public XUnused setField_737(BigDecimal field_737) {
 		this.field_737 = field_737;
 		return this;
 	}
@@ -250,7 +257,7 @@ public class XUnused implements org.jooq.test.h2.generatedclasses.tables.interfa
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IXUnused from) {
+	public void from(IXUnused from) {
 		setId(from.getId());
 		setName(from.getName());
 		setBigInteger(from.getBigInteger());
@@ -273,7 +280,7 @@ public class XUnused implements org.jooq.test.h2.generatedclasses.tables.interfa
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IXUnused> E into(E into) {
+	public <E extends IXUnused> E into(E into) {
 		into.from(this);
 		return into;
 	}

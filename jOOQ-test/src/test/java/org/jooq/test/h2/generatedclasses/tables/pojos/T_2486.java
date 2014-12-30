@@ -3,34 +3,41 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
+import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2486;
+
+
 /**
  * This is a POJO for table T_2486.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class T_2486 implements org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2486 {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class T_2486 implements IT_2486 {
 
-	private static final long serialVersionUID = 2055802023;
+	private static final long serialVersionUID = 687810528;
 
-	private java.math.BigDecimal val1;
-	private java.math.BigDecimal val2;
-	private java.math.BigDecimal val3;
-	private java.math.BigDecimal val4;
-	private java.math.BigDecimal val5;
-	private java.math.BigDecimal val6;
-	private java.math.BigInteger val7;
-	private java.math.BigInteger val8;
+	private BigDecimal val1;
+	private BigDecimal val2;
+	private BigDecimal val3;
+	private BigDecimal val4;
+	private BigDecimal val5;
+	private BigDecimal val6;
+	private BigInteger val7;
+	private BigInteger val8;
 
 	public T_2486() {}
 
 	public T_2486(
-		java.math.BigDecimal val1,
-		java.math.BigDecimal val2,
-		java.math.BigDecimal val3,
-		java.math.BigDecimal val4,
-		java.math.BigDecimal val5,
-		java.math.BigDecimal val6,
-		java.math.BigInteger val7,
-		java.math.BigInteger val8
+		BigDecimal val1,
+		BigDecimal val2,
+		BigDecimal val3,
+		BigDecimal val4,
+		BigDecimal val5,
+		BigDecimal val6,
+		BigInteger val7,
+		BigInteger val8
 	) {
 		this.val1 = val1;
 		this.val2 = val2;
@@ -43,89 +50,89 @@ public class T_2486 implements org.jooq.test.h2.generatedclasses.tables.interfac
 	}
 
 	@Override
-	public java.math.BigDecimal getVal1() {
+	public BigDecimal getVal1() {
 		return this.val1;
 	}
 
 	@Override
-	public T_2486 setVal1(java.math.BigDecimal val1) {
+	public T_2486 setVal1(BigDecimal val1) {
 		this.val1 = val1;
 		return this;
 	}
 
 	@Override
-	public java.math.BigDecimal getVal2() {
+	public BigDecimal getVal2() {
 		return this.val2;
 	}
 
 	@Override
-	public T_2486 setVal2(java.math.BigDecimal val2) {
+	public T_2486 setVal2(BigDecimal val2) {
 		this.val2 = val2;
 		return this;
 	}
 
 	@Override
-	public java.math.BigDecimal getVal3() {
+	public BigDecimal getVal3() {
 		return this.val3;
 	}
 
 	@Override
-	public T_2486 setVal3(java.math.BigDecimal val3) {
+	public T_2486 setVal3(BigDecimal val3) {
 		this.val3 = val3;
 		return this;
 	}
 
 	@Override
-	public java.math.BigDecimal getVal4() {
+	public BigDecimal getVal4() {
 		return this.val4;
 	}
 
 	@Override
-	public T_2486 setVal4(java.math.BigDecimal val4) {
+	public T_2486 setVal4(BigDecimal val4) {
 		this.val4 = val4;
 		return this;
 	}
 
 	@Override
-	public java.math.BigDecimal getVal5() {
+	public BigDecimal getVal5() {
 		return this.val5;
 	}
 
 	@Override
-	public T_2486 setVal5(java.math.BigDecimal val5) {
+	public T_2486 setVal5(BigDecimal val5) {
 		this.val5 = val5;
 		return this;
 	}
 
 	@Override
-	public java.math.BigDecimal getVal6() {
+	public BigDecimal getVal6() {
 		return this.val6;
 	}
 
 	@Override
-	public T_2486 setVal6(java.math.BigDecimal val6) {
+	public T_2486 setVal6(BigDecimal val6) {
 		this.val6 = val6;
 		return this;
 	}
 
 	@Override
-	public java.math.BigInteger getVal7() {
+	public BigInteger getVal7() {
 		return this.val7;
 	}
 
 	@Override
-	public T_2486 setVal7(java.math.BigInteger val7) {
+	public T_2486 setVal7(BigInteger val7) {
 		this.val7 = val7;
 		return this;
 	}
 
 	@Override
-	public java.math.BigInteger getVal8() {
+	public BigInteger getVal8() {
 		return this.val8;
 	}
 
 	@Override
-	public T_2486 setVal8(java.math.BigInteger val8) {
+	public T_2486 setVal8(BigInteger val8) {
 		this.val8 = val8;
 		return this;
 	}
@@ -138,7 +145,7 @@ public class T_2486 implements org.jooq.test.h2.generatedclasses.tables.interfac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2486 from) {
+	public void from(IT_2486 from) {
 		setVal1(from.getVal1());
 		setVal2(from.getVal2());
 		setVal3(from.getVal3());
@@ -153,7 +160,7 @@ public class T_2486 implements org.jooq.test.h2.generatedclasses.tables.interfac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2486> E into(E into) {
+	public <E extends IT_2486> E into(E into) {
 		into.from(this);
 		return into;
 	}

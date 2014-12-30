@@ -3,21 +3,25 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.interfaces;
 
+
+import java.io.Serializable;
+
+
 /**
  * A book store
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public interface ITBookStore extends java.io.Serializable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public interface ITBookStore extends Serializable {
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK_STORE.NAME</code>. The books store name
 	 */
-	public ITBookStore setName(java.lang.String value);
+	public ITBookStore setName(String value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOK_STORE.NAME</code>. The books store name
 	 */
-	public java.lang.String getName();
+	public String getName();
 
 	// -------------------------------------------------------------------------
 	// FROM and INTO

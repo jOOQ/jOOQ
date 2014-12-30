@@ -3,45 +3,49 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
+
+import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_3485;
+
+
 /**
  * This is a POJO for table T_3485.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class T_3485 implements org.jooq.test.h2.generatedclasses.tables.interfaces.IT_3485 {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class T_3485 implements IT_3485 {
 
-	private static final long serialVersionUID = -1533130095;
+	private static final long serialVersionUID = -624868085;
 
-	private java.lang.Integer id;
-	private java.lang.String  pw;
+	private Integer id;
+	private String  pw;
 
 	public T_3485() {}
 
 	public T_3485(
-		java.lang.Integer id,
-		java.lang.String  pw
+		Integer id,
+		String  pw
 	) {
 		this.id = id;
 		this.pw = pw;
 	}
 
 	@Override
-	public java.lang.Integer getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public T_3485 setId(java.lang.Integer id) {
+	public T_3485 setId(Integer id) {
 		this.id = id;
 		return this;
 	}
 
 	@Override
-	public java.lang.String getPw() {
+	public String getPw() {
 		return this.pw;
 	}
 
 	@Override
-	public T_3485 setPw(java.lang.String pw) {
+	public T_3485 setPw(String pw) {
 		this.pw = pw;
 		return this;
 	}
@@ -54,7 +58,7 @@ public class T_3485 implements org.jooq.test.h2.generatedclasses.tables.interfac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IT_3485 from) {
+	public void from(IT_3485 from) {
 		setId(from.getId());
 		setPw(from.getPw());
 	}
@@ -63,7 +67,7 @@ public class T_3485 implements org.jooq.test.h2.generatedclasses.tables.interfac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IT_3485> E into(E into) {
+	public <E extends IT_3485> E into(E into) {
 		into.from(this);
 		return into;
 	}

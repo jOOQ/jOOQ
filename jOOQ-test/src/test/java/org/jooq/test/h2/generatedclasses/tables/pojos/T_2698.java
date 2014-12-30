@@ -3,24 +3,28 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
+
+import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2698;
+
+
 /**
  * This is a POJO for table T_2698.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class T_2698 implements org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2698 {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class T_2698 implements IT_2698 {
 
-	private static final long serialVersionUID = -660421362;
+	private static final long serialVersionUID = 396757595;
 
-	private java.lang.Integer id;
-	private java.lang.Integer xx;
-	private java.lang.Integer yy;
+	private Integer id;
+	private Integer xx;
+	private Integer yy;
 
 	public T_2698() {}
 
 	public T_2698(
-		java.lang.Integer id,
-		java.lang.Integer xx,
-		java.lang.Integer yy
+		Integer id,
+		Integer xx,
+		Integer yy
 	) {
 		this.id = id;
 		this.xx = xx;
@@ -28,34 +32,34 @@ public class T_2698 implements org.jooq.test.h2.generatedclasses.tables.interfac
 	}
 
 	@Override
-	public java.lang.Integer getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public T_2698 setId(java.lang.Integer id) {
+	public T_2698 setId(Integer id) {
 		this.id = id;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getXx() {
+	public Integer getXx() {
 		return this.xx;
 	}
 
 	@Override
-	public T_2698 setXx(java.lang.Integer xx) {
+	public T_2698 setXx(Integer xx) {
 		this.xx = xx;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getYy() {
+	public Integer getYy() {
 		return this.yy;
 	}
 
 	@Override
-	public T_2698 setYy(java.lang.Integer yy) {
+	public T_2698 setYy(Integer yy) {
 		this.yy = yy;
 		return this;
 	}
@@ -68,7 +72,7 @@ public class T_2698 implements org.jooq.test.h2.generatedclasses.tables.interfac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2698 from) {
+	public void from(IT_2698 from) {
 		setId(from.getId());
 		setXx(from.getXx());
 		setYy(from.getYy());
@@ -78,7 +82,7 @@ public class T_2698 implements org.jooq.test.h2.generatedclasses.tables.interfac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2698> E into(E into) {
+	public <E extends IT_2698> E into(E into) {
 		into.from(this);
 		return into;
 	}

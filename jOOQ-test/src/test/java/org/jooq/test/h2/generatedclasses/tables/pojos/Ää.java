@@ -3,31 +3,35 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
+
+import org.jooq.test.h2.generatedclasses.tables.interfaces.IÄä;
+
+
 /**
  * This is a POJO for table Ää.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class Ää implements org.jooq.test.h2.generatedclasses.tables.interfaces.IÄä {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class Ää implements IÄä {
 
-	private static final long serialVersionUID = -510508772;
+	private static final long serialVersionUID = -705028557;
 
-	private java.lang.Integer öö;
+	private Integer öö;
 
 	public Ää() {}
 
 	public Ää(
-		java.lang.Integer öö
+		Integer öö
 	) {
 		this.öö = öö;
 	}
 
 	@Override
-	public java.lang.Integer getÖö() {
+	public Integer getÖö() {
 		return this.öö;
 	}
 
 	@Override
-	public Ää setÖö(java.lang.Integer öö) {
+	public Ää setÖö(Integer öö) {
 		this.öö = öö;
 		return this;
 	}
@@ -40,7 +44,7 @@ public class Ää implements org.jooq.test.h2.generatedclasses.tables.interfaces
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IÄä from) {
+	public void from(IÄä from) {
 		setÖö(from.getÖö());
 	}
 
@@ -48,7 +52,7 @@ public class Ää implements org.jooq.test.h2.generatedclasses.tables.interfaces
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IÄä> E into(E into) {
+	public <E extends IÄä> E into(E into) {
 		into.from(this);
 		return into;
 	}

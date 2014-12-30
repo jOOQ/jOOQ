@@ -3,45 +3,49 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
+
+import org.jooq.test.h2.generatedclasses.tables.interfaces.IV_2603;
+
+
 /**
  * This is a POJO for table V_2603.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class V_2603 implements org.jooq.test.h2.generatedclasses.tables.interfaces.IV_2603 {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class V_2603 implements IV_2603 {
 
-	private static final long serialVersionUID = 1178629408;
+	private static final long serialVersionUID = -1873248039;
 
-	private java.lang.Integer col1;
-	private java.lang.Integer col4;
+	private Integer col1;
+	private Integer col4;
 
 	public V_2603() {}
 
 	public V_2603(
-		java.lang.Integer col1,
-		java.lang.Integer col4
+		Integer col1,
+		Integer col4
 	) {
 		this.col1 = col1;
 		this.col4 = col4;
 	}
 
 	@Override
-	public java.lang.Integer getCol1() {
+	public Integer getCol1() {
 		return this.col1;
 	}
 
 	@Override
-	public V_2603 setCol1(java.lang.Integer col1) {
+	public V_2603 setCol1(Integer col1) {
 		this.col1 = col1;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getCol4() {
+	public Integer getCol4() {
 		return this.col4;
 	}
 
 	@Override
-	public V_2603 setCol4(java.lang.Integer col4) {
+	public V_2603 setCol4(Integer col4) {
 		this.col4 = col4;
 		return this;
 	}
@@ -54,7 +58,7 @@ public class V_2603 implements org.jooq.test.h2.generatedclasses.tables.interfac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IV_2603 from) {
+	public void from(IV_2603 from) {
 		setCol1(from.getCol1());
 		setCol4(from.getCol4());
 	}
@@ -63,7 +67,7 @@ public class V_2603 implements org.jooq.test.h2.generatedclasses.tables.interfac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IV_2603> E into(E into) {
+	public <E extends IV_2603> E into(E into) {
 		into.from(this);
 		return into;
 	}

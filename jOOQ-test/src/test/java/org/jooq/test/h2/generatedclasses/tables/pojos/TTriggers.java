@@ -3,24 +3,28 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
+
+import org.jooq.test.h2.generatedclasses.tables.interfaces.ITTriggers;
+
+
 /**
  * This is a POJO for table T_TRIGGERS.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TTriggers implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITTriggers {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class TTriggers implements ITTriggers {
 
-	private static final long serialVersionUID = 1770300003;
+	private static final long serialVersionUID = -1899515233;
 
-	private java.lang.Integer idGenerated;
-	private java.lang.Integer id;
-	private java.lang.Integer counter;
+	private Integer idGenerated;
+	private Integer id;
+	private Integer counter;
 
 	public TTriggers() {}
 
 	public TTriggers(
-		java.lang.Integer idGenerated,
-		java.lang.Integer id,
-		java.lang.Integer counter
+		Integer idGenerated,
+		Integer id,
+		Integer counter
 	) {
 		this.idGenerated = idGenerated;
 		this.id = id;
@@ -28,34 +32,34 @@ public class TTriggers implements org.jooq.test.h2.generatedclasses.tables.inter
 	}
 
 	@Override
-	public java.lang.Integer getIdGenerated() {
+	public Integer getIdGenerated() {
 		return this.idGenerated;
 	}
 
 	@Override
-	public TTriggers setIdGenerated(java.lang.Integer idGenerated) {
+	public TTriggers setIdGenerated(Integer idGenerated) {
 		this.idGenerated = idGenerated;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public TTriggers setId(java.lang.Integer id) {
+	public TTriggers setId(Integer id) {
 		this.id = id;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getCounter() {
+	public Integer getCounter() {
 		return this.counter;
 	}
 
 	@Override
-	public TTriggers setCounter(java.lang.Integer counter) {
+	public TTriggers setCounter(Integer counter) {
 		this.counter = counter;
 		return this;
 	}
@@ -68,7 +72,7 @@ public class TTriggers implements org.jooq.test.h2.generatedclasses.tables.inter
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITTriggers from) {
+	public void from(ITTriggers from) {
 		setIdGenerated(from.getIdGenerated());
 		setId(from.getId());
 		setCounter(from.getCounter());
@@ -78,7 +82,7 @@ public class TTriggers implements org.jooq.test.h2.generatedclasses.tables.inter
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITTriggers> E into(E into) {
+	public <E extends ITTriggers> E into(E into) {
 		into.from(this);
 		return into;
 	}

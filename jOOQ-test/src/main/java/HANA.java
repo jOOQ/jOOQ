@@ -47,7 +47,6 @@ import org.jooq.test.hana.generatedclasses.Routines;
  */
 
 public class HANA {
-
     public static void main(String[] args) {
         try {
             Class.forName("com.sap.db.jdbc.Driver");

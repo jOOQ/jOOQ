@@ -3,81 +3,97 @@
  */
 package org.jooq.test.h2.generatedclasses.tables;
 
+
+import java.sql.Timestamp;
+import java.util.Arrays;
+import java.util.List;
+
+import org.jooq.Field;
+import org.jooq.ForeignKey;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.UniqueKey;
+import org.jooq.impl.TableImpl;
+import org.jooq.test.h2.generatedclasses.Keys;
+import org.jooq.test.h2.generatedclasses.Public;
+import org.jooq.test.h2.generatedclasses.tables.records.TBookRecord;
+
+
 /**
  * An entity holding books
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class TBook extends TableImpl<TBookRecord> {
 
-	private static final long serialVersionUID = 202310305;
+	private static final long serialVersionUID = 2046908121;
 
 	/**
 	 * The reference instance of <code>PUBLIC.T_BOOK</code>
 	 */
-	public static final org.jooq.test.h2.generatedclasses.tables.TBook T_BOOK = new org.jooq.test.h2.generatedclasses.tables.TBook();
+	public static final TBook T_BOOK = new TBook();
 
 	/**
 	 * The class holding records for this type
 	 */
 	@Override
-	public java.lang.Class<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> getRecordType() {
-		return org.jooq.test.h2.generatedclasses.tables.records.TBookRecord.class;
+	public Class<TBookRecord> getRecordType() {
+		return TBookRecord.class;
 	}
 
 	/**
 	 * The column <code>PUBLIC.T_BOOK.ID</code>. The book ID
 	 */
-	public final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "The book ID");
+	public final TableField<TBookRecord, Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "The book ID");
 
 	/**
 	 * The column <code>PUBLIC.T_BOOK.AUTHOR_ID</code>. The author ID in entity 'author'
 	 */
-	public final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "The author ID in entity 'author'");
+	public final TableField<TBookRecord, Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "The author ID in entity 'author'");
 
 	/**
 	 * The column <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("CO_AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final TableField<TBookRecord, Integer> CO_AUTHOR_ID = createField("CO_AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>PUBLIC.T_BOOK.DETAILS_ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, java.lang.Integer> DETAILS_ID = createField("DETAILS_ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final TableField<TBookRecord, Integer> DETAILS_ID = createField("DETAILS_ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>PUBLIC.T_BOOK.TITLE</code>. The book's title
 	 */
-	public final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "The book's title");
+	public final TableField<TBookRecord, String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "The book's title");
 
 	/**
 	 * The column <code>PUBLIC.T_BOOK.PUBLISHED_IN</code>. The year the book was published in
 	 */
-	public final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, java.lang.Integer> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "The year the book was published in");
+	public final TableField<TBookRecord, Integer> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "The year the book was published in");
 
 	/**
 	 * The column <code>PUBLIC.T_BOOK.LANGUAGE_ID</code>. The language of the book
 	 */
-	public final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "The language of the book");
+	public final TableField<TBookRecord, Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "The language of the book");
 
 	/**
 	 * The column <code>PUBLIC.T_BOOK.CONTENT_TEXT</code>. Some textual content of the book
 	 */
-	public final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.CLOB.length(2147483647), this, "Some textual content of the book");
+	public final TableField<TBookRecord, String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.CLOB.length(2147483647), this, "Some textual content of the book");
 
 	/**
 	 * The column <code>PUBLIC.T_BOOK.CONTENT_PDF</code>. Some binary content of the book
 	 */
-	public final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB.length(2147483647), this, "Some binary content of the book");
+	public final TableField<TBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB.length(2147483647), this, "Some binary content of the book");
 
 	/**
 	 * The column <code>PUBLIC.T_BOOK.REC_VERSION</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, java.lang.Integer> REC_VERSION = createField("REC_VERSION", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final TableField<TBookRecord, Integer> REC_VERSION = createField("REC_VERSION", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, java.sql.Timestamp> REC_TIMESTAMP = createField("REC_TIMESTAMP", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
+	public final TableField<TBookRecord, Timestamp> REC_TIMESTAMP = createField("REC_TIMESTAMP", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
 	/**
 	 * Create a <code>PUBLIC.T_BOOK</code> table reference
@@ -89,70 +105,70 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedcla
 	/**
 	 * Create an aliased <code>PUBLIC.T_BOOK</code> table reference
 	 */
-	public TBook(java.lang.String alias) {
-		this(alias, org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK);
+	public TBook(String alias) {
+		this(alias, T_BOOK);
 	}
 
-	private TBook(java.lang.String alias, org.jooq.Table<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> aliased) {
+	private TBook(String alias, Table<TBookRecord> aliased) {
 		this(alias, aliased, null);
 	}
 
-	private TBook(java.lang.String alias, org.jooq.Table<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> aliased, org.jooq.Field<?>[] parameters) {
-		super(alias, org.jooq.test.h2.generatedclasses.Public.PUBLIC, aliased, parameters, "An entity holding books");
+	private TBook(String alias, Table<TBookRecord> aliased, Field<?>[] parameters) {
+		super(alias, Public.PUBLIC, aliased, parameters, "An entity holding books");
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> getPrimaryKey() {
-		return org.jooq.test.h2.generatedclasses.Keys.PK_T_BOOK;
+	public UniqueKey<TBookRecord> getPrimaryKey() {
+		return Keys.PK_T_BOOK;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.util.List<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord>>asList(org.jooq.test.h2.generatedclasses.Keys.PK_T_BOOK);
+	public List<UniqueKey<TBookRecord>> getKeys() {
+		return Arrays.<UniqueKey<TBookRecord>>asList(Keys.PK_T_BOOK);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.util.List<org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, ?>>asList(org.jooq.test.h2.generatedclasses.Keys.FK_T_BOOK_AUTHOR_ID, org.jooq.test.h2.generatedclasses.Keys.FK_T_BOOK_CO_AUTHOR_ID, org.jooq.test.h2.generatedclasses.Keys.FK_T_BOOK_LANGUAGE_ID);
+	public List<ForeignKey<TBookRecord, ?>> getReferences() {
+		return Arrays.<ForeignKey<TBookRecord, ?>>asList(Keys.FK_T_BOOK_AUTHOR_ID, Keys.FK_T_BOOK_CO_AUTHOR_ID, Keys.FK_T_BOOK_LANGUAGE_ID);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, java.lang.Integer> getRecordVersion() {
-		return org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK.REC_VERSION;
+	public TableField<TBookRecord, Integer> getRecordVersion() {
+		return REC_VERSION;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, java.sql.Timestamp> getRecordTimestamp() {
-		return org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK.REC_TIMESTAMP;
+	public TableField<TBookRecord, Timestamp> getRecordTimestamp() {
+		return REC_TIMESTAMP;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.test.h2.generatedclasses.tables.TBook as(java.lang.String alias) {
-		return new org.jooq.test.h2.generatedclasses.tables.TBook(alias, this);
+	public TBook as(String alias) {
+		return new TBook(alias, this);
 	}
 
 	/**
 	 * Rename this table
 	 */
-	public org.jooq.test.h2.generatedclasses.tables.TBook rename(java.lang.String name) {
-		return new org.jooq.test.h2.generatedclasses.tables.TBook(name, null);
+	public TBook rename(String name) {
+		return new TBook(name, null);
 	}
 }

@@ -3,31 +3,35 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
+
+import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_877;
+
+
 /**
  * This is a POJO for table T_877.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class T_877 implements org.jooq.test.h2.generatedclasses.tables.interfaces.IT_877 {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class T_877 implements IT_877 {
 
-	private static final long serialVersionUID = -1511465690;
+	private static final long serialVersionUID = -1653263810;
 
-	private java.lang.Integer id;
+	private Integer id;
 
 	public T_877() {}
 
 	public T_877(
-		java.lang.Integer id
+		Integer id
 	) {
 		this.id = id;
 	}
 
 	@Override
-	public java.lang.Integer getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public T_877 setId(java.lang.Integer id) {
+	public T_877 setId(Integer id) {
 		this.id = id;
 		return this;
 	}
@@ -40,7 +44,7 @@ public class T_877 implements org.jooq.test.h2.generatedclasses.tables.interface
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IT_877 from) {
+	public void from(IT_877 from) {
 		setId(from.getId());
 	}
 
@@ -48,7 +52,7 @@ public class T_877 implements org.jooq.test.h2.generatedclasses.tables.interface
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IT_877> E into(E into) {
+	public <E extends IT_877> E into(E into) {
 		into.from(this);
 		return into;
 	}

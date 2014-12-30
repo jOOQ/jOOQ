@@ -3,45 +3,49 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
+
+import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2718;
+
+
 /**
  * This is a POJO for table T_2718.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class T_2718 implements org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2718 {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class T_2718 implements IT_2718 {
 
-	private static final long serialVersionUID = 888869633;
+	private static final long serialVersionUID = -1034465095;
 
-	private java.lang.Integer excludeMe;
-	private java.lang.Integer xx;
+	private Integer excludeMe;
+	private Integer xx;
 
 	public T_2718() {}
 
 	public T_2718(
-		java.lang.Integer excludeMe,
-		java.lang.Integer xx
+		Integer excludeMe,
+		Integer xx
 	) {
 		this.excludeMe = excludeMe;
 		this.xx = xx;
 	}
 
 	@Override
-	public java.lang.Integer getExcludeMe() {
+	public Integer getExcludeMe() {
 		return this.excludeMe;
 	}
 
 	@Override
-	public T_2718 setExcludeMe(java.lang.Integer excludeMe) {
+	public T_2718 setExcludeMe(Integer excludeMe) {
 		this.excludeMe = excludeMe;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getXx() {
+	public Integer getXx() {
 		return this.xx;
 	}
 
 	@Override
-	public T_2718 setXx(java.lang.Integer xx) {
+	public T_2718 setXx(Integer xx) {
 		this.xx = xx;
 		return this;
 	}
@@ -54,7 +58,7 @@ public class T_2718 implements org.jooq.test.h2.generatedclasses.tables.interfac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2718 from) {
+	public void from(IT_2718 from) {
 		setExcludeMe(from.getExcludeMe());
 		setXx(from.getXx());
 	}
@@ -63,7 +67,7 @@ public class T_2718 implements org.jooq.test.h2.generatedclasses.tables.interfac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2718> E into(E into) {
+	public <E extends IT_2718> E into(E into) {
 		into.from(this);
 		return into;
 	}

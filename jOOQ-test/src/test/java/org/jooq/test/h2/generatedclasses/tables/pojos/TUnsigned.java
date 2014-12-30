@@ -3,26 +3,34 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
+
+import org.jooq.test.h2.generatedclasses.tables.interfaces.ITUnsigned;
+import org.jooq.types.UByte;
+import org.jooq.types.UInteger;
+import org.jooq.types.ULong;
+import org.jooq.types.UShort;
+
+
 /**
  * This is a POJO for table T_UNSIGNED.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TUnsigned implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITUnsigned {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class TUnsigned implements ITUnsigned {
 
-	private static final long serialVersionUID = 1786912658;
+	private static final long serialVersionUID = -904151606;
 
-	private org.jooq.types.UByte    uByte;
-	private org.jooq.types.UShort   uShort;
-	private org.jooq.types.UInteger uInt;
-	private org.jooq.types.ULong    uLong;
+	private UByte    uByte;
+	private UShort   uShort;
+	private UInteger uInt;
+	private ULong    uLong;
 
 	public TUnsigned() {}
 
 	public TUnsigned(
-		org.jooq.types.UByte    uByte,
-		org.jooq.types.UShort   uShort,
-		org.jooq.types.UInteger uInt,
-		org.jooq.types.ULong    uLong
+		UByte    uByte,
+		UShort   uShort,
+		UInteger uInt,
+		ULong    uLong
 	) {
 		this.uByte = uByte;
 		this.uShort = uShort;
@@ -31,45 +39,45 @@ public class TUnsigned implements org.jooq.test.h2.generatedclasses.tables.inter
 	}
 
 	@Override
-	public org.jooq.types.UByte getUByte() {
+	public UByte getUByte() {
 		return this.uByte;
 	}
 
 	@Override
-	public TUnsigned setUByte(org.jooq.types.UByte uByte) {
+	public TUnsigned setUByte(UByte uByte) {
 		this.uByte = uByte;
 		return this;
 	}
 
 	@Override
-	public org.jooq.types.UShort getUShort() {
+	public UShort getUShort() {
 		return this.uShort;
 	}
 
 	@Override
-	public TUnsigned setUShort(org.jooq.types.UShort uShort) {
+	public TUnsigned setUShort(UShort uShort) {
 		this.uShort = uShort;
 		return this;
 	}
 
 	@Override
-	public org.jooq.types.UInteger getUInt() {
+	public UInteger getUInt() {
 		return this.uInt;
 	}
 
 	@Override
-	public TUnsigned setUInt(org.jooq.types.UInteger uInt) {
+	public TUnsigned setUInt(UInteger uInt) {
 		this.uInt = uInt;
 		return this;
 	}
 
 	@Override
-	public org.jooq.types.ULong getULong() {
+	public ULong getULong() {
 		return this.uLong;
 	}
 
 	@Override
-	public TUnsigned setULong(org.jooq.types.ULong uLong) {
+	public TUnsigned setULong(ULong uLong) {
 		this.uLong = uLong;
 		return this;
 	}
@@ -82,7 +90,7 @@ public class TUnsigned implements org.jooq.test.h2.generatedclasses.tables.inter
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITUnsigned from) {
+	public void from(ITUnsigned from) {
 		setUByte(from.getUByte());
 		setUShort(from.getUShort());
 		setUInt(from.getUInt());
@@ -93,7 +101,7 @@ public class TUnsigned implements org.jooq.test.h2.generatedclasses.tables.inter
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITUnsigned> E into(E into) {
+	public <E extends ITUnsigned> E into(E into) {
 		into.from(this);
 		return into;
 	}

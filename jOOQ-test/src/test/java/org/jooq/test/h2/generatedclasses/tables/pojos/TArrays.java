@@ -3,26 +3,30 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
+
+import org.jooq.test.h2.generatedclasses.tables.interfaces.ITArrays;
+
+
 /**
  * This is a POJO for table T_ARRAYS.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TArrays implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITArrays {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class TArrays implements ITArrays {
 
-	private static final long serialVersionUID = 40730235;
+	private static final long serialVersionUID = 649908116;
 
-	private java.lang.Integer  id;
-	private java.lang.Object[] stringArray;
-	private java.lang.Object[] numberArray;
-	private java.lang.Object[] dateArray;
+	private Integer  id;
+	private Object[] stringArray;
+	private Object[] numberArray;
+	private Object[] dateArray;
 
 	public TArrays() {}
 
 	public TArrays(
-		java.lang.Integer  id,
-		java.lang.Object[] stringArray,
-		java.lang.Object[] numberArray,
-		java.lang.Object[] dateArray
+		Integer  id,
+		Object[] stringArray,
+		Object[] numberArray,
+		Object[] dateArray
 	) {
 		this.id = id;
 		this.stringArray = stringArray;
@@ -31,45 +35,45 @@ public class TArrays implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public java.lang.Integer getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public TArrays setId(java.lang.Integer id) {
+	public TArrays setId(Integer id) {
 		this.id = id;
 		return this;
 	}
 
 	@Override
-	public java.lang.Object[] getStringArray() {
+	public Object[] getStringArray() {
 		return this.stringArray;
 	}
 
 	@Override
-	public TArrays setStringArray(java.lang.Object[] stringArray) {
+	public TArrays setStringArray(Object[] stringArray) {
 		this.stringArray = stringArray;
 		return this;
 	}
 
 	@Override
-	public java.lang.Object[] getNumberArray() {
+	public Object[] getNumberArray() {
 		return this.numberArray;
 	}
 
 	@Override
-	public TArrays setNumberArray(java.lang.Object[] numberArray) {
+	public TArrays setNumberArray(Object[] numberArray) {
 		this.numberArray = numberArray;
 		return this;
 	}
 
 	@Override
-	public java.lang.Object[] getDateArray() {
+	public Object[] getDateArray() {
 		return this.dateArray;
 	}
 
 	@Override
-	public TArrays setDateArray(java.lang.Object[] dateArray) {
+	public TArrays setDateArray(Object[] dateArray) {
 		this.dateArray = dateArray;
 		return this;
 	}
@@ -82,7 +86,7 @@ public class TArrays implements org.jooq.test.h2.generatedclasses.tables.interfa
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITArrays from) {
+	public void from(ITArrays from) {
 		setId(from.getId());
 		setStringArray(from.getStringArray());
 		setNumberArray(from.getNumberArray());
@@ -93,7 +97,7 @@ public class TArrays implements org.jooq.test.h2.generatedclasses.tables.interfa
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITArrays> E into(E into) {
+	public <E extends ITArrays> E into(E into) {
 		into.from(this);
 		return into;
 	}

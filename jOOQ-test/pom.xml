@@ -3080,6 +3080,7 @@
                                             <interfaces>true</interfaces>
                                             <jpaAnnotations>false</jpaAnnotations>
                                             <fluentSetters>true</fluentSetters>
+                                            <fullyQualifiedTypes>.*AUTHOR.*</fullyQualifiedTypes>
                                         </generate>
                                         <target>
                                             <packageName>org.jooq.test.postgres.generatedclasses</packageName>
@@ -5221,6 +5222,7 @@
                                              -->
                                             <interfaces>true</interfaces>
                                             <jpaAnnotations>true</jpaAnnotations>
+                                            <fullyQualifiedTypes>.*</fullyQualifiedTypes>
                                         </generate>
                                         <target>
                                             <packageName>org.jooq.test.oracle3.generatedclasses</packageName>
@@ -5317,6 +5319,7 @@
                                             <generatedAnnotation>false</generatedAnnotation>
                                             <pojos>false</pojos>
                                             <jpaAnnotations>false</jpaAnnotations>
+                                            <fullyQualifiedTypes>.*</fullyQualifiedTypes>
                                         </generate>
                                         <target>
                                             <packageName>org.jooq.test.oracle2.generatedclasses</packageName>

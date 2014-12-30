@@ -3,34 +3,38 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
+
+import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_725LobTest;
+
+
 /**
  * This is a POJO for table T_725_LOB_TEST.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class T_725LobTest implements org.jooq.test.h2.generatedclasses.tables.interfaces.IT_725LobTest {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class T_725LobTest implements IT_725LobTest {
 
-	private static final long serialVersionUID = 1189181472;
+	private static final long serialVersionUID = 540551107;
 
-	private java.lang.Integer id;
-	private byte[]            lob;
+	private Integer id;
+	private byte[]  lob;
 
 	public T_725LobTest() {}
 
 	public T_725LobTest(
-		java.lang.Integer id,
-		byte[]            lob
+		Integer id,
+		byte[]  lob
 	) {
 		this.id = id;
 		this.lob = lob;
 	}
 
 	@Override
-	public java.lang.Integer getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public T_725LobTest setId(java.lang.Integer id) {
+	public T_725LobTest setId(Integer id) {
 		this.id = id;
 		return this;
 	}
@@ -54,7 +58,7 @@ public class T_725LobTest implements org.jooq.test.h2.generatedclasses.tables.in
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IT_725LobTest from) {
+	public void from(IT_725LobTest from) {
 		setId(from.getId());
 		setLob(from.getLob());
 	}
@@ -63,7 +67,7 @@ public class T_725LobTest implements org.jooq.test.h2.generatedclasses.tables.in
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IT_725LobTest> E into(E into) {
+	public <E extends IT_725LobTest> E into(E into) {
 		into.from(this);
 		return into;
 	}

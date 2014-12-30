@@ -3,40 +3,46 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
+
+import java.sql.Timestamp;
+
+import org.jooq.test.h2.generatedclasses.tables.interfaces.IVBook;
+
+
 /**
  * This is a POJO for table V_BOOK.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class VBook implements org.jooq.test.h2.generatedclasses.tables.interfaces.IVBook {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class VBook implements IVBook {
 
-	private static final long serialVersionUID = -32739249;
+	private static final long serialVersionUID = 1742954807;
 
-	private java.lang.Integer  id;
-	private java.lang.Integer  authorId;
-	private java.lang.Integer  coAuthorId;
-	private java.lang.Integer  detailsId;
-	private java.lang.String   title;
-	private java.lang.Integer  publishedIn;
-	private java.lang.Integer  languageId;
-	private java.lang.String   contentText;
-	private byte[]             contentPdf;
-	private java.lang.Integer  recVersion;
-	private java.sql.Timestamp recTimestamp;
+	private Integer   id;
+	private Integer   authorId;
+	private Integer   coAuthorId;
+	private Integer   detailsId;
+	private String    title;
+	private Integer   publishedIn;
+	private Integer   languageId;
+	private String    contentText;
+	private byte[]    contentPdf;
+	private Integer   recVersion;
+	private Timestamp recTimestamp;
 
 	public VBook() {}
 
 	public VBook(
-		java.lang.Integer  id,
-		java.lang.Integer  authorId,
-		java.lang.Integer  coAuthorId,
-		java.lang.Integer  detailsId,
-		java.lang.String   title,
-		java.lang.Integer  publishedIn,
-		java.lang.Integer  languageId,
-		java.lang.String   contentText,
-		byte[]             contentPdf,
-		java.lang.Integer  recVersion,
-		java.sql.Timestamp recTimestamp
+		Integer   id,
+		Integer   authorId,
+		Integer   coAuthorId,
+		Integer   detailsId,
+		String    title,
+		Integer   publishedIn,
+		Integer   languageId,
+		String    contentText,
+		byte[]    contentPdf,
+		Integer   recVersion,
+		Timestamp recTimestamp
 	) {
 		this.id = id;
 		this.authorId = authorId;
@@ -52,89 +58,89 @@ public class VBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	}
 
 	@Override
-	public java.lang.Integer getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public VBook setId(java.lang.Integer id) {
+	public VBook setId(Integer id) {
 		this.id = id;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getAuthorId() {
+	public Integer getAuthorId() {
 		return this.authorId;
 	}
 
 	@Override
-	public VBook setAuthorId(java.lang.Integer authorId) {
+	public VBook setAuthorId(Integer authorId) {
 		this.authorId = authorId;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getCoAuthorId() {
+	public Integer getCoAuthorId() {
 		return this.coAuthorId;
 	}
 
 	@Override
-	public VBook setCoAuthorId(java.lang.Integer coAuthorId) {
+	public VBook setCoAuthorId(Integer coAuthorId) {
 		this.coAuthorId = coAuthorId;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getDetailsId() {
+	public Integer getDetailsId() {
 		return this.detailsId;
 	}
 
 	@Override
-	public VBook setDetailsId(java.lang.Integer detailsId) {
+	public VBook setDetailsId(Integer detailsId) {
 		this.detailsId = detailsId;
 		return this;
 	}
 
 	@Override
-	public java.lang.String getTitle() {
+	public String getTitle() {
 		return this.title;
 	}
 
 	@Override
-	public VBook setTitle(java.lang.String title) {
+	public VBook setTitle(String title) {
 		this.title = title;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getPublishedIn() {
+	public Integer getPublishedIn() {
 		return this.publishedIn;
 	}
 
 	@Override
-	public VBook setPublishedIn(java.lang.Integer publishedIn) {
+	public VBook setPublishedIn(Integer publishedIn) {
 		this.publishedIn = publishedIn;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getLanguageId() {
+	public Integer getLanguageId() {
 		return this.languageId;
 	}
 
 	@Override
-	public VBook setLanguageId(java.lang.Integer languageId) {
+	public VBook setLanguageId(Integer languageId) {
 		this.languageId = languageId;
 		return this;
 	}
 
 	@Override
-	public java.lang.String getContentText() {
+	public String getContentText() {
 		return this.contentText;
 	}
 
 	@Override
-	public VBook setContentText(java.lang.String contentText) {
+	public VBook setContentText(String contentText) {
 		this.contentText = contentText;
 		return this;
 	}
@@ -151,23 +157,23 @@ public class VBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	}
 
 	@Override
-	public java.lang.Integer getRecVersion() {
+	public Integer getRecVersion() {
 		return this.recVersion;
 	}
 
 	@Override
-	public VBook setRecVersion(java.lang.Integer recVersion) {
+	public VBook setRecVersion(Integer recVersion) {
 		this.recVersion = recVersion;
 		return this;
 	}
 
 	@Override
-	public java.sql.Timestamp getRecTimestamp() {
+	public Timestamp getRecTimestamp() {
 		return this.recTimestamp;
 	}
 
 	@Override
-	public VBook setRecTimestamp(java.sql.Timestamp recTimestamp) {
+	public VBook setRecTimestamp(Timestamp recTimestamp) {
 		this.recTimestamp = recTimestamp;
 		return this;
 	}
@@ -180,7 +186,7 @@ public class VBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IVBook from) {
+	public void from(IVBook from) {
 		setId(from.getId());
 		setAuthorId(from.getAuthorId());
 		setCoAuthorId(from.getCoAuthorId());
@@ -198,7 +204,7 @@ public class VBook implements org.jooq.test.h2.generatedclasses.tables.interface
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IVBook> E into(E into) {
+	public <E extends IVBook> E into(E into) {
 		into.from(this);
 		return into;
 	}

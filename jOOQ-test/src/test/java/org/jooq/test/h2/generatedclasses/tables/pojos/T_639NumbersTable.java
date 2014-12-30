@@ -3,44 +3,51 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
+import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_639NumbersTable;
+
+
 /**
  * This is a POJO for table T_639_NUMBERS_TABLE.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class T_639NumbersTable implements org.jooq.test.h2.generatedclasses.tables.interfaces.IT_639NumbersTable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class T_639NumbersTable implements IT_639NumbersTable {
 
-	private static final long serialVersionUID = 1288586302;
+	private static final long serialVersionUID = -772978187;
 
-	private java.lang.Integer    id;
-	private java.lang.Byte       byte_;
-	private java.lang.Short      short_;
-	private java.lang.Integer    integer;
-	private java.lang.Long       long_;
-	private java.lang.Byte       byteDecimal;
-	private java.lang.Short      shortDecimal;
-	private java.lang.Integer    integerDecimal;
-	private java.lang.Long       longDecimal;
-	private java.math.BigInteger bigInteger;
-	private java.math.BigDecimal bigDecimal;
-	private java.lang.Float      float_;
-	private java.lang.Double     double_;
+	private Integer    id;
+	private Byte       byte_;
+	private Short      short_;
+	private Integer    integer;
+	private Long       long_;
+	private Byte       byteDecimal;
+	private Short      shortDecimal;
+	private Integer    integerDecimal;
+	private Long       longDecimal;
+	private BigInteger bigInteger;
+	private BigDecimal bigDecimal;
+	private Float      float_;
+	private Double     double_;
 
 	public T_639NumbersTable() {}
 
 	public T_639NumbersTable(
-		java.lang.Integer    id,
-		java.lang.Byte       byte_,
-		java.lang.Short      short_,
-		java.lang.Integer    integer,
-		java.lang.Long       long_,
-		java.lang.Byte       byteDecimal,
-		java.lang.Short      shortDecimal,
-		java.lang.Integer    integerDecimal,
-		java.lang.Long       longDecimal,
-		java.math.BigInteger bigInteger,
-		java.math.BigDecimal bigDecimal,
-		java.lang.Float      float_,
-		java.lang.Double     double_
+		Integer    id,
+		Byte       byte_,
+		Short      short_,
+		Integer    integer,
+		Long       long_,
+		Byte       byteDecimal,
+		Short      shortDecimal,
+		Integer    integerDecimal,
+		Long       longDecimal,
+		BigInteger bigInteger,
+		BigDecimal bigDecimal,
+		Float      float_,
+		Double     double_
 	) {
 		this.id = id;
 		this.byte_ = byte_;
@@ -58,144 +65,144 @@ public class T_639NumbersTable implements org.jooq.test.h2.generatedclasses.tabl
 	}
 
 	@Override
-	public java.lang.Integer getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public T_639NumbersTable setId(java.lang.Integer id) {
+	public T_639NumbersTable setId(Integer id) {
 		this.id = id;
 		return this;
 	}
 
 	@Override
-	public java.lang.Byte getByte() {
+	public Byte getByte() {
 		return this.byte_;
 	}
 
 	@Override
-	public T_639NumbersTable setByte(java.lang.Byte byte_) {
+	public T_639NumbersTable setByte(Byte byte_) {
 		this.byte_ = byte_;
 		return this;
 	}
 
 	@Override
-	public java.lang.Short getShort() {
+	public Short getShort() {
 		return this.short_;
 	}
 
 	@Override
-	public T_639NumbersTable setShort(java.lang.Short short_) {
+	public T_639NumbersTable setShort(Short short_) {
 		this.short_ = short_;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getInteger() {
+	public Integer getInteger() {
 		return this.integer;
 	}
 
 	@Override
-	public T_639NumbersTable setInteger(java.lang.Integer integer) {
+	public T_639NumbersTable setInteger(Integer integer) {
 		this.integer = integer;
 		return this;
 	}
 
 	@Override
-	public java.lang.Long getLong() {
+	public Long getLong() {
 		return this.long_;
 	}
 
 	@Override
-	public T_639NumbersTable setLong(java.lang.Long long_) {
+	public T_639NumbersTable setLong(Long long_) {
 		this.long_ = long_;
 		return this;
 	}
 
 	@Override
-	public java.lang.Byte getByteDecimal() {
+	public Byte getByteDecimal() {
 		return this.byteDecimal;
 	}
 
 	@Override
-	public T_639NumbersTable setByteDecimal(java.lang.Byte byteDecimal) {
+	public T_639NumbersTable setByteDecimal(Byte byteDecimal) {
 		this.byteDecimal = byteDecimal;
 		return this;
 	}
 
 	@Override
-	public java.lang.Short getShortDecimal() {
+	public Short getShortDecimal() {
 		return this.shortDecimal;
 	}
 
 	@Override
-	public T_639NumbersTable setShortDecimal(java.lang.Short shortDecimal) {
+	public T_639NumbersTable setShortDecimal(Short shortDecimal) {
 		this.shortDecimal = shortDecimal;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getIntegerDecimal() {
+	public Integer getIntegerDecimal() {
 		return this.integerDecimal;
 	}
 
 	@Override
-	public T_639NumbersTable setIntegerDecimal(java.lang.Integer integerDecimal) {
+	public T_639NumbersTable setIntegerDecimal(Integer integerDecimal) {
 		this.integerDecimal = integerDecimal;
 		return this;
 	}
 
 	@Override
-	public java.lang.Long getLongDecimal() {
+	public Long getLongDecimal() {
 		return this.longDecimal;
 	}
 
 	@Override
-	public T_639NumbersTable setLongDecimal(java.lang.Long longDecimal) {
+	public T_639NumbersTable setLongDecimal(Long longDecimal) {
 		this.longDecimal = longDecimal;
 		return this;
 	}
 
 	@Override
-	public java.math.BigInteger getBigInteger() {
+	public BigInteger getBigInteger() {
 		return this.bigInteger;
 	}
 
 	@Override
-	public T_639NumbersTable setBigInteger(java.math.BigInteger bigInteger) {
+	public T_639NumbersTable setBigInteger(BigInteger bigInteger) {
 		this.bigInteger = bigInteger;
 		return this;
 	}
 
 	@Override
-	public java.math.BigDecimal getBigDecimal() {
+	public BigDecimal getBigDecimal() {
 		return this.bigDecimal;
 	}
 
 	@Override
-	public T_639NumbersTable setBigDecimal(java.math.BigDecimal bigDecimal) {
+	public T_639NumbersTable setBigDecimal(BigDecimal bigDecimal) {
 		this.bigDecimal = bigDecimal;
 		return this;
 	}
 
 	@Override
-	public java.lang.Float getFloat() {
+	public Float getFloat() {
 		return this.float_;
 	}
 
 	@Override
-	public T_639NumbersTable setFloat(java.lang.Float float_) {
+	public T_639NumbersTable setFloat(Float float_) {
 		this.float_ = float_;
 		return this;
 	}
 
 	@Override
-	public java.lang.Double getDouble() {
+	public Double getDouble() {
 		return this.double_;
 	}
 
 	@Override
-	public T_639NumbersTable setDouble(java.lang.Double double_) {
+	public T_639NumbersTable setDouble(Double double_) {
 		this.double_ = double_;
 		return this;
 	}
@@ -208,7 +215,7 @@ public class T_639NumbersTable implements org.jooq.test.h2.generatedclasses.tabl
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IT_639NumbersTable from) {
+	public void from(IT_639NumbersTable from) {
 		setId(from.getId());
 		setByte(from.getByte());
 		setShort(from.getShort());
@@ -228,7 +235,7 @@ public class T_639NumbersTable implements org.jooq.test.h2.generatedclasses.tabl
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IT_639NumbersTable> E into(E into) {
+	public <E extends IT_639NumbersTable> E into(E into) {
 		into.from(this);
 		return into;
 	}

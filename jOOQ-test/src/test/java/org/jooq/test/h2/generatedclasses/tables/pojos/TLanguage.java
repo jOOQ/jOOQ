@@ -3,28 +3,32 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
+
+import org.jooq.test.h2.generatedclasses.tables.interfaces.ITLanguage;
+
+
 /**
  * This is a POJO for table T_LANGUAGE.
  * <p>
  * An entity holding language master data
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TLanguage implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITLanguage {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class TLanguage implements ITLanguage {
 
-	private static final long serialVersionUID = 183112394;
+	private static final long serialVersionUID = 286438833;
 
-	private java.lang.String  cd;
-	private java.lang.String  description;
-	private java.lang.String  descriptionEnglish;
-	private java.lang.Integer id;
+	private String  cd;
+	private String  description;
+	private String  descriptionEnglish;
+	private Integer id;
 
 	public TLanguage() {}
 
 	public TLanguage(
-		java.lang.String  cd,
-		java.lang.String  description,
-		java.lang.String  descriptionEnglish,
-		java.lang.Integer id
+		String  cd,
+		String  description,
+		String  descriptionEnglish,
+		Integer id
 	) {
 		this.cd = cd;
 		this.description = description;
@@ -33,45 +37,45 @@ public class TLanguage implements org.jooq.test.h2.generatedclasses.tables.inter
 	}
 
 	@Override
-	public java.lang.String getCd() {
+	public String getCd() {
 		return this.cd;
 	}
 
 	@Override
-	public TLanguage setCd(java.lang.String cd) {
+	public TLanguage setCd(String cd) {
 		this.cd = cd;
 		return this;
 	}
 
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return this.description;
 	}
 
 	@Override
-	public TLanguage setDescription(java.lang.String description) {
+	public TLanguage setDescription(String description) {
 		this.description = description;
 		return this;
 	}
 
 	@Override
-	public java.lang.String getDescriptionEnglish() {
+	public String getDescriptionEnglish() {
 		return this.descriptionEnglish;
 	}
 
 	@Override
-	public TLanguage setDescriptionEnglish(java.lang.String descriptionEnglish) {
+	public TLanguage setDescriptionEnglish(String descriptionEnglish) {
 		this.descriptionEnglish = descriptionEnglish;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public TLanguage setId(java.lang.Integer id) {
+	public TLanguage setId(Integer id) {
 		this.id = id;
 		return this;
 	}
@@ -84,7 +88,7 @@ public class TLanguage implements org.jooq.test.h2.generatedclasses.tables.inter
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITLanguage from) {
+	public void from(ITLanguage from) {
 		setCd(from.getCd());
 		setDescription(from.getDescription());
 		setDescriptionEnglish(from.getDescriptionEnglish());
@@ -95,7 +99,7 @@ public class TLanguage implements org.jooq.test.h2.generatedclasses.tables.inter
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITLanguage> E into(E into) {
+	public <E extends ITLanguage> E into(E into) {
 		into.from(this);
 		return into;
 	}

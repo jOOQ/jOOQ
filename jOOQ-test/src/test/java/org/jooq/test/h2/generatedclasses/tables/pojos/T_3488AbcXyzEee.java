@@ -3,31 +3,35 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
+
+import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_3488AbcXyzEee;
+
+
 /**
  * This is a POJO for table T_3488_ABC_XYZ_EEE.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class T_3488AbcXyzEee implements org.jooq.test.h2.generatedclasses.tables.interfaces.IT_3488AbcXyzEee {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class T_3488AbcXyzEee implements IT_3488AbcXyzEee {
 
-	private static final long serialVersionUID = 790140509;
+	private static final long serialVersionUID = 1117220862;
 
-	private java.lang.Integer id;
+	private Integer id;
 
 	public T_3488AbcXyzEee() {}
 
 	public T_3488AbcXyzEee(
-		java.lang.Integer id
+		Integer id
 	) {
 		this.id = id;
 	}
 
 	@Override
-	public java.lang.Integer getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public T_3488AbcXyzEee setId(java.lang.Integer id) {
+	public T_3488AbcXyzEee setId(Integer id) {
 		this.id = id;
 		return this;
 	}
@@ -40,7 +44,7 @@ public class T_3488AbcXyzEee implements org.jooq.test.h2.generatedclasses.tables
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IT_3488AbcXyzEee from) {
+	public void from(IT_3488AbcXyzEee from) {
 		setId(from.getId());
 	}
 
@@ -48,7 +52,7 @@ public class T_3488AbcXyzEee implements org.jooq.test.h2.generatedclasses.tables
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IT_3488AbcXyzEee> E into(E into) {
+	public <E extends IT_3488AbcXyzEee> E into(E into) {
 		into.from(this);
 		return into;
 	}

@@ -3,24 +3,28 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
+
+import org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_85;
+
+
 /**
  * This is a POJO for table X_TEST_CASE_85.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class XTestCase_85 implements org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_85 {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class XTestCase_85 implements IXTestCase_85 {
 
-	private static final long serialVersionUID = 1461123492;
+	private static final long serialVersionUID = 711658029;
 
-	private java.lang.Integer id;
-	private java.lang.Integer xUnusedId;
-	private java.lang.String  xUnusedName;
+	private Integer id;
+	private Integer xUnusedId;
+	private String  xUnusedName;
 
 	public XTestCase_85() {}
 
 	public XTestCase_85(
-		java.lang.Integer id,
-		java.lang.Integer xUnusedId,
-		java.lang.String  xUnusedName
+		Integer id,
+		Integer xUnusedId,
+		String  xUnusedName
 	) {
 		this.id = id;
 		this.xUnusedId = xUnusedId;
@@ -28,34 +32,34 @@ public class XTestCase_85 implements org.jooq.test.h2.generatedclasses.tables.in
 	}
 
 	@Override
-	public java.lang.Integer getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public XTestCase_85 setId(java.lang.Integer id) {
+	public XTestCase_85 setId(Integer id) {
 		this.id = id;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getXUnusedId() {
+	public Integer getXUnusedId() {
 		return this.xUnusedId;
 	}
 
 	@Override
-	public XTestCase_85 setXUnusedId(java.lang.Integer xUnusedId) {
+	public XTestCase_85 setXUnusedId(Integer xUnusedId) {
 		this.xUnusedId = xUnusedId;
 		return this;
 	}
 
 	@Override
-	public java.lang.String getXUnusedName() {
+	public String getXUnusedName() {
 		return this.xUnusedName;
 	}
 
 	@Override
-	public XTestCase_85 setXUnusedName(java.lang.String xUnusedName) {
+	public XTestCase_85 setXUnusedName(String xUnusedName) {
 		this.xUnusedName = xUnusedName;
 		return this;
 	}
@@ -68,7 +72,7 @@ public class XTestCase_85 implements org.jooq.test.h2.generatedclasses.tables.in
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_85 from) {
+	public void from(IXTestCase_85 from) {
 		setId(from.getId());
 		setXUnusedId(from.getXUnusedId());
 		setXUnusedName(from.getXUnusedName());
@@ -78,7 +82,7 @@ public class XTestCase_85 implements org.jooq.test.h2.generatedclasses.tables.in
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_85> E into(E into) {
+	public <E extends IXTestCase_85> E into(E into) {
 		into.from(this);
 		return into;
 	}

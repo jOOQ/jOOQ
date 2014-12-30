@@ -3,71 +3,76 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.interfaces;
 
+
+import java.io.Serializable;
+import java.sql.Date;
+
+
 /**
  * An entity holding authors of books
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public interface ITAuthor extends java.io.Serializable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public interface ITAuthor extends Serializable {
 
 	/**
 	 * Setter for <code>PUBLIC.T_AUTHOR.ID</code>. The author ID
 	 */
-	public ITAuthor setId(java.lang.Integer value);
+	public ITAuthor setId(Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_AUTHOR.ID</code>. The author ID
 	 */
-	public java.lang.Integer getId();
+	public Integer getId();
 
 	/**
 	 * Setter for <code>PUBLIC.T_AUTHOR.FIRST_NAME</code>. The author's first name
 	 */
-	public ITAuthor setFirstName(java.lang.String value);
+	public ITAuthor setFirstName(String value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_AUTHOR.FIRST_NAME</code>. The author's first name
 	 */
-	public java.lang.String getFirstName();
+	public String getFirstName();
 
 	/**
 	 * Setter for <code>PUBLIC.T_AUTHOR.LAST_NAME</code>. The author's last name
 	 */
-	public ITAuthor setLastName(java.lang.String value);
+	public ITAuthor setLastName(String value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_AUTHOR.LAST_NAME</code>. The author's last name
 	 */
-	public java.lang.String getLastName();
+	public String getLastName();
 
 	/**
 	 * Setter for <code>PUBLIC.T_AUTHOR.DATE_OF_BIRTH</code>. The author's date of birth
 	 */
-	public ITAuthor setDateOfBirth(java.sql.Date value);
+	public ITAuthor setDateOfBirth(Date value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_AUTHOR.DATE_OF_BIRTH</code>. The author's date of birth
 	 */
-	public java.sql.Date getDateOfBirth();
+	public Date getDateOfBirth();
 
 	/**
 	 * Setter for <code>PUBLIC.T_AUTHOR.YEAR_OF_BIRTH</code>. The author's year of birth
 	 */
-	public ITAuthor setYearOfBirth(java.lang.Integer value);
+	public ITAuthor setYearOfBirth(Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_AUTHOR.YEAR_OF_BIRTH</code>. The author's year of birth
 	 */
-	public java.lang.Integer getYearOfBirth();
+	public Integer getYearOfBirth();
 
 	/**
 	 * Setter for <code>PUBLIC.T_AUTHOR.ADDRESS</code>. The author's address
 	 */
-	public ITAuthor setAddress(java.lang.String value);
+	public ITAuthor setAddress(String value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_AUTHOR.ADDRESS</code>. The author's address
 	 */
-	public java.lang.String getAddress();
+	public String getAddress();
 
 	// -------------------------------------------------------------------------
 	// FROM and INTO

@@ -3,40 +3,51 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
+
+import org.jooq.test.all.converters.Boolean_10;
+import org.jooq.test.all.converters.Boolean_TF_LC;
+import org.jooq.test.all.converters.Boolean_TF_UC;
+import org.jooq.test.all.converters.Boolean_YES_NO_LC;
+import org.jooq.test.all.converters.Boolean_YES_NO_UC;
+import org.jooq.test.all.converters.Boolean_YN_LC;
+import org.jooq.test.all.converters.Boolean_YN_UC;
+import org.jooq.test.h2.generatedclasses.tables.interfaces.ITBooleans;
+
+
 /**
  * This is a POJO for table T_BOOLEANS.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TBooleans implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBooleans {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class TBooleans implements ITBooleans {
 
-	private static final long serialVersionUID = -691255563;
+	private static final long serialVersionUID = 580054507;
 
-	private java.lang.Integer                              id;
-	private org.jooq.test.all.converters.Boolean_10        oneZero;
-	private org.jooq.test.all.converters.Boolean_TF_LC     trueFalseLc;
-	private org.jooq.test.all.converters.Boolean_TF_UC     trueFalseUc;
-	private org.jooq.test.all.converters.Boolean_YES_NO_LC yesNoLc;
-	private org.jooq.test.all.converters.Boolean_YES_NO_UC yesNoUc;
-	private org.jooq.test.all.converters.Boolean_YN_LC     yNLc;
-	private org.jooq.test.all.converters.Boolean_YN_UC     yNUc;
-	private java.lang.Boolean                              vcBoolean;
-	private java.lang.Boolean                              cBoolean;
-	private java.lang.Boolean                              nBoolean;
+	private Integer           id;
+	private Boolean_10        oneZero;
+	private Boolean_TF_LC     trueFalseLc;
+	private Boolean_TF_UC     trueFalseUc;
+	private Boolean_YES_NO_LC yesNoLc;
+	private Boolean_YES_NO_UC yesNoUc;
+	private Boolean_YN_LC     yNLc;
+	private Boolean_YN_UC     yNUc;
+	private Boolean           vcBoolean;
+	private Boolean           cBoolean;
+	private Boolean           nBoolean;
 
 	public TBooleans() {}
 
 	public TBooleans(
-		java.lang.Integer                              id,
-		org.jooq.test.all.converters.Boolean_10        oneZero,
-		org.jooq.test.all.converters.Boolean_TF_LC     trueFalseLc,
-		org.jooq.test.all.converters.Boolean_TF_UC     trueFalseUc,
-		org.jooq.test.all.converters.Boolean_YES_NO_LC yesNoLc,
-		org.jooq.test.all.converters.Boolean_YES_NO_UC yesNoUc,
-		org.jooq.test.all.converters.Boolean_YN_LC     yNLc,
-		org.jooq.test.all.converters.Boolean_YN_UC     yNUc,
-		java.lang.Boolean                              vcBoolean,
-		java.lang.Boolean                              cBoolean,
-		java.lang.Boolean                              nBoolean
+		Integer           id,
+		Boolean_10        oneZero,
+		Boolean_TF_LC     trueFalseLc,
+		Boolean_TF_UC     trueFalseUc,
+		Boolean_YES_NO_LC yesNoLc,
+		Boolean_YES_NO_UC yesNoUc,
+		Boolean_YN_LC     yNLc,
+		Boolean_YN_UC     yNUc,
+		Boolean           vcBoolean,
+		Boolean           cBoolean,
+		Boolean           nBoolean
 	) {
 		this.id = id;
 		this.oneZero = oneZero;
@@ -52,122 +63,122 @@ public class TBooleans implements org.jooq.test.h2.generatedclasses.tables.inter
 	}
 
 	@Override
-	public java.lang.Integer getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public TBooleans setId(java.lang.Integer id) {
+	public TBooleans setId(Integer id) {
 		this.id = id;
 		return this;
 	}
 
 	@Override
-	public org.jooq.test.all.converters.Boolean_10 getOneZero() {
+	public Boolean_10 getOneZero() {
 		return this.oneZero;
 	}
 
 	@Override
-	public TBooleans setOneZero(org.jooq.test.all.converters.Boolean_10 oneZero) {
+	public TBooleans setOneZero(Boolean_10 oneZero) {
 		this.oneZero = oneZero;
 		return this;
 	}
 
 	@Override
-	public org.jooq.test.all.converters.Boolean_TF_LC getTrueFalseLc() {
+	public Boolean_TF_LC getTrueFalseLc() {
 		return this.trueFalseLc;
 	}
 
 	@Override
-	public TBooleans setTrueFalseLc(org.jooq.test.all.converters.Boolean_TF_LC trueFalseLc) {
+	public TBooleans setTrueFalseLc(Boolean_TF_LC trueFalseLc) {
 		this.trueFalseLc = trueFalseLc;
 		return this;
 	}
 
 	@Override
-	public org.jooq.test.all.converters.Boolean_TF_UC getTrueFalseUc() {
+	public Boolean_TF_UC getTrueFalseUc() {
 		return this.trueFalseUc;
 	}
 
 	@Override
-	public TBooleans setTrueFalseUc(org.jooq.test.all.converters.Boolean_TF_UC trueFalseUc) {
+	public TBooleans setTrueFalseUc(Boolean_TF_UC trueFalseUc) {
 		this.trueFalseUc = trueFalseUc;
 		return this;
 	}
 
 	@Override
-	public org.jooq.test.all.converters.Boolean_YES_NO_LC getYesNoLc() {
+	public Boolean_YES_NO_LC getYesNoLc() {
 		return this.yesNoLc;
 	}
 
 	@Override
-	public TBooleans setYesNoLc(org.jooq.test.all.converters.Boolean_YES_NO_LC yesNoLc) {
+	public TBooleans setYesNoLc(Boolean_YES_NO_LC yesNoLc) {
 		this.yesNoLc = yesNoLc;
 		return this;
 	}
 
 	@Override
-	public org.jooq.test.all.converters.Boolean_YES_NO_UC getYesNoUc() {
+	public Boolean_YES_NO_UC getYesNoUc() {
 		return this.yesNoUc;
 	}
 
 	@Override
-	public TBooleans setYesNoUc(org.jooq.test.all.converters.Boolean_YES_NO_UC yesNoUc) {
+	public TBooleans setYesNoUc(Boolean_YES_NO_UC yesNoUc) {
 		this.yesNoUc = yesNoUc;
 		return this;
 	}
 
 	@Override
-	public org.jooq.test.all.converters.Boolean_YN_LC getYNLc() {
+	public Boolean_YN_LC getYNLc() {
 		return this.yNLc;
 	}
 
 	@Override
-	public TBooleans setYNLc(org.jooq.test.all.converters.Boolean_YN_LC yNLc) {
+	public TBooleans setYNLc(Boolean_YN_LC yNLc) {
 		this.yNLc = yNLc;
 		return this;
 	}
 
 	@Override
-	public org.jooq.test.all.converters.Boolean_YN_UC getYNUc() {
+	public Boolean_YN_UC getYNUc() {
 		return this.yNUc;
 	}
 
 	@Override
-	public TBooleans setYNUc(org.jooq.test.all.converters.Boolean_YN_UC yNUc) {
+	public TBooleans setYNUc(Boolean_YN_UC yNUc) {
 		this.yNUc = yNUc;
 		return this;
 	}
 
 	@Override
-	public java.lang.Boolean getVcBoolean() {
+	public Boolean getVcBoolean() {
 		return this.vcBoolean;
 	}
 
 	@Override
-	public TBooleans setVcBoolean(java.lang.Boolean vcBoolean) {
+	public TBooleans setVcBoolean(Boolean vcBoolean) {
 		this.vcBoolean = vcBoolean;
 		return this;
 	}
 
 	@Override
-	public java.lang.Boolean getCBoolean() {
+	public Boolean getCBoolean() {
 		return this.cBoolean;
 	}
 
 	@Override
-	public TBooleans setCBoolean(java.lang.Boolean cBoolean) {
+	public TBooleans setCBoolean(Boolean cBoolean) {
 		this.cBoolean = cBoolean;
 		return this;
 	}
 
 	@Override
-	public java.lang.Boolean getNBoolean() {
+	public Boolean getNBoolean() {
 		return this.nBoolean;
 	}
 
 	@Override
-	public TBooleans setNBoolean(java.lang.Boolean nBoolean) {
+	public TBooleans setNBoolean(Boolean nBoolean) {
 		this.nBoolean = nBoolean;
 		return this;
 	}
@@ -180,7 +191,7 @@ public class TBooleans implements org.jooq.test.h2.generatedclasses.tables.inter
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITBooleans from) {
+	public void from(ITBooleans from) {
 		setId(from.getId());
 		setOneZero(from.getOneZero());
 		setTrueFalseLc(from.getTrueFalseLc());
@@ -198,7 +209,7 @@ public class TBooleans implements org.jooq.test.h2.generatedclasses.tables.inter
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITBooleans> E into(E into) {
+	public <E extends ITBooleans> E into(E into) {
 		into.from(this);
 		return into;
 	}

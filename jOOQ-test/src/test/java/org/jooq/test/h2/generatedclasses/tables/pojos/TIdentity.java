@@ -3,45 +3,49 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
+
+import org.jooq.test.h2.generatedclasses.tables.interfaces.ITIdentity;
+
+
 /**
  * This is a POJO for table T_IDENTITY.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TIdentity implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITIdentity {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class TIdentity implements ITIdentity {
 
-	private static final long serialVersionUID = -816266187;
+	private static final long serialVersionUID = -277153198;
 
-	private java.lang.Integer id;
-	private java.lang.Integer val;
+	private Integer id;
+	private Integer val;
 
 	public TIdentity() {}
 
 	public TIdentity(
-		java.lang.Integer id,
-		java.lang.Integer val
+		Integer id,
+		Integer val
 	) {
 		this.id = id;
 		this.val = val;
 	}
 
 	@Override
-	public java.lang.Integer getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public TIdentity setId(java.lang.Integer id) {
+	public TIdentity setId(Integer id) {
 		this.id = id;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getVal() {
+	public Integer getVal() {
 		return this.val;
 	}
 
 	@Override
-	public TIdentity setVal(java.lang.Integer val) {
+	public TIdentity setVal(Integer val) {
 		this.val = val;
 		return this;
 	}
@@ -54,7 +58,7 @@ public class TIdentity implements org.jooq.test.h2.generatedclasses.tables.inter
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITIdentity from) {
+	public void from(ITIdentity from) {
 		setId(from.getId());
 		setVal(from.getVal());
 	}
@@ -63,7 +67,7 @@ public class TIdentity implements org.jooq.test.h2.generatedclasses.tables.inter
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITIdentity> E into(E into) {
+	public <E extends ITIdentity> E into(E into) {
 		into.from(this);
 		return into;
 	}

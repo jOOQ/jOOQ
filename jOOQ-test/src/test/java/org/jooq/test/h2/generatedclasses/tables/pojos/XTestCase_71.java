@@ -3,45 +3,49 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
+
+import org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_71;
+
+
 /**
  * This is a POJO for table X_TEST_CASE_71.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class XTestCase_71 implements org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_71 {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class XTestCase_71 implements IXTestCase_71 {
 
-	private static final long serialVersionUID = -56504873;
+	private static final long serialVersionUID = -1694682401;
 
-	private java.lang.Integer id;
-	private java.lang.Short   testCase_64_69Id;
+	private Integer id;
+	private Short   testCase_64_69Id;
 
 	public XTestCase_71() {}
 
 	public XTestCase_71(
-		java.lang.Integer id,
-		java.lang.Short   testCase_64_69Id
+		Integer id,
+		Short   testCase_64_69Id
 	) {
 		this.id = id;
 		this.testCase_64_69Id = testCase_64_69Id;
 	}
 
 	@Override
-	public java.lang.Integer getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public XTestCase_71 setId(java.lang.Integer id) {
+	public XTestCase_71 setId(Integer id) {
 		this.id = id;
 		return this;
 	}
 
 	@Override
-	public java.lang.Short getTestCase_64_69Id() {
+	public Short getTestCase_64_69Id() {
 		return this.testCase_64_69Id;
 	}
 
 	@Override
-	public XTestCase_71 setTestCase_64_69Id(java.lang.Short testCase_64_69Id) {
+	public XTestCase_71 setTestCase_64_69Id(Short testCase_64_69Id) {
 		this.testCase_64_69Id = testCase_64_69Id;
 		return this;
 	}
@@ -54,7 +58,7 @@ public class XTestCase_71 implements org.jooq.test.h2.generatedclasses.tables.in
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_71 from) {
+	public void from(IXTestCase_71 from) {
 		setId(from.getId());
 		setTestCase_64_69Id(from.getTestCase_64_69Id());
 	}
@@ -63,7 +67,7 @@ public class XTestCase_71 implements org.jooq.test.h2.generatedclasses.tables.in
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_71> E into(E into) {
+	public <E extends IXTestCase_71> E into(E into) {
 		into.from(this);
 		return into;
 	}

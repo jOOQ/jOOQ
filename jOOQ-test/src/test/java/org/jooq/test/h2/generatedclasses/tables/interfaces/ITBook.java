@@ -3,91 +3,96 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.interfaces;
 
+
+import java.io.Serializable;
+import java.sql.Timestamp;
+
+
 /**
  * An entity holding books
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public interface ITBook extends java.io.Serializable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public interface ITBook extends Serializable {
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.ID</code>. The book ID
 	 */
-	public ITBook setId(java.lang.Integer value);
+	public ITBook setId(Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOK.ID</code>. The book ID
 	 */
-	public java.lang.Integer getId();
+	public Integer getId();
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.AUTHOR_ID</code>. The author ID in entity 'author'
 	 */
-	public ITBook setAuthorId(java.lang.Integer value);
+	public ITBook setAuthorId(Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOK.AUTHOR_ID</code>. The author ID in entity 'author'
 	 */
-	public java.lang.Integer getAuthorId();
+	public Integer getAuthorId();
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>.
 	 */
-	public ITBook setCoAuthorId(java.lang.Integer value);
+	public ITBook setCoAuthorId(Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOK.CO_AUTHOR_ID</code>.
 	 */
-	public java.lang.Integer getCoAuthorId();
+	public Integer getCoAuthorId();
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.DETAILS_ID</code>.
 	 */
-	public ITBook setDetailsId(java.lang.Integer value);
+	public ITBook setDetailsId(Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOK.DETAILS_ID</code>.
 	 */
-	public java.lang.Integer getDetailsId();
+	public Integer getDetailsId();
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.TITLE</code>. The book's title
 	 */
-	public ITBook setTitle(java.lang.String value);
+	public ITBook setTitle(String value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOK.TITLE</code>. The book's title
 	 */
-	public java.lang.String getTitle();
+	public String getTitle();
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.PUBLISHED_IN</code>. The year the book was published in
 	 */
-	public ITBook setPublishedIn(java.lang.Integer value);
+	public ITBook setPublishedIn(Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOK.PUBLISHED_IN</code>. The year the book was published in
 	 */
-	public java.lang.Integer getPublishedIn();
+	public Integer getPublishedIn();
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.LANGUAGE_ID</code>. The language of the book
 	 */
-	public ITBook setLanguageId(java.lang.Integer value);
+	public ITBook setLanguageId(Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOK.LANGUAGE_ID</code>. The language of the book
 	 */
-	public java.lang.Integer getLanguageId();
+	public Integer getLanguageId();
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.CONTENT_TEXT</code>. Some textual content of the book
 	 */
-	public ITBook setContentText(java.lang.String value);
+	public ITBook setContentText(String value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOK.CONTENT_TEXT</code>. Some textual content of the book
 	 */
-	public java.lang.String getContentText();
+	public String getContentText();
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.CONTENT_PDF</code>. Some binary content of the book
@@ -102,22 +107,22 @@ public interface ITBook extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.REC_VERSION</code>.
 	 */
-	public ITBook setRecVersion(java.lang.Integer value);
+	public ITBook setRecVersion(Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOK.REC_VERSION</code>.
 	 */
-	public java.lang.Integer getRecVersion();
+	public Integer getRecVersion();
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>.
 	 */
-	public ITBook setRecTimestamp(java.sql.Timestamp value);
+	public ITBook setRecTimestamp(Timestamp value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOK.REC_TIMESTAMP</code>.
 	 */
-	public java.sql.Timestamp getRecTimestamp();
+	public Timestamp getRecTimestamp();
 
 	// -------------------------------------------------------------------------
 	// FROM and INTO

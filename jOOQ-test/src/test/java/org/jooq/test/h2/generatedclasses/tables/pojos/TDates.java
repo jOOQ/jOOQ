@@ -3,30 +3,38 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
+
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
+
+import org.jooq.test.h2.generatedclasses.tables.interfaces.ITDates;
+
+
 /**
  * This is a POJO for table T_DATES.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TDates implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITDates {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class TDates implements ITDates {
 
-	private static final long serialVersionUID = 1322645272;
+	private static final long serialVersionUID = -741199589;
 
-	private java.lang.Integer  id;
-	private java.sql.Date      d;
-	private java.sql.Time      t;
-	private java.sql.Timestamp ts;
-	private java.lang.Integer  dInt;
-	private java.lang.Long     tsBigint;
+	private Integer   id;
+	private Date      d;
+	private Time      t;
+	private Timestamp ts;
+	private Integer   dInt;
+	private Long      tsBigint;
 
 	public TDates() {}
 
 	public TDates(
-		java.lang.Integer  id,
-		java.sql.Date      d,
-		java.sql.Time      t,
-		java.sql.Timestamp ts,
-		java.lang.Integer  dInt,
-		java.lang.Long     tsBigint
+		Integer   id,
+		Date      d,
+		Time      t,
+		Timestamp ts,
+		Integer   dInt,
+		Long      tsBigint
 	) {
 		this.id = id;
 		this.d = d;
@@ -37,67 +45,67 @@ public class TDates implements org.jooq.test.h2.generatedclasses.tables.interfac
 	}
 
 	@Override
-	public java.lang.Integer getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public TDates setId(java.lang.Integer id) {
+	public TDates setId(Integer id) {
 		this.id = id;
 		return this;
 	}
 
 	@Override
-	public java.sql.Date getD() {
+	public Date getD() {
 		return this.d;
 	}
 
 	@Override
-	public TDates setD(java.sql.Date d) {
+	public TDates setD(Date d) {
 		this.d = d;
 		return this;
 	}
 
 	@Override
-	public java.sql.Time getT() {
+	public Time getT() {
 		return this.t;
 	}
 
 	@Override
-	public TDates setT(java.sql.Time t) {
+	public TDates setT(Time t) {
 		this.t = t;
 		return this;
 	}
 
 	@Override
-	public java.sql.Timestamp getTs() {
+	public Timestamp getTs() {
 		return this.ts;
 	}
 
 	@Override
-	public TDates setTs(java.sql.Timestamp ts) {
+	public TDates setTs(Timestamp ts) {
 		this.ts = ts;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getDInt() {
+	public Integer getDInt() {
 		return this.dInt;
 	}
 
 	@Override
-	public TDates setDInt(java.lang.Integer dInt) {
+	public TDates setDInt(Integer dInt) {
 		this.dInt = dInt;
 		return this;
 	}
 
 	@Override
-	public java.lang.Long getTsBigint() {
+	public Long getTsBigint() {
 		return this.tsBigint;
 	}
 
 	@Override
-	public TDates setTsBigint(java.lang.Long tsBigint) {
+	public TDates setTsBigint(Long tsBigint) {
 		this.tsBigint = tsBigint;
 		return this;
 	}
@@ -110,7 +118,7 @@ public class TDates implements org.jooq.test.h2.generatedclasses.tables.interfac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITDates from) {
+	public void from(ITDates from) {
 		setId(from.getId());
 		setD(from.getD());
 		setT(from.getT());
@@ -123,7 +131,7 @@ public class TDates implements org.jooq.test.h2.generatedclasses.tables.interfac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITDates> E into(E into) {
+	public <E extends ITDates> E into(E into) {
 		into.from(this);
 		return into;
 	}

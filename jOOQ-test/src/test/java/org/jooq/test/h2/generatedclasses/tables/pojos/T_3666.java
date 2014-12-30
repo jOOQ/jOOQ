@@ -3,30 +3,36 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
+
+import java.math.BigDecimal;
+
+import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_3666;
+
+
 /**
  * This is a POJO for table T_3666.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class T_3666 implements org.jooq.test.h2.generatedclasses.tables.interfaces.IT_3666 {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class T_3666 implements IT_3666 {
 
-	private static final long serialVersionUID = -1550635578;
+	private static final long serialVersionUID = 8255130;
 
-	private java.lang.Long       e1;
-	private java.math.BigDecimal e2;
-	private java.lang.Short      e3;
-	private java.lang.Short      e4;
-	private java.lang.Byte       e5;
-	private java.math.BigDecimal e6;
+	private Long       e1;
+	private BigDecimal e2;
+	private Short      e3;
+	private Short      e4;
+	private Byte       e5;
+	private BigDecimal e6;
 
 	public T_3666() {}
 
 	public T_3666(
-		java.lang.Long       e1,
-		java.math.BigDecimal e2,
-		java.lang.Short      e3,
-		java.lang.Short      e4,
-		java.lang.Byte       e5,
-		java.math.BigDecimal e6
+		Long       e1,
+		BigDecimal e2,
+		Short      e3,
+		Short      e4,
+		Byte       e5,
+		BigDecimal e6
 	) {
 		this.e1 = e1;
 		this.e2 = e2;
@@ -37,67 +43,67 @@ public class T_3666 implements org.jooq.test.h2.generatedclasses.tables.interfac
 	}
 
 	@Override
-	public java.lang.Long getE1() {
+	public Long getE1() {
 		return this.e1;
 	}
 
 	@Override
-	public T_3666 setE1(java.lang.Long e1) {
+	public T_3666 setE1(Long e1) {
 		this.e1 = e1;
 		return this;
 	}
 
 	@Override
-	public java.math.BigDecimal getE2() {
+	public BigDecimal getE2() {
 		return this.e2;
 	}
 
 	@Override
-	public T_3666 setE2(java.math.BigDecimal e2) {
+	public T_3666 setE2(BigDecimal e2) {
 		this.e2 = e2;
 		return this;
 	}
 
 	@Override
-	public java.lang.Short getE3() {
+	public Short getE3() {
 		return this.e3;
 	}
 
 	@Override
-	public T_3666 setE3(java.lang.Short e3) {
+	public T_3666 setE3(Short e3) {
 		this.e3 = e3;
 		return this;
 	}
 
 	@Override
-	public java.lang.Short getE4() {
+	public Short getE4() {
 		return this.e4;
 	}
 
 	@Override
-	public T_3666 setE4(java.lang.Short e4) {
+	public T_3666 setE4(Short e4) {
 		this.e4 = e4;
 		return this;
 	}
 
 	@Override
-	public java.lang.Byte getE5() {
+	public Byte getE5() {
 		return this.e5;
 	}
 
 	@Override
-	public T_3666 setE5(java.lang.Byte e5) {
+	public T_3666 setE5(Byte e5) {
 		this.e5 = e5;
 		return this;
 	}
 
 	@Override
-	public java.math.BigDecimal getE6() {
+	public BigDecimal getE6() {
 		return this.e6;
 	}
 
 	@Override
-	public T_3666 setE6(java.math.BigDecimal e6) {
+	public T_3666 setE6(BigDecimal e6) {
 		this.e6 = e6;
 		return this;
 	}
@@ -110,7 +116,7 @@ public class T_3666 implements org.jooq.test.h2.generatedclasses.tables.interfac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IT_3666 from) {
+	public void from(IT_3666 from) {
 		setE1(from.getE1());
 		setE2(from.getE2());
 		setE3(from.getE3());
@@ -123,7 +129,7 @@ public class T_3666 implements org.jooq.test.h2.generatedclasses.tables.interfac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IT_3666> E into(E into) {
+	public <E extends IT_3666> E into(E into) {
 		into.from(this);
 		return into;
 	}

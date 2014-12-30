@@ -3,45 +3,51 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
+
+import java.util.UUID;
+
+import org.jooq.test.h2.generatedclasses.tables.interfaces.ITExoticTypes;
+
+
 /**
  * This is a POJO for table T_EXOTIC_TYPES.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TExoticTypes implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITExoticTypes {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class TExoticTypes implements ITExoticTypes {
 
-	private static final long serialVersionUID = -1746317593;
+	private static final long serialVersionUID = -1616922424;
 
-	private java.lang.Integer id;
-	private java.util.UUID    uu;
+	private Integer id;
+	private UUID    uu;
 
 	public TExoticTypes() {}
 
 	public TExoticTypes(
-		java.lang.Integer id,
-		java.util.UUID    uu
+		Integer id,
+		UUID    uu
 	) {
 		this.id = id;
 		this.uu = uu;
 	}
 
 	@Override
-	public java.lang.Integer getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public TExoticTypes setId(java.lang.Integer id) {
+	public TExoticTypes setId(Integer id) {
 		this.id = id;
 		return this;
 	}
 
 	@Override
-	public java.util.UUID getUu() {
+	public UUID getUu() {
 		return this.uu;
 	}
 
 	@Override
-	public TExoticTypes setUu(java.util.UUID uu) {
+	public TExoticTypes setUu(UUID uu) {
 		this.uu = uu;
 		return this;
 	}
@@ -54,7 +60,7 @@ public class TExoticTypes implements org.jooq.test.h2.generatedclasses.tables.in
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITExoticTypes from) {
+	public void from(ITExoticTypes from) {
 		setId(from.getId());
 		setUu(from.getUu());
 	}
@@ -63,7 +69,7 @@ public class TExoticTypes implements org.jooq.test.h2.generatedclasses.tables.in
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITExoticTypes> E into(E into) {
+	public <E extends ITExoticTypes> E into(E into) {
 		into.from(this);
 		return into;
 	}

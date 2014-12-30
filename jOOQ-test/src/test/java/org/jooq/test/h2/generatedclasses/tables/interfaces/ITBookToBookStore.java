@@ -3,41 +3,45 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.interfaces;
 
+
+import java.io.Serializable;
+
+
 /**
  * An m:n relation between books and book stores
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public interface ITBookToBookStore extends java.io.Serializable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public interface ITBookToBookStore extends Serializable {
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
 	 */
-	public ITBookToBookStore setBookStoreName(java.lang.String value);
+	public ITBookToBookStore setBookStoreName(String value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
 	 */
-	public java.lang.String getBookStoreName();
+	public String getBookStoreName();
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. The book ID
 	 */
-	public ITBookToBookStore setBookId(java.lang.Integer value);
+	public ITBookToBookStore setBookId(Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. The book ID
 	 */
-	public java.lang.Integer getBookId();
+	public Integer getBookId();
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.STOCK</code>. The number of books on stock
 	 */
-	public ITBookToBookStore setStock(java.lang.Integer value);
+	public ITBookToBookStore setStock(Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.STOCK</code>. The number of books on stock
 	 */
-	public java.lang.Integer getStock();
+	public Integer getStock();
 
 	// -------------------------------------------------------------------------
 	// FROM and INTO

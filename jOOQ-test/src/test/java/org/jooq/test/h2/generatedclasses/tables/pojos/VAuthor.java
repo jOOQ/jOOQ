@@ -3,30 +3,36 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
+
+import java.sql.Date;
+
+import org.jooq.test.h2.generatedclasses.tables.interfaces.IVAuthor;
+
+
 /**
  * This is a POJO for table V_AUTHOR.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class VAuthor implements org.jooq.test.h2.generatedclasses.tables.interfaces.IVAuthor {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class VAuthor implements IVAuthor {
 
-	private static final long serialVersionUID = 873972536;
+	private static final long serialVersionUID = 1569828418;
 
-	private java.lang.Integer id;
-	private java.lang.String  firstName;
-	private java.lang.String  lastName;
-	private java.sql.Date     dateOfBirth;
-	private java.lang.Integer yearOfBirth;
-	private java.lang.String  address;
+	private Integer id;
+	private String  firstName;
+	private String  lastName;
+	private Date    dateOfBirth;
+	private Integer yearOfBirth;
+	private String  address;
 
 	public VAuthor() {}
 
 	public VAuthor(
-		java.lang.Integer id,
-		java.lang.String  firstName,
-		java.lang.String  lastName,
-		java.sql.Date     dateOfBirth,
-		java.lang.Integer yearOfBirth,
-		java.lang.String  address
+		Integer id,
+		String  firstName,
+		String  lastName,
+		Date    dateOfBirth,
+		Integer yearOfBirth,
+		String  address
 	) {
 		this.id = id;
 		this.firstName = firstName;
@@ -37,67 +43,67 @@ public class VAuthor implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public java.lang.Integer getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public VAuthor setId(java.lang.Integer id) {
+	public VAuthor setId(Integer id) {
 		this.id = id;
 		return this;
 	}
 
 	@Override
-	public java.lang.String getFirstName() {
+	public String getFirstName() {
 		return this.firstName;
 	}
 
 	@Override
-	public VAuthor setFirstName(java.lang.String firstName) {
+	public VAuthor setFirstName(String firstName) {
 		this.firstName = firstName;
 		return this;
 	}
 
 	@Override
-	public java.lang.String getLastName() {
+	public String getLastName() {
 		return this.lastName;
 	}
 
 	@Override
-	public VAuthor setLastName(java.lang.String lastName) {
+	public VAuthor setLastName(String lastName) {
 		this.lastName = lastName;
 		return this;
 	}
 
 	@Override
-	public java.sql.Date getDateOfBirth() {
+	public Date getDateOfBirth() {
 		return this.dateOfBirth;
 	}
 
 	@Override
-	public VAuthor setDateOfBirth(java.sql.Date dateOfBirth) {
+	public VAuthor setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getYearOfBirth() {
+	public Integer getYearOfBirth() {
 		return this.yearOfBirth;
 	}
 
 	@Override
-	public VAuthor setYearOfBirth(java.lang.Integer yearOfBirth) {
+	public VAuthor setYearOfBirth(Integer yearOfBirth) {
 		this.yearOfBirth = yearOfBirth;
 		return this;
 	}
 
 	@Override
-	public java.lang.String getAddress() {
+	public String getAddress() {
 		return this.address;
 	}
 
 	@Override
-	public VAuthor setAddress(java.lang.String address) {
+	public VAuthor setAddress(String address) {
 		this.address = address;
 		return this;
 	}
@@ -110,7 +116,7 @@ public class VAuthor implements org.jooq.test.h2.generatedclasses.tables.interfa
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.IVAuthor from) {
+	public void from(IVAuthor from) {
 		setId(from.getId());
 		setFirstName(from.getFirstName());
 		setLastName(from.getLastName());
@@ -123,7 +129,7 @@ public class VAuthor implements org.jooq.test.h2.generatedclasses.tables.interfa
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.IVAuthor> E into(E into) {
+	public <E extends IVAuthor> E into(E into) {
 		into.from(this);
 		return into;
 	}

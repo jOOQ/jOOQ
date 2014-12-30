@@ -3,17 +3,34 @@
  */
 package org.jooq.test.h2.generatedclasses;
 
+
+import org.jooq.Configuration;
+import org.jooq.Field;
+import org.jooq.Result;
+import org.jooq.test.h2.generatedclasses.routines.F1256;
+import org.jooq.test.h2.generatedclasses.routines.F317;
+import org.jooq.test.h2.generatedclasses.routines.FArrays1;
+import org.jooq.test.h2.generatedclasses.routines.FArrays2;
+import org.jooq.test.h2.generatedclasses.routines.FArrays3;
+import org.jooq.test.h2.generatedclasses.routines.FAuthorExists;
+import org.jooq.test.h2.generatedclasses.routines.FGetOneCursor;
+import org.jooq.test.h2.generatedclasses.routines.FNumber;
+import org.jooq.test.h2.generatedclasses.routines.FOne;
+import org.jooq.test.h2.generatedclasses.routines.PCreateAuthor;
+import org.jooq.test.h2.generatedclasses.routines.PCreateAuthorByName;
+
+
 /**
  * Convenience access to all stored procedures and functions in PUBLIC
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Routines {
 
 	/**
 	 * Call <code>PUBLIC.F1256</code>
 	 */
-	public static java.lang.String f1256(org.jooq.Configuration configuration, java.lang.String p1) {
-		org.jooq.test.h2.generatedclasses.routines.F1256 f = new org.jooq.test.h2.generatedclasses.routines.F1256();
+	public static String f1256(Configuration configuration, String p1) {
+		F1256 f = new F1256();
 		f.setP1(p1);
 
 		f.execute(configuration);
@@ -23,8 +40,8 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F1256</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> f1256(java.lang.String p1) {
-		org.jooq.test.h2.generatedclasses.routines.F1256 f = new org.jooq.test.h2.generatedclasses.routines.F1256();
+	public static Field<String> f1256(String p1) {
+		F1256 f = new F1256();
 		f.setP1(p1);
 
 		return f.asField();
@@ -33,8 +50,8 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F1256</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> f1256(org.jooq.Field<java.lang.String> p1) {
-		org.jooq.test.h2.generatedclasses.routines.F1256 f = new org.jooq.test.h2.generatedclasses.routines.F1256();
+	public static Field<String> f1256(Field<String> p1) {
+		F1256 f = new F1256();
 		f.setP1(p1);
 
 		return f.asField();
@@ -43,8 +60,8 @@ public class Routines {
 	/**
 	 * Call <code>PUBLIC.F317</code>
 	 */
-	public static java.lang.Integer f317(org.jooq.Configuration configuration, java.lang.Integer p1, java.lang.Integer p2, java.lang.Integer p3, java.lang.Integer p4) {
-		org.jooq.test.h2.generatedclasses.routines.F317 f = new org.jooq.test.h2.generatedclasses.routines.F317();
+	public static Integer f317(Configuration configuration, Integer p1, Integer p2, Integer p3, Integer p4) {
+		F317 f = new F317();
 		f.setP1(p1);
 		f.setP2(p2);
 		f.setP3(p3);
@@ -57,8 +74,8 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F317</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Integer> f317(java.lang.Integer p1, java.lang.Integer p2, java.lang.Integer p3, java.lang.Integer p4) {
-		org.jooq.test.h2.generatedclasses.routines.F317 f = new org.jooq.test.h2.generatedclasses.routines.F317();
+	public static Field<Integer> f317(Integer p1, Integer p2, Integer p3, Integer p4) {
+		F317 f = new F317();
 		f.setP1(p1);
 		f.setP2(p2);
 		f.setP3(p3);
@@ -70,8 +87,8 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F317</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Integer> f317(org.jooq.Field<java.lang.Integer> p1, org.jooq.Field<java.lang.Integer> p2, org.jooq.Field<java.lang.Integer> p3, org.jooq.Field<java.lang.Integer> p4) {
-		org.jooq.test.h2.generatedclasses.routines.F317 f = new org.jooq.test.h2.generatedclasses.routines.F317();
+	public static Field<Integer> f317(Field<Integer> p1, Field<Integer> p2, Field<Integer> p3, Field<Integer> p4) {
+		F317 f = new F317();
 		f.setP1(p1);
 		f.setP2(p2);
 		f.setP3(p3);
@@ -83,8 +100,8 @@ public class Routines {
 	/**
 	 * Call <code>PUBLIC.F_ARRAYS1</code>
 	 */
-	public static java.lang.Object[] fArrays1(org.jooq.Configuration configuration, java.lang.Object[] p1) {
-		org.jooq.test.h2.generatedclasses.routines.FArrays1 f = new org.jooq.test.h2.generatedclasses.routines.FArrays1();
+	public static Object[] fArrays1(Configuration configuration, Object[] p1) {
+		FArrays1 f = new FArrays1();
 		f.setP1(p1);
 
 		f.execute(configuration);
@@ -94,8 +111,8 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_ARRAYS1</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Object[]> fArrays1(java.lang.Object[] p1) {
-		org.jooq.test.h2.generatedclasses.routines.FArrays1 f = new org.jooq.test.h2.generatedclasses.routines.FArrays1();
+	public static Field<Object[]> fArrays1(Object[] p1) {
+		FArrays1 f = new FArrays1();
 		f.setP1(p1);
 
 		return f.asField();
@@ -104,8 +121,8 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_ARRAYS1</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Object[]> fArrays1(org.jooq.Field<java.lang.Object[]> p1) {
-		org.jooq.test.h2.generatedclasses.routines.FArrays1 f = new org.jooq.test.h2.generatedclasses.routines.FArrays1();
+	public static Field<Object[]> fArrays1(Field<Object[]> p1) {
+		FArrays1 f = new FArrays1();
 		f.setP1(p1);
 
 		return f.asField();
@@ -114,8 +131,8 @@ public class Routines {
 	/**
 	 * Call <code>PUBLIC.F_ARRAYS2</code>
 	 */
-	public static java.lang.Object[] fArrays2(org.jooq.Configuration configuration, java.lang.Object[] p1) {
-		org.jooq.test.h2.generatedclasses.routines.FArrays2 f = new org.jooq.test.h2.generatedclasses.routines.FArrays2();
+	public static Object[] fArrays2(Configuration configuration, Object[] p1) {
+		FArrays2 f = new FArrays2();
 		f.setP1(p1);
 
 		f.execute(configuration);
@@ -125,8 +142,8 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_ARRAYS2</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Object[]> fArrays2(java.lang.Object[] p1) {
-		org.jooq.test.h2.generatedclasses.routines.FArrays2 f = new org.jooq.test.h2.generatedclasses.routines.FArrays2();
+	public static Field<Object[]> fArrays2(Object[] p1) {
+		FArrays2 f = new FArrays2();
 		f.setP1(p1);
 
 		return f.asField();
@@ -135,8 +152,8 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_ARRAYS2</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Object[]> fArrays2(org.jooq.Field<java.lang.Object[]> p1) {
-		org.jooq.test.h2.generatedclasses.routines.FArrays2 f = new org.jooq.test.h2.generatedclasses.routines.FArrays2();
+	public static Field<Object[]> fArrays2(Field<Object[]> p1) {
+		FArrays2 f = new FArrays2();
 		f.setP1(p1);
 
 		return f.asField();
@@ -145,8 +162,8 @@ public class Routines {
 	/**
 	 * Call <code>PUBLIC.F_ARRAYS3</code>
 	 */
-	public static java.lang.Object[] fArrays3(org.jooq.Configuration configuration, java.lang.Object[] p1) {
-		org.jooq.test.h2.generatedclasses.routines.FArrays3 f = new org.jooq.test.h2.generatedclasses.routines.FArrays3();
+	public static Object[] fArrays3(Configuration configuration, Object[] p1) {
+		FArrays3 f = new FArrays3();
 		f.setP1(p1);
 
 		f.execute(configuration);
@@ -156,8 +173,8 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_ARRAYS3</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Object[]> fArrays3(java.lang.Object[] p1) {
-		org.jooq.test.h2.generatedclasses.routines.FArrays3 f = new org.jooq.test.h2.generatedclasses.routines.FArrays3();
+	public static Field<Object[]> fArrays3(Object[] p1) {
+		FArrays3 f = new FArrays3();
 		f.setP1(p1);
 
 		return f.asField();
@@ -166,8 +183,8 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_ARRAYS3</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Object[]> fArrays3(org.jooq.Field<java.lang.Object[]> p1) {
-		org.jooq.test.h2.generatedclasses.routines.FArrays3 f = new org.jooq.test.h2.generatedclasses.routines.FArrays3();
+	public static Field<Object[]> fArrays3(Field<Object[]> p1) {
+		FArrays3 f = new FArrays3();
 		f.setP1(p1);
 
 		return f.asField();
@@ -176,8 +193,8 @@ public class Routines {
 	/**
 	 * Call <code>PUBLIC.F_AUTHOR_EXISTS</code>
 	 */
-	public static java.lang.Integer fAuthorExists(org.jooq.Configuration configuration, java.lang.String p2) {
-		org.jooq.test.h2.generatedclasses.routines.FAuthorExists f = new org.jooq.test.h2.generatedclasses.routines.FAuthorExists();
+	public static Integer fAuthorExists(Configuration configuration, String p2) {
+		FAuthorExists f = new FAuthorExists();
 		f.setP2(p2);
 
 		f.execute(configuration);
@@ -187,8 +204,8 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_AUTHOR_EXISTS</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Integer> fAuthorExists(java.lang.String p2) {
-		org.jooq.test.h2.generatedclasses.routines.FAuthorExists f = new org.jooq.test.h2.generatedclasses.routines.FAuthorExists();
+	public static Field<Integer> fAuthorExists(String p2) {
+		FAuthorExists f = new FAuthorExists();
 		f.setP2(p2);
 
 		return f.asField();
@@ -197,8 +214,8 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_AUTHOR_EXISTS</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Integer> fAuthorExists(org.jooq.Field<java.lang.String> p2) {
-		org.jooq.test.h2.generatedclasses.routines.FAuthorExists f = new org.jooq.test.h2.generatedclasses.routines.FAuthorExists();
+	public static Field<Integer> fAuthorExists(Field<String> p2) {
+		FAuthorExists f = new FAuthorExists();
 		f.setP2(p2);
 
 		return f.asField();
@@ -207,8 +224,8 @@ public class Routines {
 	/**
 	 * Call <code>PUBLIC.F_GET_ONE_CURSOR</code>
 	 */
-	public static org.jooq.Result<org.jooq.Record> fGetOneCursor(org.jooq.Configuration configuration, java.lang.Object[] p2) {
-		org.jooq.test.h2.generatedclasses.routines.FGetOneCursor f = new org.jooq.test.h2.generatedclasses.routines.FGetOneCursor();
+	public static Result<org.jooq.Record> fGetOneCursor(Configuration configuration, Object[] p2) {
+		FGetOneCursor f = new FGetOneCursor();
 		f.setP2(p2);
 
 		f.execute(configuration);
@@ -218,8 +235,8 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_GET_ONE_CURSOR</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.Result<org.jooq.Record>> fGetOneCursor(java.lang.Object[] p2) {
-		org.jooq.test.h2.generatedclasses.routines.FGetOneCursor f = new org.jooq.test.h2.generatedclasses.routines.FGetOneCursor();
+	public static Field<Result<org.jooq.Record>> fGetOneCursor(Object[] p2) {
+		FGetOneCursor f = new FGetOneCursor();
 		f.setP2(p2);
 
 		return f.asField();
@@ -228,8 +245,8 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_GET_ONE_CURSOR</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.Result<org.jooq.Record>> fGetOneCursor(org.jooq.Field<java.lang.Object[]> p2) {
-		org.jooq.test.h2.generatedclasses.routines.FGetOneCursor f = new org.jooq.test.h2.generatedclasses.routines.FGetOneCursor();
+	public static Field<Result<org.jooq.Record>> fGetOneCursor(Field<Object[]> p2) {
+		FGetOneCursor f = new FGetOneCursor();
 		f.setP2(p2);
 
 		return f.asField();
@@ -238,8 +255,8 @@ public class Routines {
 	/**
 	 * Call <code>PUBLIC.F_NUMBER</code>
 	 */
-	public static java.lang.Integer fNumber(org.jooq.Configuration configuration, java.lang.Integer p1) {
-		org.jooq.test.h2.generatedclasses.routines.FNumber f = new org.jooq.test.h2.generatedclasses.routines.FNumber();
+	public static Integer fNumber(Configuration configuration, Integer p1) {
+		FNumber f = new FNumber();
 		f.setP1(p1);
 
 		f.execute(configuration);
@@ -249,8 +266,8 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_NUMBER</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Integer> fNumber(java.lang.Integer p1) {
-		org.jooq.test.h2.generatedclasses.routines.FNumber f = new org.jooq.test.h2.generatedclasses.routines.FNumber();
+	public static Field<Integer> fNumber(Integer p1) {
+		FNumber f = new FNumber();
 		f.setP1(p1);
 
 		return f.asField();
@@ -259,8 +276,8 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_NUMBER</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Integer> fNumber(org.jooq.Field<java.lang.Integer> p1) {
-		org.jooq.test.h2.generatedclasses.routines.FNumber f = new org.jooq.test.h2.generatedclasses.routines.FNumber();
+	public static Field<Integer> fNumber(Field<Integer> p1) {
+		FNumber f = new FNumber();
 		f.setP1(p1);
 
 		return f.asField();
@@ -269,8 +286,8 @@ public class Routines {
 	/**
 	 * Call <code>PUBLIC.F_ONE</code>
 	 */
-	public static java.lang.Integer fOne(org.jooq.Configuration configuration) {
-		org.jooq.test.h2.generatedclasses.routines.FOne f = new org.jooq.test.h2.generatedclasses.routines.FOne();
+	public static Integer fOne(Configuration configuration) {
+		FOne f = new FOne();
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -279,8 +296,8 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_ONE</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Integer> fOne() {
-		org.jooq.test.h2.generatedclasses.routines.FOne f = new org.jooq.test.h2.generatedclasses.routines.FOne();
+	public static Field<Integer> fOne() {
+		FOne f = new FOne();
 
 		return f.asField();
 	}
@@ -288,8 +305,8 @@ public class Routines {
 	/**
 	 * Call <code>PUBLIC.P_CREATE_AUTHOR</code>
 	 */
-	public static void pCreateAuthor(org.jooq.Configuration configuration) {
-		org.jooq.test.h2.generatedclasses.routines.PCreateAuthor p = new org.jooq.test.h2.generatedclasses.routines.PCreateAuthor();
+	public static void pCreateAuthor(Configuration configuration) {
+		PCreateAuthor p = new PCreateAuthor();
 
 		p.execute(configuration);
 	}
@@ -297,8 +314,8 @@ public class Routines {
 	/**
 	 * Call <code>PUBLIC.P_CREATE_AUTHOR_BY_NAME</code>
 	 */
-	public static void pCreateAuthorByName(org.jooq.Configuration configuration, java.lang.String p2, java.lang.String p3) {
-		org.jooq.test.h2.generatedclasses.routines.PCreateAuthorByName p = new org.jooq.test.h2.generatedclasses.routines.PCreateAuthorByName();
+	public static void pCreateAuthorByName(Configuration configuration, String p2, String p3) {
+		PCreateAuthorByName p = new PCreateAuthorByName();
 		p.setP2(p2);
 		p.setP3(p3);
 

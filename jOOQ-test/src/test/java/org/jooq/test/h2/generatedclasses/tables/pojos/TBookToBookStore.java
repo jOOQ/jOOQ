@@ -3,26 +3,30 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
+
+import org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookToBookStore;
+
+
 /**
  * This is a POJO for table T_BOOK_TO_BOOK_STORE.
  * <p>
  * An m:n relation between books and book stores
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TBookToBookStore implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookToBookStore {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class TBookToBookStore implements ITBookToBookStore {
 
-	private static final long serialVersionUID = 1771342944;
+	private static final long serialVersionUID = 1629537799;
 
-	private java.lang.String  bookStoreName;
-	private java.lang.Integer bookId;
-	private java.lang.Integer stock;
+	private String  bookStoreName;
+	private Integer bookId;
+	private Integer stock;
 
 	public TBookToBookStore() {}
 
 	public TBookToBookStore(
-		java.lang.String  bookStoreName,
-		java.lang.Integer bookId,
-		java.lang.Integer stock
+		String  bookStoreName,
+		Integer bookId,
+		Integer stock
 	) {
 		this.bookStoreName = bookStoreName;
 		this.bookId = bookId;
@@ -30,34 +34,34 @@ public class TBookToBookStore implements org.jooq.test.h2.generatedclasses.table
 	}
 
 	@Override
-	public java.lang.String getBookStoreName() {
+	public String getBookStoreName() {
 		return this.bookStoreName;
 	}
 
 	@Override
-	public TBookToBookStore setBookStoreName(java.lang.String bookStoreName) {
+	public TBookToBookStore setBookStoreName(String bookStoreName) {
 		this.bookStoreName = bookStoreName;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getBookId() {
+	public Integer getBookId() {
 		return this.bookId;
 	}
 
 	@Override
-	public TBookToBookStore setBookId(java.lang.Integer bookId) {
+	public TBookToBookStore setBookId(Integer bookId) {
 		this.bookId = bookId;
 		return this;
 	}
 
 	@Override
-	public java.lang.Integer getStock() {
+	public Integer getStock() {
 		return this.stock;
 	}
 
 	@Override
-	public TBookToBookStore setStock(java.lang.Integer stock) {
+	public TBookToBookStore setStock(Integer stock) {
 		this.stock = stock;
 		return this;
 	}
@@ -70,7 +74,7 @@ public class TBookToBookStore implements org.jooq.test.h2.generatedclasses.table
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookToBookStore from) {
+	public void from(ITBookToBookStore from) {
 		setBookStoreName(from.getBookStoreName());
 		setBookId(from.getBookId());
 		setStock(from.getStock());
@@ -80,7 +84,7 @@ public class TBookToBookStore implements org.jooq.test.h2.generatedclasses.table
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookToBookStore> E into(E into) {
+	public <E extends ITBookToBookStore> E into(E into) {
 		into.from(this);
 		return into;
 	}

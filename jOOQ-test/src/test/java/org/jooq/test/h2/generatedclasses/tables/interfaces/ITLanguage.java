@@ -3,51 +3,55 @@
  */
 package org.jooq.test.h2.generatedclasses.tables.interfaces;
 
+
+import java.io.Serializable;
+
+
 /**
  * An entity holding language master data
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public interface ITLanguage extends java.io.Serializable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public interface ITLanguage extends Serializable {
 
 	/**
 	 * Setter for <code>PUBLIC.T_LANGUAGE.CD</code>. The language ISO code
 	 */
-	public ITLanguage setCd(java.lang.String value);
+	public ITLanguage setCd(String value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_LANGUAGE.CD</code>. The language ISO code
 	 */
-	public java.lang.String getCd();
+	public String getCd();
 
 	/**
 	 * Setter for <code>PUBLIC.T_LANGUAGE.DESCRIPTION</code>. The language description
 	 */
-	public ITLanguage setDescription(java.lang.String value);
+	public ITLanguage setDescription(String value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_LANGUAGE.DESCRIPTION</code>. The language description
 	 */
-	public java.lang.String getDescription();
+	public String getDescription();
 
 	/**
 	 * Setter for <code>PUBLIC.T_LANGUAGE.DESCRIPTION_ENGLISH</code>.
 	 */
-	public ITLanguage setDescriptionEnglish(java.lang.String value);
+	public ITLanguage setDescriptionEnglish(String value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_LANGUAGE.DESCRIPTION_ENGLISH</code>.
 	 */
-	public java.lang.String getDescriptionEnglish();
+	public String getDescriptionEnglish();
 
 	/**
 	 * Setter for <code>PUBLIC.T_LANGUAGE.ID</code>. The language ID
 	 */
-	public ITLanguage setId(java.lang.Integer value);
+	public ITLanguage setId(Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_LANGUAGE.ID</code>. The language ID
 	 */
-	public java.lang.Integer getId();
+	public Integer getId();
 
 	// -------------------------------------------------------------------------
 	// FROM and INTO

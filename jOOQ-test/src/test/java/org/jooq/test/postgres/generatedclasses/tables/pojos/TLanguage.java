@@ -3,24 +3,28 @@
  */
 package org.jooq.test.postgres.generatedclasses.tables.pojos;
 
+
+import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITLanguage;
+
+
 /**
  * An entity holding language master data
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TLanguage implements org.jooq.test.postgres.generatedclasses.tables.interfaces.ITLanguage {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class TLanguage implements ITLanguage {
 
-	private static final long serialVersionUID = -1899874211;
+	private static final long serialVersionUID = -1901961290;
 
-	private final java.lang.String  cd;
-	private final java.lang.String  description;
-	private final java.lang.String  descriptionEnglish;
-	private final java.lang.Integer id;
+	private final String  cd;
+	private final String  description;
+	private final String  descriptionEnglish;
+	private final Integer id;
 
 	public TLanguage(
-		java.lang.String  cd,
-		java.lang.String  description,
-		java.lang.String  descriptionEnglish,
-		java.lang.Integer id
+		String  cd,
+		String  description,
+		String  descriptionEnglish,
+		Integer id
 	) {
 		this.cd = cd;
 		this.description = description;
@@ -29,22 +33,22 @@ public class TLanguage implements org.jooq.test.postgres.generatedclasses.tables
 	}
 
 	@Override
-	public java.lang.String getCd() {
+	public String getCd() {
 		return this.cd;
 	}
 
 	@Override
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return this.description;
 	}
 
 	@Override
-	public java.lang.String getDescriptionEnglish() {
+	public String getDescriptionEnglish() {
 		return this.descriptionEnglish;
 	}
 
 	@Override
-	public java.lang.Integer getId() {
+	public Integer getId() {
 		return this.id;
 	}
 }

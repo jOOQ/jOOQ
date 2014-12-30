@@ -3,152 +3,164 @@
  */
 package org.jooq.test.oracle.generatedclasses.test.tables.daos;
 
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.List;
+
+import org.jooq.Configuration;
+import org.jooq.Record2;
+import org.jooq.impl.DAOImpl;
+import org.jooq.test.oracle.generatedclasses.test.tables.XUnused;
+import org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord;
+
+
 /**
  * An unused table in the same schema.
  * 
  * "Its comments contain special characters"
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class XUnusedDao extends org.jooq.impl.DAOImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord, org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused, org.jooq.Record2<java.lang.Integer, java.lang.String>> {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class XUnusedDao extends DAOImpl<XUnusedRecord, org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused, Record2<Integer, String>> {
 
 	/**
 	 * Create a new XUnusedDao without any configuration
 	 */
 	public XUnusedDao() {
-		super(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED, org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused.class);
+		super(XUnused.X_UNUSED, org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused.class);
 	}
 
 	/**
 	 * Create a new XUnusedDao with an attached configuration
 	 */
-	public XUnusedDao(org.jooq.Configuration configuration) {
-		super(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED, org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused.class, configuration);
+	public XUnusedDao(Configuration configuration) {
+		super(XUnused.X_UNUSED, org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused.class, configuration);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected org.jooq.Record2<java.lang.Integer, java.lang.String> getId(org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused object) {
+	protected Record2<Integer, String> getId(org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused object) {
 		return compositeKeyRecord(object.getId(), object.getName());
 	}
 
 	/**
 	 * Fetch records that have <code>ID IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchById(java.lang.Integer... values) {
-		return fetch(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.ID, values);
+	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchById(Integer... values) {
+		return fetch(XUnused.X_UNUSED.ID, values);
 	}
 
 	/**
 	 * Fetch a unique record that has <code>ID = value</code>
 	 */
-	public org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused fetchOneById(java.lang.Integer value) {
-		return fetchOne(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.ID, value);
+	public org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused fetchOneById(Integer value) {
+		return fetchOne(XUnused.X_UNUSED.ID, value);
 	}
 
 	/**
 	 * Fetch records that have <code>NAME IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchByName(java.lang.String... values) {
-		return fetch(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.NAME, values);
+	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchByName(String... values) {
+		return fetch(XUnused.X_UNUSED.NAME, values);
 	}
 
 	/**
 	 * Fetch records that have <code>BIG_INTEGER IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchByBigInteger(java.math.BigInteger... values) {
-		return fetch(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.BIG_INTEGER, values);
+	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchByBigInteger(BigInteger... values) {
+		return fetch(XUnused.X_UNUSED.BIG_INTEGER, values);
 	}
 
 	/**
 	 * Fetch records that have <code>ID_REF IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchByIdRef(java.lang.Integer... values) {
-		return fetch(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.ID_REF, values);
+	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchByIdRef(Integer... values) {
+		return fetch(XUnused.X_UNUSED.ID_REF, values);
 	}
 
 	/**
 	 * Fetch records that have <code>CLASS IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchByClass(java.lang.Integer... values) {
-		return fetch(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.CLASS, values);
+	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchByClass(Integer... values) {
+		return fetch(XUnused.X_UNUSED.CLASS, values);
 	}
 
 	/**
 	 * Fetch records that have <code>FIELDS IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchByFields(java.lang.Integer... values) {
-		return fetch(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.FIELDS, values);
+	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchByFields(Integer... values) {
+		return fetch(XUnused.X_UNUSED.FIELDS, values);
 	}
 
 	/**
 	 * Fetch records that have <code>CONFIGURATION IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchByConfiguration(java.lang.Integer... values) {
-		return fetch(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.CONFIGURATION, values);
+	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchByConfiguration(Integer... values) {
+		return fetch(XUnused.X_UNUSED.CONFIGURATION, values);
 	}
 
 	/**
 	 * Fetch records that have <code>U_D_T IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchByUDT(java.lang.Integer... values) {
-		return fetch(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.U_D_T, values);
+	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchByUDT(Integer... values) {
+		return fetch(XUnused.X_UNUSED.U_D_T, values);
 	}
 
 	/**
 	 * Fetch records that have <code>META_DATA IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchByMetaData(java.lang.Integer... values) {
-		return fetch(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.META_DATA, values);
+	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchByMetaData(Integer... values) {
+		return fetch(XUnused.X_UNUSED.META_DATA, values);
 	}
 
 	/**
 	 * Fetch records that have <code>TYPE0 IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchByType0(java.lang.Integer... values) {
-		return fetch(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.TYPE0, values);
+	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchByType0(Integer... values) {
+		return fetch(XUnused.X_UNUSED.TYPE0, values);
 	}
 
 	/**
 	 * Fetch records that have <code>PRIMARY_KEY IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchByPrimaryKey(java.lang.Integer... values) {
-		return fetch(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.PRIMARY_KEY, values);
+	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchByPrimaryKey(Integer... values) {
+		return fetch(XUnused.X_UNUSED.PRIMARY_KEY, values);
 	}
 
 	/**
 	 * Fetch records that have <code>PRIMARYKEY IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchByPrimarykey(java.lang.Integer... values) {
-		return fetch(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.PRIMARYKEY, values);
+	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchByPrimarykey(Integer... values) {
+		return fetch(XUnused.X_UNUSED.PRIMARYKEY, values);
 	}
 
 	/**
 	 * Fetch records that have <code>NAME_REF IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchByNameRef(java.lang.String... values) {
-		return fetch(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.NAME_REF, values);
+	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchByNameRef(String... values) {
+		return fetch(XUnused.X_UNUSED.NAME_REF, values);
 	}
 
 	/**
 	 * Fetch records that have <code>FIELD 737 IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchByField_737(java.math.BigDecimal... values) {
-		return fetch(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.FIELD_737, values);
+	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchByField_737(BigDecimal... values) {
+		return fetch(XUnused.X_UNUSED.FIELD_737, values);
 	}
 
 	/**
 	 * Fetch records that have <code>MS_UNUSED_ID_REF IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchByMsUnusedIdRef(java.lang.Integer... values) {
-		return fetch(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.MS_UNUSED_ID_REF, values);
+	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchByMsUnusedIdRef(Integer... values) {
+		return fetch(XUnused.X_UNUSED.MS_UNUSED_ID_REF, values);
 	}
 
 	/**
 	 * Fetch records that have <code>MS_UNUSED_NAME_REF IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchByMsUnusedNameRef(java.lang.String... values) {
-		return fetch(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.MS_UNUSED_NAME_REF, values);
+	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.XUnused> fetchByMsUnusedNameRef(String... values) {
+		return fetch(XUnused.X_UNUSED.MS_UNUSED_NAME_REF, values);
 	}
 }

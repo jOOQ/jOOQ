@@ -3,24 +3,40 @@
  */
 package org.jooq.test.oracle.generatedclasses.multi_schema.packages;
 
+
+import org.jooq.Configuration;
+import org.jooq.Field;
+import org.jooq.impl.PackageImpl;
+import org.jooq.test.oracle.generatedclasses.multi_schema.MultiSchema;
+import org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.ActualObject;
+import org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.ActualTable;
+import org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.PublicObject;
+import org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.PublicTable;
+import org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.TestObject;
+import org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.TestTable;
+import org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.TestTransitive;
+import org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord;
+import org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord;
+
+
 /**
  * Convenience access to all stored procedures and functions in MS_SYNONYM_PACKAGE
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class MsSynonymPackage extends org.jooq.impl.PackageImpl {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class MsSynonymPackage extends PackageImpl {
 
-	private static final long serialVersionUID = 948586177;
+	private static final long serialVersionUID = -4559365;
 
 	/**
 	 * The reference instance of <code>MULTI_SCHEMA.MS_SYNONYM_PACKAGE</code>
 	 */
-	public static final org.jooq.test.oracle.generatedclasses.multi_schema.packages.MsSynonymPackage MS_SYNONYM_PACKAGE = new org.jooq.test.oracle.generatedclasses.multi_schema.packages.MsSynonymPackage();
+	public static final MsSynonymPackage MS_SYNONYM_PACKAGE = new MsSynonymPackage();
 
 	/**
 	 * Call <code>MULTI_SCHEMA.MS_SYNONYM_PACKAGE.ACTUAL_OBJECT</code>
 	 */
-	public static org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord actualObject(org.jooq.Configuration configuration) {
-		org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.ActualObject f = new org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.ActualObject();
+	public static NumberObjectRecord actualObject(Configuration configuration) {
+		ActualObject f = new ActualObject();
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -29,8 +45,8 @@ public class MsSynonymPackage extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MULTI_SCHEMA.MS_SYNONYM_PACKAGE.ACTUAL_OBJECT</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord> actualObject() {
-		org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.ActualObject f = new org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.ActualObject();
+	public static Field<NumberObjectRecord> actualObject() {
+		ActualObject f = new ActualObject();
 
 		return f.asField();
 	}
@@ -38,8 +54,8 @@ public class MsSynonymPackage extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MULTI_SCHEMA.MS_SYNONYM_PACKAGE.ACTUAL_TABLE</code>
 	 */
-	public static org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord actualTable(org.jooq.Configuration configuration) {
-		org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.ActualTable f = new org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.ActualTable();
+	public static NumberTableRecord actualTable(Configuration configuration) {
+		ActualTable f = new ActualTable();
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -48,8 +64,8 @@ public class MsSynonymPackage extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MULTI_SCHEMA.MS_SYNONYM_PACKAGE.ACTUAL_TABLE</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord> actualTable() {
-		org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.ActualTable f = new org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.ActualTable();
+	public static Field<NumberTableRecord> actualTable() {
+		ActualTable f = new ActualTable();
 
 		return f.asField();
 	}
@@ -57,8 +73,8 @@ public class MsSynonymPackage extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MULTI_SCHEMA.MS_SYNONYM_PACKAGE.PUBLIC_OBJECT</code>
 	 */
-	public static org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord publicObject(org.jooq.Configuration configuration) {
-		org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.PublicObject f = new org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.PublicObject();
+	public static NumberObjectRecord publicObject(Configuration configuration) {
+		PublicObject f = new PublicObject();
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -67,8 +83,8 @@ public class MsSynonymPackage extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MULTI_SCHEMA.MS_SYNONYM_PACKAGE.PUBLIC_OBJECT</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord> publicObject() {
-		org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.PublicObject f = new org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.PublicObject();
+	public static Field<NumberObjectRecord> publicObject() {
+		PublicObject f = new PublicObject();
 
 		return f.asField();
 	}
@@ -76,8 +92,8 @@ public class MsSynonymPackage extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MULTI_SCHEMA.MS_SYNONYM_PACKAGE.PUBLIC_TABLE</code>
 	 */
-	public static org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord publicTable(org.jooq.Configuration configuration) {
-		org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.PublicTable f = new org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.PublicTable();
+	public static NumberTableRecord publicTable(Configuration configuration) {
+		PublicTable f = new PublicTable();
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -86,8 +102,8 @@ public class MsSynonymPackage extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MULTI_SCHEMA.MS_SYNONYM_PACKAGE.PUBLIC_TABLE</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord> publicTable() {
-		org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.PublicTable f = new org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.PublicTable();
+	public static Field<NumberTableRecord> publicTable() {
+		PublicTable f = new PublicTable();
 
 		return f.asField();
 	}
@@ -95,8 +111,8 @@ public class MsSynonymPackage extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MULTI_SCHEMA.MS_SYNONYM_PACKAGE.TEST_OBJECT</code>
 	 */
-	public static org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord testObject(org.jooq.Configuration configuration) {
-		org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.TestObject f = new org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.TestObject();
+	public static NumberObjectRecord testObject(Configuration configuration) {
+		TestObject f = new TestObject();
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -105,8 +121,8 @@ public class MsSynonymPackage extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MULTI_SCHEMA.MS_SYNONYM_PACKAGE.TEST_OBJECT</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord> testObject() {
-		org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.TestObject f = new org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.TestObject();
+	public static Field<NumberObjectRecord> testObject() {
+		TestObject f = new TestObject();
 
 		return f.asField();
 	}
@@ -114,8 +130,8 @@ public class MsSynonymPackage extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MULTI_SCHEMA.MS_SYNONYM_PACKAGE.TEST_TABLE</code>
 	 */
-	public static org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord testTable(org.jooq.Configuration configuration) {
-		org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.TestTable f = new org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.TestTable();
+	public static NumberTableRecord testTable(Configuration configuration) {
+		TestTable f = new TestTable();
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -124,8 +140,8 @@ public class MsSynonymPackage extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MULTI_SCHEMA.MS_SYNONYM_PACKAGE.TEST_TABLE</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord> testTable() {
-		org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.TestTable f = new org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.TestTable();
+	public static Field<NumberTableRecord> testTable() {
+		TestTable f = new TestTable();
 
 		return f.asField();
 	}
@@ -133,8 +149,8 @@ public class MsSynonymPackage extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MULTI_SCHEMA.MS_SYNONYM_PACKAGE.TEST_TRANSITIVE</code>
 	 */
-	public static org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord testTransitive(org.jooq.Configuration configuration) {
-		org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.TestTransitive f = new org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.TestTransitive();
+	public static NumberObjectRecord testTransitive(Configuration configuration) {
+		TestTransitive f = new TestTransitive();
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -143,8 +159,8 @@ public class MsSynonymPackage extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MULTI_SCHEMA.MS_SYNONYM_PACKAGE.TEST_TRANSITIVE</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord> testTransitive() {
-		org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.TestTransitive f = new org.jooq.test.oracle.generatedclasses.multi_schema.packages.ms_synonym_package.TestTransitive();
+	public static Field<NumberObjectRecord> testTransitive() {
+		TestTransitive f = new TestTransitive();
 
 		return f.asField();
 	}
@@ -153,6 +169,6 @@ public class MsSynonymPackage extends org.jooq.impl.PackageImpl {
 	 * No further instances allowed
 	 */
 	private MsSynonymPackage() {
-		super("MS_SYNONYM_PACKAGE", org.jooq.test.oracle.generatedclasses.multi_schema.MultiSchema.MULTI_SCHEMA);
+		super("MS_SYNONYM_PACKAGE", MultiSchema.MULTI_SCHEMA);
 	}
 }

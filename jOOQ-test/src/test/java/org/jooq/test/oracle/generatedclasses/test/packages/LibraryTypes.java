@@ -3,23 +3,28 @@
  */
 package org.jooq.test.oracle.generatedclasses.test.packages;
 
+
+import org.jooq.impl.PackageImpl;
+import org.jooq.test.oracle.generatedclasses.test.Test;
+
+
 /**
  * Convenience access to all stored procedures and functions in LIBRARY_TYPES
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class LibraryTypes extends org.jooq.impl.PackageImpl {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class LibraryTypes extends PackageImpl {
 
-	private static final long serialVersionUID = -1030665326;
+	private static final long serialVersionUID = 1329778090;
 
 	/**
 	 * The reference instance of <code>TEST.LIBRARY_TYPES</code>
 	 */
-	public static final org.jooq.test.oracle.generatedclasses.test.packages.LibraryTypes LIBRARY_TYPES = new org.jooq.test.oracle.generatedclasses.test.packages.LibraryTypes();
+	public static final LibraryTypes LIBRARY_TYPES = new LibraryTypes();
 
 	/**
 	 * No further instances allowed
 	 */
 	private LibraryTypes() {
-		super("LIBRARY_TYPES", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
+		super("LIBRARY_TYPES", Test.TEST);
 	}
 }

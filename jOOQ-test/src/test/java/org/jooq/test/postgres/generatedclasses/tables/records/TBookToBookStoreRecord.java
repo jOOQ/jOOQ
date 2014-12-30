@@ -3,18 +3,29 @@
  */
 package org.jooq.test.postgres.generatedclasses.tables.records;
 
+
+import org.jooq.Field;
+import org.jooq.Record2;
+import org.jooq.Record3;
+import org.jooq.Row;
+import org.jooq.Row3;
+import org.jooq.impl.UpdatableRecordImpl;
+import org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore;
+import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITBookToBookStore;
+
+
 /**
  * An m:n relation between books and book stores
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer>, org.jooq.test.postgres.generatedclasses.tables.interfaces.ITBookToBookStore {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class TBookToBookStoreRecord extends UpdatableRecordImpl<TBookToBookStoreRecord> implements Record3<String, Integer, Integer>, ITBookToBookStore {
 
-	private static final long serialVersionUID = -484182459;
+	private static final long serialVersionUID = -385125166;
 
 	/**
 	 * Setter for <code>public.t_book_to_book_store.book_store_name</code>. The book store name
 	 */
-	public TBookToBookStoreRecord setBookStoreName(java.lang.String value) {
+	public TBookToBookStoreRecord setBookStoreName(String value) {
 		setValue(0, value);
 		return this;
 	}
@@ -23,14 +34,14 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * Getter for <code>public.t_book_to_book_store.book_store_name</code>. The book store name
 	 */
 	@Override
-	public java.lang.String getBookStoreName() {
-		return (java.lang.String) getValue(0);
+	public String getBookStoreName() {
+		return (String) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>public.t_book_to_book_store.book_id</code>. The book ID
 	 */
-	public TBookToBookStoreRecord setBookId(java.lang.Integer value) {
+	public TBookToBookStoreRecord setBookId(Integer value) {
 		setValue(1, value);
 		return this;
 	}
@@ -39,14 +50,14 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * Getter for <code>public.t_book_to_book_store.book_id</code>. The book ID
 	 */
 	@Override
-	public java.lang.Integer getBookId() {
-		return (java.lang.Integer) getValue(1);
+	public Integer getBookId() {
+		return (Integer) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>public.t_book_to_book_store.stock</code>. The number of books on stock
 	 */
-	public TBookToBookStoreRecord setStock(java.lang.Integer value) {
+	public TBookToBookStoreRecord setStock(Integer value) {
 		setValue(2, value);
 		return this;
 	}
@@ -55,8 +66,8 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * Getter for <code>public.t_book_to_book_store.stock</code>. The number of books on stock
 	 */
 	@Override
-	public java.lang.Integer getStock() {
-		return (java.lang.Integer) getValue(2);
+	public Integer getStock() {
+		return (Integer) getValue(2);
 	}
 
 	// -------------------------------------------------------------------------
@@ -67,8 +78,8 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Record2<java.lang.String, java.lang.Integer> key() {
-		return (org.jooq.Record2) super.key();
+	public Record2<String, Integer> key() {
+		return (Record2) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -79,47 +90,47 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row3<java.lang.String, java.lang.Integer, java.lang.Integer> fieldsRow() {
-		return (org.jooq.Row3) super.fieldsRow();
+	public Row3<String, Integer, Integer> fieldsRow() {
+		return (Row3) super.fieldsRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row3<java.lang.String, java.lang.Integer, java.lang.Integer> valuesRow() {
-		return (org.jooq.Row3) super.valuesRow();
+	public Row3<String, Integer, Integer> valuesRow() {
+		return (Row3) super.valuesRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.String> field1() {
-		return org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME;
+	public Field<String> field1() {
+		return TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.Integer> field2() {
-		return org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID;
+	public Field<Integer> field2() {
+		return TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.Integer> field3() {
-		return org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.STOCK;
+	public Field<Integer> field3() {
+		return TBookToBookStore.T_BOOK_TO_BOOK_STORE.STOCK;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.String value1() {
+	public String value1() {
 		return getBookStoreName();
 	}
 
@@ -127,7 +138,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.Integer value2() {
+	public Integer value2() {
 		return getBookId();
 	}
 
@@ -135,7 +146,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.Integer value3() {
+	public Integer value3() {
 		return getStock();
 	}
 
@@ -143,7 +154,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TBookToBookStoreRecord value1(java.lang.String value) {
+	public TBookToBookStoreRecord value1(String value) {
 		setBookStoreName(value);
 		return this;
 	}
@@ -152,7 +163,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TBookToBookStoreRecord value2(java.lang.Integer value) {
+	public TBookToBookStoreRecord value2(Integer value) {
 		setBookId(value);
 		return this;
 	}
@@ -161,7 +172,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TBookToBookStoreRecord value3(java.lang.Integer value) {
+	public TBookToBookStoreRecord value3(Integer value) {
 		setStock(value);
 		return this;
 	}
@@ -170,7 +181,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TBookToBookStoreRecord values(java.lang.String value1, java.lang.Integer value2, java.lang.Integer value3) {
+	public TBookToBookStoreRecord values(String value1, Integer value2, Integer value3) {
 		return this;
 	}
 
@@ -182,14 +193,14 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * Create a detached TBookToBookStoreRecord
 	 */
 	public TBookToBookStoreRecord() {
-		super(org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
+		super(TBookToBookStore.T_BOOK_TO_BOOK_STORE);
 	}
 
 	/**
 	 * Create a detached, initialised TBookToBookStoreRecord
 	 */
-	public TBookToBookStoreRecord(java.lang.String bookStoreName, java.lang.Integer bookId, java.lang.Integer stock) {
-		super(org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
+	public TBookToBookStoreRecord(String bookStoreName, Integer bookId, Integer stock) {
+		super(TBookToBookStore.T_BOOK_TO_BOOK_STORE);
 
 		setValue(0, bookStoreName);
 		setValue(1, bookId);

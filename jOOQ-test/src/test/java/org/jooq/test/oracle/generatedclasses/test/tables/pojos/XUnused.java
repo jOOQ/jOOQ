@@ -3,56 +3,69 @@
  */
 package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+
 /**
  * An unused table in the same schema.
  * 
  * "Its comments contain special characters"
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-@javax.persistence.Entity
-@javax.persistence.Table(name = "X_UNUSED", schema = "TEST", uniqueConstraints = {
-	@javax.persistence.UniqueConstraint(columnNames = {"ID", "NAME"})
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@Entity
+@Table(name = "X_UNUSED", schema = "TEST", uniqueConstraints = {
+	@UniqueConstraint(columnNames = {"ID", "NAME"})
 })
-public class XUnused implements java.io.Serializable {
+public class XUnused implements Serializable {
 
-	private static final long serialVersionUID = -365418446;
+	private static final long serialVersionUID = 987981906;
 
-	private java.lang.Integer    id;
-	private java.lang.String     name;
-	private java.math.BigInteger bigInteger;
-	private java.lang.Integer    idRef;
-	private java.lang.Integer    class_;
-	private java.lang.Integer    fields;
-	private java.lang.Integer    configuration;
-	private java.lang.Integer    uDT;
-	private java.lang.Integer    metaData;
-	private java.lang.Integer    type0;
-	private java.lang.Integer    primaryKey;
-	private java.lang.Integer    primarykey;
-	private java.lang.String     nameRef;
-	private java.math.BigDecimal field_737;
-	private java.lang.Integer    msUnusedIdRef;
-	private java.lang.String     msUnusedNameRef;
+	private Integer    id;
+	private String     name;
+	private BigInteger bigInteger;
+	private Integer    idRef;
+	private Integer    class_;
+	private Integer    fields;
+	private Integer    configuration;
+	private Integer    uDT;
+	private Integer    metaData;
+	private Integer    type0;
+	private Integer    primaryKey;
+	private Integer    primarykey;
+	private String     nameRef;
+	private BigDecimal field_737;
+	private Integer    msUnusedIdRef;
+	private String     msUnusedNameRef;
 
 	public XUnused() {}
 
 	public XUnused(
-		java.lang.Integer    id,
-		java.lang.String     name,
-		java.math.BigInteger bigInteger,
-		java.lang.Integer    idRef,
-		java.lang.Integer    class_,
-		java.lang.Integer    fields,
-		java.lang.Integer    configuration,
-		java.lang.Integer    uDT,
-		java.lang.Integer    metaData,
-		java.lang.Integer    type0,
-		java.lang.Integer    primaryKey,
-		java.lang.Integer    primarykey,
-		java.lang.String     nameRef,
-		java.math.BigDecimal field_737,
-		java.lang.Integer    msUnusedIdRef,
-		java.lang.String     msUnusedNameRef
+		Integer    id,
+		String     name,
+		BigInteger bigInteger,
+		Integer    idRef,
+		Integer    class_,
+		Integer    fields,
+		Integer    configuration,
+		Integer    uDT,
+		Integer    metaData,
+		Integer    type0,
+		Integer    primaryKey,
+		Integer    primarykey,
+		String     nameRef,
+		BigDecimal field_737,
+		Integer    msUnusedIdRef,
+		String     msUnusedNameRef
 	) {
 		this.id = id;
 		this.name = name;
@@ -72,152 +85,152 @@ public class XUnused implements java.io.Serializable {
 		this.msUnusedNameRef = msUnusedNameRef;
 	}
 
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
-	@javax.validation.constraints.NotNull
-	public java.lang.Integer getId() {
+	@Column(name = "ID", unique = true, nullable = false, precision = 7)
+	@NotNull
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(java.lang.Integer id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	@javax.persistence.Column(name = "NAME", nullable = false, length = 10)
-	@javax.validation.constraints.NotNull
-	@javax.validation.constraints.Size(max = 10)
-	public java.lang.String getName() {
+	@Column(name = "NAME", nullable = false, length = 10)
+	@NotNull
+	@Size(max = 10)
+	public String getName() {
 		return this.name;
 	}
 
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
-	@javax.persistence.Column(name = "BIG_INTEGER", precision = 38)
-	public java.math.BigInteger getBigInteger() {
+	@Column(name = "BIG_INTEGER", precision = 38)
+	public BigInteger getBigInteger() {
 		return this.bigInteger;
 	}
 
-	public void setBigInteger(java.math.BigInteger bigInteger) {
+	public void setBigInteger(BigInteger bigInteger) {
 		this.bigInteger = bigInteger;
 	}
 
-	@javax.persistence.Column(name = "ID_REF", precision = 7)
-	public java.lang.Integer getIdRef() {
+	@Column(name = "ID_REF", precision = 7)
+	public Integer getIdRef() {
 		return this.idRef;
 	}
 
-	public void setIdRef(java.lang.Integer idRef) {
+	public void setIdRef(Integer idRef) {
 		this.idRef = idRef;
 	}
 
-	@javax.persistence.Column(name = "CLASS", precision = 7)
-	public java.lang.Integer getClass_() {
+	@Column(name = "CLASS", precision = 7)
+	public Integer getClass_() {
 		return this.class_;
 	}
 
-	public void setClass_(java.lang.Integer class_) {
+	public void setClass_(Integer class_) {
 		this.class_ = class_;
 	}
 
-	@javax.persistence.Column(name = "FIELDS", precision = 7)
-	public java.lang.Integer getFields() {
+	@Column(name = "FIELDS", precision = 7)
+	public Integer getFields() {
 		return this.fields;
 	}
 
-	public void setFields(java.lang.Integer fields) {
+	public void setFields(Integer fields) {
 		this.fields = fields;
 	}
 
-	@javax.persistence.Column(name = "CONFIGURATION", precision = 7)
-	public java.lang.Integer getConfiguration() {
+	@Column(name = "CONFIGURATION", precision = 7)
+	public Integer getConfiguration() {
 		return this.configuration;
 	}
 
-	public void setConfiguration(java.lang.Integer configuration) {
+	public void setConfiguration(Integer configuration) {
 		this.configuration = configuration;
 	}
 
-	@javax.persistence.Column(name = "U_D_T", precision = 7)
-	public java.lang.Integer getUDT() {
+	@Column(name = "U_D_T", precision = 7)
+	public Integer getUDT() {
 		return this.uDT;
 	}
 
-	public void setUDT(java.lang.Integer uDT) {
+	public void setUDT(Integer uDT) {
 		this.uDT = uDT;
 	}
 
-	@javax.persistence.Column(name = "META_DATA", precision = 7)
-	public java.lang.Integer getMetaData() {
+	@Column(name = "META_DATA", precision = 7)
+	public Integer getMetaData() {
 		return this.metaData;
 	}
 
-	public void setMetaData(java.lang.Integer metaData) {
+	public void setMetaData(Integer metaData) {
 		this.metaData = metaData;
 	}
 
-	@javax.persistence.Column(name = "TYPE0", precision = 7)
-	public java.lang.Integer getType0() {
+	@Column(name = "TYPE0", precision = 7)
+	public Integer getType0() {
 		return this.type0;
 	}
 
-	public void setType0(java.lang.Integer type0) {
+	public void setType0(Integer type0) {
 		this.type0 = type0;
 	}
 
-	@javax.persistence.Column(name = "PRIMARY_KEY", precision = 7)
-	public java.lang.Integer getPrimaryKey_() {
+	@Column(name = "PRIMARY_KEY", precision = 7)
+	public Integer getPrimaryKey_() {
 		return this.primaryKey;
 	}
 
-	public void setPrimaryKey_(java.lang.Integer primaryKey) {
+	public void setPrimaryKey_(Integer primaryKey) {
 		this.primaryKey = primaryKey;
 	}
 
-	@javax.persistence.Column(name = "PRIMARYKEY", precision = 7)
-	public java.lang.Integer getPrimarykey() {
+	@Column(name = "PRIMARYKEY", precision = 7)
+	public Integer getPrimarykey() {
 		return this.primarykey;
 	}
 
-	public void setPrimarykey(java.lang.Integer primarykey) {
+	public void setPrimarykey(Integer primarykey) {
 		this.primarykey = primarykey;
 	}
 
-	@javax.persistence.Column(name = "NAME_REF", length = 10)
-	@javax.validation.constraints.Size(max = 10)
-	public java.lang.String getNameRef() {
+	@Column(name = "NAME_REF", length = 10)
+	@Size(max = 10)
+	public String getNameRef() {
 		return this.nameRef;
 	}
 
-	public void setNameRef(java.lang.String nameRef) {
+	public void setNameRef(String nameRef) {
 		this.nameRef = nameRef;
 	}
 
-	@javax.persistence.Column(name = "FIELD 737", precision = 25, scale = 2)
-	public java.math.BigDecimal getField_737() {
+	@Column(name = "FIELD 737", precision = 25, scale = 2)
+	public BigDecimal getField_737() {
 		return this.field_737;
 	}
 
-	public void setField_737(java.math.BigDecimal field_737) {
+	public void setField_737(BigDecimal field_737) {
 		this.field_737 = field_737;
 	}
 
-	@javax.persistence.Column(name = "MS_UNUSED_ID_REF", precision = 7)
-	public java.lang.Integer getMsUnusedIdRef() {
+	@Column(name = "MS_UNUSED_ID_REF", precision = 7)
+	public Integer getMsUnusedIdRef() {
 		return this.msUnusedIdRef;
 	}
 
-	public void setMsUnusedIdRef(java.lang.Integer msUnusedIdRef) {
+	public void setMsUnusedIdRef(Integer msUnusedIdRef) {
 		this.msUnusedIdRef = msUnusedIdRef;
 	}
 
-	@javax.persistence.Column(name = "MS_UNUSED_NAME_REF", length = 10)
-	@javax.validation.constraints.Size(max = 10)
-	public java.lang.String getMsUnusedNameRef() {
+	@Column(name = "MS_UNUSED_NAME_REF", length = 10)
+	@Size(max = 10)
+	public String getMsUnusedNameRef() {
 		return this.msUnusedNameRef;
 	}
 
-	public void setMsUnusedNameRef(java.lang.String msUnusedNameRef) {
+	public void setMsUnusedNameRef(String msUnusedNameRef) {
 		this.msUnusedNameRef = msUnusedNameRef;
 	}
 

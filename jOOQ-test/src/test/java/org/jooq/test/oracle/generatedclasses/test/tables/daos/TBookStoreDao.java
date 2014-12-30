@@ -3,45 +3,54 @@
  */
 package org.jooq.test.oracle.generatedclasses.test.tables.daos;
 
+
+import java.util.List;
+
+import org.jooq.Configuration;
+import org.jooq.impl.DAOImpl;
+import org.jooq.test.oracle.generatedclasses.test.tables.TBookStore;
+import org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord;
+
+
 /**
  * A book store
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TBookStoreDao extends org.jooq.impl.DAOImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TBookStore, java.lang.String> {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class TBookStoreDao extends DAOImpl<TBookStoreRecord, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TBookStore, String> {
 
 	/**
 	 * Create a new TBookStoreDao without any configuration
 	 */
 	public TBookStoreDao() {
-		super(org.jooq.test.oracle.generatedclasses.test.tables.TBookStore.T_BOOK_STORE, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TBookStore.class);
+		super(TBookStore.T_BOOK_STORE, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TBookStore.class);
 	}
 
 	/**
 	 * Create a new TBookStoreDao with an attached configuration
 	 */
-	public TBookStoreDao(org.jooq.Configuration configuration) {
-		super(org.jooq.test.oracle.generatedclasses.test.tables.TBookStore.T_BOOK_STORE, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TBookStore.class, configuration);
+	public TBookStoreDao(Configuration configuration) {
+		super(TBookStore.T_BOOK_STORE, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TBookStore.class, configuration);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected java.lang.String getId(org.jooq.test.oracle.generatedclasses.test.tables.pojos.TBookStore object) {
+	protected String getId(org.jooq.test.oracle.generatedclasses.test.tables.pojos.TBookStore object) {
 		return object.getName();
 	}
 
 	/**
 	 * Fetch records that have <code>NAME IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.TBookStore> fetchByName(java.lang.String... values) {
-		return fetch(org.jooq.test.oracle.generatedclasses.test.tables.TBookStore.T_BOOK_STORE.NAME, values);
+	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.TBookStore> fetchByName(String... values) {
+		return fetch(TBookStore.T_BOOK_STORE.NAME, values);
 	}
 
 	/**
 	 * Fetch a unique record that has <code>NAME = value</code>
 	 */
-	public org.jooq.test.oracle.generatedclasses.test.tables.pojos.TBookStore fetchOneByName(java.lang.String value) {
-		return fetchOne(org.jooq.test.oracle.generatedclasses.test.tables.TBookStore.T_BOOK_STORE.NAME, value);
+	public org.jooq.test.oracle.generatedclasses.test.tables.pojos.TBookStore fetchOneByName(String value) {
+		return fetchOne(TBookStore.T_BOOK_STORE.NAME, value);
 	}
 }

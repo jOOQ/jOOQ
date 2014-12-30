@@ -3,36 +3,45 @@
  */
 package org.jooq.test.oracle.generatedclasses.test.tables;
 
+
+import org.jooq.Field;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.impl.TableImpl;
+import org.jooq.test.oracle.generatedclasses.test.Test;
+import org.jooq.test.oracle.generatedclasses.test.tables.records.MLibraryRecord;
+
+
 /**
  * snapshot table for snapshot TEST.M_LIBRARY
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class MLibrary extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.MLibraryRecord> {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class MLibrary extends TableImpl<MLibraryRecord> {
 
-	private static final long serialVersionUID = -706070128;
+	private static final long serialVersionUID = -1448216390;
 
 	/**
 	 * The reference instance of <code>TEST.M_LIBRARY</code>
 	 */
-	public static final org.jooq.test.oracle.generatedclasses.test.tables.MLibrary M_LIBRARY = new org.jooq.test.oracle.generatedclasses.test.tables.MLibrary();
+	public static final MLibrary M_LIBRARY = new MLibrary();
 
 	/**
 	 * The class holding records for this type
 	 */
 	@Override
-	public java.lang.Class<org.jooq.test.oracle.generatedclasses.test.tables.records.MLibraryRecord> getRecordType() {
-		return org.jooq.test.oracle.generatedclasses.test.tables.records.MLibraryRecord.class;
+	public Class<MLibraryRecord> getRecordType() {
+		return MLibraryRecord.class;
 	}
 
 	/**
 	 * The column <code>TEST.M_LIBRARY.AUTHOR</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.MLibraryRecord, java.lang.String> AUTHOR = createField("AUTHOR", org.jooq.impl.SQLDataType.VARCHAR.length(101), this, "");
+	public final TableField<MLibraryRecord, String> AUTHOR = createField("AUTHOR", org.jooq.impl.SQLDataType.VARCHAR.length(101), this, "");
 
 	/**
 	 * The column <code>TEST.M_LIBRARY.TITLE</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.MLibraryRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "");
+	public final TableField<MLibraryRecord, String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "");
 
 	/**
 	 * Create a <code>TEST.M_LIBRARY</code> table reference
@@ -44,30 +53,30 @@ public class MLibrary extends org.jooq.impl.TableImpl<org.jooq.test.oracle.gener
 	/**
 	 * Create an aliased <code>TEST.M_LIBRARY</code> table reference
 	 */
-	public MLibrary(java.lang.String alias) {
-		this(alias, org.jooq.test.oracle.generatedclasses.test.tables.MLibrary.M_LIBRARY);
+	public MLibrary(String alias) {
+		this(alias, M_LIBRARY);
 	}
 
-	private MLibrary(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.test.tables.records.MLibraryRecord> aliased) {
+	private MLibrary(String alias, Table<MLibraryRecord> aliased) {
 		this(alias, aliased, null);
 	}
 
-	private MLibrary(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle.generatedclasses.test.tables.records.MLibraryRecord> aliased, org.jooq.Field<?>[] parameters) {
-		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, aliased, parameters, "snapshot table for snapshot TEST.M_LIBRARY");
+	private MLibrary(String alias, Table<MLibraryRecord> aliased, Field<?>[] parameters) {
+		super(alias, Test.TEST, aliased, parameters, "snapshot table for snapshot TEST.M_LIBRARY");
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.test.oracle.generatedclasses.test.tables.MLibrary as(java.lang.String alias) {
-		return new org.jooq.test.oracle.generatedclasses.test.tables.MLibrary(alias, this);
+	public MLibrary as(String alias) {
+		return new MLibrary(alias, this);
 	}
 
 	/**
 	 * Rename this table
 	 */
-	public org.jooq.test.oracle.generatedclasses.test.tables.MLibrary rename(java.lang.String name) {
-		return new org.jooq.test.oracle.generatedclasses.test.tables.MLibrary(name, null);
+	public MLibrary rename(String name) {
+		return new MLibrary(name, null);
 	}
 }

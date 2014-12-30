@@ -3,109 +3,129 @@
  */
 package org.jooq.test.oracle.generatedclasses.test.tables.records;
 
+
+import java.sql.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.jooq.Field;
+import org.jooq.Record1;
+import org.jooq.Record6;
+import org.jooq.Row;
+import org.jooq.Row6;
+import org.jooq.impl.UpdatableRecordImpl;
+import org.jooq.test.oracle.generatedclasses.test.tables.TAuthor;
+import org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord;
+
+
 /**
  * An entity holding authors of books
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-@javax.persistence.Entity
-@javax.persistence.Table(name = "T_AUTHOR", schema = "TEST")
-public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord> {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@Entity
+@Table(name = "T_AUTHOR", schema = "TEST")
+public class TAuthorRecord extends UpdatableRecordImpl<TAuthorRecord> implements Record6<Integer, String, String, Date, Integer, UAddressTypeRecord> {
 
-	private static final long serialVersionUID = 1440474652;
+	private static final long serialVersionUID = 3684523;
 
 	/**
 	 * Setter for <code>TEST.T_AUTHOR.ID</code>. The author ID
 	 */
-	public void setId(java.lang.Integer value) {
+	public void setId(Integer value) {
 		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.T_AUTHOR.ID</code>. The author ID
 	 */
-	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
-	@javax.validation.constraints.NotNull
-	public java.lang.Integer getId() {
-		return (java.lang.Integer) getValue(0);
+	@Id
+	@Column(name = "ID", unique = true, nullable = false, precision = 7)
+	@NotNull
+	public Integer getId() {
+		return (Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>TEST.T_AUTHOR.FIRST_NAME</code>. The author's first name
 	 */
-	public void setFirstName(java.lang.String value) {
+	public void setFirstName(String value) {
 		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.T_AUTHOR.FIRST_NAME</code>. The author's first name
 	 */
-	@javax.persistence.Column(name = "FIRST_NAME", length = 50)
-	@javax.validation.constraints.Size(max = 50)
-	public java.lang.String getFirstName() {
-		return (java.lang.String) getValue(1);
+	@Column(name = "FIRST_NAME", length = 50)
+	@Size(max = 50)
+	public String getFirstName() {
+		return (String) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>TEST.T_AUTHOR.LAST_NAME</code>. The author's last name
 	 */
-	public void setLastName(java.lang.String value) {
+	public void setLastName(String value) {
 		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.T_AUTHOR.LAST_NAME</code>. The author's last name
 	 */
-	@javax.persistence.Column(name = "LAST_NAME", nullable = false, length = 50)
-	@javax.validation.constraints.NotNull
-	@javax.validation.constraints.Size(max = 50)
-	public java.lang.String getLastName() {
-		return (java.lang.String) getValue(2);
+	@Column(name = "LAST_NAME", nullable = false, length = 50)
+	@NotNull
+	@Size(max = 50)
+	public String getLastName() {
+		return (String) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>TEST.T_AUTHOR.DATE_OF_BIRTH</code>. The author's date of birth
 	 */
-	public void setDateOfBirth(java.sql.Date value) {
+	public void setDateOfBirth(Date value) {
 		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.T_AUTHOR.DATE_OF_BIRTH</code>. The author's date of birth
 	 */
-	@javax.persistence.Column(name = "DATE_OF_BIRTH")
-	public java.sql.Date getDateOfBirth() {
-		return (java.sql.Date) getValue(3);
+	@Column(name = "DATE_OF_BIRTH")
+	public Date getDateOfBirth() {
+		return (Date) getValue(3);
 	}
 
 	/**
 	 * Setter for <code>TEST.T_AUTHOR.YEAR_OF_BIRTH</code>. The author's year of birth
 	 */
-	public void setYearOfBirth(java.lang.Integer value) {
+	public void setYearOfBirth(Integer value) {
 		setValue(4, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.T_AUTHOR.YEAR_OF_BIRTH</code>. The author's year of birth
 	 */
-	@javax.persistence.Column(name = "YEAR_OF_BIRTH", precision = 7)
-	public java.lang.Integer getYearOfBirth() {
-		return (java.lang.Integer) getValue(4);
+	@Column(name = "YEAR_OF_BIRTH", precision = 7)
+	public Integer getYearOfBirth() {
+		return (Integer) getValue(4);
 	}
 
 	/**
 	 * Setter for <code>TEST.T_AUTHOR.ADDRESS</code>. The author's address
 	 */
-	public void setAddress(org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord value) {
+	public void setAddress(UAddressTypeRecord value) {
 		setValue(5, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.T_AUTHOR.ADDRESS</code>. The author's address
 	 */
-	@javax.persistence.Column(name = "ADDRESS")
-	public org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord getAddress() {
-		return (org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord) getValue(5);
+	@Column(name = "ADDRESS")
+	public UAddressTypeRecord getAddress() {
+		return (UAddressTypeRecord) getValue(5);
 	}
 
 	// -------------------------------------------------------------------------
@@ -116,8 +136,8 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Record1<java.lang.Integer> key() {
-		return (org.jooq.Record1) super.key();
+	public Record1<Integer> key() {
+		return (Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -128,71 +148,71 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord> fieldsRow() {
-		return (org.jooq.Row6) super.fieldsRow();
+	public Row6<Integer, String, String, Date, Integer, UAddressTypeRecord> fieldsRow() {
+		return (Row6) super.fieldsRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord> valuesRow() {
-		return (org.jooq.Row6) super.valuesRow();
+	public Row6<Integer, String, String, Date, Integer, UAddressTypeRecord> valuesRow() {
+		return (Row6) super.valuesRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.jooq.test.oracle.generatedclasses.test.tables.TAuthor.T_AUTHOR.ID;
+	public Field<Integer> field1() {
+		return TAuthor.T_AUTHOR.ID;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.String> field2() {
-		return org.jooq.test.oracle.generatedclasses.test.tables.TAuthor.T_AUTHOR.FIRST_NAME;
+	public Field<String> field2() {
+		return TAuthor.T_AUTHOR.FIRST_NAME;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.String> field3() {
-		return org.jooq.test.oracle.generatedclasses.test.tables.TAuthor.T_AUTHOR.LAST_NAME;
+	public Field<String> field3() {
+		return TAuthor.T_AUTHOR.LAST_NAME;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.sql.Date> field4() {
-		return org.jooq.test.oracle.generatedclasses.test.tables.TAuthor.T_AUTHOR.DATE_OF_BIRTH;
+	public Field<Date> field4() {
+		return TAuthor.T_AUTHOR.DATE_OF_BIRTH;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.Integer> field5() {
-		return org.jooq.test.oracle.generatedclasses.test.tables.TAuthor.T_AUTHOR.YEAR_OF_BIRTH;
+	public Field<Integer> field5() {
+		return TAuthor.T_AUTHOR.YEAR_OF_BIRTH;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord> field6() {
-		return org.jooq.test.oracle.generatedclasses.test.tables.TAuthor.T_AUTHOR.ADDRESS;
+	public Field<UAddressTypeRecord> field6() {
+		return TAuthor.T_AUTHOR.ADDRESS;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.Integer value1() {
+	public Integer value1() {
 		return getId();
 	}
 
@@ -200,7 +220,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.String value2() {
+	public String value2() {
 		return getFirstName();
 	}
 
@@ -208,7 +228,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.String value3() {
+	public String value3() {
 		return getLastName();
 	}
 
@@ -216,7 +236,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.sql.Date value4() {
+	public Date value4() {
 		return getDateOfBirth();
 	}
 
@@ -224,7 +244,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.Integer value5() {
+	public Integer value5() {
 		return getYearOfBirth();
 	}
 
@@ -232,7 +252,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord value6() {
+	public UAddressTypeRecord value6() {
 		return getAddress();
 	}
 
@@ -240,7 +260,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TAuthorRecord value1(java.lang.Integer value) {
+	public TAuthorRecord value1(Integer value) {
 		setId(value);
 		return this;
 	}
@@ -249,7 +269,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TAuthorRecord value2(java.lang.String value) {
+	public TAuthorRecord value2(String value) {
 		setFirstName(value);
 		return this;
 	}
@@ -258,7 +278,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TAuthorRecord value3(java.lang.String value) {
+	public TAuthorRecord value3(String value) {
 		setLastName(value);
 		return this;
 	}
@@ -267,7 +287,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TAuthorRecord value4(java.sql.Date value) {
+	public TAuthorRecord value4(Date value) {
 		setDateOfBirth(value);
 		return this;
 	}
@@ -276,7 +296,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TAuthorRecord value5(java.lang.Integer value) {
+	public TAuthorRecord value5(Integer value) {
 		setYearOfBirth(value);
 		return this;
 	}
@@ -285,7 +305,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TAuthorRecord value6(org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord value) {
+	public TAuthorRecord value6(UAddressTypeRecord value) {
 		setAddress(value);
 		return this;
 	}
@@ -294,7 +314,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TAuthorRecord values(java.lang.Integer value1, java.lang.String value2, java.lang.String value3, java.sql.Date value4, java.lang.Integer value5, org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord value6) {
+	public TAuthorRecord values(Integer value1, String value2, String value3, Date value4, Integer value5, UAddressTypeRecord value6) {
 		return this;
 	}
 
@@ -306,14 +326,14 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Create a detached TAuthorRecord
 	 */
 	public TAuthorRecord() {
-		super(org.jooq.test.oracle.generatedclasses.test.tables.TAuthor.T_AUTHOR);
+		super(TAuthor.T_AUTHOR);
 	}
 
 	/**
 	 * Create a detached, initialised TAuthorRecord
 	 */
-	public TAuthorRecord(java.lang.Integer id, java.lang.String firstName, java.lang.String lastName, java.sql.Date dateOfBirth, java.lang.Integer yearOfBirth, org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord address) {
-		super(org.jooq.test.oracle.generatedclasses.test.tables.TAuthor.T_AUTHOR);
+	public TAuthorRecord(Integer id, String firstName, String lastName, Date dateOfBirth, Integer yearOfBirth, UAddressTypeRecord address) {
+		super(TAuthor.T_AUTHOR);
 
 		setValue(0, id);
 		setValue(1, firstName);

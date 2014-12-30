@@ -3,51 +3,57 @@
  */
 package org.jooq.test.postgres.generatedclasses.tables.interfaces;
 
+
+import java.io.Serializable;
+
+import org.jooq.test.postgres.generatedclasses.enums.UBookStatus;
+
+
 /**
  * An entity holding books
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public interface ITBook extends java.io.Serializable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public interface ITBook extends Serializable {
 
 	/**
 	 * Getter for <code>public.t_book.id</code>. The book ID
 	 */
-	public java.lang.Integer getId();
+	public Integer getId();
 
 	/**
 	 * Getter for <code>public.t_book.author_id</code>. The author ID in entity 'author'
 	 */
-	public java.lang.Integer getAuthorId();
+	public Integer getAuthorId();
 
 	/**
 	 * Getter for <code>public.t_book.co_author_id</code>.
 	 */
-	public java.lang.Integer getCoAuthorId();
+	public Integer getCoAuthorId();
 
 	/**
 	 * Getter for <code>public.t_book.details_id</code>.
 	 */
-	public java.lang.Integer getDetailsId();
+	public Integer getDetailsId();
 
 	/**
 	 * Getter for <code>public.t_book.title</code>. The book's title
 	 */
-	public java.lang.String getTitle();
+	public String getTitle();
 
 	/**
 	 * Getter for <code>public.t_book.published_in</code>. The year the book was published in
 	 */
-	public java.lang.Integer getPublishedIn();
+	public Integer getPublishedIn();
 
 	/**
 	 * Getter for <code>public.t_book.language_id</code>. The language of the book
 	 */
-	public java.lang.Integer getLanguageId();
+	public Integer getLanguageId();
 
 	/**
 	 * Getter for <code>public.t_book.content_text</code>. Some textual content of the book
 	 */
-	public java.lang.String getContentText();
+	public String getContentText();
 
 	/**
 	 * Getter for <code>public.t_book.content_pdf</code>. Some binary content of the book
@@ -57,5 +63,5 @@ public interface ITBook extends java.io.Serializable {
 	/**
 	 * Getter for <code>public.t_book.status</code>. The book's stock status
 	 */
-	public org.jooq.test.postgres.generatedclasses.enums.UBookStatus getStatus();
+	public UBookStatus getStatus();
 }

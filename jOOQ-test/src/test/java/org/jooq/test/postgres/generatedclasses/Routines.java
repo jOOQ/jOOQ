@@ -3,17 +3,56 @@
  */
 package org.jooq.test.postgres.generatedclasses;
 
+
+import org.jooq.AggregateFunction;
+import org.jooq.Configuration;
+import org.jooq.Field;
+import org.jooq.Result;
+import org.jooq.test.postgres.generatedclasses.routines.F;
+import org.jooq.test.postgres.generatedclasses.routines.F317;
+import org.jooq.test.postgres.generatedclasses.routines.FArrays1;
+import org.jooq.test.postgres.generatedclasses.routines.FArrays2;
+import org.jooq.test.postgres.generatedclasses.routines.FArrays3;
+import org.jooq.test.postgres.generatedclasses.routines.FAuthorExists;
+import org.jooq.test.postgres.generatedclasses.routines.FGetOneCursor;
+import org.jooq.test.postgres.generatedclasses.routines.FNumber;
+import org.jooq.test.postgres.generatedclasses.routines.FOne;
+import org.jooq.test.postgres.generatedclasses.routines.P;
+import org.jooq.test.postgres.generatedclasses.routines.P391;
+import org.jooq.test.postgres.generatedclasses.routines.PArrays1;
+import org.jooq.test.postgres.generatedclasses.routines.PArrays2;
+import org.jooq.test.postgres.generatedclasses.routines.PArrays3;
+import org.jooq.test.postgres.generatedclasses.routines.PAuthorExists;
+import org.jooq.test.postgres.generatedclasses.routines.PCreateAuthor;
+import org.jooq.test.postgres.generatedclasses.routines.PCreateAuthorByName;
+import org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress1;
+import org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress2;
+import org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress3;
+import org.jooq.test.postgres.generatedclasses.routines.PGetOneCursor;
+import org.jooq.test.postgres.generatedclasses.routines.PGetTwoCursors;
+import org.jooq.test.postgres.generatedclasses.routines.PTriggers;
+import org.jooq.test.postgres.generatedclasses.routines.PUnused;
+import org.jooq.test.postgres.generatedclasses.routines.SecondMax;
+import org.jooq.test.postgres.generatedclasses.tables.FSearchBook;
+import org.jooq.test.postgres.generatedclasses.tables.FTables1;
+import org.jooq.test.postgres.generatedclasses.tables.FTables2;
+import org.jooq.test.postgres.generatedclasses.tables.FTables3;
+import org.jooq.test.postgres.generatedclasses.tables.FTables4;
+import org.jooq.test.postgres.generatedclasses.tables.FTables5;
+import org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord;
+
+
 /**
  * Convenience access to all stored procedures and functions in public
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Routines {
 
 	/**
 	 * Call <code>public.f</code>
 	 */
-	public static java.lang.Integer f(org.jooq.Configuration configuration, java.lang.Integer f, java.lang.Integer f_) {
-		org.jooq.test.postgres.generatedclasses.routines.F f__ = new org.jooq.test.postgres.generatedclasses.routines.F();
+	public static Integer f(Configuration configuration, Integer f, Integer f_) {
+		F f__ = new F();
 		f__.setF(f);
 		f__.setF_(f_);
 
@@ -24,8 +63,8 @@ public class Routines {
 	/**
 	 * Get <code>public.f</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Integer> f(java.lang.Integer f, java.lang.Integer f_) {
-		org.jooq.test.postgres.generatedclasses.routines.F f__ = new org.jooq.test.postgres.generatedclasses.routines.F();
+	public static Field<Integer> f(Integer f, Integer f_) {
+		F f__ = new F();
 		f__.setF(f);
 		f__.setF_(f_);
 
@@ -35,8 +74,8 @@ public class Routines {
 	/**
 	 * Get <code>public.f</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Integer> f(org.jooq.Field<java.lang.Integer> f, org.jooq.Field<java.lang.Integer> f_) {
-		org.jooq.test.postgres.generatedclasses.routines.F f__ = new org.jooq.test.postgres.generatedclasses.routines.F();
+	public static Field<Integer> f(Field<Integer> f, Field<Integer> f_) {
+		F f__ = new F();
 		f__.setF(f);
 		f__.setF_(f_);
 
@@ -46,8 +85,8 @@ public class Routines {
 	/**
 	 * Call <code>public.f_arrays</code>
 	 */
-	public static java.lang.Integer[] fArrays1(org.jooq.Configuration configuration, java.lang.Integer[] inArray) {
-		org.jooq.test.postgres.generatedclasses.routines.FArrays1 f = new org.jooq.test.postgres.generatedclasses.routines.FArrays1();
+	public static Integer[] fArrays1(Configuration configuration, Integer[] inArray) {
+		FArrays1 f = new FArrays1();
 		f.setInArray(inArray);
 
 		f.execute(configuration);
@@ -57,8 +96,8 @@ public class Routines {
 	/**
 	 * Get <code>public.f_arrays</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Integer[]> fArrays1(java.lang.Integer[] inArray) {
-		org.jooq.test.postgres.generatedclasses.routines.FArrays1 f = new org.jooq.test.postgres.generatedclasses.routines.FArrays1();
+	public static Field<Integer[]> fArrays1(Integer[] inArray) {
+		FArrays1 f = new FArrays1();
 		f.setInArray(inArray);
 
 		return f.asField();
@@ -67,8 +106,8 @@ public class Routines {
 	/**
 	 * Get <code>public.f_arrays</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Integer[]> fArrays1(org.jooq.Field<java.lang.Integer[]> inArray) {
-		org.jooq.test.postgres.generatedclasses.routines.FArrays1 f = new org.jooq.test.postgres.generatedclasses.routines.FArrays1();
+	public static Field<Integer[]> fArrays1(Field<Integer[]> inArray) {
+		FArrays1 f = new FArrays1();
 		f.setInArray(inArray);
 
 		return f.asField();
@@ -77,8 +116,8 @@ public class Routines {
 	/**
 	 * Call <code>public.f_arrays</code>
 	 */
-	public static java.lang.Long[] fArrays2(org.jooq.Configuration configuration, java.lang.Long[] inArray) {
-		org.jooq.test.postgres.generatedclasses.routines.FArrays2 f = new org.jooq.test.postgres.generatedclasses.routines.FArrays2();
+	public static Long[] fArrays2(Configuration configuration, Long[] inArray) {
+		FArrays2 f = new FArrays2();
 		f.setInArray(inArray);
 
 		f.execute(configuration);
@@ -88,8 +127,8 @@ public class Routines {
 	/**
 	 * Get <code>public.f_arrays</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Long[]> fArrays2(java.lang.Long[] inArray) {
-		org.jooq.test.postgres.generatedclasses.routines.FArrays2 f = new org.jooq.test.postgres.generatedclasses.routines.FArrays2();
+	public static Field<Long[]> fArrays2(Long[] inArray) {
+		FArrays2 f = new FArrays2();
 		f.setInArray(inArray);
 
 		return f.asField();
@@ -98,8 +137,8 @@ public class Routines {
 	/**
 	 * Get <code>public.f_arrays</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Long[]> fArrays2(org.jooq.Field<java.lang.Long[]> inArray) {
-		org.jooq.test.postgres.generatedclasses.routines.FArrays2 f = new org.jooq.test.postgres.generatedclasses.routines.FArrays2();
+	public static Field<Long[]> fArrays2(Field<Long[]> inArray) {
+		FArrays2 f = new FArrays2();
 		f.setInArray(inArray);
 
 		return f.asField();
@@ -108,8 +147,8 @@ public class Routines {
 	/**
 	 * Call <code>public.f_arrays</code>
 	 */
-	public static java.lang.String[] fArrays3(org.jooq.Configuration configuration, java.lang.String[] inArray) {
-		org.jooq.test.postgres.generatedclasses.routines.FArrays3 f = new org.jooq.test.postgres.generatedclasses.routines.FArrays3();
+	public static String[] fArrays3(Configuration configuration, String[] inArray) {
+		FArrays3 f = new FArrays3();
 		f.setInArray(inArray);
 
 		f.execute(configuration);
@@ -119,8 +158,8 @@ public class Routines {
 	/**
 	 * Get <code>public.f_arrays</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String[]> fArrays3(java.lang.String[] inArray) {
-		org.jooq.test.postgres.generatedclasses.routines.FArrays3 f = new org.jooq.test.postgres.generatedclasses.routines.FArrays3();
+	public static Field<String[]> fArrays3(String[] inArray) {
+		FArrays3 f = new FArrays3();
 		f.setInArray(inArray);
 
 		return f.asField();
@@ -129,8 +168,8 @@ public class Routines {
 	/**
 	 * Get <code>public.f_arrays</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String[]> fArrays3(org.jooq.Field<java.lang.String[]> inArray) {
-		org.jooq.test.postgres.generatedclasses.routines.FArrays3 f = new org.jooq.test.postgres.generatedclasses.routines.FArrays3();
+	public static Field<String[]> fArrays3(Field<String[]> inArray) {
+		FArrays3 f = new FArrays3();
 		f.setInArray(inArray);
 
 		return f.asField();
@@ -139,8 +178,8 @@ public class Routines {
 	/**
 	 * Call <code>public.f_author_exists</code>
 	 */
-	public static java.lang.Integer fAuthorExists(org.jooq.Configuration configuration, java.lang.String authorName) {
-		org.jooq.test.postgres.generatedclasses.routines.FAuthorExists f = new org.jooq.test.postgres.generatedclasses.routines.FAuthorExists();
+	public static Integer fAuthorExists(Configuration configuration, String authorName) {
+		FAuthorExists f = new FAuthorExists();
 		f.setAuthorName(authorName);
 
 		f.execute(configuration);
@@ -150,8 +189,8 @@ public class Routines {
 	/**
 	 * Get <code>public.f_author_exists</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Integer> fAuthorExists(java.lang.String authorName) {
-		org.jooq.test.postgres.generatedclasses.routines.FAuthorExists f = new org.jooq.test.postgres.generatedclasses.routines.FAuthorExists();
+	public static Field<Integer> fAuthorExists(String authorName) {
+		FAuthorExists f = new FAuthorExists();
 		f.setAuthorName(authorName);
 
 		return f.asField();
@@ -160,8 +199,8 @@ public class Routines {
 	/**
 	 * Get <code>public.f_author_exists</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Integer> fAuthorExists(org.jooq.Field<java.lang.String> authorName) {
-		org.jooq.test.postgres.generatedclasses.routines.FAuthorExists f = new org.jooq.test.postgres.generatedclasses.routines.FAuthorExists();
+	public static Field<Integer> fAuthorExists(Field<String> authorName) {
+		FAuthorExists f = new FAuthorExists();
 		f.setAuthorName(authorName);
 
 		return f.asField();
@@ -170,8 +209,8 @@ public class Routines {
 	/**
 	 * Call <code>public.f_get_one_cursor</code>
 	 */
-	public static org.jooq.Result<org.jooq.Record> fGetOneCursor(org.jooq.Configuration configuration, java.lang.Integer[] bookIds) {
-		org.jooq.test.postgres.generatedclasses.routines.FGetOneCursor f = new org.jooq.test.postgres.generatedclasses.routines.FGetOneCursor();
+	public static Result<org.jooq.Record> fGetOneCursor(Configuration configuration, Integer[] bookIds) {
+		FGetOneCursor f = new FGetOneCursor();
 		f.setBookIds(bookIds);
 
 		f.execute(configuration);
@@ -181,8 +220,8 @@ public class Routines {
 	/**
 	 * Get <code>public.f_get_one_cursor</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.Result<org.jooq.Record>> fGetOneCursor(java.lang.Integer[] bookIds) {
-		org.jooq.test.postgres.generatedclasses.routines.FGetOneCursor f = new org.jooq.test.postgres.generatedclasses.routines.FGetOneCursor();
+	public static Field<Result<org.jooq.Record>> fGetOneCursor(Integer[] bookIds) {
+		FGetOneCursor f = new FGetOneCursor();
 		f.setBookIds(bookIds);
 
 		return f.asField();
@@ -191,8 +230,8 @@ public class Routines {
 	/**
 	 * Get <code>public.f_get_one_cursor</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.Result<org.jooq.Record>> fGetOneCursor(org.jooq.Field<java.lang.Integer[]> bookIds) {
-		org.jooq.test.postgres.generatedclasses.routines.FGetOneCursor f = new org.jooq.test.postgres.generatedclasses.routines.FGetOneCursor();
+	public static Field<Result<org.jooq.Record>> fGetOneCursor(Field<Integer[]> bookIds) {
+		FGetOneCursor f = new FGetOneCursor();
 		f.setBookIds(bookIds);
 
 		return f.asField();
@@ -201,8 +240,8 @@ public class Routines {
 	/**
 	 * Call <code>public.f_number</code>
 	 */
-	public static java.lang.Integer fNumber(org.jooq.Configuration configuration, java.lang.Integer n) {
-		org.jooq.test.postgres.generatedclasses.routines.FNumber f = new org.jooq.test.postgres.generatedclasses.routines.FNumber();
+	public static Integer fNumber(Configuration configuration, Integer n) {
+		FNumber f = new FNumber();
 		f.setN(n);
 
 		f.execute(configuration);
@@ -212,8 +251,8 @@ public class Routines {
 	/**
 	 * Get <code>public.f_number</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Integer> fNumber(java.lang.Integer n) {
-		org.jooq.test.postgres.generatedclasses.routines.FNumber f = new org.jooq.test.postgres.generatedclasses.routines.FNumber();
+	public static Field<Integer> fNumber(Integer n) {
+		FNumber f = new FNumber();
 		f.setN(n);
 
 		return f.asField();
@@ -222,8 +261,8 @@ public class Routines {
 	/**
 	 * Get <code>public.f_number</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Integer> fNumber(org.jooq.Field<java.lang.Integer> n) {
-		org.jooq.test.postgres.generatedclasses.routines.FNumber f = new org.jooq.test.postgres.generatedclasses.routines.FNumber();
+	public static Field<Integer> fNumber(Field<Integer> n) {
+		FNumber f = new FNumber();
 		f.setN(n);
 
 		return f.asField();
@@ -232,8 +271,8 @@ public class Routines {
 	/**
 	 * Call <code>public.f_one</code>
 	 */
-	public static java.lang.Integer fOne(org.jooq.Configuration configuration) {
-		org.jooq.test.postgres.generatedclasses.routines.FOne f = new org.jooq.test.postgres.generatedclasses.routines.FOne();
+	public static Integer fOne(Configuration configuration) {
+		FOne f = new FOne();
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -242,8 +281,8 @@ public class Routines {
 	/**
 	 * Get <code>public.f_one</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Integer> fOne() {
-		org.jooq.test.postgres.generatedclasses.routines.FOne f = new org.jooq.test.postgres.generatedclasses.routines.FOne();
+	public static Field<Integer> fOne() {
+		FOne f = new FOne();
 
 		return f.asField();
 	}
@@ -251,8 +290,8 @@ public class Routines {
 	/**
 	 * Call <code>public.f317</code>
 	 */
-	public static java.lang.Integer f317(org.jooq.Configuration configuration, java.lang.Integer p1, java.lang.Integer p2, java.lang.Integer p3, java.lang.Integer p4) {
-		org.jooq.test.postgres.generatedclasses.routines.F317 f = new org.jooq.test.postgres.generatedclasses.routines.F317();
+	public static Integer f317(Configuration configuration, Integer p1, Integer p2, Integer p3, Integer p4) {
+		F317 f = new F317();
 		f.setP1(p1);
 		f.setP2(p2);
 		f.setP3(p3);
@@ -265,8 +304,8 @@ public class Routines {
 	/**
 	 * Get <code>public.f317</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Integer> f317(java.lang.Integer p1, java.lang.Integer p2, java.lang.Integer p3, java.lang.Integer p4) {
-		org.jooq.test.postgres.generatedclasses.routines.F317 f = new org.jooq.test.postgres.generatedclasses.routines.F317();
+	public static Field<Integer> f317(Integer p1, Integer p2, Integer p3, Integer p4) {
+		F317 f = new F317();
 		f.setP1(p1);
 		f.setP2(p2);
 		f.setP3(p3);
@@ -278,8 +317,8 @@ public class Routines {
 	/**
 	 * Get <code>public.f317</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Integer> f317(org.jooq.Field<java.lang.Integer> p1, org.jooq.Field<java.lang.Integer> p2, org.jooq.Field<java.lang.Integer> p3, org.jooq.Field<java.lang.Integer> p4) {
-		org.jooq.test.postgres.generatedclasses.routines.F317 f = new org.jooq.test.postgres.generatedclasses.routines.F317();
+	public static Field<Integer> f317(Field<Integer> p1, Field<Integer> p2, Field<Integer> p3, Field<Integer> p4) {
+		F317 f = new F317();
 		f.setP1(p1);
 		f.setP2(p2);
 		f.setP3(p3);
@@ -291,8 +330,8 @@ public class Routines {
 	/**
 	 * Call <code>public.p</code>
 	 */
-	public static void p(org.jooq.Configuration configuration, java.lang.Integer p, java.lang.Integer p_) {
-		org.jooq.test.postgres.generatedclasses.routines.P p__ = new org.jooq.test.postgres.generatedclasses.routines.P();
+	public static void p(Configuration configuration, Integer p, Integer p_) {
+		P p__ = new P();
 		p__.setP(p);
 		p__.setP_(p_);
 
@@ -302,8 +341,8 @@ public class Routines {
 	/**
 	 * Call <code>public.p_arrays</code>
 	 */
-	public static java.lang.Integer[] pArrays1(org.jooq.Configuration configuration, java.lang.Integer[] inArray) {
-		org.jooq.test.postgres.generatedclasses.routines.PArrays1 p = new org.jooq.test.postgres.generatedclasses.routines.PArrays1();
+	public static Integer[] pArrays1(Configuration configuration, Integer[] inArray) {
+		PArrays1 p = new PArrays1();
 		p.setInArray(inArray);
 
 		p.execute(configuration);
@@ -313,8 +352,8 @@ public class Routines {
 	/**
 	 * Call <code>public.p_arrays</code>
 	 */
-	public static java.lang.Long[] pArrays2(org.jooq.Configuration configuration, java.lang.Long[] inArray) {
-		org.jooq.test.postgres.generatedclasses.routines.PArrays2 p = new org.jooq.test.postgres.generatedclasses.routines.PArrays2();
+	public static Long[] pArrays2(Configuration configuration, Long[] inArray) {
+		PArrays2 p = new PArrays2();
 		p.setInArray(inArray);
 
 		p.execute(configuration);
@@ -324,8 +363,8 @@ public class Routines {
 	/**
 	 * Call <code>public.p_arrays</code>
 	 */
-	public static java.lang.String[] pArrays3(org.jooq.Configuration configuration, java.lang.String[] inArray) {
-		org.jooq.test.postgres.generatedclasses.routines.PArrays3 p = new org.jooq.test.postgres.generatedclasses.routines.PArrays3();
+	public static String[] pArrays3(Configuration configuration, String[] inArray) {
+		PArrays3 p = new PArrays3();
 		p.setInArray(inArray);
 
 		p.execute(configuration);
@@ -335,8 +374,8 @@ public class Routines {
 	/**
 	 * Call <code>public.p_author_exists</code>
 	 */
-	public static java.lang.Integer pAuthorExists(org.jooq.Configuration configuration, java.lang.String authorName) {
-		org.jooq.test.postgres.generatedclasses.routines.PAuthorExists p = new org.jooq.test.postgres.generatedclasses.routines.PAuthorExists();
+	public static Integer pAuthorExists(Configuration configuration, String authorName) {
+		PAuthorExists p = new PAuthorExists();
 		p.setAuthorName(authorName);
 
 		p.execute(configuration);
@@ -346,8 +385,8 @@ public class Routines {
 	/**
 	 * Call <code>public.p_create_author</code>
 	 */
-	public static void pCreateAuthor(org.jooq.Configuration configuration) {
-		org.jooq.test.postgres.generatedclasses.routines.PCreateAuthor p = new org.jooq.test.postgres.generatedclasses.routines.PCreateAuthor();
+	public static void pCreateAuthor(Configuration configuration) {
+		PCreateAuthor p = new PCreateAuthor();
 
 		p.execute(configuration);
 	}
@@ -355,8 +394,8 @@ public class Routines {
 	/**
 	 * Call <code>public.p_create_author_by_name</code>
 	 */
-	public static void pCreateAuthorByName(org.jooq.Configuration configuration, java.lang.String firstName, java.lang.String lastName) {
-		org.jooq.test.postgres.generatedclasses.routines.PCreateAuthorByName p = new org.jooq.test.postgres.generatedclasses.routines.PCreateAuthorByName();
+	public static void pCreateAuthorByName(Configuration configuration, String firstName, String lastName) {
+		PCreateAuthorByName p = new PCreateAuthorByName();
 		p.setFirstName(firstName);
 		p.setLastName(lastName);
 
@@ -366,8 +405,8 @@ public class Routines {
 	/**
 	 * Call <code>public.p_enhance_address1</code>
 	 */
-	public static java.lang.String pEnhanceAddress1(org.jooq.Configuration configuration, org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord address) {
-		org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress1 p = new org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress1();
+	public static String pEnhanceAddress1(Configuration configuration, UAddressTypeRecord address) {
+		PEnhanceAddress1 p = new PEnhanceAddress1();
 		p.setAddress(address);
 
 		p.execute(configuration);
@@ -377,8 +416,8 @@ public class Routines {
 	/**
 	 * Call <code>public.p_enhance_address2</code>
 	 */
-	public static org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord pEnhanceAddress2(org.jooq.Configuration configuration) {
-		org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress2 p = new org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress2();
+	public static UAddressTypeRecord pEnhanceAddress2(Configuration configuration) {
+		PEnhanceAddress2 p = new PEnhanceAddress2();
 
 		p.execute(configuration);
 		return p.getAddress();
@@ -387,8 +426,8 @@ public class Routines {
 	/**
 	 * Call <code>public.p_enhance_address3</code>
 	 */
-	public static org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord pEnhanceAddress3(org.jooq.Configuration configuration, org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord address) {
-		org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress3 p = new org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress3();
+	public static UAddressTypeRecord pEnhanceAddress3(Configuration configuration, UAddressTypeRecord address) {
+		PEnhanceAddress3 p = new PEnhanceAddress3();
 		p.setAddress(address);
 
 		p.execute(configuration);
@@ -398,8 +437,8 @@ public class Routines {
 	/**
 	 * Call <code>public.p_get_one_cursor</code>
 	 */
-	public static org.jooq.test.postgres.generatedclasses.routines.PGetOneCursor pGetOneCursor(org.jooq.Configuration configuration, java.lang.Integer[] bookIds) {
-		org.jooq.test.postgres.generatedclasses.routines.PGetOneCursor p = new org.jooq.test.postgres.generatedclasses.routines.PGetOneCursor();
+	public static PGetOneCursor pGetOneCursor(Configuration configuration, Integer[] bookIds) {
+		PGetOneCursor p = new PGetOneCursor();
 		p.setBookIds(bookIds);
 
 		p.execute(configuration);
@@ -409,8 +448,8 @@ public class Routines {
 	/**
 	 * Call <code>public.p_get_two_cursors</code>
 	 */
-	public static org.jooq.test.postgres.generatedclasses.routines.PGetTwoCursors pGetTwoCursors(org.jooq.Configuration configuration) {
-		org.jooq.test.postgres.generatedclasses.routines.PGetTwoCursors p = new org.jooq.test.postgres.generatedclasses.routines.PGetTwoCursors();
+	public static PGetTwoCursors pGetTwoCursors(Configuration configuration) {
+		PGetTwoCursors p = new PGetTwoCursors();
 
 		p.execute(configuration);
 		return p;
@@ -419,8 +458,8 @@ public class Routines {
 	/**
 	 * Call <code>public.p_triggers</code>
 	 */
-	public static java.lang.Object pTriggers(org.jooq.Configuration configuration) {
-		org.jooq.test.postgres.generatedclasses.routines.PTriggers f = new org.jooq.test.postgres.generatedclasses.routines.PTriggers();
+	public static Object pTriggers(Configuration configuration) {
+		PTriggers f = new PTriggers();
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -429,8 +468,8 @@ public class Routines {
 	/**
 	 * Get <code>public.p_triggers</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Object> pTriggers() {
-		org.jooq.test.postgres.generatedclasses.routines.PTriggers f = new org.jooq.test.postgres.generatedclasses.routines.PTriggers();
+	public static Field<Object> pTriggers() {
+		PTriggers f = new PTriggers();
 
 		return f.asField();
 	}
@@ -438,8 +477,8 @@ public class Routines {
 	/**
 	 * Call <code>public.p_unused</code>
 	 */
-	public static org.jooq.test.postgres.generatedclasses.routines.PUnused pUnused(org.jooq.Configuration configuration, java.lang.String in1, java.lang.Integer out2) {
-		org.jooq.test.postgres.generatedclasses.routines.PUnused p = new org.jooq.test.postgres.generatedclasses.routines.PUnused();
+	public static PUnused pUnused(Configuration configuration, String in1, Integer out2) {
+		PUnused p = new PUnused();
 		p.setIn1(in1);
 		p.setOut2(out2);
 
@@ -450,8 +489,8 @@ public class Routines {
 	/**
 	 * Call <code>public.p391</code>
 	 */
-	public static org.jooq.test.postgres.generatedclasses.routines.P391 p391(org.jooq.Configuration configuration, java.lang.Integer i1, java.lang.Integer io1, java.lang.Integer io2, java.lang.Integer i2) {
-		org.jooq.test.postgres.generatedclasses.routines.P391 p = new org.jooq.test.postgres.generatedclasses.routines.P391();
+	public static P391 p391(Configuration configuration, Integer i1, Integer io1, Integer io2, Integer i2) {
+		P391 p = new P391();
 		p.setI1(i1);
 		p.setIo1(io1);
 		p.setIo2(io2);
@@ -464,8 +503,8 @@ public class Routines {
 	/**
 	 * Get <code>public.second_max</code> as a field
 	 */
-	public static org.jooq.AggregateFunction<java.lang.Integer> secondMax(java.lang.Integer __1) {
-		org.jooq.test.postgres.generatedclasses.routines.SecondMax f = new org.jooq.test.postgres.generatedclasses.routines.SecondMax();
+	public static AggregateFunction<Integer> secondMax(Integer __1) {
+		SecondMax f = new SecondMax();
 		f.set__1(__1);
 
 		return f.asAggregateFunction();
@@ -474,8 +513,8 @@ public class Routines {
 	/**
 	 * Get <code>public.second_max</code> as a field
 	 */
-	public static org.jooq.AggregateFunction<java.lang.Integer> secondMax(org.jooq.Field<java.lang.Integer> __1) {
-		org.jooq.test.postgres.generatedclasses.routines.SecondMax f = new org.jooq.test.postgres.generatedclasses.routines.SecondMax();
+	public static AggregateFunction<Integer> secondMax(Field<Integer> __1) {
+		SecondMax f = new SecondMax();
 		f.set__1(__1);
 
 		return f.asAggregateFunction();
@@ -484,63 +523,63 @@ public class Routines {
 	/**
 	 * Get <code>public.f_search_book</code> as a field
 	 */
-	public static org.jooq.test.postgres.generatedclasses.tables.FSearchBook fSearchBook(java.lang.String pTitle, java.lang.Long pLimit, java.lang.Long pOffset) {
-		return org.jooq.test.postgres.generatedclasses.tables.FSearchBook.F_SEARCH_BOOK.call(pTitle, pLimit, pOffset);
+	public static FSearchBook fSearchBook(String pTitle, Long pLimit, Long pOffset) {
+		return FSearchBook.F_SEARCH_BOOK.call(pTitle, pLimit, pOffset);
 	}
 
 	/**
 	 * Get <code>public.f_search_book</code> as a field
 	 */
-	public static org.jooq.test.postgres.generatedclasses.tables.FSearchBook fSearchBook(org.jooq.Field<java.lang.String> pTitle, org.jooq.Field<java.lang.Long> pLimit, org.jooq.Field<java.lang.Long> pOffset) {
-		return org.jooq.test.postgres.generatedclasses.tables.FSearchBook.F_SEARCH_BOOK.call(pTitle, pLimit, pOffset);
+	public static FSearchBook fSearchBook(Field<String> pTitle, Field<Long> pLimit, Field<Long> pOffset) {
+		return FSearchBook.F_SEARCH_BOOK.call(pTitle, pLimit, pOffset);
 	}
 
 	/**
 	 * Get <code>public.f_tables1</code> as a field
 	 */
-	public static org.jooq.test.postgres.generatedclasses.tables.FTables1 fTables1() {
-		return org.jooq.test.postgres.generatedclasses.tables.FTables1.F_TABLES1.call();
+	public static FTables1 fTables1() {
+		return FTables1.F_TABLES1.call();
 	}
 
 	/**
 	 * Get <code>public.f_tables2</code> as a field
 	 */
-	public static org.jooq.test.postgres.generatedclasses.tables.FTables2 fTables2() {
-		return org.jooq.test.postgres.generatedclasses.tables.FTables2.F_TABLES2.call();
+	public static FTables2 fTables2() {
+		return FTables2.F_TABLES2.call();
 	}
 
 	/**
 	 * Get <code>public.f_tables3</code> as a field
 	 */
-	public static org.jooq.test.postgres.generatedclasses.tables.FTables3 fTables3() {
-		return org.jooq.test.postgres.generatedclasses.tables.FTables3.F_TABLES3.call();
+	public static FTables3 fTables3() {
+		return FTables3.F_TABLES3.call();
 	}
 
 	/**
 	 * Get <code>public.f_tables4</code> as a field
 	 */
-	public static org.jooq.test.postgres.generatedclasses.tables.FTables4 fTables4(java.lang.Integer inId) {
-		return org.jooq.test.postgres.generatedclasses.tables.FTables4.F_TABLES4.call(inId);
+	public static FTables4 fTables4(Integer inId) {
+		return FTables4.F_TABLES4.call(inId);
 	}
 
 	/**
 	 * Get <code>public.f_tables4</code> as a field
 	 */
-	public static org.jooq.test.postgres.generatedclasses.tables.FTables4 fTables4(org.jooq.Field<java.lang.Integer> inId) {
-		return org.jooq.test.postgres.generatedclasses.tables.FTables4.F_TABLES4.call(inId);
+	public static FTables4 fTables4(Field<Integer> inId) {
+		return FTables4.F_TABLES4.call(inId);
 	}
 
 	/**
 	 * Get <code>public.f_tables5</code> as a field
 	 */
-	public static org.jooq.test.postgres.generatedclasses.tables.FTables5 fTables5(java.lang.Integer v1, java.lang.Integer v2, java.lang.Integer v3) {
-		return org.jooq.test.postgres.generatedclasses.tables.FTables5.F_TABLES5.call(v1, v2, v3);
+	public static FTables5 fTables5(Integer v1, Integer v2, Integer v3) {
+		return FTables5.F_TABLES5.call(v1, v2, v3);
 	}
 
 	/**
 	 * Get <code>public.f_tables5</code> as a field
 	 */
-	public static org.jooq.test.postgres.generatedclasses.tables.FTables5 fTables5(org.jooq.Field<java.lang.Integer> v1, org.jooq.Field<java.lang.Integer> v2, org.jooq.Field<java.lang.Integer> v3) {
-		return org.jooq.test.postgres.generatedclasses.tables.FTables5.F_TABLES5.call(v1, v2, v3);
+	public static FTables5 fTables5(Field<Integer> v1, Field<Integer> v2, Field<Integer> v3) {
+		return FTables5.F_TABLES5.call(v1, v2, v3);
 	}
 }

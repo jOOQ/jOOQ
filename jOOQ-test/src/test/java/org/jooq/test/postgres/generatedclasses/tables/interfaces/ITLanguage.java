@@ -3,29 +3,33 @@
  */
 package org.jooq.test.postgres.generatedclasses.tables.interfaces;
 
+
+import java.io.Serializable;
+
+
 /**
  * An entity holding language master data
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public interface ITLanguage extends java.io.Serializable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public interface ITLanguage extends Serializable {
 
 	/**
 	 * Getter for <code>public.t_language.cd</code>. The language ISO code
 	 */
-	public java.lang.String getCd();
+	public String getCd();
 
 	/**
 	 * Getter for <code>public.t_language.description</code>. The language description
 	 */
-	public java.lang.String getDescription();
+	public String getDescription();
 
 	/**
 	 * Getter for <code>public.t_language.description_english</code>.
 	 */
-	public java.lang.String getDescriptionEnglish();
+	public String getDescriptionEnglish();
 
 	/**
 	 * Getter for <code>public.t_language.id</code>. The language ID
 	 */
-	public java.lang.Integer getId();
+	public Integer getId();
 }

@@ -3,14 +3,18 @@
  */
 package org.jooq.test.postgres.generatedclasses.tables.interfaces;
 
+
+import java.io.Serializable;
+
+
 /**
  * A book store
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public interface ITBookStore extends java.io.Serializable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public interface ITBookStore extends Serializable {
 
 	/**
 	 * Getter for <code>public.t_book_store.name</code>. The books store name
 	 */
-	public java.lang.String getName();
+	public String getName();
 }

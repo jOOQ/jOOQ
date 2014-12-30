@@ -3,39 +3,46 @@
  */
 package org.jooq.test.postgres.generatedclasses.tables.interfaces;
 
+
+import java.io.Serializable;
+import java.sql.Date;
+
+import org.jooq.test.postgres.generatedclasses.udt.interfaces.IUAddressType;
+
+
 /**
  * An entity holding authors of books
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public interface ITAuthor extends java.io.Serializable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public interface ITAuthor extends Serializable {
 
 	/**
 	 * Getter for <code>public.t_author.id</code>. The author ID
 	 */
-	public java.lang.Integer getId();
+	public Integer getId();
 
 	/**
 	 * Getter for <code>public.t_author.first_name</code>. The author's first name
 	 */
-	public java.lang.String getFirstName();
+	public String getFirstName();
 
 	/**
 	 * Getter for <code>public.t_author.last_name</code>. The author's last name
 	 */
-	public java.lang.String getLastName();
+	public String getLastName();
 
 	/**
 	 * Getter for <code>public.t_author.date_of_birth</code>. The author's date of birth
 	 */
-	public java.sql.Date getDateOfBirth();
+	public Date getDateOfBirth();
 
 	/**
 	 * Getter for <code>public.t_author.year_of_birth</code>. The author's year of birth
 	 */
-	public java.lang.Integer getYearOfBirth();
+	public Integer getYearOfBirth();
 
 	/**
 	 * Getter for <code>public.t_author.address</code>. The author's address
 	 */
-	public org.jooq.test.postgres.generatedclasses.udt.interfaces.IUAddressType getAddress();
+	public IUAddressType getAddress();
 }

@@ -3,22 +3,26 @@
  */
 package org.jooq.test.postgres.generatedclasses.tables.pojos;
 
+
+import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITBookToBookStore;
+
+
 /**
  * An m:n relation between books and book stores
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TBookToBookStore implements org.jooq.test.postgres.generatedclasses.tables.interfaces.ITBookToBookStore {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class TBookToBookStore implements ITBookToBookStore {
 
-	private static final long serialVersionUID = -940068453;
+	private static final long serialVersionUID = 149039402;
 
-	private final java.lang.String  bookStoreName;
-	private final java.lang.Integer bookId;
-	private final java.lang.Integer stock;
+	private final String  bookStoreName;
+	private final Integer bookId;
+	private final Integer stock;
 
 	public TBookToBookStore(
-		java.lang.String  bookStoreName,
-		java.lang.Integer bookId,
-		java.lang.Integer stock
+		String  bookStoreName,
+		Integer bookId,
+		Integer stock
 	) {
 		this.bookStoreName = bookStoreName;
 		this.bookId = bookId;
@@ -26,17 +30,17 @@ public class TBookToBookStore implements org.jooq.test.postgres.generatedclasses
 	}
 
 	@Override
-	public java.lang.String getBookStoreName() {
+	public String getBookStoreName() {
 		return this.bookStoreName;
 	}
 
 	@Override
-	public java.lang.Integer getBookId() {
+	public Integer getBookId() {
 		return this.bookId;
 	}
 
 	@Override
-	public java.lang.Integer getStock() {
+	public Integer getStock() {
 		return this.stock;
 	}
 }

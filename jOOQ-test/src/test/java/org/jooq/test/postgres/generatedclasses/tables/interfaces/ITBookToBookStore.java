@@ -3,24 +3,28 @@
  */
 package org.jooq.test.postgres.generatedclasses.tables.interfaces;
 
+
+import java.io.Serializable;
+
+
 /**
  * An m:n relation between books and book stores
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public interface ITBookToBookStore extends java.io.Serializable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public interface ITBookToBookStore extends Serializable {
 
 	/**
 	 * Getter for <code>public.t_book_to_book_store.book_store_name</code>. The book store name
 	 */
-	public java.lang.String getBookStoreName();
+	public String getBookStoreName();
 
 	/**
 	 * Getter for <code>public.t_book_to_book_store.book_id</code>. The book ID
 	 */
-	public java.lang.Integer getBookId();
+	public Integer getBookId();
 
 	/**
 	 * Getter for <code>public.t_book_to_book_store.stock</code>. The number of books on stock
 	 */
-	public java.lang.Integer getStock();
+	public Integer getStock();
 }

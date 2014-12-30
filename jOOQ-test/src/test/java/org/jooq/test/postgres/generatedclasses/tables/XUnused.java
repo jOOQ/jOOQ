@@ -3,101 +3,118 @@
  */
 package org.jooq.test.postgres.generatedclasses.tables;
 
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Arrays;
+import java.util.List;
+
+import org.jooq.Field;
+import org.jooq.ForeignKey;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.UniqueKey;
+import org.jooq.impl.TableImpl;
+import org.jooq.test.postgres.generatedclasses.Keys;
+import org.jooq.test.postgres.generatedclasses.Public;
+import org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord;
+
+
 /**
  * An unused table in the same schema.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord> {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class XUnused extends TableImpl<XUnusedRecord> {
 
-	private static final long serialVersionUID = -752575434;
+	private static final long serialVersionUID = 1613904157;
 
 	/**
 	 * The reference instance of <code>public.x_unused</code>
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.XUnused X_UNUSED = new org.jooq.test.postgres.generatedclasses.tables.XUnused();
+	public static final XUnused X_UNUSED = new XUnused();
 
 	/**
 	 * The class holding records for this type
 	 */
 	@Override
-	public java.lang.Class<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord> getRecordType() {
-		return org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord.class;
+	public Class<XUnusedRecord> getRecordType() {
+		return XUnusedRecord.class;
 	}
 
 	/**
 	 * The column <code>public.x_unused.id</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final TableField<XUnusedRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>public.x_unused.name</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(10).nullable(false), this, "");
+	public final TableField<XUnusedRecord, String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(10).nullable(false), this, "");
 
 	/**
 	 * The column <code>public.x_unused.big_integer</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.math.BigInteger> BIG_INTEGER = createField("big_integer", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(25), this, "");
+	public final TableField<XUnusedRecord, BigInteger> BIG_INTEGER = createField("big_integer", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(25), this, "");
 
 	/**
 	 * The column <code>public.x_unused.id_ref</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> ID_REF = createField("id_ref", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final TableField<XUnusedRecord, Integer> ID_REF = createField("id_ref", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>public.x_unused.class</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> CLASS = createField("class", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final TableField<XUnusedRecord, Integer> CLASS = createField("class", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>public.x_unused.fields</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> FIELDS = createField("fields", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final TableField<XUnusedRecord, Integer> FIELDS = createField("fields", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>public.x_unused.configuration</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> CONFIGURATION = createField("configuration", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final TableField<XUnusedRecord, Integer> CONFIGURATION = createField("configuration", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>public.x_unused.u_d_t</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> U_D_T = createField("u_d_t", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final TableField<XUnusedRecord, Integer> U_D_T = createField("u_d_t", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>public.x_unused.meta_data</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> META_DATA = createField("meta_data", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final TableField<XUnusedRecord, Integer> META_DATA = createField("meta_data", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>public.x_unused.values</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> VALUES = createField("values", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final TableField<XUnusedRecord, Integer> VALUES = createField("values", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>public.x_unused.type0</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> TYPE0 = createField("type0", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final TableField<XUnusedRecord, Integer> TYPE0 = createField("type0", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>public.x_unused.primary_key</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> PRIMARY_KEY = createField("primary_key", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final TableField<XUnusedRecord, Integer> PRIMARY_KEY = createField("primary_key", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>public.x_unused.primarykey</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> PRIMARYKEY = createField("primarykey", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final TableField<XUnusedRecord, Integer> PRIMARYKEY = createField("primarykey", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>public.x_unused.name_ref</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME_REF = createField("name_ref", org.jooq.impl.SQLDataType.VARCHAR.length(10), this, "");
+	public final TableField<XUnusedRecord, String> NAME_REF = createField("name_ref", org.jooq.impl.SQLDataType.VARCHAR.length(10), this, "");
 
 	/**
 	 * The column <code>public.x_unused.FIELD 737</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.math.BigDecimal> FIELD_737 = createField("FIELD 737", org.jooq.impl.SQLDataType.NUMERIC.precision(25, 2), this, "");
+	public final TableField<XUnusedRecord, BigDecimal> FIELD_737 = createField("FIELD 737", org.jooq.impl.SQLDataType.NUMERIC.precision(25, 2), this, "");
 
 	/**
 	 * Create a <code>public.x_unused</code> table reference
@@ -109,54 +126,54 @@ public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gene
 	/**
 	 * Create an aliased <code>public.x_unused</code> table reference
 	 */
-	public XUnused(java.lang.String alias) {
-		this(alias, org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED);
+	public XUnused(String alias) {
+		this(alias, X_UNUSED);
 	}
 
-	private XUnused(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord> aliased) {
+	private XUnused(String alias, Table<XUnusedRecord> aliased) {
 		this(alias, aliased, null);
 	}
 
-	private XUnused(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord> aliased, org.jooq.Field<?>[] parameters) {
-		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased, parameters, "An unused table in the same schema.");
+	private XUnused(String alias, Table<XUnusedRecord> aliased, Field<?>[] parameters) {
+		super(alias, Public.PUBLIC, aliased, parameters, "An unused table in the same schema.");
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord> getPrimaryKey() {
-		return org.jooq.test.postgres.generatedclasses.Keys.PK_X_UNUSED;
+	public UniqueKey<XUnusedRecord> getPrimaryKey() {
+		return Keys.PK_X_UNUSED;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.util.List<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord>>asList(org.jooq.test.postgres.generatedclasses.Keys.PK_X_UNUSED, org.jooq.test.postgres.generatedclasses.Keys.UK_X_UNUSED_ID);
+	public List<UniqueKey<XUnusedRecord>> getKeys() {
+		return Arrays.<UniqueKey<XUnusedRecord>>asList(Keys.PK_X_UNUSED, Keys.UK_X_UNUSED_ID);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.util.List<org.jooq.ForeignKey<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, ?>>asList(org.jooq.test.postgres.generatedclasses.Keys.X_UNUSED__FK_X_UNUSED_SELF);
+	public List<ForeignKey<XUnusedRecord, ?>> getReferences() {
+		return Arrays.<ForeignKey<XUnusedRecord, ?>>asList(Keys.X_UNUSED__FK_X_UNUSED_SELF);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.test.postgres.generatedclasses.tables.XUnused as(java.lang.String alias) {
-		return new org.jooq.test.postgres.generatedclasses.tables.XUnused(alias, this);
+	public XUnused as(String alias) {
+		return new XUnused(alias, this);
 	}
 
 	/**
 	 * Rename this table
 	 */
-	public org.jooq.test.postgres.generatedclasses.tables.XUnused rename(java.lang.String name) {
-		return new org.jooq.test.postgres.generatedclasses.tables.XUnused(name, null);
+	public XUnused rename(String name) {
+		return new XUnused(name, null);
 	}
 }

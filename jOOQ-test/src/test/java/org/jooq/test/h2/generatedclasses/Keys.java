@@ -168,18 +168,18 @@ public class Keys {
 	}
 
 	private static class ForeignKeys0 extends AbstractKeys {
-		public static final ForeignKey<TBookRecord, TAuthorRecord> FK_T_BOOK_AUTHOR_ID = createForeignKey(Keys.PK_T_AUTHOR, TBook.T_BOOK, TBook.T_BOOK.AUTHOR_ID);
-		public static final ForeignKey<TBookRecord, TAuthorRecord> FK_T_BOOK_CO_AUTHOR_ID = createForeignKey(Keys.PK_T_AUTHOR, TBook.T_BOOK, TBook.T_BOOK.CO_AUTHOR_ID);
-		public static final ForeignKey<TBookRecord, TLanguageRecord> FK_T_BOOK_LANGUAGE_ID = createForeignKey(Keys.PK_T_LANGUAGE, TBook.T_BOOK, TBook.T_BOOK.LANGUAGE_ID);
-		public static final ForeignKey<TBookToBookStoreRecord, TBookStoreRecord> FK_B2BS_BS_NAME = createForeignKey(Keys.UK_T_BOOK_STORE_NAME, TBookToBookStore.T_BOOK_TO_BOOK_STORE, TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME);
-		public static final ForeignKey<TBookToBookStoreRecord, TBookRecord> FK_B2BS_B_ID = createForeignKey(Keys.PK_T_BOOK, TBookToBookStore.T_BOOK_TO_BOOK_STORE, TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID);
-		public static final ForeignKey<XUnusedRecord, XUnusedRecord> FK_X_UNUSED_SELF = createForeignKey(Keys.PK_X_UNUSED, XUnused.X_UNUSED, XUnused.X_UNUSED.ID_REF, XUnused.X_UNUSED.NAME_REF);
-		public static final ForeignKey<XTestCase_64_69Record, XUnusedRecord> FK_X_TEST_CASE_64_69A = createForeignKey(Keys.UK_X_UNUSED_ID, XTestCase_64_69.X_TEST_CASE_64_69, XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID);
-		public static final ForeignKey<XTestCase_64_69Record, XUnusedRecord> FK_X_TEST_CASE_64_69B = createForeignKey(Keys.UK_X_UNUSED_ID, XTestCase_64_69.X_TEST_CASE_64_69, XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID);
-		public static final ForeignKey<XTestCase_71Record, XTestCase_64_69Record> FK_X_TEST_CASE_71 = createForeignKey(Keys.PK_X_TEST_CASE_64_69, XTestCase_71.X_TEST_CASE_71, XTestCase_71.X_TEST_CASE_71.TEST_CASE_64_69_ID);
-		public static final ForeignKey<XTestCase_85Record, XUnusedRecord> FK_X_TEST_CASE_85 = createForeignKey(Keys.PK_X_UNUSED, XTestCase_85.X_TEST_CASE_85, XTestCase_85.X_TEST_CASE_85.X_UNUSED_ID, XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME);
-		public static final ForeignKey<XTestCase_2025Record, XTestCase_85Record> FK_X_TEST_CASE_2025_1 = createForeignKey(Keys.PK_X_TEST_CASE_85, XTestCase_2025.X_TEST_CASE_2025, XTestCase_2025.X_TEST_CASE_2025.REF_ID);
-		public static final ForeignKey<XTestCase_2025Record, XTestCase_71Record> FK_X_TEST_CASE_2025_2 = createForeignKey(Keys.PK_X_TEST_CASE_71, XTestCase_2025.X_TEST_CASE_2025, XTestCase_2025.X_TEST_CASE_2025.REF_ID);
-		public static final ForeignKey<XTestCase_2025Record, XUnusedRecord> FK_X_TEST_CASE_2025_3 = createForeignKey(Keys.PK_X_UNUSED, XTestCase_2025.X_TEST_CASE_2025, XTestCase_2025.X_TEST_CASE_2025.REF_ID, XTestCase_2025.X_TEST_CASE_2025.REF_NAME);
+		public static final ForeignKey<TBookRecord, TAuthorRecord> FK_T_BOOK_AUTHOR_ID = createForeignKey(org.jooq.test.h2.generatedclasses.Keys.PK_T_AUTHOR, TBook.T_BOOK, TBook.T_BOOK.AUTHOR_ID);
+		public static final ForeignKey<TBookRecord, TAuthorRecord> FK_T_BOOK_CO_AUTHOR_ID = createForeignKey(org.jooq.test.h2.generatedclasses.Keys.PK_T_AUTHOR, TBook.T_BOOK, TBook.T_BOOK.CO_AUTHOR_ID);
+		public static final ForeignKey<TBookRecord, TLanguageRecord> FK_T_BOOK_LANGUAGE_ID = createForeignKey(org.jooq.test.h2.generatedclasses.Keys.PK_T_LANGUAGE, TBook.T_BOOK, TBook.T_BOOK.LANGUAGE_ID);
+		public static final ForeignKey<TBookToBookStoreRecord, TBookStoreRecord> FK_B2BS_BS_NAME = createForeignKey(org.jooq.test.h2.generatedclasses.Keys.UK_T_BOOK_STORE_NAME, TBookToBookStore.T_BOOK_TO_BOOK_STORE, TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME);
+		public static final ForeignKey<TBookToBookStoreRecord, TBookRecord> FK_B2BS_B_ID = createForeignKey(org.jooq.test.h2.generatedclasses.Keys.PK_T_BOOK, TBookToBookStore.T_BOOK_TO_BOOK_STORE, TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID);
+		public static final ForeignKey<XUnusedRecord, XUnusedRecord> FK_X_UNUSED_SELF = createForeignKey(org.jooq.test.h2.generatedclasses.Keys.PK_X_UNUSED, XUnused.X_UNUSED, XUnused.X_UNUSED.ID_REF, XUnused.X_UNUSED.NAME_REF);
+		public static final ForeignKey<XTestCase_64_69Record, XUnusedRecord> FK_X_TEST_CASE_64_69A = createForeignKey(org.jooq.test.h2.generatedclasses.Keys.UK_X_UNUSED_ID, XTestCase_64_69.X_TEST_CASE_64_69, XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID);
+		public static final ForeignKey<XTestCase_64_69Record, XUnusedRecord> FK_X_TEST_CASE_64_69B = createForeignKey(org.jooq.test.h2.generatedclasses.Keys.UK_X_UNUSED_ID, XTestCase_64_69.X_TEST_CASE_64_69, XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID);
+		public static final ForeignKey<XTestCase_71Record, XTestCase_64_69Record> FK_X_TEST_CASE_71 = createForeignKey(org.jooq.test.h2.generatedclasses.Keys.PK_X_TEST_CASE_64_69, XTestCase_71.X_TEST_CASE_71, XTestCase_71.X_TEST_CASE_71.TEST_CASE_64_69_ID);
+		public static final ForeignKey<XTestCase_85Record, XUnusedRecord> FK_X_TEST_CASE_85 = createForeignKey(org.jooq.test.h2.generatedclasses.Keys.PK_X_UNUSED, XTestCase_85.X_TEST_CASE_85, XTestCase_85.X_TEST_CASE_85.X_UNUSED_ID, XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME);
+		public static final ForeignKey<XTestCase_2025Record, XTestCase_85Record> FK_X_TEST_CASE_2025_1 = createForeignKey(org.jooq.test.h2.generatedclasses.Keys.PK_X_TEST_CASE_85, XTestCase_2025.X_TEST_CASE_2025, XTestCase_2025.X_TEST_CASE_2025.REF_ID);
+		public static final ForeignKey<XTestCase_2025Record, XTestCase_71Record> FK_X_TEST_CASE_2025_2 = createForeignKey(org.jooq.test.h2.generatedclasses.Keys.PK_X_TEST_CASE_71, XTestCase_2025.X_TEST_CASE_2025, XTestCase_2025.X_TEST_CASE_2025.REF_ID);
+		public static final ForeignKey<XTestCase_2025Record, XUnusedRecord> FK_X_TEST_CASE_2025_3 = createForeignKey(org.jooq.test.h2.generatedclasses.Keys.PK_X_UNUSED, XTestCase_2025.X_TEST_CASE_2025, XTestCase_2025.X_TEST_CASE_2025.REF_ID, XTestCase_2025.X_TEST_CASE_2025.REF_NAME);
 	}
 }

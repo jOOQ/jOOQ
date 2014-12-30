@@ -3,6 +3,17 @@
  */
 package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+
 /**
  * An entity holding language master data
  * 
@@ -12,25 +23,25 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
  * 
  * Oh, and beware of end-of-javadoc * /
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-@javax.persistence.Entity
-@javax.persistence.Table(name = "T_LANGUAGE", schema = "TEST")
-public class TLanguage implements java.io.Serializable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@Entity
+@Table(name = "T_LANGUAGE", schema = "TEST")
+public class TLanguage implements Serializable {
 
-	private static final long serialVersionUID = -1864087169;
+	private static final long serialVersionUID = 851587605;
 
-	private java.lang.String  cd;
-	private java.lang.String  description;
-	private java.lang.String  descriptionEnglish;
-	private java.lang.Integer id;
+	private String  cd;
+	private String  description;
+	private String  descriptionEnglish;
+	private Integer id;
 
 	public TLanguage() {}
 
 	public TLanguage(
-		java.lang.String  cd,
-		java.lang.String  description,
-		java.lang.String  descriptionEnglish,
-		java.lang.Integer id
+		String  cd,
+		String  description,
+		String  descriptionEnglish,
+		Integer id
 	) {
 		this.cd = cd;
 		this.description = description;
@@ -38,45 +49,45 @@ public class TLanguage implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@javax.persistence.Column(name = "CD", nullable = false, length = 2)
-	@javax.validation.constraints.NotNull
-	@javax.validation.constraints.Size(max = 2)
-	public java.lang.String getCd() {
+	@Column(name = "CD", nullable = false, length = 2)
+	@NotNull
+	@Size(max = 2)
+	public String getCd() {
 		return this.cd;
 	}
 
-	public void setCd(java.lang.String cd) {
+	public void setCd(String cd) {
 		this.cd = cd;
 	}
 
-	@javax.persistence.Column(name = "DESCRIPTION", length = 50)
-	@javax.validation.constraints.Size(max = 50)
-	public java.lang.String getDescription() {
+	@Column(name = "DESCRIPTION", length = 50)
+	@Size(max = 50)
+	public String getDescription() {
 		return this.description;
 	}
 
-	public void setDescription(java.lang.String description) {
+	public void setDescription(String description) {
 		this.description = description;
 	}
 
-	@javax.persistence.Column(name = "DESCRIPTION_ENGLISH", length = 50)
-	@javax.validation.constraints.Size(max = 50)
-	public java.lang.String getDescriptionEnglish() {
+	@Column(name = "DESCRIPTION_ENGLISH", length = 50)
+	@Size(max = 50)
+	public String getDescriptionEnglish() {
 		return this.descriptionEnglish;
 	}
 
-	public void setDescriptionEnglish(java.lang.String descriptionEnglish) {
+	public void setDescriptionEnglish(String descriptionEnglish) {
 		this.descriptionEnglish = descriptionEnglish;
 	}
 
-	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
-	@javax.validation.constraints.NotNull
-	public java.lang.Integer getId() {
+	@Id
+	@Column(name = "ID", unique = true, nullable = false, precision = 7)
+	@NotNull
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(java.lang.Integer id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

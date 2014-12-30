@@ -3,23 +3,32 @@
  */
 package org.jooq.test.oracle.generatedclasses.test.packages;
 
+
+import java.math.BigDecimal;
+
+import org.jooq.Configuration;
+import org.jooq.Field;
+import org.jooq.impl.PackageImpl;
+import org.jooq.test.oracle.generatedclasses.test.Test;
+
+
 /**
  * Convenience access to all stored procedures and functions in LIBRARY_767_PACKAGE_TEST
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class Library_767PackageTest extends org.jooq.impl.PackageImpl {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class Library_767PackageTest extends PackageImpl {
 
-	private static final long serialVersionUID = 440970333;
+	private static final long serialVersionUID = 2025218982;
 
 	/**
 	 * The reference instance of <code>TEST.LIBRARY_767_PACKAGE_TEST</code>
 	 */
-	public static final org.jooq.test.oracle.generatedclasses.test.packages.Library_767PackageTest LIBRARY_767_PACKAGE_TEST = new org.jooq.test.oracle.generatedclasses.test.packages.Library_767PackageTest();
+	public static final Library_767PackageTest LIBRARY_767_PACKAGE_TEST = new Library_767PackageTest();
 
 	/**
 	 * Call <code>TEST.LIBRARY_767_PACKAGE_TEST.LIBRARY_767_PACKAGE_TEST</code>
 	 */
-	public static java.math.BigDecimal library_767PackageTest(org.jooq.Configuration configuration) {
+	public static BigDecimal library_767PackageTest(Configuration configuration) {
 		org.jooq.test.oracle.generatedclasses.test.packages.library_767_package_test.Library_767PackageTest f = new org.jooq.test.oracle.generatedclasses.test.packages.library_767_package_test.Library_767PackageTest();
 
 		f.execute(configuration);
@@ -29,7 +38,7 @@ public class Library_767PackageTest extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>TEST.LIBRARY_767_PACKAGE_TEST.LIBRARY_767_PACKAGE_TEST</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> library_767PackageTest() {
+	public static Field<BigDecimal> library_767PackageTest() {
 		org.jooq.test.oracle.generatedclasses.test.packages.library_767_package_test.Library_767PackageTest f = new org.jooq.test.oracle.generatedclasses.test.packages.library_767_package_test.Library_767PackageTest();
 
 		return f.asField();
@@ -39,6 +48,6 @@ public class Library_767PackageTest extends org.jooq.impl.PackageImpl {
 	 * No further instances allowed
 	 */
 	private Library_767PackageTest() {
-		super("LIBRARY_767_PACKAGE_TEST", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
+		super("LIBRARY_767_PACKAGE_TEST", Test.TEST);
 	}
 }

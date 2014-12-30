@@ -3,35 +3,46 @@
  */
 package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+
 /**
  * A book store
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-@javax.persistence.Entity
-@javax.persistence.Table(name = "T_BOOK_STORE", schema = "TEST")
-public class TBookStore implements java.io.Serializable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@Entity
+@Table(name = "T_BOOK_STORE", schema = "TEST")
+public class TBookStore implements Serializable {
 
-	private static final long serialVersionUID = 809904429;
+	private static final long serialVersionUID = -120991225;
 
-	private java.lang.String name;
+	private String name;
 
 	public TBookStore() {}
 
 	public TBookStore(
-		java.lang.String name
+		String name
 	) {
 		this.name = name;
 	}
 
-	@javax.persistence.Id
-	@javax.persistence.Column(name = "NAME", unique = true, nullable = false, length = 400)
-	@javax.validation.constraints.NotNull
-	@javax.validation.constraints.Size(max = 400)
-	public java.lang.String getName() {
+	@Id
+	@Column(name = "NAME", unique = true, nullable = false, length = 400)
+	@NotNull
+	@Size(max = 400)
+	public String getName() {
 		return this.name;
 	}
 
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 

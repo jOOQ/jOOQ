@@ -3,46 +3,53 @@
  */
 package org.jooq.test.postgres.generatedclasses.tables.pojos;
 
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
+import org.jooq.test.postgres.generatedclasses.tables.interfaces.IXUnused;
+
+
 /**
  * An unused table in the same schema.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class XUnused implements org.jooq.test.postgres.generatedclasses.tables.interfaces.IXUnused {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class XUnused implements IXUnused {
 
-	private static final long serialVersionUID = 1683132784;
+	private static final long serialVersionUID = 2114544662;
 
-	private final java.lang.Integer    id;
-	private final java.lang.String     name;
-	private final java.math.BigInteger bigInteger;
-	private final java.lang.Integer    idRef;
-	private final java.lang.Integer    class_;
-	private final java.lang.Integer    fields;
-	private final java.lang.Integer    configuration;
-	private final java.lang.Integer    uDT;
-	private final java.lang.Integer    metaData;
-	private final java.lang.Integer    values;
-	private final java.lang.Integer    type0;
-	private final java.lang.Integer    primaryKey;
-	private final java.lang.Integer    primarykey;
-	private final java.lang.String     nameRef;
-	private final java.math.BigDecimal field_737;
+	private final Integer    id;
+	private final String     name;
+	private final BigInteger bigInteger;
+	private final Integer    idRef;
+	private final Integer    class_;
+	private final Integer    fields;
+	private final Integer    configuration;
+	private final Integer    uDT;
+	private final Integer    metaData;
+	private final Integer    values;
+	private final Integer    type0;
+	private final Integer    primaryKey;
+	private final Integer    primarykey;
+	private final String     nameRef;
+	private final BigDecimal field_737;
 
 	public XUnused(
-		java.lang.Integer    id,
-		java.lang.String     name,
-		java.math.BigInteger bigInteger,
-		java.lang.Integer    idRef,
-		java.lang.Integer    class_,
-		java.lang.Integer    fields,
-		java.lang.Integer    configuration,
-		java.lang.Integer    uDT,
-		java.lang.Integer    metaData,
-		java.lang.Integer    values,
-		java.lang.Integer    type0,
-		java.lang.Integer    primaryKey,
-		java.lang.Integer    primarykey,
-		java.lang.String     nameRef,
-		java.math.BigDecimal field_737
+		Integer    id,
+		String     name,
+		BigInteger bigInteger,
+		Integer    idRef,
+		Integer    class_,
+		Integer    fields,
+		Integer    configuration,
+		Integer    uDT,
+		Integer    metaData,
+		Integer    values,
+		Integer    type0,
+		Integer    primaryKey,
+		Integer    primarykey,
+		String     nameRef,
+		BigDecimal field_737
 	) {
 		this.id = id;
 		this.name = name;
@@ -62,77 +69,77 @@ public class XUnused implements org.jooq.test.postgres.generatedclasses.tables.i
 	}
 
 	@Override
-	public java.lang.Integer getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return this.name;
 	}
 
 	@Override
-	public java.math.BigInteger getBigInteger() {
+	public BigInteger getBigInteger() {
 		return this.bigInteger;
 	}
 
 	@Override
-	public java.lang.Integer getIdRef() {
+	public Integer getIdRef() {
 		return this.idRef;
 	}
 
 	@Override
-	public java.lang.Integer getClass_() {
+	public Integer getClass_() {
 		return this.class_;
 	}
 
 	@Override
-	public java.lang.Integer getFields() {
+	public Integer getFields() {
 		return this.fields;
 	}
 
 	@Override
-	public java.lang.Integer getConfiguration() {
+	public Integer getConfiguration() {
 		return this.configuration;
 	}
 
 	@Override
-	public java.lang.Integer getUDT() {
+	public Integer getUDT() {
 		return this.uDT;
 	}
 
 	@Override
-	public java.lang.Integer getMetaData() {
+	public Integer getMetaData() {
 		return this.metaData;
 	}
 
 	@Override
-	public java.lang.Integer getValues() {
+	public Integer getValues() {
 		return this.values;
 	}
 
 	@Override
-	public java.lang.Integer getType0() {
+	public Integer getType0() {
 		return this.type0;
 	}
 
 	@Override
-	public java.lang.Integer getPrimaryKey_() {
+	public Integer getPrimaryKey_() {
 		return this.primaryKey;
 	}
 
 	@Override
-	public java.lang.Integer getPrimarykey() {
+	public Integer getPrimarykey() {
 		return this.primarykey;
 	}
 
 	@Override
-	public java.lang.String getNameRef() {
+	public String getNameRef() {
 		return this.nameRef;
 	}
 
 	@Override
-	public java.math.BigDecimal getField_737() {
+	public BigDecimal getField_737() {
 		return this.field_737;
 	}
 }

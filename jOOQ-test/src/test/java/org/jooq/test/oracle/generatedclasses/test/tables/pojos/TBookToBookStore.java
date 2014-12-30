@@ -3,61 +3,72 @@
  */
 package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+
 /**
  * An m:n relation between books and book stores
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-@javax.persistence.Entity
-@javax.persistence.Table(name = "T_BOOK_TO_BOOK_STORE", schema = "TEST", uniqueConstraints = {
-	@javax.persistence.UniqueConstraint(columnNames = {"BOOK_STORE_NAME", "BOOK_ID"})
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@Entity
+@Table(name = "T_BOOK_TO_BOOK_STORE", schema = "TEST", uniqueConstraints = {
+	@UniqueConstraint(columnNames = {"BOOK_STORE_NAME", "BOOK_ID"})
 })
-public class TBookToBookStore implements java.io.Serializable {
+public class TBookToBookStore implements Serializable {
 
-	private static final long serialVersionUID = -961197397;
+	private static final long serialVersionUID = 1388540131;
 
-	private java.lang.String  bookStoreName;
-	private java.lang.Integer bookId;
-	private java.lang.Integer stock;
+	private String  bookStoreName;
+	private Integer bookId;
+	private Integer stock;
 
 	public TBookToBookStore() {}
 
 	public TBookToBookStore(
-		java.lang.String  bookStoreName,
-		java.lang.Integer bookId,
-		java.lang.Integer stock
+		String  bookStoreName,
+		Integer bookId,
+		Integer stock
 	) {
 		this.bookStoreName = bookStoreName;
 		this.bookId = bookId;
 		this.stock = stock;
 	}
 
-	@javax.persistence.Column(name = "BOOK_STORE_NAME", nullable = false, length = 400)
-	@javax.validation.constraints.NotNull
-	@javax.validation.constraints.Size(max = 400)
-	public java.lang.String getBookStoreName() {
+	@Column(name = "BOOK_STORE_NAME", nullable = false, length = 400)
+	@NotNull
+	@Size(max = 400)
+	public String getBookStoreName() {
 		return this.bookStoreName;
 	}
 
-	public void setBookStoreName(java.lang.String bookStoreName) {
+	public void setBookStoreName(String bookStoreName) {
 		this.bookStoreName = bookStoreName;
 	}
 
-	@javax.persistence.Column(name = "BOOK_ID", nullable = false, precision = 7)
-	@javax.validation.constraints.NotNull
-	public java.lang.Integer getBookId() {
+	@Column(name = "BOOK_ID", nullable = false, precision = 7)
+	@NotNull
+	public Integer getBookId() {
 		return this.bookId;
 	}
 
-	public void setBookId(java.lang.Integer bookId) {
+	public void setBookId(Integer bookId) {
 		this.bookId = bookId;
 	}
 
-	@javax.persistence.Column(name = "STOCK", precision = 7)
-	public java.lang.Integer getStock() {
+	@Column(name = "STOCK", precision = 7)
+	public Integer getStock() {
 		return this.stock;
 	}
 
-	public void setStock(java.lang.Integer stock) {
+	public void setStock(Integer stock) {
 		this.stock = stock;
 	}
 

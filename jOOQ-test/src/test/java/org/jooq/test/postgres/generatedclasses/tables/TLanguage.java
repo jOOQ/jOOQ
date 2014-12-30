@@ -3,46 +3,60 @@
  */
 package org.jooq.test.postgres.generatedclasses.tables;
 
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.jooq.Field;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.UniqueKey;
+import org.jooq.impl.TableImpl;
+import org.jooq.test.postgres.generatedclasses.Keys;
+import org.jooq.test.postgres.generatedclasses.Public;
+import org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord;
+
+
 /**
  * An entity holding language master data
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord> {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class TLanguage extends TableImpl<TLanguageRecord> {
 
-	private static final long serialVersionUID = -1630696400;
+	private static final long serialVersionUID = 1320669985;
 
 	/**
 	 * The reference instance of <code>public.t_language</code>
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.TLanguage T_LANGUAGE = new org.jooq.test.postgres.generatedclasses.tables.TLanguage();
+	public static final TLanguage T_LANGUAGE = new TLanguage();
 
 	/**
 	 * The class holding records for this type
 	 */
 	@Override
-	public java.lang.Class<org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord> getRecordType() {
-		return org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord.class;
+	public Class<TLanguageRecord> getRecordType() {
+		return TLanguageRecord.class;
 	}
 
 	/**
 	 * The column <code>public.t_language.cd</code>. The language ISO code
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("cd", org.jooq.impl.SQLDataType.CHAR.length(2).nullable(false), this, "The language ISO code");
+	public final TableField<TLanguageRecord, String> CD = createField("cd", org.jooq.impl.SQLDataType.CHAR.length(2).nullable(false), this, "The language ISO code");
 
 	/**
 	 * The column <code>public.t_language.description</code>. The language description
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "The language description");
+	public final TableField<TLanguageRecord, String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "The language description");
 
 	/**
 	 * The column <code>public.t_language.description_english</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION_ENGLISH = createField("description_english", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
+	public final TableField<TLanguageRecord, String> DESCRIPTION_ENGLISH = createField("description_english", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
 	/**
 	 * The column <code>public.t_language.id</code>. The language ID
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "The language ID");
+	public final TableField<TLanguageRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "The language ID");
 
 	/**
 	 * Create a <code>public.t_language</code> table reference
@@ -54,46 +68,46 @@ public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.postgres.ge
 	/**
 	 * Create an aliased <code>public.t_language</code> table reference
 	 */
-	public TLanguage(java.lang.String alias) {
-		this(alias, org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE);
+	public TLanguage(String alias) {
+		this(alias, T_LANGUAGE);
 	}
 
-	private TLanguage(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord> aliased) {
+	private TLanguage(String alias, Table<TLanguageRecord> aliased) {
 		this(alias, aliased, null);
 	}
 
-	private TLanguage(java.lang.String alias, org.jooq.Table<org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord> aliased, org.jooq.Field<?>[] parameters) {
-		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, aliased, parameters, "An entity holding language master data");
+	private TLanguage(String alias, Table<TLanguageRecord> aliased, Field<?>[] parameters) {
+		super(alias, Public.PUBLIC, aliased, parameters, "An entity holding language master data");
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord> getPrimaryKey() {
-		return org.jooq.test.postgres.generatedclasses.Keys.PK_T_LANGUAGE;
+	public UniqueKey<TLanguageRecord> getPrimaryKey() {
+		return Keys.PK_T_LANGUAGE;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.util.List<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord>>asList(org.jooq.test.postgres.generatedclasses.Keys.PK_T_LANGUAGE);
+	public List<UniqueKey<TLanguageRecord>> getKeys() {
+		return Arrays.<UniqueKey<TLanguageRecord>>asList(Keys.PK_T_LANGUAGE);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.test.postgres.generatedclasses.tables.TLanguage as(java.lang.String alias) {
-		return new org.jooq.test.postgres.generatedclasses.tables.TLanguage(alias, this);
+	public TLanguage as(String alias) {
+		return new TLanguage(alias, this);
 	}
 
 	/**
 	 * Rename this table
 	 */
-	public org.jooq.test.postgres.generatedclasses.tables.TLanguage rename(java.lang.String name) {
-		return new org.jooq.test.postgres.generatedclasses.tables.TLanguage(name, null);
+	public TLanguage rename(String name) {
+		return new TLanguage(name, null);
 	}
 }

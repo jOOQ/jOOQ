@@ -3,277 +3,316 @@
  */
 package org.jooq.test.postgres.generatedclasses;
 
+
+import org.jooq.Field;
+import org.jooq.test.postgres.generatedclasses.tables.FSearchBook;
+import org.jooq.test.postgres.generatedclasses.tables.FTables1;
+import org.jooq.test.postgres.generatedclasses.tables.FTables2;
+import org.jooq.test.postgres.generatedclasses.tables.FTables3;
+import org.jooq.test.postgres.generatedclasses.tables.FTables4;
+import org.jooq.test.postgres.generatedclasses.tables.FTables5;
+import org.jooq.test.postgres.generatedclasses.tables.TArrays;
+import org.jooq.test.postgres.generatedclasses.tables.TAuthor;
+import org.jooq.test.postgres.generatedclasses.tables.TBook;
+import org.jooq.test.postgres.generatedclasses.tables.TBookStore;
+import org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore;
+import org.jooq.test.postgres.generatedclasses.tables.TBooleans;
+import org.jooq.test.postgres.generatedclasses.tables.TDates;
+import org.jooq.test.postgres.generatedclasses.tables.TExoticTypes;
+import org.jooq.test.postgres.generatedclasses.tables.TIdentity;
+import org.jooq.test.postgres.generatedclasses.tables.TIdentityPk;
+import org.jooq.test.postgres.generatedclasses.tables.TInheritanceAll;
+import org.jooq.test.postgres.generatedclasses.tables.TInheritance_1;
+import org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_1;
+import org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_2;
+import org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_2_1;
+import org.jooq.test.postgres.generatedclasses.tables.TLanguage;
+import org.jooq.test.postgres.generatedclasses.tables.TTriggers;
+import org.jooq.test.postgres.generatedclasses.tables.TUnsigned;
+import org.jooq.test.postgres.generatedclasses.tables.T_2781;
+import org.jooq.test.postgres.generatedclasses.tables.T_3111;
+import org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable;
+import org.jooq.test.postgres.generatedclasses.tables.T_725LobTest;
+import org.jooq.test.postgres.generatedclasses.tables.T_785;
+import org.jooq.test.postgres.generatedclasses.tables.T_959;
+import org.jooq.test.postgres.generatedclasses.tables.T_986_1;
+import org.jooq.test.postgres.generatedclasses.tables.T_986_2;
+import org.jooq.test.postgres.generatedclasses.tables.VAuthor;
+import org.jooq.test.postgres.generatedclasses.tables.VBook;
+import org.jooq.test.postgres.generatedclasses.tables.VLibrary;
+import org.jooq.test.postgres.generatedclasses.tables.XTestCase_2025;
+import org.jooq.test.postgres.generatedclasses.tables.XTestCase_64_69;
+import org.jooq.test.postgres.generatedclasses.tables.XTestCase_71;
+import org.jooq.test.postgres.generatedclasses.tables.XTestCase_85;
+import org.jooq.test.postgres.generatedclasses.tables.XUnused;
+
+
 /**
  * Convenience access to all tables in public
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
 
 	/**
 	 * The table public.f_search_book
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.FSearchBook F_SEARCH_BOOK = org.jooq.test.postgres.generatedclasses.tables.FSearchBook.F_SEARCH_BOOK;
+	public static final FSearchBook F_SEARCH_BOOK = org.jooq.test.postgres.generatedclasses.tables.FSearchBook.F_SEARCH_BOOK;
 
 	/**
 	 * Get <code>public.f_search_book</code> as a field
 	 */
-	public static org.jooq.test.postgres.generatedclasses.tables.FSearchBook F_SEARCH_BOOK(java.lang.String pTitle, java.lang.Long pLimit, java.lang.Long pOffset) {
-		return org.jooq.test.postgres.generatedclasses.tables.FSearchBook.F_SEARCH_BOOK.call(pTitle, pLimit, pOffset);
+	public static FSearchBook F_SEARCH_BOOK(String pTitle, Long pLimit, Long pOffset) {
+		return FSearchBook.F_SEARCH_BOOK.call(pTitle, pLimit, pOffset);
 	}
 
 	/**
 	 * Get <code>public.f_search_book</code> as a field
 	 */
-	public static org.jooq.test.postgres.generatedclasses.tables.FSearchBook F_SEARCH_BOOK(org.jooq.Field<java.lang.String> pTitle, org.jooq.Field<java.lang.Long> pLimit, org.jooq.Field<java.lang.Long> pOffset) {
-		return org.jooq.test.postgres.generatedclasses.tables.FSearchBook.F_SEARCH_BOOK.call(pTitle, pLimit, pOffset);
+	public static FSearchBook F_SEARCH_BOOK(Field<String> pTitle, Field<Long> pLimit, Field<Long> pOffset) {
+		return FSearchBook.F_SEARCH_BOOK.call(pTitle, pLimit, pOffset);
 	}
 
 	/**
 	 * The table public.f_tables1
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.FTables1 F_TABLES1 = org.jooq.test.postgres.generatedclasses.tables.FTables1.F_TABLES1;
+	public static final FTables1 F_TABLES1 = org.jooq.test.postgres.generatedclasses.tables.FTables1.F_TABLES1;
 
 	/**
 	 * Get <code>public.f_tables1</code> as a field
 	 */
-	public static org.jooq.test.postgres.generatedclasses.tables.FTables1 F_TABLES1() {
-		return org.jooq.test.postgres.generatedclasses.tables.FTables1.F_TABLES1.call();
+	public static FTables1 F_TABLES1() {
+		return FTables1.F_TABLES1.call();
 	}
 
 	/**
 	 * The table public.f_tables2
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.FTables2 F_TABLES2 = org.jooq.test.postgres.generatedclasses.tables.FTables2.F_TABLES2;
+	public static final FTables2 F_TABLES2 = org.jooq.test.postgres.generatedclasses.tables.FTables2.F_TABLES2;
 
 	/**
 	 * Get <code>public.f_tables2</code> as a field
 	 */
-	public static org.jooq.test.postgres.generatedclasses.tables.FTables2 F_TABLES2() {
-		return org.jooq.test.postgres.generatedclasses.tables.FTables2.F_TABLES2.call();
+	public static FTables2 F_TABLES2() {
+		return FTables2.F_TABLES2.call();
 	}
 
 	/**
 	 * The table public.f_tables3
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.FTables3 F_TABLES3 = org.jooq.test.postgres.generatedclasses.tables.FTables3.F_TABLES3;
+	public static final FTables3 F_TABLES3 = org.jooq.test.postgres.generatedclasses.tables.FTables3.F_TABLES3;
 
 	/**
 	 * Get <code>public.f_tables3</code> as a field
 	 */
-	public static org.jooq.test.postgres.generatedclasses.tables.FTables3 F_TABLES3() {
-		return org.jooq.test.postgres.generatedclasses.tables.FTables3.F_TABLES3.call();
+	public static FTables3 F_TABLES3() {
+		return FTables3.F_TABLES3.call();
 	}
 
 	/**
 	 * The table public.f_tables4
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.FTables4 F_TABLES4 = org.jooq.test.postgres.generatedclasses.tables.FTables4.F_TABLES4;
+	public static final FTables4 F_TABLES4 = org.jooq.test.postgres.generatedclasses.tables.FTables4.F_TABLES4;
 
 	/**
 	 * Get <code>public.f_tables4</code> as a field
 	 */
-	public static org.jooq.test.postgres.generatedclasses.tables.FTables4 F_TABLES4(java.lang.Integer inId) {
-		return org.jooq.test.postgres.generatedclasses.tables.FTables4.F_TABLES4.call(inId);
+	public static FTables4 F_TABLES4(Integer inId) {
+		return FTables4.F_TABLES4.call(inId);
 	}
 
 	/**
 	 * Get <code>public.f_tables4</code> as a field
 	 */
-	public static org.jooq.test.postgres.generatedclasses.tables.FTables4 F_TABLES4(org.jooq.Field<java.lang.Integer> inId) {
-		return org.jooq.test.postgres.generatedclasses.tables.FTables4.F_TABLES4.call(inId);
+	public static FTables4 F_TABLES4(Field<Integer> inId) {
+		return FTables4.F_TABLES4.call(inId);
 	}
 
 	/**
 	 * The table public.f_tables5
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.FTables5 F_TABLES5 = org.jooq.test.postgres.generatedclasses.tables.FTables5.F_TABLES5;
+	public static final FTables5 F_TABLES5 = org.jooq.test.postgres.generatedclasses.tables.FTables5.F_TABLES5;
 
 	/**
 	 * Get <code>public.f_tables5</code> as a field
 	 */
-	public static org.jooq.test.postgres.generatedclasses.tables.FTables5 F_TABLES5(java.lang.Integer v1, java.lang.Integer v2, java.lang.Integer v3) {
-		return org.jooq.test.postgres.generatedclasses.tables.FTables5.F_TABLES5.call(v1, v2, v3);
+	public static FTables5 F_TABLES5(Integer v1, Integer v2, Integer v3) {
+		return FTables5.F_TABLES5.call(v1, v2, v3);
 	}
 
 	/**
 	 * Get <code>public.f_tables5</code> as a field
 	 */
-	public static org.jooq.test.postgres.generatedclasses.tables.FTables5 F_TABLES5(org.jooq.Field<java.lang.Integer> v1, org.jooq.Field<java.lang.Integer> v2, org.jooq.Field<java.lang.Integer> v3) {
-		return org.jooq.test.postgres.generatedclasses.tables.FTables5.F_TABLES5.call(v1, v2, v3);
+	public static FTables5 F_TABLES5(Field<Integer> v1, Field<Integer> v2, Field<Integer> v3) {
+		return FTables5.F_TABLES5.call(v1, v2, v3);
 	}
 
 	/**
 	 * The table public.t_2781
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.T_2781 T_2781 = org.jooq.test.postgres.generatedclasses.tables.T_2781.T_2781;
+	public static final T_2781 T_2781 = org.jooq.test.postgres.generatedclasses.tables.T_2781.T_2781;
 
 	/**
 	 * The table public.t_3111
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.T_3111 T_3111 = org.jooq.test.postgres.generatedclasses.tables.T_3111.T_3111;
+	public static final T_3111 T_3111 = org.jooq.test.postgres.generatedclasses.tables.T_3111.T_3111;
 
 	/**
 	 * The table public.t_639_numbers_table
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;
+	public static final T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;
 
 	/**
 	 * The table public.t_725_lob_test
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.T_725LobTest T_725_LOB_TEST = org.jooq.test.postgres.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST;
+	public static final T_725LobTest T_725_LOB_TEST = org.jooq.test.postgres.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST;
 
 	/**
 	 * The table public.t_785
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.T_785 T_785 = org.jooq.test.postgres.generatedclasses.tables.T_785.T_785;
+	public static final T_785 T_785 = org.jooq.test.postgres.generatedclasses.tables.T_785.T_785;
 
 	/**
 	 * The table public.t_959
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.T_959 T_959 = org.jooq.test.postgres.generatedclasses.tables.T_959.T_959;
+	public static final T_959 T_959 = org.jooq.test.postgres.generatedclasses.tables.T_959.T_959;
 
 	/**
 	 * The table public.t_986_1
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.T_986_1 T_986_1 = org.jooq.test.postgres.generatedclasses.tables.T_986_1.T_986_1;
+	public static final T_986_1 T_986_1 = org.jooq.test.postgres.generatedclasses.tables.T_986_1.T_986_1;
 
 	/**
 	 * The table public.t_986_2
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.T_986_2 T_986_2 = org.jooq.test.postgres.generatedclasses.tables.T_986_2.T_986_2;
+	public static final T_986_2 T_986_2 = org.jooq.test.postgres.generatedclasses.tables.T_986_2.T_986_2;
 
 	/**
 	 * The table public.t_arrays
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.TArrays T_ARRAYS = org.jooq.test.postgres.generatedclasses.tables.TArrays.T_ARRAYS;
+	public static final TArrays T_ARRAYS = org.jooq.test.postgres.generatedclasses.tables.TArrays.T_ARRAYS;
 
 	/**
 	 * An entity holding authors of books
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.TAuthor T_AUTHOR = org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR;
+	public static final TAuthor T_AUTHOR = org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR;
 
 	/**
 	 * An entity holding books
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.TBook T_BOOK = org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK;
+	public static final TBook T_BOOK = org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK;
 
 	/**
 	 * A book store
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.TBookStore T_BOOK_STORE = org.jooq.test.postgres.generatedclasses.tables.TBookStore.T_BOOK_STORE;
+	public static final TBookStore T_BOOK_STORE = org.jooq.test.postgres.generatedclasses.tables.TBookStore.T_BOOK_STORE;
 
 	/**
 	 * An m:n relation between books and book stores
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore T_BOOK_TO_BOOK_STORE = org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE;
+	public static final TBookToBookStore T_BOOK_TO_BOOK_STORE = org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE;
 
 	/**
 	 * The table public.t_booleans
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.TBooleans T_BOOLEANS = org.jooq.test.postgres.generatedclasses.tables.TBooleans.T_BOOLEANS;
+	public static final TBooleans T_BOOLEANS = org.jooq.test.postgres.generatedclasses.tables.TBooleans.T_BOOLEANS;
 
 	/**
 	 * The table public.t_dates
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.TDates T_DATES = org.jooq.test.postgres.generatedclasses.tables.TDates.T_DATES;
+	public static final TDates T_DATES = org.jooq.test.postgres.generatedclasses.tables.TDates.T_DATES;
 
 	/**
 	 * The table public.t_exotic_types
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.TExoticTypes T_EXOTIC_TYPES = org.jooq.test.postgres.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES;
+	public static final TExoticTypes T_EXOTIC_TYPES = org.jooq.test.postgres.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES;
 
 	/**
 	 * The table public.t_identity
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.TIdentity T_IDENTITY = org.jooq.test.postgres.generatedclasses.tables.TIdentity.T_IDENTITY;
+	public static final TIdentity T_IDENTITY = org.jooq.test.postgres.generatedclasses.tables.TIdentity.T_IDENTITY;
 
 	/**
 	 * The table public.t_identity_pk
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = org.jooq.test.postgres.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK;
+	public static final TIdentityPk T_IDENTITY_PK = org.jooq.test.postgres.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK;
 
 	/**
 	 * The table public.t_inheritance_1
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.TInheritance_1 T_INHERITANCE_1 = org.jooq.test.postgres.generatedclasses.tables.TInheritance_1.T_INHERITANCE_1;
+	public static final TInheritance_1 T_INHERITANCE_1 = org.jooq.test.postgres.generatedclasses.tables.TInheritance_1.T_INHERITANCE_1;
 
 	/**
 	 * The table public.t_inheritance_1_1
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_1 T_INHERITANCE_1_1 = org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_1.T_INHERITANCE_1_1;
+	public static final TInheritance_1_1 T_INHERITANCE_1_1 = org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_1.T_INHERITANCE_1_1;
 
 	/**
 	 * The table public.t_inheritance_1_2
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_2 T_INHERITANCE_1_2 = org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_2.T_INHERITANCE_1_2;
+	public static final TInheritance_1_2 T_INHERITANCE_1_2 = org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_2.T_INHERITANCE_1_2;
 
 	/**
 	 * The table public.t_inheritance_1_2_1
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_2_1 T_INHERITANCE_1_2_1 = org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_2_1.T_INHERITANCE_1_2_1;
+	public static final TInheritance_1_2_1 T_INHERITANCE_1_2_1 = org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_2_1.T_INHERITANCE_1_2_1;
 
 	/**
 	 * The table public.t_inheritance_all
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.TInheritanceAll T_INHERITANCE_ALL = org.jooq.test.postgres.generatedclasses.tables.TInheritanceAll.T_INHERITANCE_ALL;
+	public static final TInheritanceAll T_INHERITANCE_ALL = org.jooq.test.postgres.generatedclasses.tables.TInheritanceAll.T_INHERITANCE_ALL;
 
 	/**
 	 * An entity holding language master data
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.TLanguage T_LANGUAGE = org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE;
-
-	/**
-	 * The table public.t_pg_extensions
-	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.TPgExtensions T_PG_EXTENSIONS = org.jooq.test.postgres.generatedclasses.tables.TPgExtensions.T_PG_EXTENSIONS;
+	public static final TLanguage T_LANGUAGE = org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE;
 
 	/**
 	 * The table public.t_triggers
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.postgres.generatedclasses.tables.TTriggers.T_TRIGGERS;
+	public static final TTriggers T_TRIGGERS = org.jooq.test.postgres.generatedclasses.tables.TTriggers.T_TRIGGERS;
 
 	/**
 	 * The table public.t_unsigned
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.TUnsigned T_UNSIGNED = org.jooq.test.postgres.generatedclasses.tables.TUnsigned.T_UNSIGNED;
+	public static final TUnsigned T_UNSIGNED = org.jooq.test.postgres.generatedclasses.tables.TUnsigned.T_UNSIGNED;
 
 	/**
 	 * The table public.v_author
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.VAuthor V_AUTHOR = org.jooq.test.postgres.generatedclasses.tables.VAuthor.V_AUTHOR;
+	public static final VAuthor V_AUTHOR = org.jooq.test.postgres.generatedclasses.tables.VAuthor.V_AUTHOR;
 
 	/**
 	 * The table public.v_book
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.VBook V_BOOK = org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK;
+	public static final VBook V_BOOK = org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK;
 
 	/**
 	 * The table public.v_library
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.VLibrary V_LIBRARY = org.jooq.test.postgres.generatedclasses.tables.VLibrary.V_LIBRARY;
+	public static final VLibrary V_LIBRARY = org.jooq.test.postgres.generatedclasses.tables.VLibrary.V_LIBRARY;
 
 	/**
 	 * The table public.x_test_case_2025
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.XTestCase_2025 X_TEST_CASE_2025 = org.jooq.test.postgres.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025;
+	public static final XTestCase_2025 X_TEST_CASE_2025 = org.jooq.test.postgres.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025;
 
 	/**
 	 * The table public.x_test_case_64_69
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.XTestCase_64_69 X_TEST_CASE_64_69 = org.jooq.test.postgres.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69;
+	public static final XTestCase_64_69 X_TEST_CASE_64_69 = org.jooq.test.postgres.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69;
 
 	/**
 	 * The table public.x_test_case_71
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.XTestCase_71 X_TEST_CASE_71 = org.jooq.test.postgres.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71;
+	public static final XTestCase_71 X_TEST_CASE_71 = org.jooq.test.postgres.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71;
 
 	/**
 	 * The table public.x_test_case_85
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.XTestCase_85 X_TEST_CASE_85 = org.jooq.test.postgres.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85;
+	public static final XTestCase_85 X_TEST_CASE_85 = org.jooq.test.postgres.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85;
 
 	/**
 	 * An unused table in the same schema.
 	 */
-	public static final org.jooq.test.postgres.generatedclasses.tables.XUnused X_UNUSED = org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED;
+	public static final XUnused X_UNUSED = org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED;
 }

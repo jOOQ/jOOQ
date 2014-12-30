@@ -3,28 +3,35 @@
  */
 package org.jooq.test.postgres.generatedclasses.tables.pojos;
 
+
+import java.sql.Date;
+
+import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITAuthor;
+import org.jooq.test.postgres.generatedclasses.udt.pojos.UAddressType;
+
+
 /**
  * An entity holding authors of books
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TAuthor implements org.jooq.test.postgres.generatedclasses.tables.interfaces.ITAuthor {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class TAuthor implements ITAuthor {
 
-	private static final long serialVersionUID = -598790152;
+	private static final long serialVersionUID = -991625529;
 
-	private final java.lang.Integer                                              id;
-	private final java.lang.String                                               firstName;
-	private final java.lang.String                                               lastName;
-	private final java.sql.Date                                                  dateOfBirth;
-	private final java.lang.Integer                                              yearOfBirth;
-	private final org.jooq.test.postgres.generatedclasses.udt.pojos.UAddressType address;
+	private final Integer      id;
+	private final String       firstName;
+	private final String       lastName;
+	private final Date         dateOfBirth;
+	private final Integer      yearOfBirth;
+	private final UAddressType address;
 
 	public TAuthor(
-		java.lang.Integer                                              id,
-		java.lang.String                                               firstName,
-		java.lang.String                                               lastName,
-		java.sql.Date                                                  dateOfBirth,
-		java.lang.Integer                                              yearOfBirth,
-		org.jooq.test.postgres.generatedclasses.udt.pojos.UAddressType address
+		Integer      id,
+		String       firstName,
+		String       lastName,
+		Date         dateOfBirth,
+		Integer      yearOfBirth,
+		UAddressType address
 	) {
 		this.id = id;
 		this.firstName = firstName;
@@ -35,32 +42,32 @@ public class TAuthor implements org.jooq.test.postgres.generatedclasses.tables.i
 	}
 
 	@Override
-	public java.lang.Integer getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public java.lang.String getFirstName() {
+	public String getFirstName() {
 		return this.firstName;
 	}
 
 	@Override
-	public java.lang.String getLastName() {
+	public String getLastName() {
 		return this.lastName;
 	}
 
 	@Override
-	public java.sql.Date getDateOfBirth() {
+	public Date getDateOfBirth() {
 		return this.dateOfBirth;
 	}
 
 	@Override
-	public java.lang.Integer getYearOfBirth() {
+	public Integer getYearOfBirth() {
 		return this.yearOfBirth;
 	}
 
 	@Override
-	public org.jooq.test.postgres.generatedclasses.udt.pojos.UAddressType getAddress() {
+	public UAddressType getAddress() {
 		return this.address;
 	}
 }

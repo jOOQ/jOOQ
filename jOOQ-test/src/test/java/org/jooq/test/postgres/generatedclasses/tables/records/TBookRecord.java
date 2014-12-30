@@ -3,18 +3,30 @@
  */
 package org.jooq.test.postgres.generatedclasses.tables.records;
 
+
+import org.jooq.Field;
+import org.jooq.Record1;
+import org.jooq.Record10;
+import org.jooq.Row;
+import org.jooq.Row10;
+import org.jooq.impl.UpdatableRecordImpl;
+import org.jooq.test.postgres.generatedclasses.enums.UBookStatus;
+import org.jooq.test.postgres.generatedclasses.tables.TBook;
+import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITBook;
+
+
 /**
  * An entity holding books
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.postgres.generatedclasses.enums.UBookStatus>, org.jooq.test.postgres.generatedclasses.tables.interfaces.ITBook {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class TBookRecord extends UpdatableRecordImpl<TBookRecord> implements Record10<Integer, Integer, Integer, Integer, String, Integer, Integer, String, byte[], UBookStatus>, ITBook {
 
-	private static final long serialVersionUID = 999453949;
+	private static final long serialVersionUID = -96162870;
 
 	/**
 	 * Setter for <code>public.t_book.id</code>. The book ID
 	 */
-	public TBookRecord setId(java.lang.Integer value) {
+	public TBookRecord setId(Integer value) {
 		setValue(0, value);
 		return this;
 	}
@@ -23,14 +35,14 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * Getter for <code>public.t_book.id</code>. The book ID
 	 */
 	@Override
-	public java.lang.Integer getId() {
-		return (java.lang.Integer) getValue(0);
+	public Integer getId() {
+		return (Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>public.t_book.author_id</code>. The author ID in entity 'author'
 	 */
-	public TBookRecord setAuthorId(java.lang.Integer value) {
+	public TBookRecord setAuthorId(Integer value) {
 		setValue(1, value);
 		return this;
 	}
@@ -39,14 +51,14 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * Getter for <code>public.t_book.author_id</code>. The author ID in entity 'author'
 	 */
 	@Override
-	public java.lang.Integer getAuthorId() {
-		return (java.lang.Integer) getValue(1);
+	public Integer getAuthorId() {
+		return (Integer) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>public.t_book.co_author_id</code>.
 	 */
-	public TBookRecord setCoAuthorId(java.lang.Integer value) {
+	public TBookRecord setCoAuthorId(Integer value) {
 		setValue(2, value);
 		return this;
 	}
@@ -55,14 +67,14 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * Getter for <code>public.t_book.co_author_id</code>.
 	 */
 	@Override
-	public java.lang.Integer getCoAuthorId() {
-		return (java.lang.Integer) getValue(2);
+	public Integer getCoAuthorId() {
+		return (Integer) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>public.t_book.details_id</code>.
 	 */
-	public TBookRecord setDetailsId(java.lang.Integer value) {
+	public TBookRecord setDetailsId(Integer value) {
 		setValue(3, value);
 		return this;
 	}
@@ -71,14 +83,14 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * Getter for <code>public.t_book.details_id</code>.
 	 */
 	@Override
-	public java.lang.Integer getDetailsId() {
-		return (java.lang.Integer) getValue(3);
+	public Integer getDetailsId() {
+		return (Integer) getValue(3);
 	}
 
 	/**
 	 * Setter for <code>public.t_book.title</code>. The book's title
 	 */
-	public TBookRecord setTitle(java.lang.String value) {
+	public TBookRecord setTitle(String value) {
 		setValue(4, value);
 		return this;
 	}
@@ -87,14 +99,14 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * Getter for <code>public.t_book.title</code>. The book's title
 	 */
 	@Override
-	public java.lang.String getTitle() {
-		return (java.lang.String) getValue(4);
+	public String getTitle() {
+		return (String) getValue(4);
 	}
 
 	/**
 	 * Setter for <code>public.t_book.published_in</code>. The year the book was published in
 	 */
-	public TBookRecord setPublishedIn(java.lang.Integer value) {
+	public TBookRecord setPublishedIn(Integer value) {
 		setValue(5, value);
 		return this;
 	}
@@ -103,14 +115,14 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * Getter for <code>public.t_book.published_in</code>. The year the book was published in
 	 */
 	@Override
-	public java.lang.Integer getPublishedIn() {
-		return (java.lang.Integer) getValue(5);
+	public Integer getPublishedIn() {
+		return (Integer) getValue(5);
 	}
 
 	/**
 	 * Setter for <code>public.t_book.language_id</code>. The language of the book
 	 */
-	public TBookRecord setLanguageId(java.lang.Integer value) {
+	public TBookRecord setLanguageId(Integer value) {
 		setValue(6, value);
 		return this;
 	}
@@ -119,14 +131,14 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * Getter for <code>public.t_book.language_id</code>. The language of the book
 	 */
 	@Override
-	public java.lang.Integer getLanguageId() {
-		return (java.lang.Integer) getValue(6);
+	public Integer getLanguageId() {
+		return (Integer) getValue(6);
 	}
 
 	/**
 	 * Setter for <code>public.t_book.content_text</code>. Some textual content of the book
 	 */
-	public TBookRecord setContentText(java.lang.String value) {
+	public TBookRecord setContentText(String value) {
 		setValue(7, value);
 		return this;
 	}
@@ -135,8 +147,8 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * Getter for <code>public.t_book.content_text</code>. Some textual content of the book
 	 */
 	@Override
-	public java.lang.String getContentText() {
-		return (java.lang.String) getValue(7);
+	public String getContentText() {
+		return (String) getValue(7);
 	}
 
 	/**
@@ -158,7 +170,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * Setter for <code>public.t_book.status</code>. The book's stock status
 	 */
-	public TBookRecord setStatus(org.jooq.test.postgres.generatedclasses.enums.UBookStatus value) {
+	public TBookRecord setStatus(UBookStatus value) {
 		setValue(9, value);
 		return this;
 	}
@@ -167,8 +179,8 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * Getter for <code>public.t_book.status</code>. The book's stock status
 	 */
 	@Override
-	public org.jooq.test.postgres.generatedclasses.enums.UBookStatus getStatus() {
-		return (org.jooq.test.postgres.generatedclasses.enums.UBookStatus) getValue(9);
+	public UBookStatus getStatus() {
+		return (UBookStatus) getValue(9);
 	}
 
 	// -------------------------------------------------------------------------
@@ -179,8 +191,8 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Record1<java.lang.Integer> key() {
-		return (org.jooq.Record1) super.key();
+	public Record1<Integer> key() {
+		return (Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -191,31 +203,31 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.postgres.generatedclasses.enums.UBookStatus> fieldsRow() {
-		return (org.jooq.Row10) super.fieldsRow();
+	public Row10<Integer, Integer, Integer, Integer, String, Integer, Integer, String, byte[], UBookStatus> fieldsRow() {
+		return (Row10) super.fieldsRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.postgres.generatedclasses.enums.UBookStatus> valuesRow() {
-		return (org.jooq.Row10) super.valuesRow();
+	public Row10<Integer, Integer, Integer, Integer, String, Integer, Integer, String, byte[], UBookStatus> valuesRow() {
+		return (Row10) super.valuesRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.ID;
+	public Field<Integer> field1() {
+		return TBook.T_BOOK.ID;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.Integer> field2() {
+	public Field<Integer> field2() {
 		return org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID;
 	}
 
@@ -223,7 +235,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.Integer> field3() {
+	public Field<Integer> field3() {
 		return org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID;
 	}
 
@@ -231,63 +243,63 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.Integer> field4() {
-		return org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.DETAILS_ID;
+	public Field<Integer> field4() {
+		return TBook.T_BOOK.DETAILS_ID;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.String> field5() {
-		return org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.TITLE;
+	public Field<String> field5() {
+		return TBook.T_BOOK.TITLE;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.Integer> field6() {
-		return org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.PUBLISHED_IN;
+	public Field<Integer> field6() {
+		return TBook.T_BOOK.PUBLISHED_IN;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.Integer> field7() {
-		return org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID;
+	public Field<Integer> field7() {
+		return TBook.T_BOOK.LANGUAGE_ID;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.String> field8() {
-		return org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.CONTENT_TEXT;
+	public Field<String> field8() {
+		return TBook.T_BOOK.CONTENT_TEXT;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<byte[]> field9() {
-		return org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.CONTENT_PDF;
+	public Field<byte[]> field9() {
+		return TBook.T_BOOK.CONTENT_PDF;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<org.jooq.test.postgres.generatedclasses.enums.UBookStatus> field10() {
-		return org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.STATUS;
+	public Field<UBookStatus> field10() {
+		return TBook.T_BOOK.STATUS;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.Integer value1() {
+	public Integer value1() {
 		return getId();
 	}
 
@@ -295,7 +307,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.Integer value2() {
+	public Integer value2() {
 		return getAuthorId();
 	}
 
@@ -303,7 +315,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.Integer value3() {
+	public Integer value3() {
 		return getCoAuthorId();
 	}
 
@@ -311,7 +323,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.Integer value4() {
+	public Integer value4() {
 		return getDetailsId();
 	}
 
@@ -319,7 +331,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.String value5() {
+	public String value5() {
 		return getTitle();
 	}
 
@@ -327,7 +339,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.Integer value6() {
+	public Integer value6() {
 		return getPublishedIn();
 	}
 
@@ -335,7 +347,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.Integer value7() {
+	public Integer value7() {
 		return getLanguageId();
 	}
 
@@ -343,7 +355,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.String value8() {
+	public String value8() {
 		return getContentText();
 	}
 
@@ -359,7 +371,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.test.postgres.generatedclasses.enums.UBookStatus value10() {
+	public UBookStatus value10() {
 		return getStatus();
 	}
 
@@ -367,7 +379,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TBookRecord value1(java.lang.Integer value) {
+	public TBookRecord value1(Integer value) {
 		setId(value);
 		return this;
 	}
@@ -376,7 +388,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TBookRecord value2(java.lang.Integer value) {
+	public TBookRecord value2(Integer value) {
 		setAuthorId(value);
 		return this;
 	}
@@ -385,7 +397,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TBookRecord value3(java.lang.Integer value) {
+	public TBookRecord value3(Integer value) {
 		setCoAuthorId(value);
 		return this;
 	}
@@ -394,7 +406,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TBookRecord value4(java.lang.Integer value) {
+	public TBookRecord value4(Integer value) {
 		setDetailsId(value);
 		return this;
 	}
@@ -403,7 +415,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TBookRecord value5(java.lang.String value) {
+	public TBookRecord value5(String value) {
 		setTitle(value);
 		return this;
 	}
@@ -412,7 +424,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TBookRecord value6(java.lang.Integer value) {
+	public TBookRecord value6(Integer value) {
 		setPublishedIn(value);
 		return this;
 	}
@@ -421,7 +433,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TBookRecord value7(java.lang.Integer value) {
+	public TBookRecord value7(Integer value) {
 		setLanguageId(value);
 		return this;
 	}
@@ -430,7 +442,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TBookRecord value8(java.lang.String value) {
+	public TBookRecord value8(String value) {
 		setContentText(value);
 		return this;
 	}
@@ -448,7 +460,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TBookRecord value10(org.jooq.test.postgres.generatedclasses.enums.UBookStatus value) {
+	public TBookRecord value10(UBookStatus value) {
 		setStatus(value);
 		return this;
 	}
@@ -457,7 +469,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TBookRecord values(java.lang.Integer value1, java.lang.Integer value2, java.lang.Integer value3, java.lang.Integer value4, java.lang.String value5, java.lang.Integer value6, java.lang.Integer value7, java.lang.String value8, byte[] value9, org.jooq.test.postgres.generatedclasses.enums.UBookStatus value10) {
+	public TBookRecord values(Integer value1, Integer value2, Integer value3, Integer value4, String value5, Integer value6, Integer value7, String value8, byte[] value9, UBookStatus value10) {
 		return this;
 	}
 
@@ -469,14 +481,14 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * Create a detached TBookRecord
 	 */
 	public TBookRecord() {
-		super(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK);
+		super(TBook.T_BOOK);
 	}
 
 	/**
 	 * Create a detached, initialised TBookRecord
 	 */
-	public TBookRecord(java.lang.Integer id, java.lang.Integer authorId, java.lang.Integer coAuthorId, java.lang.Integer detailsId, java.lang.String title, java.lang.Integer publishedIn, java.lang.Integer languageId, java.lang.String contentText, byte[] contentPdf, org.jooq.test.postgres.generatedclasses.enums.UBookStatus status) {
-		super(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK);
+	public TBookRecord(Integer id, Integer authorId, Integer coAuthorId, Integer detailsId, String title, Integer publishedIn, Integer languageId, String contentText, byte[] contentPdf, UBookStatus status) {
+		super(TBook.T_BOOK);
 
 		setValue(0, id);
 		setValue(1, authorId);

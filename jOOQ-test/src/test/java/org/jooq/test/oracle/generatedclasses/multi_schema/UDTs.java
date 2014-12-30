@@ -3,14 +3,18 @@
  */
 package org.jooq.test.oracle.generatedclasses.multi_schema;
 
+
+import org.jooq.test.oracle.generatedclasses.multi_schema.udt.NumberObject;
+
+
 /**
  * Convenience access to all UDTs in MULTI_SCHEMA
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UDTs {
 
 	/**
 	 * The type <code>MULTI_SCHEMA.NUMBER_OBJECT</code>
 	 */
-	public static org.jooq.test.oracle.generatedclasses.multi_schema.udt.NumberObject NUMBER_OBJECT = org.jooq.test.oracle.generatedclasses.multi_schema.udt.NumberObject.NUMBER_OBJECT;
+	public static NumberObject NUMBER_OBJECT = org.jooq.test.oracle.generatedclasses.multi_schema.udt.NumberObject.NUMBER_OBJECT;
 }

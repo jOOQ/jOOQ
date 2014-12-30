@@ -67,6 +67,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateValidationAnnotations  = false;
     boolean                            generateGlobalObjectReferences = true;
     boolean                            fluentSetters                  = false;
+    String                             fullyQualifiedTypes            = "";
 
     protected GeneratorStrategyWrapper strategy;
 
@@ -237,6 +238,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGeneratePojosEqualsAndHashCode(boolean generatePojosEqualsAndHashCode) {
         this.generatePojosEqualsAndHashCode = generatePojosEqualsAndHashCode;
+    }
+
+    @Override
+    public String fullyQualifiedTypes() {
+        return fullyQualifiedTypes;
+    }
+
+    @Override
+    public void setFullyQualifiedTypes(String fullyQualifiedTypes) {
+        this.fullyQualifiedTypes = fullyQualifiedTypes;
     }
 
     // ----

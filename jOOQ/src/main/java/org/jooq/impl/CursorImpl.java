@@ -83,6 +83,8 @@ import org.jooq.exception.ControlFlowSignal;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.JDBC41ResultSet;
 import org.jooq.tools.jdbc.JDBCUtils;
+import org.jooq.tools.reflect.RecordInstantiator;
+import org.jooq.tools.reflect.RecordInstantiatorFactory;
 
 /**
  * @author Lukas Eder
@@ -104,6 +106,8 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     private transient Iterator<R>     iterator;
     private transient int             rows;
 
+    private final RecordInstantiator<? extends R> recordInstantiator;
+
     @SuppressWarnings("unchecked")
     CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement, boolean keepResultSet) {
         this(ctx, listener, fields, internIndexes, keepStatement, keepResultSet, (Class<? extends R>) RecordImpl.class);
@@ -123,6 +127,11 @@ class CursorImpl<R extends Record> implements Cursor<R> {
             for (int i : internIndexes) {
                 intern[i] = true;
             }
+        }
+        try {
+           this.recordInstantiator = RecordInstantiatorFactory.newInstantiator(type);
+        } catch(Exception e) {
+            throw new IllegalStateException("Could not construct new record", e);
         }
     }
 
@@ -1410,8 +1419,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
                         rs.updateRow();
                     }
 
-                    record = Utils.newRecord(true, (Class<AbstractRecord>) type, fields, ctx.configuration())
-                                  .operate(initialiser);
+                    record = Utils.newRecord(true, (RecordInstantiator<AbstractRecord>)recordInstantiator, fields, ctx.configuration()).operate(initialiser);
 
                     rows++;
                 }

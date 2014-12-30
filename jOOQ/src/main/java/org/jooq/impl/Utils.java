@@ -59,10 +59,6 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.nullSafe;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
-import static org.jooq.impl.DropStatementType.INDEX;
-import static org.jooq.impl.DropStatementType.SEQUENCE;
-import static org.jooq.impl.DropStatementType.TABLE;
-import static org.jooq.impl.DropStatementType.VIEW;
 import static org.jooq.impl.Identifiers.QUOTES;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
@@ -130,6 +126,7 @@ import org.jooq.impl.Utils.Cache.CachedOperation;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
+import org.jooq.tools.reflect.RecordInstantiator;
 import org.jooq.tools.reflect.Reflect;
 
 /**
@@ -463,7 +460,20 @@ final class Utils {
             throw new IllegalStateException("Could not construct new record", e);
         }
     }
+    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, RecordInstantiator<? extends R> instatiator, Field<?>[] fields, Configuration configuration) {
+        try {
+            R record = instatiator.newInstance(fields);
 
+            // [#3300] Records that were fetched from the database
+            if (record instanceof AbstractRecord)
+                ((AbstractRecord) record).fetched = fetched;
+
+            return new RecordDelegate<R>(configuration, record);
+        }
+        catch (Exception e) {
+            throw new IllegalStateException("Could not construct new record", e);
+        }
+    }
     /**
      * [#2700] [#3582] If a POJO attribute is NULL, but the column is NOT NULL
      * then we should let the database apply DEFAULT values

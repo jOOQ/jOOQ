@@ -813,6 +813,13 @@ public abstract class BaseTest<
         return dialect().family();
     }
 
+    protected final void sleep(long millis) {
+        try {
+            Thread.sleep(millis);
+        }
+        catch (InterruptedException ignore) {}
+    }
+
     /**
      * Round all strings to a given scale, to avoid annoying floating point side-effects
      */

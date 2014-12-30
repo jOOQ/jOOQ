@@ -53,7 +53,6 @@ import static org.junit.Assert.assertTrue;
 import java.sql.Connection;
 import java.sql.Date;
 import java.util.Vector;
-import java.util.concurrent.CountDownLatch;
 
 import org.jooq.DSLContext;
 import org.jooq.Field;
@@ -322,15 +321,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             final DSLContext create1 = create();
             final DSLContext create2 = create(create().configuration().derive(new DefaultConnectionProvider(connection2)));
 
-            final CountDownLatch latch1 = new CountDownLatch(1);
-            final CountDownLatch latch2 = new CountDownLatch(1);
-
             final Vector<String> execOrder = new Vector<String>();
             final Thread t1 = new Thread(() -> {
+                sleep(2000);
+                execOrder.add("t1-block");
                 try {
-                    latch1.await();
-                    execOrder.add("t1-block");
-
                     create1
                         .select(TAuthor_ID())
                         .from(TAuthor())
@@ -339,11 +334,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 }
 
                 // Some databases fail on locking, others lock for a while
-                catch (InterruptedException | DataAccessException ignore) {
+                catch (DataAccessException ignore) {
                 }
                 finally {
                     execOrder.add("t1-fail-or-t2-commit");
-                    latch2.countDown();
                 }
             });
 
@@ -356,11 +350,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 assertEquals(2, result2.size());
 
                 execOrder.add("t2-signal");
-                try {
-                    latch1.countDown();
-                    latch2.await();
-                    execOrder.add("t1-fail-or-t2-commit");
+                sleep(4000);
+                execOrder.add("t1-fail-or-t2-commit");
 
+                try {
                     create2.configuration().connectionProvider().acquire().commit();
                     create2.configuration().connectionProvider().acquire().close();
                 }

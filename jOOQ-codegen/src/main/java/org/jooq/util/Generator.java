@@ -213,6 +213,18 @@ public interface Generator {
     void setGeneratePojosEqualsAndHashCode(boolean generatePojosEqualsAndHashCode);
 
     /**
+     * A regular expression matching all the types in generated code that should
+     * be fully qualified.
+     */
+    String fullyQualifiedTypes();
+
+    /**
+     * A regular expression matching all the types in generated code that should
+     * be fully qualified.
+     */
+    void setFullyQualifiedTypes(String fullyQualifiedTypes);
+
+    /**
      * The target directory
      */
     String getTargetDirectory();

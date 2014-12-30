@@ -394,6 +394,8 @@ public class GenerationTool {
                 generator.setFluentSetters(g.getGenerate().isFluentSetters());
             if (g.getGenerate().isPojosEqualsAndHashCode() != null)
                 generator.setGeneratePojosEqualsAndHashCode(g.getGenerate().isPojosEqualsAndHashCode());
+            if (g.getGenerate().getFullyQualifiedTypes() != null)
+                generator.setFullyQualifiedTypes(g.getGenerate().getFullyQualifiedTypes());
 
             // [#3669] Optional Database element
             if (g.getDatabase() == null)

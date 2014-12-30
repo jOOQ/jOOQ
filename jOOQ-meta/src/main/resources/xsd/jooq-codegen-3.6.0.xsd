@@ -701,6 +701,16 @@
         useful to those users who do not depend on EL, JSP, JSF, etc.
         -->
       <element name="fluentSetters" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
+      
+      <!--
+        A regular expression matching all the types in generated code that should
+        be fully qualified.
+        
+        This can be useful if you have a database object that generates a String
+        class, and you want to avoid naming clashes with the java.lang package
+        by specifying <fullyQualifiedTypes>java\.lang\..*</fullyQualifiedTypes>
+        -->
+      <element name="fullyQualifiedTypes" type="string" default="" minOccurs="0" maxOcurrs="1" />
     </all>
   </complexType>
 

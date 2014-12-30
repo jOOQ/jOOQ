@@ -49,6 +49,7 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -123,7 +124,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
             for (;;) {
                 for (Object arg : originals) {
                     if (arg instanceof Class) {
-                        translated.add(((Class<?>) arg).getName());
+                        translated.add(ref((Class<?>) arg));
                     }
                     else if (arg instanceof Object[] || arg instanceof Collection) {
                         if (arg instanceof Collection) {
@@ -264,6 +265,59 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
 
     protected String beforeClose(String string) {
         return string;
+    }
+
+    /**
+     * Get a reference to a {@link Class}.
+     */
+    protected final String ref(Class<?> clazz) {
+        return clazz == null ? null : ref(clazz.getName());
+    }
+
+    /**
+     * Get a reference to a {@link Class}.
+     */
+    protected final String ref(String clazzOrId) {
+        return clazzOrId == null ? null : ref(Arrays.asList(clazzOrId), 1).get(0);
+    }
+
+    /**
+     * Get a reference to a list of {@link Class}.
+     */
+    protected final String[] ref(String[] clazzOrId) {
+        return clazzOrId == null ? new String[0] : ref(Arrays.asList(clazzOrId), 1).toArray(new String[clazzOrId.length]);
+    }
+
+    /**
+     * Get a reference to a list of {@link Class}.
+     * <p>
+     * Subtypes may override this to generate import statements.
+     */
+    protected final List<String> ref(List<String> clazzOrId) {
+        return clazzOrId == null ? Collections.<String>emptyList() : ref(clazzOrId, 1);
+    }
+
+    /**
+     * Get a reference to a {@link Class}.
+     */
+    protected final String ref(String clazzOrId, int keepSegments) {
+        return clazzOrId == null ? null : ref(Arrays.asList(clazzOrId), keepSegments).get(0);
+    }
+
+    /**
+     * Get a reference to a list of {@link Class}.
+     */
+    protected final String[] ref(String[] clazzOrId, int keepSegments) {
+        return clazzOrId == null ? new String[0] : ref(Arrays.asList(clazzOrId), keepSegments).toArray(new String[clazzOrId.length]);
+    }
+
+    /**
+     * Get a reference to a list of {@link Class}.
+     * <p>
+     * Subtypes may override this to generate import statements.
+     */
+    protected List<String> ref(List<String> clazzOrId, int keepSegments) {
+        return clazzOrId == null ? Collections.<String>emptyList() : clazzOrId;
     }
 
     @Override

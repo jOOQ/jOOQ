@@ -564,7 +564,7 @@ public abstract class jOOQAbstractTest<
 
         if (!initialised) {
             initialised = true;
-//            execute(getCreateScript());
+            execute(getCreateScript());
             // execute(getLargeScript());
         }
 

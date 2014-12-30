@@ -2036,10 +2036,16 @@ public class OracleTest extends jOOQAbstractTest<
                 .values(2, new S(1))
                 .execute());
 
+        assertEquals(1,
+        create().insertInto(T_EXOTIC_TYPES, T_EXOTIC_TYPES.ID, T_EXOTIC_TYPES.JAVA_IO_SERIALIZABLE)
+                .values(3, "abc".getBytes())
+                .execute());
+
         Result<TExoticTypesRecord> result = create().selectFrom(T_EXOTIC_TYPES).orderBy(T_EXOTIC_TYPES.ID).fetch();
 
         assertNull(result.get(0).getJavaIoSerializable());
         assertEquals(1, ((S) result.get(1).getJavaIoSerializable()).value);
+        assertEquals("abc", new String((byte[]) result.get(2).getJavaIoSerializable()));
     }
 
     @SuppressWarnings("serial")

@@ -594,7 +594,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.ref(getJavaType(identity.getColumn().getType())),
             getStrategy().getJavaIdentifier(identity),
             out.ref(getStrategy().getFullJavaIdentifier(identity.getColumn().getContainer()), 2),
-            out.ref(getStrategy().getFullJavaIdentifier(identity.getColumn()), 3));
+            out.ref(getStrategy().getFullJavaIdentifier(identity.getColumn()), colRefSegments(identity.getColumn())));
     }
 
     protected void printUniqueKey(JavaWriter out, int uniqueKeyCounter, UniqueKeyDefinition uniqueKey) {
@@ -615,7 +615,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.ref(getStrategy().getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD)),
             getStrategy().getJavaIdentifier(uniqueKey),
             out.ref(getStrategy().getFullJavaIdentifier(uniqueKey.getTable()), 2),
-            out.ref(getStrategy().getFullJavaIdentifiers(uniqueKey.getKeyColumns()), 3));
+            out.ref(getStrategy().getFullJavaIdentifiers(uniqueKey.getKeyColumns()), colRefSegments(null)));
     }
 
     protected void printForeignKey(JavaWriter out, int foreignKeyCounter, ForeignKeyDefinition foreignKey) {
@@ -631,14 +631,14 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("private static class ForeignKeys%s extends %s {", block, AbstractKeys.class);
         }
 
-        out.tab(2).println("public static final %s<%s, %s> %s = createForeignKey(Keys.%s, %s, [[%s]]);",
+        out.tab(2).println("public static final %s<%s, %s> %s = createForeignKey(%s, %s, [[%s]]);",
             ForeignKey.class,
             out.ref(getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD)),
             out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD)),
             getStrategy().getJavaIdentifier(foreignKey),
-            getStrategy().getJavaIdentifier(foreignKey.getReferencedKey()),
+            out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getReferencedKey()), 2),
             out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getKeyTable()), 2),
-            out.ref(getStrategy().getFullJavaIdentifiers(foreignKey.getKeyColumns()), 3));
+            out.ref(getStrategy().getFullJavaIdentifiers(foreignKey.getKeyColumns()), colRefSegments(null)));
     }
 
     protected void generateRecords(SchemaDefinition schema) {
@@ -717,7 +717,6 @@ public class JavaGenerator extends AbstractGenerator {
             final String setter = getStrategy().getJavaSetterName(column, Mode.DEFAULT);
             final String getter = getStrategy().getJavaGetterName(column, Mode.DEFAULT);
             final String type = out.ref(getJavaType(column.getType()));
-            final String typeInterface = out.ref(getJavaType(column.getType(), Mode.INTERFACE));
             final String name = column.getQualifiedOutputName();
             final boolean isUDT = column.getType().isUDT();
 
@@ -731,6 +730,8 @@ public class JavaGenerator extends AbstractGenerator {
 
             // [#3117] Avoid covariant setters for UDTs when generating interfaces
             if (generateInterfaces() && !generateImmutablePojos() && isUDT) {
+                final String typeInterface = out.ref(getJavaType(column.getType(), Mode.INTERFACE));
+
                 out.tab(1).javadoc("Setter for <code>%s</code>.%s", name, defaultIfBlank(" " + comment, ""));
                 out.tab(1).override();
                 out.tab(1).println("public %s %s(%s value) {", setterReturnType, setter, typeInterface);
@@ -816,7 +817,7 @@ public class JavaGenerator extends AbstractGenerator {
                 TypedElementDefinition<?> column = columns.get(i - 1);
 
                 final String colType = out.ref(getJavaType(column.getType()));
-                final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), 3);
+                final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegments(column));
 
                 out.tab(1).overrideInherit();
                 out.tab(1).println("public %s<%s> field%s() {", Field.class, colType, i);
@@ -911,6 +912,16 @@ public class JavaGenerator extends AbstractGenerator {
 
         out.println("}");
         out.close();
+    }
+
+    private int colRefSegments(TypedElementDefinition<?> column) {
+        if (column != null && column.getContainer() instanceof UDTDefinition)
+            return 2;
+
+        if (!getStrategy().getInstanceFields())
+            return 2;
+
+        return 3;
     }
 
     /**
@@ -1079,7 +1090,7 @@ public class JavaGenerator extends AbstractGenerator {
         for (AttributeDefinition attribute : udt.getAttributes()) {
             final String attrType = out.ref(getJavaType(attribute.getType()));
             final String attrTypeRef = getJavaTypeReference(attribute.getDatabase(), attribute.getType());
-            final String attrId = out.ref(getStrategy().getJavaIdentifier(attribute), 3);
+            final String attrId = out.ref(getStrategy().getJavaIdentifier(attribute), 2);
             final String attrName = attribute.getName();
             final String attrComment = StringUtils.defaultString(attribute.getComment());
             final List<String> converters = out.ref(list(
@@ -1727,7 +1738,7 @@ public class JavaGenerator extends AbstractGenerator {
             final String colName = column.getOutputName();
             final String colClass = getStrategy().getJavaClassName(column, Mode.POJO);
             final String colType = out.ref(getJavaType(column.getType()));
-            final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), 3);
+            final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegments(column));
 
             // fetchBy[Column]([T]...)
             // -----------------------
@@ -1874,7 +1885,6 @@ public class JavaGenerator extends AbstractGenerator {
 
         for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
             final String columnType = out.ref(getJavaType(column.getType(), Mode.POJO));
-            final String columnTypeInterface = out.ref(getJavaType(column.getType(), Mode.INTERFACE));
             final String columnSetterReturnType = fluentSetters() ? className : "void";
             final String columnSetter = getStrategy().getJavaSetterName(column, Mode.POJO);
             final String columnGetter = getStrategy().getJavaGetterName(column, Mode.POJO);
@@ -1905,6 +1915,8 @@ public class JavaGenerator extends AbstractGenerator {
 
                 // [#3117] To avoid covariant setters on POJOs, we need to generate two setter overloads
                 if (generateInterfaces() && isUDT) {
+                    final String columnTypeInterface = out.ref(getJavaType(column.getType(), Mode.INTERFACE));
+
                     out.println();
                     out.tab(1).override();
                     out.tab(1).println("public %s %s(%s %s) {", columnSetterReturnType, columnSetter, columnTypeInterface, columnMember);
@@ -2066,7 +2078,7 @@ public class JavaGenerator extends AbstractGenerator {
         for (ColumnDefinition column : table.getColumns()) {
             final String columnType = out.ref(getJavaType(column.getType()));
             final String columnTypeRef = getJavaTypeReference(column.getDatabase(), column.getType());
-            final String columnId = out.ref(getStrategy().getJavaIdentifier(column), 3);
+            final String columnId = out.ref(getStrategy().getJavaIdentifier(column), colRefSegments(column));
             final String columnName = column.getName();
             final String columnComment = StringUtils.defaultString(column.getComment());
             final List<String> converters = out.ref(list(
@@ -2592,7 +2604,7 @@ public class JavaGenerator extends AbstractGenerator {
         for (ParameterDefinition parameter : routine.getAllParameters()) {
             final String paramType = out.ref(getJavaType(parameter.getType()));
             final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType());
-            final String paramId = out.ref(getStrategy().getJavaIdentifier(parameter), 3);
+            final String paramId = out.ref(getStrategy().getJavaIdentifier(parameter), 2);
             final String paramName = parameter.getName();
             final String paramComment = StringUtils.defaultString(parameter.getComment());
             final String isDefaulted = parameter.isDefaulted() ? "true" : "false";
@@ -2954,13 +2966,14 @@ public class JavaGenerator extends AbstractGenerator {
             final ParameterDefinition parameter = procedure.getOutParameters().get(0);
 
             final String getter = getStrategy().getJavaGetterName(parameter, Mode.DEFAULT);
-            final String columnTypeInterface = out.ref(getJavaType(parameter.getType(), Mode.INTERFACE));
             final boolean isUDT = parameter.getType().isUDT();
 
             if (instance) {
 
                 // [#3117] Avoid funny call-site ambiguity if this is a UDT that is implemented by an interface
                 if (generateInterfaces() && isUDT) {
+                    final String columnTypeInterface = out.ref(getJavaType(parameter.getType(), Mode.INTERFACE));
+
                     out.tab(2).println("from((%s) %s.%s());", columnTypeInterface, localVar, getter);
                 }
                 else {

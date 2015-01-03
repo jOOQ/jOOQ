@@ -10,6 +10,31 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.5.1 - January 03, 2015
+================================================================================
+
+This is a patch release with some useful fixes for the 3.5 branch
+
+Bug fixes
+---------
+#3378 - Error when fully qualifying PostgreSQL table-valued functions in SELECT clauses
+#3803 - CREATE TABLE statement does not generate NOT NULL constraint
+#3811 - Potential NullPointerException in Cursor.fetchOne(RecordMapper) and other methods
+#3817 - When used with set operations, ORDER BY must not contain any qualified fields
+#3819 - Add Constants.XSD_META and Constants.NS_META to describe the new jooq-meta-x.x.xsd
+#3822 - Invalid SQL for Postgres created with values(Row1...)
+#3824 - PostgreSQL dateAdd() erroneously returns a TIMESTAMP value
+#3831 - <dateAsTimestamp/> deprecation warning is displayed even if the flag is not active
+#3833 - org.jooq.CreateTableAsStep.column(Field<T> field, DataType<T> type) SQLite
+#3835 - SQLite's CREATE VIEW statement doesn't allow to rename columns
+#3838 - Bad @Support annotations on ALTER TABLE statements, which are not supported by SQLite
+#3855 - Oracle REAL and FLOAT types cause code generator to produce BigInteger instead of Double types
+#3863 - CSV-Export with delimiter only does not work properly
+#3880 - Cannot access private JavaGenerator.newJavaWriter() method
+#3888 - Data type conversion fails when using a Binding<byte[], Serializable> and passing a byte[] as user input
+#3895 - The free trial version no longer works after Jan 01, 2015
+
+
 Version 3.5.0 - November 21, 2014
 ================================================================================
 

@@ -10875,7 +10875,14 @@ public class DSL {
      * @return The most specific data type
      */
     private static <T> DataType<T> mostSpecific(T value, DataType<T> dataType) {
-        if (value != null) {
+
+        // [#3888] With custom data type conversion, users may wish to
+        // allow for a less specific data type than the actual value. Example:
+        //   data type: Serializable
+        //   value    : byte[]
+        // [#3889] TODO: Improve this once DataType.getBinding() is available
+
+        if (value != null && !(dataType instanceof ConvertedDataType)) {
             Class<T> valueType = (Class<T>) value.getClass();
             Class<T> coercionType = dataType.getType();
 

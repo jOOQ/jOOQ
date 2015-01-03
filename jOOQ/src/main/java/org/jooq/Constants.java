@@ -58,7 +58,7 @@ public final class Constants {
      * This is the same as {@link #MINOR_VERSION}, but it may include patch
      * version suffixes.
      */
-    public static final String VERSION        = "3.5.0";
+    public static final String VERSION        = "3.5.1";
 
     /**
      * The latest jOOQ full version.
@@ -66,7 +66,7 @@ public final class Constants {
      * This is the same as {@link #VERSION}, but it may include release
      * candidate and other suffixes.
      */
-    public static final String FULL_VERSION   = "3.5.0";
+    public static final String FULL_VERSION   = "3.5.1";
 
     /**
      * The current jooq-runtime XSD file name.
@@ -77,6 +77,16 @@ public final class Constants {
      * The current jooq-runtime XML namespace
      */
     public static final String NS_RUNTIME     = "http://www.jooq.org/xsd/" + XSD_RUNTIME;
+
+    /**
+     * The current jooq-meta XSD file name.
+     */
+    public static final String XSD_META       = "jooq-meta-3.5.0.xsd";
+
+    /**
+     * The current jooq-meta XML namespace.
+     */
+    public static final String NS_META        = "http://www.jooq.org/xsd/" + XSD_META;
 
     /**
      * The current jooq-codegen XSD file name.

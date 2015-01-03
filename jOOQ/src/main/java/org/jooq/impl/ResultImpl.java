@@ -593,7 +593,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final void formatCSV(Writer writer, char delimiter) {
-        formatCSV(delimiter, "");
+        formatCSV(writer, delimiter, "");
     }
 
     @Override

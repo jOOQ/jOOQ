@@ -341,7 +341,7 @@ public class GenerationTool {
 
             if (d.getEnumTypes().size() > 0)
                 log.warn("DEPRECATED", "The configuration property /configuration/generator/database/enumTypes is experimental and deprecated and will be removed in the future.");
-            if (d.isDateAsTimestamp() != null)
+            if (Boolean.TRUE.equals(d.isDateAsTimestamp()))
                 log.warn("DEPRECATED", "The configuration property /configuration/generator/database/dateAsTimestamp is deprecated as it is superseded by custom bindings and converters. It will thus be removed in the future.");
 
             if (d.isDateAsTimestamp() != null)

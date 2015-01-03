@@ -45,6 +45,7 @@ import static org.jooq.Clause.TABLE;
 import static org.jooq.Clause.TABLE_ALIAS;
 import static org.jooq.Clause.TABLE_REFERENCE;
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.POSTGRES;
 
 import java.util.Arrays;
 
@@ -132,7 +133,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
             alias.accept(ctx);
         }
         else {
-            if (ctx.qualify()) {
+            if (ctx.qualify() && (ctx.family() != POSTGRES || parameters == null || ctx.declareTables())) {
                 Schema mappedSchema = Utils.getMappedSchema(ctx.configuration(), getSchema());
 
                 if (mappedSchema != null) {

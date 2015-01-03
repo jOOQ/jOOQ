@@ -2104,7 +2104,11 @@ public class JavaGenerator extends AbstractGenerator {
 
         out.println();
         out.tab(1).println("private %s(%s alias, %s<%s> aliased) {", className, String.class, Table.class, recordType);
-        out.tab(2).println("this(alias, aliased, null);");
+        if (table.isTableValuedFunction())
+            out.tab(2).println("this(alias, aliased, new %s[%s]);", Field.class, table.getParameters().size());
+        else
+            out.tab(2).println("this(alias, aliased, null);");
+
         out.tab(1).println("}");
 
         out.println();
@@ -3380,7 +3384,8 @@ public class JavaGenerator extends AbstractGenerator {
         return result;
     }
 
-    private final JavaWriter newJavaWriter(File file) {
+    // [#3880] Users may need to call this method
+    protected final JavaWriter newJavaWriter(File file) {
         files.add(file);
         return new JavaWriter(file);
     }

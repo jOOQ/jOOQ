@@ -193,6 +193,46 @@ public interface Generator {
     void setGenerateGlobalObjectReferences(boolean generateGlobalObjectReferences);
 
     /**
+     * Whether global routine references should be generated
+     */
+    boolean generateGlobalRoutineReferences();
+
+    /**
+     * Whether global routine references should be generated
+     */
+    void setGenerateGlobalRoutineReferences(boolean globalRoutineReferences);
+
+    /**
+     * Whether global sequence references should be generated
+     */
+    boolean generateGlobalSequenceReferences();
+
+    /**
+     * Whether global sequence references should be generated
+     */
+    void setGenerateGlobalSequenceReferences(boolean globalSequenceReferences);
+
+    /**
+     * Whether global table references should be generated
+     */
+    boolean generateGlobalTableReferences();
+
+    /**
+     * Whether global table references should be generated
+     */
+    void setGenerateGlobalTableReferences(boolean globalTableReferences);
+
+    /**
+     * Whether global UDT references should be generated
+     */
+    boolean generateGlobalUDTReferences();
+
+    /**
+     * Whether global UDT references should be generated
+     */
+    void setGenerateGlobalUDTReferences(boolean globalUDTReferences);
+
+    /**
      * Whether fluent setters should be generated
      */
     boolean fluentSetters();

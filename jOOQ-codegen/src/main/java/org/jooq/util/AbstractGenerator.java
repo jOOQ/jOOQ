@@ -52,22 +52,26 @@ import java.util.Set;
  */
 abstract class AbstractGenerator implements Generator {
 
-    boolean                            generateDeprecated             = true;
-    boolean                            generateRelations              = true;
-    boolean                            generateInstanceFields         = true;
-    boolean                            generateGeneratedAnnotation    = true;
-    boolean                            useSchemaVersionProvider       = false;
-    boolean                            generateRecords                = true;
-    boolean                            generatePojos                  = false;
-    boolean                            generatePojosEqualsAndHashCode = false;
-    boolean                            generateImmutablePojos         = false;
-    boolean                            generateInterfaces             = false;
-    boolean                            generateDaos                   = false;
-    boolean                            generateJPAAnnotations         = false;
-    boolean                            generateValidationAnnotations  = false;
-    boolean                            generateGlobalObjectReferences = true;
-    boolean                            fluentSetters                  = false;
-    String                             fullyQualifiedTypes            = "";
+    boolean                            generateDeprecated               = true;
+    boolean                            generateRelations                = true;
+    boolean                            generateInstanceFields           = true;
+    boolean                            generateGeneratedAnnotation      = true;
+    boolean                            useSchemaVersionProvider         = false;
+    boolean                            generateRecords                  = true;
+    boolean                            generatePojos                    = false;
+    boolean                            generatePojosEqualsAndHashCode   = false;
+    boolean                            generateImmutablePojos           = false;
+    boolean                            generateInterfaces               = false;
+    boolean                            generateDaos                     = false;
+    boolean                            generateJPAAnnotations           = false;
+    boolean                            generateValidationAnnotations    = false;
+    boolean                            generateGlobalObjectReferences   = true;
+    boolean                            generateGlobalRoutineReferences  = true;
+    boolean                            generateGlobalSequenceReferences = true;
+    boolean                            generateGlobalTableReferences    = true;
+    boolean                            generateGlobalUDTReferences      = true;
+    boolean                            fluentSetters                    = false;
+    String                             fullyQualifiedTypes              = "";
 
     protected GeneratorStrategyWrapper strategy;
 
@@ -218,6 +222,46 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateGlobalObjectReferences(boolean generateGlobalObjectReferences) {
         this.generateGlobalObjectReferences = generateGlobalObjectReferences;
+    }
+
+    @Override
+    public boolean generateGlobalRoutineReferences() {
+        return generateGlobalRoutineReferences;
+    }
+
+    @Override
+    public void setGenerateGlobalRoutineReferences(boolean generateGlobalRoutineReferences) {
+        this.generateGlobalRoutineReferences = generateGlobalRoutineReferences;
+    }
+
+    @Override
+    public boolean generateGlobalSequenceReferences() {
+        return generateGlobalSequenceReferences;
+    }
+
+    @Override
+    public void setGenerateGlobalSequenceReferences(boolean generateGlobalSequenceReferences) {
+        this.generateGlobalSequenceReferences = generateGlobalSequenceReferences;
+    }
+
+    @Override
+    public boolean generateGlobalTableReferences() {
+        return generateGlobalTableReferences;
+    }
+
+    @Override
+    public void setGenerateGlobalTableReferences(boolean generateGlobalTableReferences) {
+        this.generateGlobalTableReferences = generateGlobalTableReferences;
+    }
+
+    @Override
+    public boolean generateGlobalUDTReferences() {
+        return generateGlobalUDTReferences;
+    }
+
+    @Override
+    public void setGenerateGlobalUDTReferences(boolean generateGlobalUDTReferences) {
+        this.generateGlobalUDTReferences = generateGlobalUDTReferences;
     }
 
     @Override

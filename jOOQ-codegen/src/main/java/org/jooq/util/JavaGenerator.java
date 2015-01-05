@@ -282,7 +282,7 @@ public class JavaGenerator extends AbstractGenerator {
         // ----------------------------------------------------------------------
         generateSchema(schema);
 
-        if (generateGlobalObjectReferences() && database.getSequences(schema).size() > 0) {
+        if (generateGlobalObjectReferences() && generateGlobalSequenceReferences() && database.getSequences(schema).size() > 0) {
             generateSequences(schema);
         }
 
@@ -298,7 +298,7 @@ public class JavaGenerator extends AbstractGenerator {
             generateDaos(schema);
         }
 
-        if (generateGlobalObjectReferences() && database.getTables(schema).size() > 0) {
+        if (generateGlobalObjectReferences() && generateGlobalTableReferences() && database.getTables(schema).size() > 0) {
             generateTableReferences(schema);
         }
 
@@ -334,7 +334,7 @@ public class JavaGenerator extends AbstractGenerator {
             generateUDTRoutines(schema);
         }
 
-        if (generateGlobalObjectReferences() && database.getUDTs(schema).size() > 0) {
+        if (generateGlobalObjectReferences() && generateGlobalUDTReferences() && database.getUDTs(schema).size() > 0) {
             generateUDTReferences(schema);
         }
 
@@ -346,7 +346,7 @@ public class JavaGenerator extends AbstractGenerator {
             generateEnums(schema);
         }
 
-        if (database.getRoutines(schema).size() > 0 || hasTableValuedFunctions(schema)) {
+        if (generateGlobalObjectReferences() && generateGlobalRoutineReferences() && database.getRoutines(schema).size() > 0 || hasTableValuedFunctions(schema)) {
             generateRoutines(schema);
         }
 
@@ -2367,7 +2367,7 @@ public class JavaGenerator extends AbstractGenerator {
         out.tab(1).println("}");
 
         // [#2255] Avoid referencing sequence literals, if they're not generated
-        if (generateGlobalObjectReferences()) {
+        if (generateGlobalObjectReferences() && generateGlobalSequenceReferences()) {
             printSchemaReferences(out, database.getSequences(schema), Sequence.class, true);
         }
 

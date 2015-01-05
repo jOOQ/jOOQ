@@ -42,6 +42,7 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
 import static org.jooq.impl.Utils.DATA_LOCK_ROWS_FOR_UPDATE;
+import static org.jooq.impl.Utils.recordFactory;
 
 import java.io.InputStream;
 import java.io.Reader;
@@ -89,20 +90,21 @@ import org.jooq.tools.jdbc.JDBCUtils;
  */
 class CursorImpl<R extends Record> implements Cursor<R> {
 
-    private static final JooqLogger   log = JooqLogger.getLogger(CursorImpl.class);
+    private static final JooqLogger          log = JooqLogger.getLogger(CursorImpl.class);
 
-    private final ExecuteContext      ctx;
-    private final ExecuteListener     listener;
-    private final Field<?>[]          fields;
-    private final boolean[]           intern;
-    private final boolean             keepResultSet;
-    private final boolean             keepStatement;
-    private final Class<? extends R>  type;
-    private boolean                   isClosed;
+    private final ExecuteContext             ctx;
+    private final ExecuteListener            listener;
+    private final Field<?>[]                 fields;
+    private final boolean[]                  intern;
+    private final boolean                    keepResultSet;
+    private final boolean                    keepStatement;
+    private final Class<? extends R>         type;
+    private final RecordFactory<? extends R> factory;
+    private boolean                          isClosed;
 
-    private transient CursorResultSet rs;
-    private transient Iterator<R>     iterator;
-    private transient int             rows;
+    private transient CursorResultSet        rs;
+    private transient Iterator<R>            iterator;
+    private transient int                    rows;
 
     @SuppressWarnings("unchecked")
     CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement, boolean keepResultSet) {
@@ -114,6 +116,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         this.listener = (listener != null ? listener : new ExecuteListeners(ctx));
         this.fields = fields;
         this.type = type;
+        this.factory = recordFactory(type, fields);
         this.keepStatement = keepStatement;
         this.keepResultSet = keepResultSet;
         this.rs = new CursorResultSet();
@@ -1410,7 +1413,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
                         rs.updateRow();
                     }
 
-                    record = Utils.newRecord(true, (Class<AbstractRecord>) type, fields, ctx.configuration())
+                    record = Utils.newRecord(true, (RecordFactory<AbstractRecord>) factory, ctx.configuration())
                                   .operate(initialiser);
 
                     rows++;

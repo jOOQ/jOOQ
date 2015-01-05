@@ -198,7 +198,11 @@ public abstract class AbstractDatabase implements Database {
                     log.warn(
                         "SQL exception",
                         "Exception while executing meta query: "
-                      + ctx.sqlException().getMessage()
+                      + (ctx.sqlException() != null
+                      ? ctx.sqlException().getMessage()
+                      : ctx.exception() != null
+                      ? ctx.exception().getMessage()
+                      : "No exception available")
                       + "\n\n"
                       + "Please report this bug here: https://github.com/jOOQ/jOOQ/issues/new\n\n"
                       + DSL.using(configuration.derive(newSettings)).renderInlined(ctx.query()));

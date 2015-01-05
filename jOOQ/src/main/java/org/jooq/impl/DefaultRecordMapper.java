@@ -40,6 +40,9 @@
  */
 package org.jooq.impl;
 
+import static java.util.Collections.nCopies;
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Utils.getAnnotatedGetter;
 import static org.jooq.impl.Utils.getAnnotatedMembers;
 import static org.jooq.impl.Utils.getAnnotatedSetters;
@@ -57,9 +60,13 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Proxy;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.persistence.Column;
 
@@ -137,6 +144,19 @@ import org.jooq.tools.reflect.Reflect;
  * <p>
  * If {@link Field#getName()} is <code>MY_field</code> (case-sensitive!), then
  * this field's value will be set on all of these:
+ * <ul>
+ * <li>Public single-argument instance method <code>MY_field(...)</code></li>
+ * <li>Public single-argument instance method <code>myField(...)</code></li>
+ * <li>Public single-argument instance method <code>setMY_field(...)</code></li>
+ * <li>Public single-argument instance method <code>setMyField(...)</code></li>
+ * <li>Public non-final instance member field <code>MY_field</code></li>
+ * <li>Public non-final instance member field <code>myField</code></li>
+ * </ul>
+ * <p>
+ * If {@link Field#getName()} is <code>MY_field.MY_nested_field</code>
+ * (case-sensitive!), then this field's value will be considered a nested value
+ * <code>MY_nested_field</code>, which is set on a nested POJO that is passed to
+ * all of these:
  * <ul>
  * <li>Public single-argument instance method <code>MY_field(...)</code></li>
  * <li>Public single-argument instance method <code>myField(...)</code></li>
@@ -433,6 +453,37 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
     }
 
     /**
+     * A mapper that keeps only fields with a certain prefix prior to applying a
+     * delegate mapper.
+     */
+    private class RemovingPrefixRecordMapper implements RecordMapper<R, Object> {
+
+        private final RecordMapper<R, Object> d;
+        private final Field<?>[]              f;
+
+        RemovingPrefixRecordMapper(RecordMapper<R, Object> d, Field<?>[] fields, String prefix) {
+            this.d = d;
+            this.f = new Field[fields.length];
+
+            String dotted = prefix + ".";
+            for (int i = 0; i < fields.length; i++)
+                if (fields[i].getName().startsWith(dotted))
+                    f[i] = field(name(fields[i].getName().substring(dotted.length() + 1)), fields[i].getDataType());
+        }
+
+        @Override
+        public Object map(R record) {
+            AbstractRecord copy = (AbstractRecord) DSL.using(configuration).newRecord(f);
+
+            for (int i = 0; i < f.length; i++)
+                if (f[i] != null)
+                    copy.setValue(i, record.getValue(i));
+
+            return d.map(record);
+        }
+    }
+
+    /**
      * Convert a record into a mutable POJO type
      * <p>
      * jOOQ's understanding of a mutable POJO is a Java type that has a default
@@ -440,31 +491,85 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
      */
     private class MutablePOJOMapper implements RecordMapper<R, E> {
 
-        private final Constructor<? extends E>         constructor;
-        private final boolean                          useAnnotations;
-        private final List<java.lang.reflect.Field>[]  members;
-        private final List<java.lang.reflect.Method>[] methods;
+        private final Constructor<? extends E>                   constructor;
+        private final boolean                                    useAnnotations;
+        private final List<java.lang.reflect.Field>[]            members;
+        private final List<java.lang.reflect.Method>[]           methods;
+        private final Map<String, List<RecordMapper<R, Object>>> nested;
 
         MutablePOJOMapper(Constructor<? extends E> constructor) {
             this.constructor = accessible(constructor);
             this.useAnnotations = hasColumnAnnotations(configuration, type);
             this.members = new List[fields.length];
             this.methods = new List[fields.length];
+            this.nested = new HashMap<String, List<RecordMapper<R, Object>>>();
 
+            Map<String, Field<?>[]> nestedFields = new HashMap<String, Field<?>[]>();
             for (int i = 0; i < fields.length; i++) {
                 Field<?> field = fields[i];
+                String name = field.getName();
 
                 // Annotations are available and present
                 if (useAnnotations) {
-                    members[i] = getAnnotatedMembers(configuration, type, field.getName());
-                    methods[i] = getAnnotatedSetters(configuration, type, field.getName());
+                    members[i] = getAnnotatedMembers(configuration, type, name);
+                    methods[i] = getAnnotatedSetters(configuration, type, name);
                 }
 
                 // No annotations are present
                 else {
-                    members[i] = getMatchingMembers(configuration, type, field.getName());
-                    methods[i] = getMatchingSetters(configuration, type, field.getName());
+                    int dot = name.indexOf('.');
+
+                    // A nested mapping is applied
+                    if (dot > -1) {
+                        String prefix = name.substring(0, dot);
+
+                        Field<?>[] f = nestedFields.get(prefix);
+                        if (f == null) {
+                            f = nCopies(fields.length, field("")).toArray(new Field[fields.length]);
+                            nestedFields.put(prefix, f);
+                        }
+
+                        f[i] = field(name(name.substring(prefix.length() + 1)), field.getDataType());
+
+                        members[i] = Collections.emptyList();
+                        methods[i] = Collections.emptyList();
+                    }
+
+                    // A top-level mapping is applied
+                    else {
+                        members[i] = getMatchingMembers(configuration, type, name);
+                        methods[i] = getMatchingSetters(configuration, type, name);
+                    }
                 }
+            }
+
+            for (Entry<String, Field<?>[]> entry : nestedFields.entrySet()) {
+                String prefix = entry.getKey();
+                List<RecordMapper<R, Object>> list = new ArrayList<RecordMapper<R, Object>>();
+
+                for (java.lang.reflect.Field member : getMatchingMembers(configuration, type, prefix)) {
+                    list.add(new RemovingPrefixRecordMapper(
+                        new DefaultRecordMapper<R, Object>(
+                            new Fields<R>(entry.getValue()),
+                            member.getType(),
+                            instance,
+                            configuration
+                        ), fields, prefix
+                    ));
+                }
+
+                for (Method method : getMatchingSetters(configuration, type, prefix)) {
+                    list.add(new RemovingPrefixRecordMapper(
+                        new DefaultRecordMapper<R, Object>(
+                            new Fields<R>(entry.getValue()),
+                            method.getParameterTypes()[0],
+                            instance,
+                            configuration
+                        ), fields, prefix
+                    ));
+                }
+
+                nested.put(prefix, list);
             }
         }
 
@@ -487,6 +592,26 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                     }
                 }
 
+                for (Entry<String, List<RecordMapper<R, Object>>> entry : nested.entrySet()) {
+                    String prefix = entry.getKey();
+
+                    for (RecordMapper<R, Object> mapper : entry.getValue()) {
+                        Object value = mapper.map(record);
+
+                        for (java.lang.reflect.Field member : getMatchingMembers(configuration, type, prefix)) {
+
+                            // [#935] Avoid setting final fields
+                            if ((member.getModifiers() & Modifier.FINAL) == 0) {
+                                map(value, result, member);
+                            }
+                        }
+
+                        for (Method method : getMatchingSetters(configuration, type, prefix)) {
+                            method.invoke(result, value);
+                        }
+                    }
+                }
+
                 return result;
             }
             catch (Exception e) {
@@ -499,32 +624,66 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
             if (mType.isPrimitive()) {
                 if (mType == byte.class) {
-                    member.setByte(result, record.getValue(index, byte.class));
+                    map(record.getValue(index, byte.class), result, member);
                 }
                 else if (mType == short.class) {
-                    member.setShort(result, record.getValue(index, short.class));
+                    map(record.getValue(index, short.class), result, member);
                 }
                 else if (mType == int.class) {
-                    member.setInt(result, record.getValue(index, int.class));
+                    map(record.getValue(index, int.class), result, member);
                 }
                 else if (mType == long.class) {
-                    member.setLong(result, record.getValue(index, long.class));
+                    map(record.getValue(index, long.class), result, member);
                 }
                 else if (mType == float.class) {
-                    member.setFloat(result, record.getValue(index, float.class));
+                    map(record.getValue(index, float.class), result, member);
                 }
                 else if (mType == double.class) {
-                    member.setDouble(result, record.getValue(index, double.class));
+                    map(record.getValue(index, double.class), result, member);
                 }
                 else if (mType == boolean.class) {
-                    member.setBoolean(result, record.getValue(index, boolean.class));
+                    map(record.getValue(index, boolean.class), result, member);
                 }
                 else if (mType == char.class) {
-                    member.setChar(result, record.getValue(index, char.class));
+                    map(record.getValue(index, char.class), result, member);
                 }
             }
             else {
-                member.set(result, record.getValue(index, mType));
+                map(record.getValue(index, mType), result, member);
+            }
+        }
+
+        private final void map(Object value, Object result, java.lang.reflect.Field member) throws IllegalAccessException {
+            Class<?> mType = member.getType();
+
+            if (mType.isPrimitive()) {
+                if (mType == byte.class) {
+                    member.setByte(result, (Byte) value);
+                }
+                else if (mType == short.class) {
+                    member.setShort(result, (Short) value);
+                }
+                else if (mType == int.class) {
+                    member.setInt(result, (Integer) value);
+                }
+                else if (mType == long.class) {
+                    member.setLong(result, (Long) value);
+                }
+                else if (mType == float.class) {
+                    member.setFloat(result, (Float) value);
+                }
+                else if (mType == double.class) {
+                    member.setDouble(result, (Double) value);
+                }
+                else if (mType == boolean.class) {
+                    member.setBoolean(result, (Boolean) value);
+                }
+                else if (mType == char.class) {
+                    member.setChar(result, (Character) value);
+                }
+            }
+            else {
+                member.set(result, value);
             }
         }
     }

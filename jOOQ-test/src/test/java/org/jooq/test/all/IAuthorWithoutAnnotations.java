@@ -41,19 +41,17 @@
 package org.jooq.test.all;
 
 
+
 /**
  * @author Lukas Eder
  */
-public interface IBookWithoutAnnotations {
+public interface IAuthorWithoutAnnotations {
 
     public void setId(long id);
     public long getId();
     public void setFirstName(String f);
     public void setLAST_NAME(String l);
     public String getLAST_NAME();
-    public void setLAST_NAME(String l, String tooManyParameters);
-    public void setLAST_NAME();
-
-    public void setTheAuthor(IAuthorWithoutAnnotations author);
-    public IAuthorWithoutAnnotations getTheAuthor();
+    public void setFullName(NameWithoutAnnotations name);
+    public NameWithoutAnnotations getFullName();
 }

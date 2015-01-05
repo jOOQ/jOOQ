@@ -46,17 +46,20 @@ package org.jooq.test.all;
  */
 public class BookWithoutAnnotations {
 
-    public Integer        id;
-    public int            id2;
-    public int            ID;
-    public String         title;
-    public String         firstName;
-    public String         firstName2;
-    public String         lastName;
-    public String         lastName2;
-    public String         LAST_NAME;
-    public java.util.Date DATE_OF_BIRTH;
-    public java.sql.Date  dateOfBirth;
+    public Integer                  id;
+    public int                      id2;
+    public int                      ID;
+    public String                   title;
+    public String                   firstName;
+    public String                   firstName2;
+    public String                   lastName;
+    public String                   lastName2;
+    public String                   LAST_NAME;
+    public java.util.Date           DATE_OF_BIRTH;
+    public java.sql.Date            dateOfBirth;
+    public AuthorWithoutAnnotations theAuthor;
+    public AuthorWithoutAnnotations THE_AUTHOR;
+    public AuthorWithoutAnnotations a;
 
     public void setId(long id) {
         id2 = (int) id;
@@ -83,8 +86,12 @@ public class BookWithoutAnnotations {
         throw new AssertionError();
     }
 
+    public void setTheAuthor(AuthorWithoutAnnotations author) {
+        a = author;
+    }
+
     @Override
     public String toString() {
-        return "NonJPABook [id=" + id + ", title=" + title + ", firstName=" + firstName + ", lastName=" + lastName + "]";
+        return "NonJPABook [id=" + id + ", title=" + title + ", firstName=" + firstName + ", lastName=" + lastName + ", theAuthor=" + theAuthor + "]";
     }
 }

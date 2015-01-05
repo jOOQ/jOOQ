@@ -739,7 +739,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     TBook_TITLE(),
                     TAuthor_FIRST_NAME(),
                     TAuthor_LAST_NAME(),
-                    TAuthor_DATE_OF_BIRTH())
+                    TAuthor_DATE_OF_BIRTH(),
+                    TAuthor_ID().as("THE_AUTHOR.ID"),
+                    TAuthor_FIRST_NAME().as("THE_AUTHOR.FIRST_NAME"),
+                    TAuthor_LAST_NAME().as("THE_AUTHOR.LAST_NAME"),
+                    TAuthor_FIRST_NAME().as("THE_AUTHOR.FULL_NAME.FIRST_NAME"),
+                    TAuthor_LAST_NAME().as("THE_AUTHOR.FULL_NAME.LAST_NAME"),
+                    TAuthor_DATE_OF_BIRTH().as("THE_AUTHOR.DATE_OF_BIRTH")
+                )
                 .from(TBook())
                 .join(TAuthor()).on(TBook_AUTHOR_ID().equal(TAuthor_ID()))
                 .orderBy(TBook_ID());
@@ -750,60 +757,52 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(4, result1.size());
         assertEquals(4, result2.size());
 
-        assertEquals(1, (int) result1.get(0).id);
-        assertEquals(2, (int) result1.get(1).id);
-        assertEquals(3, (int) result1.get(2).id);
-        assertEquals(4, (int) result1.get(3).id);
+        assertEquals(BOOK_IDS, seq(result1).map(b -> b.id).toList());
+        assertEquals(BOOK_IDS, seq(result1).map(b -> b.id2).toList());
+        assertEquals(BOOK_IDS, seq(result1).map(b -> b.ID).toList());
+        assertEquals(BOOK_IDS, seq(result2).map(b -> (int) b.getId()).toList());
 
-        assertEquals(1, result1.get(0).id2);
-        assertEquals(2, result1.get(1).id2);
-        assertEquals(3, result1.get(2).id2);
-        assertEquals(4, result1.get(3).id2);
+        assertEquals(BOOK_AUTHOR_IDS , seq(result1).map(b -> b.THE_AUTHOR.ID).toList());
+        assertEquals(BOOK_AUTHOR_IDS , seq(result1).map(b -> b.theAuthor.ID).toList());
+        assertEquals(BOOK_AUTHOR_IDS , seq(result1).map(b -> b.a.ID).toList());
 
-        assertEquals(1, result1.get(0).ID);
-        assertEquals(2, result1.get(1).ID);
-        assertEquals(3, result1.get(2).ID);
-        assertEquals(4, result1.get(3).ID);
+        assertEquals(BOOK_FIRST_NAMES, seq(result1).map(b -> b.THE_AUTHOR.firstName).toList());
+        assertEquals(BOOK_FIRST_NAMES, seq(result1).map(b -> b.THE_AUTHOR.FULL_NAME.firstName).toList());
+        assertEquals(BOOK_FIRST_NAMES, seq(result1).map(b -> b.THE_AUTHOR.fullName.firstName).toList());
+        assertEquals(BOOK_FIRST_NAMES, seq(result1).map(b -> b.THE_AUTHOR.f.firstName).toList());
+        assertEquals(BOOK_FIRST_NAMES, seq(result1).map(b -> b.theAuthor.firstName).toList());
+        assertEquals(BOOK_FIRST_NAMES, seq(result1).map(b -> b.theAuthor.FULL_NAME.firstName).toList());
+        assertEquals(BOOK_FIRST_NAMES, seq(result1).map(b -> b.theAuthor.fullName.firstName).toList());
+        assertEquals(BOOK_FIRST_NAMES, seq(result1).map(b -> b.theAuthor.f.firstName).toList());
+        assertEquals(BOOK_FIRST_NAMES, seq(result1).map(b -> b.a.firstName).toList());
+        assertEquals(BOOK_FIRST_NAMES, seq(result1).map(b -> b.a.FULL_NAME.firstName).toList());
+        assertEquals(BOOK_FIRST_NAMES, seq(result1).map(b -> b.a.fullName.firstName).toList());
+        assertEquals(BOOK_FIRST_NAMES, seq(result1).map(b -> b.a.f.firstName).toList());
+        assertEquals(BOOK_FIRST_NAMES, seq(result2).map(b -> b.getTheAuthor().getFullName().firstName).toList());
 
-        assertEquals(1, (int) result2.get(0).getId());
-        assertEquals(2, (int) result2.get(1).getId());
-        assertEquals(3, (int) result2.get(2).getId());
-        assertEquals(4, (int) result2.get(3).getId());
+        assertEquals(BOOK_LAST_NAMES , seq(result1).map(b -> b.THE_AUTHOR.lastName).toList());
+        assertEquals(BOOK_LAST_NAMES , seq(result1).map(b -> b.THE_AUTHOR.FULL_NAME.lastName).toList());
+        assertEquals(BOOK_LAST_NAMES , seq(result1).map(b -> b.THE_AUTHOR.fullName.lastName).toList());
+        assertEquals(BOOK_LAST_NAMES , seq(result1).map(b -> b.THE_AUTHOR.f.lastName).toList());
+        assertEquals(BOOK_LAST_NAMES , seq(result1).map(b -> b.theAuthor.lastName).toList());
+        assertEquals(BOOK_LAST_NAMES , seq(result1).map(b -> b.theAuthor.FULL_NAME.lastName).toList());
+        assertEquals(BOOK_LAST_NAMES , seq(result1).map(b -> b.theAuthor.fullName.lastName).toList());
+        assertEquals(BOOK_LAST_NAMES , seq(result1).map(b -> b.theAuthor.f.lastName).toList());
+        assertEquals(BOOK_LAST_NAMES , seq(result1).map(b -> b.a.lastName).toList());
+        assertEquals(BOOK_LAST_NAMES , seq(result1).map(b -> b.a.FULL_NAME.lastName).toList());
+        assertEquals(BOOK_LAST_NAMES , seq(result1).map(b -> b.a.fullName.lastName).toList());
+        assertEquals(BOOK_LAST_NAMES , seq(result1).map(b -> b.a.f.lastName).toList());
+        assertEquals(BOOK_LAST_NAMES , seq(result2).map(b -> b.getLAST_NAME()).toList());
+        assertEquals(BOOK_LAST_NAMES , seq(result2).map(b -> b.getTheAuthor().getLAST_NAME()).toList());
+        assertEquals(BOOK_LAST_NAMES , seq(result2).map(b -> b.getTheAuthor().getFullName().lastName).toList());
 
-        assertEquals("1984", result1.get(0).title);
-        assertEquals("Animal Farm", result1.get(1).title);
-        assertEquals("O Alquimista", result1.get(2).title);
-        assertEquals("Brida", result1.get(3).title);
 
-        assertEquals("George", result1.get(0).firstName);
-        assertEquals("George", result1.get(1).firstName);
-        assertEquals("Paulo", result1.get(2).firstName);
-        assertEquals("Paulo", result1.get(3).firstName);
-
-        assertEquals("George", result1.get(0).firstName2);
-        assertEquals("George", result1.get(1).firstName2);
-        assertEquals("Paulo", result1.get(2).firstName2);
-        assertEquals("Paulo", result1.get(3).firstName2);
-
-        assertEquals("Orwell", result1.get(0).lastName);
-        assertEquals("Orwell", result1.get(1).lastName);
-        assertEquals("Coelho", result1.get(2).lastName);
-        assertEquals("Coelho", result1.get(3).lastName);
-
-        assertEquals("Orwell", result1.get(0).lastName2);
-        assertEquals("Orwell", result1.get(1).lastName2);
-        assertEquals("Coelho", result1.get(2).lastName2);
-        assertEquals("Coelho", result1.get(3).lastName2);
-
-        assertEquals("Orwell", result1.get(0).LAST_NAME);
-        assertEquals("Orwell", result1.get(1).LAST_NAME);
-        assertEquals("Coelho", result1.get(2).LAST_NAME);
-        assertEquals("Coelho", result1.get(3).LAST_NAME);
-
-        assertEquals("Orwell", result2.get(0).getLAST_NAME());
-        assertEquals("Orwell", result2.get(1).getLAST_NAME());
-        assertEquals("Coelho", result2.get(2).getLAST_NAME());
-        assertEquals("Coelho", result2.get(3).getLAST_NAME());
+        assertEquals(BOOK_TITLES, seq(result1).map(b -> b.title).toList());
+        assertEquals(BOOK_FIRST_NAMES, seq(result1).map(b -> b.firstName).toList());
+        assertEquals(BOOK_FIRST_NAMES, seq(result1).map(b -> b.firstName2).toList());
+        assertEquals(BOOK_LAST_NAMES, seq(result1).map(b -> b.lastName).toList());
+        assertEquals(BOOK_LAST_NAMES, seq(result1).map(b -> b.lastName2).toList());
+        assertEquals(BOOK_LAST_NAMES, seq(result1).map(b -> b.LAST_NAME).toList());
     }
 
     public void testRecordFromWithAnnotations() throws Exception {

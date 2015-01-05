@@ -53,4 +53,11 @@ public class AuthorWithoutAnnotations {
     public Date dateOfBirth;
     public Short yearOfBirth;
 
+    public NameWithoutAnnotations FULL_NAME;
+    public NameWithoutAnnotations fullName;
+    public NameWithoutAnnotations f;
+
+    public void setFullName(NameWithoutAnnotations name) {
+        this.f = name;
+    }
 }

@@ -1736,7 +1736,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         for (ColumnDefinition column : table.getColumns()) {
             final String colName = column.getOutputName();
-            final String colClass = getStrategy().getJavaClassName(column, Mode.POJO);
+            final String colClass = getStrategy().getJavaClassName(column);
             final String colType = out.ref(getJavaType(column.getType()));
             final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegments(column));
 

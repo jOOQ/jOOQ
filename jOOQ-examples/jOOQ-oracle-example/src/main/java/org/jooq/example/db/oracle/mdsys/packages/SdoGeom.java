@@ -3,31 +3,118 @@
  */
 package org.jooq.example.db.oracle.mdsys.packages;
 
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
+import javax.annotation.Generated;
+
+import org.jooq.Configuration;
+import org.jooq.Field;
+import org.jooq.example.db.oracle.mdsys.Mdsys;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.CheckBounds;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.GetDimArray;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.GetOrds;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.InitElement;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Interact1;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Interact2;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Interact3;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate1;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate2;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate3;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate5;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate6;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoAlphaShape;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArcDensify1;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArcDensify2;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArea1;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArea2;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArea3;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArea4;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoBuffer1;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoBuffer2;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoBuffer3;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoBuffer4;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoCentroid1;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoCentroid2;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoClosestPoints;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConcavehull1;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConcavehull2;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConcavehullBoundary;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConvexhull1;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConvexhull2;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDifference1;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDifference2;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDistance1;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDistance2;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDistance3;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDistance4;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoG3dconv1;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoG3dconv2;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoInsertLogFilter;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoIntersection1;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoIntersection2;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoLength1;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoLength2;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoLength3;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoLength4;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMaxMbrOrdinate1;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMaxMbrOrdinate2;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMbr1;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMbr2;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMinMbrOrdinate1;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMinMbrOrdinate2;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPointonsurface1;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPointonsurface2;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPolyDifference;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPolyIntersection;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPolyUnion;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPolyXor;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoTriangulate;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoUnion1;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoUnion2;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoVolume;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoXor1;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoXor2;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometry1;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometry2;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometry3;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometryWithContext1;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometryWithContext2;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateLayer1;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateLayer2;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateLayerWithContext;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.WithinDistance1;
+import org.jooq.example.db.oracle.mdsys.packages.sdo_geom.WithinDistance2;
+import org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord;
+import org.jooq.impl.PackageImpl;
+
+
 /**
  * Convenience access to all stored procedures and functions in SDO_GEOM
  */
-@javax.annotation.Generated(
+@Generated(
 	value = {
 		"http://www.jooq.org",
 		"jOOQ version:3.6.0"
 	},
 	comments = "This class is generated by jOOQ"
 )
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class SdoGeom extends org.jooq.impl.PackageImpl {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class SdoGeom extends PackageImpl {
 
-	private static final long serialVersionUID = -1144258654;
+	private static final long serialVersionUID = 1738381434;
 
 	/**
 	 * The reference instance of <code>MDSYS.SDO_GEOM</code>
 	 */
-	public static final org.jooq.example.db.oracle.mdsys.packages.SdoGeom SDO_GEOM = new org.jooq.example.db.oracle.mdsys.packages.SdoGeom();
+	public static final SdoGeom SDO_GEOM = new SdoGeom();
 
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.CHECK_BOUNDS</code>
 	 */
-	public static java.math.BigInteger checkBounds(org.jooq.Configuration configuration, java.lang.String tablename, java.lang.Number gid, java.math.BigInteger eseq, java.math.BigInteger seq, java.lang.Number coordwidth, java.lang.Number dim1lb, java.lang.Number dim1ub, java.lang.Number dim2lb, java.lang.Number dim2ub) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.CheckBounds f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.CheckBounds();
+	public static BigInteger checkBounds(Configuration configuration, String tablename, Number gid, BigInteger eseq, BigInteger seq, Number coordwidth, Number dim1lb, Number dim1ub, Number dim2lb, Number dim2ub) {
+		CheckBounds f = new CheckBounds();
 		f.setTablename(tablename);
 		f.setGid(gid);
 		f.setEseq(eseq);
@@ -45,8 +132,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.CHECK_BOUNDS</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigInteger> checkBounds(java.lang.String tablename, java.lang.Number gid, java.math.BigInteger eseq, java.math.BigInteger seq, java.lang.Number coordwidth, java.lang.Number dim1lb, java.lang.Number dim1ub, java.lang.Number dim2lb, java.lang.Number dim2ub) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.CheckBounds f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.CheckBounds();
+	public static Field<BigInteger> checkBounds(String tablename, Number gid, BigInteger eseq, BigInteger seq, Number coordwidth, Number dim1lb, Number dim1ub, Number dim2lb, Number dim2ub) {
+		CheckBounds f = new CheckBounds();
 		f.setTablename(tablename);
 		f.setGid(gid);
 		f.setEseq(eseq);
@@ -63,8 +150,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.CHECK_BOUNDS</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigInteger> checkBounds(org.jooq.Field<java.lang.String> tablename, org.jooq.Field<? extends java.lang.Number> gid, org.jooq.Field<java.math.BigInteger> eseq, org.jooq.Field<java.math.BigInteger> seq, org.jooq.Field<? extends java.lang.Number> coordwidth, org.jooq.Field<? extends java.lang.Number> dim1lb, org.jooq.Field<? extends java.lang.Number> dim1ub, org.jooq.Field<? extends java.lang.Number> dim2lb, org.jooq.Field<? extends java.lang.Number> dim2ub) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.CheckBounds f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.CheckBounds();
+	public static Field<BigInteger> checkBounds(Field<String> tablename, Field<? extends Number> gid, Field<BigInteger> eseq, Field<BigInteger> seq, Field<? extends Number> coordwidth, Field<? extends Number> dim1lb, Field<? extends Number> dim1ub, Field<? extends Number> dim2lb, Field<? extends Number> dim2ub) {
+		CheckBounds f = new CheckBounds();
 		f.setTablename(tablename);
 		f.setGid(gid);
 		f.setEseq(eseq);
@@ -81,8 +168,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.GET_DIM_ARRAY</code>
 	 */
-	public static java.lang.Object getDimArray(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.GetDimArray f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.GetDimArray();
+	public static Object getDimArray(Configuration configuration, SdoGeometryRecord geom, Number tol) {
+		GetDimArray f = new GetDimArray();
 		f.setGeom(geom);
 		f.setTol(tol);
 
@@ -93,8 +180,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.GET_DIM_ARRAY</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Object> getDimArray(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.GetDimArray f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.GetDimArray();
+	public static Field<Object> getDimArray(SdoGeometryRecord geom, Number tol) {
+		GetDimArray f = new GetDimArray();
 		f.setGeom(geom);
 		f.setTol(tol);
 
@@ -104,8 +191,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.GET_DIM_ARRAY</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Object> getDimArray(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom, org.jooq.Field<? extends java.lang.Number> tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.GetDimArray f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.GetDimArray();
+	public static Field<Object> getDimArray(Field<SdoGeometryRecord> geom, Field<? extends Number> tol) {
+		GetDimArray f = new GetDimArray();
 		f.setGeom(geom);
 		f.setTol(tol);
 
@@ -115,8 +202,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.GET_ORDS</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.packages.sdo_geom.GetOrds getOrds(org.jooq.Configuration configuration, java.lang.String tablename, java.lang.Number gid, java.math.BigInteger eseq, java.math.BigInteger seq, java.math.BigInteger columnindex) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.GetOrds p = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.GetOrds();
+	public static GetOrds getOrds(Configuration configuration, String tablename, Number gid, BigInteger eseq, BigInteger seq, BigInteger columnindex) {
+		GetOrds p = new GetOrds();
 		p.setTablename(tablename);
 		p.setGid(gid);
 		p.setEseq(eseq);
@@ -130,8 +217,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.INIT_ELEMENT</code>
 	 */
-	public static java.math.BigInteger initElement(org.jooq.Configuration configuration, java.lang.String layer, java.lang.Number gid) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.InitElement f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.InitElement();
+	public static BigInteger initElement(Configuration configuration, String layer, Number gid) {
+		InitElement f = new InitElement();
 		f.setLayer(layer);
 		f.setGid(gid);
 
@@ -142,8 +229,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.INIT_ELEMENT</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigInteger> initElement(java.lang.String layer, java.lang.Number gid) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.InitElement f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.InitElement();
+	public static Field<BigInteger> initElement(String layer, Number gid) {
+		InitElement f = new InitElement();
 		f.setLayer(layer);
 		f.setGid(gid);
 
@@ -153,8 +240,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.INIT_ELEMENT</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigInteger> initElement(org.jooq.Field<java.lang.String> layer, org.jooq.Field<? extends java.lang.Number> gid) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.InitElement f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.InitElement();
+	public static Field<BigInteger> initElement(Field<String> layer, Field<? extends Number> gid) {
+		InitElement f = new InitElement();
 		f.setLayer(layer);
 		f.setGid(gid);
 
@@ -164,8 +251,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.INTERACT</code>
 	 */
-	public static java.lang.String interact1(org.jooq.Configuration configuration, java.lang.String layer, java.lang.Number gid1, java.lang.Number gid2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Interact1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Interact1();
+	public static String interact1(Configuration configuration, String layer, Number gid1, Number gid2) {
+		Interact1 f = new Interact1();
 		f.setLayer(layer);
 		f.setGid1(gid1);
 		f.setGid2(gid2);
@@ -177,8 +264,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.INTERACT</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> interact1(java.lang.String layer, java.lang.Number gid1, java.lang.Number gid2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Interact1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Interact1();
+	public static Field<String> interact1(String layer, Number gid1, Number gid2) {
+		Interact1 f = new Interact1();
 		f.setLayer(layer);
 		f.setGid1(gid1);
 		f.setGid2(gid2);
@@ -189,8 +276,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.INTERACT</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> interact1(org.jooq.Field<java.lang.String> layer, org.jooq.Field<? extends java.lang.Number> gid1, org.jooq.Field<? extends java.lang.Number> gid2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Interact1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Interact1();
+	public static Field<String> interact1(Field<String> layer, Field<? extends Number> gid1, Field<? extends Number> gid2) {
+		Interact1 f = new Interact1();
 		f.setLayer(layer);
 		f.setGid1(gid1);
 		f.setGid2(gid2);
@@ -201,8 +288,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.INTERACT</code>
 	 */
-	public static java.lang.String interact2(org.jooq.Configuration configuration, java.lang.String layer1, java.lang.Number gid1, java.lang.String layer2, java.lang.Number gid2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Interact2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Interact2();
+	public static String interact2(Configuration configuration, String layer1, Number gid1, String layer2, Number gid2) {
+		Interact2 f = new Interact2();
 		f.setLayer1(layer1);
 		f.setGid1(gid1);
 		f.setLayer2(layer2);
@@ -215,8 +302,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.INTERACT</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> interact2(java.lang.String layer1, java.lang.Number gid1, java.lang.String layer2, java.lang.Number gid2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Interact2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Interact2();
+	public static Field<String> interact2(String layer1, Number gid1, String layer2, Number gid2) {
+		Interact2 f = new Interact2();
 		f.setLayer1(layer1);
 		f.setGid1(gid1);
 		f.setLayer2(layer2);
@@ -228,8 +315,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.INTERACT</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> interact2(org.jooq.Field<java.lang.String> layer1, org.jooq.Field<? extends java.lang.Number> gid1, org.jooq.Field<java.lang.String> layer2, org.jooq.Field<? extends java.lang.Number> gid2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Interact2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Interact2();
+	public static Field<String> interact2(Field<String> layer1, Field<? extends Number> gid1, Field<String> layer2, Field<? extends Number> gid2) {
+		Interact2 f = new Interact2();
 		f.setLayer1(layer1);
 		f.setGid1(gid1);
 		f.setLayer2(layer2);
@@ -241,8 +328,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.INTERACT</code>
 	 */
-	public static java.lang.String interact3(org.jooq.Configuration configuration, java.lang.String layer1, java.lang.Number gid1, java.lang.Number xTolerance, java.lang.Number yTolerance, java.lang.Number v000, java.lang.Number v001, java.lang.Number v002, java.lang.Number v003, java.lang.Number v004, java.lang.Number v005, java.lang.Number v006, java.lang.Number v007, java.lang.Number v008, java.lang.Number v009, java.lang.Number v010, java.lang.Number v011, java.lang.Number v012, java.lang.Number v013, java.lang.Number v014, java.lang.Number v015, java.lang.Number v016, java.lang.Number v017, java.lang.Number v018, java.lang.Number v019, java.lang.Number v020, java.lang.Number v021, java.lang.Number v022, java.lang.Number v023, java.lang.Number v024, java.lang.Number v025, java.lang.Number v026, java.lang.Number v027, java.lang.Number v028, java.lang.Number v029, java.lang.Number v030, java.lang.Number v031, java.lang.Number v032, java.lang.Number v033, java.lang.Number v034, java.lang.Number v035, java.lang.Number v036, java.lang.Number v037, java.lang.Number v038, java.lang.Number v039, java.lang.Number v040, java.lang.Number v041, java.lang.Number v042, java.lang.Number v043, java.lang.Number v044, java.lang.Number v045, java.lang.Number v046, java.lang.Number v047, java.lang.Number v048, java.lang.Number v049, java.lang.Number v050, java.lang.Number v051, java.lang.Number v052, java.lang.Number v053, java.lang.Number v054, java.lang.Number v055, java.lang.Number v056, java.lang.Number v057, java.lang.Number v058, java.lang.Number v059, java.lang.Number v060, java.lang.Number v061, java.lang.Number v062, java.lang.Number v063, java.lang.Number v064, java.lang.Number v065, java.lang.Number v066, java.lang.Number v067, java.lang.Number v068, java.lang.Number v069, java.lang.Number v070, java.lang.Number v071, java.lang.Number v072, java.lang.Number v073, java.lang.Number v074, java.lang.Number v075, java.lang.Number v076, java.lang.Number v077, java.lang.Number v078, java.lang.Number v079, java.lang.Number v080, java.lang.Number v081, java.lang.Number v082, java.lang.Number v083, java.lang.Number v084, java.lang.Number v085, java.lang.Number v086, java.lang.Number v087, java.lang.Number v088, java.lang.Number v089, java.lang.Number v090, java.lang.Number v091, java.lang.Number v092, java.lang.Number v093, java.lang.Number v094, java.lang.Number v095, java.lang.Number v096, java.lang.Number v097, java.lang.Number v098, java.lang.Number v099, java.lang.Number v100, java.lang.Number v101, java.lang.Number v102, java.lang.Number v103, java.lang.Number v104, java.lang.Number v105, java.lang.Number v106, java.lang.Number v107, java.lang.Number v108, java.lang.Number v109, java.lang.Number v110, java.lang.Number v111, java.lang.Number v112, java.lang.Number v113, java.lang.Number v114, java.lang.Number v115, java.lang.Number v116, java.lang.Number v117, java.lang.Number v118, java.lang.Number v119, java.lang.Number v120, java.lang.Number v121, java.lang.Number v122, java.lang.Number v123, java.lang.Number v124, java.lang.Number v125, java.lang.Number v126, java.lang.Number v127, java.lang.Number v128, java.lang.Number v129, java.lang.Number v130, java.lang.Number v131, java.lang.Number v132, java.lang.Number v133, java.lang.Number v134, java.lang.Number v135, java.lang.Number v136, java.lang.Number v137, java.lang.Number v138, java.lang.Number v139, java.lang.Number v140, java.lang.Number v141, java.lang.Number v142, java.lang.Number v143, java.lang.Number v144, java.lang.Number v145, java.lang.Number v146, java.lang.Number v147, java.lang.Number v148, java.lang.Number v149, java.lang.Number v150, java.lang.Number v151, java.lang.Number v152, java.lang.Number v153, java.lang.Number v154, java.lang.Number v155, java.lang.Number v156, java.lang.Number v157, java.lang.Number v158, java.lang.Number v159, java.lang.Number v160, java.lang.Number v161, java.lang.Number v162, java.lang.Number v163, java.lang.Number v164, java.lang.Number v165, java.lang.Number v166, java.lang.Number v167, java.lang.Number v168, java.lang.Number v169, java.lang.Number v170, java.lang.Number v171, java.lang.Number v172, java.lang.Number v173, java.lang.Number v174, java.lang.Number v175, java.lang.Number v176, java.lang.Number v177, java.lang.Number v178, java.lang.Number v179, java.lang.Number v180, java.lang.Number v181, java.lang.Number v182, java.lang.Number v183, java.lang.Number v184, java.lang.Number v185, java.lang.Number v186, java.lang.Number v187, java.lang.Number v188, java.lang.Number v189, java.lang.Number v190, java.lang.Number v191, java.lang.Number v192, java.lang.Number v193, java.lang.Number v194, java.lang.Number v195, java.lang.Number v196, java.lang.Number v197, java.lang.Number v198, java.lang.Number v199, java.lang.Number v200, java.lang.Number v201, java.lang.Number v202, java.lang.Number v203, java.lang.Number v204, java.lang.Number v205, java.lang.Number v206, java.lang.Number v207, java.lang.Number v208, java.lang.Number v209, java.lang.Number v210, java.lang.Number v211, java.lang.Number v212, java.lang.Number v213, java.lang.Number v214, java.lang.Number v215, java.lang.Number v216, java.lang.Number v217, java.lang.Number v218, java.lang.Number v219, java.lang.Number v220, java.lang.Number v221, java.lang.Number v222, java.lang.Number v223, java.lang.Number v224, java.lang.Number v225, java.lang.Number v226, java.lang.Number v227, java.lang.Number v228, java.lang.Number v229, java.lang.Number v230, java.lang.Number v231, java.lang.Number v232, java.lang.Number v233, java.lang.Number v234, java.lang.Number v235, java.lang.Number v236, java.lang.Number v237, java.lang.Number v238, java.lang.Number v239, java.lang.Number v240, java.lang.Number v241, java.lang.Number v242, java.lang.Number v243, java.lang.Number v244, java.lang.Number v245, java.lang.Number v246, java.lang.Number v247, java.lang.Number v248, java.lang.Number v249) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Interact3 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Interact3();
+	public static String interact3(Configuration configuration, String layer1, Number gid1, Number xTolerance, Number yTolerance, Number v000, Number v001, Number v002, Number v003, Number v004, Number v005, Number v006, Number v007, Number v008, Number v009, Number v010, Number v011, Number v012, Number v013, Number v014, Number v015, Number v016, Number v017, Number v018, Number v019, Number v020, Number v021, Number v022, Number v023, Number v024, Number v025, Number v026, Number v027, Number v028, Number v029, Number v030, Number v031, Number v032, Number v033, Number v034, Number v035, Number v036, Number v037, Number v038, Number v039, Number v040, Number v041, Number v042, Number v043, Number v044, Number v045, Number v046, Number v047, Number v048, Number v049, Number v050, Number v051, Number v052, Number v053, Number v054, Number v055, Number v056, Number v057, Number v058, Number v059, Number v060, Number v061, Number v062, Number v063, Number v064, Number v065, Number v066, Number v067, Number v068, Number v069, Number v070, Number v071, Number v072, Number v073, Number v074, Number v075, Number v076, Number v077, Number v078, Number v079, Number v080, Number v081, Number v082, Number v083, Number v084, Number v085, Number v086, Number v087, Number v088, Number v089, Number v090, Number v091, Number v092, Number v093, Number v094, Number v095, Number v096, Number v097, Number v098, Number v099, Number v100, Number v101, Number v102, Number v103, Number v104, Number v105, Number v106, Number v107, Number v108, Number v109, Number v110, Number v111, Number v112, Number v113, Number v114, Number v115, Number v116, Number v117, Number v118, Number v119, Number v120, Number v121, Number v122, Number v123, Number v124, Number v125, Number v126, Number v127, Number v128, Number v129, Number v130, Number v131, Number v132, Number v133, Number v134, Number v135, Number v136, Number v137, Number v138, Number v139, Number v140, Number v141, Number v142, Number v143, Number v144, Number v145, Number v146, Number v147, Number v148, Number v149, Number v150, Number v151, Number v152, Number v153, Number v154, Number v155, Number v156, Number v157, Number v158, Number v159, Number v160, Number v161, Number v162, Number v163, Number v164, Number v165, Number v166, Number v167, Number v168, Number v169, Number v170, Number v171, Number v172, Number v173, Number v174, Number v175, Number v176, Number v177, Number v178, Number v179, Number v180, Number v181, Number v182, Number v183, Number v184, Number v185, Number v186, Number v187, Number v188, Number v189, Number v190, Number v191, Number v192, Number v193, Number v194, Number v195, Number v196, Number v197, Number v198, Number v199, Number v200, Number v201, Number v202, Number v203, Number v204, Number v205, Number v206, Number v207, Number v208, Number v209, Number v210, Number v211, Number v212, Number v213, Number v214, Number v215, Number v216, Number v217, Number v218, Number v219, Number v220, Number v221, Number v222, Number v223, Number v224, Number v225, Number v226, Number v227, Number v228, Number v229, Number v230, Number v231, Number v232, Number v233, Number v234, Number v235, Number v236, Number v237, Number v238, Number v239, Number v240, Number v241, Number v242, Number v243, Number v244, Number v245, Number v246, Number v247, Number v248, Number v249) {
+		Interact3 f = new Interact3();
 		f.setLayer1(layer1);
 		f.setGid1(gid1);
 		f.setXTolerance(xTolerance);
@@ -505,8 +592,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.INTERACT</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> interact3(java.lang.String layer1, java.lang.Number gid1, java.lang.Number xTolerance, java.lang.Number yTolerance, java.lang.Number v000, java.lang.Number v001, java.lang.Number v002, java.lang.Number v003, java.lang.Number v004, java.lang.Number v005, java.lang.Number v006, java.lang.Number v007, java.lang.Number v008, java.lang.Number v009, java.lang.Number v010, java.lang.Number v011, java.lang.Number v012, java.lang.Number v013, java.lang.Number v014, java.lang.Number v015, java.lang.Number v016, java.lang.Number v017, java.lang.Number v018, java.lang.Number v019, java.lang.Number v020, java.lang.Number v021, java.lang.Number v022, java.lang.Number v023, java.lang.Number v024, java.lang.Number v025, java.lang.Number v026, java.lang.Number v027, java.lang.Number v028, java.lang.Number v029, java.lang.Number v030, java.lang.Number v031, java.lang.Number v032, java.lang.Number v033, java.lang.Number v034, java.lang.Number v035, java.lang.Number v036, java.lang.Number v037, java.lang.Number v038, java.lang.Number v039, java.lang.Number v040, java.lang.Number v041, java.lang.Number v042, java.lang.Number v043, java.lang.Number v044, java.lang.Number v045, java.lang.Number v046, java.lang.Number v047, java.lang.Number v048, java.lang.Number v049, java.lang.Number v050, java.lang.Number v051, java.lang.Number v052, java.lang.Number v053, java.lang.Number v054, java.lang.Number v055, java.lang.Number v056, java.lang.Number v057, java.lang.Number v058, java.lang.Number v059, java.lang.Number v060, java.lang.Number v061, java.lang.Number v062, java.lang.Number v063, java.lang.Number v064, java.lang.Number v065, java.lang.Number v066, java.lang.Number v067, java.lang.Number v068, java.lang.Number v069, java.lang.Number v070, java.lang.Number v071, java.lang.Number v072, java.lang.Number v073, java.lang.Number v074, java.lang.Number v075, java.lang.Number v076, java.lang.Number v077, java.lang.Number v078, java.lang.Number v079, java.lang.Number v080, java.lang.Number v081, java.lang.Number v082, java.lang.Number v083, java.lang.Number v084, java.lang.Number v085, java.lang.Number v086, java.lang.Number v087, java.lang.Number v088, java.lang.Number v089, java.lang.Number v090, java.lang.Number v091, java.lang.Number v092, java.lang.Number v093, java.lang.Number v094, java.lang.Number v095, java.lang.Number v096, java.lang.Number v097, java.lang.Number v098, java.lang.Number v099, java.lang.Number v100, java.lang.Number v101, java.lang.Number v102, java.lang.Number v103, java.lang.Number v104, java.lang.Number v105, java.lang.Number v106, java.lang.Number v107, java.lang.Number v108, java.lang.Number v109, java.lang.Number v110, java.lang.Number v111, java.lang.Number v112, java.lang.Number v113, java.lang.Number v114, java.lang.Number v115, java.lang.Number v116, java.lang.Number v117, java.lang.Number v118, java.lang.Number v119, java.lang.Number v120, java.lang.Number v121, java.lang.Number v122, java.lang.Number v123, java.lang.Number v124, java.lang.Number v125, java.lang.Number v126, java.lang.Number v127, java.lang.Number v128, java.lang.Number v129, java.lang.Number v130, java.lang.Number v131, java.lang.Number v132, java.lang.Number v133, java.lang.Number v134, java.lang.Number v135, java.lang.Number v136, java.lang.Number v137, java.lang.Number v138, java.lang.Number v139, java.lang.Number v140, java.lang.Number v141, java.lang.Number v142, java.lang.Number v143, java.lang.Number v144, java.lang.Number v145, java.lang.Number v146, java.lang.Number v147, java.lang.Number v148, java.lang.Number v149, java.lang.Number v150, java.lang.Number v151, java.lang.Number v152, java.lang.Number v153, java.lang.Number v154, java.lang.Number v155, java.lang.Number v156, java.lang.Number v157, java.lang.Number v158, java.lang.Number v159, java.lang.Number v160, java.lang.Number v161, java.lang.Number v162, java.lang.Number v163, java.lang.Number v164, java.lang.Number v165, java.lang.Number v166, java.lang.Number v167, java.lang.Number v168, java.lang.Number v169, java.lang.Number v170, java.lang.Number v171, java.lang.Number v172, java.lang.Number v173, java.lang.Number v174, java.lang.Number v175, java.lang.Number v176, java.lang.Number v177, java.lang.Number v178, java.lang.Number v179, java.lang.Number v180, java.lang.Number v181, java.lang.Number v182, java.lang.Number v183, java.lang.Number v184, java.lang.Number v185, java.lang.Number v186, java.lang.Number v187, java.lang.Number v188, java.lang.Number v189, java.lang.Number v190, java.lang.Number v191, java.lang.Number v192, java.lang.Number v193, java.lang.Number v194, java.lang.Number v195, java.lang.Number v196, java.lang.Number v197, java.lang.Number v198, java.lang.Number v199, java.lang.Number v200, java.lang.Number v201, java.lang.Number v202, java.lang.Number v203, java.lang.Number v204, java.lang.Number v205, java.lang.Number v206, java.lang.Number v207, java.lang.Number v208, java.lang.Number v209, java.lang.Number v210, java.lang.Number v211, java.lang.Number v212, java.lang.Number v213, java.lang.Number v214, java.lang.Number v215, java.lang.Number v216, java.lang.Number v217, java.lang.Number v218, java.lang.Number v219, java.lang.Number v220, java.lang.Number v221, java.lang.Number v222, java.lang.Number v223, java.lang.Number v224, java.lang.Number v225, java.lang.Number v226, java.lang.Number v227, java.lang.Number v228, java.lang.Number v229, java.lang.Number v230, java.lang.Number v231, java.lang.Number v232, java.lang.Number v233, java.lang.Number v234, java.lang.Number v235, java.lang.Number v236, java.lang.Number v237, java.lang.Number v238, java.lang.Number v239, java.lang.Number v240, java.lang.Number v241, java.lang.Number v242, java.lang.Number v243, java.lang.Number v244, java.lang.Number v245, java.lang.Number v246, java.lang.Number v247, java.lang.Number v248, java.lang.Number v249) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Interact3 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Interact3();
+	public static Field<String> interact3(String layer1, Number gid1, Number xTolerance, Number yTolerance, Number v000, Number v001, Number v002, Number v003, Number v004, Number v005, Number v006, Number v007, Number v008, Number v009, Number v010, Number v011, Number v012, Number v013, Number v014, Number v015, Number v016, Number v017, Number v018, Number v019, Number v020, Number v021, Number v022, Number v023, Number v024, Number v025, Number v026, Number v027, Number v028, Number v029, Number v030, Number v031, Number v032, Number v033, Number v034, Number v035, Number v036, Number v037, Number v038, Number v039, Number v040, Number v041, Number v042, Number v043, Number v044, Number v045, Number v046, Number v047, Number v048, Number v049, Number v050, Number v051, Number v052, Number v053, Number v054, Number v055, Number v056, Number v057, Number v058, Number v059, Number v060, Number v061, Number v062, Number v063, Number v064, Number v065, Number v066, Number v067, Number v068, Number v069, Number v070, Number v071, Number v072, Number v073, Number v074, Number v075, Number v076, Number v077, Number v078, Number v079, Number v080, Number v081, Number v082, Number v083, Number v084, Number v085, Number v086, Number v087, Number v088, Number v089, Number v090, Number v091, Number v092, Number v093, Number v094, Number v095, Number v096, Number v097, Number v098, Number v099, Number v100, Number v101, Number v102, Number v103, Number v104, Number v105, Number v106, Number v107, Number v108, Number v109, Number v110, Number v111, Number v112, Number v113, Number v114, Number v115, Number v116, Number v117, Number v118, Number v119, Number v120, Number v121, Number v122, Number v123, Number v124, Number v125, Number v126, Number v127, Number v128, Number v129, Number v130, Number v131, Number v132, Number v133, Number v134, Number v135, Number v136, Number v137, Number v138, Number v139, Number v140, Number v141, Number v142, Number v143, Number v144, Number v145, Number v146, Number v147, Number v148, Number v149, Number v150, Number v151, Number v152, Number v153, Number v154, Number v155, Number v156, Number v157, Number v158, Number v159, Number v160, Number v161, Number v162, Number v163, Number v164, Number v165, Number v166, Number v167, Number v168, Number v169, Number v170, Number v171, Number v172, Number v173, Number v174, Number v175, Number v176, Number v177, Number v178, Number v179, Number v180, Number v181, Number v182, Number v183, Number v184, Number v185, Number v186, Number v187, Number v188, Number v189, Number v190, Number v191, Number v192, Number v193, Number v194, Number v195, Number v196, Number v197, Number v198, Number v199, Number v200, Number v201, Number v202, Number v203, Number v204, Number v205, Number v206, Number v207, Number v208, Number v209, Number v210, Number v211, Number v212, Number v213, Number v214, Number v215, Number v216, Number v217, Number v218, Number v219, Number v220, Number v221, Number v222, Number v223, Number v224, Number v225, Number v226, Number v227, Number v228, Number v229, Number v230, Number v231, Number v232, Number v233, Number v234, Number v235, Number v236, Number v237, Number v238, Number v239, Number v240, Number v241, Number v242, Number v243, Number v244, Number v245, Number v246, Number v247, Number v248, Number v249) {
+		Interact3 f = new Interact3();
 		f.setLayer1(layer1);
 		f.setGid1(gid1);
 		f.setXTolerance(xTolerance);
@@ -768,8 +855,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.INTERACT</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> interact3(org.jooq.Field<java.lang.String> layer1, org.jooq.Field<? extends java.lang.Number> gid1, org.jooq.Field<? extends java.lang.Number> xTolerance, org.jooq.Field<? extends java.lang.Number> yTolerance, org.jooq.Field<? extends java.lang.Number> v000, org.jooq.Field<? extends java.lang.Number> v001, org.jooq.Field<? extends java.lang.Number> v002, org.jooq.Field<? extends java.lang.Number> v003, org.jooq.Field<? extends java.lang.Number> v004, org.jooq.Field<? extends java.lang.Number> v005, org.jooq.Field<? extends java.lang.Number> v006, org.jooq.Field<? extends java.lang.Number> v007, org.jooq.Field<? extends java.lang.Number> v008, org.jooq.Field<? extends java.lang.Number> v009, org.jooq.Field<? extends java.lang.Number> v010, org.jooq.Field<? extends java.lang.Number> v011, org.jooq.Field<? extends java.lang.Number> v012, org.jooq.Field<? extends java.lang.Number> v013, org.jooq.Field<? extends java.lang.Number> v014, org.jooq.Field<? extends java.lang.Number> v015, org.jooq.Field<? extends java.lang.Number> v016, org.jooq.Field<? extends java.lang.Number> v017, org.jooq.Field<? extends java.lang.Number> v018, org.jooq.Field<? extends java.lang.Number> v019, org.jooq.Field<? extends java.lang.Number> v020, org.jooq.Field<? extends java.lang.Number> v021, org.jooq.Field<? extends java.lang.Number> v022, org.jooq.Field<? extends java.lang.Number> v023, org.jooq.Field<? extends java.lang.Number> v024, org.jooq.Field<? extends java.lang.Number> v025, org.jooq.Field<? extends java.lang.Number> v026, org.jooq.Field<? extends java.lang.Number> v027, org.jooq.Field<? extends java.lang.Number> v028, org.jooq.Field<? extends java.lang.Number> v029, org.jooq.Field<? extends java.lang.Number> v030, org.jooq.Field<? extends java.lang.Number> v031, org.jooq.Field<? extends java.lang.Number> v032, org.jooq.Field<? extends java.lang.Number> v033, org.jooq.Field<? extends java.lang.Number> v034, org.jooq.Field<? extends java.lang.Number> v035, org.jooq.Field<? extends java.lang.Number> v036, org.jooq.Field<? extends java.lang.Number> v037, org.jooq.Field<? extends java.lang.Number> v038, org.jooq.Field<? extends java.lang.Number> v039, org.jooq.Field<? extends java.lang.Number> v040, org.jooq.Field<? extends java.lang.Number> v041, org.jooq.Field<? extends java.lang.Number> v042, org.jooq.Field<? extends java.lang.Number> v043, org.jooq.Field<? extends java.lang.Number> v044, org.jooq.Field<? extends java.lang.Number> v045, org.jooq.Field<? extends java.lang.Number> v046, org.jooq.Field<? extends java.lang.Number> v047, org.jooq.Field<? extends java.lang.Number> v048, org.jooq.Field<? extends java.lang.Number> v049, org.jooq.Field<? extends java.lang.Number> v050, org.jooq.Field<? extends java.lang.Number> v051, org.jooq.Field<? extends java.lang.Number> v052, org.jooq.Field<? extends java.lang.Number> v053, org.jooq.Field<? extends java.lang.Number> v054, org.jooq.Field<? extends java.lang.Number> v055, org.jooq.Field<? extends java.lang.Number> v056, org.jooq.Field<? extends java.lang.Number> v057, org.jooq.Field<? extends java.lang.Number> v058, org.jooq.Field<? extends java.lang.Number> v059, org.jooq.Field<? extends java.lang.Number> v060, org.jooq.Field<? extends java.lang.Number> v061, org.jooq.Field<? extends java.lang.Number> v062, org.jooq.Field<? extends java.lang.Number> v063, org.jooq.Field<? extends java.lang.Number> v064, org.jooq.Field<? extends java.lang.Number> v065, org.jooq.Field<? extends java.lang.Number> v066, org.jooq.Field<? extends java.lang.Number> v067, org.jooq.Field<? extends java.lang.Number> v068, org.jooq.Field<? extends java.lang.Number> v069, org.jooq.Field<? extends java.lang.Number> v070, org.jooq.Field<? extends java.lang.Number> v071, org.jooq.Field<? extends java.lang.Number> v072, org.jooq.Field<? extends java.lang.Number> v073, org.jooq.Field<? extends java.lang.Number> v074, org.jooq.Field<? extends java.lang.Number> v075, org.jooq.Field<? extends java.lang.Number> v076, org.jooq.Field<? extends java.lang.Number> v077, org.jooq.Field<? extends java.lang.Number> v078, org.jooq.Field<? extends java.lang.Number> v079, org.jooq.Field<? extends java.lang.Number> v080, org.jooq.Field<? extends java.lang.Number> v081, org.jooq.Field<? extends java.lang.Number> v082, org.jooq.Field<? extends java.lang.Number> v083, org.jooq.Field<? extends java.lang.Number> v084, org.jooq.Field<? extends java.lang.Number> v085, org.jooq.Field<? extends java.lang.Number> v086, org.jooq.Field<? extends java.lang.Number> v087, org.jooq.Field<? extends java.lang.Number> v088, org.jooq.Field<? extends java.lang.Number> v089, org.jooq.Field<? extends java.lang.Number> v090, org.jooq.Field<? extends java.lang.Number> v091, org.jooq.Field<? extends java.lang.Number> v092, org.jooq.Field<? extends java.lang.Number> v093, org.jooq.Field<? extends java.lang.Number> v094, org.jooq.Field<? extends java.lang.Number> v095, org.jooq.Field<? extends java.lang.Number> v096, org.jooq.Field<? extends java.lang.Number> v097, org.jooq.Field<? extends java.lang.Number> v098, org.jooq.Field<? extends java.lang.Number> v099, org.jooq.Field<? extends java.lang.Number> v100, org.jooq.Field<? extends java.lang.Number> v101, org.jooq.Field<? extends java.lang.Number> v102, org.jooq.Field<? extends java.lang.Number> v103, org.jooq.Field<? extends java.lang.Number> v104, org.jooq.Field<? extends java.lang.Number> v105, org.jooq.Field<? extends java.lang.Number> v106, org.jooq.Field<? extends java.lang.Number> v107, org.jooq.Field<? extends java.lang.Number> v108, org.jooq.Field<? extends java.lang.Number> v109, org.jooq.Field<? extends java.lang.Number> v110, org.jooq.Field<? extends java.lang.Number> v111, org.jooq.Field<? extends java.lang.Number> v112, org.jooq.Field<? extends java.lang.Number> v113, org.jooq.Field<? extends java.lang.Number> v114, org.jooq.Field<? extends java.lang.Number> v115, org.jooq.Field<? extends java.lang.Number> v116, org.jooq.Field<? extends java.lang.Number> v117, org.jooq.Field<? extends java.lang.Number> v118, org.jooq.Field<? extends java.lang.Number> v119, org.jooq.Field<? extends java.lang.Number> v120, org.jooq.Field<? extends java.lang.Number> v121, org.jooq.Field<? extends java.lang.Number> v122, org.jooq.Field<? extends java.lang.Number> v123, org.jooq.Field<? extends java.lang.Number> v124, org.jooq.Field<? extends java.lang.Number> v125, org.jooq.Field<? extends java.lang.Number> v126, org.jooq.Field<? extends java.lang.Number> v127, org.jooq.Field<? extends java.lang.Number> v128, org.jooq.Field<? extends java.lang.Number> v129, org.jooq.Field<? extends java.lang.Number> v130, org.jooq.Field<? extends java.lang.Number> v131, org.jooq.Field<? extends java.lang.Number> v132, org.jooq.Field<? extends java.lang.Number> v133, org.jooq.Field<? extends java.lang.Number> v134, org.jooq.Field<? extends java.lang.Number> v135, org.jooq.Field<? extends java.lang.Number> v136, org.jooq.Field<? extends java.lang.Number> v137, org.jooq.Field<? extends java.lang.Number> v138, org.jooq.Field<? extends java.lang.Number> v139, org.jooq.Field<? extends java.lang.Number> v140, org.jooq.Field<? extends java.lang.Number> v141, org.jooq.Field<? extends java.lang.Number> v142, org.jooq.Field<? extends java.lang.Number> v143, org.jooq.Field<? extends java.lang.Number> v144, org.jooq.Field<? extends java.lang.Number> v145, org.jooq.Field<? extends java.lang.Number> v146, org.jooq.Field<? extends java.lang.Number> v147, org.jooq.Field<? extends java.lang.Number> v148, org.jooq.Field<? extends java.lang.Number> v149, org.jooq.Field<? extends java.lang.Number> v150, org.jooq.Field<? extends java.lang.Number> v151, org.jooq.Field<? extends java.lang.Number> v152, org.jooq.Field<? extends java.lang.Number> v153, org.jooq.Field<? extends java.lang.Number> v154, org.jooq.Field<? extends java.lang.Number> v155, org.jooq.Field<? extends java.lang.Number> v156, org.jooq.Field<? extends java.lang.Number> v157, org.jooq.Field<? extends java.lang.Number> v158, org.jooq.Field<? extends java.lang.Number> v159, org.jooq.Field<? extends java.lang.Number> v160, org.jooq.Field<? extends java.lang.Number> v161, org.jooq.Field<? extends java.lang.Number> v162, org.jooq.Field<? extends java.lang.Number> v163, org.jooq.Field<? extends java.lang.Number> v164, org.jooq.Field<? extends java.lang.Number> v165, org.jooq.Field<? extends java.lang.Number> v166, org.jooq.Field<? extends java.lang.Number> v167, org.jooq.Field<? extends java.lang.Number> v168, org.jooq.Field<? extends java.lang.Number> v169, org.jooq.Field<? extends java.lang.Number> v170, org.jooq.Field<? extends java.lang.Number> v171, org.jooq.Field<? extends java.lang.Number> v172, org.jooq.Field<? extends java.lang.Number> v173, org.jooq.Field<? extends java.lang.Number> v174, org.jooq.Field<? extends java.lang.Number> v175, org.jooq.Field<? extends java.lang.Number> v176, org.jooq.Field<? extends java.lang.Number> v177, org.jooq.Field<? extends java.lang.Number> v178, org.jooq.Field<? extends java.lang.Number> v179, org.jooq.Field<? extends java.lang.Number> v180, org.jooq.Field<? extends java.lang.Number> v181, org.jooq.Field<? extends java.lang.Number> v182, org.jooq.Field<? extends java.lang.Number> v183, org.jooq.Field<? extends java.lang.Number> v184, org.jooq.Field<? extends java.lang.Number> v185, org.jooq.Field<? extends java.lang.Number> v186, org.jooq.Field<? extends java.lang.Number> v187, org.jooq.Field<? extends java.lang.Number> v188, org.jooq.Field<? extends java.lang.Number> v189, org.jooq.Field<? extends java.lang.Number> v190, org.jooq.Field<? extends java.lang.Number> v191, org.jooq.Field<? extends java.lang.Number> v192, org.jooq.Field<? extends java.lang.Number> v193, org.jooq.Field<? extends java.lang.Number> v194, org.jooq.Field<? extends java.lang.Number> v195, org.jooq.Field<? extends java.lang.Number> v196, org.jooq.Field<? extends java.lang.Number> v197, org.jooq.Field<? extends java.lang.Number> v198, org.jooq.Field<? extends java.lang.Number> v199, org.jooq.Field<? extends java.lang.Number> v200, org.jooq.Field<? extends java.lang.Number> v201, org.jooq.Field<? extends java.lang.Number> v202, org.jooq.Field<? extends java.lang.Number> v203, org.jooq.Field<? extends java.lang.Number> v204, org.jooq.Field<? extends java.lang.Number> v205, org.jooq.Field<? extends java.lang.Number> v206, org.jooq.Field<? extends java.lang.Number> v207, org.jooq.Field<? extends java.lang.Number> v208, org.jooq.Field<? extends java.lang.Number> v209, org.jooq.Field<? extends java.lang.Number> v210, org.jooq.Field<? extends java.lang.Number> v211, org.jooq.Field<? extends java.lang.Number> v212, org.jooq.Field<? extends java.lang.Number> v213, org.jooq.Field<? extends java.lang.Number> v214, org.jooq.Field<? extends java.lang.Number> v215, org.jooq.Field<? extends java.lang.Number> v216, org.jooq.Field<? extends java.lang.Number> v217, org.jooq.Field<? extends java.lang.Number> v218, org.jooq.Field<? extends java.lang.Number> v219, org.jooq.Field<? extends java.lang.Number> v220, org.jooq.Field<? extends java.lang.Number> v221, org.jooq.Field<? extends java.lang.Number> v222, org.jooq.Field<? extends java.lang.Number> v223, org.jooq.Field<? extends java.lang.Number> v224, org.jooq.Field<? extends java.lang.Number> v225, org.jooq.Field<? extends java.lang.Number> v226, org.jooq.Field<? extends java.lang.Number> v227, org.jooq.Field<? extends java.lang.Number> v228, org.jooq.Field<? extends java.lang.Number> v229, org.jooq.Field<? extends java.lang.Number> v230, org.jooq.Field<? extends java.lang.Number> v231, org.jooq.Field<? extends java.lang.Number> v232, org.jooq.Field<? extends java.lang.Number> v233, org.jooq.Field<? extends java.lang.Number> v234, org.jooq.Field<? extends java.lang.Number> v235, org.jooq.Field<? extends java.lang.Number> v236, org.jooq.Field<? extends java.lang.Number> v237, org.jooq.Field<? extends java.lang.Number> v238, org.jooq.Field<? extends java.lang.Number> v239, org.jooq.Field<? extends java.lang.Number> v240, org.jooq.Field<? extends java.lang.Number> v241, org.jooq.Field<? extends java.lang.Number> v242, org.jooq.Field<? extends java.lang.Number> v243, org.jooq.Field<? extends java.lang.Number> v244, org.jooq.Field<? extends java.lang.Number> v245, org.jooq.Field<? extends java.lang.Number> v246, org.jooq.Field<? extends java.lang.Number> v247, org.jooq.Field<? extends java.lang.Number> v248, org.jooq.Field<? extends java.lang.Number> v249) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Interact3 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Interact3();
+	public static Field<String> interact3(Field<String> layer1, Field<? extends Number> gid1, Field<? extends Number> xTolerance, Field<? extends Number> yTolerance, Field<? extends Number> v000, Field<? extends Number> v001, Field<? extends Number> v002, Field<? extends Number> v003, Field<? extends Number> v004, Field<? extends Number> v005, Field<? extends Number> v006, Field<? extends Number> v007, Field<? extends Number> v008, Field<? extends Number> v009, Field<? extends Number> v010, Field<? extends Number> v011, Field<? extends Number> v012, Field<? extends Number> v013, Field<? extends Number> v014, Field<? extends Number> v015, Field<? extends Number> v016, Field<? extends Number> v017, Field<? extends Number> v018, Field<? extends Number> v019, Field<? extends Number> v020, Field<? extends Number> v021, Field<? extends Number> v022, Field<? extends Number> v023, Field<? extends Number> v024, Field<? extends Number> v025, Field<? extends Number> v026, Field<? extends Number> v027, Field<? extends Number> v028, Field<? extends Number> v029, Field<? extends Number> v030, Field<? extends Number> v031, Field<? extends Number> v032, Field<? extends Number> v033, Field<? extends Number> v034, Field<? extends Number> v035, Field<? extends Number> v036, Field<? extends Number> v037, Field<? extends Number> v038, Field<? extends Number> v039, Field<? extends Number> v040, Field<? extends Number> v041, Field<? extends Number> v042, Field<? extends Number> v043, Field<? extends Number> v044, Field<? extends Number> v045, Field<? extends Number> v046, Field<? extends Number> v047, Field<? extends Number> v048, Field<? extends Number> v049, Field<? extends Number> v050, Field<? extends Number> v051, Field<? extends Number> v052, Field<? extends Number> v053, Field<? extends Number> v054, Field<? extends Number> v055, Field<? extends Number> v056, Field<? extends Number> v057, Field<? extends Number> v058, Field<? extends Number> v059, Field<? extends Number> v060, Field<? extends Number> v061, Field<? extends Number> v062, Field<? extends Number> v063, Field<? extends Number> v064, Field<? extends Number> v065, Field<? extends Number> v066, Field<? extends Number> v067, Field<? extends Number> v068, Field<? extends Number> v069, Field<? extends Number> v070, Field<? extends Number> v071, Field<? extends Number> v072, Field<? extends Number> v073, Field<? extends Number> v074, Field<? extends Number> v075, Field<? extends Number> v076, Field<? extends Number> v077, Field<? extends Number> v078, Field<? extends Number> v079, Field<? extends Number> v080, Field<? extends Number> v081, Field<? extends Number> v082, Field<? extends Number> v083, Field<? extends Number> v084, Field<? extends Number> v085, Field<? extends Number> v086, Field<? extends Number> v087, Field<? extends Number> v088, Field<? extends Number> v089, Field<? extends Number> v090, Field<? extends Number> v091, Field<? extends Number> v092, Field<? extends Number> v093, Field<? extends Number> v094, Field<? extends Number> v095, Field<? extends Number> v096, Field<? extends Number> v097, Field<? extends Number> v098, Field<? extends Number> v099, Field<? extends Number> v100, Field<? extends Number> v101, Field<? extends Number> v102, Field<? extends Number> v103, Field<? extends Number> v104, Field<? extends Number> v105, Field<? extends Number> v106, Field<? extends Number> v107, Field<? extends Number> v108, Field<? extends Number> v109, Field<? extends Number> v110, Field<? extends Number> v111, Field<? extends Number> v112, Field<? extends Number> v113, Field<? extends Number> v114, Field<? extends Number> v115, Field<? extends Number> v116, Field<? extends Number> v117, Field<? extends Number> v118, Field<? extends Number> v119, Field<? extends Number> v120, Field<? extends Number> v121, Field<? extends Number> v122, Field<? extends Number> v123, Field<? extends Number> v124, Field<? extends Number> v125, Field<? extends Number> v126, Field<? extends Number> v127, Field<? extends Number> v128, Field<? extends Number> v129, Field<? extends Number> v130, Field<? extends Number> v131, Field<? extends Number> v132, Field<? extends Number> v133, Field<? extends Number> v134, Field<? extends Number> v135, Field<? extends Number> v136, Field<? extends Number> v137, Field<? extends Number> v138, Field<? extends Number> v139, Field<? extends Number> v140, Field<? extends Number> v141, Field<? extends Number> v142, Field<? extends Number> v143, Field<? extends Number> v144, Field<? extends Number> v145, Field<? extends Number> v146, Field<? extends Number> v147, Field<? extends Number> v148, Field<? extends Number> v149, Field<? extends Number> v150, Field<? extends Number> v151, Field<? extends Number> v152, Field<? extends Number> v153, Field<? extends Number> v154, Field<? extends Number> v155, Field<? extends Number> v156, Field<? extends Number> v157, Field<? extends Number> v158, Field<? extends Number> v159, Field<? extends Number> v160, Field<? extends Number> v161, Field<? extends Number> v162, Field<? extends Number> v163, Field<? extends Number> v164, Field<? extends Number> v165, Field<? extends Number> v166, Field<? extends Number> v167, Field<? extends Number> v168, Field<? extends Number> v169, Field<? extends Number> v170, Field<? extends Number> v171, Field<? extends Number> v172, Field<? extends Number> v173, Field<? extends Number> v174, Field<? extends Number> v175, Field<? extends Number> v176, Field<? extends Number> v177, Field<? extends Number> v178, Field<? extends Number> v179, Field<? extends Number> v180, Field<? extends Number> v181, Field<? extends Number> v182, Field<? extends Number> v183, Field<? extends Number> v184, Field<? extends Number> v185, Field<? extends Number> v186, Field<? extends Number> v187, Field<? extends Number> v188, Field<? extends Number> v189, Field<? extends Number> v190, Field<? extends Number> v191, Field<? extends Number> v192, Field<? extends Number> v193, Field<? extends Number> v194, Field<? extends Number> v195, Field<? extends Number> v196, Field<? extends Number> v197, Field<? extends Number> v198, Field<? extends Number> v199, Field<? extends Number> v200, Field<? extends Number> v201, Field<? extends Number> v202, Field<? extends Number> v203, Field<? extends Number> v204, Field<? extends Number> v205, Field<? extends Number> v206, Field<? extends Number> v207, Field<? extends Number> v208, Field<? extends Number> v209, Field<? extends Number> v210, Field<? extends Number> v211, Field<? extends Number> v212, Field<? extends Number> v213, Field<? extends Number> v214, Field<? extends Number> v215, Field<? extends Number> v216, Field<? extends Number> v217, Field<? extends Number> v218, Field<? extends Number> v219, Field<? extends Number> v220, Field<? extends Number> v221, Field<? extends Number> v222, Field<? extends Number> v223, Field<? extends Number> v224, Field<? extends Number> v225, Field<? extends Number> v226, Field<? extends Number> v227, Field<? extends Number> v228, Field<? extends Number> v229, Field<? extends Number> v230, Field<? extends Number> v231, Field<? extends Number> v232, Field<? extends Number> v233, Field<? extends Number> v234, Field<? extends Number> v235, Field<? extends Number> v236, Field<? extends Number> v237, Field<? extends Number> v238, Field<? extends Number> v239, Field<? extends Number> v240, Field<? extends Number> v241, Field<? extends Number> v242, Field<? extends Number> v243, Field<? extends Number> v244, Field<? extends Number> v245, Field<? extends Number> v246, Field<? extends Number> v247, Field<? extends Number> v248, Field<? extends Number> v249) {
+		Interact3 f = new Interact3();
 		f.setLayer1(layer1);
 		f.setGid1(gid1);
 		f.setXTolerance(xTolerance);
@@ -1031,8 +1118,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.RELATE</code>
 	 */
-	public static java.lang.String relate1(org.jooq.Configuration configuration, java.lang.String layer, java.lang.Number gid1, java.lang.String mask, java.lang.Number gid2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate1();
+	public static String relate1(Configuration configuration, String layer, Number gid1, String mask, Number gid2) {
+		Relate1 f = new Relate1();
 		f.setLayer(layer);
 		f.setGid1(gid1);
 		f.setMask(mask);
@@ -1045,8 +1132,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.RELATE</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> relate1(java.lang.String layer, java.lang.Number gid1, java.lang.String mask, java.lang.Number gid2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate1();
+	public static Field<String> relate1(String layer, Number gid1, String mask, Number gid2) {
+		Relate1 f = new Relate1();
 		f.setLayer(layer);
 		f.setGid1(gid1);
 		f.setMask(mask);
@@ -1058,8 +1145,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.RELATE</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> relate1(org.jooq.Field<java.lang.String> layer, org.jooq.Field<? extends java.lang.Number> gid1, org.jooq.Field<java.lang.String> mask, org.jooq.Field<? extends java.lang.Number> gid2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate1();
+	public static Field<String> relate1(Field<String> layer, Field<? extends Number> gid1, Field<String> mask, Field<? extends Number> gid2) {
+		Relate1 f = new Relate1();
 		f.setLayer(layer);
 		f.setGid1(gid1);
 		f.setMask(mask);
@@ -1071,8 +1158,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.RELATE</code>
 	 */
-	public static java.lang.String relate2(org.jooq.Configuration configuration, java.lang.String layer1, java.lang.Number gid1, java.lang.String mask, java.lang.String layer2, java.lang.Number gid2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate2();
+	public static String relate2(Configuration configuration, String layer1, Number gid1, String mask, String layer2, Number gid2) {
+		Relate2 f = new Relate2();
 		f.setLayer1(layer1);
 		f.setGid1(gid1);
 		f.setMask(mask);
@@ -1086,8 +1173,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.RELATE</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> relate2(java.lang.String layer1, java.lang.Number gid1, java.lang.String mask, java.lang.String layer2, java.lang.Number gid2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate2();
+	public static Field<String> relate2(String layer1, Number gid1, String mask, String layer2, Number gid2) {
+		Relate2 f = new Relate2();
 		f.setLayer1(layer1);
 		f.setGid1(gid1);
 		f.setMask(mask);
@@ -1100,8 +1187,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.RELATE</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> relate2(org.jooq.Field<java.lang.String> layer1, org.jooq.Field<? extends java.lang.Number> gid1, org.jooq.Field<java.lang.String> mask, org.jooq.Field<java.lang.String> layer2, org.jooq.Field<? extends java.lang.Number> gid2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate2();
+	public static Field<String> relate2(Field<String> layer1, Field<? extends Number> gid1, Field<String> mask, Field<String> layer2, Field<? extends Number> gid2) {
+		Relate2 f = new Relate2();
 		f.setLayer1(layer1);
 		f.setGid1(gid1);
 		f.setMask(mask);
@@ -1114,8 +1201,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.RELATE</code>
 	 */
-	public static java.lang.String relate3(org.jooq.Configuration configuration, java.lang.String layer1, java.lang.Number gid1, java.lang.Number nord1, java.lang.String mask, java.lang.String layer2, java.lang.Number gid2, java.lang.Number nord2, java.lang.Number tolerance1, java.lang.Number tolerance2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate3 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate3();
+	public static String relate3(Configuration configuration, String layer1, Number gid1, Number nord1, String mask, String layer2, Number gid2, Number nord2, Number tolerance1, Number tolerance2) {
+		Relate3 f = new Relate3();
 		f.setLayer1(layer1);
 		f.setGid1(gid1);
 		f.setNord1(nord1);
@@ -1133,8 +1220,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.RELATE</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> relate3(java.lang.String layer1, java.lang.Number gid1, java.lang.Number nord1, java.lang.String mask, java.lang.String layer2, java.lang.Number gid2, java.lang.Number nord2, java.lang.Number tolerance1, java.lang.Number tolerance2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate3 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate3();
+	public static Field<String> relate3(String layer1, Number gid1, Number nord1, String mask, String layer2, Number gid2, Number nord2, Number tolerance1, Number tolerance2) {
+		Relate3 f = new Relate3();
 		f.setLayer1(layer1);
 		f.setGid1(gid1);
 		f.setNord1(nord1);
@@ -1151,8 +1238,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.RELATE</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> relate3(org.jooq.Field<java.lang.String> layer1, org.jooq.Field<? extends java.lang.Number> gid1, org.jooq.Field<? extends java.lang.Number> nord1, org.jooq.Field<java.lang.String> mask, org.jooq.Field<java.lang.String> layer2, org.jooq.Field<? extends java.lang.Number> gid2, org.jooq.Field<? extends java.lang.Number> nord2, org.jooq.Field<? extends java.lang.Number> tolerance1, org.jooq.Field<? extends java.lang.Number> tolerance2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate3 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate3();
+	public static Field<String> relate3(Field<String> layer1, Field<? extends Number> gid1, Field<? extends Number> nord1, Field<String> mask, Field<String> layer2, Field<? extends Number> gid2, Field<? extends Number> nord2, Field<? extends Number> tolerance1, Field<? extends Number> tolerance2) {
+		Relate3 f = new Relate3();
 		f.setLayer1(layer1);
 		f.setGid1(gid1);
 		f.setNord1(nord1);
@@ -1169,8 +1256,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.RELATE</code>
 	 */
-	public static java.lang.String relate5(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Object dim1, java.lang.String mask, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Object dim2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate5 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate5();
+	public static String relate5(Configuration configuration, SdoGeometryRecord geom1, Object dim1, String mask, SdoGeometryRecord geom2, Object dim2) {
+		Relate5 f = new Relate5();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setMask(mask);
@@ -1184,8 +1271,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.RELATE</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> relate5(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Object dim1, java.lang.String mask, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Object dim2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate5 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate5();
+	public static Field<String> relate5(SdoGeometryRecord geom1, Object dim1, String mask, SdoGeometryRecord geom2, Object dim2) {
+		Relate5 f = new Relate5();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setMask(mask);
@@ -1198,8 +1285,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.RELATE</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> relate5(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom1, org.jooq.Field<java.lang.Object> dim1, org.jooq.Field<java.lang.String> mask, org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom2, org.jooq.Field<java.lang.Object> dim2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate5 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate5();
+	public static Field<String> relate5(Field<SdoGeometryRecord> geom1, Field<Object> dim1, Field<String> mask, Field<SdoGeometryRecord> geom2, Field<Object> dim2) {
+		Relate5 f = new Relate5();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setMask(mask);
@@ -1212,8 +1299,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.RELATE</code>
 	 */
-	public static java.lang.String relate6(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.String mask, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Number tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate6 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate6();
+	public static String relate6(Configuration configuration, SdoGeometryRecord geom1, String mask, SdoGeometryRecord geom2, Number tol) {
+		Relate6 f = new Relate6();
 		f.setGeom1(geom1);
 		f.setMask(mask);
 		f.setGeom2(geom2);
@@ -1226,8 +1313,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.RELATE</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> relate6(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.String mask, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Number tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate6 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate6();
+	public static Field<String> relate6(SdoGeometryRecord geom1, String mask, SdoGeometryRecord geom2, Number tol) {
+		Relate6 f = new Relate6();
 		f.setGeom1(geom1);
 		f.setMask(mask);
 		f.setGeom2(geom2);
@@ -1239,8 +1326,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.RELATE</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> relate6(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom1, org.jooq.Field<java.lang.String> mask, org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom2, org.jooq.Field<? extends java.lang.Number> tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate6 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.Relate6();
+	public static Field<String> relate6(Field<SdoGeometryRecord> geom1, Field<String> mask, Field<SdoGeometryRecord> geom2, Field<? extends Number> tol) {
+		Relate6 f = new Relate6();
 		f.setGeom1(geom1);
 		f.setMask(mask);
 		f.setGeom2(geom2);
@@ -1252,8 +1339,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_ALPHA_SHAPE</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoAlphaShape(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number tol, java.lang.Number radius, java.lang.Integer flag) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoAlphaShape f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoAlphaShape();
+	public static SdoGeometryRecord sdoAlphaShape(Configuration configuration, SdoGeometryRecord geom, Number tol, Number radius, Integer flag) {
+		SdoAlphaShape f = new SdoAlphaShape();
 		f.setGeom(geom);
 		f.setTol(tol);
 		f.setRadius(radius);
@@ -1266,8 +1353,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_ALPHA_SHAPE</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoAlphaShape(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number tol, java.lang.Number radius, java.lang.Integer flag) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoAlphaShape f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoAlphaShape();
+	public static Field<SdoGeometryRecord> sdoAlphaShape(SdoGeometryRecord geom, Number tol, Number radius, Integer flag) {
+		SdoAlphaShape f = new SdoAlphaShape();
 		f.setGeom(geom);
 		f.setTol(tol);
 		f.setRadius(radius);
@@ -1279,8 +1366,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_ALPHA_SHAPE</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoAlphaShape(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom, org.jooq.Field<? extends java.lang.Number> tol, org.jooq.Field<? extends java.lang.Number> radius, org.jooq.Field<java.lang.Integer> flag) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoAlphaShape f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoAlphaShape();
+	public static Field<SdoGeometryRecord> sdoAlphaShape(Field<SdoGeometryRecord> geom, Field<? extends Number> tol, Field<? extends Number> radius, Field<Integer> flag) {
+		SdoAlphaShape f = new SdoAlphaShape();
 		f.setGeom(geom);
 		f.setTol(tol);
 		f.setRadius(radius);
@@ -1292,8 +1379,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_ARC_DENSIFY</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoArcDensify1(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Object dim, java.lang.String params) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArcDensify1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArcDensify1();
+	public static SdoGeometryRecord sdoArcDensify1(Configuration configuration, SdoGeometryRecord geom, Object dim, String params) {
+		SdoArcDensify1 f = new SdoArcDensify1();
 		f.setGeom(geom);
 		f.setDim(dim);
 		f.setParams(params);
@@ -1305,8 +1392,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_ARC_DENSIFY</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoArcDensify1(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Object dim, java.lang.String params) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArcDensify1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArcDensify1();
+	public static Field<SdoGeometryRecord> sdoArcDensify1(SdoGeometryRecord geom, Object dim, String params) {
+		SdoArcDensify1 f = new SdoArcDensify1();
 		f.setGeom(geom);
 		f.setDim(dim);
 		f.setParams(params);
@@ -1317,8 +1404,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_ARC_DENSIFY</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoArcDensify1(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom, org.jooq.Field<java.lang.Object> dim, org.jooq.Field<java.lang.String> params) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArcDensify1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArcDensify1();
+	public static Field<SdoGeometryRecord> sdoArcDensify1(Field<SdoGeometryRecord> geom, Field<Object> dim, Field<String> params) {
+		SdoArcDensify1 f = new SdoArcDensify1();
 		f.setGeom(geom);
 		f.setDim(dim);
 		f.setParams(params);
@@ -1329,8 +1416,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_ARC_DENSIFY</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoArcDensify2(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number tol, java.lang.String params) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArcDensify2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArcDensify2();
+	public static SdoGeometryRecord sdoArcDensify2(Configuration configuration, SdoGeometryRecord geom, Number tol, String params) {
+		SdoArcDensify2 f = new SdoArcDensify2();
 		f.setGeom(geom);
 		f.setTol(tol);
 		f.setParams(params);
@@ -1342,8 +1429,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_ARC_DENSIFY</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoArcDensify2(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number tol, java.lang.String params) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArcDensify2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArcDensify2();
+	public static Field<SdoGeometryRecord> sdoArcDensify2(SdoGeometryRecord geom, Number tol, String params) {
+		SdoArcDensify2 f = new SdoArcDensify2();
 		f.setGeom(geom);
 		f.setTol(tol);
 		f.setParams(params);
@@ -1354,8 +1441,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_ARC_DENSIFY</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoArcDensify2(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom, org.jooq.Field<? extends java.lang.Number> tol, org.jooq.Field<java.lang.String> params) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArcDensify2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArcDensify2();
+	public static Field<SdoGeometryRecord> sdoArcDensify2(Field<SdoGeometryRecord> geom, Field<? extends Number> tol, Field<String> params) {
+		SdoArcDensify2 f = new SdoArcDensify2();
 		f.setGeom(geom);
 		f.setTol(tol);
 		f.setParams(params);
@@ -1366,8 +1453,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_AREA</code>
 	 */
-	public static java.math.BigDecimal sdoArea1(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Object dim) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArea1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArea1();
+	public static BigDecimal sdoArea1(Configuration configuration, SdoGeometryRecord geom, Object dim) {
+		SdoArea1 f = new SdoArea1();
 		f.setGeom(geom);
 		f.setDim(dim);
 
@@ -1378,8 +1465,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_AREA</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoArea1(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Object dim) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArea1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArea1();
+	public static Field<BigDecimal> sdoArea1(SdoGeometryRecord geom, Object dim) {
+		SdoArea1 f = new SdoArea1();
 		f.setGeom(geom);
 		f.setDim(dim);
 
@@ -1389,8 +1476,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_AREA</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoArea1(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom, org.jooq.Field<java.lang.Object> dim) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArea1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArea1();
+	public static Field<BigDecimal> sdoArea1(Field<SdoGeometryRecord> geom, Field<Object> dim) {
+		SdoArea1 f = new SdoArea1();
 		f.setGeom(geom);
 		f.setDim(dim);
 
@@ -1400,8 +1487,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_AREA</code>
 	 */
-	public static java.math.BigDecimal sdoArea2(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArea2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArea2();
+	public static BigDecimal sdoArea2(Configuration configuration, SdoGeometryRecord geom, Number tol) {
+		SdoArea2 f = new SdoArea2();
 		f.setGeom(geom);
 		f.setTol(tol);
 
@@ -1412,8 +1499,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_AREA</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoArea2(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArea2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArea2();
+	public static Field<BigDecimal> sdoArea2(SdoGeometryRecord geom, Number tol) {
+		SdoArea2 f = new SdoArea2();
 		f.setGeom(geom);
 		f.setTol(tol);
 
@@ -1423,8 +1510,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_AREA</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoArea2(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom, org.jooq.Field<? extends java.lang.Number> tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArea2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArea2();
+	public static Field<BigDecimal> sdoArea2(Field<SdoGeometryRecord> geom, Field<? extends Number> tol) {
+		SdoArea2 f = new SdoArea2();
 		f.setGeom(geom);
 		f.setTol(tol);
 
@@ -1434,8 +1521,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_AREA</code>
 	 */
-	public static java.math.BigDecimal sdoArea3(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Object dim, java.lang.String unit) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArea3 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArea3();
+	public static BigDecimal sdoArea3(Configuration configuration, SdoGeometryRecord geom, Object dim, String unit) {
+		SdoArea3 f = new SdoArea3();
 		f.setGeom(geom);
 		f.setDim(dim);
 		f.setUnit(unit);
@@ -1447,8 +1534,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_AREA</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoArea3(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Object dim, java.lang.String unit) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArea3 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArea3();
+	public static Field<BigDecimal> sdoArea3(SdoGeometryRecord geom, Object dim, String unit) {
+		SdoArea3 f = new SdoArea3();
 		f.setGeom(geom);
 		f.setDim(dim);
 		f.setUnit(unit);
@@ -1459,8 +1546,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_AREA</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoArea3(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom, org.jooq.Field<java.lang.Object> dim, org.jooq.Field<java.lang.String> unit) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArea3 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArea3();
+	public static Field<BigDecimal> sdoArea3(Field<SdoGeometryRecord> geom, Field<Object> dim, Field<String> unit) {
+		SdoArea3 f = new SdoArea3();
 		f.setGeom(geom);
 		f.setDim(dim);
 		f.setUnit(unit);
@@ -1471,8 +1558,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_AREA</code>
 	 */
-	public static java.math.BigDecimal sdoArea4(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number tol, java.lang.String unit) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArea4 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArea4();
+	public static BigDecimal sdoArea4(Configuration configuration, SdoGeometryRecord geom, Number tol, String unit) {
+		SdoArea4 f = new SdoArea4();
 		f.setGeom(geom);
 		f.setTol(tol);
 		f.setUnit(unit);
@@ -1484,8 +1571,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_AREA</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoArea4(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number tol, java.lang.String unit) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArea4 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArea4();
+	public static Field<BigDecimal> sdoArea4(SdoGeometryRecord geom, Number tol, String unit) {
+		SdoArea4 f = new SdoArea4();
 		f.setGeom(geom);
 		f.setTol(tol);
 		f.setUnit(unit);
@@ -1496,8 +1583,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_AREA</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoArea4(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom, org.jooq.Field<? extends java.lang.Number> tol, org.jooq.Field<java.lang.String> unit) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArea4 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoArea4();
+	public static Field<BigDecimal> sdoArea4(Field<SdoGeometryRecord> geom, Field<? extends Number> tol, Field<String> unit) {
+		SdoArea4 f = new SdoArea4();
 		f.setGeom(geom);
 		f.setTol(tol);
 		f.setUnit(unit);
@@ -1508,8 +1595,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_BUFFER</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoBuffer1(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Object dim, java.lang.Number dist) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoBuffer1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoBuffer1();
+	public static SdoGeometryRecord sdoBuffer1(Configuration configuration, SdoGeometryRecord geom, Object dim, Number dist) {
+		SdoBuffer1 f = new SdoBuffer1();
 		f.setGeom(geom);
 		f.setDim(dim);
 		f.setDist(dist);
@@ -1521,8 +1608,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_BUFFER</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoBuffer1(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Object dim, java.lang.Number dist) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoBuffer1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoBuffer1();
+	public static Field<SdoGeometryRecord> sdoBuffer1(SdoGeometryRecord geom, Object dim, Number dist) {
+		SdoBuffer1 f = new SdoBuffer1();
 		f.setGeom(geom);
 		f.setDim(dim);
 		f.setDist(dist);
@@ -1533,8 +1620,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_BUFFER</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoBuffer1(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom, org.jooq.Field<java.lang.Object> dim, org.jooq.Field<? extends java.lang.Number> dist) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoBuffer1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoBuffer1();
+	public static Field<SdoGeometryRecord> sdoBuffer1(Field<SdoGeometryRecord> geom, Field<Object> dim, Field<? extends Number> dist) {
+		SdoBuffer1 f = new SdoBuffer1();
 		f.setGeom(geom);
 		f.setDim(dim);
 		f.setDist(dist);
@@ -1545,8 +1632,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_BUFFER</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoBuffer2(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number dist, java.lang.Number tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoBuffer2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoBuffer2();
+	public static SdoGeometryRecord sdoBuffer2(Configuration configuration, SdoGeometryRecord geom, Number dist, Number tol) {
+		SdoBuffer2 f = new SdoBuffer2();
 		f.setGeom(geom);
 		f.setDist(dist);
 		f.setTol(tol);
@@ -1558,8 +1645,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_BUFFER</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoBuffer2(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number dist, java.lang.Number tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoBuffer2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoBuffer2();
+	public static Field<SdoGeometryRecord> sdoBuffer2(SdoGeometryRecord geom, Number dist, Number tol) {
+		SdoBuffer2 f = new SdoBuffer2();
 		f.setGeom(geom);
 		f.setDist(dist);
 		f.setTol(tol);
@@ -1570,8 +1657,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_BUFFER</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoBuffer2(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom, org.jooq.Field<? extends java.lang.Number> dist, org.jooq.Field<? extends java.lang.Number> tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoBuffer2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoBuffer2();
+	public static Field<SdoGeometryRecord> sdoBuffer2(Field<SdoGeometryRecord> geom, Field<? extends Number> dist, Field<? extends Number> tol) {
+		SdoBuffer2 f = new SdoBuffer2();
 		f.setGeom(geom);
 		f.setDist(dist);
 		f.setTol(tol);
@@ -1582,8 +1669,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_BUFFER</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoBuffer3(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Object dim, java.lang.Number dist, java.lang.String params) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoBuffer3 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoBuffer3();
+	public static SdoGeometryRecord sdoBuffer3(Configuration configuration, SdoGeometryRecord geom, Object dim, Number dist, String params) {
+		SdoBuffer3 f = new SdoBuffer3();
 		f.setGeom(geom);
 		f.setDim(dim);
 		f.setDist(dist);
@@ -1596,8 +1683,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_BUFFER</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoBuffer3(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Object dim, java.lang.Number dist, java.lang.String params) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoBuffer3 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoBuffer3();
+	public static Field<SdoGeometryRecord> sdoBuffer3(SdoGeometryRecord geom, Object dim, Number dist, String params) {
+		SdoBuffer3 f = new SdoBuffer3();
 		f.setGeom(geom);
 		f.setDim(dim);
 		f.setDist(dist);
@@ -1609,8 +1696,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_BUFFER</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoBuffer3(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom, org.jooq.Field<java.lang.Object> dim, org.jooq.Field<? extends java.lang.Number> dist, org.jooq.Field<java.lang.String> params) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoBuffer3 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoBuffer3();
+	public static Field<SdoGeometryRecord> sdoBuffer3(Field<SdoGeometryRecord> geom, Field<Object> dim, Field<? extends Number> dist, Field<String> params) {
+		SdoBuffer3 f = new SdoBuffer3();
 		f.setGeom(geom);
 		f.setDim(dim);
 		f.setDist(dist);
@@ -1622,8 +1709,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_BUFFER</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoBuffer4(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number dist, java.lang.Number tol, java.lang.String params) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoBuffer4 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoBuffer4();
+	public static SdoGeometryRecord sdoBuffer4(Configuration configuration, SdoGeometryRecord geom, Number dist, Number tol, String params) {
+		SdoBuffer4 f = new SdoBuffer4();
 		f.setGeom(geom);
 		f.setDist(dist);
 		f.setTol(tol);
@@ -1636,8 +1723,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_BUFFER</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoBuffer4(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number dist, java.lang.Number tol, java.lang.String params) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoBuffer4 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoBuffer4();
+	public static Field<SdoGeometryRecord> sdoBuffer4(SdoGeometryRecord geom, Number dist, Number tol, String params) {
+		SdoBuffer4 f = new SdoBuffer4();
 		f.setGeom(geom);
 		f.setDist(dist);
 		f.setTol(tol);
@@ -1649,8 +1736,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_BUFFER</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoBuffer4(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom, org.jooq.Field<? extends java.lang.Number> dist, org.jooq.Field<? extends java.lang.Number> tol, org.jooq.Field<java.lang.String> params) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoBuffer4 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoBuffer4();
+	public static Field<SdoGeometryRecord> sdoBuffer4(Field<SdoGeometryRecord> geom, Field<? extends Number> dist, Field<? extends Number> tol, Field<String> params) {
+		SdoBuffer4 f = new SdoBuffer4();
 		f.setGeom(geom);
 		f.setDist(dist);
 		f.setTol(tol);
@@ -1662,8 +1749,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_CENTROID</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoCentroid1(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Object dim1) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoCentroid1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoCentroid1();
+	public static SdoGeometryRecord sdoCentroid1(Configuration configuration, SdoGeometryRecord geom1, Object dim1) {
+		SdoCentroid1 f = new SdoCentroid1();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 
@@ -1674,8 +1761,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_CENTROID</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoCentroid1(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Object dim1) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoCentroid1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoCentroid1();
+	public static Field<SdoGeometryRecord> sdoCentroid1(SdoGeometryRecord geom1, Object dim1) {
+		SdoCentroid1 f = new SdoCentroid1();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 
@@ -1685,8 +1772,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_CENTROID</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoCentroid1(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom1, org.jooq.Field<java.lang.Object> dim1) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoCentroid1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoCentroid1();
+	public static Field<SdoGeometryRecord> sdoCentroid1(Field<SdoGeometryRecord> geom1, Field<Object> dim1) {
+		SdoCentroid1 f = new SdoCentroid1();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 
@@ -1696,8 +1783,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_CENTROID</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoCentroid2(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Number tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoCentroid2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoCentroid2();
+	public static SdoGeometryRecord sdoCentroid2(Configuration configuration, SdoGeometryRecord geom1, Number tol) {
+		SdoCentroid2 f = new SdoCentroid2();
 		f.setGeom1(geom1);
 		f.setTol(tol);
 
@@ -1708,8 +1795,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_CENTROID</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoCentroid2(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Number tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoCentroid2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoCentroid2();
+	public static Field<SdoGeometryRecord> sdoCentroid2(SdoGeometryRecord geom1, Number tol) {
+		SdoCentroid2 f = new SdoCentroid2();
 		f.setGeom1(geom1);
 		f.setTol(tol);
 
@@ -1719,8 +1806,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_CENTROID</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoCentroid2(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom1, org.jooq.Field<? extends java.lang.Number> tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoCentroid2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoCentroid2();
+	public static Field<SdoGeometryRecord> sdoCentroid2(Field<SdoGeometryRecord> geom1, Field<? extends Number> tol) {
+		SdoCentroid2 f = new SdoCentroid2();
 		f.setGeom1(geom1);
 		f.setTol(tol);
 
@@ -1730,8 +1817,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_CLOSEST_POINTS</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoClosestPoints sdoClosestPoints(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Number tolerance, java.lang.String unit) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoClosestPoints p = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoClosestPoints();
+	public static SdoClosestPoints sdoClosestPoints(Configuration configuration, SdoGeometryRecord geom1, SdoGeometryRecord geom2, Number tolerance, String unit) {
+		SdoClosestPoints p = new SdoClosestPoints();
 		p.setGeom1(geom1);
 		p.setGeom2(geom2);
 		p.setTolerance(tolerance);
@@ -1744,8 +1831,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_CONCAVEHULL</code>
 	 */
-	public static java.math.BigDecimal sdoConcavehull1(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConcavehull1 p = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConcavehull1();
+	public static BigDecimal sdoConcavehull1(Configuration configuration, SdoGeometryRecord geom, Number tol) {
+		SdoConcavehull1 p = new SdoConcavehull1();
 		p.setGeom(geom);
 		p.setTol(tol);
 
@@ -1756,8 +1843,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_CONCAVEHULL</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoConcavehull2(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConcavehull2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConcavehull2();
+	public static SdoGeometryRecord sdoConcavehull2(Configuration configuration, SdoGeometryRecord geom, Number tol) {
+		SdoConcavehull2 f = new SdoConcavehull2();
 		f.setGeom(geom);
 		f.setTol(tol);
 
@@ -1768,8 +1855,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_CONCAVEHULL</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoConcavehull2(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConcavehull2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConcavehull2();
+	public static Field<SdoGeometryRecord> sdoConcavehull2(SdoGeometryRecord geom, Number tol) {
+		SdoConcavehull2 f = new SdoConcavehull2();
 		f.setGeom(geom);
 		f.setTol(tol);
 
@@ -1779,8 +1866,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_CONCAVEHULL</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoConcavehull2(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom, org.jooq.Field<? extends java.lang.Number> tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConcavehull2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConcavehull2();
+	public static Field<SdoGeometryRecord> sdoConcavehull2(Field<SdoGeometryRecord> geom, Field<? extends Number> tol) {
+		SdoConcavehull2 f = new SdoConcavehull2();
 		f.setGeom(geom);
 		f.setTol(tol);
 
@@ -1790,8 +1877,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_CONCAVEHULL_BOUNDARY</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoConcavehullBoundary(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number tol, java.lang.Number length) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConcavehullBoundary f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConcavehullBoundary();
+	public static SdoGeometryRecord sdoConcavehullBoundary(Configuration configuration, SdoGeometryRecord geom, Number tol, Number length) {
+		SdoConcavehullBoundary f = new SdoConcavehullBoundary();
 		f.setGeom(geom);
 		f.setTol(tol);
 		f.setLength(length);
@@ -1803,8 +1890,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_CONCAVEHULL_BOUNDARY</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoConcavehullBoundary(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number tol, java.lang.Number length) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConcavehullBoundary f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConcavehullBoundary();
+	public static Field<SdoGeometryRecord> sdoConcavehullBoundary(SdoGeometryRecord geom, Number tol, Number length) {
+		SdoConcavehullBoundary f = new SdoConcavehullBoundary();
 		f.setGeom(geom);
 		f.setTol(tol);
 		f.setLength(length);
@@ -1815,8 +1902,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_CONCAVEHULL_BOUNDARY</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoConcavehullBoundary(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom, org.jooq.Field<? extends java.lang.Number> tol, org.jooq.Field<? extends java.lang.Number> length) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConcavehullBoundary f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConcavehullBoundary();
+	public static Field<SdoGeometryRecord> sdoConcavehullBoundary(Field<SdoGeometryRecord> geom, Field<? extends Number> tol, Field<? extends Number> length) {
+		SdoConcavehullBoundary f = new SdoConcavehullBoundary();
 		f.setGeom(geom);
 		f.setTol(tol);
 		f.setLength(length);
@@ -1827,8 +1914,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_CONVEXHULL</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoConvexhull1(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Object dim1) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConvexhull1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConvexhull1();
+	public static SdoGeometryRecord sdoConvexhull1(Configuration configuration, SdoGeometryRecord geom1, Object dim1) {
+		SdoConvexhull1 f = new SdoConvexhull1();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 
@@ -1839,8 +1926,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_CONVEXHULL</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoConvexhull1(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Object dim1) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConvexhull1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConvexhull1();
+	public static Field<SdoGeometryRecord> sdoConvexhull1(SdoGeometryRecord geom1, Object dim1) {
+		SdoConvexhull1 f = new SdoConvexhull1();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 
@@ -1850,8 +1937,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_CONVEXHULL</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoConvexhull1(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom1, org.jooq.Field<java.lang.Object> dim1) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConvexhull1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConvexhull1();
+	public static Field<SdoGeometryRecord> sdoConvexhull1(Field<SdoGeometryRecord> geom1, Field<Object> dim1) {
+		SdoConvexhull1 f = new SdoConvexhull1();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 
@@ -1861,8 +1948,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_CONVEXHULL</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoConvexhull2(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Number tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConvexhull2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConvexhull2();
+	public static SdoGeometryRecord sdoConvexhull2(Configuration configuration, SdoGeometryRecord geom1, Number tol) {
+		SdoConvexhull2 f = new SdoConvexhull2();
 		f.setGeom1(geom1);
 		f.setTol(tol);
 
@@ -1873,8 +1960,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_CONVEXHULL</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoConvexhull2(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Number tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConvexhull2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConvexhull2();
+	public static Field<SdoGeometryRecord> sdoConvexhull2(SdoGeometryRecord geom1, Number tol) {
+		SdoConvexhull2 f = new SdoConvexhull2();
 		f.setGeom1(geom1);
 		f.setTol(tol);
 
@@ -1884,8 +1971,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_CONVEXHULL</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoConvexhull2(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom1, org.jooq.Field<? extends java.lang.Number> tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConvexhull2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoConvexhull2();
+	public static Field<SdoGeometryRecord> sdoConvexhull2(Field<SdoGeometryRecord> geom1, Field<? extends Number> tol) {
+		SdoConvexhull2 f = new SdoConvexhull2();
 		f.setGeom1(geom1);
 		f.setTol(tol);
 
@@ -1895,8 +1982,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_DIFFERENCE</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoDifference1(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Object dim1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Object dim2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDifference1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDifference1();
+	public static SdoGeometryRecord sdoDifference1(Configuration configuration, SdoGeometryRecord geom1, Object dim1, SdoGeometryRecord geom2, Object dim2) {
+		SdoDifference1 f = new SdoDifference1();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setGeom2(geom2);
@@ -1909,8 +1996,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_DIFFERENCE</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoDifference1(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Object dim1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Object dim2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDifference1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDifference1();
+	public static Field<SdoGeometryRecord> sdoDifference1(SdoGeometryRecord geom1, Object dim1, SdoGeometryRecord geom2, Object dim2) {
+		SdoDifference1 f = new SdoDifference1();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setGeom2(geom2);
@@ -1922,8 +2009,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_DIFFERENCE</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoDifference1(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom1, org.jooq.Field<java.lang.Object> dim1, org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom2, org.jooq.Field<java.lang.Object> dim2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDifference1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDifference1();
+	public static Field<SdoGeometryRecord> sdoDifference1(Field<SdoGeometryRecord> geom1, Field<Object> dim1, Field<SdoGeometryRecord> geom2, Field<Object> dim2) {
+		SdoDifference1 f = new SdoDifference1();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setGeom2(geom2);
@@ -1935,8 +2022,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_DIFFERENCE</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoDifference2(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Number tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDifference2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDifference2();
+	public static SdoGeometryRecord sdoDifference2(Configuration configuration, SdoGeometryRecord geom1, SdoGeometryRecord geom2, Number tol) {
+		SdoDifference2 f = new SdoDifference2();
 		f.setGeom1(geom1);
 		f.setGeom2(geom2);
 		f.setTol(tol);
@@ -1948,8 +2035,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_DIFFERENCE</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoDifference2(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Number tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDifference2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDifference2();
+	public static Field<SdoGeometryRecord> sdoDifference2(SdoGeometryRecord geom1, SdoGeometryRecord geom2, Number tol) {
+		SdoDifference2 f = new SdoDifference2();
 		f.setGeom1(geom1);
 		f.setGeom2(geom2);
 		f.setTol(tol);
@@ -1960,8 +2047,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_DIFFERENCE</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoDifference2(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom1, org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom2, org.jooq.Field<? extends java.lang.Number> tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDifference2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDifference2();
+	public static Field<SdoGeometryRecord> sdoDifference2(Field<SdoGeometryRecord> geom1, Field<SdoGeometryRecord> geom2, Field<? extends Number> tol) {
+		SdoDifference2 f = new SdoDifference2();
 		f.setGeom1(geom1);
 		f.setGeom2(geom2);
 		f.setTol(tol);
@@ -1972,8 +2059,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_DISTANCE</code>
 	 */
-	public static java.math.BigDecimal sdoDistance1(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Object dim1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Object dim2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDistance1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDistance1();
+	public static BigDecimal sdoDistance1(Configuration configuration, SdoGeometryRecord geom1, Object dim1, SdoGeometryRecord geom2, Object dim2) {
+		SdoDistance1 f = new SdoDistance1();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setGeom2(geom2);
@@ -1986,8 +2073,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_DISTANCE</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoDistance1(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Object dim1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Object dim2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDistance1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDistance1();
+	public static Field<BigDecimal> sdoDistance1(SdoGeometryRecord geom1, Object dim1, SdoGeometryRecord geom2, Object dim2) {
+		SdoDistance1 f = new SdoDistance1();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setGeom2(geom2);
@@ -1999,8 +2086,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_DISTANCE</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoDistance1(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom1, org.jooq.Field<java.lang.Object> dim1, org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom2, org.jooq.Field<java.lang.Object> dim2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDistance1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDistance1();
+	public static Field<BigDecimal> sdoDistance1(Field<SdoGeometryRecord> geom1, Field<Object> dim1, Field<SdoGeometryRecord> geom2, Field<Object> dim2) {
+		SdoDistance1 f = new SdoDistance1();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setGeom2(geom2);
@@ -2012,8 +2099,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_DISTANCE</code>
 	 */
-	public static java.math.BigDecimal sdoDistance2(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Number tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDistance2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDistance2();
+	public static BigDecimal sdoDistance2(Configuration configuration, SdoGeometryRecord geom1, SdoGeometryRecord geom2, Number tol) {
+		SdoDistance2 f = new SdoDistance2();
 		f.setGeom1(geom1);
 		f.setGeom2(geom2);
 		f.setTol(tol);
@@ -2025,8 +2112,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_DISTANCE</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoDistance2(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Number tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDistance2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDistance2();
+	public static Field<BigDecimal> sdoDistance2(SdoGeometryRecord geom1, SdoGeometryRecord geom2, Number tol) {
+		SdoDistance2 f = new SdoDistance2();
 		f.setGeom1(geom1);
 		f.setGeom2(geom2);
 		f.setTol(tol);
@@ -2037,8 +2124,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_DISTANCE</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoDistance2(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom1, org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom2, org.jooq.Field<? extends java.lang.Number> tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDistance2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDistance2();
+	public static Field<BigDecimal> sdoDistance2(Field<SdoGeometryRecord> geom1, Field<SdoGeometryRecord> geom2, Field<? extends Number> tol) {
+		SdoDistance2 f = new SdoDistance2();
 		f.setGeom1(geom1);
 		f.setGeom2(geom2);
 		f.setTol(tol);
@@ -2049,8 +2136,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_DISTANCE</code>
 	 */
-	public static java.math.BigDecimal sdoDistance3(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Object dim1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Object dim2, java.lang.String unit) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDistance3 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDistance3();
+	public static BigDecimal sdoDistance3(Configuration configuration, SdoGeometryRecord geom1, Object dim1, SdoGeometryRecord geom2, Object dim2, String unit) {
+		SdoDistance3 f = new SdoDistance3();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setGeom2(geom2);
@@ -2064,8 +2151,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_DISTANCE</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoDistance3(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Object dim1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Object dim2, java.lang.String unit) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDistance3 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDistance3();
+	public static Field<BigDecimal> sdoDistance3(SdoGeometryRecord geom1, Object dim1, SdoGeometryRecord geom2, Object dim2, String unit) {
+		SdoDistance3 f = new SdoDistance3();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setGeom2(geom2);
@@ -2078,8 +2165,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_DISTANCE</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoDistance3(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom1, org.jooq.Field<java.lang.Object> dim1, org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom2, org.jooq.Field<java.lang.Object> dim2, org.jooq.Field<java.lang.String> unit) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDistance3 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDistance3();
+	public static Field<BigDecimal> sdoDistance3(Field<SdoGeometryRecord> geom1, Field<Object> dim1, Field<SdoGeometryRecord> geom2, Field<Object> dim2, Field<String> unit) {
+		SdoDistance3 f = new SdoDistance3();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setGeom2(geom2);
@@ -2092,8 +2179,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_DISTANCE</code>
 	 */
-	public static java.math.BigDecimal sdoDistance4(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Number tol, java.lang.String unit) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDistance4 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDistance4();
+	public static BigDecimal sdoDistance4(Configuration configuration, SdoGeometryRecord geom1, SdoGeometryRecord geom2, Number tol, String unit) {
+		SdoDistance4 f = new SdoDistance4();
 		f.setGeom1(geom1);
 		f.setGeom2(geom2);
 		f.setTol(tol);
@@ -2106,8 +2193,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_DISTANCE</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoDistance4(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Number tol, java.lang.String unit) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDistance4 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDistance4();
+	public static Field<BigDecimal> sdoDistance4(SdoGeometryRecord geom1, SdoGeometryRecord geom2, Number tol, String unit) {
+		SdoDistance4 f = new SdoDistance4();
 		f.setGeom1(geom1);
 		f.setGeom2(geom2);
 		f.setTol(tol);
@@ -2119,8 +2206,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_DISTANCE</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoDistance4(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom1, org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom2, org.jooq.Field<? extends java.lang.Number> tol, org.jooq.Field<java.lang.String> unit) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDistance4 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoDistance4();
+	public static Field<BigDecimal> sdoDistance4(Field<SdoGeometryRecord> geom1, Field<SdoGeometryRecord> geom2, Field<? extends Number> tol, Field<String> unit) {
+		SdoDistance4 f = new SdoDistance4();
 		f.setGeom1(geom1);
 		f.setGeom2(geom2);
 		f.setTol(tol);
@@ -2132,8 +2219,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_G3DCONV</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoG3dconv1(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Object dim) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoG3dconv1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoG3dconv1();
+	public static SdoGeometryRecord sdoG3dconv1(Configuration configuration, SdoGeometryRecord geom, Object dim) {
+		SdoG3dconv1 f = new SdoG3dconv1();
 		f.setGeom(geom);
 		f.setDim(dim);
 
@@ -2144,8 +2231,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_G3DCONV</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoG3dconv1(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Object dim) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoG3dconv1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoG3dconv1();
+	public static Field<SdoGeometryRecord> sdoG3dconv1(SdoGeometryRecord geom, Object dim) {
+		SdoG3dconv1 f = new SdoG3dconv1();
 		f.setGeom(geom);
 		f.setDim(dim);
 
@@ -2155,8 +2242,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_G3DCONV</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoG3dconv1(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom, org.jooq.Field<java.lang.Object> dim) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoG3dconv1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoG3dconv1();
+	public static Field<SdoGeometryRecord> sdoG3dconv1(Field<SdoGeometryRecord> geom, Field<Object> dim) {
+		SdoG3dconv1 f = new SdoG3dconv1();
 		f.setGeom(geom);
 		f.setDim(dim);
 
@@ -2166,8 +2253,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_G3DCONV</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoG3dconv2(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoG3dconv2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoG3dconv2();
+	public static SdoGeometryRecord sdoG3dconv2(Configuration configuration, SdoGeometryRecord geom) {
+		SdoG3dconv2 f = new SdoG3dconv2();
 		f.setGeom(geom);
 
 		f.execute(configuration);
@@ -2177,8 +2264,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_G3DCONV</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoG3dconv2(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoG3dconv2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoG3dconv2();
+	public static Field<SdoGeometryRecord> sdoG3dconv2(SdoGeometryRecord geom) {
+		SdoG3dconv2 f = new SdoG3dconv2();
 		f.setGeom(geom);
 
 		return f.asField();
@@ -2187,8 +2274,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_G3DCONV</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoG3dconv2(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoG3dconv2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoG3dconv2();
+	public static Field<SdoGeometryRecord> sdoG3dconv2(Field<SdoGeometryRecord> geom) {
+		SdoG3dconv2 f = new SdoG3dconv2();
 		f.setGeom(geom);
 
 		return f.asField();
@@ -2197,8 +2284,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_INSERT_LOG_FILTER</code>
 	 */
-	public static java.lang.String sdoInsertLogFilter(org.jooq.Configuration configuration, java.lang.String indSchema, java.lang.String indName, java.lang.String indpartName, java.lang.Number minX, java.lang.Number maxX, java.lang.Number minY, java.lang.Number maxY, java.lang.Number minZ, java.lang.Number maxZ) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoInsertLogFilter f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoInsertLogFilter();
+	public static String sdoInsertLogFilter(Configuration configuration, String indSchema, String indName, String indpartName, Number minX, Number maxX, Number minY, Number maxY, Number minZ, Number maxZ) {
+		SdoInsertLogFilter f = new SdoInsertLogFilter();
 		f.setIndSchema(indSchema);
 		f.setIndName(indName);
 		f.setIndpartName(indpartName);
@@ -2216,8 +2303,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_INSERT_LOG_FILTER</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> sdoInsertLogFilter(java.lang.String indSchema, java.lang.String indName, java.lang.String indpartName, java.lang.Number minX, java.lang.Number maxX, java.lang.Number minY, java.lang.Number maxY, java.lang.Number minZ, java.lang.Number maxZ) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoInsertLogFilter f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoInsertLogFilter();
+	public static Field<String> sdoInsertLogFilter(String indSchema, String indName, String indpartName, Number minX, Number maxX, Number minY, Number maxY, Number minZ, Number maxZ) {
+		SdoInsertLogFilter f = new SdoInsertLogFilter();
 		f.setIndSchema(indSchema);
 		f.setIndName(indName);
 		f.setIndpartName(indpartName);
@@ -2234,8 +2321,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_INSERT_LOG_FILTER</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> sdoInsertLogFilter(org.jooq.Field<java.lang.String> indSchema, org.jooq.Field<java.lang.String> indName, org.jooq.Field<java.lang.String> indpartName, org.jooq.Field<? extends java.lang.Number> minX, org.jooq.Field<? extends java.lang.Number> maxX, org.jooq.Field<? extends java.lang.Number> minY, org.jooq.Field<? extends java.lang.Number> maxY, org.jooq.Field<? extends java.lang.Number> minZ, org.jooq.Field<? extends java.lang.Number> maxZ) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoInsertLogFilter f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoInsertLogFilter();
+	public static Field<String> sdoInsertLogFilter(Field<String> indSchema, Field<String> indName, Field<String> indpartName, Field<? extends Number> minX, Field<? extends Number> maxX, Field<? extends Number> minY, Field<? extends Number> maxY, Field<? extends Number> minZ, Field<? extends Number> maxZ) {
+		SdoInsertLogFilter f = new SdoInsertLogFilter();
 		f.setIndSchema(indSchema);
 		f.setIndName(indName);
 		f.setIndpartName(indpartName);
@@ -2252,8 +2339,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_INTERSECTION</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoIntersection1(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Object dim1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Object dim2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoIntersection1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoIntersection1();
+	public static SdoGeometryRecord sdoIntersection1(Configuration configuration, SdoGeometryRecord geom1, Object dim1, SdoGeometryRecord geom2, Object dim2) {
+		SdoIntersection1 f = new SdoIntersection1();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setGeom2(geom2);
@@ -2266,8 +2353,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_INTERSECTION</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoIntersection1(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Object dim1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Object dim2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoIntersection1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoIntersection1();
+	public static Field<SdoGeometryRecord> sdoIntersection1(SdoGeometryRecord geom1, Object dim1, SdoGeometryRecord geom2, Object dim2) {
+		SdoIntersection1 f = new SdoIntersection1();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setGeom2(geom2);
@@ -2279,8 +2366,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_INTERSECTION</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoIntersection1(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom1, org.jooq.Field<java.lang.Object> dim1, org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom2, org.jooq.Field<java.lang.Object> dim2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoIntersection1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoIntersection1();
+	public static Field<SdoGeometryRecord> sdoIntersection1(Field<SdoGeometryRecord> geom1, Field<Object> dim1, Field<SdoGeometryRecord> geom2, Field<Object> dim2) {
+		SdoIntersection1 f = new SdoIntersection1();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setGeom2(geom2);
@@ -2292,8 +2379,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_INTERSECTION</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoIntersection2(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Number tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoIntersection2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoIntersection2();
+	public static SdoGeometryRecord sdoIntersection2(Configuration configuration, SdoGeometryRecord geom1, SdoGeometryRecord geom2, Number tol) {
+		SdoIntersection2 f = new SdoIntersection2();
 		f.setGeom1(geom1);
 		f.setGeom2(geom2);
 		f.setTol(tol);
@@ -2305,8 +2392,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_INTERSECTION</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoIntersection2(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Number tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoIntersection2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoIntersection2();
+	public static Field<SdoGeometryRecord> sdoIntersection2(SdoGeometryRecord geom1, SdoGeometryRecord geom2, Number tol) {
+		SdoIntersection2 f = new SdoIntersection2();
 		f.setGeom1(geom1);
 		f.setGeom2(geom2);
 		f.setTol(tol);
@@ -2317,8 +2404,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_INTERSECTION</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoIntersection2(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom1, org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom2, org.jooq.Field<? extends java.lang.Number> tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoIntersection2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoIntersection2();
+	public static Field<SdoGeometryRecord> sdoIntersection2(Field<SdoGeometryRecord> geom1, Field<SdoGeometryRecord> geom2, Field<? extends Number> tol) {
+		SdoIntersection2 f = new SdoIntersection2();
 		f.setGeom1(geom1);
 		f.setGeom2(geom2);
 		f.setTol(tol);
@@ -2329,8 +2416,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_LENGTH</code>
 	 */
-	public static java.math.BigDecimal sdoLength1(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Object dim, java.lang.Number countSharedEdges) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoLength1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoLength1();
+	public static BigDecimal sdoLength1(Configuration configuration, SdoGeometryRecord geom, Object dim, Number countSharedEdges) {
+		SdoLength1 f = new SdoLength1();
 		f.setGeom(geom);
 		f.setDim(dim);
 		f.setCountSharedEdges(countSharedEdges);
@@ -2342,8 +2429,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_LENGTH</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoLength1(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Object dim, java.lang.Number countSharedEdges) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoLength1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoLength1();
+	public static Field<BigDecimal> sdoLength1(SdoGeometryRecord geom, Object dim, Number countSharedEdges) {
+		SdoLength1 f = new SdoLength1();
 		f.setGeom(geom);
 		f.setDim(dim);
 		f.setCountSharedEdges(countSharedEdges);
@@ -2354,8 +2441,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_LENGTH</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoLength1(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom, org.jooq.Field<java.lang.Object> dim, org.jooq.Field<? extends java.lang.Number> countSharedEdges) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoLength1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoLength1();
+	public static Field<BigDecimal> sdoLength1(Field<SdoGeometryRecord> geom, Field<Object> dim, Field<? extends Number> countSharedEdges) {
+		SdoLength1 f = new SdoLength1();
 		f.setGeom(geom);
 		f.setDim(dim);
 		f.setCountSharedEdges(countSharedEdges);
@@ -2366,8 +2453,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_LENGTH</code>
 	 */
-	public static java.math.BigDecimal sdoLength2(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number tol, java.lang.Number countSharedEdges) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoLength2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoLength2();
+	public static BigDecimal sdoLength2(Configuration configuration, SdoGeometryRecord geom, Number tol, Number countSharedEdges) {
+		SdoLength2 f = new SdoLength2();
 		f.setGeom(geom);
 		f.setTol(tol);
 		f.setCountSharedEdges(countSharedEdges);
@@ -2379,8 +2466,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_LENGTH</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoLength2(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number tol, java.lang.Number countSharedEdges) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoLength2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoLength2();
+	public static Field<BigDecimal> sdoLength2(SdoGeometryRecord geom, Number tol, Number countSharedEdges) {
+		SdoLength2 f = new SdoLength2();
 		f.setGeom(geom);
 		f.setTol(tol);
 		f.setCountSharedEdges(countSharedEdges);
@@ -2391,8 +2478,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_LENGTH</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoLength2(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom, org.jooq.Field<? extends java.lang.Number> tol, org.jooq.Field<? extends java.lang.Number> countSharedEdges) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoLength2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoLength2();
+	public static Field<BigDecimal> sdoLength2(Field<SdoGeometryRecord> geom, Field<? extends Number> tol, Field<? extends Number> countSharedEdges) {
+		SdoLength2 f = new SdoLength2();
 		f.setGeom(geom);
 		f.setTol(tol);
 		f.setCountSharedEdges(countSharedEdges);
@@ -2403,8 +2490,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_LENGTH</code>
 	 */
-	public static java.math.BigDecimal sdoLength3(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Object dim, java.lang.String unit, java.lang.Number countSharedEdges) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoLength3 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoLength3();
+	public static BigDecimal sdoLength3(Configuration configuration, SdoGeometryRecord geom, Object dim, String unit, Number countSharedEdges) {
+		SdoLength3 f = new SdoLength3();
 		f.setGeom(geom);
 		f.setDim(dim);
 		f.setUnit(unit);
@@ -2417,8 +2504,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_LENGTH</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoLength3(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Object dim, java.lang.String unit, java.lang.Number countSharedEdges) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoLength3 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoLength3();
+	public static Field<BigDecimal> sdoLength3(SdoGeometryRecord geom, Object dim, String unit, Number countSharedEdges) {
+		SdoLength3 f = new SdoLength3();
 		f.setGeom(geom);
 		f.setDim(dim);
 		f.setUnit(unit);
@@ -2430,8 +2517,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_LENGTH</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoLength3(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom, org.jooq.Field<java.lang.Object> dim, org.jooq.Field<java.lang.String> unit, org.jooq.Field<? extends java.lang.Number> countSharedEdges) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoLength3 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoLength3();
+	public static Field<BigDecimal> sdoLength3(Field<SdoGeometryRecord> geom, Field<Object> dim, Field<String> unit, Field<? extends Number> countSharedEdges) {
+		SdoLength3 f = new SdoLength3();
 		f.setGeom(geom);
 		f.setDim(dim);
 		f.setUnit(unit);
@@ -2443,8 +2530,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_LENGTH</code>
 	 */
-	public static java.math.BigDecimal sdoLength4(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number tol, java.lang.String unit, java.lang.Number countSharedEdges) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoLength4 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoLength4();
+	public static BigDecimal sdoLength4(Configuration configuration, SdoGeometryRecord geom, Number tol, String unit, Number countSharedEdges) {
+		SdoLength4 f = new SdoLength4();
 		f.setGeom(geom);
 		f.setTol(tol);
 		f.setUnit(unit);
@@ -2457,8 +2544,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_LENGTH</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoLength4(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number tol, java.lang.String unit, java.lang.Number countSharedEdges) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoLength4 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoLength4();
+	public static Field<BigDecimal> sdoLength4(SdoGeometryRecord geom, Number tol, String unit, Number countSharedEdges) {
+		SdoLength4 f = new SdoLength4();
 		f.setGeom(geom);
 		f.setTol(tol);
 		f.setUnit(unit);
@@ -2470,8 +2557,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_LENGTH</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoLength4(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom, org.jooq.Field<? extends java.lang.Number> tol, org.jooq.Field<java.lang.String> unit, org.jooq.Field<? extends java.lang.Number> countSharedEdges) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoLength4 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoLength4();
+	public static Field<BigDecimal> sdoLength4(Field<SdoGeometryRecord> geom, Field<? extends Number> tol, Field<String> unit, Field<? extends Number> countSharedEdges) {
+		SdoLength4 f = new SdoLength4();
 		f.setGeom(geom);
 		f.setTol(tol);
 		f.setUnit(unit);
@@ -2483,8 +2570,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_MAX_MBR_ORDINATE</code>
 	 */
-	public static java.math.BigDecimal sdoMaxMbrOrdinate1(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Object dim, java.lang.Number ordinatePos) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMaxMbrOrdinate1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMaxMbrOrdinate1();
+	public static BigDecimal sdoMaxMbrOrdinate1(Configuration configuration, SdoGeometryRecord geom, Object dim, Number ordinatePos) {
+		SdoMaxMbrOrdinate1 f = new SdoMaxMbrOrdinate1();
 		f.setGeom(geom);
 		f.setDim(dim);
 		f.setOrdinatePos(ordinatePos);
@@ -2496,8 +2583,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_MAX_MBR_ORDINATE</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoMaxMbrOrdinate1(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Object dim, java.lang.Number ordinatePos) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMaxMbrOrdinate1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMaxMbrOrdinate1();
+	public static Field<BigDecimal> sdoMaxMbrOrdinate1(SdoGeometryRecord geom, Object dim, Number ordinatePos) {
+		SdoMaxMbrOrdinate1 f = new SdoMaxMbrOrdinate1();
 		f.setGeom(geom);
 		f.setDim(dim);
 		f.setOrdinatePos(ordinatePos);
@@ -2508,8 +2595,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_MAX_MBR_ORDINATE</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoMaxMbrOrdinate1(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom, org.jooq.Field<java.lang.Object> dim, org.jooq.Field<? extends java.lang.Number> ordinatePos) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMaxMbrOrdinate1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMaxMbrOrdinate1();
+	public static Field<BigDecimal> sdoMaxMbrOrdinate1(Field<SdoGeometryRecord> geom, Field<Object> dim, Field<? extends Number> ordinatePos) {
+		SdoMaxMbrOrdinate1 f = new SdoMaxMbrOrdinate1();
 		f.setGeom(geom);
 		f.setDim(dim);
 		f.setOrdinatePos(ordinatePos);
@@ -2520,8 +2607,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_MAX_MBR_ORDINATE</code>
 	 */
-	public static java.math.BigDecimal sdoMaxMbrOrdinate2(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number ordinatePos) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMaxMbrOrdinate2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMaxMbrOrdinate2();
+	public static BigDecimal sdoMaxMbrOrdinate2(Configuration configuration, SdoGeometryRecord geom, Number ordinatePos) {
+		SdoMaxMbrOrdinate2 f = new SdoMaxMbrOrdinate2();
 		f.setGeom(geom);
 		f.setOrdinatePos(ordinatePos);
 
@@ -2532,8 +2619,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_MAX_MBR_ORDINATE</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoMaxMbrOrdinate2(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number ordinatePos) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMaxMbrOrdinate2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMaxMbrOrdinate2();
+	public static Field<BigDecimal> sdoMaxMbrOrdinate2(SdoGeometryRecord geom, Number ordinatePos) {
+		SdoMaxMbrOrdinate2 f = new SdoMaxMbrOrdinate2();
 		f.setGeom(geom);
 		f.setOrdinatePos(ordinatePos);
 
@@ -2543,8 +2630,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_MAX_MBR_ORDINATE</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoMaxMbrOrdinate2(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom, org.jooq.Field<? extends java.lang.Number> ordinatePos) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMaxMbrOrdinate2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMaxMbrOrdinate2();
+	public static Field<BigDecimal> sdoMaxMbrOrdinate2(Field<SdoGeometryRecord> geom, Field<? extends Number> ordinatePos) {
+		SdoMaxMbrOrdinate2 f = new SdoMaxMbrOrdinate2();
 		f.setGeom(geom);
 		f.setOrdinatePos(ordinatePos);
 
@@ -2554,8 +2641,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_MBR</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoMbr1(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Object dim) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMbr1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMbr1();
+	public static SdoGeometryRecord sdoMbr1(Configuration configuration, SdoGeometryRecord geom, Object dim) {
+		SdoMbr1 f = new SdoMbr1();
 		f.setGeom(geom);
 		f.setDim(dim);
 
@@ -2566,8 +2653,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_MBR</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoMbr1(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Object dim) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMbr1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMbr1();
+	public static Field<SdoGeometryRecord> sdoMbr1(SdoGeometryRecord geom, Object dim) {
+		SdoMbr1 f = new SdoMbr1();
 		f.setGeom(geom);
 		f.setDim(dim);
 
@@ -2577,8 +2664,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_MBR</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoMbr1(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom, org.jooq.Field<java.lang.Object> dim) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMbr1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMbr1();
+	public static Field<SdoGeometryRecord> sdoMbr1(Field<SdoGeometryRecord> geom, Field<Object> dim) {
+		SdoMbr1 f = new SdoMbr1();
 		f.setGeom(geom);
 		f.setDim(dim);
 
@@ -2588,8 +2675,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_MBR</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoMbr2(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMbr2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMbr2();
+	public static SdoGeometryRecord sdoMbr2(Configuration configuration, SdoGeometryRecord geom) {
+		SdoMbr2 f = new SdoMbr2();
 		f.setGeom(geom);
 
 		f.execute(configuration);
@@ -2599,8 +2686,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_MBR</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoMbr2(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMbr2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMbr2();
+	public static Field<SdoGeometryRecord> sdoMbr2(SdoGeometryRecord geom) {
+		SdoMbr2 f = new SdoMbr2();
 		f.setGeom(geom);
 
 		return f.asField();
@@ -2609,8 +2696,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_MBR</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoMbr2(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMbr2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMbr2();
+	public static Field<SdoGeometryRecord> sdoMbr2(Field<SdoGeometryRecord> geom) {
+		SdoMbr2 f = new SdoMbr2();
 		f.setGeom(geom);
 
 		return f.asField();
@@ -2619,8 +2706,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_MIN_MBR_ORDINATE</code>
 	 */
-	public static java.math.BigDecimal sdoMinMbrOrdinate1(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Object dim, java.lang.Number ordinatePos) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMinMbrOrdinate1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMinMbrOrdinate1();
+	public static BigDecimal sdoMinMbrOrdinate1(Configuration configuration, SdoGeometryRecord geom, Object dim, Number ordinatePos) {
+		SdoMinMbrOrdinate1 f = new SdoMinMbrOrdinate1();
 		f.setGeom(geom);
 		f.setDim(dim);
 		f.setOrdinatePos(ordinatePos);
@@ -2632,8 +2719,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_MIN_MBR_ORDINATE</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoMinMbrOrdinate1(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Object dim, java.lang.Number ordinatePos) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMinMbrOrdinate1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMinMbrOrdinate1();
+	public static Field<BigDecimal> sdoMinMbrOrdinate1(SdoGeometryRecord geom, Object dim, Number ordinatePos) {
+		SdoMinMbrOrdinate1 f = new SdoMinMbrOrdinate1();
 		f.setGeom(geom);
 		f.setDim(dim);
 		f.setOrdinatePos(ordinatePos);
@@ -2644,8 +2731,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_MIN_MBR_ORDINATE</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoMinMbrOrdinate1(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom, org.jooq.Field<java.lang.Object> dim, org.jooq.Field<? extends java.lang.Number> ordinatePos) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMinMbrOrdinate1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMinMbrOrdinate1();
+	public static Field<BigDecimal> sdoMinMbrOrdinate1(Field<SdoGeometryRecord> geom, Field<Object> dim, Field<? extends Number> ordinatePos) {
+		SdoMinMbrOrdinate1 f = new SdoMinMbrOrdinate1();
 		f.setGeom(geom);
 		f.setDim(dim);
 		f.setOrdinatePos(ordinatePos);
@@ -2656,8 +2743,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_MIN_MBR_ORDINATE</code>
 	 */
-	public static java.math.BigDecimal sdoMinMbrOrdinate2(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number ordinatePos) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMinMbrOrdinate2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMinMbrOrdinate2();
+	public static BigDecimal sdoMinMbrOrdinate2(Configuration configuration, SdoGeometryRecord geom, Number ordinatePos) {
+		SdoMinMbrOrdinate2 f = new SdoMinMbrOrdinate2();
 		f.setGeom(geom);
 		f.setOrdinatePos(ordinatePos);
 
@@ -2668,8 +2755,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_MIN_MBR_ORDINATE</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoMinMbrOrdinate2(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number ordinatePos) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMinMbrOrdinate2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMinMbrOrdinate2();
+	public static Field<BigDecimal> sdoMinMbrOrdinate2(SdoGeometryRecord geom, Number ordinatePos) {
+		SdoMinMbrOrdinate2 f = new SdoMinMbrOrdinate2();
 		f.setGeom(geom);
 		f.setOrdinatePos(ordinatePos);
 
@@ -2679,8 +2766,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_MIN_MBR_ORDINATE</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoMinMbrOrdinate2(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom, org.jooq.Field<? extends java.lang.Number> ordinatePos) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMinMbrOrdinate2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoMinMbrOrdinate2();
+	public static Field<BigDecimal> sdoMinMbrOrdinate2(Field<SdoGeometryRecord> geom, Field<? extends Number> ordinatePos) {
+		SdoMinMbrOrdinate2 f = new SdoMinMbrOrdinate2();
 		f.setGeom(geom);
 		f.setOrdinatePos(ordinatePos);
 
@@ -2690,8 +2777,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_POINTONSURFACE</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoPointonsurface1(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Object dim1) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPointonsurface1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPointonsurface1();
+	public static SdoGeometryRecord sdoPointonsurface1(Configuration configuration, SdoGeometryRecord geom1, Object dim1) {
+		SdoPointonsurface1 f = new SdoPointonsurface1();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 
@@ -2702,8 +2789,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_POINTONSURFACE</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoPointonsurface1(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Object dim1) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPointonsurface1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPointonsurface1();
+	public static Field<SdoGeometryRecord> sdoPointonsurface1(SdoGeometryRecord geom1, Object dim1) {
+		SdoPointonsurface1 f = new SdoPointonsurface1();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 
@@ -2713,8 +2800,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_POINTONSURFACE</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoPointonsurface1(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom1, org.jooq.Field<java.lang.Object> dim1) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPointonsurface1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPointonsurface1();
+	public static Field<SdoGeometryRecord> sdoPointonsurface1(Field<SdoGeometryRecord> geom1, Field<Object> dim1) {
+		SdoPointonsurface1 f = new SdoPointonsurface1();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 
@@ -2724,8 +2811,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_POINTONSURFACE</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoPointonsurface2(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Number tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPointonsurface2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPointonsurface2();
+	public static SdoGeometryRecord sdoPointonsurface2(Configuration configuration, SdoGeometryRecord geom1, Number tol) {
+		SdoPointonsurface2 f = new SdoPointonsurface2();
 		f.setGeom1(geom1);
 		f.setTol(tol);
 
@@ -2736,8 +2823,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_POINTONSURFACE</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoPointonsurface2(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Number tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPointonsurface2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPointonsurface2();
+	public static Field<SdoGeometryRecord> sdoPointonsurface2(SdoGeometryRecord geom1, Number tol) {
+		SdoPointonsurface2 f = new SdoPointonsurface2();
 		f.setGeom1(geom1);
 		f.setTol(tol);
 
@@ -2747,8 +2834,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_POINTONSURFACE</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoPointonsurface2(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom1, org.jooq.Field<? extends java.lang.Number> tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPointonsurface2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPointonsurface2();
+	public static Field<SdoGeometryRecord> sdoPointonsurface2(Field<SdoGeometryRecord> geom1, Field<? extends Number> tol) {
+		SdoPointonsurface2 f = new SdoPointonsurface2();
 		f.setGeom1(geom1);
 		f.setTol(tol);
 
@@ -2758,8 +2845,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_POLY_DIFFERENCE</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoPolyDifference(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Object dim1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Object dim2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPolyDifference f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPolyDifference();
+	public static SdoGeometryRecord sdoPolyDifference(Configuration configuration, SdoGeometryRecord geom1, Object dim1, SdoGeometryRecord geom2, Object dim2) {
+		SdoPolyDifference f = new SdoPolyDifference();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setGeom2(geom2);
@@ -2772,8 +2859,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_POLY_DIFFERENCE</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoPolyDifference(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Object dim1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Object dim2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPolyDifference f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPolyDifference();
+	public static Field<SdoGeometryRecord> sdoPolyDifference(SdoGeometryRecord geom1, Object dim1, SdoGeometryRecord geom2, Object dim2) {
+		SdoPolyDifference f = new SdoPolyDifference();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setGeom2(geom2);
@@ -2785,8 +2872,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_POLY_DIFFERENCE</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoPolyDifference(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom1, org.jooq.Field<java.lang.Object> dim1, org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom2, org.jooq.Field<java.lang.Object> dim2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPolyDifference f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPolyDifference();
+	public static Field<SdoGeometryRecord> sdoPolyDifference(Field<SdoGeometryRecord> geom1, Field<Object> dim1, Field<SdoGeometryRecord> geom2, Field<Object> dim2) {
+		SdoPolyDifference f = new SdoPolyDifference();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setGeom2(geom2);
@@ -2798,8 +2885,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_POLY_INTERSECTION</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoPolyIntersection(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Object dim1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Object dim2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPolyIntersection f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPolyIntersection();
+	public static SdoGeometryRecord sdoPolyIntersection(Configuration configuration, SdoGeometryRecord geom1, Object dim1, SdoGeometryRecord geom2, Object dim2) {
+		SdoPolyIntersection f = new SdoPolyIntersection();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setGeom2(geom2);
@@ -2812,8 +2899,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_POLY_INTERSECTION</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoPolyIntersection(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Object dim1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Object dim2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPolyIntersection f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPolyIntersection();
+	public static Field<SdoGeometryRecord> sdoPolyIntersection(SdoGeometryRecord geom1, Object dim1, SdoGeometryRecord geom2, Object dim2) {
+		SdoPolyIntersection f = new SdoPolyIntersection();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setGeom2(geom2);
@@ -2825,8 +2912,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_POLY_INTERSECTION</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoPolyIntersection(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom1, org.jooq.Field<java.lang.Object> dim1, org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom2, org.jooq.Field<java.lang.Object> dim2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPolyIntersection f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPolyIntersection();
+	public static Field<SdoGeometryRecord> sdoPolyIntersection(Field<SdoGeometryRecord> geom1, Field<Object> dim1, Field<SdoGeometryRecord> geom2, Field<Object> dim2) {
+		SdoPolyIntersection f = new SdoPolyIntersection();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setGeom2(geom2);
@@ -2838,8 +2925,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_POLY_UNION</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoPolyUnion(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Object dim1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Object dim2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPolyUnion f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPolyUnion();
+	public static SdoGeometryRecord sdoPolyUnion(Configuration configuration, SdoGeometryRecord geom1, Object dim1, SdoGeometryRecord geom2, Object dim2) {
+		SdoPolyUnion f = new SdoPolyUnion();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setGeom2(geom2);
@@ -2852,8 +2939,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_POLY_UNION</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoPolyUnion(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Object dim1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Object dim2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPolyUnion f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPolyUnion();
+	public static Field<SdoGeometryRecord> sdoPolyUnion(SdoGeometryRecord geom1, Object dim1, SdoGeometryRecord geom2, Object dim2) {
+		SdoPolyUnion f = new SdoPolyUnion();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setGeom2(geom2);
@@ -2865,8 +2952,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_POLY_UNION</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoPolyUnion(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom1, org.jooq.Field<java.lang.Object> dim1, org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom2, org.jooq.Field<java.lang.Object> dim2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPolyUnion f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPolyUnion();
+	public static Field<SdoGeometryRecord> sdoPolyUnion(Field<SdoGeometryRecord> geom1, Field<Object> dim1, Field<SdoGeometryRecord> geom2, Field<Object> dim2) {
+		SdoPolyUnion f = new SdoPolyUnion();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setGeom2(geom2);
@@ -2878,8 +2965,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_POLY_XOR</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoPolyXor(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Object dim1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Object dim2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPolyXor f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPolyXor();
+	public static SdoGeometryRecord sdoPolyXor(Configuration configuration, SdoGeometryRecord geom1, Object dim1, SdoGeometryRecord geom2, Object dim2) {
+		SdoPolyXor f = new SdoPolyXor();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setGeom2(geom2);
@@ -2892,8 +2979,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_POLY_XOR</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoPolyXor(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Object dim1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Object dim2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPolyXor f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPolyXor();
+	public static Field<SdoGeometryRecord> sdoPolyXor(SdoGeometryRecord geom1, Object dim1, SdoGeometryRecord geom2, Object dim2) {
+		SdoPolyXor f = new SdoPolyXor();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setGeom2(geom2);
@@ -2905,8 +2992,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_POLY_XOR</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoPolyXor(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom1, org.jooq.Field<java.lang.Object> dim1, org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom2, org.jooq.Field<java.lang.Object> dim2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPolyXor f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoPolyXor();
+	public static Field<SdoGeometryRecord> sdoPolyXor(Field<SdoGeometryRecord> geom1, Field<Object> dim1, Field<SdoGeometryRecord> geom2, Field<Object> dim2) {
+		SdoPolyXor f = new SdoPolyXor();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setGeom2(geom2);
@@ -2918,8 +3005,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_TRIANGULATE</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoTriangulate(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoTriangulate f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoTriangulate();
+	public static SdoGeometryRecord sdoTriangulate(Configuration configuration, SdoGeometryRecord geom, Number tol) {
+		SdoTriangulate f = new SdoTriangulate();
 		f.setGeom(geom);
 		f.setTol(tol);
 
@@ -2930,8 +3017,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_TRIANGULATE</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoTriangulate(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoTriangulate f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoTriangulate();
+	public static Field<SdoGeometryRecord> sdoTriangulate(SdoGeometryRecord geom, Number tol) {
+		SdoTriangulate f = new SdoTriangulate();
 		f.setGeom(geom);
 		f.setTol(tol);
 
@@ -2941,8 +3028,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_TRIANGULATE</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoTriangulate(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom, org.jooq.Field<? extends java.lang.Number> tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoTriangulate f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoTriangulate();
+	public static Field<SdoGeometryRecord> sdoTriangulate(Field<SdoGeometryRecord> geom, Field<? extends Number> tol) {
+		SdoTriangulate f = new SdoTriangulate();
 		f.setGeom(geom);
 		f.setTol(tol);
 
@@ -2952,8 +3039,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_UNION</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoUnion1(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Object dim1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Object dim2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoUnion1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoUnion1();
+	public static SdoGeometryRecord sdoUnion1(Configuration configuration, SdoGeometryRecord geom1, Object dim1, SdoGeometryRecord geom2, Object dim2) {
+		SdoUnion1 f = new SdoUnion1();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setGeom2(geom2);
@@ -2966,8 +3053,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_UNION</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoUnion1(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Object dim1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Object dim2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoUnion1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoUnion1();
+	public static Field<SdoGeometryRecord> sdoUnion1(SdoGeometryRecord geom1, Object dim1, SdoGeometryRecord geom2, Object dim2) {
+		SdoUnion1 f = new SdoUnion1();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setGeom2(geom2);
@@ -2979,8 +3066,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_UNION</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoUnion1(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom1, org.jooq.Field<java.lang.Object> dim1, org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom2, org.jooq.Field<java.lang.Object> dim2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoUnion1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoUnion1();
+	public static Field<SdoGeometryRecord> sdoUnion1(Field<SdoGeometryRecord> geom1, Field<Object> dim1, Field<SdoGeometryRecord> geom2, Field<Object> dim2) {
+		SdoUnion1 f = new SdoUnion1();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setGeom2(geom2);
@@ -2992,8 +3079,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_UNION</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoUnion2(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Number tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoUnion2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoUnion2();
+	public static SdoGeometryRecord sdoUnion2(Configuration configuration, SdoGeometryRecord geom1, SdoGeometryRecord geom2, Number tol) {
+		SdoUnion2 f = new SdoUnion2();
 		f.setGeom1(geom1);
 		f.setGeom2(geom2);
 		f.setTol(tol);
@@ -3005,8 +3092,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_UNION</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoUnion2(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Number tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoUnion2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoUnion2();
+	public static Field<SdoGeometryRecord> sdoUnion2(SdoGeometryRecord geom1, SdoGeometryRecord geom2, Number tol) {
+		SdoUnion2 f = new SdoUnion2();
 		f.setGeom1(geom1);
 		f.setGeom2(geom2);
 		f.setTol(tol);
@@ -3017,8 +3104,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_UNION</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoUnion2(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom1, org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom2, org.jooq.Field<? extends java.lang.Number> tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoUnion2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoUnion2();
+	public static Field<SdoGeometryRecord> sdoUnion2(Field<SdoGeometryRecord> geom1, Field<SdoGeometryRecord> geom2, Field<? extends Number> tol) {
+		SdoUnion2 f = new SdoUnion2();
 		f.setGeom1(geom1);
 		f.setGeom2(geom2);
 		f.setTol(tol);
@@ -3029,8 +3116,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_VOLUME</code>
 	 */
-	public static java.math.BigDecimal sdoVolume(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number tol, java.lang.String unit) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoVolume f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoVolume();
+	public static BigDecimal sdoVolume(Configuration configuration, SdoGeometryRecord geom, Number tol, String unit) {
+		SdoVolume f = new SdoVolume();
 		f.setGeom(geom);
 		f.setTol(tol);
 		f.setUnit(unit);
@@ -3042,8 +3129,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_VOLUME</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoVolume(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom, java.lang.Number tol, java.lang.String unit) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoVolume f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoVolume();
+	public static Field<BigDecimal> sdoVolume(SdoGeometryRecord geom, Number tol, String unit) {
+		SdoVolume f = new SdoVolume();
 		f.setGeom(geom);
 		f.setTol(tol);
 		f.setUnit(unit);
@@ -3054,8 +3141,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_VOLUME</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> sdoVolume(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom, org.jooq.Field<? extends java.lang.Number> tol, org.jooq.Field<java.lang.String> unit) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoVolume f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoVolume();
+	public static Field<BigDecimal> sdoVolume(Field<SdoGeometryRecord> geom, Field<? extends Number> tol, Field<String> unit) {
+		SdoVolume f = new SdoVolume();
 		f.setGeom(geom);
 		f.setTol(tol);
 		f.setUnit(unit);
@@ -3066,8 +3153,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_XOR</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoXor1(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Object dim1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Object dim2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoXor1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoXor1();
+	public static SdoGeometryRecord sdoXor1(Configuration configuration, SdoGeometryRecord geom1, Object dim1, SdoGeometryRecord geom2, Object dim2) {
+		SdoXor1 f = new SdoXor1();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setGeom2(geom2);
@@ -3080,8 +3167,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_XOR</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoXor1(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Object dim1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Object dim2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoXor1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoXor1();
+	public static Field<SdoGeometryRecord> sdoXor1(SdoGeometryRecord geom1, Object dim1, SdoGeometryRecord geom2, Object dim2) {
+		SdoXor1 f = new SdoXor1();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setGeom2(geom2);
@@ -3093,8 +3180,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_XOR</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoXor1(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom1, org.jooq.Field<java.lang.Object> dim1, org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom2, org.jooq.Field<java.lang.Object> dim2) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoXor1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoXor1();
+	public static Field<SdoGeometryRecord> sdoXor1(Field<SdoGeometryRecord> geom1, Field<Object> dim1, Field<SdoGeometryRecord> geom2, Field<Object> dim2) {
+		SdoXor1 f = new SdoXor1();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setGeom2(geom2);
@@ -3106,8 +3193,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.SDO_XOR</code>
 	 */
-	public static org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord sdoXor2(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Number tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoXor2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoXor2();
+	public static SdoGeometryRecord sdoXor2(Configuration configuration, SdoGeometryRecord geom1, SdoGeometryRecord geom2, Number tol) {
+		SdoXor2 f = new SdoXor2();
 		f.setGeom1(geom1);
 		f.setGeom2(geom2);
 		f.setTol(tol);
@@ -3119,8 +3206,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_XOR</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoXor2(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Number tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoXor2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoXor2();
+	public static Field<SdoGeometryRecord> sdoXor2(SdoGeometryRecord geom1, SdoGeometryRecord geom2, Number tol) {
+		SdoXor2 f = new SdoXor2();
 		f.setGeom1(geom1);
 		f.setGeom2(geom2);
 		f.setTol(tol);
@@ -3131,8 +3218,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.SDO_XOR</code> as a field
 	 */
-	public static org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> sdoXor2(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom1, org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom2, org.jooq.Field<? extends java.lang.Number> tol) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoXor2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.SdoXor2();
+	public static Field<SdoGeometryRecord> sdoXor2(Field<SdoGeometryRecord> geom1, Field<SdoGeometryRecord> geom2, Field<? extends Number> tol) {
+		SdoXor2 f = new SdoXor2();
 		f.setGeom1(geom1);
 		f.setGeom2(geom2);
 		f.setTol(tol);
@@ -3143,8 +3230,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.VALIDATE_GEOMETRY</code>
 	 */
-	public static java.lang.String validateGeometry1(org.jooq.Configuration configuration, java.lang.String layer, java.lang.Number gid) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometry1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometry1();
+	public static String validateGeometry1(Configuration configuration, String layer, Number gid) {
+		ValidateGeometry1 f = new ValidateGeometry1();
 		f.setLayer(layer);
 		f.setGid(gid);
 
@@ -3155,8 +3242,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.VALIDATE_GEOMETRY</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> validateGeometry1(java.lang.String layer, java.lang.Number gid) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometry1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometry1();
+	public static Field<String> validateGeometry1(String layer, Number gid) {
+		ValidateGeometry1 f = new ValidateGeometry1();
 		f.setLayer(layer);
 		f.setGid(gid);
 
@@ -3166,8 +3253,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.VALIDATE_GEOMETRY</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> validateGeometry1(org.jooq.Field<java.lang.String> layer, org.jooq.Field<? extends java.lang.Number> gid) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometry1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometry1();
+	public static Field<String> validateGeometry1(Field<String> layer, Field<? extends Number> gid) {
+		ValidateGeometry1 f = new ValidateGeometry1();
 		f.setLayer(layer);
 		f.setGid(gid);
 
@@ -3177,8 +3264,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.VALIDATE_GEOMETRY</code>
 	 */
-	public static java.lang.String validateGeometry2(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord thegeometry, java.lang.Object thediminfo) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometry2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometry2();
+	public static String validateGeometry2(Configuration configuration, SdoGeometryRecord thegeometry, Object thediminfo) {
+		ValidateGeometry2 f = new ValidateGeometry2();
 		f.setThegeometry(thegeometry);
 		f.setThediminfo(thediminfo);
 
@@ -3189,8 +3276,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.VALIDATE_GEOMETRY</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> validateGeometry2(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord thegeometry, java.lang.Object thediminfo) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometry2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometry2();
+	public static Field<String> validateGeometry2(SdoGeometryRecord thegeometry, Object thediminfo) {
+		ValidateGeometry2 f = new ValidateGeometry2();
 		f.setThegeometry(thegeometry);
 		f.setThediminfo(thediminfo);
 
@@ -3200,8 +3287,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.VALIDATE_GEOMETRY</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> validateGeometry2(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> thegeometry, org.jooq.Field<java.lang.Object> thediminfo) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometry2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometry2();
+	public static Field<String> validateGeometry2(Field<SdoGeometryRecord> thegeometry, Field<Object> thediminfo) {
+		ValidateGeometry2 f = new ValidateGeometry2();
 		f.setThegeometry(thegeometry);
 		f.setThediminfo(thediminfo);
 
@@ -3211,8 +3298,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.VALIDATE_GEOMETRY</code>
 	 */
-	public static java.lang.String validateGeometry3(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord thegeometry, java.lang.Number tolerance) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometry3 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometry3();
+	public static String validateGeometry3(Configuration configuration, SdoGeometryRecord thegeometry, Number tolerance) {
+		ValidateGeometry3 f = new ValidateGeometry3();
 		f.setThegeometry(thegeometry);
 		f.setTolerance(tolerance);
 
@@ -3223,8 +3310,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.VALIDATE_GEOMETRY</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> validateGeometry3(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord thegeometry, java.lang.Number tolerance) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometry3 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometry3();
+	public static Field<String> validateGeometry3(SdoGeometryRecord thegeometry, Number tolerance) {
+		ValidateGeometry3 f = new ValidateGeometry3();
 		f.setThegeometry(thegeometry);
 		f.setTolerance(tolerance);
 
@@ -3234,8 +3321,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.VALIDATE_GEOMETRY</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> validateGeometry3(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> thegeometry, org.jooq.Field<? extends java.lang.Number> tolerance) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometry3 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometry3();
+	public static Field<String> validateGeometry3(Field<SdoGeometryRecord> thegeometry, Field<? extends Number> tolerance) {
+		ValidateGeometry3 f = new ValidateGeometry3();
 		f.setThegeometry(thegeometry);
 		f.setTolerance(tolerance);
 
@@ -3245,8 +3332,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.VALIDATE_GEOMETRY_WITH_CONTEXT</code>
 	 */
-	public static java.lang.String validateGeometryWithContext1(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord thegeometry, java.lang.Object thediminfo, java.lang.String conditional, java.lang.String flag10g) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometryWithContext1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometryWithContext1();
+	public static String validateGeometryWithContext1(Configuration configuration, SdoGeometryRecord thegeometry, Object thediminfo, String conditional, String flag10g) {
+		ValidateGeometryWithContext1 f = new ValidateGeometryWithContext1();
 		f.setThegeometry(thegeometry);
 		f.setThediminfo(thediminfo);
 		f.setConditional(conditional);
@@ -3259,8 +3346,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.VALIDATE_GEOMETRY_WITH_CONTEXT</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> validateGeometryWithContext1(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord thegeometry, java.lang.Object thediminfo, java.lang.String conditional, java.lang.String flag10g) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometryWithContext1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometryWithContext1();
+	public static Field<String> validateGeometryWithContext1(SdoGeometryRecord thegeometry, Object thediminfo, String conditional, String flag10g) {
+		ValidateGeometryWithContext1 f = new ValidateGeometryWithContext1();
 		f.setThegeometry(thegeometry);
 		f.setThediminfo(thediminfo);
 		f.setConditional(conditional);
@@ -3272,8 +3359,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.VALIDATE_GEOMETRY_WITH_CONTEXT</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> validateGeometryWithContext1(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> thegeometry, org.jooq.Field<java.lang.Object> thediminfo, org.jooq.Field<java.lang.String> conditional, org.jooq.Field<java.lang.String> flag10g) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometryWithContext1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometryWithContext1();
+	public static Field<String> validateGeometryWithContext1(Field<SdoGeometryRecord> thegeometry, Field<Object> thediminfo, Field<String> conditional, Field<String> flag10g) {
+		ValidateGeometryWithContext1 f = new ValidateGeometryWithContext1();
 		f.setThegeometry(thegeometry);
 		f.setThediminfo(thediminfo);
 		f.setConditional(conditional);
@@ -3285,8 +3372,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.VALIDATE_GEOMETRY_WITH_CONTEXT</code>
 	 */
-	public static java.lang.String validateGeometryWithContext2(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord thegeometry, java.lang.Number tolerance, java.lang.String conditional, java.lang.String flag10g) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometryWithContext2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometryWithContext2();
+	public static String validateGeometryWithContext2(Configuration configuration, SdoGeometryRecord thegeometry, Number tolerance, String conditional, String flag10g) {
+		ValidateGeometryWithContext2 f = new ValidateGeometryWithContext2();
 		f.setThegeometry(thegeometry);
 		f.setTolerance(tolerance);
 		f.setConditional(conditional);
@@ -3299,8 +3386,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.VALIDATE_GEOMETRY_WITH_CONTEXT</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> validateGeometryWithContext2(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord thegeometry, java.lang.Number tolerance, java.lang.String conditional, java.lang.String flag10g) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometryWithContext2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometryWithContext2();
+	public static Field<String> validateGeometryWithContext2(SdoGeometryRecord thegeometry, Number tolerance, String conditional, String flag10g) {
+		ValidateGeometryWithContext2 f = new ValidateGeometryWithContext2();
 		f.setThegeometry(thegeometry);
 		f.setTolerance(tolerance);
 		f.setConditional(conditional);
@@ -3312,8 +3399,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.VALIDATE_GEOMETRY_WITH_CONTEXT</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> validateGeometryWithContext2(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> thegeometry, org.jooq.Field<? extends java.lang.Number> tolerance, org.jooq.Field<java.lang.String> conditional, org.jooq.Field<java.lang.String> flag10g) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometryWithContext2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateGeometryWithContext2();
+	public static Field<String> validateGeometryWithContext2(Field<SdoGeometryRecord> thegeometry, Field<? extends Number> tolerance, Field<String> conditional, Field<String> flag10g) {
+		ValidateGeometryWithContext2 f = new ValidateGeometryWithContext2();
 		f.setThegeometry(thegeometry);
 		f.setTolerance(tolerance);
 		f.setConditional(conditional);
@@ -3325,8 +3412,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.VALIDATE_LAYER</code>
 	 */
-	public static void validateLayer1(org.jooq.Configuration configuration, java.lang.String layer, java.lang.String resultTable) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateLayer1 p = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateLayer1();
+	public static void validateLayer1(Configuration configuration, String layer, String resultTable) {
+		ValidateLayer1 p = new ValidateLayer1();
 		p.setLayer(layer);
 		p.setResultTable(resultTable);
 
@@ -3336,8 +3423,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.VALIDATE_LAYER</code>
 	 */
-	public static void validateLayer2(org.jooq.Configuration configuration, java.lang.String geomTable, java.lang.String geomColumn, java.lang.String pkeyColumn, java.lang.String resultTable, java.lang.Number commitInterval) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateLayer2 p = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateLayer2();
+	public static void validateLayer2(Configuration configuration, String geomTable, String geomColumn, String pkeyColumn, String resultTable, Number commitInterval) {
+		ValidateLayer2 p = new ValidateLayer2();
 		p.setGeomTable(geomTable);
 		p.setGeomColumn(geomColumn);
 		p.setPkeyColumn(pkeyColumn);
@@ -3350,8 +3437,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.VALIDATE_LAYER_WITH_CONTEXT</code>
 	 */
-	public static void validateLayerWithContext(org.jooq.Configuration configuration, java.lang.String geomTable, java.lang.String geomColumn, java.lang.String resultTable, java.lang.Number commitInterval, java.lang.String conditional, java.lang.String flag10g) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateLayerWithContext p = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.ValidateLayerWithContext();
+	public static void validateLayerWithContext(Configuration configuration, String geomTable, String geomColumn, String resultTable, Number commitInterval, String conditional, String flag10g) {
+		ValidateLayerWithContext p = new ValidateLayerWithContext();
 		p.setGeomTable(geomTable);
 		p.setGeomColumn(geomColumn);
 		p.setResultTable(resultTable);
@@ -3365,8 +3452,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.WITHIN_DISTANCE</code>
 	 */
-	public static java.lang.String withinDistance1(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Object dim1, java.lang.Number dist, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Object dim2, java.lang.String units) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.WithinDistance1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.WithinDistance1();
+	public static String withinDistance1(Configuration configuration, SdoGeometryRecord geom1, Object dim1, Number dist, SdoGeometryRecord geom2, Object dim2, String units) {
+		WithinDistance1 f = new WithinDistance1();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setDist(dist);
@@ -3381,8 +3468,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.WITHIN_DISTANCE</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> withinDistance1(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Object dim1, java.lang.Number dist, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Object dim2, java.lang.String units) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.WithinDistance1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.WithinDistance1();
+	public static Field<String> withinDistance1(SdoGeometryRecord geom1, Object dim1, Number dist, SdoGeometryRecord geom2, Object dim2, String units) {
+		WithinDistance1 f = new WithinDistance1();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setDist(dist);
@@ -3396,8 +3483,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.WITHIN_DISTANCE</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> withinDistance1(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom1, org.jooq.Field<java.lang.Object> dim1, org.jooq.Field<? extends java.lang.Number> dist, org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom2, org.jooq.Field<java.lang.Object> dim2, org.jooq.Field<java.lang.String> units) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.WithinDistance1 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.WithinDistance1();
+	public static Field<String> withinDistance1(Field<SdoGeometryRecord> geom1, Field<Object> dim1, Field<? extends Number> dist, Field<SdoGeometryRecord> geom2, Field<Object> dim2, Field<String> units) {
+		WithinDistance1 f = new WithinDistance1();
 		f.setGeom1(geom1);
 		f.setDim1(dim1);
 		f.setDist(dist);
@@ -3411,8 +3498,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>MDSYS.SDO_GEOM.WITHIN_DISTANCE</code>
 	 */
-	public static java.lang.String withinDistance2(org.jooq.Configuration configuration, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Number dist, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Number tol, java.lang.String units) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.WithinDistance2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.WithinDistance2();
+	public static String withinDistance2(Configuration configuration, SdoGeometryRecord geom1, Number dist, SdoGeometryRecord geom2, Number tol, String units) {
+		WithinDistance2 f = new WithinDistance2();
 		f.setGeom1(geom1);
 		f.setDist(dist);
 		f.setGeom2(geom2);
@@ -3426,8 +3513,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.WITHIN_DISTANCE</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> withinDistance2(org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom1, java.lang.Number dist, org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord geom2, java.lang.Number tol, java.lang.String units) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.WithinDistance2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.WithinDistance2();
+	public static Field<String> withinDistance2(SdoGeometryRecord geom1, Number dist, SdoGeometryRecord geom2, Number tol, String units) {
+		WithinDistance2 f = new WithinDistance2();
 		f.setGeom1(geom1);
 		f.setDist(dist);
 		f.setGeom2(geom2);
@@ -3440,8 +3527,8 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>MDSYS.SDO_GEOM.WITHIN_DISTANCE</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.String> withinDistance2(org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom1, org.jooq.Field<? extends java.lang.Number> dist, org.jooq.Field<org.jooq.example.db.oracle.mdsys.udt.records.SdoGeometryRecord> geom2, org.jooq.Field<? extends java.lang.Number> tol, org.jooq.Field<java.lang.String> units) {
-		org.jooq.example.db.oracle.mdsys.packages.sdo_geom.WithinDistance2 f = new org.jooq.example.db.oracle.mdsys.packages.sdo_geom.WithinDistance2();
+	public static Field<String> withinDistance2(Field<SdoGeometryRecord> geom1, Field<? extends Number> dist, Field<SdoGeometryRecord> geom2, Field<? extends Number> tol, Field<String> units) {
+		WithinDistance2 f = new WithinDistance2();
 		f.setGeom1(geom1);
 		f.setDist(dist);
 		f.setGeom2(geom2);
@@ -3455,6 +3542,6 @@ public class SdoGeom extends org.jooq.impl.PackageImpl {
 	 * No further instances allowed
 	 */
 	private SdoGeom() {
-		super("SDO_GEOM", org.jooq.example.db.oracle.mdsys.Mdsys.MDSYS);
+		super("SDO_GEOM", Mdsys.MDSYS);
 	}
 }

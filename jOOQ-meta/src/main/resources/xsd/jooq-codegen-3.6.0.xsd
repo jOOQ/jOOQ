@@ -677,18 +677,46 @@
       <element name="validationAnnotations" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
       
       <!--
-        Allow to turn off the generation of global object references, which include
+        Allow to turn off the generation of ALL global object references, which include
         
         - Tables.java
         - Sequences.java
         - UDTs.java
+        - Routines.java
         
         Turning off the generation of the above files may be necessary for very
         large schemas, which exceed the amount of allowed constants in a class's
         constant pool (64k) or, whose static initialiser would exceed 64k of
-        byte code
+        byte code.
+        
+        Setting this flag to false will force all other global reference flags to be false:
+
+        - <globalTableReferences/>
+        - <globalSequenceReferences/>
+        - <globalUDTReferences/>
+        - <globalRoutineReferences/>
         -->
       <element name="globalObjectReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      
+      <!--
+        Allow to turn off the generation of global table references in Tables.java
+        -->
+      <element name="globalTableReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      
+      <!--
+        Allow to turn off the generation of global table references in Sequences.java
+        -->
+      <element name="globalSequenceReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      
+      <!--
+        Allow to turn off the generation of global table references in UDTs.java
+        -->
+      <element name="globalUDTReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      
+      <!--
+        Allow to turn off the generation of global table references in Routines.java
+        -->
+      <element name="globalRoutineReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
       
       <!--
         Generate fluent setters in

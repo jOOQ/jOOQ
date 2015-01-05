@@ -393,6 +393,14 @@ public class GenerationTool {
                 generator.setGenerateValidationAnnotations(g.getGenerate().isValidationAnnotations());
             if (g.getGenerate().isGlobalObjectReferences() != null)
                 generator.setGenerateGlobalObjectReferences(g.getGenerate().isGlobalObjectReferences());
+            if (g.getGenerate().isGlobalRoutineReferences() != null)
+                generator.setGenerateGlobalRoutineReferences(g.getGenerate().isGlobalRoutineReferences());
+            if (g.getGenerate().isGlobalSequenceReferences() != null)
+                generator.setGenerateGlobalSequenceReferences(g.getGenerate().isGlobalSequenceReferences());
+            if (g.getGenerate().isGlobalTableReferences() != null)
+                generator.setGenerateGlobalTableReferences(g.getGenerate().isGlobalTableReferences());
+            if (g.getGenerate().isGlobalUDTReferences() != null)
+                generator.setGenerateGlobalUDTReferences(g.getGenerate().isGlobalUDTReferences());
             if (g.getGenerate().isFluentSetters() != null)
                 generator.setFluentSetters(g.getGenerate().isFluentSetters());
             if (g.getGenerate().isPojosEqualsAndHashCode() != null)

@@ -170,6 +170,9 @@ public interface Record extends Attachable, Comparable<Record> {
 
     /**
      * Get a value from this Record, providing a field.
+     * <p>
+     * If this record contains a field with the same {@link Field#getName()} as
+     * the argument field, that value is retrieved.
      *
      * @param <T> The generic field parameter
      * @param field The field
@@ -196,6 +199,9 @@ public interface Record extends Attachable, Comparable<Record> {
 
     /**
      * Get a converted value from this Record, providing a field.
+     * <p>
+     * If this record contains a field with the same {@link Field#getName()} as
+     * the argument field, that value is retrieved.
      *
      * @param <T> The conversion type parameter
      * @param field The field
@@ -233,6 +239,9 @@ public interface Record extends Attachable, Comparable<Record> {
 
     /**
      * Get a converted value from this Record, providing a field.
+     * <p>
+     * If this record contains a field with the same {@link Field#getName()} as
+     * the argument field, that value is retrieved.
      *
      * @param <T> The database type parameter
      * @param <U> The conversion type parameter

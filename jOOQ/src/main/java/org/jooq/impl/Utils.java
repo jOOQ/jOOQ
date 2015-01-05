@@ -69,6 +69,7 @@ import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
 import static org.jooq.impl.Identifiers.QUOTE_START_DELIMITER;
 import static org.jooq.tools.reflect.Reflect.accessible;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.sql.Connection;
@@ -434,24 +435,18 @@ final class Utils {
     }
 
     /**
-     * Create a new record
+     * Create a new record.
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Class<R> type, Field<?>[] fields, Configuration configuration) {
+        return newRecord(fetched, recordFactory(type, fields), configuration);
+    }
+
+    /**
+     * Create a new record.
+     */
+    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, RecordFactory<R> factory, Configuration configuration) {
         try {
-            R record;
-
-            // An ad-hoc type resulting from a JOIN or arbitrary SELECT
-            if (type == RecordImpl.class || type == Record.class) {
-                record = (R) new RecordImpl(fields);
-            }
-
-            // Any generated record
-            else {
-
-                // [#919] Allow for accessing non-public constructors
-                record = Reflect.accessible(type.getDeclaredConstructor()).newInstance();
-            }
+            R record = factory.newInstance();
 
             // [#3300] Records that were fetched from the database
             if (record instanceof AbstractRecord)
@@ -461,6 +456,47 @@ final class Utils {
         }
         catch (Exception e) {
             throw new IllegalStateException("Could not construct new record", e);
+        }
+    }
+
+    /**
+     * Create a new record factory.
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    static final <R extends Record> RecordFactory<R> recordFactory(final Class<R> type, final Field<?>[] fields) {
+
+        // An ad-hoc type resulting from a JOIN or arbitrary SELECT
+        if (type == RecordImpl.class || type == Record.class) {
+            return new RecordFactory<R>() {
+                @Override
+                public R newInstance() {
+                    return (R) new RecordImpl(fields);
+                }
+            };
+        }
+
+        // Any generated record
+        else {
+            try {
+
+                // [#919] Allow for accessing non-public constructors
+                final Constructor<R> constructor = Reflect.accessible(type.getDeclaredConstructor());
+
+                return new RecordFactory<R>() {
+                    @Override
+                    public R newInstance() {
+                        try {
+                            return constructor.newInstance();
+                        }
+                        catch (Exception e) {
+                            throw new IllegalStateException("Could not construct new record", e);
+                        }
+                    }
+                };
+            }
+            catch (Exception e) {
+                throw new IllegalStateException("Could not construct new record", e);
+            }
         }
     }
 

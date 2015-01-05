@@ -55,6 +55,7 @@ import java.io.OutputStream;
 import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.Driver;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
 
@@ -237,9 +238,11 @@ public class GenerationTool {
 
             org.jooq.util.jaxb.Database d = defaultIfNull(g.getDatabase(), new org.jooq.util.jaxb.Database());
             String databaseName = trim(d.getName());
-            Class<? extends Database> databaseClass = isBlank(databaseName)
-                ? databaseClass(j)
-                : (Class<? extends Database>) loadClass(databaseName);
+            Class<? extends Database> databaseClass = !isBlank(databaseName)
+                ? (Class<? extends Database>) loadClass(databaseName)
+                : connection != null
+                ? databaseClass(connection)
+                : databaseClass(j);
             Database database = databaseClass.newInstance();
             database.setProperties(properties(d.getProperties()));
 
@@ -442,8 +445,24 @@ public class GenerationTool {
     }
 
     private Class<? extends Database> databaseClass(Jdbc j) {
-        Class<? extends Database> result = Databases.databaseClass(JDBCUtils.dialect(j.getUrl()));
-        log.info("Database", "Inferring database " + result.getName() + " from URL " + j.getUrl());
+        return databaseClass(j.getUrl());
+    }
+
+    private Class<? extends Database> databaseClass(Connection c) {
+        try {
+            return databaseClass(c.getMetaData().getURL());
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private Class<? extends Database> databaseClass(String url) {
+        if (isBlank(url))
+            throw new RuntimeException("No JDBC URL configured.");
+
+        Class<? extends Database> result = Databases.databaseClass(JDBCUtils.dialect(url));
+        log.info("Database", "Inferring database " + result.getName() + " from URL " + url);
         return result;
     }
 

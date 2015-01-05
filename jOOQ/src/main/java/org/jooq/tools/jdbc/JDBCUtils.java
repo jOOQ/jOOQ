@@ -43,6 +43,7 @@ package org.jooq.tools.jdbc;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+import static org.jooq.SQLDialect.DEFAULT;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -94,20 +95,22 @@ public class JDBCUtils {
     public static final SQLDialect dialect(Connection connection) {
         SQLDialect result = SQLDialect.DEFAULT;
 
-        try {
-            DatabaseMetaData m = connection.getMetaData();
+        if (connection != null) {
+            try {
+                DatabaseMetaData m = connection.getMetaData();
 
-            /* [pro] xx
-            xxxxxx xxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                xxxxxx xxxxxxxxxxxxxxxxxx
-            x
-            xx [/pro] */
+                /* [pro] xx
+                xxxxxx xxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+                    xxxxxx xxxxxxxxxxxxxxxxxx
+                x
+                xx [/pro] */
 
-            String url = m.getURL();
-            result = dialect(url);
+                String url = m.getURL();
+                result = dialect(url);
+            }
+            catch (SQLException ignore) {}
         }
-        catch (SQLException ignore) {}
 
         if (result == SQLDialect.DEFAULT) {
             // If the dialect cannot be guessed from the URL, take some other
@@ -121,6 +124,8 @@ public class JDBCUtils {
      * "Guess" the {@link SQLDialect} from a connection URL.
      */
     public static final SQLDialect dialect(String url) {
+        if (url == null)
+            return DEFAULT;
 
         // The below list might not be accurate or complete. Feel free to
         // contribute fixes related to new / different JDBC driver configuraitons
@@ -185,7 +190,7 @@ public class JDBCUtils {
         x
         xx [/pro] */
 
-        return SQLDialect.DEFAULT;
+        return DEFAULT;
     }
 
     /**

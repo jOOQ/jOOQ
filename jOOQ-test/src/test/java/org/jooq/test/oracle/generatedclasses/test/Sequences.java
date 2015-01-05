@@ -23,6 +23,11 @@ public class Sequences {
 	public static final Sequence<Integer> S_AUTHOR_ID = new SequenceImpl<Integer>("S_AUTHOR_ID", Test.TEST, org.jooq.impl.SQLDataType.INTEGER.nullable(false));
 
 	/**
+	 * The sequence <code>TEST.S_3899$</code>
+	 */
+	public static final Sequence<BigInteger> S_3899$ = new SequenceImpl<BigInteger>("S_3899$", Test.TEST, org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(38).nullable(false));
+
+	/**
 	 * The sequence <code>TEST.S_961_BIG_INTEGER</code>
 	 */
 	public static final Sequence<BigInteger> S_961_BIG_INTEGER = new SequenceImpl<BigInteger>("S_961_BIG_INTEGER", Test.TEST, org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(38).nullable(false));

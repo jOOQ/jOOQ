@@ -144,8 +144,10 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
                     // com.example.Table.TABLE.COLUMN (with keepSegments = 3)
                     if (fullyQualifiedTypes == null || !fullyQualifiedTypes.matcher(c).matches()) {
 
-                        // That's a unicode-safe \w (http://stackoverflow.com/a/4307261/521799)
-                        Pattern p = Pattern.compile("([\\pL\\pM\\p{Nd}\\p{Nl}\\p{Pc}[\\p{InEnclosedAlphanumerics}&&\\p{So}]\\.]+)((?:<.*>|\\[\\])*)");
+                        // That's a unicode-safe \w, more or less:
+                        // - http://stackoverflow.com/a/4307261/521799
+                        // - http://stackoverflow.com/a/5205467/521799
+                        Pattern p = Pattern.compile("((?:[\\p{L}_$][\\p{L}\\p{N}_$]*\\.)*[\\p{L}_$][\\p{L}\\p{N}_$]*)((?:<.*>|\\[\\])*)");
                         Matcher m = p.matcher(c);
 
                         if (m.find()) {

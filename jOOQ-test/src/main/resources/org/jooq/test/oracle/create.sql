@@ -10,6 +10,7 @@ DROP SEQUENCE s_961_int/
 DROP SEQUENCE s_961_long/
 DROP SEQUENCE s_961_big_integer/
 DROP SEQUENCE s_triggers_sequence/
+DROP SEQUENCE s_3899_$/
 DROP TRIGGER t_triggers_trigger/
 
 DROP TABLE multi_schema.t_book_sale/
@@ -391,8 +392,9 @@ CREATE SEQUENCE s_961_short MAXVALUE 10000/
 CREATE SEQUENCE s_961_int MAXVALUE 2000000000/
 CREATE SEQUENCE s_961_long MAXVALUE 10000000000/
 CREATE SEQUENCE s_961_big_integer/
-CREATE SEQUENCE s_triggers_sequence
-/
+CREATE SEQUENCE s_triggers_sequence/
+CREATE SEQUENCE s_3899_$/
+CREATE SEQUENCE s_3899$/
 
 CREATE TABLE t_dates (
   id number(7),

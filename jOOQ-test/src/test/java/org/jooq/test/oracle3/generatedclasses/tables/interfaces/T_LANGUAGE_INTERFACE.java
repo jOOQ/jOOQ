@@ -3,6 +3,15 @@
  */
 package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
 
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
 /**
  * An entity holding language master data
  * 
@@ -12,55 +21,55 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
  * 
  * Oh, and beware of end-of-javadoc * /
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-@javax.persistence.Entity
-@javax.persistence.Table(name = "T_LANGUAGE")
-public interface T_LANGUAGE_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@Entity
+@Table(name = "T_LANGUAGE")
+public interface T_LANGUAGE_INTERFACE extends Cloneable, Serializable {
 
 	/**
 	 * Setter for <code>T_LANGUAGE.CD</code>. The language ISO code
 	 */
-	public void setCD(java.lang.String value);
+	public void setCD(String value);
 
 	/**
 	 * Getter for <code>T_LANGUAGE.CD</code>. The language ISO code
 	 */
-	@javax.persistence.Column(name = "CD", nullable = false, length = 2)
-	public java.lang.String getCD();
+	@Column(name = "CD", nullable = false, length = 2)
+	public String getCD();
 
 	/**
 	 * Setter for <code>T_LANGUAGE.DESCRIPTION</code>. The language description
 	 */
-	public void setDESCRIPTION(java.lang.String value);
+	public void setDESCRIPTION(String value);
 
 	/**
 	 * Getter for <code>T_LANGUAGE.DESCRIPTION</code>. The language description
 	 */
-	@javax.persistence.Column(name = "DESCRIPTION", length = 50)
-	public java.lang.String getDESCRIPTION();
+	@Column(name = "DESCRIPTION", length = 50)
+	public String getDESCRIPTION();
 
 	/**
 	 * Setter for <code>T_LANGUAGE.DESCRIPTION_ENGLISH</code>.
 	 */
-	public void setDESCRIPTION_ENGLISH(java.lang.String value);
+	public void setDESCRIPTION_ENGLISH(String value);
 
 	/**
 	 * Getter for <code>T_LANGUAGE.DESCRIPTION_ENGLISH</code>.
 	 */
-	@javax.persistence.Column(name = "DESCRIPTION_ENGLISH", length = 50)
-	public java.lang.String getDESCRIPTION_ENGLISH();
+	@Column(name = "DESCRIPTION_ENGLISH", length = 50)
+	public String getDESCRIPTION_ENGLISH();
 
 	/**
 	 * Setter for <code>T_LANGUAGE.ID</code>. The language ID
 	 */
-	public void setID(java.lang.Integer value);
+	public void setID(Integer value);
 
 	/**
 	 * Getter for <code>T_LANGUAGE.ID</code>. The language ID
 	 */
-	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
-	public java.lang.Integer getID();
+	@Id
+	@Column(name = "ID", unique = true, nullable = false, precision = 7)
+	public Integer getID();
 
 	// -------------------------------------------------------------------------
 	// FROM and INTO

@@ -3,23 +3,33 @@
  */
 package org.jooq.test.oracle3.generatedclasses.packages;
 
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+
+import org.jooq.Configuration;
+import org.jooq.Field;
+import org.jooq.impl.PackageImpl;
+import org.jooq.test.oracle3.generatedclasses.DefaultSchema;
+
+
 /**
  * Convenience access to all stored procedures and functions in LIBRARY_767_PACKAGE_TEST
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class LIBRARY_767_PACKAGE_TEST extends org.jooq.impl.PackageImpl implements java.io.Serializable, java.lang.Cloneable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class LIBRARY_767_PACKAGE_TEST extends PackageImpl implements Serializable, Cloneable {
 
-	private static final long serialVersionUID = -1555268872;
+	private static final long serialVersionUID = -1822733010;
 
 	/**
-	 * The singleton instance of <code>LIBRARY_767_PACKAGE_TEST</code>
+	 * The reference instance of <code>LIBRARY_767_PACKAGE_TEST</code>
 	 */
-	public static final org.jooq.test.oracle3.generatedclasses.packages.LIBRARY_767_PACKAGE_TEST LIBRARY_767_PACKAGE_TEST = new org.jooq.test.oracle3.generatedclasses.packages.LIBRARY_767_PACKAGE_TEST();
+	public static final LIBRARY_767_PACKAGE_TEST LIBRARY_767_PACKAGE_TEST = new LIBRARY_767_PACKAGE_TEST();
 
 	/**
 	 * Call <code>LIBRARY_767_PACKAGE_TEST.LIBRARY_767_PACKAGE_TEST</code>
 	 */
-	public static java.math.BigDecimal call_LIBRARY_767_PACKAGE_TEST(org.jooq.Configuration configuration) {
+	public static BigDecimal call_LIBRARY_767_PACKAGE_TEST(Configuration configuration) {
 		org.jooq.test.oracle3.generatedclasses.packages.library_767_package_test.LIBRARY_767_PACKAGE_TEST f = new org.jooq.test.oracle3.generatedclasses.packages.library_767_package_test.LIBRARY_767_PACKAGE_TEST();
 
 		f.execute(configuration);
@@ -29,7 +39,7 @@ public class LIBRARY_767_PACKAGE_TEST extends org.jooq.impl.PackageImpl implemen
 	/**
 	 * Get <code>LIBRARY_767_PACKAGE_TEST.LIBRARY_767_PACKAGE_TEST</code> as a field
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> call_LIBRARY_767_PACKAGE_TEST() {
+	public static Field<BigDecimal> call_LIBRARY_767_PACKAGE_TEST() {
 		org.jooq.test.oracle3.generatedclasses.packages.library_767_package_test.LIBRARY_767_PACKAGE_TEST f = new org.jooq.test.oracle3.generatedclasses.packages.library_767_package_test.LIBRARY_767_PACKAGE_TEST();
 
 		return f.asField();
@@ -39,6 +49,6 @@ public class LIBRARY_767_PACKAGE_TEST extends org.jooq.impl.PackageImpl implemen
 	 * No further instances allowed
 	 */
 	private LIBRARY_767_PACKAGE_TEST() {
-		super("LIBRARY_767_PACKAGE_TEST", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		super("LIBRARY_767_PACKAGE_TEST", DefaultSchema.DEFAULT_SCHEMA);
 	}
 }

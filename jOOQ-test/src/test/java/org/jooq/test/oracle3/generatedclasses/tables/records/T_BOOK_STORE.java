@@ -3,32 +3,46 @@
  */
 package org.jooq.test.oracle3.generatedclasses.tables.records;
 
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.jooq.Field;
+import org.jooq.Record1;
+import org.jooq.Row;
+import org.jooq.Row1;
+import org.jooq.impl.UpdatableRecordImpl;
+import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_STORE_INTERFACE;
+
+
 /**
  * A book store
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-@javax.persistence.Entity
-@javax.persistence.Table(name = "T_BOOK_STORE")
-public class T_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE> implements java.lang.Cloneable, org.jooq.Record1<java.lang.String>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_STORE_INTERFACE {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@Entity
+@Table(name = "T_BOOK_STORE")
+public class T_BOOK_STORE extends UpdatableRecordImpl<T_BOOK_STORE> implements Cloneable, Record1<String>, T_BOOK_STORE_INTERFACE {
 
-	private static final long serialVersionUID = -478154386;
+	private static final long serialVersionUID = 359492642;
 
 	/**
 	 * Setter for <code>T_BOOK_STORE.NAME</code>. The books store name
 	 */
 	@Override
-	public void setNAME(java.lang.String value) {
+	public void setNAME(String value) {
 		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>T_BOOK_STORE.NAME</code>. The books store name
 	 */
-	@javax.persistence.Id
-	@javax.persistence.Column(name = "NAME", unique = true, nullable = false, length = 400)
+	@Id
+	@Column(name = "NAME", unique = true, nullable = false, length = 400)
 	@Override
-	public java.lang.String getNAME() {
-		return (java.lang.String) getValue(0);
+	public String getNAME() {
+		return (String) getValue(0);
 	}
 
 	// -------------------------------------------------------------------------
@@ -39,8 +53,8 @@ public class T_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Record1<java.lang.String> key() {
-		return (org.jooq.Record1) super.key();
+	public Record1<String> key() {
+		return (Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -51,23 +65,23 @@ public class T_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row1<java.lang.String> fieldsRow() {
-		return (org.jooq.Row1) super.fieldsRow();
+	public Row1<String> fieldsRow() {
+		return (Row1) super.fieldsRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row1<java.lang.String> valuesRow() {
-		return (org.jooq.Row1) super.valuesRow();
+	public Row1<String> valuesRow() {
+		return (Row1) super.valuesRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.String> field1() {
+	public Field<String> field1() {
 		return org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_STORE.T_BOOK_STORE.NAME;
 	}
 
@@ -75,7 +89,7 @@ public class T_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.String value1() {
+	public String value1() {
 		return getNAME();
 	}
 
@@ -83,7 +97,7 @@ public class T_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T_BOOK_STORE value1(java.lang.String value) {
+	public T_BOOK_STORE value1(String value) {
 		setNAME(value);
 		return this;
 	}
@@ -92,7 +106,7 @@ public class T_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T_BOOK_STORE values(java.lang.String value1) {
+	public T_BOOK_STORE values(String value1) {
 		return this;
 	}
 
@@ -104,7 +118,7 @@ public class T_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_STORE_INTERFACE from) {
+	public void from(T_BOOK_STORE_INTERFACE from) {
 		setNAME(from.getNAME());
 	}
 
@@ -112,7 +126,7 @@ public class T_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_STORE_INTERFACE> E into(E into) {
+	public <E extends T_BOOK_STORE_INTERFACE> E into(E into) {
 		into.from(this);
 		return into;
 	}
@@ -131,7 +145,7 @@ public class T_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	/**
 	 * Create a detached, initialised T_BOOK_STORE
 	 */
-	public T_BOOK_STORE(java.lang.String NAME) {
+	public T_BOOK_STORE(String NAME) {
 		super(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_STORE.T_BOOK_STORE);
 
 		setValue(0, NAME);

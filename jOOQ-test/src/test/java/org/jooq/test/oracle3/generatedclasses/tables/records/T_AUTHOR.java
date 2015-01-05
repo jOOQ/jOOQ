@@ -3,106 +3,125 @@
  */
 package org.jooq.test.oracle3.generatedclasses.tables.records;
 
+
+import java.sql.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.jooq.Field;
+import org.jooq.Record1;
+import org.jooq.Record6;
+import org.jooq.Row;
+import org.jooq.Row6;
+import org.jooq.impl.UpdatableRecordImpl;
+import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_AUTHOR_INTERFACE;
+import org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_ADDRESS_TYPE_INTERFACE;
+import org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE;
+
+
 /**
  * An entity holding authors of books
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-@javax.persistence.Entity
-@javax.persistence.Table(name = "T_AUTHOR")
-public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_AUTHOR> implements java.lang.Cloneable, org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_AUTHOR_INTERFACE {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@Entity
+@Table(name = "T_AUTHOR")
+public class T_AUTHOR extends UpdatableRecordImpl<T_AUTHOR> implements Cloneable, Record6<Integer, String, String, Date, Integer, U_ADDRESS_TYPE>, T_AUTHOR_INTERFACE {
 
-	private static final long serialVersionUID = -1934780262;
+	private static final long serialVersionUID = 2011062391;
 
 	/**
 	 * Setter for <code>T_AUTHOR.ID</code>. The author ID
 	 */
 	@Override
-	public void setID(java.lang.Integer value) {
+	public void setID(Integer value) {
 		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>T_AUTHOR.ID</code>. The author ID
 	 */
-	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
+	@Id
+	@Column(name = "ID", unique = true, nullable = false, precision = 7)
 	@Override
-	public java.lang.Integer getID() {
-		return (java.lang.Integer) getValue(0);
+	public Integer getID() {
+		return (Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>T_AUTHOR.FIRST_NAME</code>. The author's first name
 	 */
 	@Override
-	public void setFIRST_NAME(java.lang.String value) {
+	public void setFIRST_NAME(String value) {
 		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>T_AUTHOR.FIRST_NAME</code>. The author's first name
 	 */
-	@javax.persistence.Column(name = "FIRST_NAME", length = 50)
+	@Column(name = "FIRST_NAME", length = 50)
 	@Override
-	public java.lang.String getFIRST_NAME() {
-		return (java.lang.String) getValue(1);
+	public String getFIRST_NAME() {
+		return (String) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>T_AUTHOR.LAST_NAME</code>. The author's last name
 	 */
 	@Override
-	public void setLAST_NAME(java.lang.String value) {
+	public void setLAST_NAME(String value) {
 		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>T_AUTHOR.LAST_NAME</code>. The author's last name
 	 */
-	@javax.persistence.Column(name = "LAST_NAME", nullable = false, length = 50)
+	@Column(name = "LAST_NAME", nullable = false, length = 50)
 	@Override
-	public java.lang.String getLAST_NAME() {
-		return (java.lang.String) getValue(2);
+	public String getLAST_NAME() {
+		return (String) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>T_AUTHOR.DATE_OF_BIRTH</code>. The author's date of birth
 	 */
 	@Override
-	public void setDATE_OF_BIRTH(java.sql.Date value) {
+	public void setDATE_OF_BIRTH(Date value) {
 		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>T_AUTHOR.DATE_OF_BIRTH</code>. The author's date of birth
 	 */
-	@javax.persistence.Column(name = "DATE_OF_BIRTH", length = 7)
+	@Column(name = "DATE_OF_BIRTH")
 	@Override
-	public java.sql.Date getDATE_OF_BIRTH() {
-		return (java.sql.Date) getValue(3);
+	public Date getDATE_OF_BIRTH() {
+		return (Date) getValue(3);
 	}
 
 	/**
 	 * Setter for <code>T_AUTHOR.YEAR_OF_BIRTH</code>. The author's year of birth
 	 */
 	@Override
-	public void setYEAR_OF_BIRTH(java.lang.Integer value) {
+	public void setYEAR_OF_BIRTH(Integer value) {
 		setValue(4, value);
 	}
 
 	/**
 	 * Getter for <code>T_AUTHOR.YEAR_OF_BIRTH</code>. The author's year of birth
 	 */
-	@javax.persistence.Column(name = "YEAR_OF_BIRTH", precision = 7)
+	@Column(name = "YEAR_OF_BIRTH", precision = 7)
 	@Override
-	public java.lang.Integer getYEAR_OF_BIRTH() {
-		return (java.lang.Integer) getValue(4);
+	public Integer getYEAR_OF_BIRTH() {
+		return (Integer) getValue(4);
 	}
 
 	/**
 	 * Setter for <code>T_AUTHOR.ADDRESS</code>. The author's address
 	 */
-	public void setADDRESS(org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE value) {
+	public void setADDRESS(U_ADDRESS_TYPE value) {
 		setValue(5, value);
 	}
 
@@ -110,20 +129,20 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * Setter for <code>T_AUTHOR.ADDRESS</code>. The author's address
 	 */
 	@Override
-	public void setADDRESS(org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_ADDRESS_TYPE_INTERFACE value) {
+	public void setADDRESS(U_ADDRESS_TYPE_INTERFACE value) {
 		if (value == null)
 			setValue(5, null);
 		else
-			setValue(5, value.into(new org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE()));
+			setValue(5, value.into(new U_ADDRESS_TYPE()));
 	}
 
 	/**
 	 * Getter for <code>T_AUTHOR.ADDRESS</code>. The author's address
 	 */
-	@javax.persistence.Column(name = "ADDRESS", length = 1)
+	@Column(name = "ADDRESS")
 	@Override
-	public org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE getADDRESS() {
-		return (org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE) getValue(5);
+	public U_ADDRESS_TYPE getADDRESS() {
+		return (U_ADDRESS_TYPE) getValue(5);
 	}
 
 	// -------------------------------------------------------------------------
@@ -134,8 +153,8 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Record1<java.lang.Integer> key() {
-		return (org.jooq.Record1) super.key();
+	public Record1<Integer> key() {
+		return (Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -146,23 +165,23 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE> fieldsRow() {
-		return (org.jooq.Row6) super.fieldsRow();
+	public Row6<Integer, String, String, Date, Integer, U_ADDRESS_TYPE> fieldsRow() {
+		return (Row6) super.fieldsRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE> valuesRow() {
-		return (org.jooq.Row6) super.valuesRow();
+	public Row6<Integer, String, String, Date, Integer, U_ADDRESS_TYPE> valuesRow() {
+		return (Row6) super.valuesRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.Integer> field1() {
+	public Field<Integer> field1() {
 		return org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR.ID;
 	}
 
@@ -170,7 +189,7 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.String> field2() {
+	public Field<String> field2() {
 		return org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR.FIRST_NAME;
 	}
 
@@ -178,7 +197,7 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.String> field3() {
+	public Field<String> field3() {
 		return org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR.LAST_NAME;
 	}
 
@@ -186,7 +205,7 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.sql.Date> field4() {
+	public Field<Date> field4() {
 		return org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR.DATE_OF_BIRTH;
 	}
 
@@ -194,7 +213,7 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.Integer> field5() {
+	public Field<Integer> field5() {
 		return org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR.YEAR_OF_BIRTH;
 	}
 
@@ -202,7 +221,7 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE> field6() {
+	public Field<U_ADDRESS_TYPE> field6() {
 		return org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR.ADDRESS;
 	}
 
@@ -210,7 +229,7 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.Integer value1() {
+	public Integer value1() {
 		return getID();
 	}
 
@@ -218,7 +237,7 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.String value2() {
+	public String value2() {
 		return getFIRST_NAME();
 	}
 
@@ -226,7 +245,7 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.String value3() {
+	public String value3() {
 		return getLAST_NAME();
 	}
 
@@ -234,7 +253,7 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.sql.Date value4() {
+	public Date value4() {
 		return getDATE_OF_BIRTH();
 	}
 
@@ -242,7 +261,7 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.Integer value5() {
+	public Integer value5() {
 		return getYEAR_OF_BIRTH();
 	}
 
@@ -250,7 +269,7 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE value6() {
+	public U_ADDRESS_TYPE value6() {
 		return getADDRESS();
 	}
 
@@ -258,7 +277,7 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T_AUTHOR value1(java.lang.Integer value) {
+	public T_AUTHOR value1(Integer value) {
 		setID(value);
 		return this;
 	}
@@ -267,7 +286,7 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T_AUTHOR value2(java.lang.String value) {
+	public T_AUTHOR value2(String value) {
 		setFIRST_NAME(value);
 		return this;
 	}
@@ -276,7 +295,7 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T_AUTHOR value3(java.lang.String value) {
+	public T_AUTHOR value3(String value) {
 		setLAST_NAME(value);
 		return this;
 	}
@@ -285,7 +304,7 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T_AUTHOR value4(java.sql.Date value) {
+	public T_AUTHOR value4(Date value) {
 		setDATE_OF_BIRTH(value);
 		return this;
 	}
@@ -294,7 +313,7 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T_AUTHOR value5(java.lang.Integer value) {
+	public T_AUTHOR value5(Integer value) {
 		setYEAR_OF_BIRTH(value);
 		return this;
 	}
@@ -303,7 +322,7 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T_AUTHOR value6(org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE value) {
+	public T_AUTHOR value6(U_ADDRESS_TYPE value) {
 		setADDRESS(value);
 		return this;
 	}
@@ -312,7 +331,7 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T_AUTHOR values(java.lang.Integer value1, java.lang.String value2, java.lang.String value3, java.sql.Date value4, java.lang.Integer value5, org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE value6) {
+	public T_AUTHOR values(Integer value1, String value2, String value3, Date value4, Integer value5, U_ADDRESS_TYPE value6) {
 		return this;
 	}
 
@@ -324,7 +343,7 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_AUTHOR_INTERFACE from) {
+	public void from(T_AUTHOR_INTERFACE from) {
 		setID(from.getID());
 		setFIRST_NAME(from.getFIRST_NAME());
 		setLAST_NAME(from.getLAST_NAME());
@@ -337,7 +356,7 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_AUTHOR_INTERFACE> E into(E into) {
+	public <E extends T_AUTHOR_INTERFACE> E into(E into) {
 		into.from(this);
 		return into;
 	}
@@ -356,7 +375,7 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	/**
 	 * Create a detached, initialised T_AUTHOR
 	 */
-	public T_AUTHOR(java.lang.Integer ID, java.lang.String FIRST_NAME, java.lang.String LAST_NAME, java.sql.Date DATE_OF_BIRTH, java.lang.Integer YEAR_OF_BIRTH, org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE ADDRESS) {
+	public T_AUTHOR(Integer ID, String FIRST_NAME, String LAST_NAME, Date DATE_OF_BIRTH, Integer YEAR_OF_BIRTH, U_ADDRESS_TYPE ADDRESS) {
 		super(org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR);
 
 		setValue(0, ID);

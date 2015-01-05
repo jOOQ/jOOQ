@@ -3,23 +3,30 @@
  */
 package org.jooq.test.oracle3.generatedclasses.packages;
 
+
+import java.io.Serializable;
+
+import org.jooq.impl.PackageImpl;
+import org.jooq.test.oracle3.generatedclasses.DefaultSchema;
+
+
 /**
  * Convenience access to all stored procedures and functions in LIBRARY_TYPES
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class LIBRARY_TYPES extends org.jooq.impl.PackageImpl implements java.io.Serializable, java.lang.Cloneable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class LIBRARY_TYPES extends PackageImpl implements Serializable, Cloneable {
 
-	private static final long serialVersionUID = -1614831311;
+	private static final long serialVersionUID = -123833996;
 
 	/**
-	 * The singleton instance of <code>LIBRARY_TYPES</code>
+	 * The reference instance of <code>LIBRARY_TYPES</code>
 	 */
-	public static final org.jooq.test.oracle3.generatedclasses.packages.LIBRARY_TYPES LIBRARY_TYPES = new org.jooq.test.oracle3.generatedclasses.packages.LIBRARY_TYPES();
+	public static final LIBRARY_TYPES LIBRARY_TYPES = new LIBRARY_TYPES();
 
 	/**
 	 * No further instances allowed
 	 */
 	private LIBRARY_TYPES() {
-		super("LIBRARY_TYPES", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		super("LIBRARY_TYPES", DefaultSchema.DEFAULT_SCHEMA);
 	}
 }

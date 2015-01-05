@@ -3,48 +3,57 @@
  */
 package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
 
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+
 /**
  * An m:n relation between books and book stores
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-@javax.persistence.Entity
-@javax.persistence.Table(name = "T_BOOK_TO_BOOK_STORE", uniqueConstraints = {
-	@javax.persistence.UniqueConstraint(columnNames = {"BOOK_STORE_NAME", "BOOK_ID"})
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@Entity
+@Table(name = "T_BOOK_TO_BOOK_STORE", uniqueConstraints = {
+	@UniqueConstraint(columnNames = {"BOOK_STORE_NAME", "BOOK_ID"})
 })
-public interface T_BOOK_TO_BOOK_STORE_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
+public interface T_BOOK_TO_BOOK_STORE_INTERFACE extends Cloneable, Serializable {
 
 	/**
 	 * Setter for <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
 	 */
-	public void setBOOK_STORE_NAME(java.lang.String value);
+	public void setBOOK_STORE_NAME(String value);
 
 	/**
 	 * Getter for <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
 	 */
-	@javax.persistence.Column(name = "BOOK_STORE_NAME", nullable = false, length = 400)
-	public java.lang.String getBOOK_STORE_NAME();
+	@Column(name = "BOOK_STORE_NAME", nullable = false, length = 400)
+	public String getBOOK_STORE_NAME();
 
 	/**
 	 * Setter for <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. The book ID
 	 */
-	public void setBOOK_ID(java.lang.Integer value);
+	public void setBOOK_ID(Integer value);
 
 	/**
 	 * Getter for <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. The book ID
 	 */
-	@javax.persistence.Column(name = "BOOK_ID", nullable = false, precision = 7)
-	public java.lang.Integer getBOOK_ID();
+	@Column(name = "BOOK_ID", nullable = false, precision = 7)
+	public Integer getBOOK_ID();
 
 	/**
 	 * Setter for <code>T_BOOK_TO_BOOK_STORE.STOCK</code>. The number of books on stock
 	 */
-	public void setSTOCK(java.lang.Integer value);
+	public void setSTOCK(Integer value);
 
 	/**
 	 * Getter for <code>T_BOOK_TO_BOOK_STORE.STOCK</code>. The number of books on stock
 	 */
-	@javax.persistence.Column(name = "STOCK", precision = 7)
-	public java.lang.Integer getSTOCK();
+	@Column(name = "STOCK", precision = 7)
+	public Integer getSTOCK();
 
 	// -------------------------------------------------------------------------
 	// FROM and INTO

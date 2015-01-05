@@ -3,6 +3,21 @@
  */
 package org.jooq.test.oracle3.generatedclasses.tables.records;
 
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.jooq.Field;
+import org.jooq.Record1;
+import org.jooq.Record4;
+import org.jooq.Row;
+import org.jooq.Row4;
+import org.jooq.impl.UpdatableRecordImpl;
+import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_LANGUAGE_INTERFACE;
+
+
 /**
  * An entity holding language master data
  * 
@@ -12,80 +27,80 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  * 
  * Oh, and beware of end-of-javadoc * /
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-@javax.persistence.Entity
-@javax.persistence.Table(name = "T_LANGUAGE")
-public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE> implements java.lang.Cloneable, org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_LANGUAGE_INTERFACE {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@Entity
+@Table(name = "T_LANGUAGE")
+public class T_LANGUAGE extends UpdatableRecordImpl<T_LANGUAGE> implements Cloneable, Record4<String, String, String, Integer>, T_LANGUAGE_INTERFACE {
 
-	private static final long serialVersionUID = 684475441;
+	private static final long serialVersionUID = -71301465;
 
 	/**
 	 * Setter for <code>T_LANGUAGE.CD</code>. The language ISO code
 	 */
 	@Override
-	public void setCD(java.lang.String value) {
+	public void setCD(String value) {
 		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>T_LANGUAGE.CD</code>. The language ISO code
 	 */
-	@javax.persistence.Column(name = "CD", nullable = false, length = 2)
+	@Column(name = "CD", nullable = false, length = 2)
 	@Override
-	public java.lang.String getCD() {
-		return (java.lang.String) getValue(0);
+	public String getCD() {
+		return (String) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>T_LANGUAGE.DESCRIPTION</code>. The language description
 	 */
 	@Override
-	public void setDESCRIPTION(java.lang.String value) {
+	public void setDESCRIPTION(String value) {
 		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>T_LANGUAGE.DESCRIPTION</code>. The language description
 	 */
-	@javax.persistence.Column(name = "DESCRIPTION", length = 50)
+	@Column(name = "DESCRIPTION", length = 50)
 	@Override
-	public java.lang.String getDESCRIPTION() {
-		return (java.lang.String) getValue(1);
+	public String getDESCRIPTION() {
+		return (String) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>T_LANGUAGE.DESCRIPTION_ENGLISH</code>.
 	 */
 	@Override
-	public void setDESCRIPTION_ENGLISH(java.lang.String value) {
+	public void setDESCRIPTION_ENGLISH(String value) {
 		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>T_LANGUAGE.DESCRIPTION_ENGLISH</code>.
 	 */
-	@javax.persistence.Column(name = "DESCRIPTION_ENGLISH", length = 50)
+	@Column(name = "DESCRIPTION_ENGLISH", length = 50)
 	@Override
-	public java.lang.String getDESCRIPTION_ENGLISH() {
-		return (java.lang.String) getValue(2);
+	public String getDESCRIPTION_ENGLISH() {
+		return (String) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>T_LANGUAGE.ID</code>. The language ID
 	 */
 	@Override
-	public void setID(java.lang.Integer value) {
+	public void setID(Integer value) {
 		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>T_LANGUAGE.ID</code>. The language ID
 	 */
-	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
+	@Id
+	@Column(name = "ID", unique = true, nullable = false, precision = 7)
 	@Override
-	public java.lang.Integer getID() {
-		return (java.lang.Integer) getValue(3);
+	public Integer getID() {
+		return (Integer) getValue(3);
 	}
 
 	// -------------------------------------------------------------------------
@@ -96,8 +111,8 @@ public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Record1<java.lang.Integer> key() {
-		return (org.jooq.Record1) super.key();
+	public Record1<Integer> key() {
+		return (Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -108,23 +123,23 @@ public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> fieldsRow() {
-		return (org.jooq.Row4) super.fieldsRow();
+	public Row4<String, String, String, Integer> fieldsRow() {
+		return (Row4) super.fieldsRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> valuesRow() {
-		return (org.jooq.Row4) super.valuesRow();
+	public Row4<String, String, String, Integer> valuesRow() {
+		return (Row4) super.valuesRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.String> field1() {
+	public Field<String> field1() {
 		return org.jooq.test.oracle3.generatedclasses.tables.T_LANGUAGE.T_LANGUAGE.CD;
 	}
 
@@ -132,7 +147,7 @@ public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.String> field2() {
+	public Field<String> field2() {
 		return org.jooq.test.oracle3.generatedclasses.tables.T_LANGUAGE.T_LANGUAGE.DESCRIPTION;
 	}
 
@@ -140,7 +155,7 @@ public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.String> field3() {
+	public Field<String> field3() {
 		return org.jooq.test.oracle3.generatedclasses.tables.T_LANGUAGE.T_LANGUAGE.DESCRIPTION_ENGLISH;
 	}
 
@@ -148,7 +163,7 @@ public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.Integer> field4() {
+	public Field<Integer> field4() {
 		return org.jooq.test.oracle3.generatedclasses.tables.T_LANGUAGE.T_LANGUAGE.ID;
 	}
 
@@ -156,7 +171,7 @@ public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.String value1() {
+	public String value1() {
 		return getCD();
 	}
 
@@ -164,7 +179,7 @@ public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.String value2() {
+	public String value2() {
 		return getDESCRIPTION();
 	}
 
@@ -172,7 +187,7 @@ public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.String value3() {
+	public String value3() {
 		return getDESCRIPTION_ENGLISH();
 	}
 
@@ -180,7 +195,7 @@ public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.Integer value4() {
+	public Integer value4() {
 		return getID();
 	}
 
@@ -188,7 +203,7 @@ public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T_LANGUAGE value1(java.lang.String value) {
+	public T_LANGUAGE value1(String value) {
 		setCD(value);
 		return this;
 	}
@@ -197,7 +212,7 @@ public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T_LANGUAGE value2(java.lang.String value) {
+	public T_LANGUAGE value2(String value) {
 		setDESCRIPTION(value);
 		return this;
 	}
@@ -206,7 +221,7 @@ public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T_LANGUAGE value3(java.lang.String value) {
+	public T_LANGUAGE value3(String value) {
 		setDESCRIPTION_ENGLISH(value);
 		return this;
 	}
@@ -215,7 +230,7 @@ public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T_LANGUAGE value4(java.lang.Integer value) {
+	public T_LANGUAGE value4(Integer value) {
 		setID(value);
 		return this;
 	}
@@ -224,7 +239,7 @@ public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T_LANGUAGE values(java.lang.String value1, java.lang.String value2, java.lang.String value3, java.lang.Integer value4) {
+	public T_LANGUAGE values(String value1, String value2, String value3, Integer value4) {
 		return this;
 	}
 
@@ -236,7 +251,7 @@ public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_LANGUAGE_INTERFACE from) {
+	public void from(T_LANGUAGE_INTERFACE from) {
 		setCD(from.getCD());
 		setDESCRIPTION(from.getDESCRIPTION());
 		setDESCRIPTION_ENGLISH(from.getDESCRIPTION_ENGLISH());
@@ -247,7 +262,7 @@ public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_LANGUAGE_INTERFACE> E into(E into) {
+	public <E extends T_LANGUAGE_INTERFACE> E into(E into) {
 		into.from(this);
 		return into;
 	}
@@ -266,7 +281,7 @@ public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	/**
 	 * Create a detached, initialised T_LANGUAGE
 	 */
-	public T_LANGUAGE(java.lang.String CD, java.lang.String DESCRIPTION, java.lang.String DESCRIPTION_ENGLISH, java.lang.Integer ID) {
+	public T_LANGUAGE(String CD, String DESCRIPTION, String DESCRIPTION_ENGLISH, Integer ID) {
 		super(org.jooq.test.oracle3.generatedclasses.tables.T_LANGUAGE.T_LANGUAGE);
 
 		setValue(0, CD);

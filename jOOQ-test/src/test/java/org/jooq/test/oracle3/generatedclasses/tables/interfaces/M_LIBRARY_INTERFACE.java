@@ -3,35 +3,43 @@
  */
 package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
 
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+
 /**
  * snapshot table for snapshot TEST.M_LIBRARY
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-@javax.persistence.Entity
-@javax.persistence.Table(name = "M_LIBRARY")
-public interface M_LIBRARY_INTERFACE extends java.io.Serializable, java.lang.Cloneable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@Entity
+@Table(name = "M_LIBRARY")
+public interface M_LIBRARY_INTERFACE extends Serializable, Cloneable {
 
 	/**
 	 * Setter for <code>M_LIBRARY.AUTHOR</code>.
 	 */
-	public void setAUTHOR(java.lang.String value);
+	public void setAUTHOR(String value);
 
 	/**
 	 * Getter for <code>M_LIBRARY.AUTHOR</code>.
 	 */
-	@javax.persistence.Column(name = "AUTHOR", length = 101)
-	public java.lang.String getAUTHOR();
+	@Column(name = "AUTHOR", length = 101)
+	public String getAUTHOR();
 
 	/**
 	 * Setter for <code>M_LIBRARY.TITLE</code>.
 	 */
-	public void setTITLE(java.lang.String value);
+	public void setTITLE(String value);
 
 	/**
 	 * Getter for <code>M_LIBRARY.TITLE</code>.
 	 */
-	@javax.persistence.Column(name = "TITLE", nullable = false, length = 400)
-	public java.lang.String getTITLE();
+	@Column(name = "TITLE", nullable = false, length = 400)
+	public String getTITLE();
 
 	// -------------------------------------------------------------------------
 	// FROM and INTO

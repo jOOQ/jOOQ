@@ -3,42 +3,55 @@
  */
 package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_INTERFACE;
+
+
 /**
  * An entity holding books
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-@javax.persistence.Entity
-@javax.persistence.Table(name = "T_BOOK")
-public class T_BOOK_POJO extends java.lang.Object implements java.io.Serializable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_INTERFACE {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@Entity
+@Table(name = "T_BOOK")
+public class T_BOOK_POJO extends Object implements Serializable, T_BOOK_INTERFACE {
 
-	private static final long serialVersionUID = 546051343;
+	private static final long serialVersionUID = -1891726613;
 
-	private java.lang.Integer    ID;
-	private java.lang.Integer    AUTHOR_ID;
-	private java.lang.Integer    CO_AUTHOR_ID;
-	private java.lang.Integer    DETAILS_ID;
-	private java.lang.String     TITLE;
-	private java.lang.Integer    PUBLISHED_IN;
-	private java.lang.Integer    LANGUAGE_ID;
-	private java.lang.String     CONTENT_TEXT;
-	private byte[]               CONTENT_PDF;
-	private java.math.BigDecimal REC_VERSION;
-	private java.sql.Timestamp   REC_TIMESTAMP;
+	private Integer    ID;
+	private Integer    AUTHOR_ID;
+	private Integer    CO_AUTHOR_ID;
+	private Integer    DETAILS_ID;
+	private String     TITLE;
+	private Integer    PUBLISHED_IN;
+	private Integer    LANGUAGE_ID;
+	private String     CONTENT_TEXT;
+	private byte[]     CONTENT_PDF;
+	private BigDecimal REC_VERSION;
+	private Timestamp  REC_TIMESTAMP;
 
 	public T_BOOK_POJO() {}
 
 	public T_BOOK_POJO(
-		java.lang.Integer    ID,
-		java.lang.Integer    AUTHOR_ID,
-		java.lang.Integer    CO_AUTHOR_ID,
-		java.lang.Integer    DETAILS_ID,
-		java.lang.String     TITLE,
-		java.lang.Integer    PUBLISHED_IN,
-		java.lang.Integer    LANGUAGE_ID,
-		java.lang.String     CONTENT_TEXT,
-		byte[]               CONTENT_PDF,
-		java.math.BigDecimal REC_VERSION,
-		java.sql.Timestamp   REC_TIMESTAMP
+		Integer    ID,
+		Integer    AUTHOR_ID,
+		Integer    CO_AUTHOR_ID,
+		Integer    DETAILS_ID,
+		String     TITLE,
+		Integer    PUBLISHED_IN,
+		Integer    LANGUAGE_ID,
+		String     CONTENT_TEXT,
+		byte[]     CONTENT_PDF,
+		BigDecimal REC_VERSION,
+		Timestamp  REC_TIMESTAMP
 	) {
 		this.ID = ID;
 		this.AUTHOR_ID = AUTHOR_ID;
@@ -53,96 +66,96 @@ public class T_BOOK_POJO extends java.lang.Object implements java.io.Serializabl
 		this.REC_TIMESTAMP = REC_TIMESTAMP;
 	}
 
-	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
+	@Id
+	@Column(name = "ID", unique = true, nullable = false, precision = 7)
 	@Override
-	public java.lang.Integer getID() {
+	public Integer getID() {
 		return this.ID;
 	}
 
 	@Override
-	public void setID(java.lang.Integer ID) {
+	public void setID(Integer ID) {
 		this.ID = ID;
 	}
 
-	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false, precision = 7)
+	@Column(name = "AUTHOR_ID", nullable = false, precision = 7)
 	@Override
-	public java.lang.Integer getAUTHOR_ID() {
+	public Integer getAUTHOR_ID() {
 		return this.AUTHOR_ID;
 	}
 
 	@Override
-	public void setAUTHOR_ID(java.lang.Integer AUTHOR_ID) {
+	public void setAUTHOR_ID(Integer AUTHOR_ID) {
 		this.AUTHOR_ID = AUTHOR_ID;
 	}
 
-	@javax.persistence.Column(name = "CO_AUTHOR_ID", precision = 7)
+	@Column(name = "CO_AUTHOR_ID", precision = 7)
 	@Override
-	public java.lang.Integer getCO_AUTHOR_ID() {
+	public Integer getCO_AUTHOR_ID() {
 		return this.CO_AUTHOR_ID;
 	}
 
 	@Override
-	public void setCO_AUTHOR_ID(java.lang.Integer CO_AUTHOR_ID) {
+	public void setCO_AUTHOR_ID(Integer CO_AUTHOR_ID) {
 		this.CO_AUTHOR_ID = CO_AUTHOR_ID;
 	}
 
-	@javax.persistence.Column(name = "DETAILS_ID", precision = 7)
+	@Column(name = "DETAILS_ID", precision = 7)
 	@Override
-	public java.lang.Integer getDETAILS_ID() {
+	public Integer getDETAILS_ID() {
 		return this.DETAILS_ID;
 	}
 
 	@Override
-	public void setDETAILS_ID(java.lang.Integer DETAILS_ID) {
+	public void setDETAILS_ID(Integer DETAILS_ID) {
 		this.DETAILS_ID = DETAILS_ID;
 	}
 
-	@javax.persistence.Column(name = "TITLE", nullable = false, length = 400)
+	@Column(name = "TITLE", nullable = false, length = 400)
 	@Override
-	public java.lang.String getTITLE() {
+	public String getTITLE() {
 		return this.TITLE;
 	}
 
 	@Override
-	public void setTITLE(java.lang.String TITLE) {
+	public void setTITLE(String TITLE) {
 		this.TITLE = TITLE;
 	}
 
-	@javax.persistence.Column(name = "PUBLISHED_IN", nullable = false, precision = 7)
+	@Column(name = "PUBLISHED_IN", nullable = false, precision = 7)
 	@Override
-	public java.lang.Integer getPUBLISHED_IN() {
+	public Integer getPUBLISHED_IN() {
 		return this.PUBLISHED_IN;
 	}
 
 	@Override
-	public void setPUBLISHED_IN(java.lang.Integer PUBLISHED_IN) {
+	public void setPUBLISHED_IN(Integer PUBLISHED_IN) {
 		this.PUBLISHED_IN = PUBLISHED_IN;
 	}
 
-	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false, precision = 7)
+	@Column(name = "LANGUAGE_ID", nullable = false, precision = 7)
 	@Override
-	public java.lang.Integer getLANGUAGE_ID() {
+	public Integer getLANGUAGE_ID() {
 		return this.LANGUAGE_ID;
 	}
 
 	@Override
-	public void setLANGUAGE_ID(java.lang.Integer LANGUAGE_ID) {
+	public void setLANGUAGE_ID(Integer LANGUAGE_ID) {
 		this.LANGUAGE_ID = LANGUAGE_ID;
 	}
 
-	@javax.persistence.Column(name = "CONTENT_TEXT")
+	@Column(name = "CONTENT_TEXT")
 	@Override
-	public java.lang.String getCONTENT_TEXT() {
+	public String getCONTENT_TEXT() {
 		return this.CONTENT_TEXT;
 	}
 
 	@Override
-	public void setCONTENT_TEXT(java.lang.String CONTENT_TEXT) {
+	public void setCONTENT_TEXT(String CONTENT_TEXT) {
 		this.CONTENT_TEXT = CONTENT_TEXT;
 	}
 
-	@javax.persistence.Column(name = "CONTENT_PDF")
+	@Column(name = "CONTENT_PDF")
 	@Override
 	public byte[] getCONTENT_PDF() {
 		return this.CONTENT_PDF;
@@ -153,25 +166,25 @@ public class T_BOOK_POJO extends java.lang.Object implements java.io.Serializabl
 		this.CONTENT_PDF = CONTENT_PDF;
 	}
 
-	@javax.persistence.Column(name = "REC_VERSION", length = 22)
+	@Column(name = "REC_VERSION")
 	@Override
-	public java.math.BigDecimal getREC_VERSION() {
+	public BigDecimal getREC_VERSION() {
 		return this.REC_VERSION;
 	}
 
 	@Override
-	public void setREC_VERSION(java.math.BigDecimal REC_VERSION) {
+	public void setREC_VERSION(BigDecimal REC_VERSION) {
 		this.REC_VERSION = REC_VERSION;
 	}
 
-	@javax.persistence.Column(name = "REC_TIMESTAMP", length = 11)
+	@Column(name = "REC_TIMESTAMP")
 	@Override
-	public java.sql.Timestamp getREC_TIMESTAMP() {
+	public Timestamp getREC_TIMESTAMP() {
 		return this.REC_TIMESTAMP;
 	}
 
 	@Override
-	public void setREC_TIMESTAMP(java.sql.Timestamp REC_TIMESTAMP) {
+	public void setREC_TIMESTAMP(Timestamp REC_TIMESTAMP) {
 		this.REC_TIMESTAMP = REC_TIMESTAMP;
 	}
 
@@ -183,7 +196,7 @@ public class T_BOOK_POJO extends java.lang.Object implements java.io.Serializabl
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_INTERFACE from) {
+	public void from(T_BOOK_INTERFACE from) {
 		setID(from.getID());
 		setAUTHOR_ID(from.getAUTHOR_ID());
 		setCO_AUTHOR_ID(from.getCO_AUTHOR_ID());
@@ -201,7 +214,7 @@ public class T_BOOK_POJO extends java.lang.Object implements java.io.Serializabl
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_INTERFACE> E into(E into) {
+	public <E extends T_BOOK_INTERFACE> E into(E into) {
 		into.from(this);
 		return into;
 	}

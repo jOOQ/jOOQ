@@ -3,81 +3,97 @@
  */
 package org.jooq.test.oracle3.generatedclasses.tables;
 
+
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.util.Arrays;
+import java.util.List;
+
+import org.jooq.Field;
+import org.jooq.ForeignKey;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.UniqueKey;
+import org.jooq.impl.TableImpl;
+import org.jooq.test.oracle3.generatedclasses.DefaultSchema;
+import org.jooq.test.oracle3.generatedclasses.Keys;
+
+
 /**
  * An entity holding books
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class T_BOOK extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK> implements java.lang.Cloneable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class T_BOOK extends TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK> implements Cloneable {
 
-	private static final long serialVersionUID = 162474202;
+	private static final long serialVersionUID = -1878733176;
 
 	/**
-	 * The singleton instance of <code>T_BOOK</code>
+	 * The reference instance of <code>T_BOOK</code>
 	 */
-	public static final org.jooq.test.oracle3.generatedclasses.tables.T_BOOK T_BOOK = new org.jooq.test.oracle3.generatedclasses.tables.T_BOOK();
+	public static final T_BOOK T_BOOK = new T_BOOK();
 
 	/**
 	 * The class holding records for this type
 	 */
 	@Override
-	public java.lang.Class<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK> getRecordType() {
+	public Class<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK> getRecordType() {
 		return org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK.class;
 	}
 
 	/**
 	 * The column <code>T_BOOK.ID</code>. The book ID
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "The book ID");
+	public final TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "The book ID");
 
 	/**
 	 * The column <code>T_BOOK.AUTHOR_ID</code>. The author ID in entity 'author'
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "The author ID in entity 'author'");
+	public final TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "The author ID in entity 'author'");
 
 	/**
 	 * The column <code>T_BOOK.CO_AUTHOR_ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, java.lang.Integer> CO_AUTHOR_ID = createField("CO_AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, Integer> CO_AUTHOR_ID = createField("CO_AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>T_BOOK.DETAILS_ID</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, java.lang.Integer> DETAILS_ID = createField("DETAILS_ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, Integer> DETAILS_ID = createField("DETAILS_ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>T_BOOK.TITLE</code>. The book's title
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "The book's title");
+	public final TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "The book's title");
 
 	/**
 	 * The column <code>T_BOOK.PUBLISHED_IN</code>. The year the book was published in
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, java.lang.Integer> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "The year the book was published in");
+	public final TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, Integer> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "The year the book was published in");
 
 	/**
 	 * The column <code>T_BOOK.LANGUAGE_ID</code>. The language of the book
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "The language of the book");
+	public final TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "The language of the book");
 
 	/**
 	 * The column <code>T_BOOK.CONTENT_TEXT</code>. Some textual content of the book
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.CLOB, this, "Some textual content of the book");
+	public final TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.CLOB, this, "Some textual content of the book");
 
 	/**
 	 * The column <code>T_BOOK.CONTENT_PDF</code>. Some binary content of the book
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB, this, "Some binary content of the book");
+	public final TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB, this, "Some binary content of the book");
 
 	/**
 	 * The column <code>T_BOOK.REC_VERSION</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, java.math.BigDecimal> REC_VERSION = createField("REC_VERSION", org.jooq.impl.SQLDataType.NUMERIC, this, "");
+	public final TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, BigDecimal> REC_VERSION = createField("REC_VERSION", org.jooq.impl.SQLDataType.NUMERIC, this, "");
 
 	/**
 	 * The column <code>T_BOOK.REC_TIMESTAMP</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, java.sql.Timestamp> REC_TIMESTAMP = createField("REC_TIMESTAMP", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
+	public final TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, Timestamp> REC_TIMESTAMP = createField("REC_TIMESTAMP", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
 	/**
 	 * Create a <code>T_BOOK</code> table reference
@@ -89,54 +105,54 @@ public class T_BOOK extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.genera
 	/**
 	 * Create an aliased <code>T_BOOK</code> table reference
 	 */
-	public T_BOOK(java.lang.String alias) {
-		this(alias, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK);
+	public T_BOOK(String alias) {
+		this(alias, T_BOOK);
 	}
 
-	private T_BOOK(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK> aliased) {
+	private T_BOOK(String alias, Table<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK> aliased) {
 		this(alias, aliased, null);
 	}
 
-	private T_BOOK(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK> aliased, org.jooq.Field<?>[] parameters) {
-		super(alias, org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "An entity holding books");
+	private T_BOOK(String alias, Table<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK> aliased, Field<?>[] parameters) {
+		super(alias, DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "An entity holding books");
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK> getPrimaryKey() {
-		return org.jooq.test.oracle3.generatedclasses.Keys.PK_T_BOOK;
+	public UniqueKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK> getPrimaryKey() {
+		return Keys.PK_T_BOOK;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.util.List<org.jooq.UniqueKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK>>asList(org.jooq.test.oracle3.generatedclasses.Keys.PK_T_BOOK);
+	public List<UniqueKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK>> getKeys() {
+		return Arrays.<UniqueKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK>>asList(Keys.PK_T_BOOK);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.util.List<org.jooq.ForeignKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, ?>>asList(org.jooq.test.oracle3.generatedclasses.Keys.FK_T_BOOK_AUTHOR_ID, org.jooq.test.oracle3.generatedclasses.Keys.FK_T_BOOK_CO_AUTHOR_ID, org.jooq.test.oracle3.generatedclasses.Keys.FK_T_BOOK_LANGUAGE_ID);
+	public List<ForeignKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, ?>> getReferences() {
+		return Arrays.<ForeignKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, ?>>asList(Keys.FK_T_BOOK_AUTHOR_ID, Keys.FK_T_BOOK_CO_AUTHOR_ID, Keys.FK_T_BOOK_LANGUAGE_ID);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.test.oracle3.generatedclasses.tables.T_BOOK as(java.lang.String alias) {
-		return new org.jooq.test.oracle3.generatedclasses.tables.T_BOOK(alias, this);
+	public T_BOOK as(String alias) {
+		return new T_BOOK(alias, this);
 	}
 
 	/**
 	 * Rename this table
 	 */
-	public org.jooq.test.oracle3.generatedclasses.tables.T_BOOK rename(java.lang.String name) {
-		return new org.jooq.test.oracle3.generatedclasses.tables.T_BOOK(name, null);
+	public T_BOOK rename(String name) {
+		return new T_BOOK(name, null);
 	}
 }

@@ -3,6 +3,19 @@
  */
 package org.jooq.test.oracle3.generatedclasses.tables;
 
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.jooq.Field;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.UniqueKey;
+import org.jooq.impl.TableImpl;
+import org.jooq.test.oracle3.generatedclasses.DefaultSchema;
+import org.jooq.test.oracle3.generatedclasses.Keys;
+
+
 /**
  * An entity holding language master data
  * 
@@ -12,43 +25,43 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  * 
  * Oh, and beware of end-of-javadoc * /
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class T_LANGUAGE extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE> implements java.lang.Cloneable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class T_LANGUAGE extends TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE> implements Cloneable {
 
-	private static final long serialVersionUID = 1934731683;
+	private static final long serialVersionUID = -1554584777;
 
 	/**
-	 * The singleton instance of <code>T_LANGUAGE</code>
+	 * The reference instance of <code>T_LANGUAGE</code>
 	 */
-	public static final org.jooq.test.oracle3.generatedclasses.tables.T_LANGUAGE T_LANGUAGE = new org.jooq.test.oracle3.generatedclasses.tables.T_LANGUAGE();
+	public static final T_LANGUAGE T_LANGUAGE = new T_LANGUAGE();
 
 	/**
 	 * The class holding records for this type
 	 */
 	@Override
-	public java.lang.Class<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE> getRecordType() {
+	public Class<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE> getRecordType() {
 		return org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE.class;
 	}
 
 	/**
 	 * The column <code>T_LANGUAGE.CD</code>. The language ISO code
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE, java.lang.String> CD = createField("CD", org.jooq.impl.SQLDataType.CHAR.length(2).nullable(false), this, "The language ISO code");
+	public final TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE, String> CD = createField("CD", org.jooq.impl.SQLDataType.CHAR.length(2).nullable(false), this, "The language ISO code");
 
 	/**
 	 * The column <code>T_LANGUAGE.DESCRIPTION</code>. The language description
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE, java.lang.String> DESCRIPTION = createField("DESCRIPTION", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "The language description");
+	public final TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE, String> DESCRIPTION = createField("DESCRIPTION", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "The language description");
 
 	/**
 	 * The column <code>T_LANGUAGE.DESCRIPTION_ENGLISH</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE, java.lang.String> DESCRIPTION_ENGLISH = createField("DESCRIPTION_ENGLISH", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
+	public final TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE, String> DESCRIPTION_ENGLISH = createField("DESCRIPTION_ENGLISH", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
 	/**
 	 * The column <code>T_LANGUAGE.ID</code>. The language ID
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "The language ID");
+	public final TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE, Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "The language ID");
 
 	/**
 	 * Create a <code>T_LANGUAGE</code> table reference
@@ -60,46 +73,46 @@ public class T_LANGUAGE extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.ge
 	/**
 	 * Create an aliased <code>T_LANGUAGE</code> table reference
 	 */
-	public T_LANGUAGE(java.lang.String alias) {
-		this(alias, org.jooq.test.oracle3.generatedclasses.tables.T_LANGUAGE.T_LANGUAGE);
+	public T_LANGUAGE(String alias) {
+		this(alias, T_LANGUAGE);
 	}
 
-	private T_LANGUAGE(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE> aliased) {
+	private T_LANGUAGE(String alias, Table<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE> aliased) {
 		this(alias, aliased, null);
 	}
 
-	private T_LANGUAGE(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE> aliased, org.jooq.Field<?>[] parameters) {
-		super(alias, org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "An entity holding language master data\n\nOh oh. Newline character.\n\n\"Quotes\". And \\Escaping\\That\\Shouldn't\\Be\\Escaping\n\nOh, and beware of end-of-javadoc */");
+	private T_LANGUAGE(String alias, Table<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE> aliased, Field<?>[] parameters) {
+		super(alias, DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "An entity holding language master data\n\nOh oh. Newline character.\n\n\"Quotes\". And \\Escaping\\That\\Shouldn't\\Be\\Escaping\n\nOh, and beware of end-of-javadoc */");
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE> getPrimaryKey() {
-		return org.jooq.test.oracle3.generatedclasses.Keys.PK_T_LANGUAGE;
+	public UniqueKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE> getPrimaryKey() {
+		return Keys.PK_T_LANGUAGE;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.util.List<org.jooq.UniqueKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE>>asList(org.jooq.test.oracle3.generatedclasses.Keys.PK_T_LANGUAGE);
+	public List<UniqueKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE>> getKeys() {
+		return Arrays.<UniqueKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE>>asList(Keys.PK_T_LANGUAGE);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.test.oracle3.generatedclasses.tables.T_LANGUAGE as(java.lang.String alias) {
-		return new org.jooq.test.oracle3.generatedclasses.tables.T_LANGUAGE(alias, this);
+	public T_LANGUAGE as(String alias) {
+		return new T_LANGUAGE(alias, this);
 	}
 
 	/**
 	 * Rename this table
 	 */
-	public org.jooq.test.oracle3.generatedclasses.tables.T_LANGUAGE rename(java.lang.String name) {
-		return new org.jooq.test.oracle3.generatedclasses.tables.T_LANGUAGE(name, null);
+	public T_LANGUAGE rename(String name) {
+		return new T_LANGUAGE(name, null);
 	}
 }

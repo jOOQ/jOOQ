@@ -3,59 +3,78 @@
  */
 package org.jooq.test.oracle3.generatedclasses;
 
+
+import org.jooq.test.oracle3.generatedclasses.udt.O_INVALID_TYPE;
+import org.jooq.test.oracle3.generatedclasses.udt.U_2155_OBJECT;
+import org.jooq.test.oracle3.generatedclasses.udt.U_3005;
+import org.jooq.test.oracle3.generatedclasses.udt.U_ADDRESS_TYPE;
+import org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE;
+import org.jooq.test.oracle3.generatedclasses.udt.U_BOOK_TYPE;
+import org.jooq.test.oracle3.generatedclasses.udt.U_INVALID_TABLE;
+import org.jooq.test.oracle3.generatedclasses.udt.U_INVALID_TYPE;
+import org.jooq.test.oracle3.generatedclasses.udt.U_NESTED_1;
+import org.jooq.test.oracle3.generatedclasses.udt.U_NESTED_3;
+import org.jooq.test.oracle3.generatedclasses.udt.U_STREET_TYPE;
+
+
 /**
  * Convenience access to all UDTs in 
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UDTs {
 
 	/**
 	 * The type <code>O_INVALID_TYPE</code>
 	 */
-	public static org.jooq.test.oracle3.generatedclasses.udt.O_INVALID_TYPE O_INVALID_TYPE = org.jooq.test.oracle3.generatedclasses.udt.O_INVALID_TYPE.O_INVALID_TYPE;
+	public static O_INVALID_TYPE O_INVALID_TYPE = org.jooq.test.oracle3.generatedclasses.udt.O_INVALID_TYPE.O_INVALID_TYPE;
 
 	/**
 	 * The type <code>U_ADDRESS_TYPE</code>
 	 */
-	public static org.jooq.test.oracle3.generatedclasses.udt.U_ADDRESS_TYPE U_ADDRESS_TYPE = org.jooq.test.oracle3.generatedclasses.udt.U_ADDRESS_TYPE.U_ADDRESS_TYPE;
+	public static U_ADDRESS_TYPE U_ADDRESS_TYPE = org.jooq.test.oracle3.generatedclasses.udt.U_ADDRESS_TYPE.U_ADDRESS_TYPE;
 
 	/**
 	 * The type <code>U_AUTHOR_TYPE</code>
 	 */
-	public static org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE U_AUTHOR_TYPE = org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE.U_AUTHOR_TYPE;
+	public static U_AUTHOR_TYPE U_AUTHOR_TYPE = org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE.U_AUTHOR_TYPE;
 
 	/**
 	 * The type <code>U_BOOK_TYPE</code>
 	 */
-	public static org.jooq.test.oracle3.generatedclasses.udt.U_BOOK_TYPE U_BOOK_TYPE = org.jooq.test.oracle3.generatedclasses.udt.U_BOOK_TYPE.U_BOOK_TYPE;
+	public static U_BOOK_TYPE U_BOOK_TYPE = org.jooq.test.oracle3.generatedclasses.udt.U_BOOK_TYPE.U_BOOK_TYPE;
 
 	/**
 	 * The type <code>U_INVALID_TABLE</code>
 	 */
-	public static org.jooq.test.oracle3.generatedclasses.udt.U_INVALID_TABLE U_INVALID_TABLE = org.jooq.test.oracle3.generatedclasses.udt.U_INVALID_TABLE.U_INVALID_TABLE;
+	public static U_INVALID_TABLE U_INVALID_TABLE = org.jooq.test.oracle3.generatedclasses.udt.U_INVALID_TABLE.U_INVALID_TABLE;
 
 	/**
 	 * The type <code>U_INVALID_TYPE</code>
 	 */
-	public static org.jooq.test.oracle3.generatedclasses.udt.U_INVALID_TYPE U_INVALID_TYPE = org.jooq.test.oracle3.generatedclasses.udt.U_INVALID_TYPE.U_INVALID_TYPE;
+	public static U_INVALID_TYPE U_INVALID_TYPE = org.jooq.test.oracle3.generatedclasses.udt.U_INVALID_TYPE.U_INVALID_TYPE;
 
 	/**
 	 * The type <code>U_NESTED_1</code>
 	 */
-	public static org.jooq.test.oracle3.generatedclasses.udt.U_NESTED_1 U_NESTED_1 = org.jooq.test.oracle3.generatedclasses.udt.U_NESTED_1.U_NESTED_1;
+	public static U_NESTED_1 U_NESTED_1 = org.jooq.test.oracle3.generatedclasses.udt.U_NESTED_1.U_NESTED_1;
 
 	/**
 	 * The type <code>U_NESTED_3</code>
 	 */
-	public static org.jooq.test.oracle3.generatedclasses.udt.U_NESTED_3 U_NESTED_3 = org.jooq.test.oracle3.generatedclasses.udt.U_NESTED_3.U_NESTED_3;
+	public static U_NESTED_3 U_NESTED_3 = org.jooq.test.oracle3.generatedclasses.udt.U_NESTED_3.U_NESTED_3;
 
 	/**
 	 * The type <code>U_STREET_TYPE</code>
 	 */
-	public static org.jooq.test.oracle3.generatedclasses.udt.U_STREET_TYPE U_STREET_TYPE = org.jooq.test.oracle3.generatedclasses.udt.U_STREET_TYPE.U_STREET_TYPE;
+	public static U_STREET_TYPE U_STREET_TYPE = org.jooq.test.oracle3.generatedclasses.udt.U_STREET_TYPE.U_STREET_TYPE;
+
+	/**
+	 * The type <code>U_2155_OBJECT</code>
+	 */
+	public static U_2155_OBJECT U_2155_OBJECT = org.jooq.test.oracle3.generatedclasses.udt.U_2155_OBJECT.U_2155_OBJECT;
 
 	/**
 	 * The type <code>U_3005</code>
 	 */
-	public static org.jooq.test.oracle3.generatedclasses.udt.U_3005 U_3005 = org.jooq.test.oracle3.generatedclasses.udt.U_3005.U_3005;
+	public static U_3005 U_3005 = org.jooq.test.oracle3.generatedclasses.udt.U_3005.U_3005;
 }

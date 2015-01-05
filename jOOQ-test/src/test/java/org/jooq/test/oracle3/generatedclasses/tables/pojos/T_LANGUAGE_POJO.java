@@ -3,6 +3,15 @@
  */
 package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_LANGUAGE_INTERFACE;
+
+
 /**
  * An entity holding language master data
  * 
@@ -12,25 +21,25 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
  * 
  * Oh, and beware of end-of-javadoc * /
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-@javax.persistence.Entity
-@javax.persistence.Table(name = "T_LANGUAGE")
-public class T_LANGUAGE_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_LANGUAGE_INTERFACE {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@Entity
+@Table(name = "T_LANGUAGE")
+public class T_LANGUAGE_POJO extends ThreadDeath implements Cloneable, T_LANGUAGE_INTERFACE {
 
-	private static final long serialVersionUID = 1521639079;
+	private static final long serialVersionUID = 1944764129;
 
-	private java.lang.String  CD;
-	private java.lang.String  DESCRIPTION;
-	private java.lang.String  DESCRIPTION_ENGLISH;
-	private java.lang.Integer ID;
+	private String  CD;
+	private String  DESCRIPTION;
+	private String  DESCRIPTION_ENGLISH;
+	private Integer ID;
 
 	public T_LANGUAGE_POJO() {}
 
 	public T_LANGUAGE_POJO(
-		java.lang.String  CD,
-		java.lang.String  DESCRIPTION,
-		java.lang.String  DESCRIPTION_ENGLISH,
-		java.lang.Integer ID
+		String  CD,
+		String  DESCRIPTION,
+		String  DESCRIPTION_ENGLISH,
+		Integer ID
 	) {
 		this.CD = CD;
 		this.DESCRIPTION = DESCRIPTION;
@@ -38,48 +47,48 @@ public class T_LANGUAGE_POJO extends java.lang.ThreadDeath implements java.lang.
 		this.ID = ID;
 	}
 
-	@javax.persistence.Column(name = "CD", nullable = false, length = 2)
+	@Column(name = "CD", nullable = false, length = 2)
 	@Override
-	public java.lang.String getCD() {
+	public String getCD() {
 		return this.CD;
 	}
 
 	@Override
-	public void setCD(java.lang.String CD) {
+	public void setCD(String CD) {
 		this.CD = CD;
 	}
 
-	@javax.persistence.Column(name = "DESCRIPTION", length = 50)
+	@Column(name = "DESCRIPTION", length = 50)
 	@Override
-	public java.lang.String getDESCRIPTION() {
+	public String getDESCRIPTION() {
 		return this.DESCRIPTION;
 	}
 
 	@Override
-	public void setDESCRIPTION(java.lang.String DESCRIPTION) {
+	public void setDESCRIPTION(String DESCRIPTION) {
 		this.DESCRIPTION = DESCRIPTION;
 	}
 
-	@javax.persistence.Column(name = "DESCRIPTION_ENGLISH", length = 50)
+	@Column(name = "DESCRIPTION_ENGLISH", length = 50)
 	@Override
-	public java.lang.String getDESCRIPTION_ENGLISH() {
+	public String getDESCRIPTION_ENGLISH() {
 		return this.DESCRIPTION_ENGLISH;
 	}
 
 	@Override
-	public void setDESCRIPTION_ENGLISH(java.lang.String DESCRIPTION_ENGLISH) {
+	public void setDESCRIPTION_ENGLISH(String DESCRIPTION_ENGLISH) {
 		this.DESCRIPTION_ENGLISH = DESCRIPTION_ENGLISH;
 	}
 
-	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
+	@Id
+	@Column(name = "ID", unique = true, nullable = false, precision = 7)
 	@Override
-	public java.lang.Integer getID() {
+	public Integer getID() {
 		return this.ID;
 	}
 
 	@Override
-	public void setID(java.lang.Integer ID) {
+	public void setID(Integer ID) {
 		this.ID = ID;
 	}
 
@@ -91,7 +100,7 @@ public class T_LANGUAGE_POJO extends java.lang.ThreadDeath implements java.lang.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_LANGUAGE_INTERFACE from) {
+	public void from(T_LANGUAGE_INTERFACE from) {
 		setCD(from.getCD());
 		setDESCRIPTION(from.getDESCRIPTION());
 		setDESCRIPTION_ENGLISH(from.getDESCRIPTION_ENGLISH());
@@ -102,7 +111,7 @@ public class T_LANGUAGE_POJO extends java.lang.ThreadDeath implements java.lang.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_LANGUAGE_INTERFACE> E into(E into) {
+	public <E extends T_LANGUAGE_INTERFACE> E into(E into) {
 		into.from(this);
 		return into;
 	}

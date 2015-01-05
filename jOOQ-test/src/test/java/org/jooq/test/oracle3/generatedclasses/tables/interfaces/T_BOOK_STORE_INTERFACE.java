@@ -3,25 +3,34 @@
  */
 package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
 
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
 /**
  * A book store
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-@javax.persistence.Entity
-@javax.persistence.Table(name = "T_BOOK_STORE")
-public interface T_BOOK_STORE_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@Entity
+@Table(name = "T_BOOK_STORE")
+public interface T_BOOK_STORE_INTERFACE extends Cloneable, Serializable {
 
 	/**
 	 * Setter for <code>T_BOOK_STORE.NAME</code>. The books store name
 	 */
-	public void setNAME(java.lang.String value);
+	public void setNAME(String value);
 
 	/**
 	 * Getter for <code>T_BOOK_STORE.NAME</code>. The books store name
 	 */
-	@javax.persistence.Id
-	@javax.persistence.Column(name = "NAME", unique = true, nullable = false, length = 400)
-	public java.lang.String getNAME();
+	@Id
+	@Column(name = "NAME", unique = true, nullable = false, length = 400)
+	public String getNAME();
 
 	// -------------------------------------------------------------------------
 	// FROM and INTO

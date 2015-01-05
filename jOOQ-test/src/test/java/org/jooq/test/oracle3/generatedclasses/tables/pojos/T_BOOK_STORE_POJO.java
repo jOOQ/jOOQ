@@ -3,35 +3,46 @@
  */
 package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_STORE_INTERFACE;
+
+
 /**
  * A book store
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-@javax.persistence.Entity
-@javax.persistence.Table(name = "T_BOOK_STORE")
-public class T_BOOK_STORE_POJO extends java.lang.Object implements java.io.Serializable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_STORE_INTERFACE {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@Entity
+@Table(name = "T_BOOK_STORE")
+public class T_BOOK_STORE_POJO extends Object implements Serializable, T_BOOK_STORE_INTERFACE {
 
-	private static final long serialVersionUID = 1846186867;
+	private static final long serialVersionUID = -1165783410;
 
-	private java.lang.String NAME;
+	private String NAME;
 
 	public T_BOOK_STORE_POJO() {}
 
 	public T_BOOK_STORE_POJO(
-		java.lang.String NAME
+		String NAME
 	) {
 		this.NAME = NAME;
 	}
 
-	@javax.persistence.Id
-	@javax.persistence.Column(name = "NAME", unique = true, nullable = false, length = 400)
+	@Id
+	@Column(name = "NAME", unique = true, nullable = false, length = 400)
 	@Override
-	public java.lang.String getNAME() {
+	public String getNAME() {
 		return this.NAME;
 	}
 
 	@Override
-	public void setNAME(java.lang.String NAME) {
+	public void setNAME(String NAME) {
 		this.NAME = NAME;
 	}
 
@@ -43,7 +54,7 @@ public class T_BOOK_STORE_POJO extends java.lang.Object implements java.io.Seria
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_STORE_INTERFACE from) {
+	public void from(T_BOOK_STORE_INTERFACE from) {
 		setNAME(from.getNAME());
 	}
 
@@ -51,7 +62,7 @@ public class T_BOOK_STORE_POJO extends java.lang.Object implements java.io.Seria
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_STORE_INTERFACE> E into(E into) {
+	public <E extends T_BOOK_STORE_INTERFACE> E into(E into) {
 		into.from(this);
 		return into;
 	}

@@ -3,24 +3,38 @@
  */
 package org.jooq.test.oracle3.generatedclasses.packages;
 
+
+import org.jooq.Configuration;
+import org.jooq.Field;
+import org.jooq.impl.PackageImpl;
+import org.jooq.test.oracle3.generatedclasses.DefaultSchema;
+import org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.ACTUAL_OBJECT;
+import org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.ACTUAL_TABLE;
+import org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.PUBLIC_OBJECT;
+import org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.PUBLIC_TABLE;
+import org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.TEST_OBJECT;
+import org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.TEST_TABLE;
+import org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.TEST_TRANSITIVE;
+
+
 /**
  * Convenience access to all stored procedures and functions in TEST_SYNONYM_PACKAGE
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TEST_SYNONYM_PACKAGE extends org.jooq.impl.PackageImpl implements java.lang.Cloneable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class TEST_SYNONYM_PACKAGE extends PackageImpl implements Cloneable {
 
-	private static final long serialVersionUID = -63232135;
+	private static final long serialVersionUID = -1619491959;
 
 	/**
-	 * The singleton instance of <code>TEST_SYNONYM_PACKAGE</code>
+	 * The reference instance of <code>TEST_SYNONYM_PACKAGE</code>
 	 */
-	public static final org.jooq.test.oracle3.generatedclasses.packages.TEST_SYNONYM_PACKAGE TEST_SYNONYM_PACKAGE = new org.jooq.test.oracle3.generatedclasses.packages.TEST_SYNONYM_PACKAGE();
+	public static final TEST_SYNONYM_PACKAGE TEST_SYNONYM_PACKAGE = new TEST_SYNONYM_PACKAGE();
 
 	/**
 	 * Call <code>TEST_SYNONYM_PACKAGE.ACTUAL_OBJECT</code>
 	 */
-	public static java.lang.Object call_ACTUAL_OBJECT(org.jooq.Configuration configuration) {
-		org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.ACTUAL_OBJECT f = new org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.ACTUAL_OBJECT();
+	public static Object call_ACTUAL_OBJECT(Configuration configuration) {
+		ACTUAL_OBJECT f = new ACTUAL_OBJECT();
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -29,8 +43,8 @@ public class TEST_SYNONYM_PACKAGE extends org.jooq.impl.PackageImpl implements j
 	/**
 	 * Get <code>TEST_SYNONYM_PACKAGE.ACTUAL_OBJECT</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Object> call_ACTUAL_OBJECT() {
-		org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.ACTUAL_OBJECT f = new org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.ACTUAL_OBJECT();
+	public static Field<Object> call_ACTUAL_OBJECT() {
+		ACTUAL_OBJECT f = new ACTUAL_OBJECT();
 
 		return f.asField();
 	}
@@ -38,8 +52,8 @@ public class TEST_SYNONYM_PACKAGE extends org.jooq.impl.PackageImpl implements j
 	/**
 	 * Call <code>TEST_SYNONYM_PACKAGE.ACTUAL_TABLE</code>
 	 */
-	public static java.lang.Object call_ACTUAL_TABLE(org.jooq.Configuration configuration) {
-		org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.ACTUAL_TABLE f = new org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.ACTUAL_TABLE();
+	public static Object call_ACTUAL_TABLE(Configuration configuration) {
+		ACTUAL_TABLE f = new ACTUAL_TABLE();
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -48,8 +62,8 @@ public class TEST_SYNONYM_PACKAGE extends org.jooq.impl.PackageImpl implements j
 	/**
 	 * Get <code>TEST_SYNONYM_PACKAGE.ACTUAL_TABLE</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Object> call_ACTUAL_TABLE() {
-		org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.ACTUAL_TABLE f = new org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.ACTUAL_TABLE();
+	public static Field<Object> call_ACTUAL_TABLE() {
+		ACTUAL_TABLE f = new ACTUAL_TABLE();
 
 		return f.asField();
 	}
@@ -57,8 +71,8 @@ public class TEST_SYNONYM_PACKAGE extends org.jooq.impl.PackageImpl implements j
 	/**
 	 * Call <code>TEST_SYNONYM_PACKAGE.PUBLIC_OBJECT</code>
 	 */
-	public static java.lang.Object call_PUBLIC_OBJECT(org.jooq.Configuration configuration) {
-		org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.PUBLIC_OBJECT f = new org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.PUBLIC_OBJECT();
+	public static Object call_PUBLIC_OBJECT(Configuration configuration) {
+		PUBLIC_OBJECT f = new PUBLIC_OBJECT();
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -67,8 +81,8 @@ public class TEST_SYNONYM_PACKAGE extends org.jooq.impl.PackageImpl implements j
 	/**
 	 * Get <code>TEST_SYNONYM_PACKAGE.PUBLIC_OBJECT</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Object> call_PUBLIC_OBJECT() {
-		org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.PUBLIC_OBJECT f = new org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.PUBLIC_OBJECT();
+	public static Field<Object> call_PUBLIC_OBJECT() {
+		PUBLIC_OBJECT f = new PUBLIC_OBJECT();
 
 		return f.asField();
 	}
@@ -76,8 +90,8 @@ public class TEST_SYNONYM_PACKAGE extends org.jooq.impl.PackageImpl implements j
 	/**
 	 * Call <code>TEST_SYNONYM_PACKAGE.PUBLIC_TABLE</code>
 	 */
-	public static java.lang.Object call_PUBLIC_TABLE(org.jooq.Configuration configuration) {
-		org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.PUBLIC_TABLE f = new org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.PUBLIC_TABLE();
+	public static Object call_PUBLIC_TABLE(Configuration configuration) {
+		PUBLIC_TABLE f = new PUBLIC_TABLE();
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -86,8 +100,8 @@ public class TEST_SYNONYM_PACKAGE extends org.jooq.impl.PackageImpl implements j
 	/**
 	 * Get <code>TEST_SYNONYM_PACKAGE.PUBLIC_TABLE</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Object> call_PUBLIC_TABLE() {
-		org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.PUBLIC_TABLE f = new org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.PUBLIC_TABLE();
+	public static Field<Object> call_PUBLIC_TABLE() {
+		PUBLIC_TABLE f = new PUBLIC_TABLE();
 
 		return f.asField();
 	}
@@ -95,8 +109,8 @@ public class TEST_SYNONYM_PACKAGE extends org.jooq.impl.PackageImpl implements j
 	/**
 	 * Call <code>TEST_SYNONYM_PACKAGE.TEST_OBJECT</code>
 	 */
-	public static java.lang.Object call_TEST_OBJECT(org.jooq.Configuration configuration) {
-		org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.TEST_OBJECT f = new org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.TEST_OBJECT();
+	public static Object call_TEST_OBJECT(Configuration configuration) {
+		TEST_OBJECT f = new TEST_OBJECT();
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -105,8 +119,8 @@ public class TEST_SYNONYM_PACKAGE extends org.jooq.impl.PackageImpl implements j
 	/**
 	 * Get <code>TEST_SYNONYM_PACKAGE.TEST_OBJECT</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Object> call_TEST_OBJECT() {
-		org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.TEST_OBJECT f = new org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.TEST_OBJECT();
+	public static Field<Object> call_TEST_OBJECT() {
+		TEST_OBJECT f = new TEST_OBJECT();
 
 		return f.asField();
 	}
@@ -114,8 +128,8 @@ public class TEST_SYNONYM_PACKAGE extends org.jooq.impl.PackageImpl implements j
 	/**
 	 * Call <code>TEST_SYNONYM_PACKAGE.TEST_TABLE</code>
 	 */
-	public static java.lang.Object call_TEST_TABLE(org.jooq.Configuration configuration) {
-		org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.TEST_TABLE f = new org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.TEST_TABLE();
+	public static Object call_TEST_TABLE(Configuration configuration) {
+		TEST_TABLE f = new TEST_TABLE();
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -124,8 +138,8 @@ public class TEST_SYNONYM_PACKAGE extends org.jooq.impl.PackageImpl implements j
 	/**
 	 * Get <code>TEST_SYNONYM_PACKAGE.TEST_TABLE</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Object> call_TEST_TABLE() {
-		org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.TEST_TABLE f = new org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.TEST_TABLE();
+	public static Field<Object> call_TEST_TABLE() {
+		TEST_TABLE f = new TEST_TABLE();
 
 		return f.asField();
 	}
@@ -133,8 +147,8 @@ public class TEST_SYNONYM_PACKAGE extends org.jooq.impl.PackageImpl implements j
 	/**
 	 * Call <code>TEST_SYNONYM_PACKAGE.TEST_TRANSITIVE</code>
 	 */
-	public static java.lang.Object call_TEST_TRANSITIVE(org.jooq.Configuration configuration) {
-		org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.TEST_TRANSITIVE f = new org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.TEST_TRANSITIVE();
+	public static Object call_TEST_TRANSITIVE(Configuration configuration) {
+		TEST_TRANSITIVE f = new TEST_TRANSITIVE();
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -143,8 +157,8 @@ public class TEST_SYNONYM_PACKAGE extends org.jooq.impl.PackageImpl implements j
 	/**
 	 * Get <code>TEST_SYNONYM_PACKAGE.TEST_TRANSITIVE</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Object> call_TEST_TRANSITIVE() {
-		org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.TEST_TRANSITIVE f = new org.jooq.test.oracle3.generatedclasses.packages.test_synonym_package.TEST_TRANSITIVE();
+	public static Field<Object> call_TEST_TRANSITIVE() {
+		TEST_TRANSITIVE f = new TEST_TRANSITIVE();
 
 		return f.asField();
 	}
@@ -153,6 +167,6 @@ public class TEST_SYNONYM_PACKAGE extends org.jooq.impl.PackageImpl implements j
 	 * No further instances allowed
 	 */
 	private TEST_SYNONYM_PACKAGE() {
-		super("TEST_SYNONYM_PACKAGE", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		super("TEST_SYNONYM_PACKAGE", DefaultSchema.DEFAULT_SCHEMA);
 	}
 }

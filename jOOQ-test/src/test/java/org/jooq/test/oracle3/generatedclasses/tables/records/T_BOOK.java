@@ -3,151 +3,169 @@
  */
 package org.jooq.test.oracle3.generatedclasses.tables.records;
 
+
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.jooq.Field;
+import org.jooq.Record1;
+import org.jooq.Record11;
+import org.jooq.Row;
+import org.jooq.Row11;
+import org.jooq.impl.UpdatableRecordImpl;
+import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_INTERFACE;
+
+
 /**
  * An entity holding books
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-@javax.persistence.Entity
-@javax.persistence.Table(name = "T_BOOK")
-public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK> implements java.lang.Cloneable, org.jooq.Record11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.math.BigDecimal, java.sql.Timestamp>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_INTERFACE {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@Entity
+@Table(name = "T_BOOK")
+public class T_BOOK extends UpdatableRecordImpl<T_BOOK> implements Cloneable, Record11<Integer, Integer, Integer, Integer, String, Integer, Integer, String, byte[], BigDecimal, Timestamp>, T_BOOK_INTERFACE {
 
-	private static final long serialVersionUID = 231854979;
+	private static final long serialVersionUID = -1784627509;
 
 	/**
 	 * Setter for <code>T_BOOK.ID</code>. The book ID
 	 */
 	@Override
-	public void setID(java.lang.Integer value) {
+	public void setID(Integer value) {
 		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>T_BOOK.ID</code>. The book ID
 	 */
-	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
+	@Id
+	@Column(name = "ID", unique = true, nullable = false, precision = 7)
 	@Override
-	public java.lang.Integer getID() {
-		return (java.lang.Integer) getValue(0);
+	public Integer getID() {
+		return (Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>T_BOOK.AUTHOR_ID</code>. The author ID in entity 'author'
 	 */
 	@Override
-	public void setAUTHOR_ID(java.lang.Integer value) {
+	public void setAUTHOR_ID(Integer value) {
 		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>T_BOOK.AUTHOR_ID</code>. The author ID in entity 'author'
 	 */
-	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false, precision = 7)
+	@Column(name = "AUTHOR_ID", nullable = false, precision = 7)
 	@Override
-	public java.lang.Integer getAUTHOR_ID() {
-		return (java.lang.Integer) getValue(1);
+	public Integer getAUTHOR_ID() {
+		return (Integer) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>T_BOOK.CO_AUTHOR_ID</code>.
 	 */
 	@Override
-	public void setCO_AUTHOR_ID(java.lang.Integer value) {
+	public void setCO_AUTHOR_ID(Integer value) {
 		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>T_BOOK.CO_AUTHOR_ID</code>.
 	 */
-	@javax.persistence.Column(name = "CO_AUTHOR_ID", precision = 7)
+	@Column(name = "CO_AUTHOR_ID", precision = 7)
 	@Override
-	public java.lang.Integer getCO_AUTHOR_ID() {
-		return (java.lang.Integer) getValue(2);
+	public Integer getCO_AUTHOR_ID() {
+		return (Integer) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>T_BOOK.DETAILS_ID</code>.
 	 */
 	@Override
-	public void setDETAILS_ID(java.lang.Integer value) {
+	public void setDETAILS_ID(Integer value) {
 		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>T_BOOK.DETAILS_ID</code>.
 	 */
-	@javax.persistence.Column(name = "DETAILS_ID", precision = 7)
+	@Column(name = "DETAILS_ID", precision = 7)
 	@Override
-	public java.lang.Integer getDETAILS_ID() {
-		return (java.lang.Integer) getValue(3);
+	public Integer getDETAILS_ID() {
+		return (Integer) getValue(3);
 	}
 
 	/**
 	 * Setter for <code>T_BOOK.TITLE</code>. The book's title
 	 */
 	@Override
-	public void setTITLE(java.lang.String value) {
+	public void setTITLE(String value) {
 		setValue(4, value);
 	}
 
 	/**
 	 * Getter for <code>T_BOOK.TITLE</code>. The book's title
 	 */
-	@javax.persistence.Column(name = "TITLE", nullable = false, length = 400)
+	@Column(name = "TITLE", nullable = false, length = 400)
 	@Override
-	public java.lang.String getTITLE() {
-		return (java.lang.String) getValue(4);
+	public String getTITLE() {
+		return (String) getValue(4);
 	}
 
 	/**
 	 * Setter for <code>T_BOOK.PUBLISHED_IN</code>. The year the book was published in
 	 */
 	@Override
-	public void setPUBLISHED_IN(java.lang.Integer value) {
+	public void setPUBLISHED_IN(Integer value) {
 		setValue(5, value);
 	}
 
 	/**
 	 * Getter for <code>T_BOOK.PUBLISHED_IN</code>. The year the book was published in
 	 */
-	@javax.persistence.Column(name = "PUBLISHED_IN", nullable = false, precision = 7)
+	@Column(name = "PUBLISHED_IN", nullable = false, precision = 7)
 	@Override
-	public java.lang.Integer getPUBLISHED_IN() {
-		return (java.lang.Integer) getValue(5);
+	public Integer getPUBLISHED_IN() {
+		return (Integer) getValue(5);
 	}
 
 	/**
 	 * Setter for <code>T_BOOK.LANGUAGE_ID</code>. The language of the book
 	 */
 	@Override
-	public void setLANGUAGE_ID(java.lang.Integer value) {
+	public void setLANGUAGE_ID(Integer value) {
 		setValue(6, value);
 	}
 
 	/**
 	 * Getter for <code>T_BOOK.LANGUAGE_ID</code>. The language of the book
 	 */
-	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false, precision = 7)
+	@Column(name = "LANGUAGE_ID", nullable = false, precision = 7)
 	@Override
-	public java.lang.Integer getLANGUAGE_ID() {
-		return (java.lang.Integer) getValue(6);
+	public Integer getLANGUAGE_ID() {
+		return (Integer) getValue(6);
 	}
 
 	/**
 	 * Setter for <code>T_BOOK.CONTENT_TEXT</code>. Some textual content of the book
 	 */
 	@Override
-	public void setCONTENT_TEXT(java.lang.String value) {
+	public void setCONTENT_TEXT(String value) {
 		setValue(7, value);
 	}
 
 	/**
 	 * Getter for <code>T_BOOK.CONTENT_TEXT</code>. Some textual content of the book
 	 */
-	@javax.persistence.Column(name = "CONTENT_TEXT")
+	@Column(name = "CONTENT_TEXT")
 	@Override
-	public java.lang.String getCONTENT_TEXT() {
-		return (java.lang.String) getValue(7);
+	public String getCONTENT_TEXT() {
+		return (String) getValue(7);
 	}
 
 	/**
@@ -161,7 +179,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	/**
 	 * Getter for <code>T_BOOK.CONTENT_PDF</code>. Some binary content of the book
 	 */
-	@javax.persistence.Column(name = "CONTENT_PDF")
+	@Column(name = "CONTENT_PDF")
 	@Override
 	public byte[] getCONTENT_PDF() {
 		return (byte[]) getValue(8);
@@ -171,34 +189,34 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * Setter for <code>T_BOOK.REC_VERSION</code>.
 	 */
 	@Override
-	public void setREC_VERSION(java.math.BigDecimal value) {
+	public void setREC_VERSION(BigDecimal value) {
 		setValue(9, value);
 	}
 
 	/**
 	 * Getter for <code>T_BOOK.REC_VERSION</code>.
 	 */
-	@javax.persistence.Column(name = "REC_VERSION", length = 22)
+	@Column(name = "REC_VERSION")
 	@Override
-	public java.math.BigDecimal getREC_VERSION() {
-		return (java.math.BigDecimal) getValue(9);
+	public BigDecimal getREC_VERSION() {
+		return (BigDecimal) getValue(9);
 	}
 
 	/**
 	 * Setter for <code>T_BOOK.REC_TIMESTAMP</code>.
 	 */
 	@Override
-	public void setREC_TIMESTAMP(java.sql.Timestamp value) {
+	public void setREC_TIMESTAMP(Timestamp value) {
 		setValue(10, value);
 	}
 
 	/**
 	 * Getter for <code>T_BOOK.REC_TIMESTAMP</code>.
 	 */
-	@javax.persistence.Column(name = "REC_TIMESTAMP", length = 11)
+	@Column(name = "REC_TIMESTAMP")
 	@Override
-	public java.sql.Timestamp getREC_TIMESTAMP() {
-		return (java.sql.Timestamp) getValue(10);
+	public Timestamp getREC_TIMESTAMP() {
+		return (Timestamp) getValue(10);
 	}
 
 	// -------------------------------------------------------------------------
@@ -209,8 +227,8 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Record1<java.lang.Integer> key() {
-		return (org.jooq.Record1) super.key();
+	public Record1<Integer> key() {
+		return (Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -221,23 +239,23 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.math.BigDecimal, java.sql.Timestamp> fieldsRow() {
-		return (org.jooq.Row11) super.fieldsRow();
+	public Row11<Integer, Integer, Integer, Integer, String, Integer, Integer, String, byte[], BigDecimal, Timestamp> fieldsRow() {
+		return (Row11) super.fieldsRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.math.BigDecimal, java.sql.Timestamp> valuesRow() {
-		return (org.jooq.Row11) super.valuesRow();
+	public Row11<Integer, Integer, Integer, Integer, String, Integer, Integer, String, byte[], BigDecimal, Timestamp> valuesRow() {
+		return (Row11) super.valuesRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.Integer> field1() {
+	public Field<Integer> field1() {
 		return org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.ID;
 	}
 
@@ -245,7 +263,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.Integer> field2() {
+	public Field<Integer> field2() {
 		return org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.AUTHOR_ID;
 	}
 
@@ -253,7 +271,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.Integer> field3() {
+	public Field<Integer> field3() {
 		return org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.CO_AUTHOR_ID;
 	}
 
@@ -261,7 +279,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.Integer> field4() {
+	public Field<Integer> field4() {
 		return org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.DETAILS_ID;
 	}
 
@@ -269,7 +287,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.String> field5() {
+	public Field<String> field5() {
 		return org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.TITLE;
 	}
 
@@ -277,7 +295,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.Integer> field6() {
+	public Field<Integer> field6() {
 		return org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.PUBLISHED_IN;
 	}
 
@@ -285,7 +303,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.Integer> field7() {
+	public Field<Integer> field7() {
 		return org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.LANGUAGE_ID;
 	}
 
@@ -293,7 +311,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.String> field8() {
+	public Field<String> field8() {
 		return org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.CONTENT_TEXT;
 	}
 
@@ -301,7 +319,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<byte[]> field9() {
+	public Field<byte[]> field9() {
 		return org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.CONTENT_PDF;
 	}
 
@@ -309,7 +327,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.math.BigDecimal> field10() {
+	public Field<BigDecimal> field10() {
 		return org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.REC_VERSION;
 	}
 
@@ -317,7 +335,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.sql.Timestamp> field11() {
+	public Field<Timestamp> field11() {
 		return org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.REC_TIMESTAMP;
 	}
 
@@ -325,7 +343,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.Integer value1() {
+	public Integer value1() {
 		return getID();
 	}
 
@@ -333,7 +351,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.Integer value2() {
+	public Integer value2() {
 		return getAUTHOR_ID();
 	}
 
@@ -341,7 +359,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.Integer value3() {
+	public Integer value3() {
 		return getCO_AUTHOR_ID();
 	}
 
@@ -349,7 +367,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.Integer value4() {
+	public Integer value4() {
 		return getDETAILS_ID();
 	}
 
@@ -357,7 +375,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.String value5() {
+	public String value5() {
 		return getTITLE();
 	}
 
@@ -365,7 +383,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.Integer value6() {
+	public Integer value6() {
 		return getPUBLISHED_IN();
 	}
 
@@ -373,7 +391,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.Integer value7() {
+	public Integer value7() {
 		return getLANGUAGE_ID();
 	}
 
@@ -381,7 +399,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.String value8() {
+	public String value8() {
 		return getCONTENT_TEXT();
 	}
 
@@ -397,7 +415,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.math.BigDecimal value10() {
+	public BigDecimal value10() {
 		return getREC_VERSION();
 	}
 
@@ -405,7 +423,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.sql.Timestamp value11() {
+	public Timestamp value11() {
 		return getREC_TIMESTAMP();
 	}
 
@@ -413,7 +431,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T_BOOK value1(java.lang.Integer value) {
+	public T_BOOK value1(Integer value) {
 		setID(value);
 		return this;
 	}
@@ -422,7 +440,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T_BOOK value2(java.lang.Integer value) {
+	public T_BOOK value2(Integer value) {
 		setAUTHOR_ID(value);
 		return this;
 	}
@@ -431,7 +449,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T_BOOK value3(java.lang.Integer value) {
+	public T_BOOK value3(Integer value) {
 		setCO_AUTHOR_ID(value);
 		return this;
 	}
@@ -440,7 +458,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T_BOOK value4(java.lang.Integer value) {
+	public T_BOOK value4(Integer value) {
 		setDETAILS_ID(value);
 		return this;
 	}
@@ -449,7 +467,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T_BOOK value5(java.lang.String value) {
+	public T_BOOK value5(String value) {
 		setTITLE(value);
 		return this;
 	}
@@ -458,7 +476,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T_BOOK value6(java.lang.Integer value) {
+	public T_BOOK value6(Integer value) {
 		setPUBLISHED_IN(value);
 		return this;
 	}
@@ -467,7 +485,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T_BOOK value7(java.lang.Integer value) {
+	public T_BOOK value7(Integer value) {
 		setLANGUAGE_ID(value);
 		return this;
 	}
@@ -476,7 +494,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T_BOOK value8(java.lang.String value) {
+	public T_BOOK value8(String value) {
 		setCONTENT_TEXT(value);
 		return this;
 	}
@@ -494,7 +512,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T_BOOK value10(java.math.BigDecimal value) {
+	public T_BOOK value10(BigDecimal value) {
 		setREC_VERSION(value);
 		return this;
 	}
@@ -503,7 +521,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T_BOOK value11(java.sql.Timestamp value) {
+	public T_BOOK value11(Timestamp value) {
 		setREC_TIMESTAMP(value);
 		return this;
 	}
@@ -512,7 +530,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T_BOOK values(java.lang.Integer value1, java.lang.Integer value2, java.lang.Integer value3, java.lang.Integer value4, java.lang.String value5, java.lang.Integer value6, java.lang.Integer value7, java.lang.String value8, byte[] value9, java.math.BigDecimal value10, java.sql.Timestamp value11) {
+	public T_BOOK values(Integer value1, Integer value2, Integer value3, Integer value4, String value5, Integer value6, Integer value7, String value8, byte[] value9, BigDecimal value10, Timestamp value11) {
 		return this;
 	}
 
@@ -524,7 +542,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_INTERFACE from) {
+	public void from(T_BOOK_INTERFACE from) {
 		setID(from.getID());
 		setAUTHOR_ID(from.getAUTHOR_ID());
 		setCO_AUTHOR_ID(from.getCO_AUTHOR_ID());
@@ -542,7 +560,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_INTERFACE> E into(E into) {
+	public <E extends T_BOOK_INTERFACE> E into(E into) {
 		into.from(this);
 		return into;
 	}
@@ -561,7 +579,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	/**
 	 * Create a detached, initialised T_BOOK
 	 */
-	public T_BOOK(java.lang.Integer ID, java.lang.Integer AUTHOR_ID, java.lang.Integer CO_AUTHOR_ID, java.lang.Integer DETAILS_ID, java.lang.String TITLE, java.lang.Integer PUBLISHED_IN, java.lang.Integer LANGUAGE_ID, java.lang.String CONTENT_TEXT, byte[] CONTENT_PDF, java.math.BigDecimal REC_VERSION, java.sql.Timestamp REC_TIMESTAMP) {
+	public T_BOOK(Integer ID, Integer AUTHOR_ID, Integer CO_AUTHOR_ID, Integer DETAILS_ID, String TITLE, Integer PUBLISHED_IN, Integer LANGUAGE_ID, String CONTENT_TEXT, byte[] CONTENT_PDF, BigDecimal REC_VERSION, Timestamp REC_TIMESTAMP) {
 		super(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK);
 
 		setValue(0, ID);

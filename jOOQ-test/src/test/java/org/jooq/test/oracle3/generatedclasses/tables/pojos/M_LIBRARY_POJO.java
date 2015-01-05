@@ -3,48 +3,56 @@
  */
 package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+import org.jooq.test.oracle3.generatedclasses.tables.interfaces.M_LIBRARY_INTERFACE;
+
+
 /**
  * snapshot table for snapshot TEST.M_LIBRARY
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-@javax.persistence.Entity
-@javax.persistence.Table(name = "M_LIBRARY")
-public class M_LIBRARY_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.M_LIBRARY_INTERFACE {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@Entity
+@Table(name = "M_LIBRARY")
+public class M_LIBRARY_POJO extends ThreadDeath implements Cloneable, M_LIBRARY_INTERFACE {
 
-	private static final long serialVersionUID = 837444994;
+	private static final long serialVersionUID = 710495569;
 
-	private java.lang.String AUTHOR;
-	private java.lang.String TITLE;
+	private String AUTHOR;
+	private String TITLE;
 
 	public M_LIBRARY_POJO() {}
 
 	public M_LIBRARY_POJO(
-		java.lang.String AUTHOR,
-		java.lang.String TITLE
+		String AUTHOR,
+		String TITLE
 	) {
 		this.AUTHOR = AUTHOR;
 		this.TITLE = TITLE;
 	}
 
-	@javax.persistence.Column(name = "AUTHOR", length = 101)
+	@Column(name = "AUTHOR", length = 101)
 	@Override
-	public java.lang.String getAUTHOR() {
+	public String getAUTHOR() {
 		return this.AUTHOR;
 	}
 
 	@Override
-	public void setAUTHOR(java.lang.String AUTHOR) {
+	public void setAUTHOR(String AUTHOR) {
 		this.AUTHOR = AUTHOR;
 	}
 
-	@javax.persistence.Column(name = "TITLE", nullable = false, length = 400)
+	@Column(name = "TITLE", nullable = false, length = 400)
 	@Override
-	public java.lang.String getTITLE() {
+	public String getTITLE() {
 		return this.TITLE;
 	}
 
 	@Override
-	public void setTITLE(java.lang.String TITLE) {
+	public void setTITLE(String TITLE) {
 		this.TITLE = TITLE;
 	}
 
@@ -56,7 +64,7 @@ public class M_LIBRARY_POJO extends java.lang.ThreadDeath implements java.lang.C
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.M_LIBRARY_INTERFACE from) {
+	public void from(M_LIBRARY_INTERFACE from) {
 		setAUTHOR(from.getAUTHOR());
 		setTITLE(from.getTITLE());
 	}
@@ -65,7 +73,7 @@ public class M_LIBRARY_POJO extends java.lang.ThreadDeath implements java.lang.C
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.M_LIBRARY_INTERFACE> E into(E into) {
+	public <E extends M_LIBRARY_INTERFACE> E into(E into) {
 		into.from(this);
 		return into;
 	}

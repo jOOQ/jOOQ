@@ -3,48 +3,63 @@
  */
 package org.jooq.test.oracle3.generatedclasses.tables.records;
 
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+import org.jooq.Field;
+import org.jooq.Record2;
+import org.jooq.Row;
+import org.jooq.Row2;
+import org.jooq.impl.TableRecordImpl;
+import org.jooq.test.oracle3.generatedclasses.tables.interfaces.M_LIBRARY_INTERFACE;
+
+
 /**
  * snapshot table for snapshot TEST.M_LIBRARY
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-@javax.persistence.Entity
-@javax.persistence.Table(name = "M_LIBRARY")
-public class M_LIBRARY extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY> implements java.io.Serializable, java.lang.Cloneable, org.jooq.Record2<java.lang.String, java.lang.String>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.M_LIBRARY_INTERFACE {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@Entity
+@Table(name = "M_LIBRARY")
+public class M_LIBRARY extends TableRecordImpl<M_LIBRARY> implements Serializable, Cloneable, Record2<String, String>, M_LIBRARY_INTERFACE {
 
-	private static final long serialVersionUID = 1128790148;
+	private static final long serialVersionUID = -1753005953;
 
 	/**
 	 * Setter for <code>M_LIBRARY.AUTHOR</code>.
 	 */
 	@Override
-	public void setAUTHOR(java.lang.String value) {
+	public void setAUTHOR(String value) {
 		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>M_LIBRARY.AUTHOR</code>.
 	 */
-	@javax.persistence.Column(name = "AUTHOR", length = 101)
+	@Column(name = "AUTHOR", length = 101)
 	@Override
-	public java.lang.String getAUTHOR() {
-		return (java.lang.String) getValue(0);
+	public String getAUTHOR() {
+		return (String) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>M_LIBRARY.TITLE</code>.
 	 */
 	@Override
-	public void setTITLE(java.lang.String value) {
+	public void setTITLE(String value) {
 		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>M_LIBRARY.TITLE</code>.
 	 */
-	@javax.persistence.Column(name = "TITLE", nullable = false, length = 400)
+	@Column(name = "TITLE", nullable = false, length = 400)
 	@Override
-	public java.lang.String getTITLE() {
-		return (java.lang.String) getValue(1);
+	public String getTITLE() {
+		return (String) getValue(1);
 	}
 
 	// -------------------------------------------------------------------------
@@ -55,23 +70,23 @@ public class M_LIBRARY extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracl
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row2<java.lang.String, java.lang.String> fieldsRow() {
-		return (org.jooq.Row2) super.fieldsRow();
+	public Row2<String, String> fieldsRow() {
+		return (Row2) super.fieldsRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row2<java.lang.String, java.lang.String> valuesRow() {
-		return (org.jooq.Row2) super.valuesRow();
+	public Row2<String, String> valuesRow() {
+		return (Row2) super.valuesRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.String> field1() {
+	public Field<String> field1() {
 		return org.jooq.test.oracle3.generatedclasses.tables.M_LIBRARY.M_LIBRARY.AUTHOR;
 	}
 
@@ -79,7 +94,7 @@ public class M_LIBRARY extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracl
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.String> field2() {
+	public Field<String> field2() {
 		return org.jooq.test.oracle3.generatedclasses.tables.M_LIBRARY.M_LIBRARY.TITLE;
 	}
 
@@ -87,7 +102,7 @@ public class M_LIBRARY extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracl
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.String value1() {
+	public String value1() {
 		return getAUTHOR();
 	}
 
@@ -95,7 +110,7 @@ public class M_LIBRARY extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracl
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.String value2() {
+	public String value2() {
 		return getTITLE();
 	}
 
@@ -103,7 +118,7 @@ public class M_LIBRARY extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracl
 	 * {@inheritDoc}
 	 */
 	@Override
-	public M_LIBRARY value1(java.lang.String value) {
+	public M_LIBRARY value1(String value) {
 		setAUTHOR(value);
 		return this;
 	}
@@ -112,7 +127,7 @@ public class M_LIBRARY extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracl
 	 * {@inheritDoc}
 	 */
 	@Override
-	public M_LIBRARY value2(java.lang.String value) {
+	public M_LIBRARY value2(String value) {
 		setTITLE(value);
 		return this;
 	}
@@ -121,7 +136,7 @@ public class M_LIBRARY extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracl
 	 * {@inheritDoc}
 	 */
 	@Override
-	public M_LIBRARY values(java.lang.String value1, java.lang.String value2) {
+	public M_LIBRARY values(String value1, String value2) {
 		return this;
 	}
 
@@ -133,7 +148,7 @@ public class M_LIBRARY extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracl
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.M_LIBRARY_INTERFACE from) {
+	public void from(M_LIBRARY_INTERFACE from) {
 		setAUTHOR(from.getAUTHOR());
 		setTITLE(from.getTITLE());
 	}
@@ -142,7 +157,7 @@ public class M_LIBRARY extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracl
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.M_LIBRARY_INTERFACE> E into(E into) {
+	public <E extends M_LIBRARY_INTERFACE> E into(E into) {
 		into.from(this);
 		return into;
 	}
@@ -161,7 +176,7 @@ public class M_LIBRARY extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracl
 	/**
 	 * Create a detached, initialised M_LIBRARY
 	 */
-	public M_LIBRARY(java.lang.String AUTHOR, java.lang.String TITLE) {
+	public M_LIBRARY(String AUTHOR, String TITLE) {
 		super(org.jooq.test.oracle3.generatedclasses.tables.M_LIBRARY.M_LIBRARY);
 
 		setValue(0, AUTHOR);

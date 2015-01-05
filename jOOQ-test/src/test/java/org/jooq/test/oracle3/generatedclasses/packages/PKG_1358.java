@@ -3,24 +3,37 @@
  */
 package org.jooq.test.oracle3.generatedclasses.packages;
 
+
+import org.jooq.Configuration;
+import org.jooq.impl.PackageImpl;
+import org.jooq.test.oracle3.generatedclasses.DefaultSchema;
+import org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P21;
+import org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P2______ABC_1;
+import org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P2______ABC_2;
+import org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P3;
+import org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P______ABC_1;
+import org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P______ABC_2;
+import org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P______ABC_3;
+
+
 /**
  * Convenience access to all stored procedures and functions in PKG_1358
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class PKG_1358 extends org.jooq.impl.PackageImpl implements java.lang.Cloneable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class PKG_1358 extends PackageImpl implements Cloneable {
 
-	private static final long serialVersionUID = 973329542;
+	private static final long serialVersionUID = 1492208190;
 
 	/**
-	 * The singleton instance of <code>PKG_1358</code>
+	 * The reference instance of <code>PKG_1358</code>
 	 */
-	public static final org.jooq.test.oracle3.generatedclasses.packages.PKG_1358 PKG_1358 = new org.jooq.test.oracle3.generatedclasses.packages.PKG_1358();
+	public static final PKG_1358 PKG_1358 = new PKG_1358();
 
 	/**
 	 * Call <code>PKG_1358.P</code>
 	 */
-	public static void call_P______ABC_1(org.jooq.Configuration configuration, java.lang.String I) {
-		org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P______ABC_1 p = new org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P______ABC_1();
+	public static void call_P______ABC_1(Configuration configuration, String I) {
+		P______ABC_1 p = new P______ABC_1();
 		p.setI(I);
 
 		p.execute(configuration);
@@ -29,8 +42,8 @@ public class PKG_1358 extends org.jooq.impl.PackageImpl implements java.lang.Clo
 	/**
 	 * Call <code>PKG_1358.P</code>
 	 */
-	public static void call_P______ABC_2(org.jooq.Configuration configuration, java.lang.String J) {
-		org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P______ABC_2 p = new org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P______ABC_2();
+	public static void call_P______ABC_2(Configuration configuration, String J) {
+		P______ABC_2 p = new P______ABC_2();
 		p.setJ(J);
 
 		p.execute(configuration);
@@ -39,8 +52,8 @@ public class PKG_1358 extends org.jooq.impl.PackageImpl implements java.lang.Clo
 	/**
 	 * Call <code>PKG_1358.P</code>
 	 */
-	public static void call_P______ABC_3(org.jooq.Configuration configuration, java.lang.String K) {
-		org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P______ABC_3 p = new org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P______ABC_3();
+	public static void call_P______ABC_3(Configuration configuration, String K) {
+		P______ABC_3 p = new P______ABC_3();
 		p.setK(K);
 
 		p.execute(configuration);
@@ -49,8 +62,8 @@ public class PKG_1358 extends org.jooq.impl.PackageImpl implements java.lang.Clo
 	/**
 	 * Call <code>PKG_1358.P2</code>
 	 */
-	public static void call_P2______ABC_1(org.jooq.Configuration configuration, java.lang.String I) {
-		org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P2______ABC_1 p = new org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P2______ABC_1();
+	public static void call_P2______ABC_1(Configuration configuration, String I) {
+		P2______ABC_1 p = new P2______ABC_1();
 		p.setI(I);
 
 		p.execute(configuration);
@@ -59,8 +72,8 @@ public class PKG_1358 extends org.jooq.impl.PackageImpl implements java.lang.Clo
 	/**
 	 * Call <code>PKG_1358.P2</code>
 	 */
-	public static void call_P2______ABC_2(org.jooq.Configuration configuration, java.lang.String J) {
-		org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P2______ABC_2 p = new org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P2______ABC_2();
+	public static void call_P2______ABC_2(Configuration configuration, String J) {
+		P2______ABC_2 p = new P2______ABC_2();
 		p.setJ(J);
 
 		p.execute(configuration);
@@ -69,8 +82,8 @@ public class PKG_1358 extends org.jooq.impl.PackageImpl implements java.lang.Clo
 	/**
 	 * Call <code>PKG_1358.P21</code>
 	 */
-	public static void call_P21(org.jooq.Configuration configuration, java.lang.String I) {
-		org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P21 p = new org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P21();
+	public static void call_P21(Configuration configuration, String I) {
+		P21 p = new P21();
 		p.setI(I);
 
 		p.execute(configuration);
@@ -79,8 +92,8 @@ public class PKG_1358 extends org.jooq.impl.PackageImpl implements java.lang.Clo
 	/**
 	 * Call <code>PKG_1358.P3</code>
 	 */
-	public static void call_P3(org.jooq.Configuration configuration, java.lang.String K) {
-		org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P3 p = new org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P3();
+	public static void call_P3(Configuration configuration, String K) {
+		P3 p = new P3();
 		p.setK(K);
 
 		p.execute(configuration);
@@ -90,6 +103,6 @@ public class PKG_1358 extends org.jooq.impl.PackageImpl implements java.lang.Clo
 	 * No further instances allowed
 	 */
 	private PKG_1358() {
-		super("PKG_1358", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+		super("PKG_1358", DefaultSchema.DEFAULT_SCHEMA);
 	}
 }

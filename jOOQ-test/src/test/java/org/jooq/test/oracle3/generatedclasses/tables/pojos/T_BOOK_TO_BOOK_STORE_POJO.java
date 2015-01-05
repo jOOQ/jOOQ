@@ -3,64 +3,75 @@
  */
 package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_TO_BOOK_STORE_INTERFACE;
+
+
 /**
  * An m:n relation between books and book stores
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-@javax.persistence.Entity
-@javax.persistence.Table(name = "T_BOOK_TO_BOOK_STORE", uniqueConstraints = {
-	@javax.persistence.UniqueConstraint(columnNames = {"BOOK_STORE_NAME", "BOOK_ID"})
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@Entity
+@Table(name = "T_BOOK_TO_BOOK_STORE", uniqueConstraints = {
+	@UniqueConstraint(columnNames = {"BOOK_STORE_NAME", "BOOK_ID"})
 })
-public class T_BOOK_TO_BOOK_STORE_POJO extends java.lang.Object implements java.io.Serializable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_TO_BOOK_STORE_INTERFACE {
+public class T_BOOK_TO_BOOK_STORE_POJO extends Object implements Serializable, T_BOOK_TO_BOOK_STORE_INTERFACE {
 
-	private static final long serialVersionUID = -274676681;
+	private static final long serialVersionUID = -1889108771;
 
-	private java.lang.String  BOOK_STORE_NAME;
-	private java.lang.Integer BOOK_ID;
-	private java.lang.Integer STOCK;
+	private String  BOOK_STORE_NAME;
+	private Integer BOOK_ID;
+	private Integer STOCK;
 
 	public T_BOOK_TO_BOOK_STORE_POJO() {}
 
 	public T_BOOK_TO_BOOK_STORE_POJO(
-		java.lang.String  BOOK_STORE_NAME,
-		java.lang.Integer BOOK_ID,
-		java.lang.Integer STOCK
+		String  BOOK_STORE_NAME,
+		Integer BOOK_ID,
+		Integer STOCK
 	) {
 		this.BOOK_STORE_NAME = BOOK_STORE_NAME;
 		this.BOOK_ID = BOOK_ID;
 		this.STOCK = STOCK;
 	}
 
-	@javax.persistence.Column(name = "BOOK_STORE_NAME", nullable = false, length = 400)
+	@Column(name = "BOOK_STORE_NAME", nullable = false, length = 400)
 	@Override
-	public java.lang.String getBOOK_STORE_NAME() {
+	public String getBOOK_STORE_NAME() {
 		return this.BOOK_STORE_NAME;
 	}
 
 	@Override
-	public void setBOOK_STORE_NAME(java.lang.String BOOK_STORE_NAME) {
+	public void setBOOK_STORE_NAME(String BOOK_STORE_NAME) {
 		this.BOOK_STORE_NAME = BOOK_STORE_NAME;
 	}
 
-	@javax.persistence.Column(name = "BOOK_ID", nullable = false, precision = 7)
+	@Column(name = "BOOK_ID", nullable = false, precision = 7)
 	@Override
-	public java.lang.Integer getBOOK_ID() {
+	public Integer getBOOK_ID() {
 		return this.BOOK_ID;
 	}
 
 	@Override
-	public void setBOOK_ID(java.lang.Integer BOOK_ID) {
+	public void setBOOK_ID(Integer BOOK_ID) {
 		this.BOOK_ID = BOOK_ID;
 	}
 
-	@javax.persistence.Column(name = "STOCK", precision = 7)
+	@Column(name = "STOCK", precision = 7)
 	@Override
-	public java.lang.Integer getSTOCK() {
+	public Integer getSTOCK() {
 		return this.STOCK;
 	}
 
 	@Override
-	public void setSTOCK(java.lang.Integer STOCK) {
+	public void setSTOCK(Integer STOCK) {
 		this.STOCK = STOCK;
 	}
 
@@ -72,7 +83,7 @@ public class T_BOOK_TO_BOOK_STORE_POJO extends java.lang.Object implements java.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_TO_BOOK_STORE_INTERFACE from) {
+	public void from(T_BOOK_TO_BOOK_STORE_INTERFACE from) {
 		setBOOK_STORE_NAME(from.getBOOK_STORE_NAME());
 		setBOOK_ID(from.getBOOK_ID());
 		setSTOCK(from.getSTOCK());
@@ -82,7 +93,7 @@ public class T_BOOK_TO_BOOK_STORE_POJO extends java.lang.Object implements java.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_TO_BOOK_STORE_INTERFACE> E into(E into) {
+	public <E extends T_BOOK_TO_BOOK_STORE_INTERFACE> E into(E into) {
 		into.from(this);
 		return into;
 	}

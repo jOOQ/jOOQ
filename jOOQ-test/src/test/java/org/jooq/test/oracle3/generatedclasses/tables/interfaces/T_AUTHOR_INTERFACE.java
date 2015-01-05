@@ -3,80 +3,92 @@
  */
 package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
 
+
+import java.io.Serializable;
+import java.sql.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_ADDRESS_TYPE_INTERFACE;
+
+
 /**
  * An entity holding authors of books
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-@javax.persistence.Entity
-@javax.persistence.Table(name = "T_AUTHOR")
-public interface T_AUTHOR_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@Entity
+@Table(name = "T_AUTHOR")
+public interface T_AUTHOR_INTERFACE extends Cloneable, Serializable {
 
 	/**
 	 * Setter for <code>T_AUTHOR.ID</code>. The author ID
 	 */
-	public void setID(java.lang.Integer value);
+	public void setID(Integer value);
 
 	/**
 	 * Getter for <code>T_AUTHOR.ID</code>. The author ID
 	 */
-	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
-	public java.lang.Integer getID();
+	@Id
+	@Column(name = "ID", unique = true, nullable = false, precision = 7)
+	public Integer getID();
 
 	/**
 	 * Setter for <code>T_AUTHOR.FIRST_NAME</code>. The author's first name
 	 */
-	public void setFIRST_NAME(java.lang.String value);
+	public void setFIRST_NAME(String value);
 
 	/**
 	 * Getter for <code>T_AUTHOR.FIRST_NAME</code>. The author's first name
 	 */
-	@javax.persistence.Column(name = "FIRST_NAME", length = 50)
-	public java.lang.String getFIRST_NAME();
+	@Column(name = "FIRST_NAME", length = 50)
+	public String getFIRST_NAME();
 
 	/**
 	 * Setter for <code>T_AUTHOR.LAST_NAME</code>. The author's last name
 	 */
-	public void setLAST_NAME(java.lang.String value);
+	public void setLAST_NAME(String value);
 
 	/**
 	 * Getter for <code>T_AUTHOR.LAST_NAME</code>. The author's last name
 	 */
-	@javax.persistence.Column(name = "LAST_NAME", nullable = false, length = 50)
-	public java.lang.String getLAST_NAME();
+	@Column(name = "LAST_NAME", nullable = false, length = 50)
+	public String getLAST_NAME();
 
 	/**
 	 * Setter for <code>T_AUTHOR.DATE_OF_BIRTH</code>. The author's date of birth
 	 */
-	public void setDATE_OF_BIRTH(java.sql.Date value);
+	public void setDATE_OF_BIRTH(Date value);
 
 	/**
 	 * Getter for <code>T_AUTHOR.DATE_OF_BIRTH</code>. The author's date of birth
 	 */
-	@javax.persistence.Column(name = "DATE_OF_BIRTH", length = 7)
-	public java.sql.Date getDATE_OF_BIRTH();
+	@Column(name = "DATE_OF_BIRTH")
+	public Date getDATE_OF_BIRTH();
 
 	/**
 	 * Setter for <code>T_AUTHOR.YEAR_OF_BIRTH</code>. The author's year of birth
 	 */
-	public void setYEAR_OF_BIRTH(java.lang.Integer value);
+	public void setYEAR_OF_BIRTH(Integer value);
 
 	/**
 	 * Getter for <code>T_AUTHOR.YEAR_OF_BIRTH</code>. The author's year of birth
 	 */
-	@javax.persistence.Column(name = "YEAR_OF_BIRTH", precision = 7)
-	public java.lang.Integer getYEAR_OF_BIRTH();
+	@Column(name = "YEAR_OF_BIRTH", precision = 7)
+	public Integer getYEAR_OF_BIRTH();
 
 	/**
 	 * Setter for <code>T_AUTHOR.ADDRESS</code>. The author's address
 	 */
-	public void setADDRESS(org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_ADDRESS_TYPE_INTERFACE value);
+	public void setADDRESS(U_ADDRESS_TYPE_INTERFACE value);
 
 	/**
 	 * Getter for <code>T_AUTHOR.ADDRESS</code>. The author's address
 	 */
-	@javax.persistence.Column(name = "ADDRESS", length = 1)
-	public org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_ADDRESS_TYPE_INTERFACE getADDRESS();
+	@Column(name = "ADDRESS")
+	public U_ADDRESS_TYPE_INTERFACE getADDRESS();
 
 	// -------------------------------------------------------------------------
 	// FROM and INTO

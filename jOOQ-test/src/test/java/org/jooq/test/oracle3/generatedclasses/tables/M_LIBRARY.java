@@ -3,36 +3,46 @@
  */
 package org.jooq.test.oracle3.generatedclasses.tables;
 
+
+import java.io.Serializable;
+
+import org.jooq.Field;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.impl.TableImpl;
+import org.jooq.test.oracle3.generatedclasses.DefaultSchema;
+
+
 /**
  * snapshot table for snapshot TEST.M_LIBRARY
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class M_LIBRARY extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY> implements java.io.Serializable, java.lang.Cloneable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class M_LIBRARY extends TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY> implements Serializable, Cloneable {
 
-	private static final long serialVersionUID = -1017478295;
+	private static final long serialVersionUID = 1115134877;
 
 	/**
-	 * The singleton instance of <code>M_LIBRARY</code>
+	 * The reference instance of <code>M_LIBRARY</code>
 	 */
-	public static final org.jooq.test.oracle3.generatedclasses.tables.M_LIBRARY M_LIBRARY = new org.jooq.test.oracle3.generatedclasses.tables.M_LIBRARY();
+	public static final M_LIBRARY M_LIBRARY = new M_LIBRARY();
 
 	/**
 	 * The class holding records for this type
 	 */
 	@Override
-	public java.lang.Class<org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY> getRecordType() {
+	public Class<org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY> getRecordType() {
 		return org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY.class;
 	}
 
 	/**
 	 * The column <code>M_LIBRARY.AUTHOR</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY, java.lang.String> AUTHOR = createField("AUTHOR", org.jooq.impl.SQLDataType.VARCHAR.length(101), this, "");
+	public final TableField<org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY, String> AUTHOR = createField("AUTHOR", org.jooq.impl.SQLDataType.VARCHAR.length(101), this, "");
 
 	/**
 	 * The column <code>M_LIBRARY.TITLE</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "");
+	public final TableField<org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY, String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "");
 
 	/**
 	 * Create a <code>M_LIBRARY</code> table reference
@@ -44,30 +54,30 @@ public class M_LIBRARY extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.gen
 	/**
 	 * Create an aliased <code>M_LIBRARY</code> table reference
 	 */
-	public M_LIBRARY(java.lang.String alias) {
-		this(alias, org.jooq.test.oracle3.generatedclasses.tables.M_LIBRARY.M_LIBRARY);
+	public M_LIBRARY(String alias) {
+		this(alias, M_LIBRARY);
 	}
 
-	private M_LIBRARY(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY> aliased) {
+	private M_LIBRARY(String alias, Table<org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY> aliased) {
 		this(alias, aliased, null);
 	}
 
-	private M_LIBRARY(java.lang.String alias, org.jooq.Table<org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY> aliased, org.jooq.Field<?>[] parameters) {
-		super(alias, org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "snapshot table for snapshot TEST.M_LIBRARY");
+	private M_LIBRARY(String alias, Table<org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY> aliased, Field<?>[] parameters) {
+		super(alias, DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "snapshot table for snapshot TEST.M_LIBRARY");
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.test.oracle3.generatedclasses.tables.M_LIBRARY as(java.lang.String alias) {
-		return new org.jooq.test.oracle3.generatedclasses.tables.M_LIBRARY(alias, this);
+	public M_LIBRARY as(String alias) {
+		return new M_LIBRARY(alias, this);
 	}
 
 	/**
 	 * Rename this table
 	 */
-	public org.jooq.test.oracle3.generatedclasses.tables.M_LIBRARY rename(java.lang.String name) {
-		return new org.jooq.test.oracle3.generatedclasses.tables.M_LIBRARY(name, null);
+	public M_LIBRARY rename(String name) {
+		return new M_LIBRARY(name, null);
 	}
 }

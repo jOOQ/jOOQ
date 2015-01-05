@@ -5222,7 +5222,6 @@
                                              -->
                                             <interfaces>true</interfaces>
                                             <jpaAnnotations>true</jpaAnnotations>
-                                            <fullyQualifiedTypes>.*</fullyQualifiedTypes>
                                         </generate>
                                         <target>
                                             <packageName>org.jooq.test.oracle3.generatedclasses</packageName>

@@ -1852,6 +1852,18 @@ public class JavaGenerator extends AbstractGenerator {
             out.println();
         }
 
+        // [#1363] copy constructor
+        out.println();
+        out.tab(1).println("public %s(%s value) {", className, className);
+
+        for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
+            out.tab(2).println("this.%s = value.%s;",
+                getStrategy().getJavaMemberName(column, Mode.POJO),
+                getStrategy().getJavaMemberName(column, Mode.POJO));
+        }
+
+        out.tab(1).println("}");
+
         // Multi-constructor
 
         // [#3010] Invalid UDTs may have no attributes. Avoid generating this constructor in that case

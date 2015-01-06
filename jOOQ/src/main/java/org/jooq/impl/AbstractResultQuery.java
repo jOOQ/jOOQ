@@ -50,6 +50,7 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.impl.Utils.DATA_LOCK_ROWS_FOR_UPDATE;
 import static org.jooq.impl.Utils.consumeResultSets;
 
+import java.lang.reflect.Array;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -74,6 +75,7 @@ import org.jooq.RecordMapper;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.Table;
+import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
@@ -662,6 +664,13 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final Object[][] fetchArrays() {
         return fetch().intoArrays();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final R[] fetchArray() throws DataAccessException {
+        Result<R> r = fetch();
+        return r.toArray((R[]) Array.newInstance(getRecordType(), r.size()));
     }
 
     @Override

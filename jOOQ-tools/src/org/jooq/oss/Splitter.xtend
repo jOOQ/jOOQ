@@ -214,6 +214,13 @@ For more information, please visit: http://www.jooq.org/licenses''');
         this.token = token;
         
         if (token.equals("pro")) {
+            replaceFirst.add(new ImmutablePair(compile('''-trial\.jar'''), '''.jar'''));
+        }
+        else {
+            replaceFirst.add(new ImmutablePair(compile('''-trial\.jar'''), '''-pro.jar'''));
+        }
+        
+        if (token.equals("pro")) {
             
             // Replace a couple of imports
             replaceFirst.add(new ImmutablePair(compile('''import (org\.jooq\.(ArrayConstant|ArrayRecord|VersionsBetweenAndStep|impl\.ArrayRecordImpl|impl\.FlashbackTable.*?)|(com.microsoft.*?));'''), "// ..."));

@@ -51,6 +51,7 @@ import static org.jooq.impl.Utils.hasColumnAnnotations;
 import static org.jooq.impl.Utils.indexOrFail;
 import static org.jooq.impl.Utils.resetChangedOnNotNull;
 import static org.jooq.impl.Utils.settings;
+import static org.jooq.impl.Utils.ThreadGuard.Guard.RECORD_TOSTRING;
 
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
@@ -95,6 +96,8 @@ import org.jooq.Table;
 import org.jooq.UniqueKey;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
+import org.jooq.impl.Utils.ThreadGuard;
+import org.jooq.impl.Utils.ThreadGuard.GuardedOperation;
 import org.jooq.tools.Convert;
 import org.jooq.tools.StringUtils;
 
@@ -970,9 +973,20 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public String toString() {
-        Result<AbstractRecord> result = new ResultImpl<AbstractRecord>(configuration(), fields.fields.fields);
-        result.add(this);
-        return result.toString();
+        // [#3900] Nested records should generate different toString() behaviour
+        return ThreadGuard.run(RECORD_TOSTRING, new GuardedOperation<String>() {
+            @Override
+            public String unguarded() {
+                Result<AbstractRecord> result = new ResultImpl<AbstractRecord>(configuration(), fields.fields.fields);
+                result.add(AbstractRecord.this);
+                return result.toString();
+            }
+
+            @Override
+            public String guarded() {
+                return valuesRow().toString();
+            }
+        });
     }
 
     @Override

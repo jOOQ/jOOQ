@@ -677,6 +677,9 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         else if (value instanceof EnumType) {
             formatted += ((EnumType) value).getLiteral();
         }
+        else if (value instanceof Record) {
+            formatted += ((Record) value).valuesRow().toString();
+        }
         else {
             formatted += value.toString();
         }

@@ -255,6 +255,13 @@ public enum SQLDialect {
     SQLSERVER2012("SQLServer", true, SQLSERVER, SQLSERVER2008),
 
     /**
+     * The SQL Server 2014 dialect.
+     * <p>
+     * This dialect is available in commercial jOOQ distributions, only.
+     */
+    SQLSERVER2014("SQLServer", true, SQLSERVER, SQLSERVER2012),
+
+    /**
      * The Sybase SQL Anywhere dialect family.
      * <p>
      * This dialect is available in commercial jOOQ distributions, only.

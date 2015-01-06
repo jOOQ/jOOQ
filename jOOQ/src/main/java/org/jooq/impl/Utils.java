@@ -1880,7 +1880,7 @@ final class Utils {
          * Run an operation using a guard.
          */
         static final <V> V run(Guard guard, GuardedOperation<V> operation) {
-            boolean unguarded = (guard.tl.get() != null);
+            boolean unguarded = (guard.tl.get() == null);
             if (unguarded)
                 guard.tl.set(Guard.class);
 

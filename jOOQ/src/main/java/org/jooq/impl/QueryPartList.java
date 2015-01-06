@@ -90,22 +90,22 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
 
         else {
             String separator = "";
-            boolean indent = (size() > 1);
+            boolean indent = (size() > 1) && ctx.data(DATA_LIST_ALREADY_INDENTED) == null;
 
-            if (indent && ctx.data(DATA_LIST_ALREADY_INDENTED) == null)
+            if (indent)
                 ctx.formatIndentStart();
 
             for (int i = 0; i < size(); i++) {
                 ctx.sql(separator);
 
-                if (i > 0 || ctx.data(DATA_LIST_ALREADY_INDENTED) == null)
+                if (i > 0 || indent)
                     ctx.formatNewLine();
 
                 ctx.visit(get(i));
                 separator = ", ";
             }
 
-            if (indent && ctx.data(DATA_LIST_ALREADY_INDENTED) == null)
+            if (indent)
                 ctx.formatIndentEnd();
         }
     }

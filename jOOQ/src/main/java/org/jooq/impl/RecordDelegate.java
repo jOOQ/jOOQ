@@ -84,7 +84,7 @@ class RecordDelegate<R extends Record> {
     }
 
     @SuppressWarnings("unchecked")
-    final <E extends Exception> R operate(RecordOperation<R, E> operation) throws E {
+    final <E extends Exception> R operate(RecordOperation<? super R, E> operation) throws E {
         RecordListenerProvider[] providers = null;
         RecordListener[] listeners = null;
         DefaultRecordContext ctx = null;

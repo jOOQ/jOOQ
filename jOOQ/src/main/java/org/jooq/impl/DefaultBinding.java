@@ -1414,7 +1414,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     result = (T) ctx.resultSet().getObject(ctx.index(), DataTypes.udtRecords());
                     break;
             }
-
         }
         else if (Result.class.isAssignableFrom(type)) {
             ResultSet nested = (ResultSet) ctx.resultSet().getObject(ctx.index());

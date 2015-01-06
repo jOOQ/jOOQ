@@ -732,17 +732,38 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testRowValueExpressionInSelectClause() throws Exception {
-        Result<Record2<Integer, Record2<String, String>>> result =
-        create().select(TAuthor_ID(), field(row(TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())))
+        Result<Record4<
+            Integer,
+            Record2<String, String>,
+            Integer,
+            Record2<String, Integer>
+        >> result =
+        create().select(
+                    TAuthor_ID(),
+                    field(row(TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())).as("row1"),
+                    TBook_ID(),
+                    field(row(TBook_TITLE(), TBook_LANGUAGE_ID())).as("row2")
+                )
                 .from(TAuthor())
-                .orderBy(TAuthor_ID())
+                .join(TBook())
+                .on(TAuthor_ID().eq(TBook_AUTHOR_ID()))
+                .union(
+                 select(
+                    val(1),
+                    field(row("A", "B")),
+                    val(2),
+                    field(row("C", 3))
+                )
+                .where("1 = 0"))
+                .orderBy(1)
                 .fetch();
 
-        assertEquals(2, result.fields().length);
-        assertEquals(1, result.get(0).getValue(TAuthor_ID()));
-        assertEquals(2, result.get(1).getValue(TAuthor_ID()));
-
-        assertEquals(row("George", "Orwell"), result.get(0).value2().valuesRow());
-        assertEquals(row("Paulo", "Coelho"), result.get(1).value2().valuesRow());
+        assertEquals(4, result.fields().length);
+        assertEquals(BOOK_AUTHOR_IDS, result.getValues(TAuthor_ID()));
+        assertEquals(BOOK_FIRST_NAMES, result.map(r -> r.value2().value1()));
+        assertEquals(BOOK_LAST_NAMES, result.map(r -> r.value2().value2()));
+        assertEquals(BOOK_IDS, result.getValues(TBook_ID()));
+        assertEquals(BOOK_TITLES, result.map(r -> r.value4().value1()));
+        assertEquals(BOOK_LANGUAGES, result.map(r -> r.value4().value2()));
     }
 }

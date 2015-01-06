@@ -140,7 +140,7 @@ import org.jooq.tools.reflect.Reflect;
  */
 final class Utils {
 
-    static final JooqLogger      log                                          = JooqLogger.getLogger(Utils.class);
+    static final JooqLogger       log                                          = JooqLogger.getLogger(Utils.class);
 
     // ------------------------------------------------------------------------
     // Some constants for use with Context.data()
@@ -151,7 +151,7 @@ final class Utils {
      * clause in {@link DSLContext#batchStore(UpdatableRecord...)} calls for
      * {@link SQLDialect#POSTGRES}.
      */
-    static final String          DATA_OMIT_RETURNING_CLAUSE                   = "org.jooq.configuration.omit-returning-clause";
+    static final String           DATA_OMIT_RETURNING_CLAUSE                   = "org.jooq.configuration.omit-returning-clause";
 
     /**
      * [#1905] This constant is used internally by jOOQ to indicate to
@@ -161,20 +161,20 @@ final class Utils {
      * This is particularly useful for H2, which pretends that ARRAYs and RVEs
      * are the same
      */
-    static final String          DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY = "org.jooq.configuration.row-value-expression-subquery";
+    static final String           DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY = "org.jooq.configuration.row-value-expression-subquery";
 
     /**
      * [#1296] This constant is used internally by jOOQ to indicate that
      * {@link ResultSet} rows must be locked to simulate a
      * <code>FOR UPDATE</code> clause.
      */
-    static final String          DATA_LOCK_ROWS_FOR_UPDATE                    = "org.jooq.configuration.lock-rows-for-update";
+    static final String           DATA_LOCK_ROWS_FOR_UPDATE                    = "org.jooq.configuration.lock-rows-for-update";
 
     /**
      * [#1520] Count the number of bind values, and potentially enforce a static
      * statement.
      */
-    static final String          DATA_COUNT_BIND_VALUES                       = "org.jooq.configuration.count-bind-values";
+    static final String           DATA_COUNT_BIND_VALUES                       = "org.jooq.configuration.count-bind-values";
 
     /**
      * [#1520] Enforce executing static statements.
@@ -189,7 +189,7 @@ final class Utils {
      * <li>{@link SQLDialect#SQLSERVER} : 2100</li>
      * </ul>
      */
-    static final String          DATA_FORCE_STATIC_STATEMENT                  = "org.jooq.configuration.force-static-statement";
+    static final String           DATA_FORCE_STATIC_STATEMENT                  = "org.jooq.configuration.force-static-statement";
 
     /**
      * [#2665] Omit the emission of clause events by {@link QueryPart}s.
@@ -199,7 +199,7 @@ final class Utils {
      * {@link Clause#FIELD_REFERENCE} may contain a
      * {@link Clause#TABLE_REFERENCE}.
      */
-    static final String          DATA_OMIT_CLAUSE_EVENT_EMISSION              = "org.jooq.configuration.omit-clause-event-emission";
+    static final String           DATA_OMIT_CLAUSE_EVENT_EMISSION              = "org.jooq.configuration.omit-clause-event-emission";
 
     /**
      * [#2665] Wrap derived tables in parentheses.
@@ -210,7 +210,7 @@ final class Utils {
      * practice should no longer be pursued, as such "sub-renderers" will emit /
      * divert {@link Clause} events.
      */
-    static final String          DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES      = "org.jooq.configuration.wrap-derived-tables-in-parentheses";
+    static final String           DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES      = "org.jooq.configuration.wrap-derived-tables-in-parentheses";
 
     /**
      * [#2790] A locally scoped data map.
@@ -220,7 +220,7 @@ final class Utils {
      * when communicating between SELECT and WINDOW clauses, as is required to
      * emulate #531.
      */
-    static final String          DATA_LOCALLY_SCOPED_DATA_MAP                 = "org.jooq.configuration.locally-scoped-data-map";
+    static final String           DATA_LOCALLY_SCOPED_DATA_MAP                 = "org.jooq.configuration.locally-scoped-data-map";
 
     /**
      * [#531] The local window definitions.
@@ -229,7 +229,7 @@ final class Utils {
      * needed in the <code>SELECT</code> clause when emulating them by inlining
      * window specifications.
      */
-    static final String          DATA_WINDOW_DEFINITIONS                      = "org.jooq.configuration.local-window-definitions";
+    static final String           DATA_WINDOW_DEFINITIONS                      = "org.jooq.configuration.local-window-definitions";
 
     /* [pro] */
     /**
@@ -238,26 +238,26 @@ final class Utils {
      * In DB2, a <code>FINAL TABLE (INSERT ...)</code> clause exists, which
      * corresponds to the PostgreSQL <code>INSERT .. RETURNING</code> clause.
      */
-    static final String          DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE        = "org.jooq.configuration.rendering-db2-final-table-clause";
+    static final String           DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE        = "org.jooq.configuration.rendering-db2-final-table-clause";
     /* [/pro] */
 
     /**
      * [#1629] The {@link Connection#getAutoCommit()} flag value before starting
      * a new transaction.
      */
-    static final String          DATA_DEFAULT_TRANSACTION_PROVIDER_AUTOCOMMIT = "org.jooq.configuration.default-transaction-provider-autocommit";
+    static final String           DATA_DEFAULT_TRANSACTION_PROVIDER_AUTOCOMMIT = "org.jooq.configuration.default-transaction-provider-autocommit";
 
     /**
      * [#1629] The {@link Connection#getAutoCommit()} flag value before starting
      * a new transaction.
      */
-    static final String          DATA_DEFAULT_TRANSACTION_PROVIDER_SAVEPOINTS = "org.jooq.configuration.default-transaction-provider-savepoints";
+    static final String           DATA_DEFAULT_TRANSACTION_PROVIDER_SAVEPOINTS = "org.jooq.configuration.default-transaction-provider-savepoints";
 
     /**
      * [#1629] The {@link DefaultConnectionProvider} instance to be used during
      * the transaction.
      */
-    static final String          DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION = "org.jooq.configuration.default-transaction-provider-connection-provider";
+    static final String           DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION = "org.jooq.configuration.default-transaction-provider-connection-provider";
 
     /**
      * [#2080] When emulating OFFSET pagination in certain databases, synthetic
@@ -265,7 +265,7 @@ final class Utils {
      * <code>ORDER BY</code> clauses, in lieu of their corresponding original
      * aliases.
      */
-    static final String          DATA_OVERRIDE_ALIASES_IN_ORDER_BY            = "org.jooq.configuration.override-aliases-in-order-by";
+    static final String           DATA_OVERRIDE_ALIASES_IN_ORDER_BY            = "org.jooq.configuration.override-aliases-in-order-by";
 
     /**
      * [#2080] When emulating OFFSET pagination in certain databases, synthetic
@@ -273,22 +273,27 @@ final class Utils {
      * <code>ORDER BY</code> clauses, in lieu of their corresponding original
      * aliases.
      */
-    static final String          DATA_UNALIAS_ALIASES_IN_ORDER_BY             = "org.jooq.configuration.unalias-aliases-in-order-by";
+    static final String           DATA_UNALIAS_ALIASES_IN_ORDER_BY             = "org.jooq.configuration.unalias-aliases-in-order-by";
 
     /**
      * [#3381] The table to be used for the {@link Clause#SELECT_INTO} clause.
      */
-    static final String           DATA_SELECT_INTO_TABLE                      = "org.jooq.configuration.select-into-table";
+    static final String           DATA_SELECT_INTO_TABLE                       = "org.jooq.configuration.select-into-table";
 
     /**
      * [#3381] Omit the {@link Clause#SELECT_INTO}, as it is being emulated.
      */
-    static final String           DATA_OMIT_INTO_CLAUSE                       = "org.jooq.configuration.omit-into-clause";
+    static final String           DATA_OMIT_INTO_CLAUSE                        = "org.jooq.configuration.omit-into-clause";
 
     /**
      * [#1658] Specify whether the trailing LIMIT clause needs to be rendered.
      */
-    static final String           DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE    = "org.jooq.configuration.render-trailing-limit-if-applicable";
+    static final String           DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE     = "org.jooq.configuration.render-trailing-limit-if-applicable";
+
+    /**
+     * [#3886] Whether a list has already been indented.
+     */
+    static final String           DATA_LIST_ALREADY_INDENTED                   = "org.jooq.configuration.list-already-indented";
 
     /**
      * [#2965] These are {@link ConcurrentHashMap}s containing caches for
@@ -1874,6 +1879,16 @@ final class Utils {
              * This callback is executed if {@link #unguarded()} has already been executed on the current stack.
              */
             V guarded();
+        }
+
+        /**
+         * A default implementation for {@link GuardedOperation#guarded()}.
+         */
+        abstract static class AbstractGuardedOperation<V> implements GuardedOperation<V> {
+            @Override
+            public V guarded() {
+                return null;
+            }
         }
 
         /**

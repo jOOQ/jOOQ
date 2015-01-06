@@ -62,7 +62,7 @@ class DSL extends Generators {
                  * Create a row value expression of degree <code>«degree»</code>.
                  * <p>
                  * Note: Not all databases support row value expressions, but many row value
-                 * expression operations can be simulated on all databases. See relevant row
+                 * expression operations can be emulated on all databases. See relevant row
                  * value expression method Javadocs for details.
                  */
                 «generatedMethod»
@@ -86,7 +86,7 @@ class DSL extends Generators {
                  * Create a row value expression of degree <code>«degree»</code>.
                  * <p>
                  * Note: Not all databases support row value expressions, but many row value
-                 * expression operations can be simulated on all databases. See relevant row
+                 * expression operations can be emulated on all databases. See relevant row
                  * value expression method Javadocs for details.
                  */
                 «generatedMethod»
@@ -110,11 +110,11 @@ class DSL extends Generators {
                  * Turn a row value expression of degree <code>«degree»</code> into a {@code Field}.
                  * <p>
                  * Note: Not all databases support row value expressions, but many row value
-                 * expression operations can be simulated on all databases. See relevant row
+                 * expression operations can be emulated on all databases. See relevant row
                  * value expression method Javadocs for details.
                  */
                 «generatedMethod»
-                @Support({ POSTGRES })
+                @Support
                 public static <«TN(degree)»> Field<Record«recTypeSuffix(degree)»> field(Row«typeSuffix(degree)» row) {
                     return new RowField<Row«typeSuffix(degree)», Record«recTypeSuffix(degree)»>(row);
                 }                
@@ -137,7 +137,7 @@ class DSL extends Generators {
                  * databases to allow for constructing tables from constant values.
                  * <p>
                  * If a database doesn't support the <code>VALUES()</code> constructor, it
-                 * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+                 * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
                  * expressions are equivalent:
                  * <p>
                  * <pre><code>

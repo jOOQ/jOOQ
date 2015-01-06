@@ -42,6 +42,7 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.impl.Utils.DATA_LIST_ALREADY_INDENTED;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -91,20 +92,20 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
             String separator = "";
             boolean indent = (size() > 1);
 
-            if (indent)
+            if (indent && ctx.data(DATA_LIST_ALREADY_INDENTED) == null)
                 ctx.formatIndentStart();
 
-            for (T queryPart : this) {
+            for (int i = 0; i < size(); i++) {
                 ctx.sql(separator);
 
-                if (indent)
+                if (i > 0 || ctx.data(DATA_LIST_ALREADY_INDENTED) == null)
                     ctx.formatNewLine();
 
-                ctx.visit(queryPart);
+                ctx.visit(get(i));
                 separator = ", ";
             }
 
-            if (indent)
+            if (indent && ctx.data(DATA_LIST_ALREADY_INDENTED) == null)
                 ctx.formatIndentEnd();
         }
     }

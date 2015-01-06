@@ -94,7 +94,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
     private final ExecuteContext             ctx;
     private final ExecuteListener            listener;
-    private final Field<?>[]                 fields;
+    private final Field<?>[]                 cursorFields;
     private final boolean[]                  intern;
     private final boolean                    keepResultSet;
     private final boolean                    keepStatement;
@@ -113,7 +113,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement, boolean keepResultSet, Class<? extends R> type) {
         this.ctx = ctx;
         this.listener = (listener != null ? listener : new ExecuteListeners(ctx));
-        this.fields = fields;
+        this.cursorFields = fields;
         this.factory = recordFactory(type, fields);
         this.keepStatement = keepStatement;
         this.keepResultSet = keepResultSet;
@@ -130,13 +130,13 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final RecordType<R> recordType() {
-        return new RowImpl(fields).fields;
+        return new RowImpl(cursorFields).fields;
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Row fieldsRow() {
-        return new RowImpl(fields);
+        return new RowImpl(cursorFields);
     }
 
     @Override
@@ -151,12 +151,12 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
     @Override
     public final Field<?> field(int index) {
-        return index >= 0 && index < fields.length ? fields[index] : null;
+        return index >= 0 && index < cursorFields.length ? cursorFields[index] : null;
     }
 
     @Override
     public final Field<?>[] fields() {
-        return fields.clone();
+        return cursorFields.clone();
     }
 
     @Override
@@ -196,7 +196,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         // Before listener.resultStart(ctx)
         iterator();
 
-        ResultImpl<R> result = new ResultImpl<R>(ctx.configuration(), fields);
+        ResultImpl<R> result = new ResultImpl<R>(ctx.configuration(), cursorFields);
 
         ctx.result(result);
         listener.resultStart(ctx);
@@ -1371,11 +1371,6 @@ class CursorImpl<R extends Record> implements Cursor<R> {
          */
         private Boolean                       hasNext;
 
-        /**
-         * A delegate runnable that handles record initialisation.
-         */
-        private final CursorRecordInitialiser initialiser = new CursorRecordInitialiser();
-
         @Override
         public final boolean hasNext() {
             if (hasNext == null) {
@@ -1412,7 +1407,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
                     }
 
                     record = Utils.newRecord(true, (RecordFactory<AbstractRecord>) factory, ctx.configuration())
-                                  .operate(initialiser);
+                                  .operate(new CursorRecordInitialiser(cursorFields, 0));
 
                     rows++;
                 }
@@ -1450,13 +1445,21 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
         private class CursorRecordInitialiser implements RecordOperation<AbstractRecord, SQLException> {
 
+            private final Field<?>[] initaliserFields;
+            private int              offset;
+
+            CursorRecordInitialiser(Field<?>[] fields, int offset) {
+                this.initaliserFields = fields;
+                this.offset = offset;
+            }
+
             @Override
             public AbstractRecord operate(AbstractRecord record) throws SQLException {
                 ctx.record(record);
                 listener.recordStart(ctx);
 
-                for (int i = 0; i < fields.length; i++) {
-                    setValue(record, fields[i], i);
+                for (int i = 0; i < initaliserFields.length; i++) {
+                    setValue(record, initaliserFields[i], i);
 
                     if (intern[i]) {
                         record.intern0(i);
@@ -1472,10 +1475,23 @@ class CursorImpl<R extends Record> implements Cursor<R> {
             /**
              * Utility method to prevent unnecessary unchecked conversions
              */
+            @SuppressWarnings("unchecked")
             private final <T> void setValue(AbstractRecord record, Field<T> field, int index) throws SQLException {
-                DefaultBindingGetResultSetContext<T> out = new DefaultBindingGetResultSetContext<T>(ctx.configuration(), ctx.resultSet(), index + 1);
-                field.getBinding().get(out);
-                T value = out.value();
+                T value;
+
+                if (field instanceof RowField) {
+                    Field<?>[] emulatedFields = ((RowField<?, ?>) field).emulatedFields();
+
+                    value = (T) Utils.newRecord(true, RecordImpl.class, emulatedFields, ctx.configuration())
+                                     .operate(new CursorRecordInitialiser(emulatedFields, offset + index));
+
+                    offset += emulatedFields.length - 1;
+                }
+                else {
+                    DefaultBindingGetResultSetContext<T> out = new DefaultBindingGetResultSetContext<T>(ctx.configuration(), ctx.resultSet(), offset + index + 1);
+                    field.getBinding().get(out);
+                    value = out.value();
+                }
 
                 record.values[index] = value;
                 record.originals[index] = value;

@@ -1846,6 +1846,58 @@ final class Utils {
     // ------------------------------------------------------------------------
 
     /**
+     * This API acts as a "guard" to prevent the same code from being executed
+     * recursively within the same thread.
+     */
+    static class ThreadGuard {
+
+        /**
+         * The type of guard.
+         */
+        static enum Guard {
+            RECORD_TOSTRING;
+
+            ThreadLocal<Object> tl = new ThreadLocal<Object>();
+        }
+
+        /**
+         * A guarded operation.
+         */
+        static interface GuardedOperation<V> {
+
+            /**
+             * This callback is executed only once on the current stack.
+             */
+            V unguarded();
+
+            /**
+             * This callback is executed if {@link #unguarded()} has already been executed on the current stack.
+             */
+            V guarded();
+        }
+
+        /**
+         * Run an operation using a guard.
+         */
+        static final <V> V run(Guard guard, GuardedOperation<V> operation) {
+            boolean unguarded = (guard.tl.get() != null);
+            if (unguarded)
+                guard.tl.set(Guard.class);
+
+            try {
+                if (unguarded)
+                    return operation.unguarded();
+                else
+                    return operation.guarded();
+            }
+            finally {
+                if (unguarded)
+                    guard.tl.remove();
+            }
+        }
+    }
+
+    /**
      * [#2965] This is a {@link Configuration}-based cache that can cache reflection information and other things
      */
     static class Cache {

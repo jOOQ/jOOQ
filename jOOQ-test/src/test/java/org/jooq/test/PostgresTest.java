@@ -79,7 +79,6 @@ import static org.jooq.test.postgres.generatedclasses.Tables.T_EXOTIC_TYPES;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_IDENTITY;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_IDENTITY_PK;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_INHERITANCE_1;
-import static org.jooq.test.postgres.generatedclasses.Tables.T_PG_EXTENSIONS;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_TRIGGERS;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_UNSIGNED;
 import static org.jooq.test.postgres.generatedclasses.Tables.V_AUTHOR;
@@ -160,7 +159,6 @@ import org.jooq.test.postgres.generatedclasses.tables.records.TDatesRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TExoticTypesRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TIdentityPkRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TIdentityRecord;
-import org.jooq.test.postgres.generatedclasses.tables.records.TPgExtensionsRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TUnsignedRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.T_3111Record;
@@ -186,10 +184,6 @@ import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.NullNode;
 import org.codehaus.jackson.node.ObjectNode;
 import org.junit.Test;
-import org.postgis.PGgeometry;
-import org.postgis.Point;
-import org.postgresql.geometric.PGbox;
-import org.postgresql.util.PGInterval;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -1112,35 +1106,35 @@ public class PostgresTest extends jOOQAbstractTest<
         assertEquals(BOOK_TITLES.subList(1, 4), result4b.getValues(t4b.TITLE));
     }
 
-    @Test
-    public void testPostgresExtensions() throws Exception {
-        jOOQAbstractTest.reset = false;
-
-        // [#2267] Try to execute some basic CRUD operations on PostGIS data
-        // types. Even without formal support, jOOQ should allow to pass these
-        // objects through to JDBC
-        Point point = new Point(0, 0);
-        point.setSrid(4326);
-        PGgeometry geometry = new PGgeometry(point);
-
-        // [#2267] Non-PostGIS geometry objects should work, too
-        PGbox box = new PGbox(1.0, 1.0, 2.0, 2.0);
-        PGInterval interval = new PGInterval(1, 2, 3, 4, 5, 6);
-
-        TPgExtensionsRecord r1 = create().newRecord(T_PG_EXTENSIONS);
-        r1.setPgGeometry(geometry);
-        r1.setPgInterval(interval);
-        r1.setPgBox(box);
-        assertEquals(1, r1.store());
-        assertEquals(1, (int) create().selectCount().from(T_PG_EXTENSIONS).fetchOne(0, int.class));
-
-        TPgExtensionsRecord r2 = create().selectFrom(T_PG_EXTENSIONS).fetchOne();
-        assertEquals(r1, r2);
-
-        assertEquals(box, r2.getPgBox());
-        assertEquals(geometry, r2.getPgGeometry());
-        assertEquals(interval, r2.getPgInterval());
-    }
+//    @Test
+//    public void testPostgresExtensions() throws Exception {
+//        jOOQAbstractTest.reset = false;
+//
+//        // [#2267] Try to execute some basic CRUD operations on PostGIS data
+//        // types. Even without formal support, jOOQ should allow to pass these
+//        // objects through to JDBC
+//        Point point = new Point(0, 0);
+//        point.setSrid(4326);
+//        PGgeometry geometry = new PGgeometry(point);
+//
+//        // [#2267] Non-PostGIS geometry objects should work, too
+//        PGbox box = new PGbox(1.0, 1.0, 2.0, 2.0);
+//        PGInterval interval = new PGInterval(1, 2, 3, 4, 5, 6);
+//
+//        TPgExtensionsRecord r1 = create().newRecord(T_PG_EXTENSIONS);
+//        r1.setPgGeometry(geometry);
+//        r1.setPgInterval(interval);
+//        r1.setPgBox(box);
+//        assertEquals(1, r1.store());
+//        assertEquals(1, (int) create().selectCount().from(T_PG_EXTENSIONS).fetchOne(0, int.class));
+//
+//        TPgExtensionsRecord r2 = create().selectFrom(T_PG_EXTENSIONS).fetchOne();
+//        assertEquals(r1, r2);
+//
+//        assertEquals(box, r2.getPgBox());
+//        assertEquals(geometry, r2.getPgGeometry());
+//        assertEquals(interval, r2.getPgInterval());
+//    }
 
     @Test
     public void testPostgresUDTTypes() throws Exception {

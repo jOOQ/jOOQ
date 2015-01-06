@@ -17,7 +17,7 @@ if [ -f jOOQ-src/jooq-$VERSION-sources.jar ]; then
   SOURCES_JOOQ_SCALA=-Dsources=jOOQ-src/jooq-scala-$VERSION-sources.jar
 fi
 
-mvn install:install-file -Dfile=jOOQ-pom/pom.xml                         -DgroupId=org.jooq -DartifactId=jooq-parent        -Dversion=$VERSION -Dpackaging=pom
+mvn install:install-file -Dfile=jOOQ-pom/pom.xml                               -DgroupId=org.jooq -DartifactId=jooq-parent        -Dversion=$VERSION -Dpackaging=pom
 mvn install:install-file -Dfile=jOOQ-lib/jooq-$VERSION.jar               -DgroupId=org.jooq -DartifactId=jooq               -Dversion=$VERSION -Dpackaging=jar $JAVADOC_JOOQ               $SOURCES_JOOQ              -DpomFile=jOOQ-pom/jooq/pom.xml
 mvn install:install-file -Dfile=jOOQ-lib/jooq-meta-$VERSION.jar          -DgroupId=org.jooq -DartifactId=jooq-meta          -Dversion=$VERSION -Dpackaging=jar $JAVADOC_JOOQ_META          $SOURCES_JOOQ_META         -DpomFile=jOOQ-pom/jooq-meta/pom.xml
 mvn install:install-file -Dfile=jOOQ-lib/jooq-codegen-$VERSION.jar       -DgroupId=org.jooq -DartifactId=jooq-codegen       -Dversion=$VERSION -Dpackaging=jar $JAVADOC_JOOQ_CODEGEN       $SOURCES_JOOQ_CODEGEN      -DpomFile=jOOQ-pom/jooq-codegen/pom.xml

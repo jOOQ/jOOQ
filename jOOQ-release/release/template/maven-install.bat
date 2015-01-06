@@ -17,7 +17,7 @@ if exist jOOQ-src\jooq-%VERSION%-sources.jar (
   set SOURCES_JOOQ_SCALA=-Dsources=jOOQ-src\jooq-scala-%VERSION%-sources.jar
 )
 
-call mvn install:install-file -Dfile=jOOQ-pom\pom.xml                          -DgroupId=org.jooq -DartifactId=jooq-parent        -Dversion=%VERSION% -Dpackaging=pom
+call mvn install:install-file -Dfile=jOOQ-pom\pom.xml                                -DgroupId=org.jooq -DartifactId=jooq-parent        -Dversion=%VERSION% -Dpackaging=pom
 call mvn install:install-file -Dfile=jOOQ-lib\jooq-%VERSION%.jar               -DgroupId=org.jooq -DartifactId=jooq               -Dversion=%VERSION% -Dpackaging=jar %JAVADOC_JOOQ%               %SOURCES_JOOQ%              -DpomFile=jOOQ-pom\jooq\pom.xml
 call mvn install:install-file -Dfile=jOOQ-lib\jooq-meta-%VERSION%.jar          -DgroupId=org.jooq -DartifactId=jooq-meta          -Dversion=%VERSION% -Dpackaging=jar %JAVADOC_JOOQ_META%          %SOURCES_JOOQ_META%         -DpomFile=jOOQ-pom\jooq-meta\pom.xml
 call mvn install:install-file -Dfile=jOOQ-lib\jooq-codegen-%VERSION%.jar       -DgroupId=org.jooq -DartifactId=jooq-codegen       -Dversion=%VERSION% -Dpackaging=jar %JAVADOC_JOOQ_CODEGEN%       %SOURCES_JOOQ_CODEGEN%      -DpomFile=jOOQ-pom\jooq-codegen\pom.xml

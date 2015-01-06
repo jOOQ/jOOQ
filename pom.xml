@@ -232,6 +232,15 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <classifier>${classifier}</classifier>
+                </configuration>
+            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -269,6 +278,9 @@
     <profiles>
         <profile>
             <id>release-oss</id>
+            <properties>
+                <classifier></classifier>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -335,7 +347,20 @@
         
         <!-- [pro] xxx
         xxxxxxxxx
+            xxxxxxxxxxxxxxxx
+            xxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxx
+            xxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxx
+        xxxxxxxxxx
+        
+        xxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxx
             xxxxxxx
                 xxxxxxxxx
                     xxxxxxxx
@@ -368,6 +393,9 @@
         
         xxxxxxxxx
             xxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxx
             xxxxxxx
                 xxxxxxxxx
                     xxxxxxxx

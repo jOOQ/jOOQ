@@ -1154,7 +1154,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
         MappingException;
 
     /**
-     * Execute the query and return the generated result as an Object matrix
+     * Execute the query and return the generated result as an Object matrix.
      * <p>
      * You can access data like this
      * <code><pre>query.fetchArray()[recordIndex][fieldIndex]</pre></code>
@@ -1164,6 +1164,16 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @see Result#intoArrays()
      */
     Object[][] fetchArrays() throws DataAccessException;
+
+    /**
+     * Execute the query and return the generated result as an array of records.
+     * <p>
+     *
+     * @return The result.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Result#toArray(Object[])
+     */
+    R[] fetchArray() throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field index from the

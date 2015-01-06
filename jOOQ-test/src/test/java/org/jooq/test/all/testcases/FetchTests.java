@@ -412,21 +412,25 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // fetch
         // -----
         Result<B> books = create().selectFrom(TBook()).orderBy(TBook_ID()).fetch();
-        Object[][] booksArray = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchArrays();
+        B[] booksArray = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchArray();
+        Object[][] booksMatrix = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchArrays();
 
         for (int j = 0; j < books.size(); j++) {
-            B bookJ = books.get(j);
-            Object[] array = bookJ.intoArray();
+            B bookJ1 = books.get(j);
+            B bookJ2 = booksArray[j];
+            Object[] array = bookJ1.intoArray();
 
             B book2 = create().newRecord(TBook());
             B book3 = create().newRecord(TBook());
             book2.fromArray(array);
             book3.from(array);
-            assertEquals(bookJ, book2);
-            assertEquals(bookJ, book3);
+            assertEquals(bookJ1, book2);
+            assertEquals(bookJ1, book3);
+            assertEquals(bookJ2, book2);
+            assertEquals(bookJ2, book3);
 
             for (int i = 0; i < TBook().fieldsRow().size(); i++) {
-                assertEquals(books.getValue(j, i), booksArray[j][i]);
+                assertEquals(books.getValue(j, i), booksMatrix[j][i]);
                 assertEquals(books.getValue(j, i), books.intoArrays()[j][i]);
                 assertEquals(books.get(j).getValue(i), books.get(j).intoArray()[i]);
             }

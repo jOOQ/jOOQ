@@ -13,7 +13,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_3571;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_3571 implements IT_3571 {
 
-	private static final long serialVersionUID = -523425987;
+	private static final long serialVersionUID = -599674984;
 
 	private org.jooq.test.all.converters.T_3571 e1;
 	private org.jooq.test.all.converters.T_3571 e2;
@@ -21,6 +21,13 @@ public class T_3571 implements IT_3571 {
 	private org.jooq.test.all.converters.T_3571 e4;
 
 	public T_3571() {}
+
+	public T_3571(T_3571 value) {
+		this.e1 = value.e1;
+		this.e2 = value.e2;
+		this.e3 = value.e3;
+		this.e4 = value.e4;
+	}
 
 	public T_3571(
 		org.jooq.test.all.converters.T_3571 e1,

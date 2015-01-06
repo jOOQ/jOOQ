@@ -13,12 +13,17 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_3485;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_3485 implements IT_3485 {
 
-	private static final long serialVersionUID = -624868085;
+	private static final long serialVersionUID = 312785834;
 
 	private Integer id;
 	private String  pw;
 
 	public T_3485() {}
+
+	public T_3485(T_3485 value) {
+		this.id = value.id;
+		this.pw = value.pw;
+	}
 
 	public T_3485(
 		Integer id,

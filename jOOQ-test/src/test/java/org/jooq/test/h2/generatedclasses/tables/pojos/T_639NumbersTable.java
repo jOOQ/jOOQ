@@ -16,7 +16,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_639NumbersTable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTable implements IT_639NumbersTable {
 
-	private static final long serialVersionUID = -772978187;
+	private static final long serialVersionUID = 1515393127;
 
 	private Integer    id;
 	private Byte       byte_;
@@ -33,6 +33,22 @@ public class T_639NumbersTable implements IT_639NumbersTable {
 	private Double     double_;
 
 	public T_639NumbersTable() {}
+
+	public T_639NumbersTable(T_639NumbersTable value) {
+		this.id = value.id;
+		this.byte_ = value.byte_;
+		this.short_ = value.short_;
+		this.integer = value.integer;
+		this.long_ = value.long_;
+		this.byteDecimal = value.byteDecimal;
+		this.shortDecimal = value.shortDecimal;
+		this.integerDecimal = value.integerDecimal;
+		this.longDecimal = value.longDecimal;
+		this.bigInteger = value.bigInteger;
+		this.bigDecimal = value.bigDecimal;
+		this.float_ = value.float_;
+		this.double_ = value.double_;
+	}
 
 	public T_639NumbersTable(
 		Integer    id,

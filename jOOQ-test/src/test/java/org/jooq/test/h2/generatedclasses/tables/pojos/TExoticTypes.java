@@ -15,12 +15,17 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.ITExoticTypes;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes implements ITExoticTypes {
 
-	private static final long serialVersionUID = -1616922424;
+	private static final long serialVersionUID = -647608513;
 
 	private Integer id;
 	private UUID    uu;
 
 	public TExoticTypes() {}
+
+	public TExoticTypes(TExoticTypes value) {
+		this.id = value.id;
+		this.uu = value.uu;
+	}
 
 	public TExoticTypes(
 		Integer id,

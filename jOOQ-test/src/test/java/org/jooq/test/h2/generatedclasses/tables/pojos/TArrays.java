@@ -13,7 +13,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.ITArrays;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TArrays implements ITArrays {
 
-	private static final long serialVersionUID = 649908116;
+	private static final long serialVersionUID = 834688227;
 
 	private Integer  id;
 	private Object[] stringArray;
@@ -21,6 +21,13 @@ public class TArrays implements ITArrays {
 	private Object[] dateArray;
 
 	public TArrays() {}
+
+	public TArrays(TArrays value) {
+		this.id = value.id;
+		this.stringArray = value.stringArray;
+		this.numberArray = value.numberArray;
+		this.dateArray = value.dateArray;
+	}
 
 	public TArrays(
 		Integer  id,

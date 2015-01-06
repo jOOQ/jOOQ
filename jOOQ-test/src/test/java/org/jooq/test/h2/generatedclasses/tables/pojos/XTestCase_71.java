@@ -13,12 +13,17 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_71;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_71 implements IXTestCase_71 {
 
-	private static final long serialVersionUID = -1694682401;
+	private static final long serialVersionUID = -40566290;
 
 	private Integer id;
 	private Short   testCase_64_69Id;
 
 	public XTestCase_71() {}
+
+	public XTestCase_71(XTestCase_71 value) {
+		this.id = value.id;
+		this.testCase_64_69Id = value.testCase_64_69Id;
+	}
 
 	public XTestCase_71(
 		Integer id,

@@ -17,7 +17,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.ITAuthor;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor implements ITAuthor {
 
-	private static final long serialVersionUID = -450936384;
+	private static final long serialVersionUID = 1167972329;
 
 	private Integer id;
 	private String  firstName;
@@ -27,6 +27,15 @@ public class TAuthor implements ITAuthor {
 	private String  address;
 
 	public TAuthor() {}
+
+	public TAuthor(TAuthor value) {
+		this.id = value.id;
+		this.firstName = value.firstName;
+		this.lastName = value.lastName;
+		this.dateOfBirth = value.dateOfBirth;
+		this.yearOfBirth = value.yearOfBirth;
+		this.address = value.address;
+	}
 
 	public TAuthor(
 		Integer id,

@@ -15,7 +15,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IVAuthor;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthor implements IVAuthor {
 
-	private static final long serialVersionUID = 1569828418;
+	private static final long serialVersionUID = 1557526647;
 
 	private Integer id;
 	private String  firstName;
@@ -25,6 +25,15 @@ public class VAuthor implements IVAuthor {
 	private String  address;
 
 	public VAuthor() {}
+
+	public VAuthor(VAuthor value) {
+		this.id = value.id;
+		this.firstName = value.firstName;
+		this.lastName = value.lastName;
+		this.dateOfBirth = value.dateOfBirth;
+		this.yearOfBirth = value.yearOfBirth;
+		this.address = value.address;
+	}
 
 	public VAuthor(
 		Integer id,

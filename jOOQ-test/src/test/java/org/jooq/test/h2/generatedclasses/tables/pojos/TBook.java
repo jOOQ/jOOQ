@@ -17,7 +17,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook implements ITBook {
 
-	private static final long serialVersionUID = -1542066762;
+	private static final long serialVersionUID = 66851746;
 
 	private Integer   id;
 	private Integer   authorId;
@@ -32,6 +32,20 @@ public class TBook implements ITBook {
 	private Timestamp recTimestamp;
 
 	public TBook() {}
+
+	public TBook(TBook value) {
+		this.id = value.id;
+		this.authorId = value.authorId;
+		this.coAuthorId = value.coAuthorId;
+		this.detailsId = value.detailsId;
+		this.title = value.title;
+		this.publishedIn = value.publishedIn;
+		this.languageId = value.languageId;
+		this.contentText = value.contentText;
+		this.contentPdf = value.contentPdf;
+		this.recVersion = value.recVersion;
+		this.recTimestamp = value.recTimestamp;
+	}
 
 	public TBook(
 		Integer   id,

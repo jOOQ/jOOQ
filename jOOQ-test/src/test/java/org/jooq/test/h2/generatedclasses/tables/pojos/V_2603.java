@@ -13,12 +13,17 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IV_2603;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class V_2603 implements IV_2603 {
 
-	private static final long serialVersionUID = -1873248039;
+	private static final long serialVersionUID = 1783252158;
 
 	private Integer col1;
 	private Integer col4;
 
 	public V_2603() {}
+
+	public V_2603(V_2603 value) {
+		this.col1 = value.col1;
+		this.col4 = value.col4;
+	}
 
 	public V_2603(
 		Integer col1,

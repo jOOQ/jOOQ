@@ -13,12 +13,17 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.ITIdentity;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentity implements ITIdentity {
 
-	private static final long serialVersionUID = -277153198;
+	private static final long serialVersionUID = -1264044467;
 
 	private Integer id;
 	private Integer val;
 
 	public TIdentity() {}
+
+	public TIdentity(TIdentity value) {
+		this.id = value.id;
+		this.val = value.val;
+	}
 
 	public TIdentity(
 		Integer id,

@@ -15,7 +15,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IVBook;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBook implements IVBook {
 
-	private static final long serialVersionUID = 1742954807;
+	private static final long serialVersionUID = 426208389;
 
 	private Integer   id;
 	private Integer   authorId;
@@ -30,6 +30,20 @@ public class VBook implements IVBook {
 	private Timestamp recTimestamp;
 
 	public VBook() {}
+
+	public VBook(VBook value) {
+		this.id = value.id;
+		this.authorId = value.authorId;
+		this.coAuthorId = value.coAuthorId;
+		this.detailsId = value.detailsId;
+		this.title = value.title;
+		this.publishedIn = value.publishedIn;
+		this.languageId = value.languageId;
+		this.contentText = value.contentText;
+		this.contentPdf = value.contentPdf;
+		this.recVersion = value.recVersion;
+		this.recTimestamp = value.recTimestamp;
+	}
 
 	public VBook(
 		Integer   id,

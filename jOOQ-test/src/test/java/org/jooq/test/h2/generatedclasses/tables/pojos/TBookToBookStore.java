@@ -15,13 +15,19 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookToBookStore;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStore implements ITBookToBookStore {
 
-	private static final long serialVersionUID = 1629537799;
+	private static final long serialVersionUID = -300811517;
 
 	private String  bookStoreName;
 	private Integer bookId;
 	private Integer stock;
 
 	public TBookToBookStore() {}
+
+	public TBookToBookStore(TBookToBookStore value) {
+		this.bookStoreName = value.bookStoreName;
+		this.bookId = value.bookId;
+		this.stock = value.stock;
+	}
 
 	public TBookToBookStore(
 		String  bookStoreName,

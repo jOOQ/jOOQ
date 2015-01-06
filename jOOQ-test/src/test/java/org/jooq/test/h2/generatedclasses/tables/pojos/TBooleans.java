@@ -20,7 +20,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.ITBooleans;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleans implements ITBooleans {
 
-	private static final long serialVersionUID = 580054507;
+	private static final long serialVersionUID = 966096843;
 
 	private Integer           id;
 	private Boolean_10        oneZero;
@@ -35,6 +35,20 @@ public class TBooleans implements ITBooleans {
 	private Boolean           nBoolean;
 
 	public TBooleans() {}
+
+	public TBooleans(TBooleans value) {
+		this.id = value.id;
+		this.oneZero = value.oneZero;
+		this.trueFalseLc = value.trueFalseLc;
+		this.trueFalseUc = value.trueFalseUc;
+		this.yesNoLc = value.yesNoLc;
+		this.yesNoUc = value.yesNoUc;
+		this.yNLc = value.yNLc;
+		this.yNUc = value.yNUc;
+		this.vcBoolean = value.vcBoolean;
+		this.cBoolean = value.cBoolean;
+		this.nBoolean = value.nBoolean;
+	}
 
 	public TBooleans(
 		Integer           id,

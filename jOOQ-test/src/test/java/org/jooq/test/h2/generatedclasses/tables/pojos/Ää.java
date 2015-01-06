@@ -13,11 +13,15 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IÄä;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Ää implements IÄä {
 
-	private static final long serialVersionUID = -705028557;
+	private static final long serialVersionUID = 1268778279;
 
 	private Integer öö;
 
 	public Ää() {}
+
+	public Ää(Ää value) {
+		this.öö = value.öö;
+	}
 
 	public Ää(
 		Integer öö

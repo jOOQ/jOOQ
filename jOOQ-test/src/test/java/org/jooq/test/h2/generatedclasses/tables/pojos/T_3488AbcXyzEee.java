@@ -13,11 +13,15 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_3488AbcXyzEee;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_3488AbcXyzEee implements IT_3488AbcXyzEee {
 
-	private static final long serialVersionUID = 1117220862;
+	private static final long serialVersionUID = -1583941570;
 
 	private Integer id;
 
 	public T_3488AbcXyzEee() {}
+
+	public T_3488AbcXyzEee(T_3488AbcXyzEee value) {
+		this.id = value.id;
+	}
 
 	public T_3488AbcXyzEee(
 		Integer id

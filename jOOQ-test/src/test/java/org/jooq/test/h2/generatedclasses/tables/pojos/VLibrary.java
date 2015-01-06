@@ -13,12 +13,17 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IVLibrary;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibrary implements IVLibrary {
 
-	private static final long serialVersionUID = -1539571990;
+	private static final long serialVersionUID = -300455951;
 
 	private String author;
 	private String title;
 
 	public VLibrary() {}
+
+	public VLibrary(VLibrary value) {
+		this.author = value.author;
+		this.title = value.title;
+	}
 
 	public VLibrary(
 		String author,

@@ -17,7 +17,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.ITDates;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates implements ITDates {
 
-	private static final long serialVersionUID = -741199589;
+	private static final long serialVersionUID = 658298860;
 
 	private Integer   id;
 	private Date      d;
@@ -27,6 +27,15 @@ public class TDates implements ITDates {
 	private Long      tsBigint;
 
 	public TDates() {}
+
+	public TDates(TDates value) {
+		this.id = value.id;
+		this.d = value.d;
+		this.t = value.t;
+		this.ts = value.ts;
+		this.dInt = value.dInt;
+		this.tsBigint = value.tsBigint;
+	}
 
 	public TDates(
 		Integer   id,

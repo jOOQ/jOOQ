@@ -13,13 +13,19 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2698;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2698 implements IT_2698 {
 
-	private static final long serialVersionUID = 396757595;
+	private static final long serialVersionUID = -1297108677;
 
 	private Integer id;
 	private Integer xx;
 	private Integer yy;
 
 	public T_2698() {}
+
+	public T_2698(T_2698 value) {
+		this.id = value.id;
+		this.xx = value.xx;
+		this.yy = value.yy;
+	}
 
 	public T_2698(
 		Integer id,

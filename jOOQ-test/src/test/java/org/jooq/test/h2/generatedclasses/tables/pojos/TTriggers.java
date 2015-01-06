@@ -13,13 +13,19 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.ITTriggers;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggers implements ITTriggers {
 
-	private static final long serialVersionUID = -1899515233;
+	private static final long serialVersionUID = 145978013;
 
 	private Integer idGenerated;
 	private Integer id;
 	private Integer counter;
 
 	public TTriggers() {}
+
+	public TTriggers(TTriggers value) {
+		this.idGenerated = value.idGenerated;
+		this.id = value.id;
+		this.counter = value.counter;
+	}
 
 	public TTriggers(
 		Integer idGenerated,

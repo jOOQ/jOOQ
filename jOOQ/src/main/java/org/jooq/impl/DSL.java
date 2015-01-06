@@ -6558,287 +6558,287 @@ public class DSL {
      * Turn a row value expression of degree <code>1</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ POSTGRES })
+    @Support
     public static <T1> Field<Record1<T1>> field(Row1<T1> row) {
         return new RowField<Row1<T1>, Record1<T1>>(row);
-    }
+    }                
 
     /**
      * Turn a row value expression of degree <code>2</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ POSTGRES })
+    @Support
     public static <T1, T2> Field<Record2<T1, T2>> field(Row2<T1, T2> row) {
         return new RowField<Row2<T1, T2>, Record2<T1, T2>>(row);
-    }
+    }                
 
     /**
      * Turn a row value expression of degree <code>3</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ POSTGRES })
+    @Support
     public static <T1, T2, T3> Field<Record3<T1, T2, T3>> field(Row3<T1, T2, T3> row) {
         return new RowField<Row3<T1, T2, T3>, Record3<T1, T2, T3>>(row);
-    }
+    }                
 
     /**
      * Turn a row value expression of degree <code>4</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ POSTGRES })
+    @Support
     public static <T1, T2, T3, T4> Field<Record4<T1, T2, T3, T4>> field(Row4<T1, T2, T3, T4> row) {
         return new RowField<Row4<T1, T2, T3, T4>, Record4<T1, T2, T3, T4>>(row);
-    }
+    }                
 
     /**
      * Turn a row value expression of degree <code>5</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ POSTGRES })
+    @Support
     public static <T1, T2, T3, T4, T5> Field<Record5<T1, T2, T3, T4, T5>> field(Row5<T1, T2, T3, T4, T5> row) {
         return new RowField<Row5<T1, T2, T3, T4, T5>, Record5<T1, T2, T3, T4, T5>>(row);
-    }
+    }                
 
     /**
      * Turn a row value expression of degree <code>6</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ POSTGRES })
+    @Support
     public static <T1, T2, T3, T4, T5, T6> Field<Record6<T1, T2, T3, T4, T5, T6>> field(Row6<T1, T2, T3, T4, T5, T6> row) {
         return new RowField<Row6<T1, T2, T3, T4, T5, T6>, Record6<T1, T2, T3, T4, T5, T6>>(row);
-    }
+    }                
 
     /**
      * Turn a row value expression of degree <code>7</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ POSTGRES })
+    @Support
     public static <T1, T2, T3, T4, T5, T6, T7> Field<Record7<T1, T2, T3, T4, T5, T6, T7>> field(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
         return new RowField<Row7<T1, T2, T3, T4, T5, T6, T7>, Record7<T1, T2, T3, T4, T5, T6, T7>>(row);
-    }
+    }                
 
     /**
      * Turn a row value expression of degree <code>8</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ POSTGRES })
+    @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8> Field<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> field(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
         return new RowField<Row8<T1, T2, T3, T4, T5, T6, T7, T8>, Record8<T1, T2, T3, T4, T5, T6, T7, T8>>(row);
-    }
+    }                
 
     /**
      * Turn a row value expression of degree <code>9</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ POSTGRES })
+    @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> Field<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> field(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row) {
         return new RowField<Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9>, Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>>(row);
-    }
+    }                
 
     /**
      * Turn a row value expression of degree <code>10</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ POSTGRES })
+    @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Field<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> field(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row) {
         return new RowField<Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>, Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>>(row);
-    }
+    }                
 
     /**
      * Turn a row value expression of degree <code>11</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ POSTGRES })
+    @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Field<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> field(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row) {
         return new RowField<Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>, Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>>(row);
-    }
+    }                
 
     /**
      * Turn a row value expression of degree <code>12</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ POSTGRES })
+    @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Field<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> field(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row) {
         return new RowField<Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>, Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>>(row);
-    }
+    }                
 
     /**
      * Turn a row value expression of degree <code>13</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ POSTGRES })
+    @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Field<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> field(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row) {
         return new RowField<Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>, Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>>(row);
-    }
+    }                
 
     /**
      * Turn a row value expression of degree <code>14</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ POSTGRES })
+    @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Field<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> field(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row) {
         return new RowField<Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>, Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>>(row);
-    }
+    }                
 
     /**
      * Turn a row value expression of degree <code>15</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ POSTGRES })
+    @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Field<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> field(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row) {
         return new RowField<Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>, Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>>(row);
-    }
+    }                
 
     /**
      * Turn a row value expression of degree <code>16</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ POSTGRES })
+    @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Field<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> field(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row) {
         return new RowField<Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>, Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>>(row);
-    }
+    }                
 
     /**
      * Turn a row value expression of degree <code>17</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ POSTGRES })
+    @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Field<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> field(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row) {
         return new RowField<Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>, Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>>(row);
-    }
+    }                
 
     /**
      * Turn a row value expression of degree <code>18</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ POSTGRES })
+    @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Field<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> field(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row) {
         return new RowField<Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>, Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>>(row);
-    }
+    }                
 
     /**
      * Turn a row value expression of degree <code>19</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ POSTGRES })
+    @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Field<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> field(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row) {
         return new RowField<Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>, Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>>(row);
-    }
+    }                
 
     /**
      * Turn a row value expression of degree <code>20</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ POSTGRES })
+    @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Field<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> field(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row) {
         return new RowField<Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>, Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>>(row);
-    }
+    }                
 
     /**
      * Turn a row value expression of degree <code>21</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ POSTGRES })
+    @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Field<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> field(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row) {
         return new RowField<Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>, Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>>(row);
-    }
+    }                
 
     /**
      * Turn a row value expression of degree <code>22</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ POSTGRES })
+    @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Field<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> field(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row) {
         return new RowField<Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>, Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>>(row);
-    }
+    }                
 
 // [jooq-tools] END [row-field]
 
@@ -11515,7 +11515,7 @@ public class DSL {
      * Create a row value expression of degree <code>1</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11528,7 +11528,7 @@ public class DSL {
      * Create a row value expression of degree <code>2</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11541,7 +11541,7 @@ public class DSL {
      * Create a row value expression of degree <code>3</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11554,7 +11554,7 @@ public class DSL {
      * Create a row value expression of degree <code>4</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11567,7 +11567,7 @@ public class DSL {
      * Create a row value expression of degree <code>5</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11580,7 +11580,7 @@ public class DSL {
      * Create a row value expression of degree <code>6</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11593,7 +11593,7 @@ public class DSL {
      * Create a row value expression of degree <code>7</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11606,7 +11606,7 @@ public class DSL {
      * Create a row value expression of degree <code>8</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11619,7 +11619,7 @@ public class DSL {
      * Create a row value expression of degree <code>9</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11632,7 +11632,7 @@ public class DSL {
      * Create a row value expression of degree <code>10</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11645,7 +11645,7 @@ public class DSL {
      * Create a row value expression of degree <code>11</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11658,7 +11658,7 @@ public class DSL {
      * Create a row value expression of degree <code>12</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11671,7 +11671,7 @@ public class DSL {
      * Create a row value expression of degree <code>13</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11684,7 +11684,7 @@ public class DSL {
      * Create a row value expression of degree <code>14</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11697,7 +11697,7 @@ public class DSL {
      * Create a row value expression of degree <code>15</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11710,7 +11710,7 @@ public class DSL {
      * Create a row value expression of degree <code>16</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11723,7 +11723,7 @@ public class DSL {
      * Create a row value expression of degree <code>17</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11736,7 +11736,7 @@ public class DSL {
      * Create a row value expression of degree <code>18</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11749,7 +11749,7 @@ public class DSL {
      * Create a row value expression of degree <code>19</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11762,7 +11762,7 @@ public class DSL {
      * Create a row value expression of degree <code>20</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11775,7 +11775,7 @@ public class DSL {
      * Create a row value expression of degree <code>21</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11788,7 +11788,7 @@ public class DSL {
      * Create a row value expression of degree <code>22</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11817,7 +11817,7 @@ public class DSL {
      * Create a row value expression of degree <code>1</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11830,7 +11830,7 @@ public class DSL {
      * Create a row value expression of degree <code>2</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11843,7 +11843,7 @@ public class DSL {
      * Create a row value expression of degree <code>3</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11856,7 +11856,7 @@ public class DSL {
      * Create a row value expression of degree <code>4</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11869,7 +11869,7 @@ public class DSL {
      * Create a row value expression of degree <code>5</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11882,7 +11882,7 @@ public class DSL {
      * Create a row value expression of degree <code>6</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11895,7 +11895,7 @@ public class DSL {
      * Create a row value expression of degree <code>7</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11908,7 +11908,7 @@ public class DSL {
      * Create a row value expression of degree <code>8</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11921,7 +11921,7 @@ public class DSL {
      * Create a row value expression of degree <code>9</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11934,7 +11934,7 @@ public class DSL {
      * Create a row value expression of degree <code>10</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11947,7 +11947,7 @@ public class DSL {
      * Create a row value expression of degree <code>11</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11960,7 +11960,7 @@ public class DSL {
      * Create a row value expression of degree <code>12</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11973,7 +11973,7 @@ public class DSL {
      * Create a row value expression of degree <code>13</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11986,7 +11986,7 @@ public class DSL {
      * Create a row value expression of degree <code>14</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -11999,7 +11999,7 @@ public class DSL {
      * Create a row value expression of degree <code>15</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -12012,7 +12012,7 @@ public class DSL {
      * Create a row value expression of degree <code>16</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -12025,7 +12025,7 @@ public class DSL {
      * Create a row value expression of degree <code>17</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -12038,7 +12038,7 @@ public class DSL {
      * Create a row value expression of degree <code>18</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -12051,7 +12051,7 @@ public class DSL {
      * Create a row value expression of degree <code>19</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -12064,7 +12064,7 @@ public class DSL {
      * Create a row value expression of degree <code>20</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -12077,7 +12077,7 @@ public class DSL {
      * Create a row value expression of degree <code>21</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -12090,7 +12090,7 @@ public class DSL {
      * Create a row value expression of degree <code>22</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -12182,7 +12182,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -12214,7 +12214,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -12246,7 +12246,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -12278,7 +12278,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -12310,7 +12310,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -12342,7 +12342,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -12374,7 +12374,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -12406,7 +12406,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -12438,7 +12438,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -12470,7 +12470,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -12502,7 +12502,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -12534,7 +12534,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -12566,7 +12566,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -12598,7 +12598,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -12630,7 +12630,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -12662,7 +12662,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -12694,7 +12694,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -12726,7 +12726,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -12758,7 +12758,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -12790,7 +12790,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -12822,7 +12822,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>
@@ -12854,7 +12854,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>

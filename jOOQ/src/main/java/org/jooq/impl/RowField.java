@@ -40,31 +40,68 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Utils.DATA_LIST_ALREADY_INDENTED;
+
 import org.jooq.Context;
 import org.jooq.DataType;
+import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Row;
 
 /**
  * @author Lukas Eder
  */
-class RowField<R1 extends Row, R2 extends Record> extends AbstractField<R2> {
+class RowField<ROW extends Row, REC extends Record> extends AbstractField<REC> {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = -2065258332642911588L;
 
-    private final R1          row;
+    private final ROW         row;
+    private final String      as;
+    private final Field<?>[]  emulatedFields;
 
-    RowField(R1 row) {
-        super("row", (DataType) SQLDataType.RECORD);
+    RowField(ROW row) {
+        this(row, "row");
+    }
+
+    RowField(ROW row, String as) {
+        super(as, (DataType) SQLDataType.RECORD);
 
         this.row = row;
+        this.as = as;
+        this.emulatedFields = new Field[row.fields().length];
+
+        for (int i = 0; i < emulatedFields.length; i++)
+            emulatedFields[i] = row.field(i).as(as + "." + row.field(i).getName());
+    }
+
+    Field<?>[] emulatedFields() {
+        return emulatedFields;
     }
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(row);
+        if (ctx.declareFields()) {
+            Object previous = ctx.data(DATA_LIST_ALREADY_INDENTED);
+
+            ctx.data(DATA_LIST_ALREADY_INDENTED, true);
+            ctx.visit(new SelectFieldList(emulatedFields()));
+            ctx.data(DATA_LIST_ALREADY_INDENTED, previous);
+        }
+        else {
+            ctx.visit(row);
+        }
+    }
+
+    @Override
+    public Field<REC> as(String alias) {
+        return new RowField<ROW, REC>(row, alias);
+    }
+
+    @Override
+    public boolean declaresFields() {
+        return true;
     }
 }

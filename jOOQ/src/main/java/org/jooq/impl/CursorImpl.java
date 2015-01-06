@@ -98,7 +98,6 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     private final boolean[]                  intern;
     private final boolean                    keepResultSet;
     private final boolean                    keepStatement;
-    private final Class<? extends R>         type;
     private final RecordFactory<? extends R> factory;
     private boolean                          isClosed;
 
@@ -115,7 +114,6 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         this.ctx = ctx;
         this.listener = (listener != null ? listener : new ExecuteListeners(ctx));
         this.fields = fields;
-        this.type = type;
         this.factory = recordFactory(type, fields);
         this.keepStatement = keepStatement;
         this.keepResultSet = keepResultSet;

@@ -45,13 +45,10 @@ import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
 
-import java.util.Arrays;
-
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.Select;
 
@@ -75,7 +72,7 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
 
     @Override
     public final Condition and(Condition other) {
-        return new CombinedCondition(Operator.AND, Arrays.asList(this, other));
+        return DSL.and(this, other);
     }
 
     /*
@@ -89,7 +86,7 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
 
     @Override
     public final Condition or(Condition other) {
-        return new CombinedCondition(Operator.OR, Arrays.asList(this, other));
+        return DSL.or(this, other);
     }
 
     @Override

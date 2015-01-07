@@ -104,14 +104,14 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
                 c = conditions.iterator().next();
             }
             else {
-                c = new CombinedCondition(operator, conditions);
+                c = DSL.condition(operator, conditions);
             }
 
             if (getWhere() instanceof TrueCondition) {
                 condition = c;
             }
             else {
-                condition = new CombinedCondition(operator, Arrays.asList(getWhere(), c));
+                condition = DSL.condition(operator, getWhere(), c);
             }
         }
     }

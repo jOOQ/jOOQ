@@ -69,7 +69,6 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.Operator;
 import org.jooq.QueryPartInternal;
 import org.jooq.Row;
 
@@ -114,7 +113,7 @@ class RowIsNull extends AbstractCondition {
                 conditions.add(isNull ? field.isNull() : field.isNotNull());
             }
 
-            Condition result = new CombinedCondition(Operator.AND, conditions);
+            Condition result = DSL.and(conditions);
             return (QueryPartInternal) result;
         }
         else {

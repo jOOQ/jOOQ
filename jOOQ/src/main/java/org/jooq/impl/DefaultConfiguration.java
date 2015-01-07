@@ -57,6 +57,7 @@ import javax.xml.bind.JAXB;
 
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
+import org.jooq.ConverterProvider;
 import org.jooq.DSLContext;
 import org.jooq.ExecuteListenerProvider;
 import org.jooq.RecordListenerProvider;
@@ -95,6 +96,7 @@ public class DefaultConfiguration implements Configuration {
     private transient RecordListenerProvider[]  recordListenerProviders;
     private transient ExecuteListenerProvider[] executeListenerProviders;
     private transient VisitListenerProvider[]   visitListenerProviders;
+    private transient ConverterProvider         converterProvider;
 
     // Derived objects
     private org.jooq.SchemaMapping              mapping;
@@ -131,6 +133,7 @@ public class DefaultConfiguration implements Configuration {
             null,
             null,
             null,
+            null,
             dialect,
             SettingsTools.defaultSettings(),
             null
@@ -153,6 +156,7 @@ public class DefaultConfiguration implements Configuration {
             configuration.recordListenerProviders(),
             configuration.executeListenerProviders(),
             configuration.visitListenerProviders(),
+            configuration.converterProvider(),
             configuration.dialect(),
             configuration.settings(),
             configuration.data()
@@ -182,6 +186,7 @@ public class DefaultConfiguration implements Configuration {
             null,
             null,
             executeListenerProviders,
+            null,
             null,
             dialect,
             settings,
@@ -213,6 +218,7 @@ public class DefaultConfiguration implements Configuration {
             recordMapperProvider,
             null,
             executeListenerProviders,
+            null,
             null,
             dialect,
             settings,
@@ -247,6 +253,42 @@ public class DefaultConfiguration implements Configuration {
             recordListenerProviders,
             executeListenerProviders,
             visitListenerProviders,
+            null,
+            dialect,
+            settings,
+            data
+        );
+    }
+
+    /**
+     * This constructor is maintained for backwards-compatibility reasons.
+     * Spring users tend to construct this <code>DefaultConfiguration</code>
+     * through reflection.
+     *
+     * @deprecated Use
+     *             {@link #DefaultConfiguration(ConnectionProvider, TransactionProvider, RecordMapperProvider, RecordListenerProvider[], ExecuteListenerProvider[], VisitListenerProvider[], ConverterProvider, SQLDialect, Settings, Map)}
+     *             instead. This constructor is maintained to provide jOOQ 3.2, 3.3 backwards-compatibility if called with reflection from Spring configurations.
+     */
+    @Deprecated
+    DefaultConfiguration(
+        ConnectionProvider connectionProvider,
+        TransactionProvider transactionProvider,
+        RecordMapperProvider recordMapperProvider,
+        RecordListenerProvider[] recordListenerProviders,
+        ExecuteListenerProvider[] executeListenerProviders,
+        VisitListenerProvider[] visitListenerProviders,
+        SQLDialect dialect,
+        Settings settings,
+        Map<Object, Object> data)
+    {
+        this(
+            connectionProvider,
+            transactionProvider,
+            recordMapperProvider,
+            recordListenerProviders,
+            executeListenerProviders,
+            visitListenerProviders,
+            null,
             dialect,
             settings,
             data
@@ -268,6 +310,7 @@ public class DefaultConfiguration implements Configuration {
         RecordListenerProvider[] recordListenerProviders,
         ExecuteListenerProvider[] executeListenerProviders,
         VisitListenerProvider[] visitListenerProviders,
+        ConverterProvider converterProvider,
         SQLDialect dialect,
         Settings settings,
         Map<Object, Object> data)
@@ -278,6 +321,7 @@ public class DefaultConfiguration implements Configuration {
         set(recordListenerProviders);
         set(executeListenerProviders);
         set(visitListenerProviders);
+        set(converterProvider);
         set(dialect);
         set(settings);
 
@@ -326,6 +370,7 @@ public class DefaultConfiguration implements Configuration {
             recordListenerProviders,
             executeListenerProviders,
             visitListenerProviders,
+            converterProvider,
             dialect,
             settings,
             data
@@ -344,6 +389,7 @@ public class DefaultConfiguration implements Configuration {
             recordListenerProviders,
             executeListenerProviders,
             visitListenerProviders,
+            converterProvider,
             dialect,
             settings,
             data
@@ -362,6 +408,7 @@ public class DefaultConfiguration implements Configuration {
             recordListenerProviders,
             executeListenerProviders,
             visitListenerProviders,
+            converterProvider,
             dialect,
             settings,
             data
@@ -380,6 +427,7 @@ public class DefaultConfiguration implements Configuration {
             newRecordListenerProviders,
             executeListenerProviders,
             visitListenerProviders,
+            converterProvider,
             dialect,
             settings,
             data
@@ -398,6 +446,7 @@ public class DefaultConfiguration implements Configuration {
             recordListenerProviders,
             newExecuteListenerProviders,
             visitListenerProviders,
+            converterProvider,
             dialect,
             settings,
             data
@@ -416,6 +465,26 @@ public class DefaultConfiguration implements Configuration {
             recordListenerProviders,
             executeListenerProviders,
             newVisitListenerProviders,
+            converterProvider,
+            dialect,
+            settings,
+            data
+        );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Configuration derive(ConverterProvider newConverterProvider) {
+        return new DefaultConfiguration(
+            connectionProvider,
+            transactionProvider,
+            recordMapperProvider,
+            recordListenerProviders,
+            executeListenerProviders,
+            visitListenerProviders,
+            newConverterProvider,
             dialect,
             settings,
             data
@@ -434,6 +503,7 @@ public class DefaultConfiguration implements Configuration {
             recordListenerProviders,
             executeListenerProviders,
             visitListenerProviders,
+            converterProvider,
             newDialect,
             settings,
             data
@@ -452,6 +522,7 @@ public class DefaultConfiguration implements Configuration {
             recordListenerProviders,
             executeListenerProviders,
             visitListenerProviders,
+            converterProvider,
             dialect,
             newSettings,
             data
@@ -546,6 +617,15 @@ public class DefaultConfiguration implements Configuration {
         this.visitListenerProviders = newVisitListenerProviders != null
             ? newVisitListenerProviders
             : new VisitListenerProvider[0];
+
+        return this;
+    }
+
+    @Override
+    public final Configuration set(ConverterProvider newConverterProvider) {
+        this.converterProvider = newConverterProvider != null
+            ? newConverterProvider
+            : new DefaultConverterProvider();
 
         return this;
     }
@@ -713,6 +793,14 @@ public class DefaultConfiguration implements Configuration {
      * {@inheritDoc}
      */
     @Override
+    public final ConverterProvider converterProvider() {
+        return converterProvider;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public final SQLDialect dialect() {
         return dialect;
     }
@@ -801,6 +889,10 @@ public class DefaultConfiguration implements Configuration {
         oos.writeObject(cloneSerializables(executeListenerProviders));
         oos.writeObject(cloneSerializables(recordListenerProviders));
         oos.writeObject(cloneSerializables(visitListenerProviders));
+
+        oos.writeObject(converterProvider instanceof Serializable
+            ? converterProvider
+            : null);
     }
 
     private <E> E[] cloneSerializables(E[] array) {
@@ -824,5 +916,6 @@ public class DefaultConfiguration implements Configuration {
         executeListenerProviders = (ExecuteListenerProvider[]) ois.readObject();
         recordListenerProviders = (RecordListenerProvider[]) ois.readObject();
         visitListenerProviders = (VisitListenerProvider[]) ois.readObject();
+        converterProvider = (ConverterProvider) ois.readObject();
     }
 }

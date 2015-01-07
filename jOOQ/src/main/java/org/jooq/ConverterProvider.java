@@ -38,82 +38,19 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq.impl;
-
-import static org.jooq.tools.Convert.convert;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
+package org.jooq;
 
 /**
- * A base class for enum conversion.
+ * A <code>ConverterProvider</code> providers {@link Converter} implementations
+ * for any combination of types <code>&lt;T></code> and <code>&lt;U></code>.
  *
  * @author Lukas Eder
  */
-public class EnumConverter<T, U extends Enum<U>> extends AbstractConverter<T, U> {
+public interface ConverterProvider {
 
     /**
-     * Generated UID
+     * Provide a converter that can convert between <code>&lt;T></code> and
+     * <code>&lt;U></code> types.
      */
-    private static final long serialVersionUID = -6094337837408829491L;
-
-    private final Map<T, U>   lookup;
-    private final EnumType    enumType;
-
-    public EnumConverter(Class<T> fromType, Class<U> toType) {
-        super(fromType, toType);
-
-        this.enumType = Number.class.isAssignableFrom(fromType) ? EnumType.ORDINAL : EnumType.STRING;
-        this.lookup = new LinkedHashMap<T, U>();
-        for (U u : toType.getEnumConstants()) {
-            this.lookup.put(to(u), u);
-        }
-    }
-
-    @Override
-    public final U from(T databaseObject) {
-        return lookup.get(databaseObject);
-    }
-
-    /**
-     * Subclasses may override this method to provide a custom reverse mapping
-     * implementation
-     * <p>
-     * {@inheritDoc}
-     */
-    @Override
-    public T to(U userObject) {
-        if (userObject == null) {
-            return null;
-        }
-        else if (enumType == EnumType.ORDINAL) {
-            return convert(userObject.ordinal(), fromType());
-        }
-        else {
-            return convert(userObject.name(), fromType());
-        }
-    }
-
-    /**
-     * The type of the converted <code>Enum</code>.
-     * <p>
-     * This corresponds to JPA's <code>EnumType</code>
-     */
-    enum EnumType {
-
-        /**
-         * Ordinal enum type
-         */
-        ORDINAL,
-
-        /**
-         * String enum type
-         */
-        STRING
-    }
-
-    @Override
-    public String toString() {
-        return "EnumConverter [ " + fromType().getName() + " -> " + toType().getName() + " ]";
-    }
+    <T, U> Converter<T, U> provide(Class<T> tType, Class<U> uType);
 }

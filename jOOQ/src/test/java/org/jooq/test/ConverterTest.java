@@ -41,13 +41,16 @@
 package org.jooq.test;
 
 import static org.jooq.test.data.BoolTable.BOOL_TABLE;
+import static org.junit.Assert.assertNull;
 
 import java.sql.SQLException;
 
 import org.jooq.Converter;
 import org.jooq.Converters;
 import org.jooq.Result;
+import org.jooq.impl.AbstractConverter;
 import org.jooq.impl.DSL;
+import org.jooq.impl.DefaultConverterProvider;
 import org.jooq.test.data.BoolRecord;
 import org.jooq.test.data.converter.Bool;
 import org.jooq.tools.jdbc.MockConnection;
@@ -149,5 +152,186 @@ public class ConverterTest extends AbstractTest {
         assertEquals(1, (int) c3.from(c3.to(1)));
         assertEquals(1, (int) c4.from(c4.to(1)));
         assertEquals(1, (int) c5.from(c5.to(1)));
+    }
+
+    @SuppressWarnings("serial")
+    @Test
+    public void testConverterGraph() {
+        Converter<A, B> ab = new AbstractConverter<A, B>(A.class, B.class) {
+            @Override
+            public B from(A v) {
+                return new B(v.v);
+            }
+
+            @Override
+            public A to(B v) {
+                return new A(v.v);
+            }
+        };
+
+
+        Converter<A, C> ac = new AbstractConverter<A, C>(A.class, C.class) {
+            @Override
+            public C from(A v) {
+                return new C(v.v);
+            }
+
+            @Override
+            public A to(C v) {
+                return new A(v.v);
+            }
+        };
+
+        Converter<C, D> cd = new AbstractConverter<C, D>(C.class, D.class) {
+            @Override
+            public D from(C v) {
+                return new D(v.v);
+            }
+
+            @Override
+            public C to(D v) {
+                return new C(v.v);
+            }
+        };
+
+        Converter<C, E> ce = new AbstractConverter<C, E>(C.class, E.class) {
+            @Override
+            public E from(C v) {
+                return new E(v.v);
+            }
+
+            @Override
+            public C to(E v) {
+                return new C(v.v);
+            }
+        };
+
+        DefaultConverterProvider provider = new DefaultConverterProvider();
+        provider.add(ab);
+        provider.add(ac);
+        provider.add(cd);
+        provider.add(ce);
+
+        // F is not part of the graph
+        assertNull(provider.provide(A.class, F.class));
+        assertNull(provider.provide(B.class, F.class));
+        assertNull(provider.provide(C.class, F.class));
+        assertNull(provider.provide(D.class, F.class));
+        assertNull(provider.provide(E.class, F.class));
+        assertNull(provider.provide(F.class, A.class));
+        assertNull(provider.provide(F.class, A.class));
+        assertNull(provider.provide(F.class, A.class));
+        assertNull(provider.provide(F.class, A.class));
+        assertNull(provider.provide(F.class, A.class));
+
+        // Identity conversion
+        assertEquals("a", provider.provide(A.class, A.class).from(new A("")).v);
+        assertEquals("a", provider.provide(A.class, A.class).to(new A("")).v);
+        assertEquals("b", provider.provide(B.class, B.class).from(new B("")).v);
+        assertEquals("b", provider.provide(B.class, B.class).to(new B("")).v);
+        assertEquals("c", provider.provide(C.class, C.class).from(new C("")).v);
+        assertEquals("c", provider.provide(C.class, C.class).to(new C("")).v);
+        assertEquals("d", provider.provide(D.class, D.class).from(new D("")).v);
+        assertEquals("d", provider.provide(D.class, D.class).to(new D("")).v);
+        assertEquals("e", provider.provide(E.class, E.class).from(new E("")).v);
+        assertEquals("e", provider.provide(E.class, E.class).to(new E("")).v);
+        assertEquals("f", provider.provide(F.class, F.class).from(new F("")).v);
+        assertEquals("f", provider.provide(F.class, F.class).to(new F("")).v);
+
+        // Rest of the graph
+        assertEquals("ab", provider.provide(A.class, B.class).from(new A("")).v);
+        assertEquals("ba", provider.provide(A.class, B.class).to(new B("")).v);
+        assertEquals("ac", provider.provide(A.class, C.class).from(new A("")).v);
+        assertEquals("ca", provider.provide(A.class, C.class).to(new C("")).v);
+        assertEquals("acd", provider.provide(A.class, D.class).from(new A("")).v);
+        assertEquals("dca", provider.provide(A.class, D.class).to(new D("")).v);
+        assertEquals("ace", provider.provide(A.class, E.class).from(new A("")).v);
+        assertEquals("eca", provider.provide(A.class, E.class).to(new E("")).v);
+
+        assertEquals("ba", provider.provide(B.class, A.class).from(new B("")).v);
+        assertEquals("ab", provider.provide(B.class, A.class).to(new A("")).v);
+        assertEquals("bac", provider.provide(B.class, C.class).from(new B("")).v);
+        assertEquals("cab", provider.provide(B.class, C.class).to(new C("")).v);
+        assertEquals("bacd", provider.provide(B.class, D.class).from(new B("")).v);
+        assertEquals("dcab", provider.provide(B.class, D.class).to(new D("")).v);
+        assertEquals("bace", provider.provide(B.class, E.class).from(new B("")).v);
+        assertEquals("ecab", provider.provide(B.class, E.class).to(new E("")).v);
+
+        assertEquals("ca", provider.provide(C.class, A.class).from(new C("")).v);
+        assertEquals("ac", provider.provide(C.class, A.class).to(new A("")).v);
+        assertEquals("cab", provider.provide(C.class, B.class).from(new C("")).v);
+        assertEquals("bac", provider.provide(C.class, B.class).to(new B("")).v);
+        assertEquals("cd", provider.provide(C.class, D.class).from(new C("")).v);
+        assertEquals("dc", provider.provide(C.class, D.class).to(new D("")).v);
+        assertEquals("ce", provider.provide(C.class, E.class).from(new C("")).v);
+        assertEquals("ec", provider.provide(C.class, E.class).to(new E("")).v);
+
+        assertEquals("dca", provider.provide(D.class, A.class).from(new D("")).v);
+        assertEquals("acd", provider.provide(D.class, A.class).to(new A("")).v);
+        assertEquals("dcab", provider.provide(D.class, B.class).from(new D("")).v);
+        assertEquals("bacd", provider.provide(D.class, B.class).to(new B("")).v);
+        assertEquals("dc", provider.provide(D.class, C.class).from(new D("")).v);
+        assertEquals("cd", provider.provide(D.class, C.class).to(new C("")).v);
+        assertEquals("dce", provider.provide(D.class, E.class).from(new D("")).v);
+        assertEquals("ecd", provider.provide(D.class, E.class).to(new E("")).v);
+
+        assertEquals("eca", provider.provide(E.class, A.class).from(new E("")).v);
+        assertEquals("ace", provider.provide(E.class, A.class).to(new A("")).v);
+        assertEquals("ecab", provider.provide(E.class, B.class).from(new E("")).v);
+        assertEquals("bace", provider.provide(E.class, B.class).to(new B("")).v);
+        assertEquals("ec", provider.provide(E.class, C.class).from(new E("")).v);
+        assertEquals("ce", provider.provide(E.class, C.class).to(new C("")).v);
+        assertEquals("ecd", provider.provide(E.class, D.class).from(new E("")).v);
+        assertEquals("dce", provider.provide(E.class, D.class).to(new D("")).v);
+
+        System.out.println(provider);
+    }
+
+    static class A {
+        final String v;
+
+        A(String v) {
+            this.v = v + "a";
+        }
+    }
+
+    static class B {
+        final String v;
+
+        B(String v) {
+            this.v = v + "b";
+        }
+    }
+
+    static class C {
+        final String v;
+
+        C(String v) {
+            this.v = v + "c";
+        }
+    }
+
+    static class D {
+        final String v;
+
+        D(String v) {
+            this.v = v + "d";
+        }
+    }
+
+    static class E {
+        final String v;
+
+        E(String v) {
+            this.v = v + "e";
+        }
+    }
+
+    static class F {
+        final String v;
+
+        F(String v) {
+            this.v = v + "f";
+        }
     }
 }

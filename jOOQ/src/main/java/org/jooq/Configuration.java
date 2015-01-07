@@ -300,6 +300,12 @@ public interface Configuration extends Serializable {
     VisitListenerProvider[] visitListenerProviders();
 
     /**
+     * Get the configured <code>ConverterProvider</code> from this
+     * configuration.
+     */
+    ConverterProvider converterProvider();
+
+    /**
      * Retrieve the configured schema mapping.
      *
      * @deprecated - 2.0.5 - Use {@link #settings()} instead
@@ -399,6 +405,18 @@ public interface Configuration extends Serializable {
     Configuration set(VisitListenerProvider... newVisitListenerProviders);
 
     /**
+     * Change this configuration to hold a new converter provider.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newConverterProvider The new converter provider to be contained in
+     *            the changed configuration.
+     * @return The changed configuration.
+     */
+    Configuration set(ConverterProvider newConverterProvider);
+
+    /**
      * Change this configuration to hold a new dialect.
      * <p>
      * This method is not thread-safe and should not be used in globally
@@ -493,6 +511,16 @@ public interface Configuration extends Serializable {
      * @return The derived configuration.
      */
     Configuration derive(VisitListenerProvider... newVisitListenerProviders);
+
+    /**
+     * Create a derived configuration from this one, with new converter
+     * provider.
+     *
+     * @param newConverterProvider The new converter provider to
+     *            be contained in the derived configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(ConverterProvider newConverterProvider);
 
     /**
      * Create a derived configuration from this one, with a new dialect.

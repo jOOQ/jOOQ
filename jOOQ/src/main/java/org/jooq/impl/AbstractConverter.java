@@ -40,80 +40,38 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.tools.Convert.convert;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
+import org.jooq.Converter;
 
 /**
- * A base class for enum conversion.
- *
  * @author Lukas Eder
  */
-public class EnumConverter<T, U extends Enum<U>> extends AbstractConverter<T, U> {
+public abstract class AbstractConverter<T, U> implements Converter<T, U> {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -6094337837408829491L;
+    private static final long serialVersionUID = 3739249904977790727L;
 
-    private final Map<T, U>   lookup;
-    private final EnumType    enumType;
+    private final Class<T>    fromType;
+    private final Class<U>    toType;
 
-    public EnumConverter(Class<T> fromType, Class<U> toType) {
-        super(fromType, toType);
-
-        this.enumType = Number.class.isAssignableFrom(fromType) ? EnumType.ORDINAL : EnumType.STRING;
-        this.lookup = new LinkedHashMap<T, U>();
-        for (U u : toType.getEnumConstants()) {
-            this.lookup.put(to(u), u);
-        }
+    public AbstractConverter(Class<T> fromType, Class<U> toType) {
+        this.fromType = fromType;
+        this.toType = toType;
     }
 
     @Override
-    public final U from(T databaseObject) {
-        return lookup.get(databaseObject);
+    public final Class<T> fromType() {
+        return fromType;
     }
 
-    /**
-     * Subclasses may override this method to provide a custom reverse mapping
-     * implementation
-     * <p>
-     * {@inheritDoc}
-     */
     @Override
-    public T to(U userObject) {
-        if (userObject == null) {
-            return null;
-        }
-        else if (enumType == EnumType.ORDINAL) {
-            return convert(userObject.ordinal(), fromType());
-        }
-        else {
-            return convert(userObject.name(), fromType());
-        }
-    }
-
-    /**
-     * The type of the converted <code>Enum</code>.
-     * <p>
-     * This corresponds to JPA's <code>EnumType</code>
-     */
-    enum EnumType {
-
-        /**
-         * Ordinal enum type
-         */
-        ORDINAL,
-
-        /**
-         * String enum type
-         */
-        STRING
+    public final Class<U> toType() {
+        return toType;
     }
 
     @Override
     public String toString() {
-        return "EnumConverter [ " + fromType().getName() + " -> " + toType().getName() + " ]";
+        return "Converter [ " + fromType().getName() + " -> " + toType().getName() + " ]";
     }
 }

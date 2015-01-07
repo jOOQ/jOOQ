@@ -95,6 +95,44 @@ public class Converters<T, U> implements Converter<T, U> {
         return new Converters(c1, c2, c3, c4);
     }
 
+    /**
+     * Inverse a converter.
+     */
+    public static <T, U> Converter<U, T> inverse(final Converter<T, U> converter) {
+        return new Converter<U, T>() {
+
+            /**
+             * Generated UID
+             */
+            private static final long serialVersionUID = -4307758248063822630L;
+
+            @Override
+            public T from(U u) {
+                return converter.to(u);
+            }
+
+            @Override
+            public U to(T t) {
+                return converter.from(t);
+            }
+
+            @Override
+            public Class<U> fromType() {
+                return converter.toType();
+            }
+
+            @Override
+            public Class<T> toType() {
+                return converter.fromType();
+            }
+
+            @Override
+            public String toString() {
+                return "InverseConverter [ " + fromType().getName() + " -> " + toType().getName() + " ]";
+            }
+        };
+    }
+
     Converters(Converter... chain) {
         this.chain = chain == null ? new Converter[0] : chain;
     }
@@ -127,5 +165,22 @@ public class Converters<T, U> implements Converter<T, U> {
     @Override
     public final Class<U> toType() {
         return chain[chain.length - 1].toType();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        String separator = " -> ";
+
+        sb.append("Converters [ ");
+        sb.append(chain[0].fromType().getName());
+
+        for (Converter<?, ?> converter : chain) {
+            sb.append(separator);
+            sb.append(converter.toType().getName());
+        }
+
+        sb.append(" ]");
+        return sb.toString();
     }
 }

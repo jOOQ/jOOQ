@@ -346,6 +346,7 @@
         </profile>
         
         <!-- [pro] -->
+        <!-- 
         <profile>
             <id>default</id>
             <properties>
@@ -355,7 +356,8 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
         </profile>
-        
+         -->
+         
         <profile>
             <id>release-trial</id>
             <properties>

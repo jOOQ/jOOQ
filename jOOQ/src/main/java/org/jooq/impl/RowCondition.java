@@ -72,7 +72,6 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.Operator;
 import org.jooq.QueryPartInternal;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
@@ -124,7 +123,7 @@ class RowCondition extends AbstractCondition {
                 conditions.add(leftFields[i].equal((Field) rightFields[i]));
             }
 
-            Condition result = new CombinedCondition(Operator.AND, conditions);
+            Condition result = DSL.and(conditions);
 
             if (comparator == NOT_EQUALS) {
                 result = result.not();
@@ -174,14 +173,14 @@ class RowCondition extends AbstractCondition {
                 }
 
                 inner.add(leftFields[i].compare(order, (Field) rightFields[i]));
-                outer.add(new CombinedCondition(Operator.AND, inner));
+                outer.add(DSL.and(inner));
             }
 
             if (equal) {
                 outer.add(new RowCondition(left, right, Comparator.EQUALS));
             }
 
-            Condition result = new CombinedCondition(Operator.OR, outer);
+            Condition result = DSL.or(outer);
 
             // [#2658] For performance reasons, an additional, redundant
             // predicate is factored out to favour the application of range

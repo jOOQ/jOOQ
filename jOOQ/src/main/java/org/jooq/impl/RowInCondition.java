@@ -66,7 +66,6 @@ import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
-import org.jooq.Operator;
 import org.jooq.QueryPartInternal;
 import org.jooq.Row;
 
@@ -110,7 +109,7 @@ class RowInCondition extends AbstractCondition {
                 conditions.add(new RowCondition(left, row, EQUALS));
             }
 
-            Condition result = new CombinedCondition(Operator.OR, conditions);
+            Condition result = DSL.or(conditions);
 
             if (comparator == NOT_IN) {
                 result = result.not();

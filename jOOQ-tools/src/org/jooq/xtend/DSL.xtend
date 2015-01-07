@@ -117,7 +117,7 @@ class DSL extends Generators {
                 @Support
                 public static <«TN(degree)»> Field<Record«recTypeSuffix(degree)»> field(Row«typeSuffix(degree)» row) {
                     return new RowField<Row«typeSuffix(degree)», Record«recTypeSuffix(degree)»>(row);
-                }                
+                }
             ''');// (Field) field("{0}", SQLDataType.RECORD, row);
         }
 

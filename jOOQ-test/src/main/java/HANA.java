@@ -6,7 +6,7 @@ import org.jooq.impl.DSL;
 import org.jooq.test.hana.generatedclasses.Routines;
 
 /**
- * Copyright (c) 2009-2014, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * This work is dual-licensed

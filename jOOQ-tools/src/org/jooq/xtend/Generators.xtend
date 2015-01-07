@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2014, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * This work is dual-licensed
@@ -161,7 +161,7 @@ abstract class Generators {
     def classHeader() {
         '''
         /**
-         * Copyright (c) 2009-2014, Data Geekery GmbH (http://www.datageekery.com)
+         * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
          * All rights reserved.
          *
          * This work is dual-licensed

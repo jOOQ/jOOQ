@@ -275,8 +275,6 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
 
-        File targetPackage = getStrategy().getFile(schema).getParentFile();
-
         // ----------------------------------------------------------------------
         // XXX Initialising
         // ----------------------------------------------------------------------
@@ -657,13 +655,28 @@ public class JavaGenerator extends AbstractGenerator {
 
 
     protected void generateRecord(TableDefinition table) {
-        generateRecord((Definition) table);
+        log.info("Generating record", getStrategy().getFileName(table, Mode.RECORD));
+        JavaWriter out = newJavaWriter(getStrategy().getFile(table, Mode.RECORD));
+        generateRecord(table, out);
+        out.close();
     }
 
-    private void generateRecord(Definition tableOrUdt) {
-        log.info("Generating record", getStrategy().getFileName(tableOrUdt, Mode.RECORD));
-        JavaWriter out = newJavaWriter(getStrategy().getFile(tableOrUdt, Mode.RECORD));
+    protected void generateUDTRecord(UDTDefinition udt) {
+        log.info("Generating record", getStrategy().getFileName(udt, Mode.RECORD));
+        JavaWriter out = newJavaWriter(getStrategy().getFile(udt, Mode.RECORD));
+        generateRecord(udt, out);
+        out.close();
+    }
 
+    protected void generateRecord(TableDefinition table, JavaWriter out) {
+        generateRecord((Definition) table, out);
+    }
+
+    protected void generateUDTRecord(UDTDefinition udt, JavaWriter out) {
+        generateRecord(udt, out);
+    }
+
+    private void generateRecord(Definition tableOrUdt, JavaWriter out) {
         final UniqueKeyDefinition key = (tableOrUdt instanceof TableDefinition)
             ? ((TableDefinition) tableOrUdt).getPrimaryKey()
             : null;
@@ -911,7 +924,6 @@ public class JavaGenerator extends AbstractGenerator {
             generateUDTRecordClassFooter((UDTDefinition) tableOrUdt, out);
 
         out.println("}");
-        out.close();
     }
 
     private int colRefSegments(TypedElementDefinition<?> column) {
@@ -966,13 +978,28 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generateInterface(TableDefinition table) {
-        generateInterface((Definition) table);
+        log.info("Generating interface", getStrategy().getFileName(table, Mode.INTERFACE));
+        JavaWriter out = newJavaWriter(getStrategy().getFile(table, Mode.INTERFACE));
+        generateInterface(table, out);
+        out.close();
     }
 
-    private void generateInterface(Definition tableOrUDT) {
-        log.info("Generating interface", getStrategy().getFileName(tableOrUDT, Mode.INTERFACE));
-        JavaWriter out = newJavaWriter(getStrategy().getFile(tableOrUDT, Mode.INTERFACE));
+    protected void generateUDTInterface(UDTDefinition udt) {
+        log.info("Generating interface", getStrategy().getFileName(udt, Mode.INTERFACE));
+        JavaWriter out = newJavaWriter(getStrategy().getFile(udt, Mode.INTERFACE));
+        generateInterface(udt, out);
+        out.close();
+    }
 
+    protected void generateInterface(TableDefinition table, JavaWriter out) {
+        generateInterface((Definition) table, out);
+    }
+
+    protected void generateUDTInterface(UDTDefinition udt, JavaWriter out) {
+        generateInterface(udt, out);
+    }
+
+    private void generateInterface(Definition tableOrUDT, JavaWriter out) {
         final String className = getStrategy().getJavaClassName(tableOrUDT, Mode.INTERFACE);
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(tableOrUDT, Mode.INTERFACE));
 
@@ -1031,7 +1058,6 @@ public class JavaGenerator extends AbstractGenerator {
             generateUDTInterfaceClassFooter((UDTDefinition) tableOrUDT, out);
 
         out.println("}");
-        out.close();
     }
 
     /**
@@ -1062,10 +1088,16 @@ public class JavaGenerator extends AbstractGenerator {
         watch.splitInfo("UDTs generated");
     }
 
+    @SuppressWarnings("unused")
     protected void generateUDT(SchemaDefinition schema, UDTDefinition udt) {
         log.info("Generating UDT ", getStrategy().getFileName(udt));
         JavaWriter out = newJavaWriter(getStrategy().getFile(udt));
+        generateUDT(udt, out);
+        out.close();
+    }
 
+    protected void generateUDT(UDTDefinition udt, JavaWriter out) {
+        final SchemaDefinition schema = udt.getSchema();
         final String className = getStrategy().getJavaClassName(udt);
         final String recordType = out.ref(getStrategy().getFullJavaClassName(udt, Mode.RECORD));
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(udt, Mode.DEFAULT));
@@ -1160,7 +1192,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         for (UDTDefinition udt : database.getUDTs(schema)) {
             try {
-                generatePojo(udt);
+                generateUDTPojo(udt);
             }
             catch (Exception e) {
                 log.error("Error while generating UDT POJO " + udt, e);
@@ -1188,7 +1220,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         for (UDTDefinition udt : database.getUDTs(schema)) {
             try {
-                generateInterface(udt);
+                generateUDTInterface(udt);
             } catch (Exception e) {
                 log.error("Error while generating UDT interface " + udt, e);
             }
@@ -1225,10 +1257,6 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         watch.splitInfo("UDT records generated");
-    }
-
-    protected void generateUDTRecord(UDTDefinition udt) {
-        generateRecord(udt);
     }
 
     /**
@@ -1307,11 +1335,17 @@ public class JavaGenerator extends AbstractGenerator {
         watch.splitInfo("ARRAYs generated");
     }
 
+    @SuppressWarnings("unused")
     protected void generateArray(SchemaDefinition schema, ArrayDefinition array) {
-        /* [pro] */
         log.info("Generating ARRAY", getStrategy().getFileName(array, Mode.RECORD));
         JavaWriter out = newJavaWriter(getStrategy().getFile(array, Mode.RECORD));
+        generateArray(array, out);
+        out.close();
+    }
 
+    protected void generateArray(ArrayDefinition array, JavaWriter out) {
+        /* [pro] */
+        final SchemaDefinition schema = array.getSchema();
         final String className = getStrategy().getJavaClassName(array, Mode.RECORD);
         final String elementType = out.ref(getJavaType(array.getElementType()));
         final String elementTypeRef = getJavaTypeReference(database, array.getElementType());
@@ -1373,7 +1407,6 @@ public class JavaGenerator extends AbstractGenerator {
 
         generateArrayClassFooter(array, out);
         out.println("}");
-        out.close();
         /* [/pro] */
     }
 
@@ -1407,7 +1440,11 @@ public class JavaGenerator extends AbstractGenerator {
     protected void generateEnum(EnumDefinition e) {
         log.info("Generating ENUM", getStrategy().getFileName(e, Mode.ENUM));
         JavaWriter out = newJavaWriter(getStrategy().getFile(e, Mode.ENUM));
+        generateEnum(e, out);
+        out.close();
+    }
 
+    protected void generateEnum(EnumDefinition e, JavaWriter out) {
         final String className = getStrategy().getJavaClassName(e, Mode.ENUM);
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(e, Mode.ENUM));
 
@@ -1463,7 +1500,6 @@ public class JavaGenerator extends AbstractGenerator {
 
         generateEnumClassFooter(e, out);
         out.println("}");
-        out.close();
     }
 
     /**
@@ -1549,10 +1585,16 @@ public class JavaGenerator extends AbstractGenerator {
         watch.splitInfo("Packages generated");
     }
 
+    @SuppressWarnings("unused")
     protected void generatePackage(SchemaDefinition schema, PackageDefinition pkg) {
         log.info("Generating package", pkg);
         JavaWriter out = newJavaWriter(getStrategy().getFile(pkg));
+        generatePackage(pkg, out);
+        out.close();
+    }
 
+    protected void generatePackage(PackageDefinition pkg, JavaWriter out) {
+        final SchemaDefinition schema = pkg.getSchema();
         final String className = getStrategy().getJavaClassName(pkg);
         final String schemaIdentifier = out.ref(getStrategy().getFullJavaIdentifier(schema), 2);
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(pkg, Mode.DEFAULT));
@@ -1583,7 +1625,6 @@ public class JavaGenerator extends AbstractGenerator {
 
         generatePackageClassFooter(pkg, out);
         out.println("}");
-        out.close();
     }
 
     /**
@@ -1653,7 +1694,11 @@ public class JavaGenerator extends AbstractGenerator {
     protected void generateDao(TableDefinition table) {
         log.info("Generating DAO", getStrategy().getFileName(table, Mode.DAO));
         JavaWriter out = newJavaWriter(getStrategy().getFile(table, Mode.DAO));
+        generateDao(table, out);
+        out.close();
+    }
 
+    protected void generateDao(TableDefinition table, JavaWriter out) {
         final String className = getStrategy().getJavaClassName(table, Mode.DAO);
         final String tableRecord = out.ref(getStrategy().getFullJavaClassName(table, Mode.RECORD));
         final String daoImpl = out.ref(DAOImpl.class);
@@ -1766,7 +1811,6 @@ public class JavaGenerator extends AbstractGenerator {
 
         generateDaoClassFooter(table, out);
         out.println("}");
-        out.close();
     }
 
     /**
@@ -1798,13 +1842,28 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generatePojo(TableDefinition table) {
-        generatePojo((Definition) table);
+        log.info("Generating POJO", getStrategy().getFileName(table, Mode.POJO));
+        JavaWriter out = newJavaWriter(getStrategy().getFile(table, Mode.POJO));
+        generatePojo(table, out);
+        out.close();
     }
 
-    private void generatePojo(Definition tableOrUDT) {
-        log.info("Generating POJO", getStrategy().getFileName(tableOrUDT, Mode.POJO));
-        JavaWriter out = newJavaWriter(getStrategy().getFile(tableOrUDT, Mode.POJO));
+    protected void generateUDTPojo(UDTDefinition udt) {
+        log.info("Generating POJO", getStrategy().getFileName(udt, Mode.POJO));
+        JavaWriter out = newJavaWriter(getStrategy().getFile(udt, Mode.POJO));
+        generatePojo(udt, out);
+        out.close();
+    }
 
+    protected void generatePojo(TableDefinition table, JavaWriter out) {
+        generatePojo((Definition) table, out);
+    }
+
+    protected void generateUDTPojo(UDTDefinition udt, JavaWriter out) {
+        generatePojo(udt, out);
+    }
+
+    private void generatePojo(Definition tableOrUDT, JavaWriter out) {
         final String className = getStrategy().getJavaClassName(tableOrUDT, Mode.POJO);
         final String superName = out.ref(getStrategy().getJavaClassExtends(tableOrUDT, Mode.POJO));
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(tableOrUDT, Mode.POJO));
@@ -2061,9 +2120,16 @@ public class JavaGenerator extends AbstractGenerator {
         watch.splitInfo("Tables generated");
     }
 
+    @SuppressWarnings("unused")
     protected void generateTable(SchemaDefinition schema, TableDefinition table) {
-        UniqueKeyDefinition primaryKey = table.getPrimaryKey();
         JavaWriter out = newJavaWriter(getStrategy().getFile(table));
+        generateTable(table, out);
+        out.close();
+    }
+
+    protected void generateTable(TableDefinition table, JavaWriter out) {
+        final SchemaDefinition schema = table.getSchema();
+        final UniqueKeyDefinition primaryKey = table.getPrimaryKey();
 
         final boolean updatable = generateRelations() && primaryKey != null;
         final String className = getStrategy().getJavaClassName(table);
@@ -2358,7 +2424,11 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating schema", getStrategy().getFileName(schema));
         log.info("----------------------------------------------------------");
         JavaWriter out = newJavaWriter(getStrategy().getFile(schema));
+        generateSchema(schema, out);
+        out.close();
+    }
 
+    protected void generateSchema(SchemaDefinition schema, JavaWriter out) {
         final String schemaName = schema.getQualifiedOutputName();
         final String schemaId = getStrategy().getJavaIdentifier(schema);
         final String className = getStrategy().getJavaClassName(schema);
@@ -2388,7 +2458,6 @@ public class JavaGenerator extends AbstractGenerator {
 
         generateSchemaClassFooter(schema, out);
         out.println("}");
-        out.close();
     }
 
     /**
@@ -2583,10 +2652,16 @@ public class JavaGenerator extends AbstractGenerator {
         }
     }
 
+    @SuppressWarnings("unused")
     protected void generateRoutine(SchemaDefinition schema, RoutineDefinition routine) {
         log.info("Generating routine", getStrategy().getFileName(routine));
         JavaWriter out = newJavaWriter(getStrategy().getFile(routine));
+        generateRoutine(routine, out);
+        out.close();
+    }
 
+    protected void generateRoutine(RoutineDefinition routine, JavaWriter out) {
+        final SchemaDefinition schema = routine.getSchema();
         final String className = getStrategy().getJavaClassName(routine);
         final String returnType = (routine.getReturnValue() == null)
             ? Void.class.getName()
@@ -2706,7 +2781,6 @@ public class JavaGenerator extends AbstractGenerator {
 
         generateRoutineClassFooter(routine, out);
         out.println("}");
-        out.close();
     }
 
     /**

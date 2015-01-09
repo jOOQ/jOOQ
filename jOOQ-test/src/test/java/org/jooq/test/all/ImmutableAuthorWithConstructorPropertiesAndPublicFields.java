@@ -43,6 +43,8 @@ package org.jooq.test.all;
 import java.beans.ConstructorProperties;
 import java.util.Date;
 
+import javax.persistence.Column;
+
 /**
  * @author Lukas Eder
  */
@@ -69,9 +71,9 @@ public class ImmutableAuthorWithConstructorPropertiesAndPublicFields {
         throw new RuntimeException();
     }
 
-//
-//    @Column(name = "LAST_NAME")
-//    public String getXX() {
-//        return null;
-//    }
+    // [#3919] This matches "accidentally", but shouldn't be used
+    @Column(name = "LAST_NAME")
+    public String getXX() {
+        return null;
+    }
 }

@@ -2244,7 +2244,7 @@ final class Utils {
                 return null;
             }
 
-        }, DATA_REFLECTION_CACHE_GET_ANNOTATED_GETTER, name);
+        }, DATA_REFLECTION_CACHE_GET_ANNOTATED_GETTER, type, name);
     }
 
     /**

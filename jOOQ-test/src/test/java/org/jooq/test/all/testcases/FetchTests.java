@@ -128,6 +128,7 @@ import org.jooq.test.all.ImmutableAuthorWithConstructorProperties;
 import org.jooq.test.all.ImmutableAuthorWithConstructorPropertiesAndJPAAnnotations;
 import org.jooq.test.all.ImmutableAuthorWithConstructorPropertiesAndJPAAnnotationsAndPublicFields;
 import org.jooq.test.all.ImmutableAuthorWithConstructorPropertiesAndPublicFields;
+import org.jooq.test.all.ImmutableAuthorWithConstructorPropertiesButNoMatchingGetters;
 import org.jooq.test.all.StaticWithAnnotations;
 import org.jooq.test.all.StaticWithoutAnnotations;
 import org.jooq.tools.jdbc.DefaultConnection;
@@ -1174,6 +1175,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(1, into4.f3);
         assertEquals(AUTHOR_FIRST_NAMES.get(0), into4.f1);
         assertEquals(AUTHOR_LAST_NAMES.get(0), into4.f2);
+
+        ImmutableAuthorWithConstructorPropertiesButNoMatchingGetters into5 =
+            author.into(ImmutableAuthorWithConstructorPropertiesButNoMatchingGetters.class);
+        assertNull(into5.get_date_of_birth());
+        assertEquals(1, into5.get_id());
+        assertEquals(AUTHOR_FIRST_NAMES.get(0), into5.get_first_name());
+        assertEquals(AUTHOR_LAST_NAMES.get(0), into5.get_last_name());
+
     }
 
     public void testFetchIntoTableRecords() throws Exception {

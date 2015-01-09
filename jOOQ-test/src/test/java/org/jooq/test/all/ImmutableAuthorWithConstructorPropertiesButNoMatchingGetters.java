@@ -46,32 +46,42 @@ import java.util.Date;
 /**
  * @author Lukas Eder
  */
-public class ImmutableAuthorWithConstructorPropertiesAndPublicFields {
+public class ImmutableAuthorWithConstructorPropertiesButNoMatchingGetters {
 
-    public final String firstName;
-    public final String lastName;
-    public final int    id;
-    public final Date   dateOfBirth;
+    private final int    id;
+    private final String first_name;
+    private final String last_name;
+    private final Date   dateOfBirth;
 
     // Check if setAccessible is called correctly
     @ConstructorProperties({ "firstName", "lastName", "id", "dateOfBirth" })
-    ImmutableAuthorWithConstructorPropertiesAndPublicFields(String firstName, String lastName, int id, Date dateOfBirth) {
+    ImmutableAuthorWithConstructorPropertiesButNoMatchingGetters(String firstName, String lastName, int id, Date dateOfBirth) {
 
-        this.firstName = firstName;
-        this.lastName = lastName;
         this.id = id;
+        this.first_name = firstName;
+        this.last_name = lastName;
         this.dateOfBirth = dateOfBirth;
     }
 
     // This should never be called
     @SuppressWarnings("unused")
-    ImmutableAuthorWithConstructorPropertiesAndPublicFields(int ID, String firstName, String lastName) {
+    ImmutableAuthorWithConstructorPropertiesButNoMatchingGetters(int ID, String firstName, String lastName) {
         throw new RuntimeException();
     }
 
-//
-//    @Column(name = "LAST_NAME")
-//    public String getXX() {
-//        return null;
-//    }
+    public int get_id() {
+        return id;
+    }
+
+    public String get_first_name() {
+        return first_name;
+    }
+
+    public String get_last_name() {
+        return last_name;
+    }
+
+    public Date get_date_of_birth() {
+        return dateOfBirth;
+    }
 }

@@ -767,7 +767,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         for (byte b : binary) {
             sb.append("\\\\");
-            sb.append(leftPad(toOctalString(b), 3, '0'));
+            int octal = b & 0x000000ff;
+            sb.append(leftPad(toOctalString(octal), 3, '0'));
         }
 
         return sb.toString();

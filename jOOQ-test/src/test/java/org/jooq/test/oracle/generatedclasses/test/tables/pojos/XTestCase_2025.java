@@ -21,12 +21,17 @@ import javax.validation.constraints.Size;
 @Table(name = "X_TEST_CASE_2025", schema = "TEST")
 public class XTestCase_2025 implements Serializable {
 
-	private static final long serialVersionUID = 1574753044;
+	private static final long serialVersionUID = -1070425441;
 
 	private Integer refId;
 	private String  refName;
 
 	public XTestCase_2025() {}
+
+	public XTestCase_2025(XTestCase_2025 value) {
+		this.refId = value.refId;
+		this.refName = value.refName;
+	}
 
 	public XTestCase_2025(
 		Integer refId,

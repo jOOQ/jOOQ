@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Table(name = "V_INCOMPLETE", schema = "TEST")
 public class VIncomplete implements Serializable {
 
-	private static final long serialVersionUID = 1315408366;
+	private static final long serialVersionUID = 631538274;
 
 	private Object id;
 	private Object authorId;
@@ -34,6 +34,20 @@ public class VIncomplete implements Serializable {
 	private Object recTimestamp;
 
 	public VIncomplete() {}
+
+	public VIncomplete(VIncomplete value) {
+		this.id = value.id;
+		this.authorId = value.authorId;
+		this.coAuthorId = value.coAuthorId;
+		this.detailsId = value.detailsId;
+		this.title = value.title;
+		this.publishedIn = value.publishedIn;
+		this.languageId = value.languageId;
+		this.contentText = value.contentText;
+		this.contentPdf = value.contentPdf;
+		this.recVersion = value.recVersion;
+		this.recTimestamp = value.recTimestamp;
+	}
 
 	public VIncomplete(
 		Object id,

@@ -22,12 +22,17 @@ import javax.validation.constraints.NotNull;
 @Table(name = "T_725_LOB_TEST", schema = "TEST")
 public class T_725LobTest implements Serializable {
 
-	private static final long serialVersionUID = 1945350895;
+	private static final long serialVersionUID = -1172954814;
 
 	private Integer id;
 	private byte[]  lob;
 
 	public T_725LobTest() {}
+
+	public T_725LobTest(T_725LobTest value) {
+		this.id = value.id;
+		this.lob = value.lob;
+	}
 
 	public T_725LobTest(
 		Integer id,

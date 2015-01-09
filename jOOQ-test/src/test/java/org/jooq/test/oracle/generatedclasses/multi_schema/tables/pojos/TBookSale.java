@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
 @Table(name = "T_BOOK_SALE", schema = "MULTI_SCHEMA")
 public class TBookSale implements Serializable {
 
-	private static final long serialVersionUID = 2060086575;
+	private static final long serialVersionUID = 1161590735;
 
 	private Integer    id;
 	private Integer    bookId;
@@ -33,6 +33,14 @@ public class TBookSale implements Serializable {
 	private BigDecimal soldFor;
 
 	public TBookSale() {}
+
+	public TBookSale(TBookSale value) {
+		this.id = value.id;
+		this.bookId = value.bookId;
+		this.bookStoreName = value.bookStoreName;
+		this.soldAt = value.soldAt;
+		this.soldFor = value.soldFor;
+	}
 
 	public TBookSale(
 		Integer    id,

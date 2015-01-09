@@ -24,7 +24,7 @@ import org.jooq.types.UShort;
 @Table(name = "T_UNSIGNED", schema = "TEST")
 public class TUnsigned implements Serializable {
 
-	private static final long serialVersionUID = 1035598516;
+	private static final long serialVersionUID = -2017574727;
 
 	private UByte    uByte;
 	private UShort   uShort;
@@ -32,6 +32,13 @@ public class TUnsigned implements Serializable {
 	private ULong    uLong;
 
 	public TUnsigned() {}
+
+	public TUnsigned(TUnsigned value) {
+		this.uByte = value.uByte;
+		this.uShort = value.uShort;
+		this.uInt = value.uInt;
+		this.uLong = value.uLong;
+	}
 
 	public TUnsigned(
 		UByte    uByte,

@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
 @Table(name = "V_BOOK", schema = "TEST")
 public class VBook implements Serializable {
 
-	private static final long serialVersionUID = 1956306705;
+	private static final long serialVersionUID = 423423353;
 
 	private Integer    id;
 	private Integer    authorId;
@@ -39,6 +39,20 @@ public class VBook implements Serializable {
 	private Timestamp  recTimestamp;
 
 	public VBook() {}
+
+	public VBook(VBook value) {
+		this.id = value.id;
+		this.authorId = value.authorId;
+		this.coAuthorId = value.coAuthorId;
+		this.detailsId = value.detailsId;
+		this.title = value.title;
+		this.publishedIn = value.publishedIn;
+		this.languageId = value.languageId;
+		this.contentText = value.contentText;
+		this.contentPdf = value.contentPdf;
+		this.recVersion = value.recVersion;
+		this.recTimestamp = value.recTimestamp;
+	}
 
 	public VBook(
 		Integer    id,

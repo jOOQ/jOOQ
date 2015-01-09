@@ -13,13 +13,19 @@ import java.io.Serializable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class NumberObject implements Serializable {
 
-	private static final long serialVersionUID = -122675889;
+	private static final long serialVersionUID = 666095847;
 
 	private Integer a;
 	private Integer b;
 	private Integer c;
 
 	public NumberObject() {}
+
+	public NumberObject(NumberObject value) {
+		this.a = value.a;
+		this.b = value.b;
+		this.c = value.c;
+	}
 
 	public NumberObject(
 		Integer a,

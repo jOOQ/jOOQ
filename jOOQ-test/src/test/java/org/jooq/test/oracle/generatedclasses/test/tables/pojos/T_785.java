@@ -20,13 +20,19 @@ import javax.validation.constraints.Size;
 @Table(name = "T_785", schema = "TEST")
 public class T_785 implements Serializable {
 
-	private static final long serialVersionUID = -469866847;
+	private static final long serialVersionUID = 1013867751;
 
 	private Integer id;
 	private String  name;
 	private String  value;
 
 	public T_785() {}
+
+	public T_785(T_785 value) {
+		this.id = value.id;
+		this.name = value.name;
+		this.value = value.value;
+	}
 
 	public T_785(
 		Integer id,

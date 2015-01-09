@@ -24,13 +24,19 @@ import javax.validation.constraints.Size;
 })
 public class TBookToBookStore implements Serializable {
 
-	private static final long serialVersionUID = 1388540131;
+	private static final long serialVersionUID = -1588362197;
 
 	private String  bookStoreName;
 	private Integer bookId;
 	private Integer stock;
 
 	public TBookToBookStore() {}
+
+	public TBookToBookStore(TBookToBookStore value) {
+		this.bookStoreName = value.bookStoreName;
+		this.bookId = value.bookId;
+		this.stock = value.stock;
+	}
 
 	public TBookToBookStore(
 		String  bookStoreName,

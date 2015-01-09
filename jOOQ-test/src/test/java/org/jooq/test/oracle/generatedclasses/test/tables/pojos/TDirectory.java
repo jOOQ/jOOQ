@@ -22,7 +22,7 @@ import javax.validation.constraints.Size;
 @Table(name = "T_DIRECTORY", schema = "TEST")
 public class TDirectory implements Serializable {
 
-	private static final long serialVersionUID = -1756926177;
+	private static final long serialVersionUID = 1174548426;
 
 	private Integer id;
 	private Integer parentId;
@@ -30,6 +30,13 @@ public class TDirectory implements Serializable {
 	private String  name;
 
 	public TDirectory() {}
+
+	public TDirectory(TDirectory value) {
+		this.id = value.id;
+		this.parentId = value.parentId;
+		this.isDirectory = value.isDirectory;
+		this.name = value.name;
+	}
 
 	public TDirectory(
 		Integer id,

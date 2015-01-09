@@ -22,13 +22,19 @@ import javax.validation.constraints.NotNull;
 @Table(name = "T_EXOTIC_TYPES", schema = "TEST")
 public class TExoticTypes implements Serializable {
 
-	private static final long serialVersionUID = 1697346402;
+	private static final long serialVersionUID = 270806866;
 
 	private Integer      id;
 	private UUID         uu;
 	private Serializable javaIoSerializable;
 
 	public TExoticTypes() {}
+
+	public TExoticTypes(TExoticTypes value) {
+		this.id = value.id;
+		this.uu = value.uu;
+		this.javaIoSerializable = value.javaIoSerializable;
+	}
 
 	public TExoticTypes(
 		Integer      id,

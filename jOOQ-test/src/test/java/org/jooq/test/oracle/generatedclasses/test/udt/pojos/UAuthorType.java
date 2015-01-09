@@ -15,13 +15,19 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UAuthorType implements Serializable {
 
-	private static final long serialVersionUID = 1984230190;
+	private static final long serialVersionUID = -12442576;
 
 	private Integer id;
 	private String  firstName;
 	private String  lastName;
 
 	public UAuthorType() {}
+
+	public UAuthorType(UAuthorType value) {
+		this.id = value.id;
+		this.firstName = value.firstName;
+		this.lastName = value.lastName;
+	}
 
 	public UAuthorType(
 		Integer id,

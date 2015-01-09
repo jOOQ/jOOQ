@@ -15,12 +15,17 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UBookType implements Serializable {
 
-	private static final long serialVersionUID = -1069367216;
+	private static final long serialVersionUID = 435673057;
 
 	private Integer id;
 	private String  title;
 
 	public UBookType() {}
+
+	public UBookType(UBookType value) {
+		this.id = value.id;
+		this.title = value.title;
+	}
 
 	public UBookType(
 		Integer id,

@@ -23,7 +23,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "T_639_NUMBERS_TABLE", schema = "TEST")
 public class T_639NumbersTable implements Serializable {
 
-	private static final long serialVersionUID = 1943470860;
+	private static final long serialVersionUID = -201748882;
 
 	private Integer    id;
 	private Byte       byte_;
@@ -40,6 +40,22 @@ public class T_639NumbersTable implements Serializable {
 	private Double     real;
 
 	public T_639NumbersTable() {}
+
+	public T_639NumbersTable(T_639NumbersTable value) {
+		this.id = value.id;
+		this.byte_ = value.byte_;
+		this.short_ = value.short_;
+		this.integer = value.integer;
+		this.long_ = value.long_;
+		this.byteDecimal = value.byteDecimal;
+		this.shortDecimal = value.shortDecimal;
+		this.integerDecimal = value.integerDecimal;
+		this.longDecimal = value.longDecimal;
+		this.bigInteger = value.bigInteger;
+		this.bigDecimal = value.bigDecimal;
+		this.float_ = value.float_;
+		this.real = value.real;
+	}
 
 	public T_639NumbersTable(
 		Integer    id,

@@ -15,12 +15,17 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberTableRecord
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UNested_1 implements Serializable {
 
-	private static final long serialVersionUID = -302233680;
+	private static final long serialVersionUID = 208880073;
 
 	private Integer            id;
 	private UNumberTableRecord nested;
 
 	public UNested_1() {}
+
+	public UNested_1(UNested_1 value) {
+		this.id = value.id;
+		this.nested = value.nested;
+	}
 
 	public UNested_1(
 		Integer            id,

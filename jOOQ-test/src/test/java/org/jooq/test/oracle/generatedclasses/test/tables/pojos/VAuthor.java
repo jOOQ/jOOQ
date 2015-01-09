@@ -24,7 +24,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.pojos.UAddressType;
 @Table(name = "V_AUTHOR", schema = "TEST")
 public class VAuthor implements Serializable {
 
-	private static final long serialVersionUID = 1829254353;
+	private static final long serialVersionUID = 1261656980;
 
 	private Integer      id;
 	private String       firstName;
@@ -34,6 +34,15 @@ public class VAuthor implements Serializable {
 	private UAddressType address;
 
 	public VAuthor() {}
+
+	public VAuthor(VAuthor value) {
+		this.id = value.id;
+		this.firstName = value.firstName;
+		this.lastName = value.lastName;
+		this.dateOfBirth = value.dateOfBirth;
+		this.yearOfBirth = value.yearOfBirth;
+		this.address = value.address;
+	}
 
 	public VAuthor(
 		Integer      id,

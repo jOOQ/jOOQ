@@ -22,11 +22,15 @@ import javax.validation.constraints.Size;
 @Table(name = "T_BOOK_STORE", schema = "TEST")
 public class TBookStore implements Serializable {
 
-	private static final long serialVersionUID = -120991225;
+	private static final long serialVersionUID = 686421117;
 
 	private String name;
 
 	public TBookStore() {}
+
+	public TBookStore(TBookStore value) {
+		this.name = value.name;
+	}
 
 	public TBookStore(
 		String name

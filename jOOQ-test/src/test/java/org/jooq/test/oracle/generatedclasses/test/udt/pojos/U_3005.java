@@ -13,11 +13,15 @@ import java.io.Serializable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_3005 implements Serializable {
 
-	private static final long serialVersionUID = 1105785360;
+	private static final long serialVersionUID = 1891446182;
 
 	private Integer id;
 
 	public U_3005() {}
+
+	public U_3005(U_3005 value) {
+		this.id = value.id;
+	}
 
 	public U_3005(
 		Integer id

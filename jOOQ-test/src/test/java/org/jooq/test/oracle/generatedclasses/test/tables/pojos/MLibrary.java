@@ -21,12 +21,17 @@ import javax.validation.constraints.Size;
 @Table(name = "M_LIBRARY", schema = "TEST")
 public class MLibrary implements Serializable {
 
-	private static final long serialVersionUID = 1600022882;
+	private static final long serialVersionUID = -1483474677;
 
 	private String author;
 	private String title;
 
 	public MLibrary() {}
+
+	public MLibrary(MLibrary value) {
+		this.author = value.author;
+		this.title = value.title;
+	}
 
 	public MLibrary(
 		String author,

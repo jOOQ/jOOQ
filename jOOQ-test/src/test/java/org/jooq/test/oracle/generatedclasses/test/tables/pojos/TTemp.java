@@ -21,11 +21,15 @@ import javax.validation.constraints.NotNull;
 @Table(name = "T_TEMP", schema = "TEST")
 public class TTemp implements Serializable {
 
-	private static final long serialVersionUID = 522952691;
+	private static final long serialVersionUID = -395401931;
 
 	private Integer id;
 
 	public TTemp() {}
+
+	public TTemp(TTemp value) {
+		this.id = value.id;
+	}
 
 	public TTemp(
 		Integer id

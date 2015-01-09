@@ -13,10 +13,13 @@ import java.io.Serializable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UInvalidTable implements Serializable {
 
-	private static final long serialVersionUID = 1050901609;
+	private static final long serialVersionUID = 104966828;
 
 
 	public UInvalidTable() {}
+
+	public UInvalidTable(UInvalidTable value) {
+	}
 
 	@Override
 	public boolean equals(Object obj) {

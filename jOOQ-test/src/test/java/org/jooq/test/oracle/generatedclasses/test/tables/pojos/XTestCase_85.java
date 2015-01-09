@@ -22,13 +22,19 @@ import javax.validation.constraints.Size;
 @Table(name = "X_TEST_CASE_85", schema = "TEST")
 public class XTestCase_85 implements Serializable {
 
-	private static final long serialVersionUID = -1112445429;
+	private static final long serialVersionUID = -701920433;
 
 	private Integer id;
 	private Integer xUnusedId;
 	private String  xUnusedName;
 
 	public XTestCase_85() {}
+
+	public XTestCase_85(XTestCase_85 value) {
+		this.id = value.id;
+		this.xUnusedId = value.xUnusedId;
+		this.xUnusedName = value.xUnusedName;
+	}
 
 	public XTestCase_85(
 		Integer id,

@@ -19,7 +19,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.pojos.UStreetType;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UAddressType implements Serializable {
 
-	private static final long serialVersionUID = -2113984888;
+	private static final long serialVersionUID = 352063087;
 
 	private UStreetType street;
 	private String      zip;
@@ -31,6 +31,17 @@ public class UAddressType implements Serializable {
 	private String      f_1326;
 
 	public UAddressType() {}
+
+	public UAddressType(UAddressType value) {
+		this.street = value.street;
+		this.zip = value.zip;
+		this.city = value.city;
+		this.country = value.country;
+		this.since = value.since;
+		this.code = value.code;
+		this.f_1323 = value.f_1323;
+		this.f_1326 = value.f_1326;
+	}
 
 	public UAddressType(
 		UStreetType street,

@@ -21,12 +21,17 @@ import javax.validation.constraints.NotNull;
 @Table(name = "X_TEST_CASE_64_69", schema = "TEST")
 public class XTestCase_64_69 implements Serializable {
 
-	private static final long serialVersionUID = -1788535624;
+	private static final long serialVersionUID = 627683867;
 
 	private Integer id;
 	private Integer unusedId;
 
 	public XTestCase_64_69() {}
+
+	public XTestCase_64_69(XTestCase_64_69 value) {
+		this.id = value.id;
+		this.unusedId = value.unusedId;
+	}
 
 	public XTestCase_64_69(
 		Integer id,

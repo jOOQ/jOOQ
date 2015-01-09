@@ -21,13 +21,19 @@ import javax.validation.constraints.NotNull;
 @Table(name = "T_TRIGGERS", schema = "TEST")
 public class TTriggers implements Serializable {
 
-	private static final long serialVersionUID = -35778878;
+	private static final long serialVersionUID = -1764597830;
 
 	private Integer idGenerated;
 	private Integer id;
 	private Integer counter;
 
 	public TTriggers() {}
+
+	public TTriggers(TTriggers value) {
+		this.idGenerated = value.idGenerated;
+		this.id = value.id;
+		this.counter = value.counter;
+	}
 
 	public TTriggers(
 		Integer idGenerated,

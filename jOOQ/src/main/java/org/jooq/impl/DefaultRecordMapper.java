@@ -81,6 +81,7 @@ import org.jooq.RecordMapperProvider;
 import org.jooq.RecordType;
 import org.jooq.exception.MappingException;
 import org.jooq.tools.Convert;
+import org.jooq.tools.StringUtils;
 import org.jooq.tools.reflect.Reflect;
 
 /**
@@ -173,14 +174,16 @@ import org.jooq.tools.reflect.Reflect;
  * <ul>
  * <li>The standard JavaBeans {@link ConstructorProperties} annotation is used
  * to match constructor arguments against POJO members or getters.</li>
+ * <li>If the property names provided to the constructor match the record's
+ * columns via the aforementioned naming conventions, that information is used.</li>
  * <li>If those POJO members or getters have JPA annotations, those will be used
  * according to the aforementioned rules, in order to map <code>Record</code>
  * values onto constructor arguments.</li>
  * <li>If those POJO members or getters don't have JPA annotations, the
  * aforementioned naming conventions will be used, in order to map
  * <code>Record</code> values onto constructor arguments.</li>
- * <li>When several annotated constructors are found, the first one is chosen
- * (as reported by {@link Class#getDeclaredConstructors()}</li>
+ * <li>When several annotated constructors are found, the first one is chosen,
+ * randomly.</li>
  * <li>When invoking the annotated constructor, values are converted onto
  * constructor argument types</li>
  * </ul>
@@ -727,6 +730,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         private final boolean                         useAnnotations;
         private final List<java.lang.reflect.Field>[] members;
         private final java.lang.reflect.Method[]      methods;
+        private final Integer[]                       propertyIndexes;
 
         ImmutablePOJOMapperWithConstructorProperties(Constructor<E> constructor, ConstructorProperties properties) {
             this.constructor = constructor;
@@ -736,20 +740,33 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             this.parameterValues = new Object[parameterTypes.length];
             this.members = new List[fields.length];
             this.methods = new Method[fields.length];
+            this.propertyIndexes = new Integer[fields.length];
 
             for (int i = 0; i < fields.length; i++) {
                 Field<?> field = fields[i];
+                String name = field.getName();
+                String nameLC = StringUtils.toCamelCaseLC(name);
+
 
                 // Annotations are available and present
                 if (useAnnotations) {
-                    members[i] = getAnnotatedMembers(configuration, type, field.getName());
-                    methods[i] = getAnnotatedGetter(configuration, type, field.getName());
+                    members[i] = getAnnotatedMembers(configuration, type, name);
+                    methods[i] = getAnnotatedGetter(configuration, type, name);
                 }
 
                 // No annotations are present
                 else {
-                    members[i] = getMatchingMembers(configuration, type, field.getName());
-                    methods[i] = getMatchingGetter(configuration, type, field.getName());
+                    members[i] = getMatchingMembers(configuration, type, name);
+                    methods[i] = getMatchingGetter(configuration, type, name);
+                }
+
+                // [#3911] Liberal interpretation of the @ConstructorProperties specs:
+                // We also accept properties that don't have a matching getter or member
+                for (int j = 0; j < propertyNames.size(); j++) {
+                    if (name.equals(propertyNames.get(j)) || nameLC.equals(propertyNames.get(j))) {
+                        propertyIndexes[i] = j;
+                        break;
+                    }
                 }
             }
         }
@@ -758,20 +775,25 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         public final E map(R record) {
             try {
                 for (int i = 0; i < fields.length; i++) {
-                    for (java.lang.reflect.Field member : members[i]) {
-                        int index = propertyNames.indexOf(member.getName());
-
-                        if (index >= 0) {
-                            parameterValues[index] = record.getValue(i);
-                        }
+                    if (propertyIndexes[i] != null) {
+                        parameterValues[propertyIndexes[i]] = record.getValue(i);
                     }
+                    else {
+                        for (java.lang.reflect.Field member : members[i]) {
+                            int index = propertyNames.indexOf(member.getName());
 
-                    if (methods[i] != null) {
-                        String name = getPropertyName(methods[i].getName());
-                        int index = propertyNames.indexOf(name);
+                            if (index >= 0) {
+                                parameterValues[index] = record.getValue(i);
+                            }
+                        }
 
-                        if (index >= 0) {
-                            parameterValues[index] = record.getValue(i);
+                        if (methods[i] != null) {
+                            String name = getPropertyName(methods[i].getName());
+                            int index = propertyNames.indexOf(name);
+
+                            if (index >= 0) {
+                                parameterValues[index] = record.getValue(i);
+                            }
                         }
                     }
                 }

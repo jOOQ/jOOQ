@@ -620,31 +620,34 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         jOOQAbstractTest.reset = false;
 
         // [#2534] BLOB and CLOB should be auto-converted to byte[] and Spring
-        create().update(TBook())
-                .set(TBook_CONTENT_TEXT(), "text")
-                .set(TBook_CONTENT_PDF(), "pdf".getBytes("UTF-8"))
-                .where(TBook_ID().eq(1))
-                .execute();
+        // [#3923] äöü generate "negative" bytes, which might be serialised badly in PostgreSQL
+        for (DSLContext create : new DSLContext[] { create(), create(new Settings().withStatementType(STATIC_STATEMENT)) }) {
+            create.update(TBook())
+                  .set(TBook_CONTENT_TEXT(), "text")
+                  .set(TBook_CONTENT_PDF(), "pdf äöü".getBytes("UTF-8"))
+                  .where(TBook_ID().eq(1))
+                  .execute();
 
-        Record r1 = create().fetchOne("select content_text, content_pdf from t_book where id = 1");
-        assertEquals("text", r1.getValue(0));
-        assertEquals("pdf", new String((byte[]) r1.getValue(1), "UTF-8"));
+            Record r1 = create.fetchOne("select content_text, content_pdf from t_book where id = 1");
+            assertEquals("text", r1.getValue(0));
+            assertEquals("pdf äöü", new String((byte[]) r1.getValue(1), "UTF-8"));
 
-        Record r2 = create().select(
-                                field("content_text", String.class),
-                                field("content_pdf", byte[].class))
-                            .from("t_book")
-                            .where("id = 1")
-                            .fetchOne();
-        assertEquals("text", r2.getValue(0));
-        assertEquals("pdf", new String((byte[]) r2.getValue(1), "UTF-8"));
+            Record r2 = create.select(
+                                  field("content_text", String.class),
+                                  field("content_pdf", byte[].class))
+                              .from("t_book")
+                              .where("id = 1")
+                              .fetchOne();
+            assertEquals("text", r2.getValue(0));
+            assertEquals("pdf äöü", new String((byte[]) r2.getValue(1), "UTF-8"));
 
-        Record r3 = create().select(field("content_text"), field("content_pdf"))
-                            .from("t_book")
-                            .where("id = 1")
-                            .fetchOne();
-        assertEquals("text", r3.getValue(0));
-        assertEquals("pdf", new String((byte[]) r3.getValue(1), "UTF-8"));
+            Record r3 = create.select(field("content_text"), field("content_pdf"))
+                              .from("t_book")
+                              .where("id = 1")
+                              .fetchOne();
+            assertEquals("text", r3.getValue(0));
+            assertEquals("pdf äöü", new String((byte[]) r3.getValue(1), "UTF-8"));
+        }
     }
 
     public void testPlainSQLLimitOffset() throws Exception {

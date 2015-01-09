@@ -1039,8 +1039,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(UInteger.valueOf("1"), SQLDataType.INTEGERUNSIGNED.convert(1.1f));
         assertEquals(Long.valueOf("1"), SQLDataType.BIGINT.convert(1.1f));
         assertEquals(ULong.valueOf("1"), SQLDataType.BIGINTUNSIGNED.convert(1.1f));
-        assertEquals(Float.valueOf("1.1"), SQLDataType.REAL.convert(1.1f));
-        assertEquals(Double.valueOf("1.1"), SQLDataType.DOUBLE.convert(1.1f));
+        assertEquals(Float.valueOf("1.1"), SQLDataType.REAL.convert(1.1f), 0.0001f);
+        assertEquals(Double.valueOf("1.1"), SQLDataType.DOUBLE.convert(1.1f), 0.0001);
         assertEquals(new BigInteger("1"), SQLDataType.DECIMAL_INTEGER.convert(1.1f));
         assertEquals(new BigDecimal("1.1"), SQLDataType.NUMERIC.convert(1.1f));
         assertEquals(null, SQLDataType.BOOLEAN.convert(1.1f));
@@ -1056,8 +1056,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(UInteger.valueOf("1"), SQLDataType.INTEGERUNSIGNED.convert(1.1));
         assertEquals(Long.valueOf("1"), SQLDataType.BIGINT.convert(1.1));
         assertEquals(ULong.valueOf("1"), SQLDataType.BIGINTUNSIGNED.convert(1.1));
-        assertEquals(Float.valueOf("1.1"), SQLDataType.REAL.convert(1.1));
-        assertEquals(Double.valueOf("1.1"), SQLDataType.DOUBLE.convert(1.1));
+        assertEquals(Float.valueOf("1.1"), SQLDataType.REAL.convert(1.1), 0.0001f);
+        assertEquals(Double.valueOf("1.1"), SQLDataType.DOUBLE.convert(1.1), 0.0001);
         assertEquals(new BigInteger("1"), SQLDataType.DECIMAL_INTEGER.convert(1.1));
         assertEquals(new BigDecimal("1.1"), SQLDataType.NUMERIC.convert(1.1));
         assertEquals(null, SQLDataType.BOOLEAN.convert(1.1));
@@ -1090,8 +1090,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(UInteger.valueOf("1"), SQLDataType.INTEGERUNSIGNED.convert(new BigDecimal("1.1")));
         assertEquals(Long.valueOf("1"), SQLDataType.BIGINT.convert(new BigDecimal("1.1")));
         assertEquals(ULong.valueOf("1"), SQLDataType.BIGINTUNSIGNED.convert(new BigDecimal("1.1")));
-        assertEquals(Float.valueOf("1.1"), SQLDataType.REAL.convert(new BigDecimal("1.1")));
-        assertEquals(Double.valueOf("1.1"), SQLDataType.DOUBLE.convert(new BigDecimal("1.1")));
+        assertEquals(Float.valueOf("1.1"), SQLDataType.REAL.convert(new BigDecimal("1.1")), 0.0001f);
+        assertEquals(Double.valueOf("1.1"), SQLDataType.DOUBLE.convert(new BigDecimal("1.1")), 0.0001);
         assertEquals(new BigInteger("1"), SQLDataType.DECIMAL_INTEGER.convert(new BigDecimal("1.1")));
         assertEquals(new BigDecimal("1.1"), SQLDataType.NUMERIC.convert(new BigDecimal("1.1")));
         assertEquals(null, SQLDataType.BOOLEAN.convert(new BigDecimal("1.1")));

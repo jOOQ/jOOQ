@@ -430,6 +430,57 @@
 
 
         <!-- Code generation profiles -->
+
+
+        <profile>
+            <id>sql-cubrid</id>
+            <activation>
+                <property>
+                    <name>sql-cubrid</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>sql-maven-plugin</artifactId>
+                        <version>1.5</version>
+        
+                        <executions>
+                            <execution>
+                                <id>create-database-cubrid</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>execute</goal>
+                                </goals>
+                                <configuration>
+                                    <driver>${db.cubrid.driver}</driver>
+                                    <url>${db.cubrid.url}</url>
+                                    <username>${db.cubrid.username}</username>
+                                    <password>${db.cubrid.password}</password>
+                                    <delimiter>/</delimiter>
+                                    <autocommit>true</autocommit>
+                                    <srcFiles>
+                                        <srcFile>src/main/resources/org/jooq/test/cubrid/create.sql</srcFile>
+                                        <srcFile>src/main/resources/org/jooq/test/cubrid/reset.sql</srcFile>
+                                    </srcFiles>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.jooq.cubrid</groupId>
+                                <artifactId>cubrid-jdbc</artifactId>
+                                <version>${db.cubrid.version}</version>
+                                <scope>system</scope>
+                                <systemPath>${basedir}/lib/JDBC-9.2.0.0155-cubrid.jar</systemPath>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        
         <profile>
             <id>codegen-cubrid</id>
             <build>
@@ -1165,6 +1216,60 @@
         </profile>
 
 
+        <profile>
+            <id>sql-h2</id>
+            <activation>
+                <property>
+                    <name>sql-h2</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>sql-maven-plugin</artifactId>
+                        <version>1.5</version>
+        
+                        <executions>
+                            <execution>
+                                <id>create-database-h2</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>execute</goal>
+                                </goals>
+                                <configuration>
+                                    <driver>${db.h2.driver}</driver>
+                                    <url>${db.h2.url}</url>
+                                    <username>${db.h2.username}</username>
+                                    <password>${db.h2.password}</password>
+                                    <delimiter>/</delimiter>
+                                    <autocommit>true</autocommit>
+                                    <srcFiles>
+                                        <srcFile>src/main/resources/org/jooq/test/h2/create.sql</srcFile>
+                                        <srcFile>src/main/resources/org/jooq/test/h2/reset.sql</srcFile>
+                                    </srcFiles>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>com.h2database</groupId>
+                                <artifactId>h2</artifactId>
+                                <version>${db.h2.version}</version>
+                            </dependency>
+
+                            <!-- Stored procedures need to be on the classpath -->
+                            <dependency>
+                                <groupId>org.jooq</groupId>
+                                <artifactId>jooq-test-utils</artifactId>
+                                <version>${project.version}</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        
         <profile>
             <id>codegen-h2</id>
             <build>

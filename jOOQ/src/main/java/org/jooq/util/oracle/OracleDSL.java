@@ -82,7 +82,7 @@ public class OracleDSL extends DSL {
     // -------------------------------------------------------------------------
 
     /**
-     * Retrieve the Oracle-specific <code>ROWNUM</code> pseudo-field.
+     * The Oracle-specific <code>ROWNUM</code> pseudo-field.
      */
     @Support(ORACLE)
     public static Field<Integer> rownum() {
@@ -90,7 +90,7 @@ public class OracleDSL extends DSL {
     }
 
     /**
-     * Retrieve the Oracle-specific <code>ROWID</code> pseudo-field.
+     * The Oracle-specific <code>ROWID</code> pseudo-field.
      */
     @Support(ORACLE)
     public static Field<String> rowid() {
@@ -98,7 +98,7 @@ public class OracleDSL extends DSL {
     }
 
     /**
-     * Retrieve the Oracle-specific <code>ORA_ROWSCN</code> pseudo-field.
+     * The Oracle-specific <code>ORA_ROWSCN</code> pseudo-field.
      */
     @Support(ORACLE)
     public static Field<Long> rowscn() {
@@ -106,7 +106,7 @@ public class OracleDSL extends DSL {
     }
 
     /**
-     * Retrieve the Oracle-specific <code>ORA_ROWSCN</code> pseudo-field.
+     * The Oracle-specific <code>ORA_ROWSCN</code> pseudo-field.
      */
     @Support(ORACLE)
     public static Field<Long> oraRowscn() {

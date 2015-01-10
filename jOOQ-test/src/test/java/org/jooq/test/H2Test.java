@@ -47,6 +47,7 @@ import static org.jooq.impl.DSL.defaultValue;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.update;
+import static org.jooq.lambda.Unchecked.runnable;
 import static org.jooq.test.h2.generatedclasses.Tables.T_2486;
 import static org.jooq.test.h2.generatedclasses.Tables.T_2698;
 import static org.jooq.test.h2.generatedclasses.Tables.T_3485;
@@ -96,6 +97,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
+import org.jooq.lambda.fi.lang.CheckedRunnable;
 import org.jooq.test.all.converters.Boolean_10;
 import org.jooq.test.all.converters.Boolean_TF_LC;
 import org.jooq.test.all.converters.Boolean_TF_UC;
@@ -1133,5 +1135,21 @@ public class H2Test extends jOOQAbstractTest<
                 BOOK_TITLES.get(3)),
             create().fetchValues(select(T_BOOK.TITLE).from(T_BOOK).orderBy(T_BOOK.ID))
         );
+    }
+
+    @Test
+    public void testPerformance_INSERT() {
+
+    }
+
+    private void testPerformance(CheckedRunnable jdbc, CheckedRunnable jooq, int repetitions) {
+
+        // Bootstrapping
+        runnable(jdbc).run();
+        runnable(jooq).run();
+
+        for (int i = 0; i < repetitions; i++) {
+
+        }
     }
 }

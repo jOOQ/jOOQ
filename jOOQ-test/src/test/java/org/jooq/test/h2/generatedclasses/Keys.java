@@ -19,6 +19,7 @@ import org.jooq.test.h2.generatedclasses.tables.TExoticTypes;
 import org.jooq.test.h2.generatedclasses.tables.TIdentity;
 import org.jooq.test.h2.generatedclasses.tables.TIdentityPk;
 import org.jooq.test.h2.generatedclasses.tables.TLanguage;
+import org.jooq.test.h2.generatedclasses.tables.TPerformance;
 import org.jooq.test.h2.generatedclasses.tables.TTriggers;
 import org.jooq.test.h2.generatedclasses.tables.T_2327UkOnly;
 import org.jooq.test.h2.generatedclasses.tables.T_2698;
@@ -46,6 +47,7 @@ import org.jooq.test.h2.generatedclasses.tables.records.TExoticTypesRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TIdentityRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TLanguageRecord;
+import org.jooq.test.h2.generatedclasses.tables.records.TPerformanceRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.T_2327UkOnlyRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.T_2698Record;
@@ -75,6 +77,7 @@ public class Keys {
 	// IDENTITY definitions
 	// -------------------------------------------------------------------------
 
+	public static final Identity<TPerformanceRecord, Integer> IDENTITY_T_PERFORMANCE = Identities0.IDENTITY_T_PERFORMANCE;
 	public static final Identity<TIdentityPkRecord, Integer> IDENTITY_T_IDENTITY_PK = Identities0.IDENTITY_T_IDENTITY_PK;
 	public static final Identity<TIdentityRecord, Integer> IDENTITY_T_IDENTITY = Identities0.IDENTITY_T_IDENTITY;
 	public static final Identity<TTriggersRecord, Integer> IDENTITY_T_TRIGGERS = Identities0.IDENTITY_T_TRIGGERS;
@@ -84,6 +87,7 @@ public class Keys {
 	// UNIQUE and PRIMARY KEY definitions
 	// -------------------------------------------------------------------------
 
+	public static final UniqueKey<TPerformanceRecord> PK_T_PERFORMANCE_PK = UniqueKeys0.PK_T_PERFORMANCE_PK;
 	public static final UniqueKey<T_3485Record> PK_T_3485 = UniqueKeys0.PK_T_3485;
 	public static final UniqueKey<T_2327UkOnlyRecord> UK_T_2327_UK_ONLY = UniqueKeys0.UK_T_2327_UK_ONLY;
 	public static final UniqueKey<TIdentityPkRecord> PK_T_IDENTITY_PK = UniqueKeys0.PK_T_IDENTITY_PK;
@@ -133,6 +137,7 @@ public class Keys {
 	// -------------------------------------------------------------------------
 
 	private static class Identities0 extends AbstractKeys {
+		public static Identity<TPerformanceRecord, Integer> IDENTITY_T_PERFORMANCE = createIdentity(TPerformance.T_PERFORMANCE, TPerformance.T_PERFORMANCE.ID);
 		public static Identity<TIdentityPkRecord, Integer> IDENTITY_T_IDENTITY_PK = createIdentity(TIdentityPk.T_IDENTITY_PK, TIdentityPk.T_IDENTITY_PK.ID);
 		public static Identity<TIdentityRecord, Integer> IDENTITY_T_IDENTITY = createIdentity(TIdentity.T_IDENTITY, TIdentity.T_IDENTITY.ID);
 		public static Identity<TTriggersRecord, Integer> IDENTITY_T_TRIGGERS = createIdentity(TTriggers.T_TRIGGERS, TTriggers.T_TRIGGERS.ID_GENERATED);
@@ -140,6 +145,7 @@ public class Keys {
 	}
 
 	private static class UniqueKeys0 extends AbstractKeys {
+		public static final UniqueKey<TPerformanceRecord> PK_T_PERFORMANCE_PK = createUniqueKey(TPerformance.T_PERFORMANCE, TPerformance.T_PERFORMANCE.ID);
 		public static final UniqueKey<T_3485Record> PK_T_3485 = createUniqueKey(T_3485.T_3485, T_3485.T_3485.ID);
 		public static final UniqueKey<T_2327UkOnlyRecord> UK_T_2327_UK_ONLY = createUniqueKey(T_2327UkOnly.T_2327_UK_ONLY, T_2327UkOnly.T_2327_UK_ONLY.ID);
 		public static final UniqueKey<TIdentityPkRecord> PK_T_IDENTITY_PK = createUniqueKey(TIdentityPk.T_IDENTITY_PK, TIdentityPk.T_IDENTITY_PK.ID);

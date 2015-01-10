@@ -23,6 +23,7 @@ import org.jooq.test.h2.generatedclasses.tables.TExoticTypes;
 import org.jooq.test.h2.generatedclasses.tables.TIdentity;
 import org.jooq.test.h2.generatedclasses.tables.TIdentityPk;
 import org.jooq.test.h2.generatedclasses.tables.TLanguage;
+import org.jooq.test.h2.generatedclasses.tables.TPerformance;
 import org.jooq.test.h2.generatedclasses.tables.TTriggers;
 import org.jooq.test.h2.generatedclasses.tables.TUnsigned;
 import org.jooq.test.h2.generatedclasses.tables.T_2327UkOnly;
@@ -56,7 +57,7 @@ import org.jooq.test.h2.generatedclasses.tables.Ää;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-	private static final long serialVersionUID = -1965222505;
+	private static final long serialVersionUID = 1340171162;
 
 	/**
 	 * The reference instance of <code>PUBLIC</code>
@@ -92,6 +93,7 @@ public class Public extends SchemaImpl {
 
 	private final List<Table<?>> getTables0() {
 		return Arrays.<Table<?>>asList(
+			TPerformance.T_PERFORMANCE,
 			T_3485.T_3485,
 			T_3666.T_3666,
 			T_3571.T_3571,

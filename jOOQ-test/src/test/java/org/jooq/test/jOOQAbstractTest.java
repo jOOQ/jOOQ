@@ -811,7 +811,7 @@ public abstract class jOOQAbstractTest<
         return connectionMultiSchemaUnused;
     }
 
-    private final String getProperty(List<Property> properties, String key) {
+    public static  final String getProperty(List<Property> properties, String key) {
         for (Property p : properties) {
             if (p.getKey().equals(key)) {
                 return p.getValue();
@@ -821,7 +821,7 @@ public abstract class jOOQAbstractTest<
         return null;
     }
 
-    private final Properties getProperties() {
+    public static final Properties getProperties() {
 
         // [#682] We reuse the config.properties that is also used for the Maven pom.xml
         try (InputStream config = GenerationTool.class.getResourceAsStream("/config.properties")) {
@@ -839,24 +839,52 @@ public abstract class jOOQAbstractTest<
         return null;
     }
 
+    public static final String getDriver(SQLDialect dialect) {
+        return getProperties().getProperty("db." + dialect.family().name().toLowerCase() + ".driver");
+    }
+
+    public static final String getURL(SQLDialect dialect) {
+        return getURL(dialect, "");
+    }
+
+    public static final String getURL(SQLDialect dialect, String schemaSuffix) {
+        return getProperties().getProperty("db." + dialect.family().name().toLowerCase() + ".url") + schemaSuffix;
+    }
+
+    public static final String getSchema(SQLDialect dialect) {
+        return getSchema(dialect, "");
+    }
+
+    public static final String getSchema(SQLDialect dialect, String schemaSuffix) {
+        return getProperties().getProperty("db." + dialect.family().name().toLowerCase() + ".schema") + schemaSuffix;
+    }
+
+    public static final String getUsername(SQLDialect dialect) {
+        return getProperties().getProperty("db." + dialect.family().name().toLowerCase() + ".username");
+    }
+
+    public static final String getPassword(SQLDialect dialect) {
+        return getProperties().getProperty("db." + dialect.family().name().toLowerCase() + ".password");
+    }
+
     public final String getDriver() {
-        return getProperties().getProperty("db." + dialect().family().name().toLowerCase() + ".driver");
+        return getDriver(dialect());
     }
 
     public final String getURL() {
-        return getProperties().getProperty("db." + dialect().family().name().toLowerCase() + ".url") + getSchemaSuffix();
+        return getURL(dialect(), getSchemaSuffix());
     }
 
     public final String getSchema() {
-        return getProperties().getProperty("db." + dialect().family().name().toLowerCase() + ".schema") + getSchemaSuffix();
+        return getSchema(dialect(), getSchemaSuffix());
     }
 
     public final String getUsername() {
-        return getProperties().getProperty("db." + dialect().family().name().toLowerCase() + ".username");
+        return getUsername(dialect());
     }
 
     public final String getPassword() {
-        return getProperties().getProperty("db." + dialect().family().name().toLowerCase() + ".password");
+        return getPassword(dialect());
     }
 
     final Connection getConnection0(String jdbcUser, String jdbcPassword) {

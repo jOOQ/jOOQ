@@ -15,6 +15,7 @@ import org.jooq.test.h2.generatedclasses.tables.TExoticTypes;
 import org.jooq.test.h2.generatedclasses.tables.TIdentity;
 import org.jooq.test.h2.generatedclasses.tables.TIdentityPk;
 import org.jooq.test.h2.generatedclasses.tables.TLanguage;
+import org.jooq.test.h2.generatedclasses.tables.TPerformance;
 import org.jooq.test.h2.generatedclasses.tables.TTriggers;
 import org.jooq.test.h2.generatedclasses.tables.TUnsigned;
 import org.jooq.test.h2.generatedclasses.tables.T_2327UkOnly;
@@ -47,6 +48,11 @@ import org.jooq.test.h2.generatedclasses.tables.Ää;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
+
+	/**
+	 * The table PUBLIC.T_PERFORMANCE
+	 */
+	public static final TPerformance T_PERFORMANCE = org.jooq.test.h2.generatedclasses.tables.TPerformance.T_PERFORMANCE;
 
 	/**
 	 * The table PUBLIC.T_3485

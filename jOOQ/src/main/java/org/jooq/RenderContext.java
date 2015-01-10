@@ -85,8 +85,7 @@ public interface RenderContext extends Context<RenderContext> {
     /**
      * Append a SQL keyword to the context's contained {@link StringBuilder}.
      * <p>
-     * Use this to have your SQL keyword rendered in {@link RenderKeywordStyle}
-     * (upper or lower case)
+     * Use this to have your SQL keyword rendered in {@link RenderKeywordStyle}.
      */
     @Override
     RenderContext keyword(String keyword);

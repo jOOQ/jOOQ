@@ -766,9 +766,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         StringBuilder sb = new StringBuilder();
 
         for (byte b : binary) {
+
+            // [#3924] Beware of signed vs unsigned bytes!
             sb.append("\\\\");
-            int octal = b & 0x000000ff;
-            sb.append(leftPad(toOctalString(octal), 3, '0'));
+            sb.append(leftPad(toOctalString(b & 0x000000ff), 3, '0'));
         }
 
         return sb.toString();

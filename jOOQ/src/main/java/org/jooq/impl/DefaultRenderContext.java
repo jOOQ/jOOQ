@@ -239,8 +239,11 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         if (RenderKeywordStyle.UPPER == cachedRenderKeywordStyle) {
             return sql(keyword.toUpperCase());
         }
-        else {
+        else if (RenderKeywordStyle.LOWER == cachedRenderKeywordStyle) {
             return sql(keyword.toLowerCase());
+        }
+        else {
+            return sql(keyword);
         }
     }
 

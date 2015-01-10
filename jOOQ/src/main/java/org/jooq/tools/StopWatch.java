@@ -88,6 +88,10 @@ public final class StopWatch {
         }
     }
 
+    public long split() {
+        return System.nanoTime() - start;
+    }
+
     private String splitMessage() {
         final long temp = split;
         split = System.nanoTime();

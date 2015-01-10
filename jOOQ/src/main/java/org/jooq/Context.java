@@ -208,8 +208,7 @@ public interface Context<C extends Context<C>> extends Scope {
     /**
      * Append a SQL keyword to the context's contained {@link StringBuilder}.
      * <p>
-     * Use this to have your SQL keyword rendered in {@link RenderKeywordStyle}
-     * (upper or lower case)
+     * Use this to have your SQL keyword rendered in {@link RenderKeywordStyle}.
      */
     C keyword(String keyword);
 

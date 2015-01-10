@@ -40,9 +40,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
-import static org.jooq.SQLDialect.ACCESS;
-import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
@@ -71,7 +68,6 @@ import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
-import org.jooq.Select;
 import org.jooq.conf.RenderKeywordStyle;
 import org.jooq.conf.RenderNameStyle;
 import org.jooq.conf.Settings;
@@ -153,85 +149,9 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         return sql.toString();
     }
 
-    /* [pro] */ /* [trial] */
-    private static final long exp;
-    private static final java.util.concurrent.atomic.AtomicLong cnt;
-
-    static {
-        String d = "2015-12-31";
-        java.io.RandomAccessFile f = null;
-
-        try {
-            f = new java.io.RandomAccessFile(
-                new java.io.File(DefaultRenderContext.class.getResource("/xsd/jooq-pro.xsd").toURI()), "r");
-
-            String xsd = null;
-            byte[] contents = new byte[(int) f.length()];
-            f.readFully(contents);
-            xsd = new String(contents);
-
-            java.util.regex.Pattern p = Pattern.compile("name=\"d-([\\w-]+)\"");
-            java.util.regex.Matcher m = p.matcher(xsd);
-
-            if (m.find()) {
-                 d = m.group(1);
-            }
-        }
-        catch (Exception ignore) {}
-        finally {
-            if (f != null) {
-                try {
-                    f.close();
-                }
-                catch (Exception ignore) {}
-            }
-        }
-
-        // "Close enough" date arithmetic
-        cnt = new java.util.concurrent.atomic.AtomicLong();
-        exp = java.sql.Date.valueOf(d).getTime();
-    }
-
-    /* [/trial] */ /* [/pro] */
-
     @Override
     public final String render(QueryPart part) {
-        RenderContext local = new DefaultRenderContext(this).visit(part);
-
-        /* [pro] */ /* [trial] */
-
-        // Please do not remove or circumvent the below logic
-        // --------------------------------------------------
-        // This generated SQL comment is a friendly reminder that you are using
-        // a commercial version of jOOQ with a free 30 days trial license. We do
-        // not want to bother our honest customers with annoying license
-        // verification. So, if you want to remove the below notice, consider
-        // purchasing a license from http://www.jooq.org/download
-
-        if (part instanceof Select) {
-
-            // It seems as though MS Access cannot handle any SQL comments
-            if (ACCESS == configuration().dialect().family()) {
-            }
-            else if (asList(ACCESS, INGRES).contains(configuration().dialect().family())) {
-                local.sql(" /* SQL rendered with a free trial version of jOOQ ").sql(Constants.FULL_VERSION).sql(" */");
-            }
-            else {
-                local.sql(" -- SQL rendered with a free trial version of jOOQ ").sql(Constants.FULL_VERSION);
-            }
-        }
-
-        if (cnt.incrementAndGet() > 100000) {
-            throw new RuntimeException("You have executed > 100000 queries with the free trial version. Please consider upgrading to a commercial license or contact sales@datageekery.com, if you wish to run more queries with your free trial.");
-        }
-
-        if (exp < System.currentTimeMillis()) {
-            throw new RuntimeException("Your 30 day trial period has ended some time ago. Please consider upgrading to a commercial license or contact sales@datageekery.com, if you wish to extend your free trial.");
-        }
-
-        /* [/trial] */ /* [/pro] */
-
-        return local.render();
+        return new DefaultRenderContext(this).visit(part).render();
     }
 
     @Override

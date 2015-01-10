@@ -173,8 +173,8 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
     public final void accept(Context<?> ctx) {
 
         /* [pro] xx
-        xx xxxxxxxxxxxxxxxxxxxxx
-                xx xxxxxxxxxxxx xx xxx
+        xx xxxxxxxxxxxxx xx xxx
+                xx xxxxxxxxxxxxxxxxxxxx
                 xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxx x
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxxxxxxx

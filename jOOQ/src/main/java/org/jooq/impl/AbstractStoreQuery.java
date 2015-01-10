@@ -173,8 +173,8 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
     public final void accept(Context<?> ctx) {
 
         /* [pro] */
-        if (!returning.isEmpty()
-                && ctx.family() == DB2
+        if (ctx.family() == DB2
+                && !returning.isEmpty()
                 && ctx.data(DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE) == null) {
             ctx.data(DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE, true);
             ctx.visit(select(unqualify(returning)).from("{0}", new FinalTable()));

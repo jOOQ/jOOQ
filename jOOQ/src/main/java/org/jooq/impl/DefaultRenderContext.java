@@ -214,10 +214,10 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             if (ACCESS == configuration().dialect().family()) {
             }
             else if (asList(ACCESS, INGRES).contains(configuration().dialect().family())) {
-                local.sql(" /* SQL rendered with a free trial version of jOOQ " + Constants.FULL_VERSION + " */");
+                local.sql(" /* SQL rendered with a free trial version of jOOQ ").sql(Constants.FULL_VERSION).sql(" */");
             }
             else {
-                local.sql(" -- SQL rendered with a free trial version of jOOQ " + Constants.FULL_VERSION);
+                local.sql(" -- SQL rendered with a free trial version of jOOQ ").sql(Constants.FULL_VERSION);
             }
         }
 

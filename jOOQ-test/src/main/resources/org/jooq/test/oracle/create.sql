@@ -11,6 +11,7 @@ DROP SEQUENCE s_961_long/
 DROP SEQUENCE s_961_big_integer/
 DROP SEQUENCE s_triggers_sequence/
 DROP SEQUENCE s_3899_$/
+DROP SEQUENCE s_3899$/
 DROP TRIGGER t_triggers_trigger/
 
 DROP TABLE multi_schema.t_book_sale/

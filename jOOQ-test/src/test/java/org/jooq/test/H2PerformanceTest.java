@@ -44,7 +44,8 @@ package org.jooq.test;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.lambda.Unchecked.intConsumer;
 import static org.jooq.lambda.Unchecked.runnable;
-import static org.jooq.test.h2.generatedclasses.Tables.T_PERFORMANCE;
+import static org.jooq.test.h2.generatedclasses.Tables.T_PERFORMANCE_JDBC;
+import static org.jooq.test.h2.generatedclasses.Tables.T_PERFORMANCE_JOOQ;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.Connection;
@@ -95,7 +96,7 @@ public class H2PerformanceTest {
         compareWithJDBC(
             1000000,
             i -> {
-                try (PreparedStatement stmt = connection.prepareStatement("insert into t_performance (value_int, value_string) values (?, ?)")) {
+                try (PreparedStatement stmt = connection.prepareStatement("insert into t_performance_jdbc (value_int, value_string) values (?, ?)")) {
                     stmt.setInt(1, i);
                     stmt.setString(2, "" + i);
                     stmt.executeUpdate();
@@ -103,7 +104,7 @@ public class H2PerformanceTest {
             },
 
             i -> {
-                ctx.insertInto(T_PERFORMANCE, T_PERFORMANCE.VALUE_INT, T_PERFORMANCE.VALUE_STRING)
+                ctx.insertInto(T_PERFORMANCE_JOOQ, T_PERFORMANCE_JOOQ.VALUE_INT, T_PERFORMANCE_JOOQ.VALUE_STRING)
                    .values(i, "" + i)
                    .execute();
             },
@@ -114,7 +115,8 @@ public class H2PerformanceTest {
     }
 
     private void cleanup() {
-        ctx.delete(T_PERFORMANCE).execute();
+        ctx.delete(T_PERFORMANCE_JDBC).execute();
+        ctx.delete(T_PERFORMANCE_JOOQ).execute();
     }
 
     private void compareWithJDBC(

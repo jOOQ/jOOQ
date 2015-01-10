@@ -97,9 +97,57 @@ public class OracleDSL extends DSL {
         return field("rowid", String.class);
     }
 
+    /**
+     * Retrieve the Oracle-specific <code>ORA_ROWSCN</code> pseudo-field.
+     */
+    @Support(ORACLE)
+    public static Field<Long> rowscn() {
+        return oraRowscn();
+    }
+
+    /**
+     * Retrieve the Oracle-specific <code>ORA_ROWSCN</code> pseudo-field.
+     */
+    @Support(ORACLE)
+    public static Field<Long> oraRowscn() {
+        return field("ora_rowscn", Long.class);
+    }
+
     // -------------------------------------------------------------------------
     // Oracle-specific functions
     // -------------------------------------------------------------------------
+
+    /**
+     * The Oracle-specific <code>SCN_TO_TIMESTAMP</code> function.
+     */
+    @Support(ORACLE)
+    public static Field<Timestamp> scnToTimestamp(Number scn) {
+        return scnToTimestamp(val(scn));
+    }
+
+    /**
+     * The Oracle-specific <code>SCN_TO_TIMESTAMP</code> function.
+     */
+    @Support(ORACLE)
+    public static Field<Timestamp> scnToTimestamp(Field<? extends Number> scn) {
+        return function("scn_to_timestamp", SQLDataType.TIMESTAMP, nullSafe(scn));
+    }
+
+    /**
+     * The Oracle-specific <code>TIMESTAMP_TO_SCN</code> function.
+     */
+    @Support(ORACLE)
+    public static Field<Long> timestampToScn(java.util.Date timestamp) {
+        return timestampToScn(val(timestamp));
+    }
+
+    /**
+     * The Oracle-specific <code>TIMESTAMP_TO_SCN</code> function.
+     */
+    @Support(ORACLE)
+    public static Field<Long> timestampToScn(Field<? extends java.util.Date> scn) {
+        return function("timestamp_to_scn", SQLDataType.BIGINT, nullSafe(scn));
+    }
 
     /**
      * The Oracle-specific <code>SYS_CONTEXT</code> function.

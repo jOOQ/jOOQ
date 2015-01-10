@@ -43,6 +43,7 @@ package org.jooq.test;
 
 /* [pro] */
 
+import static java.lang.System.currentTimeMillis;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
@@ -89,8 +90,11 @@ import static org.jooq.test.oracle2.generatedclasses.Tables.DATE_AS_TIMESTAMP_T_
 import static org.jooq.test.oracle2.generatedclasses.udt.DateAsTimestampT_976ObjectType.DATE_AS_TIMESTAMP_T_976_OBJECT_TYPE;
 import static org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA;
 import static org.jooq.util.oracle.OracleDSL.contains;
+import static org.jooq.util.oracle.OracleDSL.rowscn;
+import static org.jooq.util.oracle.OracleDSL.scnToTimestamp;
 import static org.jooq.util.oracle.OracleDSL.score;
 import static org.jooq.util.oracle.OracleDSL.sysContext;
+import static org.jooq.util.oracle.OracleDSL.timestampToScn;
 import static org.jooq.util.oracle.OracleDSL.toChar;
 import static org.jooq.util.oracle.OracleDSL.toNumber;
 import static org.jooq.util.oracle.OracleDSL.versionsEndscn;
@@ -2060,6 +2064,19 @@ public class OracleTest extends jOOQAbstractTest<
         public String toString() {
             return "S [value=" + value + "]";
         }
+    }
+
+    @Test
+    public void testOracleRowSCN() throws Exception {
+        Result<Record3<Long, Timestamp, Long>> result =
+        create().select(
+                    rowscn(),
+                    scnToTimestamp(rowscn()),
+                    timestampToScn(new Timestamp(currentTimeMillis())))
+                .from(T_BOOK)
+                .fetch();
+
+        assertEquals(4, result.size());
     }
 }
 

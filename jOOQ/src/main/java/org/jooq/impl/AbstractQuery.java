@@ -41,7 +41,11 @@
 
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
+import static org.jooq.ExecuteType.DDL;
 import static org.jooq.SQLDialect.ACCESS;
+import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
@@ -60,11 +64,13 @@ import java.util.Map;
 
 import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
+import org.jooq.Constants;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.RenderContext;
+import org.jooq.Select;
 import org.jooq.conf.ParamType;
 import org.jooq.conf.StatementType;
 import org.jooq.exception.ControlFlowSignal;
@@ -428,21 +434,77 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
     }
 
     private final String getSQL0(ExecuteContext ctx) {
+        String result;
+
+        /* [pro] */
+
+        // [#3542] Oracle DDL statements do not support bind values
+        if (ctx.type() == DDL && ctx.configuration().dialect().family() == ORACLE) {
+            ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
+            result = getSQL(INLINED);
+        }
+        else
+        /* [/pro] */
+
         if (executePreparedStatements(configuration().settings())) {
             try {
                 RenderContext render = new DefaultRenderContext(configuration);
                 render.data(DATA_COUNT_BIND_VALUES, true);
-                return render.render(this);
+                result = render.visit(this).render();
             }
             catch (DefaultRenderContext.ForceInlineSignal e) {
                 ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
-                return getSQL(INLINED);
+                result = getSQL(INLINED);
             }
         }
         else {
-            return getSQL(INLINED);
+            result = getSQL(INLINED);
         }
+
+        /* [pro] */ /* [trial] */
+
+        // Please do not remove or circumvent the below logic
+        // --------------------------------------------------
+        // This generated SQL comment is a friendly reminder that you are using
+        // a commercial version of jOOQ with a free 30 days trial license. We do
+        // not want to bother our honest customers with annoying license
+        // verification. So, if you want to remove the below notice, consider
+        // purchasing a license from http://www.jooq.org/download
+
+        if (this instanceof Select) {
+
+            // It seems as though MS Access cannot handle any SQL comments
+            if (ACCESS == configuration().dialect().family()) {
+            }
+            else if (asList(ACCESS, INGRES).contains(configuration().dialect().family())) {
+                result += " /* SQL rendered with a free trial version of jOOQ " + Constants.FULL_VERSION + " */";
+            }
+            else {
+                result += " -- SQL rendered with a free trial version of jOOQ " + Constants.FULL_VERSION;
+            }
+        }
+
+        if (cnt.incrementAndGet() > 1000000) {
+            throw new RuntimeException("You have executed > 1000000 queries with the free trial version. Please consider upgrading to a commercial license or contact sales@datageekery.com, if you wish to run more queries with your free trial.");
+        }
+
+        if (exp < System.currentTimeMillis()) {
+            throw new RuntimeException("Your 30 day trial period has ended some time ago. Please consider upgrading to a commercial license or contact sales@datageekery.com, if you wish to extend your free trial.");
+        }
+
+        /* [/trial] */ /* [/pro] */
+        return result;
     }
+
+    /* [pro] */ /* [trial] */
+    private static final long exp;
+    private static final java.util.concurrent.atomic.AtomicLong cnt;
+
+    static {
+        cnt = new java.util.concurrent.atomic.AtomicLong();
+        exp = java.sql.Date.valueOf("2015-04-01").getTime();
+    }
+    /* [/trial] */ /* [/pro] */
 
     /**
      * {@inheritDoc}

@@ -57,6 +57,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -117,16 +118,19 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     final List<Attachable> getAttachables() {
-        List<Attachable> result = new ArrayList<Attachable>();
+        List<Attachable> result = null;
 
         int size = size();
         for (int i = 0; i < size; i++) {
             if (values[i] instanceof Attachable) {
+                if (result == null)
+                    result = new ArrayList<Attachable>();
+
                 result.add((Attachable) values[i]);
             }
         }
 
-        return result;
+        return result == null ? Collections.<Attachable>emptyList() : result;
     }
 
     // ------------------------------------------------------------------------

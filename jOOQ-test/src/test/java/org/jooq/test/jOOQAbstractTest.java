@@ -2785,6 +2785,16 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testBatchSingleMerge() throws Exception {
+        new BatchTests(this).testBatchSingleMerge();
+    }
+
+    @Test
+    public void testBatchSingleWithInlineVariables() throws Exception {
+        new BatchTests(this).testBatchSingleWithInlineVariables();
+    }
+
+    @Test
     public void testBatchSinglePlainSQL() throws Exception {
         new BatchTests(this).testBatchSinglePlainSQL();
     }

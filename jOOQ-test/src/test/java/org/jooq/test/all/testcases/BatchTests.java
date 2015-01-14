@@ -42,9 +42,22 @@ package org.jooq.test.all.testcases;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.nCopies;
+import static org.jooq.SQLDialect.ACCESS;
+import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.delete;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.insertInto;
+import static org.jooq.impl.DSL.mergeInto;
 import static org.jooq.impl.DSL.selectOne;
+import static org.jooq.impl.DSL.update;
 import static org.jooq.tools.reflect.Reflect.on;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -56,6 +69,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 
 import org.jooq.Batch;
+import org.jooq.BatchBindStep;
 import org.jooq.ExecuteContext;
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -150,6 +164,41 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         int[] result3 = batch3.execute();
         assertEquals(3, result3.length);
         testBatchAuthors("Gamma", "Helm", "Johnson");
+    }
+
+    public void testBatchSingleMerge() throws Exception {
+        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, H2, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE);
+        jOOQAbstractTest.reset = false;
+
+        BatchBindStep batch = create().batch(
+            mergeInto(TBook())
+            .usingDual()
+            .on(TBook_ID().eq((Integer) null))
+            .whenMatchedThenUpdate()
+            .set(TBook_TITLE(), (String) null)
+        );
+
+        for (int i = 1; i < 5; i++)
+            batch.bind(i, "abc");
+
+        assertEquals(4, batch.execute().length);
+        assertEquals(nCopies(4, "abc"), create().select(TBook_TITLE()).from(TBook()).fetch(TBook_TITLE()));
+    }
+
+    public void testBatchSingleWithInlineVariables() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        BatchBindStep batch = create().batch(
+            update(TBook())
+            .set(TBook_TITLE(), inline("abc"))
+            .where(TBook_ID().eq((Integer) null))
+        );
+
+        for (int i = 1; i < 5; i++)
+            batch.bind(i);
+
+        assertEquals(4, batch.execute().length);
+        assertEquals(nCopies(4, "abc"), create().select(TBook_TITLE()).from(TBook()).fetch(TBook_TITLE()));
     }
 
     public void testBatchSinglePlainSQL() throws Exception {

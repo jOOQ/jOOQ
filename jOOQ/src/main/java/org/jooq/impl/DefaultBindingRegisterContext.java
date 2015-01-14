@@ -55,7 +55,7 @@ class DefaultBindingRegisterContext<U> extends AbstractScope implements BindingR
     private final int               index;
 
     DefaultBindingRegisterContext(Configuration configuration, CallableStatement statement, int index) {
-        super(configuration, true);
+        super(configuration, configuration.data());
 
         this.statement = statement;
         this.index = index;

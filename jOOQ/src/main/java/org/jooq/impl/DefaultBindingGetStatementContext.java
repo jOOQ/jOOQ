@@ -56,7 +56,7 @@ class DefaultBindingGetStatementContext<U> extends AbstractScope implements Bind
     private U                       value;
 
     DefaultBindingGetStatementContext(Configuration configuration, CallableStatement statement, int index) {
-        super(configuration, true);
+        super(configuration, configuration.data());
 
         this.statement = statement;
         this.index = index;

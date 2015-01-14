@@ -59,7 +59,7 @@ class DefaultBindingSQLContext<U> extends AbstractScope implements BindingSQLCon
     }
 
     DefaultBindingSQLContext(Configuration configuration, RenderContext render, U value, String variable) {
-        super(configuration, true);
+        super(configuration, configuration.data());
 
         this.render = render;
         this.value = value;

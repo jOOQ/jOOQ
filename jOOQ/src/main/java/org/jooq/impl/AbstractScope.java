@@ -53,16 +53,18 @@ import org.jooq.conf.Settings;
  */
 abstract class AbstractScope implements Scope {
 
-    private final Configuration configuration;
-    private Map<Object, Object> data;
+    private final Configuration       configuration;
+    private final Map<Object, Object> data;
 
     AbstractScope(Configuration configuration) {
-        this(configuration, true);
+        this(configuration, null);
     }
 
-    AbstractScope(Configuration configuration, boolean lazy) {
-        if (!lazy)
-            this.data = new HashMap<Object, Object>();
+    AbstractScope(AbstractScope scope) {
+        this(scope.configuration, scope.data);
+    }
+
+    AbstractScope(Configuration configuration, Map<Object, Object> data) {
 
         // The Configuration can be null when unattached objects are
         // executed or when unattached Records are stored...
@@ -70,12 +72,12 @@ abstract class AbstractScope implements Scope {
             configuration = new DefaultConfiguration();
         }
 
-        this.configuration = configuration;
-    }
+        if (data == null) {
+            data = new HashMap<Object, Object>();
+        }
 
-    AbstractScope(AbstractScope scope) {
-        this.data = scope.data;
-        this.configuration = scope.configuration;
+        this.configuration = configuration;
+        this.data = data;
     }
 
     // ------------------------------------------------------------------------
@@ -104,19 +106,16 @@ abstract class AbstractScope implements Scope {
 
     @Override
     public final Map<Object, Object> data() {
-        if (data == null)
-            data = new HashMap<Object, Object>();
-
         return data;
     }
 
     @Override
     public final Object data(Object key) {
-        return data().get(key);
+        return data.get(key);
     }
 
     @Override
     public final Object data(Object key, Object value) {
-        return data().put(key, value);
+        return data.put(key, value);
     }
 }

@@ -56,7 +56,7 @@ class DefaultBindingGetResultSetContext<U> extends AbstractScope implements Bind
     private U               value;
 
     DefaultBindingGetResultSetContext(Configuration configuration, ResultSet resultSet, int index) {
-        super(configuration, true);
+        super(configuration, configuration.data());
 
         this.resultSet = resultSet;
         this.index = index;

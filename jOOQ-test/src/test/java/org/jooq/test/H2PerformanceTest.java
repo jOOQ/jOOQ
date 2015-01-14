@@ -122,9 +122,10 @@ public class H2PerformanceTest {
             i -> {
                 try (PreparedStatement stmt = connection.prepareStatement("select id, value_int, value_string from t_performance_jdbc");
                     ResultSet rs = stmt.executeQuery()) {
+                    Object[] o;
 
                     while (rs.next()) {
-                        Object[] o = new Object[3];
+                        o = new Object[3];
                         o[0] = rs.getInt(1); rs.wasNull();
                         o[1] = rs.getInt(2); rs.wasNull();
                         o[2] = rs.getString(3); rs.wasNull();

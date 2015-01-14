@@ -186,6 +186,7 @@ class DefaultExecuteContext implements ExecuteContext {
         }
 
         LOCAL_CONFIGURATION.remove();
+        LOCAL_DATA.remove();
         LOCAL_CONNECTION.remove();
     }
 
@@ -221,10 +222,11 @@ class DefaultExecuteContext implements ExecuteContext {
     // XXX: Static utility methods for handling Configuration lifecycle
     // ------------------------------------------------------------------------
 
-    private static final ThreadLocal<Configuration> LOCAL_CONFIGURATION = new ThreadLocal<Configuration>();
+    private static final ThreadLocal<Configuration>       LOCAL_CONFIGURATION = new ThreadLocal<Configuration>();
+    private static final ThreadLocal<Map<Object, Object>> LOCAL_DATA          = new ThreadLocal<Map<Object, Object>>();
 
     /**
-     * Get the registered configuration
+     * Get the registered configuration.
      * <p>
      * It can be safely assumed that such a configuration is available once the
      * {@link ExecuteContext} has been established, until the statement is
@@ -232,6 +234,17 @@ class DefaultExecuteContext implements ExecuteContext {
      */
     static final Configuration localConfiguration() {
         return LOCAL_CONFIGURATION.get();
+    }
+
+    /**
+     * Get the registered data.
+     * <p>
+     * It can be safely assumed that such a configuration is available once the
+     * {@link ExecuteContext} has been established, until the statement is
+     * closed.
+     */
+    static final Map<Object, Object> localData() {
+        return LOCAL_DATA.get();
     }
 
     // ------------------------------------------------------------------------
@@ -347,6 +360,7 @@ class DefaultExecuteContext implements ExecuteContext {
         SQLXMLS.set(new ArrayList<SQLXML>());
         ARRAYS.set(new ArrayList<Array>());
         LOCAL_CONFIGURATION.set(configuration);
+        LOCAL_DATA.set(this.data);
     }
 
     @Override

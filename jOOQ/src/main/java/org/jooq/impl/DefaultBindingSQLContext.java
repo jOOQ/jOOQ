@@ -40,6 +40,8 @@
  */
 package org.jooq.impl;
 
+import java.util.Map;
+
 import org.jooq.BindingSQLContext;
 import org.jooq.Configuration;
 import org.jooq.Converter;
@@ -54,20 +56,12 @@ class DefaultBindingSQLContext<U> extends AbstractScope implements BindingSQLCon
     private final U value;
     private final String variable;
 
-    DefaultBindingSQLContext(Configuration configuration, RenderContext render, U value) {
-        this(configuration, render, value, "?");
+    DefaultBindingSQLContext(Configuration configuration, Map<Object, Object> data, RenderContext render, U value) {
+        this(configuration, data, render, value, "?");
     }
 
-    DefaultBindingSQLContext(Configuration configuration, RenderContext render, U value, String variable) {
-        super(configuration);
-
-        this.render = render;
-        this.value = value;
-        this.variable = variable;
-    }
-
-    private DefaultBindingSQLContext(AbstractScope other, RenderContext render, U value, String variable) {
-        super(other);
+    DefaultBindingSQLContext(Configuration configuration, Map<Object, Object> data, RenderContext render, U value, String variable) {
+        super(configuration, data);
 
         this.render = render;
         this.value = value;
@@ -91,6 +85,6 @@ class DefaultBindingSQLContext<U> extends AbstractScope implements BindingSQLCon
 
     @Override
     public <T> BindingSQLContext<T> convert(Converter<T, U> converter) {
-        return new DefaultBindingSQLContext<T>(this, render, converter.to(value), variable);
+        return new DefaultBindingSQLContext<T>(configuration, data, render, converter.to(value), variable);
     }
 }

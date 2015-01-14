@@ -621,7 +621,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                     for (Object o : ((Object[]) val)) {
                         render.sql(separator);
-                        new DefaultBinding<Object, Object>(new IdentityConverter(type.getComponentType()), isLob).sql(new DefaultBindingSQLContext<Object>(ctx.configuration(), ctx.render(), o));
+                        new DefaultBinding<Object, Object>(new IdentityConverter(type.getComponentType()), isLob).sql(new DefaultBindingSQLContext<Object>(ctx.configuration(), ctx.data(), ctx.render(), o));
                         separator = ", ";
                     }
 
@@ -635,7 +635,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                     for (Object o : ((Object[]) val)) {
                         render.sql(separator);
-                        new DefaultBinding<Object, Object>(new IdentityConverter(type.getComponentType()), isLob).sql(new DefaultBindingSQLContext<Object>(ctx.configuration(), ctx.render(), o));
+                        new DefaultBinding<Object, Object>(new IdentityConverter(type.getComponentType()), isLob).sql(new DefaultBindingSQLContext<Object>(ctx.configuration(), ctx.data(), ctx.render(), o));
                         separator = ", ";
                     }
 
@@ -657,10 +657,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 String literal = ((EnumType) val).getLiteral();
 
                 if (literal == null) {
-                    new DefaultBinding<Object, Object>(new IdentityConverter(String.class), isLob).sql(new DefaultBindingSQLContext<Object>(ctx.configuration(), ctx.render(), literal));
+                    new DefaultBinding<Object, Object>(new IdentityConverter(String.class), isLob).sql(new DefaultBindingSQLContext<Object>(ctx.configuration(), ctx.data(), ctx.render(), literal));
                 }
                 else {
-                    new DefaultBinding<Object, Object>(new IdentityConverter(String.class), isLob).sql(new DefaultBindingSQLContext<Object>(ctx.configuration(), ctx.render(), literal));
+                    new DefaultBinding<Object, Object>(new IdentityConverter(String.class), isLob).sql(new DefaultBindingSQLContext<Object>(ctx.configuration(), ctx.data(), ctx.render(), literal));
                 }
             }
             else if (UDTRecord.class.isAssignableFrom(type)) {
@@ -2066,7 +2066,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // Try fetching the array as a JDBC ResultSet
             try {
                 while (rs.next()) {
-                    DefaultBindingGetResultSetContext<T> out = new DefaultBindingGetResultSetContext<T>(ctx.configuration(), rs, 2);
+                    DefaultBindingGetResultSetContext<T> out = new DefaultBindingGetResultSetContext<T>(ctx.configuration(), ctx.data(), rs, 2);
                     new DefaultBinding<T, T>(new IdentityConverter<T>((Class<T>) type.getComponentType()), false).get(out);
                     result.add(out.value());
                 }

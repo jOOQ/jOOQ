@@ -41,6 +41,7 @@
 package org.jooq.impl;
 
 import java.sql.SQLOutput;
+import java.util.Map;
 
 import org.jooq.BindingSetSQLOutputContext;
 import org.jooq.Configuration;
@@ -54,15 +55,8 @@ class DefaultBindingSetSQLOutputContext<U> extends AbstractScope implements Bind
     private final SQLOutput output;
     private final U         value;
 
-    DefaultBindingSetSQLOutputContext(Configuration configuration, SQLOutput output, U value) {
-        super(configuration);
-
-        this.output = output;
-        this.value = value;
-    }
-
-    private DefaultBindingSetSQLOutputContext(AbstractScope other, SQLOutput output, U value) {
-        super(other);
+    DefaultBindingSetSQLOutputContext(Configuration configuration, Map<Object, Object> data, SQLOutput output, U value) {
+        super(configuration, configuration.data());
 
         this.output = output;
         this.value = value;
@@ -80,6 +74,6 @@ class DefaultBindingSetSQLOutputContext<U> extends AbstractScope implements Bind
 
     @Override
     public final <T> BindingSetSQLOutputContext<T> convert(Converter<T, U> converter) {
-        return new DefaultBindingSetSQLOutputContext<T>(this, output, converter.to(value));
+        return new DefaultBindingSetSQLOutputContext<T>(configuration, data, output, converter.to(value));
     }
 }

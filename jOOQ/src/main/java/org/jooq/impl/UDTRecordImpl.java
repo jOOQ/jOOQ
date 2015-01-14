@@ -41,10 +41,12 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DefaultExecuteContext.localConfiguration;
+import static org.jooq.impl.DefaultExecuteContext.localData;
 
 import java.sql.SQLException;
 import java.sql.SQLInput;
 import java.sql.SQLOutput;
+import java.util.Map;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -119,27 +121,31 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
     @Override
     public final void readSQL(SQLInput stream, String typeName) throws SQLException {
         Configuration configuration = localConfiguration();
+        Map<Object, Object> data = localData();
 
         for (Field<?> field : getUDT().fields()) {
-            setValue(configuration, stream, field);
+            setValue(configuration, data, stream, field);
         }
     }
 
-    private final <T> void setValue(Configuration configuration, SQLInput stream, Field<T> field) throws SQLException {
-        DefaultBindingGetSQLInputContext<T> out = new DefaultBindingGetSQLInputContext<T>(configuration, stream);
+    private final <T> void setValue(Configuration configuration, Map<Object, Object> data, SQLInput stream, Field<T> field) throws SQLException {
+        DefaultBindingGetSQLInputContext<T> out = new DefaultBindingGetSQLInputContext<T>(configuration, data, stream);
         field.getBinding().get(out);
         setValue(field, out.value());
     }
 
     @Override
     public final void writeSQL(SQLOutput stream) throws SQLException {
+        Configuration configuration = localConfiguration();
+        Map<Object, Object> data = localData();
+
         for (Field<?> field : getUDT().fields()) {
-            setValue(stream, field);
+            setValue(configuration, data, stream, field);
         }
     }
 
-    private final <T> void setValue(SQLOutput stream, Field<T> field) throws SQLException {
-        field.getBinding().set(new DefaultBindingSetSQLOutputContext<T>(localConfiguration(), stream, getValue(field)));
+    private final <T> void setValue(Configuration configuration, Map<Object, Object> data, SQLOutput stream, Field<T> field) throws SQLException {
+        field.getBinding().set(new DefaultBindingSetSQLOutputContext<T>(configuration, data, stream, getValue(field)));
     }
 
     @Override

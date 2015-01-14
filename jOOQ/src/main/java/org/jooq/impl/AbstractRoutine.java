@@ -337,7 +337,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
             listener.bindStart(ctx);
             using(configuration).bindContext(ctx.statement()).visit(this);
-            registerOutParameters(configuration, (CallableStatement) ctx.statement());
+            registerOutParameters(ctx);
             listener.bindEnd(ctx);
 
             execute0(ctx, listener);
@@ -598,6 +598,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     private final <U> void fetchOutParameter(ExecuteContext ctx, Parameter<U> parameter) throws SQLException {
         DefaultBindingGetStatementContext<U> out = new DefaultBindingGetStatementContext<U>(
             ctx.configuration(),
+            ctx.data(),
             (CallableStatement) ctx.statement(),
             parameterIndexes.get(parameter)
         );
@@ -606,7 +607,10 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         outValues.put(parameter, out.value());
     }
 
-    private final void registerOutParameters(Configuration c, CallableStatement statement) throws SQLException {
+    private final void registerOutParameters(ExecuteContext ctx) throws SQLException {
+        Configuration c = ctx.configuration();
+        Map<Object, Object> data = ctx.data();
+        CallableStatement statement = (CallableStatement) ctx.statement();
 
         // Register all out / inout parameters according to their position
         // Note that some RDBMS do not support binding by name very well
@@ -614,13 +618,13 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             if (parameter.equals(getReturnParameter()) ||
                 getOutParameters().contains(parameter)) {
 
-                registerOutParameter(c, statement, parameter);
+                registerOutParameter(c, data, statement, parameter);
             }
         }
     }
 
-    private final <U> void registerOutParameter(Configuration c, CallableStatement statement, Parameter<U> parameter) throws SQLException {
-        parameter.getBinding().register(new DefaultBindingRegisterContext<U>(c, statement, parameterIndexes.get(parameter)));
+    private final <U> void registerOutParameter(Configuration c, Map<Object, Object> data, CallableStatement statement, Parameter<U> parameter) throws SQLException {
+        parameter.getBinding().register(new DefaultBindingRegisterContext<U>(c, data, statement, parameterIndexes.get(parameter)));
     }
 
     // ------------------------------------------------------------------------

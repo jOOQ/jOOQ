@@ -53,15 +53,11 @@ import org.jooq.conf.Settings;
  */
 abstract class AbstractScope implements Scope {
 
-    private final Configuration       configuration;
-    private final Map<Object, Object> data;
+    final Configuration       configuration;
+    final Map<Object, Object> data;
 
     AbstractScope(Configuration configuration) {
         this(configuration, null);
-    }
-
-    AbstractScope(AbstractScope scope) {
-        this(scope.configuration, scope.data);
     }
 
     AbstractScope(Configuration configuration, Map<Object, Object> data) {

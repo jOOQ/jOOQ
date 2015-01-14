@@ -41,6 +41,7 @@
 package org.jooq.impl;
 
 import java.sql.PreparedStatement;
+import java.util.Map;
 
 import org.jooq.BindingSetStatementContext;
 import org.jooq.Configuration;
@@ -55,16 +56,8 @@ class DefaultBindingSetStatementContext<U> extends AbstractScope implements Bind
     private final int               index;
     private final U                 value;
 
-    DefaultBindingSetStatementContext(Configuration configuration, PreparedStatement statement, int index, U value) {
+    DefaultBindingSetStatementContext(Configuration configuration, Map<Object, Object> data, PreparedStatement statement, int index, U value) {
         super(configuration, configuration.data());
-
-        this.statement = statement;
-        this.index = index;
-        this.value = value;
-    }
-
-    private DefaultBindingSetStatementContext(AbstractScope other, PreparedStatement statement, int index, U value) {
-        super(other);
 
         this.statement = statement;
         this.index = index;
@@ -88,6 +81,6 @@ class DefaultBindingSetStatementContext<U> extends AbstractScope implements Bind
 
     @Override
     public final <T> BindingSetStatementContext<T> convert(Converter<T, U> converter) {
-        return new DefaultBindingSetStatementContext<T>(this, statement, index, converter.to(value));
+        return new DefaultBindingSetStatementContext<T>(configuration, data, statement, index, converter.to(value));
     }
 }

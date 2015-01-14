@@ -60,7 +60,7 @@ class DefaultBindContext extends AbstractBindContext {
     @SuppressWarnings({ "unchecked" })
     protected final BindContext bindValue0(Object value, Field<?> field) throws SQLException {
         ((Field<Object>) field).getBinding().set(
-            new DefaultBindingSetStatementContext<Object>(configuration(), stmt, nextIndex(), value)
+            new DefaultBindingSetStatementContext<Object>(configuration(), data(), stmt, nextIndex(), value)
         );
 
         return this;

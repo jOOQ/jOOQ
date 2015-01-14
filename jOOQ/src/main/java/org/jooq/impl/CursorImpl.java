@@ -1488,7 +1488,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
                     offset += emulatedFields.length - 1;
                 }
                 else {
-                    DefaultBindingGetResultSetContext<T> out = new DefaultBindingGetResultSetContext<T>(ctx.configuration(), ctx.resultSet(), offset + index + 1);
+                    DefaultBindingGetResultSetContext<T> out = new DefaultBindingGetResultSetContext<T>(ctx.configuration(), ctx.data(), ctx.resultSet(), offset + index + 1);
                     field.getBinding().get(out);
                     value = out.value();
                 }

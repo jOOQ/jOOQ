@@ -80,7 +80,7 @@ class Val<T> extends AbstractParam<T> {
                 ctx.paramType(ParamType.INLINED);
 
             try {
-                getBinding().sql(new DefaultBindingSQLContext<T>(ctx.configuration(), (RenderContext) ctx, value, getBindVariable(ctx)));
+                getBinding().sql(new DefaultBindingSQLContext<T>(ctx.configuration(), ctx.data(), (RenderContext) ctx, value, getBindVariable(ctx)));
             }
             catch (SQLException e) {
                 throw new DataAccessException("Error while generating SQL for Binding", e);

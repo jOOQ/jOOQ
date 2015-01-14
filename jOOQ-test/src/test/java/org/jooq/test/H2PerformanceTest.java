@@ -51,6 +51,7 @@ import static org.junit.Assert.assertTrue;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import org.jooq.DSLContext;
 import org.jooq.conf.Settings;
@@ -112,6 +113,41 @@ public class H2PerformanceTest {
             () -> {},
             this::cleanup
         );
+    }
+
+    @Test
+    public void testPerformance_SELECT() {
+        compareWithJDBC(
+            50000,
+            i -> {
+                try (PreparedStatement stmt = connection.prepareStatement("select id, value_int, value_string from t_performance_jdbc");
+                    ResultSet rs = stmt.executeQuery()) {
+
+                    while (rs.next()) {
+                        Object[] o = new Object[3];
+                        o[0] = rs.getInt(1); rs.wasNull();
+                        o[1] = rs.getInt(2); rs.wasNull();
+                        o[2] = rs.getString(3); rs.wasNull();
+                    }
+                }
+            },
+
+            i -> {
+                ctx.select(T_PERFORMANCE_JOOQ.ID, T_PERFORMANCE_JOOQ.VALUE_INT, T_PERFORMANCE_JOOQ.VALUE_STRING)
+                   .from(T_PERFORMANCE_JOOQ)
+                   .fetch();
+            },
+
+            this::init,
+            this::cleanup
+        );
+    }
+
+    private void init() {
+        for (int i = 0; i < 1000; i++) {
+            ctx.insertInto(T_PERFORMANCE_JDBC, T_PERFORMANCE_JDBC.VALUE_INT, T_PERFORMANCE_JDBC.VALUE_STRING).values(i, "" + i).execute();
+            ctx.insertInto(T_PERFORMANCE_JOOQ, T_PERFORMANCE_JOOQ.VALUE_INT, T_PERFORMANCE_JOOQ.VALUE_STRING).values(i, "" + i).execute();
+        }
     }
 
     private void cleanup() {

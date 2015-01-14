@@ -55,7 +55,7 @@ class DefaultBindingGetSQLInputContext<U> extends AbstractScope implements Bindi
     private U              value;
 
     DefaultBindingGetSQLInputContext(Configuration configuration, SQLInput input) {
-        super(configuration);
+        super(configuration, true);
 
         this.input = input;
     }

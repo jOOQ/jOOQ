@@ -63,15 +63,15 @@ class ExecuteListeners implements ExecuteListener {
     /**
      * Generated UID
      */
-    private static final long           serialVersionUID = 7399239846062763212L;
+    private static final long       serialVersionUID = 7399239846062763212L;
 
-    private final List<ExecuteListener> listeners;
+    private final ExecuteListener[] listeners;
 
     // In some setups, these two events may get mixed up chronologically by the
     // Cursor. Postpone fetchEnd event until after resultEnd event, if there is
     // an open Result
-    private boolean                     resultStart;
-    private boolean                     fetchEnd;
+    private boolean                 resultStart;
+    private boolean                 fetchEnd;
 
     ExecuteListeners(ExecuteContext ctx) {
         listeners = listeners(ctx);
@@ -82,7 +82,7 @@ class ExecuteListeners implements ExecuteListener {
     /**
      * Provide delegate listeners from an <code>ExecuteContext</code>
      */
-    private static List<ExecuteListener> listeners(ExecuteContext ctx) {
+    private static ExecuteListener[] listeners(ExecuteContext ctx) {
         List<ExecuteListener> result = new ArrayList<ExecuteListener>();
 
         for (ExecuteListenerProvider provider : ctx.configuration().executeListenerProviders()) {
@@ -98,7 +98,7 @@ class ExecuteListeners implements ExecuteListener {
             result.add(new StopWatchListener());
         }
 
-        return result;
+        return result.toArray(new ExecuteListener[result.size()]);
     }
 
     @Override

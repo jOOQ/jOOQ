@@ -174,16 +174,23 @@ class Records extends Generators {
             private static final long serialVersionUID = -2201346180421463830L;
 
             /**
-             * Create a new general purpose record
+             * Create a new general purpose record.
              */
             public RecordImpl(Field<?>... fields) {
                 super(fields);
             }
 
             /**
-             * Create a new general purpose record
+             * Create a new general purpose record.
              */
             public RecordImpl(Collection<? extends Field<?>> fields) {
+                super(fields);
+            }
+
+            /**
+             * Create a new general purpose record.
+             */
+            RecordImpl(RowImpl fields) {
                 super(fields);
             }
 

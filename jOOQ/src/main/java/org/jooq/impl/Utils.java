@@ -472,10 +472,12 @@ final class Utils {
 
         // An ad-hoc type resulting from a JOIN or arbitrary SELECT
         if (type == RecordImpl.class || type == Record.class) {
+            final RowImpl row = new RowImpl(fields);
+            
             return new RecordFactory<R>() {
                 @Override
                 public R newInstance() {
-                    return (R) new RecordImpl(fields);
+                    return (R) new RecordImpl(row);
                 }
             };
         }

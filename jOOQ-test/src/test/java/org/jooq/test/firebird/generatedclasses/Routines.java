@@ -3,17 +3,30 @@
  */
 package org.jooq.test.firebird.generatedclasses;
 
+
+import org.jooq.Configuration;
+import org.jooq.Field;
+import org.jooq.test.firebird.generatedclasses.routines.PAuthorExists;
+import org.jooq.test.firebird.generatedclasses.routines.PCreateAuthor;
+import org.jooq.test.firebird.generatedclasses.routines.PCreateAuthorByName;
+import org.jooq.test.firebird.generatedclasses.tables.FTables1;
+import org.jooq.test.firebird.generatedclasses.tables.FTables2;
+import org.jooq.test.firebird.generatedclasses.tables.FTables3;
+import org.jooq.test.firebird.generatedclasses.tables.FTables4;
+import org.jooq.test.firebird.generatedclasses.tables.FTables5;
+
+
 /**
  * Convenience access to all stored procedures and functions in 
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Routines {
 
 	/**
 	 * Call <code>P_AUTHOR_EXISTS</code>
 	 */
-	public static java.lang.Integer pAuthorExists(org.jooq.Configuration configuration, java.lang.String authorName) {
-		org.jooq.test.firebird.generatedclasses.routines.PAuthorExists p = new org.jooq.test.firebird.generatedclasses.routines.PAuthorExists();
+	public static Integer pAuthorExists(Configuration configuration, String authorName) {
+		PAuthorExists p = new PAuthorExists();
 		p.setAuthorName(authorName);
 
 		p.execute(configuration);
@@ -23,8 +36,8 @@ public class Routines {
 	/**
 	 * Call <code>P_CREATE_AUTHOR</code>
 	 */
-	public static void pCreateAuthor(org.jooq.Configuration configuration) {
-		org.jooq.test.firebird.generatedclasses.routines.PCreateAuthor p = new org.jooq.test.firebird.generatedclasses.routines.PCreateAuthor();
+	public static void pCreateAuthor(Configuration configuration) {
+		PCreateAuthor p = new PCreateAuthor();
 
 		p.execute(configuration);
 	}
@@ -32,8 +45,8 @@ public class Routines {
 	/**
 	 * Call <code>P_CREATE_AUTHOR_BY_NAME</code>
 	 */
-	public static void pCreateAuthorByName(org.jooq.Configuration configuration, java.lang.String firstName, java.lang.String lastName) {
-		org.jooq.test.firebird.generatedclasses.routines.PCreateAuthorByName p = new org.jooq.test.firebird.generatedclasses.routines.PCreateAuthorByName();
+	public static void pCreateAuthorByName(Configuration configuration, String firstName, String lastName) {
+		PCreateAuthorByName p = new PCreateAuthorByName();
 		p.setFirstName(firstName);
 		p.setLastName(lastName);
 
@@ -43,49 +56,49 @@ public class Routines {
 	/**
 	 * Get <code>F_TABLES1</code> as a field
 	 */
-	public static org.jooq.test.firebird.generatedclasses.tables.FTables1 fTables1() {
-		return org.jooq.test.firebird.generatedclasses.tables.FTables1.F_TABLES1.call();
+	public static FTables1 fTables1() {
+		return FTables1.F_TABLES1.call();
 	}
 
 	/**
 	 * Get <code>F_TABLES2</code> as a field
 	 */
-	public static org.jooq.test.firebird.generatedclasses.tables.FTables2 fTables2() {
-		return org.jooq.test.firebird.generatedclasses.tables.FTables2.F_TABLES2.call();
+	public static FTables2 fTables2() {
+		return FTables2.F_TABLES2.call();
 	}
 
 	/**
 	 * Get <code>F_TABLES3</code> as a field
 	 */
-	public static org.jooq.test.firebird.generatedclasses.tables.FTables3 fTables3() {
-		return org.jooq.test.firebird.generatedclasses.tables.FTables3.F_TABLES3.call();
+	public static FTables3 fTables3() {
+		return FTables3.F_TABLES3.call();
 	}
 
 	/**
 	 * Get <code>F_TABLES4</code> as a field
 	 */
-	public static org.jooq.test.firebird.generatedclasses.tables.FTables4 fTables4(java.lang.Integer pId) {
-		return org.jooq.test.firebird.generatedclasses.tables.FTables4.F_TABLES4.call(pId);
+	public static FTables4 fTables4(Integer pId) {
+		return FTables4.F_TABLES4.call(pId);
 	}
 
 	/**
 	 * Get <code>F_TABLES4</code> as a field
 	 */
-	public static org.jooq.test.firebird.generatedclasses.tables.FTables4 fTables4(org.jooq.Field<java.lang.Integer> pId) {
-		return org.jooq.test.firebird.generatedclasses.tables.FTables4.F_TABLES4.call(pId);
+	public static FTables4 fTables4(Field<Integer> pId) {
+		return FTables4.F_TABLES4.call(pId);
 	}
 
 	/**
 	 * Get <code>F_TABLES5</code> as a field
 	 */
-	public static org.jooq.test.firebird.generatedclasses.tables.FTables5 fTables5(java.lang.Integer v1, java.lang.Integer v2, java.lang.Integer v3) {
-		return org.jooq.test.firebird.generatedclasses.tables.FTables5.F_TABLES5.call(v1, v2, v3);
+	public static FTables5 fTables5(Integer v1, Integer v2, Integer v3) {
+		return FTables5.F_TABLES5.call(v1, v2, v3);
 	}
 
 	/**
 	 * Get <code>F_TABLES5</code> as a field
 	 */
-	public static org.jooq.test.firebird.generatedclasses.tables.FTables5 fTables5(org.jooq.Field<java.lang.Integer> v1, org.jooq.Field<java.lang.Integer> v2, org.jooq.Field<java.lang.Integer> v3) {
-		return org.jooq.test.firebird.generatedclasses.tables.FTables5.F_TABLES5.call(v1, v2, v3);
+	public static FTables5 fTables5(Field<Integer> v1, Field<Integer> v2, Field<Integer> v3) {
+		return FTables5.F_TABLES5.call(v1, v2, v3);
 	}
 }

@@ -1118,6 +1118,10 @@
                                             <interfaces>true</interfaces>
                                             <jpaAnnotations>true</jpaAnnotations>
                                             <validationAnnotations>true</validationAnnotations>
+
+                                            <!-- There's a primary key whose name is the same as that of the table.
+                                                 This causes issues in Keys.java -->
+                                            <fullyQualifiedTypes>.*T_937.*</fullyQualifiedTypes>
                                         </generate>
                                         <target>
                                             <packageName>org.jooq.test.firebird.generatedclasses</packageName>

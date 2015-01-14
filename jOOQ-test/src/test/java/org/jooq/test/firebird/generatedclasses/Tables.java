@@ -3,56 +3,136 @@
  */
 package org.jooq.test.firebird.generatedclasses;
 
+
+import org.jooq.Field;
+import org.jooq.test.firebird.generatedclasses.tables.FTables1;
+import org.jooq.test.firebird.generatedclasses.tables.FTables2;
+import org.jooq.test.firebird.generatedclasses.tables.FTables3;
+import org.jooq.test.firebird.generatedclasses.tables.FTables4;
+import org.jooq.test.firebird.generatedclasses.tables.FTables5;
+import org.jooq.test.firebird.generatedclasses.tables.TAuthor;
+import org.jooq.test.firebird.generatedclasses.tables.TBook;
+import org.jooq.test.firebird.generatedclasses.tables.TBookStore;
+import org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore;
+import org.jooq.test.firebird.generatedclasses.tables.TBooleans;
+import org.jooq.test.firebird.generatedclasses.tables.TDates;
+import org.jooq.test.firebird.generatedclasses.tables.TExoticTypes;
+import org.jooq.test.firebird.generatedclasses.tables.TLanguage;
+import org.jooq.test.firebird.generatedclasses.tables.TTriggers;
+import org.jooq.test.firebird.generatedclasses.tables.TUnsigned;
+import org.jooq.test.firebird.generatedclasses.tables.T_3342;
+import org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable;
+import org.jooq.test.firebird.generatedclasses.tables.T_725LobTest;
+import org.jooq.test.firebird.generatedclasses.tables.T_785;
+import org.jooq.test.firebird.generatedclasses.tables.VAuthor;
+import org.jooq.test.firebird.generatedclasses.tables.VBook;
+import org.jooq.test.firebird.generatedclasses.tables.VLibrary;
+import org.jooq.test.firebird.generatedclasses.tables.XTestCase_2025;
+import org.jooq.test.firebird.generatedclasses.tables.XTestCase_64_69;
+import org.jooq.test.firebird.generatedclasses.tables.XTestCase_71;
+import org.jooq.test.firebird.generatedclasses.tables.XTestCase_85;
+import org.jooq.test.firebird.generatedclasses.tables.XUnused;
+
+
 /**
  * Convenience access to all tables in 
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
 
 	/**
 	 * The table F_TABLES1
 	 */
-	public static final org.jooq.test.firebird.generatedclasses.tables.FTables1 F_TABLES1 = org.jooq.test.firebird.generatedclasses.tables.FTables1.F_TABLES1;
+	public static final FTables1 F_TABLES1 = org.jooq.test.firebird.generatedclasses.tables.FTables1.F_TABLES1;
+
+	/**
+	 * Get <code>F_TABLES1</code> as a field
+	 */
+	public static FTables1 F_TABLES1() {
+		return FTables1.F_TABLES1.call();
+	}
 
 	/**
 	 * The table F_TABLES2
 	 */
-	public static final org.jooq.test.firebird.generatedclasses.tables.FTables2 F_TABLES2 = org.jooq.test.firebird.generatedclasses.tables.FTables2.F_TABLES2;
+	public static final FTables2 F_TABLES2 = org.jooq.test.firebird.generatedclasses.tables.FTables2.F_TABLES2;
+
+	/**
+	 * Get <code>F_TABLES2</code> as a field
+	 */
+	public static FTables2 F_TABLES2() {
+		return FTables2.F_TABLES2.call();
+	}
 
 	/**
 	 * The table F_TABLES3
 	 */
-	public static final org.jooq.test.firebird.generatedclasses.tables.FTables3 F_TABLES3 = org.jooq.test.firebird.generatedclasses.tables.FTables3.F_TABLES3;
+	public static final FTables3 F_TABLES3 = org.jooq.test.firebird.generatedclasses.tables.FTables3.F_TABLES3;
+
+	/**
+	 * Get <code>F_TABLES3</code> as a field
+	 */
+	public static FTables3 F_TABLES3() {
+		return FTables3.F_TABLES3.call();
+	}
 
 	/**
 	 * The table F_TABLES4
 	 */
-	public static final org.jooq.test.firebird.generatedclasses.tables.FTables4 F_TABLES4 = org.jooq.test.firebird.generatedclasses.tables.FTables4.F_TABLES4;
+	public static final FTables4 F_TABLES4 = org.jooq.test.firebird.generatedclasses.tables.FTables4.F_TABLES4;
+
+	/**
+	 * Get <code>F_TABLES4</code> as a field
+	 */
+	public static FTables4 F_TABLES4(Integer pId) {
+		return FTables4.F_TABLES4.call(pId);
+	}
+
+	/**
+	 * Get <code>F_TABLES4</code> as a field
+	 */
+	public static FTables4 F_TABLES4(Field<Integer> pId) {
+		return FTables4.F_TABLES4.call(pId);
+	}
 
 	/**
 	 * The table F_TABLES5
 	 */
-	public static final org.jooq.test.firebird.generatedclasses.tables.FTables5 F_TABLES5 = org.jooq.test.firebird.generatedclasses.tables.FTables5.F_TABLES5;
+	public static final FTables5 F_TABLES5 = org.jooq.test.firebird.generatedclasses.tables.FTables5.F_TABLES5;
+
+	/**
+	 * Get <code>F_TABLES5</code> as a field
+	 */
+	public static FTables5 F_TABLES5(Integer v1, Integer v2, Integer v3) {
+		return FTables5.F_TABLES5.call(v1, v2, v3);
+	}
+
+	/**
+	 * Get <code>F_TABLES5</code> as a field
+	 */
+	public static FTables5 F_TABLES5(Field<Integer> v1, Field<Integer> v2, Field<Integer> v3) {
+		return FTables5.F_TABLES5.call(v1, v2, v3);
+	}
 
 	/**
 	 * The table T_3342
 	 */
-	public static final org.jooq.test.firebird.generatedclasses.tables.T_3342 T_3342 = org.jooq.test.firebird.generatedclasses.tables.T_3342.T_3342;
+	public static final T_3342 T_3342 = org.jooq.test.firebird.generatedclasses.tables.T_3342.T_3342;
 
 	/**
 	 * The table T_639_NUMBERS_TABLE
 	 */
-	public static final org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;
+	public static final T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;
 
 	/**
 	 * The table T_725_LOB_TEST
 	 */
-	public static final org.jooq.test.firebird.generatedclasses.tables.T_725LobTest T_725_LOB_TEST = org.jooq.test.firebird.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST;
+	public static final T_725LobTest T_725_LOB_TEST = org.jooq.test.firebird.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST;
 
 	/**
 	 * The table T_785
 	 */
-	public static final org.jooq.test.firebird.generatedclasses.tables.T_785 T_785 = org.jooq.test.firebird.generatedclasses.tables.T_785.T_785;
+	public static final T_785 T_785 = org.jooq.test.firebird.generatedclasses.tables.T_785.T_785;
 
 	/**
 	 * The table T_937
@@ -62,90 +142,90 @@ public class Tables {
 	/**
 	 * The table T_AUTHOR
 	 */
-	public static final org.jooq.test.firebird.generatedclasses.tables.TAuthor T_AUTHOR = org.jooq.test.firebird.generatedclasses.tables.TAuthor.T_AUTHOR;
+	public static final TAuthor T_AUTHOR = org.jooq.test.firebird.generatedclasses.tables.TAuthor.T_AUTHOR;
 
 	/**
 	 * The table T_BOOK
 	 */
-	public static final org.jooq.test.firebird.generatedclasses.tables.TBook T_BOOK = org.jooq.test.firebird.generatedclasses.tables.TBook.T_BOOK;
+	public static final TBook T_BOOK = org.jooq.test.firebird.generatedclasses.tables.TBook.T_BOOK;
 
 	/**
 	 * The table T_BOOK_STORE
 	 */
-	public static final org.jooq.test.firebird.generatedclasses.tables.TBookStore T_BOOK_STORE = org.jooq.test.firebird.generatedclasses.tables.TBookStore.T_BOOK_STORE;
+	public static final TBookStore T_BOOK_STORE = org.jooq.test.firebird.generatedclasses.tables.TBookStore.T_BOOK_STORE;
 
 	/**
 	 * The table T_BOOK_TO_BOOK_STORE
 	 */
-	public static final org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore T_BOOK_TO_BOOK_STORE = org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE;
+	public static final TBookToBookStore T_BOOK_TO_BOOK_STORE = org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE;
 
 	/**
 	 * The table T_BOOLEANS
 	 */
-	public static final org.jooq.test.firebird.generatedclasses.tables.TBooleans T_BOOLEANS = org.jooq.test.firebird.generatedclasses.tables.TBooleans.T_BOOLEANS;
+	public static final TBooleans T_BOOLEANS = org.jooq.test.firebird.generatedclasses.tables.TBooleans.T_BOOLEANS;
 
 	/**
 	 * The table T_DATES
 	 */
-	public static final org.jooq.test.firebird.generatedclasses.tables.TDates T_DATES = org.jooq.test.firebird.generatedclasses.tables.TDates.T_DATES;
+	public static final TDates T_DATES = org.jooq.test.firebird.generatedclasses.tables.TDates.T_DATES;
 
 	/**
 	 * The table T_EXOTIC_TYPES
 	 */
-	public static final org.jooq.test.firebird.generatedclasses.tables.TExoticTypes T_EXOTIC_TYPES = org.jooq.test.firebird.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES;
+	public static final TExoticTypes T_EXOTIC_TYPES = org.jooq.test.firebird.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES;
 
 	/**
 	 * The table T_LANGUAGE
 	 */
-	public static final org.jooq.test.firebird.generatedclasses.tables.TLanguage T_LANGUAGE = org.jooq.test.firebird.generatedclasses.tables.TLanguage.T_LANGUAGE;
+	public static final TLanguage T_LANGUAGE = org.jooq.test.firebird.generatedclasses.tables.TLanguage.T_LANGUAGE;
 
 	/**
 	 * The table T_TRIGGERS
 	 */
-	public static final org.jooq.test.firebird.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.firebird.generatedclasses.tables.TTriggers.T_TRIGGERS;
+	public static final TTriggers T_TRIGGERS = org.jooq.test.firebird.generatedclasses.tables.TTriggers.T_TRIGGERS;
 
 	/**
 	 * The table T_UNSIGNED
 	 */
-	public static final org.jooq.test.firebird.generatedclasses.tables.TUnsigned T_UNSIGNED = org.jooq.test.firebird.generatedclasses.tables.TUnsigned.T_UNSIGNED;
+	public static final TUnsigned T_UNSIGNED = org.jooq.test.firebird.generatedclasses.tables.TUnsigned.T_UNSIGNED;
 
 	/**
 	 * The table V_AUTHOR
 	 */
-	public static final org.jooq.test.firebird.generatedclasses.tables.VAuthor V_AUTHOR = org.jooq.test.firebird.generatedclasses.tables.VAuthor.V_AUTHOR;
+	public static final VAuthor V_AUTHOR = org.jooq.test.firebird.generatedclasses.tables.VAuthor.V_AUTHOR;
 
 	/**
 	 * The table V_BOOK
 	 */
-	public static final org.jooq.test.firebird.generatedclasses.tables.VBook V_BOOK = org.jooq.test.firebird.generatedclasses.tables.VBook.V_BOOK;
+	public static final VBook V_BOOK = org.jooq.test.firebird.generatedclasses.tables.VBook.V_BOOK;
 
 	/**
 	 * The table V_LIBRARY
 	 */
-	public static final org.jooq.test.firebird.generatedclasses.tables.VLibrary V_LIBRARY = org.jooq.test.firebird.generatedclasses.tables.VLibrary.V_LIBRARY;
+	public static final VLibrary V_LIBRARY = org.jooq.test.firebird.generatedclasses.tables.VLibrary.V_LIBRARY;
 
 	/**
 	 * The table X_TEST_CASE_2025
 	 */
-	public static final org.jooq.test.firebird.generatedclasses.tables.XTestCase_2025 X_TEST_CASE_2025 = org.jooq.test.firebird.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025;
+	public static final XTestCase_2025 X_TEST_CASE_2025 = org.jooq.test.firebird.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025;
 
 	/**
 	 * The table X_TEST_CASE_64_69
 	 */
-	public static final org.jooq.test.firebird.generatedclasses.tables.XTestCase_64_69 X_TEST_CASE_64_69 = org.jooq.test.firebird.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69;
+	public static final XTestCase_64_69 X_TEST_CASE_64_69 = org.jooq.test.firebird.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69;
 
 	/**
 	 * The table X_TEST_CASE_71
 	 */
-	public static final org.jooq.test.firebird.generatedclasses.tables.XTestCase_71 X_TEST_CASE_71 = org.jooq.test.firebird.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71;
+	public static final XTestCase_71 X_TEST_CASE_71 = org.jooq.test.firebird.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71;
 
 	/**
 	 * The table X_TEST_CASE_85
 	 */
-	public static final org.jooq.test.firebird.generatedclasses.tables.XTestCase_85 X_TEST_CASE_85 = org.jooq.test.firebird.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85;
+	public static final XTestCase_85 X_TEST_CASE_85 = org.jooq.test.firebird.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85;
 
 	/**
 	 * The table X_UNUSED
 	 */
-	public static final org.jooq.test.firebird.generatedclasses.tables.XUnused X_UNUSED = org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED;
+	public static final XUnused X_UNUSED = org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED;
 }

@@ -345,6 +345,32 @@ public interface Configuration extends Serializable {
     Configuration set(ConnectionProvider newConnectionProvider);
 
     /**
+     * Change this configuration to hold a new connection wrapped in a
+     * {@link DefaultConnectionProvider}.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newConnection The new connection to be contained in the changed
+     *            configuration.
+     * @return The changed configuration.
+     */
+    Configuration set(Connection newConnection);
+
+    /**
+     * Change this configuration to hold a new data source wrapped in a
+     * {@link DataSourceConnectionProvider}.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newConnection The new data source to be contained in the changed
+     *            configuration.
+     * @return The changed configuration.
+     */
+    Configuration set(DataSource newDataSource);
+
+    /**
      * Change this configuration to hold a new transaction provider.
      * <p>
      * This method is not thread-safe and should not be used in globally
@@ -461,6 +487,26 @@ public interface Configuration extends Serializable {
      * @return The derived configuration.
      */
     Configuration derive(ConnectionProvider newConnectionProvider);
+
+    /**
+     * Create a derived configuration from this one, with a new connection
+     * wrapped in a {@link DefaultConnectionProvider}.
+     *
+     * @param newConnection The new connection to be contained in the derived
+     *            configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(Connection newConnection);
+
+    /**
+     * Create a derived configuration from this one, with a new data source
+     * wrapped in a {@link DataSourceConnectionProvider}.
+     *
+     * @param newDataSource The new data source to be contained in the derived
+     *            configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(DataSource newDataSource);
 
     /**
      * Create a derived configuration from this one, with a new transaction

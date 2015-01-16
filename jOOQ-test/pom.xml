@@ -76,12 +76,27 @@
             <version>${project.version}</version>
         </dependency>
         
+        
+        <!-- XML stuff, in case it's needed for tests -->
         <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>joox</artifactId>
             <version>1.2.0</version>
         </dependency>
-
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+        <!-- This is needed because of https://sourceforge.net/p/dom4j/bugs/207/ -->
+        <dependency>
+            <groupId>jaxen</groupId>
+            <artifactId>jaxen</artifactId>
+            <version>1.1-beta-6</version>
+        </dependency>
+        
+        
+        
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
@@ -172,7 +187,7 @@
         <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jool</artifactId>
-            <version>0.9.3</version>
+            <version>0.9.4</version>
         </dependency>
 
 

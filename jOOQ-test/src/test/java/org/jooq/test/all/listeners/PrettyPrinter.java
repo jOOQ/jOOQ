@@ -50,6 +50,7 @@ import org.jooq.conf.SettingsTools;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultConfiguration;
 import org.jooq.impl.DefaultExecuteListener;
+import org.jooq.lambda.Seq;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -98,26 +99,30 @@ public class PrettyPrinter extends DefaultExecuteListener {
 
         // If we're executing a query
         if (ctx.query() != null) {
-            System.out.println(normal.renderInlined(ctx.query()));
+            System.out.println(truncate(normal.renderInlined(ctx.query())));
             System.out.println();
-            System.out.println(pretty.renderContext()
-                                     .paramType(INLINED)
-                                     .render(ctx.query()));
+            System.out.println(truncate(pretty.renderContext()
+                                              .paramType(INLINED)
+                                              .render(ctx.query())));
         }
 
         // If we're executing a routine
         else if (ctx.routine() != null) {
-            System.out.println(normal.renderInlined(ctx.routine()));
+            System.out.println(truncate(normal.renderInlined(ctx.routine())));
             System.out.println();
-            System.out.println(pretty.renderContext()
-                                     .paramType(INLINED)
-                                     .render(ctx.routine()));
+            System.out.println(truncate(pretty.renderContext()
+                                              .paramType(INLINED)
+                                              .render(ctx.routine())));
         }
 
         // If we're executing anything else (e.g. plain SQL)
         else if (!StringUtils.isBlank(ctx.sql())) {
             System.out.println(ctx.sql());
         }
+    }
+
+    private String truncate(String string) {
+        return Seq.of(string.split("\n")).map(s -> StringUtils.abbreviate(s, 400)).join("\n");
     }
 
     @Override

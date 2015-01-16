@@ -343,17 +343,17 @@ public class DefaultConfiguration implements Configuration {
     }
 
     /**
-     * Convenience method for {@link #derive(ConnectionProvider)}, using a
-     * {@link DefaultConnectionProvider}.
+     * {@inheritDoc}
      */
+    @Override
     public final Configuration derive(Connection newConnection) {
         return derive(new DefaultConnectionProvider(newConnection));
     }
 
     /**
-     * Convenience method for {@link #derive(ConnectionProvider)}, using a
-     * {@link DataSourceConnectionProvider}.
+     * {@inheritDoc}
      */
+    @Override
     public final Configuration derive(DataSource newDataSource) {
         return derive(new DataSourceConnectionProvider(newDataSource));
     }
@@ -534,17 +534,17 @@ public class DefaultConfiguration implements Configuration {
     // -------------------------------------------------------------------------
 
     /**
-     * Convenience method for {@link #set(ConnectionProvider)}, using a
-     * {@link DefaultConnectionProvider}.
+     * {@inheritDoc}
      */
+    @Override
     public final Configuration set(Connection newConnection) {
         return set(new DefaultConnectionProvider(newConnection));
     }
 
     /**
-     * Convenience method for {@link #set(ConnectionProvider)}, using a
-     * {@link DataSourceConnectionProvider}.
+     * {@inheritDoc}
      */
+    @Override
     public final Configuration set(DataSource newDataSource) {
         return set(new DataSourceConnectionProvider(newDataSource));
     }

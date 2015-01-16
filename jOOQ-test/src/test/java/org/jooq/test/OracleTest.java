@@ -149,7 +149,6 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.impl.DSL;
-import org.jooq.impl.DataSourceConnectionProvider;
 import org.jooq.impl.DefaultConfiguration;
 import org.jooq.impl.DefaultRecordMapper;
 import org.jooq.test.all.converters.Boolean_10;
@@ -230,6 +229,8 @@ import org.apache.commons.dbcp.BasicDataSource;
 import org.junit.Test;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
+
+import com.jolbox.bonecp.BoneCPDataSource;
 
 
 /**
@@ -1944,32 +1945,45 @@ public class OracleTest extends jOOQAbstractTest<
         UBookArrayRecord bookArray = new UBookArrayRecord(new UBookTypeRecord(1, "A"), new UBookTypeRecord(2, "B"));
 
         Configuration c1 = new DefaultConfiguration().set(dialect()).set(
-            new DataSourceConnectionProvider(
-                new TransactionAwareDataSourceProxy(
-                    new SingleConnectionDataSource(getConnection(), true)
-                )
+            new TransactionAwareDataSourceProxy(
+                new SingleConnectionDataSource(getConnection(), true)
             )
         );
 
         assertEquals(numberArray, Routines.fArrays1(c1, numberArray));
         assertEquals(bookArray, Routines.fArrays4(c1, bookArray));
 
-        BasicDataSource ds = new BasicDataSource();
-        ds.setDriverClassName(getDriver());
-        ds.setUrl(getURL());
-        ds.setUsername(getUsername());
-        ds.setPassword(getPassword());
-        ds.setAccessToUnderlyingConnectionAllowed(true);
+        BasicDataSource ds2 = new BasicDataSource();
+        ds2.setDriverClassName(getDriver());
+        ds2.setUrl(getURL());
+        ds2.setUsername(getUsername());
+        ds2.setPassword(getPassword());
+        ds2.setAccessToUnderlyingConnectionAllowed(true);
 
         Configuration c2 = new DefaultConfiguration().set(dialect()).set(
-            new DataSourceConnectionProvider(
-                new TransactionAwareDataSourceProxy(ds)
-            )
+            new TransactionAwareDataSourceProxy(ds2)
         );
 
         assertEquals(numberArray, Routines.fArrays1(c2, numberArray));
         assertEquals(bookArray, Routines.fArrays4(c2, bookArray));
 
+        BoneCPDataSource ds3 = new BoneCPDataSource();
+        ds3.setDriverClass(getDriver());
+        ds3.setJdbcUrl(getURL());
+        ds3.setUsername(getUsername());
+        ds3.setPassword(getPassword());
+
+        Configuration c31 = new DefaultConfiguration().set(dialect()).set(
+            new TransactionAwareDataSourceProxy(ds3)
+        );
+
+        assertEquals(numberArray, Routines.fArrays1(c31, numberArray));
+        assertEquals(bookArray, Routines.fArrays4(c31, bookArray));
+
+        Configuration c32 = new DefaultConfiguration().set(dialect()).set(ds3);
+
+        assertEquals(numberArray, Routines.fArrays1(c32, numberArray));
+        assertEquals(bookArray, Routines.fArrays4(c32, bookArray));
     }
 
     @Test

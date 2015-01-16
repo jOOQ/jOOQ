@@ -41,6 +41,7 @@
 package org.jooq.test.all.testcases;
 
 import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.joining;
 import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
@@ -88,6 +89,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.IntStream;
 
 import org.jooq.Converter;
 import org.jooq.DSLContext;
@@ -169,23 +171,30 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Superficial tests in T_BOOK table
         // ---------------------------------
-        B book = create().fetchOne(TBook(), TBook_TITLE().equal("1984"));
+        DSLContext create = create();
+
+        // Avoid excessive LOB logging
+        create.configuration().settings().setExecuteLogging(false);
+
+        B book = create.fetchOne(TBook(), TBook_TITLE().equal("1984"));
 
         assertTrue(book.getValue(TBook_CONTENT_TEXT()).contains("doublethink"));
         assertEquals(null, book.getValue(TBook_CONTENT_PDF()));
 
-        book.setValue(TBook_CONTENT_TEXT(), "Blah blah");
-        book.setValue(TBook_CONTENT_PDF(), "Blah blah".getBytes());
+        String text = IntStream.range(0, 1000).mapToObj(i -> "Blah blah").collect(joining(", "));
+
+        book.setValue(TBook_CONTENT_TEXT(), text);
+        book.setValue(TBook_CONTENT_PDF(), text.getBytes());
         book.store();
 
-        book = create().fetchOne(TBook(), TBook_TITLE().equal("1984"));
+        book = create.fetchOne(TBook(), TBook_TITLE().equal("1984"));
 
-        assertEquals("Blah blah", book.getValue(TBook_CONTENT_TEXT()));
-        assertEquals("Blah blah", new String(book.getValue(TBook_CONTENT_PDF())));
+        assertEquals(text, book.getValue(TBook_CONTENT_TEXT()));
+        assertEquals(text, new String(book.getValue(TBook_CONTENT_PDF())));
 
         // More in-depth tests in T_725_LOB_TEST table
         // -------------------------------------------
-        T725 record = create().newRecord(T725());
+        T725 record = create.newRecord(T725());
 
         // Store and fetch NULL value
         record.setValue(T725_ID(), 1);
@@ -225,9 +234,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         record.refresh();
         assertEquals("Blah", new String(record.getValue(T725_LOB())));
 
-        assertEquals(1, create().query("insert into " + T725().getName() + " values (?, ?)", 2, (Object) null).execute());
-        assertEquals(1, create().query("insert into " + T725().getName() + " values (?, ?)", 3, new byte[0]).execute());
-        assertEquals(1, create().query("insert into " + T725().getName() + " values (?, ?)", 4, "abc".getBytes()).execute());
+        assertEquals(1, create.query("insert into " + T725().getName() + " values (?, ?)", 2, (Object) null).execute());
+        assertEquals(1, create.query("insert into " + T725().getName() + " values (?, ?)", 3, new byte[0]).execute());
+        assertEquals(1, create.query("insert into " + T725().getName() + " values (?, ?)", 4, "abc".getBytes()).execute());
 
         record.setValue(T725_ID(), 2);
         record.refresh();
@@ -258,7 +267,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         record.refresh();
         assertEquals("abc", new String(record.getValue(T725_LOB())));
 
-        Result<Record> result = create().fetch(
+        Result<Record> result = create.fetch(
             "select " + T725_ID().getName() + ", " + T725_LOB().getName() +
             " from " + T725().getName() +
             " order by " + T725_ID().getName());

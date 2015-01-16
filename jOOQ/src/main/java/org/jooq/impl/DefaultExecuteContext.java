@@ -214,6 +214,32 @@ class DefaultExecuteContext implements ExecuteContext {
     }
 
     /**
+     * [#3696] We shouldn't infinitely attempt to unwrap connections.
+     */
+    private static int            maxUnwrappedConnections = 256;
+
+    /* [pro] */
+    /**
+     * [#3957] We mostly only need this particular class when unwrapping
+     * connections.
+     */
+    private static final Class<?> ORACLE_CONNECTION_CLASS;
+
+    static {
+        Class<?> c;
+
+        try {
+            c = Class.forName("oracle.jdbc.OracleConnection");
+        }
+        catch (Exception e) {
+            c = null;
+        }
+
+        ORACLE_CONNECTION_CLASS = c;
+    }
+    /* [/pro] */
+
+    /**
      * Get the registered connection's "target connection" if applicable.
      * <p>
      * This will try to unwrap any native connection if it has been wrapped with
@@ -231,7 +257,19 @@ class DefaultExecuteContext implements ExecuteContext {
     static final Connection localTargetConnection() {
         Connection result = localConnection();
 
-        for (;;) {
+        for (int i = 0; i < maxUnwrappedConnections; i++) {
+
+            /* [pro] */
+            // [#3957] If at any stage we can unwrap an OracleConnection, we're done.
+            try {
+                Connection r = (Connection) result.unwrap(ORACLE_CONNECTION_CLASS);
+                if (result != r && r != null) {
+                    result = r;
+                    break;
+                }
+            }
+            catch (SQLException ignore) {}
+            /* [/pro] */
 
             // Unwrap nested Spring org.springframework.jdbc.datasource.ConnectionProxy objects
             try {

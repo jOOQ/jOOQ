@@ -108,6 +108,7 @@ import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -327,9 +328,11 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         // [#2791] TODO: Instead of explicitly manipulating these data() objects, future versions
         // of jOOQ should implement a push / pop semantics to clearly delimit such scope.
         Object renderTrailingLimit = context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE);
+        Object localDataMap = context.data(DATA_LOCALLY_SCOPED_DATA_MAP);
         try {
             if (renderTrailingLimit != null)
                 context.data().remove(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE);
+            context.data(DATA_LOCALLY_SCOPED_DATA_MAP, new HashMap<Object, Object>());
 
             if (into != null
                     && context.data(DATA_OMIT_INTO_CLAUSE) == null
@@ -559,6 +562,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
             /* [/pro] */
         }
         finally {
+            context.data(DATA_LOCALLY_SCOPED_DATA_MAP, localDataMap);
             if (renderTrailingLimit != null)
                 context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE, renderTrailingLimit);
         }

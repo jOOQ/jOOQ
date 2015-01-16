@@ -41,16 +41,10 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
-import static org.jooq.Clause.SELECT;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.Utils.DATA_LOCALLY_SCOPED_DATA_MAP;
 import static org.jooq.impl.Utils.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
 import static org.jooq.impl.Utils.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
-
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.LinkedList;
 
 import org.jooq.Field;
 import org.jooq.QueryPart;
@@ -73,23 +67,6 @@ import org.jooq.VisitListener;
  * @author Lukas Eder
  */
 class InternalVisitListener extends DefaultVisitListener {
-
-    private Deque<Object> stack = new LinkedList<Object>();
-
-    @Override
-    public void clauseStart(VisitContext ctx) {
-        if (ctx.clause() == SELECT) {
-            stack.push(ctx.context().data(DATA_LOCALLY_SCOPED_DATA_MAP));
-            ctx.context().data(DATA_LOCALLY_SCOPED_DATA_MAP, new HashMap<Object, Object>());
-        }
-    }
-
-    @Override
-    public void clauseEnd(VisitContext ctx) {
-        if (ctx.clause() == SELECT) {
-            ctx.context().data(DATA_LOCALLY_SCOPED_DATA_MAP, stack.pop());
-        }
-    }
 
     /* [pro] */
     @Override

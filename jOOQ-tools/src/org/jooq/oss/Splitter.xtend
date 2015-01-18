@@ -55,14 +55,14 @@ import static java.util.regex.Pattern.*
 // Use this to generate the jOOQ Open Source Edition code
 class RemoveProCode {
     def static void main(String[] args) {
-        Splitter::split("pro", "/../workspace-jooq-oss");
+        Splitter.split("pro", "/../workspace-jooq-oss");
     }
 }
 
 // Use this to generate the jOOQ Professional and Enterprise Edition code
 class RemoveTrialCode {
     def static void main(String[] args) {
-        Splitter::split("trial", "/../workspace-jooq-pro");
+        Splitter.split("trial", "/../workspace-jooq-pro");
     }
 }
 
@@ -74,7 +74,7 @@ class Splitter extends Generators {
     String token;
 
     def static void split(String token, String workspace) {
-        ex = Executors::newFixedThreadPool(4);
+        ex = Executors.newFixedThreadPool(4);
         
         val splitter = new Splitter(token);
         
@@ -88,12 +88,12 @@ class Splitter extends Generators {
         }
         
         ex.shutdown();
-//        ex.awaitTermination(1, TimeUnit::MINUTES);
+//        ex.awaitTermination(1, TimeUnit.MINUTES);
 //
-//        System::out.println();
-//        System::out.println("Total  chars : " + charsTotal);
-//        System::out.println("Masked chars : " + charsMasked);
-//        System::out.println("Percentage   : " + (100.0 * charsMasked.get / charsTotal.get));
+//        System.out.println();
+//        System.out.println("Total  chars : " + charsTotal);
+//        System.out.println("Masked chars : " + charsMasked);
+//        System.out.println("Percentage   : " + (100.0 * charsMasked.get / charsTotal.get));
     }
 
     def void transform(File inRoot, File outRoot, File in) {
@@ -199,7 +199,7 @@ For more information, please visit: http://www.jooq.org/licenses''');
     def compare(String content, String original) {
         charsTotal.addAndGet(original.length);
         
-        for (i : 0 .. Math::min(content.length, original.length)) {
+        for (i : 0 .. Math.min(content.length, original.length)) {
             if (("" + content.charAt(i) == "x") && ("" + original.charAt(i) != "x")) {
                 charsMasked.incrementAndGet;
             }
@@ -269,7 +269,7 @@ For more information, please visit: http://www.jooq.org/licenses''');
  *
  */'''));
         
-            for (d : SQLDialect::values.filter[commercial]) {
+            for (d : SQLDialect.values.filter[commercial]) {
                 
                 // Remove commercial dialects from @Support annotations
                 replaceAll.add(new ImmutablePair(compile('''(?s:(\@Support\([^\)]*?),\s*\b«d.name()»\b([^\)]*?\)))'''), "$1$2"));

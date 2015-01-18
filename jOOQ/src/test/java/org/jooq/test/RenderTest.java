@@ -45,6 +45,7 @@ import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
+import static org.jooq.conf.RenderKeywordStyle.AS_IS;
 import static org.jooq.conf.RenderKeywordStyle.LOWER;
 import static org.jooq.conf.RenderKeywordStyle.UPPER;
 import static org.jooq.conf.StatementType.STATIC_STATEMENT;
@@ -167,10 +168,12 @@ public class RenderTest extends AbstractTest {
         Field<?> f = DSL.field("{0} Untouched {Xx} Untouched {1}", keyword, keyword);
 
         DSLContext def = DSL.using(MYSQL);
+        DSLContext as_is = DSL.using(MYSQL, new Settings().withRenderKeywordStyle(AS_IS));
         DSLContext lower = DSL.using(MYSQL, new Settings().withRenderKeywordStyle(LOWER));
         DSLContext upper = DSL.using(MYSQL, new Settings().withRenderKeywordStyle(UPPER));
 
-        assertEquals("abc Untouched xx Untouched abc", def.render(f));
+        assertEquals("Abc Untouched Xx Untouched Abc", def.render(f));
+        assertEquals("Abc Untouched Xx Untouched Abc", as_is.render(f));
         assertEquals("abc Untouched xx Untouched abc", lower.render(f));
         assertEquals("ABC Untouched XX Untouched ABC", upper.render(f));
     }

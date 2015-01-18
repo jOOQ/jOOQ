@@ -77,7 +77,7 @@ class BitCount extends AbstractFunction<Integer> {
                     Field<Byte> f = (Field<Byte>) field;
 
                     byte i = 0;
-                    return     DSL.bitAnd(f, inline((byte) 0x01)).add(
+                    return         DSL.bitAnd(f, inline((byte) 0x01))               .add(
                            DSL.shr(DSL.bitAnd(f, inline((byte) 0x02)), inline(++i))).add(
                            DSL.shr(DSL.bitAnd(f, inline((byte) 0x04)), inline(++i))).add(
                            DSL.shr(DSL.bitAnd(f, inline((byte) 0x08)), inline(++i))).add(
@@ -91,7 +91,7 @@ class BitCount extends AbstractFunction<Integer> {
                     Field<Short> f = (Field<Short>) field;
 
                     short i = 0;
-                    return     DSL.bitAnd(f, inline((short) 0x0001)).add(
+                    return         DSL.bitAnd(f, inline((short) 0x0001))               .add(
                            DSL.shr(DSL.bitAnd(f, inline((short) 0x0002)), inline(++i))).add(
                            DSL.shr(DSL.bitAnd(f, inline((short) 0x0004)), inline(++i))).add(
                            DSL.shr(DSL.bitAnd(f, inline((short) 0x0008)), inline(++i))).add(
@@ -113,7 +113,7 @@ class BitCount extends AbstractFunction<Integer> {
                     Field<Integer> f = (Field<Integer>) field;
 
                     int i = 0;
-                    return     DSL.bitAnd(f, inline(0x00000001)).add(
+                    return         DSL.bitAnd(f, inline(0x00000001))               .add(
                            DSL.shr(DSL.bitAnd(f, inline(0x00000002)), inline(++i))).add(
                            DSL.shr(DSL.bitAnd(f, inline(0x00000004)), inline(++i))).add(
                            DSL.shr(DSL.bitAnd(f, inline(0x00000008)), inline(++i))).add(
@@ -151,7 +151,7 @@ class BitCount extends AbstractFunction<Integer> {
                     Field<Long> f = (Field<Long>) field;
 
                     long i = 0;
-                    return DSL.bitAnd(f, inline(0x0000000000000001L)).add(
+                    return         DSL.bitAnd(f, inline(0x0000000000000001L))               .add(
                            DSL.shr(DSL.bitAnd(f, inline(0x0000000000000002L)), inline(++i))).add(
                            DSL.shr(DSL.bitAnd(f, inline(0x0000000000000004L)), inline(++i))).add(
                            DSL.shr(DSL.bitAnd(f, inline(0x0000000000000008L)), inline(++i))).add(

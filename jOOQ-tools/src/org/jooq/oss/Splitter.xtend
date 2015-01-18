@@ -81,7 +81,7 @@ class Splitter extends Generators {
         val workspaceIn = new File("../..").canonicalFile;
         val workspaceOut = new File(workspaceIn.canonicalPath + workspace).canonicalFile;
         
-        for (project : workspaceIn.listFiles[f | f.name.startsWith("jOOQ")]) {
+        for (project : workspaceIn.listFiles[name.startsWith("jOOQ")]) {
             val in = new File(workspaceIn, project.name);
             val out = new File(workspaceOut, project.name);
             splitter.transform(in, out, in);
@@ -100,39 +100,39 @@ class Splitter extends Generators {
         val out = new File(outRoot.canonicalPath + "/" + in.canonicalPath.replace(inRoot.canonicalPath, ""));
         
         if (in.directory) {
-            val files = in.listFiles[path |
-                   !path.canonicalPath.endsWith(".class")
-                && !path.canonicalPath.endsWith(".dat")
-                && !path.canonicalPath.endsWith(".git")
-                && !path.canonicalPath.endsWith(".jar")
-                && !path.canonicalPath.endsWith(".pdf")
-                && !path.canonicalPath.endsWith(".zip")
-                && !path.canonicalPath.endsWith("._trace")
-                && !path.canonicalPath.contains("jOOQ-test")
-                && !path.canonicalPath.contains("jOOQ-tools")
-                && !path.canonicalPath.contains("jOOQ-website")
-                && !path.canonicalPath.contains("jOOQ-websites")
-                && !path.canonicalPath.contains("jOOQ-webservices")
-                && !path.canonicalPath.contains("jOOQ-parse")
-                && !path.canonicalPath.contains("\\target\\")
-                && !path.canonicalPath.contains("\\bin\\")
+            val files = in.listFiles[
+                   !canonicalPath.endsWith(".class")
+                && !canonicalPath.endsWith(".dat")
+                && !canonicalPath.endsWith(".git")
+                && !canonicalPath.endsWith(".jar")
+                && !canonicalPath.endsWith(".pdf")
+                && !canonicalPath.endsWith(".zip")
+                && !canonicalPath.endsWith("._trace")
+                && !canonicalPath.contains("jOOQ-test")
+                && !canonicalPath.contains("jOOQ-tools")
+                && !canonicalPath.contains("jOOQ-website")
+                && !canonicalPath.contains("jOOQ-websites")
+                && !canonicalPath.contains("jOOQ-webservices")
+                && !canonicalPath.contains("jOOQ-parse")
+                && !canonicalPath.contains("\\target\\")
+                && !canonicalPath.contains("\\bin\\")
                 
                 // Activate this when we change anything to the Sakila db
-                && !path.canonicalPath.contains("\\Sakila\\")
+                && !canonicalPath.contains("\\Sakila\\")
                 
                 && (token.equals("trial") || (
-                       !path.canonicalPath.contains("\\access\\")
-                    && !path.canonicalPath.contains("\\ase\\")
-                    && !path.canonicalPath.contains("\\db2\\")
-                    && !path.canonicalPath.contains("\\hana\\")
-                    && !path.canonicalPath.contains("\\informix\\")
-                    && !path.canonicalPath.contains("\\ingres\\")
-                    && !path.canonicalPath.contains("\\jdbcoracle\\")
-                    && !path.canonicalPath.contains("\\oracle\\")
-                    && !path.canonicalPath.contains("\\oracle2\\")
-                    && !path.canonicalPath.contains("\\oracle3\\")
-                    && !path.canonicalPath.contains("\\sqlserver\\")
-                    && !path.canonicalPath.contains("\\sybase\\")
+                       !canonicalPath.contains("\\access\\")
+                    && !canonicalPath.contains("\\ase\\")
+                    && !canonicalPath.contains("\\db2\\")
+                    && !canonicalPath.contains("\\hana\\")
+                    && !canonicalPath.contains("\\informix\\")
+                    && !canonicalPath.contains("\\ingres\\")
+                    && !canonicalPath.contains("\\jdbcoracle\\")
+                    && !canonicalPath.contains("\\oracle\\")
+                    && !canonicalPath.contains("\\oracle2\\")
+                    && !canonicalPath.contains("\\oracle3\\")
+                    && !canonicalPath.contains("\\sqlserver\\")
+                    && !canonicalPath.contains("\\sybase\\")
                 ))
             ];
 
@@ -141,7 +141,7 @@ class Splitter extends Generators {
             }
         }
         else if (token == "pro" && in.name.equals("LICENSE.txt")) {
-            ex.submit[ |
+            ex.submit[
                 write(out, '''
 Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
 All rights reserved.
@@ -168,7 +168,7 @@ For more information, please visit: http://www.jooq.org/licenses''');
             ];
         }
         else {
-            ex.submit[ |
+            ex.submit[
                 var original = read(in);
                 var content = original;
     
@@ -269,7 +269,7 @@ For more information, please visit: http://www.jooq.org/licenses''');
  *
  */'''));
         
-            for (d : SQLDialect::values.filter[d | d.commercial]) {
+            for (d : SQLDialect::values.filter[commercial]) {
                 
                 // Remove commercial dialects from @Support annotations
                 replaceAll.add(new ImmutablePair(compile('''(?s:(\@Support\([^\)]*?),\s*\b«d.name()»\b([^\)]*?\)))'''), "$1$2"));

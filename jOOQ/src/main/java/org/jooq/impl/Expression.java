@@ -171,10 +171,13 @@ class Expression<T> extends AbstractFunction<T> {
 
         // Many dialects don't support shifts. Use multiplication/division instead
         else if (SHL == operator && asList(H2, HSQLDB).contains(family)) {
-            return lhs.mul(DSL.power(two(), rhsAsNumber()));
+            return lhs.mul((Field<? extends Number>) DSL.power(two(), rhsAsNumber()).cast(lhs));
         }
+
+        // [#3962] This emulation is expensive. If this is emulated, BitCount should
+        // use division instead of SHR directly
         else if (SHR == operator && asList(H2, HSQLDB).contains(family)) {
-            return lhs.div(DSL.power(two(), rhsAsNumber()));
+            return lhs.div((Field<? extends Number>) DSL.power(two(), rhsAsNumber()).cast(lhs));
         }
 
         // Some dialects support shifts as functions

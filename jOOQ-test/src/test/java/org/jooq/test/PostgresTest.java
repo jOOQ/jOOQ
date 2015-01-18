@@ -56,7 +56,7 @@ import static org.jooq.impl.DSL.rank;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.val;
-import static org.jooq.test.postgres.generatedclasses.Tables.F_SEARCH_BOOK;
+import static org.jooq.test.postgres.generatedclasses.Tables.F_SEARCH_BOOKS;
 import static org.jooq.test.postgres.generatedclasses.Tables.F_TABLES1;
 import static org.jooq.test.postgres.generatedclasses.Tables.F_TABLES2;
 import static org.jooq.test.postgres.generatedclasses.Tables.F_TABLES3;
@@ -1045,15 +1045,15 @@ public class PostgresTest extends jOOQAbstractTest<
 
         Result<Record2<Integer, String>> books =
         create().select(
-                    F_SEARCH_BOOK.ID,
-                    F_SEARCH_BOOK.TITLE)
-                .from(F_SEARCH_BOOK("A", 2L, 0L))
-                .orderBy(F_SEARCH_BOOK.ID)
+                    F_SEARCH_BOOKS.ID,
+                    F_SEARCH_BOOKS.TITLE)
+                .from(F_SEARCH_BOOKS("A", 2L, 0L))
+                .orderBy(F_SEARCH_BOOKS.ID)
                 .fetch();
 
         assertEquals(2, books.size());
-        assertEquals(asList(2, 3), books.getValues(F_SEARCH_BOOK.ID));
-        assertEquals(BOOK_TITLES.subList(1, 3), books.getValues(F_SEARCH_BOOK.TITLE));
+        assertEquals(asList(2, 3), books.getValues(F_SEARCH_BOOKS.ID));
+        assertEquals(BOOK_TITLES.subList(1, 3), books.getValues(F_SEARCH_BOOKS.TITLE));
 
         // [#3378] PostgreSQL has issues with fully qualified references to
         // columns of table-valued functions

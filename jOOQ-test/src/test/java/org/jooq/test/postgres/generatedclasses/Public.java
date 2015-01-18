@@ -12,7 +12,7 @@ import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.UDT;
 import org.jooq.impl.SchemaImpl;
-import org.jooq.test.postgres.generatedclasses.tables.FSearchBook;
+import org.jooq.test.postgres.generatedclasses.tables.FSearchBooks;
 import org.jooq.test.postgres.generatedclasses.tables.FTables1;
 import org.jooq.test.postgres.generatedclasses.tables.FTables2;
 import org.jooq.test.postgres.generatedclasses.tables.FTables3;
@@ -61,7 +61,7 @@ import org.jooq.test.postgres.generatedclasses.udt.UUuids;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-	private static final long serialVersionUID = -1965947466;
+	private static final long serialVersionUID = 535448959;
 
 	/**
 	 * The reference instance of <code>public</code>
@@ -96,7 +96,7 @@ public class Public extends SchemaImpl {
 
 	private final List<Table<?>> getTables0() {
 		return Arrays.<Table<?>>asList(
-			FSearchBook.F_SEARCH_BOOK,
+			FSearchBooks.F_SEARCH_BOOKS,
 			FTables1.F_TABLES1,
 			FTables2.F_TABLES2,
 			FTables3.F_TABLES3,

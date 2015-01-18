@@ -16,7 +16,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IT_639NumbersTa
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTable implements IT_639NumbersTable {
 
-	private static final long serialVersionUID = -1920232070;
+	private static final long serialVersionUID = 476873469;
 
 	private final Integer    id;
 	private final Short      short_;
@@ -30,6 +30,21 @@ public class T_639NumbersTable implements IT_639NumbersTable {
 	private final BigDecimal bigDecimal;
 	private final Float      float_;
 	private final Double     double_;
+
+	public T_639NumbersTable(T_639NumbersTable value) {
+		this.id = value.id;
+		this.short_ = value.short_;
+		this.integer = value.integer;
+		this.long_ = value.long_;
+		this.byteDecimal = value.byteDecimal;
+		this.shortDecimal = value.shortDecimal;
+		this.integerDecimal = value.integerDecimal;
+		this.longDecimal = value.longDecimal;
+		this.bigInteger = value.bigInteger;
+		this.bigDecimal = value.bigDecimal;
+		this.float_ = value.float_;
+		this.double_ = value.double_;
+	}
 
 	public T_639NumbersTable(
 		Integer    id,

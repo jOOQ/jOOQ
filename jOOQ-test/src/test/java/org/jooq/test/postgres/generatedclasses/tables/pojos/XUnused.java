@@ -16,7 +16,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IXUnused;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnused implements IXUnused {
 
-	private static final long serialVersionUID = 2114544662;
+	private static final long serialVersionUID = -1416132152;
 
 	private final Integer    id;
 	private final String     name;
@@ -33,6 +33,24 @@ public class XUnused implements IXUnused {
 	private final Integer    primarykey;
 	private final String     nameRef;
 	private final BigDecimal field_737;
+
+	public XUnused(XUnused value) {
+		this.id = value.id;
+		this.name = value.name;
+		this.bigInteger = value.bigInteger;
+		this.idRef = value.idRef;
+		this.class_ = value.class_;
+		this.fields = value.fields;
+		this.configuration = value.configuration;
+		this.uDT = value.uDT;
+		this.metaData = value.metaData;
+		this.values = value.values;
+		this.type0 = value.type0;
+		this.primaryKey = value.primaryKey;
+		this.primarykey = value.primarykey;
+		this.nameRef = value.nameRef;
+		this.field_737 = value.field_737;
+	}
 
 	public XUnused(
 		Integer    id,

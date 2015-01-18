@@ -17,7 +17,7 @@ import org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TArrays implements ITArrays {
 
-	private static final long serialVersionUID = -872528770;
+	private static final long serialVersionUID = 491634943;
 
 	private final Integer             id;
 	private final String[]            stringArray;
@@ -29,6 +29,19 @@ public class TArrays implements ITArrays {
 	private final String[]            numberList;
 	private final String[]            stringList;
 	private final String[]            dateList;
+
+	public TArrays(TArrays value) {
+		this.id = value.id;
+		this.stringArray = value.stringArray;
+		this.numberArray = value.numberArray;
+		this.dateArray = value.dateArray;
+		this.udtArray = value.udtArray;
+		this.enumArray = value.enumArray;
+		this.arrayArray = value.arrayArray;
+		this.numberList = value.numberList;
+		this.stringList = value.stringList;
+		this.dateList = value.dateList;
+	}
 
 	public TArrays(
 		Integer             id,

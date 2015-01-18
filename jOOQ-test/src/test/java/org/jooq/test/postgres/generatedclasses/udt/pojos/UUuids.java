@@ -15,10 +15,15 @@ import org.jooq.test.postgres.generatedclasses.udt.interfaces.IUUuids;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UUuids implements IUUuids {
 
-	private static final long serialVersionUID = -265456510;
+	private static final long serialVersionUID = 299364127;
 
 	private final UUID   u1;
 	private final UUID[] u2;
+
+	public UUuids(UUuids value) {
+		this.u1 = value.u1;
+		this.u2 = value.u2;
+	}
 
 	public UUuids(
 		UUID   u1,

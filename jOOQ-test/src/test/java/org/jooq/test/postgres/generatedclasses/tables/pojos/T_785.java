@@ -13,11 +13,17 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IT_785;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_785 implements IT_785 {
 
-	private static final long serialVersionUID = -1387697830;
+	private static final long serialVersionUID = 1960521896;
 
 	private final Integer id;
 	private final String  name;
 	private final String  value;
+
+	public T_785(T_785 value) {
+		this.id = value.id;
+		this.name = value.name;
+		this.value = value.value;
+	}
 
 	public T_785(
 		Integer id,

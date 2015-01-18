@@ -13,12 +13,19 @@ import org.jooq.test.postgres.generatedclasses.udt.interfaces.IUStreetType;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UStreetType implements IUStreetType {
 
-	private static final long serialVersionUID = 314986623;
+	private static final long serialVersionUID = 1064237598;
 
 	private final String    street;
 	private final String    no;
 	private final Integer[] floors;
 	private final byte[]    f_1323;
+
+	public UStreetType(UStreetType value) {
+		this.street = value.street;
+		this.no = value.no;
+		this.floors = value.floors;
+		this.f_1323 = value.f_1323;
+	}
 
 	public UStreetType(
 		String    street,

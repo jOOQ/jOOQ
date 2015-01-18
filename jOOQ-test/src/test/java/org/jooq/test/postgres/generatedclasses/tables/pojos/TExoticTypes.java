@@ -20,7 +20,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITExoticTypes;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes implements ITExoticTypes {
 
-	private static final long serialVersionUID = -1647070700;
+	private static final long serialVersionUID = -529589088;
 
 	private final Integer               id;
 	private final UUID                  uu;
@@ -31,6 +31,18 @@ public class TExoticTypes implements ITExoticTypes {
 	private final JsonNode              jsJacksonJsonNode;
 	private final Object                hstore;
 	private final Map<String, String>   hstoreMap;
+
+	public TExoticTypes(TExoticTypes value) {
+		this.id = value.id;
+		this.uu = value.uu;
+		this.js = value.js;
+		this.jsGson = value.jsGson;
+		this.jsJavax = value.jsJavax;
+		this.jsJackson = value.jsJackson;
+		this.jsJacksonJsonNode = value.jsJacksonJsonNode;
+		this.hstore = value.hstore;
+		this.hstoreMap = value.hstoreMap;
+	}
 
 	public TExoticTypes(
 		Integer               id,

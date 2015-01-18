@@ -13,10 +13,15 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IT_725LobTest;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTest implements IT_725LobTest {
 
-	private static final long serialVersionUID = 1611344517;
+	private static final long serialVersionUID = -1955227774;
 
 	private final Integer id;
 	private final byte[]  lob;
+
+	public T_725LobTest(T_725LobTest value) {
+		this.id = value.id;
+		this.lob = value.lob;
+	}
 
 	public T_725LobTest(
 		Integer id,

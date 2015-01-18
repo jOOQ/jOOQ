@@ -17,12 +17,19 @@ import org.jooq.types.UShort;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TUnsigned implements ITUnsigned {
 
-	private static final long serialVersionUID = 399968061;
+	private static final long serialVersionUID = -1814600378;
 
 	private final UByte    uByte;
 	private final UShort   uShort;
 	private final UInteger uInt;
 	private final ULong    uLong;
+
+	public TUnsigned(TUnsigned value) {
+		this.uByte = value.uByte;
+		this.uShort = value.uShort;
+		this.uInt = value.uInt;
+		this.uLong = value.uLong;
+	}
 
 	public TUnsigned(
 		UByte    uByte,

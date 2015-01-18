@@ -20,7 +20,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITBooleans;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleans implements ITBooleans {
 
-	private static final long serialVersionUID = -2119851881;
+	private static final long serialVersionUID = -182333463;
 
 	private final Integer           id;
 	private final Boolean_10        oneZero;
@@ -33,6 +33,20 @@ public class TBooleans implements ITBooleans {
 	private final Boolean           vcBoolean;
 	private final Boolean           cBoolean;
 	private final Boolean           nBoolean;
+
+	public TBooleans(TBooleans value) {
+		this.id = value.id;
+		this.oneZero = value.oneZero;
+		this.trueFalseLc = value.trueFalseLc;
+		this.trueFalseUc = value.trueFalseUc;
+		this.yesNoLc = value.yesNoLc;
+		this.yesNoUc = value.yesNoUc;
+		this.yNLc = value.yNLc;
+		this.yNUc = value.yNUc;
+		this.vcBoolean = value.vcBoolean;
+		this.cBoolean = value.cBoolean;
+		this.nBoolean = value.nBoolean;
+	}
 
 	public TBooleans(
 		Integer           id,

@@ -13,11 +13,17 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITTriggers;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggers implements ITTriggers {
 
-	private static final long serialVersionUID = 1754888542;
+	private static final long serialVersionUID = -1355107658;
 
 	private final Integer idGenerated;
 	private final Integer id;
 	private final Integer counter;
+
+	public TTriggers(TTriggers value) {
+		this.idGenerated = value.idGenerated;
+		this.id = value.id;
+		this.counter = value.counter;
+	}
 
 	public TTriggers(
 		Integer idGenerated,

@@ -5,7 +5,7 @@ package org.jooq.test.postgres.generatedclasses;
 
 
 import org.jooq.Field;
-import org.jooq.test.postgres.generatedclasses.tables.FSearchBook;
+import org.jooq.test.postgres.generatedclasses.tables.FSearchBooks;
 import org.jooq.test.postgres.generatedclasses.tables.FTables1;
 import org.jooq.test.postgres.generatedclasses.tables.FTables2;
 import org.jooq.test.postgres.generatedclasses.tables.FTables3;
@@ -54,22 +54,22 @@ import org.jooq.test.postgres.generatedclasses.tables.XUnused;
 public class Tables {
 
 	/**
-	 * The table public.f_search_book
+	 * The table public.f_search_books
 	 */
-	public static final FSearchBook F_SEARCH_BOOK = org.jooq.test.postgres.generatedclasses.tables.FSearchBook.F_SEARCH_BOOK;
+	public static final FSearchBooks F_SEARCH_BOOKS = org.jooq.test.postgres.generatedclasses.tables.FSearchBooks.F_SEARCH_BOOKS;
 
 	/**
-	 * Get <code>public.f_search_book</code> as a field
+	 * Get <code>public.f_search_books</code> as a field
 	 */
-	public static FSearchBook F_SEARCH_BOOK(String pTitle, Long pLimit, Long pOffset) {
-		return FSearchBook.F_SEARCH_BOOK.call(pTitle, pLimit, pOffset);
+	public static FSearchBooks F_SEARCH_BOOKS(String pTitle, Long pLimit, Long pOffset) {
+		return FSearchBooks.F_SEARCH_BOOKS.call(pTitle, pLimit, pOffset);
 	}
 
 	/**
-	 * Get <code>public.f_search_book</code> as a field
+	 * Get <code>public.f_search_books</code> as a field
 	 */
-	public static FSearchBook F_SEARCH_BOOK(Field<String> pTitle, Field<Long> pLimit, Field<Long> pOffset) {
-		return FSearchBook.F_SEARCH_BOOK.call(pTitle, pLimit, pOffset);
+	public static FSearchBooks F_SEARCH_BOOKS(Field<String> pTitle, Field<Long> pLimit, Field<Long> pOffset) {
+		return FSearchBooks.F_SEARCH_BOOKS.call(pTitle, pLimit, pOffset);
 	}
 
 	/**

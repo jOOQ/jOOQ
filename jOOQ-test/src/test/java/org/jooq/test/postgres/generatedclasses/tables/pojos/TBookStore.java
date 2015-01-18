@@ -13,9 +13,13 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITBookStore;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStore implements ITBookStore {
 
-	private static final long serialVersionUID = -1476556639;
+	private static final long serialVersionUID = 423047141;
 
 	private final String name;
+
+	public TBookStore(TBookStore value) {
+		this.name = value.name;
+	}
 
 	public TBookStore(
 		String name

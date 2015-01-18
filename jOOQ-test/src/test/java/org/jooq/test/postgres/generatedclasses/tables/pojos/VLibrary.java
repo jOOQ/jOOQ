@@ -13,10 +13,15 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IVLibrary;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibrary implements IVLibrary {
 
-	private static final long serialVersionUID = -2098199005;
+	private static final long serialVersionUID = -916632996;
 
 	private final String author;
 	private final String title;
+
+	public VLibrary(VLibrary value) {
+		this.author = value.author;
+		this.title = value.title;
+	}
 
 	public VLibrary(
 		String author,

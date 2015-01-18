@@ -13,11 +13,17 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IXTestCase_85;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_85 implements IXTestCase_85 {
 
-	private static final long serialVersionUID = -1178526327;
+	private static final long serialVersionUID = -681536433;
 
 	private final Integer id;
 	private final Integer xUnusedId;
 	private final String  xUnusedName;
+
+	public XTestCase_85(XTestCase_85 value) {
+		this.id = value.id;
+		this.xUnusedId = value.xUnusedId;
+		this.xUnusedName = value.xUnusedName;
+	}
 
 	public XTestCase_85(
 		Integer id,

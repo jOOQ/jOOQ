@@ -17,6 +17,7 @@ import org.jooq.test.postgres.generatedclasses.routines.FAuthorExists;
 import org.jooq.test.postgres.generatedclasses.routines.FGetOneCursor;
 import org.jooq.test.postgres.generatedclasses.routines.FNumber;
 import org.jooq.test.postgres.generatedclasses.routines.FOne;
+import org.jooq.test.postgres.generatedclasses.routines.FSearchBook;
 import org.jooq.test.postgres.generatedclasses.routines.P;
 import org.jooq.test.postgres.generatedclasses.routines.P391;
 import org.jooq.test.postgres.generatedclasses.routines.PArrays1;
@@ -33,7 +34,7 @@ import org.jooq.test.postgres.generatedclasses.routines.PGetTwoCursors;
 import org.jooq.test.postgres.generatedclasses.routines.PTriggers;
 import org.jooq.test.postgres.generatedclasses.routines.PUnused;
 import org.jooq.test.postgres.generatedclasses.routines.SecondMax;
-import org.jooq.test.postgres.generatedclasses.tables.FSearchBook;
+import org.jooq.test.postgres.generatedclasses.tables.FSearchBooks;
 import org.jooq.test.postgres.generatedclasses.tables.FTables1;
 import org.jooq.test.postgres.generatedclasses.tables.FTables2;
 import org.jooq.test.postgres.generatedclasses.tables.FTables3;
@@ -288,6 +289,37 @@ public class Routines {
 	}
 
 	/**
+	 * Call <code>public.f_search_book</code>
+	 */
+	public static Object fSearchBook(Configuration configuration, String pTitle) {
+		FSearchBook f = new FSearchBook();
+		f.setPTitle(pTitle);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get <code>public.f_search_book</code> as a field
+	 */
+	public static Field<Object> fSearchBook(String pTitle) {
+		FSearchBook f = new FSearchBook();
+		f.setPTitle(pTitle);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get <code>public.f_search_book</code> as a field
+	 */
+	public static Field<Object> fSearchBook(Field<String> pTitle) {
+		FSearchBook f = new FSearchBook();
+		f.setPTitle(pTitle);
+
+		return f.asField();
+	}
+
+	/**
 	 * Call <code>public.f317</code>
 	 */
 	public static Integer f317(Configuration configuration, Integer p1, Integer p2, Integer p3, Integer p4) {
@@ -521,17 +553,17 @@ public class Routines {
 	}
 
 	/**
-	 * Get <code>public.f_search_book</code> as a field
+	 * Get <code>public.f_search_books</code> as a field
 	 */
-	public static FSearchBook fSearchBook(String pTitle, Long pLimit, Long pOffset) {
-		return FSearchBook.F_SEARCH_BOOK.call(pTitle, pLimit, pOffset);
+	public static FSearchBooks fSearchBooks(String pTitle, Long pLimit, Long pOffset) {
+		return FSearchBooks.F_SEARCH_BOOKS.call(pTitle, pLimit, pOffset);
 	}
 
 	/**
-	 * Get <code>public.f_search_book</code> as a field
+	 * Get <code>public.f_search_books</code> as a field
 	 */
-	public static FSearchBook fSearchBook(Field<String> pTitle, Field<Long> pLimit, Field<Long> pOffset) {
-		return FSearchBook.F_SEARCH_BOOK.call(pTitle, pLimit, pOffset);
+	public static FSearchBooks fSearchBooks(Field<String> pTitle, Field<Long> pLimit, Field<Long> pOffset) {
+		return FSearchBooks.F_SEARCH_BOOKS.call(pTitle, pLimit, pOffset);
 	}
 
 	/**

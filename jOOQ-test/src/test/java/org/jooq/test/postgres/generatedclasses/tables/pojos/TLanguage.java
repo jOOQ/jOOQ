@@ -13,12 +13,19 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITLanguage;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage implements ITLanguage {
 
-	private static final long serialVersionUID = -1901961290;
+	private static final long serialVersionUID = 1050427715;
 
 	private final String  cd;
 	private final String  description;
 	private final String  descriptionEnglish;
 	private final Integer id;
+
+	public TLanguage(TLanguage value) {
+		this.cd = value.cd;
+		this.description = value.description;
+		this.descriptionEnglish = value.descriptionEnglish;
+		this.id = value.id;
+	}
 
 	public TLanguage(
 		String  cd,

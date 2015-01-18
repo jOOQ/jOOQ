@@ -13,10 +13,15 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IFTables4;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FTables4 implements IFTables4 {
 
-	private static final long serialVersionUID = -1928845264;
+	private static final long serialVersionUID = 142619593;
 
 	private final Integer id;
 	private final String  title;
+
+	public FTables4(FTables4 value) {
+		this.id = value.id;
+		this.title = value.title;
+	}
 
 	public FTables4(
 		Integer id,

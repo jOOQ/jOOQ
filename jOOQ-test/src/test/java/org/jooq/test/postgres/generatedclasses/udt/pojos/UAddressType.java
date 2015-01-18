@@ -17,7 +17,7 @@ import org.jooq.test.postgres.generatedclasses.udt.pojos.UStreetType;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UAddressType implements IUAddressType {
 
-	private static final long serialVersionUID = 295524244;
+	private static final long serialVersionUID = 1470716450;
 
 	private final UStreetType street;
 	private final String      zip;
@@ -26,6 +26,16 @@ public class UAddressType implements IUAddressType {
 	private final Date        since;
 	private final Integer     code;
 	private final byte[]      f_1323;
+
+	public UAddressType(UAddressType value) {
+		this.street = value.street;
+		this.zip = value.zip;
+		this.city = value.city;
+		this.country = value.country;
+		this.since = value.since;
+		this.code = value.code;
+		this.f_1323 = value.f_1323;
+	}
 
 	public UAddressType(
 		UStreetType street,

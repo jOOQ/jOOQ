@@ -13,10 +13,15 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IT_2781;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2781 implements IT_2781 {
 
-	private static final long serialVersionUID = -2142181552;
+	private static final long serialVersionUID = -1221191881;
 
 	private final String org_;
 	private final String jooq;
+
+	public T_2781(T_2781 value) {
+		this.org_ = value.org_;
+		this.jooq = value.jooq;
+	}
 
 	public T_2781(
 		String org_,

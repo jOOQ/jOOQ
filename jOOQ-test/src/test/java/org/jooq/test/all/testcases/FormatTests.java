@@ -55,6 +55,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.xml.bind.DatatypeConverter;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
@@ -384,6 +385,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 }
                 else if (value instanceof Number) {
                     token4 += separator + value;
+                }
+                else if (value instanceof byte[]) {
+                    token4 += separator + DatatypeConverter.printBase64Binary((byte[]) value);
                 }
                 else {
                     token4 += separator + "\"" + value.toString().replaceAll("\"", "\"\"") + "\"";

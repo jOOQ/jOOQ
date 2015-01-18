@@ -70,6 +70,7 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 
+import javax.xml.bind.DatatypeConverter;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -366,7 +367,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
                     // Collect all decimal places for the column values
                     String value;
                     for (int i = 0; i < min(MAX_RECORDS, size()); i++) {
-                        value = format0(getValue(i, index), get(i).changed(index));
+                        value = format0(getValue(i, index), get(i).changed(index), true);
                         decimalPlacesList.add(getDecimalPlaces(value));
                     }
 
@@ -393,7 +394,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
                 // Add column values width
                 String value;
                 for (int i = 0; i < min(MAX_RECORDS, size()); i++) {
-                    value = format0(getValue(i, index), get(i).changed(index));
+                    value = format0(getValue(i, index), get(i).changed(index), true);
                     // Align number values before width is calculated
                     if (isNumCol) {
                         value = alignNumberValue(decimalPlaces[index], value);
@@ -444,7 +445,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
                 writer.append("\n|");
 
                 for (int index = 0; index < fields.fields.length; index++) {
-                    String value = format0(getValue(i, index), get(i).changed(index)).replace("\n", "{lf}").replace("\r", "{cr}");
+                    String value = format0(getValue(i, index), get(i).changed(index), true).replace("\n", "{lf}").replace("\r", "{cr}");
 
                     String padded;
                     if (Number.class.isAssignableFrom(fields.fields[index].getType())) {
@@ -548,7 +549,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
                 for (int index = 0; index < fields.fields.length; index++) {
                     writer.append("<td>");
-                    writer.append(format0(record.getValue(index), false));
+                    writer.append(format0(record.getValue(index), false, true));
                     writer.append("</td>");
                 }
 
@@ -652,7 +653,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
             }
         }
 
-        String result = format0(value, false);
+        String result = format0(value, false, false);
 
         if (StringUtils.containsAny(result, ',', ';', '\t', '"', '\n', '\r', '\'', '\\')) {
             return "\"" + result.replace("\\", "\\\\").replace("\"", "\"\"") + "\"";
@@ -662,14 +663,26 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         }
     }
 
-    private static final String format0(Object value, boolean changed) {
-        String formatted = changed ? "*" : "";
+    private final Object formatJSON0(Object value) {
+        if (value instanceof byte[])
+            return DatatypeConverter.printBase64Binary((byte[]) value);
+
+        return value;
+    }
+
+    /**
+     * @param value The value to be formatted
+     * @param visual Whether the formatted output is to be consumed visually
+     *            (HTML, TEXT) or by a machine (CSV, JSON, XML)
+     */
+    private static final String format0(Object value, boolean changed, boolean visual) {
+        String formatted = changed && visual ? "*" : "";
 
         if (value == null) {
-            formatted += "{null}";
+            formatted += visual ? "{null}" : null;
         }
         else if (value.getClass() == byte[].class) {
-            formatted += Arrays.toString((byte[]) value);
+            formatted += DatatypeConverter.printBase64Binary((byte[]) value);
         }
         else if (value.getClass().isArray()) {
             formatted += Arrays.toString((Object[]) value);
@@ -718,7 +731,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
                 List<Object> list = new ArrayList<Object>();
 
                 for (int index = 0; index < fields.fields.length; index++) {
-                    list.add(record.getValue(index));
+                    list.add(formatJSON0(record.getValue(index)));
                 }
 
                 r.add(list);
@@ -781,7 +794,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
                     }
                     else {
                         writer.append(">");
-                        writer.append(escapeXML(format0(value, false)));
+                        writer.append(escapeXML(format0(value, false, false)));
                         writer.append("</value>");
                     }
                 }
@@ -886,7 +899,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
                     eRecord.appendChild(eValue);
 
                     if (value != null) {
-                        eValue.setTextContent(format0(value, false));
+                        eValue.setTextContent(format0(value, false, false));
                     }
                 }
             }
@@ -932,7 +945,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
                 handler.startElement("", "", "value", attrs);
 
                 if (value != null) {
-                    char[] chars = format0(value, false).toCharArray();
+                    char[] chars = format0(value, false, false).toCharArray();
                     handler.characters(chars, 0, chars.length);
                 }
 

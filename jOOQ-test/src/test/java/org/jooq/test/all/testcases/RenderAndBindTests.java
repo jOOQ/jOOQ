@@ -211,17 +211,24 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testUnknownBindTypes() throws Exception {
 
         // [#1028] [#1029] Named params without any associated type information
-        Select<?> select = create().select(
-            param("p1"),
-            param("p2"));
+        Select<?> select = create()
+            .select(
+                param("p1"),
+                param("p2"),
+                param())
+            .where(param().eq(1))
+            .and(val(1).eq(param()));
 
         select.bind(1, "10");
         select.bind(2, null);
+        select.bind(3, "A");
+        select.bind(4, 1);
         Result<?> result3 = select.fetch();
 
         assertEquals(1, result3.size());
         assertEquals("10", result3.getValue(0, 0));
         assertEquals(null, result3.getValue(0, 1));
+        assertEquals("A", result3.getValue(0, 2));
     }
 
     public void testManyVarcharBindValues() throws Exception {
@@ -246,7 +253,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         Select<?> select =
         create().select(
                     TAuthor_ID(),
-                    param("p1", String.class))
+                    param("p1", String.class),
+                    param(String.class))
                 .from(TAuthor())
                 .where(TAuthor_ID().in(
                     param("p2", Integer.class),
@@ -259,22 +267,23 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Set both condition parameters to the same value
         Result<?> result1 =
         select.bind("p2", 1L)
-              .bind(3, "1")
+              .bind(4, "1")
               .fetch();
         assertEquals(1, result1.size());
         assertEquals(1, result1.getValue(0, 0));
         assertNull(result1.getValue(0, 1));
+        assertNull(result1.getValue(0, 2));
 
         // Set selection parameter, too
         Result<?> result2 =
-        select.bind(1, "asdf")
+        select.bind(1, "A")
+              .bind(2, "B")
               .bind("p3", "2")
               .fetch();
         assertEquals(2, result2.size());
-        assertEquals(1, result2.getValue(0, 0));
-        assertEquals(2, result2.getValue(1, 0));
-        assertEquals("asdf", result2.getValue(0, 1));
-        assertEquals("asdf", result2.getValue(1, 1));
+        assertEquals(asList(1, 2), result2.getValues(0));
+        assertEquals(asList("A", "A"), result2.getValues(1));
+        assertEquals(asList("B", "B"), result2.getValues(2));
     }
 
     public void testSelectBindValuesWithPlainSQL() throws Exception {

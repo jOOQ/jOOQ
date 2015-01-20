@@ -11201,6 +11201,50 @@ public class DSL {
     // -------------------------------------------------------------------------
 
     /**
+     * Create an unnamed parameter with a generic type ({@link Object} /
+     * {@link SQLDataType#OTHER}) and no initial value.
+     * <p>
+     * Try to avoid this method when using any of these databases, as these
+     * databases may have trouble inferring the type of the bind value. Use
+     * typed named parameters instead, using {@link #param(Class)} or
+     * {@link #param(DataType)}
+     * <ul>
+     * <li> {@link SQLDialect#DB2}</li>
+     * <li> {@link SQLDialect#DERBY}</li>
+     * <li> {@link SQLDialect#H2}</li>
+     * <li> {@link SQLDialect#HSQLDB}</li>
+     * <li> {@link SQLDialect#INGRES}</li>
+     * <li> {@link SQLDialect#SYBASE}</li>
+     * </ul>
+     *
+     * @see #param(String, Object)
+     */
+    @Support
+    public static <T> Param<Object> param() {
+        return param(Object.class);
+    }
+
+    /**
+     * Create an unnamed parameter with a defined type and no initial value.
+     *
+     * @see #param(String, Object)
+     */
+    @Support
+    public static <T> Param<T> param(Class<T> type) {
+        return param(DefaultDataType.getDataType(null, type));
+    }
+
+    /**
+     * Create an unnamed parameter with a defined type and no initial value.
+     *
+     * @see #param(String, Object)
+     */
+    @Support
+    public static <T> Param<T> param(DataType<T> type) {
+        return new Val<T>(null, type);
+    }
+
+    /**
      * Create a named parameter with a generic type ({@link Object} /
      * {@link SQLDataType#OTHER}) and no initial value.
      * <p>

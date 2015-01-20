@@ -49,7 +49,10 @@ import static org.jooq.impl.Utils.visitAll;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.jooq.BatchBindStep;
 import org.jooq.Configuration;
@@ -58,6 +61,7 @@ import org.jooq.DataType;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
+import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.exception.ControlFlowSignal;
 
@@ -69,18 +73,32 @@ class BatchSingle implements BatchBindStep {
     /**
      * Generated UID
      */
-    private static final long    serialVersionUID = 3793967258181493207L;
+    private static final long                serialVersionUID = 3793967258181493207L;
 
-    private final DSLContext       create;
-    private final Configuration  configuration;
-    private final Query          query;
-    private final List<Object[]> allBindValues;
+    private final DSLContext                 create;
+    private final Configuration              configuration;
+    private final Query                      query;
+    private final Map<String, List<Integer>> nameToIndexMapping;
+    private final List<Object[]>             allBindValues;
 
     public BatchSingle(Configuration configuration, Query query) {
         this.create = DSL.using(configuration);
         this.configuration = configuration;
         this.query = query;
         this.allBindValues = new ArrayList<Object[]>();
+        this.nameToIndexMapping = new LinkedHashMap<String, List<Integer>>();
+
+        int i = 0;
+        for (Entry<String, Param<?>> entry : query.getParams().entrySet()) {
+            List<Integer> list = nameToIndexMapping.get(entry.getKey());
+
+            if (list == null) {
+                list = new ArrayList<Integer>();
+                nameToIndexMapping.put(entry.getKey(), list);
+            }
+
+            list.add(i++);
+        }
     }
 
     @Override
@@ -90,11 +108,39 @@ class BatchSingle implements BatchBindStep {
     }
 
     @Override
-    public final BatchSingle bind(Object[][] bindValues) {
-        for (Object[] v : bindValues) {
+    public final BatchSingle bind(Object[]... bindValues) {
+        for (Object[] v : bindValues)
             bind(v);
+
+        return this;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final BatchSingle bind(Map<String, Object> namedBindValues) {
+        return bind(new Map[] { namedBindValues });
+    }
+
+    @Override
+    public final BatchSingle bind(Map<String, Object>... namedBindValues) {
+        List<Object> defaultValues = query.getBindValues();
+
+        Object[][] bindValues = new Object[namedBindValues.length][];
+        for (int row = 0; row < bindValues.length; row++) {
+            bindValues[row] = defaultValues.toArray();
+
+            for (Entry<String, Object> entry : namedBindValues[row].entrySet()) {
+                List<Integer> indexes = nameToIndexMapping.get(entry.getKey());
+
+                if (indexes != null) {
+                    for (int index : indexes) {
+                        bindValues[row][index] = entry.getValue();
+                    }
+                }
+            }
         }
 
+        bind(bindValues);
         return this;
     }
 

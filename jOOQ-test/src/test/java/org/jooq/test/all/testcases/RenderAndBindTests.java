@@ -216,8 +216,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 param("p1"),
                 param("p2"),
                 param())
-            .where(param().eq(1))
-            .and(val(1).eq(param()));
+            .where(param().eq(1));
 
         select.bind(1, "10");
         select.bind(2, null);

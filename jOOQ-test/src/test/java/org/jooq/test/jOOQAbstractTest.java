@@ -3085,6 +3085,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testBatchSingleNamedParameters() throws Exception {
+        new BatchTests(this).testBatchSingleNamedParameters();
+    }
+
+    @Test
     public void testBatchSingleMerge() throws Exception {
         new BatchTests(this).testBatchSingleMerge();
     }

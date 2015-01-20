@@ -42,6 +42,7 @@ package org.jooq.test.all.testcases;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.nCopies;
+import static java.util.Collections.singletonMap;
 import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.DERBY;
@@ -57,8 +58,11 @@ import static org.jooq.impl.DSL.delete;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.mergeInto;
+import static org.jooq.impl.DSL.param;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.update;
+import static org.jooq.lambda.tuple.Tuple.tuple;
 import static org.jooq.tools.reflect.Reflect.on;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
@@ -83,6 +87,7 @@ import org.jooq.UpdatableRecord;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DefaultConnectionProvider;
 import org.jooq.impl.DefaultExecuteListener;
+import org.jooq.lambda.Seq;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
@@ -163,6 +168,55 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(3, batch3.size());
         int[] result3 = batch3.execute();
         assertEquals(3, result3.length);
+        testBatchAuthors("Gamma", "Helm", "Johnson");
+    }
+
+    public void testBatchSingleNamedParameters() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        // Declare a :first_name bind value, but don't bind any variables to it
+        Batch batch1 = create().batch(create().insertInto(TAuthor())
+                                              .set(TAuthor_ID(), param("id", Integer.class))
+                                              .set(TAuthor_FIRST_NAME(), param("first_name", String.class))
+                                              .set(TAuthor_LAST_NAME(), param("last_name", String.class)))
+                               .bind(Seq.toMap(Seq.of(tuple("id", (Object)  8), tuple("last_name", "Gamma"  ))))
+                               .bind(Seq.toMap(Seq.of(tuple("id", (Object)  9), tuple("last_name", "Helm"   ))))
+                               .bind(Seq.toMap(Seq.of(tuple("id", (Object) 10), tuple("last_name", "Johnson"))))
+                               ;
+        assertEquals(3, batch1.size());
+        int[] result1 = batch1.execute();
+        assertEquals(3, result1.length);
+        testBatchAuthors("Gamma", "Helm", "Johnson");
+
+
+        Batch batch2 = create().batch(delete(TAuthor()).where(TAuthor_ID().eq(param("id", Integer.class))))
+                               .bind(singletonMap("id", 8))
+                               .bind(singletonMap("id", 9))
+                               .bind(singletonMap("id", 10));
+        assertEquals(3, batch2.size());
+        int[] result2 = batch2.execute();
+        assertEquals(3, result2.length);
+        assertEquals(2, create().fetchCount(selectOne().from(TAuthor())));
+
+        Batch batch3 = create().batch(insertInto(TAuthor(),
+                                            TAuthor_ID(),
+                                            TAuthor_FIRST_NAME(),
+                                            TAuthor_LAST_NAME())
+                                      .values(
+                                            param("id", Integer.class),
+                                            param("first_name", String.class),
+                                            param("last_name", String.class)))
+                               .bind(Seq.toMap(Seq.of(tuple("id", (Object)  8), tuple("first_name", "A"), tuple("last_name", "Gamma"  ))))
+                               .bind(Seq.toMap(Seq.of(tuple("id", (Object)  9), tuple("first_name", "B"), tuple("last_name", "Helm"   ))))
+                               .bind(Seq.toMap(Seq.of(tuple("id", (Object) 10), tuple("first_name", "C"), tuple("last_name", "Johnson"))));
+        assertEquals(3, batch3.size());
+        int[] result3 = batch3.execute();
+        assertEquals(3, result3.length);
+        assertEquals(asList("A", "B", "C"), create().fetchValues(
+            select(TAuthor_FIRST_NAME())
+            .from(TAuthor())
+            .where(TAuthor_ID().in(8, 9, 10))
+            .orderBy(TAuthor_FIRST_NAME())));
         testBatchAuthors("Gamma", "Helm", "Johnson");
     }
 

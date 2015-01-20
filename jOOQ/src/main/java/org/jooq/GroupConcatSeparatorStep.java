@@ -63,7 +63,7 @@ import org.jooq.impl.DSL;
 public interface GroupConcatSeparatorStep extends AggregateFunction<String> {
 
     /**
-     * Specify the separator on the <code>GROUP_CONCAT</code> function
+     * Specify the separator on the <code>GROUP_CONCAT</code> function.
      */
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     AggregateFunction<String> separator(String separator);

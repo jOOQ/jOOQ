@@ -40,45 +40,36 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.CUBRID;
-// ...
-import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.MYSQL;
-// ...
-// ...
 import static org.jooq.SQLDialect.POSTGRES;
-// ...
 
 import java.util.Collection;
 
 import org.jooq.impl.DSL;
 
-
 /**
- * MySQL's <code>GROUP_CONCAT</code> function.
+ * The SQL standard <code>ARRAY_AGG()</code> function.
  *
  * @author Lukas Eder
- * @see DSL#listAgg(Field)
+ * @see DSL#arrayAgg(Field)
  */
-public interface GroupConcatOrderByStep extends GroupConcatSeparatorStep {
+public interface ArrayAggOrderByStep<T> extends AggregateFilterStep<T> {
 
     /**
      * Add an <code>ORDER BY</code> clause to the function.
      */
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    GroupConcatSeparatorStep orderBy(Field<?>... fields);
+    @Support({ HSQLDB, POSTGRES })
+    AggregateFilterStep<T> orderBy(Field<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the function.
      */
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    GroupConcatSeparatorStep orderBy(SortField<?>... fields);
+    @Support({ HSQLDB, POSTGRES })
+    AggregateFilterStep<T> orderBy(SortField<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the function.
      */
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    GroupConcatSeparatorStep orderBy(Collection<? extends SortField<?>> fields);
+    @Support({ HSQLDB, POSTGRES })
+    AggregateFilterStep<T> orderBy(Collection<? extends SortField<?>> fields);
 }

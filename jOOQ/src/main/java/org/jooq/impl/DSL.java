@@ -90,6 +90,7 @@ import javax.sql.DataSource;
 import org.jooq.AggregateFunction;
 import org.jooq.AlterSequenceRestartStep;
 import org.jooq.AlterTableStep;
+import org.jooq.ArrayAggOrderByStep;
 // ...
 import org.jooq.Case;
 import org.jooq.CommonTableExpression;
@@ -10439,6 +10440,14 @@ public class DSL {
     @Support
     public static AggregateFunction<Boolean> every(Condition condition) {
         return new Every(condition);
+    }
+
+    /**
+     * Get the <code>array_agg()</code> aggregate function.
+     */
+    @Support({ HSQLDB, POSTGRES })
+    public static <T> ArrayAggOrderByStep<T[]> arrayAgg(Field<T> field) {
+        return new Function<T[]>(Term.ARRAY_AGG, field.getDataType().getArrayDataType(), nullSafe(field));
     }
 
     /**

@@ -55,6 +55,7 @@ import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.percentileCont;
+import static org.jooq.impl.Term.ARRAY_AGG;
 import static org.jooq.impl.Term.LIST_AGG;
 import static org.jooq.impl.Term.MEDIAN;
 import static org.jooq.impl.Term.ROW_NUMBER;
@@ -68,6 +69,7 @@ import java.util.Map;
 
 import org.jooq.AggregateFilterStep;
 import org.jooq.AggregateFunction;
+import org.jooq.ArrayAggOrderByStep;
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -99,6 +101,7 @@ class Function<T> extends AbstractField<T> implements
 
     // Cascading interface implementations for aggregate function behaviour
     OrderedAggregateFunction<T>,
+    ArrayAggOrderByStep<T>,
     AggregateFunction<T>,
     // and for window function behaviour
     WindowIgnoreNullsStep<T>,
@@ -192,7 +195,10 @@ class Function<T> extends AbstractField<T> implements
 
     @Override
     public /* final */ void accept(Context<?> ctx) {
-        if (term == LIST_AGG && asList(CUBRID, H2, HSQLDB, MARIADB, MYSQL).contains(ctx.family())) {
+        if (term == ARRAY_AGG && asList(HSQLDB, POSTGRES).contains(ctx.family())) {
+            toSQLGroupConcat(ctx);
+        }
+        else if (term == LIST_AGG && asList(CUBRID, H2, HSQLDB, MARIADB, MYSQL).contains(ctx.family())) {
             toSQLGroupConcat(ctx);
         }
         else if (term == LIST_AGG && asList(POSTGRES, SYBASE).contains(ctx.family())) {
@@ -649,20 +655,32 @@ class Function<T> extends AbstractField<T> implements
     }
 
     @Override
-    public final WindowRowsStep<T> orderBy(Field<?>... fields) {
-        windowSpecification.orderBy(fields);
+    public final Function<T> orderBy(Field<?>... fields) {
+        if (windowSpecification != null)
+            windowSpecification.orderBy(fields);
+        else
+            withinGroupOrderBy(fields);
+
         return this;
     }
 
     @Override
-    public final WindowRowsStep<T> orderBy(SortField<?>... fields) {
-        windowSpecification.orderBy(fields);
+    public final Function<T> orderBy(SortField<?>... fields) {
+        if (windowSpecification != null)
+            windowSpecification.orderBy(fields);
+        else
+            withinGroupOrderBy(fields);
+
         return this;
     }
 
     @Override
-    public final WindowRowsStep<T> orderBy(Collection<? extends SortField<?>> fields) {
-        windowSpecification.orderBy(fields);
+    public final Function<T> orderBy(Collection<? extends SortField<?>> fields) {
+        if (windowSpecification != null)
+            windowSpecification.orderBy(fields);
+        else
+            withinGroupOrderBy(fields);
+
         return this;
     }
 

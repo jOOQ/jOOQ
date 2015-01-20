@@ -2735,6 +2735,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testAggregateFunction_ARRAY_AGG() throws Exception {
+        new AggregateWindowFunctionTests(this).testAggregateFunction_ARRAY_AGG();
+    }
+
+    @Test
     public void testAggregateFunctionsStatistics() throws Exception {
         new AggregateWindowFunctionTests(this).testAggregateFunctionsStatistics();
     }

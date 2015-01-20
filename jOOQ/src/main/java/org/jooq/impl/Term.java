@@ -50,6 +50,12 @@ import org.jooq.SQLDialect;
  */
 enum Term {
 
+    ARRAY_AGG {
+        @Override
+        public String translate(SQLDialect dialect) {
+            return "array_agg";
+        }
+    },
     ATAN2 {
         @Override
         public String translate(SQLDialect dialect) {

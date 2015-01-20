@@ -60,6 +60,7 @@ import static org.jooq.SQLDialect.POSTGRES_9_3;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.impl.DSL.arrayAgg;
 import static org.jooq.impl.DSL.avg;
 import static org.jooq.impl.DSL.avgDistinct;
 import static org.jooq.impl.DSL.count;
@@ -313,6 +314,18 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 select(every(TBook_ID().lt(3)).over(partitionBy(TBook_AUTHOR_ID()))).from(TBook()).orderBy(TBook_ID())
             ));
         }
+    }
+
+    public void testAggregateFunction_ARRAY_AGG() throws Exception {
+        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, SQLITE, SQLSERVER, SYBASE);
+
+        assertSame(asList(1, 2, 3, 4), asList(create().fetchValue(
+            select(arrayAgg(TBook_ID())).from(TBook())
+        )));
+
+        assertEquals(asList(4, 3, 2, 1), asList(create().fetchValue(
+            select(arrayAgg(TBook_ID()).orderBy(TBook_ID().desc())).from(TBook())
+        )));
     }
 
     public void testAggregateFunctionsStatistics() throws Exception {

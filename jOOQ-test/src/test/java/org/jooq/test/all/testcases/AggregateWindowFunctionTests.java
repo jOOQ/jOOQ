@@ -1156,17 +1156,24 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         Name a = name("a");
         Name b = name("b");
+        Name c = name("c");
 
         TableField<B, Integer> aField = TBook_ID();
         TableField<B, Integer> bField = TBook_AUTHOR_ID();
+        TableField<B, Integer> cField = TBook_AUTHOR_ID();
 
         WindowSpecification aSpec = partitionBy(aField);
         WindowSpecification bSpec = partitionBy(bField);
 
+        // [#3727] When the window specification contains a frame clause, then
+        // the OVER clause must not generate parentheses. Weird...
+        WindowSpecification cSpec = partitionBy(bField).orderBy(TBook_ID()).rowsBetweenUnboundedPreceding().andUnboundedFollowing();
+
         WindowDefinition aDef = a.as(aSpec);
         WindowDefinition bDef = b.as(bSpec);
+        WindowDefinition cDef = c.as(cSpec);
 
-        Result<?> result =
+        Result<?> result1 =
         create().select(
                     count().over().partitionBy(aField),
                     count().over(a),
@@ -1183,16 +1190,35 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .orderBy(aField)
                 .fetch();
 
-        assertEquals(asList(1, 1, 1, 1), result.getValues(0));
-        assertEquals(asList(1, 1, 1, 1), result.getValues(1));
-        assertEquals(asList(1, 1, 1, 1), result.getValues(2));
-        assertEquals(asList(1, 1, 1, 1), result.getValues(3));
-        assertEquals(asList(1, 1, 1, 1), result.getValues(4));
+        assertEquals(asList(1, 1, 1, 1), result1.getValues(0));
+        assertEquals(asList(1, 1, 1, 1), result1.getValues(1));
+        assertEquals(asList(1, 1, 1, 1), result1.getValues(2));
+        assertEquals(asList(1, 1, 1, 1), result1.getValues(3));
+        assertEquals(asList(1, 1, 1, 1), result1.getValues(4));
 
-        assertEquals(asList(2, 2, 2, 2), result.getValues(5));
-        assertEquals(asList(2, 2, 2, 2), result.getValues(6));
-        assertEquals(asList(2, 2, 2, 2), result.getValues(7));
-        assertEquals(asList(2, 2, 2, 2), result.getValues(8));
-        assertEquals(asList(2, 2, 2, 2), result.getValues(9));
+        assertEquals(asList(2, 2, 2, 2), result1.getValues(5));
+        assertEquals(asList(2, 2, 2, 2), result1.getValues(6));
+        assertEquals(asList(2, 2, 2, 2), result1.getValues(7));
+        assertEquals(asList(2, 2, 2, 2), result1.getValues(8));
+        assertEquals(asList(2, 2, 2, 2), result1.getValues(9));
+
+        Result<?> result2 =
+        create().select(
+                    count().over().partitionBy(cField),
+                    count().over(c),
+                    count().over("c"),
+                    count().over(cSpec),
+                    count().over(cDef))
+                .from(TBook())
+                .window(cDef)
+                .orderBy(aField)
+                .fetch();
+
+        assertEquals(asList(2, 2, 2, 2), result2.getValues(0));
+        assertEquals(asList(2, 2, 2, 2), result2.getValues(1));
+        assertEquals(asList(2, 2, 2, 2), result2.getValues(2));
+        assertEquals(asList(2, 2, 2, 2), result2.getValues(3));
+        assertEquals(asList(2, 2, 2, 2), result2.getValues(4));
+
     }
 }

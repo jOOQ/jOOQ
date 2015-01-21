@@ -358,16 +358,17 @@ class Function<T> extends AbstractField<T> implements
 
         ctx.sql(" ")
            .keyword("over")
-           .sql(" (")
-           .visit(window)
-           .sql(")");
+           .sql(" ")
+           .visit(window);
     }
 
     @SuppressWarnings("unchecked")
     final QueryPart window(Context<?> ctx) {
         if (windowSpecification != null)
-            return windowSpecification;
+            return DSL.sql("({0})", windowSpecification);
 
+        // [#3727] Referenced WindowDefinitions that contain a frame clause
+        // shouldn't be referenced from within parentheses (in PostgreSQL)
         if (windowDefinition != null)
             return windowDefinition;
 

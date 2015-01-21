@@ -60,7 +60,7 @@ public class ExceptionsTest extends AbstractTest {
         assertTrue(
             create.select(count().over("window"))
                   .getSQL()
-                  .contains("over (`window`)")
+                  .contains("over `window`")
         );
     }
 }

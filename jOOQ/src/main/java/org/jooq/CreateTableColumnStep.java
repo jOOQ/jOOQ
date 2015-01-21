@@ -45,7 +45,7 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface CreateTableColumnStep extends CreateTableFinalStep {
+public interface CreateTableColumnStep extends CreateTableOnCommitStep {
 
     /**
      * Add a column to the column list of the <code>CREATE TABLE</code> statement.

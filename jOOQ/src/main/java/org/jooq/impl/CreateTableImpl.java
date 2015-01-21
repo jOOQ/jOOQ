@@ -48,6 +48,7 @@ import static org.jooq.Clause.CREATE_TABLE_NAME;
 import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.HANA;
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
@@ -62,6 +63,7 @@ import org.jooq.Context;
 import org.jooq.CreateTableAsStep;
 import org.jooq.CreateTableColumnStep;
 import org.jooq.CreateTableFinalStep;
+import org.jooq.CreateTableOnCommitStep;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
@@ -86,11 +88,14 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
     private Select<?>               select;
     private final List<Field<?>>    columnFields;
     private final List<DataType<?>> columnTypes;
+    private final boolean           temporary;
+    private OnCommit                onCommit;
 
-    CreateTableImpl(Configuration configuration, Table<?> table) {
+    CreateTableImpl(Configuration configuration, Table<?> table, boolean temporary) {
         super(configuration);
 
         this.table = table;
+        this.temporary = temporary;
         this.columnFields = new ArrayList<Field<?>>();
         this.columnTypes = new ArrayList<DataType<?>>();
     }
@@ -100,7 +105,7 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
     // ------------------------------------------------------------------------
 
     @Override
-    public final CreateTableFinalStep as(Select<? extends R> s) {
+    public final CreateTableOnCommitStep as(Select<? extends R> s) {
         this.select = s;
         return this;
     }
@@ -116,6 +121,24 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
     public final CreateTableColumnStep column(String field, DataType<?> type) {
         columnFields.add(field(name(field), type));
         columnTypes.add(type);
+        return this;
+    }
+
+    @Override
+    public final CreateTableFinalStep onCommitDeleteRows() {
+        onCommit = OnCommit.DELETE_ROWS;
+        return this;
+    }
+
+    @Override
+    public final CreateTableFinalStep onCommitPreserveRows() {
+        onCommit = OnCommit.PRESERVE_ROWS;
+        return this;
+    }
+
+    @Override
+    public final CreateTableFinalStep onCommitDrop() {
+        onCommit = OnCommit.DROP;
         return this;
     }
 
@@ -139,13 +162,9 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
             }
         }
         else {
-            ctx.start(CREATE_TABLE)
-               .start(CREATE_TABLE_NAME)
-               .keyword("create table")
-               .sql(" ")
-               .visit(table)
-               .end(CREATE_TABLE_NAME)
-               .start(CREATE_TABLE_COLUMNS)
+            ctx.start(CREATE_TABLE);
+            toSQLCreateTableName(ctx);
+            ctx.start(CREATE_TABLE_COLUMNS)
                .sql("(")
                .formatIndentStart()
                .formatNewLine();
@@ -171,19 +190,17 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
             ctx.formatIndentEnd()
                .formatNewLine()
                .sql(")")
-               .end(CREATE_TABLE_COLUMNS)
-               .end(CREATE_TABLE);
+               .end(CREATE_TABLE_COLUMNS);
+            toSQLOnCommit(ctx);
+            ctx.end(CREATE_TABLE);
         }
     }
 
     private final void acceptCreateTableAsSelect(Context<?> ctx) {
-        ctx.start(CREATE_TABLE)
-           .start(CREATE_TABLE_NAME)
-           .keyword("create table")
-           .sql(" ")
-           .visit(table)
-           .end(CREATE_TABLE_NAME)
-           .formatSeparator()
+        ctx.start(CREATE_TABLE);
+        toSQLCreateTableName(ctx);
+        toSQLOnCommit(ctx);
+        ctx.formatSeparator()
            .keyword("as");
 
         /* [pro] */
@@ -213,6 +230,33 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
         ctx.end(CREATE_TABLE);
     }
 
+    private final void toSQLCreateTableName(Context<?> ctx) {
+        ctx.start(CREATE_TABLE_NAME)
+           .keyword("create")
+           .sql(" ");
+
+        if (temporary)
+            if (ctx.family() == POSTGRES)
+                ctx.keyword("temporary").sql(" ");
+            else
+                ctx.keyword("global temporary").sql(" ");
+
+        ctx.keyword("table")
+           .sql(" ")
+           .visit(table)
+           .end(CREATE_TABLE_NAME);
+    }
+
+    private final void toSQLOnCommit(Context<?> ctx) {
+        if (temporary && onCommit != null) {
+            switch (onCommit) {
+                case DELETE_ROWS:   ctx.formatSeparator().keyword("on commit delete rows");   break;
+                case PRESERVE_ROWS: ctx.formatSeparator().keyword("on commit preserve rows"); break;
+                case DROP:          ctx.formatSeparator().keyword("on commit drop");          break;
+            }
+        }
+    }
+
     private final void acceptSelectInto(Context<?> ctx) {
         ctx.data(DATA_SELECT_INTO_TABLE, table);
         ctx.visit(select);
@@ -222,5 +266,11 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
     @Override
     public final Clause[] clauses(Context<?> ctx) {
         return null;
+    }
+
+    private enum OnCommit {
+        DELETE_ROWS,
+        PRESERVE_ROWS,
+        DROP;
     }
 }

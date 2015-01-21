@@ -40,45 +40,48 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.ACCESS;
-import static org.jooq.SQLDialect.ASE;
-import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.HANA;
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.INGRES;
-import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.SQLDialect.SQLSERVER;
+
+import org.jooq.impl.DSL;
 
 /**
  * A {@link Query} that can create tables.
  *
  * @author Lukas Eder
  */
-public interface CreateTableAsStep<R extends Record> {
+public interface CreateTableOnCommitStep extends CreateTableFinalStep {
 
     /**
-     * Add an <code>AS</code> clause to the <code>CREATE TABLE</code> statement.
+     * Add an <code>ON COMMIT DELETE ROWS</code> clause.
+     * <p>
+     * This clause will only be rendered when used with a
+     * <code>GLOBAL TEMPORARY TABLE</code>
+     *
+     * @see DSL#createGlobalTemporaryTable(Table)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SQLITE })
-    CreateTableOnCommitStep as(Select<? extends R> select);
+    @Support({ ORACLE, POSTGRES })
+    CreateTableFinalStep onCommitDeleteRows();
 
     /**
-     * Add a column to the column list of the <code>CREATE TABLE</code> statement.
+     * Add an <code>ON COMMIT PRESERVE ROWS</code> clause.
+     * <p>
+     * This clause will only be rendered when used with a
+     * <code>GLOBAL TEMPORARY TABLE</code>
+     *
+     * @see DSL#createGlobalTemporaryTable(Table)
      */
-    @Support
-    <T> CreateTableColumnStep column(Field<T> field, DataType<T> type);
+    @Support({ ORACLE, POSTGRES })
+    CreateTableFinalStep onCommitPreserveRows();
 
     /**
-     * Add a column to the column list of the <code>CREATE TABLE</code> statement.
+     * Add an <code>ON COMMIT DROP</code> clause.
+     * <p>
+     * This clause will only be rendered when used with a
+     * <code>GLOBAL TEMPORARY TABLE</code>
+     *
+     * @see DSL#createGlobalTemporaryTable(Table)
      */
-    @Support
-    CreateTableColumnStep column(String field, DataType<?> type);
+    @Support({ POSTGRES })
+    CreateTableFinalStep onCommitDrop();
 }

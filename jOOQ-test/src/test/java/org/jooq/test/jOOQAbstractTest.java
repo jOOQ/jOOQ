@@ -1515,6 +1515,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testCreateGlobalTemporaryTable() throws Exception {
+        new DDLTests(this).testCreateGlobalTemporaryTable();
+    }
+
+    @Test
     public void testSelectInto() throws Exception {
         new DDLTests(this).testSelectInto();
     }

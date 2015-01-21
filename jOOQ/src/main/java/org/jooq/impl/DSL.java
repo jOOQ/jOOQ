@@ -4243,6 +4243,46 @@ public class DSL {
     }
 
     /**
+     * Create a new DSL <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
+     *
+     * @see DSLContext#createTemporaryTable(String)
+     */
+    @Support({ ORACLE, POSTGRES })
+    public static CreateTableAsStep<Record> createTemporaryTable(String tableName) {
+        return createTemporaryTable(table(name(tableName)));
+    }
+
+    /**
+     * Create a new DSL <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
+     *
+     * @see DSLContext#createTemporaryTable(Table)
+     */
+    @Support({ ORACLE, POSTGRES })
+    public static CreateTableAsStep<Record> createTemporaryTable(Table<?> table) {
+        return using(new DefaultConfiguration()).createTemporaryTable(table);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
+     *
+     * @see DSLContext#createGlobalTemporaryTable(String)
+     */
+    @Support({ ORACLE, POSTGRES })
+    public static CreateTableAsStep<Record> createGlobalTemporaryTable(String tableName) {
+        return createGlobalTemporaryTable(table(name(tableName)));
+    }
+
+    /**
+     * Create a new DSL <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
+     *
+     * @see DSLContext#createGlobalTemporaryTable(Table)
+     */
+    @Support({ ORACLE, POSTGRES })
+    public static CreateTableAsStep<Record> createGlobalTemporaryTable(Table<?> table) {
+        return using(new DefaultConfiguration()).createGlobalTemporaryTable(table);
+    }
+
+    /**
      * Create a new DSL <code>CREATE VIEW</code> statement.
      *
      * @see DSLContext#createView(String, String...)

@@ -1604,7 +1604,27 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateTableAsStep<Record> createTable(Table<?> table) {
-        return new CreateTableImpl<Record>(configuration(), table);
+        return new CreateTableImpl<Record>(configuration(), table, false);
+    }
+
+    @Override
+    public CreateTableAsStep<Record> createTemporaryTable(String tableName) {
+        return createTemporaryTable(table(name(tableName)));
+    }
+
+    @Override
+    public CreateTableAsStep<Record> createTemporaryTable(Table<?> table) {
+        return new CreateTableImpl<Record>(configuration(), table, true);
+    }
+
+    @Override
+    public CreateTableAsStep<Record> createGlobalTemporaryTable(String tableName) {
+        return createGlobalTemporaryTable(table(name(tableName)));
+    }
+
+    @Override
+    public CreateTableAsStep<Record> createGlobalTemporaryTable(Table<?> table) {
+        return new CreateTableImpl<Record>(configuration(), table, true);
     }
 
     @Override

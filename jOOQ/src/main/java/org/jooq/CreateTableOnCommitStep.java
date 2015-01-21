@@ -40,22 +40,48 @@
  */
 package org.jooq;
 
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+
+import org.jooq.impl.DSL;
+
 /**
  * A {@link Query} that can create tables.
  *
  * @author Lukas Eder
  */
-public interface CreateTableColumnStep extends CreateTableOnCommitStep {
+public interface CreateTableOnCommitStep extends CreateTableFinalStep {
 
     /**
-     * Add a column to the column list of the <code>CREATE TABLE</code> statement.
+     * Add an <code>ON COMMIT DELETE ROWS</code> clause.
+     * <p>
+     * This clause will only be rendered when used with a
+     * <code>GLOBAL TEMPORARY TABLE</code>
+     *
+     * @see DSL#createGlobalTemporaryTable(Table)
      */
-    @Support
-    <T> CreateTableColumnStep column(Field<T> field, DataType<T> type);
+    @Support({ POSTGRES })
+    CreateTableFinalStep onCommitDeleteRows();
 
     /**
-     * Add a column to the column list of the <code>CREATE TABLE</code> statement.
+     * Add an <code>ON COMMIT PRESERVE ROWS</code> clause.
+     * <p>
+     * This clause will only be rendered when used with a
+     * <code>GLOBAL TEMPORARY TABLE</code>
+     *
+     * @see DSL#createGlobalTemporaryTable(Table)
      */
-    @Support
-    CreateTableColumnStep column(String field, DataType<?> type);
+    @Support({ POSTGRES })
+    CreateTableFinalStep onCommitPreserveRows();
+
+    /**
+     * Add an <code>ON COMMIT DROP</code> clause.
+     * <p>
+     * This clause will only be rendered when used with a
+     * <code>GLOBAL TEMPORARY TABLE</code>
+     *
+     * @see DSL#createGlobalTemporaryTable(Table)
+     */
+    @Support({ POSTGRES })
+    CreateTableFinalStep onCommitDrop();
 }

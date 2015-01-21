@@ -4834,12 +4834,44 @@ public interface DSLContext extends Scope {
     CreateTableAsStep<Record> createTable(String tableName);
 
     /**
-     * Create a new DSL <code>CREATE TABLE</code> statement.
+     * Create a new DSL <code>CREATE  TABLE</code> statement.
      *
      * @see DSL#createTable(Table)
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateTableAsStep<Record> createTable(Table<?> table);
+
+    /**
+     * Create a new DSL <code>CREATE TEMPORARY TABLE</code> statement.
+     *
+     * @see DSL#createTemporaryTable(String)
+     */
+    @Support({ POSTGRES })
+    CreateTableAsStep<Record> createTemporaryTable(String tableName);
+
+    /**
+     * Create a new DSL <code>CREATE TEMPORARY TABLE</code> statement.
+     *
+     * @see DSL#createTemporaryTable(Table)
+     */
+    @Support({ POSTGRES })
+    CreateTableAsStep<Record> createTemporaryTable(Table<?> table);
+
+    /**
+     * Create a new DSL <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
+     *
+     * @see DSL#createGlobalTemporaryTable(String)
+     */
+    @Support({ POSTGRES })
+    CreateTableAsStep<Record> createGlobalTemporaryTable(String tableName);
+
+    /**
+     * Create a new DSL <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
+     *
+     * @see DSL#createGlobalTemporaryTable(Table)
+     */
+    @Support({ POSTGRES })
+    CreateTableAsStep<Record> createGlobalTemporaryTable(Table<?> table);
 
     /**
      * Create a new DSL <code>CREATE VIEW</code> statement.

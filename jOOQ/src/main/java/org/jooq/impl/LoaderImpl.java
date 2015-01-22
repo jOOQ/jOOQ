@@ -121,6 +121,8 @@ class LoaderImpl<R extends TableRecord<R>> implements
     private int                     commitAfter             = 1;
     private int                     content                 = CONTENT_CSV;
     private BufferedReader          data;
+    private Integer markerLimit = Integer.MAX_VALUE;
+    private boolean bulkInsert;
 
     // CSV configuration data
     // ----------------------
@@ -209,6 +211,13 @@ class LoaderImpl<R extends TableRecord<R>> implements
     @Override
     public final LoaderImpl<R> commitNone() {
         commit = COMMIT_NONE;
+        return this;
+    }
+
+    @Override
+    public LoaderOptionsStep<R> withBulkInsert(int markerLimit) {
+        this.bulkInsert = true;
+        this.markerLimit = markerLimit;
         return this;
     }
 
@@ -418,83 +427,87 @@ class LoaderImpl<R extends TableRecord<R>> implements
 
     private void executeSQL(Iterator<String[]> reader) throws SQLException {
         String[] row;
+        if (bulkInsert) {
+            executeBulk(reader);
+        } else {
+            rowloop:
+            while (reader.hasNext() && ((row = reader.next()) != null)) {
 
-        // TODO: When running in COMMIT_AFTER > 1 or COMMIT_ALL mode, then
-        // it might be better to bulk load / merge n records
-        rowloop: while (reader.hasNext() && ((row = reader.next()) != null)) {
-
-            // [#1627] Handle NULL values
-            for (int i = 0; i < row.length; i++) {
-                if (StringUtils.equals(nullString, row[i])) {
-                    row[i] = null;
-                }
-            }
-
-            processed++;
-            InsertQuery<R> insert = create.insertQuery(table);
-
-            for (int i = 0; i < row.length; i++) {
-                if (i < fields.length && fields[i] != null) {
-                    addValue0(insert, fields[i], row[i]);
-                }
-            }
-
-            // TODO: This is only supported by some dialects. Let other
-            // dialects execute a SELECT and then either an INSERT or UPDATE
-            if (onDuplicate == ON_DUPLICATE_KEY_UPDATE) {
-                insert.onDuplicateKeyUpdate(true);
-
+                // [#1627] Handle NULL values
                 for (int i = 0; i < row.length; i++) {
-                    if (i < fields.length && fields[i] != null && !primaryKey[i]) {
-                        addValueForUpdate0(insert, fields[i], row[i]);
+                    if (StringUtils.equals(nullString, row[i])) {
+                        row[i] = null;
                     }
                 }
-            }
 
-            // TODO: This can be implemented faster using a MERGE statement
-            // in some dialects
-            else if (onDuplicate == ON_DUPLICATE_KEY_IGNORE) {
-                SelectQuery<R> select = create.selectQuery(table);
+                processed++;
+                InsertQuery<R> insert = create.insertQuery(table);
 
                 for (int i = 0; i < row.length; i++) {
-                    if (i < fields.length && primaryKey[i]) {
-                        select.addConditions(getCondition(fields[i], row[i]));
+                    if (i < fields.length && fields[i] != null) {
+                        addValue0(insert, fields[i], row[i]);
                     }
+                }
+
+                // TODO: This is only supported by some dialects. Let other
+                // dialects execute a SELECT and then either an INSERT or UPDATE
+                if (onDuplicate == ON_DUPLICATE_KEY_UPDATE) {
+                    insert.onDuplicateKeyUpdate(true);
+
+                    for (int i = 0; i < row.length; i++) {
+                        if (i < fields.length && fields[i] != null && !primaryKey[i]) {
+                            addValueForUpdate0(insert, fields[i], row[i]);
+                        }
+                    }
+                }
+
+                // TODO: This can be implemented faster using a MERGE statement
+                // in some dialects
+                else if (onDuplicate == ON_DUPLICATE_KEY_IGNORE) {
+                    SelectQuery<R> select = create.selectQuery(table);
+
+                    for (int i = 0; i < row.length; i++) {
+                        if (i < fields.length && primaryKey[i]) {
+                            select.addConditions(getCondition(fields[i], row[i]));
+                        }
+                    }
+
+                    try {
+                        if (select.execute() > 0) {
+                            ignored++;
+                            continue rowloop;
+                        }
+                    } catch (DataAccessException e) {
+                        errors.add(new LoaderErrorImpl(e, row, processed - 1, select));
+                    }
+                }
+
+                // Don't do anything. Let the execution fail
+                else if (onDuplicate == ON_DUPLICATE_KEY_ERROR) {
                 }
 
                 try {
-                    if (select.execute() > 0) {
-                        ignored++;
-                        continue rowloop;
+                    insert.execute();
+                    stored++;
+
+                    if (commit == COMMIT_AFTER) {
+                        if (processed % commitAfter == 0) {
+                            configuration.connectionProvider().acquire().commit();
+                        }
                     }
-                }
-                catch (DataAccessException e) {
-                    errors.add(new LoaderErrorImpl(e, row, processed - 1, select));
-                }
-            }
+                } catch (DataAccessException e) {
+                    errors.add(new LoaderErrorImpl(e, row, processed - 1, insert));
+                    ignored++;
 
-            // Don't do anything. Let the execution fail
-            else if (onDuplicate == ON_DUPLICATE_KEY_ERROR) {}
-
-            try {
-                insert.execute();
-                stored++;
-
-                if (commit == COMMIT_AFTER) {
-                    if (processed % commitAfter == 0) {
-                        configuration.connectionProvider().acquire().commit();
+                    if (onError == ON_ERROR_ABORT) {
+                        break rowloop;
                     }
-                }
-            }
-            catch (DataAccessException e) {
-                errors.add(new LoaderErrorImpl(e, row, processed - 1, insert));
-                ignored++;
-
-                if (onError == ON_ERROR_ABORT) {
-                    break rowloop;
                 }
             }
         }
+        // TODO: When running in COMMIT_AFTER > 1
+        // or COMMIT_ALL mode, then
+        // it might be better to bulk load / merge n records
 
         // Rollback on errors in COMMIT_ALL mode
         try {
@@ -502,8 +515,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
                 if (!errors.isEmpty()) {
                     stored = 0;
                     configuration.connectionProvider().acquire().rollback();
-                }
-                else {
+                } else {
                     configuration.connectionProvider().acquire().commit();
                 }
             }
@@ -514,10 +526,49 @@ class LoaderImpl<R extends TableRecord<R>> implements
                     configuration.connectionProvider().acquire().commit();
                 }
             }
-        }
-        catch (DataAccessException e) {
+        } catch (DataAccessException e) {
             errors.add(new LoaderErrorImpl(e, null, processed - 1, null));
         }
+    }
+
+    private void executeBulk(Iterator<String[]> reader) {
+        String[] row;
+        InsertQuery<R> bulkInsertQuery = create.insertQuery(table);
+        int bulkInsertBlockSize = 0;
+        while (reader.hasNext()) {
+            row = reader.next();
+            bulkInsertBlockSize++;
+            processed++;
+            stored++;
+            bulkInsertQuery.newRecord();
+            for (int i = 0; i < row.length; i++) {
+                if (i < fields.length && fields[i] != null) {
+                    addValue0(bulkInsertQuery, fields[i], row[i]);
+                }
+            }
+            if ((bulkInsertBlockSize * fields.length) + fields.length >= markerLimit) {
+                bulkInsertBlockSize = 0;
+                if (!executeStatement(bulkInsertQuery)) {
+                    return;
+                }
+                bulkInsertQuery = create.insertQuery(table);
+            }
+        }
+        executeStatement(bulkInsertQuery);
+    }
+
+    private boolean executeStatement(InsertQuery<R> bulkInsertQuery) {
+        try {
+            bulkInsertQuery.execute();
+        } catch (DataAccessException e) {
+            errors.add(new LoaderErrorImpl(e, null, -1, bulkInsertQuery));
+            ignored++;
+
+            if (onError == ON_ERROR_ABORT) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

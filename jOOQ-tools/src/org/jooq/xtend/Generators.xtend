@@ -427,7 +427,7 @@ abstract class Generators {
     /**
      * A comma-separated list of field references
      * <p>
-     * <code>field1, field2, .., field[N]</code>
+     * <code>XXX1, XXX2, .., XXX[N]</code>
      */
     def XXXn(int degree, String XXX) {
         return
@@ -440,7 +440,7 @@ abstract class Generators {
     /**
      * A comma-separated list of field references
      * <p>
-     * <code>field1, field2, .., field[N]</code>
+     * <code>XXX1, XXX2, .., XXX[N]</code>
      */
     def XXXn(int from, int to, String XXX) {
         if (from <= to)

@@ -87,6 +87,7 @@ class Lambda extends Generators {
             package org.jooq.lambda.tuple;
             
             import java.util.List;
+            import java.util.stream.Collector;
             
             /**
              * A tuple.
@@ -101,6 +102,40 @@ class Lambda extends Generators {
                  */
                 static <«TN(degree)»> Tuple«degree»<«TN(degree)»> tuple(«TN_XXXn(degree, "v")») {
                     return new Tuple«degree»<>(«vn(degree)»);
+                }
+            «ENDFOR»
+            «FOR degree : (1 .. max)»
+            
+                /**
+                 * Construct a tuple collector of degree «degree».
+                 */
+                static <T, «XXXn(degree, "A")», «XXXn(degree, "D")»> Collector<T, Tuple«degree»<«XXXn(degree, "A")»>, Tuple«degree»<«XXXn(degree, "D")»>> collectors(
+                  «FOR d : (1 .. degree)»
+                  «IF d > 1»,«ELSE» «ENDIF» Collector<T, A«d», D«d»> collector«d»
+                  «ENDFOR»
+                ) {
+                    return Collector.of(
+                        () -> tuple(
+                          «FOR d : (1 .. degree)»
+                          «IF d > 1»,«ELSE» «ENDIF» collector«d».supplier().get()
+                          «ENDFOR»
+                        ),
+                        (a, t) -> {
+                            «FOR d : (1 .. degree)»
+                            collector«d».accumulator().accept(a.v«d», t);
+                            «ENDFOR»
+                        },
+                        (a1, a2) -> tuple(
+                          «FOR d : (1 .. degree)»
+                          «IF d > 1»,«ELSE» «ENDIF» collector«d».combiner().apply(a1.v«d», a2.v«d»)
+                          «ENDFOR»
+                        ),
+                        a -> tuple(
+                          «FOR d : (1 .. degree)»
+                          «IF d > 1»,«ELSE» «ENDIF» collector«d».finisher().apply(a.v«d»)
+                          «ENDFOR»
+                        )
+                    );
                 }
             «ENDFOR»
             
@@ -258,7 +293,7 @@ class Lambda extends Generators {
                     /**
                      * Apply attribute «d» as argument to a function and return a new tuple with the substituted argument.
                      */
-                    public final <U«d»> Tuple«degree»<«TN(1, d - 1)»«IF d > 1», «ENDIF»U«d»«IF d < degree», «ENDIF»«TN(d + 1, degree)»> map«d»(Function1<T«d», U«d»> function) {
+                    public final <U«d»> Tuple«degree»<«TN(1, d - 1)»«IF d > 1», «ENDIF»U«d»«IF d < degree», «ENDIF»«TN(d + 1, degree)»> map«d»(Function1<? super T«d», ? extends U«d»> function) {
                         return Tuple.tuple(«vn(1, d - 1)»«IF d > 1», «ENDIF»function.apply(v«d»)«IF d < degree», «ENDIF»«vn(d + 1, degree)»);
                     }
                     «ENDFOR»

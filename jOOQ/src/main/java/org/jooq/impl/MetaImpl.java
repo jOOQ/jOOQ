@@ -54,6 +54,9 @@ import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -66,6 +69,7 @@ import org.jooq.ConnectionProvider;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Meta;
 import org.jooq.Name;
 import org.jooq.Record;
@@ -532,7 +536,7 @@ class MetaImpl implements Meta, Serializable {
                     fields[i] = (TableField<Record, ?>) field(result.get(i).getValue(columnName, String.class));
                 }
 
-                return AbstractKeys.createUniqueKey(this, fields);
+                return new MetaUniqueKey(this, fields);
             }
             else {
                 return null;
@@ -561,6 +565,97 @@ class MetaImpl implements Meta, Serializable {
 
                 createField(columnName, type, this);
             }
+        }
+    }
+
+    private class MetaUniqueKey implements UniqueKey<Record> {
+
+        /**
+         * Generated UID
+         */
+        private static final long             serialVersionUID = 6997258619475953490L;
+
+        private final Table<Record>           pkTable;
+        private final TableField<Record, ?>[] pkFields;
+
+        MetaUniqueKey(Table<Record> table, TableField<Record, ?>[] fields) {
+            this.pkTable = table;
+            this.pkFields = fields;
+        }
+
+        @Override
+        public final Table<Record> getTable() {
+            return pkTable;
+        }
+
+        @Override
+        public final List<TableField<Record, ?>> getFields() {
+            return Collections.unmodifiableList(Arrays.asList(pkFields));
+        }
+
+        @Override
+        public final TableField<Record, ?>[] getFieldsArray() {
+            return pkFields.clone();
+        }
+
+        @Override
+        @SuppressWarnings("unchecked")
+        public final List<ForeignKey<?, Record>> getReferences() {
+            List<ForeignKey<?, Record>> references = new ArrayList<ForeignKey<?, Record>>();
+
+            try {
+                ResultSet rs = meta().getExportedKeys(null, pkTable.getSchema().getName(), pkTable.getName());
+                Result<Record> result =
+                create.fetch(
+                    rs,
+                    String.class,  // PKTABLE_CAT
+                    String.class,  // PKTABLE_SCHEM
+                    String.class,  // PKTABLE_NAME
+                    String.class,  // PKCOLUMN_NAME
+                    String.class,  // FKTABLE_CAT
+
+                    String.class,  // FKTABLE_SCHEM
+                    String.class,  // FKTABLE_NAME
+                    String.class,  // FKCOLUMN_NAME
+                    Short.class,   // KEY_SEQ
+                    Short.class,   // UPDATE_RULE
+
+                    Short.class,   // DELETE_RULE
+                    String.class,  // FK_NAME
+                    String.class   // PK_NAME
+                );
+
+                Map<Record, Result<Record>> groups = result.intoGroups(new Field[] {
+                    result.field(4),
+                    result.field(5),
+                    result.field(6),
+                    result.field(11)
+                });
+
+                Map<String, Schema> schemas = new HashMap<String, Schema>();
+                for (Schema schema : getSchemas()) {
+                    schemas.put(schema.getName(), schema);
+                }
+
+                for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
+                    Schema schema = schemas.get(entry.getKey().getValue(1));
+
+                    Table<Record> fkTable = (Table<Record>) schema.getTable(entry.getKey().getValue(2, String.class));
+                    TableField<Record, ?>[] fkFields = new TableField[entry.getValue().size()];
+
+                    for (int i = 0; i < entry.getValue().size(); i++) {
+                        Record record = entry.getValue().get(i);
+                        fkFields[i] = (TableField<Record, ?>) fkTable.field(record.getValue(7, String.class));
+                    }
+
+                    references.add(new ReferenceImpl<Record, Record>(this, fkTable, fkFields));
+                }
+            }
+            catch (SQLException e) {
+                log.info("Foreign key access error", e.getMessage());
+            }
+
+            return references;
         }
     }
 }

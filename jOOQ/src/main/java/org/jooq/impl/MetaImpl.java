@@ -274,6 +274,11 @@ class MetaImpl implements Meta, Serializable {
 
                 switch (configuration.dialect().family()) {
 
+                    // [#3977] PostgreSQL returns other object types, too
+                    case POSTGRES:
+                        types = new String[] { "TABLE", "VIEW", "SYSTEM_TABLE", "SYSTEM_VIEW", "MATERIALIZED VIEW" };
+                        break;
+
                     // [#2323] SQLite JDBC drivers have a bug. They return other
                     // object types, too: https://bitbucket.org/xerial/sqlite-jdbc/issue/68
                     case SQLITE:

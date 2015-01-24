@@ -62,6 +62,7 @@ import java.util.List;
 
 import org.jooq.Catalog;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Meta;
 import org.jooq.Record1;
 import org.jooq.Record2;
@@ -73,6 +74,7 @@ import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.UDT;
+import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
 import org.jooq.impl.SQLDataType;
 import org.jooq.test.BaseTest;
@@ -421,6 +423,43 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 assertEquals(0, field.getDataType().length());
             }
         }
+    }
+
+    public void testMetaReferences() throws Exception {
+        // TODO: Reactivate this. For now, it is simply too slow...
+        assumeFamilyNotIn(HANA);
+
+        Meta meta = create().meta();
+        Table<?> author = null;
+        for (Table<?> table : meta.getTables()) {
+            if (table.getName().equals(TAuthor().getName())) {
+                author = table;
+                break;
+            }
+        }
+
+        assertNotNull(author);
+        UniqueKey<?> authorPK = author.getPrimaryKey();
+
+        assertNotNull(authorPK);
+        List<? extends ForeignKey<?, ?>> references = authorPK.getReferences();
+
+        assertFalse(references.isEmpty());
+        ForeignKey<?, ?> bookFK = null;
+        UniqueKey<?> bookPK = null;
+
+        for (ForeignKey<?, ?> reference : references) {
+            if (reference.getTable().getName().equals(TBook().getName())) {
+                bookFK = reference;
+                bookPK = reference.getKey();
+                break;
+            }
+        }
+
+        assertNotNull(bookFK);
+        assertNotNull(bookPK);
+        assertEquals(1, bookPK.getFieldsArray().length);
+        assertEquals(1, bookFK.getFieldsArray().length);
     }
 
     public void testMetaData() throws Exception {

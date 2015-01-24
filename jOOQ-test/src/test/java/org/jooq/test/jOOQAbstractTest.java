@@ -1555,6 +1555,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testMetaReferences() throws Exception {
+        new MetaDataTests(this).testMetaReferences();
+    }
+
+    @Test
     public void testNumbers() throws Exception {
         new DataTypeTests(this).testNumbers();
     }

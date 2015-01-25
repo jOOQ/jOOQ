@@ -483,6 +483,69 @@ class MetaImpl implements Meta, Serializable {
             }
         }
 
+        @Override
+        @SuppressWarnings("unchecked")
+        public List<ForeignKey<Record, ?>> getReferences() {
+            List<ForeignKey<Record, ?>> references = new ArrayList<ForeignKey<Record, ?>>();
+
+            try {
+                ResultSet rs = meta().getImportedKeys(null, getSchema().getName(), getName());
+                Result<Record> result =
+                create.fetch(
+                    rs,
+                    String.class,  // PKTABLE_CAT
+                    String.class,  // PKTABLE_SCHEM
+                    String.class,  // PKTABLE_NAME
+                    String.class,  // PKCOLUMN_NAME
+                    String.class,  // FKTABLE_CAT
+
+                    String.class,  // FKTABLE_SCHEM
+                    String.class,  // FKTABLE_NAME
+                    String.class,  // FKCOLUMN_NAME
+                    Short.class,   // KEY_SEQ
+                    Short.class,   // UPDATE_RULE
+
+                    Short.class,   // DELETE_RULE
+                    String.class,  // FK_NAME
+                    String.class   // PK_NAME
+                );
+
+                Map<Record, Result<Record>> groups = result.intoGroups(new Field[] {
+                    result.field(0),
+                    result.field(1),
+                    result.field(2),
+                    result.field(11),
+                    result.field(12),
+                });
+
+                Map<String, Schema> schemas = new HashMap<String, Schema>();
+                for (Schema schema : getSchemas()) {
+                    schemas.put(schema.getName(), schema);
+                }
+
+                for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
+                    Schema schema = schemas.get(entry.getKey().getValue(1));
+
+                    Table<Record> pkTable = (Table<Record>) schema.getTable(entry.getKey().getValue(2, String.class));
+                    TableField<Record, ?>[] pkFields = new TableField[entry.getValue().size()];
+                    TableField<Record, ?>[] fkFields = new TableField[entry.getValue().size()];
+
+                    for (int i = 0; i < entry.getValue().size(); i++) {
+                        Record record = entry.getValue().get(i);
+                        pkFields[i] = (TableField<Record, ?>) pkTable.field(record.getValue(3, String.class));
+                        fkFields[i] = (TableField<Record, ?>)         field(record.getValue(7, String.class));
+                    }
+
+                    references.add(new ReferenceImpl<Record, Record>(new MetaUniqueKey(pkTable, pkFields), this, fkFields));
+                }
+            }
+            catch (SQLException e) {
+                log.info("Primary key access error", e.getMessage());
+            }
+
+            return references;
+        }
+
         /* [pro] xx
         xxxxxxx xxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx x
 
@@ -629,7 +692,8 @@ class MetaImpl implements Meta, Serializable {
                     result.field(4),
                     result.field(5),
                     result.field(6),
-                    result.field(11)
+                    result.field(11),
+                    result.field(12),
                 });
 
                 Map<String, Schema> schemas = new HashMap<String, Schema>();

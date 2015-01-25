@@ -431,22 +431,33 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         Meta meta = create().meta();
         Table<?> author = null;
+        Table<?> book = null;
+
+        ForeignKey<?, ?> bookFK;
+        UniqueKey<?> bookPK;
+
+        List<? extends ForeignKey<?, ?>> references;
+
         for (Table<?> table : meta.getTables()) {
-            if (table.getName().equals(TAuthor().getName())) {
+            if (table.getName().equals(TAuthor().getName()))
                 author = table;
-                break;
-            }
+
+            if (table.getName().equals(TBook().getName()))
+                book = table;
         }
 
         assertNotNull(author);
+        assertNotNull(book);
+
+        // From T_AUTHOR to T_BOOK
         UniqueKey<?> authorPK = author.getPrimaryKey();
-
         assertNotNull(authorPK);
-        List<? extends ForeignKey<?, ?>> references = authorPK.getReferences();
 
+        references = authorPK.getReferences();
         assertFalse(references.isEmpty());
-        ForeignKey<?, ?> bookFK = null;
-        UniqueKey<?> bookPK = null;
+
+        bookFK = null;
+        bookPK = null;
 
         for (ForeignKey<?, ?> reference : references) {
             if (reference.getTable().getName().equals(TBook().getName())) {
@@ -460,6 +471,30 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertNotNull(bookPK);
         assertEquals(1, bookPK.getFieldsArray().length);
         assertEquals(1, bookFK.getFieldsArray().length);
+        assertEquals(TBook(), bookFK.getTable());
+        assertEquals(TAuthor(), bookPK.getTable());
+
+        // From T_BOOK to T_AUTHOR
+        references = book.getReferences();
+        assertFalse(references.isEmpty());
+
+        bookFK = null;
+        bookPK = null;
+
+        for (ForeignKey<?, ?> reference : references) {
+            if (reference.getKey().getTable().getName().equals(TAuthor().getName())) {
+                bookFK = reference;
+                bookPK = reference.getKey();
+                break;
+            }
+        }
+
+        assertNotNull(bookFK);
+        assertNotNull(bookPK);
+        assertEquals(1, bookPK.getFieldsArray().length);
+        assertEquals(1, bookFK.getFieldsArray().length);
+        assertEquals(TBook(), bookFK.getTable());
+        assertEquals(TAuthor(), bookPK.getTable());
     }
 
     public void testMetaData() throws Exception {

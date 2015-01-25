@@ -163,7 +163,9 @@ public class Explorer extends Application {
             uiRecord.getChildren().clear();
             for (int i = 0; i < newV.fields().length; i++) {
                 Field<?> field = newV.field(i);
-                uiRecord.addRow(i, JOOQFX.label(field, label -> label.setMinWidth(100)), JOOQFX.field(field));
+                uiRecord.addRow(i,
+                    JOOQFX.label(ctx, field, label -> label.setMinWidth(100)),
+                    JOOQFX.field(ctx, field));
             }
 
             uiNavigation.getTabs().clear();

@@ -44,45 +44,61 @@ import java.sql.Date;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import org.jooq.DSLContext;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.explorer.components.field.CDateField;
 import org.jooq.explorer.components.field.CField;
 import org.jooq.explorer.components.field.CFieldLabel;
+import org.jooq.explorer.components.field.CForeignKeyField;
 import org.jooq.explorer.components.field.COtherField;
 import org.jooq.explorer.components.field.CVarcharField;
 
 /**
  * @author Lukas Eder
  */
-@SuppressWarnings("restriction")
 public class JOOQFX {
 
-    public static <T> CField<T> field(Field<T> field) {
-        return field(field, r -> {});
+    public static <T> CField<T> field(DSLContext ctx, Field<T> field) {
+        return field(ctx, field, r -> {});
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> CField<T> field(Field<T> field, Consumer<? super CField<T>> consumer) {
+    public static <T> CField<T> field(DSLContext ctx, Field<T> field, Consumer<? super CField<T>> consumer) {
         return JOOQFX.create(
             () -> {
                 Class<T> type = field.getType();
-                CField<?> result;
-
-                if (type == String.class) {
-                    result = new CVarcharField((Field<String>) field);
-                }
-                else if (type == Date.class) {
-                    result = new CDateField((Field<Date>) field);
-                }
-                else {
-                    result = new COtherField((Field<Object>) field);
-                }
+                CField<?> result = null;
 
                 if (field instanceof TableField) {
                     Table<?> table = ((TableField) field).getTable();
 
+                    fkLoop:
+                    for (ForeignKey key : table.getReferences()) {
+                        TableField[] fields = key.getFieldsArray();
+
+                        for (int i = 0; i < fields.length; i++) {
+                            if (fields[i].equals(field)) {
+                                result = new CForeignKeyField(ctx, field, key);
+
+                                break fkLoop;
+                            }
+                        }
+                    }
+                }
+
+                if (result == null) {
+                    if (type == String.class) {
+                        result = new CVarcharField((Field<String>) field);
+                    }
+                    else if (type == Date.class) {
+                        result = new CDateField((Field<Date>) field);
+                    }
+                    else {
+                        result = new COtherField((Field<Object>) field);
+                    }
                 }
 
                 return (CField<T>) result;
@@ -91,11 +107,11 @@ public class JOOQFX {
         );
     }
 
-    public static CFieldLabel label(Field<?> field) {
-        return label(field, r -> {});
+    public static CFieldLabel label(DSLContext ctx, Field<?> field) {
+        return label(ctx, field, r -> {});
     }
 
-    public static CFieldLabel label(Field<?> field, Consumer<? super CFieldLabel> consumer) {
+    public static CFieldLabel label(DSLContext ctx, Field<?> field, Consumer<? super CFieldLabel> consumer) {
         return create(() -> new CFieldLabel(field), consumer);
     }
 

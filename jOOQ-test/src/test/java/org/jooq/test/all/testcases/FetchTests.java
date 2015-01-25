@@ -486,6 +486,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public void testFetchValue() throws Exception {
         assertEquals(1, (int) create().fetchValue(selectOne()));
+        assertSame(asList(1, 2, 3, 4), create().fetchValues(TBook_ID()));
     }
 
     public void testFetchExists() throws Exception {

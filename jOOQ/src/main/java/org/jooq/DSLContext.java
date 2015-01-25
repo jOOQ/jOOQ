@@ -5878,6 +5878,15 @@ public interface DSLContext extends Scope {
     <T, R extends Record1<T>> List<T> fetchValues(ResultQuery<R> query) throws DataAccessException;
 
     /**
+     * Fetch all values in a given {@link Table}'s {@link TableField}
+     *
+     * @param field The field for which to fetch all values.
+     * @return The values.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    <T> List<T> fetchValues(TableField<?, T> field) throws DataAccessException;
+
+    /**
      * Execute a {@link Select} query in the context of this <code>DSLContext</code> and return
      * a <code>COUNT(*)</code> value.
      * <p>

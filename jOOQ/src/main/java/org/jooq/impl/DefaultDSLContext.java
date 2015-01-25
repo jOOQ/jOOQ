@@ -187,6 +187,7 @@ import org.jooq.SelectSelectStep;
 import org.jooq.SelectWhereStep;
 import org.jooq.Sequence;
 import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.TableRecord;
 import org.jooq.TransactionProvider;
@@ -2199,6 +2200,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public <T, R extends Record1<T>> List<T> fetchValues(ResultQuery<R> query) {
         return (List) fetch(query).getValues(0);
+    }
+
+    @Override
+    public <T> List<T> fetchValues(TableField<?, T> field) {
+        return fetchValues(select(field).from(field.getTable()));
     }
 
     private final <T, R extends Record1<T>> T value1(R record) {

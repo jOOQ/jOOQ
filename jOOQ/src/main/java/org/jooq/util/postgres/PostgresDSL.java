@@ -211,6 +211,132 @@ public class PostgresDSL extends DSL {
     }
 
     /**
+     * The PostgreSQL <code>array_fill(anyelement, int[])</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {7,7,7} = array_fill(7, ARRAY[3])
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Field<T[]> arrayFill(T value, Integer[] dimensions) {
+        return arrayFill(val(value), val(dimensions));
+    }
+
+    /**
+     * The PostgreSQL <code>array_fill(anyelement, int[])</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {7,7,7} = array_fill(7, ARRAY[3])
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Field<T[]> arrayFill(Field<T> value, Integer[] dimensions) {
+        return arrayFill(nullSafe(value), val(dimensions));
+    }
+
+    /**
+     * The PostgreSQL <code>array_fill(anyelement, int[])</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {7,7,7} = array_fill(7, ARRAY[3])
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Field<T[]> arrayFill(T value, Field<Integer[]> dimensions) {
+        return arrayFill(val(value), nullSafe(dimensions));
+    }
+
+    /**
+     * The PostgreSQL <code>array_fill(anyelement, int[])</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {7,7,7} = array_fill(7, ARRAY[3])
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Field<T[]> arrayFill(Field<T> value, Field<Integer[]> dimensions) {
+        return field("{array_fill}({0}, {1})", nullSafe(value).getDataType().getArrayDataType(), nullSafe(value), nullSafe(dimensions));
+    }
+
+    /**
+     * The PostgreSQL <code>array_fill(anyelement, int[], int[])</code> function.
+     * <p>
+     * Example: <code><pre>
+     * [2:4]={7,7,7} = array_fill(7, ARRAY[3], ARRAY[2])
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Field<T[]> arrayFill(T value, Integer[] dimensions, Integer[] bounds) {
+        return arrayFill(val(value), val(dimensions), val(bounds));
+    }
+
+    /**
+     * The PostgreSQL <code>array_fill(anyelement, int[], int[])</code> function.
+     * <p>
+     * Example: <code><pre>
+     * [2:4]={7,7,7} = array_fill(7, ARRAY[3], ARRAY[2])
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Field<T[]> arrayFill(Field<T> value, Integer[] dimensions, Integer[] bounds) {
+        return arrayFill(nullSafe(value), val(dimensions), val(bounds));
+    }
+
+    /**
+     * The PostgreSQL <code>array_fill(anyelement, int[], int[])</code> function.
+     * <p>
+     * Example: <code><pre>
+     * [2:4]={7,7,7} = array_fill(7, ARRAY[3], ARRAY[2])
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Field<T[]> arrayFill(T value, Field<Integer[]> dimensions, Field<Integer[]> bounds) {
+        return arrayFill(val(value), nullSafe(dimensions), nullSafe(bounds));
+    }
+
+    /**
+     * The PostgreSQL <code>array_fill(anyelement, int[], int[])</code> function.
+     * <p>
+     * Example: <code><pre>
+     * [2:4]={7,7,7} = array_fill(7, ARRAY[3], ARRAY[2])
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Field<T[]> arrayFill(Field<T> value, Field<Integer[]> dimensions, Field<Integer[]> bounds) {
+        return field("{array_fill}({0}, {1})", nullSafe(value).getDataType().getArrayDataType(), nullSafe(value), nullSafe(dimensions), nullSafe(bounds));
+    }
+
+    /**
+     * The PostgreSQL <code>array_length(anyarray, int)</code> function.
+     * <p>
+     * jOOQ currently doesn't support multi-dimensional arrays, so the dimension
+     * will always be <code>1</code>.
+     * <p>
+     * Example: <code><pre>
+     * 3 = array_length(array[1,2,3], 1)
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static Field<Integer> arrayLength(Object[] array) {
+        return arrayLength(val(array));
+    }
+
+    /**
+     * The PostgreSQL <code>array_length(anyarray, int)</code> function.
+     * <p>
+     * jOOQ currently doesn't support multi-dimensional arrays, so the dimension
+     * will always be <code>1</code>.
+     * <p>
+     * Example: <code><pre>
+     * 3 = array_length(array[1,2,3], 1)
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static Field<Integer> arrayLength(Field<? extends Object[]> array) {
+        return field("{array_length}({0}, 1)", SQLDataType.INTEGER, array);
+    }
+
+    /**
      * The PostgreSQL <code>array_to_string(anyarray, delimiter)</code> function.
      * <p>
      * Example: <code><pre>

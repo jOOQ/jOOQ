@@ -80,7 +80,7 @@ class Nvl2<T> extends AbstractFunction<T> {
                 return field("{nvl2}({0}, {1}, {2})", getDataType(), arg1, arg2, arg3);
 
             default:
-                return DSL.decode().when(arg1.isNotNull(), arg2).otherwise(arg3);
+                return DSL.when(arg1.isNotNull(), arg2).otherwise(arg3);
         }
     }
 }

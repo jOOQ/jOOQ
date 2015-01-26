@@ -452,7 +452,7 @@ class Function<T> extends AbstractField<T> implements
                 QueryPartList<Field<?>> expressions = new QueryPartList<Field<?>>();
 
                 for (QueryPart argument : arguments) {
-                    expressions.add(DSL.decode().when(filter, argument == ASTERISK ? one() : argument));
+                    expressions.add(DSL.when(filter, argument == ASTERISK ? one() : argument));
                 }
 
                 ctx.visit(expressions);

@@ -159,10 +159,10 @@ class Cast<T> extends AbstractFunction<T> {
         private final Field<Boolean> asDecodeNumberToBoolean() {
 
             // [#859] 0 => false, null => null, all else is true
-            return DSL.decode().value((Field<Integer>) field)
-                                   .when(inline(0), inline(false))
-                                   .when(inline((Integer) null), inline((Boolean) null))
-                                   .otherwise(inline(true));
+            return DSL.choose((Field<Integer>) field)
+                      .when(inline(0), inline(false))
+                      .when(inline((Integer) null), inline((Boolean) null))
+                      .otherwise(inline(true));
         }
 
         @SuppressWarnings("unchecked")
@@ -170,11 +170,11 @@ class Cast<T> extends AbstractFunction<T> {
             Field<String> s = (Field<String>) field;
 
             // [#859] '0', 'f', 'false' => false, null => null, all else is true
-            return DSL.decode().when(s.equal(inline("0")), inline(false))
-                                   .when(DSL.lower(s).equal(inline("false")), inline(false))
-                                   .when(DSL.lower(s).equal(inline("f")), inline(false))
-                                   .when(s.isNull(), inline((Boolean) null))
-                                   .otherwise(inline(true));
+            return DSL.when(s.equal(inline("0")), inline(false))
+                      .when(DSL.lower(s).equal(inline("false")), inline(false))
+                      .when(DSL.lower(s).equal(inline("f")), inline(false))
+                      .when(s.isNull(), inline((Boolean) null))
+                      .otherwise(inline(true));
         }
 
         @SuppressWarnings("unchecked")

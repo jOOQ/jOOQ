@@ -82,9 +82,9 @@ class ConditionAsField extends AbstractFunction<Boolean> {
             case FIREBIRD:
 
                 // [#3206] Correct implementation of three-valued logic is important here
-                return DSL.decode().when(condition, inline(true))
-                                   .when(not(condition), inline(false))
-                                   .otherwise(inline((Boolean) null));
+                return DSL.when(condition, inline(true))
+                          .when(not(condition), inline(false))
+                          .otherwise(inline((Boolean) null));
 
             // These databases can inline predicates in column expression contexts
             case DERBY:

@@ -78,12 +78,12 @@ class Every extends Function<Boolean> {
                 final Field<Integer> sum = DSL.field("{0}", Integer.class, new CustomQueryPart() {
                     @Override
                     public void accept(Context<?> c) {
-                        c.visit(DSL.sum(DSL.decode().when(condition, zero()).otherwise(one())));
+                        c.visit(DSL.sum(DSL.when(condition, zero()).otherwise(one())));
                         toSQLOverClause(c);
                     }
                 });
 
-                ctx.visit(DSL.decode().when(sum.eq(zero()), inline(true)).otherwise(inline(false)));
+                ctx.visit(DSL.when(sum.eq(zero()), inline(true)).otherwise(inline(false)));
                 break;
         }
     }

@@ -402,7 +402,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals("i", r1.field(0).getName());
             assertEquals("n", r1.field(1).getName());
             assertEquals("s", r1.field(2).getName());
-            assertEquals(asList(1, new BigDecimal("10.5"), "abcde"), r1.get(0).intoList());
+            assertEquals(asList("1", "10.5", "abcde"), asList(r1.get(0).into(String[].class)));
 
             // Checking of NOT NULL constraints
             assertEquals(1,

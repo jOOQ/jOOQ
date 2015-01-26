@@ -473,7 +473,7 @@ final class Utils {
         // An ad-hoc type resulting from a JOIN or arbitrary SELECT
         if (type == RecordImpl.class || type == Record.class) {
             final RowImpl row = new RowImpl(fields);
-            
+
             return new RecordFactory<R>() {
                 @Override
                 public R newInstance() {
@@ -2649,6 +2649,38 @@ final class Utils {
 
             default:
                 break;
+        }
+    }
+
+    static void toSQLDDLTypeDeclaration(Context<?> ctx, DataType<?> type) {
+        String typeName = type.getTypeName(ctx.configuration());
+
+        if (type.hasLength()) {
+            if (type.length() > 0) {
+                ctx.keyword(typeName).sql("(").sql(type.length()).sql(")");
+            }
+
+            // Some databases don't allow for length-less VARCHAR, VARBINARY types
+            else {
+                String castTypeName = type.getCastTypeName(ctx.configuration());
+                if (!typeName.equals(castTypeName)) {
+                    ctx.keyword(castTypeName);
+                }
+                else {
+                    ctx.keyword(typeName);
+                }
+            }
+        }
+        else if (type.hasPrecision() && type.precision() > 0) {
+            if (type.hasScale()) {
+                ctx.keyword(typeName).sql("(").sql(type.precision()).sql(", ").sql(type.scale()).sql(")");
+            }
+            else {
+                ctx.keyword(typeName).sql("(").sql(type.precision()).sql(")");
+            }
+        }
+        else {
+            ctx.keyword(typeName);
         }
     }
 }

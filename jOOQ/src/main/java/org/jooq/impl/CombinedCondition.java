@@ -45,6 +45,7 @@ import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_AND;
 import static org.jooq.Clause.CONDITION_OR;
 import static org.jooq.Operator.AND;
+import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.trueCondition;
 
 import java.util.ArrayList;
@@ -112,7 +113,10 @@ class CombinedCondition extends AbstractCondition {
     @Override
     public final void accept(Context<?> ctx) {
         if (conditions.isEmpty()) {
-            ctx.visit(trueCondition());
+            if (operator == AND)
+                ctx.visit(trueCondition());
+            else
+                ctx.visit(falseCondition());
         }
         else if (conditions.size() == 1) {
             ctx.visit(conditions.get(0));

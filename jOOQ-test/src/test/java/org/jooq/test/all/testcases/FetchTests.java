@@ -105,6 +105,7 @@ import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
+import org.jooq.exception.TooManyRowsException;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultConnectionProvider;
 import org.jooq.impl.DefaultExecuteListener;
@@ -478,7 +479,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             q.fetchOne();
             fail();
         }
-        catch (InvalidResultException expected) {}
+        catch (TooManyRowsException expected) {}
 
         Record record = q.fetchAny();
         assertEquals("Coelho", record.getValue(TAuthor_LAST_NAME()));

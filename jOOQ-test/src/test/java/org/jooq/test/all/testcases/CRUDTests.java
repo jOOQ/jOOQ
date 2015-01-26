@@ -76,7 +76,8 @@ import org.jooq.UpdatableRecord;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataChangedException;
-import org.jooq.exception.InvalidResultException;
+import org.jooq.exception.NoDataFoundException;
+import org.jooq.exception.TooManyRowsException;
 import org.jooq.impl.DSL;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
@@ -201,7 +202,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             create().fetchOne(TAuthor());
             fail();
         }
-        catch (InvalidResultException expected) {}
+        catch (TooManyRowsException expected) {}
 
         A selectOne = create().fetchOne(TAuthor(), TAuthor_FIRST_NAME().equal("Paulo"));
         assertEquals("Paulo", selectOne.getValue(TAuthor_FIRST_NAME()));
@@ -359,7 +360,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         try {
             book.refresh();
         }
-        catch (InvalidResultException expected) {}
+        catch (NoDataFoundException expected) {}
 
         // Fetch the original record
         B book1 = create().fetchOne(TBook(), TBook_TITLE().equal("1984"));
@@ -619,7 +620,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         try {
             store.refresh();
         }
-        catch (InvalidResultException expected) {}
+        catch (NoDataFoundException expected) {}
 
         store.setValue(TBookStore_NAME(), "Rösslitor");
         assertEquals(1, store.store());

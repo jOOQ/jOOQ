@@ -78,6 +78,7 @@ import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
+import org.jooq.exception.TooManyRowsException;
 import org.jooq.impl.DSL;
 
 /**
@@ -727,11 +728,11 @@ public interface DSLContext extends Scope {
      * @param sql The SQL
      * @return The results from the executed query.
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
+     * @throws TooManyRowsException if the query returned more than one record
      */
     @Support
     @PlainSQL
-    Record fetchOne(String sql) throws DataAccessException, InvalidResultException;
+    Record fetchOne(String sql) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -758,11 +759,11 @@ public interface DSLContext extends Scope {
      * @return The results from the executed query. This may be
      *         <code>null</code> if the database returned no records
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
+     * @throws TooManyRowsException if the query returned more than one record
      */
     @Support
     @PlainSQL
-    Record fetchOne(String sql, Object... bindings) throws DataAccessException, InvalidResultException;
+    Record fetchOne(String sql, Object... bindings) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -791,11 +792,11 @@ public interface DSLContext extends Scope {
      * @return The results from the executed query. This may be
      *         <code>null</code> if the database returned no records
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
+     * @throws TooManyRowsException if the query returned more than one record
      */
     @Support
     @PlainSQL
-    Record fetchOne(String sql, QueryPart... parts) throws DataAccessException, InvalidResultException;
+    Record fetchOne(String sql, QueryPart... parts) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -818,12 +819,13 @@ public interface DSLContext extends Scope {
      * @return The result value from the executed query. This may be
      *         <code>null</code> if the database returned no records
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
-     *             or a record with more than one value.
+     * @throws TooManyRowsException if the query returned more than one record
+     * @throws InvalidResultException if the query returned a record with more
+     *             than one value
      */
     @Support
     @PlainSQL
-    Object fetchValue(String sql) throws DataAccessException, InvalidResultException;
+    Object fetchValue(String sql) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -850,12 +852,13 @@ public interface DSLContext extends Scope {
      * @return The results from the executed query. This may be
      *         <code>null</code> if the database returned no records
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
-     *             or a record with more than one value.
+     * @throws TooManyRowsException if the query returned more than one record
+     * @throws InvalidResultException if the query returned a record with more
+     *             than one value
      */
     @Support
     @PlainSQL
-    Object fetchValue(String sql, Object... bindings) throws DataAccessException, InvalidResultException;
+    Object fetchValue(String sql, Object... bindings) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -884,12 +887,13 @@ public interface DSLContext extends Scope {
      * @return The results from the executed query. This may be
      *         <code>null</code> if the database returned no records
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
-     *             or a record with more than one value.
+     * @throws TooManyRowsException if the query returned more than one record
+     * @throws InvalidResultException if the query returned a record with more
+     *             than one value
      */
     @Support
     @PlainSQL
-    Object fetchValue(String sql, QueryPart... parts) throws DataAccessException, InvalidResultException;
+    Object fetchValue(String sql, QueryPart... parts) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -1262,10 +1266,10 @@ public interface DSLContext extends Scope {
      * @param rs The JDBC ResultSet to fetch data from
      * @return The resulting jOOQ record
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
+     * @throws TooManyRowsException if the query returned more than one record
      */
     @Support
-    Record fetchOne(ResultSet rs) throws DataAccessException, InvalidResultException;
+    Record fetchOne(ResultSet rs) throws DataAccessException, TooManyRowsException;
 
     /**
      * Fetch a record from a JDBC {@link ResultSet} and transform it to a jOOQ
@@ -1281,10 +1285,10 @@ public interface DSLContext extends Scope {
      * @param fields The fields to use in the desired output
      * @return The resulting jOOQ record
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
+     * @throws TooManyRowsException if the query returned more than one record
      */
     @Support
-    Record fetchOne(ResultSet rs, Field<?>... fields) throws DataAccessException, InvalidResultException;
+    Record fetchOne(ResultSet rs, Field<?>... fields) throws DataAccessException, TooManyRowsException;
 
     /**
      * Fetch a record from a JDBC {@link ResultSet} and transform it to a jOOQ
@@ -1300,10 +1304,10 @@ public interface DSLContext extends Scope {
      * @param types The data types to use in the desired output
      * @return The resulting jOOQ record
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
+     * @throws TooManyRowsException if the query returned more than one record
      */
     @Support
-    Record fetchOne(ResultSet rs, DataType<?>... types) throws DataAccessException, InvalidResultException;
+    Record fetchOne(ResultSet rs, DataType<?>... types) throws DataAccessException, TooManyRowsException;
 
     /**
      * Fetch a record from a JDBC {@link ResultSet} and transform it to a jOOQ
@@ -1319,10 +1323,10 @@ public interface DSLContext extends Scope {
      * @param types The data types to use in the desired output
      * @return The resulting jOOQ record
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
+     * @throws TooManyRowsException if the query returned more than one record
      */
     @Support
-    Record fetchOne(ResultSet rs, Class<?>... types) throws DataAccessException, InvalidResultException;
+    Record fetchOne(ResultSet rs, Class<?>... types) throws DataAccessException, TooManyRowsException;
 
     /**
      * Fetch a record from a JDBC {@link ResultSet} and return the only
@@ -1334,11 +1338,12 @@ public interface DSLContext extends Scope {
      * @param rs The JDBC ResultSet to fetch data from
      * @return The resulting value
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
-     *             or a record with more than one value.
+     * @throws TooManyRowsException if the query returned more than one record
+     * @throws InvalidResultException if the query returned a record with more
+     *             than one value
      */
     @Support
-    Object fetchValue(ResultSet rs) throws DataAccessException, InvalidResultException;
+    Object fetchValue(ResultSet rs) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
      * Fetch a record from a JDBC {@link ResultSet} and return the only
@@ -1354,11 +1359,12 @@ public interface DSLContext extends Scope {
      * @param field The field to use in the desired output
      * @return The resulting value
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
-     *             or a record with more than one value.
+     * @throws TooManyRowsException if the query returned more than one record
+     * @throws InvalidResultException if the query returned a record with more
+     *             than one value
      */
     @Support
-    <T> T fetchValue(ResultSet rs, Field<T> field) throws DataAccessException, InvalidResultException;
+    <T> T fetchValue(ResultSet rs, Field<T> field) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
      * Fetch a record from a JDBC {@link ResultSet} and return the only
@@ -1374,11 +1380,12 @@ public interface DSLContext extends Scope {
      * @param type The data type to use in the desired output
      * @return The resulting value
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
-     *             or a record with more than one value.
+     * @throws TooManyRowsException if the query returned more than one record
+     * @throws InvalidResultException if the query returned a record with more
+     *             than one value
      */
     @Support
-    <T> T fetchValue(ResultSet rs, DataType<T> type) throws DataAccessException, InvalidResultException;
+    <T> T fetchValue(ResultSet rs, DataType<T> type) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
      * Fetch a record from a JDBC {@link ResultSet} and return the only
@@ -1394,11 +1401,12 @@ public interface DSLContext extends Scope {
      * @param type The data types to use in the desired output
      * @return The resulting value
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
-     *             or a record with more than one value.
+     * @throws TooManyRowsException if the query returned more than one record
+     * @throws InvalidResultException if the query returned a record with more
+     *             than one value
      */
     @Support
-    <T> T fetchValue(ResultSet rs, Class<T> type) throws DataAccessException, InvalidResultException;
+    <T> T fetchValue(ResultSet rs, Class<T> type) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
      * Fetch a result from a JDBC {@link ResultSet} and return the only
@@ -5850,10 +5858,10 @@ public interface DSLContext extends Scope {
      * @param query The query to execute
      * @return The record
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
+     * @throws TooManyRowsException if the query returned more than one record
      * @see ResultQuery#fetchOne()
      */
-    <R extends Record> R fetchOne(ResultQuery<R> query) throws DataAccessException, InvalidResultException;
+    <R extends Record> R fetchOne(ResultQuery<R> query) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute a {@link ResultQuery} in the context of this
@@ -5862,10 +5870,11 @@ public interface DSLContext extends Scope {
      * @param query The query to execute
      * @return The value.
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
-     *             or a record with more than one value.
+     * @throws TooManyRowsException if the query returned more than one record
+     * @throws InvalidResultException if the query returned a record with more
+     *             than one value
      */
-    <T, R extends Record1<T>> T fetchValue(ResultQuery<R> query) throws DataAccessException, InvalidResultException;
+    <T, R extends Record1<T>> T fetchValue(ResultQuery<R> query) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
      * Execute a {@link ResultQuery} in the context of this
@@ -6025,10 +6034,10 @@ public interface DSLContext extends Scope {
      *
      * @return The record or <code>null</code> if no record was returned
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
+     * @throws TooManyRowsException if the query returned more than one record
      */
     @Support
-    <R extends Record> R fetchOne(Table<R> table) throws DataAccessException, InvalidResultException;
+    <R extends Record> R fetchOne(Table<R> table) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute and return zero or one record for
@@ -6040,11 +6049,10 @@ public interface DSLContext extends Scope {
      *
      * @return The record or <code>null</code> if no record was returned
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
+     * @throws TooManyRowsException if the query returned more than one record
      */
     @Support
-    <R extends Record> R fetchOne(Table<R> table, Condition condition) throws DataAccessException,
-        InvalidResultException;
+    <R extends Record> R fetchOne(Table<R> table, Condition condition) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute and return zero or one record for

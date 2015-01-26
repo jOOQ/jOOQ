@@ -173,11 +173,13 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
             ctx.qualify(false);
 
             for (int i = 0; i < columnFields.size(); i++) {
-                ctx.visit(columnFields.get(i))
-                   .sql(" ")
-                   .sql(columnTypes.get(i).getCastTypeName(ctx.configuration()));
+                DataType<?> type = columnTypes.get(i);
 
-                if (columnTypes.get(i).nullable())
+                ctx.visit(columnFields.get(i))
+                   .sql(" ");
+                Utils.toSQLDDLTypeDeclaration(ctx, type);
+
+                if (type.nullable())
                     ctx.sql(" ").keyword("null");
                 else
                     ctx.sql(" ").keyword("not null");

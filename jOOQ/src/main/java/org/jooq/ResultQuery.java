@@ -56,6 +56,7 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
+import org.jooq.exception.TooManyRowsException;
 import org.jooq.impl.DefaultRecordMapper;
 
 /**
@@ -326,9 +327,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
+     * @throws TooManyRowsException if the query returned more than one record
      */
-    <T> T fetchOne(Field<T> field) throws DataAccessException, InvalidResultException;
+    <T> T fetchOne(Field<T> field) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -340,9 +341,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
+     * @throws TooManyRowsException if the query returned more than one record
      */
-    <T> T fetchOne(Field<?> field, Class<? extends T> type) throws DataAccessException, InvalidResultException;
+    <T> T fetchOne(Field<?> field, Class<? extends T> type) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -354,10 +355,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
+     * @throws TooManyRowsException if the query returned more than one record
      */
-    <T, U> U fetchOne(Field<T> field, Converter<? super T, U> converter) throws DataAccessException,
-        InvalidResultException;
+    <T, U> U fetchOne(Field<T> field, Converter<? super T, U> converter) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -369,9 +369,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
+     * @throws TooManyRowsException if the query returned more than one record
      */
-    Object fetchOne(int fieldIndex) throws DataAccessException, InvalidResultException;
+    Object fetchOne(int fieldIndex) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -383,9 +383,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
+     * @throws TooManyRowsException if the query returned more than one record
      */
-    <T> T fetchOne(int fieldIndex, Class<? extends T> type) throws DataAccessException, InvalidResultException;
+    <T> T fetchOne(int fieldIndex, Class<? extends T> type) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -397,9 +397,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
+     * @throws TooManyRowsException if the query returned more than one record
      */
-    <U> U fetchOne(int fieldIndex, Converter<?, U> converter) throws DataAccessException, InvalidResultException;
+    <U> U fetchOne(int fieldIndex, Converter<?, U> converter) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -411,9 +411,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
+     * @throws TooManyRowsException if the query returned more than one record
      */
-    Object fetchOne(String fieldName) throws DataAccessException, InvalidResultException;
+    Object fetchOne(String fieldName) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -425,9 +425,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
+     * @throws TooManyRowsException if the query returned more than one record
      */
-    <T> T fetchOne(String fieldName, Class<? extends T> type) throws DataAccessException, InvalidResultException;
+    <T> T fetchOne(String fieldName, Class<? extends T> type) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -439,9 +439,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
+     * @throws TooManyRowsException if the query returned more than one record
      */
-    <U> U fetchOne(String fieldName, Converter<?, U> converter) throws DataAccessException, InvalidResultException;
+    <U> U fetchOne(String fieldName, Converter<?, U> converter) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting record.
@@ -453,9 +453,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @return The resulting record or <code>null</code> if the query returns no
      *         records.
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
+     * @throws TooManyRowsException if the query returned more than one record
      */
-    R fetchOne() throws DataAccessException, InvalidResultException;
+    R fetchOne() throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting value into a
@@ -464,9 +464,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @return The custom mapped record or <code>null</code> if the query returned no
      *         records.
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
+     * @throws TooManyRowsException if the query returned more than one record
      */
-    <E> E fetchOne(RecordMapper<? super R, E> mapper) throws DataAccessException, InvalidResultException;
+    <E> E fetchOne(RecordMapper<? super R, E> mapper) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting record as a name/value
@@ -475,11 +475,11 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @return The resulting record or <code>null</code> if the query returns no
      *         records.
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
+     * @throws TooManyRowsException if the query returned more than one record
      * @see Result#intoMaps()
      * @see Record#intoMap()
      */
-    Map<String, Object> fetchOneMap() throws DataAccessException, InvalidResultException;
+    Map<String, Object> fetchOneMap() throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting record as an array
@@ -490,9 +490,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @return The resulting record or <code>null</code> if the query returns no
      *         records.
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
+     * @throws TooManyRowsException if the query returned more than one record
      */
-    Object[] fetchOneArray() throws DataAccessException, InvalidResultException;
+    Object[] fetchOneArray() throws DataAccessException, TooManyRowsException;
 
     /**
      * Map resulting records onto a custom type.
@@ -514,10 +514,10 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
-     * @throws InvalidResultException if the query returned more than one record
+     * @throws TooManyRowsException if the query returned more than one record
      * @see DefaultRecordMapper
      */
-    <E> E fetchOneInto(Class<? extends E> type) throws DataAccessException, MappingException, InvalidResultException;
+    <E> E fetchOneInto(Class<? extends E> type) throws DataAccessException, MappingException, TooManyRowsException;
 
     /**
      * Map resulting records onto a custom record.
@@ -541,9 +541,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @see Record#into(Table)
      * @see Result#into(Table)
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
+     * @throws TooManyRowsException if the query returned more than one record
      */
-    <Z extends Record> Z fetchOneInto(Table<Z> table) throws DataAccessException, InvalidResultException;
+    <Z extends Record> Z fetchOneInto(Table<Z> table) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting value for a

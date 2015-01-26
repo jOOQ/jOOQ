@@ -126,7 +126,7 @@ import org.jooq.UpdatableRecord;
 import org.jooq.conf.BackslashEscaping;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
-import org.jooq.exception.InvalidResultException;
+import org.jooq.exception.TooManyRowsException;
 import org.jooq.impl.Utils.Cache.CachedOperation;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
@@ -1125,17 +1125,17 @@ final class Utils {
      *
      * @param list The list
      * @return The only element from the list or <code>null</code>
-     * @throws InvalidResultException Thrown if the list contains more than one
+     * @throws TooManyRowsException Thrown if the list contains more than one
      *             element
      */
-    static final <R extends Record> R filterOne(List<R> list) throws InvalidResultException {
+    static final <R extends Record> R filterOne(List<R> list) throws TooManyRowsException {
         int size = list.size();
 
         if (size == 1) {
             return list.get(0);
         }
         else if (size > 1) {
-            throw new InvalidResultException("Too many rows selected : " + size);
+            throw new TooManyRowsException("Too many rows selected : " + size);
         }
 
         return null;
@@ -1150,15 +1150,15 @@ final class Utils {
      *
      * @param cursor The cursor
      * @return The only element from the cursor or <code>null</code>
-     * @throws InvalidResultException Thrown if the cursor returns more than one
+     * @throws TooManyRowsException Thrown if the cursor returns more than one
      *             element
      */
-    static final <R extends Record> R fetchOne(Cursor<R> cursor) throws InvalidResultException {
+    static final <R extends Record> R fetchOne(Cursor<R> cursor) throws TooManyRowsException {
         try {
             R record = cursor.fetchOne();
 
             if (cursor.hasNext()) {
-                throw new InvalidResultException("Cursor returned more than one result");
+                throw new TooManyRowsException("Cursor returned more than one result");
             }
 
             return record;

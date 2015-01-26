@@ -42,6 +42,7 @@
 package org.jooq.test;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.nCopies;
 import static org.jooq.conf.StatementType.STATIC_STATEMENT;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.countDistinct;
@@ -87,6 +88,8 @@ import static org.jooq.test.postgres.generatedclasses.Tables.V_LIBRARY;
 import static org.jooq.test.postgres.generatedclasses.Tables.X_UNUSED;
 import static org.jooq.util.postgres.PostgresDSL.arrayAppend;
 import static org.jooq.util.postgres.PostgresDSL.arrayCat;
+import static org.jooq.util.postgres.PostgresDSL.arrayFill;
+import static org.jooq.util.postgres.PostgresDSL.arrayLength;
 import static org.jooq.util.postgres.PostgresDSL.arrayPrepend;
 import static org.jooq.util.postgres.PostgresDSL.arrayToString;
 import static org.jooq.util.postgres.PostgresDSL.only;
@@ -1033,6 +1036,34 @@ public class PostgresTest extends jOOQAbstractTest<
         assertEquals(asList("a", "b"), asList(r5.value4()));
         assertNull(r5.value5());
         assertEquals(asList("a", null, "c"), asList(r5.value6()));
+
+        // array_fill()
+        // ---------------------------------------------------------------------
+        Record4<Integer[], Integer[], Integer[], Integer[]> r6 = create()
+        .select(
+            arrayFill(1, new Integer[] { 3 }),
+            arrayFill(val(1), new Integer[] { 3 }),
+            arrayFill(1, val(new Integer[] { 3 })),
+            arrayFill(val(1), val(new Integer[] { 3 }))
+        )
+        .fetchOne();
+
+        assertEquals(nCopies(3, 1), asList(r6.value1()));
+        assertEquals(nCopies(3, 1), asList(r6.value2()));
+        assertEquals(nCopies(3, 1), asList(r6.value3()));
+        assertEquals(nCopies(3, 1), asList(r6.value4()));
+
+        // array_length()
+        // ---------------------------------------------------------------------
+        Record2<Integer, Integer> r7 = create()
+        .select(
+            arrayLength(new Integer[] { 1, 2, 3 }),
+            arrayLength(val(new Integer[] { 1, 2, 3 }))
+        )
+        .fetchOne();
+
+        assertEquals(3, (int) r7.value1());
+        assertEquals(3, (int) r7.value2());
     }
 
     @Test

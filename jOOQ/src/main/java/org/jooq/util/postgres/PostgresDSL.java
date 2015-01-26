@@ -42,9 +42,12 @@ package org.jooq.util.postgres;
 
 import static org.jooq.SQLDialect.POSTGRES;
 
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.Record1;
 import org.jooq.SQLDialect;
+import org.jooq.Select;
 import org.jooq.Support;
 import org.jooq.Table;
 import org.jooq.impl.DSL;
@@ -65,6 +68,18 @@ public class PostgresDSL extends DSL {
     // -------------------------------------------------------------------------
     // PostgreSQL-specific array functions
     // -------------------------------------------------------------------------
+
+    /**
+     * The PostgreSQL <code>array(select)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {1, 2, 3} = array(select 1 union select 2 union select 3)
+     * </pre></code>
+     */
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public static <T> Field<T[]> array(Select<? extends Record1<T>> select) {
+        return DSL.field("array({0})", (DataType) select.getSelect().get(0).getDataType().getArrayDataType(), select);
+    }
 
     /**
      * The PostgreSQL <code>array_append(anyarray, anyelement)</code> function.

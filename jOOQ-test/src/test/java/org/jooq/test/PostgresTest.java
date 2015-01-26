@@ -86,6 +86,7 @@ import static org.jooq.test.postgres.generatedclasses.Tables.V_AUTHOR;
 import static org.jooq.test.postgres.generatedclasses.Tables.V_BOOK;
 import static org.jooq.test.postgres.generatedclasses.Tables.V_LIBRARY;
 import static org.jooq.test.postgres.generatedclasses.Tables.X_UNUSED;
+import static org.jooq.util.postgres.PostgresDSL.array;
 import static org.jooq.util.postgres.PostgresDSL.arrayAppend;
 import static org.jooq.util.postgres.PostgresDSL.arrayCat;
 import static org.jooq.util.postgres.PostgresDSL.arrayFill;
@@ -1064,6 +1065,25 @@ public class PostgresTest extends jOOQAbstractTest<
 
         assertEquals(3, (int) r7.value1());
         assertEquals(3, (int) r7.value2());
+
+        // array(select)
+        // ---------------------------------------------------------------------
+        Result<Record2<Integer, Integer[]>> r8 = create()
+        .select(
+            T_AUTHOR.ID,
+            array(select(T_BOOK.ID)
+                .from(T_BOOK)
+                .where(T_BOOK.AUTHOR_ID.eq(T_AUTHOR.ID))
+                .orderBy(T_BOOK.ID))
+        )
+        .from(T_AUTHOR)
+        .orderBy(T_AUTHOR.ID)
+        .fetch();
+
+        assertEquals(2, r8.size());
+        assertEquals(asList(1, 2), r8.getValues(0));
+        assertEquals(asList(1, 2), asList(r8.get(0).getValue(1, Integer[].class)));
+        assertEquals(asList(3, 4), asList(r8.get(1).getValue(1, Integer[].class)));
     }
 
     @Test

@@ -531,7 +531,6 @@ public interface ResultQuery<R extends Record> extends Query {
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
      */
     <T> T fetchAny(Field<T> field) throws DataAccessException;
 
@@ -545,7 +544,6 @@ public interface ResultQuery<R extends Record> extends Query {
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
      */
     <T> T fetchAny(Field<?> field, Class<? extends T> type) throws DataAccessException;
 
@@ -559,7 +557,6 @@ public interface ResultQuery<R extends Record> extends Query {
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
      */
     <T, U> U fetchAny(Field<T> field, Converter<? super T, U> converter) throws DataAccessException;
 
@@ -599,7 +596,6 @@ public interface ResultQuery<R extends Record> extends Query {
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
      */
     <U> U fetchAny(int fieldIndex, Converter<?, U> converter) throws DataAccessException;
 
@@ -725,9 +721,8 @@ public interface ResultQuery<R extends Record> extends Query {
      * @see Record#into(Table)
      * @see Result#into(Table)
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
      */
-    <Z extends Record> Z fetchAnyInto(Table<Z> table) throws DataAccessException, InvalidResultException;
+    <Z extends Record> Z fetchAnyInto(Table<Z> table) throws DataAccessException;
 
     /**
      * Execute the query and return the generated result as a list of name/value

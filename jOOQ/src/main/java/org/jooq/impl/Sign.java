@@ -76,7 +76,7 @@ class Sign extends AbstractFunction<Integer> {
             /* [/pro] */
 
             case SQLITE:
-                return DSL.decode()
+                return DSL
                     .when(((Field<Integer>) argument).greaterThan(zero()), one())
                     .when(((Field<Integer>) argument).lessThan(zero()), one().neg())
                     .otherwise(zero());

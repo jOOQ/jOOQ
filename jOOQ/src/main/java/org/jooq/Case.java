@@ -99,7 +99,7 @@ public interface Case {
      *      WHEN x &gt;= 2 THEN 'two'
      *      ELSE            'three'
      * END
-     * </pre></code> Instances of Case are created through the
+     * </pre></code>
      *
      * @param <T> The generic field type parameter
      * @param condition A condition to check in the case statement
@@ -115,7 +115,7 @@ public interface Case {
      *      WHEN x &gt;= 2 THEN 'two'
      *      ELSE            'three'
      * END
-     * </pre></code> Instances of Case are created through the
+     * </pre></code>
      *
      * @param <T> The generic field type parameter
      * @param condition A condition to check in the case statement
@@ -131,7 +131,7 @@ public interface Case {
      *      WHEN x &gt;= 2 THEN 'two'
      *      ELSE            'three'
      * END
-     * </pre></code> Instances of Case are created through the
+     * </pre></code>
      *
      * @param <T> The generic field type parameter
      * @param condition A condition to check in the case statement

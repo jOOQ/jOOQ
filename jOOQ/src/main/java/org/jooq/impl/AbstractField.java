@@ -312,7 +312,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final <Z> SortField<Z> sort(Map<T, Z> sortMap) {
-        CaseValueStep<T> decode = DSL.decode().value(this);
+        CaseValueStep<T> decode = DSL.choose(this);
         CaseWhenStep<T, Z> result = null;
 
         for (Entry<T, Z> entry : sortMap.entrySet()) {

@@ -93,6 +93,8 @@ import org.jooq.AlterTableStep;
 import org.jooq.ArrayAggOrderByStep;
 import org.jooq.ArrayRecord;
 import org.jooq.Case;
+import org.jooq.CaseConditionStep;
+import org.jooq.CaseValueStep;
 import org.jooq.CommonTableExpression;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -6947,6 +6949,113 @@ public class DSL {
     @Support
     public static <T> Field<T> field(Select<? extends Record1<T>> select) {
         return select.<T>asField();
+    }
+
+    /**
+     * Initialise a {@link Case} statement.
+     * <p>
+     * Choose is used as a method name to avoid name clashes with Java's
+     * reserved literal "case"
+     *
+     * @see Case
+     */
+    @Support
+    public static Case choose() {
+        return decode();
+    }
+
+    /**
+     * Initialise a {@link Case} statement.
+     * <p>
+     * This API can be used to create expressions of the type <code><pre>
+     * CASE value WHEN 1 THEN 'one'
+     *            WHEN 2 THEN 'two'
+     *            ELSE        'three'
+     * END
+     * </pre></code>
+     * <p>
+     * Choose is used as a method name to avoid name clashes with Java's
+     * reserved literal "case".
+     *
+     * @see Case
+     */
+    @Support
+    public static <V> CaseValueStep<V> choose(V value) {
+        return decode().value(value);
+    }
+
+    /**
+     * Initialise a {@link Case} statement.
+     * <p>
+     * This API can be used to create expressions of the type <code><pre>
+     * CASE value WHEN 1 THEN 'one'
+     *            WHEN 2 THEN 'two'
+     *            ELSE        'three'
+     * END
+     * </pre></code>
+     * <p>
+     * Choose is used as a method name to avoid name clashes with Java's
+     * reserved literal "case".
+     *
+     * @see Case
+     */
+    @Support
+    public static <V> CaseValueStep<V> choose(Field<V> value) {
+        return decode().value(value);
+    }
+
+    /**
+     * Initialise a {@link Case} statement.
+     * <p>
+     * This API can be used to create expressions of the type <code><pre>
+     * CASE WHEN x &lt; 1  THEN 'one'
+     *      WHEN x &gt;= 2 THEN 'two'
+     *      ELSE            'three'
+     * END
+     * </pre></code>
+     * <p>
+     * Choose is used as a method name to avoid name clashes with Java's
+     * reserved literal "case".
+     */
+    @Support
+    public static <T> CaseConditionStep<T> when(Condition condition, T result) {
+        return decode().when(condition, result);
+    }
+
+    /**
+     * Initialise a {@link Case} statement.
+     * <p>
+     * This API can be used to create expressions of the type <code><pre>
+     * CASE WHEN x &lt; 1  THEN 'one'
+     *      WHEN x &gt;= 2 THEN 'two'
+     *      ELSE            'three'
+     * END
+     * </pre></code>
+     * <p>
+     * Choose is used as a method name to avoid name clashes with Java's
+     * reserved literal "case".
+     */
+    @Support
+    public static <T> CaseConditionStep<T> when(Condition condition, Field<T> result) {
+        return decode().when(condition, result);
+    }
+
+    /**
+     * Initialise a {@link Case} statement.
+     * <p>
+     * This API can be used to create expressions of the type <code><pre>
+     * CASE WHEN x &lt; 1  THEN 'one'
+     *      WHEN x &gt;= 2 THEN 'two'
+     *      ELSE            'three'
+     * END
+     * </pre></code>
+     * <p>
+     * Choose is used as a method name to avoid name clashes with Java's
+     * reserved literal "case".
+     */
+    @Support
+    public static <T> CaseConditionStep<T> when(Condition condition, Select<? extends Record1<T>> result) {
+        return decode().when(condition, result);
     }
 
     /**

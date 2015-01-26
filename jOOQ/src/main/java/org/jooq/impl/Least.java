@@ -88,12 +88,12 @@ class Least<T> extends AbstractFunction<T> {
                     Field<?>[] remaining = new Field<?>[getArguments().length - 2];
                     System.arraycopy(getArguments(), 2, remaining, 0, remaining.length);
 
-                    return DSL.decode()
+                    return DSL
                         .when(first.lessThan(other), DSL.least(first, remaining))
                         .otherwise(DSL.least(other, remaining));
                 }
                 else {
-                    return DSL.decode()
+                    return DSL
                         .when(first.lessThan(other), first)
                         .otherwise(other);
                 }

@@ -66,6 +66,7 @@ import static org.jooq.impl.DSL.bitXor;
 import static org.jooq.impl.DSL.castNull;
 import static org.jooq.impl.DSL.ceil;
 import static org.jooq.impl.DSL.charLength;
+import static org.jooq.impl.DSL.choose;
 import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.cos;
@@ -134,6 +135,7 @@ import static org.jooq.impl.DSL.trim;
 import static org.jooq.impl.DSL.trunc;
 import static org.jooq.impl.DSL.upper;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.DSL.year;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -346,8 +348,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testCaseExpression() throws Exception {
-        Field<String> case1 = decode()
-            .value(TBook_PUBLISHED_IN())
+        Field<String> case1 =
+             choose(TBook_PUBLISHED_IN())
             .when(0, "ancient book")
             .as("case1");
 
@@ -360,22 +362,19 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         /* [/pro] */
         Field<?> case2 = noSubselects
-            ? decode()
-                .value(TBook_AUTHOR_ID())
+            ? choose(TBook_AUTHOR_ID())
                 .when(1, "Orwell")
                 .otherwise("unknown")
-            : decode()
-                .value(TBook_AUTHOR_ID())
+            : choose(TBook_AUTHOR_ID())
                 .when(1, create().select(TAuthor_LAST_NAME())
                     .from(TAuthor())
                     .where(TAuthor_ID().equal(TBook_AUTHOR_ID())).asField())
                 .otherwise("unknown");
 
-        Field<?> case3 = decode()
-            .value(1)
-            .when(1, "A")
-            .when(2, "B")
-            .otherwise("C");
+        Field<?> case3 = choose(1)
+                        .when(1, "A")
+                        .when(2, "B")
+                        .otherwise("C");
 
         SelectQuery<?> query = create().selectQuery();
         query.addSelect(case1, case2, case3);
@@ -399,8 +398,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("A", result.getValue(2, case3));
         assertEquals("A", result.getValue(3, case3));
 
-        Field<String> case4 = decode()
-            .when(TBook_PUBLISHED_IN().equal(1948), "probably orwell")
+        Field<String> case4 =
+             when(TBook_PUBLISHED_IN().equal(1948), "probably orwell")
             .when(TBook_PUBLISHED_IN().equal(1988), "probably coelho")
             .otherwise("don't know").as("case3");
 
@@ -423,9 +422,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testCaseExpressionWithSubquery() throws Exception {
         Result<Record1<Integer>> result =
         create().select(
-            decode().when(TAuthor_ID().eq(0), selectCount().from(TBook()).where(TBook_AUTHOR_ID().eq(TAuthor_ID())))
-                    .when(TAuthor_ID().eq(1), select(max(TBook_ID())).from(TBook()).where(TBook_AUTHOR_ID().eq(TAuthor_ID())))
-                    .otherwise(selectOne())
+            when(TAuthor_ID().eq(0), selectCount().from(TBook()).where(TBook_AUTHOR_ID().eq(TAuthor_ID())))
+            .when(TAuthor_ID().eq(1), select(max(TBook_ID())).from(TBook()).where(TBook_AUTHOR_ID().eq(TAuthor_ID())))
+            .otherwise(selectOne())
         )
         .from(TAuthor())
         .orderBy(TAuthor_ID())

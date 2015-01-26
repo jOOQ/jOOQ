@@ -80,7 +80,7 @@ class Round<T extends Number> extends AbstractFunction<T> {
             // evaluate "round" if unavailable
             case DERBY: {
                 if (decimals == 0) {
-                    return DSL.decode()
+                    return DSL
                         .when(argument.sub(DSL.floor(argument))
                         .lessThan((T) Double.valueOf(0.5)), DSL.floor(argument))
                         .otherwise(DSL.ceil(argument));
@@ -89,7 +89,7 @@ class Round<T extends Number> extends AbstractFunction<T> {
                     Field<BigDecimal> factor = DSL.val(BigDecimal.ONE.movePointRight(decimals));
                     Field<T> mul = argument.mul(factor);
 
-                    return DSL.decode()
+                    return DSL
                         .when(mul.sub(DSL.floor(mul))
                         .lessThan((T) Double.valueOf(0.5)), DSL.floor(mul).div(factor))
                         .otherwise(DSL.ceil(mul).div(factor));

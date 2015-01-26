@@ -40,6 +40,7 @@
  */
 package org.jooq.util.firebird;
 
+import static org.jooq.impl.DSL.choose;
 import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.select;
@@ -343,7 +344,7 @@ public class FirebirdDatabase extends AbstractDatabase {
     }
 
     static Field<Short> CHARACTER_LENGTH(Rdb$fields f) {
-        return decode().value(f.RDB$FIELD_TYPE)
+        return choose(f.RDB$FIELD_TYPE)
                 .when((short) 261, (short) 0)
                 .otherwise(f.RDB$CHARACTER_LENGTH);
     }

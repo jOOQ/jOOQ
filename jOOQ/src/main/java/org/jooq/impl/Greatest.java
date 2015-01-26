@@ -89,12 +89,12 @@ class Greatest<T> extends AbstractFunction<T> {
                     Field<?>[] remaining = new Field[getArguments().length - 2];
                     System.arraycopy(getArguments(), 2, remaining, 0, remaining.length);
 
-                    return DSL.decode()
+                    return DSL
                         .when(first.greaterThan(other), DSL.greatest(first, remaining))
                         .otherwise(DSL.greatest(other, remaining));
                 }
                 else {
-                    return DSL.decode()
+                    return DSL
                         .when(first.greaterThan(other), first)
                         .otherwise(other);
                 }

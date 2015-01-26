@@ -429,6 +429,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // TODO: Reactivate this. For now, it is simply too slow...
         assumeFamilyNotIn(HANA);
 
+        // These tests still fail for SQLite. See
+        // https://bitbucket.org/xerial/sqlite-jdbc/issue/167/databasemetadatagetprimarykeys-reports
         Meta meta = create().meta();
         Table<?> author = null;
         Table<?> book = null;

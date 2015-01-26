@@ -46,7 +46,8 @@ import java.sql.Statement;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataChangedException;
-import org.jooq.exception.InvalidResultException;
+import org.jooq.exception.NoDataFoundException;
+import org.jooq.exception.TooManyRowsException;
 
 /**
  * A common interface for records that can be stored back to the database again.
@@ -385,13 +386,10 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * <p>
      * This is the same as calling <code>record.refresh(record.fields())</code>
      *
-     * @throws DataAccessException This exception is thrown if
-     *             <ul>
-     *             <li>something went wrong executing the refresh <code>SELECT
-     *             </code> statement, if this is an {@link UpdatableRecord}.
-     *             </li> <li>the record does not exist anymore in the database
-     *             </li>
-     *             </ul>
+     * @throws DataAccessException This exception is thrown if something went
+     *             wrong executing the refresh <code>SELECT</code> statement
+     * @throws NoDataFoundException If the record does not exist anymore in the
+     *             database
      */
     void refresh() throws DataAccessException;
 
@@ -415,15 +413,12 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * <p>
      * This is the same as calling <code>record.refresh(record.fields())</code>
      *
-     * @throws DataAccessException This exception is thrown if
-     *             <ul>
-     *             <li>something went wrong
-     *             executing the refresh <code>SELECT</code> statement, if this
-     *             is an {@link UpdatableRecord}.</li> <li>the record does not
-     *             exist anymore in the database</li>
-     *             </ul>
+     * @throws DataAccessException This exception is thrown if something went
+     *             wrong executing the refresh <code>SELECT</code> statement
+     * @throws NoDataFoundException If the record does not exist anymore in the
+     *             database
      */
-    void refresh(Field<?>... fields) throws DataAccessException;
+    void refresh(Field<?>... fields) throws DataAccessException, NoDataFoundException;
 
     /**
      * Duplicate this record (in memory) and reset all fields from the primary
@@ -441,12 +436,12 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * foreign key. If no child record was found, this returns <code>null</code>
      *
      * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
+     * @throws TooManyRowsException if the query returned more than one record
      * @see ForeignKey#fetchChildren(java.util.Collection)
      * @see ForeignKey#fetchChildren(Record)
      * @see ForeignKey#fetchChildren(Record...)
      */
-    <O extends TableRecord<O>> O fetchChild(ForeignKey<O, R> key) throws InvalidResultException, DataAccessException;
+    <O extends TableRecord<O>> O fetchChild(ForeignKey<O, R> key) throws TooManyRowsException, DataAccessException;
 
     /**
      * Fetch child records of this record, given a foreign key

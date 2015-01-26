@@ -71,7 +71,7 @@ import org.jooq.UpdatableRecord;
 import org.jooq.UpdateQuery;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataChangedException;
-import org.jooq.exception.InvalidResultException;
+import org.jooq.exception.NoDataFoundException;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
@@ -324,7 +324,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
                 });
         }
         else {
-            throw new InvalidResultException("Exactly one row expected for refresh. Record does not exist in database.");
+            throw new NoDataFoundException("Exactly one row expected for refresh. Record does not exist in database.");
         }
     }
 

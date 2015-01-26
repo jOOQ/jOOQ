@@ -92,6 +92,8 @@ import static org.jooq.util.postgres.PostgresDSL.arrayCat;
 import static org.jooq.util.postgres.PostgresDSL.arrayFill;
 import static org.jooq.util.postgres.PostgresDSL.arrayLength;
 import static org.jooq.util.postgres.PostgresDSL.arrayPrepend;
+import static org.jooq.util.postgres.PostgresDSL.arrayRemove;
+import static org.jooq.util.postgres.PostgresDSL.arrayReplace;
 import static org.jooq.util.postgres.PostgresDSL.arrayToString;
 import static org.jooq.util.postgres.PostgresDSL.only;
 import static org.jooq.util.postgres.PostgresDSL.stringToArray;
@@ -132,6 +134,7 @@ import org.jooq.conf.MappedSchema;
 import org.jooq.conf.RenderMapping;
 import org.jooq.conf.RenderNameStyle;
 import org.jooq.conf.Settings;
+import org.jooq.impl.DSL;
 import org.jooq.test.all.converters.Boolean_10;
 import org.jooq.test.all.converters.Boolean_TF_LC;
 import org.jooq.test.all.converters.Boolean_TF_UC;
@@ -1084,6 +1087,36 @@ public class PostgresTest extends jOOQAbstractTest<
         assertEquals(asList(1, 2), r8.getValues(0));
         assertEquals(asList(1, 2), asList(r8.get(0).getValue(1, Integer[].class)));
         assertEquals(asList(3, 4), asList(r8.get(1).getValue(1, Integer[].class)));
+
+        // array_remove()
+        // ---------------------------------------------------------------------
+        Record4<Integer[], Integer[], Integer[], Integer[]> r9 = create()
+        .select(
+            arrayRemove(new Integer[] { 1, 2, 3, 2 }, 2),
+            arrayRemove(new Integer[] { 1, 2, 3, 2 }, val(2)),
+            arrayRemove(val(new Integer[] { 1, 2, 3, 2 }), 2),
+            arrayRemove(DSL.<Integer[]>val(new Integer[] { 1, 2, 3, 2 }), val(2))
+        )
+        .fetchOne();
+        assertEquals(asList(1, 3), asList(r9.value1()));
+        assertEquals(asList(1, 3), asList(r9.value2()));
+        assertEquals(asList(1, 3), asList(r9.value3()));
+        assertEquals(asList(1, 3), asList(r9.value4()));
+
+        // array_replace()
+        // ---------------------------------------------------------------------
+        Record4<Integer[], Integer[], Integer[], Integer[]> r10 = create()
+        .select(
+            arrayReplace(new Integer[] { 1, 2, 3, 5 }, 5, 4),
+            arrayReplace(new Integer[] { 1, 2, 3, 5 }, val(5), val(4)),
+            arrayReplace(val(new Integer[] { 1, 2, 3, 5 }), 5, 4),
+            arrayReplace(DSL.<Integer[]>val(new Integer[] { 1, 2, 3, 5 }), val(5), val(4))
+        )
+        .fetchOne();
+        assertEquals(asList(1, 2, 3, 4), asList(r10.value1()));
+        assertEquals(asList(1, 2, 3, 4), asList(r10.value2()));
+        assertEquals(asList(1, 2, 3, 4), asList(r10.value3()));
+        assertEquals(asList(1, 2, 3, 4), asList(r10.value4()));
     }
 
     @Test

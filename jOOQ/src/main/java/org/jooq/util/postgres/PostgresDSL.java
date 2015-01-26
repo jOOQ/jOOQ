@@ -226,6 +226,106 @@ public class PostgresDSL extends DSL {
     }
 
     /**
+     * The PostgreSQL <code>array_remove(anyarray, anyelement)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {1,3} = array_remove(ARRAY[1,2,3,2], 2)
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Field<T[]> arrayRemove(T[] array, T element) {
+        return arrayRemove(val(array), val(element));
+    }
+
+    /**
+     * The PostgreSQL <code>array_remove(anyarray, anyelement)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {1,3} = array_remove(ARRAY[1,2,3,2], 2)
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Field<T[]> arrayRemove(Field<T[]> array, T element) {
+        return arrayRemove(nullSafe(array), val(element));
+    }
+
+    /**
+     * The PostgreSQL <code>array_remove(anyarray, anyelement)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {1,3} = array_remove(ARRAY[1,2,3,2], 2)
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Field<T[]> arrayRemove(T[] array, Field<T> element) {
+        return arrayRemove(val(array), nullSafe(element));
+    }
+
+    /**
+     * The PostgreSQL <code>array_remove(anyarray, anyelement)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {1,3} = array_remove(ARRAY[1,2,3,2], 2)
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Field<T[]> arrayRemove(Field<T[]> array, Field<T> element) {
+        return field("{array_remove}({0}, {1})", array.getDataType(), array, element);
+    }
+
+    /**
+     * The PostgreSQL
+     * <code>array_replace(anyarray, anyelement, anyelement)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {1,2,3,4} = array_replace(ARRAY[1,2,5,4], 5, 3)
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Field<T[]> arrayReplace(T[] array, T search, T replace) {
+        return arrayReplace(val(array), val(search), val(replace));
+    }
+
+    /**
+     * The PostgreSQL
+     * <code>array_replace(anyarray, anyelement, anyelement)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {1,2,3,4} = array_replace(ARRAY[1,2,5,4], 5, 3)
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Field<T[]> arrayReplace(T[] array, Field<T> search, Field<T> replace) {
+        return arrayReplace(val(array), nullSafe(search), nullSafe(replace));
+    }
+
+    /**
+     * The PostgreSQL
+     * <code>array_replace(anyarray, anyelement, anyelement)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {1,2,3,4} = array_replace(ARRAY[1,2,5,4], 5, 3)
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Field<T[]> arrayReplace(Field<T[]> array, T search, T replace) {
+        return arrayReplace(nullSafe(array), val(search), val(replace));
+    }
+
+    /**
+     * The PostgreSQL
+     * <code>array_replace(anyarray, anyelement, anyelement)</code> function.
+     * <p>
+     * Example: <code><pre>
+     * {1,2,3,4} = array_replace(ARRAY[1,2,5,4], 5, 3)
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static <T> Field<T[]> arrayReplace(Field<T[]> array, Field<T> search, Field<T> replace) {
+        return field("{array_replace}({0}, {1}, {2})", array.getDataType(), nullSafe(array), nullSafe(search), nullSafe(replace));
+    }
+
+    /**
      * The PostgreSQL <code>array_fill(anyelement, int[])</code> function.
      * <p>
      * Example: <code><pre>

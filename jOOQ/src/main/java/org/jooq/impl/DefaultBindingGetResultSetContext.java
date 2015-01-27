@@ -53,7 +53,7 @@ import org.jooq.Converter;
 class DefaultBindingGetResultSetContext<U> extends AbstractScope implements BindingGetResultSetContext<U> {
 
     private final ResultSet resultSet;
-    private final int       index;
+    private int             index;
     private U               value;
 
     DefaultBindingGetResultSetContext(Configuration configuration, Map<Object, Object> data, ResultSet resultSet, int index) {
@@ -71,6 +71,10 @@ class DefaultBindingGetResultSetContext<U> extends AbstractScope implements Bind
     @Override
     public final int index() {
         return index;
+    }
+
+    final void index(int i) {
+        this.index = i;
     }
 
     @Override

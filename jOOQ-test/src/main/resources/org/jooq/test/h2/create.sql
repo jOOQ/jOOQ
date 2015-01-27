@@ -61,26 +61,6 @@ DROP TABLE IF EXISTS t_booleans/
 DROP TABLE IF EXISTS t_identity/
 DROP TABLE IF EXISTS t_identity_pk/
 DROP TABLE IF EXISTS t_2327_uk_only/
-DROP TABLE IF EXISTS t_performance_jdbc/
-DROP TABLE IF EXISTS t_performance_jooq/
-
-CREATE TABLE t_performance_jdbc (
-  id INTEGER NOT NULL AUTO_INCREMENT,
-  value_int int,
-  value_string varchar(50),
-
-  CONSTRAINT pk_t_performance_jdbc_pk PRIMARY KEY (id)
-)
-/
-
-CREATE TABLE t_performance_jooq (
-  id INTEGER NOT NULL AUTO_INCREMENT,
-  value_int int,
-  value_string varchar(50),
-
-  CONSTRAINT pk_t_performance_jooq_pk PRIMARY KEY (id)
-)
-/
 
 CREATE TABLE t_3485 (
   id INT,

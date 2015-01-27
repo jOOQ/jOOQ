@@ -54,7 +54,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import org.jooq.DSLContext;
+import org.jooq.conf.RenderNameStyle;
 import org.jooq.conf.Settings;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.lambda.fi.lang.CheckedRunnable;
 import org.jooq.lambda.fi.util.function.CheckedIntConsumer;
@@ -80,9 +82,35 @@ public class H2PerformanceTest {
             jOOQAbstractTest.getPassword(H2)
         );
 
-        ctx = DSL.using(connection, new Settings().withExecuteLogging(false));
+        ctx = DSL.using(connection, new Settings().withExecuteLogging(false).withRenderNameStyle(RenderNameStyle.AS_IS));
         System.in.read();
         System.in.read();
+
+        try {
+            ctx.execute("DROP TABLE IF EXISTS t_performance_jdbc");
+            ctx.execute("DROP TABLE IF EXISTS t_performance_jooq");
+
+            ctx.execute(
+                  "CREATE TABLE t_performance_jdbc ("
+                + "  id INTEGER NOT NULL AUTO_INCREMENT,"
+                + "  value_int int,"
+                + "  value_string varchar(50),"
+                + "  CONSTRAINT pk_t_performance_jdbc_pk PRIMARY KEY (id)"
+                + ")"
+            );
+
+            ctx.execute(
+                  "CREATE TABLE t_performance_jooq ("
+                + "  id INTEGER NOT NULL AUTO_INCREMENT,"
+                + "  value_int int,"
+                + "  value_string varchar(50),"
+                + "  CONSTRAINT pk_t_performance_jooq_pk PRIMARY KEY (id)"
+                + ")"
+            );
+        }
+        catch (DataAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     @AfterClass
@@ -172,7 +200,7 @@ public class H2PerformanceTest {
     }
 
     private void init() {
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 1; i < 1000; i++) {
             ctx.insertInto(T_PERFORMANCE_JDBC, T_PERFORMANCE_JDBC.VALUE_INT, T_PERFORMANCE_JDBC.VALUE_STRING).values(i, "" + i).execute();
             ctx.insertInto(T_PERFORMANCE_JOOQ, T_PERFORMANCE_JOOQ.VALUE_INT, T_PERFORMANCE_JOOQ.VALUE_STRING).values(i, "" + i).execute();
         }

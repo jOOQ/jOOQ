@@ -384,7 +384,37 @@ public class JDBCUtils {
      *         {@link SQLInput#wasNull()} is <code>true</code>
      */
     public static final <T> T wasNull(SQLInput stream, T value) throws SQLException {
-        return stream.wasNull() ? null : value;
+        return (value == null || stream.wasNull()) ? null : value;
+    }
+
+    /**
+     * Convenient way to check if a JDBC-originated record was <code>null</code>.
+     * <p>
+     * This is useful to check if primitive types obtained from the JDBC API
+     * were actually SQL NULL values.
+     *
+     * @param stream The data source from which a value was read
+     * @param value The value that was read
+     * @return The <code>value</code> or <code>null</code> if the
+     *         {@link SQLInput#wasNull()} is <code>true</code>
+     */
+    public static final <T extends Number> T wasNull(SQLInput stream, T value) throws SQLException {
+        return (value == null || (value.intValue() == 0 && stream.wasNull())) ? null : value;
+    }
+
+    /**
+     * Convenient way to check if a JDBC-originated record was <code>null</code>.
+     * <p>
+     * This is useful to check if primitive types obtained from the JDBC API
+     * were actually SQL NULL values.
+     *
+     * @param stream The data source from which a value was read
+     * @param value The value that was read
+     * @return The <code>value</code> or <code>null</code> if the
+     *         {@link SQLInput#wasNull()} is <code>true</code>
+     */
+    public static final Boolean wasNull(SQLInput stream, Boolean value) throws SQLException {
+        return (value == null || (value.booleanValue() == false && stream.wasNull())) ? null : value;
     }
 
     /**
@@ -399,7 +429,37 @@ public class JDBCUtils {
      *         {@link ResultSet#wasNull()} is <code>true</code>
      */
     public static final <T> T wasNull(ResultSet rs, T value) throws SQLException {
-        return rs.wasNull() ? null : value;
+        return (value == null || rs.wasNull()) ? null : value;
+    }
+
+    /**
+     * Convenient way to check if a JDBC-originated record was <code>null</code>.
+     * <p>
+     * This is useful to check if primitive types obtained from the JDBC API
+     * were actually SQL NULL values.
+     *
+     * @param rs The data source from which a value was read
+     * @param value The value that was read
+     * @return The <code>value</code> or <code>null</code> if the
+     *         {@link ResultSet#wasNull()} is <code>true</code>
+     */
+    public static final <T extends Number> T wasNull(ResultSet rs, T value) throws SQLException {
+        return (value == null || (value.intValue() == 0 && rs.wasNull())) ? null : value;
+    }
+
+    /**
+     * Convenient way to check if a JDBC-originated record was <code>null</code>.
+     * <p>
+     * This is useful to check if primitive types obtained from the JDBC API
+     * were actually SQL NULL values.
+     *
+     * @param rs The data source from which a value was read
+     * @param value The value that was read
+     * @return The <code>value</code> or <code>null</code> if the
+     *         {@link ResultSet#wasNull()} is <code>true</code>
+     */
+    public static final Boolean wasNull(ResultSet rs, Boolean value) throws SQLException {
+        return (value == null || (value.booleanValue() == false && rs.wasNull())) ? null : value;
     }
 
     /**
@@ -414,7 +474,37 @@ public class JDBCUtils {
      *         {@link CallableStatement#wasNull()} is <code>true</code>
      */
     public static final <T> T wasNull(CallableStatement statement, T value) throws SQLException {
-        return statement.wasNull() ? null : value;
+        return (value == null || statement.wasNull()) ? null : value;
+    }
+
+    /**
+     * Convenient way to check if a JDBC-originated record was <code>null</code>.
+     * <p>
+     * This is useful to check if primitive types obtained from the JDBC API
+     * were actually SQL NULL values.
+     *
+     * @param statement The data source from which a value was read
+     * @param value The value that was read
+     * @return The <code>value</code> or <code>null</code> if the
+     *         {@link CallableStatement#wasNull()} is <code>true</code>
+     */
+    public static final <T extends Number> T wasNull(CallableStatement statement, T value) throws SQLException {
+        return (value == null || (value.intValue() == 0 && statement.wasNull())) ? null : value;
+    }
+
+    /**
+     * Convenient way to check if a JDBC-originated record was <code>null</code>.
+     * <p>
+     * This is useful to check if primitive types obtained from the JDBC API
+     * were actually SQL NULL values.
+     *
+     * @param statement The data source from which a value was read
+     * @param value The value that was read
+     * @return The <code>value</code> or <code>null</code> if the
+     *         {@link CallableStatement#wasNull()} is <code>true</code>
+     */
+    public static final Boolean wasNull(CallableStatement statement, Boolean value) throws SQLException {
+        return (value == null || (value.booleanValue() == false && statement.wasNull())) ? null : value;
     }
 
     /**

@@ -69,6 +69,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import org.jooq.BindingGetResultSetContext;
 import org.jooq.Cursor;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
@@ -90,20 +91,21 @@ import org.jooq.tools.jdbc.JDBCUtils;
  */
 class CursorImpl<R extends Record> implements Cursor<R> {
 
-    private static final JooqLogger          log = JooqLogger.getLogger(CursorImpl.class);
+    private static final JooqLogger                        log = JooqLogger.getLogger(CursorImpl.class);
 
-    private final ExecuteContext             ctx;
-    private final ExecuteListener            listener;
-    private final Field<?>[]                 cursorFields;
-    private final boolean[]                  intern;
-    private final boolean                    keepResultSet;
-    private final boolean                    keepStatement;
-    private final RecordFactory<? extends R> factory;
-    private boolean                          isClosed;
+    private final ExecuteContext                           ctx;
+    private final ExecuteListener                          listener;
+    private final Field<?>[]                               cursorFields;
+    private final boolean[]                                intern;
+    private final boolean                                  keepResultSet;
+    private final boolean                                  keepStatement;
+    private final RecordFactory<? extends R>               factory;
+    private boolean                                        isClosed;
 
-    private transient CursorResultSet        rs;
-    private transient Iterator<R>            iterator;
-    private transient int                    rows;
+    private transient CursorResultSet                      rs;
+    private transient DefaultBindingGetResultSetContext<?> rsContext;
+    private transient Iterator<R>                          iterator;
+    private transient int                                  rows;
 
     @SuppressWarnings("unchecked")
     CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement, boolean keepResultSet) {
@@ -118,6 +120,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         this.keepStatement = keepStatement;
         this.keepResultSet = keepResultSet;
         this.rs = new CursorResultSet();
+        this.rsContext = new DefaultBindingGetResultSetContext<Object>(ctx.configuration(), ctx.data(), rs, 0);
         this.intern = new boolean[fields.length];
 
         if (internIndexes != null) {
@@ -1488,9 +1491,9 @@ class CursorImpl<R extends Record> implements Cursor<R> {
                     offset += emulatedFields.length - 1;
                 }
                 else {
-                    DefaultBindingGetResultSetContext<T> out = new DefaultBindingGetResultSetContext<T>(ctx.configuration(), ctx.data(), ctx.resultSet(), offset + index + 1);
-                    field.getBinding().get(out);
-                    value = out.value();
+                    rsContext.index(offset + index + 1);
+                    field.getBinding().get((BindingGetResultSetContext<T>) rsContext);
+                    value = (T) rsContext.value();
                 }
 
                 record.values[index] = value;

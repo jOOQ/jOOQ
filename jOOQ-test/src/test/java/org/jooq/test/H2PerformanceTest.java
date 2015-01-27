@@ -144,6 +144,33 @@ public class H2PerformanceTest {
         );
     }
 
+    @Test
+    public void testPerformance_SELECT_PlainSQL() {
+        compareWithJDBC(
+            50000,
+            i -> {
+                try (PreparedStatement stmt = connection.prepareStatement("select id, value_int, value_string from t_performance_jdbc");
+                    ResultSet rs = stmt.executeQuery()) {
+                    Object[] o;
+
+                    while (rs.next()) {
+                        o = new Object[3];
+                        o[0] = rs.getInt(1); rs.wasNull();
+                        o[1] = rs.getInt(2); rs.wasNull();
+                        o[2] = rs.getString(3); rs.wasNull();
+                    }
+                }
+            },
+
+            i -> {
+                ctx.fetch("select id, value_int, value_string from t_performance_jooq");
+            },
+
+            this::init,
+            this::cleanup
+        );
+    }
+
     private void init() {
         for (int i = 0; i < 1000; i++) {
             ctx.insertInto(T_PERFORMANCE_JDBC, T_PERFORMANCE_JDBC.VALUE_INT, T_PERFORMANCE_JDBC.VALUE_STRING).values(i, "" + i).execute();

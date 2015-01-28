@@ -56,7 +56,7 @@ class DefaultBindingSetSQLOutputContext<U> extends AbstractScope implements Bind
     private final U         value;
 
     DefaultBindingSetSQLOutputContext(Configuration configuration, Map<Object, Object> data, SQLOutput output, U value) {
-        super(configuration, configuration.data());
+        super(configuration, data);
 
         this.output = output;
         this.value = value;

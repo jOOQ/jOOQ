@@ -57,7 +57,7 @@ class DefaultBindingSetStatementContext<U> extends AbstractScope implements Bind
     private final U                 value;
 
     DefaultBindingSetStatementContext(Configuration configuration, Map<Object, Object> data, PreparedStatement statement, int index, U value) {
-        super(configuration, configuration.data());
+        super(configuration, data);
 
         this.statement = statement;
         this.index = index;

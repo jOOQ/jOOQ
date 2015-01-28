@@ -211,4 +211,17 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
     @Support
     LoaderOptionsStep<R> commitNone();
 
+    /**
+     * Run insert in bulk mode.
+     * Specially useful for insert statements.
+     * In that case, a single statement can insert multiple records in one go.
+     * There might be a limit of markers (i.e. MSSQL has 2000). In such cases the
+     * inseret statement must be executed blockwise.
+     * @param markerLimit The limit of markers. Depends on the dialect.
+     * @return
+     */
+    @Support
+    LoaderOptionsStep<R> withBulkInsert(int markerLimit);
+
+
 }

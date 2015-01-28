@@ -7407,8 +7407,7 @@ public class DSL {
     }
 
     /**
-     * Gets the Oracle-style <code>COALESCE(value1, value2, ... , value n)</code>
-     * function.
+     * The <code>COALESCE(value1, value2, ... , value n)</code> function.
      *
      * @see #coalesce(Field, Field...)
      */
@@ -7418,15 +7417,17 @@ public class DSL {
     }
 
     /**
-     * Gets the Oracle-style <code>COALESCE(field1, field2, ... , field n)</code>
-     * function.
-     * <p>
-     * Returns the dialect's equivalent to COALESCE:
-     * <ul>
-     * <li>Oracle <a
-     * href="http://www.techonthenet.com/oracle/functions/coalesce.php">COALESCE</a>
-     * </li>
-     * </ul>
+     * The <code>COALESCE(field, value)</code> function.
+     *
+     * @see #coalesce(Field, Field...)
+     */
+    @Support
+    public static <T> Field<T> coalesce(Field<T> field, T value) {
+        return coalesce(field, Utils.field(value, field));
+    }
+
+    /**
+     * The <code>COALESCE(field1, field2, ... , field n)</code> function.
      */
     @Support
     public static <T> Field<T> coalesce(Field<T> field, Field<?>... fields) {

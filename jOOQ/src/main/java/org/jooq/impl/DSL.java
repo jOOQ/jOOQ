@@ -7418,6 +7418,17 @@ public class DSL {
     }
 
     /**
+     * Gets the Oracle-style <code>COALESCE(field, value)</code>
+     * function.
+     *
+     * @see #coalesce(Field, Field...)
+     */
+    @Support
+    public static <T> Field<T> coalesce(Field<T> field, T value) {
+        return coalesce(field, Utils.field(value));
+    }
+
+    /**
      * Gets the Oracle-style <code>COALESCE(field1, field2, ... , field n)</code>
      * function.
      * <p>

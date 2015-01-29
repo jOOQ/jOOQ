@@ -46,30 +46,37 @@ import org.jooq.exception.DataAccessException;
 
 /**
  * An error that occurred during loading. Errors are only handled when they were
- * caused by {@link DataAccessException}'s. {@link IOException}'s and other problems
- * will abort loading fatally.
+ * caused by {@link DataAccessException}'s. {@link IOException}'s and other
+ * problems will abort loading fatally.
  *
  * @author Lukas Eder
  */
 public interface LoaderError {
 
     /**
-     * The underlying {@link DataAccessException} that caused the error
+     * The underlying {@link DataAccessException} that caused the error.
      */
     DataAccessException exception();
 
     /**
-     * The processed row index starting with <code>0</code> that caused the error
+     * The processed row index starting with <code>0</code> that caused the
+     * error.
+     * <p>
+     * If queries were executed in batch mode, this will be the row index of the
+     * last row added to the batch.
      */
     int rowIndex();
 
     /**
-     * The row data that caused the error
+     * The row data that caused the error.
+     * <p>
+     * If queries were executed in batch mode, this will be the last row added
+     * to the batch.
      */
     String[] row();
 
     /**
-     * The query whose execution failed
+     * The query whose execution failed.
      */
     Query query();
 }

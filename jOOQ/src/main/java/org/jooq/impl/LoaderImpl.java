@@ -55,6 +55,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import org.jooq.BatchBindStep;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
@@ -106,6 +107,10 @@ class LoaderImpl<R extends TableRecord<R>> implements
     private static final int        COMMIT_AFTER            = 1;
     private static final int        COMMIT_ALL              = 2;
 
+    private static final int        BATCH_NONE              = 0;
+    private static final int        BATCH_AFTER             = 1;
+    private static final int        BATCH_ALL               = 2;
+
     private static final int        CONTENT_CSV             = 0;
     private static final int        CONTENT_XML             = 1;
     private static final int        CONTENT_JSON            = 2;
@@ -119,6 +124,8 @@ class LoaderImpl<R extends TableRecord<R>> implements
     private int                     onError                 = ON_ERROR_ABORT;
     private int                     commit                  = COMMIT_NONE;
     private int                     commitAfter             = 1;
+    private int                     batch                   = BATCH_NONE;
+    private int                     batchAfter              = 1;
     private int                     content                 = CONTENT_CSV;
     private BufferedReader          data;
 
@@ -136,6 +143,8 @@ class LoaderImpl<R extends TableRecord<R>> implements
     private int                     ignored;
     private int                     processed;
     private int                     stored;
+    private int                     executed;
+    private int                     batched;
     private final List<LoaderError> errors;
 
     LoaderImpl(Configuration configuration, Table<R> table) {
@@ -209,6 +218,25 @@ class LoaderImpl<R extends TableRecord<R>> implements
     @Override
     public final LoaderImpl<R> commitNone() {
         commit = COMMIT_NONE;
+        return this;
+    }
+
+    @Override
+    public final LoaderImpl<R> batchAll() {
+        batch = BATCH_ALL;
+        return this;
+    }
+
+    @Override
+    public final LoaderImpl<R> batchNone() {
+        batch = BATCH_NONE;
+        return this;
+    }
+
+    @Override
+    public final LoaderImpl<R> batchAfter(int number) {
+        batch = BATCH_AFTER;
+        batchAfter = number;
         return this;
     }
 
@@ -417,83 +445,138 @@ class LoaderImpl<R extends TableRecord<R>> implements
     }
 
     private void executeSQL(Iterator<String[]> reader) throws SQLException {
-        String[] row;
+        String[] row = null;
+        BatchBindStep bind = null;
+        InsertQuery<R> insert = null;
 
-        // TODO: When running in COMMIT_AFTER > 1 or COMMIT_ALL mode, then
-        // it might be better to bulk load / merge n records
-        rowloop: while (reader.hasNext() && ((row = reader.next()) != null)) {
+        execution: {
+            rows: while (reader.hasNext() && ((row = reader.next()) != null)) {
 
-            // [#1627] Handle NULL values
-            for (int i = 0; i < row.length; i++) {
-                if (StringUtils.equals(nullString, row[i])) {
-                    row[i] = null;
-                }
-            }
-
-            processed++;
-            InsertQuery<R> insert = create.insertQuery(table);
-
-            for (int i = 0; i < row.length; i++) {
-                if (i < fields.length && fields[i] != null) {
-                    addValue0(insert, fields[i], row[i]);
-                }
-            }
-
-            // TODO: This is only supported by some dialects. Let other
-            // dialects execute a SELECT and then either an INSERT or UPDATE
-            if (onDuplicate == ON_DUPLICATE_KEY_UPDATE) {
-                insert.onDuplicateKeyUpdate(true);
-
+                // [#1627] Handle NULL values
                 for (int i = 0; i < row.length; i++) {
-                    if (i < fields.length && fields[i] != null && !primaryKey[i]) {
-                        addValueForUpdate0(insert, fields[i], row[i]);
+                    if (StringUtils.equals(nullString, row[i])) {
+                        row[i] = null;
                     }
                 }
-            }
 
-            // TODO: This can be implemented faster using a MERGE statement
-            // in some dialects
-            else if (onDuplicate == ON_DUPLICATE_KEY_IGNORE) {
-                SelectQuery<R> select = create.selectQuery(table);
+                // TODO: In batch mode, we can probably optimise this by not creating
+                // new statements every time, just to convert bind values to their
+                // appropriate target types. But beware of SQL dialects that tend to
+                // need very explicit casting of bind values (e.g. Firebird)
+                processed++;
+                insert = create.insertQuery(table);
 
                 for (int i = 0; i < row.length; i++) {
-                    if (i < fields.length && primaryKey[i]) {
-                        select.addConditions(getCondition(fields[i], row[i]));
+                    if (i < fields.length && fields[i] != null) {
+                        addValue0(insert, fields[i], row[i]);
                     }
                 }
+
+                // TODO: This is only supported by some dialects. Let other
+                // dialects execute a SELECT and then either an INSERT or UPDATE
+                if (onDuplicate == ON_DUPLICATE_KEY_UPDATE) {
+                    insert.onDuplicateKeyUpdate(true);
+
+                    for (int i = 0; i < row.length; i++) {
+                        if (i < fields.length && fields[i] != null && !primaryKey[i]) {
+                            addValueForUpdate0(insert, fields[i], row[i]);
+                        }
+                    }
+                }
+
+                // TODO: This can be implemented faster using a MERGE statement
+                // in some dialects
+                else if (onDuplicate == ON_DUPLICATE_KEY_IGNORE) {
+                    SelectQuery<R> select = create.selectQuery(table);
+
+                    for (int i = 0; i < row.length; i++) {
+                        if (i < fields.length && primaryKey[i]) {
+                            select.addConditions(getCondition(fields[i], row[i]));
+                        }
+                    }
+
+                    try {
+                        if (select.execute() > 0) {
+                            ignored++;
+                            continue rows;
+                        }
+                    }
+                    catch (DataAccessException e) {
+                        errors.add(new LoaderErrorImpl(e, row, processed - 1, select));
+                    }
+                }
+
+                // Don't do anything. Let the execution fail
+                else if (onDuplicate == ON_DUPLICATE_KEY_ERROR) {}
 
                 try {
-                    if (select.execute() > 0) {
-                        ignored++;
-                        continue rowloop;
+                    if (batch == BATCH_NONE) {
+                        batched = 1;
+                        insert.execute();
+                        stored++;
+                        executed++;
+                    }
+                    else {
+                        if (bind == null)
+                            bind = create.batch(insert);
+
+                        batched++;
+                        bind.bind(insert.getBindValues().toArray());
+                    }
+
+                    if (batch == BATCH_AFTER) {
+                        if (processed % batchAfter == 0) {
+                            if (bind != null) {
+                                bind.execute();
+                                stored += batched;
+                                batched = 0;
+                                executed++;
+                                bind = null;
+                            }
+                        }
+                    }
+
+
+                    if (commit == COMMIT_AFTER) {
+                        if ((processed % batchAfter == 0) && ((processed / batchAfter) % commitAfter == 0)) {
+                            configuration.connectionProvider().acquire().commit();
+                        }
                     }
                 }
                 catch (DataAccessException e) {
-                    errors.add(new LoaderErrorImpl(e, row, processed - 1, select));
-                }
-            }
+                    errors.add(new LoaderErrorImpl(e, row, processed - 1, insert));
+                    ignored += batched;
+                    batched = 0;
 
-            // Don't do anything. Let the execution fail
-            else if (onDuplicate == ON_DUPLICATE_KEY_ERROR) {}
-
-            try {
-                insert.execute();
-                stored++;
-
-                if (commit == COMMIT_AFTER) {
-                    if (processed % commitAfter == 0) {
-                        configuration.connectionProvider().acquire().commit();
+                    if (onError == ON_ERROR_ABORT) {
+                        break execution;
                     }
                 }
+
+                // rowloop
             }
-            catch (DataAccessException e) {
-                errors.add(new LoaderErrorImpl(e, row, processed - 1, insert));
-                ignored++;
+
+            // Execute remaining batch
+            if (bind != null) {
+                try {
+                    bind.execute();
+                    stored += batched;
+                    batched = 0;
+                    executed++;
+                    bind = null;
+                }
+                catch (DataAccessException e) {
+                    errors.add(new LoaderErrorImpl(e, row, processed - 1, insert));
+                    ignored += batched;
+                    batched = 0;
+                }
 
                 if (onError == ON_ERROR_ABORT) {
-                    break rowloop;
+                    break execution;
                 }
             }
+
+            // executionBlock
         }
 
         // Rollback on errors in COMMIT_ALL mode
@@ -510,7 +593,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
 
             // Commit remaining elements in COMMIT_AFTER mode
             else if (commit == COMMIT_AFTER) {
-                if (processed % commitAfter != 0) {
+                if ((processed % batchAfter != 0) || ((processed / batchAfter) % commitAfter != 0)) {
                     configuration.connectionProvider().acquire().commit();
                 }
             }
@@ -553,6 +636,11 @@ class LoaderImpl<R extends TableRecord<R>> implements
     @Override
     public final int processed() {
         return processed;
+    }
+
+    @Override
+    public final int executed() {
+        return executed;
     }
 
     @Override

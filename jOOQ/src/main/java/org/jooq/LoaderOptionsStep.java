@@ -133,9 +133,10 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
     LoaderOptionsStep<R> onErrorAbort();
 
     /**
-     * Commit each loaded record. This will prevent batch <code>INSERT</code>'s
-     * altogether. Otherwise, this is the same as calling
-     * {@link #commitAfter(int)} with <code>1</code> as parameter.
+     * Commit each loaded record or each batch.
+     * <p>
+     * This is the same as calling {@link #commitAfter(int)} with <code>1</code>
+     * as parameter.
      * <p>
      * With this clause, errors will never result in a rollback, even when you
      * specify {@link #onDuplicateKeyError()} or {@link #onErrorAbort()}
@@ -155,8 +156,8 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
     LoaderOptionsStep<R> commitEach();
 
     /**
-     * Commit after a certain number of inserted records. This may enable batch
-     * <code>INSERT</code>'s for at most <code>number</code> records.
+     * Commit after a certain number of inserted records or after a certain
+     * number of batches.
      * <p>
      * With this clause, errors will never result in a rollback, even when you
      * specify {@link #onDuplicateKeyError()} or {@link #onErrorAbort()}
@@ -178,9 +179,9 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
     LoaderOptionsStep<R> commitAfter(int number);
 
     /**
-     * Commit only after inserting all records. If this is used together with
-     * {@link #onDuplicateKeyError()} or {@link #onErrorAbort()}, an abort will
-     * result in a rollback of previously loaded records.
+     * Commit only after inserting all records or batches. If this is used
+     * together with {@link #onDuplicateKeyError()} or {@link #onErrorAbort()},
+     * an abort will result in a rollback of previously loaded records.
      * <p>
      * The COMMIT OPTIONS might be useful for fine-tuning performance behaviour
      * in some RDBMS, where large commits lead to a high level of concurrency in
@@ -210,5 +211,34 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
      */
     @Support
     LoaderOptionsStep<R> commitNone();
+
+    /**
+     * Batch all statements in one JDBC batch statement.
+     * <p>
+     * If {@link #commitEach()} or {@link #commitAfter(int)} are set, this will
+     * force the <code>COMMIT</code> option to {@link #commitAll()}.
+     */
+    @Support
+    LoaderOptionsStep<R> batchAll();
+
+    /**
+     * Do not batch statements.
+     * <p>
+     * If you don't specify a BATCH OPTION, this will be the default.
+     */
+    @Support
+    LoaderOptionsStep<R> batchNone();
+
+    /**
+     * Batch a given number of statements together.
+     * <p>
+     * If {@link #commitEach()} is set, each batch statement will be committed.
+     * If {@link #commitAfter(int)} is set, the given number of batch statements
+     * are committed.
+     *
+     * @param number The number of records that are batched together.
+     */
+    @Support
+    LoaderOptionsStep<R> batchAfter(int number);
 
 }

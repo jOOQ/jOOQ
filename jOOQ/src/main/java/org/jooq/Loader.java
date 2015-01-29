@@ -58,17 +58,22 @@ public interface Loader<R extends TableRecord<R>> {
     List<LoaderError> errors();
 
     /**
-     * The number of processed rows
+     * The number of processed rows.
      */
     int processed();
 
     /**
-     * The number of ignored rows
+     * The number of executed statements or batch statements.
+     */
+    int executed();
+
+    /**
+     * The number of ignored rows.
      */
     int ignored();
 
     /**
-     * The number of inserted or updated rows
+     * The number of inserted or updated rows.
      */
     int stored();
 

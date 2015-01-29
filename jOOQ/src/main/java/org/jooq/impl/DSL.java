@@ -68,6 +68,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.impl.Term.ROW_NUMBER;
 import static org.jooq.impl.Utils.combine;
+import static org.jooq.impl.Utils.configuration;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -4730,6 +4731,28 @@ public class DSL {
 
         // TODO [#2986] Coerce the record type upon the resulting table.
         return (Table<R>) values(rows).as("v", columns);
+    }
+
+    /**
+     * Use a previously obtained record as a new Table
+     */
+    @Support
+    public static <R extends Record> Table<R> table(R record) {
+        return table((R[]) new Record[] { record });
+    }
+
+    /**
+     * Use a previously obtained set of records as a new Table
+     */
+    @Support
+    public static <R extends Record> Table<R> table(R... records) {
+        if (records == null || records.length == 0)
+            return (Table<R>) new Dual();
+
+        Result<R> result = new ResultImpl(configuration(records[0]), records[0].fields());
+        result.addAll(Arrays.asList(records));
+
+        return table(result);
     }
 
     /**

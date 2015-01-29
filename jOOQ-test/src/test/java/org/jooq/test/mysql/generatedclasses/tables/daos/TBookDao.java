@@ -3,108 +3,118 @@
  */
 package org.jooq.test.mysql.generatedclasses.tables.daos;
 
+
+import java.util.List;
+
+import org.jooq.Configuration;
+import org.jooq.impl.DAOImpl;
+import org.jooq.test.mysql.generatedclasses.enums.TBookStatus;
+import org.jooq.test.mysql.generatedclasses.tables.TBook;
+import org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord;
+
+
 /**
  * An entity holding books
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TBookDao extends org.jooq.impl.DAOImpl<org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord, org.jooq.test.mysql.generatedclasses.tables.pojos.TBook, java.lang.Integer> {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class TBookDao extends DAOImpl<TBookRecord, org.jooq.test.mysql.generatedclasses.tables.pojos.TBook, Integer> {
 
 	/**
 	 * Create a new TBookDao without any configuration
 	 */
 	public TBookDao() {
-		super(org.jooq.test.mysql.generatedclasses.tables.TBook.T_BOOK, org.jooq.test.mysql.generatedclasses.tables.pojos.TBook.class);
+		super(TBook.T_BOOK, org.jooq.test.mysql.generatedclasses.tables.pojos.TBook.class);
 	}
 
 	/**
 	 * Create a new TBookDao with an attached configuration
 	 */
-	public TBookDao(org.jooq.Configuration configuration) {
-		super(org.jooq.test.mysql.generatedclasses.tables.TBook.T_BOOK, org.jooq.test.mysql.generatedclasses.tables.pojos.TBook.class, configuration);
+	public TBookDao(Configuration configuration) {
+		super(TBook.T_BOOK, org.jooq.test.mysql.generatedclasses.tables.pojos.TBook.class, configuration);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected java.lang.Integer getId(org.jooq.test.mysql.generatedclasses.tables.pojos.TBook object) {
+	protected Integer getId(org.jooq.test.mysql.generatedclasses.tables.pojos.TBook object) {
 		return object.getId();
 	}
 
 	/**
 	 * Fetch records that have <code>ID IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.TBook> fetchById(java.lang.Integer... values) {
-		return fetch(org.jooq.test.mysql.generatedclasses.tables.TBook.ID, values);
+	public List<org.jooq.test.mysql.generatedclasses.tables.pojos.TBook> fetchById(Integer... values) {
+		return fetch(TBook.ID, values);
 	}
 
 	/**
 	 * Fetch a unique record that has <code>ID = value</code>
 	 */
-	public org.jooq.test.mysql.generatedclasses.tables.pojos.TBook fetchOneById(java.lang.Integer value) {
-		return fetchOne(org.jooq.test.mysql.generatedclasses.tables.TBook.ID, value);
+	public org.jooq.test.mysql.generatedclasses.tables.pojos.TBook fetchOneById(Integer value) {
+		return fetchOne(TBook.ID, value);
 	}
 
 	/**
 	 * Fetch records that have <code>AUTHOR_ID IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.TBook> fetchByAuthorId(java.lang.Integer... values) {
-		return fetch(org.jooq.test.mysql.generatedclasses.tables.TBook.AUTHOR_ID, values);
+	public List<org.jooq.test.mysql.generatedclasses.tables.pojos.TBook> fetchByAuthorId(Integer... values) {
+		return fetch(TBook.AUTHOR_ID, values);
 	}
 
 	/**
 	 * Fetch records that have <code>co_author_id IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.TBook> fetchByCoAuthorId(java.lang.Integer... values) {
-		return fetch(org.jooq.test.mysql.generatedclasses.tables.TBook.CO_AUTHOR_ID, values);
+	public List<org.jooq.test.mysql.generatedclasses.tables.pojos.TBook> fetchByCoAuthorId(Integer... values) {
+		return fetch(TBook.CO_AUTHOR_ID, values);
 	}
 
 	/**
 	 * Fetch records that have <code>DETAILS_ID IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.TBook> fetchByDetailsId(java.lang.Integer... values) {
-		return fetch(org.jooq.test.mysql.generatedclasses.tables.TBook.DETAILS_ID, values);
+	public List<org.jooq.test.mysql.generatedclasses.tables.pojos.TBook> fetchByDetailsId(Integer... values) {
+		return fetch(TBook.DETAILS_ID, values);
 	}
 
 	/**
 	 * Fetch records that have <code>TITLE IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.TBook> fetchByTitle(java.lang.String... values) {
-		return fetch(org.jooq.test.mysql.generatedclasses.tables.TBook.TITLE, values);
+	public List<org.jooq.test.mysql.generatedclasses.tables.pojos.TBook> fetchByTitle(String... values) {
+		return fetch(TBook.TITLE, values);
 	}
 
 	/**
 	 * Fetch records that have <code>PUBLISHED_IN IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.TBook> fetchByPublishedIn(java.lang.Integer... values) {
-		return fetch(org.jooq.test.mysql.generatedclasses.tables.TBook.PUBLISHED_IN, values);
+	public List<org.jooq.test.mysql.generatedclasses.tables.pojos.TBook> fetchByPublishedIn(Integer... values) {
+		return fetch(TBook.PUBLISHED_IN, values);
 	}
 
 	/**
 	 * Fetch records that have <code>LANGUAGE_ID IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.TBook> fetchByLanguageId(java.lang.Integer... values) {
-		return fetch(org.jooq.test.mysql.generatedclasses.tables.TBook.LANGUAGE_ID, values);
+	public List<org.jooq.test.mysql.generatedclasses.tables.pojos.TBook> fetchByLanguageId(Integer... values) {
+		return fetch(TBook.LANGUAGE_ID, values);
 	}
 
 	/**
 	 * Fetch records that have <code>CONTENT_TEXT IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.TBook> fetchByContentText(java.lang.String... values) {
-		return fetch(org.jooq.test.mysql.generatedclasses.tables.TBook.CONTENT_TEXT, values);
+	public List<org.jooq.test.mysql.generatedclasses.tables.pojos.TBook> fetchByContentText(String... values) {
+		return fetch(TBook.CONTENT_TEXT, values);
 	}
 
 	/**
 	 * Fetch records that have <code>CONTENT_PDF IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.TBook> fetchByContentPdf(byte[]... values) {
-		return fetch(org.jooq.test.mysql.generatedclasses.tables.TBook.CONTENT_PDF, values);
+	public List<org.jooq.test.mysql.generatedclasses.tables.pojos.TBook> fetchByContentPdf(byte[]... values) {
+		return fetch(TBook.CONTENT_PDF, values);
 	}
 
 	/**
 	 * Fetch records that have <code>STATUS IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.TBook> fetchByStatus(org.jooq.test.mysql.generatedclasses.enums.TBookStatus... values) {
-		return fetch(org.jooq.test.mysql.generatedclasses.tables.TBook.STATUS, values);
+	public List<org.jooq.test.mysql.generatedclasses.tables.pojos.TBook> fetchByStatus(TBookStatus... values) {
+		return fetch(TBook.STATUS, values);
 	}
 }

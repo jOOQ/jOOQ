@@ -3,36 +3,51 @@
  */
 package org.jooq.test.mysql.generatedclasses.tables;
 
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.jooq.Field;
+import org.jooq.ForeignKey;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.UniqueKey;
+import org.jooq.impl.TableImpl;
+import org.jooq.test.mysql.generatedclasses.Keys;
+import org.jooq.test.mysql.generatedclasses.Test;
+import org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record;
+
+
 /**
  * An unused table in the same schema.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class XTestCase_71 extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record> {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class XTestCase_71 extends TableImpl<XTestCase_71Record> {
 
-	private static final long serialVersionUID = 800824392;
+	private static final long serialVersionUID = -635590595;
 
 	/**
 	 * The reference instance of <code>test.x_test_case_71</code>
 	 */
-	public static final org.jooq.test.mysql.generatedclasses.tables.XTestCase_71 X_TEST_CASE_71 = new org.jooq.test.mysql.generatedclasses.tables.XTestCase_71();
+	public static final XTestCase_71 X_TEST_CASE_71 = new XTestCase_71();
 
 	/**
 	 * The class holding records for this type
 	 */
 	@Override
-	public java.lang.Class<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record> getRecordType() {
-		return org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record.class;
+	public Class<XTestCase_71Record> getRecordType() {
+		return XTestCase_71Record.class;
 	}
 
 	/**
 	 * The column <code>test.x_test_case_71.ID</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), X_TEST_CASE_71, "");
+	public static final TableField<XTestCase_71Record, Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), X_TEST_CASE_71, "");
 
 	/**
 	 * The column <code>test.x_test_case_71.TEST_CASE_64_69_ID</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record, java.lang.Integer> TEST_CASE_64_69_ID = createField("TEST_CASE_64_69_ID", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_71, "");
+	public static final TableField<XTestCase_71Record, Integer> TEST_CASE_64_69_ID = createField("TEST_CASE_64_69_ID", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_71, "");
 
 	/**
 	 * No further instances allowed
@@ -41,35 +56,35 @@ public class XTestCase_71 extends org.jooq.impl.TableImpl<org.jooq.test.mysql.ge
 		this("x_test_case_71", null);
 	}
 
-	private XTestCase_71(java.lang.String alias, org.jooq.Table<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record> aliased) {
+	private XTestCase_71(String alias, Table<XTestCase_71Record> aliased) {
 		this(alias, aliased, null);
 	}
 
-	private XTestCase_71(java.lang.String alias, org.jooq.Table<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record> aliased, org.jooq.Field<?>[] parameters) {
-		super(alias, org.jooq.test.mysql.generatedclasses.Test.TEST, aliased, parameters, "An unused table in the same schema.");
+	private XTestCase_71(String alias, Table<XTestCase_71Record> aliased, Field<?>[] parameters) {
+		super(alias, Test.TEST, aliased, parameters, "An unused table in the same schema.");
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record> getPrimaryKey() {
-		return org.jooq.test.mysql.generatedclasses.Keys.KEY_X_TEST_CASE_71_PRIMARY;
+	public UniqueKey<XTestCase_71Record> getPrimaryKey() {
+		return Keys.KEY_X_TEST_CASE_71_PRIMARY;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.util.List<org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record>>asList(org.jooq.test.mysql.generatedclasses.Keys.KEY_X_TEST_CASE_71_PRIMARY);
+	public List<UniqueKey<XTestCase_71Record>> getKeys() {
+		return Arrays.<UniqueKey<XTestCase_71Record>>asList(Keys.KEY_X_TEST_CASE_71_PRIMARY);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.util.List<org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record, ?>>asList(org.jooq.test.mysql.generatedclasses.Keys.FK_X_TEST_CASE_71);
+	public List<ForeignKey<XTestCase_71Record, ?>> getReferences() {
+		return Arrays.<ForeignKey<XTestCase_71Record, ?>>asList(Keys.FK_X_TEST_CASE_71);
 	}
 }

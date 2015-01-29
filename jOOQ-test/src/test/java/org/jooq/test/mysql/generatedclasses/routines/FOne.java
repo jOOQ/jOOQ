@@ -3,24 +3,30 @@
  */
 package org.jooq.test.mysql.generatedclasses.routines;
 
+
+import org.jooq.Parameter;
+import org.jooq.impl.AbstractRoutine;
+import org.jooq.test.mysql.generatedclasses.Test;
+
+
 /**
  * 1 constant value
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class FOne extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class FOne extends AbstractRoutine<Integer> {
 
-	private static final long serialVersionUID = 1182681795;
+	private static final long serialVersionUID = 1445165278;
 
 	/**
 	 * The parameter <code>test.f_one.RETURN_VALUE</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER, false);
+	public static final Parameter<Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER, false);
 
 	/**
 	 * Create a new routine call instance
 	 */
 	public FOne() {
-		super("f_one", org.jooq.test.mysql.generatedclasses.Test.TEST, org.jooq.impl.SQLDataType.INTEGER);
+		super("f_one", Test.TEST, org.jooq.impl.SQLDataType.INTEGER);
 
 		setReturnParameter(RETURN_VALUE);
 	}

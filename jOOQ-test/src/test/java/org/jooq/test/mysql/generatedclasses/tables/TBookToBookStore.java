@@ -3,41 +3,56 @@
  */
 package org.jooq.test.mysql.generatedclasses.tables;
 
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.jooq.Field;
+import org.jooq.ForeignKey;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.UniqueKey;
+import org.jooq.impl.TableImpl;
+import org.jooq.test.mysql.generatedclasses.Keys;
+import org.jooq.test.mysql.generatedclasses.Test;
+import org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord;
+
+
 /**
  * An m:n relation between books and book stores
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord> {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class TBookToBookStore extends TableImpl<TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 2065563724;
+	private static final long serialVersionUID = 125582220;
 
 	/**
 	 * The reference instance of <code>test.t_book_to_book_store</code>
 	 */
-	public static final org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore T_BOOK_TO_BOOK_STORE = new org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore();
+	public static final TBookToBookStore T_BOOK_TO_BOOK_STORE = new TBookToBookStore();
 
 	/**
 	 * The class holding records for this type
 	 */
 	@Override
-	public java.lang.Class<org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord> getRecordType() {
-		return org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord.class;
+	public Class<TBookToBookStoreRecord> getRecordType() {
+		return TBookToBookStoreRecord.class;
 	}
 
 	/**
 	 * The column <code>test.t_book_to_book_store.book_store_name</code>. The book store name
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("book_store_name", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), T_BOOK_TO_BOOK_STORE, "The book store name");
+	public static final TableField<TBookToBookStoreRecord, String> BOOK_STORE_NAME = createField("book_store_name", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), T_BOOK_TO_BOOK_STORE, "The book store name");
 
 	/**
 	 * The column <code>test.t_book_to_book_store.book_id</code>. The book ID
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> BOOK_ID = createField("book_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_BOOK_TO_BOOK_STORE, "The book ID");
+	public static final TableField<TBookToBookStoreRecord, Integer> BOOK_ID = createField("book_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_BOOK_TO_BOOK_STORE, "The book ID");
 
 	/**
 	 * The column <code>test.t_book_to_book_store.stock</code>. The number of books on stock
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> STOCK = createField("stock", org.jooq.impl.SQLDataType.INTEGER, T_BOOK_TO_BOOK_STORE, "The number of books on stock");
+	public static final TableField<TBookToBookStoreRecord, Integer> STOCK = createField("stock", org.jooq.impl.SQLDataType.INTEGER, T_BOOK_TO_BOOK_STORE, "The number of books on stock");
 
 	/**
 	 * No further instances allowed
@@ -46,35 +61,35 @@ public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.mysq
 		this("t_book_to_book_store", null);
 	}
 
-	private TBookToBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord> aliased) {
+	private TBookToBookStore(String alias, Table<TBookToBookStoreRecord> aliased) {
 		this(alias, aliased, null);
 	}
 
-	private TBookToBookStore(java.lang.String alias, org.jooq.Table<org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord> aliased, org.jooq.Field<?>[] parameters) {
-		super(alias, org.jooq.test.mysql.generatedclasses.Test.TEST, aliased, parameters, "An m:n relation between books and book stores");
+	private TBookToBookStore(String alias, Table<TBookToBookStoreRecord> aliased, Field<?>[] parameters) {
+		super(alias, Test.TEST, aliased, parameters, "An m:n relation between books and book stores");
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord> getPrimaryKey() {
-		return org.jooq.test.mysql.generatedclasses.Keys.KEY_T_BOOK_TO_BOOK_STORE_PRIMARY;
+	public UniqueKey<TBookToBookStoreRecord> getPrimaryKey() {
+		return Keys.KEY_T_BOOK_TO_BOOK_STORE_PRIMARY;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.util.List<org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord>>asList(org.jooq.test.mysql.generatedclasses.Keys.KEY_T_BOOK_TO_BOOK_STORE_PRIMARY);
+	public List<UniqueKey<TBookToBookStoreRecord>> getKeys() {
+		return Arrays.<UniqueKey<TBookToBookStoreRecord>>asList(Keys.KEY_T_BOOK_TO_BOOK_STORE_PRIMARY);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.util.List<org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord, ?>>asList(org.jooq.test.mysql.generatedclasses.Keys.FK_B2BS_BS_NAME, org.jooq.test.mysql.generatedclasses.Keys.FK_B2BS_B_ID);
+	public List<ForeignKey<TBookToBookStoreRecord, ?>> getReferences() {
+		return Arrays.<ForeignKey<TBookToBookStoreRecord, ?>>asList(Keys.FK_B2BS_BS_NAME, Keys.FK_B2BS_B_ID);
 	}
 }

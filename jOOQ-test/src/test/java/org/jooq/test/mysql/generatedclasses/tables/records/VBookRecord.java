@@ -3,124 +3,134 @@
  */
 package org.jooq.test.mysql.generatedclasses.tables.records;
 
+
+import org.jooq.Field;
+import org.jooq.Record10;
+import org.jooq.Row;
+import org.jooq.Row10;
+import org.jooq.impl.TableRecordImpl;
+import org.jooq.test.mysql.generatedclasses.enums.VBookStatus;
+import org.jooq.test.mysql.generatedclasses.tables.VBook;
+
+
 /**
  * VIEW
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.VBookRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.mysql.generatedclasses.enums.VBookStatus> {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class VBookRecord extends TableRecordImpl<VBookRecord> implements Record10<Integer, Integer, Integer, Integer, String, Integer, Integer, String, byte[], VBookStatus> {
 
-	private static final long serialVersionUID = -1657789730;
+	private static final long serialVersionUID = -847860691;
 
 	/**
 	 * Setter for <code>test.v_book.ID</code>. The book ID
 	 */
-	public void setId(java.lang.Integer value) {
+	public void setId(Integer value) {
 		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>test.v_book.ID</code>. The book ID
 	 */
-	public java.lang.Integer getId() {
-		return (java.lang.Integer) getValue(0);
+	public Integer getId() {
+		return (Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>test.v_book.AUTHOR_ID</code>. The author ID in entity 'author'
 	 */
-	public void setAuthorId(java.lang.Integer value) {
+	public void setAuthorId(Integer value) {
 		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>test.v_book.AUTHOR_ID</code>. The author ID in entity 'author'
 	 */
-	public java.lang.Integer getAuthorId() {
-		return (java.lang.Integer) getValue(1);
+	public Integer getAuthorId() {
+		return (Integer) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>test.v_book.co_author_id</code>.
 	 */
-	public void setCoAuthorId(java.lang.Integer value) {
+	public void setCoAuthorId(Integer value) {
 		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>test.v_book.co_author_id</code>.
 	 */
-	public java.lang.Integer getCoAuthorId() {
-		return (java.lang.Integer) getValue(2);
+	public Integer getCoAuthorId() {
+		return (Integer) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>test.v_book.DETAILS_ID</code>. Some more details about the book
 	 */
-	public void setDetailsId(java.lang.Integer value) {
+	public void setDetailsId(Integer value) {
 		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>test.v_book.DETAILS_ID</code>. Some more details about the book
 	 */
-	public java.lang.Integer getDetailsId() {
-		return (java.lang.Integer) getValue(3);
+	public Integer getDetailsId() {
+		return (Integer) getValue(3);
 	}
 
 	/**
 	 * Setter for <code>test.v_book.TITLE</code>. The book's title
 	 */
-	public void setTitle(java.lang.String value) {
+	public void setTitle(String value) {
 		setValue(4, value);
 	}
 
 	/**
 	 * Getter for <code>test.v_book.TITLE</code>. The book's title
 	 */
-	public java.lang.String getTitle() {
-		return (java.lang.String) getValue(4);
+	public String getTitle() {
+		return (String) getValue(4);
 	}
 
 	/**
 	 * Setter for <code>test.v_book.PUBLISHED_IN</code>. The year the book was published in
 	 */
-	public void setPublishedIn(java.lang.Integer value) {
+	public void setPublishedIn(Integer value) {
 		setValue(5, value);
 	}
 
 	/**
 	 * Getter for <code>test.v_book.PUBLISHED_IN</code>. The year the book was published in
 	 */
-	public java.lang.Integer getPublishedIn() {
-		return (java.lang.Integer) getValue(5);
+	public Integer getPublishedIn() {
+		return (Integer) getValue(5);
 	}
 
 	/**
 	 * Setter for <code>test.v_book.LANGUAGE_ID</code>. The language of the book
 	 */
-	public void setLanguageId(java.lang.Integer value) {
+	public void setLanguageId(Integer value) {
 		setValue(6, value);
 	}
 
 	/**
 	 * Getter for <code>test.v_book.LANGUAGE_ID</code>. The language of the book
 	 */
-	public java.lang.Integer getLanguageId() {
-		return (java.lang.Integer) getValue(6);
+	public Integer getLanguageId() {
+		return (Integer) getValue(6);
 	}
 
 	/**
 	 * Setter for <code>test.v_book.CONTENT_TEXT</code>. Some textual content of the book
 	 */
-	public void setContentText(java.lang.String value) {
+	public void setContentText(String value) {
 		setValue(7, value);
 	}
 
 	/**
 	 * Getter for <code>test.v_book.CONTENT_TEXT</code>. Some textual content of the book
 	 */
-	public java.lang.String getContentText() {
-		return (java.lang.String) getValue(7);
+	public String getContentText() {
+		return (String) getValue(7);
 	}
 
 	/**
@@ -140,15 +150,15 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	/**
 	 * Setter for <code>test.v_book.STATUS</code>. The book's stock status
 	 */
-	public void setStatus(org.jooq.test.mysql.generatedclasses.enums.VBookStatus value) {
+	public void setStatus(VBookStatus value) {
 		setValue(9, value);
 	}
 
 	/**
 	 * Getter for <code>test.v_book.STATUS</code>. The book's stock status
 	 */
-	public org.jooq.test.mysql.generatedclasses.enums.VBookStatus getStatus() {
-		return (org.jooq.test.mysql.generatedclasses.enums.VBookStatus) getValue(9);
+	public VBookStatus getStatus() {
+		return (VBookStatus) getValue(9);
 	}
 
 	// -------------------------------------------------------------------------
@@ -159,103 +169,103 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.mysql.generatedclasses.enums.VBookStatus> fieldsRow() {
-		return (org.jooq.Row10) super.fieldsRow();
+	public Row10<Integer, Integer, Integer, Integer, String, Integer, Integer, String, byte[], VBookStatus> fieldsRow() {
+		return (Row10) super.fieldsRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.mysql.generatedclasses.enums.VBookStatus> valuesRow() {
-		return (org.jooq.Row10) super.valuesRow();
+	public Row10<Integer, Integer, Integer, Integer, String, Integer, Integer, String, byte[], VBookStatus> valuesRow() {
+		return (Row10) super.valuesRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.jooq.test.mysql.generatedclasses.tables.VBook.ID;
+	public Field<Integer> field1() {
+		return VBook.ID;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.Integer> field2() {
-		return org.jooq.test.mysql.generatedclasses.tables.VBook.AUTHOR_ID;
+	public Field<Integer> field2() {
+		return VBook.AUTHOR_ID;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.Integer> field3() {
-		return org.jooq.test.mysql.generatedclasses.tables.VBook.CO_AUTHOR_ID;
+	public Field<Integer> field3() {
+		return VBook.CO_AUTHOR_ID;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.Integer> field4() {
-		return org.jooq.test.mysql.generatedclasses.tables.VBook.DETAILS_ID;
+	public Field<Integer> field4() {
+		return VBook.DETAILS_ID;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.String> field5() {
-		return org.jooq.test.mysql.generatedclasses.tables.VBook.TITLE;
+	public Field<String> field5() {
+		return VBook.TITLE;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.Integer> field6() {
-		return org.jooq.test.mysql.generatedclasses.tables.VBook.PUBLISHED_IN;
+	public Field<Integer> field6() {
+		return VBook.PUBLISHED_IN;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.Integer> field7() {
-		return org.jooq.test.mysql.generatedclasses.tables.VBook.LANGUAGE_ID;
+	public Field<Integer> field7() {
+		return VBook.LANGUAGE_ID;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.String> field8() {
-		return org.jooq.test.mysql.generatedclasses.tables.VBook.CONTENT_TEXT;
+	public Field<String> field8() {
+		return VBook.CONTENT_TEXT;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<byte[]> field9() {
-		return org.jooq.test.mysql.generatedclasses.tables.VBook.CONTENT_PDF;
+	public Field<byte[]> field9() {
+		return VBook.CONTENT_PDF;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<org.jooq.test.mysql.generatedclasses.enums.VBookStatus> field10() {
-		return org.jooq.test.mysql.generatedclasses.tables.VBook.STATUS;
+	public Field<VBookStatus> field10() {
+		return VBook.STATUS;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.Integer value1() {
+	public Integer value1() {
 		return getId();
 	}
 
@@ -263,7 +273,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.Integer value2() {
+	public Integer value2() {
 		return getAuthorId();
 	}
 
@@ -271,7 +281,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.Integer value3() {
+	public Integer value3() {
 		return getCoAuthorId();
 	}
 
@@ -279,7 +289,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.Integer value4() {
+	public Integer value4() {
 		return getDetailsId();
 	}
 
@@ -287,7 +297,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.String value5() {
+	public String value5() {
 		return getTitle();
 	}
 
@@ -295,7 +305,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.Integer value6() {
+	public Integer value6() {
 		return getPublishedIn();
 	}
 
@@ -303,7 +313,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.Integer value7() {
+	public Integer value7() {
 		return getLanguageId();
 	}
 
@@ -311,7 +321,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.String value8() {
+	public String value8() {
 		return getContentText();
 	}
 
@@ -327,7 +337,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.test.mysql.generatedclasses.enums.VBookStatus value10() {
+	public VBookStatus value10() {
 		return getStatus();
 	}
 
@@ -335,7 +345,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 * {@inheritDoc}
 	 */
 	@Override
-	public VBookRecord value1(java.lang.Integer value) {
+	public VBookRecord value1(Integer value) {
 		setId(value);
 		return this;
 	}
@@ -344,7 +354,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 * {@inheritDoc}
 	 */
 	@Override
-	public VBookRecord value2(java.lang.Integer value) {
+	public VBookRecord value2(Integer value) {
 		setAuthorId(value);
 		return this;
 	}
@@ -353,7 +363,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 * {@inheritDoc}
 	 */
 	@Override
-	public VBookRecord value3(java.lang.Integer value) {
+	public VBookRecord value3(Integer value) {
 		setCoAuthorId(value);
 		return this;
 	}
@@ -362,7 +372,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 * {@inheritDoc}
 	 */
 	@Override
-	public VBookRecord value4(java.lang.Integer value) {
+	public VBookRecord value4(Integer value) {
 		setDetailsId(value);
 		return this;
 	}
@@ -371,7 +381,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 * {@inheritDoc}
 	 */
 	@Override
-	public VBookRecord value5(java.lang.String value) {
+	public VBookRecord value5(String value) {
 		setTitle(value);
 		return this;
 	}
@@ -380,7 +390,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 * {@inheritDoc}
 	 */
 	@Override
-	public VBookRecord value6(java.lang.Integer value) {
+	public VBookRecord value6(Integer value) {
 		setPublishedIn(value);
 		return this;
 	}
@@ -389,7 +399,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 * {@inheritDoc}
 	 */
 	@Override
-	public VBookRecord value7(java.lang.Integer value) {
+	public VBookRecord value7(Integer value) {
 		setLanguageId(value);
 		return this;
 	}
@@ -398,7 +408,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 * {@inheritDoc}
 	 */
 	@Override
-	public VBookRecord value8(java.lang.String value) {
+	public VBookRecord value8(String value) {
 		setContentText(value);
 		return this;
 	}
@@ -416,7 +426,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 * {@inheritDoc}
 	 */
 	@Override
-	public VBookRecord value10(org.jooq.test.mysql.generatedclasses.enums.VBookStatus value) {
+	public VBookRecord value10(VBookStatus value) {
 		setStatus(value);
 		return this;
 	}
@@ -425,7 +435,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 * {@inheritDoc}
 	 */
 	@Override
-	public VBookRecord values(java.lang.Integer value1, java.lang.Integer value2, java.lang.Integer value3, java.lang.Integer value4, java.lang.String value5, java.lang.Integer value6, java.lang.Integer value7, java.lang.String value8, byte[] value9, org.jooq.test.mysql.generatedclasses.enums.VBookStatus value10) {
+	public VBookRecord values(Integer value1, Integer value2, Integer value3, Integer value4, String value5, Integer value6, Integer value7, String value8, byte[] value9, VBookStatus value10) {
 		return this;
 	}
 
@@ -437,14 +447,14 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 * Create a detached VBookRecord
 	 */
 	public VBookRecord() {
-		super(org.jooq.test.mysql.generatedclasses.tables.VBook.V_BOOK);
+		super(VBook.V_BOOK);
 	}
 
 	/**
 	 * Create a detached, initialised VBookRecord
 	 */
-	public VBookRecord(java.lang.Integer id, java.lang.Integer authorId, java.lang.Integer coAuthorId, java.lang.Integer detailsId, java.lang.String title, java.lang.Integer publishedIn, java.lang.Integer languageId, java.lang.String contentText, byte[] contentPdf, org.jooq.test.mysql.generatedclasses.enums.VBookStatus status) {
-		super(org.jooq.test.mysql.generatedclasses.tables.VBook.V_BOOK);
+	public VBookRecord(Integer id, Integer authorId, Integer coAuthorId, Integer detailsId, String title, Integer publishedIn, Integer languageId, String contentText, byte[] contentPdf, VBookStatus status) {
+		super(VBook.V_BOOK);
 
 		setValue(0, id);
 		setValue(1, authorId);

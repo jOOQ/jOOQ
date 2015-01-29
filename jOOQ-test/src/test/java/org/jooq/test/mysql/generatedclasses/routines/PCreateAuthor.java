@@ -3,18 +3,23 @@
  */
 package org.jooq.test.mysql.generatedclasses.routines;
 
+
+import org.jooq.impl.AbstractRoutine;
+import org.jooq.test.mysql.generatedclasses.Test;
+
+
 /**
  * Create a new author
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class PCreateAuthor extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class PCreateAuthor extends AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1085273562;
+	private static final long serialVersionUID = 102305222;
 
 	/**
 	 * Create a new routine call instance
 	 */
 	public PCreateAuthor() {
-		super("p_create_author", org.jooq.test.mysql.generatedclasses.Test.TEST);
+		super("p_create_author", Test.TEST);
 	}
 }

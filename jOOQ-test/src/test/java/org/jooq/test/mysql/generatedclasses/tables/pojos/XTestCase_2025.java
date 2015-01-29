@@ -3,30 +3,39 @@
  */
 package org.jooq.test.mysql.generatedclasses.tables.pojos;
 
+
+import java.io.Serializable;
+
+
 /**
  * An unused table in the same schema.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class XTestCase_2025 implements java.io.Serializable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class XTestCase_2025 implements Serializable {
 
-	private static final long serialVersionUID = -1433570721;
+	private static final long serialVersionUID = 1418870545;
 
-	private final java.lang.Integer refId;
-	private final java.lang.String  refName;
+	private final Integer refId;
+	private final String  refName;
+
+	public XTestCase_2025(XTestCase_2025 value) {
+		this.refId = value.refId;
+		this.refName = value.refName;
+	}
 
 	public XTestCase_2025(
-		java.lang.Integer refId,
-		java.lang.String  refName
+		Integer refId,
+		String  refName
 	) {
 		this.refId = refId;
 		this.refName = refName;
 	}
 
-	public java.lang.Integer getRefId() {
+	public Integer getRefId() {
 		return this.refId;
 	}
 
-	public java.lang.String getRefName() {
+	public String getRefName() {
 		return this.refName;
 	}
 }

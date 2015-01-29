@@ -3,136 +3,148 @@
  */
 package org.jooq.test.mysql.generatedclasses.tables.daos;
 
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.List;
+
+import org.jooq.Configuration;
+import org.jooq.Record2;
+import org.jooq.impl.DAOImpl;
+import org.jooq.test.mysql.generatedclasses.tables.XUnused;
+import org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord;
+
+
 /**
  * An unused table in the same schema.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class XUnusedDao extends org.jooq.impl.DAOImpl<org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord, org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused, org.jooq.Record2<java.lang.Integer, java.lang.String>> {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class XUnusedDao extends DAOImpl<XUnusedRecord, org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused, Record2<Integer, String>> {
 
 	/**
 	 * Create a new XUnusedDao without any configuration
 	 */
 	public XUnusedDao() {
-		super(org.jooq.test.mysql.generatedclasses.tables.XUnused.X_UNUSED, org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused.class);
+		super(XUnused.X_UNUSED, org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused.class);
 	}
 
 	/**
 	 * Create a new XUnusedDao with an attached configuration
 	 */
-	public XUnusedDao(org.jooq.Configuration configuration) {
-		super(org.jooq.test.mysql.generatedclasses.tables.XUnused.X_UNUSED, org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused.class, configuration);
+	public XUnusedDao(Configuration configuration) {
+		super(XUnused.X_UNUSED, org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused.class, configuration);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected org.jooq.Record2<java.lang.Integer, java.lang.String> getId(org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused object) {
+	protected Record2<Integer, String> getId(org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused object) {
 		return compositeKeyRecord(object.getId(), object.getName());
 	}
 
 	/**
 	 * Fetch records that have <code>ID IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused> fetchById(java.lang.Integer... values) {
-		return fetch(org.jooq.test.mysql.generatedclasses.tables.XUnused.ID, values);
+	public List<org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused> fetchById(Integer... values) {
+		return fetch(XUnused.ID, values);
 	}
 
 	/**
 	 * Fetch a unique record that has <code>ID = value</code>
 	 */
-	public org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused fetchOneById(java.lang.Integer value) {
-		return fetchOne(org.jooq.test.mysql.generatedclasses.tables.XUnused.ID, value);
+	public org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused fetchOneById(Integer value) {
+		return fetchOne(XUnused.ID, value);
 	}
 
 	/**
 	 * Fetch records that have <code>NAME IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused> fetchByName(java.lang.String... values) {
-		return fetch(org.jooq.test.mysql.generatedclasses.tables.XUnused.NAME, values);
+	public List<org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused> fetchByName(String... values) {
+		return fetch(XUnused.NAME, values);
 	}
 
 	/**
 	 * Fetch records that have <code>BIG_INTEGER IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused> fetchByBigInteger(java.math.BigInteger... values) {
-		return fetch(org.jooq.test.mysql.generatedclasses.tables.XUnused.BIG_INTEGER, values);
+	public List<org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused> fetchByBigInteger(BigInteger... values) {
+		return fetch(XUnused.BIG_INTEGER, values);
 	}
 
 	/**
 	 * Fetch records that have <code>ID_REF IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused> fetchByIdRef(java.lang.Integer... values) {
-		return fetch(org.jooq.test.mysql.generatedclasses.tables.XUnused.ID_REF, values);
+	public List<org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused> fetchByIdRef(Integer... values) {
+		return fetch(XUnused.ID_REF, values);
 	}
 
 	/**
 	 * Fetch records that have <code>NAME_REF IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused> fetchByNameRef(java.lang.String... values) {
-		return fetch(org.jooq.test.mysql.generatedclasses.tables.XUnused.NAME_REF, values);
+	public List<org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused> fetchByNameRef(String... values) {
+		return fetch(XUnused.NAME_REF, values);
 	}
 
 	/**
 	 * Fetch records that have <code>CLASS IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused> fetchByClass(java.lang.Integer... values) {
-		return fetch(org.jooq.test.mysql.generatedclasses.tables.XUnused.CLASS, values);
+	public List<org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused> fetchByClass(Integer... values) {
+		return fetch(XUnused.CLASS, values);
 	}
 
 	/**
 	 * Fetch records that have <code>FIELDS IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused> fetchByFields(java.lang.Integer... values) {
-		return fetch(org.jooq.test.mysql.generatedclasses.tables.XUnused.FIELDS, values);
+	public List<org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused> fetchByFields(Integer... values) {
+		return fetch(XUnused.FIELDS, values);
 	}
 
 	/**
 	 * Fetch records that have <code>CONFIGURATION IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused> fetchByConfiguration(java.lang.Integer... values) {
-		return fetch(org.jooq.test.mysql.generatedclasses.tables.XUnused.CONFIGURATION, values);
+	public List<org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused> fetchByConfiguration(Integer... values) {
+		return fetch(XUnused.CONFIGURATION, values);
 	}
 
 	/**
 	 * Fetch records that have <code>U_D_T IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused> fetchByUDT(java.lang.Integer... values) {
-		return fetch(org.jooq.test.mysql.generatedclasses.tables.XUnused.U_D_T, values);
+	public List<org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused> fetchByUDT(Integer... values) {
+		return fetch(XUnused.U_D_T, values);
 	}
 
 	/**
 	 * Fetch records that have <code>META_DATA IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused> fetchByMetaData(java.lang.Integer... values) {
-		return fetch(org.jooq.test.mysql.generatedclasses.tables.XUnused.META_DATA, values);
+	public List<org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused> fetchByMetaData(Integer... values) {
+		return fetch(XUnused.META_DATA, values);
 	}
 
 	/**
 	 * Fetch records that have <code>TYPE0 IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused> fetchByType0(java.lang.Integer... values) {
-		return fetch(org.jooq.test.mysql.generatedclasses.tables.XUnused.TYPE0, values);
+	public List<org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused> fetchByType0(Integer... values) {
+		return fetch(XUnused.TYPE0, values);
 	}
 
 	/**
 	 * Fetch records that have <code>PRIMARY_KEY IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused> fetchByPrimaryKey(java.lang.Integer... values) {
-		return fetch(org.jooq.test.mysql.generatedclasses.tables.XUnused.PRIMARY_KEY, values);
+	public List<org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused> fetchByPrimaryKey(Integer... values) {
+		return fetch(XUnused.PRIMARY_KEY, values);
 	}
 
 	/**
 	 * Fetch records that have <code>PRIMARYKEY IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused> fetchByPrimarykey(java.lang.Integer... values) {
-		return fetch(org.jooq.test.mysql.generatedclasses.tables.XUnused.PRIMARYKEY, values);
+	public List<org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused> fetchByPrimarykey(Integer... values) {
+		return fetch(XUnused.PRIMARYKEY, values);
 	}
 
 	/**
 	 * Fetch records that have <code>FIELD 737 IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused> fetchByField_737(java.math.BigDecimal... values) {
-		return fetch(org.jooq.test.mysql.generatedclasses.tables.XUnused.FIELD_737, values);
+	public List<org.jooq.test.mysql.generatedclasses.tables.pojos.XUnused> fetchByField_737(BigDecimal... values) {
+		return fetch(XUnused.FIELD_737, values);
 	}
 }

@@ -3,28 +3,42 @@
  */
 package org.jooq.test.mysql.generatedclasses.tables.pojos;
 
+
+import java.io.Serializable;
+import java.sql.Date;
+
+
 /**
  * An entity holding authors of books
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TAuthor implements java.io.Serializable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class TAuthor implements Serializable {
 
-	private static final long serialVersionUID = -1515129811;
+	private static final long serialVersionUID = -938818975;
 
-	private final java.lang.Integer id;
-	private final java.lang.String  firstName;
-	private final java.lang.String  lastName;
-	private final java.sql.Date     dateOfBirth;
-	private final java.lang.Integer yearOfBirth;
-	private final java.lang.String  address;
+	private final Integer id;
+	private final String  firstName;
+	private final String  lastName;
+	private final Date    dateOfBirth;
+	private final Integer yearOfBirth;
+	private final String  address;
+
+	public TAuthor(TAuthor value) {
+		this.id = value.id;
+		this.firstName = value.firstName;
+		this.lastName = value.lastName;
+		this.dateOfBirth = value.dateOfBirth;
+		this.yearOfBirth = value.yearOfBirth;
+		this.address = value.address;
+	}
 
 	public TAuthor(
-		java.lang.Integer id,
-		java.lang.String  firstName,
-		java.lang.String  lastName,
-		java.sql.Date     dateOfBirth,
-		java.lang.Integer yearOfBirth,
-		java.lang.String  address
+		Integer id,
+		String  firstName,
+		String  lastName,
+		Date    dateOfBirth,
+		Integer yearOfBirth,
+		String  address
 	) {
 		this.id = id;
 		this.firstName = firstName;
@@ -34,27 +48,27 @@ public class TAuthor implements java.io.Serializable {
 		this.address = address;
 	}
 
-	public java.lang.Integer getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public java.lang.String getFirstName() {
+	public String getFirstName() {
 		return this.firstName;
 	}
 
-	public java.lang.String getLastName() {
+	public String getLastName() {
 		return this.lastName;
 	}
 
-	public java.sql.Date getDateOfBirth() {
+	public Date getDateOfBirth() {
 		return this.dateOfBirth;
 	}
 
-	public java.lang.Integer getYearOfBirth() {
+	public Integer getYearOfBirth() {
 		return this.yearOfBirth;
 	}
 
-	public java.lang.String getAddress() {
+	public String getAddress() {
 		return this.address;
 	}
 }

@@ -3,66 +3,75 @@
  */
 package org.jooq.test.mysql.generatedclasses.tables.daos;
 
+
+import java.util.List;
+
+import org.jooq.Configuration;
+import org.jooq.impl.DAOImpl;
+import org.jooq.test.mysql.generatedclasses.tables.TLanguage;
+import org.jooq.test.mysql.generatedclasses.tables.records.TLanguageRecord;
+
+
 /**
  * An entity holding language master data
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TLanguageDao extends org.jooq.impl.DAOImpl<org.jooq.test.mysql.generatedclasses.tables.records.TLanguageRecord, org.jooq.test.mysql.generatedclasses.tables.pojos.TLanguage, java.lang.Integer> {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class TLanguageDao extends DAOImpl<TLanguageRecord, org.jooq.test.mysql.generatedclasses.tables.pojos.TLanguage, Integer> {
 
 	/**
 	 * Create a new TLanguageDao without any configuration
 	 */
 	public TLanguageDao() {
-		super(org.jooq.test.mysql.generatedclasses.tables.TLanguage.T_LANGUAGE, org.jooq.test.mysql.generatedclasses.tables.pojos.TLanguage.class);
+		super(TLanguage.T_LANGUAGE, org.jooq.test.mysql.generatedclasses.tables.pojos.TLanguage.class);
 	}
 
 	/**
 	 * Create a new TLanguageDao with an attached configuration
 	 */
-	public TLanguageDao(org.jooq.Configuration configuration) {
-		super(org.jooq.test.mysql.generatedclasses.tables.TLanguage.T_LANGUAGE, org.jooq.test.mysql.generatedclasses.tables.pojos.TLanguage.class, configuration);
+	public TLanguageDao(Configuration configuration) {
+		super(TLanguage.T_LANGUAGE, org.jooq.test.mysql.generatedclasses.tables.pojos.TLanguage.class, configuration);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected java.lang.Integer getId(org.jooq.test.mysql.generatedclasses.tables.pojos.TLanguage object) {
+	protected Integer getId(org.jooq.test.mysql.generatedclasses.tables.pojos.TLanguage object) {
 		return object.getId();
 	}
 
 	/**
 	 * Fetch records that have <code>CD IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.TLanguage> fetchByCd(java.lang.String... values) {
-		return fetch(org.jooq.test.mysql.generatedclasses.tables.TLanguage.CD, values);
+	public List<org.jooq.test.mysql.generatedclasses.tables.pojos.TLanguage> fetchByCd(String... values) {
+		return fetch(TLanguage.CD, values);
 	}
 
 	/**
 	 * Fetch records that have <code>DESCRIPTION IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.TLanguage> fetchByDescription(java.lang.String... values) {
-		return fetch(org.jooq.test.mysql.generatedclasses.tables.TLanguage.DESCRIPTION, values);
+	public List<org.jooq.test.mysql.generatedclasses.tables.pojos.TLanguage> fetchByDescription(String... values) {
+		return fetch(TLanguage.DESCRIPTION, values);
 	}
 
 	/**
 	 * Fetch records that have <code>description_english IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.TLanguage> fetchByDescriptionEnglish(java.lang.String... values) {
-		return fetch(org.jooq.test.mysql.generatedclasses.tables.TLanguage.DESCRIPTION_ENGLISH, values);
+	public List<org.jooq.test.mysql.generatedclasses.tables.pojos.TLanguage> fetchByDescriptionEnglish(String... values) {
+		return fetch(TLanguage.DESCRIPTION_ENGLISH, values);
 	}
 
 	/**
 	 * Fetch records that have <code>ID IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.TLanguage> fetchById(java.lang.Integer... values) {
-		return fetch(org.jooq.test.mysql.generatedclasses.tables.TLanguage.ID, values);
+	public List<org.jooq.test.mysql.generatedclasses.tables.pojos.TLanguage> fetchById(Integer... values) {
+		return fetch(TLanguage.ID, values);
 	}
 
 	/**
 	 * Fetch a unique record that has <code>ID = value</code>
 	 */
-	public org.jooq.test.mysql.generatedclasses.tables.pojos.TLanguage fetchOneById(java.lang.Integer value) {
-		return fetchOne(org.jooq.test.mysql.generatedclasses.tables.TLanguage.ID, value);
+	public org.jooq.test.mysql.generatedclasses.tables.pojos.TLanguage fetchOneById(Integer value) {
+		return fetchOne(TLanguage.ID, value);
 	}
 }

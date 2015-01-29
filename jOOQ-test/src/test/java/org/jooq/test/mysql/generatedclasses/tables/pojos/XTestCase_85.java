@@ -3,37 +3,47 @@
  */
 package org.jooq.test.mysql.generatedclasses.tables.pojos;
 
+
+import java.io.Serializable;
+
+
 /**
  * An unused table in the same schema.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class XTestCase_85 implements java.io.Serializable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class XTestCase_85 implements Serializable {
 
-	private static final long serialVersionUID = 799822893;
+	private static final long serialVersionUID = -1493828648;
 
-	private final java.lang.Integer id;
-	private final java.lang.Integer xUnusedId;
-	private final java.lang.String  xUnusedName;
+	private final Integer id;
+	private final Integer xUnusedId;
+	private final String  xUnusedName;
+
+	public XTestCase_85(XTestCase_85 value) {
+		this.id = value.id;
+		this.xUnusedId = value.xUnusedId;
+		this.xUnusedName = value.xUnusedName;
+	}
 
 	public XTestCase_85(
-		java.lang.Integer id,
-		java.lang.Integer xUnusedId,
-		java.lang.String  xUnusedName
+		Integer id,
+		Integer xUnusedId,
+		String  xUnusedName
 	) {
 		this.id = id;
 		this.xUnusedId = xUnusedId;
 		this.xUnusedName = xUnusedName;
 	}
 
-	public java.lang.Integer getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public java.lang.Integer getXUnusedId() {
+	public Integer getXUnusedId() {
 		return this.xUnusedId;
 	}
 
-	public java.lang.String getXUnusedName() {
+	public String getXUnusedName() {
 		return this.xUnusedName;
 	}
 }

@@ -3,23 +3,31 @@
  */
 package org.jooq.test.mysql.generatedclasses.tables.pojos;
 
+
+import java.io.Serializable;
+
+
 /**
  * A book store
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TBookStore implements java.io.Serializable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class TBookStore implements Serializable {
 
-	private static final long serialVersionUID = -107240658;
+	private static final long serialVersionUID = -677462169;
 
-	private final java.lang.String name;
+	private final String name;
+
+	public TBookStore(TBookStore value) {
+		this.name = value.name;
+	}
 
 	public TBookStore(
-		java.lang.String name
+		String name
 	) {
 		this.name = name;
 	}
 
-	public java.lang.String getName() {
+	public String getName() {
 		return this.name;
 	}
 }

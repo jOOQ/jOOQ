@@ -3,30 +3,39 @@
  */
 package org.jooq.test.mysql.generatedclasses.tables.pojos;
 
+
+import java.io.Serializable;
+
+
 /**
  * VIEW
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class VLibrary implements java.io.Serializable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class VLibrary implements Serializable {
 
-	private static final long serialVersionUID = 1879785629;
+	private static final long serialVersionUID = -1422939421;
 
-	private final java.lang.String author;
-	private final java.lang.String title;
+	private final String author;
+	private final String title;
+
+	public VLibrary(VLibrary value) {
+		this.author = value.author;
+		this.title = value.title;
+	}
 
 	public VLibrary(
-		java.lang.String author,
-		java.lang.String title
+		String author,
+		String title
 	) {
 		this.author = author;
 		this.title = title;
 	}
 
-	public java.lang.String getAuthor() {
+	public String getAuthor() {
 		return this.author;
 	}
 
-	public java.lang.String getTitle() {
+	public String getTitle() {
 		return this.title;
 	}
 }

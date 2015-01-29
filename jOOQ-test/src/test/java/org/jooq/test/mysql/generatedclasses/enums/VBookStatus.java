@@ -3,11 +3,16 @@
  */
 package org.jooq.test.mysql.generatedclasses.enums;
 
+
+import org.jooq.EnumType;
+import org.jooq.Schema;
+
+
 /**
  * The book's stock status
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public enum VBookStatus implements org.jooq.EnumType {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public enum VBookStatus implements EnumType {
 
 	SOLD_OUT("SOLD OUT"),
 
@@ -15,9 +20,9 @@ public enum VBookStatus implements org.jooq.EnumType {
 
 	ON_STOCK("ON STOCK");
 
-	private final java.lang.String literal;
+	private final String literal;
 
-	private VBookStatus(java.lang.String literal) {
+	private VBookStatus(String literal) {
 		this.literal = literal;
 	}
 
@@ -25,7 +30,7 @@ public enum VBookStatus implements org.jooq.EnumType {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Schema getSchema() {
+	public Schema getSchema() {
 		return null;
 	}
 
@@ -33,7 +38,7 @@ public enum VBookStatus implements org.jooq.EnumType {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.String getName() {
+	public String getName() {
 		return "v_book_STATUS";
 	}
 
@@ -41,7 +46,7 @@ public enum VBookStatus implements org.jooq.EnumType {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.String getLiteral() {
+	public String getLiteral() {
 		return literal;
 	}
 }

@@ -3,46 +3,60 @@
  */
 package org.jooq.test.mysql.generatedclasses.tables;
 
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.jooq.Field;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.UniqueKey;
+import org.jooq.impl.TableImpl;
+import org.jooq.test.mysql.generatedclasses.Keys;
+import org.jooq.test.mysql.generatedclasses.Test;
+import org.jooq.test.mysql.generatedclasses.tables.records.TLanguageRecord;
+
+
 /**
  * An entity holding language master data
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generatedclasses.tables.records.TLanguageRecord> {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class TLanguage extends TableImpl<TLanguageRecord> {
 
-	private static final long serialVersionUID = -695129245;
+	private static final long serialVersionUID = -1053310667;
 
 	/**
 	 * The reference instance of <code>test.t_language</code>
 	 */
-	public static final org.jooq.test.mysql.generatedclasses.tables.TLanguage T_LANGUAGE = new org.jooq.test.mysql.generatedclasses.tables.TLanguage();
+	public static final TLanguage T_LANGUAGE = new TLanguage();
 
 	/**
 	 * The class holding records for this type
 	 */
 	@Override
-	public java.lang.Class<org.jooq.test.mysql.generatedclasses.tables.records.TLanguageRecord> getRecordType() {
-		return org.jooq.test.mysql.generatedclasses.tables.records.TLanguageRecord.class;
+	public Class<TLanguageRecord> getRecordType() {
+		return TLanguageRecord.class;
 	}
 
 	/**
 	 * The column <code>test.t_language.CD</code>. The language ISO code
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("CD", org.jooq.impl.SQLDataType.CHAR.length(2).nullable(false), T_LANGUAGE, "The language ISO code");
+	public static final TableField<TLanguageRecord, String> CD = createField("CD", org.jooq.impl.SQLDataType.CHAR.length(2).nullable(false), T_LANGUAGE, "The language ISO code");
 
 	/**
 	 * The column <code>test.t_language.DESCRIPTION</code>. The language description
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION = createField("DESCRIPTION", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_LANGUAGE, "The language description");
+	public static final TableField<TLanguageRecord, String> DESCRIPTION = createField("DESCRIPTION", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_LANGUAGE, "The language description");
 
 	/**
 	 * The column <code>test.t_language.description_english</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION_ENGLISH = createField("description_english", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_LANGUAGE, "");
+	public static final TableField<TLanguageRecord, String> DESCRIPTION_ENGLISH = createField("description_english", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_LANGUAGE, "");
 
 	/**
 	 * The column <code>test.t_language.ID</code>. The language ID
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TLanguageRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_LANGUAGE, "The language ID");
+	public static final TableField<TLanguageRecord, Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_LANGUAGE, "The language ID");
 
 	/**
 	 * No further instances allowed
@@ -51,27 +65,27 @@ public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.mysql.gener
 		this("t_language", null);
 	}
 
-	private TLanguage(java.lang.String alias, org.jooq.Table<org.jooq.test.mysql.generatedclasses.tables.records.TLanguageRecord> aliased) {
+	private TLanguage(String alias, Table<TLanguageRecord> aliased) {
 		this(alias, aliased, null);
 	}
 
-	private TLanguage(java.lang.String alias, org.jooq.Table<org.jooq.test.mysql.generatedclasses.tables.records.TLanguageRecord> aliased, org.jooq.Field<?>[] parameters) {
-		super(alias, org.jooq.test.mysql.generatedclasses.Test.TEST, aliased, parameters, "An entity holding language master data");
+	private TLanguage(String alias, Table<TLanguageRecord> aliased, Field<?>[] parameters) {
+		super(alias, Test.TEST, aliased, parameters, "An entity holding language master data");
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TLanguageRecord> getPrimaryKey() {
-		return org.jooq.test.mysql.generatedclasses.Keys.KEY_T_LANGUAGE_PRIMARY;
+	public UniqueKey<TLanguageRecord> getPrimaryKey() {
+		return Keys.KEY_T_LANGUAGE_PRIMARY;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.util.List<org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TLanguageRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TLanguageRecord>>asList(org.jooq.test.mysql.generatedclasses.Keys.KEY_T_LANGUAGE_PRIMARY);
+	public List<UniqueKey<TLanguageRecord>> getKeys() {
+		return Arrays.<UniqueKey<TLanguageRecord>>asList(Keys.KEY_T_LANGUAGE_PRIMARY);
 	}
 }

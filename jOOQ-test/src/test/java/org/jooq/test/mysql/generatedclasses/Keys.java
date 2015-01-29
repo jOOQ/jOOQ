@@ -3,102 +3,143 @@
  */
 package org.jooq.test.mysql.generatedclasses;
 
+
+import org.jooq.ForeignKey;
+import org.jooq.Identity;
+import org.jooq.UniqueKey;
+import org.jooq.impl.AbstractKeys;
+import org.jooq.test.mysql.generatedclasses.tables.TAuthor;
+import org.jooq.test.mysql.generatedclasses.tables.TBook;
+import org.jooq.test.mysql.generatedclasses.tables.TBookStore;
+import org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore;
+import org.jooq.test.mysql.generatedclasses.tables.TBooleans;
+import org.jooq.test.mysql.generatedclasses.tables.TDates;
+import org.jooq.test.mysql.generatedclasses.tables.TExoticTypes;
+import org.jooq.test.mysql.generatedclasses.tables.TIdentityPk;
+import org.jooq.test.mysql.generatedclasses.tables.TLanguage;
+import org.jooq.test.mysql.generatedclasses.tables.TTriggers;
+import org.jooq.test.mysql.generatedclasses.tables.T_639NumbersTable;
+import org.jooq.test.mysql.generatedclasses.tables.T_725LobTest;
+import org.jooq.test.mysql.generatedclasses.tables.XTestCase_2025;
+import org.jooq.test.mysql.generatedclasses.tables.XTestCase_64_69;
+import org.jooq.test.mysql.generatedclasses.tables.XTestCase_71;
+import org.jooq.test.mysql.generatedclasses.tables.XTestCase_85;
+import org.jooq.test.mysql.generatedclasses.tables.XUnused;
+import org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord;
+import org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord;
+import org.jooq.test.mysql.generatedclasses.tables.records.TBookStoreRecord;
+import org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord;
+import org.jooq.test.mysql.generatedclasses.tables.records.TBooleansRecord;
+import org.jooq.test.mysql.generatedclasses.tables.records.TDatesRecord;
+import org.jooq.test.mysql.generatedclasses.tables.records.TExoticTypesRecord;
+import org.jooq.test.mysql.generatedclasses.tables.records.TIdentityPkRecord;
+import org.jooq.test.mysql.generatedclasses.tables.records.TLanguageRecord;
+import org.jooq.test.mysql.generatedclasses.tables.records.TTriggersRecord;
+import org.jooq.test.mysql.generatedclasses.tables.records.T_639NumbersTableRecord;
+import org.jooq.test.mysql.generatedclasses.tables.records.T_725LobTestRecord;
+import org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_2025Record;
+import org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_64_69Record;
+import org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record;
+import org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_85Record;
+import org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord;
+
+
 /**
  * A class modelling foreign key relationships between tables of the <code>test</code> 
  * schema
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Keys {
 
 	// -------------------------------------------------------------------------
 	// IDENTITY definitions
 	// -------------------------------------------------------------------------
 
-	public static final org.jooq.Identity<org.jooq.test.mysql.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> IDENTITY_T_IDENTITY_PK = Identities0.IDENTITY_T_IDENTITY_PK;
-	public static final org.jooq.Identity<org.jooq.test.mysql.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> IDENTITY_T_TRIGGERS = Identities0.IDENTITY_T_TRIGGERS;
+	public static final Identity<TIdentityPkRecord, Integer> IDENTITY_T_IDENTITY_PK = Identities0.IDENTITY_T_IDENTITY_PK;
+	public static final Identity<TTriggersRecord, Integer> IDENTITY_T_TRIGGERS = Identities0.IDENTITY_T_TRIGGERS;
 
 	// -------------------------------------------------------------------------
 	// UNIQUE and PRIMARY KEY definitions
 	// -------------------------------------------------------------------------
 
-	public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.T_639NumbersTableRecord> KEY_T_639_NUMBERS_TABLE_PRIMARY = UniqueKeys0.KEY_T_639_NUMBERS_TABLE_PRIMARY;
-	public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.T_725LobTestRecord> KEY_T_725_LOB_TEST_PRIMARY = UniqueKeys0.KEY_T_725_LOB_TEST_PRIMARY;
-	public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord> KEY_T_AUTHOR_PRIMARY = UniqueKeys0.KEY_T_AUTHOR_PRIMARY;
-	public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord> KEY_T_BOOK_PRIMARY = UniqueKeys0.KEY_T_BOOK_PRIMARY;
-	public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookStoreRecord> KEY_T_BOOK_STORE_PRIMARY = UniqueKeys0.KEY_T_BOOK_STORE_PRIMARY;
-	public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord> KEY_T_BOOK_TO_BOOK_STORE_PRIMARY = UniqueKeys0.KEY_T_BOOK_TO_BOOK_STORE_PRIMARY;
-	public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TBooleansRecord> KEY_T_BOOLEANS_PRIMARY = UniqueKeys0.KEY_T_BOOLEANS_PRIMARY;
-	public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TDatesRecord> KEY_T_DATES_PRIMARY = UniqueKeys0.KEY_T_DATES_PRIMARY;
-	public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TExoticTypesRecord> KEY_T_EXOTIC_TYPES_PRIMARY = UniqueKeys0.KEY_T_EXOTIC_TYPES_PRIMARY;
-	public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TIdentityPkRecord> KEY_T_IDENTITY_PK_PRIMARY = UniqueKeys0.KEY_T_IDENTITY_PK_PRIMARY;
-	public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TLanguageRecord> KEY_T_LANGUAGE_PRIMARY = UniqueKeys0.KEY_T_LANGUAGE_PRIMARY;
-	public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TTriggersRecord> KEY_T_TRIGGERS_PRIMARY = UniqueKeys0.KEY_T_TRIGGERS_PRIMARY;
-	public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_64_69Record> KEY_X_TEST_CASE_64_69_PRIMARY = UniqueKeys0.KEY_X_TEST_CASE_64_69_PRIMARY;
-	public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record> KEY_X_TEST_CASE_71_PRIMARY = UniqueKeys0.KEY_X_TEST_CASE_71_PRIMARY;
-	public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_85Record> KEY_X_TEST_CASE_85_PRIMARY = UniqueKeys0.KEY_X_TEST_CASE_85_PRIMARY;
-	public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord> KEY_X_UNUSED_PRIMARY = UniqueKeys0.KEY_X_UNUSED_PRIMARY;
-	public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord> KEY_X_UNUSED_UK_X_UNUSED_ID = UniqueKeys0.KEY_X_UNUSED_UK_X_UNUSED_ID;
+	public static final UniqueKey<T_639NumbersTableRecord> KEY_T_639_NUMBERS_TABLE_PRIMARY = UniqueKeys0.KEY_T_639_NUMBERS_TABLE_PRIMARY;
+	public static final UniqueKey<T_725LobTestRecord> KEY_T_725_LOB_TEST_PRIMARY = UniqueKeys0.KEY_T_725_LOB_TEST_PRIMARY;
+	public static final UniqueKey<TAuthorRecord> KEY_T_AUTHOR_PRIMARY = UniqueKeys0.KEY_T_AUTHOR_PRIMARY;
+	public static final UniqueKey<TBookRecord> KEY_T_BOOK_PRIMARY = UniqueKeys0.KEY_T_BOOK_PRIMARY;
+	public static final UniqueKey<TBookStoreRecord> KEY_T_BOOK_STORE_PRIMARY = UniqueKeys0.KEY_T_BOOK_STORE_PRIMARY;
+	public static final UniqueKey<TBookToBookStoreRecord> KEY_T_BOOK_TO_BOOK_STORE_PRIMARY = UniqueKeys0.KEY_T_BOOK_TO_BOOK_STORE_PRIMARY;
+	public static final UniqueKey<TBooleansRecord> KEY_T_BOOLEANS_PRIMARY = UniqueKeys0.KEY_T_BOOLEANS_PRIMARY;
+	public static final UniqueKey<TDatesRecord> KEY_T_DATES_PRIMARY = UniqueKeys0.KEY_T_DATES_PRIMARY;
+	public static final UniqueKey<TExoticTypesRecord> KEY_T_EXOTIC_TYPES_PRIMARY = UniqueKeys0.KEY_T_EXOTIC_TYPES_PRIMARY;
+	public static final UniqueKey<TIdentityPkRecord> KEY_T_IDENTITY_PK_PRIMARY = UniqueKeys0.KEY_T_IDENTITY_PK_PRIMARY;
+	public static final UniqueKey<TLanguageRecord> KEY_T_LANGUAGE_PRIMARY = UniqueKeys0.KEY_T_LANGUAGE_PRIMARY;
+	public static final UniqueKey<TTriggersRecord> KEY_T_TRIGGERS_PRIMARY = UniqueKeys0.KEY_T_TRIGGERS_PRIMARY;
+	public static final UniqueKey<XTestCase_64_69Record> KEY_X_TEST_CASE_64_69_PRIMARY = UniqueKeys0.KEY_X_TEST_CASE_64_69_PRIMARY;
+	public static final UniqueKey<XTestCase_71Record> KEY_X_TEST_CASE_71_PRIMARY = UniqueKeys0.KEY_X_TEST_CASE_71_PRIMARY;
+	public static final UniqueKey<XTestCase_85Record> KEY_X_TEST_CASE_85_PRIMARY = UniqueKeys0.KEY_X_TEST_CASE_85_PRIMARY;
+	public static final UniqueKey<XUnusedRecord> KEY_X_UNUSED_PRIMARY = UniqueKeys0.KEY_X_UNUSED_PRIMARY;
+	public static final UniqueKey<XUnusedRecord> KEY_X_UNUSED_UK_X_UNUSED_ID = UniqueKeys0.KEY_X_UNUSED_UK_X_UNUSED_ID;
 
 	// -------------------------------------------------------------------------
 	// FOREIGN KEY definitions
 	// -------------------------------------------------------------------------
 
-	public static final org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord, org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord> FK_T_BOOK_AUTHOR_ID = ForeignKeys0.FK_T_BOOK_AUTHOR_ID;
-	public static final org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord, org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord> FK_T_BOOK_CO_AUTHOR_ID = ForeignKeys0.FK_T_BOOK_CO_AUTHOR_ID;
-	public static final org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord, org.jooq.test.mysql.generatedclasses.tables.records.TLanguageRecord> FK_T_BOOK_LANGUAGE_ID = ForeignKeys0.FK_T_BOOK_LANGUAGE_ID;
-	public static final org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord, org.jooq.test.mysql.generatedclasses.tables.records.TBookStoreRecord> FK_B2BS_BS_NAME = ForeignKeys0.FK_B2BS_BS_NAME;
-	public static final org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord, org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord> FK_B2BS_B_ID = ForeignKeys0.FK_B2BS_B_ID;
-	public static final org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_2025Record, org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_85Record> FK_X_TEST_CASE_2025_1 = ForeignKeys0.FK_X_TEST_CASE_2025_1;
-	public static final org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_2025Record, org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record> FK_X_TEST_CASE_2025_2 = ForeignKeys0.FK_X_TEST_CASE_2025_2;
-	public static final org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_2025Record, org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord> FK_X_TEST_CASE_2025_3 = ForeignKeys0.FK_X_TEST_CASE_2025_3;
-	public static final org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_64_69Record, org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord> FK_X_TEST_CASE_64_69A = ForeignKeys0.FK_X_TEST_CASE_64_69A;
-	public static final org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_64_69Record, org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord> FK_X_TEST_CASE_64_69B = ForeignKeys0.FK_X_TEST_CASE_64_69B;
-	public static final org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record, org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_64_69Record> FK_X_TEST_CASE_71 = ForeignKeys0.FK_X_TEST_CASE_71;
-	public static final org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_85Record, org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord> FK_X_TEST_CASE_85 = ForeignKeys0.FK_X_TEST_CASE_85;
-	public static final org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord, org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord> FK_X_UNUSED_SELF = ForeignKeys0.FK_X_UNUSED_SELF;
+	public static final ForeignKey<TBookRecord, TAuthorRecord> FK_T_BOOK_AUTHOR_ID = ForeignKeys0.FK_T_BOOK_AUTHOR_ID;
+	public static final ForeignKey<TBookRecord, TAuthorRecord> FK_T_BOOK_CO_AUTHOR_ID = ForeignKeys0.FK_T_BOOK_CO_AUTHOR_ID;
+	public static final ForeignKey<TBookRecord, TLanguageRecord> FK_T_BOOK_LANGUAGE_ID = ForeignKeys0.FK_T_BOOK_LANGUAGE_ID;
+	public static final ForeignKey<TBookToBookStoreRecord, TBookStoreRecord> FK_B2BS_BS_NAME = ForeignKeys0.FK_B2BS_BS_NAME;
+	public static final ForeignKey<TBookToBookStoreRecord, TBookRecord> FK_B2BS_B_ID = ForeignKeys0.FK_B2BS_B_ID;
+	public static final ForeignKey<XTestCase_2025Record, XTestCase_85Record> FK_X_TEST_CASE_2025_1 = ForeignKeys0.FK_X_TEST_CASE_2025_1;
+	public static final ForeignKey<XTestCase_2025Record, XTestCase_71Record> FK_X_TEST_CASE_2025_2 = ForeignKeys0.FK_X_TEST_CASE_2025_2;
+	public static final ForeignKey<XTestCase_2025Record, XUnusedRecord> FK_X_TEST_CASE_2025_3 = ForeignKeys0.FK_X_TEST_CASE_2025_3;
+	public static final ForeignKey<XTestCase_64_69Record, XUnusedRecord> FK_X_TEST_CASE_64_69A = ForeignKeys0.FK_X_TEST_CASE_64_69A;
+	public static final ForeignKey<XTestCase_64_69Record, XUnusedRecord> FK_X_TEST_CASE_64_69B = ForeignKeys0.FK_X_TEST_CASE_64_69B;
+	public static final ForeignKey<XTestCase_71Record, XTestCase_64_69Record> FK_X_TEST_CASE_71 = ForeignKeys0.FK_X_TEST_CASE_71;
+	public static final ForeignKey<XTestCase_85Record, XUnusedRecord> FK_X_TEST_CASE_85 = ForeignKeys0.FK_X_TEST_CASE_85;
+	public static final ForeignKey<XUnusedRecord, XUnusedRecord> FK_X_UNUSED_SELF = ForeignKeys0.FK_X_UNUSED_SELF;
 
 	// -------------------------------------------------------------------------
 	// [#1459] distribute members to avoid static initialisers > 64kb
 	// -------------------------------------------------------------------------
 
-	private static class Identities0 extends org.jooq.impl.AbstractKeys {
-		public static org.jooq.Identity<org.jooq.test.mysql.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> IDENTITY_T_IDENTITY_PK = createIdentity(org.jooq.test.mysql.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK, org.jooq.test.mysql.generatedclasses.tables.TIdentityPk.ID);
-		public static org.jooq.Identity<org.jooq.test.mysql.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> IDENTITY_T_TRIGGERS = createIdentity(org.jooq.test.mysql.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.mysql.generatedclasses.tables.TTriggers.ID_GENERATED);
+	private static class Identities0 extends AbstractKeys {
+		public static Identity<TIdentityPkRecord, Integer> IDENTITY_T_IDENTITY_PK = createIdentity(TIdentityPk.T_IDENTITY_PK, TIdentityPk.ID);
+		public static Identity<TTriggersRecord, Integer> IDENTITY_T_TRIGGERS = createIdentity(TTriggers.T_TRIGGERS, TTriggers.ID_GENERATED);
 	}
 
-	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
-		public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.T_639NumbersTableRecord> KEY_T_639_NUMBERS_TABLE_PRIMARY = createUniqueKey(org.jooq.test.mysql.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE, org.jooq.test.mysql.generatedclasses.tables.T_639NumbersTable.ID);
-		public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.T_725LobTestRecord> KEY_T_725_LOB_TEST_PRIMARY = createUniqueKey(org.jooq.test.mysql.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST, org.jooq.test.mysql.generatedclasses.tables.T_725LobTest.ID);
-		public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord> KEY_T_AUTHOR_PRIMARY = createUniqueKey(org.jooq.test.mysql.generatedclasses.tables.TAuthor.T_AUTHOR, org.jooq.test.mysql.generatedclasses.tables.TAuthor.ID);
-		public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord> KEY_T_BOOK_PRIMARY = createUniqueKey(org.jooq.test.mysql.generatedclasses.tables.TBook.T_BOOK, org.jooq.test.mysql.generatedclasses.tables.TBook.ID);
-		public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookStoreRecord> KEY_T_BOOK_STORE_PRIMARY = createUniqueKey(org.jooq.test.mysql.generatedclasses.tables.TBookStore.T_BOOK_STORE, org.jooq.test.mysql.generatedclasses.tables.TBookStore.NAME);
-		public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord> KEY_T_BOOK_TO_BOOK_STORE_PRIMARY = createUniqueKey(org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE, org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME, org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore.BOOK_ID);
-		public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TBooleansRecord> KEY_T_BOOLEANS_PRIMARY = createUniqueKey(org.jooq.test.mysql.generatedclasses.tables.TBooleans.T_BOOLEANS, org.jooq.test.mysql.generatedclasses.tables.TBooleans.ID);
-		public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TDatesRecord> KEY_T_DATES_PRIMARY = createUniqueKey(org.jooq.test.mysql.generatedclasses.tables.TDates.T_DATES, org.jooq.test.mysql.generatedclasses.tables.TDates.ID);
-		public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TExoticTypesRecord> KEY_T_EXOTIC_TYPES_PRIMARY = createUniqueKey(org.jooq.test.mysql.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES, org.jooq.test.mysql.generatedclasses.tables.TExoticTypes.ID);
-		public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TIdentityPkRecord> KEY_T_IDENTITY_PK_PRIMARY = createUniqueKey(org.jooq.test.mysql.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK, org.jooq.test.mysql.generatedclasses.tables.TIdentityPk.ID);
-		public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TLanguageRecord> KEY_T_LANGUAGE_PRIMARY = createUniqueKey(org.jooq.test.mysql.generatedclasses.tables.TLanguage.T_LANGUAGE, org.jooq.test.mysql.generatedclasses.tables.TLanguage.ID);
-		public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TTriggersRecord> KEY_T_TRIGGERS_PRIMARY = createUniqueKey(org.jooq.test.mysql.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.mysql.generatedclasses.tables.TTriggers.ID_GENERATED);
-		public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_64_69Record> KEY_X_TEST_CASE_64_69_PRIMARY = createUniqueKey(org.jooq.test.mysql.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69, org.jooq.test.mysql.generatedclasses.tables.XTestCase_64_69.ID);
-		public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record> KEY_X_TEST_CASE_71_PRIMARY = createUniqueKey(org.jooq.test.mysql.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71, org.jooq.test.mysql.generatedclasses.tables.XTestCase_71.ID);
-		public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_85Record> KEY_X_TEST_CASE_85_PRIMARY = createUniqueKey(org.jooq.test.mysql.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85, org.jooq.test.mysql.generatedclasses.tables.XTestCase_85.ID);
-		public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord> KEY_X_UNUSED_PRIMARY = createUniqueKey(org.jooq.test.mysql.generatedclasses.tables.XUnused.X_UNUSED, org.jooq.test.mysql.generatedclasses.tables.XUnused.ID, org.jooq.test.mysql.generatedclasses.tables.XUnused.NAME);
-		public static final org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord> KEY_X_UNUSED_UK_X_UNUSED_ID = createUniqueKey(org.jooq.test.mysql.generatedclasses.tables.XUnused.X_UNUSED, org.jooq.test.mysql.generatedclasses.tables.XUnused.ID);
+	private static class UniqueKeys0 extends AbstractKeys {
+		public static final UniqueKey<T_639NumbersTableRecord> KEY_T_639_NUMBERS_TABLE_PRIMARY = createUniqueKey(T_639NumbersTable.T_639_NUMBERS_TABLE, T_639NumbersTable.ID);
+		public static final UniqueKey<T_725LobTestRecord> KEY_T_725_LOB_TEST_PRIMARY = createUniqueKey(T_725LobTest.T_725_LOB_TEST, T_725LobTest.ID);
+		public static final UniqueKey<TAuthorRecord> KEY_T_AUTHOR_PRIMARY = createUniqueKey(TAuthor.T_AUTHOR, TAuthor.ID);
+		public static final UniqueKey<TBookRecord> KEY_T_BOOK_PRIMARY = createUniqueKey(TBook.T_BOOK, TBook.ID);
+		public static final UniqueKey<TBookStoreRecord> KEY_T_BOOK_STORE_PRIMARY = createUniqueKey(TBookStore.T_BOOK_STORE, TBookStore.NAME);
+		public static final UniqueKey<TBookToBookStoreRecord> KEY_T_BOOK_TO_BOOK_STORE_PRIMARY = createUniqueKey(TBookToBookStore.T_BOOK_TO_BOOK_STORE, TBookToBookStore.BOOK_STORE_NAME, TBookToBookStore.BOOK_ID);
+		public static final UniqueKey<TBooleansRecord> KEY_T_BOOLEANS_PRIMARY = createUniqueKey(TBooleans.T_BOOLEANS, TBooleans.ID);
+		public static final UniqueKey<TDatesRecord> KEY_T_DATES_PRIMARY = createUniqueKey(TDates.T_DATES, TDates.ID);
+		public static final UniqueKey<TExoticTypesRecord> KEY_T_EXOTIC_TYPES_PRIMARY = createUniqueKey(TExoticTypes.T_EXOTIC_TYPES, TExoticTypes.ID);
+		public static final UniqueKey<TIdentityPkRecord> KEY_T_IDENTITY_PK_PRIMARY = createUniqueKey(TIdentityPk.T_IDENTITY_PK, TIdentityPk.ID);
+		public static final UniqueKey<TLanguageRecord> KEY_T_LANGUAGE_PRIMARY = createUniqueKey(TLanguage.T_LANGUAGE, TLanguage.ID);
+		public static final UniqueKey<TTriggersRecord> KEY_T_TRIGGERS_PRIMARY = createUniqueKey(TTriggers.T_TRIGGERS, TTriggers.ID_GENERATED);
+		public static final UniqueKey<XTestCase_64_69Record> KEY_X_TEST_CASE_64_69_PRIMARY = createUniqueKey(XTestCase_64_69.X_TEST_CASE_64_69, XTestCase_64_69.ID);
+		public static final UniqueKey<XTestCase_71Record> KEY_X_TEST_CASE_71_PRIMARY = createUniqueKey(XTestCase_71.X_TEST_CASE_71, XTestCase_71.ID);
+		public static final UniqueKey<XTestCase_85Record> KEY_X_TEST_CASE_85_PRIMARY = createUniqueKey(XTestCase_85.X_TEST_CASE_85, XTestCase_85.ID);
+		public static final UniqueKey<XUnusedRecord> KEY_X_UNUSED_PRIMARY = createUniqueKey(XUnused.X_UNUSED, XUnused.ID, XUnused.NAME);
+		public static final UniqueKey<XUnusedRecord> KEY_X_UNUSED_UK_X_UNUSED_ID = createUniqueKey(XUnused.X_UNUSED, XUnused.ID);
 	}
 
-	private static class ForeignKeys0 extends org.jooq.impl.AbstractKeys {
-		public static final org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord, org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord> FK_T_BOOK_AUTHOR_ID = createForeignKey(org.jooq.test.mysql.generatedclasses.Keys.KEY_T_AUTHOR_PRIMARY, org.jooq.test.mysql.generatedclasses.tables.TBook.T_BOOK, org.jooq.test.mysql.generatedclasses.tables.TBook.AUTHOR_ID);
-		public static final org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord, org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord> FK_T_BOOK_CO_AUTHOR_ID = createForeignKey(org.jooq.test.mysql.generatedclasses.Keys.KEY_T_AUTHOR_PRIMARY, org.jooq.test.mysql.generatedclasses.tables.TBook.T_BOOK, org.jooq.test.mysql.generatedclasses.tables.TBook.CO_AUTHOR_ID);
-		public static final org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord, org.jooq.test.mysql.generatedclasses.tables.records.TLanguageRecord> FK_T_BOOK_LANGUAGE_ID = createForeignKey(org.jooq.test.mysql.generatedclasses.Keys.KEY_T_LANGUAGE_PRIMARY, org.jooq.test.mysql.generatedclasses.tables.TBook.T_BOOK, org.jooq.test.mysql.generatedclasses.tables.TBook.LANGUAGE_ID);
-		public static final org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord, org.jooq.test.mysql.generatedclasses.tables.records.TBookStoreRecord> FK_B2BS_BS_NAME = createForeignKey(org.jooq.test.mysql.generatedclasses.Keys.KEY_T_BOOK_STORE_PRIMARY, org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE, org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME);
-		public static final org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord, org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord> FK_B2BS_B_ID = createForeignKey(org.jooq.test.mysql.generatedclasses.Keys.KEY_T_BOOK_PRIMARY, org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE, org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore.BOOK_ID);
-		public static final org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_2025Record, org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_85Record> FK_X_TEST_CASE_2025_1 = createForeignKey(org.jooq.test.mysql.generatedclasses.Keys.KEY_X_TEST_CASE_85_PRIMARY, org.jooq.test.mysql.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025, org.jooq.test.mysql.generatedclasses.tables.XTestCase_2025.REF_ID);
-		public static final org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_2025Record, org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record> FK_X_TEST_CASE_2025_2 = createForeignKey(org.jooq.test.mysql.generatedclasses.Keys.KEY_X_TEST_CASE_71_PRIMARY, org.jooq.test.mysql.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025, org.jooq.test.mysql.generatedclasses.tables.XTestCase_2025.REF_ID);
-		public static final org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_2025Record, org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord> FK_X_TEST_CASE_2025_3 = createForeignKey(org.jooq.test.mysql.generatedclasses.Keys.KEY_X_UNUSED_PRIMARY, org.jooq.test.mysql.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025, org.jooq.test.mysql.generatedclasses.tables.XTestCase_2025.REF_ID, org.jooq.test.mysql.generatedclasses.tables.XTestCase_2025.REF_NAME);
-		public static final org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_64_69Record, org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord> FK_X_TEST_CASE_64_69A = createForeignKey(org.jooq.test.mysql.generatedclasses.Keys.KEY_X_UNUSED_PRIMARY, org.jooq.test.mysql.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69, org.jooq.test.mysql.generatedclasses.tables.XTestCase_64_69.UNUSED_ID);
-		public static final org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_64_69Record, org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord> FK_X_TEST_CASE_64_69B = createForeignKey(org.jooq.test.mysql.generatedclasses.Keys.KEY_X_UNUSED_PRIMARY, org.jooq.test.mysql.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69, org.jooq.test.mysql.generatedclasses.tables.XTestCase_64_69.UNUSED_ID);
-		public static final org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record, org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_64_69Record> FK_X_TEST_CASE_71 = createForeignKey(org.jooq.test.mysql.generatedclasses.Keys.KEY_X_TEST_CASE_64_69_PRIMARY, org.jooq.test.mysql.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71, org.jooq.test.mysql.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID);
-		public static final org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_85Record, org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord> FK_X_TEST_CASE_85 = createForeignKey(org.jooq.test.mysql.generatedclasses.Keys.KEY_X_UNUSED_PRIMARY, org.jooq.test.mysql.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85, org.jooq.test.mysql.generatedclasses.tables.XTestCase_85.X_UNUSED_ID, org.jooq.test.mysql.generatedclasses.tables.XTestCase_85.X_UNUSED_NAME);
-		public static final org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord, org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord> FK_X_UNUSED_SELF = createForeignKey(org.jooq.test.mysql.generatedclasses.Keys.KEY_X_UNUSED_PRIMARY, org.jooq.test.mysql.generatedclasses.tables.XUnused.X_UNUSED, org.jooq.test.mysql.generatedclasses.tables.XUnused.ID_REF, org.jooq.test.mysql.generatedclasses.tables.XUnused.NAME_REF);
+	private static class ForeignKeys0 extends AbstractKeys {
+		public static final ForeignKey<TBookRecord, TAuthorRecord> FK_T_BOOK_AUTHOR_ID = createForeignKey(org.jooq.test.mysql.generatedclasses.Keys.KEY_T_AUTHOR_PRIMARY, TBook.T_BOOK, TBook.AUTHOR_ID);
+		public static final ForeignKey<TBookRecord, TAuthorRecord> FK_T_BOOK_CO_AUTHOR_ID = createForeignKey(org.jooq.test.mysql.generatedclasses.Keys.KEY_T_AUTHOR_PRIMARY, TBook.T_BOOK, TBook.CO_AUTHOR_ID);
+		public static final ForeignKey<TBookRecord, TLanguageRecord> FK_T_BOOK_LANGUAGE_ID = createForeignKey(org.jooq.test.mysql.generatedclasses.Keys.KEY_T_LANGUAGE_PRIMARY, TBook.T_BOOK, TBook.LANGUAGE_ID);
+		public static final ForeignKey<TBookToBookStoreRecord, TBookStoreRecord> FK_B2BS_BS_NAME = createForeignKey(org.jooq.test.mysql.generatedclasses.Keys.KEY_T_BOOK_STORE_PRIMARY, TBookToBookStore.T_BOOK_TO_BOOK_STORE, TBookToBookStore.BOOK_STORE_NAME);
+		public static final ForeignKey<TBookToBookStoreRecord, TBookRecord> FK_B2BS_B_ID = createForeignKey(org.jooq.test.mysql.generatedclasses.Keys.KEY_T_BOOK_PRIMARY, TBookToBookStore.T_BOOK_TO_BOOK_STORE, TBookToBookStore.BOOK_ID);
+		public static final ForeignKey<XTestCase_2025Record, XTestCase_85Record> FK_X_TEST_CASE_2025_1 = createForeignKey(org.jooq.test.mysql.generatedclasses.Keys.KEY_X_TEST_CASE_85_PRIMARY, XTestCase_2025.X_TEST_CASE_2025, XTestCase_2025.REF_ID);
+		public static final ForeignKey<XTestCase_2025Record, XTestCase_71Record> FK_X_TEST_CASE_2025_2 = createForeignKey(org.jooq.test.mysql.generatedclasses.Keys.KEY_X_TEST_CASE_71_PRIMARY, XTestCase_2025.X_TEST_CASE_2025, XTestCase_2025.REF_ID);
+		public static final ForeignKey<XTestCase_2025Record, XUnusedRecord> FK_X_TEST_CASE_2025_3 = createForeignKey(org.jooq.test.mysql.generatedclasses.Keys.KEY_X_UNUSED_PRIMARY, XTestCase_2025.X_TEST_CASE_2025, XTestCase_2025.REF_ID, XTestCase_2025.REF_NAME);
+		public static final ForeignKey<XTestCase_64_69Record, XUnusedRecord> FK_X_TEST_CASE_64_69A = createForeignKey(org.jooq.test.mysql.generatedclasses.Keys.KEY_X_UNUSED_PRIMARY, XTestCase_64_69.X_TEST_CASE_64_69, XTestCase_64_69.UNUSED_ID);
+		public static final ForeignKey<XTestCase_64_69Record, XUnusedRecord> FK_X_TEST_CASE_64_69B = createForeignKey(org.jooq.test.mysql.generatedclasses.Keys.KEY_X_UNUSED_PRIMARY, XTestCase_64_69.X_TEST_CASE_64_69, XTestCase_64_69.UNUSED_ID);
+		public static final ForeignKey<XTestCase_71Record, XTestCase_64_69Record> FK_X_TEST_CASE_71 = createForeignKey(org.jooq.test.mysql.generatedclasses.Keys.KEY_X_TEST_CASE_64_69_PRIMARY, XTestCase_71.X_TEST_CASE_71, XTestCase_71.TEST_CASE_64_69_ID);
+		public static final ForeignKey<XTestCase_85Record, XUnusedRecord> FK_X_TEST_CASE_85 = createForeignKey(org.jooq.test.mysql.generatedclasses.Keys.KEY_X_UNUSED_PRIMARY, XTestCase_85.X_TEST_CASE_85, XTestCase_85.X_UNUSED_ID, XTestCase_85.X_UNUSED_NAME);
+		public static final ForeignKey<XUnusedRecord, XUnusedRecord> FK_X_UNUSED_SELF = createForeignKey(org.jooq.test.mysql.generatedclasses.Keys.KEY_X_UNUSED_PRIMARY, XUnused.X_UNUSED, XUnused.ID_REF, XUnused.NAME_REF);
 	}
 }

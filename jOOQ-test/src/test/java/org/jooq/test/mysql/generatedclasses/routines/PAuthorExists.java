@@ -3,29 +3,35 @@
  */
 package org.jooq.test.mysql.generatedclasses.routines;
 
+
+import org.jooq.Parameter;
+import org.jooq.impl.AbstractRoutine;
+import org.jooq.test.mysql.generatedclasses.Test;
+
+
 /**
  * Check existence of an author
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class PAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class PAuthorExists extends AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1884494664;
+	private static final long serialVersionUID = 446988770;
 
 	/**
 	 * The parameter <code>test.p_author_exists.author_name</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.String> AUTHOR_NAME = createParameter("author_name", org.jooq.impl.SQLDataType.VARCHAR.length(50), false);
+	public static final Parameter<String> AUTHOR_NAME = createParameter("author_name", org.jooq.impl.SQLDataType.VARCHAR.length(50), false);
 
 	/**
 	 * The parameter <code>test.p_author_exists.result</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.Integer> RESULT = createParameter("result", org.jooq.impl.SQLDataType.INTEGER, false);
+	public static final Parameter<Integer> RESULT = createParameter("result", org.jooq.impl.SQLDataType.INTEGER, false);
 
 	/**
 	 * Create a new routine call instance
 	 */
 	public PAuthorExists() {
-		super("p_author_exists", org.jooq.test.mysql.generatedclasses.Test.TEST);
+		super("p_author_exists", Test.TEST);
 
 		addInParameter(AUTHOR_NAME);
 		addOutParameter(RESULT);
@@ -34,14 +40,14 @@ public class PAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Void>
 	/**
 	 * Set the <code>author_name</code> parameter IN value to the routine
 	 */
-	public void setAuthorName(java.lang.String value) {
-		setValue(org.jooq.test.mysql.generatedclasses.routines.PAuthorExists.AUTHOR_NAME, value);
+	public void setAuthorName(String value) {
+		setValue(AUTHOR_NAME, value);
 	}
 
 	/**
 	 * Get the <code>result</code> parameter OUT value from the routine
 	 */
-	public java.lang.Integer getResult() {
+	public Integer getResult() {
 		return getValue(RESULT);
 	}
 }

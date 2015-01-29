@@ -3,36 +3,55 @@
  */
 package org.jooq.test.mysql.generatedclasses.tables.pojos;
 
+
+import java.io.Serializable;
+
+import org.jooq.test.mysql.generatedclasses.enums.VBookStatus;
+
+
 /**
  * VIEW
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class VBook implements java.io.Serializable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class VBook implements Serializable {
 
-	private static final long serialVersionUID = 1053921898;
+	private static final long serialVersionUID = -1731518919;
 
-	private final java.lang.Integer                                      id;
-	private final java.lang.Integer                                      authorId;
-	private final java.lang.Integer                                      coAuthorId;
-	private final java.lang.Integer                                      detailsId;
-	private final java.lang.String                                       title;
-	private final java.lang.Integer                                      publishedIn;
-	private final java.lang.Integer                                      languageId;
-	private final java.lang.String                                       contentText;
-	private final byte[]                                                 contentPdf;
-	private final org.jooq.test.mysql.generatedclasses.enums.VBookStatus status;
+	private final Integer     id;
+	private final Integer     authorId;
+	private final Integer     coAuthorId;
+	private final Integer     detailsId;
+	private final String      title;
+	private final Integer     publishedIn;
+	private final Integer     languageId;
+	private final String      contentText;
+	private final byte[]      contentPdf;
+	private final VBookStatus status;
+
+	public VBook(VBook value) {
+		this.id = value.id;
+		this.authorId = value.authorId;
+		this.coAuthorId = value.coAuthorId;
+		this.detailsId = value.detailsId;
+		this.title = value.title;
+		this.publishedIn = value.publishedIn;
+		this.languageId = value.languageId;
+		this.contentText = value.contentText;
+		this.contentPdf = value.contentPdf;
+		this.status = value.status;
+	}
 
 	public VBook(
-		java.lang.Integer                                      id,
-		java.lang.Integer                                      authorId,
-		java.lang.Integer                                      coAuthorId,
-		java.lang.Integer                                      detailsId,
-		java.lang.String                                       title,
-		java.lang.Integer                                      publishedIn,
-		java.lang.Integer                                      languageId,
-		java.lang.String                                       contentText,
-		byte[]                                                 contentPdf,
-		org.jooq.test.mysql.generatedclasses.enums.VBookStatus status
+		Integer     id,
+		Integer     authorId,
+		Integer     coAuthorId,
+		Integer     detailsId,
+		String      title,
+		Integer     publishedIn,
+		Integer     languageId,
+		String      contentText,
+		byte[]      contentPdf,
+		VBookStatus status
 	) {
 		this.id = id;
 		this.authorId = authorId;
@@ -46,35 +65,35 @@ public class VBook implements java.io.Serializable {
 		this.status = status;
 	}
 
-	public java.lang.Integer getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public java.lang.Integer getAuthorId() {
+	public Integer getAuthorId() {
 		return this.authorId;
 	}
 
-	public java.lang.Integer getCoAuthorId() {
+	public Integer getCoAuthorId() {
 		return this.coAuthorId;
 	}
 
-	public java.lang.Integer getDetailsId() {
+	public Integer getDetailsId() {
 		return this.detailsId;
 	}
 
-	public java.lang.String getTitle() {
+	public String getTitle() {
 		return this.title;
 	}
 
-	public java.lang.Integer getPublishedIn() {
+	public Integer getPublishedIn() {
 		return this.publishedIn;
 	}
 
-	public java.lang.Integer getLanguageId() {
+	public Integer getLanguageId() {
 		return this.languageId;
 	}
 
-	public java.lang.String getContentText() {
+	public String getContentText() {
 		return this.contentText;
 	}
 
@@ -82,7 +101,7 @@ public class VBook implements java.io.Serializable {
 		return this.contentPdf;
 	}
 
-	public org.jooq.test.mysql.generatedclasses.enums.VBookStatus getStatus() {
+	public VBookStatus getStatus() {
 		return this.status;
 	}
 }

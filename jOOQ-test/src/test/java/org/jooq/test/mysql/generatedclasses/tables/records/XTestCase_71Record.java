@@ -3,40 +3,50 @@
  */
 package org.jooq.test.mysql.generatedclasses.tables.records;
 
+
+import org.jooq.Field;
+import org.jooq.Record1;
+import org.jooq.Record2;
+import org.jooq.Row;
+import org.jooq.Row2;
+import org.jooq.impl.UpdatableRecordImpl;
+import org.jooq.test.mysql.generatedclasses.tables.XTestCase_71;
+
+
 /**
  * An unused table in the same schema.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class XTestCase_71Record extends UpdatableRecordImpl<XTestCase_71Record> implements Record2<Integer, Integer> {
 
-	private static final long serialVersionUID = 2024311239;
+	private static final long serialVersionUID = -1285178034;
 
 	/**
 	 * Setter for <code>test.x_test_case_71.ID</code>.
 	 */
-	public void setId(java.lang.Integer value) {
+	public void setId(Integer value) {
 		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>test.x_test_case_71.ID</code>.
 	 */
-	public java.lang.Integer getId() {
-		return (java.lang.Integer) getValue(0);
+	public Integer getId() {
+		return (Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>test.x_test_case_71.TEST_CASE_64_69_ID</code>.
 	 */
-	public void setTestCase_64_69Id(java.lang.Integer value) {
+	public void setTestCase_64_69Id(Integer value) {
 		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>test.x_test_case_71.TEST_CASE_64_69_ID</code>.
 	 */
-	public java.lang.Integer getTestCase_64_69Id() {
-		return (java.lang.Integer) getValue(1);
+	public Integer getTestCase_64_69Id() {
+		return (Integer) getValue(1);
 	}
 
 	// -------------------------------------------------------------------------
@@ -47,8 +57,8 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Record1<java.lang.Integer> key() {
-		return (org.jooq.Record1) super.key();
+	public Record1<Integer> key() {
+		return (Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -59,39 +69,39 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row2<java.lang.Integer, java.lang.Integer> fieldsRow() {
-		return (org.jooq.Row2) super.fieldsRow();
+	public Row2<Integer, Integer> fieldsRow() {
+		return (Row2) super.fieldsRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row2<java.lang.Integer, java.lang.Integer> valuesRow() {
-		return (org.jooq.Row2) super.valuesRow();
+	public Row2<Integer, Integer> valuesRow() {
+		return (Row2) super.valuesRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.Integer> field1() {
-		return org.jooq.test.mysql.generatedclasses.tables.XTestCase_71.ID;
+	public Field<Integer> field1() {
+		return XTestCase_71.ID;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Field<java.lang.Integer> field2() {
-		return org.jooq.test.mysql.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID;
+	public Field<Integer> field2() {
+		return XTestCase_71.TEST_CASE_64_69_ID;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.Integer value1() {
+	public Integer value1() {
 		return getId();
 	}
 
@@ -99,7 +109,7 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.lang.Integer value2() {
+	public Integer value2() {
 		return getTestCase_64_69Id();
 	}
 
@@ -107,7 +117,7 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * {@inheritDoc}
 	 */
 	@Override
-	public XTestCase_71Record value1(java.lang.Integer value) {
+	public XTestCase_71Record value1(Integer value) {
 		setId(value);
 		return this;
 	}
@@ -116,7 +126,7 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * {@inheritDoc}
 	 */
 	@Override
-	public XTestCase_71Record value2(java.lang.Integer value) {
+	public XTestCase_71Record value2(Integer value) {
 		setTestCase_64_69Id(value);
 		return this;
 	}
@@ -125,7 +135,7 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * {@inheritDoc}
 	 */
 	@Override
-	public XTestCase_71Record values(java.lang.Integer value1, java.lang.Integer value2) {
+	public XTestCase_71Record values(Integer value1, Integer value2) {
 		return this;
 	}
 
@@ -137,14 +147,14 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * Create a detached XTestCase_71Record
 	 */
 	public XTestCase_71Record() {
-		super(org.jooq.test.mysql.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71);
+		super(XTestCase_71.X_TEST_CASE_71);
 	}
 
 	/**
 	 * Create a detached, initialised XTestCase_71Record
 	 */
-	public XTestCase_71Record(java.lang.Integer id, java.lang.Integer testCase_64_69Id) {
-		super(org.jooq.test.mysql.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71);
+	public XTestCase_71Record(Integer id, Integer testCase_64_69Id) {
+		super(XTestCase_71.X_TEST_CASE_71);
 
 		setValue(0, id);
 		setValue(1, testCase_64_69Id);

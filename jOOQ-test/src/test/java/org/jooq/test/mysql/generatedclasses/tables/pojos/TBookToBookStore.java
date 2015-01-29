@@ -3,37 +3,47 @@
  */
 package org.jooq.test.mysql.generatedclasses.tables.pojos;
 
+
+import java.io.Serializable;
+
+
 /**
  * An m:n relation between books and book stores
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TBookToBookStore implements java.io.Serializable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class TBookToBookStore implements Serializable {
 
-	private static final long serialVersionUID = 1383797581;
+	private static final long serialVersionUID = -1933289290;
 
-	private final java.lang.String  bookStoreName;
-	private final java.lang.Integer bookId;
-	private final java.lang.Integer stock;
+	private final String  bookStoreName;
+	private final Integer bookId;
+	private final Integer stock;
+
+	public TBookToBookStore(TBookToBookStore value) {
+		this.bookStoreName = value.bookStoreName;
+		this.bookId = value.bookId;
+		this.stock = value.stock;
+	}
 
 	public TBookToBookStore(
-		java.lang.String  bookStoreName,
-		java.lang.Integer bookId,
-		java.lang.Integer stock
+		String  bookStoreName,
+		Integer bookId,
+		Integer stock
 	) {
 		this.bookStoreName = bookStoreName;
 		this.bookId = bookId;
 		this.stock = stock;
 	}
 
-	public java.lang.String getBookStoreName() {
+	public String getBookStoreName() {
 		return this.bookStoreName;
 	}
 
-	public java.lang.Integer getBookId() {
+	public Integer getBookId() {
 		return this.bookId;
 	}
 
-	public java.lang.Integer getStock() {
+	public Integer getStock() {
 		return this.stock;
 	}
 }

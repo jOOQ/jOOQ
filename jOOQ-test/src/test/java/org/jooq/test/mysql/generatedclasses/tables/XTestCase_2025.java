@@ -3,36 +3,50 @@
  */
 package org.jooq.test.mysql.generatedclasses.tables;
 
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.jooq.Field;
+import org.jooq.ForeignKey;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.impl.TableImpl;
+import org.jooq.test.mysql.generatedclasses.Keys;
+import org.jooq.test.mysql.generatedclasses.Test;
+import org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_2025Record;
+
+
 /**
  * An unused table in the same schema.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_2025Record> {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class XTestCase_2025 extends TableImpl<XTestCase_2025Record> {
 
-	private static final long serialVersionUID = -155799684;
+	private static final long serialVersionUID = -773522779;
 
 	/**
 	 * The reference instance of <code>test.x_test_case_2025</code>
 	 */
-	public static final org.jooq.test.mysql.generatedclasses.tables.XTestCase_2025 X_TEST_CASE_2025 = new org.jooq.test.mysql.generatedclasses.tables.XTestCase_2025();
+	public static final XTestCase_2025 X_TEST_CASE_2025 = new XTestCase_2025();
 
 	/**
 	 * The class holding records for this type
 	 */
 	@Override
-	public java.lang.Class<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_2025Record> getRecordType() {
-		return org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_2025Record.class;
+	public Class<XTestCase_2025Record> getRecordType() {
+		return XTestCase_2025Record.class;
 	}
 
 	/**
 	 * The column <code>test.x_test_case_2025.ref_id</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_2025Record, java.lang.Integer> REF_ID = createField("ref_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), X_TEST_CASE_2025, "");
+	public static final TableField<XTestCase_2025Record, Integer> REF_ID = createField("ref_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), X_TEST_CASE_2025, "");
 
 	/**
 	 * The column <code>test.x_test_case_2025.ref_name</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_2025Record, java.lang.String> REF_NAME = createField("ref_name", org.jooq.impl.SQLDataType.VARCHAR.length(10).nullable(false), X_TEST_CASE_2025, "");
+	public static final TableField<XTestCase_2025Record, String> REF_NAME = createField("ref_name", org.jooq.impl.SQLDataType.VARCHAR.length(10).nullable(false), X_TEST_CASE_2025, "");
 
 	/**
 	 * No further instances allowed
@@ -41,19 +55,19 @@ public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.mysql.
 		this("x_test_case_2025", null);
 	}
 
-	private XTestCase_2025(java.lang.String alias, org.jooq.Table<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_2025Record> aliased) {
+	private XTestCase_2025(String alias, Table<XTestCase_2025Record> aliased) {
 		this(alias, aliased, null);
 	}
 
-	private XTestCase_2025(java.lang.String alias, org.jooq.Table<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_2025Record> aliased, org.jooq.Field<?>[] parameters) {
-		super(alias, org.jooq.test.mysql.generatedclasses.Test.TEST, aliased, parameters, "An unused table in the same schema.");
+	private XTestCase_2025(String alias, Table<XTestCase_2025Record> aliased, Field<?>[] parameters) {
+		super(alias, Test.TEST, aliased, parameters, "An unused table in the same schema.");
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public java.util.List<org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_2025Record, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_2025Record, ?>>asList(org.jooq.test.mysql.generatedclasses.Keys.FK_X_TEST_CASE_2025_1, org.jooq.test.mysql.generatedclasses.Keys.FK_X_TEST_CASE_2025_2, org.jooq.test.mysql.generatedclasses.Keys.FK_X_TEST_CASE_2025_3);
+	public List<ForeignKey<XTestCase_2025Record, ?>> getReferences() {
+		return Arrays.<ForeignKey<XTestCase_2025Record, ?>>asList(Keys.FK_X_TEST_CASE_2025_1, Keys.FK_X_TEST_CASE_2025_2, Keys.FK_X_TEST_CASE_2025_3);
 	}
 }

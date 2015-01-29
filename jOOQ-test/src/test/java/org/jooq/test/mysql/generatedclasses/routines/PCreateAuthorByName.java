@@ -3,29 +3,35 @@
  */
 package org.jooq.test.mysql.generatedclasses.routines;
 
+
+import org.jooq.Parameter;
+import org.jooq.impl.AbstractRoutine;
+import org.jooq.test.mysql.generatedclasses.Test;
+
+
 /**
  * Create a new author
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class PCreateAuthorByName extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class PCreateAuthorByName extends AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -225346414;
+	private static final long serialVersionUID = -949797842;
 
 	/**
 	 * The parameter <code>test.p_create_author_by_name.first_name</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.String> FIRST_NAME = createParameter("first_name", org.jooq.impl.SQLDataType.VARCHAR.length(50), false);
+	public static final Parameter<String> FIRST_NAME = createParameter("first_name", org.jooq.impl.SQLDataType.VARCHAR.length(50), false);
 
 	/**
 	 * The parameter <code>test.p_create_author_by_name.last_name</code>.
 	 */
-	public static final org.jooq.Parameter<java.lang.String> LAST_NAME = createParameter("last_name", org.jooq.impl.SQLDataType.VARCHAR.length(50), false);
+	public static final Parameter<String> LAST_NAME = createParameter("last_name", org.jooq.impl.SQLDataType.VARCHAR.length(50), false);
 
 	/**
 	 * Create a new routine call instance
 	 */
 	public PCreateAuthorByName() {
-		super("p_create_author_by_name", org.jooq.test.mysql.generatedclasses.Test.TEST);
+		super("p_create_author_by_name", Test.TEST);
 
 		addInParameter(FIRST_NAME);
 		addInParameter(LAST_NAME);
@@ -34,14 +40,14 @@ public class PCreateAuthorByName extends org.jooq.impl.AbstractRoutine<java.lang
 	/**
 	 * Set the <code>first_name</code> parameter IN value to the routine
 	 */
-	public void setFirstName(java.lang.String value) {
-		setValue(org.jooq.test.mysql.generatedclasses.routines.PCreateAuthorByName.FIRST_NAME, value);
+	public void setFirstName(String value) {
+		setValue(FIRST_NAME, value);
 	}
 
 	/**
 	 * Set the <code>last_name</code> parameter IN value to the routine
 	 */
-	public void setLastName(java.lang.String value) {
-		setValue(org.jooq.test.mysql.generatedclasses.routines.PCreateAuthorByName.LAST_NAME, value);
+	public void setLastName(String value) {
+		setValue(LAST_NAME, value);
 	}
 }

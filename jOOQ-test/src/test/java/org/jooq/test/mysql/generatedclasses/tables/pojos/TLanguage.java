@@ -3,24 +3,35 @@
  */
 package org.jooq.test.mysql.generatedclasses.tables.pojos;
 
+
+import java.io.Serializable;
+
+
 /**
  * An entity holding language master data
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TLanguage implements java.io.Serializable {
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class TLanguage implements Serializable {
 
-	private static final long serialVersionUID = -943906634;
+	private static final long serialVersionUID = 920534254;
 
-	private final java.lang.String  cd;
-	private final java.lang.String  description;
-	private final java.lang.String  descriptionEnglish;
-	private final java.lang.Integer id;
+	private final String  cd;
+	private final String  description;
+	private final String  descriptionEnglish;
+	private final Integer id;
+
+	public TLanguage(TLanguage value) {
+		this.cd = value.cd;
+		this.description = value.description;
+		this.descriptionEnglish = value.descriptionEnglish;
+		this.id = value.id;
+	}
 
 	public TLanguage(
-		java.lang.String  cd,
-		java.lang.String  description,
-		java.lang.String  descriptionEnglish,
-		java.lang.Integer id
+		String  cd,
+		String  description,
+		String  descriptionEnglish,
+		Integer id
 	) {
 		this.cd = cd;
 		this.description = description;
@@ -28,19 +39,19 @@ public class TLanguage implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public java.lang.String getCd() {
+	public String getCd() {
 		return this.cd;
 	}
 
-	public java.lang.String getDescription() {
+	public String getDescription() {
 		return this.description;
 	}
 
-	public java.lang.String getDescriptionEnglish() {
+	public String getDescriptionEnglish() {
 		return this.descriptionEnglish;
 	}
 
-	public java.lang.Integer getId() {
+	public Integer getId() {
 		return this.id;
 	}
 }

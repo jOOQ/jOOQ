@@ -145,4 +145,21 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     .fetch()
                     .getValues(TBook_ID()));
     }
+
+    public void testRecordConstructor() throws Exception {
+        Result<Record2<Integer, String>> records =
+        create().select(TBook_ID(), TBook_TITLE())
+                .from(TBook())
+                .where(TBook_ID().in(1, 2))
+                .orderBy(TBook_ID())
+                .fetch();
+
+        Table<Record2<Integer, String>> table = table(records.get(0), records.get(1));
+        assertEquals(
+            records,
+            create().selectFrom(table)
+                    .orderBy(table.field(TBook_ID()))
+                    .fetch()
+        );
+    }
 }

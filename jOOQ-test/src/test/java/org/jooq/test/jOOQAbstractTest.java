@@ -2490,6 +2490,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testRecordConstructor() throws Exception {
+        new ValuesConstructorTests(this).testRecordConstructor();
+    }
+
+    @Test
     public void testOrderByInSubquery() throws Exception {
         new OrderByTests(this).testOrderByInSubquery();
     }

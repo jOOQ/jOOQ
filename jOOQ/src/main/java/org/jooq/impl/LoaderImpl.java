@@ -49,6 +49,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -547,7 +548,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
 
                     if (commit == COMMIT_AFTER) {
                         if ((processed % batchAfter == 0) && ((processed / batchAfter) % commitAfter == 0)) {
-                            configuration.connectionProvider().acquire().commit();
+                            commit();
                         }
                     }
                 }
@@ -592,22 +593,44 @@ class LoaderImpl<R extends TableRecord<R>> implements
             if (commit == COMMIT_ALL) {
                 if (!errors.isEmpty()) {
                     stored = 0;
-                    configuration.connectionProvider().acquire().rollback();
+                    rollback();
                 }
                 else {
-                    configuration.connectionProvider().acquire().commit();
+                    commit();
                 }
             }
 
             // Commit remaining elements in COMMIT_AFTER mode
             else if (commit == COMMIT_AFTER) {
                 if ((processed % batchAfter != 0) || ((processed / batchAfter) % commitAfter != 0)) {
-                    configuration.connectionProvider().acquire().commit();
+                    commit();
                 }
             }
         }
         catch (DataAccessException e) {
             errors.add(new LoaderErrorImpl(e, null, processed - 1, null));
+        }
+    }
+
+    private void commit() throws SQLException {
+        Connection connection = configuration.connectionProvider().acquire();
+
+        try {
+            connection.commit();
+        }
+        finally {
+            configuration.connectionProvider().release(connection);
+        }
+    }
+
+    private void rollback() throws SQLException {
+        Connection connection = configuration.connectionProvider().acquire();
+
+        try {
+            connection.rollback();
+        }
+        finally {
+            configuration.connectionProvider().release(connection);
         }
     }
 

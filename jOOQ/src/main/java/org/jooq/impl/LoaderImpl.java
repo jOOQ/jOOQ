@@ -73,6 +73,7 @@ import org.jooq.SelectQuery;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.LoaderConfigurationException;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.csv.CSVParser;
 import org.jooq.tools.csv.CSVReader;
@@ -390,6 +391,8 @@ class LoaderImpl<R extends TableRecord<R>> implements
 
     @Override
     public final LoaderImpl<R> execute() throws IOException {
+        checkFlags();
+
         if (content == CONTENT_CSV) {
             executeCSV();
         }
@@ -404,6 +407,11 @@ class LoaderImpl<R extends TableRecord<R>> implements
         }
 
         return this;
+    }
+
+    private void checkFlags() {
+        if (batch != BATCH_NONE && onDuplicate == ON_DUPLICATE_KEY_IGNORE)
+            throw new LoaderConfigurationException("Cannot apply batch loading with onDuplicateKeyIgnore flag. Turn off either flag.");
     }
 
     private void executeJSON() throws IOException {

@@ -43,7 +43,11 @@ package org.jooq.test.all.testcases;
 import static java.util.Arrays.asList;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.jooq.DSLContext;
+import org.jooq.ExecuteContext;
 import org.jooq.Loader;
 import org.jooq.Record1;
 import org.jooq.Record2;
@@ -53,6 +57,7 @@ import org.jooq.Result;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.impl.DSL;
+import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.test.jOOQAbstractTest;
 import org.jooq.test.all.converters.Boolean_10;
 import org.jooq.test.all.converters.Boolean_TF_LC;
@@ -86,6 +91,61 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
 
     public CsvLoaderTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> delegate) {
         super(delegate);
+    }
+
+    public void testCsvLoaderBatch() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        Loader<A> loader;
+        String csv = "ID,First Qualifier,Last Qualifier\r" +
+                "8,Hermann,Hesse\n" +
+                "9,Max,Frisch\n" +
+                "10,Friedrich,Dürrenmatt";
+
+        BatchListener listener;
+        DSLContext create;
+
+        listener = new BatchListener();
+        create = create(listener);
+
+        loader =
+        create.loadInto(TAuthor())
+              .batchAll()
+              .loadCSV(csv)
+              .fields(TAuthor_ID(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
+              .execute();
+
+        assertEquals(1, loader.executed());
+        assertEquals(3, loader.processed());
+        assertEquals(3, loader.stored());
+        assertEquals(0, loader.ignored());
+        assertEquals(0, loader.errors().size());
+        assertEquals(1, listener.batchCommands.size());
+        assertEquals(1, listener.batchCommands.get(0));
+
+        Result<A> result =
+        create.selectFrom(TAuthor())
+              .where(TAuthor_ID().ge(8))
+              .orderBy(TAuthor_ID())
+              .fetch();
+
+        assertEquals(3, result.size());
+        assertEquals(asList(8, 9, 10), result.getValues(TAuthor_ID()));
+        assertEquals(asList("Hermann", "Max", "Friedrich"), result.getValues(TAuthor_FIRST_NAME()));
+        assertEquals(asList("Hesse", "Frisch", "Dürrenmatt"), result.getValues(TAuthor_LAST_NAME()));
+    }
+
+    @SuppressWarnings("serial")
+    static class BatchListener extends DefaultExecuteListener {
+
+        List<Integer> batchCommands = new ArrayList<>();
+
+        @Override
+        public void executeEnd(ExecuteContext ctx) {
+            super.executeEnd(ctx);
+
+            batchCommands.add(ctx.batchRows().length);
+        }
     }
 
     public void testLoaderConverter() throws Exception {

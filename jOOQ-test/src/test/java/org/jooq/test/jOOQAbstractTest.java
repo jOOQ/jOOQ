@@ -3340,6 +3340,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testCsvLoaderBatch() throws Exception {
+        new CsvLoaderTests(this).testCsvLoaderBatch();
+    }
+
+    @Test
     public void testJsonLoader() throws Exception {
         new JsonLoaderTests(this).testLoader();
     }

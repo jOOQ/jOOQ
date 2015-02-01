@@ -95,6 +95,13 @@ class Lambda extends Generators {
              * @author Lukas Eder
              */
             public interface Tuple extends Iterable<Object> {
+            
+                /**
+                 * Construct a tuple of degree 0.
+                 */
+                static Tuple0 tuple() {
+                    return new Tuple0();
+                }
             «FOR degree : (1 .. max)»
             
                 /**
@@ -166,7 +173,7 @@ class Lambda extends Generators {
     }
     
     def generateTuples() {
-        for (degree : 1 .. max) {
+        for (degree : 0 .. max) {
             write(
                 "org.jooq.lambda.tuple.Tuple" + degree,
                 '''
@@ -192,11 +199,12 @@ class Lambda extends Generators {
                  *
                  * @author Lukas Eder
                  */
-                public class Tuple«degree»<«TN(degree)»> implements Tuple, Comparable<Tuple«degree»<«TN(degree)»>>, Serializable, Cloneable {
+                public class Tuple«degree»«IF degree > 0»<«TN(degree)»>«ENDIF» implements Tuple, Comparable<Tuple«degree»«IF degree > 0»<«TN(degree)»>«ENDIF»>, Serializable, Cloneable {
                 
                     private static final long serialVersionUID = 1L;
-                    «FOR d : 1 .. degree»
+                    «IF degree > 0»
 
+                    «FOR d : 1 .. degree»
                     public final T«d» v«d»;
                     «ENDFOR»
                     «FOR d : 1 .. degree»
@@ -205,7 +213,9 @@ class Lambda extends Generators {
                         return v«d»;
                     }
                     «ENDFOR»
-                
+                    «ENDIF»
+                    «IF degree > 0»
+
                     public Tuple«degree»(Tuple«degree»<«TN(degree)»> tuple) {
                         «FOR d : 1 .. degree»
                         this.v«d» = tuple.v«d»;
@@ -216,14 +226,22 @@ class Lambda extends Generators {
                         «FOR d : 1 .. degree»
                         this.v«d» = v«d»;
                         «ENDFOR»
-                    }                    
+                    }
+                    «ELSE»
+
+                    public Tuple«degree»(Tuple0 tuple) {
+                    }
+
+                    public Tuple«degree»() {
+                    }
+                    «ENDIF»  
                     «IF degree < max»
 
                     /**
                      * Concatenate a value to this tuple.
                      */
                     public final <T«degree + 1»> Tuple«degree + 1»<«TN(degree + 1)»> concat(T«degree + 1» value) {
-                        return new Tuple«degree + 1»<>(«XXXn(degree, "v")», value);
+                        return new Tuple«degree + 1»<>(«IF degree > 0»«XXXn(degree, "v")», «ENDIF»value);
                     }
                     «FOR d : (degree + 1 .. max)»
 
@@ -231,7 +249,7 @@ class Lambda extends Generators {
                      * Concatenate a tuple to this tuple.
                      */
                     public final <«TN(degree + 1, d)»> Tuple«d»<«TN(d)»> concat(Tuple«d - degree»<«TN(degree + 1, d)»> tuple) {
-                        return new Tuple«d»<>(«XXXn(degree, "v")», «XXXn(d - degree, "tuple.v")»);
+                        return new Tuple«d»<>(«IF degree > 0»«XXXn(degree, "v")», «ENDIF»«XXXn(d - degree, "tuple.v")»);
                     }
                     «ENDFOR»
                     «ENDIF»
@@ -285,9 +303,10 @@ class Lambda extends Generators {
                     /**
                      * Apply this tuple as arguments to a function.
                      */
-                    public final <R> R map(Function«degree»<«TN(degree)», R> function) {
+                    public final <R> R map(Function«degree»<«IF degree > 0»«TN(degree)», «ENDIF»R> function) {
                         return function.apply(this);
                     }
+                    «IF degree > 0»
                     «FOR d : 1 .. degree»
 
                     /**
@@ -297,10 +316,11 @@ class Lambda extends Generators {
                         return Tuple.tuple(«vn(1, d - 1)»«IF d > 1», «ENDIF»function.apply(v«d»)«IF d < degree», «ENDIF»«vn(d + 1, degree)»);
                     }
                     «ENDFOR»
+                    «ENDIF»
 
                     @Override
                     public final Object[] array() {
-                        return new Object[] { «vn(degree)» };
+                        return new Object[] { «IF degree > 0»«vn(degree)»«ENDIF» };
                     }
 
                     @Override
@@ -323,13 +343,15 @@ class Lambda extends Generators {
                     }
                 
                     @Override
-                    public int compareTo(Tuple«degree»<«TN(degree)»> other) {
-                        int result;
+                    public int compareTo(Tuple«degree»«IF degree > 0»<«TN(degree)»>«ENDIF» other) {
+                        int result = 0;
+                        «IF degree > 0»
 
                         «FOR d : 1 .. degree»
                         result = Tuples.compare(v«d», other.v«d»); if (result != 0) return result;
                         «ENDFOR»
 
+                        «ENDIF»
                         return result;
                     }
                 
@@ -339,13 +361,15 @@ class Lambda extends Generators {
                             return true;
                         if (!(o instanceof Tuple«degree»))
                             return false;
-                
+                        «IF degree > 0»
+
                         @SuppressWarnings({ "unchecked", "rawtypes" })
                         final Tuple«degree»<«TN(degree)»> that = (Tuple«degree») o;
 
                         «FOR d : 1 .. degree»
                         if (!Objects.equals(v«d», that.v«d»)) return false;
                         «ENDFOR»
+                        «ENDIF»
                 
                         return true;
                     }
@@ -354,26 +378,32 @@ class Lambda extends Generators {
                     public int hashCode() {
                         final int prime = 31;
                         int result = 1;
+                        «IF degree > 0»
 
                         «FOR d : 1 .. degree»
                         result = prime * result + ((v«d» == null) ? 0 : v«d».hashCode());
                         «ENDFOR»
-                
+
+                        «ENDIF»
                         return result;
                     }
                 
                     @Override
                     public String toString() {
+                        «IF degree == 0»
+                        return "()";
+                        «ELSE»
                         return "("
                              «FOR d : 1 .. degree»
                              + «IF d > 1»", " + «ELSE»       «ENDIF»v«d»
                              «ENDFOR»
                              + ")";
+                        «ENDIF»
                     }
                 
                     @Override
-                    public Tuple«degree»<«TN(degree)»> clone() {
-                        return new Tuple«degree»<>(this);
+                    public Tuple«degree»«IF degree > 0»<«TN(degree)»>«ENDIF» clone() {
+                        return new Tuple«degree»«IF degree > 0»<>«ENDIF»(this);
                     }
                 }
                 '''  

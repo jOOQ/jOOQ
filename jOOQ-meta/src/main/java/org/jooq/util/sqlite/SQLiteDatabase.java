@@ -101,7 +101,7 @@ public class SQLiteDatabase extends AbstractDatabase {
                 .fetch(SQLiteMaster.NAME)) {
 
             for (Record record : create().fetch("pragma table_info('" + tableName + "')")) {
-                if (record.getValue("pk", boolean.class)) {
+                if (record.getValue("pk", int.class) > 0) {
                     String columnName = record.getValue("name", String.class);
 
                     // Generate a primary key name

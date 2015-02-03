@@ -738,7 +738,7 @@
         class, and you want to avoid naming clashes with the java.lang package
         by specifying <fullyQualifiedTypes>java\.lang\..*</fullyQualifiedTypes>
         -->
-      <element name="fullyQualifiedTypes" type="string" default="" minOccurs="0" maxOcurrs="1" />
+      <element name="fullyQualifiedTypes" type="string" default="" minOccurs="0" maxOccurs="1" />
     </all>
   </complexType>
 

@@ -88,7 +88,8 @@ public class SupportVerificationTransformer implements ClassFileTransformer {
         className = className.replace("/", ".");
 
         // Consider only jOOQ classes
-        if (!className.startsWith("org.jooq."))
+        if (!className.startsWith("org.jooq.") ||
+             className.startsWith("org.jooq.lambda."))
             return null;
 
         classPool.appendClassPath(new ByteArrayClassPath(className, classfileBuffer));

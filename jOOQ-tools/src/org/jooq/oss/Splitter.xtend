@@ -46,11 +46,11 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.regex.Pattern
-import org.apache.commons.lang3.tuple.ImmutablePair
 import org.jooq.SQLDialect
 import org.jooq.xtend.Generators
 
 import static java.util.regex.Pattern.*
+import java.util.AbstractMap.SimpleImmutableEntry
 
 // Use this to generate the jOOQ Open Source Edition code
 class RemoveProCode {
@@ -185,10 +185,10 @@ For more information, please visit: http://www.jooq.org/licenses''');
                     }
                 }
                 for (pair : replaceFirst) {
-                    content = pair.left.matcher(content).replaceAll(pair.right);
+                    content = pair.key.matcher(content).replaceAll(pair.value);
                 }
                 for (pair : replaceAll) {
-                    content = pair.left.matcher(content).replaceAll(pair.right);
+                    content = pair.key.matcher(content).replaceAll(pair.value);
                 }
                 
                 write(out, content);
@@ -208,27 +208,27 @@ For more information, please visit: http://www.jooq.org/licenses''');
     }
     
     val translateAll = new ArrayList<Pattern>();
-    val replaceAll = new ArrayList<ImmutablePair<Pattern, String>>();
-    val replaceFirst = new ArrayList<ImmutablePair<Pattern, String>>();
+    val replaceAll = new ArrayList<SimpleImmutableEntry<Pattern, String>>();
+    val replaceFirst = new ArrayList<SimpleImmutableEntry<Pattern, String>>();
     
     new(String token) {
         this.token = token;
         
         if (token.equals("pro")) {
-            replaceFirst.add(new ImmutablePair(compile('''-trial\.jar'''), '''.jar'''));
+            replaceFirst.add(new SimpleImmutableEntry(compile('''-trial\.jar'''), '''.jar'''));
         }
         else {
-            replaceFirst.add(new ImmutablePair(compile('''-trial\.jar'''), '''-pro.jar'''));
+            replaceFirst.add(new SimpleImmutableEntry(compile('''-trial\.jar'''), '''-pro.jar'''));
         }
         
         if (token.equals("pro")) {
             
             // Replace a couple of imports
-            replaceFirst.add(new ImmutablePair(compile('''import (org\.jooq\.(ArrayConstant|ArrayRecord|VersionsBetweenAndStep|impl\.ArrayRecordImpl|impl\.FlashbackTable.*?)|(com.microsoft.*?));'''), "// ..."));
-            replaceFirst.add(new ImmutablePair(compile('''import static org\.jooq\.impl\.DSL\.(cube|grouping|groupingId|groupingSets);'''), "// ..."));
+            replaceFirst.add(new SimpleImmutableEntry(compile('''import (org\.jooq\.(ArrayConstant|ArrayRecord|VersionsBetweenAndStep|impl\.ArrayRecordImpl|impl\.FlashbackTable.*?)|(com.microsoft.*?));'''), "// ..."));
+            replaceFirst.add(new SimpleImmutableEntry(compile('''import static org\.jooq\.impl\.DSL\.(cube|grouping|groupingId|groupingSets);'''), "// ..."));
             
             // Replace the Java / Scala / Xtend license header
-            replaceFirst.add(new ImmutablePair(compile('''(?s:/\*\*[\r\n] \* Copyright.*?eula[\r\n] \*/)'''), '''
+            replaceFirst.add(new SimpleImmutableEntry(compile('''(?s:/\*\*[\r\n] \* Copyright.*?eula[\r\n] \*/)'''), '''
 /**
  * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
@@ -273,24 +273,24 @@ For more information, please visit: http://www.jooq.org/licenses''');
             for (d : SQLDialect.values.filter[commercial]) {
                 
                 // Remove commercial dialects from @Support annotations
-                replaceAll.add(new ImmutablePair(compile('''(?s:(\@Support\([^\)]*?),\s*\b«d.name()»\b([^\)]*?\)))'''), "$1$2"));
-                replaceAll.add(new ImmutablePair(compile('''(?s:(\@Support\([^\)]*?)\b«d.name()»\b,\s*([^\)]*?\)))'''), "$1$2"));
-                replaceAll.add(new ImmutablePair(compile('''(?s:(\@Support\([^\)]*?)\s*\b«d.name()»\b\s*([^\)]*?\)))'''), "$1$2"));
+                replaceAll.add(new SimpleImmutableEntry(compile('''(?s:(\@Support\([^\)]*?),\s*\b«d.name()»\b([^\)]*?\)))'''), "$1$2"));
+                replaceAll.add(new SimpleImmutableEntry(compile('''(?s:(\@Support\([^\)]*?)\b«d.name()»\b,\s*([^\)]*?\)))'''), "$1$2"));
+                replaceAll.add(new SimpleImmutableEntry(compile('''(?s:(\@Support\([^\)]*?)\s*\b«d.name()»\b\s*([^\)]*?\)))'''), "$1$2"));
                 
                 // Remove commercial dialects from assume*(...) listings
-                replaceAll.add(new ImmutablePair(compile('''(?:(assume(?:Family|Dialect)NotIn.*\([^\)]*?),\s*\b«d.name()»\b([^\)]*\)))'''), "$1$2"));
-                replaceAll.add(new ImmutablePair(compile('''(?:(assume(?:Family|Dialect)NotIn.*\([^\)]*?)\b«d.name()»\b,\s*([^\)]*\)))'''), "$1$2"));
-                replaceAll.add(new ImmutablePair(compile('''(?:(assume(?:Family|Dialect)NotIn.*\([^\)]*?)\s*\b«d.name()»\b\s*([^\)]*\)))'''), "$1$2"));
+                replaceAll.add(new SimpleImmutableEntry(compile('''(?:(assume(?:Family|Dialect)NotIn.*\([^\)]*?),\s*\b«d.name()»\b([^\)]*\)))'''), "$1$2"));
+                replaceAll.add(new SimpleImmutableEntry(compile('''(?:(assume(?:Family|Dialect)NotIn.*\([^\)]*?)\b«d.name()»\b,\s*([^\)]*\)))'''), "$1$2"));
+                replaceAll.add(new SimpleImmutableEntry(compile('''(?:(assume(?:Family|Dialect)NotIn.*\([^\)]*?)\s*\b«d.name()»\b\s*([^\)]*\)))'''), "$1$2"));
                 
                 // Remove commercial dialects from Arrays.asList() expressions
-                replaceAll.add(new ImmutablePair(compile('''(asList\([^\)]*?),\s*\b«d.name()»\b([^\)]*?\))'''), "$1$2"));
-                replaceAll.add(new ImmutablePair(compile('''(asList\([^\)]*?)\b«d.name()»\b,\s*([^\)]*?\))'''), "$1$2"));
-                replaceAll.add(new ImmutablePair(compile('''(asList\([^\)]*?)\s*\b«d.name()»\b\s*([^\)]*?\))'''), "$1$2"));
+                replaceAll.add(new SimpleImmutableEntry(compile('''(asList\([^\)]*?),\s*\b«d.name()»\b([^\)]*?\))'''), "$1$2"));
+                replaceAll.add(new SimpleImmutableEntry(compile('''(asList\([^\)]*?)\b«d.name()»\b,\s*([^\)]*?\))'''), "$1$2"));
+                replaceAll.add(new SimpleImmutableEntry(compile('''(asList\([^\)]*?)\s*\b«d.name()»\b\s*([^\)]*?\))'''), "$1$2"));
                 
                 // Remove commercial dialects from imports
-                replaceAll.add(new ImmutablePair(compile('''import (static )?org\.jooq\.SQLDialect\.«d.name()»;'''), "// ..."));
-                replaceAll.add(new ImmutablePair(compile('''import (static )?org\.jooq\.util\.«d.name().toLowerCase»\..*?;'''), "// ..."));
-                replaceAll.add(new ImmutablePair(compile('''import (static )?org\.jooq\..*?(\b|(?<=_))«d.name().toUpperCase»(\b|(?=_)).*?;'''), "// ..."));
+                replaceAll.add(new SimpleImmutableEntry(compile('''import (static )?org\.jooq\.SQLDialect\.«d.name()»;'''), "// ..."));
+                replaceAll.add(new SimpleImmutableEntry(compile('''import (static )?org\.jooq\.util\.«d.name().toLowerCase»\..*?;'''), "// ..."));
+                replaceAll.add(new SimpleImmutableEntry(compile('''import (static )?org\.jooq\..*?(\b|(?<=_))«d.name().toUpperCase»(\b|(?=_)).*?;'''), "// ..."));
             }
         }
                 

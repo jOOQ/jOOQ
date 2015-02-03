@@ -111,7 +111,7 @@ public class Keys {
 		public static final UniqueKey<TAuthorRecord> PK_T_AUTHOR = createUniqueKey(TAuthor.T_AUTHOR, TAuthor.ID);
 		public static final UniqueKey<TBookRecord> PK_T_BOOK = createUniqueKey(TBook.T_BOOK, TBook.ID);
 		public static final UniqueKey<TBookStoreRecord> PK_T_BOOK_STORE = createUniqueKey(TBookStore.T_BOOK_STORE, TBookStore.NAME);
-		public static final UniqueKey<TBookToBookStoreRecord> PK_T_BOOK_TO_BOOK_STORE = createUniqueKey(TBookToBookStore.T_BOOK_TO_BOOK_STORE, TBookToBookStore.BOOK_STORE_NAME);
+		public static final UniqueKey<TBookToBookStoreRecord> PK_T_BOOK_TO_BOOK_STORE = createUniqueKey(TBookToBookStore.T_BOOK_TO_BOOK_STORE, TBookToBookStore.BOOK_STORE_NAME, TBookToBookStore.BOOK_ID);
 		public static final UniqueKey<TBooleansRecord> PK_T_BOOLEANS = createUniqueKey(TBooleans.T_BOOLEANS, TBooleans.ID);
 		public static final UniqueKey<TDatesRecord> PK_T_DATES = createUniqueKey(TDates.T_DATES, TDates.ID);
 		public static final UniqueKey<TExoticTypesRecord> PK_T_EXOTIC_TYPES = createUniqueKey(TExoticTypes.T_EXOTIC_TYPES, TExoticTypes.ID);
@@ -120,7 +120,7 @@ public class Keys {
 		public static final UniqueKey<XTestCase_64_69Record> PK_X_TEST_CASE_64_69 = createUniqueKey(XTestCase_64_69.X_TEST_CASE_64_69, XTestCase_64_69.ID);
 		public static final UniqueKey<XTestCase_71Record> PK_X_TEST_CASE_71 = createUniqueKey(XTestCase_71.X_TEST_CASE_71, XTestCase_71.ID);
 		public static final UniqueKey<XTestCase_85Record> PK_X_TEST_CASE_85 = createUniqueKey(XTestCase_85.X_TEST_CASE_85, XTestCase_85.ID);
-		public static final UniqueKey<XUnusedRecord> PK_X_UNUSED = createUniqueKey(XUnused.X_UNUSED, XUnused.ID);
+		public static final UniqueKey<XUnusedRecord> PK_X_UNUSED = createUniqueKey(XUnused.X_UNUSED, XUnused.ID, XUnused.NAME);
 	}
 
 	private static class ForeignKeys0 extends AbstractKeys {

@@ -5,7 +5,7 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
 
 
 import org.jooq.Field;
-import org.jooq.Record1;
+import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Row;
 import org.jooq.Row3;
@@ -19,7 +19,7 @@ import org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStoreRecord extends UpdatableRecordImpl<TBookToBookStoreRecord> implements Record3<String, Integer, Integer> {
 
-	private static final long serialVersionUID = -927940143;
+	private static final long serialVersionUID = 454030322;
 
 	/**
 	 * Setter for <code>t_book_to_book_store.book_store_name</code>.
@@ -71,8 +71,8 @@ public class TBookToBookStoreRecord extends UpdatableRecordImpl<TBookToBookStore
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Record1<String> key() {
-		return (Record1) super.key();
+	public Record2<String, Integer> key() {
+		return (Record2) super.key();
 	}
 
 	// -------------------------------------------------------------------------

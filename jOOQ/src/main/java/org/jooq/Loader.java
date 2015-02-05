@@ -63,7 +63,7 @@ public interface Loader<R extends TableRecord<R>> {
     int processed();
 
     /**
-     * The number of executed statements or batch statements.
+     * The number of executed statements, bulk statements, or batch statements.
      */
     int executed();
 

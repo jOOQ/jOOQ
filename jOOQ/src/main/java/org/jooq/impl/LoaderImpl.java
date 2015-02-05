@@ -510,7 +510,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
                             select.addConditions(getCondition(fields[i], row[i]));
 
                     try {
-                        if (select.execute() > 0) {
+                        if (create.fetchExists(select)) {
                             ignored++;
                             continue rows;
                         }

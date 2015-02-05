@@ -592,37 +592,128 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         ));
 
         /* [trial] */
-        JooqLogger l = JooqLogger.getLogger(Constants.class);
-        String message;
 
-        message = "Thank you for using jOOQ " + Constants.FULL_VERSION;
+        /*
+         * So, you've found the piece of logic that displays our beautifully-crafted ASCII-art logo that
+         * we display in the log files to our jOOQ Open Source Edition and jOOQ Free Trial Edition users
+         *
+         * You probably came here to see if you can somehow turn it off, e.g. because you found this
+         * page here:
+         *
+         *   http://stackoverflow.com/q/28272284/521799
+         *
+         * And yes! You can:
+         *
+         *   a) turn off your logger for org.jooq.Constants
+         *   b) set the -Dorg.jooq.no-logo=true property
+         *   c) simply patch this file in your sources and rebuild jOOQ
+         *   d) buy a commercial license
+         *
+         * Hint: While a) - c) work, d) is the right answer :-)
+         *
+         * But before you do any of a) - c), consider this. We give away this awesome software for free,
+         * and we'd love to continue giving it away for free, so all we would like to ask you is to
+         * continue to show your love and our brand to everyone involved in your software simply in the
+         * log files when you load jOOQ. Please don't remove our logo.
+         *
+         *   Everytime someone removes our logo, god kills a kitten
+         *
+         * Some more ASCII-art to illustrate this:
+         *
+         * ---:-----------------------------------------------------------------------------------------
+         * ----------///::------------------------------------------------------------------------------
+         * ---------+yssso/-----------------------------------------------------------------------------
+         * :::-----:syyssso:--------------------------------------+oso:---------------------------------
+         * ::-----:oysooosss+----------------------------------:ooyyyys:--------------------------------
+         * :::----/sysoooooos+/------------------------------:/syysssso:.-------------------------------
+         * ::::---/yyyysooossyy/-::-------------------------:shyysooo++o:.---------------------:::--:--:
+         * ::::---:syhyyyyyyyyyyy/:--:-.-::/:::/:::-:::::-:oyhyssoo++//++.....------------------::::::::
+         * --------oyhhhdhhhhhyhh+`:+o+++sssssyossooooo/+oyhyssssso++/+o/`````..----::::::-:::::::::::::
+         * :------:oyhhdddddhhhyyo-.sshdysoyysyoossdhyyssyhyyyyyysoooos+-`   ``..----:::::::::::::::::::
+         * :------/syhddddddhhhsso/:ooyhyhhhyyhhyhsdhhyoyyyyysyyyyyysss/``    ```-----::::::::::::::::::
+         * -------/shmmmddhhyyhsoo/+o+hdyhddhomyhhyhyhysssyhhyyyyyhhsoo:``      `..----:::::::::::::::::
+         * :------/yhmmmmho++syhyyhddmNNhmNmdhdyyhNdhddhsssyysyysshyyy+-.`       `.-----::::::::--::::::
+         * -------+yhmNmdhyhhhydmhhmmNNNdNNNdmdddNNdmdddyys+++sysshhhhh```       `..-------------:::::::
+         * -------:yhNNmddddmmmhdhhddNNNdmNNmmhdNNdmmdhdhdhyy++ooyddhdh`````    `..---------------::::::
+         * ------.:yhddhddmmmmdmddhddmNMNdmNNmNNNmdmdhhdddddhysoshdddmh.```` ````.------------------::::
+         * -----.`/yyyyhdmdhhhdmdhydmddNMNNNNmMNdddyyhhhhyhhhdhysyddmdy` ```..``..----------------------
+         * -----.-+syhhdddyyyhdmmysdMdshNNNNNNdshNmssyyhyyyyhddhsosssso  ```...``..-------------::------
+         * :-----:oyhdddyysyyyhhdyohNyoshmmmNNo+hNh+ohdhysoosyyyys++/::  ```...```...-----------:-------
+         * :------odmdmdyssyyyyyysoshs+shhmdhh+/ydo+osssso++oosyhhsso/-  ```.....```..------------------
+         * -----:-+hmNNmhhddmNNNNmdh+++syddhys++ooosooo++//::+oyhhhyys:  ````....```..------------------
+         * -------:+ymNNNNoymNNNNNNMs++sshhyo+//smNmNmdhdhys/:+syhhhh+. ``  ```...```.------------------
+         * ---------:ydhhdssdNMNNNMMms+osyyo+/+yNMNmNNmmNhohdhhdddmms. ```   `.--.```...----------------
+         * ----------oyysymdhdmmmNNNNhssssoo+/hmNMMNNNNNh+:oyyyhyyhs-` ```    ``.-.```...---------------
+         * --------:/ssssydmmhyoosyhNmysssoo+omdhhhdmddhsosys///+o/.`  ````    `.::.``...---------------
+         * --------/osyydmyhmmdhysydmdhyysoooyNdo///+oshdhs+/://+/.`   ````     `::.``...---------------
+         * ------.:osssyhhhhdddhyyyydddhhyyysyyhhsshhhhdyo+//+o+--.``   `       `::.````.---------------
+         * -----::oyhdhhhhyysssyyhhsdNNmmmdddy:oooooyyyyo+oss/:----`    ``      `::-````..--------------
+         * --..-:/oyhdmddddhysosyysoshmMMMNmho:oo++--//:/+/::::/oo+-`   ``     ``:::-.``..--------------
+         * ----:osyhddmNNNNNmmdosysssohNMNmy+/++///..-::+oo+//oyys/-`          `.::/-.```..-------------
+         * ----:+ossyyyhmNNNMNNmhsyyyhhmNmdyssoso+::/+shddddhds+++:`          `.-++/-`  ``.-------------
+         * ---://+ssyhddddmNMMMMNddhsyhhdddhyyo+//+hhddhmmmmmddhyyo/-`        `.-+o+:.   ``.------------
+         * .-::/osshdddmmmmmNMMNNmddhyysssoooosyyhddddmmmNmmdhyysso+-        `.-/oo+:-``   `..----------
+         * .-://+oyhhhhdddddNNNdhhhhddhyyyyyyhhdddddddmNhho/:.::::..``      `.-/+sso/:.`   ``..---------
+         * .-://+syhhdmdddhdmNdoosyhddhhhhhhhhhddddhhhhy+/-.````````      ``.-:/+ooso+-``   ``..--------
+         * ..--:oydhhddddhhhhho-::+syhhhhhhyyhhhddhhyyso/----`````        `.::/++osyso/.`     ``..------
+         * ..-:+yhhhdhddhyyyyo:---::osyhhhyyyhhhhhhso/::-...````          ./ooooosyyys/-```    ``..-----
+         * `.-/oyyhdddddhyyyys/.----::+osyssyhhhyy+-..``..````            ./yyyhhyyyso/-```     ``..----
+         * ..-/oyyhhhdddhyyhhhy...-----:/ooossss+-.``....````             ./hdddhyysso/-..``     ``..---
+         * ..-/+oyyyyhhhhyyhdmy........--://+ooo-```.::::-``             `.:yhhhhyssso+//::.``    ``.---
+         * `.:+osyyyyhhhhhhyhmo...............+s+-....`.`:-             ``.-:/oyyyyysso++//-...`  ```..-
+         * ``:ooysyyhhhhhhhhhh/...............hmmdh+/--:`..`           ``....--:/oooooso++/::::-`````..-
+         * ``:ssyyyhhhhhdddhdh+........--...``dmmmdsoo+/:.``          ``......-------:/+ossoo+/:``````.-
+         * ``/yysyhhyhhhddddmms......------..`shdddmdyss+.``.`      ```.....--...-....:/syyyyso/-`````..
+         * ``+yyyyhhhhdddmNNNd+.....--------..-:sNNdmmddho/-ss:   ```......---------.-/+shhhhhso/:.````.
+         * `.omdyyyhyhhdddNmh+---------::---..:/sdmmNNNNdhyhds-```.........-----------/+syhhhhyyoo:`````
+         * --:oshyhhhdhddmms:.-.------:::::---:/shhhhdmdyo+/:` ``..--------------:::--/+yyhhhhyyso+-` ``
+         * :-.`.ydmmdmmmmh/-...---------::----::+yhhhhhhyso:. ```...-----------:::::-:/+yhhhhhyyyss+-  `
+         * ...``-/syoyyo:..........-------------:+ohhhdddhs/` `````...------::::::::-:/+yhhhhhhhhyys+```
+         * .....`..------...........-------------:/syhhhyo-`````````...----::--:::----:/oyhhdddhhhys+.``
+         * .......------............---------------:/+oo:-```````````.....--------------:+oyhdhhhho:-.`.
+         * --..-----:----------------------------------:-........`````````....-----------:/+osssso/-....
+         * :-------:::--------::--------:::---------.......------...````````...-----------::::::::------
+         *
+         * Thank you very much! If you absolutely must remove this logo, and can live with the guilt
+         * and shame, below is the system property that deactivates it.
+         *
+         * Cheers from the jOOQ Team.
+         *
+         * --------------------------------------------------
+         * DEAR USER, PLEASE READ THE ABOVE BEFORE PROCEEDING
+         */
+        if (!Boolean.getBoolean("org.jooq.no-logo")) {
+            JooqLogger l = JooqLogger.getLogger(Constants.class);
+            String message;
 
-        /* [pro] */
-        message = "Thank you for using the 30 day free jOOQ " + Constants.FULL_VERSION + " trial edition";
-        /* [/pro] */
+            message = "Thank you for using jOOQ " + Constants.FULL_VERSION;
+
+            /* [pro] */
+            message = "Thank you for using the 30 day free jOOQ " + Constants.FULL_VERSION + " trial edition";
+            /* [/pro] */
 
 
-        l.info("\n                                      " +
-               "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" +
-               "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" +
-               "\n@@@@@@@@@@@@@@@@  @@        @@@@@@@@@@" +
-               "\n@@@@@@@@@@@@@@@@@@@@        @@@@@@@@@@" +
-               "\n@@@@@@@@@@@@@@@@  @@  @@    @@@@@@@@@@" +
-               "\n@@@@@@@@@@  @@@@  @@  @@    @@@@@@@@@@" +
-               "\n@@@@@@@@@@        @@        @@@@@@@@@@" +
-               "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" +
-               "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" +
-               "\n@@@@@@@@@@        @@        @@@@@@@@@@" +
-               "\n@@@@@@@@@@    @@  @@  @@@@  @@@@@@@@@@" +
-               "\n@@@@@@@@@@    @@  @@  @@@@  @@@@@@@@@@" +
-               "\n@@@@@@@@@@        @@  @  @  @@@@@@@@@@" +
-               "\n@@@@@@@@@@        @@        @@@@@@@@@@" +
-               "\n@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@@@" +
-               "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" +
-               "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  " + message +
-               "\n                                      ");
+            l.info("\n                                      " +
+                   "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" +
+                   "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" +
+                   "\n@@@@@@@@@@@@@@@@  @@        @@@@@@@@@@" +
+                   "\n@@@@@@@@@@@@@@@@@@@@        @@@@@@@@@@" +
+                   "\n@@@@@@@@@@@@@@@@  @@  @@    @@@@@@@@@@" +
+                   "\n@@@@@@@@@@  @@@@  @@  @@    @@@@@@@@@@" +
+                   "\n@@@@@@@@@@        @@        @@@@@@@@@@" +
+                   "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" +
+                   "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" +
+                   "\n@@@@@@@@@@        @@        @@@@@@@@@@" +
+                   "\n@@@@@@@@@@    @@  @@  @@@@  @@@@@@@@@@" +
+                   "\n@@@@@@@@@@    @@  @@  @@@@  @@@@@@@@@@" +
+                   "\n@@@@@@@@@@        @@  @  @  @@@@@@@@@@" +
+                   "\n@@@@@@@@@@        @@        @@@@@@@@@@" +
+                   "\n@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@@@" +
+                   "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" +
+                   "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  " + message +
+                   "\n                                      ");
+        }
         /* [/trial] */
-
     }
 
     /**

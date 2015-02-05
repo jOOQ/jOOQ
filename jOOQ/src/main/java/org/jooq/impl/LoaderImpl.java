@@ -462,11 +462,9 @@ class LoaderImpl<R extends TableRecord<R>> implements
             rows: while (reader.hasNext() && ((row = reader.next()) != null)) {
 
                 // [#1627] Handle NULL values
-                for (int i = 0; i < row.length; i++) {
-                    if (StringUtils.equals(nullString, row[i])) {
+                for (int i = 0; i < row.length; i++)
+                    if (StringUtils.equals(nullString, row[i]))
                         row[i] = null;
-                    }
-                }
 
                 // TODO: In batch mode, we can probably optimise this by not creating
                 // new statements every time, just to convert bind values to their
@@ -475,22 +473,18 @@ class LoaderImpl<R extends TableRecord<R>> implements
                 processed++;
                 insert = create.insertQuery(table);
 
-                for (int i = 0; i < row.length; i++) {
-                    if (i < fields.length && fields[i] != null) {
+                for (int i = 0; i < row.length; i++)
+                    if (i < fields.length && fields[i] != null)
                         addValue0(insert, fields[i], row[i]);
-                    }
-                }
 
                 // TODO: This is only supported by some dialects. Let other
                 // dialects execute a SELECT and then either an INSERT or UPDATE
                 if (onDuplicate == ON_DUPLICATE_KEY_UPDATE) {
                     insert.onDuplicateKeyUpdate(true);
 
-                    for (int i = 0; i < row.length; i++) {
-                        if (i < fields.length && fields[i] != null && !primaryKey[i]) {
+                    for (int i = 0; i < row.length; i++)
+                        if (i < fields.length && fields[i] != null && !primaryKey[i])
                             addValueForUpdate0(insert, fields[i], row[i]);
-                        }
-                    }
                 }
 
                 // TODO: This can be implemented faster using a MERGE statement
@@ -498,11 +492,9 @@ class LoaderImpl<R extends TableRecord<R>> implements
                 else if (onDuplicate == ON_DUPLICATE_KEY_IGNORE) {
                     SelectQuery<R> select = create.selectQuery(table);
 
-                    for (int i = 0; i < row.length; i++) {
-                        if (i < fields.length && primaryKey[i]) {
+                    for (int i = 0; i < row.length; i++)
+                        if (i < fields.length && primaryKey[i])
                             select.addConditions(getCondition(fields[i], row[i]));
-                        }
-                    }
 
                     try {
                         if (select.execute() > 0) {
@@ -546,20 +538,17 @@ class LoaderImpl<R extends TableRecord<R>> implements
                     }
 
 
-                    if (commit == COMMIT_AFTER) {
-                        if ((processed % batchAfter == 0) && ((processed / batchAfter) % commitAfter == 0)) {
+                    if (commit == COMMIT_AFTER)
+                        if ((processed % batchAfter == 0) && ((processed / batchAfter) % commitAfter == 0))
                             commit();
-                        }
-                    }
                 }
                 catch (DataAccessException e) {
                     errors.add(new LoaderErrorImpl(e, row, processed - 1, insert));
                     ignored += batched;
                     batched = 0;
 
-                    if (onError == ON_ERROR_ABORT) {
+                    if (onError == ON_ERROR_ABORT)
                         break execution;
-                    }
                 }
 
                 // rowloop
@@ -580,9 +569,8 @@ class LoaderImpl<R extends TableRecord<R>> implements
                     batched = 0;
                 }
 
-                if (onError == ON_ERROR_ABORT) {
+                if (onError == ON_ERROR_ABORT)
                     break execution;
-                }
             }
 
             // executionBlock

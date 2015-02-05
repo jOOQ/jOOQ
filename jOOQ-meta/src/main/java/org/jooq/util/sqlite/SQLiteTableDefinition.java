@@ -83,8 +83,8 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
 
             // SQLite identities are primary keys whose tables are mentioned in
             // sqlite_sequence
-            boolean pk = record.getValue("pk", Boolean.class);
-            boolean identity = pk && existsSqliteSequence() && create()
+            int pk = record.getValue("pk", int.class);
+            boolean identity = pk > 0 && existsSqliteSequence() && create()
                 .fetchOne("select count(*) from sqlite_sequence where name = ?", getName())
                 .getValue(0, Boolean.class);
 

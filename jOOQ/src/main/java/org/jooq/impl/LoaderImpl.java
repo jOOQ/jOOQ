@@ -113,6 +113,10 @@ class LoaderImpl<R extends TableRecord<R>> implements
     private static final int        BATCH_AFTER             = 1;
     private static final int        BATCH_ALL               = 2;
 
+    private static final int        BULK_NONE               = 0;
+    private static final int        BULK_AFTER              = 1;
+    private static final int        BULK_ALL                = 2;
+
     private static final int        CONTENT_CSV             = 0;
     private static final int        CONTENT_XML             = 1;
     private static final int        CONTENT_JSON            = 2;
@@ -128,6 +132,8 @@ class LoaderImpl<R extends TableRecord<R>> implements
     private int                     commitAfter             = 1;
     private int                     batch                   = BATCH_NONE;
     private int                     batchAfter              = 1;
+    private int                     bulk                    = BULK_NONE;
+    private int                     bulkAfter               = 1;
     private int                     content                 = CONTENT_CSV;
     private BufferedReader          data;
 
@@ -146,7 +152,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
     private int                     processed;
     private int                     stored;
     private int                     executed;
-    private int                     batched;
+    private int                     buffered;
     private final List<LoaderError> errors;
 
     LoaderImpl(Configuration configuration, Table<R> table) {
@@ -239,6 +245,25 @@ class LoaderImpl<R extends TableRecord<R>> implements
     public final LoaderImpl<R> batchAfter(int number) {
         batch = BATCH_AFTER;
         batchAfter = number;
+        return this;
+    }
+
+    @Override
+    public final LoaderImpl<R> bulkAll() {
+        bulk = BULK_ALL;
+        return this;
+    }
+
+    @Override
+    public final LoaderImpl<R> bulkNone() {
+        bulk = BULK_NONE;
+        return this;
+    }
+
+    @Override
+    public final LoaderImpl<R> bulkAfter(int number) {
+        bulk = BULK_AFTER;
+        bulkAfter = number;
         return this;
     }
 
@@ -413,6 +438,9 @@ class LoaderImpl<R extends TableRecord<R>> implements
     private void checkFlags() {
         if (batch != BATCH_NONE && onDuplicate == ON_DUPLICATE_KEY_IGNORE)
             throw new LoaderConfigurationException("Cannot apply batch loading with onDuplicateKeyIgnore flag. Turn off either flag.");
+
+        if (bulk != BULK_NONE && onDuplicate != ON_DUPLICATE_KEY_ERROR)
+            throw new LoaderConfigurationException("Cannot apply bulk loading with onDuplicateKey flags. Turn off either flag.");
     }
 
     private void executeJSON() throws IOException {
@@ -471,25 +499,10 @@ class LoaderImpl<R extends TableRecord<R>> implements
                 // appropriate target types. But beware of SQL dialects that tend to
                 // need very explicit casting of bind values (e.g. Firebird)
                 processed++;
-                insert = create.insertQuery(table);
-
-                for (int i = 0; i < row.length; i++)
-                    if (i < fields.length && fields[i] != null)
-                        addValue0(insert, fields[i], row[i]);
-
-                // TODO: This is only supported by some dialects. Let other
-                // dialects execute a SELECT and then either an INSERT or UPDATE
-                if (onDuplicate == ON_DUPLICATE_KEY_UPDATE) {
-                    insert.onDuplicateKeyUpdate(true);
-
-                    for (int i = 0; i < row.length; i++)
-                        if (i < fields.length && fields[i] != null && !primaryKey[i])
-                            addValueForUpdate0(insert, fields[i], row[i]);
-                }
 
                 // TODO: This can be implemented faster using a MERGE statement
                 // in some dialects
-                else if (onDuplicate == ON_DUPLICATE_KEY_IGNORE) {
+                if (onDuplicate == ON_DUPLICATE_KEY_IGNORE) {
                     SelectQuery<R> select = create.selectQuery(table);
 
                     for (int i = 0; i < row.length; i++)
@@ -507,36 +520,58 @@ class LoaderImpl<R extends TableRecord<R>> implements
                     }
                 }
 
+                buffered++;
+
+                if (insert == null)
+                    insert = create.insertQuery(table);
+
+                for (int i = 0; i < row.length; i++)
+                    if (i < fields.length && fields[i] != null)
+                        addValue0(insert, fields[i], row[i]);
+
+                // TODO: This is only supported by some dialects. Let other
+                // dialects execute a SELECT and then either an INSERT or UPDATE
+                if (onDuplicate == ON_DUPLICATE_KEY_UPDATE) {
+                    insert.onDuplicateKeyUpdate(true);
+
+                    for (int i = 0; i < row.length; i++)
+                        if (i < fields.length && fields[i] != null && !primaryKey[i])
+                            addValueForUpdate0(insert, fields[i], row[i]);
+                }
+
                 // Don't do anything. Let the execution fail
                 else if (onDuplicate == ON_DUPLICATE_KEY_ERROR) {}
 
                 try {
-                    if (batch == BATCH_NONE) {
-                        batched = 1;
-                        insert.execute();
-                        stored++;
-                        executed++;
-                    }
-                    else {
-                        if (bind == null)
-                            bind = create.batch(insert);
-
-                        batched++;
-                        bind.bind(insert.getBindValues().toArray());
-                    }
-
-                    if (batch == BATCH_AFTER) {
-                        if (processed % batchAfter == 0) {
-                            if (bind != null) {
-                                bind.execute();
-                                stored += batched;
-                                batched = 0;
-                                executed++;
-                                bind = null;
-                            }
+                    if (bulk != BULK_NONE) {
+                        if (bulk == BULK_ALL || processed % bulkAfter != 0) {
+                            insert.newRecord();
+                            continue rows;
                         }
                     }
 
+                    if (batch != BATCH_NONE) {
+                        if (bind == null)
+                            bind = create.batch(insert);
+
+                        bind.bind(insert.getBindValues().toArray());
+                        insert = null;
+
+                        if (batch == BATCH_ALL || processed % (bulkAfter * batchAfter) != 0)
+                            continue rows;
+                    }
+
+                    if (bind != null)
+                        bind.execute();
+                    else if (insert != null)
+                        insert.execute();
+
+                    stored += buffered;
+                    executed++;
+
+                    buffered = 0;
+                    bind = null;
+                    insert = null;
 
                     if (commit == COMMIT_AFTER)
                         if ((processed % batchAfter == 0) && ((processed / batchAfter) % commitAfter == 0))
@@ -544,36 +579,40 @@ class LoaderImpl<R extends TableRecord<R>> implements
                 }
                 catch (DataAccessException e) {
                     errors.add(new LoaderErrorImpl(e, row, processed - 1, insert));
-                    ignored += batched;
-                    batched = 0;
+                    ignored += buffered;
+                    buffered = 0;
 
                     if (onError == ON_ERROR_ABORT)
                         break execution;
                 }
 
-                // rowloop
+                // rows:
             }
 
             // Execute remaining batch
-            if (bind != null) {
+            if (buffered != 0) {
                 try {
-                    bind.execute();
-                    stored += batched;
-                    batched = 0;
+                    if (bind != null)
+                        bind.execute();
+                    if (insert != null)
+                        insert.execute();
+
+                    stored += buffered;
                     executed++;
-                    bind = null;
+
+                    buffered = 0;
                 }
                 catch (DataAccessException e) {
                     errors.add(new LoaderErrorImpl(e, row, processed - 1, insert));
-                    ignored += batched;
-                    batched = 0;
+                    ignored += buffered;
+                    buffered = 0;
                 }
 
                 if (onError == ON_ERROR_ABORT)
                     break execution;
             }
 
-            // executionBlock
+            // execution:
         }
 
         // Rollback on errors in COMMIT_ALL mode
@@ -590,9 +629,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
 
             // Commit remaining elements in COMMIT_AFTER mode
             else if (commit == COMMIT_AFTER) {
-                if ((processed % batchAfter != 0) || ((processed / batchAfter) % commitAfter != 0)) {
-                    commit();
-                }
+                commit();
             }
         }
         catch (DataAccessException e) {

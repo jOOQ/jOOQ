@@ -3340,8 +3340,28 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testCsvLoaderBatch() throws Exception {
-        new CsvLoaderTests(this).testCsvLoaderBatch();
+    public void testCsvLoaderBulkAll() throws Exception {
+        new CsvLoaderTests(this).testCsvLoaderBulkAll();
+    }
+
+    @Test
+    public void testCsvLoaderBulkAfter() throws Exception {
+        new CsvLoaderTests(this).testCsvLoaderBulkAfter();
+    }
+
+    @Test
+    public void testCsvLoaderBatchAll() throws Exception {
+        new CsvLoaderTests(this).testCsvLoaderBatchAll();
+    }
+
+    @Test
+    public void testCsvLoaderBatchAfter() throws Exception {
+        new CsvLoaderTests(this).testCsvLoaderBatchAfter();
+    }
+
+    @Test
+    public void testCsvLoaderBatchAndBulk() throws Exception {
+        new CsvLoaderTests(this).testCsvLoaderBatchAndBulk();
     }
 
     @Test

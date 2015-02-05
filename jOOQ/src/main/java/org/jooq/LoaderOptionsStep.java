@@ -54,11 +54,25 @@ import java.sql.Connection;
 /**
  * The <code>Loader</code> API is used for configuring data loads.
  * <p>
- * Add options to for the loading behaviour
+ * Add options to for the loading behaviour. For performance reasons, you can
+ * fine-tune three different types of measures:
+ * <ul>
+ * <li><strong>The bulk statement size</strong>. This specifies how many rows
+ * will be inserted in a single bulk statement / multi-row <code>INSERT</code>
+ * statement.</li>
+ * <li><strong>The batch statement size</strong>. This specifies how many bulk
+ * statements will be sent to the server as a single JDBC batch statement.</li>
+ * <li><strong>The commit size</strong>. This specifies how many batch
+ * statements will be committed in a single transaction.</li>
+ * </ul>
  *
  * @author Lukas Eder
  */
 public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourceStep<R> {
+
+    // -------------------------------------------------------------------------
+    // Duplicate handling
+    // -------------------------------------------------------------------------
 
     /**
      * Instruct the <code>Loader</code> to update duplicate records if the main
@@ -106,6 +120,10 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
     @Support
     LoaderOptionsStep<R> onDuplicateKeyError();
 
+    // -------------------------------------------------------------------------
+    // Error handling
+    // -------------------------------------------------------------------------
+
     /**
      * Instruct the <code>Loader</code> to ignore any errors that might occur
      * when inserting a record. The <code>Loader</code> will then skip the
@@ -132,8 +150,12 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
     @Support
     LoaderOptionsStep<R> onErrorAbort();
 
+    // -------------------------------------------------------------------------
+    // Commit strategy
+    // -------------------------------------------------------------------------
+
     /**
-     * Commit each loaded record or each batch.
+     * Commit each batch.
      * <p>
      * This is the same as calling {@link #commitAfter(int)} with <code>1</code>
      * as parameter.
@@ -156,8 +178,7 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
     LoaderOptionsStep<R> commitEach();
 
     /**
-     * Commit after a certain number of inserted records or after a certain
-     * number of batches.
+     * Commit after a certain number of batches.
      * <p>
      * With this clause, errors will never result in a rollback, even when you
      * specify {@link #onDuplicateKeyError()} or {@link #onErrorAbort()}
@@ -179,9 +200,9 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
     LoaderOptionsStep<R> commitAfter(int number);
 
     /**
-     * Commit only after inserting all records or batches. If this is used
-     * together with {@link #onDuplicateKeyError()} or {@link #onErrorAbort()},
-     * an abort will result in a rollback of previously loaded records.
+     * Commit only after inserting all batches. If this is used together with
+     * {@link #onDuplicateKeyError()} or {@link #onErrorAbort()}, an abort will
+     * result in a rollback of previously loaded records.
      * <p>
      * The COMMIT OPTIONS might be useful for fine-tuning performance behaviour
      * in some RDBMS, where large commits lead to a high level of concurrency in
@@ -212,8 +233,12 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
     @Support
     LoaderOptionsStep<R> commitNone();
 
+    // -------------------------------------------------------------------------
+    // Batch strategy
+    // -------------------------------------------------------------------------
+
     /**
-     * Batch all statements in one JDBC batch statement.
+     * Batch all bulk statements in one JDBC batch statement.
      * <p>
      * If {@link #commitEach()} or {@link #commitAfter(int)} are set, this will
      * force the <code>COMMIT</code> option to {@link #commitAll()}.
@@ -222,7 +247,7 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
     LoaderOptionsStep<R> batchAll();
 
     /**
-     * Do not batch statements.
+     * Do not batch bulk statements together.
      * <p>
      * If you don't specify a BATCH OPTION, this will be the default.
      */
@@ -230,15 +255,45 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
     LoaderOptionsStep<R> batchNone();
 
     /**
-     * Batch a given number of statements together.
-     * <p>
-     * If {@link #commitEach()} is set, each batch statement will be committed.
-     * If {@link #commitAfter(int)} is set, the given number of batch statements
-     * are committed.
+     * Batch a given number of bulk statements together.
      *
      * @param number The number of records that are batched together.
      */
     @Support
     LoaderOptionsStep<R> batchAfter(int number);
 
+    // -------------------------------------------------------------------------
+    // Bulk strategy
+    // -------------------------------------------------------------------------
+
+    /**
+     * Bulk-insert all rows in a single multi-row bulk statement.
+     * <p>
+     * If {@link #commitEach()} or {@link #commitAfter(int)} are set, this will
+     * force the <code>COMMIT</code> option to {@link #commitAll()}.
+     */
+    @Support
+    LoaderOptionsStep<R> bulkAll();
+
+    /**
+     * Do not bulk-insert rows in multi-row bulk statements.
+     * <p>
+     * If you don't specify a BULK OPTION, this will be the default.
+     */
+    @Support
+    LoaderOptionsStep<R> bulkNone();
+
+    /**
+     * Bulk-insert a given number of statements in a single multi-row bulk
+     * statement.
+     * <p>
+     * If {@link #commitEach()} is set, each bulk statement will be committed.
+     * If {@link #commitAfter(int)} is set, the given number of bulk statements
+     * are committed.
+     *
+     * @param number The number of records that are put together in one bulk
+     *            statement.
+     */
+    @Support
+    LoaderOptionsStep<R> bulkAfter(int number);
 }

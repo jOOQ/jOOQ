@@ -75,7 +75,10 @@ class FieldMapsForInsert extends AbstractQueryPart {
     @Override
     public final void accept(Context<?> ctx) {
         if (!isExecutable()) {
-            ctx.sql("[ no fields are inserted ]");
+            ctx.formatSeparator()
+               .start(INSERT_VALUES)
+               .keyword("default values")
+               .end(INSERT_VALUES);
         }
 
         // Single record inserts can use the standard syntax in any dialect

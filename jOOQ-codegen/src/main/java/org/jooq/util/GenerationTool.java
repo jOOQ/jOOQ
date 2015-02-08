@@ -496,7 +496,7 @@ public class GenerationTool {
 
         // [#2801]
         catch (ClassNotFoundException e) {
-            if (className.startsWith("org.jooq.util.")) {
+            if (className.startsWith("org.jooq.util.") && className.endsWith("Database")) {
                 log.warn("Licensing", "With jOOQ 3.2, licensing has changed, and your database may no longer be supported with jOOQ Open Source Edition. See http://www.jooq.org/licensing for details");
             }
 

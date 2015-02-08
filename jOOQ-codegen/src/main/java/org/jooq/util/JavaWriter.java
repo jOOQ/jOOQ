@@ -31,11 +31,17 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     private final Set<String>         qualifiedTypes   = new TreeSet<String>();
     private final Map<String, String> unqualifiedTypes = new TreeMap<String, String>();
     private final String              className;
+    private final boolean             isJava;
+    private final boolean             isScala;
+    private final Pattern             REF_PATTERN      = Pattern
+                                                           .compile("((?:[\\p{L}_$][\\p{L}\\p{N}_$]*\\.)*[\\p{L}_$][\\p{L}\\p{N}_$]*)((?:<.*>|\\[.*\\])*)"); ;
 
     public JavaWriter(File file, String fullyQualifiedTypes) {
         super(file);
 
         this.className = file.getName().replace(".java", "");
+        this.isJava = file.getName().endsWith(".java");
+        this.isScala = file.getName().endsWith(".scala");
         this.fullyQualifiedTypes = fullyQualifiedTypes == null ? null : Pattern.compile(fullyQualifiedTypes);
     }
 
@@ -97,8 +103,10 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     }
 
     public void printSerial() {
-        println();
-        println("\tprivate static final long serialVersionUID = %s;", SERIAL_STATEMENT);
+        if (isJava) {
+            println();
+            println("\tprivate static final long serialVersionUID = %s;", SERIAL_STATEMENT);
+        }
     }
 
     public void printImports() {
@@ -111,7 +119,10 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
 
         String previous = "";
         for (String imp : qualifiedTypes) {
-            if (imp.startsWith("java.lang."))
+
+            // [#4021] For Scala interoperability, we better also import
+            // java.lang types
+            if (isJava && imp.startsWith("java.lang."))
                 continue;
 
             String topLevelPackage = imp.split("\\.")[0];
@@ -121,7 +132,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
 
             importString.append("import ")
                         .append(imp)
-                        .append(";\n");
+                        .append(isScala ? "\n" : ";\n");
 
             previous = topLevelPackage;
         }
@@ -143,12 +154,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
 
                     // com.example.Table.TABLE.COLUMN (with keepSegments = 3)
                     if (fullyQualifiedTypes == null || !fullyQualifiedTypes.matcher(c).matches()) {
-
-                        // That's a unicode-safe \w, more or less:
-                        // - http://stackoverflow.com/a/4307261/521799
-                        // - http://stackoverflow.com/a/5205467/521799
-                        Pattern p = Pattern.compile("((?:[\\p{L}_$][\\p{L}\\p{N}_$]*\\.)*[\\p{L}_$][\\p{L}\\p{N}_$]*)((?:<.*>|\\[\\])*)");
-                        Matcher m = p.matcher(c);
+                        Matcher m = REF_PATTERN.matcher(c);
 
                         if (m.find()) {
 
@@ -167,10 +173,10 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
                             if (!className.equals(unqualifiedType) &&
                                (!unqualifiedTypes.containsKey(unqualifiedType) || qualifiedType.equals(unqualifiedTypes.get(unqualifiedType)))) {
 
-                            unqualifiedTypes.put(unqualifiedType, qualifiedType);
-                            qualifiedTypes.add(qualifiedType);
-                            c = remainder + m.group(2);
-                        }
+                                unqualifiedTypes.put(unqualifiedType, qualifiedType);
+                                qualifiedTypes.add(qualifiedType);
+                                c = remainder + m.group(2);
+                            }
                         }
                     }
                 }

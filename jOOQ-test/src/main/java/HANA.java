@@ -3,7 +3,6 @@ import java.util.Properties;
 
 import org.jooq.Configuration;
 import org.jooq.impl.DSL;
-import org.jooq.test.hana.generatedclasses.Routines;
 
 /**
  * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
@@ -65,9 +64,10 @@ public class HANA {
 
             System.out.println("Select");
             Configuration conf = DSL.using(cn).configuration();
-
+/*
             System.out.println(Routines.fOne(conf));
             System.out.println(DSL.using(conf).select(Routines.fOne()).fetchOne());
+            */
         } catch (Exception e) {
             e.printStackTrace();
         }

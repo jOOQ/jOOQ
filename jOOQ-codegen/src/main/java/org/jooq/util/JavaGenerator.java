@@ -56,7 +56,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -2146,7 +2145,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (scala) {
                 out.tab(1).println("def fetchBy%s(values : %s*) : %s[%s] = {", colClass, colType, List.class, pType);
-                out.tab(2).println("fetch(%s, values)", colIdentifier);
+                out.tab(2).println("fetch(%s, values:_*)", colIdentifier);
                 out.tab(1).println("}");
             }
             else {
@@ -2165,7 +2164,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.tab(1).javadoc("Fetch a unique record that has <code>%s = value</code>", colName);
 
                     if (scala) {
-                        out.tab(1).println("def fetchOneBy%s(value : %s) : %s = {", colClass, pType, colType);
+                        out.tab(1).println("def fetchOneBy%s(value : %s) : %s = {", colClass, colType, pType);
                         out.tab(2).println("fetchOne(%s, value)", colIdentifier);
                         out.tab(1).println("}");
                     }
@@ -2285,8 +2284,8 @@ public class JavaGenerator extends AbstractGenerator {
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
                 out.tab(1).println("private %s%s %s;",
                     generateImmutablePojos() ? "final " : "",
-                        StringUtils.rightPad(out.ref(getJavaType(column.getType(), Mode.POJO)), maxLength),
-                        getStrategy().getJavaMemberName(column, Mode.POJO));
+                    StringUtils.rightPad(out.ref(getJavaType(column.getType(), Mode.POJO)), maxLength),
+                    getStrategy().getJavaMemberName(column, Mode.POJO));
             }
         }
 
@@ -2298,9 +2297,24 @@ public class JavaGenerator extends AbstractGenerator {
             out.println();
 
             if (scala) {
-                out.tab(1).println("def this() = {", className);
-                out.tab(2).println("this([[%s]])", Collections.nCopies(getTypedElements(tableOrUDT).size(), "null"));
-                out.tab(1).println("}");
+
+                // [#3010] Invalid UDTs may have no attributes. Avoid generating this constructor in that case
+                int size = getTypedElements(tableOrUDT).size();
+                if (size > 0) {
+                    List<String> nulls = new ArrayList<String>();
+                    for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT))
+
+                        // Avoid ambiguities between a single-T-value constructor
+                        // and the copy constructor
+                        if (size == 1)
+                            nulls.add("null : " + out.ref(getJavaType(column.getType(), Mode.POJO)));
+                        else
+                            nulls.add("null");
+
+                    out.tab(1).println("def this() = {", className);
+                    out.tab(2).println("this([[%s]])", nulls);
+                    out.tab(1).println("}");
+                }
             }
             else {
                 out.tab(1).println("public %s() {}", className);
@@ -2347,7 +2361,7 @@ public class JavaGenerator extends AbstractGenerator {
         // [#3010] Invalid UDTs may have no attributes. Avoid generating this constructor in that case
         // [#3176] Avoid generating constructors for tables with more than 255 columns (Java's method argument limit)
         else if (getTypedElements(tableOrUDT).size() > 0 &&
-            getTypedElements(tableOrUDT).size() < 256) {
+                 getTypedElements(tableOrUDT).size() < 256) {
             out.println();
             out.tab(1).print("public %s(", className);
 

@@ -32,6 +32,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.springframework.version>4.1.2.RELEASE</org.springframework.version>
+        <scala.version>2.10.4</scala.version>
         <org.jooq.version>3.6.0-SNAPSHOT</org.jooq.version>
 
         <db.cubrid.version>9.2.0.0155</db.cubrid.version>
@@ -348,6 +349,9 @@
     </dependencies>
 
     <build>
+        <sourceDirectory>src/main/scala</sourceDirectory>
+        <testSourceDirectory>src/test/scala</testSourceDirectory>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -378,6 +382,21 @@
                         <Xlint:-varargs/>
                     </compilerArguments>
                 </configuration>
+            </plugin>
+
+            <!-- The Scala compiler plugin -->
+            <plugin>
+                <groupId>org.scala-tools</groupId>
+                <artifactId>maven-scala-plugin</artifactId>
+                <version>2.15.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <!-- We're using the properties plugin to load external properties into Maven.
@@ -4970,6 +4989,195 @@
                                         <target>
                                             <packageName>org.jooq.test.oracle.generatedclasses</packageName>
                                             <directory>./src/test/java</directory>
+                                        </target>
+                                    </generator>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>com.oracle</groupId>
+                                <artifactId>ojdbc6</artifactId>
+                                <version>${db.oracle.version}</version>
+                                <scope>system</scope>
+                                <systemPath>${basedir}/lib/ojdbc6.jar</systemPath>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+
+        <profile>
+            <id>codegen-oracle-scala</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-codegen-maven</artifactId>
+                        <version>${org.jooq.version}</version>
+
+                        <executions>
+                            <execution>
+                                <id>generate-oracle-scala</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+
+                                <configuration>
+                                    <jdbc>
+                                        <driver>${db.oracle.driver}</driver>
+                                        <url>${db.oracle.url}</url>
+                                        <user>${db.oracle.username}</user>
+                                        <password>${db.oracle.password}</password>
+                                    </jdbc>
+                                    <generator>
+                                        <name>org.jooq.util.ScalaGenerator</name>
+                                        <database>
+                                            <name>org.jooq.util.oracle.OracleDatabase</name>
+                                            <includes>.*</includes>
+                                            <excludes>T_BOOK_DETAILS|S_TRIGGERS_SEQUENCE|.*976.*|.*1358.*|U_SECOND_MAX</excludes>
+                                            <recordVersionFields>REC_VERSION</recordVersionFields>
+                                            <recordTimestampFields>REC_TIMESTAMP</recordTimestampFields>
+                                            <unsignedTypes>true</unsignedTypes>
+                                            <schemata>
+                                                <schema>
+                                                    <inputSchema>${db.oracle.schema}</inputSchema>
+                                                </schema>
+                                                <schema>
+                                                    <inputSchema>MULTI_SCHEMA</inputSchema>
+                                                </schema>
+                                            </schemata>
+
+                                            <customTypes>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_10</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_10_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_LC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_TF_LC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_UC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_TF_UC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_LC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YN_LC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_UC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YN_UC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_LC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YES_NO_LC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_UC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YES_NO_UC_Converter</converter>
+                                                </customType>
+
+                                                 <customType>
+                                                    <name>LocalDateTime</name>
+                                                    <type>java.time.LocalDateTime</type>
+                                                    <converter>org.jooq.test.all.converters.LocalDateTimeConverter</converter>
+                                                </customType>
+                                                
+                                                <customType>
+                                                    <name>Serializable</name>
+                                                    <type>java.io.Serializable</type>
+                                                    <binding>org.jooq.test.all.bindings.SerializedBinding</binding>
+                                                </customType>
+                                            </customTypes>
+
+                                            <forcedTypes>
+                                                <forcedType>
+                                                    <name>Serializable</name>
+                                                    <expression>JAVA_IO_SERIALIZABLE</expression>
+                                                    <types>BLOB</types>
+                                                </forcedType>
+                                            
+                                                <forcedType>
+                                                    <name>LocalDateTime</name>
+                                                    <expression>.*2155.*</expression>
+                                                    <types>DATE</types>
+                                                </forcedType>
+
+                                                <forcedType>
+                                                    <name>BOOLEAN</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.(VC|C|N)_BOOLEAN)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>UUID</name>
+                                                    <expression>(?i:(.*?.)?T_EXOTIC_TYPES.UU)</expression>
+                                                </forcedType>
+
+                                                <!-- [#2477] Check if unsigned types work correctly -->
+                                                <forcedType>
+                                                    <name>TINYINTUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_BYTE)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>SMALLINTUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_SHORT)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>INTEGERUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_INT)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>BIGINTUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_LONG)</expression>
+                                                </forcedType>
+
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_LC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.YES_NO_LC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_UC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.YES_NO_UC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_LC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.Y_N_LC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_UC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.Y_N_UC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_LC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.TRUE_FALSE_LC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_UC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.TRUE_FALSE_UC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_10</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.ONE_ZERO)</expression>
+                                                </forcedType>
+                                            </forcedTypes>
+                                        </database>
+                                        <generate>
+                                            <relations>true</relations>
+                                            <deprecated>true</deprecated>
+                                            <instanceFields>true</instanceFields>
+                                            <generatedAnnotation>false</generatedAnnotation>
+                                            <pojos>false</pojos>
+                                            <pojosEqualsAndHashCode>true</pojosEqualsAndHashCode>
+                                            <daos>true</daos>
+                                            <jpaAnnotations>true</jpaAnnotations>
+                                            <validationAnnotations>true</validationAnnotations>
+                                        </generate>
+                                        <target>
+                                            <packageName>org.jooq.test.oraclescala.generatedclasses</packageName>
+                                            <directory>./src/test/scala</directory>
                                         </target>
                                     </generator>
                                 </configuration>

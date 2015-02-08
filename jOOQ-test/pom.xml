@@ -95,7 +95,21 @@
             <artifactId>jaxen</artifactId>
             <version>1.1-beta-6</version>
         </dependency>
-        
+
+
+        <!-- Run Scala tests -->
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>${scala.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-compiler</artifactId>
+            <version>${scala.version}</version>
+            <scope>test</scope>
+        </dependency>
         
         
         <dependency>
@@ -179,6 +193,13 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.11</version>
+        </dependency>
+        <dependency>
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest_2.10</artifactId>
+            <version>2.1.7</version>
+            <type>jar</type>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.jmock</groupId>

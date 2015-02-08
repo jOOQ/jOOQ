@@ -382,6 +382,61 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
         return tableField;
     }
 
+    /**
+     * Subclasses may call this method to create {@link TableField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     */
+    protected final <T> TableField<R, T> createField(String name, DataType<T> type) {
+        return createField(name, type, this, null, null, null);
+    }
+
+    /**
+     * Subclasses may call this method to create {@link TableField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     */
+    protected final <T> TableField<R, T> createField(String name, DataType<T> type, String comment) {
+        return createField(name, type, this, comment, null, null);
+    }
+
+    /**
+     * Subclasses may call this method to create {@link TableField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     */
+    protected final <T, U> TableField<R, U> createField(String name, DataType<T> type, String comment, Converter<T, U> converter) {
+        return createField(name, type, this, comment, converter, null);
+    }
+
+    /**
+     * Subclasses may call this method to create {@link TableField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     */
+    protected final <T, U> TableField<R, U> createField(String name, DataType<T> type, String comment, Binding<T, U> binding) {
+        return createField(name, type, this, comment, null, binding);
+    }
+
+    /**
+     * Subclasses may call this method to create {@link TableField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     */
+    protected final <T, X, U> TableField<R, U> createField(String name, DataType<T> type, String comment, Converter<X, U> converter, Binding<T, X> binding) {
+        return createField(name, type, this, comment, converter, binding);
+    }
+
     // ------------------------------------------------------------------------
     // XXX: Other API
     // ------------------------------------------------------------------------

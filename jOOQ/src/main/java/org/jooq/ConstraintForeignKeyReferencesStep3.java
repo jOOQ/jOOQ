@@ -38,25 +38,27 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq.xtend
+package org.jooq;
+
+import javax.annotation.Generated;
 
 /**
+ * The step in the {@link Constraint} construction DSL API that allows for
+ * matching a <code>FOREIGN KEY</code> clause with a <code>REFERENCES</code>
+ * clause.
+ *
  * @author Lukas Eder
  */
-class GenerateAll {
-    def static void main(String[] args) {
-    	BetweenAndSteps::main(args);
-    	ScalaConversions::main(args);
-    	XtendConversions::main(args);
-    	DSLContext::main(args);
-    	DSL::main(args);
-    	Constraint::main(args);
-    	InsertDSL::main(args);
-    	MergeDSL::main(args);
-    	Records::main(args);
-    	Rows::main(args);
-    	SelectSeekStep::main(args);
-    	UpdateDSL::main(args);
-    	With::main(args);
-    }
+@Generated("This class was generated using jOOQ-tools")
+public interface ConstraintForeignKeyReferencesStep3<T1, T2, T3> {
+
+    /**
+     * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>.
+     */
+    ConstraintFinalStep references(String table, String field1, String field2, String field3);
+
+    /**
+     * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>.
+     */
+    ConstraintFinalStep references(Table<?> table, Field<T1> field1, Field<T2> field2, Field<T3> field3);
 }

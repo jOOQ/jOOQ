@@ -38,25 +38,27 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq.xtend
+package org.jooq;
+
+import javax.annotation.Generated;
 
 /**
+ * The step in the {@link Constraint} construction DSL API that allows for
+ * matching a <code>FOREIGN KEY</code> clause with a <code>REFERENCES</code>
+ * clause.
+ *
  * @author Lukas Eder
  */
-class GenerateAll {
-    def static void main(String[] args) {
-    	BetweenAndSteps::main(args);
-    	ScalaConversions::main(args);
-    	XtendConversions::main(args);
-    	DSLContext::main(args);
-    	DSL::main(args);
-    	Constraint::main(args);
-    	InsertDSL::main(args);
-    	MergeDSL::main(args);
-    	Records::main(args);
-    	Rows::main(args);
-    	SelectSeekStep::main(args);
-    	UpdateDSL::main(args);
-    	With::main(args);
-    }
+@Generated("This class was generated using jOOQ-tools")
+public interface ConstraintForeignKeyReferencesStep21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> {
+
+    /**
+     * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>.
+     */
+    ConstraintFinalStep references(String table, String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17, String field18, String field19, String field20, String field21);
+
+    /**
+     * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>.
+     */
+    ConstraintFinalStep references(Table<?> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21);
 }

@@ -1505,6 +1505,16 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testAlterTableAddConstraint_FOREIGN_KEY() throws Exception {
+        new DDLTests(this).testAlterTableAddConstraint_FOREIGN_KEY();
+    }
+
+    @Test
+    public void testAlterTableAddConstraint_FOREIGN_KEY_ON_CLAUSES() throws Exception {
+        new DDLTests(this).testAlterTableAddConstraint_FOREIGN_KEY_ON_CLAUSES();
+    }
+
+    @Test
     public void testAlterTableDropConstraint() throws Exception {
         new DDLTests(this).testAlterTableDropConstraint();
     }

@@ -117,6 +117,7 @@ class Splitter extends Generators {
                 && !canonicalPath.contains("jOOQ-parse")
                 && !canonicalPath.contains("\\target\\")
                 && !canonicalPath.contains("\\bin\\")
+                && !canonicalPath.contains("\\.idea\\")
                 
                 // Activate this when we change anything to the Sakila db
                 && !canonicalPath.contains("\\Sakila\\")

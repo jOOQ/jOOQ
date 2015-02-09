@@ -100,6 +100,7 @@ import org.jooq.CommonTableExpression;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
+import org.jooq.ConstraintTypeStep;
 import org.jooq.CreateIndexStep;
 import org.jooq.CreateSequenceFinalStep;
 import org.jooq.CreateTableAsStep;
@@ -4219,6 +4220,15 @@ public class DSL {
     @Support
     public static <R extends Record> DeleteWhereStep<R> delete(Table<R> table) {
         return using(new DefaultConfiguration()).delete(table);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX DDL Clauses
+    // -------------------------------------------------------------------------
+
+    @Support
+    public static ConstraintTypeStep constraint(String name) {
+        return new ConstraintImpl(name);
     }
 
     // -------------------------------------------------------------------------

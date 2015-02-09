@@ -66,6 +66,7 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.two;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeNotNull;
@@ -361,6 +362,35 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             fail();
         }
         catch (DataAccessException expected) {}
+    }
+
+    public void testDropConstraint() throws Exception {
+        try {
+            create().createTable("t").column("v", INTEGER).execute();
+
+            // TODO: Re-use jOOQ API for this
+            create().execute("alter table {0} add constraint {1} unique ({2})", name("t"), name("x"), name("v"));
+
+            assertThrows(DataAccessException.class, () -> {
+                create().insertInto(table(name("t")), field(name("v")))
+                        .values(1)
+                        .values(1)
+                        .execute();
+            });
+
+            create().alterTable("t").dropConstraint("x").execute();
+            assertEquals(2,
+            create().insertInto(table(name("t")), field(name("v")))
+                    .values(1)
+                    .values(1)
+                    .execute());
+
+            assertSame(asList(1, 1), create().fetch(table(name("t"))).getValues(0, int.class));
+        }
+
+        finally {
+            ignoreThrows(() -> create().dropTable("t").execute());
+        }
     }
 
     public void testDropTableIfExists() throws Exception {

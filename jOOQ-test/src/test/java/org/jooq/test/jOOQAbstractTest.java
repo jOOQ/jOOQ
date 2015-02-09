@@ -1455,6 +1455,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testDropConstraint() throws Exception {
+        new DDLTests(this).testDropConstraint();
+    }
+
+    @Test
     public void testCreateSequence() throws Exception {
         new DDLTests(this).testCreateSequence();
     }

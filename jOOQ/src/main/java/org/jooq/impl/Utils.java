@@ -296,6 +296,11 @@ final class Utils {
     static final String           DATA_LIST_ALREADY_INDENTED                   = "org.jooq.configuration.list-already-indented";
 
     /**
+     * [#3338] Whether a constraint is being dropped.
+     */
+    static final String           DATA_DROP_CONSTRAINT                         = "org.jooq.configuration.drop-constraint";
+
+    /**
      * [#2965] These are {@link ConcurrentHashMap}s containing caches for
      * reflection information.
      * <p>

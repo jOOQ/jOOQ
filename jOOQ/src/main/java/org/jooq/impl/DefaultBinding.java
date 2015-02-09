@@ -67,6 +67,7 @@ import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.impl.Utils.needsBackslashEscaping;
 import static org.jooq.tools.StringUtils.leftPad;
+import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
 import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
 import static org.jooq.tools.jdbc.JDBCUtils.wasNull;
 import static org.jooq.tools.reflect.Reflect.on;
@@ -2034,37 +2035,57 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     private static final <T> T pgGetArray(Scope ctx, ResultSet rs, Class<T> type, int index) throws SQLException {
 
         // Get the JDBC Array and check for null. If null, that's OK
-        Array array = rs.getArray(index);
-        if (array == null) {
-            return null;
-        }
-
-        // Try fetching a Java Object[]. That's gonna work for non-UDT types
+        Array array = null;
         try {
-            return (T) convertArray(rs.getArray(index), (Class<? extends Object[]>) type);
-        }
 
-        // This might be a UDT (not implemented exception...)
-        catch (Exception e) {
-            List<Object> result = new ArrayList<Object>();
-
-            // Try fetching the array as a JDBC ResultSet
-            try {
-                while (rs.next()) {
-                    DefaultBindingGetResultSetContext<T> out = new DefaultBindingGetResultSetContext<T>(ctx.configuration(), ctx.data(), rs, 2);
-                    new DefaultBinding<T, T>(new IdentityConverter<T>((Class<T>) type.getComponentType()), false).get(out);
-                    result.add(out.value());
-                }
-            }
-
-            // That might fail too, then we don't know any further...
-            catch (Exception fatal) {
-                log.error("Cannot parse Postgres array: " + rs.getString(index));
-                log.error(fatal);
+            array = rs.getArray(index);
+            if (array == null) {
                 return null;
             }
 
-            return (T) convertArray(result.toArray(), (Class<? extends Object[]>) type);
+            // Try fetching a Java Object[]. That's gonna work for non-UDT types
+            try {
+                return (T) convertArray(array, (Class<? extends Object[]>) type);
+            }
+
+            // This might be a UDT (not implemented exception...)
+            catch (Exception e) {
+                List<Object> result = new ArrayList<Object>();
+                ResultSet arrayRs = null;
+
+                // Try fetching the array as a JDBC ResultSet
+                try {
+                    arrayRs = array.getResultSet();
+
+                    while (arrayRs.next()) {
+                        DefaultBindingGetResultSetContext<T> out = new DefaultBindingGetResultSetContext<T>(ctx.configuration(), ctx.data(), arrayRs, 2);
+                        new DefaultBinding<T, T>(new IdentityConverter<T>((Class<T>) type.getComponentType()), false).get(out);
+                        result.add(out.value());
+                    }
+                }
+
+                // That might fail too, then we don't know any further...
+                catch (Exception fatal) {
+                    String string = null;
+                    try {
+                        string = rs.getString(index);
+                    }
+                    catch (SQLException ignore) {}
+
+                    log.error("Cannot parse array", string, fatal);
+                    return null;
+                }
+
+                finally {
+                    safeClose(arrayRs);
+                }
+
+                return (T) convertArray(result.toArray(), (Class<? extends Object[]>) type);
+            }
+        }
+
+        finally {
+            safeFree(array);
         }
     }
 

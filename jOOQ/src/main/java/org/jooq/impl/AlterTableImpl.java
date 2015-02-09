@@ -105,24 +105,44 @@ class AlterTableImpl extends AbstractQuery implements
     // ------------------------------------------------------------------------
 
     @Override
-    public final AlterTableImpl add(String field, DataType<?> type) {
-        return add((Field) field(name(field), type), type);
+    public final <T> AlterTableImpl add(Field<T> field, DataType<T> type) {
+        return addColumn(field, type);
     }
 
     @Override
-    public final <T> AlterTableImpl add(Field<T> field, DataType<T> type) {
+    public final AlterTableImpl add(String field, DataType<?> type) {
+        return addColumn(field, type);
+    }
+
+    @Override
+    public final AlterTableImpl addColumn(String field, DataType<?> type) {
+        return addColumn((Field) field(name(field), type), type);
+    }
+
+    @Override
+    public final <T> AlterTableImpl addColumn(Field<T> field, DataType<T> type) {
         add = field;
         addType = type;
         return this;
     }
 
     @Override
-    public final AlterTableImpl alter(String field) {
-        return alter(field(name(field)));
+    public final <T> AlterTableImpl alter(Field<T> field) {
+        return alterColumn(field);
     }
 
     @Override
-    public final <T> AlterTableImpl alter(Field<T> field) {
+    public final AlterTableImpl alter(String field) {
+        return alterColumn(field);
+    }
+
+    @Override
+    public final AlterTableImpl alterColumn(String field) {
+        return alterColumn(field(name(field)));
+    }
+
+    @Override
+    public final <T> AlterTableImpl alterColumn(Field<T> field) {
         alter = field;
         return this;
     }
@@ -145,12 +165,22 @@ class AlterTableImpl extends AbstractQuery implements
     }
 
     @Override
-    public final AlterTableImpl drop(String field) {
-        return drop(field(name(field)));
+    public final AlterTableImpl drop(Field<?> field) {
+        return dropColumn(field);
     }
 
     @Override
-    public final AlterTableImpl drop(Field<?> field) {
+    public final AlterTableImpl drop(String field) {
+        return dropColumn(field);
+    }
+
+    @Override
+    public final AlterTableImpl dropColumn(String field) {
+        return dropColumn(field(name(field)));
+    }
+
+    @Override
+    public final AlterTableImpl dropColumn(Field<?> field) {
         drop = field;
         return this;
     }

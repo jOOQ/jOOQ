@@ -69,6 +69,8 @@ public interface AlterTableStep {
     /**
      * Add an <code>ALTER COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
+     * <p>
+     * This is an alias for {@link #alterColumn(Field)}.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     <T> AlterTableAlterStep<T> alter(Field<T> field);
@@ -76,13 +78,31 @@ public interface AlterTableStep {
     /**
      * Add an <code>ALTER COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
+     * <p>
+     * This is an alias for {@link #alterColumn(String)}
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableAlterStep<Object> alter(String field);
 
     /**
+     * Add an <code>ALTER COLUMN</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    <T> AlterTableAlterStep<T> alterColumn(Field<T> field);
+
+    /**
+     * Add an <code>ALTER COLUMN</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    AlterTableAlterStep<Object> alterColumn(String field);
+
+    /**
      * Add an <code>ADD COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
+     * <p>
+     * This is an alias for {@link #addColumn(Field, DataType)}.
      */
     @Support
     <T> AlterTableFinalStep add(Field<T> field, DataType<T> type);
@@ -90,13 +110,31 @@ public interface AlterTableStep {
     /**
      * Add an <code>ADD COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
+     * <p>
+     * This is an alias for {@link #addColumn(String, DataType)}.
      */
     @Support
     AlterTableFinalStep add(String field, DataType<?> type);
 
     /**
+     * Add an <code>ADD COLUMN</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support
+    <T> AlterTableFinalStep addColumn(Field<T> field, DataType<T> type);
+
+    /**
+     * Add an <code>ADD COLUMN</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support
+    AlterTableFinalStep addColumn(String field, DataType<?> type);
+
+    /**
      * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
+     * <p>
+     * This is an alias for {@link #dropColumn(Field)}.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep drop(Field<?> field);
@@ -104,7 +142,23 @@ public interface AlterTableStep {
     /**
      * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
+     * <p>
+     * This is an alias for {@link #dropColumn(String)}.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep drop(String field);
+
+    /**
+     * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    AlterTableDropStep dropColumn(Field<?> field);
+
+    /**
+     * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    AlterTableDropStep dropColumn(String field);
 }

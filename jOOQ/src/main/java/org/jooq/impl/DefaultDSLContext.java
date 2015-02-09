@@ -1496,6 +1496,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> DeleteWhereStep<R> delete(Table<R> table) {
+        return deleteFrom(table);
+    }
+
+    @Override
+    public <R extends Record> DeleteWhereStep<R> deleteFrom(Table<R> table) {
         return new DeleteImpl<R>(configuration(), table);
     }
 

@@ -4536,12 +4536,20 @@ public interface DSLContext extends Scope {
      * Example: <code><pre>
      * DSLContext create = DSL.using(configuration);
      *
-     * create.delete(table)
+     * create.deleteFrom(table)
      *       .where(field1.greaterThan(100))
      *       .execute();
      * </pre></code>
      * <p>
      * Some but not all databases support aliased tables in delete statements.
+     */
+    @Support
+    <R extends Record> DeleteWhereStep<R> deleteFrom(Table<R> table);
+
+    /**
+     * Create a new DSL delete statement.
+     * <p>
+     * This is an alias for {@link #deleteFrom(Table)}
      */
     @Support
     <R extends Record> DeleteWhereStep<R> delete(Table<R> table);

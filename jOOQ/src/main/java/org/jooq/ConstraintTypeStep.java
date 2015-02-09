@@ -397,4 +397,10 @@ public interface ConstraintTypeStep extends ConstraintFinalStep {
      */
     @Support
     ConstraintFinalStep unique(Field<?>... fields);
+
+    /**
+     * Create a <code>CHECK</code> constraint.
+     */
+    @Support
+    ConstraintFinalStep check(Condition condition);
 }

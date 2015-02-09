@@ -643,8 +643,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                     // [#3214] Some PostgreSQL array type literals need explicit casting
                     if (family == POSTGRES && EnumType.class.isAssignableFrom(type.getComponentType())) {
-                        render.sql("::")
-                               .keyword(DefaultDataType.getDataType(family, type).getCastTypeName(render.configuration()));
+                        pgRenderEnumCast(render, type);
                     }
                 }
             }
@@ -673,40 +672,26 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // - UUID
             else {
                 render.sql("'")
-                       .sql(escape(val, render), true)
-                       .sql("'");
+                      .sql(escape(val, render), true)
+                      .sql("'");
             }
         }
 
         // In Postgres, some additional casting must be done in some cases...
         else if (family == SQLDialect.POSTGRES) {
 
-            // Postgres needs explicit casting for array types
-            if (type.isArray() && byte[].class != type) {
+            // Postgres needs explicit casting for enum (array) types
+            if (EnumType.class.isAssignableFrom(type) ||
+                (type.isArray() && EnumType.class.isAssignableFrom(type.getComponentType()))) {
+                render.sql(ctx.variable());
+                pgRenderEnumCast(render, type);
+            }
+
+            // ... and also for other array types
+            else if (type.isArray() && byte[].class != type) {
                 render.sql(ctx.variable());
                 render.sql("::");
                 render.keyword(DefaultDataType.getDataType(family, type).getCastTypeName(render.configuration()));
-            }
-
-            // ... and also for enum types
-            else if (EnumType.class.isAssignableFrom(type)) {
-                render.sql(ctx.variable());
-
-                // [#968] Don't cast "synthetic" enum types (note, val can be null!)
-                EnumType e = (EnumType) type.getEnumConstants()[0];
-                Schema schema = e.getSchema();
-
-                if (schema != null) {
-                    render.sql("::");
-
-                    schema = using(render.configuration()).map(schema);
-                    if (schema != null && TRUE.equals(render.configuration().settings().isRenderSchema())) {
-                        render.visit(schema);
-                        render.sql(".");
-                    }
-
-                    render.visit(name(e.getName()));
-                }
             }
 
             else {
@@ -2122,6 +2107,29 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
     private static final <T> void pgSetValue(UDTRecord<?> record, Field<T> field, String value) throws SQLException {
         record.setValue(field, pgFromString(field.getType(), value));
+    }
+
+    private static final void pgRenderEnumCast(RenderContext render, Class<?> type) {
+        Class<?> enumType = type.isArray() ? type.getComponentType() : type;
+
+        // [#968] Don't cast "synthetic" enum types (note, val can be null!)
+        EnumType e = (EnumType) enumType.getEnumConstants()[0];
+        Schema schema = e.getSchema();
+
+        if (schema != null) {
+            render.sql("::");
+
+            schema = using(render.configuration()).map(schema);
+            if (schema != null && TRUE.equals(render.configuration().settings().isRenderSchema())) {
+                render.visit(schema);
+                render.sql(".");
+            }
+
+            render.visit(name(e.getName()));
+        }
+
+        if (type.isArray())
+            render.sql("[]");
     }
 }
 

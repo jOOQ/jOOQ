@@ -1244,6 +1244,7 @@ public class PostgresTest extends jOOQAbstractTest<
         // [#2549] TODO: Re-enable this
         // Param<UCountry> val = val(UCountry.England);
         Param<UCountry> val = val(UCountry.England, UAddressType.COUNTRY.getDataType());
+        Param<UCountry[]> array = val(new UCountry[] { UCountry.England }, UAddressType.COUNTRY.getDataType().getArrayDataType());
 
         // [#2135] Be sure that all settings are applied to explicit casts to
         // PostgreSQL enum types
@@ -1263,6 +1264,23 @@ public class PostgresTest extends jOOQAbstractTest<
                    new MappedSchema().withInput("public")
                                      .withOutput("test")))).render(val));
 
+        // [#3778] Be sure that all settings are applied to explicit casts to
+        // PostgreSQL enum array types
+        assertEquals("ARRAY['England']::\"public\".\"u_country\"[]", create().renderInlined(array));
+        assertEquals("?::\"public\".\"u_country\"[]",
+            create().render(array));
+        assertEquals("?::\"u_country\"[]",
+            create(new Settings().withRenderSchema(false)).render(array));
+        assertEquals("?::PUBLIC.U_COUNTRY[]",
+            create(new Settings().withRenderNameStyle(RenderNameStyle.UPPER)).render(array));
+        assertEquals("?::\"u_country\"[]",
+            create(new Settings().withRenderMapping(
+                new RenderMapping().withDefaultSchema("public"))).render(array));
+        assertEquals("?::\"test\".\"u_country\"[]",
+            create(new Settings().withRenderMapping(
+                   new RenderMapping().withSchemata(
+                   new MappedSchema().withInput("public")
+                                     .withOutput("test")))).render(array));
 
     }
 
@@ -1626,5 +1644,4 @@ public class PostgresTest extends jOOQAbstractTest<
         assertEquals(0, (int) result.value7());
         assertEquals(0, (int) result.value8());
     }
-
 }

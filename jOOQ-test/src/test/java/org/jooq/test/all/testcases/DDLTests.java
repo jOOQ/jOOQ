@@ -403,6 +403,31 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
+    public void testAlterTableAddConstraint_CHECK() throws Exception {
+        try {
+            create().createTable("t").column("v", INTEGER).execute();
+
+            create().alterTable("t").add(constraint("c").check(field(name("v")).in(inline(1), inline(2)))).execute();
+
+            assertEquals(2,
+            create().insertInto(table(name("t")), field(name("v")))
+                    .values(1)
+                    .values(2)
+                    .execute());
+
+            assertThrows(DataAccessException.class, () -> {
+                create().insertInto(table(name("t")), field(name("v")))
+                        .values(3)
+                        .execute();
+            });
+
+        }
+
+        finally {
+            ignoreThrows(() -> create().dropTable("t").execute());
+        }
+    }
+
     public void testAlterTableAddConstraint_PRIMARY_KEY() throws Exception {
         try {
             create().createTable("t")

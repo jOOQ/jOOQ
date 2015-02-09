@@ -1495,6 +1495,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testAlterTableAddConstraint_CHECK() throws Exception {
+        new DDLTests(this).testAlterTableAddConstraint_CHECK();
+    }
+
+    @Test
     public void testAlterTableAddConstraint_UNIQUE() throws Exception {
         new DDLTests(this).testAlterTableAddConstraint_UNIQUE();
     }

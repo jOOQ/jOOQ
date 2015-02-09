@@ -1597,7 +1597,7 @@ public class PostgresTest extends jOOQAbstractTest<
     }
 
     @Test
-    public void testOracleOrderedAggregateFunctions() throws Exception {
+    public void testPostgresOrderedAggregateFunctions() throws Exception {
         Record8<BigDecimal, BigDecimal, Integer, Integer, Integer, Integer, Integer, Integer> result =
         create().select(
                     cumeDist(val(1)).withinGroupOrderBy(T_BOOK.ID.desc()),

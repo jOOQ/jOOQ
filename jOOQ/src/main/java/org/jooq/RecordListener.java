@@ -56,11 +56,6 @@ import java.util.EventListener;
  * <li>{@link UpdatableRecord#delete()}</li>
  * <li>{@link UpdatableRecord#refresh()}</li>
  * </ul>
- * <p>
- * As of jOOQ 3.2, the <code>RecordListener</code> API behaviour is not defined
- * for batch CRUD operations, such as
- * {@link DSLContext#batchStore(UpdatableRecord...)}. This will be corrected in
- * a future version of jOOQ [#2770].
  *
  * @author Lukas Eder
  */

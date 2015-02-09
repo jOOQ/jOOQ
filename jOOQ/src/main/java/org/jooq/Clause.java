@@ -49,6 +49,12 @@ package org.jooq;
 public enum Clause {
 
     // -------------------------------------------------------------------------
+    // Clauses used in a any type of statement to model constraint references
+    // -------------------------------------------------------------------------
+
+    CONSTRAINT,
+
+    // -------------------------------------------------------------------------
     // Clauses used in a any type of statement to model catalog references
     // -------------------------------------------------------------------------
 

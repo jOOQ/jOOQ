@@ -58,6 +58,8 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 
+import org.jooq.impl.DSL;
+
 
 /**
  * The step in the <code>ALTER TABLE</code> where the action can be decided.
@@ -124,6 +126,13 @@ public interface AlterTableStep {
     <T> AlterTableFinalStep addColumn(Field<T> field, DataType<T> type);
 
     /**
+     * Add an <code>ADD CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support
+    AlterTableFinalStep addConstraint(Constraint constraint);
+
+    /**
      * Add an <code>ADD COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
@@ -161,4 +170,20 @@ public interface AlterTableStep {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep dropColumn(String field);
+
+    /**
+     * Add a <code>DROP CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support
+    AlterTableFinalStep drop(Constraint constraint);
+
+    /**
+     * Add a <code>DROP CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     *
+     * @see DSL#constraint(String)
+     */
+    @Support
+    AlterTableFinalStep dropConstraint(String constraint);
 }

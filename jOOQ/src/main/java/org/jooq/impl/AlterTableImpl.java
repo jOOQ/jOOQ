@@ -53,6 +53,7 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.sql;
+import static org.jooq.impl.Utils.DATA_DROP_CONSTRAINT;
 import static org.jooq.impl.Utils.toSQLDDLTypeDeclaration;
 
 import org.jooq.AlterTableAlterStep;
@@ -61,6 +62,7 @@ import org.jooq.AlterTableFinalStep;
 import org.jooq.AlterTableStep;
 import org.jooq.Clause;
 import org.jooq.Configuration;
+import org.jooq.Constraint;
 import org.jooq.Context;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
@@ -86,13 +88,15 @@ class AlterTableImpl extends AbstractQuery implements
     private static final Clause[] CLAUSES          = { ALTER_TABLE };
 
     private final Table<?>        table;
-    private Field<?>              add;
-    private DataType<?>           addType;
-    private Field<?>              alter;
-    private DataType<?>           alterType;
-    private Field<?>              alterDefault;
-    private Field<?>              drop;
-    private boolean               dropCascade;
+    private Field<?>              addColumn;
+    private DataType<?>           addColumnType;
+    private Constraint            addConstraint;
+    private Field<?>              alterColumn;
+    private DataType<?>           alterColumnType;
+    private Field<?>              alterColumnDefault;
+    private Field<?>              dropColumn;
+    private boolean               dropColumnCascade;
+    private Constraint            dropConstraint;
 
     AlterTableImpl(Configuration configuration, Table<?> table) {
         super(configuration);
@@ -121,8 +125,14 @@ class AlterTableImpl extends AbstractQuery implements
 
     @Override
     public final <T> AlterTableImpl addColumn(Field<T> field, DataType<T> type) {
-        add = field;
-        addType = type;
+        addColumn = field;
+        addColumnType = type;
+        return this;
+    }
+
+    @Override
+    public final AlterTableImpl addConstraint(Constraint constraint) {
+        addConstraint = constraint;
         return this;
     }
 
@@ -143,13 +153,13 @@ class AlterTableImpl extends AbstractQuery implements
 
     @Override
     public final <T> AlterTableImpl alterColumn(Field<T> field) {
-        alter = field;
+        alterColumn = field;
         return this;
     }
 
     @Override
     public final AlterTableImpl set(DataType type) {
-        alterType = type;
+        alterColumnType = type;
         return this;
     }
 
@@ -160,7 +170,7 @@ class AlterTableImpl extends AbstractQuery implements
 
     @Override
     public final AlterTableImpl defaultValue(Field expression) {
-        alterDefault = expression;
+        alterColumnDefault = expression;
         return this;
     }
 
@@ -181,19 +191,30 @@ class AlterTableImpl extends AbstractQuery implements
 
     @Override
     public final AlterTableImpl dropColumn(Field<?> field) {
-        drop = field;
+        dropColumn = field;
         return this;
     }
 
     @Override
+    public final AlterTableImpl drop(Constraint constraint) {
+        dropConstraint = constraint;
+        return this;
+    }
+
+    @Override
+    public final AlterTableImpl dropConstraint(String constraint) {
+        return drop(DSL.constraint(constraint));
+    }
+
+    @Override
     public final AlterTableFinalStep cascade() {
-        dropCascade = true;
+        dropColumnCascade = true;
         return this;
     }
 
     @Override
     public final AlterTableFinalStep restrict() {
-        dropCascade = false;
+        dropColumnCascade = false;
         return this;
     }
 
@@ -207,7 +228,7 @@ class AlterTableImpl extends AbstractQuery implements
 
         /* [pro] xx
         xx xxx xxxxxx xxxxxxx xxxxxx xxxxx xx xxxxx xxxxxxx xxxxxxx xxx xx xxx xxx x xxxxx xxxxxx xx xx xxxx
-        xx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxxxx xx xxxxx x
+        xx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxxxxxxxxxx xx xxxxx x
             xxxxxxxxxxxxxxxxxxxxxxxxxxx
         x
         xxxx
@@ -224,7 +245,7 @@ class AlterTableImpl extends AbstractQuery implements
            .keyword("alter table").sql(" ").visit(table)
            .end(ALTER_TABLE_TABLE);
 
-        if (add != null) {
+        if (addColumn != null) {
             ctx.start(ALTER_TABLE_ADD)
                .sql(" ").keyword("add").sql(" ");
 
@@ -234,12 +255,12 @@ class AlterTableImpl extends AbstractQuery implements
             xx [/pro] */
 
             ctx.qualify(false)
-               .visit(add).sql(" ")
+               .visit(addColumn).sql(" ")
                .qualify(true);
 
-            toSQLDDLTypeDeclaration(ctx, addType);
+            toSQLDDLTypeDeclaration(ctx, addColumnType);
 
-            if (!addType.nullable()) {
+            if (!addColumnType.nullable()) {
                 ctx.sql(" ").keyword("not null");
             }
 
@@ -256,7 +277,12 @@ class AlterTableImpl extends AbstractQuery implements
 
             ctx.end(ALTER_TABLE_ADD);
         }
-        else if (alter != null) {
+
+        // TODO [#3338] Implement adding of constraints.
+        else if (addConstraint != null) {
+            throw new UnsupportedOperationException();
+        }
+        else if (alterColumn != null) {
             ctx.start(ALTER_TABLE_ALTER);
 
             switch (family) {
@@ -275,7 +301,7 @@ class AlterTableImpl extends AbstractQuery implements
                 case MYSQL:
                     // MySQL's CHANGE COLUMN clause has a mandatory RENAMING syntax...
                     ctx.sql(" ").keyword("change column")
-                       .sql(" ").qualify(false).visit(alter).qualify(true);
+                       .sql(" ").qualify(false).visit(alterColumn).qualify(true);
                     break;
 
                 default:
@@ -285,10 +311,10 @@ class AlterTableImpl extends AbstractQuery implements
 
             ctx.sql(" ")
                .qualify(false)
-               .visit(alter)
+               .visit(alterColumn)
                .qualify(true);
 
-            if (alterType != null) {
+            if (alterColumnType != null) {
                 switch (family) {
                     /* [pro] xx
                     xxxx xxxx
@@ -302,13 +328,13 @@ class AlterTableImpl extends AbstractQuery implements
                 }
 
                 ctx.sql(" ");
-                toSQLDDLTypeDeclaration(ctx, alterType);
+                toSQLDDLTypeDeclaration(ctx, alterColumnType);
 
-                if (!alterType.nullable()) {
+                if (!alterColumnType.nullable()) {
                     ctx.sql(" ").keyword("not null");
                 }
             }
-            else if (alterDefault != null) {
+            else if (alterColumnDefault != null) {
                 ctx.start(ALTER_TABLE_ALTER_DEFAULT);
 
                 switch (family) {
@@ -323,13 +349,13 @@ class AlterTableImpl extends AbstractQuery implements
                         break;
                 }
 
-                ctx.sql(" ").visit(alterDefault)
+                ctx.sql(" ").visit(alterColumnDefault)
                    .end(ALTER_TABLE_ALTER_DEFAULT);
             }
 
             ctx.end(ALTER_TABLE_ALTER);
         }
-        else if (drop != null) {
+        else if (dropColumn != null) {
             ctx.start(ALTER_TABLE_DROP);
 
             switch (family) {
@@ -351,7 +377,7 @@ class AlterTableImpl extends AbstractQuery implements
 
             ctx.sql(" ")
                .qualify(false)
-               .visit(drop)
+               .visit(dropColumn)
                .qualify(true);
 
             switch (family) {
@@ -365,10 +391,22 @@ class AlterTableImpl extends AbstractQuery implements
                     break;
             }
 
-            if (dropCascade) {
+            if (dropColumnCascade) {
                 ctx.sql(" ").keyword("cascade");
             }
 
+            ctx.end(ALTER_TABLE_DROP);
+        }
+        else if (dropConstraint != null) {
+            ctx.start(ALTER_TABLE_DROP);
+            ctx.data(DATA_DROP_CONSTRAINT, true);
+
+            ctx.sql(" ")
+               .keyword("drop")
+               .sql(" ")
+               .visit(dropConstraint);
+
+            ctx.data().remove(DATA_DROP_CONSTRAINT);
             ctx.end(ALTER_TABLE_DROP);
         }
     }
@@ -378,8 +416,8 @@ class AlterTableImpl extends AbstractQuery implements
         xxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
         xxxxxx xxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxx xxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxx xxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxx xxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxx xxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
         xx xxxxxxx xxxxx xxxxxxxxxxx xxxx xxx xxxxxx xx x xxxxxxxxxxx xxxx xxx xxx xxxxxx
         xx               xxxxxxxxxx xxxxxxxxx xx xxxx xx

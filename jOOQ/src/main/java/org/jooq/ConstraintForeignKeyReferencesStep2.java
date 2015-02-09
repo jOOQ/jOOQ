@@ -42,6 +42,8 @@ package org.jooq;
 
 import javax.annotation.Generated;
 
+import org.jooq.Support;
+
 /**
  * The step in the {@link Constraint} construction DSL API that allows for
  * matching a <code>FOREIGN KEY</code> clause with a <code>REFERENCES</code>
@@ -55,10 +57,12 @@ public interface ConstraintForeignKeyReferencesStep2<T1, T2> {
     /**
      * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>.
      */
+    @Support
     ConstraintFinalStep references(String table, String field1, String field2);
 
     /**
      * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>.
      */
+    @Support
     ConstraintFinalStep references(Table<?> table, Field<T1> field1, Field<T2> field2);
 }

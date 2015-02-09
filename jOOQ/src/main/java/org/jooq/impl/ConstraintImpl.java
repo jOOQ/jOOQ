@@ -54,6 +54,7 @@ import static org.jooq.impl.Utils.fieldsByName;
 import javax.annotation.Generated;
 
 import org.jooq.Clause;
+import org.jooq.Condition;
 import org.jooq.ConstraintForeignKeyOnStep;
 import org.jooq.ConstraintForeignKeyReferencesStep1;
 import org.jooq.ConstraintForeignKeyReferencesStep10;
@@ -136,6 +137,7 @@ implements
     private Field<?>[]            references;
     private Action                onDelete;
     private Action                onUpdate;
+    private Condition             check;
 
     ConstraintImpl(String name) {
         this.name = name(name);
@@ -198,6 +200,15 @@ implements
                     ctx.sql(" ").keyword("on update")
                        .sql(" ").keyword(onUpdate.sql);
             }
+            else if (check != null) {
+                ctx.sql(" ")
+                   .keyword("check")
+                   .sql(" (")
+                   .qualify(false)
+                   .visit(check)
+                   .qualify(qualify)
+                   .sql(")");
+            }
         }
     }
 
@@ -209,6 +220,12 @@ implements
     @Override
     public final ConstraintImpl unique(Field<?>... fields) {
         unique = fields;
+        return this;
+    }
+
+    @Override
+    public final ConstraintImpl check(Condition condition) {
+        check = condition;
         return this;
     }
 

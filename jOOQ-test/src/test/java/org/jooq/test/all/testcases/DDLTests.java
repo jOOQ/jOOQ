@@ -58,6 +58,7 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.impl.DSL.constraint;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
@@ -364,12 +365,72 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         catch (DataAccessException expected) {}
     }
 
-    public void testDropConstraint() throws Exception {
+    public void testAlterTableAddConstraint_UNIQUE() throws Exception {
+        try {
+            create().createTable("t")
+                    .column("v1", INTEGER)
+                    .column("v2", INTEGER)
+                    .column("v3", INTEGER)
+                    .execute();
+
+            create().alterTable("t").add(constraint("u1").unique("v1")).execute();
+            create().alterTable("t").add(constraint("u2").unique("v2", "v3")).execute();
+
+            assertEquals(2,
+            create().insertInto(table(name("t")), field(name("v1")), field(name("v2")), field(name("v3")))
+                    .values(1, 1, 1)
+                    .values(2, 1, 2)
+                    .execute());
+
+            // Violating u1
+            assertThrows(DataAccessException.class, () -> {
+                create().insertInto(table(name("t")), field(name("v1")), field(name("v2")), field(name("v3")))
+                        .values(1, 2, 3)
+                        .execute();
+            });
+
+            // Violating u2
+            assertThrows(DataAccessException.class, () -> {
+                create().insertInto(table(name("t")), field(name("v1")), field(name("v2")), field(name("v3")))
+                        .values(3, 1, 2)
+                        .execute();
+            });
+        }
+
+        finally {
+            ignoreThrows(() -> create().dropTable("t").execute());
+        }
+    }
+
+    public void testAlterTableAddConstraint_PRIMARY_KEY() throws Exception {
+        try {
+            create().createTable("t")
+                    .column("v", INTEGER)
+                    .execute();
+
+            create().alterTable("t").add(constraint("pk").unique("v")).execute();
+
+            assertEquals(2,
+            create().insertInto(table(name("t")), field(name("v")))
+                    .values(1)
+                    .values(2)
+                    .execute());
+
+            assertThrows(DataAccessException.class, () -> {
+                create().insertInto(table(name("t")), field(name("v")))
+                        .values(1)
+                        .execute();
+            });
+        }
+
+        finally {
+            ignoreThrows(() -> create().dropTable("t").execute());
+        }
+    }
+    public void testAlterTableDropConstraint() throws Exception {
         try {
             create().createTable("t").column("v", INTEGER).execute();
-
-            // TODO: Re-use jOOQ API for this
-            create().execute("alter table {0} add constraint {1} unique ({2})", name("t"), name("x"), name("v"));
+            create().alterTable("t").add(constraint("x").unique("v")).execute();
 
             assertThrows(DataAccessException.class, () -> {
                 create().insertInto(table(name("t")), field(name("v")))

@@ -131,7 +131,7 @@ class AlterTableImpl extends AbstractQuery implements
     }
 
     @Override
-    public final AlterTableImpl addConstraint(Constraint constraint) {
+    public final AlterTableImpl add(Constraint constraint) {
         addConstraint = constraint;
         return this;
     }
@@ -277,10 +277,15 @@ class AlterTableImpl extends AbstractQuery implements
 
             ctx.end(ALTER_TABLE_ADD);
         }
-
-        // TODO [#3338] Implement adding of constraints.
         else if (addConstraint != null) {
-            throw new UnsupportedOperationException();
+            ctx.start(ALTER_TABLE_ADD);
+
+            ctx.sql(" ")
+               .keyword("add")
+               .sql(" ")
+               .visit(addConstraint);
+
+            ctx.end(ALTER_TABLE_ADD);
         }
         else if (alterColumn != null) {
             ctx.start(ALTER_TABLE_ALTER);

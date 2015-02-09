@@ -41,34 +41,10 @@
 package org.jooq;
 
 /**
- * The step in the {@link Constraint} construction DSL API that allows for
- * specifying the constraint type.
+ * The final step in the {@link Constraint} construction DSL API.
  *
  * @author Lukas Eder
  */
-public interface ConstraintTypeStep extends ConstraintFinalStep {
+public interface ConstraintFinalStep extends Constraint {
 
-    /**
-     * Create a <code>UNIQUE</code> constraint.
-     */
-    @Support
-    ConstraintFinalStep unique(String... fields);
-
-    /**
-     * Create a <code>UNIQUE</code> constraint.
-     */
-    @Support
-    ConstraintFinalStep unique(Field<?>... fields);
-
-    /**
-     * Create a <code>PRIMARY KEY</code> constraint.
-     */
-    @Support
-    ConstraintFinalStep primaryKey(String... fields);
-
-    /**
-     * Create a <code>PRIMARY KEY</code> constraint.
-     */
-    @Support
-    ConstraintFinalStep primaryKey(Field<?>... fields);
 }

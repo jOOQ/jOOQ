@@ -1455,11 +1455,6 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testDropConstraint() throws Exception {
-        new DDLTests(this).testDropConstraint();
-    }
-
-    @Test
     public void testCreateSequence() throws Exception {
         new DDLTests(this).testCreateSequence();
     }
@@ -1497,6 +1492,21 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testAlterTableDrop() throws Exception {
         new DDLTests(this).testAlterTableDrop();
+    }
+
+    @Test
+    public void testAlterTableAddConstraint_UNIQUE() throws Exception {
+        new DDLTests(this).testAlterTableAddConstraint_UNIQUE();
+    }
+
+    @Test
+    public void testAlterTableAddConstraint_PRIMARY_KEY() throws Exception {
+        new DDLTests(this).testAlterTableAddConstraint_PRIMARY_KEY();
+    }
+
+    @Test
+    public void testAlterTableDropConstraint() throws Exception {
+        new DDLTests(this).testAlterTableDropConstraint();
     }
 
     @Test

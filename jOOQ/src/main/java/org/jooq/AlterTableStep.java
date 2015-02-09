@@ -130,7 +130,7 @@ public interface AlterTableStep {
      * statement.
      */
     @Support
-    AlterTableFinalStep addConstraint(Constraint constraint);
+    AlterTableFinalStep add(Constraint constraint);
 
     /**
      * Add an <code>ADD COLUMN</code> clause to the <code>ALTER TABLE</code>

@@ -43,10 +43,12 @@ package org.jooq.impl;
 import static org.jooq.Clause.CONSTRAINT;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Utils.DATA_DROP_CONSTRAINT;
+import static org.jooq.impl.Utils.fieldsByName;
 
 import org.jooq.Clause;
 import org.jooq.ConstraintTypeStep;
 import org.jooq.Context;
+import org.jooq.Field;
 import org.jooq.Name;
 
 /**
@@ -61,6 +63,8 @@ class ConstraintImpl extends AbstractQueryPart implements ConstraintTypeStep {
     private static final Clause[] CLAUSES          = { CONSTRAINT };
 
     private final Name            name;
+    private Field<?>[]            unique;
+    private Field<?>[]            primaryKey;
 
     ConstraintImpl(String name) {
         this.name = name(name);
@@ -78,7 +82,48 @@ class ConstraintImpl extends AbstractQueryPart implements ConstraintTypeStep {
            .visit(name);
 
         if (ctx.data(DATA_DROP_CONSTRAINT) == null) {
-            // TODO [#3338] Implement adding of constraints.
+            boolean qualify = ctx.qualify();
+
+            if (unique != null) {
+                ctx.sql(" ")
+                   .keyword("unique")
+                   .sql(" (")
+                   .qualify(false)
+                   .visit(new QueryPartList<Field<?>>(unique))
+                   .qualify(qualify)
+                   .sql(")");
+            }
+            else if (primaryKey != null) {
+                ctx.sql(" ")
+                   .keyword("primary key")
+                   .sql(" (")
+                   .qualify(false)
+                   .visit(new QueryPartList<Field<?>>(primaryKey))
+                   .qualify(qualify)
+                   .sql(")");
+            }
         }
+    }
+
+    @Override
+    public final ConstraintImpl unique(String... fields) {
+        return unique(fieldsByName(fields));
+    }
+
+    @Override
+    public final ConstraintImpl unique(Field<?>... fields) {
+        unique = fields;
+        return this;
+    }
+
+    @Override
+    public final ConstraintImpl primaryKey(String... fields) {
+        return primaryKey(fieldsByName(fields));
+    }
+
+    @Override
+    public final ConstraintImpl primaryKey(Field<?>... fields) {
+        primaryKey = fields;
+        return this;
     }
 }

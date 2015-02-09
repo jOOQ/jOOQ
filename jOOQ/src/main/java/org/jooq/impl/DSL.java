@@ -4209,17 +4209,27 @@ public class DSL {
      *
      * // [...]
      *
-     * delete(table)
+     * deleteFrom(table)
      *   .where(field1.greaterThan(100))
      * </pre></code>
      * <p>
      * Some but not all databases support aliased tables in delete statements.
      *
-     * @see DSLContext#delete(Table)
+     * @see DSLContext#deleteFrom(Table)
+     */
+    @Support
+    public static <R extends Record> DeleteWhereStep<R> deleteFrom(Table<R> table) {
+        return using(new DefaultConfiguration()).deleteFrom(table);
+    }
+
+    /**
+     * Create a new DSL delete statement.
+     * <p>
+     * This is an alias for {@link #deleteFrom(Table)}
      */
     @Support
     public static <R extends Record> DeleteWhereStep<R> delete(Table<R> table) {
-        return using(new DefaultConfiguration()).delete(table);
+        return using(new DefaultConfiguration()).deleteFrom(table);
     }
 
     // -------------------------------------------------------------------------

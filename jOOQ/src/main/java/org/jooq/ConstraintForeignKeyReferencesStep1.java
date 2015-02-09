@@ -58,11 +58,11 @@ public interface ConstraintForeignKeyReferencesStep1<T1> {
      * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>.
      */
     @Support
-    ConstraintFinalStep references(String table, String field1);
+    ConstraintForeignKeyOnStep references(String table, String field1);
 
     /**
      * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>.
      */
     @Support
-    ConstraintFinalStep references(Table<?> table, Field<T1> field1);
+    ConstraintForeignKeyOnStep references(Table<?> table, Field<T1> field1);
 }

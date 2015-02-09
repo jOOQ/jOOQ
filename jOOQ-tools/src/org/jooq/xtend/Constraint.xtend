@@ -172,13 +172,13 @@ class Constraint extends Generators {
                  * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>.
                  */
                 @Support
-                ConstraintFinalStep references(String table, «XXXn(degree, "String field")»);
+                ConstraintForeignKeyOnStep references(String table, «XXXn(degree, "String field")»);
             
                 /**
                  * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>.
                  */
                 @Support
-                ConstraintFinalStep references(Table<?> table, «Field_TN_fieldn(degree)»);
+                ConstraintForeignKeyOnStep references(Table<?> table, «Field_TN_fieldn(degree)»);
             }
             ''');
              

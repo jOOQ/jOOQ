@@ -627,17 +627,17 @@ class Expression<T> extends AbstractFunction<T> {
                 op = "#";
             }
 
-            ctx.sql("(");
+            ctx.sql('(');
             ctx.visit(lhs);
 
             for (Field<?> field : rhs) {
-                ctx.sql(" ")
+                ctx.sql(' ')
                    .sql(op)
-                   .sql(" ")
+                   .sql(' ')
                    .visit(field);
             }
 
-            ctx.sql(")");
+            ctx.sql(')');
         }
     }
 }

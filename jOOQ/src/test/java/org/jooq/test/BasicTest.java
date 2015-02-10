@@ -894,9 +894,9 @@ public class BasicTest extends AbstractTest {
             @Override
             public void toSQL(RenderContext ctx) {
                 if (ctx.paramType() == INLINED) {
-                    ctx.sql("1");
+                    ctx.sql('1');
                 } else {
-                    ctx.sql("?");
+                    ctx.sql('?');
                 }
             }
 

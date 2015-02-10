@@ -101,7 +101,7 @@ class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
     public final void accept(Context<?> ctx) {
         ctx.start(ALTER_SEQUENCE_SEQUENCE)
            .keyword("alter sequence")
-           .sql(" ").visit(sequence)
+           .sql(' ').visit(sequence)
            .end(ALTER_SEQUENCE_SEQUENCE)
            .start(ALTER_SEQUENCE_RESTART);
 
@@ -113,11 +113,11 @@ class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
                 xxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxx xxxx
             xxxx
             xx [/pro] */
-                ctx.sql(" ").keyword("restart");
+                ctx.sql(' ').keyword("restart");
         }
         else {
-            ctx.sql(" ").keyword("restart with")
-               .sql(" ").sql(with.toString());
+            ctx.sql(' ').keyword("restart with")
+               .sql(' ').sql(with.toString());
         }
 
         ctx.end(ALTER_SEQUENCE_RESTART);

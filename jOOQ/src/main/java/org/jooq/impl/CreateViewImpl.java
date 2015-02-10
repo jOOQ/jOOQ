@@ -107,17 +107,17 @@ class CreateViewImpl<R extends Record> extends AbstractQuery implements
 
         ctx.start(CREATE_VIEW_NAME)
            .keyword("create view")
-           .sql(" ")
+           .sql(' ')
            .visit(view);
 
         if (rename && renameSupported) {
             boolean qualify = ctx.qualify();
 
-            ctx.sql("(")
+            ctx.sql('(')
                .qualify(false)
                .visit(new QueryPartList<Field<?>>(fields))
                .qualify(qualify)
-               .sql(")");
+               .sql(')');
         }
 
         ctx.end(CREATE_VIEW_NAME)

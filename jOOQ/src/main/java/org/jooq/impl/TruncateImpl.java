@@ -119,7 +119,7 @@ class TruncateImpl<R extends Record> extends AbstractQuery implements
             // All other dialects do
             default: {
                 ctx.start(TRUNCATE_TRUNCATE)
-                   .keyword("truncate table").sql(" ")
+                   .keyword("truncate table").sql(' ')
                    .visit(table);
 
                 /* [pro] xx

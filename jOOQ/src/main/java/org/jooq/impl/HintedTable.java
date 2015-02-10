@@ -79,9 +79,9 @@ class HintedTable<R extends Record> extends AbstractTable<R> {
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(delegate)
-           .sql(" ").keyword(keywords)
+           .sql(' ').keyword(keywords)
            .sql(" (").visit(arguments)
-           .sql(")");
+           .sql(')');
     }
 
     @Override

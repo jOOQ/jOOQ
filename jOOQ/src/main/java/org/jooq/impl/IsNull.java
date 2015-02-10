@@ -68,7 +68,7 @@ class IsNull extends AbstractCondition {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(field).sql(" ").keyword(isNull ? "is null" : "is not null");
+        ctx.visit(field).sql(' ').keyword(isNull ? "is null" : "is not null");
     }
 
     @Override

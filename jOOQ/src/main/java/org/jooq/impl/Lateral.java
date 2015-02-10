@@ -84,7 +84,7 @@ class Lateral<R extends Record> extends AbstractTable<R> {
     @Override
     public final void accept(Context<?> ctx) {
         ctx.keyword("lateral")
-           .sql(" ")
+           .sql(' ')
            .visit(table);
     }
 

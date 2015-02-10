@@ -144,7 +144,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
 
         if (mappedSchema != null) {
             ctx.visit(mappedSchema);
-            ctx.sql(".");
+            ctx.sql('.');
         }
 
         ctx.visit(DSL.name(getName()));

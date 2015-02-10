@@ -132,11 +132,11 @@ class RowInCondition extends AbstractCondition {
         @Override
         public final void accept(Context<?> ctx) {
             ctx.visit(left)
-               .sql(" ")
+               .sql(' ')
                .keyword(comparator.toSQL())
                .sql(" (")
                .visit(right)
-               .sql(")");
+               .sql(')');
         }
 
         @Override

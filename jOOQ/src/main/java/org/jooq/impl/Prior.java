@@ -101,7 +101,7 @@ class Prior<T> extends AbstractField<T> {
             xx [/pro] */
             case CUBRID:
             default:
-                ctx.keyword("prior").sql(" ").visit(field);
+                ctx.keyword("prior").sql(' ').visit(field);
                 break;
         }
     }

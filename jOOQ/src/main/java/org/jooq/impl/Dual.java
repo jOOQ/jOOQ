@@ -125,7 +125,7 @@ class Dual extends AbstractTable<Record> {
                     break;
 
                 case HSQLDB:
-                    ctx.sql("(").sql(DUAL_HSQLDB).sql(") as dual");
+                    ctx.sql('(').sql(DUAL_HSQLDB).sql(") as dual");
                     break;
 
                 case CUBRID:
@@ -163,7 +163,7 @@ class Dual extends AbstractTable<Record> {
                 xx [/pro] */
                 case DERBY:
                     ctx.literal("SYSIBM")
-                       .sql(".")
+                       .sql('.')
                        .literal("SYSDUMMY1");
                     break;
 

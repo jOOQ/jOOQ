@@ -80,7 +80,7 @@ class CreateSequenceImpl extends AbstractQuery implements
     public final void accept(Context<?> ctx) {
         ctx.start(CREATE_SEQUENCE_SEQUENCE)
            .keyword("create sequence")
-           .sql(" ")
+           .sql(' ')
            .visit(sequence);
 
         /* [pro] xx

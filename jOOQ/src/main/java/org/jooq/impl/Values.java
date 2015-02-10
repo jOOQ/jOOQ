@@ -156,7 +156,7 @@ class Values<R extends Record> extends AbstractTable<R> {
                 boolean firstRow = true;
                 for (Row row : rows) {
                     if (!firstRow) {
-                        ctx.sql(",").formatSeparator();
+                        ctx.sql(',').formatSeparator();
                     }
 
                     ctx.visit(row);

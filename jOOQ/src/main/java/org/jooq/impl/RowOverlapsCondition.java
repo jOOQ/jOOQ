@@ -152,10 +152,10 @@ class RowOverlapsCondition<T1, T2> extends AbstractCondition {
 
         @Override
         public final void accept(Context<?> ctx) {
-            ctx.sql("(").visit(left)
-               .sql(" ").keyword("overlaps")
-               .sql(" ").visit(right)
-               .sql(")");
+            ctx.sql('(').visit(left)
+               .sql(' ').keyword("overlaps")
+               .sql(' ').visit(right)
+               .sql(')');
         }
 
         @Override

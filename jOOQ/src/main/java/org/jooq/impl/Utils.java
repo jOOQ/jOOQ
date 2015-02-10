@@ -2662,7 +2662,7 @@ final class Utils {
 
         if (type.hasLength()) {
             if (type.length() > 0) {
-                ctx.keyword(typeName).sql("(").sql(type.length()).sql(")");
+                ctx.keyword(typeName).sql('(').sql(type.length()).sql(')');
             }
 
             // Some databases don't allow for length-less VARCHAR, VARBINARY types
@@ -2678,10 +2678,10 @@ final class Utils {
         }
         else if (type.hasPrecision() && type.precision() > 0) {
             if (type.hasScale()) {
-                ctx.keyword(typeName).sql("(").sql(type.precision()).sql(", ").sql(type.scale()).sql(")");
+                ctx.keyword(typeName).sql('(').sql(type.precision()).sql(", ").sql(type.scale()).sql(')');
             }
             else {
-                ctx.keyword(typeName).sql("(").sql(type.precision()).sql(")");
+                ctx.keyword(typeName).sql('(').sql(type.precision()).sql(')');
             }
         }
         else {

@@ -472,7 +472,7 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     final void accept0(Context<?> ctx) {
         ctx.start(UPDATE_UPDATE)
            .keyword("update")
-           .sql(" ")
+           .sql(' ')
            .declareTables(true)
            .visit(getInto())
            .declareTables(false)
@@ -498,7 +498,7 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         ctx.formatSeparator()
            .start(UPDATE_SET)
            .keyword("set")
-           .sql(" ");
+           .sql(' ');
 
         // A multi-row update was specified
         if (multiRow != null) {
@@ -524,7 +524,7 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                     select = select(multiValue.fields());
                 }
 
-                ctx.sql("(")
+                ctx.sql('(')
                    .formatIndentStart()
                    .formatNewLine()
                    .subquery(true)
@@ -532,7 +532,7 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                    .subquery(false)
                    .formatIndentEnd()
                    .formatNewLine()
-                   .sql(")");
+                   .sql(')');
             }
 
             ctx.end(UPDATE_SET_ASSIGNMENT);
@@ -560,7 +560,7 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
                 if (!from.isEmpty()) {
                     ctx.formatSeparator()
-                       .keyword("from").sql(" ")
+                       .keyword("from").sql(' ')
                        .declareTables(true)
                        .visit(from)
                        .declareTables(false);
@@ -574,7 +574,7 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
         if (!(getWhere() instanceof TrueCondition)) {
             ctx.formatSeparator()
-               .keyword("where").sql(" ")
+               .keyword("where").sql(' ')
                .visit(getWhere());
         }
 

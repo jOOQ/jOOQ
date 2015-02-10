@@ -92,7 +92,7 @@ class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements Ta
 
         if (ctx.qualify()) {
             ctx.visit(table);
-            ctx.sql(".");
+            ctx.sql('.');
         }
 
         ctx.literal(getName());

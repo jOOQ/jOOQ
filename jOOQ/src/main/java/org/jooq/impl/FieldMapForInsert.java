@@ -68,7 +68,7 @@ class FieldMapForInsert extends AbstractQueryPartMap<Field<?>, Field<?>> {
     public final void accept(Context<?> ctx) {
         boolean indent = (size() > 1);
 
-        ctx.sql("(");
+        ctx.sql('(');
 
         if (indent) {
             ctx.formatIndentStart();
@@ -91,13 +91,13 @@ class FieldMapForInsert extends AbstractQueryPartMap<Field<?>, Field<?>> {
                .formatNewLine();
         }
 
-        ctx.sql(")");
+        ctx.sql(')');
     }
 
     final void toSQLReferenceKeys(Context<?> ctx) {
         boolean indent = (size() > 1);
 
-        ctx.sql("(");
+        ctx.sql('(');
 
         if (indent) {
             ctx.formatIndentStart();
@@ -126,7 +126,7 @@ class FieldMapForInsert extends AbstractQueryPartMap<Field<?>, Field<?>> {
                .formatNewLine();
         }
 
-        ctx.sql(")");
+        ctx.sql(')');
     }
 
     @Override

@@ -203,7 +203,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                .visit(AbstractStoreQuery.this)
                .formatIndentEnd()
                .formatNewLine()
-               .sql(")");
+               .sql(')');
         }
     }
 
@@ -216,7 +216,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 case POSTGRES:
                     ctx.formatSeparator()
                        .keyword("returning")
-                       .sql(" ")
+                       .sql(' ')
                        .visit(returning);
                     break;
 

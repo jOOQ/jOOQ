@@ -72,9 +72,9 @@ class WithTable<R extends Record> extends AbstractTable<R> {
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(delegate)
-           .sql(" ").keyword("with")
+           .sql(' ').keyword("with")
            .sql(" (").sql(hint)
-           .sql(")");
+           .sql(')');
     }
 
     @Override

@@ -93,7 +93,7 @@ class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart implement
                .visit(delegate(ctx.configuration()))
                .formatIndentEnd()
                .formatNewLine()
-               .sql(")");
+               .sql(')');
         }
         else {
             ctx.keyword(quantifier.toSQL())
@@ -105,7 +105,7 @@ class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart implement
                .formatIndentEnd()
                .formatNewLine()
                .subquery(false)
-               .sql(")");
+               .sql(')');
         }
     }
 

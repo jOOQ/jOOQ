@@ -198,7 +198,7 @@ implements
             xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
 
         xx [/pro] */
-        context.sql("(");
+        context.sql('(');
 
         String separator = "";
         for (Field<?> field : fields.fields) {
@@ -208,7 +208,7 @@ implements
             separator = ", ";
         }
 
-        context.sql(")");
+        context.sql(')');
     }
 
     @Override

@@ -442,7 +442,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         }
 
         toSQLCall(context);
-        context.sql("(");
+        context.sql('(');
 
         String separator = "";
         for (Parameter<?> parameter : getParameters()) {
@@ -479,7 +479,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             separator = ", ";
         }
 
-        context.sql(")");
+        context.sql(')');
         toSQLEnd(context);
     }
 
@@ -545,7 +545,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         x
 
         xx [/pro] */
-        context.sql("?");
+        context.sql('?');
     }
 
     private final void toSQLInParam(RenderContext context, Parameter<?> parameter, Field<?> value) {
@@ -565,7 +565,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         if (context.qualify()) {
             if (mappedSchema != null) {
                 context.visit(mappedSchema);
-                context.sql(".");
+                context.sql('.');
             }
 
             /* [pro] xx
@@ -578,7 +578,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             xx [/pro] */
             if (getPackage() != null) {
                 context.visit(getPackage());
-                context.sql(".");
+                context.sql('.');
             }
         }
 

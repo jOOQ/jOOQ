@@ -86,7 +86,7 @@ class FieldMapsForInsert extends AbstractQueryPart {
             ctx.formatSeparator()
                .start(INSERT_VALUES)
                .keyword("values")
-               .sql(" ")
+               .sql(' ')
                .visit(insertMaps.get(0))
                .end(INSERT_VALUES);
         }
@@ -133,7 +133,7 @@ class FieldMapsForInsert extends AbstractQueryPart {
                     ctx.formatSeparator()
                        .start(INSERT_VALUES)
                        .keyword("values")
-                       .sql(" ");
+                       .sql(' ');
                     toSQL92Values(ctx);
                     ctx.end(INSERT_VALUES);
 

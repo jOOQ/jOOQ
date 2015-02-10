@@ -79,7 +79,7 @@ class ExistsCondition extends AbstractCondition {
            .formatIndentEnd()
            .formatNewLine()
            .subquery(subquery)
-           .sql(")");
+           .sql(')');
     }
 
     @Override

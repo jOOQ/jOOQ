@@ -131,7 +131,7 @@ class RowIsNull extends AbstractCondition {
         @Override
         public final void accept(Context<?> ctx) {
             ctx.visit(row)
-               .sql(" ")
+               .sql(' ')
                .keyword(isNull ? "is null" : "is not null");
         }
 

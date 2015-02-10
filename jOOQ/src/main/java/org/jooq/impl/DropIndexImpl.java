@@ -107,10 +107,10 @@ class DropIndexImpl extends AbstractQuery implements
     }
 
     private void accept0(Context<?> ctx) {
-        ctx.keyword("drop index").sql(" ");
+        ctx.keyword("drop index").sql(' ');
 
         if (ifExists && supportsIfExists(ctx))
-            ctx.keyword("if exists").sql(" ");
+            ctx.keyword("if exists").sql(' ');
 
         ctx.visit(name(index));
     }

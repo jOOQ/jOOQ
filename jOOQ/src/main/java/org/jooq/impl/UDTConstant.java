@@ -124,7 +124,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
 
     private void toSQLInline(RenderContext context) {
         context.sql(getInlineConstructor(context));
-        context.sql("(");
+        context.sql('(');
 
         String separator = "";
         for (Field<?> field : value.fields()) {
@@ -133,7 +133,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
             separator = ", ";
         }
 
-        context.sql(")");
+        context.sql(')');
     }
 
     private String getInlineConstructor(RenderContext context) {

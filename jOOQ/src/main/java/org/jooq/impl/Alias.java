@@ -136,9 +136,9 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
                 Select<Record> select =
                     select(list(field("*"))).from(((Table<?>) wrapped).as(alias));
 
-                context.sql("(").formatIndentStart().formatNewLine()
+                context.sql('(').formatIndentStart().formatNewLine()
                        .visit(select).formatIndentEnd().formatNewLine()
-                       .sql(")");
+                       .sql(')');
             }
 
             // [#1801] Some databases do not support "derived column names".
@@ -181,9 +181,9 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
                 );
 
-                context.sql("(").formatIndentStart().formatNewLine()
+                context.sql('(').formatIndentStart().formatNewLine()
                        .visit(select).formatIndentEnd().formatNewLine()
-                       .sql(")");
+                       .sql(')');
             }
 
             // The default behaviour
@@ -194,7 +194,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
             // [#291] some aliases cause trouble, if they are not explicitly marked using "as"
             toSQLAs(context);
 
-            context.sql(" ");
+            context.sql(' ');
             context.literal(alias);
 
             // [#1801] Add field aliases to the table alias, if applicable
@@ -219,9 +219,9 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
                         if (context.declareTables() && o instanceof ArrayTable) {
                             ArrayTable table = (ArrayTable) o;
 
-                            context.sql("(");
+                            context.sql('(');
                             Utils.fieldNames(context, table.fields());
-                            context.sql(")");
+                            context.sql(')');
                         }
 
                         break;
@@ -243,7 +243,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
     static void toSQLAs(Context<?> context) {
         if (asList(DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES).contains(context.family())) {
-            context.sql(" ").keyword("as");
+            context.sql(' ').keyword("as");
         }
     }
 
@@ -256,7 +256,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
     private void toSQLDerivedColumnList(Context<?> context) {
         String separator = "";
 
-        context.sql("(");
+        context.sql('(');
 
         for (int i = 0; i < fieldAliases.length; i++) {
             context.sql(separator);
@@ -265,7 +265,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
             separator = ", ";
         }
 
-        context.sql(")");
+        context.sql(')');
     }
 
     @Override

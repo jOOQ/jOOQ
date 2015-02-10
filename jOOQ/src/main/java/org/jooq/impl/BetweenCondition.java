@@ -147,12 +147,12 @@ class BetweenCondition<T> extends AbstractCondition implements BetweenAndStep<T>
         @Override
         public final void accept(Context<?> ctx) {
                            ctx.visit(field);
-            if (not)       ctx.sql(" ").keyword("not");
-                           ctx.sql(" ").keyword("between");
-            if (symmetric) ctx.sql(" ").keyword("symmetric");
-                           ctx.sql(" ").visit(minValue);
-                           ctx.sql(" ").keyword("and");
-                           ctx.sql(" ").visit(maxValue);
+            if (not)       ctx.sql(' ').keyword("not");
+                           ctx.sql(' ').keyword("between");
+            if (symmetric) ctx.sql(' ').keyword("symmetric");
+                           ctx.sql(' ').visit(minValue);
+                           ctx.sql(' ').keyword("and");
+                           ctx.sql(' ').visit(maxValue);
         }
 
         @Override

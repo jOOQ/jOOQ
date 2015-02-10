@@ -190,13 +190,13 @@ class CaseConditionStepImpl<T> extends AbstractFunction<T> implements CaseCondit
                     ctx.formatNewLine();
                 }
 
-                ctx.sql(" ").keyword("when").sql(" ").visit(conditions.get(i))
-                   .sql(" ").keyword("then").sql(" ").visit(results.get(i));
+                ctx.sql(' ').keyword("when").sql(' ').visit(conditions.get(i))
+                   .sql(' ').keyword("then").sql(' ').visit(results.get(i));
             }
 
             if (otherwise != null) {
                 ctx.formatNewLine()
-                   .sql(" ").keyword("else").sql(" ").visit(otherwise);
+                   .sql(' ').keyword("else").sql(' ').visit(otherwise);
             }
 
             ctx.formatIndentLockEnd();
@@ -205,7 +205,7 @@ class CaseConditionStepImpl<T> extends AbstractFunction<T> implements CaseCondit
                 ctx.formatSeparator();
             }
             else {
-                ctx.sql(" ");
+                ctx.sql(' ');
             }
 
             ctx.keyword("end")

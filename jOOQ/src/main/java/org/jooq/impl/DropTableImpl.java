@@ -127,15 +127,15 @@ class DropTableImpl extends AbstractQuery implements
 
     private void accept0(Context<?> ctx) {
         ctx.start(DROP_TABLE_TABLE)
-           .keyword("drop table").sql(" ");
+           .keyword("drop table").sql(' ');
 
         if (ifExists && supportsIfExists(ctx))
-            ctx.keyword("if exists").sql(" ");
+            ctx.keyword("if exists").sql(' ');
 
         ctx.visit(table);
 
         if (cascade) {
-            ctx.sql(" ").keyword("cascade");
+            ctx.sql(' ').keyword("cascade");
         }
 
         ctx.end(DROP_TABLE_TABLE);

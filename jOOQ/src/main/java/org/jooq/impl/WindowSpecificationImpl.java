@@ -97,7 +97,7 @@ class WindowSpecificationImpl extends AbstractQueryPart implements
             }
             else {
                 ctx.sql(glue)
-                       .keyword("partition by").sql(" ")
+                       .keyword("partition by").sql(' ')
                        .visit(partitionBy);
 
                 glue = " ";
@@ -106,7 +106,7 @@ class WindowSpecificationImpl extends AbstractQueryPart implements
 
         if (!orderBy.isEmpty()) {
             ctx.sql(glue)
-                   .keyword("order by").sql(" ")
+                   .keyword("order by").sql(' ')
                    .visit(orderBy);
 
             glue = " ";
@@ -114,13 +114,13 @@ class WindowSpecificationImpl extends AbstractQueryPart implements
 
         if (rowsStart != null) {
             ctx.sql(glue);
-            ctx.keyword("rows").sql(" ");
+            ctx.keyword("rows").sql(' ');
 
             if (rowsEnd != null) {
-                ctx.keyword("between").sql(" ");
+                ctx.keyword("between").sql(' ');
                 toSQLRows(ctx, rowsStart);
 
-                ctx.sql(" ").keyword("and").sql(" ");
+                ctx.sql(' ').keyword("and").sql(' ');
                 toSQLRows(ctx, rowsEnd);
             }
             else {
@@ -140,11 +140,11 @@ class WindowSpecificationImpl extends AbstractQueryPart implements
         }
         else if (rows < 0) {
             ctx.sql(-rows);
-            ctx.sql(" ").keyword("preceding");
+            ctx.sql(' ').keyword("preceding");
         }
         else if (rows > 0) {
             ctx.sql(rows);
-            ctx.sql(" ").keyword("following");
+            ctx.sql(' ').keyword("following");
         }
         else {
             ctx.keyword("current row");

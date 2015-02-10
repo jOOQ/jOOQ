@@ -7836,7 +7836,7 @@ public class DSL {
      * <code><pre>concat([field], repeat([character], [length] - length([field])))</pre></code>
      * <p>
      * In {@link SQLDialect#SQLITE}, this is simulated as such:
-     * <code><pre>[field] || replace(replace(substr(quote(zeroblob(([length] + 1) / 2)), 3, ([length] - length([field]))), '''', ''), '0', [character])</pre></code>
+     * <code><pre>[field] || replace(replace(substr(quote(zeroblob(([length] + 1) / 2)), 3, ([length] - length([field]))), '\''', ''), '0', [character])</pre></code>
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> rpad(Field<String> field, Field<? extends Number> length, Field<String> character) {
@@ -7897,7 +7897,7 @@ public class DSL {
      * <code><pre>concat(repeat([character], [length] - length([field])), [field])</pre></code>
      * <p>
      * In {@link SQLDialect#SQLITE}, this is simulated as such:
-     * <code><pre>replace(replace(substr(quote(zeroblob(([length] + 1) / 2)), 3, ([length] - length([field]))), '''', ''), '0', [character]) || [field]</pre></code>
+     * <code><pre>replace(replace(substr(quote(zeroblob(([length] + 1) / 2)), 3, ([length] - length([field]))), '\''', ''), '0', [character]) || [field]</pre></code>
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> lpad(Field<String> field, Field<? extends Number> length, Field<String> character) {

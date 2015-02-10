@@ -211,18 +211,18 @@ class RowCondition extends AbstractCondition {
 
             // Some dialects do not support != comparison with rows
             if (comparator == NOT_EQUALS && asList().contains(ctx.configuration().dialect().family())) {
-                ctx.keyword("not").sql("(")
+                ctx.keyword("not").sql('(')
                    .visit(left).sql(" = ").visit(right)
-                   .sql(")");
+                   .sql(')');
             }
             else {
                 // Some databases need extra parentheses around the RHS
                 boolean extraParentheses = asList().contains(ctx.configuration().dialect().family());
 
                 ctx.visit(left)
-                   .sql(" ")
+                   .sql(' ')
                    .sql(comparator.toSQL())
-                   .sql(" ")
+                   .sql(' ')
                    .sql(extraParentheses ? "(" : "")
                    .visit(right)
                    .sql(extraParentheses ? ")" : "");

@@ -458,6 +458,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         try {
             create().createTable("t1").column("v", INTEGER).execute();
             create().createTable("t2").column("w", INTEGER).execute();
+            create().alterTable("t1").add(constraint("pk").primaryKey("v")).execute();
 
             assertEquals(1,
             create().insertInto(table(name("t1")), field(name("v")))

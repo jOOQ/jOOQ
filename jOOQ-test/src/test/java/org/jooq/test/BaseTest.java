@@ -997,16 +997,11 @@ public abstract class BaseTest<
      * Reflection helper
      */
     @SuppressWarnings("unchecked")
-    protected <R> R invoke(Class<?> clazz, String methodName, Object... parameters) throws Exception {
-        return (R) invoke0(clazz, clazz, methodName, parameters);
-    }
-
-    /**
-     * Reflection helper
-     */
-    @SuppressWarnings("unchecked")
     protected <R> R  invoke(Object object, String methodName, Object... parameters) throws Exception {
-        return (R) invoke0(object.getClass(), object, methodName, parameters);
+        if (object instanceof Class<?>)
+            return (R) invoke0((Class<?>) object, object, methodName, parameters);
+        else
+            return (R) invoke0(object.getClass(), object, methodName, parameters);
     }
 
     /**

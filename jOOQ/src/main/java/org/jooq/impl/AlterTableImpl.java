@@ -433,22 +433,26 @@ class AlterTableImpl extends AbstractQuery implements
             x xxxx
             x xxxxxxxxx xxxxxxxxxxx x xxxxx
             x xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx
-            x xxxxxxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxx x xxxxxxxxxxxx x xxxx
-            x xxxxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxx x xxxx xx x xxxxxxxxxxxx x xxx xxxxxxxxxxxxx
+            x xxxxxxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxx
+            x xxxxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxxx
             x xxxx
             x xxxxx xxxxxxxxxxx xx xxx xxxxx
             x xxxxxxxxx
-            x xxx  xxx xxxxxxxx x xxxxxx xxxxx x x xxxxxxxxxxxx x x xxxx xxxxxxxxxx x x xxxxxxxxxxxx
+            x xxx  xxx xxxxxxxx x xxxxxx xxxxx x x xxx x x xxxx xxxxxxxxxx x x xxxxxxxxxxxx
             x xxx  xxxxxxx xxxxxxxxxxxxx xxxxxxxxx
             x xxxx
-            x xxx  xxx xxxxxxxx x xxxxxx xxxxx x x xxxxxxxxxxxx x x xxx xxxxxxxxxx x x xxxxxxxxxxx x x xxxxxxx xx x xxxxxxxxxxxxxxxxxxx x xx xxx x x xxxxxxxxxxxx x xxx
+            x xxx  xxx xxxxxxxx x xxxxxx xxxxx x x xxx x x xxx xxxxxxxxxx x x xxxxxxxxxxx x x xxxxxxx x x xxx x x xxx x x xxxx
             x xxx  xxxxxxx xxxxxxxxxxxxx xxxxxxxxx
             x xxxxxxx
             x xxxxxxxx
             x xxxxxxxxx
-            x xxx  xxx xxxxxxxx x xxxxxx xxxxx x x xxxxxxxxxxxx x x xxx xxxxxxx xx x xxxxxxxxxxxxxxxxxxx x xx xxx x x xxxxxxxxxxxx x xxx
+            x xxx  xxx xxxxxxxx x xxxxxx xxxxx x x xxx x x xxx xxxxxxx x x xxx x x xxx x x xxxx
             x xxx  xxxxxxx xxxxxxxxxxxxx xxxxxxxxx
             x xxxxxxx
+
+            x xxxxxxxxxxxxxxxxxxxx
+            x xxxxxxxxxxxxxxxxxxxx
+            x xxxxxxxxxxxxxxxxxxxxxxxxxxx
         xxx
     x
     xx [/pro] */

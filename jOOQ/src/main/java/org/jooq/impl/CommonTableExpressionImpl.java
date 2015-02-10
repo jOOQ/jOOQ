@@ -95,7 +95,7 @@ class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R> imple
     public final void accept(Context<?> ctx) {
         if (ctx.declareCTE()) {
             ctx.visit(name)
-               .sql(" ")
+               .sql(' ')
                .keyword("as")
                .sql(" (")
                .formatIndentStart()
@@ -103,7 +103,7 @@ class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R> imple
                .visit(select)
                .formatIndentEnd()
                .formatNewLine()
-               .sql(")");
+               .sql(')');
         }
         else {
             ctx.visit(DSL.name(name.name));

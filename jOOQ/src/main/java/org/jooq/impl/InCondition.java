@@ -101,7 +101,7 @@ class InCondition<T> extends AbstractCondition {
                 case SQLSERVER:
                 /* [/pro] */
                 case FIREBIRD: {
-                    ctx.sql("(")
+                    ctx.sql('(')
                        .formatIndentStart()
                        .formatNewLine();
 
@@ -113,12 +113,12 @@ class InCondition<T> extends AbstractCondition {
                             if (comparator == Comparator.IN) {
                                 ctx.formatSeparator()
                                    .keyword("or")
-                                   .sql(" ");
+                                   .sql(' ');
                             }
                             else {
                                 ctx.formatSeparator()
                                    .keyword("and")
-                                   .sql(" ");
+                                   .sql(' ');
                             }
                         }
 
@@ -127,7 +127,7 @@ class InCondition<T> extends AbstractCondition {
 
                     ctx.formatIndentEnd()
                        .formatNewLine()
-                       .sql(")");
+                       .sql(')');
                     break;
                 }
 
@@ -148,7 +148,7 @@ class InCondition<T> extends AbstractCondition {
      */
     private void toSQLSubValues(Context<?> ctx, List<Field<?>> subValues) {
         ctx.visit(field)
-           .sql(" ")
+           .sql(' ')
            .keyword(comparator.toSQL())
            .sql(" (");
 
@@ -171,6 +171,6 @@ class InCondition<T> extends AbstractCondition {
                .formatNewLine();
         }
 
-        ctx.sql(")");
+        ctx.sql(')');
     }
 }

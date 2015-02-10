@@ -110,7 +110,7 @@ class DeleteQueryImpl<R extends Record> extends AbstractQuery implements DeleteQ
         boolean declare = ctx.declareTables();
 
         ctx.start(DELETE_DELETE)
-           .keyword("delete").sql(" ");
+           .keyword("delete").sql(' ');
 
         // [#2464] MySQL supports a peculiar multi-table DELETE syntax for aliased tables:
         // DELETE t1 FROM my_table AS t1
@@ -121,11 +121,11 @@ class DeleteQueryImpl<R extends Record> extends AbstractQuery implements DeleteQ
             if (getFrom() instanceof TableAlias ||
                (getFrom() instanceof TableImpl && ((TableImpl<R>)getFrom()).getAliasedTable() != null)) {
                 ctx.visit(getFrom())
-                   .sql(" ");
+                   .sql(' ');
             }
         }
 
-        ctx.keyword("from").sql(" ")
+        ctx.keyword("from").sql(' ')
            .declareTables(true)
            .visit(getFrom())
            .declareTables(declare)
@@ -134,7 +134,7 @@ class DeleteQueryImpl<R extends Record> extends AbstractQuery implements DeleteQ
 
         if (!(getWhere() instanceof TrueCondition)) {
             ctx.formatSeparator()
-               .keyword("where").sql(" ")
+               .keyword("where").sql(' ')
                .visit(getWhere());
         }
 

@@ -138,7 +138,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
 
                 if (mappedSchema != null) {
                     ctx.visit(mappedSchema);
-                    ctx.sql(".");
+                    ctx.sql('.');
                 }
             }
 
@@ -150,9 +150,9 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
                 if (ctx.family() == FIREBIRD && parameters.length == 0)
                     ctx.visit(new QueryPartList<Field<?>>(parameters));
                 else
-                    ctx.sql("(")
+                    ctx.sql('(')
                        .visit(new QueryPartList<Field<?>>(parameters))
-                       .sql(")");
+                       .sql(')');
             }
         }
     }

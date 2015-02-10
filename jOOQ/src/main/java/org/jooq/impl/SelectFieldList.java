@@ -68,7 +68,7 @@ class SelectFieldList extends QueryPartList<Field<?>> {
 
     @Override
     protected void toSQLEmptyList(Context<?> ctx) {
-        ctx.sql("*");
+        ctx.sql('*');
     }
 
     @Override

@@ -125,7 +125,7 @@ class Dual extends AbstractTable<Record> {
                     break;
 
                 case HSQLDB:
-                    ctx.sql("(").sql(DUAL_HSQLDB).sql(") as dual");
+                    ctx.sql('(').sql(DUAL_HSQLDB).sql(") as dual");
                     break;
 
                 case CUBRID:
@@ -136,17 +136,17 @@ class Dual extends AbstractTable<Record> {
                 // for queries like SELECT 1 WHERE 1 = 1
                 /* [pro] */
                 case ACCESS:
-                    ctx.sql("(").sql(DUAL_ACCESS).sql(") as dual");
+                    ctx.sql('(').sql(DUAL_ACCESS).sql(") as dual");
                     break;
 
                 case DB2:
                     ctx.literal("SYSIBM")
-                       .sql(".")
+                       .sql('.')
                        .literal("DUAL");
                     break;
 
                 case INFORMIX:
-                    ctx.sql("(").sql(DUAL_INFORMIX).sql(") as dual");
+                    ctx.sql('(').sql(DUAL_INFORMIX).sql(") as dual");
                     break;
 
                 case INGRES:
@@ -156,14 +156,14 @@ class Dual extends AbstractTable<Record> {
                 case HANA:
                 case SYBASE:
                     ctx.literal("SYS")
-                       .sql(".")
+                       .sql('.')
                        .literal("DUMMY");
                     break;
 
                 /* [/pro] */
                 case DERBY:
                     ctx.literal("SYSIBM")
-                       .sql(".")
+                       .sql('.')
                        .literal("SYSDUMMY1");
                     break;
 

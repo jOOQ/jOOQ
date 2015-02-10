@@ -138,7 +138,7 @@ class Cast<T> extends AbstractFunction<T> {
                 : "cstr"
                 ;
 
-            ctx.keyword(function).sql("(").visit(field).sql(")");
+            ctx.keyword(function).sql('(').visit(field).sql(')');
         }
 
         @Override
@@ -189,14 +189,14 @@ class Cast<T> extends AbstractFunction<T> {
             if (field.getDataType().isNumeric() &&
                 VARCHAR.equals(getSQLDataType())) {
 
-                ctx.keyword("trim").sql("(")
-                       .keyword("cast").sql("(")
-                           .keyword("cast").sql("(")
+                ctx.keyword("trim").sql('(')
+                       .keyword("cast").sql('(')
+                           .keyword("cast").sql('(')
                                .castMode(CastMode.NEVER)
                                .visit(field)
                                .castMode(castMode)
-                               .sql(" ").keyword("as").sql(" char(38))")
-                           .sql(" ").keyword("as").sql(" ")
+                               .sql(' ').keyword("as").sql(" char(38))")
+                           .sql(' ').keyword("as").sql(' ')
                            .keyword(getDataType(ctx.configuration()).getCastTypeName(ctx.configuration()))
                        .sql("))");
 
@@ -207,17 +207,17 @@ class Cast<T> extends AbstractFunction<T> {
             else if (field.getDataType().isString() &&
                      asList(FLOAT, DOUBLE, REAL).contains(getSQLDataType())) {
 
-                ctx.keyword("cast").sql("(")
-                       .keyword("cast").sql("(")
+                ctx.keyword("cast").sql('(')
+                       .keyword("cast").sql('(')
                            .castMode(CastMode.NEVER)
                            .visit(field)
                            .castMode(castMode)
-                           .sql(" ").keyword("as").sql(" ").keyword("decimal")
+                           .sql(' ').keyword("as").sql(' ').keyword("decimal")
                        .sql(") ")
                        .keyword("as")
-                       .sql(" ")
+                       .sql(' ')
                        .keyword(getDataType(ctx.configuration()).getCastTypeName(ctx.configuration()))
-                   .sql(")");
+                   .sql(')');
 
                 return;
             }
@@ -256,13 +256,13 @@ class Cast<T> extends AbstractFunction<T> {
             CastMode castMode = ctx.castMode();
 
             // Default rendering, if no special case has applied yet
-            ctx.keyword("cast").sql("(")
+            ctx.keyword("cast").sql('(')
                .castMode(CastMode.NEVER)
                .visit(field)
                .castMode(castMode)
-               .sql(" ").keyword("as").sql(" ")
+               .sql(' ').keyword("as").sql(' ')
                .keyword(getDataType(ctx.configuration()).getCastTypeName(ctx.configuration()))
-               .sql(")");
+               .sql(')');
         }
 
         @Override

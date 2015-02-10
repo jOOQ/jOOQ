@@ -195,10 +195,10 @@ implements
 
         /* [pro] */
         if (context.family() == INFORMIX)
-            context.keyword("row").sql(" ");
+            context.keyword("row").sql(' ');
 
         /* [/pro] */
-        context.sql("(");
+        context.sql('(');
 
         String separator = "";
         for (Field<?> field : fields.fields) {
@@ -208,7 +208,7 @@ implements
             separator = ", ";
         }
 
-        context.sql(")");
+        context.sql(')');
     }
 
     @Override

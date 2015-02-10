@@ -238,17 +238,17 @@ implements
                .formatIndentStart()
                .visit(aggregateFunctions)
                .formatSeparator()
-               .keyword("for").sql(" ")
+               .keyword("for").sql(' ')
                .literal(on.getName())
                .formatSeparator()
                .keyword("in").sql(" (")
                .visit(in)
                .declareFields(declareFields)
                .paramType(paramType)
-               .sql(")")
+               .sql(')')
                .formatIndentEnd()
                .formatNewLine()
-               .sql(")");
+               .sql(')');
         }
     }
     /* [/pro] */

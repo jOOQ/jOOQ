@@ -116,23 +116,23 @@ implements VersionsBetweenAndStep<R, T> {
         ctx.visit(table);
 
         if (asOf != null) {
-            ctx.sql(" ")
+            ctx.sql(' ')
                .keyword("as of")
-               .sql(" ")
+               .sql(' ')
                .visit(type)
-               .sql(" ")
+               .sql(' ')
                .visit(asOf);
         }
         else {
-            ctx.sql(" ")
+            ctx.sql(' ')
                .keyword("versions between")
-               .sql(" ")
+               .sql(' ')
                .visit(type)
-               .sql(" ")
+               .sql(' ')
                .visit(minvalue)
-               .sql(" ")
+               .sql(' ')
                .keyword("and")
-               .sql(" ")
+               .sql(' ')
                .visit(maxvalue);
         }
     }

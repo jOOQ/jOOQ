@@ -97,9 +97,9 @@ public class DateAsTimestampBinding implements Binding<Timestamp, Timestamp> {
         // which would prevent index usage.
         // More information here: http://stackoverflow.com/q/6612679/521799
         if (family == ORACLE) {
-            render.keyword("cast").sql("(")
+            render.keyword("cast").sql('(')
                   .visit(val(ctx.value()))
-                  .sql(" ").keyword("as date").sql(")");
+                  .sql(' ').keyword("as date").sql(')');
         }
         else
         /* [/pro] */

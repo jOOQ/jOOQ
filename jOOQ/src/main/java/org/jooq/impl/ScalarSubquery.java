@@ -70,7 +70,7 @@ class ScalarSubquery<T> extends AbstractField<T> {
     public final void accept(Context<?> ctx) {
         boolean subquery = ctx.subquery();
 
-        ctx.sql("(")
+        ctx.sql('(')
            .subquery(true)
            .formatIndentStart()
            .formatNewLine()
@@ -78,6 +78,6 @@ class ScalarSubquery<T> extends AbstractField<T> {
            .formatIndentEnd()
            .formatNewLine()
            .subquery(subquery)
-           .sql(")");
+           .sql(')');
     }
 }

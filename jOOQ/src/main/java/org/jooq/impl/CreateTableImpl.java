@@ -165,7 +165,7 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
             ctx.start(CREATE_TABLE);
             toSQLCreateTableName(ctx);
             ctx.start(CREATE_TABLE_COLUMNS)
-               .sql("(")
+               .sql('(')
                .formatIndentStart()
                .formatNewLine();
 
@@ -176,22 +176,22 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
                 DataType<?> type = columnTypes.get(i);
 
                 ctx.visit(columnFields.get(i))
-                   .sql(" ");
+                   .sql(' ');
                 Utils.toSQLDDLTypeDeclaration(ctx, type);
 
                 if (type.nullable())
-                    ctx.sql(" ").keyword("null");
+                    ctx.sql(' ').keyword("null");
                 else
-                    ctx.sql(" ").keyword("not null");
+                    ctx.sql(' ').keyword("not null");
 
                 if (i < columnFields.size() - 1)
-                    ctx.sql(",").formatSeparator();
+                    ctx.sql(',').formatSeparator();
             }
 
             ctx.qualify(qualify);
             ctx.formatIndentEnd()
                .formatNewLine()
-               .sql(")")
+               .sql(')')
                .end(CREATE_TABLE_COLUMNS);
             toSQLOnCommit(ctx);
             ctx.end(CREATE_TABLE);
@@ -225,7 +225,7 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
         if (ctx.family() == HANA) {
             ctx.formatIndentEnd()
                .formatNewLine()
-               .sql(")");
+               .sql(')');
         }
         /* [/pro] */
 
@@ -235,16 +235,16 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
     private final void toSQLCreateTableName(Context<?> ctx) {
         ctx.start(CREATE_TABLE_NAME)
            .keyword("create")
-           .sql(" ");
+           .sql(' ');
 
         if (temporary)
             if (ctx.family() == POSTGRES)
-                ctx.keyword("temporary").sql(" ");
+                ctx.keyword("temporary").sql(' ');
             else
-                ctx.keyword("global temporary").sql(" ");
+                ctx.keyword("global temporary").sql(' ');
 
         ctx.keyword("table")
-           .sql(" ")
+           .sql(' ')
            .visit(table)
            .end(CREATE_TABLE_NAME);
     }

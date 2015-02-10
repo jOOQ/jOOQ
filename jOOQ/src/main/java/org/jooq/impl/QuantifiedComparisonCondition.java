@@ -72,9 +72,9 @@ class QuantifiedComparisonCondition extends AbstractCondition {
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(field)
-           .sql(" ")
+           .sql(' ')
            .keyword(comparator.toSQL())
-           .sql(" ")
+           .sql(' ')
            .visit(query);
     }
 

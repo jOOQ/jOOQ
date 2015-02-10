@@ -747,12 +747,12 @@ implements
         @Override
         public final void toSQL(RenderContext context) {
                            context.visit(row);
-            if (not)       context.sql(" ").keyword("not");
-                           context.sql(" ").keyword("between");
-            if (symmetric) context.sql(" ").keyword("symmetric");
-                           context.sql(" ").visit(minValue);
-                           context.sql(" ").keyword("and");
-                           context.sql(" ").visit(maxValue);
+            if (not)       context.sql(' ').keyword("not");
+                           context.sql(' ').keyword("between");
+            if (symmetric) context.sql(' ').keyword("symmetric");
+                           context.sql(' ').visit(minValue);
+                           context.sql(' ').keyword("and");
+                           context.sql(' ').visit(maxValue);
         }
 
         @Override

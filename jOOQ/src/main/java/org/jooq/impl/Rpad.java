@@ -99,7 +99,7 @@ class Rpad extends AbstractFunction<String> {
                                    "quote(" +
                                      "zeroblob((({1} - length({0}) - 1 + length({2})) / length({2}) + 1) / 2)" +
                                    "), 3" +
-                                 "), '''', ''" +
+                                 "), '\''', ''" +
                                "), '0', {2}" +
                              "), 1, ({1} - length({0}))" +
                            ")",

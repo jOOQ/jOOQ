@@ -111,10 +111,10 @@ class DropViewImpl extends AbstractQuery implements
 
     private void accept0(Context<?> ctx) {
         ctx.start(DROP_VIEW_TABLE)
-           .keyword("drop view").sql(" ");
+           .keyword("drop view").sql(' ');
 
         if (ifExists && supportsIfExists(ctx))
-            ctx.keyword("if exists").sql(" ");
+            ctx.keyword("if exists").sql(' ');
 
         ctx.visit(table);
 

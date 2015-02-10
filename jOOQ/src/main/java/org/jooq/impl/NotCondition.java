@@ -60,7 +60,7 @@ class NotCondition extends AbstractCondition {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.keyword("not(").visit(condition).sql(")");
+        ctx.keyword("not(").visit(condition).sql(')');
     }
 
     @Override

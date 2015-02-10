@@ -352,7 +352,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
             Boolean wrapDerivedTables = (Boolean) context.data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES);
             if (TRUE.equals(wrapDerivedTables)) {
-                context.sql("(")
+                context.sql('(')
                        .formatIndentStart()
                        .formatNewLine()
                        .data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, null);
@@ -449,11 +449,11 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                        .keyword("for update");
 
                 if (!forUpdateOf.isEmpty()) {
-                    context.sql(" ").keyword("of").sql(" ");
+                    context.sql(' ').keyword("of").sql(' ');
                     Utils.fieldNames(context, forUpdateOf);
                 }
                 else if (!forUpdateOfTables.isEmpty()) {
-                    context.sql(" ").keyword("of").sql(" ");
+                    context.sql(' ').keyword("of").sql(' ');
 
                     switch (family) {
 
@@ -480,15 +480,15 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                 // [#3186] Firebird's FOR UPDATE clause has a different semantics. To achieve "regular"
                 // FOR UPDATE semantics, we should use FOR UPDATE WITH LOCK
                 if (family == FIREBIRD) {
-                    context.sql(" ").keyword("with lock");
+                    context.sql(' ').keyword("with lock");
                 }
 
                 if (forUpdateMode != null) {
-                    context.sql(" ");
+                    context.sql(' ');
                     context.keyword(forUpdateMode.toSQL());
 
                     if (forUpdateMode == ForUpdateMode.WAIT) {
-                        context.sql(" ");
+                        context.sql(' ');
                         context.sql(forUpdateWait);
                     }
                 }
@@ -533,7 +533,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
             if (TRUE.equals(wrapDerivedTables)) {
                 context.formatIndentEnd()
                        .formatNewLine()
-                       .sql(")")
+                       .sql(')')
                        .data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, true);
             }
 
@@ -552,7 +552,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
                     context.formatSeparator()
                            .keyword("into")
-                           .sql(" ")
+                           .sql(' ')
                            .visit(actualInto);
                 }
 
@@ -658,7 +658,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
         boolean subquery = ctx.subquery();
 
-        ctx.keyword("select").sql(" ")
+        ctx.keyword("select").sql(' ')
            .declareFields(true)
            .visit(new SelectFieldList(unaliasedFields))
            .declareFields(false)
@@ -676,12 +676,12 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
            .sql(") ")
            .visit(name("x"))
            .formatSeparator()
-           .keyword("where").sql(" ")
+           .keyword("where").sql(' ')
            .visit(name("rn"))
            .sql(" > ")
            .visit(getLimit().getLowerRownum())
            .formatSeparator()
-           .keyword("and").sql(" ")
+           .keyword("and").sql(' ')
            .visit(name("rn"))
            .sql(" <= ")
            .visit(getLimit().getUpperRownum());
@@ -718,7 +718,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         // v1 as ID, v2 as ID, v3 as TITLE
         Field<?>[] unaliasedFields = Utils.aliasedFields(Utils.fields(originalFields.length), originalNames);
 
-        ctx.keyword("select").sql(" ")
+        ctx.keyword("select").sql(' ')
            .declareFields(true)
            .visit(new SelectFieldList(unaliasedFields))
            .declareFields(false)
@@ -726,7 +726,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
            .keyword("from").sql(" (")
            .formatIndentStart()
            .formatNewLine()
-             .keyword("select").sql(" ")
+             .keyword("select").sql(' ')
              .declareFields(true)
              .visit(new SelectFieldList(qualifiedAlternativeFields))
              .declareFields(false)
@@ -742,13 +742,13 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
              .sql(") ")
              .visit(name("x"))
              .formatSeparator()
-             .keyword("where").sql(" ").visit(DSL.rownum()).sql(" <= ")
+             .keyword("where").sql(' ').visit(DSL.rownum()).sql(" <= ")
              .visit(getLimit().getUpperRownum())
            .formatIndentEnd()
            .formatNewLine()
            .sql(") ")
            .formatSeparator()
-           .keyword("where").sql(" ")
+           .keyword("where").sql(' ')
            .visit(name("rn"))
            .sql(" > ")
            .visit(getLimit().getLowerRownum());
@@ -807,7 +807,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         //                       This can be done only via a derived table.
         wrapQueryExpressionBodyInDerivedTable = wrapQueryExpressionBodyInDerivedTable(context);
         if (wrapQueryExpressionBodyInDerivedTable) {
-            context.keyword("select").sql(" ");
+            context.keyword("select").sql(' ');
 
             toSQLTopClause(context);
 
@@ -850,17 +850,17 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         // -------------
         context.start(SELECT_SELECT)
                .keyword("select")
-               .sql(" ");
+               .sql(' ');
 
         // [#1493] Oracle hints come directly after the SELECT keyword
         if (!StringUtils.isBlank(hint)) {
-            context.sql(hint).sql(" ");
+            context.sql(hint).sql(' ');
         }
 
         /* [pro] */
         // Informix requires SKIP .. FIRST .. to be placed before DISTINCT
         if (family == INFORMIX && getLimit().isApplicable()) {
-            context.visit(getLimit()).sql(" ");
+            context.visit(getLimit()).sql(' ');
         }
         /* [/pro] */
 
@@ -868,7 +868,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
             context.keyword("distinct on").sql(" (").visit(distinctOn).sql(") ");
         }
         else if (distinct) {
-            context.keyword("distinct").sql(" ");
+            context.keyword("distinct").sql(' ');
         }
 
         /* [pro] */
@@ -895,9 +895,9 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
             try {
                 context.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, null);
-                context.sql("(")
+                context.sql('(')
                        .visit(getSelect1())
-                       .sql(")");
+                       .sql(')');
             }
             finally {
                 context.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, data);
@@ -928,7 +928,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
                 context.formatSeparator()
                        .keyword("into")
-                       .sql(" ")
+                       .sql(' ')
                        .visit(actualInto);
             }
 
@@ -958,7 +958,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         if (hasFrom) {
             context.formatSeparator()
                    .keyword("from")
-                   .sql(" ")
+                   .sql(' ')
                    .visit(getFrom());
 
             /* [pro] */
@@ -984,7 +984,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         if (!(getWhere().getWhere() instanceof TrueCondition)) {
             context.formatSeparator()
                    .keyword("where")
-                   .sql(" ")
+                   .sql(' ')
                    .visit(getWhere());
         }
 
@@ -1001,7 +1001,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         if (!(getConnectByStartWith().getWhere() instanceof TrueCondition)) {
             context.formatSeparator()
                    .keyword("start with")
-                   .sql(" ")
+                   .sql(' ')
                    .visit(getConnectByStartWith());
         }
 
@@ -1013,10 +1013,10 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                    .keyword("connect by");
 
             if (connectByNoCycle) {
-                context.sql(" ").keyword("nocycle");
+                context.sql(' ').keyword("nocycle");
             }
 
-            context.sql(" ").visit(getConnectBy());
+            context.sql(' ').visit(getConnectBy());
         }
 
         context.end(SELECT_CONNECT_BY);
@@ -1028,7 +1028,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         if (grouping) {
             context.formatSeparator()
                    .keyword("group by")
-                   .sql(" ");
+                   .sql(' ');
 
             // [#1665] Empty GROUP BY () clauses need parentheses
             if (getGroupBy().isEmpty()) {
@@ -1040,7 +1040,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
                 // Some dialects don't support empty GROUP BY () clauses
                 else if (asList(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE).contains(dialect)) {
-                    context.sql("1");
+                    context.sql('1');
                 }
 
                 // Few dialects support the SQL standard empty grouping set
@@ -1062,7 +1062,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         if (!(getHaving().getWhere() instanceof TrueCondition)) {
             context.formatSeparator()
                    .keyword("having")
-                   .sql(" ")
+                   .sql(' ')
                    .visit(getHaving());
         }
 
@@ -1075,7 +1075,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         if (!getWindow().isEmpty() && asList(POSTGRES, SYBASE).contains(family)) {
             context.formatSeparator()
                    .keyword("window")
-                   .sql(" ")
+                   .sql(' ')
                    .declareWindows(true)
                    .visit(getWindow())
                    .declareWindows(false);
@@ -1103,7 +1103,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                 for (Select<?> other : union.get(i)) {
                     context.formatSeparator()
                            .keyword(op.toSQL(dialect))
-                           .sql(" ");
+                           .sql(' ');
 
                     unionParenthesis(context, "(");
                     context.visit(other);
@@ -1162,9 +1162,9 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                    .keyword("order")
                    .sql(orderBySiblings ? " " : "")
                    .keyword(orderBySiblings ? "siblings" : "")
-                   .sql(" ")
+                   .sql(' ')
                    .keyword("by")
-                   .sql(" ");
+                   .sql(' ');
 
             /* [pro] */
 
@@ -1208,7 +1208,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         if (wrapQueryExpressionInDerivedTable)
             context.formatIndentEnd()
                    .formatNewLine()
-                   .sql(")");
+                   .sql(')');
         /* [/pro] */
 
         if (context.data().containsKey(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE) && actualLimit.isApplicable())
@@ -1238,7 +1238,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                         && getLimit().offsetZero()
                         && !getLimit().rendersParams()) {
 
-                    context.visit(getLimit()).sql(" ");
+                    context.visit(getLimit()).sql(' ');
                 }
 
                 // [#759] SQL Server needs a TOP clause in ordered subqueries
@@ -1249,7 +1249,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                     // [#2423] SQL Server 2012 will render an OFFSET .. FETCH
                     // clause if there is an applicable limit
                     if (dialect == SQLSERVER2008 || !getLimit().isApplicable()) {
-                        context.keyword("top").sql(" 100 ").keyword("percent").sql(" ");
+                        context.keyword("top").sql(" 100 ").keyword("percent").sql(' ');
                     }
                 }
 
@@ -1258,7 +1258,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
             case SYBASE: {
                 if (getLimit().isApplicable() && !getLimit().rendersParams()) {
-                    context.visit(getLimit()).sql(" ");
+                    context.visit(getLimit()).sql(' ');
                 }
 
                 break;
@@ -1293,7 +1293,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                        .sql(" *")
                        .formatSeparator()
                        .keyword("from")
-                       .sql(" ");
+                       .sql(' ');
                     break;
             }
         }

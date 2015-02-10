@@ -77,11 +77,11 @@ class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefinition
         // In the WINDOW clause, always declare window definitions
         if (ctx.declareWindows()) {
             ctx.visit(name)
-               .sql(" ")
+               .sql(' ')
                .keyword("as")
                .sql(" (")
                .visit(window)
-               .sql(")");
+               .sql(')');
         }
 
         // Outside the WINDOW clause, only few dialects actually support

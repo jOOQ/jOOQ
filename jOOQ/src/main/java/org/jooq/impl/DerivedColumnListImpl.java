@@ -77,7 +77,7 @@ class DerivedColumnListImpl extends AbstractQueryPart implements DerivedColumnLi
         ctx.visit(name(name));
 
         if (fieldNames != null && fieldNames.length > 0) {
-            ctx.sql("(");
+            ctx.sql('(');
 
             for (int i = 0; i < fieldNames.length; i++) {
                 if (i > 0)
@@ -86,7 +86,7 @@ class DerivedColumnListImpl extends AbstractQueryPart implements DerivedColumnLi
                 ctx.visit(name(fieldNames[i]));
             }
 
-            ctx.sql(")");
+            ctx.sql(')');
         }
     }
 

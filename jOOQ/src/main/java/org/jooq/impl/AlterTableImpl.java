@@ -242,37 +242,37 @@ class AlterTableImpl extends AbstractQuery implements
         SQLDialect family = ctx.configuration().dialect().family();
 
         ctx.start(ALTER_TABLE_TABLE)
-           .keyword("alter table").sql(" ").visit(table)
+           .keyword("alter table").sql(' ').visit(table)
            .end(ALTER_TABLE_TABLE);
 
         if (addColumn != null) {
             ctx.start(ALTER_TABLE_ADD)
-               .sql(" ").keyword("add").sql(" ");
+               .sql(' ').keyword("add").sql(' ');
 
             /* [pro] */
             if (family == HANA)
-                ctx.sql("(");
+                ctx.sql('(');
             /* [/pro] */
 
             ctx.qualify(false)
-               .visit(addColumn).sql(" ")
+               .visit(addColumn).sql(' ')
                .qualify(true);
 
             toSQLDDLTypeDeclaration(ctx, addColumnType);
 
             if (!addColumnType.nullable()) {
-                ctx.sql(" ").keyword("not null");
+                ctx.sql(' ').keyword("not null");
             }
 
             // Some databases default to NOT NULL, so explicitly setting columns to NULL is mostly required here
             // [#3400] ... but not in Firebird
             else if (family != FIREBIRD) {
-                ctx.sql(" ").keyword("null");
+                ctx.sql(' ').keyword("null");
             }
 
             /* [pro] */
             if (family == HANA)
-                ctx.sql(")");
+                ctx.sql(')');
             /* [/pro] */
 
             ctx.end(ALTER_TABLE_ADD);
@@ -280,9 +280,9 @@ class AlterTableImpl extends AbstractQuery implements
         else if (addConstraint != null) {
             ctx.start(ALTER_TABLE_ADD);
 
-            ctx.sql(" ")
+            ctx.sql(' ')
                .keyword("add")
-               .sql(" ")
+               .sql(' ')
                .visit(addConstraint);
 
             ctx.end(ALTER_TABLE_ADD);
@@ -294,27 +294,27 @@ class AlterTableImpl extends AbstractQuery implements
                 /* [pro] */
                 case INFORMIX:
                 case ORACLE:
-                    ctx.sql(" ").keyword("modify");
+                    ctx.sql(' ').keyword("modify");
                     break;
 
                 case SQLSERVER:
-                    ctx.sql(" ").keyword("alter column");
+                    ctx.sql(' ').keyword("alter column");
                     break;
                 /* [/pro] */
 
                 case MARIADB:
                 case MYSQL:
                     // MySQL's CHANGE COLUMN clause has a mandatory RENAMING syntax...
-                    ctx.sql(" ").keyword("change column")
-                       .sql(" ").qualify(false).visit(alterColumn).qualify(true);
+                    ctx.sql(' ').keyword("change column")
+                       .sql(' ').qualify(false).visit(alterColumn).qualify(true);
                     break;
 
                 default:
-                    ctx.sql(" ").keyword("alter");
+                    ctx.sql(' ').keyword("alter");
                     break;
             }
 
-            ctx.sql(" ")
+            ctx.sql(' ')
                .qualify(false)
                .visit(alterColumn)
                .qualify(true);
@@ -323,20 +323,20 @@ class AlterTableImpl extends AbstractQuery implements
                 switch (family) {
                     /* [pro] */
                     case DB2:
-                        ctx.sql(" ").keyword("set data type");
+                        ctx.sql(' ').keyword("set data type");
                         break;
                     /* [/pro] */
 
                     case POSTGRES:
-                        ctx.sql(" ").keyword("type");
+                        ctx.sql(' ').keyword("type");
                         break;
                 }
 
-                ctx.sql(" ");
+                ctx.sql(' ');
                 toSQLDDLTypeDeclaration(ctx, alterColumnType);
 
                 if (!alterColumnType.nullable()) {
-                    ctx.sql(" ").keyword("not null");
+                    ctx.sql(' ').keyword("not null");
                 }
             }
             else if (alterColumnDefault != null) {
@@ -345,16 +345,16 @@ class AlterTableImpl extends AbstractQuery implements
                 switch (family) {
                     /* [pro] */
                     case ORACLE:
-                        ctx.sql(" ").keyword("default");
+                        ctx.sql(' ').keyword("default");
                         break;
                     /* [/pro] */
 
                     default:
-                        ctx.sql(" ").keyword("set default");
+                        ctx.sql(' ').keyword("set default");
                         break;
                 }
 
-                ctx.sql(" ").visit(alterColumnDefault)
+                ctx.sql(' ').visit(alterColumnDefault)
                    .end(ALTER_TABLE_ALTER_DEFAULT);
             }
 
@@ -367,20 +367,20 @@ class AlterTableImpl extends AbstractQuery implements
                 /* [pro] */
                 case ORACLE:
                 case SQLSERVER:
-                    ctx.sql(" ").keyword("drop column");
+                    ctx.sql(' ').keyword("drop column");
                     break;
 
                 case HANA:
-                    ctx.sql(" ").keyword("drop").sql("(");
+                    ctx.sql(' ').keyword("drop").sql('(');
                     break;
                 /* [/pro] */
 
                 default:
-                    ctx.sql(" ").keyword("drop");
+                    ctx.sql(' ').keyword("drop");
                     break;
             }
 
-            ctx.sql(" ")
+            ctx.sql(' ')
                .qualify(false)
                .visit(dropColumn)
                .qualify(true);
@@ -388,7 +388,7 @@ class AlterTableImpl extends AbstractQuery implements
             switch (family) {
                 /* [pro] */
                 case HANA:
-                    ctx.sql(")");
+                    ctx.sql(')');
                     break;
                 /* [/pro] */
 
@@ -397,7 +397,7 @@ class AlterTableImpl extends AbstractQuery implements
             }
 
             if (dropColumnCascade) {
-                ctx.sql(" ").keyword("cascade");
+                ctx.sql(' ').keyword("cascade");
             }
 
             ctx.end(ALTER_TABLE_DROP);
@@ -406,9 +406,9 @@ class AlterTableImpl extends AbstractQuery implements
             ctx.start(ALTER_TABLE_DROP);
             ctx.data(DATA_DROP_CONSTRAINT, true);
 
-            ctx.sql(" ")
+            ctx.sql(' ')
                .keyword("drop")
-               .sql(" ")
+               .sql(' ')
                .visit(dropConstraint);
 
             ctx.data().remove(DATA_DROP_CONSTRAINT);

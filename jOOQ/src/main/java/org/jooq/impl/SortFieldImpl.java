@@ -131,7 +131,7 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
                     ctx.visit(nvl2(field, ifNotNull, ifNull))
                        .sql(", ")
                        .visit(field)
-                       .sql(" ")
+                       .sql(' ')
                        .keyword(order.toSQL());
 
                     break;
@@ -140,14 +140,14 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
                 // DERBY, H2, HSQLDB, ORACLE, POSTGRES
                 default: {
                     ctx.visit(field)
-                       .sql(" ")
+                       .sql(' ')
                        .keyword(order.toSQL());
 
                     if (nullsFirst) {
-                        ctx.sql(" ").keyword("nulls first");
+                        ctx.sql(' ').keyword("nulls first");
                     }
                     else {
-                        ctx.sql(" ").keyword("nulls last");
+                        ctx.sql(' ').keyword("nulls last");
                     }
 
                     break;
@@ -156,7 +156,7 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
         }
         else {
             ctx.visit(field)
-               .sql(" ")
+               .sql(' ')
                .keyword(order.toSQL());
         }
     }

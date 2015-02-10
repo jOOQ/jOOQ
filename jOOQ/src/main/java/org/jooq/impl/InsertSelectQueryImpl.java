@@ -82,7 +82,7 @@ class InsertSelectQueryImpl<R extends Record> extends AbstractQuery implements I
     public final void accept(Context<?> ctx) {
         ctx.start(INSERT_INSERT_INTO)
            .keyword("insert into")
-           .sql(" ")
+           .sql(' ')
            .visit(into)
            .sql(" (");
 
@@ -99,7 +99,7 @@ class InsertSelectQueryImpl<R extends Record> extends AbstractQuery implements I
         }
 
         ctx.qualify(qualify);
-        ctx.sql(")")
+        ctx.sql(')')
            .end(INSERT_INSERT_INTO)
            .formatSeparator()
            .start(INSERT_SELECT)

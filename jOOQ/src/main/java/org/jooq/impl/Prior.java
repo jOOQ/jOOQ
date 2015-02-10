@@ -87,7 +87,7 @@ class Prior<T> extends AbstractField<T> {
                         ? DSL.field(name(((TableField<?, ?>) field).getTable().getName(), field.getName()))
                         : field;
 
-                    ctx.keyword("prior").sql(" ").visit(f);
+                    ctx.keyword("prior").sql(' ').visit(f);
                 }
                 finally {
                     if (ctx instanceof DefaultRenderContext) {
@@ -101,7 +101,7 @@ class Prior<T> extends AbstractField<T> {
             /* [/pro] */
             case CUBRID:
             default:
-                ctx.keyword("prior").sql(" ").visit(field);
+                ctx.keyword("prior").sql(' ').visit(field);
                 break;
         }
     }

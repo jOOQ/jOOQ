@@ -144,7 +144,7 @@ class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWhenStep
         @Override
         public final void accept(Context<?> ctx) {
             ctx.keyword("switch")
-               .sql("(");
+               .sql('(');
 
             for (int i = 0; i < compareValues.size(); i++) {
                 if (i > 0) {
@@ -165,7 +165,7 @@ class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWhenStep
                    .visit(otherwise);
             }
 
-            ctx.sql(")");
+            ctx.sql(')');
         }
     }
 
@@ -195,9 +195,9 @@ class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWhenStep
                             ctx.formatNewLine();
                         }
 
-                        ctx.sql(" ").keyword("when").sql(" ");
+                        ctx.sql(' ').keyword("when").sql(' ');
                         ctx.visit(value.equal(compareValues.get(i)));
-                        ctx.sql(" ").keyword("then").sql(" ");
+                        ctx.sql(' ').keyword("then").sql(' ');
                         ctx.visit(results.get(i));
                     }
 
@@ -205,7 +205,7 @@ class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWhenStep
                 }
 
                 default: {
-                    ctx.sql(" ")
+                    ctx.sql(' ')
                        .visit(value)
                        .formatIndentLockStart();
 
@@ -214,9 +214,9 @@ class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWhenStep
                             ctx.formatNewLine();
                         }
 
-                        ctx.sql(" ").keyword("when").sql(" ");
+                        ctx.sql(' ').keyword("when").sql(' ');
                         ctx.visit(compareValues.get(i));
-                        ctx.sql(" ").keyword("then").sql(" ");
+                        ctx.sql(' ').keyword("then").sql(' ');
                         ctx.visit(results.get(i));
                     }
 
@@ -226,7 +226,7 @@ class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWhenStep
 
             if (otherwise != null) {
                 ctx.formatNewLine()
-                   .sql(" ").keyword("else").sql(" ").visit(otherwise);
+                   .sql(' ').keyword("else").sql(' ').visit(otherwise);
             }
 
             ctx.formatIndentLockEnd();
@@ -235,7 +235,7 @@ class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWhenStep
                 ctx.formatSeparator();
             }
             else {
-                ctx.sql(" ");
+                ctx.sql(' ');
             }
 
             ctx.keyword("end")

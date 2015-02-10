@@ -122,7 +122,7 @@ class CombinedCondition extends AbstractCondition {
             ctx.visit(conditions.get(0));
         }
         else {
-            ctx.sql("(")
+            ctx.sql('(')
                .formatIndentStart()
                .formatNewLine();
 
@@ -141,7 +141,7 @@ class CombinedCondition extends AbstractCondition {
 
             ctx.formatIndentEnd()
                .formatNewLine()
-               .sql(")");
+               .sql(')');
         }
     }
 }

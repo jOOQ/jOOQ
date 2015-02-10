@@ -112,7 +112,7 @@ class CompareCondition extends AbstractCondition {
         }
 
         ctx.visit(lhs)
-           .sql(" ");
+           .sql(' ');
 
         boolean castRhs = false;
 
@@ -124,15 +124,15 @@ class CompareCondition extends AbstractCondition {
             castRhs = true;
         /* [/pro] */
 
-                     ctx.keyword(op.toSQL()).sql(" ");
-        if (castRhs) ctx.keyword("cast").sql("(");
+                     ctx.keyword(op.toSQL()).sql(' ');
+        if (castRhs) ctx.keyword("cast").sql('(');
                      ctx.visit(rhs);
-        if (castRhs) ctx.sql(" ").keyword("as").sql(" ").keyword("varchar").sql("(4000))");
+        if (castRhs) ctx.sql(' ').keyword("as").sql(' ').keyword("varchar").sql("(4000))");
 
         if (escape != null) {
-            ctx.sql(" ").keyword("escape").sql(" '")
+            ctx.sql(' ').keyword("escape").sql(" '")
                .sql(escape)
-               .sql("'");
+               .sql('\'');
         }
     }
 

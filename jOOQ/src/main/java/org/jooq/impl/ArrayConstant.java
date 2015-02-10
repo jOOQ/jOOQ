@@ -83,7 +83,7 @@ class ArrayConstant<R extends ArrayRecord<?>> extends AbstractParam<R> {
     final void toSQL0(RenderContext context) {
         if (context.paramType() == INLINED) {
             context.sql(array.getName());
-            context.sql("(");
+            context.sql('(');
 
             String separator = "";
             for (Object object : array.get()) {
@@ -93,10 +93,10 @@ class ArrayConstant<R extends ArrayRecord<?>> extends AbstractParam<R> {
                 separator = ", ";
             }
 
-            context.sql(")");
+            context.sql(')');
         }
         else {
-            context.sql("?");
+            context.sql('?');
         }
     }
 

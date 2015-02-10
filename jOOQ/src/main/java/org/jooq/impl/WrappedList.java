@@ -61,9 +61,9 @@ class WrappedList extends AbstractQueryPart {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.sql("(")
+        ctx.sql('(')
            .visit(wrapped)
-           .sql(")");
+           .sql(')');
 }
 
     @Override

@@ -409,11 +409,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     private final void toSQLCast(BindingSQLContext<U> ctx, T converted, DataType<?> dataType, int length, int precision, int scale) {
-        ctx.render().keyword("cast").sql("(");
+        ctx.render().keyword("cast").sql('(');
         toSQL(ctx, converted);
-        ctx.render().sql(" ").keyword("as").sql(" ")
+        ctx.render().sql(' ').keyword("as").sql(' ')
                .sql(dataType.length(length).precision(precision, scale).getCastTypeName(ctx.configuration()))
-               .sql(")");
+               .sql(')');
     }
 
     /**
@@ -468,7 +468,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 else if (asList(DERBY, H2, HSQLDB, INGRES, MARIADB, MYSQL, SQLITE).contains(family)) {
                     render.sql("X'")
                           .sql(convertBytesToHex(binary))
-                          .sql("'");
+                          .sql('\'');
                 }
                 else if (asList(ORACLE).contains(family)) {
                     render.keyword("hextoraw('")
@@ -486,15 +486,15 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 else {
                     render.sql("X'")
                           .sql(convertBytesToHex(binary))
-                          .sql("'");
+                          .sql('\'');
                 }
             }
 
             // Interval extends Number, so let Interval come first!
             else if (Interval.class.isAssignableFrom(type)) {
-                render.sql("'")
+                render.sql('\'')
                       .sql(escape(val, render))
-                      .sql("'");
+                      .sql('\'');
             }
 
             else if (Number.class.isAssignableFrom(type)) {
@@ -508,16 +508,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 // The SQLite JDBC driver does not implement the escape syntax
                 // [#1253] SQL Server and Sybase do not implement date literals
                 if (asList(ASE, SQLITE, SQLSERVER, SYBASE).contains(family)) {
-                    render.sql("'").sql(escape(val, render)).sql("'");
+                    render.sql('\'').sql(escape(val, render)).sql('\'');
                 }
 
                 /* [pro] */
                 else if (asList(ACCESS).contains(family)) {
-                    render.sql("#").sql(new SimpleDateFormat("yyyy/MM/dd").format((Date) val)).sql("#");
+                    render.sql('#').sql(new SimpleDateFormat("yyyy/MM/dd").format((Date) val)).sql('#');
                 }
 
                 else if (family == INFORMIX) {
-                    render.keyword("datetime").sql("(").sql(escape(val, render)).sql(") ").keyword("year to day");
+                    render.keyword("datetime").sql('(').sql(escape(val, render)).sql(") ").keyword("year to day");
                 }
                 /* [/pro] */
 
@@ -533,7 +533,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // Most dialects implement SQL standard date literals
                 else {
-                    render.keyword("date '").sql(escape(val, render)).sql("'");
+                    render.keyword("date '").sql(escape(val, render)).sql('\'');
                 }
             }
             else if (type == Timestamp.class) {
@@ -541,16 +541,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 // The SQLite JDBC driver does not implement the escape syntax
                 // [#1253] SQL Server and Sybase do not implement timestamp literals
                 if (asList(ASE, SQLITE, SQLSERVER, SYBASE).contains(family)) {
-                    render.sql("'").sql(escape(val, render)).sql("'");
+                    render.sql('\'').sql(escape(val, render)).sql('\'');
                 }
 
                 /* [pro] */
                 else if (asList(ACCESS).contains(family)) {
-                    render.sql("#").sql(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format((Timestamp) val)).sql("#");
+                    render.sql('#').sql(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format((Timestamp) val)).sql('#');
                 }
 
                 else if (family == INFORMIX) {
-                    render.keyword("datetime").sql("(").sql(escape(val, render)).sql(") ").keyword("year to fraction");
+                    render.keyword("datetime").sql('(').sql(escape(val, render)).sql(") ").keyword("year to fraction");
                 }
                 /* [/pro] */
 
@@ -561,7 +561,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // CUBRID timestamps have no fractional seconds
                 else if (family == CUBRID) {
-                    render.keyword("datetime '").sql(escape(val, render)).sql("'");
+                    render.keyword("datetime '").sql(escape(val, render)).sql('\'');
                 }
 
                 // [#3648] Circumvent a MySQL bug related to date literals
@@ -571,7 +571,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // Most dialects implement SQL standard timestamp literals
                 else {
-                    render.keyword("timestamp '").sql(escape(val, render)).sql("'");
+                    render.keyword("timestamp '").sql(escape(val, render)).sql('\'');
                 }
             }
             else if (type == Time.class) {
@@ -579,7 +579,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 // The SQLite JDBC driver does not implement the escape syntax
                 // [#1253] SQL Server and Sybase do not implement time literals
                 if (asList(ASE, SQLITE, SQLSERVER, SYBASE).contains(family)) {
-                    render.sql("'").sql(new SimpleDateFormat("HH:mm:ss").format((Time) val)).sql("'");
+                    render.sql('\'').sql(new SimpleDateFormat("HH:mm:ss").format((Time) val)).sql('\'');
                 }
 
                 /* [pro] */
@@ -588,7 +588,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 }
 
                 else if (family == INFORMIX) {
-                    render.keyword("datetime").sql("(").sql(escape(val, render)).sql(") ").keyword("hour to second");
+                    render.keyword("datetime").sql('(').sql(escape(val, render)).sql(") ").keyword("hour to second");
                 }
                 /* [/pro] */
 
@@ -604,13 +604,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 /* [pro] */
                 // [#1253] Oracle doesn't know time literals
                 else if (family == ORACLE) {
-                    render.keyword("timestamp").sql(" '1970-01-01 ").sql(escape(val, render)).sql("'");
+                    render.keyword("timestamp").sql(" '1970-01-01 ").sql(escape(val, render)).sql('\'');
                 }
 
                 /* [/pro] */
                 // Most dialects implement SQL standard time literals
                 else {
-                    render.keyword("time").sql(" '").sql(escape(val, render)).sql("'");
+                    render.keyword("time").sql(" '").sql(escape(val, render)).sql('\'');
                 }
             }
             else if (type.isArray()) {
@@ -618,7 +618,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // H2 renders arrays as rows
                 if (family == H2) {
-                    render.sql("(");
+                    render.sql('(');
 
                     for (Object o : ((Object[]) val)) {
                         render.sql(separator);
@@ -626,13 +626,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                         separator = ", ";
                     }
 
-                    render.sql(")");
+                    render.sql(')');
                 }
 
                 // By default, render HSQLDB / POSTGRES syntax
                 else {
                     render.keyword("ARRAY");
-                    render.sql("[");
+                    render.sql('[');
 
                     for (Object o : ((Object[]) val)) {
                         render.sql(separator);
@@ -640,7 +640,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                         separator = ", ";
                     }
 
-                    render.sql("]");
+                    render.sql(']');
 
                     // [#3214] Some PostgreSQL array type literals need explicit casting
                     if (family == POSTGRES && EnumType.class.isAssignableFrom(type.getComponentType())) {
@@ -672,9 +672,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // - String
             // - UUID
             else {
-                render.sql("'")
+                render.sql('\'')
                       .sql(escape(val, render), true)
-                      .sql("'");
+                      .sql('\'');
             }
         }
 
@@ -2143,7 +2143,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             schema = using(render.configuration()).map(schema);
             if (schema != null && TRUE.equals(render.configuration().settings().isRenderSchema())) {
                 render.visit(schema);
-                render.sql(".");
+                render.sql('.');
             }
 
             render.visit(name(e.getName()));

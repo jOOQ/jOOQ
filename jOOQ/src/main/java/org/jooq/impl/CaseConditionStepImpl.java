@@ -145,7 +145,7 @@ class CaseConditionStepImpl<T> extends AbstractFunction<T> implements CaseCondit
         @Override
         public final void accept(Context<?> ctx) {
             ctx.keyword("switch")
-               .sql("(");
+               .sql('(');
 
             int size = conditions.size();
             for (int i = 0; i < size; i++) {
@@ -165,7 +165,7 @@ class CaseConditionStepImpl<T> extends AbstractFunction<T> implements CaseCondit
                    .visit(otherwise);
             }
 
-            ctx.sql(")");
+            ctx.sql(')');
         }
     }
 
@@ -190,13 +190,13 @@ class CaseConditionStepImpl<T> extends AbstractFunction<T> implements CaseCondit
                     ctx.formatNewLine();
                 }
 
-                ctx.sql(" ").keyword("when").sql(" ").visit(conditions.get(i))
-                   .sql(" ").keyword("then").sql(" ").visit(results.get(i));
+                ctx.sql(' ').keyword("when").sql(' ').visit(conditions.get(i))
+                   .sql(' ').keyword("then").sql(' ').visit(results.get(i));
             }
 
             if (otherwise != null) {
                 ctx.formatNewLine()
-                   .sql(" ").keyword("else").sql(" ").visit(otherwise);
+                   .sql(' ').keyword("else").sql(' ').visit(otherwise);
             }
 
             ctx.formatIndentLockEnd();
@@ -205,7 +205,7 @@ class CaseConditionStepImpl<T> extends AbstractFunction<T> implements CaseCondit
                 ctx.formatSeparator();
             }
             else {
-                ctx.sql(" ");
+                ctx.sql(' ');
             }
 
             ctx.keyword("end")

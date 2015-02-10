@@ -239,7 +239,7 @@ public class SequenceImpl<T extends Number> extends AbstractQueryPart implements
             }
             else {
                 ctx.visit(mappedSchema)
-                   .sql(".");
+                   .sql('.');
             }
         }
 

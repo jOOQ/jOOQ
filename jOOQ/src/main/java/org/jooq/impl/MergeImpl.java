@@ -1069,35 +1069,35 @@ implements
 
     private final void toSQLH2(Context<?> ctx) {
         ctx.keyword("merge into")
-           .sql(" ")
+           .sql(' ')
            .declareTables(true)
            .visit(table)
            .formatSeparator();
 
-        ctx.sql("(");
+        ctx.sql('(');
         Utils.fieldNames(ctx, getH2Fields());
-        ctx.sql(")");
+        ctx.sql(')');
 
         if (!getH2Keys().isEmpty()) {
-            ctx.sql(" ").keyword("key").sql(" (");
+            ctx.sql(' ').keyword("key").sql(" (");
             Utils.fieldNames(ctx, getH2Keys());
-            ctx.sql(")");
+            ctx.sql(')');
         }
 
         if (h2Select != null) {
-            ctx.sql(" ")
+            ctx.sql(' ')
                .visit(h2Select);
         }
         else {
-            ctx.sql(" ").keyword("values").sql(" (")
+            ctx.sql(' ').keyword("values").sql(" (")
                .visit(getH2Values())
-               .sql(")");
+               .sql(')');
         }
     }
 
     private final void toSQLStandard(Context<?> ctx) {
         ctx.start(MERGE_MERGE_INTO)
-           .keyword("merge into").sql(" ")
+           .keyword("merge into").sql(' ')
            .declareTables(true)
            .visit(table)
            .declareTables(false)
@@ -1105,7 +1105,7 @@ implements
            .formatSeparator()
            .start(MERGE_USING)
            .declareTables(true)
-           .keyword("using").sql(" ")
+           .keyword("using").sql(' ')
            .formatIndentStart()
            .formatNewLine();
         ctx.data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, true);
@@ -1121,10 +1121,10 @@ implements
                 if (using instanceof Select) {
                     int hash = Utils.hash(using);
 
-                    ctx.sql(" ").keyword("as").sql(" ")
+                    ctx.sql(' ').keyword("as").sql(' ')
                        .sql("dummy_")
                        .sql(hash)
-                       .sql("(");
+                       .sql('(');
 
                     String separator = "";
                     for (Field<?> field : ((Select<?>) using).fields()) {
@@ -1139,7 +1139,7 @@ implements
                         separator = ", ";
                     }
 
-                    ctx.sql(")");
+                    ctx.sql(')');
                 }
 
                 break;
@@ -1175,7 +1175,7 @@ implements
         // [#998] Oracle MERGE extension: WHEN MATCHED THEN UPDATE .. WHERE
         if (matchedWhere != null) {
             ctx.formatSeparator()
-               .keyword("where").sql(" ")
+               .keyword("where").sql(' ')
                .visit(matchedWhere);
         }
 
@@ -1185,7 +1185,7 @@ implements
         // [#998] Oracle MERGE extension: WHEN MATCHED THEN UPDATE .. DELETE WHERE
         if (matchedDeleteWhere != null) {
             ctx.formatSeparator()
-               .keyword("delete where").sql(" ")
+               .keyword("delete where").sql(' ')
                .visit(matchedDeleteWhere);
         }
 
@@ -1196,11 +1196,11 @@ implements
         // [#999] WHEN NOT MATCHED clause is optional
         if (notMatchedInsert != null) {
             ctx.formatSeparator()
-               .keyword("when not matched then insert").sql(" ");
+               .keyword("when not matched then insert").sql(' ');
             notMatchedInsert.toSQLReferenceKeys(ctx);
             ctx.formatSeparator()
                .start(MERGE_VALUES)
-               .keyword("values").sql(" ")
+               .keyword("values").sql(' ')
                .visit(notMatchedInsert)
                .end(MERGE_VALUES);
         }
@@ -1210,7 +1210,7 @@ implements
         // [#998] Oracle MERGE extension: WHEN NOT MATCHED THEN INSERT .. WHERE
         if (notMatchedWhere != null) {
             ctx.formatSeparator()
-               .keyword("where").sql(" ")
+               .keyword("where").sql(' ')
                .visit(notMatchedWhere);
         }
 
@@ -1220,7 +1220,7 @@ implements
 
         switch (ctx.configuration().dialect().family()) {
             case SQLSERVER:
-                ctx.sql(";");
+                ctx.sql(';');
                 break;
         }
         /* [/pro] */

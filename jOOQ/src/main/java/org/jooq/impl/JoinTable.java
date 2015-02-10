@@ -169,7 +169,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
                .formatSeparator()
                .start(translatedClause)
                .keyword(keyword)
-               .sql(" ");
+               .sql(' ');
 
         toSQLTable(ctx, rhs);
 
@@ -181,7 +181,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
                    .keyword("partition by")
                    .sql(" (")
                    .visit(rhsPartitionBy)
-                   .sql(")")
+                   .sql(')')
                    .end(TABLE_JOIN_PARTITION_BY);
         }
 
@@ -208,7 +208,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
             (table == rhs || asList(ACCESS).contains(ctx.configuration().dialect().family()));
 
         if (wrap) {
-            ctx.sql("(")
+            ctx.sql('(')
                .formatIndentStart()
                .formatNewLine();
         }
@@ -218,7 +218,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
         if (wrap) {
             ctx.formatIndentEnd()
                .formatNewLine()
-               .sql(")");
+               .sql(')');
         }
     }
 
@@ -298,7 +298,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
                         context.keyword("and");
                     }
 
-                    context.sql(" ")
+                    context.sql(' ')
                            .visit(lhs.field(field))
                            .sql(" = ")
                            .visit(rhs.field(field));
@@ -312,9 +312,9 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
                 context.formatSeparator()
                        .start(TABLE_JOIN_USING)
                        .keyword("using")
-                       .sql("(");
+                       .sql('(');
                 Utils.fieldNames(context, using);
-                context.sql(")")
+                context.sql(')')
                        .end(TABLE_JOIN_USING);
             }
         }
@@ -342,7 +342,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
                         context.keyword("and");
                     }
 
-                    context.sql(" ")
+                    context.sql(' ')
                            .visit(field)
                            .sql(" = ")
                            .visit(other);
@@ -357,7 +357,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
             context.formatSeparator()
                    .start(TABLE_JOIN_ON)
                    .keyword("on")
-                   .sql(" ")
+                   .sql(' ')
                    .visit(condition)
                    .end(TABLE_JOIN_ON);
         }

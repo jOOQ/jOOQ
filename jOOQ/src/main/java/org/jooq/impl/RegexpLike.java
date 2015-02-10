@@ -80,9 +80,9 @@ class RegexpLike extends AbstractCondition {
             case MYSQL:
             case SQLITE: {
                 ctx.visit(search)
-                   .sql(" ")
+                   .sql(' ')
                    .keyword("regexp")
-                   .sql(" ")
+                   .sql(' ')
                    .visit(pattern);
 
                 break;
@@ -126,9 +126,9 @@ class RegexpLike extends AbstractCondition {
             case FIREBIRD:
             default: {
                 ctx.visit(search)
-                   .sql(" ")
+                   .sql(' ')
                    .keyword("like_regex")
-                   .sql(" ")
+                   .sql(' ')
                    .visit(pattern);
 
                 break;

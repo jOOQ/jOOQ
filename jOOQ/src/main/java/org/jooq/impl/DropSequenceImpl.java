@@ -109,10 +109,10 @@ class DropSequenceImpl extends AbstractQuery implements
 
     private void accept0(Context<?> ctx) {
         ctx.start(DROP_SEQUENCE_SEQUENCE)
-           .keyword("drop sequence").sql(" ");
+           .keyword("drop sequence").sql(' ');
 
         if (ifExists && supportsIfExists(ctx))
-            ctx.keyword("if exists").sql(" ");
+            ctx.keyword("if exists").sql(' ');
 
         ctx.visit(sequence)
            .end(DROP_SEQUENCE_SEQUENCE);

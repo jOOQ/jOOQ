@@ -250,20 +250,20 @@ class Function<T> extends AbstractField<T> implements
         ctx.visit(arguments.get(0));
 
         if (arguments.size() > 1) {
-            ctx.sql(")"); // CONCAT
+            ctx.sql(')'); // CONCAT
         }
 
-        ctx.sql(")"); // XMLTEXT
+        ctx.sql(')'); // XMLTEXT
 
         if (!withinGroupOrderBy.isEmpty()) {
-            ctx.sql(" ").keyword("order by").sql(" ")
+            ctx.sql(' ').keyword("order by").sql(' ')
                    .visit(withinGroupOrderBy);
         }
 
-        ctx.sql(")"); // XMLAGG
-        ctx.sql(" ").keyword("as").sql(" ");
+        ctx.sql(')'); // XMLAGG
+        ctx.sql(' ').keyword("as").sql(' ');
         ctx.sql(DB2DataType.VARCHAR.getCastTypeName());
-        ctx.sql(")"); // XMLSERIALIZE
+        ctx.sql(')'); // XMLSERIALIZE
 
         if (arguments.size() > 1) {
             ctx.sql(", ");
@@ -271,7 +271,7 @@ class Function<T> extends AbstractField<T> implements
             // The separator is of this form: [', '].
             // The example has length 4
             ctx.sql(arguments.get(1).toString().length() - 1);
-            ctx.sql(")"); // SUBSTR
+            ctx.sql(')'); // SUBSTR
         }
     }
 
@@ -281,10 +281,10 @@ class Function<T> extends AbstractField<T> implements
      */
     final void toSQLStringAgg(Context<?> ctx) {
         toSQLFunctionName(ctx);
-        ctx.sql("(");
+        ctx.sql('(');
 
         if (distinct) {
-            ctx.keyword("distinct").sql(" ");
+            ctx.keyword("distinct").sql(' ');
         }
 
         // The explicit cast is needed in Postgres
@@ -299,11 +299,11 @@ class Function<T> extends AbstractField<T> implements
         }
 
         if (!withinGroupOrderBy.isEmpty()) {
-            ctx.sql(" ").keyword("order by").sql(" ")
+            ctx.sql(' ').keyword("order by").sql(' ')
                    .visit(withinGroupOrderBy);
         }
 
-        ctx.sql(")");
+        ctx.sql(')');
     }
 
     /**
@@ -311,36 +311,36 @@ class Function<T> extends AbstractField<T> implements
      */
     final void toSQLGroupConcat(Context<?> ctx) {
         toSQLFunctionName(ctx);
-        ctx.sql("(");
+        ctx.sql('(');
 
         if (distinct) {
-            ctx.keyword("distinct").sql(" ");
+            ctx.keyword("distinct").sql(' ');
         }
 
         ctx.visit(arguments.get(0));
 
         if (!withinGroupOrderBy.isEmpty()) {
-            ctx.sql(" ").keyword("order by").sql(" ")
+            ctx.sql(' ').keyword("order by").sql(' ')
                    .visit(withinGroupOrderBy);
         }
 
         if (arguments.size() > 1) {
-            ctx.sql(" ").keyword("separator").sql(" ")
+            ctx.sql(' ').keyword("separator").sql(' ')
                    .visit(arguments.get(1));
         }
 
-        ctx.sql(")");
+        ctx.sql(')');
     }
 
     final void toSQLFilterClause(Context<?> ctx) {
         if (filter != null && POSTGRES_9_4.precedes(ctx.dialect())) {
-            ctx.sql(" ")
+            ctx.sql(' ')
                .keyword("filter")
                .sql(" (")
                .keyword("where")
-               .sql(" ")
+               .sql(' ')
                .visit(filter)
-               .sql(")");
+               .sql(')');
         }
     }
 
@@ -356,9 +356,9 @@ class Function<T> extends AbstractField<T> implements
             return;
 
 
-        ctx.sql(" ")
+        ctx.sql(' ')
            .keyword("over")
-           .sql(" ")
+           .sql(' ')
            .visit(window);
     }
 
@@ -404,12 +404,12 @@ class Function<T> extends AbstractField<T> implements
      */
     final void toSQLKeepDenseRankOrderByClause(Context<?> ctx) {
         if (!keepDenseRankOrderBy.isEmpty()) {
-            ctx.sql(" ").keyword("keep")
+            ctx.sql(' ').keyword("keep")
                .sql(" (").keyword("dense_rank")
-               .sql(" ").keyword(first ? "first" : "last")
-               .sql(" ").keyword("order by")
-               .sql(" ").visit(keepDenseRankOrderBy)
-               .sql(")");
+               .sql(' ').keyword(first ? "first" : "last")
+               .sql(' ').keyword("order by")
+               .sql(' ').visit(keepDenseRankOrderBy)
+               .sql(')');
         }
     }
 
@@ -418,10 +418,10 @@ class Function<T> extends AbstractField<T> implements
      */
     final void toSQLWithinGroupClause(Context<?> ctx) {
         if (!withinGroupOrderBy.isEmpty()) {
-            ctx.sql(" ").keyword("within group")
+            ctx.sql(' ').keyword("within group")
                .sql(" (").keyword("order by")
-               .sql(" ").visit(withinGroupOrderBy)
-               .sql(")");
+               .sql(' ').visit(withinGroupOrderBy)
+               .sql(')');
         }
     }
 
@@ -430,17 +430,17 @@ class Function<T> extends AbstractField<T> implements
      */
     final void toSQLArguments(Context<?> ctx) {
         toSQLFunctionName(ctx);
-        ctx.sql("(");
+        ctx.sql('(');
 
         if (distinct) {
             ctx.keyword("distinct");
 
             // [#2883] PostgreSQL can use the DISTINCT keyword with formal row value expressions.
             if (ctx.family() == POSTGRES && arguments.size() > 1) {
-                ctx.sql("(");
+                ctx.sql('(');
             }
             else {
-                ctx.sql(" ");
+                ctx.sql(' ');
             }
         }
 
@@ -461,7 +461,7 @@ class Function<T> extends AbstractField<T> implements
 
         if (distinct) {
             if (ctx.family() == POSTGRES && arguments.size() > 1) {
-                ctx.sql(")");
+                ctx.sql(')');
             }
         }
 
@@ -473,7 +473,7 @@ class Function<T> extends AbstractField<T> implements
             else
             /* [/pro] */
             {
-                ctx.sql(" ").keyword("ignore nulls");
+                ctx.sql(' ').keyword("ignore nulls");
             }
         }
         else if (respectNulls) {
@@ -484,11 +484,11 @@ class Function<T> extends AbstractField<T> implements
             else
             /* [/pro] */
             {
-                ctx.sql(" ").keyword("respect nulls");
+                ctx.sql(' ').keyword("respect nulls");
             }
         }
 
-        ctx.sql(")");
+        ctx.sql(')');
     }
 
     final void toSQLFunctionName(Context<?> ctx) {

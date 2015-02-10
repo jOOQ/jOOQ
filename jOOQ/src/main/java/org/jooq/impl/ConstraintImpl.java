@@ -151,32 +151,32 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         ctx.keyword("constraint")
-           .sql(" ")
+           .sql(' ')
            .visit(name);
 
         if (ctx.data(DATA_DROP_CONSTRAINT) == null) {
             boolean qualify = ctx.qualify();
 
             if (unique != null) {
-                ctx.sql(" ")
+                ctx.sql(' ')
                    .keyword("unique")
                    .sql(" (")
                    .qualify(false)
                    .visit(new QueryPartList<Field<?>>(unique))
                    .qualify(qualify)
-                   .sql(")");
+                   .sql(')');
             }
             else if (primaryKey != null) {
-                ctx.sql(" ")
+                ctx.sql(' ')
                    .keyword("primary key")
                    .sql(" (")
                    .qualify(false)
                    .visit(new QueryPartList<Field<?>>(primaryKey))
                    .qualify(qualify)
-                   .sql(")");
+                   .sql(')');
             }
             else if (foreignKey != null) {
-                ctx.sql(" ")
+                ctx.sql(' ')
                    .keyword("foreign key")
                    .sql(" (")
                    .qualify(false)
@@ -184,30 +184,30 @@ implements
                    .qualify(qualify)
                    .sql(") ")
                    .keyword("references")
-                   .sql(" ")
+                   .sql(' ')
                    .visit(referencesTable)
                    .sql(" (")
                    .qualify(false)
                    .visit(new QueryPartList<Field<?>>(references))
                    .qualify(qualify)
-                   .sql(")");
+                   .sql(')');
 
                 if (onDelete != null)
-                    ctx.sql(" ").keyword("on delete")
-                       .sql(" ").keyword(onDelete.sql);
+                    ctx.sql(' ').keyword("on delete")
+                       .sql(' ').keyword(onDelete.sql);
 
                 if (onUpdate != null)
-                    ctx.sql(" ").keyword("on update")
-                       .sql(" ").keyword(onUpdate.sql);
+                    ctx.sql(' ').keyword("on update")
+                       .sql(' ').keyword(onUpdate.sql);
             }
             else if (check != null) {
-                ctx.sql(" ")
+                ctx.sql(' ')
                    .keyword("check")
                    .sql(" (")
                    .qualify(false)
                    .visit(check)
                    .qualify(qualify)
-                   .sql(")");
+                   .sql(')');
             }
         }
     }

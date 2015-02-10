@@ -227,9 +227,9 @@ class RowSubqueryCondition extends AbstractCondition {
             boolean subquery = ctx.subquery();
 
             ctx.visit(left)
-               .sql(" ")
+               .sql(' ')
                .keyword(comparator.toSQL())
-               .sql(" ")
+               .sql(' ')
                .sql(     parentheses ? "(" : "")
                .sql(extraParentheses ? "(" : "");
             ctx.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true);

@@ -157,7 +157,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                     ctx.formatSeparator()
                        .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
                        .keyword("on duplicate key update")
-                       .sql(" ")
+                       .sql(' ')
                        .visit(updateMap)
                        .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
 
@@ -211,7 +211,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                     ctx.formatSeparator()
                        .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
                        .keyword("on duplicate key update")
-                       .sql(" ")
+                       .sql(' ')
                        .visit(update)
                        .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
 
@@ -264,18 +264,18 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
         ctx.start(INSERT_INSERT_INTO)
            .keyword("insert")
-           .sql(" ")
+           .sql(' ')
            // [#1295] MySQL natively supports the IGNORE keyword
            .keyword((onDuplicateKeyIgnore && asList(MARIADB, MYSQL).contains(ctx.configuration().dialect())) ? "ignore " : "")
            .keyword("into")
-           .sql(" ")
+           .sql(' ')
            .declareTables(true)
            .visit(getInto())
            .declareTables(declareTables);
 
         // [#1506] with DEFAULT VALUES, we might not have any columns to render
         if (insertMaps.isExecutable()) {
-            ctx.sql(" ");
+            ctx.sql(' ');
             insertMaps.insertMaps.get(0).toSQLReferenceKeys(ctx);
         }
 
@@ -292,7 +292,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 case DERBY:
                 case MARIADB:
                 case MYSQL:
-                    ctx.sql(" ").keyword("values").sql("(");
+                    ctx.sql(' ').keyword("values").sql('(');
 
                     int count = getInto().fields().length;
                     String separator = "";
@@ -303,11 +303,11 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                         separator = ", ";
                     }
 
-                    ctx.sql(")");
+                    ctx.sql(')');
                     break;
 
                 default:
-                    ctx.sql(" ").keyword("default values");
+                    ctx.sql(' ').keyword("default values");
                     break;
             }
         }

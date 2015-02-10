@@ -108,17 +108,17 @@ class CreateIndexImpl extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         ctx.keyword("create index")
-           .sql(" ")
+           .sql(' ')
            .visit(name(index))
-           .sql(" ")
+           .sql(' ')
            .keyword("on")
-           .sql(" ")
+           .sql(' ')
            .visit(table)
-           .sql("(")
+           .sql('(')
            .qualify(false)
            .visit(new QueryPartList<QueryPart>(fields))
            .qualify(true)
-           .sql(")");
+           .sql(')');
     }
 
     @Override

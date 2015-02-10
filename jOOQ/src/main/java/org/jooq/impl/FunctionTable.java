@@ -84,7 +84,7 @@ class FunctionTable<R extends Record> extends AbstractTable<R> {
     public final void accept(Context<?> ctx) {
         switch (ctx.configuration().dialect()) {
             case HSQLDB: {
-                ctx.keyword("table(").visit(function).sql(")");
+                ctx.keyword("table(").visit(function).sql(')');
                 break;
             }
 

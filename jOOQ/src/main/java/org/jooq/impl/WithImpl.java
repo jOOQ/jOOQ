@@ -177,11 +177,11 @@ class WithImpl extends AbstractQueryPart implements WithStep, WithAsStep {
     @Override
     public final void accept(Context<?> ctx) {
         ctx.keyword("with")
-           .sql(" ");
+           .sql(' ');
 
         if (recursive && !asList(DB2, ORACLE, SQLSERVER).contains(ctx.configuration().dialect().family()))
             ctx.keyword("recursive")
-               .sql(" ");
+               .sql(' ');
 
         ctx.declareCTE(true)
            .visit(cte)

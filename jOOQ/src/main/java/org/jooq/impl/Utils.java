@@ -2551,7 +2551,7 @@ final class Utils {
             /* [pro] */
             case DB2: {
                 ctx.keyword("begin").formatIndentStart().formatSeparator()
-                   .keyword("declare continue handler for sqlstate").sql(" '42704' ").keyword("begin end").sql(";").formatSeparator()
+                   .keyword("declare continue handler for sqlstate").sql(" '42704' ").keyword("begin end").sql(';').formatSeparator()
                    .keyword("execute immediate").sql(" '");
 
                 break;
@@ -2623,10 +2623,10 @@ final class Utils {
                 ctx.sql("';").formatIndentEnd().formatSeparator()
                    .keyword("exception").formatIndentStart().formatSeparator()
                    .keyword("when others then").formatIndentStart().formatSeparator()
-                   .keyword("if").sql(" sqlerrm ").keyword("like").sql(" '" + ora + "%' ").keyword("then null").sql(";").formatSeparator()
-                   .keyword("else raise").sql(";").formatSeparator()
-                   .keyword("end if").sql(";").formatIndentEnd().formatIndentEnd().formatSeparator()
-                   .keyword("end").sql(";");
+                   .keyword("if").sql(" sqlerrm ").keyword("like").sql(" '" + ora + "%' ").keyword("then null").sql(';').formatSeparator()
+                   .keyword("else raise").sql(';').formatSeparator()
+                   .keyword("end if").sql(';').formatIndentEnd().formatIndentEnd().formatSeparator()
+                   .keyword("end").sql(';');
 
                 break;
             }
@@ -2635,7 +2635,7 @@ final class Utils {
                 ctx.formatIndentEnd().formatSeparator()
                    .keyword("end try").formatSeparator()
                    .keyword("begin catch").formatIndentStart().formatSeparator()
-                   .keyword("if").sql(" error_number() != 3701 ").keyword("throw").sql(";").formatIndentEnd().formatSeparator()
+                   .keyword("if").sql(" error_number() != 3701 ").keyword("throw").sql(';').formatIndentEnd().formatSeparator()
                    .keyword("end catch");
 
                 break;
@@ -2662,7 +2662,7 @@ final class Utils {
 
         if (type.hasLength()) {
             if (type.length() > 0) {
-                ctx.keyword(typeName).sql("(").sql(type.length()).sql(")");
+                ctx.keyword(typeName).sql('(').sql(type.length()).sql(')');
             }
 
             // Some databases don't allow for length-less VARCHAR, VARBINARY types
@@ -2678,10 +2678,10 @@ final class Utils {
         }
         else if (type.hasPrecision() && type.precision() > 0) {
             if (type.hasScale()) {
-                ctx.keyword(typeName).sql("(").sql(type.precision()).sql(", ").sql(type.scale()).sql(")");
+                ctx.keyword(typeName).sql('(').sql(type.precision()).sql(", ").sql(type.scale()).sql(')');
             }
             else {
-                ctx.keyword(typeName).sql("(").sql(type.precision()).sql(")");
+                ctx.keyword(typeName).sql('(').sql(type.precision()).sql(')');
             }
         }
         else {

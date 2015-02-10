@@ -89,11 +89,11 @@ class Limit extends AbstractQueryPart {
                 context.castMode(NEVER)
                        .formatSeparator()
                        .keyword("limit")
-                       .sql(" ").visit(numberOfRows);
+                       .sql(' ').visit(numberOfRows);
 
                 if (!offsetZero())
-                    context.sql(" ").keyword("offset")
-                           .sql(" ").visit(offsetOrZero);
+                    context.sql(' ').keyword("offset")
+                           .sql(' ').visit(offsetOrZero);
 
                 context.castMode(castMode);
 
@@ -106,7 +106,7 @@ class Limit extends AbstractQueryPart {
                 context.castMode(NEVER)
                        .formatSeparator()
                        .keyword("limit")
-                       .sql(" ").visit(offsetOrZero)
+                       .sql(' ').visit(offsetOrZero)
                        .sql(", ").visit(numberOfRows)
                        .castMode(castMode);
 
@@ -119,9 +119,9 @@ class Limit extends AbstractQueryPart {
                 context.castMode(NEVER)
                        .formatSeparator()
                        .keyword("rows")
-                       .sql(" ").visit(getLowerRownum().add(inline(1)))
-                       .sql(" ").keyword("to")
-                       .sql(" ").visit(getUpperRownum())
+                       .sql(' ').visit(getLowerRownum().add(inline(1)))
+                       .sql(' ').keyword("to")
+                       .sql(' ').visit(getUpperRownum())
                        .castMode(castMode);
 
                 break;
@@ -137,10 +137,10 @@ class Limit extends AbstractQueryPart {
                 context.castMode(NEVER)
                        .formatSeparator()
                        .keyword("offset")
-                       .sql(" ").visit(offsetOrZero)
-                       .sql(" ").keyword("rows fetch next")
-                       .sql(" ").visit(numberOfRows)
-                       .sql(" ").keyword("rows only")
+                       .sql(' ').visit(offsetOrZero)
+                       .sql(' ').keyword("rows fetch next")
+                       .sql(' ').visit(numberOfRows)
+                       .sql(' ').keyword("rows only")
                        .castMode(castMode);
 
                 break;
@@ -154,10 +154,10 @@ class Limit extends AbstractQueryPart {
                 context.paramType(INLINED)
                        .formatSeparator()
                        .keyword("offset")
-                       .sql(" ").visit(offsetOrZero)
-                       .sql(" ").keyword("fetch first")
-                       .sql(" ").visit(numberOfRows)
-                       .sql(" ").keyword("rows only")
+                       .sql(' ').visit(offsetOrZero)
+                       .sql(' ').keyword("fetch first")
+                       .sql(' ').visit(numberOfRows)
+                       .sql(' ').keyword("rows only")
                        .paramType(paramType);
 
                 break;
@@ -170,11 +170,11 @@ class Limit extends AbstractQueryPart {
 
                 if (!offsetZero())
                     context.keyword("skip")
-                           .sql(" ").visit(offsetOrZero)
-                           .sql(" ");
+                           .sql(' ').visit(offsetOrZero)
+                           .sql(' ');
 
                 context.keyword("first")
-                       .sql(" ").visit(numberOfRows)
+                       .sql(' ').visit(numberOfRows)
                        .paramType(paramType);
 
                 break;
@@ -185,11 +185,11 @@ class Limit extends AbstractQueryPart {
             case SYBASE: {
                 context.paramType(INLINED)
                        .keyword("top")
-                       .sql(" ").visit(numberOfRows);
+                       .sql(' ').visit(numberOfRows);
 
                 if (!offsetZero())
-                    context.sql(" ").keyword("start at")
-                           .sql(" ").visit(offsetPlusOne);
+                    context.sql(' ').keyword("start at")
+                           .sql(' ').visit(offsetPlusOne);
 
                 context.paramType(paramType);
 
@@ -210,8 +210,8 @@ class Limit extends AbstractQueryPart {
                 context.paramType(INLINED)
                        .formatSeparator()
                        .keyword("fetch first")
-                       .sql(" ").visit(numberOfRows)
-                       .sql(" ").keyword("rows only")
+                       .sql(' ').visit(numberOfRows)
+                       .sql(' ').keyword("rows only")
                        .paramType(paramType);
 
                 break;
@@ -228,7 +228,7 @@ class Limit extends AbstractQueryPart {
                 // SQL Server and Sybase don't allow bind variables in the TOP n clause
                 context.paramType(INLINED)
                        .keyword("top")
-                       .sql(" ").visit(numberOfRows)
+                       .sql(' ').visit(numberOfRows)
                        .paramType(paramType);
 
                 break;
@@ -240,12 +240,12 @@ class Limit extends AbstractQueryPart {
                 context.castMode(NEVER)
                        .formatSeparator()
                        .keyword("limit")
-                       .sql(" ").visit(numberOfRows);
+                       .sql(' ').visit(numberOfRows);
 
 
                 if (!offsetZero())
-                    context.sql(" ").keyword("offset")
-                           .sql(" ").visit(offsetOrZero);
+                    context.sql(' ').keyword("offset")
+                           .sql(' ').visit(offsetOrZero);
 
                 context.castMode(castMode);
 

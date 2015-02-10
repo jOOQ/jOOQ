@@ -616,64 +616,6 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
          * continue to show your love and our brand to everyone involved in your software simply in the
          * log files when you load jOOQ. Please don't remove our logo.
          *
-         *   Everytime someone removes our logo, god kills a kitten
-         *
-         * Some more ASCII-art to illustrate this:
-         *
-         * ---:-----------------------------------------------------------------------------------------
-         * ----------///::------------------------------------------------------------------------------
-         * ---------+yssso/-----------------------------------------------------------------------------
-         * :::-----:syyssso:--------------------------------------+oso:---------------------------------
-         * ::-----:oysooosss+----------------------------------:ooyyyys:--------------------------------
-         * :::----/sysoooooos+/------------------------------:/syysssso:.-------------------------------
-         * ::::---/yyyysooossyy/-::-------------------------:shyysooo++o:.---------------------:::--:--:
-         * ::::---:syhyyyyyyyyyyy/:--:-.-::/:::/:::-:::::-:oyhyssoo++//++.....------------------::::::::
-         * --------oyhhhdhhhhhyhh+`:+o+++sssssyossooooo/+oyhyssssso++/+o/`````..----::::::-:::::::::::::
-         * :------:oyhhdddddhhhyyo-.sshdysoyysyoossdhyyssyhyyyyyysoooos+-`   ``..----:::::::::::::::::::
-         * :------/syhddddddhhhsso/:ooyhyhhhyyhhyhsdhhyoyyyyysyyyyyysss/``    ```-----::::::::::::::::::
-         * -------/shmmmddhhyyhsoo/+o+hdyhddhomyhhyhyhysssyhhyyyyyhhsoo:``      `..----:::::::::::::::::
-         * :------/yhmmmmho++syhyyhddmNNhmNmdhdyyhNdhddhsssyysyysshyyy+-.`       `.-----::::::::--::::::
-         * -------+yhmNmdhyhhhydmhhmmNNNdNNNdmdddNNdmdddyys+++sysshhhhh```       `..-------------:::::::
-         * -------:yhNNmddddmmmhdhhddNNNdmNNmmhdNNdmmdhdhdhyy++ooyddhdh`````    `..---------------::::::
-         * ------.:yhddhddmmmmdmddhddmNMNdmNNmNNNmdmdhhdddddhysoshdddmh.```` ````.------------------::::
-         * -----.`/yyyyhdmdhhhdmdhydmddNMNNNNmMNdddyyhhhhyhhhdhysyddmdy` ```..``..----------------------
-         * -----.-+syhhdddyyyhdmmysdMdshNNNNNNdshNmssyyhyyyyhddhsosssso  ```...``..-------------::------
-         * :-----:oyhdddyysyyyhhdyohNyoshmmmNNo+hNh+ohdhysoosyyyys++/::  ```...```...-----------:-------
-         * :------odmdmdyssyyyyyysoshs+shhmdhh+/ydo+osssso++oosyhhsso/-  ```.....```..------------------
-         * -----:-+hmNNmhhddmNNNNmdh+++syddhys++ooosooo++//::+oyhhhyys:  ````....```..------------------
-         * -------:+ymNNNNoymNNNNNNMs++sshhyo+//smNmNmdhdhys/:+syhhhh+. ``  ```...```.------------------
-         * ---------:ydhhdssdNMNNNMMms+osyyo+/+yNMNmNNmmNhohdhhdddmms. ```   `.--.```...----------------
-         * ----------oyysymdhdmmmNNNNhssssoo+/hmNMMNNNNNh+:oyyyhyyhs-` ```    ``.-.```...---------------
-         * --------:/ssssydmmhyoosyhNmysssoo+omdhhhdmddhsosys///+o/.`  ````    `.::.``...---------------
-         * --------/osyydmyhmmdhysydmdhyysoooyNdo///+oshdhs+/://+/.`   ````     `::.``...---------------
-         * ------.:osssyhhhhdddhyyyydddhhyyysyyhhsshhhhdyo+//+o+--.``   `       `::.````.---------------
-         * -----::oyhdhhhhyysssyyhhsdNNmmmdddy:oooooyyyyo+oss/:----`    ``      `::-````..--------------
-         * --..-:/oyhdmddddhysosyysoshmMMMNmho:oo++--//:/+/::::/oo+-`   ``     ``:::-.``..--------------
-         * ----:osyhddmNNNNNmmdosysssohNMNmy+/++///..-::+oo+//oyys/-`          `.::/-.```..-------------
-         * ----:+ossyyyhmNNNMNNmhsyyyhhmNmdyssoso+::/+shddddhds+++:`          `.-++/-`  ``.-------------
-         * ---://+ssyhddddmNMMMMNddhsyhhdddhyyo+//+hhddhmmmmmddhyyo/-`        `.-+o+:.   ``.------------
-         * .-::/osshdddmmmmmNMMNNmddhyysssoooosyyhddddmmmNmmdhyysso+-        `.-/oo+:-``   `..----------
-         * .-://+oyhhhhdddddNNNdhhhhddhyyyyyyhhdddddddmNhho/:.::::..``      `.-/+sso/:.`   ``..---------
-         * .-://+syhhdmdddhdmNdoosyhddhhhhhhhhhddddhhhhy+/-.````````      ``.-:/+ooso+-``   ``..--------
-         * ..--:oydhhddddhhhhho-::+syhhhhhhyyhhhddhhyyso/----`````        `.::/++osyso/.`     ``..------
-         * ..-:+yhhhdhddhyyyyo:---::osyhhhyyyhhhhhhso/::-...````          ./ooooosyyys/-```    ``..-----
-         * `.-/oyyhdddddhyyyys/.----::+osyssyhhhyy+-..``..````            ./yyyhhyyyso/-```     ``..----
-         * ..-/oyyhhhdddhyyhhhy...-----:/ooossss+-.``....````             ./hdddhyysso/-..``     ``..---
-         * ..-/+oyyyyhhhhyyhdmy........--://+ooo-```.::::-``             `.:yhhhhyssso+//::.``    ``.---
-         * `.:+osyyyyhhhhhhyhmo...............+s+-....`.`:-             ``.-:/oyyyyysso++//-...`  ```..-
-         * ``:ooysyyhhhhhhhhhh/...............hmmdh+/--:`..`           ``....--:/oooooso++/::::-`````..-
-         * ``:ssyyyhhhhhdddhdh+........--...``dmmmdsoo+/:.``          ``......-------:/+ossoo+/:``````.-
-         * ``/yysyhhyhhhddddmms......------..`shdddmdyss+.``.`      ```.....--...-....:/syyyyso/-`````..
-         * ``+yyyyhhhhdddmNNNd+.....--------..-:sNNdmmddho/-ss:   ```......---------.-/+shhhhhso/:.````.
-         * `.omdyyyhyhhdddNmh+---------::---..:/sdmmNNNNdhyhds-```.........-----------/+syhhhhyyoo:`````
-         * --:oshyhhhdhddmms:.-.------:::::---:/shhhhdmdyo+/:` ``..--------------:::--/+yyhhhhyyso+-` ``
-         * :-.`.ydmmdmmmmh/-...---------::----::+yhhhhhhyso:. ```...-----------:::::-:/+yhhhhhyyyss+-  `
-         * ...``-/syoyyo:..........-------------:+ohhhdddhs/` `````...------::::::::-:/+yhhhhhhhhyys+```
-         * .....`..------...........-------------:/syhhhyo-`````````...----::--:::----:/oyhhdddhhhys+.``
-         * .......------............---------------:/+oo:-```````````.....--------------:+oyhdhhhho:-.`.
-         * --..-----:----------------------------------:-........`````````....-----------:/+osssso/-....
-         * :-------:::--------::--------:::---------.......------...````````...-----------::::::::------
-         *
          * Thank you very much! If you absolutely must remove this logo, and can live with the guilt
          * and shame, below is the system property that deactivates it.
          *

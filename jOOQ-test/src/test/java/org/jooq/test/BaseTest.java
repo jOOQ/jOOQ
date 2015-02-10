@@ -40,6 +40,7 @@
  */
 package org.jooq.test;
 
+import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
 import static org.hamcrest.Matchers.isOneOf;
 import static org.hamcrest.Matchers.not;
@@ -924,6 +925,20 @@ public abstract class BaseTest<
 
     protected final void assumeDialectNotIn(SQLDialect... dialects) {
         Assume.assumeThat(dialect(), not(isOneOf(dialects)));
+    }
+
+    protected final void skipForFamilies(Runnable runnable, SQLDialect... families) {
+        if (asList(families).contains(family()))
+            log.info("Skipping test");
+        else
+            runnable.run();
+    }
+
+    protected final void skipForDialects(Runnable runnable, SQLDialect... families) {
+        if (asList(families).contains(dialect()))
+            log.info("Skipping test");
+        else
+            runnable.run();
     }
 
     @SuppressWarnings("unchecked")

@@ -504,25 +504,29 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(0, create().fetchCount(table(name("t2"))));
         });
 
-        foreignKeys(() -> {
-            create().alterTable("t2").add(
-                constraint("fk").foreignKey("w").references("t1", "v").onDeleteRestrict()
-            ).execute();
+        skipForFamilies(() -> {
+            foreignKeys(() -> {
+                create().alterTable("t2").add(
+                    constraint("fk").foreignKey("w").references("t1", "v").onDeleteRestrict()
+                ).execute();
 
-            assertThrows(DataAccessException.class, () -> {
-                create().delete(table(name("t1"))).execute();
+                assertThrows(DataAccessException.class, () -> {
+                    create().delete(table(name("t1"))).execute();
+                });
             });
-        });
+        }, ORACLE);
 
-        foreignKeys(() -> {
-            create().alterTable("t2").add(
-                constraint("fk").foreignKey("w").references("t1", "v").onDeleteNoAction()
-            ).execute();
+        skipForFamilies(() -> {
+            foreignKeys(() -> {
+                create().alterTable("t2").add(
+                    constraint("fk").foreignKey("w").references("t1", "v").onDeleteNoAction()
+                ).execute();
 
-            assertThrows(DataAccessException.class, () -> {
-                create().delete(table(name("t1"))).execute();
+                assertThrows(DataAccessException.class, () -> {
+                    create().delete(table(name("t1"))).execute();
+                });
             });
-        });
+        }, ORACLE);
 
         foreignKeys(() -> {
             create().alterTable("t2").alterColumn("w").defaultValue(-1).execute();
@@ -545,56 +549,68 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertNull(create().fetchOne(table(name("t2"))).getValue(0));
         });
 
-        foreignKeys(() -> {
-            create().alterTable("t2").add(
-                constraint("fk").foreignKey("w").references("t1", "v").onUpdateCascade()
-            ).execute();
+        skipForFamilies(() -> {
+            foreignKeys(() -> {
+                create().alterTable("t2").add(
+                    constraint("fk").foreignKey("w").references("t1", "v").onUpdateCascade()
+                ).execute();
 
-            create().update(table(name("t1"))).set(field(name("v")), 2).execute();
-            assertEquals(2, create().fetchOne(table(name("t1"))).getValue(0, int.class));
-            assertEquals(2, create().fetchOne(table(name("t2"))).getValue(0, int.class));
-        });
-
-        foreignKeys(() -> {
-            create().alterTable("t2").add(
-                constraint("fk").foreignKey("w").references("t1", "v").onUpdateRestrict()
-            ).execute();
-
-            assertThrows(DataAccessException.class, () -> {
                 create().update(table(name("t1"))).set(field(name("v")), 2).execute();
+                assertEquals(2, create().fetchOne(table(name("t1"))).getValue(0, int.class));
+                assertEquals(2, create().fetchOne(table(name("t2"))).getValue(0, int.class));
             });
-        });
+        }, ORACLE);
 
-        foreignKeys(() -> {
-            create().alterTable("t2").add(
-                constraint("fk").foreignKey("w").references("t1", "v").onUpdateNoAction()
-            ).execute();
 
-            assertThrows(DataAccessException.class, () -> {
+        skipForFamilies(() -> {
+            foreignKeys(() -> {
+                create().alterTable("t2").add(
+                    constraint("fk").foreignKey("w").references("t1", "v").onUpdateRestrict()
+                ).execute();
+
+                assertThrows(DataAccessException.class, () -> {
+                    create().update(table(name("t1"))).set(field(name("v")), 2).execute();
+                });
+            });
+        }, ORACLE);
+
+
+        skipForFamilies(() -> {
+            foreignKeys(() -> {
+                create().alterTable("t2").add(
+                    constraint("fk").foreignKey("w").references("t1", "v").onUpdateNoAction()
+                ).execute();
+
+                assertThrows(DataAccessException.class, () -> {
+                    create().update(table(name("t1"))).set(field(name("v")), 2).execute();
+                });
+            });
+        }, ORACLE);
+
+        skipForFamilies(() -> {
+            foreignKeys(() -> {
+                create().alterTable("t2").alterColumn("w").defaultValue(-1).execute();
+                create().alterTable("t2").add(
+                    constraint("fk").foreignKey("w").references("t1", "v").onUpdateSetDefault()
+                ).execute();
+
                 create().update(table(name("t1"))).set(field(name("v")), 2).execute();
+                assertEquals(2, create().fetchOne(table(name("t1"))).getValue(0, int.class));
+                assertEquals(-1, create().fetchOne(table(name("t2"))).getValue(0, int.class));
             });
-        });
+        }, ORACLE);
 
-        foreignKeys(() -> {
-            create().alterTable("t2").alterColumn("w").defaultValue(-1).execute();
-            create().alterTable("t2").add(
-                constraint("fk").foreignKey("w").references("t1", "v").onUpdateSetDefault()
-            ).execute();
+        skipForFamilies(() -> {
+            foreignKeys(() -> {
+                create().alterTable("t2").add(
+                    constraint("fk").foreignKey("w").references("t1", "v").onUpdateSetNull()
+                ).execute();
 
-            create().update(table(name("t1"))).set(field(name("v")), 2).execute();
-            assertEquals(2, create().fetchOne(table(name("t1"))).getValue(0, int.class));
-            assertEquals(-1, create().fetchOne(table(name("t2"))).getValue(0, int.class));
-        });
-
-        foreignKeys(() -> {
-            create().alterTable("t2").add(
-                constraint("fk").foreignKey("w").references("t1", "v").onUpdateSetNull()
-            ).execute();
-
-            create().update(table(name("t1"))).set(field(name("v")), 2).execute();
-            assertEquals(2, create().fetchOne(table(name("t1"))).getValue(0, int.class));
-            assertNull(create().fetchOne(table(name("t2"))).getValue(0));
-        });
+                create().update(table(name("t1"))).set(field(name("v")), 2).execute();
+                assertEquals(2, create().fetchOne(table(name("t1"))).getValue(0, int.class));
+                assertNull(create().fetchOne(table(name("t2"))).getValue(0));
+            });
+        }, ORACLE);
     }
 
     public void testAlterTableDropConstraint() throws Exception {

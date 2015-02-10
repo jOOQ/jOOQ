@@ -40,6 +40,24 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.ACCESS;
+import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HANA;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INFORMIX;
+import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
+
 
 /**
  * The step in the {@link Constraint} construction DSL API that allows for
@@ -53,14 +71,14 @@ public interface ConstraintForeignKeyOnStep extends ConstraintFinalStep {
      * Add an <code>ON DELETE NO ACTION</code> clause to the
      * <code>FOREIGN KEY</code> constraint.
      */
-    @Support
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     ConstraintFinalStep onDeleteNoAction();
 
     /**
      * Add an <code>ON DELETE RESTRICT</code> clause to the
      * <code>FOREIGN KEY</code> constraint.
      */
-    @Support
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     ConstraintFinalStep onDeleteRestrict();
 
     /**
@@ -81,42 +99,42 @@ public interface ConstraintForeignKeyOnStep extends ConstraintFinalStep {
      * Add an <code>ON DELETE SET DEFAULT</code> clause to the
      * <code>FOREIGN KEY</code> constraint.
      */
-    @Support
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     ConstraintFinalStep onDeleteSetDefault();
 
     /**
      * Add an <code>ON UPDATE NO ACTION</code> clause to the
      * <code>FOREIGN KEY</code> constraint.
      */
-    @Support
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     ConstraintFinalStep onUpdateNoAction();
 
     /**
      * Add an <code>ON UPDATE RESTRICT</code> clause to the
      * <code>FOREIGN KEY</code> constraint.
      */
-    @Support
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     ConstraintFinalStep onUpdateRestrict();
 
     /**
      * Add an <code>ON UPDATE CASCADE</code> clause to the
      * <code>FOREIGN KEY</code> constraint.
      */
-    @Support
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     ConstraintFinalStep onUpdateCascade();
 
     /**
      * Add an <code>ON UPDATE SET NULL</code> clause to the
      * <code>FOREIGN KEY</code> constraint.
      */
-    @Support
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     ConstraintFinalStep onUpdateSetNull();
 
     /**
      * Add an <code>ON UPDATE SET DEFAULT</code> clause to the
      * <code>FOREIGN KEY</code> constraint.
      */
-    @Support
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     ConstraintFinalStep onUpdateSetDefault();
 
 }

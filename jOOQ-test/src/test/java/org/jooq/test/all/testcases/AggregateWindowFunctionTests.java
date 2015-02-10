@@ -292,8 +292,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assumeFamilyNotIn(ACCESS, ASE, DB2, DERBY, FIREBIRD, H2, HANA, INFORMIX, INGRES, MARIADB, MYSQL, SQLITE, SQLSERVER);
         assumeDialectNotIn(POSTGRES_9_3);
 
-        assertEquals(2.5, create().fetchValue(select(median(TBook_ID())).from(TBook())).doubleValue());
-        assertEquals(2, create().fetchValue(select(median(TBook_ID()).filterWhere(TBook_ID().ne(4))).from(TBook())).intValue());
+        // Round this, as HSQLDB calculates MEDIAN() wrong
+        // https://sourceforge.net/p/hsqldb/bugs/1383/
+        // https://sourceforge.net/p/hsqldb/bugs/1384/
+        if (family() == HSQLDB) {
+            assertEquals(2, create().fetchValue(select(median(TBook_ID())).from(TBook())).intValue());
+            assertEquals(1, create().fetchValue(select(median(TBook_ID()).filterWhere(TBook_ID().ne(4))).from(TBook())).intValue());
+        }
+        else {
+            assertEquals(2.5, create().fetchValue(select(median(TBook_ID())).from(TBook())).doubleValue());
+            assertEquals(2, create().fetchValue(select(median(TBook_ID()).filterWhere(TBook_ID().ne(4))).from(TBook())).intValue());
+        }
     }
 
     public void testAggregateFunction_EVERY() throws Exception {

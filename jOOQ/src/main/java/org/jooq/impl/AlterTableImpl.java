@@ -433,22 +433,26 @@ class AlterTableImpl extends AbstractQuery implements
             + "\n"
             + "\nSELECT @constraint = name"
             + "\nFROM sys.default_constraints"
-            + "\nWHERE parent_object_id = object_id('" + inlinedTable + "')"
-            + "\nAND parent_column_id = columnproperty(object_id('" + inlinedTable + "'), '" + inlinedAlter + "', 'ColumnId');"
+            + "\nWHERE parent_object_id = object_id({0})"
+            + "\nAND parent_column_id = columnproperty(object_id({0}), {1}, 'ColumnId');"
             + "\n"
             + "\nIF @constraint IS NOT NULL"
             + "\nBEGIN"
-            + "\n  SET @command = 'ALTER TABLE " + inlinedTable + " DROP CONSTRAINT ' + @constraint"
+            + "\n  SET @command = 'ALTER TABLE ' + {0} + ' DROP CONSTRAINT ' + @constraint"
             + "\n  EXECUTE sp_executeSQL @command"
             + "\n"
-            + "\n  SET @command = 'ALTER TABLE " + inlinedTable + " ADD CONSTRAINT ' + @constraint + ' DEFAULT '" + inlinedAlterDefault + "' FOR " + inlinedAlter + "'"
+            + "\n  SET @command = 'ALTER TABLE ' + {0} + ' ADD CONSTRAINT ' + @constraint + ' DEFAULT ' + {2} + ' FOR ' + {1}"
             + "\n  EXECUTE sp_executeSQL @command"
             + "\nEND"
             + "\nELSE"
             + "\nBEGIN"
-            + "\n  SET @command = 'ALTER TABLE " + inlinedTable + " ADD DEFAULT '" + inlinedAlterDefault + "' FOR " + inlinedAlter + "'"
+            + "\n  SET @command = 'ALTER TABLE ' + {0} + ' ADD DEFAULT ' + {2} + ' FOR ' + {1}"
             + "\n  EXECUTE sp_executeSQL @command"
             + "\nEND"
+
+            , inline(inlinedTable)
+            , inline(inlinedAlter)
+            , inline(inlinedAlterDefault)
         ));
     }
     /* [/pro] */

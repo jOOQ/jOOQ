@@ -78,7 +78,7 @@ public interface ConstraintForeignKeyOnStep extends ConstraintFinalStep {
      * Add an <code>ON DELETE RESTRICT</code> clause to the
      * <code>FOREIGN KEY</code> constraint.
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE, SYBASE })
     ConstraintFinalStep onDeleteRestrict();
 
     /**
@@ -113,7 +113,7 @@ public interface ConstraintForeignKeyOnStep extends ConstraintFinalStep {
      * Add an <code>ON UPDATE RESTRICT</code> clause to the
      * <code>FOREIGN KEY</code> constraint.
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE, SYBASE })
     ConstraintFinalStep onUpdateRestrict();
 
     /**

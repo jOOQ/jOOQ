@@ -483,7 +483,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testAlterTableAddConstraint_FOREIGN_KEY() throws Exception {
         foreignKeys(() -> {
             create().alterTable("t2").add(
-                constraint("fk").foreignKey("w").references("t1", "v")
+                constraint("t2_fk").foreignKey("w").references("t1", "v")
             ).execute();
 
             assertThrows(DataAccessException.class, () -> {
@@ -497,7 +497,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testAlterTableAddConstraint_FOREIGN_KEY_ON_CLAUSES() throws Exception {
         foreignKeys(() -> {
             create().alterTable("t2").add(
-                constraint("fk").foreignKey("w").references("t1", "v").onDeleteCascade()
+                constraint("t2_fk").foreignKey("w").references("t1", "v").onDeleteCascade()
             ).execute();
 
             create().delete(table(name("t1"))).execute();
@@ -508,19 +508,19 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         skipForFamilies(() -> {
             foreignKeys(() -> {
                 create().alterTable("t2").add(
-                    constraint("fk").foreignKey("w").references("t1", "v").onDeleteRestrict()
+                    constraint("t2_fk").foreignKey("w").references("t1", "v").onDeleteRestrict()
                 ).execute();
 
                 assertThrows(DataAccessException.class, () -> {
                     create().delete(table(name("t1"))).execute();
                 });
             });
-        }, ORACLE);
+        }, ORACLE, SQLSERVER);
 
         skipForFamilies(() -> {
             foreignKeys(() -> {
                 create().alterTable("t2").add(
-                    constraint("fk").foreignKey("w").references("t1", "v").onDeleteNoAction()
+                    constraint("t2_fk").foreignKey("w").references("t1", "v").onDeleteNoAction()
                 ).execute();
 
                 assertThrows(DataAccessException.class, () -> {
@@ -533,7 +533,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             foreignKeys(() -> {
                 create().alterTable("t2").alterColumn("w").defaultValue(2).execute();
                 create().alterTable("t2").add(
-                    constraint("fk").foreignKey("w").references("t1", "v").onDeleteSetDefault()
+                    constraint("t2_fk").foreignKey("w").references("t1", "v").onDeleteSetDefault()
                 ).execute();
 
                 create().delete(table(name("t1"))).where(field(name("v")).eq(1)).execute();
@@ -544,7 +544,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         foreignKeys(() -> {
             create().alterTable("t2").add(
-                constraint("fk").foreignKey("w").references("t1", "v").onDeleteSetNull()
+                constraint("t2_fk").foreignKey("w").references("t1", "v").onDeleteSetNull()
             ).execute();
 
             create().delete(table(name("t1"))).where(field(name("v")).eq(1)).execute();
@@ -555,7 +555,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         skipForFamilies(() -> {
             foreignKeys(() -> {
                 create().alterTable("t2").add(
-                    constraint("fk").foreignKey("w").references("t1", "v").onUpdateCascade()
+                    constraint("t2_fk").foreignKey("w").references("t1", "v").onUpdateCascade()
                 ).execute();
 
                 create().update(table(name("t1"))).set(field(name("v")), 0).where(field(name("v")).eq(1)).execute();
@@ -568,20 +568,20 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         skipForFamilies(() -> {
             foreignKeys(() -> {
                 create().alterTable("t2").add(
-                    constraint("fk").foreignKey("w").references("t1", "v").onUpdateRestrict()
+                    constraint("t2_fk").foreignKey("w").references("t1", "v").onUpdateRestrict()
                 ).execute();
 
                 assertThrows(DataAccessException.class, () -> {
                     create().update(table(name("t1"))).set(field(name("v")), 2).where(field(name("v")).eq(1)).execute();
                 });
             });
-        }, ORACLE);
+        }, ORACLE, SQLSERVER);
 
 
         skipForFamilies(() -> {
             foreignKeys(() -> {
                 create().alterTable("t2").add(
-                    constraint("fk").foreignKey("w").references("t1", "v").onUpdateNoAction()
+                    constraint("t2_fk").foreignKey("w").references("t1", "v").onUpdateNoAction()
                 ).execute();
 
                 assertThrows(DataAccessException.class, () -> {
@@ -594,7 +594,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             foreignKeys(() -> {
                 create().alterTable("t2").alterColumn("w").defaultValue(2).execute();
                 create().alterTable("t2").add(
-                    constraint("fk").foreignKey("w").references("t1", "v").onUpdateSetDefault()
+                    constraint("t2_fk").foreignKey("w").references("t1", "v").onUpdateSetDefault()
                 ).execute();
 
                 create().update(table(name("t1"))).set(field(name("v")), 0).where(field(name("v")).eq(1)).execute();
@@ -606,7 +606,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         skipForFamilies(() -> {
             foreignKeys(() -> {
                 create().alterTable("t2").add(
-                    constraint("fk").foreignKey("w").references("t1", "v").onUpdateSetNull()
+                    constraint("t2_fk").foreignKey("w").references("t1", "v").onUpdateSetNull()
                 ).execute();
 
                 create().update(table(name("t1"))).set(field(name("v")), 0).where(field(name("v")).eq(1)).execute();

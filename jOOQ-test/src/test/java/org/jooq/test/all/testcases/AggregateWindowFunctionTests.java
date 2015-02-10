@@ -390,7 +390,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testOrderedAggregateFunctions() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, H2, HANA, HSQLDB, INGRES, MARIADB, MYSQL, SQLITE);
+        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, H2, HANA, HSQLDB, INGRES, MARIADB, MYSQL, SQLITE, SQLSERVER);
 
         Record8<BigDecimal, BigDecimal, Integer, Integer, Integer, Integer, Integer, Integer> result =
         create().select(

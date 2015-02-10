@@ -13,6 +13,7 @@ DROP FUNCTION f_tables2()/
 DROP FUNCTION f_tables3()/
 DROP FUNCTION f_tables4(in_id INTEGER)/
 DROP FUNCTION f_tables5 (v1 INTEGER, v2 INTEGER, v3 INTEGER)/
+DROP FUNCTION f_array_tables(in_text IN text[], in_integer IN integer[])/
 DROP FUNCTION f_arrays(in_array IN integer[])/
 DROP FUNCTION f_arrays(in_array IN bigint[])/
 DROP FUNCTION f_arrays(in_array IN text[])/
@@ -788,6 +789,32 @@ BEGIN
     FROM (VALUES(v1, v1),
                 (v2, v1 + v2),
                 (v3, v1 + v2 + v3)) t(a, b);
+END
+$$ LANGUAGE plpgsql;
+/
+
+CREATE FUNCTION f_array_tables(in_text IN text[], in_integer IN integer[])
+RETURNS TABLE (
+    out_text text[],
+    out_integer integer[]
+)
+AS $$
+BEGIN
+    out_text := NULL;
+    out_integer := NULL;
+    RETURN NEXT;
+    
+    out_text := ARRAY[]::text[];
+    out_integer := ARRAY[]::integer[];
+    RETURN NEXT;
+    
+    out_text := ARRAY['a'];
+    out_integer := ARRAY[1];
+    RETURN NEXT;
+    
+    out_text := ARRAY['a', 'b'];
+    out_integer := ARRAY[1, 2];
+    RETURN NEXT;
 END
 $$ LANGUAGE plpgsql;
 /

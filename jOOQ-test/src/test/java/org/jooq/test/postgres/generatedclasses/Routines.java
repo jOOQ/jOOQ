@@ -34,6 +34,7 @@ import org.jooq.test.postgres.generatedclasses.routines.PGetTwoCursors;
 import org.jooq.test.postgres.generatedclasses.routines.PTriggers;
 import org.jooq.test.postgres.generatedclasses.routines.PUnused;
 import org.jooq.test.postgres.generatedclasses.routines.SecondMax;
+import org.jooq.test.postgres.generatedclasses.tables.FArrayTables;
 import org.jooq.test.postgres.generatedclasses.tables.FSearchBooks;
 import org.jooq.test.postgres.generatedclasses.tables.FTables1;
 import org.jooq.test.postgres.generatedclasses.tables.FTables2;
@@ -550,6 +551,20 @@ public class Routines {
 		f.set__1(__1);
 
 		return f.asAggregateFunction();
+	}
+
+	/**
+	 * Get <code>public.f_array_tables</code> as a field
+	 */
+	public static FArrayTables fArrayTables(String[] inText, Integer[] inInteger) {
+		return FArrayTables.F_ARRAY_TABLES.call(inText, inInteger);
+	}
+
+	/**
+	 * Get <code>public.f_array_tables</code> as a field
+	 */
+	public static FArrayTables fArrayTables(Field<String[]> inText, Field<Integer[]> inInteger) {
+		return FArrayTables.F_ARRAY_TABLES.call(inText, inInteger);
 	}
 
 	/**

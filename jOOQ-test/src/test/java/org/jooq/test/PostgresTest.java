@@ -57,6 +57,7 @@ import static org.jooq.impl.DSL.rank;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.test.postgres.generatedclasses.Tables.F_ARRAY_TABLES;
 import static org.jooq.test.postgres.generatedclasses.Tables.F_SEARCH_BOOKS;
 import static org.jooq.test.postgres.generatedclasses.Tables.F_TABLES1;
 import static org.jooq.test.postgres.generatedclasses.Tables.F_TABLES2;
@@ -153,6 +154,7 @@ import org.jooq.test.postgres.generatedclasses.tables.FTables2;
 import org.jooq.test.postgres.generatedclasses.tables.FTables3;
 import org.jooq.test.postgres.generatedclasses.tables.FTables4;
 import org.jooq.test.postgres.generatedclasses.tables.TArrays;
+import org.jooq.test.postgres.generatedclasses.tables.records.FArrayTablesRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.FTables2Record;
 import org.jooq.test.postgres.generatedclasses.tables.records.FTables3Record;
 import org.jooq.test.postgres.generatedclasses.tables.records.FTables4Record;
@@ -1643,5 +1645,22 @@ public class PostgresTest extends jOOQAbstractTest<
 
         assertEquals(0, (int) result.value7());
         assertEquals(0, (int) result.value8());
+    }
+
+    @Test
+    public void testPostgresArraysInTableValuedFunctions() throws Exception {
+        Result<FArrayTablesRecord> result =
+        create().selectFrom(F_ARRAY_TABLES(new String[] { "abc" }, new Integer[] { 123 }))
+                .fetch();
+
+        assertEquals(4, result.size());
+        assertNull(result.get(0).getOutText());
+        assertNull(result.get(0).getOutInteger());
+        assertEquals(0, result.get(1).getOutText().length);
+        assertEquals(0, result.get(1).getOutInteger().length);
+        assertEquals(asList("a"), asList(result.get(2).getOutText()));
+        assertEquals(asList(1), asList(result.get(2).getOutInteger()));
+        assertEquals(asList("a", "b"), asList(result.get(3).getOutText()));
+        assertEquals(asList(1, 2), asList(result.get(3).getOutInteger()));
     }
 }

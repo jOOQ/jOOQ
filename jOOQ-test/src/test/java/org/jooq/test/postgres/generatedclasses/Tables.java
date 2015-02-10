@@ -5,6 +5,7 @@ package org.jooq.test.postgres.generatedclasses;
 
 
 import org.jooq.Field;
+import org.jooq.test.postgres.generatedclasses.tables.FArrayTables;
 import org.jooq.test.postgres.generatedclasses.tables.FSearchBooks;
 import org.jooq.test.postgres.generatedclasses.tables.FTables1;
 import org.jooq.test.postgres.generatedclasses.tables.FTables2;
@@ -52,6 +53,25 @@ import org.jooq.test.postgres.generatedclasses.tables.XUnused;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
+
+	/**
+	 * The table public.f_array_tables
+	 */
+	public static final FArrayTables F_ARRAY_TABLES = org.jooq.test.postgres.generatedclasses.tables.FArrayTables.F_ARRAY_TABLES;
+
+	/**
+	 * Get <code>public.f_array_tables</code> as a field
+	 */
+	public static FArrayTables F_ARRAY_TABLES(String[] inText, Integer[] inInteger) {
+		return FArrayTables.F_ARRAY_TABLES.call(inText, inInteger);
+	}
+
+	/**
+	 * Get <code>public.f_array_tables</code> as a field
+	 */
+	public static FArrayTables F_ARRAY_TABLES(Field<String[]> inText, Field<Integer[]> inInteger) {
+		return FArrayTables.F_ARRAY_TABLES.call(inText, inInteger);
+	}
 
 	/**
 	 * The table public.f_search_books

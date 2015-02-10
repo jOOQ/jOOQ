@@ -40,6 +40,7 @@
  */
 package org.jooq.tools;
 
+import static java.lang.Boolean.TRUE;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.tools.StringUtils.abbreviate;
 
@@ -79,6 +80,7 @@ public class LoggerListener extends DefaultExecuteListener {
     public void renderEnd(ExecuteContext ctx) {
         if (log.isDebugEnabled()) {
             Configuration configuration = ctx.configuration();
+            String newline = TRUE.equals(configuration.settings().isRenderFormatted()) ? "\n" : "";
 
             // [#2939] Prevent excessive logging of bind variables only in DEBUG mode, not in TRACE mode.
             if (!log.isTraceEnabled()) {
@@ -89,25 +91,25 @@ public class LoggerListener extends DefaultExecuteListener {
             if (ctx.query() != null) {
 
                 // Actual SQL passed to JDBC
-                log.debug("Executing query", ctx.sql());
+                log.debug("Executing query", newline + ctx.sql());
 
                 // [#1278] DEBUG log also SQL with inlined bind values, if
                 // that is not the same as the actual SQL passed to JDBC
                 String inlined = DSL.using(configuration).renderInlined(ctx.query());
                 if (!ctx.sql().equals(inlined)) {
-                    log.debug("-> with bind values", inlined);
+                    log.debug("-> with bind values", newline + inlined);
                 }
             }
 
             // [#2987] Log routines
             else if (ctx.routine() != null) {
-                log.debug("Calling routine", ctx.sql());
+                log.debug("Calling routine", newline + ctx.sql());
 
                 String inlined = DSL.using(configuration)
                                     .renderInlined(ctx.routine());
 
                 if (!ctx.sql().equals(inlined)) {
-                    log.debug("-> with bind values", inlined);
+                    log.debug("-> with bind values", newline + inlined);
                 }
             }
 
@@ -115,10 +117,10 @@ public class LoggerListener extends DefaultExecuteListener {
 
                 // [#1529] Batch queries should be logged specially
                 if (ctx.type() == ExecuteType.BATCH) {
-                    log.debug("Executing batch query", ctx.sql());
+                    log.debug("Executing batch query", newline + ctx.sql());
                 }
                 else {
-                    log.debug("Executing query", ctx.sql());
+                    log.debug("Executing query", newline + ctx.sql());
                 }
             }
 
@@ -126,7 +128,7 @@ public class LoggerListener extends DefaultExecuteListener {
             else if (batchSQL.length > 0) {
                 if (batchSQL[batchSQL.length - 1] != null) {
                     for (String sql : batchSQL) {
-                        log.debug("Executing batch query", sql);
+                        log.debug("Executing batch query", newline + sql);
                     }
                 }
             }

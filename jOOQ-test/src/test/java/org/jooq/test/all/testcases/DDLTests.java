@@ -488,7 +488,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             assertThrows(DataAccessException.class, () -> {
                 create().insertInto(table(name("t2")), field(name("w")))
-                        .values(2)
+                        .values(5)
                         .execute();
             });
         });

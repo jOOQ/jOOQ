@@ -11447,6 +11447,17 @@ public class DSL {
     }
 
     /**
+     * Create an unnamed parameter with the defined type of another field and no
+     * initial value.
+     *
+     * @see #param(String, Object)
+     */
+    @Support
+    public static <T> Param<T> param(Field<T> field) {
+        return param(field.getDataType());
+    }
+
+    /**
      * Create a named parameter with a generic type ({@link Object} /
      * {@link SQLDataType#OTHER}) and no initial value.
      * <p>
@@ -11488,6 +11499,17 @@ public class DSL {
     @Support
     public static <T> Param<T> param(String name, DataType<T> type) {
         return new Val<T>(null, type, name);
+    }
+
+    /**
+     * Create a named parameter with a defined type of another field and no
+     * initial value.
+     *
+     * @see #param(String, Object)
+     */
+    @Support
+    public static <T> Param<T> param(String name, Field<T> type) {
+        return param(name, type.getDataType());
     }
 
     /**

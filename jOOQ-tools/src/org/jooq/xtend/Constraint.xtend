@@ -156,8 +156,6 @@ class Constraint extends Generators {
 
             import javax.annotation.Generated;
             
-            import org.jooq.Support;
-
             /**
              * The step in the {@link Constraint} construction DSL API that allows for
              * matching a <code>FOREIGN KEY</code> clause with a <code>REFERENCES</code>

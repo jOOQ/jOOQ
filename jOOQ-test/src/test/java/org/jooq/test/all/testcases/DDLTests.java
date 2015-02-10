@@ -456,13 +456,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     private void foreignKeys(Runnable runnable)  {
         try {
-            create().createTable("t1").column("v", INTEGER).execute();
+            create().createTable("t1").column("v", INTEGER.nullable(false)).execute();
             create().createTable("t2").column("w", INTEGER).execute();
             create().alterTable("t1").add(constraint("pk").primaryKey("v")).execute();
 
-            assertEquals(1,
+            assertEquals(2,
             create().insertInto(table(name("t1")), field(name("v")))
                     .values(1)
+                    .values(2)
                     .execute());
 
             assertEquals(1,
@@ -530,14 +531,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         skipForFamilies(() -> {
             foreignKeys(() -> {
-                create().alterTable("t2").alterColumn("w").defaultValue(-1).execute();
+                create().alterTable("t2").alterColumn("w").defaultValue(2).execute();
                 create().alterTable("t2").add(
                     constraint("fk").foreignKey("w").references("t1", "v").onDeleteSetDefault()
                 ).execute();
 
-                create().delete(table(name("t1"))).execute();
-                assertEquals(0, create().fetchCount(table(name("t1"))));
-                assertEquals(-1, create().fetchOne(table(name("t2"))).getValue(0));
+                create().delete(table(name("t1"))).where(field(name("v")).eq(1)).execute();
+                assertEquals(1, create().fetchCount(table(name("t1"))));
+                assertEquals(2, create().fetchOne(table(name("t2"))).getValue(0));
             });
         }, ORACLE);
 
@@ -546,8 +547,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 constraint("fk").foreignKey("w").references("t1", "v").onDeleteSetNull()
             ).execute();
 
-            create().delete(table(name("t1"))).execute();
-            assertEquals(0, create().fetchCount(table(name("t1"))));
+            create().delete(table(name("t1"))).where(field(name("v")).eq(1)).execute();
+            assertEquals(1, create().fetchCount(table(name("t1"))));
             assertNull(create().fetchOne(table(name("t2"))).getValue(0));
         });
 
@@ -557,9 +558,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     constraint("fk").foreignKey("w").references("t1", "v").onUpdateCascade()
                 ).execute();
 
-                create().update(table(name("t1"))).set(field(name("v")), 2).execute();
-                assertEquals(2, create().fetchOne(table(name("t1"))).getValue(0, int.class));
-                assertEquals(2, create().fetchOne(table(name("t2"))).getValue(0, int.class));
+                create().update(table(name("t1"))).set(field(name("v")), 0).where(field(name("v")).eq(1)).execute();
+                assertEquals(2, create().fetchCount(table(name("t1"))));
+                assertEquals(0, create().fetchOne(table(name("t2"))).getValue(0, int.class));
             });
         }, ORACLE);
 
@@ -571,7 +572,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 ).execute();
 
                 assertThrows(DataAccessException.class, () -> {
-                    create().update(table(name("t1"))).set(field(name("v")), 2).execute();
+                    create().update(table(name("t1"))).set(field(name("v")), 2).where(field(name("v")).eq(1)).execute();
                 });
             });
         }, ORACLE);
@@ -584,21 +585,21 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 ).execute();
 
                 assertThrows(DataAccessException.class, () -> {
-                    create().update(table(name("t1"))).set(field(name("v")), 2).execute();
+                    create().update(table(name("t1"))).set(field(name("v")), 2).where(field(name("v")).eq(1)).execute();
                 });
             });
         }, ORACLE);
 
         skipForFamilies(() -> {
             foreignKeys(() -> {
-                create().alterTable("t2").alterColumn("w").defaultValue(-1).execute();
+                create().alterTable("t2").alterColumn("w").defaultValue(2).execute();
                 create().alterTable("t2").add(
                     constraint("fk").foreignKey("w").references("t1", "v").onUpdateSetDefault()
                 ).execute();
 
-                create().update(table(name("t1"))).set(field(name("v")), 2).execute();
-                assertEquals(2, create().fetchOne(table(name("t1"))).getValue(0, int.class));
-                assertEquals(-1, create().fetchOne(table(name("t2"))).getValue(0, int.class));
+                create().update(table(name("t1"))).set(field(name("v")), 0).where(field(name("v")).eq(1)).execute();
+                assertEquals(2, create().fetchCount(table(name("t1"))));
+                assertEquals(2, create().fetchOne(table(name("t2"))).getValue(0, int.class));
             });
         }, ORACLE);
 
@@ -608,8 +609,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     constraint("fk").foreignKey("w").references("t1", "v").onUpdateSetNull()
                 ).execute();
 
-                create().update(table(name("t1"))).set(field(name("v")), 2).execute();
-                assertEquals(2, create().fetchOne(table(name("t1"))).getValue(0, int.class));
+                create().update(table(name("t1"))).set(field(name("v")), 0).where(field(name("v")).eq(1)).execute();
+                assertEquals(2, create().fetchCount(table(name("t1"))));
                 assertNull(create().fetchOne(table(name("t2"))).getValue(0));
             });
         }, ORACLE);

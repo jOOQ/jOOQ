@@ -85,6 +85,11 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
     }
 
     private final String match(Definition definition, String expression, String ruleExpression, MatcherTransformType ruleTransformType) {
+        // [#3734] If users forget to specify the rule's expression but they use
+        // a transformer (e.g. PASCAL), we should assume the "default" replacement
+        if (ruleTransformType != null && ruleExpression == null)
+            ruleExpression = "$0";
+
         if (ruleExpression != null) {
             Pattern p = compile(defaultIfEmpty(expression, "^.*$").trim());
             Matcher m = p.matcher(definition.getName());

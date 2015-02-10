@@ -507,10 +507,7 @@ public class DefaultConfiguration implements Configuration {
      */
     @Override
     public final Configuration set(RecordMapperProvider newRecordMapperProvider) {
-        this.recordMapperProvider = newRecordMapperProvider != null
-            ? newRecordMapperProvider
-            : new DefaultRecordMapperProvider(this);
-
+        this.recordMapperProvider = newRecordMapperProvider;
         return this;
     }
 
@@ -682,7 +679,12 @@ public class DefaultConfiguration implements Configuration {
      */
     @Override
     public final RecordMapperProvider recordMapperProvider() {
-        return recordMapperProvider;
+
+        // [#3915] Avoid permanently referencing such a DefaultRecordMapperProvider from this
+        // DefaultConfiguration to prevent memory leaks.
+        return recordMapperProvider != null
+             ? recordMapperProvider
+             : new DefaultRecordMapperProvider(this);
     }
 
     /**

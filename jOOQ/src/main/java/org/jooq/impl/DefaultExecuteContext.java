@@ -216,6 +216,32 @@ class DefaultExecuteContext implements ExecuteContext {
     }
 
     /**
+     * [#3696] We shouldn't infinitely attempt to unwrap connections.
+     */
+    private static int            maxUnwrappedConnections = 256;
+
+    /* [pro] xx
+    xxx
+     x xxxxxxx xx xxxxxx xxxx xxxx xxxx xxxxxxxxxx xxxxx xxxx xxxxxxxxxx
+     x xxxxxxxxxxxx
+     xx
+    xxxxxxx xxxxxx xxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx
+
+    xxxxxx x
+        xxxxxxxx xx
+
+        xxx x
+            x x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        x
+        xxxxx xxxxxxxxxx xx x
+            x x xxxxx
+        x
+
+        xxxxxxxxxxxxxxxxxxxxxxx x xx
+    x
+    xx [/pro] */
+
+    /**
      * Get the registered connection's "target connection" if applicable.
      * <p>
      * This will try to unwrap any native connection if it has been wrapped with
@@ -233,7 +259,19 @@ class DefaultExecuteContext implements ExecuteContext {
     static final Connection localTargetConnection() {
         Connection result = localConnection();
 
-        for (;;) {
+        for (int i = 0; i < maxUnwrappedConnections; i++) {
+
+            /* [pro] xx
+            xx xxxxxxx xx xx xxx xxxxx xx xxx xxxxxx xx xxxxxxxxxxxxxxxxx xxxxx xxxxx
+            xxx x
+                xxxxxxxxxx x x xxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xx xxxxxxx xx x xx x xx xxxxx x
+                    xxxxxx x xx
+                    xxxxxx
+                x
+            x
+            xxxxx xxxxxxxxxxxxx xxxxxxx xx
+            xx [/pro] */
 
             // Unwrap nested Spring org.springframework.jdbc.datasource.ConnectionProxy objects
             try {

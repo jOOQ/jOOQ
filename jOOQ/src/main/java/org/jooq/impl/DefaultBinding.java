@@ -66,6 +66,7 @@ import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.impl.Utils.needsBackslashEscaping;
 import static org.jooq.tools.StringUtils.leftPad;
+import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
 import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
 import static org.jooq.tools.jdbc.JDBCUtils.wasNull;
 import static org.jooq.tools.reflect.Reflect.on;
@@ -642,8 +643,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                     // [#3214] Some PostgreSQL array type literals need explicit casting
                     if (family == POSTGRES && EnumType.class.isAssignableFrom(type.getComponentType())) {
-                        render.sql("::")
-                               .keyword(DefaultDataType.getDataType(family, type).getCastTypeName(render.configuration()));
+                        pgRenderEnumCast(render, type);
                     }
                 }
             }
@@ -672,40 +672,26 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // - UUID
             else {
                 render.sql("'")
-                       .sql(escape(val, render), true)
-                       .sql("'");
+                      .sql(escape(val, render), true)
+                      .sql("'");
             }
         }
 
         // In Postgres, some additional casting must be done in some cases...
         else if (family == SQLDialect.POSTGRES) {
 
-            // Postgres needs explicit casting for array types
-            if (type.isArray() && byte[].class != type) {
+            // Postgres needs explicit casting for enum (array) types
+            if (EnumType.class.isAssignableFrom(type) ||
+                (type.isArray() && EnumType.class.isAssignableFrom(type.getComponentType()))) {
+                render.sql(ctx.variable());
+                pgRenderEnumCast(render, type);
+            }
+
+            // ... and also for other array types
+            else if (type.isArray() && byte[].class != type) {
                 render.sql(ctx.variable());
                 render.sql("::");
                 render.keyword(DefaultDataType.getDataType(family, type).getCastTypeName(render.configuration()));
-            }
-
-            // ... and also for enum types
-            else if (EnumType.class.isAssignableFrom(type)) {
-                render.sql(ctx.variable());
-
-                // [#968] Don't cast "synthetic" enum types (note, val can be null!)
-                EnumType e = (EnumType) type.getEnumConstants()[0];
-                Schema schema = e.getSchema();
-
-                if (schema != null) {
-                    render.sql("::");
-
-                    schema = using(render.configuration()).map(schema);
-                    if (schema != null && TRUE.equals(render.configuration().settings().isRenderSchema())) {
-                        render.visit(schema);
-                        render.sql(".");
-                    }
-
-                    render.visit(name(e.getName()));
-                }
             }
 
             else {
@@ -765,8 +751,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         StringBuilder sb = new StringBuilder();
 
         for (byte b : binary) {
+
+            // [#3924] Beware of signed vs unsigned bytes!
             sb.append("\\\\");
-            sb.append(leftPad(toOctalString(b), 3, '0'));
+            sb.append(leftPad(toOctalString(b & 0x000000ff), 3, '0'));
         }
 
         return sb.toString();
@@ -2047,37 +2035,57 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     private static final <T> T pgGetArray(Scope ctx, ResultSet rs, Class<T> type, int index) throws SQLException {
 
         // Get the JDBC Array and check for null. If null, that's OK
-        Array array = rs.getArray(index);
-        if (array == null) {
-            return null;
-        }
-
-        // Try fetching a Java Object[]. That's gonna work for non-UDT types
+        Array array = null;
         try {
-            return (T) convertArray(rs.getArray(index), (Class<? extends Object[]>) type);
-        }
 
-        // This might be a UDT (not implemented exception...)
-        catch (Exception e) {
-            List<Object> result = new ArrayList<Object>();
-
-            // Try fetching the array as a JDBC ResultSet
-            try {
-                while (rs.next()) {
-                    DefaultBindingGetResultSetContext<T> out = new DefaultBindingGetResultSetContext<T>(ctx.configuration(), rs, 2);
-                    new DefaultBinding<T, T>(new IdentityConverter<T>((Class<T>) type.getComponentType()), false).get(out);
-                    result.add(out.value());
-                }
-            }
-
-            // That might fail too, then we don't know any further...
-            catch (Exception fatal) {
-                log.error("Cannot parse Postgres array: " + rs.getString(index));
-                log.error(fatal);
+            array = rs.getArray(index);
+            if (array == null) {
                 return null;
             }
 
-            return (T) convertArray(result.toArray(), (Class<? extends Object[]>) type);
+            // Try fetching a Java Object[]. That's gonna work for non-UDT types
+            try {
+                return (T) convertArray(array, (Class<? extends Object[]>) type);
+            }
+
+            // This might be a UDT (not implemented exception...)
+            catch (Exception e) {
+                List<Object> result = new ArrayList<Object>();
+                ResultSet arrayRs = null;
+
+                // Try fetching the array as a JDBC ResultSet
+                try {
+                    arrayRs = array.getResultSet();
+
+                    while (arrayRs.next()) {
+                        DefaultBindingGetResultSetContext<T> out = new DefaultBindingGetResultSetContext<T>(ctx.configuration(), arrayRs, 2);
+                        new DefaultBinding<T, T>(new IdentityConverter<T>((Class<T>) type.getComponentType()), false).get(out);
+                        result.add(out.value());
+                    }
+                }
+
+                // That might fail too, then we don't know any further...
+                catch (Exception fatal) {
+                    String string = null;
+                    try {
+                        string = rs.getString(index);
+                    }
+                    catch (SQLException ignore) {}
+
+                    log.error("Cannot parse array", string, fatal);
+                    return null;
+                }
+
+                finally {
+                    safeClose(arrayRs);
+                }
+
+                return (T) convertArray(result.toArray(), (Class<? extends Object[]>) type);
+            }
+        }
+
+        finally {
+            safeFree(array);
         }
     }
 
@@ -2120,6 +2128,29 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
     private static final <T> void pgSetValue(UDTRecord<?> record, Field<T> field, String value) throws SQLException {
         record.setValue(field, pgFromString(field.getType(), value));
+    }
+
+    private static final void pgRenderEnumCast(RenderContext render, Class<?> type) {
+        Class<?> enumType = type.isArray() ? type.getComponentType() : type;
+
+        // [#968] Don't cast "synthetic" enum types (note, val can be null!)
+        EnumType e = (EnumType) enumType.getEnumConstants()[0];
+        Schema schema = e.getSchema();
+
+        if (schema != null) {
+            render.sql("::");
+
+            schema = using(render.configuration()).map(schema);
+            if (schema != null && TRUE.equals(render.configuration().settings().isRenderSchema())) {
+                render.visit(schema);
+                render.sql(".");
+            }
+
+            render.visit(name(e.getName()));
+        }
+
+        if (type.isArray())
+            render.sql("[]");
     }
 }
 

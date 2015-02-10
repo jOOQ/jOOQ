@@ -68,6 +68,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import org.jooq.BindingGetResultSetContext;
 import org.jooq.Cursor;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
@@ -89,20 +90,21 @@ import org.jooq.tools.jdbc.JDBCUtils;
  */
 class CursorImpl<R extends Record> implements Cursor<R> {
 
-    private static final JooqLogger   log = JooqLogger.getLogger(CursorImpl.class);
+    private static final JooqLogger                        log = JooqLogger.getLogger(CursorImpl.class);
 
-    private final ExecuteContext      ctx;
-    private final ExecuteListener     listener;
-    private final Field<?>[]          fields;
-    private final boolean[]           intern;
-    private final boolean             keepResultSet;
-    private final boolean             keepStatement;
-    private final Class<? extends R>  type;
-    private boolean                   isClosed;
+    private final ExecuteContext                           ctx;
+    private final ExecuteListener                          listener;
+    private final Field<?>[]                               fields;
+    private final boolean[]                                intern;
+    private final boolean                                  keepResultSet;
+    private final boolean                                  keepStatement;
+    private final Class<? extends R>                       type;
+    private boolean                                        isClosed;
 
-    private transient CursorResultSet rs;
-    private transient Iterator<R>     iterator;
-    private transient int             rows;
+    private transient CursorResultSet                      rs;
+    private transient DefaultBindingGetResultSetContext<?> rsContext;
+    private transient Iterator<R>                          iterator;
+    private transient int                                  rows;
 
     @SuppressWarnings("unchecked")
     CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement, boolean keepResultSet) {
@@ -117,6 +119,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         this.keepStatement = keepStatement;
         this.keepResultSet = keepResultSet;
         this.rs = new CursorResultSet();
+        this.rsContext = new DefaultBindingGetResultSetContext<Object>(ctx.configuration(), rs, 0);
         this.intern = new boolean[fields.length];
 
         if (internIndexes != null) {
@@ -1471,10 +1474,11 @@ class CursorImpl<R extends Record> implements Cursor<R> {
             /**
              * Utility method to prevent unnecessary unchecked conversions
              */
+            @SuppressWarnings("unchecked")
             private final <T> void setValue(AbstractRecord record, Field<T> field, int index) throws SQLException {
-                DefaultBindingGetResultSetContext<T> out = new DefaultBindingGetResultSetContext<T>(ctx.configuration(), ctx.resultSet(), index + 1);
-                field.getBinding().get(out);
-                T value = out.value();
+                rsContext.index(index + 1);
+                field.getBinding().get((BindingGetResultSetContext<T>) rsContext);
+                T value = (T) rsContext.value();
 
                 record.values[index] = value;
                 record.originals[index] = value;

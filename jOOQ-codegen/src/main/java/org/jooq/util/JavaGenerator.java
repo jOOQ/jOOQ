@@ -2589,16 +2589,15 @@ public class JavaGenerator extends AbstractGenerator {
             final String paramName = parameter.getName();
             final String paramComment = StringUtils.defaultString(parameter.getComment());
             final String isDefaulted = parameter.isDefaulted() ? "true" : "false";
-            final String paramConverterType = parameter.getType().getConverter();
+            final List<String> converters = list(
+                parameter.getType().getConverter(),
+                parameter.getType().getBinding()
+            );
 
             out.tab(1).javadoc("The parameter <code>%s</code>.%s", parameter.getQualifiedOutputName(), defaultIfBlank(" " + paramComment, ""));
 
-            if (paramConverterType != null)
-                out.tab(1).println("public static final %s<%s> %s = createParameter(\"%s\", %s, %s, new %s());",
-                    Parameter.class, paramType, paramId, paramName, paramTypeRef, isDefaulted, paramConverterType);
-            else
-                out.tab(1).println("public static final %s<%s> %s = createParameter(\"%s\", %s, %s);",
-                    Parameter.class, paramType, paramId, paramName, paramTypeRef, isDefaulted);
+            out.tab(1).println("public static final %s<%s> %s = createParameter(\"%s\", %s, %s[[before=, ][new %s()]]);",
+                Parameter.class, paramType, paramId, paramName, paramTypeRef, isDefaulted, converters);
         }
 
         out.tab(1).javadoc("Create a new routine call instance");

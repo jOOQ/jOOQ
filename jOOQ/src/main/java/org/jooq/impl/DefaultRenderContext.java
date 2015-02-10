@@ -40,9 +40,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
-// ...
-// ...
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
@@ -71,7 +68,6 @@ import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
-import org.jooq.Select;
 import org.jooq.conf.RenderKeywordStyle;
 import org.jooq.conf.RenderNameStyle;
 import org.jooq.conf.Settings;
@@ -153,85 +149,9 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         return sql.toString();
     }
 
-    /* [pro] xx xx xxxxxxx xx
-    xxxxxxx xxxxxx xxxxx xxxx xxxx
-    xxxxxxx xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxx
-
-    xxxxxx x
-        xxxxxx x x xxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxx x x xxxxx
-
-        xxx x
-            x x xxx xxxxxxxxxxxxxxxxxxxxxxxxx
-                xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx
-
-            xxxxxx xxx x xxxxx
-            xxxxxx xxxxxxxx x xxx xxxxxxxxxx xxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxx
-            xxx x xxx xxxxxxxxxxxxxxxxx
-
-            xxxxxxxxxxxxxxxxxxxxxxx x x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxx x x xxxxxxxxxxxxxxx
-
-            xx xxxxxxxxxx x
-                 x x xxxxxxxxxxx
-            x
-        x
-        xxxxx xxxxxxxxxx xxxxxxx xx
-        xxxxxxx x
-            xx xx xx xxxxx x
-                xxx x
-                    xxxxxxxxxx
-                x
-                xxxxx xxxxxxxxxx xxxxxxx xx
-            x
-        x
-
-        xx xxxxxx xxxxxxx xxxx xxxxxxxxxx
-        xxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    x
-
-    xx xxxxxxxx xx xx [/pro] */
-
     @Override
     public final String render(QueryPart part) {
-        RenderContext local = new DefaultRenderContext(this).visit(part);
-
-        /* [pro] xx xx xxxxxxx xx
-
-        xx xxxxxx xx xxx xxxxxx xx xxxxxxxxxx xxx xxxxx xxxxx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xx xxxx xxxxxxxxx xxx xxxxxxx xx x xxxxxxxx xxxxxxxx xxxx xxx xxx xxxxx
-        xx x xxxxxxxxxx xxxxxxx xx xxxx xxxx x xxxx xx xxxx xxxxx xxxxxxxx xx xx
-        xx xxx xxxx xx xxxxxx xxx xxxxxx xxxxxxxxx xxxx xxxxxxxx xxxxxxx
-        xx xxxxxxxxxxxxx xxx xx xxx xxxx xx xxxxxx xxx xxxxx xxxxxxx xxxxxxxx
-        xx xxxxxxxxxx x xxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-        xx xxxxx xxxxxxxxxx xxxxxxx x
-
-            xx xx xxxxx xx xxxxxx xx xxxxxx xxxxxx xxxxxx xxx xxx xxxxxxxx
-            xx xxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            x
-            xxxx xx xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                xxxxxxxxxxx xx xxx xxxxxxxx xxxx x xxxx xxxxx xxxxxxx xx xxxx x x xxxxxxxxxxxxxxxxxxxxxx x x xxxxx
-            x
-            xxxx x
-                xxxxxxxxxxx xx xxx xxxxxxxx xxxx x xxxx xxxxx xxxxxxx xx xxxx x x xxxxxxxxxxxxxxxxxxxxxxxx
-            x
-        x
-
-        xx xxxxxxxxxxxxxxxxxxxxxx x xxxxxxx x
-            xxxxx xxx xxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxx x xxxxxx xxxxxxx xxxx xxx xxxx xxxxx xxxxxxxx xxxxxx xxxxxxxx xxxxxxxxx xx x xxxxxxxxxx xxxxxxx xx xxxxxxx xxxxxxxxxxxxxxxxxxxxxx xx xxx xxxx xx xxx xxxx xxxxxxx xxxx xxxx xxxx xxxxxxxxx
-        x
-
-        xx xxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxx xxx xxxxxxxxxxxxxxxxxxxxxx xx xxx xxxxx xxxxxx xxx xxxxx xxxx xxxx xxxx xxxxxx xxxxxxxx xxxxxxxxx xx x xxxxxxxxxx xxxxxxx xx xxxxxxx xxxxxxxxxxxxxxxxxxxxxx xx xxx xxxx xx xxxxxx xxxx xxxx xxxxxxxxx
-        x
-
-        xx xxxxxxxx xx xx [/pro] */
-
-        return local.render();
+        return new DefaultRenderContext(this).visit(part).render();
     }
 
     @Override
@@ -669,37 +589,70 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         ));
 
         /* [trial] */
-        JooqLogger l = JooqLogger.getLogger(Constants.class);
-        String message;
 
-        message = "Thank you for using jOOQ " + Constants.FULL_VERSION;
+        /*
+         * So, you've found the piece of logic that displays our beautifully-crafted ASCII-art logo that
+         * we display in the log files to our jOOQ Open Source Edition and jOOQ Free Trial Edition users
+         *
+         * You probably came here to see if you can somehow turn it off, e.g. because you found this
+         * page here:
+         *
+         *   http://stackoverflow.com/q/28272284/521799
+         *
+         * And yes! You can:
+         *
+         *   a) turn off your logger for org.jooq.Constants
+         *   b) set the -Dorg.jooq.no-logo=true property
+         *   c) simply patch this file in your sources and rebuild jOOQ
+         *   d) buy a commercial license
+         *
+         * Hint: While a) - c) work, d) is the right answer :-)
+         *
+         * But before you do any of a) - c), consider this. We give away this awesome software for free,
+         * and we'd love to continue giving it away for free, so all we would like to ask you is to
+         * continue to show your love and our brand to everyone involved in your software simply in the
+         * log files when you load jOOQ. Please don't remove our logo.
+         *
+         * Thank you very much! If you absolutely must remove this logo, and can live with the guilt
+         * and shame, below is the system property that deactivates it.
+         *
+         * Cheers from the jOOQ Team.
+         *
+         * --------------------------------------------------
+         * DEAR USER, PLEASE READ THE ABOVE BEFORE PROCEEDING
+         */
+        if (!Boolean.getBoolean("org.jooq.no-logo")) {
+            JooqLogger l = JooqLogger.getLogger(Constants.class);
+            String message;
 
-        /* [pro] xx
-        xxxxxxx x xxxxxx xxx xxx xxxxx xxx xx xxx xxxx xxxx x x xxxxxxxxxxxxxxxxxxxxxx x x xxxxx xxxxxxxxx
-        xx [/pro] */
+            message = "Thank you for using jOOQ " + Constants.FULL_VERSION;
+
+            /* [pro] xx
+            xxxxxxx x xxxxxx xxx xxx xxxxx xxx xx xxx xxxx xxxx x x xxxxxxxxxxxxxxxxxxxxxx x x xxxxx xxxxxxxxx
+            xx [/pro] */
 
 
-        l.info("\n                                      " +
-               "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" +
-               "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" +
-               "\n@@@@@@@@@@@@@@@@  @@        @@@@@@@@@@" +
-               "\n@@@@@@@@@@@@@@@@@@@@        @@@@@@@@@@" +
-               "\n@@@@@@@@@@@@@@@@  @@  @@    @@@@@@@@@@" +
-               "\n@@@@@@@@@@  @@@@  @@  @@    @@@@@@@@@@" +
-               "\n@@@@@@@@@@        @@        @@@@@@@@@@" +
-               "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" +
-               "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" +
-               "\n@@@@@@@@@@        @@        @@@@@@@@@@" +
-               "\n@@@@@@@@@@    @@  @@  @@@@  @@@@@@@@@@" +
-               "\n@@@@@@@@@@    @@  @@  @@@@  @@@@@@@@@@" +
-               "\n@@@@@@@@@@        @@  @  @  @@@@@@@@@@" +
-               "\n@@@@@@@@@@        @@        @@@@@@@@@@" +
-               "\n@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@@@" +
-               "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" +
-               "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  " + message +
-               "\n                                      ");
+            l.info("\n                                      " +
+                   "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" +
+                   "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" +
+                   "\n@@@@@@@@@@@@@@@@  @@        @@@@@@@@@@" +
+                   "\n@@@@@@@@@@@@@@@@@@@@        @@@@@@@@@@" +
+                   "\n@@@@@@@@@@@@@@@@  @@  @@    @@@@@@@@@@" +
+                   "\n@@@@@@@@@@  @@@@  @@  @@    @@@@@@@@@@" +
+                   "\n@@@@@@@@@@        @@        @@@@@@@@@@" +
+                   "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" +
+                   "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" +
+                   "\n@@@@@@@@@@        @@        @@@@@@@@@@" +
+                   "\n@@@@@@@@@@    @@  @@  @@@@  @@@@@@@@@@" +
+                   "\n@@@@@@@@@@    @@  @@  @@@@  @@@@@@@@@@" +
+                   "\n@@@@@@@@@@        @@  @  @  @@@@@@@@@@" +
+                   "\n@@@@@@@@@@        @@        @@@@@@@@@@" +
+                   "\n@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@@@" +
+                   "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" +
+                   "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  " + message +
+                   "\n                                      ");
+        }
         /* [/trial] */
-
     }
 
     /**

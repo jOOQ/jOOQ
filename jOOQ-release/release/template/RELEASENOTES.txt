@@ -10,6 +10,44 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+
+Version 3.5.2 - February 10, 2015
+================================================================================
+
+This is a patch release with some useful fixes for the 3.5 branch
+
+Features and improvements
+-------------------------
+#4019 - Add system property to remove the logo from the log output
+
+Bug fixes
+---------
+#3745 - NullPointerException when <jdbc/> is not provided and <database/> <name/> isn't provided either
+#3778 - PostgreSQL enum array types have to be cast with their fully qualified name
+#3909 - Inefficient number to number conversion in org.jooq.tools.Convert
+#3915 - Calls to Configuration.derive() create a Configuration that indirectly references the previous Configuration instance
+#3919 - Bad caching of JPA-annotated getters leads to wrong mapping into POJOs that have @ConstructorProperties
+#3924 - Four octects are sent to Postgres for each negative byte in a byte[]
+#3932 - jooq-runtime-3.5.0.xsd declares wrong namespace
+#3936 - AbstractQuery unnecessarily creates two DefaultRenderContext instances
+#3946 - Replace ArrayList<ExecuteListener> by ExecuteListener[] in ExecuteListeners to avoid excessive Iterator creation
+#3947 - Avoid creating unnecessary Iterators and ArrayLists in AbstractStore.getAttachables()
+#3957 - java.lang.NoSuchMethodException: createARRAY when using Oracle arrays with BoneCP
+#3962 - The H2 emulation of SHR might produce rounding errors
+#3966 - Inefficient BIT_COUNT() function for those dialects that do not natively support SHR()
+#3976 - Code generator does not apply binding to Routines
+#3977 - Meta.getTables() also returns entries for indexes for PostgreSQL
+#3993 - ResultQuery.fetchAny() methods Javadoc erroneously claims throwing of InvalidResultException
+#3998 - Cache internal BindingGetResultSetContext instance across a single Cursor
+#4000 - Avoid {ResultSet | CallableStatement | SQLInput).wasNull() calls if not necessary, as they're somewhat expensive on some JDBC drivers
+#4017 - jooq-meta-3.5.0.xsd is not valid XSD 1.0
+#4022 - NullPointerException when generating SQLite table with composite primary key
+#4028 - Loader API's "onDuplicateKeyIgnore()" executes inefficient SELECT
+#4036 - Obsolete remark in RecordListener Javadoc about batch semantics
+#4041 - Bad unnesting of UDT arrays in PostgreSQL
+#4052 - NullPointerException when generating source code for PostgreSQL table-valued function that returns nested arrays
+
+
 Version 3.5.1 - January 03, 2015
 ================================================================================
 
@@ -32,7 +70,7 @@ Bug fixes
 #3863 - CSV-Export with delimiter only does not work properly
 #3880 - Cannot access private JavaGenerator.newJavaWriter() method
 #3888 - Data type conversion fails when using a Binding<byte[], Serializable> and passing a byte[] as user input
-#3895 The free trial version no longer works after Jan 01, 2015
+#3895 - The free trial version no longer works after Jan 01, 2015
 
 
 Version 3.5.0 - November 21, 2014

@@ -98,7 +98,8 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
                 p.DATA_TYPE,
                 p.CHARACTER_MAXIMUM_LENGTH,
                 p.NUMERIC_PRECISION,
-                p.NUMERIC_SCALE
+                p.NUMERIC_SCALE,
+                p.UDT_NAME
             )
             .from(r)
             .join(p).on(row(r.SPECIFIC_CATALOG, r.SPECIFIC_SCHEMA, r.SPECIFIC_NAME)
@@ -121,7 +122,7 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
                 record.getValue(p.NUMERIC_SCALE),
                 true,
                 false,
-                null
+                record.getValue(p.UDT_NAME)
             );
 
 			ColumnDefinition column = new DefaultColumnDefinition(

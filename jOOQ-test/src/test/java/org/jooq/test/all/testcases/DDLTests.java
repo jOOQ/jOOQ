@@ -528,16 +528,18 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             });
         }, ORACLE);
 
-        foreignKeys(() -> {
-            create().alterTable("t2").alterColumn("w").defaultValue(-1).execute();
-            create().alterTable("t2").add(
-                constraint("fk").foreignKey("w").references("t1", "v").onDeleteSetDefault()
-            ).execute();
+        skipForFamilies(() -> {
+            foreignKeys(() -> {
+                create().alterTable("t2").alterColumn("w").defaultValue(-1).execute();
+                create().alterTable("t2").add(
+                    constraint("fk").foreignKey("w").references("t1", "v").onDeleteSetDefault()
+                ).execute();
 
-            create().delete(table(name("t1"))).execute();
-            assertEquals(0, create().fetchCount(table(name("t1"))));
-            assertEquals(-1, create().fetchOne(table(name("t2"))).getValue(0));
-        });
+                create().delete(table(name("t1"))).execute();
+                assertEquals(0, create().fetchCount(table(name("t1"))));
+                assertEquals(-1, create().fetchOne(table(name("t2"))).getValue(0));
+            });
+        }, ORACLE);
 
         foreignKeys(() -> {
             create().alterTable("t2").add(

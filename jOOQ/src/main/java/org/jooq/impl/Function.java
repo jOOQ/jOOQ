@@ -333,7 +333,7 @@ class Function<T> extends AbstractField<T> implements
     }
 
     final void toSQLFilterClause(Context<?> ctx) {
-        if (filter != null && POSTGRES_9_4.precedes(ctx.dialect())) {
+        if (filter != null && (HSQLDB == ctx.family() || POSTGRES_9_4.precedes(ctx.dialect()))) {
             ctx.sql(' ')
                .keyword("filter")
                .sql(" (")
@@ -445,7 +445,7 @@ class Function<T> extends AbstractField<T> implements
         }
 
         if (!arguments.isEmpty()) {
-            if (filter == null || POSTGRES_9_4.precedes(ctx.dialect())) {
+            if (filter == null || HSQLDB == ctx.family() || POSTGRES_9_4.precedes(ctx.dialect())) {
                 ctx.visit(arguments);
             }
             else {

@@ -295,6 +295,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Round this, as HSQLDB calculates MEDIAN() wrong
         // https://sourceforge.net/p/hsqldb/bugs/1383/
         // https://sourceforge.net/p/hsqldb/bugs/1384/
+        // https://sourceforge.net/p/hsqldb/bugs/1385/
         if (family() == HSQLDB) {
             assertEquals(2, create().fetchValue(select(median(TBook_ID())).from(TBook())).intValue());
             assertEquals(1, create().fetchValue(select(median(TBook_ID()).filterWhere(TBook_ID().ne(4))).from(TBook())).intValue());

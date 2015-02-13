@@ -1743,6 +1743,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return new TruncateImpl<R>(configuration(), table);
     }
 
+    @Override
+    public final TruncateIdentityStep<Record> truncate(String table) {
+        return truncate(table(name(table)));
+    }
+
     // -------------------------------------------------------------------------
     // XXX Other queries for identites and sequences
     // -------------------------------------------------------------------------

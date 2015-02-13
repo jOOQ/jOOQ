@@ -121,7 +121,7 @@ class Lambda extends Generators {
                   «IF d > 1»,«ELSE» «ENDIF» Collector<T, A«d», D«d»> collector«d»
                   «ENDFOR»
                 ) {
-                    return Collector.of(
+                    return Collector.<T, Tuple«degree»<«XXXn(degree, "A")»>, Tuple«degree»<«XXXn(degree, "D")»>>of(
                         () -> tuple(
                           «FOR d : (1 .. degree)»
                           «IF d > 1»,«ELSE» «ENDIF» collector«d».supplier().get()

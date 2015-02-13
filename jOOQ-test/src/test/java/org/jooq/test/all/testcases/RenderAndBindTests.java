@@ -41,6 +41,7 @@
 package org.jooq.test.all.testcases;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.nCopies;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -283,6 +284,26 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(asList(1, 2), result2.getValues(0));
         assertEquals(asList("A", "A"), result2.getValues(1));
         assertEquals(asList("B", "B"), result2.getValues(2));
+    }
+
+    public void testReuseNamedBindValues() throws Exception {
+        Select<?> select =
+        create().select(
+                    param("p1", String.class),
+                    param("p1", String.class),
+                    param("p2", String.class),
+                    param("p2", String.class));
+
+        Record r;
+
+        r = select.fetchOne();
+        assertEquals(nCopies(4, null), r.intoList());
+
+        r = select.bind("p1", "A").fetchOne();
+        assertEquals(asList("A", "A", null, null), r.intoList());
+
+        r = select.bind("p2", "B").fetchOne();
+        assertEquals(asList("A", "A", "B", "B"), r.intoList());
     }
 
     public void testSelectBindValuesWithPlainSQL() throws Exception {

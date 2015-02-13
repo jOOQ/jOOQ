@@ -3215,6 +3215,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testReuseNamedBindValues() throws Exception {
+        new RenderAndBindTests(this).testReuseNamedBindValues();
+    }
+
+    @Test
     public void testSelectBindValuesWithPlainSQL() throws Exception {
         new RenderAndBindTests(this).testSelectBindValuesWithPlainSQL();
     }

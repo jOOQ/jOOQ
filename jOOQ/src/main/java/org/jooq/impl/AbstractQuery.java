@@ -157,14 +157,18 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
             return bind(index, value);
         }
         catch (NumberFormatException e) {
-            Param<?> p = getParam(param);
+            ParamCollector collector = new ParamCollector(configuration(), true);
+            collector.visit(this);
+            List<Param<?>> params = collector.result.get(param);
 
-            if (p == null) {
+            if (params == null || params.size() == 0)
                 throw new IllegalArgumentException("No such parameter : " + param);
+
+            for (Param<?> p : params) {
+                p.setConverted(value);
+                closeIfNecessary(p);
             }
 
-            p.setConverted(value);
-            closeIfNecessary(p);
             return this;
         }
     }

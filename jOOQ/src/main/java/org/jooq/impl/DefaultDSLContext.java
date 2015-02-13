@@ -393,7 +393,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     final Map<String, Param<?>> extractParams0(QueryPart part, boolean includeInlinedParams) {
         ParamCollector collector = new ParamCollector(configuration(), includeInlinedParams);
         collector.visit(part);
-        return Collections.unmodifiableMap(collector.result);
+        return Collections.unmodifiableMap(collector.resultFlat);
     }
 
     @Override

@@ -41,7 +41,9 @@
 package org.jooq.impl;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.jooq.BindContext;
@@ -60,8 +62,10 @@ import org.jooq.tools.StringUtils;
  */
 class ParamCollector extends AbstractBindContext {
 
-    final Map<String, Param<?>> result = new LinkedHashMap<String, Param<?>>();
-    private final boolean       includeInlinedParams;
+    final Map<String, Param<?>>       resultFlat = new LinkedHashMap<String, Param<?>>();
+    final Map<String, List<Param<?>>> result     = new LinkedHashMap<String, List<Param<?>>>();
+
+    private final boolean             includeInlinedParams;
 
     ParamCollector(Configuration configuration, boolean includeInlinedParams) {
         super(configuration, null);
@@ -79,16 +83,29 @@ class ParamCollector extends AbstractBindContext {
                 String i = String.valueOf(nextIndex());
 
                 if (StringUtils.isBlank(param.getParamName())) {
-                    result.put(i, param);
+                    resultFlat.put(i, param);
+                    result(i).add(param);
                 }
                 else {
-                    result.put(param.getParamName(), param);
+                    resultFlat.put(param.getParamName(), param);
+                    result(param.getParamName()).add(param);
                 }
             }
         }
         else {
             super.bindInternal(internal);
         }
+    }
+
+    private final List<Param<?>> result(String key) {
+        List<Param<?>> list = result.get(key);
+
+        if (list == null) {
+            list = new ArrayList<Param<?>>();
+            result.put(key, list);
+        }
+
+        return list;
     }
 
     @Override

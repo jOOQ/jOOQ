@@ -748,6 +748,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             ignoreThrows(() -> create().dropTable("s1").execute());
             ignoreThrows(() -> create().dropTable("s2").execute());
+
+            // Oracle's ON COMMIT PRESERVE ROWS GTTs need truncation before dropping
+            ignoreThrows(() -> create().truncate(table(name("s3"))).execute());
             ignoreThrows(() -> create().dropTable("s3").execute());
         }
     }

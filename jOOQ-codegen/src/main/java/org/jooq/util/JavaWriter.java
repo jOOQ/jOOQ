@@ -125,6 +125,10 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
             if (isJava && imp.startsWith("java.lang."))
                 continue;
 
+            // Don't import the class itself
+            if (imp.endsWith("." + className))
+                continue;
+
             String topLevelPackage = imp.split("\\.")[0];
 
             if (!topLevelPackage.equals(previous))

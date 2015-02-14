@@ -65,6 +65,10 @@
         </dependency>
         <dependency>
             <groupId>org.jooq</groupId>
+            <artifactId>jooq-scala</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jooq</groupId>
             <artifactId>jooq-meta</artifactId>
         </dependency>
         <dependency>

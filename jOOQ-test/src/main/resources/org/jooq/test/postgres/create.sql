@@ -31,7 +31,9 @@ DROP FUNCTION f317(p1 int, p2 int, p3 int, p4 int);/
 DROP FUNCTION p_get_two_cursors(books OUT refcursor, authors OUT refcursor)/
 DROP FUNCTION p_get_one_cursor(total OUT int, books OUT refcursor, book_ids in int[])/
 DROP FUNCTION f_get_one_cursor(book_ids IN int[])/
-DROP FUNCTION f_search_book(p_title character varying, p_limit bigint, p_offset bigint)/
+DROP FUNCTION f_search_books(p_title character varying, p_limit bigint, p_offset bigint)/
+DROP FUNCTION f_search_book(p_title character varying)/
+DROP FUNCTION f_get_arrays(p_id integer)/
 
 DROP TRIGGER IF EXISTS t_triggers_trigger ON t_triggers/
 DROP FUNCTION p_triggers()/
@@ -560,6 +562,29 @@ $BODY$
   ROWS 1000;
 /
 
+CREATE OR REPLACE FUNCTION f_search_book(p_title character varying)
+  RETURNS t_book AS
+$BODY$
+SELECT * FROM t_book
+WHERE (LOWER(title) LIKE LOWER('%' || $1 || '%'))
+LIMIT 1;
+$BODY$
+  LANGUAGE sql VOLATILE
+  COST 100;
+/
+
+CREATE OR REPLACE FUNCTION f_get_arrays(p_id integer)
+  RETURNS SETOF t_arrays AS
+$BODY$
+SELECT * FROM t_arrays
+WHERE p_id IS NULL OR p_id = id
+ORDER BY id;
+$BODY$
+  LANGUAGE sql VOLATILE
+  COST 100
+  ROWS 1000;
+/
+
 CREATE FUNCTION p_unused (in1 VARCHAR, out1 OUT INT, out2 IN OUT INT)
 AS $$
 BEGIN
@@ -795,4 +820,39 @@ BEGIN
 	RETURN ref;
 END;
 $$ LANGUAGE plpgsql;
+/
+
+CREATE FUNCTION second_max_sfunc (state INTEGER[], data INTEGER) RETURNS INTEGER[]
+AS
+$$
+BEGIN
+    IF state IS NULL THEN
+        RETURN ARRAY[data, NULL];
+    ELSE
+        RETURN CASE WHEN state[1] > data
+                    THEN CASE WHEN state[2] > data
+                              THEN state
+                              ELSE ARRAY[state[1], data]
+                         END
+                    ELSE ARRAY[data, state[1]]
+               END;
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
+/
+
+CREATE FUNCTION second_max_ffunc (state INTEGER[]) RETURNS INTEGER
+AS
+$$
+BEGIN
+    RETURN state[2];
+END;
+$$ LANGUAGE plpgsql;
+/
+
+CREATE AGGREGATE second_max (INTEGER) (
+    SFUNC     = second_max_sfunc,
+    STYPE     = INTEGER[],
+    FINALFUNC = second_max_ffunc
+);
 /

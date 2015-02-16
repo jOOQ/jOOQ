@@ -42,6 +42,7 @@ DROP FUNCTION p_get_one_cursor(total OUT int, books OUT refcursor, book_ids in i
 DROP FUNCTION f_get_one_cursor(book_ids IN int[])/
 DROP FUNCTION f_search_books(p_title character varying, p_limit bigint, p_offset bigint)/
 DROP FUNCTION f_search_book(p_title character varying)/
+DROP FUNCTION f_get_arrays(p_id integer)/
 
 DROP TRIGGER IF EXISTS t_triggers_trigger ON t_triggers/
 DROP FUNCTION p_triggers()/
@@ -587,6 +588,18 @@ LIMIT 1;
 $BODY$
   LANGUAGE sql VOLATILE
   COST 100;
+/
+
+CREATE OR REPLACE FUNCTION f_get_arrays(p_id integer)
+  RETURNS SETOF t_arrays AS
+$BODY$
+SELECT * FROM t_arrays
+WHERE p_id IS NULL OR p_id = id
+ORDER BY id;
+$BODY$
+  LANGUAGE sql VOLATILE
+  COST 100
+  ROWS 1000;
 /
 
 CREATE FUNCTION p_unused (in1 VARCHAR, out1 OUT INT, out2 IN OUT INT)

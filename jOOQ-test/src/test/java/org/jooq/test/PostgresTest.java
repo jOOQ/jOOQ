@@ -1663,4 +1663,13 @@ public class PostgresTest extends jOOQAbstractTest<
         assertEquals(asList("a", "b"), asList(result.get(3).getOutText()));
         assertEquals(asList(1, 2), asList(result.get(3).getOutInteger()));
     }
+
+    @Test
+    public void testPostgresArraysInTableValuedFunctionResults() throws Exception {
+
+        // [#4065] Plain SQL
+        Record record = create().fetchOne("select * from f_get_arrays(?)", 4);
+        assertEquals(4, record.getValue(TArrays_ID()));
+        assertEquals(asList("a", "b"), asList(record.getValue(TArrays_STRING().getName(), String[].class)));
+    }
 }

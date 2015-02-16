@@ -35,6 +35,7 @@ import org.jooq.test.postgres.generatedclasses.routines.PTriggers;
 import org.jooq.test.postgres.generatedclasses.routines.PUnused;
 import org.jooq.test.postgres.generatedclasses.routines.SecondMax;
 import org.jooq.test.postgres.generatedclasses.tables.FArrayTables;
+import org.jooq.test.postgres.generatedclasses.tables.FGetArrays;
 import org.jooq.test.postgres.generatedclasses.tables.FSearchBooks;
 import org.jooq.test.postgres.generatedclasses.tables.FTables1;
 import org.jooq.test.postgres.generatedclasses.tables.FTables2;
@@ -565,6 +566,20 @@ public class Routines {
 	 */
 	public static FArrayTables fArrayTables(Field<String[]> inText, Field<Integer[]> inInteger) {
 		return FArrayTables.F_ARRAY_TABLES.call(inText, inInteger);
+	}
+
+	/**
+	 * Get <code>public.f_get_arrays</code> as a field
+	 */
+	public static FGetArrays fGetArrays(Integer pId) {
+		return FGetArrays.F_GET_ARRAYS.call(pId);
+	}
+
+	/**
+	 * Get <code>public.f_get_arrays</code> as a field
+	 */
+	public static FGetArrays fGetArrays(Field<Integer> pId) {
+		return FGetArrays.F_GET_ARRAYS.call(pId);
 	}
 
 	/**

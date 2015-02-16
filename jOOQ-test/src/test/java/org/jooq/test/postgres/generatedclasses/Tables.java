@@ -6,6 +6,7 @@ package org.jooq.test.postgres.generatedclasses;
 
 import org.jooq.Field;
 import org.jooq.test.postgres.generatedclasses.tables.FArrayTables;
+import org.jooq.test.postgres.generatedclasses.tables.FGetArrays;
 import org.jooq.test.postgres.generatedclasses.tables.FSearchBooks;
 import org.jooq.test.postgres.generatedclasses.tables.FTables1;
 import org.jooq.test.postgres.generatedclasses.tables.FTables2;
@@ -71,6 +72,25 @@ public class Tables {
 	 */
 	public static FArrayTables F_ARRAY_TABLES(Field<String[]> inText, Field<Integer[]> inInteger) {
 		return FArrayTables.F_ARRAY_TABLES.call(inText, inInteger);
+	}
+
+	/**
+	 * The table public.f_get_arrays
+	 */
+	public static final FGetArrays F_GET_ARRAYS = org.jooq.test.postgres.generatedclasses.tables.FGetArrays.F_GET_ARRAYS;
+
+	/**
+	 * Get <code>public.f_get_arrays</code> as a field
+	 */
+	public static FGetArrays F_GET_ARRAYS(Integer pId) {
+		return FGetArrays.F_GET_ARRAYS.call(pId);
+	}
+
+	/**
+	 * Get <code>public.f_get_arrays</code> as a field
+	 */
+	public static FGetArrays F_GET_ARRAYS(Field<Integer> pId) {
+		return FGetArrays.F_GET_ARRAYS.call(pId);
 	}
 
 	/**

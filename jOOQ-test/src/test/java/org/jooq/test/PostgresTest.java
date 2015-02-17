@@ -1668,8 +1668,25 @@ public class PostgresTest extends jOOQAbstractTest<
     public void testPostgresArraysInTableValuedFunctionResults() throws Exception {
 
         // [#4065] Plain SQL
-        Record record = create().fetchOne("select * from f_get_arrays(?)", 4);
+        // UDT and Enum type arrays cannot be recognised via JDBC's ResultSetMetaData...
+        Record record = create().fetchOne("select id, string_array, number_array, date_array from f_get_arrays(?)", 4);
+        TArraysRecord into = record.into(TArraysRecord.class);
+
         assertEquals(4, record.getValue(TArrays_ID()));
+        assertEquals(4, (int) into.getId());
+
         assertEquals(asList("a", "b"), asList(record.getValue(TArrays_STRING().getName(), String[].class)));
+        assertEquals(asList("a", "b"), asList(into.getStringArray()));
+
+        assertEquals(asList(1, 2), asList(record.getValue(TArrays_NUMBER().getName(), Integer[].class)));
+        assertEquals(asList(1, 2), asList(into.getNumberArray()));
+
+        assertEquals(
+            asList(Date.valueOf("1981-07-10"), Date.valueOf("2000-01-01")),
+            asList(record.getValue(TArrays_DATE().getName(), Date[].class)));
+        assertEquals(
+            asList(Date.valueOf("1981-07-10"), Date.valueOf("2000-01-01")),
+            asList(into.getDateArray()));
+
     }
 }

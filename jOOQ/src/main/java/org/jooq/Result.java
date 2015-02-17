@@ -51,6 +51,7 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.IOException;
 import org.jooq.exception.InvalidResultException;
@@ -1812,6 +1813,30 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @see String#intern()
      */
     Result<R> intern(String... fieldNames);
+
+    // ------------------------------------------------------------------------
+    // Fetching of new results based on records in this result
+    // ------------------------------------------------------------------------
+
+    /**
+     * Fetch parent records of this record, given a foreign key.
+     *
+     * @throws DataAccessException if something went wrong executing the query.
+     * @see ForeignKey#fetchParent(Record)
+     * @see ForeignKey#fetchParents(java.util.Collection)
+     * @see ForeignKey#fetchParents(Record...)
+     */
+    <O extends UpdatableRecord<O>> Result<O> fetchParents(ForeignKey<R, O> key) throws DataAccessException;
+
+    /**
+     * Fetch child records of this record, given a foreign key.
+     *
+     * @throws DataAccessException if something went wrong executing the query.
+     * @see ForeignKey#fetchChildren(java.util.Collection)
+     * @see ForeignKey#fetchChildren(Record)
+     * @see ForeignKey#fetchChildren(Record...)
+     */
+    <O extends TableRecord<O>> Result<O> fetchChildren(ForeignKey<O, R> key) throws DataAccessException;
 
     // ------------------------------------------------------------------------
     // Specialisations of Attachable methods

@@ -1782,10 +1782,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
                 Field<BigInteger> field = field("lastval()", BigInteger.class);
                 return select(field).fetchOne(field);
             }
-<<<<<<< HEAD
 
-=======
->>>>>>> 0c10d02ede2e596135170aeaf5db1a64f8a8104e
             /* [pro] xx
             xxxx xxxxxxxxx x
                 xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxxx xxxxx xxxxx x xxxx xxxxxxxxxxxxxxxxxx

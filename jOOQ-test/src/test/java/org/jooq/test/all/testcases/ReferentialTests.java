@@ -104,8 +104,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(a1, b1.fetchParent(FK_T_BOOK_AUTHOR_ID()));
         assertEquals(a1, FK_T_BOOK_AUTHOR_ID().fetchParent(b1));
         assertSame(asList(a1), FK_T_BOOK_AUTHOR_ID().fetchParents(b1, b2));
+        assertSame(asList(a1), FK_T_BOOK_AUTHOR_ID().fetchParents(b1, b2));
         assertSame(asList(a1, a2), FK_T_BOOK_AUTHOR_ID().fetchParents(b1, b3));
         assertSame(asList(a1, a2), FK_T_BOOK_AUTHOR_ID().fetchParents(b1, b2, b3, b4));
+        assertSame(asList(a1, a2), books.fetchParents(FK_T_BOOK_AUTHOR_ID()));
 
         // Fetching children
         assertSame(asList(b1, b2), a1.fetchChildren(FK_T_BOOK_AUTHOR_ID()));
@@ -113,6 +115,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertSame(asList(b3, b4), a2.fetchChildren(FK_T_BOOK_AUTHOR_ID()));
         assertSame(asList(b3, b4), FK_T_BOOK_AUTHOR_ID().fetchChildren(a2));
         assertSame(asList(b1, b2, b3, b4), FK_T_BOOK_AUTHOR_ID().fetchChildren(a1, a2));
+        assertSame(asList(b1, b2, b3, b4), authors.fetchChildren(FK_T_BOOK_AUTHOR_ID()));
 
         // No co-authors available
         assertNull(b1.fetchParent(FK_T_BOOK_CO_AUTHOR_ID()));

@@ -51,7 +51,7 @@ import org.jooq.exception.DataAccessException;
 public interface TableRecord<R extends TableRecord<R>> extends Record {
 
     /**
-     * The table from which this record was read
+     * The table from which this record was read.
      */
     Table<R> getTable();
 
@@ -88,7 +88,7 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
     int insert(Field<?>... fields) throws DataAccessException;
 
     /**
-     * Fetch a parent record of this record, given a foreign key
+     * Fetch a parent record of this record, given a foreign key.
      * <p>
      * This returns a parent record referenced by this record through a given
      * foreign key. If no parent record was found, this returns

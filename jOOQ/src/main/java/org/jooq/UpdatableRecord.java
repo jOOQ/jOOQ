@@ -430,7 +430,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
     R copy();
 
     /**
-     * Fetch a child record of this record, given a foreign key
+     * Fetch a child record of this record, given a foreign key.
      * <p>
      * This returns a child record referencing this record through a given
      * foreign key. If no child record was found, this returns <code>null</code>
@@ -444,7 +444,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
     <O extends TableRecord<O>> O fetchChild(ForeignKey<O, R> key) throws TooManyRowsException, DataAccessException;
 
     /**
-     * Fetch child records of this record, given a foreign key
+     * Fetch child records of this record, given a foreign key.
      * <p>
      * This returns childs record referencing this record through a given
      * foreign key.

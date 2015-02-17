@@ -81,6 +81,7 @@ import org.jooq.Converter;
 import org.jooq.DSLContext;
 import org.jooq.EnumType;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record10;
@@ -111,6 +112,7 @@ import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.Table;
 import org.jooq.TableRecord;
+import org.jooq.UpdatableRecord;
 import org.jooq.exception.IOException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.tools.Convert;
@@ -1695,6 +1697,20 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
             }
             return o1.compareTo(o2);
         }
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX Fetching of parents or children
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final <O extends UpdatableRecord<O>> Result<O> fetchParents(ForeignKey<R, O> key) {
+        return key.fetchParents(this);
+    }
+
+    @Override
+    public final <O extends TableRecord<O>> Result<O> fetchChildren(ForeignKey<O, R> key) {
+        return key.fetchChildren(this);
     }
 
     // -------------------------------------------------------------------------

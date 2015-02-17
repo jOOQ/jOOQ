@@ -5181,20 +5181,30 @@ public interface DSLContext extends Scope {
     /**
      * Retrieve the last inserted ID.
      * <p>
-     * Note, there are some restrictions to the following dialects:
+     * This is implemented for the following dialects:
      * <ul>
-     * <li> {@link SQLDialect#DB2} doesn't support this</li>
-     * <li> {@link SQLDialect#ORACLE} doesn't support this</li>
-     * <li> {@link SQLDialect#POSTGRES} doesn't support this</li>
-     * <li> {@link SQLDialect#SQLITE} supports this, but its support is poorly
-     * documented.</li>
+     * <li>{@link SQLDialect#ACCESS}: Using <code>@@identity</code></li>
+     * <li>{@link SQLDialect#ASE}: Using <code>@@identity</code></li>
+     * <li>{@link SQLDialect#CUBRID}: Using <code>last_insert_id()</code></li>
+     * <li>{@link SQLDialect#DERBY}: Using <code>identity_val_local()</code></li>
+     * <li>{@link SQLDialect#H2}: Using <code>identity()</code></li>
+     * <li>{@link SQLDialect#HSQLDB}: Using <code>identity()</code></li>
+     * <li>{@link SQLDialect#INFORMIX}: Using
+     * <code>dbinfo('sqlca.sqlerrd1')</code></li>
+     * <li>{@link SQLDialect#INGRES}: Using <code>last_identity()</code></li>
+     * <li>{@link SQLDialect#MARIADB}: Using <code>last_insert_id()</code></li>
+     * <li>{@link SQLDialect#MYSQL}: Using <code>last_insert_id()</code></li>
+     * <li>{@link SQLDialect#POSTGRES}: Using <code>lastval()</code></li>
+     * <li>{@link SQLDialect#SQLITE}: Using <code>last_insert_rowid()</code></li>
+     * <li>{@link SQLDialect#SQLSERVER}: Using <code>@@identity</code></li>
+     * <li>{@link SQLDialect#SYBASE}: Using <code>@@identity</code></li>
      * </ul>
      *
      * @return The last inserted ID. This may be <code>null</code> in some
      *         dialects, if no such number is available.
      * @throws DataAccessException if something went wrong executing the query
      */
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, SQLITE })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     BigInteger lastID() throws DataAccessException;
 
     /**

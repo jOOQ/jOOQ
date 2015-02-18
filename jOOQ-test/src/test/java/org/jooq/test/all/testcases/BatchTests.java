@@ -208,16 +208,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                                             TAuthor_YEAR_OF_BIRTH())
                                       .values(
                                             param("id", Integer.class),
-                                            param("first_name", String.class),
-                                            param("last_name", String.class),
+                                            param("name", String.class),
+                                            param("name", String.class),
                                             inline(2000)))
-                               .bind(Seq.toMap(Seq.of(tuple("id", (Object)  8), tuple("first_name", "A"), tuple("last_name", "Gamma"  ))))
-                               .bind(Seq.toMap(Seq.of(tuple("id", (Object)  9), tuple("first_name", "B"), tuple("last_name", "Helm"   ))))
-                               .bind(Seq.toMap(Seq.of(tuple("id", (Object) 10), tuple("first_name", "C"), tuple("last_name", "Johnson"))));
+                               .bind(Seq.toMap(Seq.of(tuple("id", (Object)  8), tuple("name", "Gamma"  ))))
+                               .bind(Seq.toMap(Seq.of(tuple("id", (Object)  9), tuple("name", "Helm"   ))))
+                               .bind(Seq.toMap(Seq.of(tuple("id", (Object) 10), tuple("name", "Johnson"))));
         assertEquals(3, batch3.size());
         int[] result3 = batch3.execute();
         assertEquals(3, result3.length);
-        assertEquals(asList("A", "B", "C"), create().fetchValues(
+        assertEquals(asList("Gamma", "Helm", "Johnson"), create().fetchValues(
             select(TAuthor_FIRST_NAME())
             .from(TAuthor())
             .where(TAuthor_ID().in(8, 9, 10))

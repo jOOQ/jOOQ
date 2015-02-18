@@ -89,7 +89,7 @@ class BatchSingle implements BatchBindStep {
         this.nameToIndexMapping = new LinkedHashMap<String, List<Integer>>();
 
         int i = 0;
-        for (Entry<String, Param<?>> entry : query.getParams().entrySet()) {
+        for (Entry<String, Param<?>> entry : new DefaultDSLContext(configuration).extractParams0(query, false).entrySet()) {
             List<Integer> list = nameToIndexMapping.get(entry.getKey());
 
             if (list == null) {

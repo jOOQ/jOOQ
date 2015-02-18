@@ -41,10 +41,12 @@
 package org.jooq.impl;
 
 import java.sql.SQLException;
+import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.jooq.BindContext;
 import org.jooq.Configuration;
@@ -62,10 +64,11 @@ import org.jooq.tools.StringUtils;
  */
 class ParamCollector extends AbstractBindContext {
 
-    final Map<String, Param<?>>       resultFlat = new LinkedHashMap<String, Param<?>>();
-    final Map<String, List<Param<?>>> result     = new LinkedHashMap<String, List<Param<?>>>();
+    final Map<String, Param<?>>         resultFlat = new LinkedHashMap<String, Param<?>>();
+    final Map<String, List<Param<?>>>   result     = new LinkedHashMap<String, List<Param<?>>>();
+    final List<Entry<String, Param<?>>> resultList = new ArrayList<Map.Entry<String, Param<?>>>();
 
-    private final boolean             includeInlinedParams;
+    private final boolean               includeInlinedParams;
 
     ParamCollector(Configuration configuration, boolean includeInlinedParams) {
         super(configuration, null);
@@ -81,13 +84,16 @@ class ParamCollector extends AbstractBindContext {
             // [#3131] Inlined parameters should not be returned in some contexts
             if (includeInlinedParams || !param.isInline()) {
                 String i = String.valueOf(nextIndex());
+                String paramName = param.getParamName();
 
-                if (StringUtils.isBlank(param.getParamName())) {
+                if (StringUtils.isBlank(paramName)) {
                     resultFlat.put(i, param);
+                    resultList.add(new SimpleImmutableEntry<String, Param<?>>(i, param));
                     result(i).add(param);
                 }
                 else {
                     resultFlat.put(param.getParamName(), param);
+                    resultList.add(new SimpleImmutableEntry<String, Param<?>>(param.getParamName(), param));
                     result(param.getParamName()).add(param);
                 }
             }

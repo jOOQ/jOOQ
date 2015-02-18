@@ -41,7 +41,9 @@
 package org.jooq.test;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.nCopies;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.param;
 import static org.jooq.impl.DSL.val;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -77,5 +79,15 @@ public class ParamTest extends AbstractTest {
         assertTrue(values.get(3).isInline());
 
         assertEquals(asList(1, 3), query.getBindValues());
+    }
+
+    @Test
+    public void testNamedBindValues() {
+        Query query = create.select(param("a"), param("a")).where(param("b").eq(param("b")));
+        assertEquals(nCopies(4, null), query.getBindValues());
+
+        query.bind("a", 1);
+        query.bind("b", 2);
+        assertEquals(asList(1, 1, 2, 2), query.getBindValues());
     }
 }

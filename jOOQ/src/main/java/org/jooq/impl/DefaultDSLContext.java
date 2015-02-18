@@ -67,6 +67,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Generated;
 import javax.sql.DataSource;
@@ -377,9 +378,10 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     public List<Object> extractBindValues(QueryPart part) {
         List<Object> result = new ArrayList<Object>();
 
-        for (Param<?> param : extractParams0(part, false).values()) {
-            result.add(param.getValue());
-        }
+        ParamCollector collector = new ParamCollector(configuration(), false);
+        collector.visit(part);
+        for (Entry<String, Param<?>> entry : collector.resultList)
+            result.add(entry.getValue().getValue());
 
         return Collections.unmodifiableList(result);
     }
@@ -392,7 +394,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     final Map<String, Param<?>> extractParams0(QueryPart part, boolean includeInlinedParams) {
         ParamCollector collector = new ParamCollector(configuration, includeInlinedParams);
         collector.visit(part);
-        return Collections.unmodifiableMap(collector.result);
+        return Collections.unmodifiableMap(collector.resultFlat);
     }
 
     @Override

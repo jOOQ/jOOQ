@@ -89,7 +89,11 @@ class BatchSingle implements BatchBindStep {
         this.nameToIndexMapping = new LinkedHashMap<String, List<Integer>>();
 
         int i = 0;
-        for (Entry<String, Param<?>> entry : new DefaultDSLContext(configuration).extractParams0(query, false).entrySet()) {
+
+        ParamCollector collector = new ParamCollector(configuration, false);
+        collector.visit(query);
+
+        for (Entry<String, Param<?>> entry : collector.resultList) {
             List<Integer> list = nameToIndexMapping.get(entry.getKey());
 
             if (list == null) {
@@ -169,11 +173,14 @@ class BatchSingle implements BatchBindStep {
 
         // [#1371] fetch bind variables to restore them again, later
         // [#3940] Don't include inlined bind variables
-        DataType<?>[] paramTypes = dataTypes(
-            new DefaultDSLContext(configuration)
-                .extractParams0(query, false)
-                .values()
-                .toArray(new Field[0]));
+        // [#4062] Make sure we collect also repeated named parameters
+        ParamCollector collector = new ParamCollector(configuration, false);
+        collector.visit(query);
+        List<Param<?>> params = new ArrayList<Param<?>>();
+        for (Entry<String, Param<?>> entry : collector.resultList)
+            params.add(entry.getValue());
+
+        DataType<?>[] paramTypes = dataTypes(params.toArray(new Field[0]));
 
         try {
             listener.renderStart(ctx);
@@ -192,11 +199,10 @@ class BatchSingle implements BatchBindStep {
                 //                 list to preserve type information
                 // [#3547]         The original query may have no Params specified - e.g. when it was constructed with
                 //                 plain SQL. In that case, infer the bind value type directly from the bind value
-                List<Field<?>> params = (paramTypes.length > 0)
-                    ? fields(bindValues, paramTypes)
-                    : fields(bindValues);
-
-                visitAll(new DefaultBindContext(configuration, ctx.statement()), params);
+                visitAll(new DefaultBindContext(configuration, ctx.statement()),
+                    (paramTypes.length > 0)
+                        ? fields(bindValues, paramTypes)
+                        : fields(bindValues));
 
                 listener.bindEnd(ctx);
                 ctx.statement().addBatch();

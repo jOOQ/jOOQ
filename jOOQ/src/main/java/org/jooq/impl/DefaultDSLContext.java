@@ -68,6 +68,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Generated;
 import javax.sql.DataSource;
@@ -378,9 +379,10 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public List<Object> extractBindValues(QueryPart part) {
         List<Object> result = new ArrayList<Object>();
 
-        for (Param<?> param : extractParams0(part, false).values()) {
-            result.add(param.getValue());
-        }
+        ParamCollector collector = new ParamCollector(configuration(), false);
+        collector.visit(part);
+        for (Entry<String, Param<?>> entry : collector.resultList)
+            result.add(entry.getValue().getValue());
 
         return Collections.unmodifiableList(result);
     }

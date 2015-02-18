@@ -168,7 +168,12 @@ class BatchSingle implements BatchBindStep {
         Connection connection = ctx.connection();
 
         // [#1371] fetch bind variables to restore them again, later
-        DataType<?>[] paramTypes = dataTypes(query.getParams().values().toArray(new Field[0]));
+        // [#3940] Don't include inlined bind variables
+        DataType<?>[] paramTypes = dataTypes(
+            new DefaultDSLContext(configuration)
+                .extractParams0(query, false)
+                .values()
+                .toArray(new Field[0]));
 
         try {
             listener.renderStart(ctx);

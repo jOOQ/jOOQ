@@ -176,6 +176,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Declare a :first_name bind value, but don't bind any variables to it
         Batch batch1 = create().batch(create().insertInto(TAuthor())
+
+                                              // [#3940] Add some inline values just to be sure
+                                              .set(TAuthor_YEAR_OF_BIRTH(), inline(2000))
                                               .set(TAuthor_ID(), param("id", Integer.class))
                                               .set(TAuthor_FIRST_NAME(), param("first_name", String.class))
                                               .set(TAuthor_LAST_NAME(), param("last_name", String.class)))
@@ -201,11 +204,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         Batch batch3 = create().batch(insertInto(TAuthor(),
                                             TAuthor_ID(),
                                             TAuthor_FIRST_NAME(),
-                                            TAuthor_LAST_NAME())
+                                            TAuthor_LAST_NAME(),
+                                            TAuthor_YEAR_OF_BIRTH())
                                       .values(
                                             param("id", Integer.class),
                                             param("first_name", String.class),
-                                            param("last_name", String.class)))
+                                            param("last_name", String.class),
+                                            inline(2000)))
                                .bind(Seq.toMap(Seq.of(tuple("id", (Object)  8), tuple("first_name", "A"), tuple("last_name", "Gamma"  ))))
                                .bind(Seq.toMap(Seq.of(tuple("id", (Object)  9), tuple("first_name", "B"), tuple("last_name", "Helm"   ))))
                                .bind(Seq.toMap(Seq.of(tuple("id", (Object) 10), tuple("first_name", "C"), tuple("last_name", "Johnson"))));
@@ -214,6 +219,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(3, result3.length);
         assertEquals(asList("A", "B", "C"), create().fetchValues(
             select(TAuthor_FIRST_NAME())
+            .from(TAuthor())
+            .where(TAuthor_ID().in(8, 9, 10))
+            .orderBy(TAuthor_FIRST_NAME())));
+        assertEquals(nCopies(3, 2000), create().fetchValues(
+            select(TAuthor_YEAR_OF_BIRTH())
             .from(TAuthor())
             .where(TAuthor_ID().in(8, 9, 10))
             .orderBy(TAuthor_FIRST_NAME())));

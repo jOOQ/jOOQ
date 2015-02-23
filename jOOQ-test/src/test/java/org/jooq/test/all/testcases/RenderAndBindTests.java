@@ -286,13 +286,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         Record r;
 
         r = select.fetchOne();
-        assertEquals(nCopies(4, null), r.intoList());
+        assertEquals(nCopies(4, null), asList(r.intoArray()));
 
         r = select.bind("p1", "A").fetchOne();
-        assertEquals(asList("A", "A", null, null), r.intoList());
+        assertEquals(asList("A", "A", null, null), asList(r.intoArray()));
 
         r = select.bind("p2", "B").fetchOne();
-        assertEquals(asList("A", "A", "B", "B"), r.intoList());
+        assertEquals(asList("A", "A", "B", "B"), asList(r.intoArray()));
     }
 
     public void testSelectBindValuesWithPlainSQL() throws Exception {

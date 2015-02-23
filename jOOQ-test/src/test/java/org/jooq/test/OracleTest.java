@@ -141,6 +141,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.impl.DSL;
+import org.jooq.impl.DataSourceConnectionProvider;
 import org.jooq.impl.DefaultConfiguration;
 import org.jooq.impl.DefaultRecordMapper;
 import org.jooq.test.all.converters.Boolean_10;
@@ -1883,8 +1884,10 @@ public class OracleTest extends jOOQAbstractTest<
         UBookArrayRecord bookArray = new UBookArrayRecord(new UBookTypeRecord(1, "A"), new UBookTypeRecord(2, "B"));
 
         Configuration c1 = new DefaultConfiguration().set(dialect()).set(
-            new TransactionAwareDataSourceProxy(
-                new SingleConnectionDataSource(getConnection(), true)
+            new DataSourceConnectionProvider(
+                new TransactionAwareDataSourceProxy(
+                    new SingleConnectionDataSource(getConnection(), true)
+                )
             )
         );
 
@@ -1899,7 +1902,9 @@ public class OracleTest extends jOOQAbstractTest<
         ds2.setAccessToUnderlyingConnectionAllowed(true);
 
         Configuration c2 = new DefaultConfiguration().set(dialect()).set(
-            new TransactionAwareDataSourceProxy(ds2)
+            new DataSourceConnectionProvider(
+                new TransactionAwareDataSourceProxy(ds2)
+            )
         );
 
         assertEquals(numberArray, Routines.fArrays1(c2, numberArray));
@@ -1912,13 +1917,17 @@ public class OracleTest extends jOOQAbstractTest<
         ds3.setPassword(getPassword());
 
         Configuration c31 = new DefaultConfiguration().set(dialect()).set(
-            new TransactionAwareDataSourceProxy(ds3)
+            new DataSourceConnectionProvider(
+                new TransactionAwareDataSourceProxy(ds3)
+            )
         );
 
         assertEquals(numberArray, Routines.fArrays1(c31, numberArray));
         assertEquals(bookArray, Routines.fArrays4(c31, bookArray));
 
-        Configuration c32 = new DefaultConfiguration().set(dialect()).set(ds3);
+        Configuration c32 = new DefaultConfiguration().set(dialect()).set(
+            new DataSourceConnectionProvider(ds3)
+        );
 
         assertEquals(numberArray, Routines.fArrays1(c32, numberArray));
         assertEquals(bookArray, Routines.fArrays4(c32, bookArray));

@@ -51,7 +51,7 @@ import static org.jooq.Clause.INSERT_RETURNING;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.Utils.DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE;
+// ...
 import static org.jooq.impl.Utils.unqualify;
 
 import java.util.ArrayList;

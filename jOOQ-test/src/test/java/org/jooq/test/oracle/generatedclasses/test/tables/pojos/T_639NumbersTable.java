@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_639_NUMBERS_TABLE", schema = "TEST")
 public class T_639NumbersTable implements java.io.Serializable {
 
-	private static final long serialVersionUID = -154395933;
+	private static final long serialVersionUID = -839905033;
 
 	private java.lang.Integer    id;
 	private java.lang.Byte       byte_;
@@ -24,6 +24,8 @@ public class T_639NumbersTable implements java.io.Serializable {
 	private java.lang.Long       longDecimal;
 	private java.math.BigInteger bigInteger;
 	private java.math.BigDecimal bigDecimal;
+	private java.math.BigInteger float_;
+	private java.math.BigInteger real;
 
 	public T_639NumbersTable() {}
 
@@ -38,7 +40,9 @@ public class T_639NumbersTable implements java.io.Serializable {
 		java.lang.Integer    integerDecimal,
 		java.lang.Long       longDecimal,
 		java.math.BigInteger bigInteger,
-		java.math.BigDecimal bigDecimal
+		java.math.BigDecimal bigDecimal,
+		java.math.BigInteger float_,
+		java.math.BigInteger real
 	) {
 		this.id = id;
 		this.byte_ = byte_;
@@ -51,6 +55,8 @@ public class T_639NumbersTable implements java.io.Serializable {
 		this.longDecimal = longDecimal;
 		this.bigInteger = bigInteger;
 		this.bigDecimal = bigDecimal;
+		this.float_ = float_;
+		this.real = real;
 	}
 
 	@javax.persistence.Id
@@ -152,5 +158,23 @@ public class T_639NumbersTable implements java.io.Serializable {
 
 	public void setBigDecimal(java.math.BigDecimal bigDecimal) {
 		this.bigDecimal = bigDecimal;
+	}
+
+	@javax.persistence.Column(name = "FLOAT", precision = 126)
+	public java.math.BigInteger getFloat() {
+		return this.float_;
+	}
+
+	public void setFloat(java.math.BigInteger float_) {
+		this.float_ = float_;
+	}
+
+	@javax.persistence.Column(name = "REAL", precision = 63)
+	public java.math.BigInteger getReal() {
+		return this.real;
+	}
+
+	public void setReal(java.math.BigInteger real) {
+		this.real = real;
 	}
 }

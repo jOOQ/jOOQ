@@ -9,9 +9,9 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_639_NUMBERS_TABLE", schema = "TEST")
-public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.T_639NumbersTableRecord> implements org.jooq.Record11<java.lang.Integer, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger, java.math.BigDecimal> {
+public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.T_639NumbersTableRecord> implements org.jooq.Record13<java.lang.Integer, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger, java.math.BigDecimal, java.math.BigInteger, java.math.BigInteger> {
 
-	private static final long serialVersionUID = 1261343747;
+	private static final long serialVersionUID = 1049016672;
 
 	/**
 	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.ID</code>.
@@ -180,6 +180,36 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 		return (java.math.BigDecimal) getValue(10);
 	}
 
+	/**
+	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.FLOAT</code>.
+	 */
+	public void setFloat(java.math.BigInteger value) {
+		setValue(11, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.FLOAT</code>.
+	 */
+	@javax.persistence.Column(name = "FLOAT", precision = 126)
+	public java.math.BigInteger getFloat() {
+		return (java.math.BigInteger) getValue(11);
+	}
+
+	/**
+	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.REAL</code>.
+	 */
+	public void setReal(java.math.BigInteger value) {
+		setValue(12, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.REAL</code>.
+	 */
+	@javax.persistence.Column(name = "REAL", precision = 63)
+	public java.math.BigInteger getReal() {
+		return (java.math.BigInteger) getValue(12);
+	}
+
 	// -------------------------------------------------------------------------
 	// Primary key information
 	// -------------------------------------------------------------------------
@@ -193,23 +223,23 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	}
 
 	// -------------------------------------------------------------------------
-	// Record11 type implementation
+	// Record13 type implementation
 	// -------------------------------------------------------------------------
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row11<java.lang.Integer, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger, java.math.BigDecimal> fieldsRow() {
-		return (org.jooq.Row11) super.fieldsRow();
+	public org.jooq.Row13<java.lang.Integer, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger, java.math.BigDecimal, java.math.BigInteger, java.math.BigInteger> fieldsRow() {
+		return (org.jooq.Row13) super.fieldsRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row11<java.lang.Integer, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger, java.math.BigDecimal> valuesRow() {
-		return (org.jooq.Row11) super.valuesRow();
+	public org.jooq.Row13<java.lang.Integer, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger, java.math.BigDecimal, java.math.BigInteger, java.math.BigInteger> valuesRow() {
+		return (org.jooq.Row13) super.valuesRow();
 	}
 
 	/**
@@ -304,6 +334,22 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 * {@inheritDoc}
 	 */
 	@Override
+	public org.jooq.Field<java.math.BigInteger> field12() {
+		return org.jooq.test.oracle.generatedclasses.test.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.FLOAT;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.math.BigInteger> field13() {
+		return org.jooq.test.oracle.generatedclasses.test.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.REAL;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public java.lang.Integer value1() {
 		return getId();
 	}
@@ -386,6 +432,22 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	@Override
 	public java.math.BigDecimal value11() {
 		return getBigDecimal();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.math.BigInteger value12() {
+		return getFloat();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.math.BigInteger value13() {
+		return getReal();
 	}
 
 	/**
@@ -491,7 +553,25 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T_639NumbersTableRecord values(java.lang.Integer value1, java.lang.Byte value2, java.lang.Short value3, java.lang.Integer value4, java.lang.Long value5, java.lang.Byte value6, java.lang.Short value7, java.lang.Integer value8, java.lang.Long value9, java.math.BigInteger value10, java.math.BigDecimal value11) {
+	public T_639NumbersTableRecord value12(java.math.BigInteger value) {
+		setFloat(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_639NumbersTableRecord value13(java.math.BigInteger value) {
+		setReal(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_639NumbersTableRecord values(java.lang.Integer value1, java.lang.Byte value2, java.lang.Short value3, java.lang.Integer value4, java.lang.Long value5, java.lang.Byte value6, java.lang.Short value7, java.lang.Integer value8, java.lang.Long value9, java.math.BigInteger value10, java.math.BigDecimal value11, java.math.BigInteger value12, java.math.BigInteger value13) {
 		return this;
 	}
 
@@ -509,7 +589,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	/**
 	 * Create a detached, initialised T_639NumbersTableRecord
 	 */
-	public T_639NumbersTableRecord(java.lang.Integer id, java.lang.Byte byte_, java.lang.Short short_, java.lang.Integer integer, java.lang.Long long_, java.lang.Byte byteDecimal, java.lang.Short shortDecimal, java.lang.Integer integerDecimal, java.lang.Long longDecimal, java.math.BigInteger bigInteger, java.math.BigDecimal bigDecimal) {
+	public T_639NumbersTableRecord(java.lang.Integer id, java.lang.Byte byte_, java.lang.Short short_, java.lang.Integer integer, java.lang.Long long_, java.lang.Byte byteDecimal, java.lang.Short shortDecimal, java.lang.Integer integerDecimal, java.lang.Long longDecimal, java.math.BigInteger bigInteger, java.math.BigDecimal bigDecimal, java.math.BigInteger float_, java.math.BigInteger real) {
 		super(org.jooq.test.oracle.generatedclasses.test.tables.T_639NumbersTable.T_639_NUMBERS_TABLE);
 
 		setValue(0, id);
@@ -523,5 +603,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 		setValue(8, longDecimal);
 		setValue(9, bigInteger);
 		setValue(10, bigDecimal);
+		setValue(11, float_);
+		setValue(12, real);
 	}
 }

@@ -76,7 +76,7 @@ public class TAuthorDao extends org.jooq.impl.DAOImpl<org.jooq.test.oracle.gener
 	/**
 	 * Fetch records that have <code>ADDRESS IN (values)</code>
 	 */
-	public java.util.List<org.jooq.test.oracle.generatedclasses.multi_schema.tables.pojos.TAuthor> fetchByAddress(java.lang.Object... values) {
+	public java.util.List<org.jooq.test.oracle.generatedclasses.multi_schema.tables.pojos.TAuthor> fetchByAddress(org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord... values) {
 		return fetch(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR.ADDRESS, values);
 	}
 }

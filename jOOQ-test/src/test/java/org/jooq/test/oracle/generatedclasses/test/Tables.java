@@ -98,6 +98,11 @@ Oh, and beware of end-of-javadoc * /
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.T_2845CaseSensitivity T_2845_CASE_SENSITIVITY = org.jooq.test.oracle.generatedclasses.test.tables.T_2845CaseSensitivity.T_2845_CASE_SENSITIVITY;
 
 	/**
+	 * The table TEST.T_3711
+	 */
+	public static final org.jooq.test.oracle.generatedclasses.test.tables.T_3711 T_3711 = org.jooq.test.oracle.generatedclasses.test.tables.T_3711.T_3711;
+
+	/**
 	 * The table TEST.T_639_NUMBERS_TABLE
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.oracle.generatedclasses.test.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;

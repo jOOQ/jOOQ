@@ -51,6 +51,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.queryPart;
+import static org.jooq.impl.Utils.toSQLDDLTypeDeclaration;
 
 import org.jooq.AlterTableAlterStep;
 import org.jooq.AlterTableDropStep;
@@ -196,9 +197,9 @@ class AlterTableImpl extends AbstractQuery implements
                .sql(" ").keyword("add").sql(" ")
                .qualify(false)
                .visit(add).sql(" ")
-               .qualify(true)
-                // [#3341] This is currently incorrect for MySQL and MariaDB
-               .keyword(addType.getCastTypeName(ctx.configuration()));
+               .qualify(true);
+
+            toSQLDDLTypeDeclaration(ctx, addType);
 
             if (!addType.nullable()) {
                 ctx.sql(" ").keyword("not null");
@@ -257,8 +258,8 @@ class AlterTableImpl extends AbstractQuery implements
                         break;
                 }
 
-                // [#3341] This is currently incorrect for MySQL and MariaDB
-                ctx.sql(" ").keyword(alterType.getCastTypeName(ctx.configuration()));
+                ctx.sql(" ");
+                toSQLDDLTypeDeclaration(ctx, alterType);
 
                 if (!alterType.nullable()) {
                     ctx.sql(" ").keyword("not null");

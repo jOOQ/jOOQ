@@ -11,6 +11,20 @@ For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
 
+Version 3.5.3 - February 23, 2015
+================================================================================
+
+This is a patch release with some useful fixes for the 3.5 branch
+
+Bug fixes
+---------
+#3341 - Cannot use ALTER TABLE ADD or CHANGE statements on MySQL for all column data types
+#3940 - Batch statements do not work when queries contain inlined bind variables
+#4056 - Query.bind(String, Object) binds only to the first occurrence of a named bind value
+#4065 - Exception when loading array results from plain SQL queries into a Record
+#4075 - Bad result from Query.getBindValues() when named Params are repeated
+
+
 Version 3.5.2 - February 10, 2015
 ================================================================================
 

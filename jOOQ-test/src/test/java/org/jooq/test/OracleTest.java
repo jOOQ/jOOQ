@@ -65,7 +65,6 @@ import static org.jooq.test.oracle.generatedclasses.test.Routines.fTables1;
 import static org.jooq.test.oracle.generatedclasses.test.Routines.fTables4;
 import static org.jooq.test.oracle.generatedclasses.test.Routines.pArrays1;
 import static org.jooq.test.oracle.generatedclasses.test.Routines.pTables1;
-import static org.jooq.test.oracle.generatedclasses.test.Tables.T_2155;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.T_3711;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.T_639_NUMBERS_TABLE;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.T_725_LOB_TEST;
@@ -111,8 +110,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
@@ -163,7 +160,6 @@ import org.jooq.test.oracle.generatedclasses.test.Routines;
 import org.jooq.test.oracle.generatedclasses.test.Sequences;
 import org.jooq.test.oracle.generatedclasses.test.packages.Library;
 import org.jooq.test.oracle.generatedclasses.test.packages.TestSynonymPackage;
-import org.jooq.test.oracle.generatedclasses.test.routines.P2155;
 import org.jooq.test.oracle.generatedclasses.test.routines.PNested;
 import org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord;
@@ -177,7 +173,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecor
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TExoticTypesRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TTriggersRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TUnsignedRecord;
-import org.jooq.test.oracle.generatedclasses.test.tables.records.T_2155Record;
+import org.jooq.test.oracle.generatedclasses.test.tables.records.T_3711Record;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.T_725LobTestRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.T_785Record;
@@ -206,8 +202,6 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongArrayRe
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberTableRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UStreetTypeRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord;
-import org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ArrayRecord;
-import org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ObjectRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.GetBooks;
 import org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampTDatesRecord;
 import org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record;
@@ -1880,86 +1874,6 @@ public class OracleTest extends jOOQAbstractTest<
         assertEquals(asList(4, 5, 6), asList(record.value12().into(Integer[].class)));
         assertEquals(asList(7, 8, 9), asList(record.value13().into(Integer[].class)));
         assertEquals(asList(7, 8, 9), asList(record.value14().into(Integer[].class)));
-    }
-
-    @Test
-    public void testOraclePojosEqualsAndHashCode() {
-        Set<TAuthor> set = new LinkedHashSet<>();
-
-        for (int i = 0; i < 3; i++)
-            set.add(new TAuthor());
-
-        assertEquals(1, set.size());
-
-
-        for (int i = 0; i < 3; i++)
-            set.add(
-                new TAuthor(1, "a", "a", null, 1,
-                    new org.jooq.test.oracle.generatedclasses.test.udt.pojos.UAddressType(
-                        new org.jooq.test.oracle.generatedclasses.test.udt.pojos.UStreetType("street", "no", new UNumberArrayRecord(1, 2, 3), new byte[0], "x"),
-                        "zip", "city", "country", Date.valueOf("2000-01-01"), null, null, null
-                    )
-                )
-            );
-
-        assertEquals(2, set.size());
-    }
-
-    @Test
-    public void testOracleConverterOnProceduresAndUDTs() {
-        LocalDateTime zero = LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC);
-        LocalDateTime one = LocalDateTime.ofEpochSecond(24 * 3600, 0, ZoneOffset.UTC);
-        U_2155ObjectRecord record = new U_2155ObjectRecord(zero, new U_2155ArrayRecord(zero, zero));
-        U_2155ArrayRecord array = new U_2155ArrayRecord();
-
-        try {
-
-            // Interaction with tables
-            // -----------------------
-            assertEquals(1,
-            create().insertInto(T_2155, T_2155.ID, T_2155.D1, T_2155.D2, T_2155.D3)
-                    .values(1, null, null, null)
-                    .execute());
-
-            assertEquals(1,
-            create().insertInto(T_2155, T_2155.ID, T_2155.D1, T_2155.D2, T_2155.D3)
-                    .values(2, zero, record, array)
-                    .execute());
-
-            Result<T_2155Record> result =
-            create().selectFrom(T_2155)
-                    .orderBy(T_2155.ID)
-                    .fetch();
-
-            create().fetch("select * from t_2155");
-
-            assertEquals(1, (int) result.get(0).getId());
-            assertNull(result.get(0).getD1());
-            assertNull(result.get(0).getD2());
-            assertNull(result.get(0).getD3());
-
-            assertEquals(2, (int) result.get(1).getId());
-            assertEquals(zero, result.get(1).getD1());
-            assertEquals(record, result.get(1).getD2());
-            assertEquals(array, result.get(1).getD3());
-
-            // Interaction with procedures / functions
-            // ---------------------------------------
-
-            assertEquals(zero, Routines.f2155(create().configuration(), null, zero, null, one));
-            assertEquals(one, Routines.f2155(create().configuration(), 1, zero, null, one));
-
-            P2155 p1 = Routines.p2155(create().configuration(), 0, zero);
-            assertEquals(zero, p1.getP4());
-            assertEquals(zero, p1.getP5());
-
-            P2155 p2 = Routines.p2155(create().configuration(), 0, one);
-            assertEquals(one, p2.getP4());
-            assertEquals(one, p2.getP5());
-        }
-        finally {
-            create().delete(T_2155).execute();
-        }
     }
 
     @Test

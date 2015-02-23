@@ -67,6 +67,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Generated;
 import javax.sql.DataSource;
@@ -196,7 +197,10 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.BatchCRUD.Action;
+import org.jooq.tools.JooqLogger;
 import org.jooq.tools.csv.CSVReader;
+import org.jooq.tools.reflect.Reflect;
+import org.jooq.tools.reflect.ReflectException;
 
 /**
  * A default implementation for {@link DSLContext}.
@@ -213,8 +217,10 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     /**
      * Generated UID
      */
-    private static final long   serialVersionUID = 2681360188806309513L;
-    private final Configuration configuration;
+    private static final long       serialVersionUID = 2681360188806309513L;
+    private static final JooqLogger log              = JooqLogger.getLogger(DefaultDSLContext.class);
+
+    private final Configuration     configuration;
 
     // -------------------------------------------------------------------------
     // XXX Constructors
@@ -308,7 +314,19 @@ public class DefaultDSLContext implements DSLContext, Serializable {
             provider.commit(ctx);
         }
         catch (Exception cause) {
-            provider.rollback(ctx.cause(cause));
+            try {
+                provider.rollback(ctx.cause(cause));
+            }
+
+            // [#3718] Use reflection to support also JDBC 4.0
+            catch (Exception suppress) {
+                try {
+                    Reflect.on(cause).call("addSuppressed", suppress);
+                }
+                catch (ReflectException ignore) {
+                    log.error("Error when rolling back", suppress);
+                }
+            }
 
             if (cause instanceof RuntimeException) {
                 throw (RuntimeException) cause;
@@ -360,9 +378,10 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     public List<Object> extractBindValues(QueryPart part) {
         List<Object> result = new ArrayList<Object>();
 
-        for (Param<?> param : extractParams0(part, false).values()) {
-            result.add(param.getValue());
-        }
+        ParamCollector collector = new ParamCollector(configuration(), false);
+        collector.visit(part);
+        for (Entry<String, Param<?>> entry : collector.resultList)
+            result.add(entry.getValue().getValue());
 
         return Collections.unmodifiableList(result);
     }
@@ -375,7 +394,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     final Map<String, Param<?>> extractParams0(QueryPart part, boolean includeInlinedParams) {
         ParamCollector collector = new ParamCollector(configuration, includeInlinedParams);
         collector.visit(part);
-        return Collections.unmodifiableMap(collector.result);
+        return Collections.unmodifiableMap(collector.resultFlat);
     }
 
     @Override

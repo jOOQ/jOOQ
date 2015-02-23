@@ -10,6 +10,46 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.4.5 - February 23, 2015
+================================================================================
+
+Bug fixes
+---------
+
+#3696 - OutOfMemoryException with SQL Azure, caused by long-running loop of consuming further exceptions
+#3705 - The jOOQ "flash log" doesn't display nicely when using java.util.logging
+#3711 - Incorrect code generated for cross-schema OBJECT type references
+#3718 - Exceptions on rollback hide the original exceptions causing the rollback
+#3730 - Cannot use regex COMMENTS in <forcedType/>'s <expression/>
+#3758 - ExecuteListener.warning() is not listed as a method in the Javadoc
+#3762 - Bad emulation of DUAL table in HSQLDB when connecting with a DBA user on a database with more than one user
+#3811 - Potential NullPointerException in Cursor.fetchOne(RecordMapper) and other methods
+#3824 - PostgreSQL dateAdd() erroneously returns a TIMESTAMP value
+#3855 - Oracle REAL and FLOAT types cause code generator to produce BigInteger instead of Double types
+#3909 - Inefficient number to number conversion in org.jooq.tools.Convert
+#3915 - Calls to Configuration.derive() create a Configuration that indirectly references the previous Configuration instance
+#3919 - Bad caching of JPA-annotated getters leads to wrong mapping into POJOs that have @ConstructorProperties
+#3924 - Four octects are sent to Postgres for each negative byte in a byte[]
+#3936 - AbstractQuery unnecessarily creates two DefaultRenderContext instances
+#3940 - Batch statements do not work when queries contain inlined bind variables
+#3946 - Replace ArrayList<ExecuteListener> by ExecuteListener[] in ExecuteListeners to avoid excessive Iterator creation
+#3947 - Avoid creating unnecessary Iterators and ArrayLists in AbstractStore.getAttachables()
+#3957 - java.lang.NoSuchMethodException: createARRAY when using Oracle arrays with BoneCP
+#3962 - The H2 emulation of SHR might produce rounding errors
+#3966 - Inefficient BIT_COUNT() function for those dialects that do not natively support SHR()
+#3977 - Meta.getTables() also returns entries for indexes for PostgreSQL
+#3993 - ResultQuery.fetchAny() methods Javadoc erroneously claims throwing of InvalidResultException
+#4000 - Avoid {ResultSet | CallableStatement | SQLInput).wasNull() calls if not necessary, as they're somewhat expensive on some JDBC drivers
+#4022 - NullPointerException when generating SQLite table with composite primary key
+#4028 - Loader API's "onDuplicateKeyIgnore()" executes inefficient SELECT
+#4036 - Obsolete remark in RecordListener Javadoc about batch semantics
+#4056 - Query.bind(String, Object) binds only to the first occurrence of a named bind value
+#4065 - Exception when loading array results from plain SQL queries into a Record
+#4075 - Bad result from Query.getBindValues() when named Params are repeated
+
+
+This is a patch release with some useful fixes for the 3.4 branch
+
 Version 3.4.4 - October 15, 2014
 ================================================================================
 

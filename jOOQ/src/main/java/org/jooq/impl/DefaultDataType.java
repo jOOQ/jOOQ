@@ -637,15 +637,17 @@ public class DefaultDataType<T> implements DataType<T> {
         }
 
         // UDT data types and others are registered using SQL99
-        if (result == null) {
+        if (result == null)
             result = TYPES_BY_NAME[SQLDialect.SQL99.ordinal()].get(typeName);
-        }
 
-        if (result == null) {
-            // [#366] Don't log a warning here. The warning is logged when
-            // catching the exception in jOOQ-codegen
+        // [#4065] PostgreSQL reports array types as _typename, e.g. _varchar
+        if (result == null && dialect.family() == SQLDialect.POSTGRES && typeName.charAt(0) == '_')
+            result = getDataType(dialect, typeName.substring(1)).getArrayDataType();
+
+        // [#366] Don't log a warning here. The warning is logged when
+        // catching the exception in jOOQ-codegen
+        if (result == null)
             throw new SQLDialectNotSupportedException("Type " + typeName + " is not supported in dialect " + dialect, false);
-        }
 
         return result;
     }

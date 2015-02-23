@@ -177,19 +177,25 @@ public class DefaultTransactionProvider implements TransactionProvider {
             connection = provider.acquire();
         }
 
-        boolean autoCommit = autoCommit(configuration);
+        try {
+            boolean autoCommit = autoCommit(configuration);
 
-        // Transactions cannot run with autoCommit = true. Change the value for
-        // the duration of a transaction
-        if (autoCommit == true) {
-            connection(configuration).setAutoCommit(!start);
+            // Transactions cannot run with autoCommit = true. Change the value for
+            // the duration of a transaction
+            if (autoCommit == true) {
+                connection(configuration).setAutoCommit(!start);
+            }
         }
 
-        if (!start) {
-            provider.release(connection);
+        // [#3718] Chances are that the above JDBC interactions throw additional exceptions
+        //         try-finally will ensure that the ConnectionProvider.release() call is made
+        finally {
+            if (!start) {
+                provider.release(connection);
 
-            connection = null;
-            configuration.data().remove(DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION);
+                connection = null;
+                configuration.data().remove(DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION);
+            }
         }
     }
 }

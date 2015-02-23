@@ -463,7 +463,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
                 }
 
                 try {
-                    if (select.execute() > 0) {
+                    if (create.selectOne().whereExists(select).fetchOne() != null) {
                         ignored++;
                         continue rowloop;
                     }

@@ -473,6 +473,10 @@ public final class Convert {
 
                 // Various number types are converted between each other via String
                 else if (toClass == Byte.class || toClass == byte.class) {
+                    if (Number.class.isAssignableFrom(fromClass)) {
+                        return (U) Byte.valueOf(((Number) from).byteValue());
+                    }
+
                     if (fromClass == Boolean.class || fromClass == boolean.class) {
                         return (U) (((Boolean) from) ? Byte.valueOf((byte) 1) : Byte.valueOf((byte) 0));
                     }
@@ -485,6 +489,10 @@ public final class Convert {
                     }
                 }
                 else if (toClass == Short.class || toClass == short.class) {
+                    if (Number.class.isAssignableFrom(fromClass)) {
+                        return (U) Short.valueOf(((Number) from).shortValue());
+                    }
+
                     if (fromClass == Boolean.class || fromClass == boolean.class) {
                         return (U) (((Boolean) from) ? Short.valueOf((short) 1) : Short.valueOf((short) 0));
                     }
@@ -497,6 +505,10 @@ public final class Convert {
                     }
                 }
                 else if (toClass == Integer.class || toClass == int.class) {
+                    if (Number.class.isAssignableFrom(fromClass)) {
+                        return (U) Integer.valueOf(((Number) from).intValue());
+                    }
+
                     if (fromClass == Boolean.class || fromClass == boolean.class) {
                         return (U) (((Boolean) from) ? Integer.valueOf(1) : Integer.valueOf(0));
                     }
@@ -509,6 +521,10 @@ public final class Convert {
                     }
                 }
                 else if (toClass == Long.class || toClass == long.class) {
+                    if (Number.class.isAssignableFrom(fromClass)) {
+                        return (U) Long.valueOf(((Number) from).longValue());
+                    }
+
                     if (fromClass == Boolean.class || fromClass == boolean.class) {
                         return (U) (((Boolean) from) ? Long.valueOf(1L) : Long.valueOf(0L));
                     }
@@ -527,11 +543,15 @@ public final class Convert {
 
                 // ... this also includes unsigned number types
                 else if (toClass == UByte.class) {
-                    if (fromClass == Boolean.class || fromClass == boolean.class) {
-                        return (U) (((Boolean) from) ? ubyte(1) : ubyte(0));
-                    }
-
                     try {
+                        if (Number.class.isAssignableFrom(fromClass)) {
+                            return (U) ubyte(((Number) from).shortValue());
+                        }
+
+                        if (fromClass == Boolean.class || fromClass == boolean.class) {
+                            return (U) (((Boolean) from) ? ubyte(1) : ubyte(0));
+                        }
+
                         return (U) ubyte(new BigDecimal(from.toString().trim()).shortValue());
                     }
                     catch (NumberFormatException e) {
@@ -539,11 +559,15 @@ public final class Convert {
                     }
                 }
                 else if (toClass == UShort.class) {
-                    if (fromClass == Boolean.class || fromClass == boolean.class) {
-                        return (U) (((Boolean) from) ? ushort(1) : ushort(0));
-                    }
-
                     try {
+                        if (Number.class.isAssignableFrom(fromClass)) {
+                            return (U) ushort(((Number) from).intValue());
+                        }
+
+                        if (fromClass == Boolean.class || fromClass == boolean.class) {
+                            return (U) (((Boolean) from) ? ushort(1) : ushort(0));
+                        }
+
                         return (U) ushort(new BigDecimal(from.toString().trim()).intValue());
                     }
                     catch (NumberFormatException e) {
@@ -551,11 +575,15 @@ public final class Convert {
                     }
                 }
                 else if (toClass == UInteger.class) {
-                    if (fromClass == Boolean.class || fromClass == boolean.class) {
-                        return (U) (((Boolean) from) ? uint(1) : uint(0));
-                    }
-
                     try {
+                        if (Number.class.isAssignableFrom(fromClass)) {
+                            return (U) uint(((Number) from).longValue());
+                        }
+
+                        if (fromClass == Boolean.class || fromClass == boolean.class) {
+                            return (U) (((Boolean) from) ? uint(1) : uint(0));
+                        }
+
                         return (U) uint(new BigDecimal(from.toString().trim()).longValue());
                     }
                     catch (NumberFormatException e) {
@@ -581,6 +609,10 @@ public final class Convert {
 
                 // ... and floating point / fixed point types
                 else if (toClass == Float.class || toClass == float.class) {
+                    if (Number.class.isAssignableFrom(fromClass)) {
+                        return (U) Float.valueOf(((Number) from).floatValue());
+                    }
+
                     if (fromClass == Boolean.class || fromClass == boolean.class) {
                         return (U) (((Boolean) from) ? Float.valueOf(1.0f) : Float.valueOf(0.0f));
                     }
@@ -593,6 +625,10 @@ public final class Convert {
                     }
                 }
                 else if (toClass == Double.class || toClass == double.class) {
+                    if (Number.class.isAssignableFrom(fromClass)) {
+                        return (U) Double.valueOf(((Number) from).doubleValue());
+                    }
+
                     if (fromClass == Boolean.class || fromClass == boolean.class) {
                         return (U) (((Boolean) from) ? Double.valueOf(1.0) : Double.valueOf(0.0));
                     }

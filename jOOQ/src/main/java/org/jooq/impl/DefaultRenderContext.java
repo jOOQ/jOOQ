@@ -225,10 +225,6 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             throw new RuntimeException("You have executed > 100000 queries with the free trial version. Please consider upgrading to a commercial license or contact sales@datageekery.com, if you wish to run more queries with your free trial.");
         }
 
-        if (exp < System.currentTimeMillis()) {
-            throw new RuntimeException("Your 30 day trial period has ended some time ago. Please consider upgrading to a commercial license or contact sales@datageekery.com, if you wish to extend your free trial.");
-        }
-
         /* [/trial] */ /* [/pro] */
 
         return local.render();

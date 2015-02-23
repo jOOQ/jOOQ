@@ -5,6 +5,15 @@ DROP VIEW IF EXISTS v_library/
 DROP VIEW IF EXISTS v_author/
 DROP VIEW IF EXISTS v_book/
 
+DROP AGGREGATE second_max(INTEGER)/
+DROP FUNCTION second_max_sfunc (state INTEGER[], data INTEGER)/
+DROP FUNCTION second_max_ffunc (state INTEGER[])/
+DROP FUNCTION f_tables1()/
+DROP FUNCTION f_tables2()/
+DROP FUNCTION f_tables3()/
+DROP FUNCTION f_tables4(in_id INTEGER)/
+DROP FUNCTION f_tables5 (v1 INTEGER, v2 INTEGER, v3 INTEGER)/
+DROP FUNCTION f_array_tables(in_text IN text[], in_integer IN integer[])/
 DROP FUNCTION f_arrays(in_array IN integer[])/
 DROP FUNCTION f_arrays(in_array IN bigint[])/
 DROP FUNCTION f_arrays(in_array IN text[])/
@@ -19,8 +28,8 @@ DROP FUNCTION p_create_author()/
 DROP FUNCTION p_create_author_by_name(first_name VARCHAR, last_name VARCHAR)/
 DROP FUNCTION p_author_exists(author_name VARCHAR, result OUT INTEGER)/
 DROP FUNCTION p391(
-	i1 INTEGER, io1 IN OUT INTEGER, o1 OUT INTEGER,
-	o2 OUT INTEGER, io2 IN OUT INTEGER, i2 INTEGER)
+    i1 INTEGER, io1 IN OUT INTEGER, o1 OUT INTEGER,
+    o2 OUT INTEGER, io2 IN OUT INTEGER, i2 INTEGER)
 /
 DROP FUNCTION f_author_exists(author_name VARCHAR);/
 DROP FUNCTION f_one();/

@@ -68,6 +68,7 @@ import static org.jooq.impl.DSL.countDistinct;
 import static org.jooq.impl.DSL.cumeDist;
 import static org.jooq.impl.DSL.denseRank;
 import static org.jooq.impl.DSL.every;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.firstValue;
 import static org.jooq.impl.DSL.groupConcat;
 import static org.jooq.impl.DSL.inline;
@@ -82,6 +83,7 @@ import static org.jooq.impl.DSL.minDistinct;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.ntile;
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.orderBy;
 import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.impl.DSL.percentRank;
 import static org.jooq.impl.DSL.percentileCont;
@@ -96,6 +98,7 @@ import static org.jooq.impl.DSL.regrSXX;
 import static org.jooq.impl.DSL.regrSXY;
 import static org.jooq.impl.DSL.regrSYY;
 import static org.jooq.impl.DSL.regrSlope;
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectDistinct;
@@ -108,6 +111,7 @@ import static org.jooq.impl.DSL.sumDistinct;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DSL.varPop;
 import static org.jooq.impl.DSL.varSamp;
+import static org.jooq.lambda.Seq.seq;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeNotNull;
@@ -119,6 +123,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jooq.DSLContext;
+import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -1063,6 +1068,33 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 break;
             }
         }
+    }
+
+    public void testWindowFunctionsWithRowValueExpressions_LEAD_LAG() {
+        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, FIREBIRD, MARIADB, MYSQL, ORACLE, SQLITE, SQLSERVER, SYBASE);
+
+        Field<Record2<Integer, String>> x = field(row(TBook_ID(), TBook_TITLE()));
+        System.out.println(x);
+
+        Field<Record2<Integer, String>> lead = lead(field(row(TBook_ID(), TBook_TITLE()))).over(orderBy(TBook_ID()));
+        Field<Record2<Integer, String>> lag = lag(field(row(TBook_ID(), TBook_TITLE()))).over(orderBy(TBook_ID()));
+
+        Result<Record3<Integer, Record2<Integer, String>, Record2<Integer, String>>> result =
+        create().select(TBook_ID(), lead, lag)
+                .from(TBook())
+                .orderBy(TBook_ID())
+                .fetch();
+
+        assertEquals(4, result.size());
+        assertEquals(asList(1, 2, 3, 4), result.getValues(TBook_ID()));
+        assertEquals(asList(2, 3, 4, null),
+            seq(result.getValues(lead)).map(r -> r.value1()).toList());
+        assertEquals(asList(BOOK_TITLES.get(2), BOOK_TITLES.get(3), BOOK_TITLES.get(4), null),
+            seq(result.getValues(lead)).map(r -> r.value2()).toList());
+        assertEquals(asList((Integer) null, 1, 2, 3),
+            seq(result.getValues(lag)).map(r -> r.value1()).toList());
+        assertEquals(asList((Integer) null, BOOK_TITLES.get(2), BOOK_TITLES.get(3), BOOK_TITLES.get(4)),
+            seq(result.getValues(lag)).map(r -> r.value2()).toList());
     }
 
     public void testListAgg() throws Exception {

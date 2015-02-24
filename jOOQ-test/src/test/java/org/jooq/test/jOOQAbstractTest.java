@@ -2830,6 +2830,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testWindowFunctionsWithRowValueExpressions_LEAD_LAG() throws Exception {
+        new AggregateWindowFunctionTests(this).testWindowFunctionsWithRowValueExpressions_LEAD_LAG();
+    }
+
+    @Test
     public void testWindowClause() throws Exception {
         new AggregateWindowFunctionTests(this).testWindowClause();
     }

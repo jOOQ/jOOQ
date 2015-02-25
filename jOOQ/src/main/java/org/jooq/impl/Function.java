@@ -370,7 +370,10 @@ class Function<T> extends AbstractField<T> implements
         // [#3727] Referenced WindowDefinitions that contain a frame clause
         // shouldn't be referenced from within parentheses (in PostgreSQL)
         if (windowDefinition != null)
-            return windowDefinition;
+            if (POSTGRES == ctx.family())
+                return windowDefinition;
+            else
+                return DSL.sql("{0}", windowDefinition);
 
         // [#531] Inline window specifications if the WINDOW clause is not supported
         if (windowName != null) {
@@ -384,7 +387,7 @@ class Function<T> extends AbstractField<T> implements
             if (windows != null) {
                 for (WindowDefinition window : windows) {
                     if (((WindowDefinitionImpl) window).getName().equals(windowName)) {
-                        return window;
+                        return DSL.sql("({0})", window);
                     }
                 }
             }

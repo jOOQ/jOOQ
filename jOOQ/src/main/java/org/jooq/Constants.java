@@ -81,7 +81,7 @@ public final class Constants {
     /**
      * The current jooq-meta XSD file name.
      */
-    public static final String XSD_META       = "jooq-meta-3.5.2.xsd";
+    public static final String XSD_META       = "jooq-meta-3.5.4.xsd";
 
     /**
      * The current jooq-meta XML namespace.

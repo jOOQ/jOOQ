@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<information_schema xmlns="http://www.jooq.org/xsd/jooq-meta-3.5.0.xsd">
+<information_schema xmlns="http://www.jooq.org/xsd/jooq-meta-3.5.4.xsd">
     <schemata>
         <schema>
             <schema_name>TEST</schema_name>

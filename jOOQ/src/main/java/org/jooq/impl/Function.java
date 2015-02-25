@@ -373,7 +373,7 @@ class Function<T> extends AbstractField<T> implements
             if (POSTGRES == ctx.family())
                 return windowDefinition;
             else
-                return DSL.sql("{0}", windowDefinition);
+                return DSL.sql("({0})", windowDefinition);
 
         // [#531] Inline window specifications if the WINDOW clause is not supported
         if (windowName != null) {

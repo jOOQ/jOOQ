@@ -48,7 +48,7 @@
     <xsl:key name="schema" match="/DatabaseModel/Tables/Table/Properties/Property[Name = 'Schema']" use="." />
     
     <xsl:template match="/">
-        <information_schema xmlns="http://www.jooq.org/xsd/jooq-meta-3.5.0.xsd">
+        <information_schema xmlns="http://www.jooq.org/xsd/jooq-meta-3.5.4.xsd">
             <schemata>
                 <xsl:apply-templates select="/DatabaseModel/Tables/Table/Properties/Property[Name = 'Schema'][generate-id() = generate-id(key('schema', .)[1])]" mode="schema"/>
             </schemata>

@@ -109,6 +109,7 @@ import org.jooq.Converters;
 import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.Field;
+import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.Row;
@@ -168,7 +169,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
         if (converter == null && binding == null) {
-            theBinding = (Binding) new DefaultBinding<T, T>(new IdentityConverter<T>(type.getType()), type.isLob());
+            theBinding = (Binding) type.getBinding();
         }
         else if (converter == null) {
             theBinding = (Binding) binding;
@@ -1218,19 +1219,15 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else if (ArrayRecord.class.isAssignableFrom(type)) {
 
             // [#1544] We can safely assume that localConfiguration has been
-            // set on DefaultBindContext, prior to serialising arrays to SQLOut
+            // set on DefaultBindContext, prior to serialising arrays to SQLOutput
             ArrayRecord<?> arrayRecord = (ArrayRecord<?>) value;
             Object[] array = arrayRecord.get();
+            Object[] converted = new Object[array.length];
 
-            if (arrayRecord.getDataType() instanceof ConvertedDataType) {
-                Object[] converted = new Object[array.length];
+            for (int i = 0; i < converted.length; i++)
+                converted[i] = ((DataType<Object>) arrayRecord.getDataType()).getConverter().to(array[i]);
 
-                for (int i = 0; i < converted.length; i++)
-                    converted[i] = ((ConvertedDataType<Object, Object>) arrayRecord.getDataType()).converter().to(array[i]);
-
-                array = converted;
-            }
-            ctx.output().writeArray(on(localTargetConnection()).call("createARRAY", arrayRecord.getName(), array).<Array>get());
+            ctx.output().writeArray(on(localTargetConnection()).call("createARRAY", arrayRecord.getName(), converted).<Array>get());
         }
         /* [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
@@ -2006,7 +2003,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
      * @return The converted {@link UDTRecord}
      */
     @SuppressWarnings("unchecked")
-    private static final UDTRecord<?> pgNewUDTRecord(Class<?> type, final Object object) throws SQLException {
+    static final UDTRecord<?> pgNewUDTRecord(Class<?> type, final Object object) throws SQLException {
         if (object == null) {
             return null;
         }
@@ -2126,7 +2123,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    private static final <T> void pgSetValue(UDTRecord<?> record, Field<T> field, String value) throws SQLException {
+    static final <T> void pgSetValue(Record record, Field<T> field, String value) throws SQLException {
         record.setValue(field, pgFromString(field.getType(), value));
     }
 

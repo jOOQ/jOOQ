@@ -178,6 +178,11 @@ public class DefaultDataType<T> implements DataType<T> {
     private final Class<T>                               type;
 
     /**
+     * The data type binding corresponding to this data type.
+     */
+    private final Binding<?, T>                          binding;
+
+    /**
      * The Java class corresponding to arrays of this data type.
      */
     private final Class<T[]>                             arrayType;
@@ -242,7 +247,15 @@ public class DefaultDataType<T> implements DataType<T> {
         this(dialect, null, type, typeName, castTypeName, precision, scale, length, nullable, defaulted);
     }
 
+    DefaultDataType(SQLDialect dialect, Class<T> type, Binding<?, T> binding, String typeName, String castTypeName, int precision, int scale, int length, boolean nullable, boolean defaulted) {
+        this(dialect, null, type, binding, typeName, castTypeName, precision, scale, length, nullable, defaulted);
+    }
+
     DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, String typeName, String castTypeName, int precision, int scale, int length, boolean nullable, boolean defaulted) {
+        this(dialect, sqlDataType, type, null, typeName, castTypeName, precision, scale, length, nullable, defaulted);
+    }
+
+    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, String typeName, String castTypeName, int precision, int scale, int length, boolean nullable, boolean defaulted) {
 
         // Initialise final instance members
         // ---------------------------------
@@ -307,6 +320,10 @@ public class DefaultDataType<T> implements DataType<T> {
                 SQL_DATATYPES_BY_TYPE.put(type, this);
             }
         }
+
+        this.binding = binding != null
+            ? binding
+            : new DefaultBinding<T, T>(new IdentityConverter<T>(type), this.isLob());
     }
 
     @Override
@@ -530,6 +547,16 @@ public class DefaultDataType<T> implements DataType<T> {
     }
 
     @Override
+    public final Binding<?, T> getBinding() {
+        return binding;
+    }
+
+    @Override
+    public final Converter<?, T> getConverter() {
+        return binding.converter();
+    }
+
+    @Override
     public final Class<T[]> getArrayType() {
         return arrayType;
     }
@@ -590,9 +617,16 @@ public class DefaultDataType<T> implements DataType<T> {
         return asConvertedDataType(DefaultBinding.newBinding(converter, this, null));
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public final <U> DataType<U> asConvertedDataType(Binding<? super T, U> binding) {
-        return new ConvertedDataType<T, U>(this, binding);
+    public final <U> DataType<U> asConvertedDataType(Binding<? super T, U> newBinding) {
+        if (binding == newBinding)
+            return (DataType<U>) this;
+
+        if (newBinding == null)
+            newBinding = (Binding<? super T, U>) new DefaultBinding<T, T>(new IdentityConverter<T>(getType()), isLob());
+
+        return new ConvertedDataType<T, U>(this, newBinding);
     }
 
     @Override
@@ -748,7 +782,11 @@ public class DefaultDataType<T> implements DataType<T> {
     @Override
     public final boolean isLob() {
         DataType<T> t = getSQLDataType();
-        return (t == BLOB || t == CLOB || t == NCLOB);
+
+        if (t == this)
+            return getTypeName().endsWith("lob");
+        else
+            return (t == BLOB || t == CLOB || t == NCLOB);
     }
 
     @Override

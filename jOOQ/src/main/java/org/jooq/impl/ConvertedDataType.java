@@ -49,7 +49,10 @@ import org.jooq.DataType;
  * A <code>DataType</code> used for converted types using {@link Converter}
  *
  * @author Lukas Eder
+ * @deprecated - 3.6.0 - [#3889] - Remove this type, it should not be needed any
+ *             longer
  */
+@Deprecated
 class ConvertedDataType<T, U> extends DefaultDataType<U> {
 
     /**
@@ -58,12 +61,12 @@ class ConvertedDataType<T, U> extends DefaultDataType<U> {
     private static final long           serialVersionUID = -2321926692580974126L;
 
     private final DataType<T>           delegate;
-    private final Binding<? super T, U> binding;
 
     ConvertedDataType(DataType<T> delegate, Binding<? super T, U> binding) {
         super(
             null,
             binding.converter().toType(),
+            binding,
             delegate.getTypeName(),
             delegate.getCastTypeName(),
             delegate.precision(),
@@ -74,7 +77,6 @@ class ConvertedDataType<T, U> extends DefaultDataType<U> {
         );
 
         this.delegate = delegate;
-        this.binding = binding;
     }
 
     @Override
@@ -95,21 +97,13 @@ class ConvertedDataType<T, U> extends DefaultDataType<U> {
     @SuppressWarnings("unchecked")
     @Override
     public U convert(Object object) {
-        if (binding.converter().toType().isInstance(object)) {
+        if (getConverter().toType().isInstance(object)) {
             return (U) object;
         }
 
         // [#3200] Try to convert arbitrary objects to T
         else {
-            return binding.converter().from(delegate.convert(object));
+            return ((Converter<T, U>) getConverter()).from(delegate.convert(object));
         }
-    }
-
-    Binding<? super T, U> binding() {
-        return binding;
-    }
-
-    Converter<? super T, U> converter() {
-        return binding.converter();
     }
 }

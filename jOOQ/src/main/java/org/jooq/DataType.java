@@ -75,6 +75,16 @@ public interface DataType<T> extends Serializable {
     int getSQLType();
 
     /**
+     * Get the data type binding associated with this data type.
+     */
+    Binding<?, T> getBinding();
+
+    /**
+     * Get the converter associated with this data type.
+     */
+    Converter<?, T> getConverter();
+
+    /**
      * Retrieve the Java type associated with this data type.
      */
     Class<T> getType();

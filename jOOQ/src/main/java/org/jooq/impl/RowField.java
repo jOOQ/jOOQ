@@ -42,11 +42,16 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Utils.DATA_LIST_ALREADY_INDENTED;
 
+import java.sql.SQLException;
+import java.util.List;
+
 import org.jooq.Context;
+import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Row;
+import org.jooq.util.postgres.PostgresUtils;
 
 /**
  * @author Lukas Eder
@@ -66,8 +71,43 @@ class RowField<ROW extends Row, REC extends Record> extends AbstractField<REC> {
         this(row, "row");
     }
 
-    RowField(ROW row, String as) {
-        super(as, (DataType) SQLDataType.RECORD);
+    RowField(final ROW row, String as) {
+        super(as, (DataType) SQLDataType.RECORD, "", new DefaultBinding<Object, REC>(new Converter<Object, REC>() {
+
+            @Override
+            public REC from(final Object t) {
+                return t == null ? null : Utils.newRecord(true, (Class<REC>) RecordImpl.class, row.fields()).operate(new RecordOperation<REC, RuntimeException>() {
+
+                    @Override
+                    public REC operate(REC record) {
+                        List<String> values = PostgresUtils.toPGObject(t.toString());
+
+                        for (int i = 0; i < row.size(); i++) {
+                            try {
+                                DefaultBinding.pgSetValue(record, row.field(i), values.get(i));
+                            }
+                            catch (SQLException ignore) {}
+                        }
+
+                        return record;
+                    }
+                });
+            }
+
+            @Override
+            public Object to(REC u) {
+                return null;
+            }
+
+            @Override
+            public Class<Object> fromType() {
+                return Object.class;
+            }
+
+            @Override
+            public Class<REC> toType() {
+                return (Class<REC>) RecordImpl.class;
+            }}));
 
         this.row = row;
         this.as = as;

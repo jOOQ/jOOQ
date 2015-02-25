@@ -117,6 +117,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Scope;
 import org.jooq.UDTRecord;
+import org.jooq.exception.DataTypeException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
@@ -1389,10 +1390,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else if (EnumType.class.isAssignableFrom(type)) {
             result = getEnumType(type, ctx.resultSet().getString(ctx.index()));
         }
-        else if (UDTRecord.class.isAssignableFrom(type)) {
+        else if (Record.class.isAssignableFrom(type)) {
             switch (ctx.family()) {
                 case POSTGRES:
-                    result = (T) pgNewUDTRecord(type, ctx.resultSet().getObject(ctx.index()));
+                    result = (T) pgNewRecord(type, null, ctx.resultSet().getObject(ctx.index()));
                     break;
 
                 default:
@@ -1540,10 +1541,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else if (EnumType.class.isAssignableFrom(type)) {
             result = getEnumType(type, ctx.statement().getString(ctx.index()));
         }
-        else if (UDTRecord.class.isAssignableFrom(type)) {
+        else if (Record.class.isAssignableFrom(type)) {
             switch (ctx.family()) {
                 case POSTGRES:
-                    result = (T) pgNewUDTRecord(type, ctx.statement().getObject(ctx.index()));
+                    result = (T) pgNewRecord(type, null, ctx.statement().getObject(ctx.index()));
                     break;
 
                 default:
@@ -1747,7 +1748,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     @SuppressWarnings("unchecked")
-    private static final <T> T getEnumType(Class<T> type, String literal) throws SQLException {
+    private static final <T> T getEnumType(Class<T> type, String literal) {
         try {
             Object[] list = (Object[]) type.getMethod("values").invoke(type);
 
@@ -1760,7 +1761,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
         }
         catch (Exception e) {
-            throw new SQLException("Unknown enum literal found : " + literal);
+            throw new DataTypeException("Unknown enum literal found : " + literal);
         }
 
         return null;
@@ -1894,7 +1895,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     // -------------------------------------------------------------------------
 
     @SuppressWarnings("unchecked")
-    private static final <T> T pgFromString(Class<T> type, String string) throws SQLException {
+    private static final <T> T pgFromString(Class<T> type, String string) {
         if (string == null) {
             return null;
         }
@@ -1975,19 +1976,19 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else if (EnumType.class.isAssignableFrom(type)) {
             return getEnumType(type, string);
         }
-        else if (UDTRecord.class.isAssignableFrom(type)) {
-            return (T) pgNewUDTRecord(type, string);
+        else if (Record.class.isAssignableFrom(type)) {
+            return (T) pgNewRecord(type, null, string);
         }
 
         throw new UnsupportedOperationException("Class " + type + " is not supported");
     }
 
-    private static final java.util.Date pgParseDate(String string, SimpleDateFormat f) throws SQLException {
+    private static final java.util.Date pgParseDate(String string, SimpleDateFormat f) {
         try {
             return f.parse(string);
         }
         catch (ParseException e) {
-            throw new SQLException(e);
+            throw new DataTypeException("Error while converting date", e);
         }
     }
 
@@ -2003,16 +2004,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
      * @return The converted {@link UDTRecord}
      */
     @SuppressWarnings("unchecked")
-    static final UDTRecord<?> pgNewUDTRecord(Class<?> type, final Object object) throws SQLException {
+    static final Record pgNewRecord(Class<?> type, Field<?>[] fields, final Object object) {
         if (object == null) {
             return null;
         }
 
-        return Utils.newRecord(true, (Class<UDTRecord<?>>) type)
-                    .operate(new RecordOperation<UDTRecord<?>, SQLException>() {
+        return Utils.newRecord(true, (Class<Record>) type, fields)
+                    .operate(new RecordOperation<Record, RuntimeException>() {
 
                 @Override
-                public UDTRecord<?> operate(UDTRecord<?> record) throws SQLException {
+                public Record operate(Record record) {
                     List<String> values = PostgresUtils.toPGObject(object.toString());
 
                     Row row = record.fieldsRow();
@@ -2095,7 +2096,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
      * @param string A String representation of an array
      * @return The converted array
      */
-    private static final Object[] pgNewArray(Class<?> type, String string) throws SQLException {
+    private static final Object[] pgNewArray(Class<?> type, String string) {
         if (string == null) {
             return null;
         }
@@ -2119,11 +2120,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
         }
         catch (Exception e) {
-            throw new SQLException(e);
+            throw new DataTypeException("Error while creating array", e);
         }
     }
 
-    static final <T> void pgSetValue(Record record, Field<T> field, String value) throws SQLException {
+    static final <T> void pgSetValue(Record record, Field<T> field, String value) {
         record.setValue(field, pgFromString(field.getType(), value));
     }
 

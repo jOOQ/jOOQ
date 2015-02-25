@@ -1088,13 +1088,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(4, result.size());
         assertEquals(asList(1, 2, 3, 4), result.getValues(TBook_ID()));
         assertEquals(asList(2, 3, 4, null),
-            seq(result.getValues(lead)).map(r -> r.value1()).toList());
-        assertEquals(asList(BOOK_TITLES.get(2), BOOK_TITLES.get(3), BOOK_TITLES.get(4), null),
-            seq(result.getValues(lead)).map(r -> r.value2()).toList());
+            seq(result.getValues(lead)).map(r -> r == null ? null : r.value1()).toList());
+        assertEquals(asList(BOOK_TITLES.get(1), BOOK_TITLES.get(2), BOOK_TITLES.get(3), null),
+            seq(result.getValues(lead)).map(r -> r == null ? null : r.value2()).toList());
         assertEquals(asList((Integer) null, 1, 2, 3),
-            seq(result.getValues(lag)).map(r -> r.value1()).toList());
-        assertEquals(asList((Integer) null, BOOK_TITLES.get(2), BOOK_TITLES.get(3), BOOK_TITLES.get(4)),
-            seq(result.getValues(lag)).map(r -> r.value2()).toList());
+            seq(result.getValues(lag)).map(r -> r == null ? null : r.value1()).toList());
+        assertEquals(asList((Integer) null, BOOK_TITLES.get(0), BOOK_TITLES.get(1), BOOK_TITLES.get(2)),
+            seq(result.getValues(lag)).map(r -> r == null ? null : r.value2()).toList());
     }
 
     public void testListAgg() throws Exception {

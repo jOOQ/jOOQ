@@ -113,25 +113,18 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     private final String          name;
     private final String          comment;
     private final DataType<T>     dataType;
-    private final Binding<?, T>   binding;
 
     AbstractField(String name, DataType<T> type) {
-        this(name, type, null, null);
+        this(name, type, null, type.getBinding());
     }
 
+    @SuppressWarnings("unchecked")
     AbstractField(String name, DataType<T> type, String comment, Binding<?, T> binding) {
         super();
 
         this.name = name;
         this.comment = defaultString(comment);
-        this.dataType = type;
-
-        this.binding =
-            binding != null
-          ? binding
-          : type instanceof ConvertedDataType
-          ? ((ConvertedDataType<?, T>) type).binding()
-          : new DefaultBinding<T, T>(new IdentityConverter<T>(type.getType()), type.isLob());
+        this.dataType = type.asConvertedDataType((Binding<T, T>) binding);
     }
 
     // ------------------------------------------------------------------------
@@ -172,12 +165,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Converter<?, T> getConverter() {
-        return binding.converter();
+        return getBinding().converter();
     }
 
     @Override
     public final Binding<?, T> getBinding() {
-        return binding;
+        return dataType.getBinding();
     }
 
     @Override

@@ -109,6 +109,7 @@ import org.jooq.Converters;
 import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.Field;
+import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.Row;
@@ -168,7 +169,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
         if (converter == null && binding == null) {
-            theBinding = (Binding) new DefaultBinding<T, T>(new IdentityConverter<T>(type.getType()), type.isLob());
+            theBinding = (Binding) type.getBinding();
         }
         else if (converter == null) {
             theBinding = (Binding) binding;
@@ -1218,19 +1219,15 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
 
             xx xxxxxxx xx xxx xxxxxx xxxxxx xxxx xxxxxxxxxxxxxxxxxx xxx xxxx
-            xx xxx xx xxxxxxxxxxxxxxxxxxx xxxxx xx xxxxxxxxxxx xxxxxx xx xxxxxx
+            xx xxx xx xxxxxxxxxxxxxxxxxxx xxxxx xx xxxxxxxxxxx xxxxxx xx xxxxxxxxx
             xxxxxxxxxxxxxx xxxxxxxxxxx x xxxxxxxxxxxxxxxx xxxxxx
             xxxxxxxx xxxxx x xxxxxxxxxxxxxxxxxx
+            xxxxxxxx xxxxxxxxx x xxx xxxxxxxxxxxxxxxxxxxxx
 
-            xx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxx x
-                xxxxxxxx xxxxxxxxx x xxx xxxxxxxxxxxxxxxxxxxxx
+            xxx xxxx x x xx x x xxxxxxxxxxxxxxxxx xxxx
+                xxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                xxx xxxx x x xx x x xxxxxxxxxxxxxxxxx xxxx
-                    xxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-                xxxxx x xxxxxxxxxx
-            x
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
         x
         xx [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
@@ -2006,7 +2003,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
      * @return The converted {@link UDTRecord}
      */
     @SuppressWarnings("unchecked")
-    private static final UDTRecord<?> pgNewUDTRecord(Class<?> type, final Object object) throws SQLException {
+    static final UDTRecord<?> pgNewUDTRecord(Class<?> type, final Object object) throws SQLException {
         if (object == null) {
             return null;
         }
@@ -2126,7 +2123,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    private static final <T> void pgSetValue(UDTRecord<?> record, Field<T> field, String value) throws SQLException {
+    static final <T> void pgSetValue(Record record, Field<T> field, String value) throws SQLException {
         record.setValue(field, pgFromString(field.getType(), value));
     }
 

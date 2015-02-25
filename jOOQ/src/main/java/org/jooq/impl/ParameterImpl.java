@@ -61,21 +61,13 @@ class ParameterImpl<T> extends AbstractQueryPart implements Parameter<T> {
 
     private final String          name;
     private final DataType<T>     type;
-    private final Binding<?, T>   binding;
     private final boolean         isDefaulted;
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     ParameterImpl(String name, DataType<T> type, boolean isDefaulted, Binding<?, T> binding) {
         this.name = name;
         this.isDefaulted = isDefaulted;
-        this.type = type;
-
-        this.binding =
-              binding != null
-            ? binding
-            : type instanceof ConvertedDataType
-            ? ((ConvertedDataType<?, T>) type).binding()
-            : new DefaultBinding<T, T>(new IdentityConverter<T>(type.getType()), type.isLob());
+        this.type = type.asConvertedDataType((Binding<T, T>) binding);
     }
 
     @Override
@@ -85,12 +77,12 @@ class ParameterImpl<T> extends AbstractQueryPart implements Parameter<T> {
 
     @Override
     public final Converter<?, T> getConverter() {
-        return binding.converter();
+        return type.getBinding().converter();
     }
 
     @Override
     public final Binding<?, T> getBinding() {
-        return binding;
+        return type.getBinding();
     }
 
     @Override

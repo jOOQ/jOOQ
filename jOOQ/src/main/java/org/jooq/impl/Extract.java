@@ -44,6 +44,8 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
 
+import java.sql.Timestamp;
+
 import org.jooq.Configuration;
 import org.jooq.DatePart;
 import org.jooq.Field;
@@ -149,17 +151,17 @@ class Extract extends AbstractFunction<Integer> {
             case ORACLE:
                 switch (datePart) {
                     case YEAR:
-                        return field("{to_char}({0}, 'YYYY')", SQLDataType.INTEGER, field);
+                        return field("{extract}({" + datePart.toSQL() + " from} {0})", SQLDataType.INTEGER, field);
                     case MONTH:
-                        return field("{to_char}({0}, 'MM')", SQLDataType.INTEGER, field);
+                        return field("{extract}({" + datePart.toSQL() + " from} {0})", SQLDataType.INTEGER, field);
                     case DAY:
-                        return field("{to_char}({0}, 'DD')", SQLDataType.INTEGER, field);
+                        return field("{extract}({" + datePart.toSQL() + " from} {0})", SQLDataType.INTEGER, field);
                     case HOUR:
-                        return field("{to_char}({0}, 'HH24')", SQLDataType.INTEGER, field);
+                        return field("{extract}({" + datePart.toSQL() + " from} {0})", SQLDataType.INTEGER, field.cast(Timestamp.class));
                     case MINUTE:
-                        return field("{to_char}({0}, 'MI')", SQLDataType.INTEGER, field);
+                        return field("{extract}({" + datePart.toSQL() + " from} {0})", SQLDataType.INTEGER, field.cast(Timestamp.class));
                     case SECOND:
-                        return field("{to_char}({0}, 'SS')", SQLDataType.INTEGER, field);
+                        return field("{extract}({" + datePart.toSQL() + " from} {0})", SQLDataType.INTEGER, field.cast(Timestamp.class));
                     default:
                         throw new SQLDialectNotSupportedException("DatePart not supported: " + datePart);
                 }

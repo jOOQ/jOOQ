@@ -44,6 +44,8 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
 
+import java.sql.Timestamp;
+
 import org.jooq.Configuration;
 import org.jooq.DatePart;
 import org.jooq.Field;
@@ -149,17 +151,17 @@ class Extract extends AbstractFunction<Integer> {
             xxxx xxxxxxx
                 xxxxxx xxxxxxxxxx x
                     xxxx xxxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
+                        xxxxxx xxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxx x x xxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
                     xxxx xxxxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
+                        xxxxxx xxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxx x x xxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
                     xxxx xxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
+                        xxxxxx xxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxx x x xxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
                     xxxx xxxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
+                        xxxxxx xxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxx x x xxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                     xxxx xxxxxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
+                        xxxxxx xxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxx x x xxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                     xxxx xxxxxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
+                        xxxxxx xxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxx x x xxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                     xxxxxxxx
                         xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxx x x xxxxxxxxxx
                 x

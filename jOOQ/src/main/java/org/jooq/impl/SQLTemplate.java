@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2014, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * This work is dual-licensed
@@ -40,61 +40,57 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.function;
+import static org.jooq.Clause.TEMPLATE;
 
-import java.sql.Time;
+import java.util.List;
 
-import org.jooq.Configuration;
-import org.jooq.Field;
+import org.jooq.Clause;
+import org.jooq.Context;
+import org.jooq.QueryPart;
+import org.jooq.Template;
 
-/**
- * @author Lukas Eder
- */
-class CurrentTime extends AbstractFunction<Time> {
+@SuppressWarnings("deprecation")
+class SQLTemplate implements Template {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -7273879239726265322L;
+    private final String sql;
 
-    CurrentTime() {
-        super("current_time", SQLDataType.TIME);
+    SQLTemplate(String sql) {
+        this.sql = sql;
     }
 
     @Override
-    final Field<Time> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
+    public final QueryPart transform(Object... input) {
+        return new SQLTemplateQueryPart(sql, input);
+    }
 
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
+    private static class SQLTemplateQueryPart extends AbstractQueryPart {
 
-            xxxx xxxxxxxxx
-                xxxxxx xxxxxxxxxxxxxxx xxxx xx xxxxxxxxx xxxxxxxxxxxxxxxxxx
+        /**
+         * Generated UID
+         */
+        private static final long     serialVersionUID = -7514156096865122018L;
+        private static final Clause[] CLAUSES          = { TEMPLATE };
+        private final String          sql;
+        private final List<QueryPart> substitutes;
 
-            xxxx xxxx
-            xxxx xxxxx
-            xxxx xxxxxxx
-            xx [/pro] */
-            case DERBY:
-            case FIREBIRD:
-            case HSQLDB:
-            case POSTGRES:
-            case SQLITE:
-                return field("{current_time}", SQLDataType.TIME);
-
-            /* [pro] xx
-            xxxx xxxxxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
-
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxx
-            xx [/pro] */
+        SQLTemplateQueryPart(String sql, Object... input) {
+            this.sql = sql;
+            this.substitutes = Utils.queryParts(input);
         }
 
-        return function("current_time", SQLDataType.TIME);
+        @Override
+        public final void accept(Context<?> ctx) {
+            Utils.renderAndBind(ctx, sql, substitutes);
+        }
+
+        @Override
+        public final Clause[] clauses(Context<?> ctx) {
+            return CLAUSES;
+        }
+
+        @Override
+        public String toString() {
+            return sql;
+        }
     }
 }

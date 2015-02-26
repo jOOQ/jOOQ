@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2014, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * This work is dual-licensed
@@ -38,63 +38,78 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
+
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.function;
-
-import java.sql.Time;
-
-import org.jooq.Configuration;
-import org.jooq.Field;
+import org.jooq.Clause;
+import org.jooq.Context;
+import org.jooq.Record;
+import org.jooq.Select;
+import org.jooq.Table;
 
 /**
  * @author Lukas Eder
  */
-class CurrentTime extends AbstractFunction<Time> {
+class SelectQueryAsTable<R extends Record> extends AbstractTable<R> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -7273879239726265322L;
+    private static final long serialVersionUID = 6272398035926615668L;
 
-    CurrentTime() {
-        super("current_time", SQLDataType.TIME);
+    private final Select<R>   query;
+
+    SelectQueryAsTable(Select<R> query) {
+        super("select");
+
+        this.query = query;
+    }
+
+    final Select<R> query() {
+        return query;
     }
 
     @Override
-    final Field<Time> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
+    public final Table<R> as(String alias) {
+        return new TableAlias<R>(this, alias, true);
+    }
 
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
+    @Override
+    public final Table<R> as(String alias, String... fieldAliases) {
+        return new TableAlias<R>(this, alias, fieldAliases, true);
+    }
 
-            xxxx xxxxxxxxx
-                xxxxxx xxxxxxxxxxxxxxx xxxx xx xxxxxxxxx xxxxxxxxxxxxxxxxxx
+    @Override
+    final Fields<R> fields0() {
+        return new Fields<R>(query.getSelect());
+    }
 
-            xxxx xxxx
-            xxxx xxxxx
-            xxxx xxxxxxx
-            xx [/pro] */
-            case DERBY:
-            case FIREBIRD:
-            case HSQLDB:
-            case POSTGRES:
-            case SQLITE:
-                return field("{current_time}", SQLDataType.TIME);
+    @Override
+    public final Class<? extends R> getRecordType() {
+        return query.getRecordType();
+    }
 
-            /* [pro] xx
-            xxxx xxxxxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
+    @Override
+    public final void accept(Context<?> ctx) {
 
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxx
-            xx [/pro] */
+        // If this is already a subquery, proceed
+        if (ctx.subquery()) {
+            ctx.formatIndentStart()
+               .formatNewLine()
+               .visit(query)
+               .formatIndentEnd()
+               .formatNewLine();
         }
+        else {
+            ctx.subquery(true)
+               .formatIndentStart()
+               .formatNewLine()
+               .visit(query)
+               .formatIndentEnd()
+               .formatNewLine()
+               .subquery(false);
+        }
+    }
 
-        return function("current_time", SQLDataType.TIME);
+    @Override
+    public final Clause[] clauses(Context<?> ctx) {
+        return null;
     }
 }

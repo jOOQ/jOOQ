@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2014, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * This work is dual-licensed
@@ -38,63 +38,57 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
+
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.function;
-
-import java.sql.Time;
-
-import org.jooq.Configuration;
+import org.jooq.Context;
+import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Select;
 
 /**
  * @author Lukas Eder
  */
-class CurrentTime extends AbstractFunction<Time> {
+class SelectQueryAsField<T> extends AbstractField<T> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -7273879239726265322L;
+    private static final long serialVersionUID = 3463144434073231750L;
 
-    CurrentTime() {
-        super("current_time", SQLDataType.TIME);
+    private final Select<?>   query;
+
+    SelectQueryAsField(Select<?> query, DataType<T> type) {
+        super("select", type);
+
+        this.query = query;
     }
 
     @Override
-    final Field<Time> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
+    public final Field<T> as(String alias) {
+        return new FieldAlias<T>(this, alias);
+    }
 
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
+    @Override
+    public final void accept(Context<?> ctx) {
 
-            xxxx xxxxxxxxx
-                xxxxxx xxxxxxxxxxxxxxx xxxx xx xxxxxxxxx xxxxxxxxxxxxxxxxxx
-
-            xxxx xxxx
-            xxxx xxxxx
-            xxxx xxxxxxx
-            xx [/pro] */
-            case DERBY:
-            case FIREBIRD:
-            case HSQLDB:
-            case POSTGRES:
-            case SQLITE:
-                return field("{current_time}", SQLDataType.TIME);
-
-            /* [pro] xx
-            xxxx xxxxxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
-
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxx
-            xx [/pro] */
+        // If this is already a subquery, proceed
+        if (ctx.subquery()) {
+            ctx.sql("(")
+               .formatIndentStart()
+               .formatNewLine()
+               .visit(query)
+               .formatIndentEnd()
+               .formatNewLine()
+               .sql(")");
         }
-
-        return function("current_time", SQLDataType.TIME);
+        else {
+            ctx.sql("(")
+               .subquery(true)
+               .formatIndentStart()
+               .formatNewLine()
+               .visit(query)
+               .formatIndentEnd()
+               .formatNewLine()
+               .subquery(false)
+               .sql(")");
+        }
     }
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2014, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * This work is dual-licensed
@@ -38,63 +38,26 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
+
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.function;
-
-import java.sql.Time;
-
-import org.jooq.Configuration;
-import org.jooq.Field;
-
 /**
+ * An operator for the {@link ExistsCondition}
+ *
  * @author Lukas Eder
  */
-class CurrentTime extends AbstractFunction<Time> {
+enum ExistsOperator {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -7273879239726265322L;
+    EXISTS("exists"),
+    NOT_EXISTS("not exists");
 
-    CurrentTime() {
-        super("current_time", SQLDataType.TIME);
+    private final String sql;
+
+    private ExistsOperator(String sql) {
+        this.sql = sql;
     }
 
-    @Override
-    final Field<Time> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
-
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
-
-            xxxx xxxxxxxxx
-                xxxxxx xxxxxxxxxxxxxxx xxxx xx xxxxxxxxx xxxxxxxxxxxxxxxxxx
-
-            xxxx xxxx
-            xxxx xxxxx
-            xxxx xxxxxxx
-            xx [/pro] */
-            case DERBY:
-            case FIREBIRD:
-            case HSQLDB:
-            case POSTGRES:
-            case SQLITE:
-                return field("{current_time}", SQLDataType.TIME);
-
-            /* [pro] xx
-            xxxx xxxxxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
-
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxx
-            xx [/pro] */
-        }
-
-        return function("current_time", SQLDataType.TIME);
+    public String toSQL() {
+        return sql;
     }
 }

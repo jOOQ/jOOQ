@@ -73,8 +73,6 @@ import static org.jooq.impl.DSL.cos;
 import static org.jooq.impl.DSL.cosh;
 import static org.jooq.impl.DSL.cot;
 import static org.jooq.impl.DSL.coth;
-import static org.jooq.impl.DSL.currentDate;
-import static org.jooq.impl.DSL.currentTime;
 import static org.jooq.impl.DSL.currentTimestamp;
 import static org.jooq.impl.DSL.currentUser;
 import static org.jooq.impl.DSL.date;
@@ -1016,10 +1014,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Some checks on current_timestamp functions
         // ------------------------------------------
         SelectQuery<?> q1 = create().selectQuery();
-        Field<Timestamp> now = currentTimestamp();
+        Field<Timestamp> now = val(new Timestamp(0));
         Field<Timestamp> ts = now.as("ts");
-        Field<Date> date = currentDate().as("d");
-        Field<Time> time = currentTime().as("t");
+        Field<Date> date = val(new Date(0)).as("d");
+        Field<Time> time = val(new Time(0)).as("t");
 
         // ... and the extract function
         // ----------------------------

@@ -73,7 +73,7 @@ class CurrentTimestamp extends AbstractFunction<Timestamp> {
                 return function("current_bigdatetime", SQLDataType.TIMESTAMP);
 
             case ORACLE:
-                return field("{sysdate}", SQLDataType.TIMESTAMP);
+                return field("{current_timestamp}", SQLDataType.TIMESTAMP);
 
             case SYBASE:
                 return field("{current timestamp}", SQLDataType.TIMESTAMP);

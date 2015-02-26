@@ -2860,6 +2860,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testCurrentDateTime() throws Exception {
+        new FunctionTests(this).testCurrentDateTime();
+    }
+
+    @Test
     public void testFunctionsOnDates_EXTRACT() throws Exception {
         new FunctionTests(this).testFunctionsOnDates_EXTRACT();
     }

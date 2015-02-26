@@ -73,6 +73,8 @@ import static org.jooq.impl.DSL.cos;
 import static org.jooq.impl.DSL.cosh;
 import static org.jooq.impl.DSL.cot;
 import static org.jooq.impl.DSL.coth;
+import static org.jooq.impl.DSL.currentDate;
+import static org.jooq.impl.DSL.currentTime;
 import static org.jooq.impl.DSL.currentTimestamp;
 import static org.jooq.impl.DSL.currentUser;
 import static org.jooq.impl.DSL.date;
@@ -1007,6 +1009,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("1970-01-01 02:00:00.0", record.getValue(ts2).toString());
         assertEquals("1970-01-01", record.getValue(d2).toString());
         assertEquals("02:00:00", record.getValue(t2).toString());
+    }
+
+    public void testCurrentDateTime() {
+        Record3<Timestamp, Date, Time> record = create().select(currentTimestamp(), currentDate(), currentTime()).fetchOne();
+
+        // Let's not compare fractional seconds, though...
+        assertEquals(
+            record.value1().toString().replaceAll("\\..*", ""),
+            record.value2().toString() + " " + record.value3().toString().replaceAll("\\..*", ""));
     }
 
     public void testFunctionsOnDates_EXTRACT() throws Exception {

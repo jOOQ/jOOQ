@@ -5107,6 +5107,26 @@ public class DSL {
     }
 
     // -------------------------------------------------------------------------
+    // XXX QueryPart composition
+    // -------------------------------------------------------------------------
+
+    /**
+     * Compose a list of <code>QueryParts</code> into a new
+     * <code>QueryPart</code>, with individual parts being comma-separated.
+     */
+    public static QueryPart list(QueryPart... parts) {
+        return list(Arrays.asList(parts));
+    }
+
+    /**
+     * Compose a list of <code>QueryParts</code> into a new
+     * <code>QueryPart</code>, with individual parts being comma-separated.
+     */
+    public static QueryPart list(Collection<? extends QueryPart> parts) {
+        return new QueryPartList<QueryPart>(parts);
+    }
+
+    // -------------------------------------------------------------------------
     // XXX SQL identifiers
     // -------------------------------------------------------------------------
 

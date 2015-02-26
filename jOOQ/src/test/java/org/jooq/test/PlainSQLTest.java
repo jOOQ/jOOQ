@@ -42,12 +42,19 @@ package org.jooq.test;
 
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.DSL.condition;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.list;
+import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.test.data.Table1.TABLE1;
+
+import java.sql.SQLException;
 
 import org.jooq.Condition;
 import org.jooq.QueryPart;
 import org.jooq.impl.DSL;
 
+import org.jmock.Expectations;
 import org.junit.Test;
 
 /**
@@ -80,19 +87,19 @@ public class PlainSQLTest extends AbstractTest {
     @Test
     public void testQuotedIdentifiers() {
         Condition c1 = condition("a = `?` and b = `{0}` and c = ?", 1);
-        Condition c2 = condition("a = \"?\" and b = \"{0}\" and c = ?", 1);
+        Condition c2 = condition("a = `?` and b = `{0}` and c = ?", 1);
 
         assertEquals("(a = `?` and b = `{0}` and c = ?)", create.render(c1));
         assertEquals("(a = `?` and b = `{0}` and c = 1)", create.renderInlined(c1));
         assertEquals("(a = `?` and b = `{0}` and c = :1)", create.renderNamedParams(c1));
 
-        assertEquals("(a = \"?\" and b = \"{0}\" and c = ?)", create.render(c2));
-        assertEquals("(a = \"?\" and b = \"{0}\" and c = 1)", create.renderInlined(c2));
-        assertEquals("(a = \"?\" and b = \"{0}\" and c = :1)", create.renderNamedParams(c2));
+        assertEquals("(a = `?` and b = `{0}` and c = ?)", create.render(c2));
+        assertEquals("(a = `?` and b = `{0}` and c = 1)", create.renderInlined(c2));
+        assertEquals("(a = `?` and b = `{0}` and c = :1)", create.renderNamedParams(c2));
 
-        assertEquals("(a = \"?\" and b = \"{0}\" and c = ?)", DSL.using(POSTGRES).render(c2));
-        assertEquals("(a = \"?\" and b = \"{0}\" and c = 1)", DSL.using(POSTGRES).renderInlined(c2));
-        assertEquals("(a = \"?\" and b = \"{0}\" and c = :1)", DSL.using(POSTGRES).renderNamedParams(c2));
+        assertEquals("(a = `?` and b = `{0}` and c = ?)", DSL.using(POSTGRES).render(c2));
+        assertEquals("(a = `?` and b = `{0}` and c = 1)", DSL.using(POSTGRES).renderInlined(c2));
+        assertEquals("(a = `?` and b = `{0}` and c = :1)", DSL.using(POSTGRES).renderNamedParams(c2));
     }
 
     @Test
@@ -114,5 +121,24 @@ public class PlainSQLTest extends AbstractTest {
 //        assertEquals("(a = ? and b = ? and ? = ?)", create.render(q));
 //        assertEquals("(a = :1 and b = :2 and :3 = :4)", create.renderNamedParams(q));
 //        assertEquals("(a = 1 and b = 2 and 'a' = 'b')", create.renderInlined(q));
+    }
+
+    @Test
+    public void testList() throws SQLException {
+        QueryPart list = list(val(1), inline(2), sql("({0})", list(val("a"), TABLE1)));
+
+        assertEquals("?, 2, (?, `TABLE1`)", create.render(list));
+        assertEquals("1, 2, ('a', `TABLE1`)", create.renderInlined(list));
+
+        context.checking(new Expectations() {{
+            oneOf(statement).setInt(1, 1);
+            oneOf(statement).setString(2, "a");
+        }});
+
+        int i = b_ref().visit(list).peekIndex();
+        assertEquals(3, i);
+
+        context.assertIsSatisfied();
+
     }
 }

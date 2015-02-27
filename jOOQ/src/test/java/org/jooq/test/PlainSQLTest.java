@@ -40,7 +40,6 @@
  */
 package org.jooq.test;
 
-import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.list;
@@ -52,7 +51,6 @@ import java.sql.SQLException;
 
 import org.jooq.Condition;
 import org.jooq.QueryPart;
-import org.jooq.impl.DSL;
 
 import org.jmock.Expectations;
 import org.junit.Test;
@@ -97,9 +95,9 @@ public class PlainSQLTest extends AbstractTest {
         assertEquals("(a = `?` and b = `{0}` and c = 1)", create.renderInlined(c2));
         assertEquals("(a = `?` and b = `{0}` and c = :1)", create.renderNamedParams(c2));
 
-        assertEquals("(a = `?` and b = `{0}` and c = ?)", DSL.using(POSTGRES).render(c2));
-        assertEquals("(a = `?` and b = `{0}` and c = 1)", DSL.using(POSTGRES).renderInlined(c2));
-        assertEquals("(a = `?` and b = `{0}` and c = :1)", DSL.using(POSTGRES).renderNamedParams(c2));
+//        assertEquals("(a = `?` and b = `{0}` and c = ?)", DSL.using(POSTGRES).render(c2));
+//        assertEquals("(a = `?` and b = `{0}` and c = 1)", DSL.using(POSTGRES).renderInlined(c2));
+//        assertEquals("(a = `?` and b = `{0}` and c = :1)", DSL.using(POSTGRES).renderNamedParams(c2));
     }
 
     @Test

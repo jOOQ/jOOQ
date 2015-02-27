@@ -69,4 +69,18 @@ public class TExoticTypesDao extends DAOImpl<TExoticTypesRecord, org.jooq.test.o
 	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.TExoticTypes> fetchByJavaIoSerializable(Serializable... values) {
 		return fetch(TExoticTypes.T_EXOTIC_TYPES.JAVA_IO_SERIALIZABLE, values);
 	}
+
+	/**
+	 * Fetch records that have <code>PLAIN_SQL_CONVERTER_XML IN (values)</code>
+	 */
+	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.TExoticTypes> fetchByPlainSqlConverterXml(String... values) {
+		return fetch(TExoticTypes.T_EXOTIC_TYPES.PLAIN_SQL_CONVERTER_XML, values);
+	}
+
+	/**
+	 * Fetch records that have <code>PLAIN_SQL_BINDING_XML IN (values)</code>
+	 */
+	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.TExoticTypes> fetchByPlainSqlBindingXml(String... values) {
+		return fetch(TExoticTypes.T_EXOTIC_TYPES.PLAIN_SQL_BINDING_XML, values);
+	}
 }

@@ -15,9 +15,9 @@ import javax.validation.constraints.NotNull;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Record3;
+import org.jooq.Record5;
 import org.jooq.Row;
-import org.jooq.Row3;
+import org.jooq.Row5;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.test.tables.TExoticTypes;
 
@@ -28,9 +28,9 @@ import org.jooq.test.oracle.generatedclasses.test.tables.TExoticTypes;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @Entity
 @Table(name = "T_EXOTIC_TYPES", schema = "TEST")
-public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> implements Record3<Integer, UUID, Serializable> {
+public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> implements Record5<Integer, UUID, Serializable, String, String> {
 
-	private static final long serialVersionUID = -1141526766;
+	private static final long serialVersionUID = 1238632213;
 
 	/**
 	 * Setter for <code>TEST.T_EXOTIC_TYPES.ID</code>.
@@ -79,6 +79,36 @@ public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> 
 		return (Serializable) getValue(2);
 	}
 
+	/**
+	 * Setter for <code>TEST.T_EXOTIC_TYPES.PLAIN_SQL_CONVERTER_XML</code>.
+	 */
+	public void setPlainSqlConverterXml(String value) {
+		setValue(3, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.T_EXOTIC_TYPES.PLAIN_SQL_CONVERTER_XML</code>.
+	 */
+	@Column(name = "PLAIN_SQL_CONVERTER_XML")
+	public String getPlainSqlConverterXml() {
+		return (String) getValue(3);
+	}
+
+	/**
+	 * Setter for <code>TEST.T_EXOTIC_TYPES.PLAIN_SQL_BINDING_XML</code>.
+	 */
+	public void setPlainSqlBindingXml(String value) {
+		setValue(4, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.T_EXOTIC_TYPES.PLAIN_SQL_BINDING_XML</code>.
+	 */
+	@Column(name = "PLAIN_SQL_BINDING_XML")
+	public String getPlainSqlBindingXml() {
+		return (String) getValue(4);
+	}
+
 	// -------------------------------------------------------------------------
 	// Primary key information
 	// -------------------------------------------------------------------------
@@ -92,23 +122,23 @@ public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> 
 	}
 
 	// -------------------------------------------------------------------------
-	// Record3 type implementation
+	// Record5 type implementation
 	// -------------------------------------------------------------------------
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Row3<Integer, UUID, Serializable> fieldsRow() {
-		return (Row3) super.fieldsRow();
+	public Row5<Integer, UUID, Serializable, String, String> fieldsRow() {
+		return (Row5) super.fieldsRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Row3<Integer, UUID, Serializable> valuesRow() {
-		return (Row3) super.valuesRow();
+	public Row5<Integer, UUID, Serializable, String, String> valuesRow() {
+		return (Row5) super.valuesRow();
 	}
 
 	/**
@@ -139,6 +169,22 @@ public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> 
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Field<String> field4() {
+		return TExoticTypes.T_EXOTIC_TYPES.PLAIN_SQL_CONVERTER_XML;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Field<String> field5() {
+		return TExoticTypes.T_EXOTIC_TYPES.PLAIN_SQL_BINDING_XML;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Integer value1() {
 		return getId();
 	}
@@ -157,6 +203,22 @@ public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> 
 	@Override
 	public Serializable value3() {
 		return getJavaIoSerializable();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String value4() {
+		return getPlainSqlConverterXml();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String value5() {
+		return getPlainSqlBindingXml();
 	}
 
 	/**
@@ -190,7 +252,25 @@ public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> 
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TExoticTypesRecord values(Integer value1, UUID value2, Serializable value3) {
+	public TExoticTypesRecord value4(String value) {
+		setPlainSqlConverterXml(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TExoticTypesRecord value5(String value) {
+		setPlainSqlBindingXml(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TExoticTypesRecord values(Integer value1, UUID value2, Serializable value3, String value4, String value5) {
 		return this;
 	}
 
@@ -208,11 +288,13 @@ public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> 
 	/**
 	 * Create a detached, initialised TExoticTypesRecord
 	 */
-	public TExoticTypesRecord(Integer id, UUID uu, Serializable javaIoSerializable) {
+	public TExoticTypesRecord(Integer id, UUID uu, Serializable javaIoSerializable, String plainSqlConverterXml, String plainSqlBindingXml) {
 		super(TExoticTypes.T_EXOTIC_TYPES);
 
 		setValue(0, id);
 		setValue(1, uu);
 		setValue(2, javaIoSerializable);
+		setValue(3, plainSqlConverterXml);
+		setValue(4, plainSqlBindingXml);
 	}
 }

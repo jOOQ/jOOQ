@@ -22,11 +22,13 @@ import javax.validation.constraints.NotNull;
 @Table(name = "T_EXOTIC_TYPES", schema = "TEST")
 public class TExoticTypes implements Serializable {
 
-	private static final long serialVersionUID = 270806866;
+	private static final long serialVersionUID = -1229298697;
 
 	private Integer      id;
 	private UUID         uu;
 	private Serializable javaIoSerializable;
+	private String       plainSqlConverterXml;
+	private String       plainSqlBindingXml;
 
 	public TExoticTypes() {}
 
@@ -34,16 +36,22 @@ public class TExoticTypes implements Serializable {
 		this.id = value.id;
 		this.uu = value.uu;
 		this.javaIoSerializable = value.javaIoSerializable;
+		this.plainSqlConverterXml = value.plainSqlConverterXml;
+		this.plainSqlBindingXml = value.plainSqlBindingXml;
 	}
 
 	public TExoticTypes(
 		Integer      id,
 		UUID         uu,
-		Serializable javaIoSerializable
+		Serializable javaIoSerializable,
+		String       plainSqlConverterXml,
+		String       plainSqlBindingXml
 	) {
 		this.id = id;
 		this.uu = uu;
 		this.javaIoSerializable = javaIoSerializable;
+		this.plainSqlConverterXml = plainSqlConverterXml;
+		this.plainSqlBindingXml = plainSqlBindingXml;
 	}
 
 	@Id
@@ -75,6 +83,24 @@ public class TExoticTypes implements Serializable {
 		this.javaIoSerializable = javaIoSerializable;
 	}
 
+	@Column(name = "PLAIN_SQL_CONVERTER_XML")
+	public String getPlainSqlConverterXml() {
+		return this.plainSqlConverterXml;
+	}
+
+	public void setPlainSqlConverterXml(String plainSqlConverterXml) {
+		this.plainSqlConverterXml = plainSqlConverterXml;
+	}
+
+	@Column(name = "PLAIN_SQL_BINDING_XML")
+	public String getPlainSqlBindingXml() {
+		return this.plainSqlBindingXml;
+	}
+
+	public void setPlainSqlBindingXml(String plainSqlBindingXml) {
+		this.plainSqlBindingXml = plainSqlBindingXml;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -102,6 +128,18 @@ public class TExoticTypes implements Serializable {
 		}
 		else if (!javaIoSerializable.equals(other.javaIoSerializable))
 			return false;
+		if (plainSqlConverterXml == null) {
+			if (other.plainSqlConverterXml != null)
+				return false;
+		}
+		else if (!plainSqlConverterXml.equals(other.plainSqlConverterXml))
+			return false;
+		if (plainSqlBindingXml == null) {
+			if (other.plainSqlBindingXml != null)
+				return false;
+		}
+		else if (!plainSqlBindingXml.equals(other.plainSqlBindingXml))
+			return false;
 		return true;
 	}
 
@@ -112,6 +150,8 @@ public class TExoticTypes implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((uu == null) ? 0 : uu.hashCode());
 		result = prime * result + ((javaIoSerializable == null) ? 0 : javaIoSerializable.hashCode());
+		result = prime * result + ((plainSqlConverterXml == null) ? 0 : plainSqlConverterXml.hashCode());
+		result = prime * result + ((plainSqlBindingXml == null) ? 0 : plainSqlBindingXml.hashCode());
 		return result;
 	}
 }

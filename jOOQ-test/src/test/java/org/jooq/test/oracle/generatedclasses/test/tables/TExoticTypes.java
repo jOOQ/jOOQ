@@ -26,7 +26,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.records.TExoticTypesRec
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes extends TableImpl<TExoticTypesRecord> {
 
-	private static final long serialVersionUID = -542680235;
+	private static final long serialVersionUID = -574306288;
 
 	/**
 	 * The reference instance of <code>TEST.T_EXOTIC_TYPES</code>
@@ -55,6 +55,16 @@ public class TExoticTypes extends TableImpl<TExoticTypesRecord> {
 	 * The column <code>TEST.T_EXOTIC_TYPES.JAVA_IO_SERIALIZABLE</code>.
 	 */
 	public final TableField<TExoticTypesRecord, Serializable> JAVA_IO_SERIALIZABLE = createField("JAVA_IO_SERIALIZABLE", org.jooq.impl.SQLDataType.BLOB, this, "", new SerializedBinding());
+
+	/**
+	 * The column <code>TEST.T_EXOTIC_TYPES.PLAIN_SQL_CONVERTER_XML</code>.
+	 */
+	public final TableField<TExoticTypesRecord, String> PLAIN_SQL_CONVERTER_XML = createField("PLAIN_SQL_CONVERTER_XML", org.jooq.impl.SQLDataType.CLOB, this, "");
+
+	/**
+	 * The column <code>TEST.T_EXOTIC_TYPES.PLAIN_SQL_BINDING_XML</code>.
+	 */
+	public final TableField<TExoticTypesRecord, String> PLAIN_SQL_BINDING_XML = createField("PLAIN_SQL_BINDING_XML", org.jooq.impl.SQLDataType.CLOB, this, "");
 
 	/**
 	 * Create a <code>TEST.T_EXOTIC_TYPES</code> table reference

@@ -9744,7 +9744,7 @@ public class DSL {
     /**
      * The bitwise left shift operator.
      * <p>
-     * Some dialects natively support this using <code>[field1] << [field2]</code>.
+     * Some dialects natively support this using <code>[field1] &lt;&lt; [field2]</code>.
      * jOOQ simulates this operator in some dialects using
      * <code>[field1] * power(2, [field2])</code>, where power might also be simulated.
      *
@@ -9892,7 +9892,7 @@ public class DSL {
      * ... or simulates it elsewhere (without bind variables on values -1, 0, 1):
      * <code><pre>
      * CASE WHEN [this] > 0 THEN 1
-     *      WHEN [this] < 0 THEN -1
+     *      WHEN [this] &lt; 0 THEN -1
      *      ELSE 0
      * END
      */

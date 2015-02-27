@@ -96,7 +96,7 @@ public interface InsertSetMoreStep<R extends Record> extends InsertOnDuplicateSt
      * Set values in the <code>INSERT</code> statement.
      * <p>
      * This is the same as calling {@link #set(Map)} with the argument record
-     * treated as a <code>Map<Field<?>, Object></code>.
+     * treated as a <code>Map&lt;Field&lt;?>, Object></code>.
      *
      * @see #set(Map)
      */

@@ -399,7 +399,7 @@ public interface Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * <p>
      * Row non-equality comparison predicates can be emulated in those
      * databases that do not support such predicates natively:
-     * <code>(A, B) <> (1, 2)</code> is equivalent to
+     * <code>(A, B) &lt;> (1, 2)</code> is equivalent to
      * <code>NOT(A = 1 AND B = 2)</code>
      */
     @Support
@@ -518,8 +518,8 @@ public interface Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * <p>
      * Row order comparison predicates can be emulated in those
      * databases that do not support such predicates natively:
-     * <code>(A, B, C) < (1, 2, 3)</code> is equivalent to
-     * <code>A < 1 OR (A = 1 AND B < 2) OR (A = 1 AND B = 2 AND C < 3)</code>
+     * <code>(A, B, C) &lt; (1, 2, 3)</code> is equivalent to
+     * <code>A &lt; 1 OR (A = 1 AND B &lt; 2) OR (A = 1 AND B = 2 AND C &lt; 3)</code>
      */
     @Support
     Condition lessThan(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row);
@@ -633,8 +633,8 @@ public interface Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * <p>
      * Row order comparison predicates can be emulated in those
      * databases that do not support such predicates natively:
-     * <code>(A, B) <= (1, 2)</code> is equivalent to
-     * <code>A < 1 OR (A = 1 AND B < 2) OR (A = 1 AND B = 2)</code>
+     * <code>(A, B) &lt;= (1, 2)</code> is equivalent to
+     * <code>A &lt; 1 OR (A = 1 AND B &lt; 2) OR (A = 1 AND B = 2)</code>
      */
     @Support
     Condition lessOrEqual(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row);
@@ -1018,7 +1018,7 @@ public interface Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * This is the same as calling <code>between(minValue).and(maxValue)</code>
      * <p>
      * The expression <code>A BETWEEN B AND C</code> is equivalent to the
-     * expression <code>A >= B AND A <= C</code> for those SQL dialects that do
+     * expression <code>A >= B AND A &lt;= C</code> for those SQL dialects that do
      * not properly support the <code>BETWEEN</code> predicate for row value
      * expressions
      */
@@ -1080,7 +1080,7 @@ public interface Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * This is the same as calling <code>betweenSymmetric(minValue).and(maxValue)</code>
      * <p>
      * The expression <code>A BETWEEN SYMMETRIC B AND C</code> is equivalent to
-     * the expression <code>(A >= B AND A <= C) OR (A >= C AND A <= B)</code>
+     * the expression <code>(A >= B AND A &lt;= C) OR (A >= C AND A &lt;= B)</code>
      * for those SQL dialects that do not properly support the
      * <code>BETWEEN</code> predicate for row value expressions
      */
@@ -1142,7 +1142,7 @@ public interface Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * This is the same as calling <code>notBetween(minValue).and(maxValue)</code>
      * <p>
      * The expression <code>A NOT BETWEEN B AND C</code> is equivalent to the
-     * expression <code>A < B OR A > C</code> for those SQL dialects that do
+     * expression <code>A &lt; B OR A > C</code> for those SQL dialects that do
      * not properly support the <code>BETWEEN</code> predicate for row value
      * expressions
      */
@@ -1204,7 +1204,7 @@ public interface Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * This is the same as calling <code>notBetweenSymmetric(minValue).and(maxValue)</code>
      * <p>
      * The expression <code>A NOT BETWEEN SYMMETRIC B AND C</code> is equivalent
-     * to the expression <code>(A < B OR A > C) AND (A < C OR A > B)</code> for
+     * to the expression <code>(A &lt; B OR A > C) AND (A &lt; C OR A > B)</code> for
      * those SQL dialects that do not properly support the <code>BETWEEN</code>
      * predicate for row value expressions
      */

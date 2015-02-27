@@ -1767,13 +1767,13 @@ public interface Field<T> extends SelectField<T>, GroupField {
     Condition equal(Field<T> field);
 
     /**
-     * <code>this = (Select<?> ...)</code>.
+     * <code>this = (Select&lt;?> ...)</code>.
      */
     @Support
     Condition equal(Select<? extends Record1<T>> query);
 
     /**
-     * <code>this = [quantifier] (Select<?> ...)</code>.
+     * <code>this = [quantifier] (Select&lt;?> ...)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -1802,7 +1802,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
     Condition eq(Field<T> field);
 
     /**
-     * <code>this = (Select<?> ...)</code>.
+     * <code>this = (Select&lt;?> ...)</code>.
      *
      * @see #equal(Select)
      */
@@ -1810,7 +1810,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
     Condition eq(Select<? extends Record1<T>> query);
 
     /**
-     * <code>this = [quantifier] (Select<?> ...)</code>.
+     * <code>this = [quantifier] (Select&lt;?> ...)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -1835,13 +1835,13 @@ public interface Field<T> extends SelectField<T>, GroupField {
     Condition notEqual(Field<T> field);
 
     /**
-     * <code>this != (Select<?> ...)</code>.
+     * <code>this != (Select&lt;?> ...)</code>.
      */
     @Support
     Condition notEqual(Select<? extends Record1<T>> query);
 
     /**
-     * <code>this != [quantifier] (Select<?> ...)</code>.
+     * <code>this != [quantifier] (Select&lt;?> ...)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -1870,7 +1870,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
     Condition ne(Field<T> field);
 
     /**
-     * <code>this != (Select<?> ...)</code>.
+     * <code>this != (Select&lt;?> ...)</code>.
      *
      * @see #notEqual(Select)
      */
@@ -1878,7 +1878,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
     Condition ne(Select<? extends Record1<T>> query);
 
     /**
-     * <code>this != [quantifier] (Select<?> ...)</code>.
+     * <code>this != [quantifier] (Select&lt;?> ...)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -1891,25 +1891,25 @@ public interface Field<T> extends SelectField<T>, GroupField {
     Condition ne(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this < value</code>.
+     * <code>this &lt; value</code>.
      */
     @Support
     Condition lessThan(T value);
 
     /**
-     * <code>this < field</code>.
+     * <code>this &lt; field</code>.
      */
     @Support
     Condition lessThan(Field<T> field);
 
     /**
-     * <code>this < (Select<?> ...)</code>.
+     * <code>this &lt; (Select&lt;?> ...)</code>.
      */
     @Support
     Condition lessThan(Select<? extends Record1<T>> query);
 
     /**
-     * <code>this < [quantifier] (Select<?> ...)</code>.
+     * <code>this &lt; [quantifier] (Select&lt;?> ...)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -1922,7 +1922,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
     Condition lessThan(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this < value</code>.
+     * <code>this &lt; value</code>.
      *
      * @see #lessThan(Object)
      */
@@ -1930,7 +1930,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
     Condition lt(T value);
 
     /**
-     * <code>this < field</code>.
+     * <code>this &lt; field</code>.
      *
      * @see #lessThan(Field)
      */
@@ -1938,7 +1938,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
     Condition lt(Field<T> field);
 
     /**
-     * <code>this < (Select<?> ...)</code>.
+     * <code>this &lt; (Select&lt;?> ...)</code>.
      *
      * @see #lessThan(Select)
      */
@@ -1946,7 +1946,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
     Condition lt(Select<? extends Record1<T>> query);
 
     /**
-     * <code>this < [quantifier] (Select<?> ...)</code>.
+     * <code>this &lt; [quantifier] (Select&lt;?> ...)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -1959,25 +1959,25 @@ public interface Field<T> extends SelectField<T>, GroupField {
     Condition lt(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this <= value</code>.
+     * <code>this &lt;= value</code>.
      */
     @Support
     Condition lessOrEqual(T value);
 
     /**
-     * <code>this <= field</code>.
+     * <code>this &lt;= field</code>.
      */
     @Support
     Condition lessOrEqual(Field<T> field);
 
     /**
-     * <code>this <= (Select<?> ...)</code>.
+     * <code>this &lt;= (Select&lt;?> ...)</code>.
      */
     @Support
     Condition lessOrEqual(Select<? extends Record1<T>> query);
 
     /**
-     * <code>this <= [quantifier] (Select<?> ...)</code>.
+     * <code>this &lt;= [quantifier] (Select&lt;?> ...)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -1990,7 +1990,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
     Condition lessOrEqual(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this <= value</code>.
+     * <code>this &lt;= value</code>.
      *
      * @see #lessOrEqual(Object)
      */
@@ -1998,7 +1998,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
     Condition le(T value);
 
     /**
-     * <code>this <= field</code>.
+     * <code>this &lt;= field</code>.
      *
      * @see #lessOrEqual(Field)
      */
@@ -2006,7 +2006,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
     Condition le(Field<T> field);
 
     /**
-     * <code>this <= (Select<?> ...)</code>.
+     * <code>this &lt;= (Select&lt;?> ...)</code>.
      *
      * @see #lessOrEqual(Select)
      */
@@ -2014,7 +2014,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
     Condition le(Select<? extends Record1<T>> query);
 
     /**
-     * <code>this <= [quantifier] (Select<?> ...)</code>.
+     * <code>this &lt;= [quantifier] (Select&lt;?> ...)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -2039,13 +2039,13 @@ public interface Field<T> extends SelectField<T>, GroupField {
     Condition greaterThan(Field<T> field);
 
     /**
-     * <code>this > (Select<?> ...)</code>.
+     * <code>this > (Select&lt;?> ...)</code>.
      */
     @Support
     Condition greaterThan(Select<? extends Record1<T>> query);
 
     /**
-     * <code>this > [quantifier] (Select<?> ...)</code>.
+     * <code>this > [quantifier] (Select&lt;?> ...)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -2074,7 +2074,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
     Condition gt(Field<T> field);
 
     /**
-     * <code>this > (Select<?> ...)</code>.
+     * <code>this > (Select&lt;?> ...)</code>.
      *
      * @see #greaterThan(Select)
      */
@@ -2082,7 +2082,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
     Condition gt(Select<? extends Record1<T>> query);
 
     /**
-     * <code>this > [quantifier] (Select<?> ...)</code>.
+     * <code>this > [quantifier] (Select&lt;?> ...)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -2107,13 +2107,13 @@ public interface Field<T> extends SelectField<T>, GroupField {
     Condition greaterOrEqual(Field<T> field);
 
     /**
-     * <code>this >= (Select<?> ...)</code>.
+     * <code>this >= (Select&lt;?> ...)</code>.
      */
     @Support
     Condition greaterOrEqual(Select<? extends Record1<T>> query);
 
     /**
-     * <code>this >= [quantifier] (Select<?> ...)</code>.
+     * <code>this >= [quantifier] (Select&lt;?> ...)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -2142,7 +2142,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
     Condition ge(Field<T> field);
 
     /**
-     * <code>this >= (Select<?> ...)</code>.
+     * <code>this >= (Select&lt;?> ...)</code>.
      *
      * @see #greaterOrEqual(Select)
      */
@@ -2150,7 +2150,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
     Condition ge(Select<? extends Record1<T>> query);
 
     /**
-     * <code>this >= [quantifier] (Select<?> ...)</code>.
+     * <code>this >= [quantifier] (Select&lt;?> ...)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)

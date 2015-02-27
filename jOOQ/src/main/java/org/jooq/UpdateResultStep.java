@@ -51,7 +51,7 @@ import org.jooq.exception.DataAccessException;
  * Example: <code><pre>
  * DSLContext create = DSL.using(configuration);
  *
- * TableRecord<?> record =
+ * TableRecord&lt;?> record =
  * create.update(table)
  *       .set(field1, value1)
  *       .set(field2, value2)

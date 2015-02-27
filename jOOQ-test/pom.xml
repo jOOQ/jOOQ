@@ -825,8 +825,8 @@
                                                     <converter>org.jooq.test.all.converters.Boolean_YES_NO_UC_Converter</converter>
                                                 </customType>
                                                 <customType>
-                                                    <name>java.time.LocalDateTime</name>
-                                                    <converter>org.jooq.test.all.converters.LocalDateTimeConverter</converter>
+                                                    <name>java.time.LocalDate</name>
+                                                    <converter>org.jooq.test.all.converters.LocalDateConverter</converter>
                                                 </customType>
                                             </customTypes>
 
@@ -887,7 +887,7 @@
                                                     <expression>(?i:(.*?.)?T_BOOLEANS.ONE_ZERO)</expression>
                                                 </forcedType>
                                                 <forcedType>
-                                                    <name>java.time.LocalDateTime</name>
+                                                    <name>java.time.LocalDate</name>
                                                     <expression>(?i:(.*?\.)?T_3667\..*)</expression>
                                                     <types>DATE</types>
                                                 </forcedType>
@@ -4918,9 +4918,9 @@
                                                 </customType>
 
                                                  <customType>
-                                                    <name>LocalDateTime</name>
-                                                    <type>java.time.LocalDateTime</type>
-                                                    <converter>org.jooq.test.all.converters.LocalDateTimeConverter</converter>
+                                                    <name>LocalDate</name>
+                                                    <type>java.time.LocalDate</type>
+                                                    <converter>org.jooq.test.all.converters.LocalDateConverter</converter>
                                                 </customType>
                                                 
                                                 <customType>
@@ -4938,7 +4938,7 @@
                                                 </forcedType>
                                             
                                                 <forcedType>
-                                                    <name>LocalDateTime</name>
+                                                    <name>LocalDate</name>
                                                     <expression>.*2155.*</expression>
                                                     <types>DATE</types>
                                                 </forcedType>
@@ -5107,9 +5107,9 @@
                                                 </customType>
 
                                                  <customType>
-                                                    <name>LocalDateTime</name>
-                                                    <type>java.time.LocalDateTime</type>
-                                                    <converter>org.jooq.test.all.converters.LocalDateTimeConverter</converter>
+                                                    <name>LocalDate</name>
+                                                    <type>java.time.LocalDate</type>
+                                                    <converter>org.jooq.test.all.converters.LocalDateConverter</converter>
                                                 </customType>
                                                 
                                                 <customType>
@@ -5127,7 +5127,7 @@
                                                 </forcedType>
                                             
                                                 <forcedType>
-                                                    <name>LocalDateTime</name>
+                                                    <name>LocalDate</name>
                                                     <expression>.*2155.*</expression>
                                                     <types>DATE</types>
                                                 </forcedType>
@@ -5750,9 +5750,9 @@
 
                                             <customTypes>
                                                 <customType>
-                                                    <name>LocalDateTime</name>
-                                                    <type>java.time.LocalDateTime</type>
-                                                    <converter>org.jooq.test.all.converters.LocalDateTimeConverter</converter>
+                                                    <name>LocalDate</name>
+                                                    <type>java.time.LocalDate</type>
+                                                    <converter>org.jooq.test.all.converters.LocalDateConverter</converter>
                                                 </customType>
                                             </customTypes>
                                             <forcedTypes>
@@ -5761,7 +5761,7 @@
                                                     <types>NUMBER.*|INTEGER</types>
                                                 </forcedType>
                                                 <forcedType>
-                                                    <name>LocalDateTime</name>
+                                                    <name>LocalDate</name>
                                                     <types>DATE</types>
                                                 </forcedType>
                                             </forcedTypes>

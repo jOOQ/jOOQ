@@ -455,7 +455,7 @@ public class Routines {
 	/**
 	 * Call <code>TEST.F2155</code>
 	 */
-	public static java.time.LocalDateTime f2155(org.jooq.Configuration configuration, java.math.BigDecimal p1, java.time.LocalDateTime p2, java.math.BigDecimal p3, java.time.LocalDateTime p4) {
+	public static java.time.LocalDate f2155(org.jooq.Configuration configuration, java.math.BigDecimal p1, java.time.LocalDate p2, java.math.BigDecimal p3, java.time.LocalDate p4) {
 		org.jooq.test.oracle5.generatedclasses.routines.F2155 f = new org.jooq.test.oracle5.generatedclasses.routines.F2155();
 		f.setP1(p1);
 		f.setP2(p2);
@@ -469,7 +469,7 @@ public class Routines {
 	/**
 	 * Get <code>TEST.F2155</code> as a field
 	 */
-	public static org.jooq.Field<java.time.LocalDateTime> f2155(java.math.BigDecimal p1, java.time.LocalDateTime p2, java.math.BigDecimal p3, java.time.LocalDateTime p4) {
+	public static org.jooq.Field<java.time.LocalDate> f2155(java.math.BigDecimal p1, java.time.LocalDate p2, java.math.BigDecimal p3, java.time.LocalDate p4) {
 		org.jooq.test.oracle5.generatedclasses.routines.F2155 f = new org.jooq.test.oracle5.generatedclasses.routines.F2155();
 		f.setP1(p1);
 		f.setP2(p2);
@@ -482,7 +482,7 @@ public class Routines {
 	/**
 	 * Get <code>TEST.F2155</code> as a field
 	 */
-	public static org.jooq.Field<java.time.LocalDateTime> f2155(org.jooq.Field<java.math.BigDecimal> p1, org.jooq.Field<java.time.LocalDateTime> p2, org.jooq.Field<java.math.BigDecimal> p3, org.jooq.Field<java.time.LocalDateTime> p4) {
+	public static org.jooq.Field<java.time.LocalDate> f2155(org.jooq.Field<java.math.BigDecimal> p1, org.jooq.Field<java.time.LocalDate> p2, org.jooq.Field<java.math.BigDecimal> p3, org.jooq.Field<java.time.LocalDate> p4) {
 		org.jooq.test.oracle5.generatedclasses.routines.F2155 f = new org.jooq.test.oracle5.generatedclasses.routines.F2155();
 		f.setP1(p1);
 		f.setP2(p2);
@@ -606,7 +606,7 @@ public class Routines {
 	/**
 	 * Call <code>TEST.F_976</code>
 	 */
-	public static java.time.LocalDateTime f_976(org.jooq.Configuration configuration, java.time.LocalDateTime i) {
+	public static java.time.LocalDate f_976(org.jooq.Configuration configuration, java.time.LocalDate i) {
 		org.jooq.test.oracle5.generatedclasses.routines.F_976 f = new org.jooq.test.oracle5.generatedclasses.routines.F_976();
 		f.setI(i);
 
@@ -617,7 +617,7 @@ public class Routines {
 	/**
 	 * Get <code>TEST.F_976</code> as a field
 	 */
-	public static org.jooq.Field<java.time.LocalDateTime> f_976(java.time.LocalDateTime i) {
+	public static org.jooq.Field<java.time.LocalDate> f_976(java.time.LocalDate i) {
 		org.jooq.test.oracle5.generatedclasses.routines.F_976 f = new org.jooq.test.oracle5.generatedclasses.routines.F_976();
 		f.setI(i);
 
@@ -627,7 +627,7 @@ public class Routines {
 	/**
 	 * Get <code>TEST.F_976</code> as a field
 	 */
-	public static org.jooq.Field<java.time.LocalDateTime> f_976(org.jooq.Field<java.time.LocalDateTime> i) {
+	public static org.jooq.Field<java.time.LocalDate> f_976(org.jooq.Field<java.time.LocalDate> i) {
 		org.jooq.test.oracle5.generatedclasses.routines.F_976 f = new org.jooq.test.oracle5.generatedclasses.routines.F_976();
 		f.setI(i);
 
@@ -712,7 +712,7 @@ public class Routines {
 	/**
 	 * Call <code>TEST.P_DEFAULT</code>
 	 */
-	public static org.jooq.test.oracle5.generatedclasses.routines.PDefault pDefault(org.jooq.Configuration configuration, java.math.BigDecimal pInNumber, java.lang.String pInVarchar, java.time.LocalDateTime pInDate) {
+	public static org.jooq.test.oracle5.generatedclasses.routines.PDefault pDefault(org.jooq.Configuration configuration, java.math.BigDecimal pInNumber, java.lang.String pInVarchar, java.time.LocalDate pInDate) {
 		org.jooq.test.oracle5.generatedclasses.routines.PDefault p = new org.jooq.test.oracle5.generatedclasses.routines.PDefault();
 		p.setPInNumber(pInNumber);
 		p.setPInVarchar(pInVarchar);
@@ -856,7 +856,7 @@ public class Routines {
 	/**
 	 * Call <code>TEST.P2155</code>
 	 */
-	public static org.jooq.test.oracle5.generatedclasses.routines.P2155 p2155(org.jooq.Configuration configuration, java.math.BigDecimal p1, java.time.LocalDateTime p2) {
+	public static org.jooq.test.oracle5.generatedclasses.routines.P2155 p2155(org.jooq.Configuration configuration, java.math.BigDecimal p1, java.time.LocalDate p2) {
 		org.jooq.test.oracle5.generatedclasses.routines.P2155 p = new org.jooq.test.oracle5.generatedclasses.routines.P2155();
 		p.setP1(p1);
 		p.setP2(p2);
@@ -901,7 +901,7 @@ public class Routines {
 	/**
 	 * Call <code>TEST.P_976</code>
 	 */
-	public static java.time.LocalDateTime p_976(org.jooq.Configuration configuration, java.time.LocalDateTime i) {
+	public static java.time.LocalDate p_976(org.jooq.Configuration configuration, java.time.LocalDate i) {
 		org.jooq.test.oracle5.generatedclasses.routines.P_976 p = new org.jooq.test.oracle5.generatedclasses.routines.P_976();
 		p.setI(i);
 

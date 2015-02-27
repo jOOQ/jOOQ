@@ -34,7 +34,7 @@ public class T_976ObjectType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle5
 	/**
 	 * The attribute <code>TEST.T_976_OBJECT_TYPE.D</code>.
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.T_976ObjectTypeRecord, java.time.LocalDateTime> D = createField("D", org.jooq.impl.SQLDataType.DATE, T_976_OBJECT_TYPE, "", new org.jooq.test.all.converters.LocalDateTimeConverter());
+	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.T_976ObjectTypeRecord, java.time.LocalDate> D = createField("D", org.jooq.impl.SQLDataType.DATE, T_976_OBJECT_TYPE, "", new org.jooq.test.all.converters.LocalDateConverter());
 
 	/**
 	 * No further instances allowed

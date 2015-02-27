@@ -4,7 +4,7 @@
 package org.jooq.test.oracle.generatedclasses.test.tables.records;
 
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,7 +29,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ObjectRecord
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @Entity
 @Table(name = "T_2155", schema = "TEST")
-public class T_2155Record extends UpdatableRecordImpl<T_2155Record> implements Record4<Integer, LocalDateTime, U_2155ObjectRecord, U_2155ArrayRecord> {
+public class T_2155Record extends UpdatableRecordImpl<T_2155Record> implements Record4<Integer, LocalDate, U_2155ObjectRecord, U_2155ArrayRecord> {
 
 	private static final long serialVersionUID = 1515795341;
 
@@ -53,7 +53,7 @@ public class T_2155Record extends UpdatableRecordImpl<T_2155Record> implements R
 	/**
 	 * Setter for <code>TEST.T_2155.D1</code>.
 	 */
-	public void setD1(LocalDateTime value) {
+	public void setD1(LocalDate value) {
 		setValue(1, value);
 	}
 
@@ -61,8 +61,8 @@ public class T_2155Record extends UpdatableRecordImpl<T_2155Record> implements R
 	 * Getter for <code>TEST.T_2155.D1</code>.
 	 */
 	@Column(name = "D1")
-	public LocalDateTime getD1() {
-		return (LocalDateTime) getValue(1);
+	public LocalDate getD1() {
+		return (LocalDate) getValue(1);
 	}
 
 	/**
@@ -115,7 +115,7 @@ public class T_2155Record extends UpdatableRecordImpl<T_2155Record> implements R
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Row4<Integer, LocalDateTime, U_2155ObjectRecord, U_2155ArrayRecord> fieldsRow() {
+	public Row4<Integer, LocalDate, U_2155ObjectRecord, U_2155ArrayRecord> fieldsRow() {
 		return (Row4) super.fieldsRow();
 	}
 
@@ -123,7 +123,7 @@ public class T_2155Record extends UpdatableRecordImpl<T_2155Record> implements R
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Row4<Integer, LocalDateTime, U_2155ObjectRecord, U_2155ArrayRecord> valuesRow() {
+	public Row4<Integer, LocalDate, U_2155ObjectRecord, U_2155ArrayRecord> valuesRow() {
 		return (Row4) super.valuesRow();
 	}
 
@@ -139,7 +139,7 @@ public class T_2155Record extends UpdatableRecordImpl<T_2155Record> implements R
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Field<LocalDateTime> field2() {
+	public Field<LocalDate> field2() {
 		return T_2155.T_2155.D1;
 	}
 
@@ -171,7 +171,7 @@ public class T_2155Record extends UpdatableRecordImpl<T_2155Record> implements R
 	 * {@inheritDoc}
 	 */
 	@Override
-	public LocalDateTime value2() {
+	public LocalDate value2() {
 		return getD1();
 	}
 
@@ -204,7 +204,7 @@ public class T_2155Record extends UpdatableRecordImpl<T_2155Record> implements R
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T_2155Record value2(LocalDateTime value) {
+	public T_2155Record value2(LocalDate value) {
 		setD1(value);
 		return this;
 	}
@@ -231,7 +231,7 @@ public class T_2155Record extends UpdatableRecordImpl<T_2155Record> implements R
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T_2155Record values(Integer value1, LocalDateTime value2, U_2155ObjectRecord value3, U_2155ArrayRecord value4) {
+	public T_2155Record values(Integer value1, LocalDate value2, U_2155ObjectRecord value3, U_2155ArrayRecord value4) {
 		return this;
 	}
 
@@ -249,7 +249,7 @@ public class T_2155Record extends UpdatableRecordImpl<T_2155Record> implements R
 	/**
 	 * Create a detached, initialised T_2155Record
 	 */
-	public T_2155Record(Integer id, LocalDateTime d1, U_2155ObjectRecord d2, U_2155ArrayRecord d3) {
+	public T_2155Record(Integer id, LocalDate d1, U_2155ObjectRecord d2, U_2155ArrayRecord d3) {
 		super(T_2155.T_2155);
 
 		setValue(0, id);

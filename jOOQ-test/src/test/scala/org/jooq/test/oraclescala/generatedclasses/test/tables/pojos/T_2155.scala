@@ -6,7 +6,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables.pojos
 
 import java.io.Serializable
 import java.lang.Integer
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -25,7 +25,7 @@ import org.jooq.test.oraclescala.generatedclasses.test.udt.records.U_2155ArrayRe
 @Table(name = "T_2155", schema = "TEST")
 class T_2155(
 	  private var id : Integer          
-	, private var d1 : LocalDateTime    
+	, private var d1 : LocalDate    
 	, private var d2 : U_2155Object     
 	, private var d3 : U_2155ArrayRecord
 ) extends Serializable {
@@ -55,11 +55,11 @@ class T_2155(
 	}
 
 	@Column(name = "D1")
-	def getD1 : LocalDateTime = {
+	def getD1 : LocalDate = {
 		this.d1
 	}
 
-	def setD1(d1 : LocalDateTime) : Unit = {
+	def setD1(d1 : LocalDate) : Unit = {
 		this.d1 = d1
 	}
 

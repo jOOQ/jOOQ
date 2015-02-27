@@ -34,7 +34,7 @@ public class U_2155Object extends org.jooq.impl.UDTImpl<org.jooq.test.oracle5.ge
 	/**
 	 * The attribute <code>TEST.U_2155_OBJECT.D</code>.
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.U_2155ObjectRecord, java.time.LocalDateTime> D = createField("D", org.jooq.impl.SQLDataType.DATE, U_2155_OBJECT, "", new org.jooq.test.all.converters.LocalDateTimeConverter());
+	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.U_2155ObjectRecord, java.time.LocalDate> D = createField("D", org.jooq.impl.SQLDataType.DATE, U_2155_OBJECT, "", new org.jooq.test.all.converters.LocalDateConverter());
 
 	/**
 	 * The attribute <code>TEST.U_2155_OBJECT.A</code>.

@@ -18,24 +18,24 @@ public class U_2155Object implements java.io.Serializable {
 
 	private static final long serialVersionUID = -1039830800;
 
-	private java.time.LocalDateTime                                              d;
+	private java.time.LocalDate                                              d;
 	private org.jooq.test.oracle5.generatedclasses.udt.records.U_2155ArrayRecord a;
 
 	public U_2155Object() {}
 
 	public U_2155Object(
-		java.time.LocalDateTime                                              d,
+		java.time.LocalDate                                              d,
 		org.jooq.test.oracle5.generatedclasses.udt.records.U_2155ArrayRecord a
 	) {
 		this.d = d;
 		this.a = a;
 	}
 
-	public java.time.LocalDateTime getD() {
+	public java.time.LocalDate getD() {
 		return this.d;
 	}
 
-	public void setD(java.time.LocalDateTime d) {
+	public void setD(java.time.LocalDate d) {
 		this.d = d;
 	}
 

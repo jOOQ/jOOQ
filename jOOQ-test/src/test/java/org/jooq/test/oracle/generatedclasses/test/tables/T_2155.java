@@ -4,7 +4,7 @@
 package org.jooq.test.oracle.generatedclasses.test.tables;
 
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,7 +13,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.impl.TableImpl;
-import org.jooq.test.all.converters.LocalDateTimeConverter;
+import org.jooq.test.all.converters.LocalDateConverter;
 import org.jooq.test.oracle.generatedclasses.test.Keys;
 import org.jooq.test.oracle.generatedclasses.test.Test;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.T_2155Record;
@@ -50,7 +50,7 @@ public class T_2155 extends TableImpl<T_2155Record> {
 	/**
 	 * The column <code>TEST.T_2155.D1</code>.
 	 */
-	public final TableField<T_2155Record, LocalDateTime> D1 = createField("D1", org.jooq.impl.SQLDataType.DATE, this, "", new LocalDateTimeConverter());
+	public final TableField<T_2155Record, LocalDate> D1 = createField("D1", org.jooq.impl.SQLDataType.DATE, this, "", new LocalDateConverter());
 
 	/**
 	 * The column <code>TEST.T_2155.D2</code>.

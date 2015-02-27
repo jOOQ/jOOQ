@@ -86,6 +86,8 @@ import java.math.RoundingMode;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -119,6 +121,8 @@ import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 import org.jooq.test.all.converters.Boolean_YES_NO_LC;
 import org.jooq.test.all.converters.Boolean_YES_NO_UC;
+import org.jooq.test.all.converters.LocalDateConverter;
+import org.jooq.test.all.converters.LocalDateTimeConverter;
 import org.jooq.test.all.pojos.jaxb.Author;
 import org.jooq.test.all.pojos.jaxb.Book;
 import org.jooq.types.DayToSecond;
@@ -338,7 +342,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @SuppressWarnings("serial")
-
     public void testCustomConversion() {
         Converter<String, StringBuilder> converter = new Converter<String, StringBuilder>() {
             @Override
@@ -428,6 +431,54 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         return result;
+    }
+
+    public void testJava8TimeWithConverter() {
+        Field<LocalDate> d = field(
+            name(TDates().getName(), TDates_D().getName()),
+            SQLDataType.DATE.asConvertedDataType(new LocalDateConverter())
+        );
+
+        Field<LocalDateTime> ts = field(
+            name(TDates().getName(), TDates_TS().getName()),
+            SQLDataType.TIMESTAMP.asConvertedDataType(new LocalDateTimeConverter())
+        );
+
+        testJava8Time0(d, ts);
+    }
+
+    public void testJava8TimeWithBinding() {
+
+    }
+
+    private void testJava8Time0(Field<LocalDate> d, Field<LocalDateTime> ts) {
+        clean(TDates());
+
+        assertEquals(1,
+        create().insertInto(TDates(), TDates_ID(), d, ts)
+                .values(1, null, null)
+                .execute());
+
+        assertEquals(1,
+        create().insertInto(TDates(), TDates_ID(), d, ts)
+                .values(2, LocalDate.parse("2000-01-01"), LocalDateTime.parse("2000-01-01T00:01:02"))
+                .execute());
+
+        Result<?> result =
+        create().select(TDates_ID(), d, ts)
+                .from(TDates())
+                .orderBy(TDates_ID())
+                .fetch();
+
+        assertNull(result.get(0).getValue(d));
+        assertNull(result.get(0).getValue(ts));
+
+        assertEquals(
+            LocalDate.parse("2000-01-01"),
+            result.get(1).getValue(d));
+        assertEquals(
+            LocalDateTime.parse("2000-01-01T00:01:02"),
+            result.get(1).getValue(ts));
     }
 
     public void testCastingToDialectDataType() throws Exception {

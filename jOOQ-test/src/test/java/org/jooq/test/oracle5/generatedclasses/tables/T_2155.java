@@ -39,7 +39,7 @@ public class T_2155 extends org.jooq.impl.TableImpl<org.jooq.test.oracle5.genera
 	/**
 	 * The column <code>TEST.T_2155.D1</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle5.generatedclasses.tables.records.T_2155Record, java.time.LocalDateTime> D1 = createField("D1", org.jooq.impl.SQLDataType.DATE, this, "", new org.jooq.test.all.converters.LocalDateTimeConverter());
+	public final org.jooq.TableField<org.jooq.test.oracle5.generatedclasses.tables.records.T_2155Record, java.time.LocalDate> D1 = createField("D1", org.jooq.impl.SQLDataType.DATE, this, "", new org.jooq.test.all.converters.LocalDateConverter());
 
 	/**
 	 * The column <code>TEST.T_2155.D2</code>.

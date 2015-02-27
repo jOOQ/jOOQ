@@ -26,7 +26,7 @@ public class Pkg_976 extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>TEST.PKG_976.F_976</code>
 	 */
-	public static java.time.LocalDateTime f_976(org.jooq.Configuration configuration, java.time.LocalDateTime i) {
+	public static java.time.LocalDate f_976(org.jooq.Configuration configuration, java.time.LocalDate i) {
 		org.jooq.test.oracle5.generatedclasses.packages.pkg_976.F_976 f = new org.jooq.test.oracle5.generatedclasses.packages.pkg_976.F_976();
 		f.setI(i);
 
@@ -37,7 +37,7 @@ public class Pkg_976 extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>TEST.PKG_976.F_976</code> as a field
 	 */
-	public static org.jooq.Field<java.time.LocalDateTime> f_976(java.time.LocalDateTime i) {
+	public static org.jooq.Field<java.time.LocalDate> f_976(java.time.LocalDate i) {
 		org.jooq.test.oracle5.generatedclasses.packages.pkg_976.F_976 f = new org.jooq.test.oracle5.generatedclasses.packages.pkg_976.F_976();
 		f.setI(i);
 
@@ -47,7 +47,7 @@ public class Pkg_976 extends org.jooq.impl.PackageImpl {
 	/**
 	 * Get <code>TEST.PKG_976.F_976</code> as a field
 	 */
-	public static org.jooq.Field<java.time.LocalDateTime> f_976(org.jooq.Field<java.time.LocalDateTime> i) {
+	public static org.jooq.Field<java.time.LocalDate> f_976(org.jooq.Field<java.time.LocalDate> i) {
 		org.jooq.test.oracle5.generatedclasses.packages.pkg_976.F_976 f = new org.jooq.test.oracle5.generatedclasses.packages.pkg_976.F_976();
 		f.setI(i);
 
@@ -57,7 +57,7 @@ public class Pkg_976 extends org.jooq.impl.PackageImpl {
 	/**
 	 * Call <code>TEST.PKG_976.P_976</code>
 	 */
-	public static java.time.LocalDateTime p_976(org.jooq.Configuration configuration, java.time.LocalDateTime i) {
+	public static java.time.LocalDate p_976(org.jooq.Configuration configuration, java.time.LocalDate i) {
 		org.jooq.test.oracle5.generatedclasses.packages.pkg_976.P_976 p = new org.jooq.test.oracle5.generatedclasses.packages.pkg_976.P_976();
 		p.setI(i);
 

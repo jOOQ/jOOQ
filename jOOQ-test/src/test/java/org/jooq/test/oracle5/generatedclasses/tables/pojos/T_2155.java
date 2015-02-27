@@ -19,7 +19,7 @@ public class T_2155 implements java.io.Serializable {
 	private static final long serialVersionUID = -1607300544;
 
 	private java.math.BigDecimal                                                 id;
-	private java.time.LocalDateTime                                              d1;
+	private java.time.LocalDate                                              d1;
 	private org.jooq.test.oracle5.generatedclasses.udt.pojos.U_2155Object        d2;
 	private org.jooq.test.oracle5.generatedclasses.udt.records.U_2155ArrayRecord d3;
 
@@ -27,7 +27,7 @@ public class T_2155 implements java.io.Serializable {
 
 	public T_2155(
 		java.math.BigDecimal                                                 id,
-		java.time.LocalDateTime                                              d1,
+		java.time.LocalDate                                              d1,
 		org.jooq.test.oracle5.generatedclasses.udt.pojos.U_2155Object        d2,
 		org.jooq.test.oracle5.generatedclasses.udt.records.U_2155ArrayRecord d3
 	) {
@@ -45,11 +45,11 @@ public class T_2155 implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public java.time.LocalDateTime getD1() {
+	public java.time.LocalDate getD1() {
 		return this.d1;
 	}
 
-	public void setD1(java.time.LocalDateTime d1) {
+	public void setD1(java.time.LocalDate d1) {
 		this.d1 = d1;
 	}
 

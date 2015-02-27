@@ -5,7 +5,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables.daos
 
 
 import java.lang.Integer
-import java.time.LocalDateTime
+import java.time.LocalDate
 import java.util.List
 
 import org.jooq.Configuration
@@ -49,7 +49,7 @@ class T_2155Dao(configuration : Configuration) extends DAOImpl[T_2155Record, org
 	/**
 	 * Fetch records that have <code>D1 IN (values)</code>
 	 */
-	def fetchByD1(values : LocalDateTime*) : List[org.jooq.test.oraclescala.generatedclasses.test.tables.pojos.T_2155] = {
+	def fetchByD1(values : LocalDate*) : List[org.jooq.test.oraclescala.generatedclasses.test.tables.pojos.T_2155] = {
 		fetch(T_2155.T_2155.D1, values:_*)
 	}
 

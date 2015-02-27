@@ -1698,6 +1698,16 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testJava8TimeWithConverter() throws Exception {
+        new DataTypeTests(this).testJava8TimeWithConverter();
+    }
+
+    @Test
+    public void testJava8TimeWithBinding() throws Exception {
+        new DataTypeTests(this).testJava8TimeWithBinding();
+    }
+
+    @Test
     public void testForUpdateClauses() throws Exception {
         new SelectTests(this).testForUpdateClauses();
     }

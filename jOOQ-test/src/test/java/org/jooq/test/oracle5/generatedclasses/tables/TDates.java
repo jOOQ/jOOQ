@@ -39,7 +39,7 @@ public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.oracle5.genera
 	/**
 	 * The column <code>TEST.T_DATES.D</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle5.generatedclasses.tables.records.TDatesRecord, java.time.LocalDateTime> D = createField("D", org.jooq.impl.SQLDataType.DATE, this, "", new org.jooq.test.all.converters.LocalDateTimeConverter());
+	public final org.jooq.TableField<org.jooq.test.oracle5.generatedclasses.tables.records.TDatesRecord, java.time.LocalDate> D = createField("D", org.jooq.impl.SQLDataType.DATE, this, "", new org.jooq.test.all.converters.LocalDateConverter());
 
 	/**
 	 * The column <code>TEST.T_DATES.T</code>.

@@ -22,7 +22,7 @@ public class UAddressType implements java.io.Serializable {
 	private java.lang.String                                             zip;
 	private java.lang.String                                             city;
 	private java.lang.String                                             country;
-	private java.time.LocalDateTime                                      since;
+	private java.time.LocalDate                                      since;
 	private java.math.BigDecimal                                         code;
 	private byte[]                                                       f_1323;
 	private java.lang.String                                             f_1326;
@@ -34,7 +34,7 @@ public class UAddressType implements java.io.Serializable {
 		java.lang.String                                             zip,
 		java.lang.String                                             city,
 		java.lang.String                                             country,
-		java.time.LocalDateTime                                      since,
+		java.time.LocalDate                                      since,
 		java.math.BigDecimal                                         code,
 		byte[]                                                       f_1323,
 		java.lang.String                                             f_1326
@@ -81,11 +81,11 @@ public class UAddressType implements java.io.Serializable {
 		this.country = country;
 	}
 
-	public java.time.LocalDateTime getSince() {
+	public java.time.LocalDate getSince() {
 		return this.since;
 	}
 
-	public void setSince(java.time.LocalDateTime since) {
+	public void setSince(java.time.LocalDate since) {
 		this.since = since;
 	}
 

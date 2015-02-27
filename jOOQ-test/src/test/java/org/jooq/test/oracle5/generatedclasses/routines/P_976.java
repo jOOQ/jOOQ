@@ -21,12 +21,12 @@ public class P_976 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	/**
 	 * The parameter <code>TEST.P_976.I</code>.
 	 */
-	public static final org.jooq.Parameter<java.time.LocalDateTime> I = createParameter("I", org.jooq.impl.SQLDataType.DATE, false, new org.jooq.test.all.converters.LocalDateTimeConverter());
+	public static final org.jooq.Parameter<java.time.LocalDate> I = createParameter("I", org.jooq.impl.SQLDataType.DATE, false, new org.jooq.test.all.converters.LocalDateConverter());
 
 	/**
 	 * The parameter <code>TEST.P_976.O</code>.
 	 */
-	public static final org.jooq.Parameter<java.time.LocalDateTime> O = createParameter("O", org.jooq.impl.SQLDataType.DATE, false, new org.jooq.test.all.converters.LocalDateTimeConverter());
+	public static final org.jooq.Parameter<java.time.LocalDate> O = createParameter("O", org.jooq.impl.SQLDataType.DATE, false, new org.jooq.test.all.converters.LocalDateConverter());
 
 	/**
 	 * Create a new routine call instance
@@ -41,14 +41,14 @@ public class P_976 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	/**
 	 * Set the <code>I</code> parameter IN value to the routine
 	 */
-	public void setI(java.time.LocalDateTime value) {
+	public void setI(java.time.LocalDate value) {
 		setValue(org.jooq.test.oracle5.generatedclasses.routines.P_976.I, value);
 	}
 
 	/**
 	 * Get the <code>O</code> parameter OUT value from the routine
 	 */
-	public java.time.LocalDateTime getO() {
+	public java.time.LocalDate getO() {
 		return getValue(O);
 	}
 }

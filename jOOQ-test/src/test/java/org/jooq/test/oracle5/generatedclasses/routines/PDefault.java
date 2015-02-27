@@ -41,12 +41,12 @@ public class PDefault extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	/**
 	 * The parameter <code>TEST.P_DEFAULT.P_IN_DATE</code>.
 	 */
-	public static final org.jooq.Parameter<java.time.LocalDateTime> P_IN_DATE = createParameter("P_IN_DATE", org.jooq.impl.SQLDataType.DATE.defaulted(true), true, new org.jooq.test.all.converters.LocalDateTimeConverter());
+	public static final org.jooq.Parameter<java.time.LocalDate> P_IN_DATE = createParameter("P_IN_DATE", org.jooq.impl.SQLDataType.DATE.defaulted(true), true, new org.jooq.test.all.converters.LocalDateConverter());
 
 	/**
 	 * The parameter <code>TEST.P_DEFAULT.P_OUT_DATE</code>.
 	 */
-	public static final org.jooq.Parameter<java.time.LocalDateTime> P_OUT_DATE = createParameter("P_OUT_DATE", org.jooq.impl.SQLDataType.DATE, false, new org.jooq.test.all.converters.LocalDateTimeConverter());
+	public static final org.jooq.Parameter<java.time.LocalDate> P_OUT_DATE = createParameter("P_OUT_DATE", org.jooq.impl.SQLDataType.DATE, false, new org.jooq.test.all.converters.LocalDateConverter());
 
 	/**
 	 * Create a new routine call instance
@@ -79,7 +79,7 @@ public class PDefault extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	/**
 	 * Set the <code>P_IN_DATE</code> parameter IN value to the routine
 	 */
-	public void setPInDate(java.time.LocalDateTime value) {
+	public void setPInDate(java.time.LocalDate value) {
 		setValue(org.jooq.test.oracle5.generatedclasses.routines.PDefault.P_IN_DATE, value);
 	}
 
@@ -100,7 +100,7 @@ public class PDefault extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	/**
 	 * Get the <code>P_OUT_DATE</code> parameter OUT value from the routine
 	 */
-	public java.time.LocalDateTime getPOutDate() {
+	public java.time.LocalDate getPOutDate() {
 		return getValue(P_OUT_DATE);
 	}
 }

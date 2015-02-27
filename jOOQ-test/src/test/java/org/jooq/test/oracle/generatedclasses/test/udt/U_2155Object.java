@@ -4,11 +4,11 @@
 package org.jooq.test.oracle.generatedclasses.test.udt;
 
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import org.jooq.UDTField;
 import org.jooq.impl.UDTImpl;
-import org.jooq.test.all.converters.LocalDateTimeConverter;
+import org.jooq.test.all.converters.LocalDateConverter;
 import org.jooq.test.oracle.generatedclasses.test.Test;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ArrayRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ObjectRecord;
@@ -38,7 +38,7 @@ public class U_2155Object extends UDTImpl<U_2155ObjectRecord> {
 	/**
 	 * The attribute <code>TEST.U_2155_OBJECT.D</code>.
 	 */
-	public static final UDTField<U_2155ObjectRecord, LocalDateTime> D = createField("D", org.jooq.impl.SQLDataType.DATE, U_2155_OBJECT, "", new LocalDateTimeConverter());
+	public static final UDTField<U_2155ObjectRecord, LocalDate> D = createField("D", org.jooq.impl.SQLDataType.DATE, U_2155_OBJECT, "", new LocalDateConverter());
 
 	/**
 	 * The attribute <code>TEST.U_2155_OBJECT.A</code>.

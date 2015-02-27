@@ -334,6 +334,14 @@ public abstract class BaseTest<
         return delegate.TExoticTypes_UNTYPED_XML_AS_JAXB();
     }
 
+    protected TableField<UU, String> TExoticTypes_PLAIN_SQL_BINDING_XML() {
+        return delegate.TExoticTypes_PLAIN_SQL_BINDING_XML();
+    }
+
+    protected TableField<UU, String> TExoticTypes_PLAIN_SQL_CONVERTER_XML() {
+        return delegate.TExoticTypes_PLAIN_SQL_CONVERTER_XML();
+    }
+
     public Table<DATE> TDates() {
         return delegate.TDates();
     }

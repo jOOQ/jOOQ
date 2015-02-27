@@ -464,6 +464,16 @@ public class OracleTest extends jOOQAbstractTest<
     }
 
     @Override
+    protected TableField<TExoticTypesRecord, String> TExoticTypes_PLAIN_SQL_CONVERTER_XML() {
+        return T_EXOTIC_TYPES.PLAIN_SQL_CONVERTER_XML;
+    }
+
+    @Override
+    protected TableField<TExoticTypesRecord, String> TExoticTypes_PLAIN_SQL_BINDING_XML() {
+        return T_EXOTIC_TYPES.PLAIN_SQL_BINDING_XML;
+    }
+
+    @Override
     protected Table<TDatesRecord> TDates() {
         return T_DATES;
     }

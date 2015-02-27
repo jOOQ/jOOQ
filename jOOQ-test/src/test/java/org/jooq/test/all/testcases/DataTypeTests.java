@@ -65,6 +65,8 @@ import static org.jooq.impl.DSL.dateDiff;
 import static org.jooq.impl.DSL.dateSub;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.timestampAdd;
 import static org.jooq.impl.DSL.timestampDiff;
 import static org.jooq.impl.DSL.val;
@@ -106,11 +108,13 @@ import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
+import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
+import org.jooq.impl.XMLasDOMBinding;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 import org.jooq.test.all.converters.Boolean_YES_NO_LC;
@@ -124,6 +128,8 @@ import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.types.Unsigned;
 import org.jooq.types.YearToMonth;
+
+import org.w3c.dom.Node;
 
 public class DataTypeTests<
     A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
@@ -1802,39 +1808,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    public void testXMLasDOM() throws Exception {
-        assumeNotNull(TExoticTypes_UNTYPED_XML_AS_DOM());
-        clean(TExoticTypes());
-
-        assertEquals(1,
-        create().insertInto(TExoticTypes(), TExoticTypes_ID(), TExoticTypes_UNTYPED_XML_AS_DOM())
-                .values(1, null)
-                .execute());
-
-        assertEquals(1,
-        create().insertInto(TExoticTypes(), TExoticTypes_ID(), TExoticTypes_UNTYPED_XML_AS_DOM())
-                .values(2, $("<empty/>").document())
-                .execute());
-
-        assertEquals(1,
-        create().insertInto(TExoticTypes(), TExoticTypes_ID(), TExoticTypes_UNTYPED_XML_AS_DOM())
-                .values(3, $("<a><b/></a>").document())
-                .execute());
-
-        Result<UU> result =
-        create().selectFrom(TExoticTypes())
-                .orderBy(TExoticTypes_ID())
-                .fetch();
-
-        assertNull(result.get(0).getValue(TExoticTypes_UNTYPED_XML_AS_DOM()));
-        assertEquals(
-            $("<empty/>").toString(),
-            $(result.get(1).getValue(TExoticTypes_UNTYPED_XML_AS_DOM())).toString());
-        assertEquals(
-            $("<a><b/></a>").toString(),
-            $(result.get(2).getValue(TExoticTypes_UNTYPED_XML_AS_DOM())).toString());
-    }
-
     public void testXMLasJAXB() throws Exception {
         assumeNotNull(TExoticTypes_UNTYPED_XML_AS_JAXB());
         clean(TExoticTypes());
@@ -1866,6 +1839,77 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(
             new Book("1984", new Author("George", "Orwell")),
             result.get(2).getValue(TExoticTypes_UNTYPED_XML_AS_JAXB()));
+    }
+
+    public void testXMLasDOM() throws Exception {
+        assumeNotNull(TExoticTypes_UNTYPED_XML_AS_DOM());
+        testXMLasDOM0(TExoticTypes(), TExoticTypes_ID(), TExoticTypes_UNTYPED_XML_AS_DOM());
+    }
+
+    public void testXMLusingPlainSQLConverters() {
+        assumeNotNull(TExoticTypes_PLAIN_SQL_CONVERTER_XML());
+        clean(TExoticTypes());
+
+        XMLasDOMBinding binding = new XMLasDOMBinding();
+        Converter<Object, Node> converter = binding.converter();
+
+        Table<?> table = table(name(TExoticTypes().getName()));
+        Field<Integer> id = field(name(table.getName(), TExoticTypes_ID().getName()), Integer.class);
+        Field<Node> xml = field(
+            name(table.getName(), TExoticTypes_PLAIN_SQL_CONVERTER_XML().getName()),
+            SQLDataType.CLOB.asConvertedDataType(converter)
+        );
+
+        testXMLasDOM0(table, id, xml);
+    }
+
+    public void testXMLusingPlainSQLBindings() {
+        assumeNotNull(TExoticTypes_PLAIN_SQL_CONVERTER_XML());
+        clean(TExoticTypes());
+
+        XMLasDOMBinding binding = new XMLasDOMBinding();
+
+        Table<?> table = table(name(TExoticTypes().getName()));
+        Field<Integer> id = field(name(table.getName(), TExoticTypes_ID().getName()), Integer.class);
+        Field<Node> xml = field(
+            name(table.getName(), TExoticTypes_PLAIN_SQL_CONVERTER_XML().getName()),
+            SQLDataType.CLOB.asConvertedDataType(binding)
+        );
+
+        testXMLasDOM0(table, id, xml);
+    }
+
+    private void testXMLasDOM0(Table<?> table, Field<Integer> id, Field<Node> xml) {
+        clean(TExoticTypes());
+
+        assertEquals(1,
+        create().insertInto(TExoticTypes(), id, xml)
+                .values(1, null)
+                .execute());
+
+        assertEquals(1,
+        create().insertInto(table, id, xml)
+                .values(2, $("<empty/>").document())
+                .execute());
+
+        assertEquals(1,
+        create().insertInto(table, id, xml)
+                .values(3, $("<a><b/></a>").document())
+                .execute());
+
+        Result<?> result =
+        create().select(id, xml)
+                .from(table)
+                .orderBy(id)
+                .fetch();
+
+        assertNull(result.get(0).getValue(xml));
+        assertEquals(
+            $("<empty/>").toString(),
+            $(result.get(1).getValue(xml)).toString());
+        assertEquals(
+            $("<a><b/></a>").toString(),
+            $(result.get(2).getValue(xml)).toString());
     }
 
     public void testCoercion() throws Exception {

@@ -455,7 +455,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         clean(TDates());
 
         assertEquals(1,
-        create().insertInto(TDates(), TDates_ID(), d, ts)
+        create().insertInto(TDates())
+                .columns(TDates_ID(), d, ts)
                 .values(1, null, null)
                 .execute());
 

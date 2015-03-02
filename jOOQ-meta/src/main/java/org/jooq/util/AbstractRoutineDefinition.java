@@ -163,7 +163,7 @@ public abstract class AbstractRoutineDefinition extends AbstractDefinition imple
     }
 
     @Override
-    public final boolean isSQLUsable() {
+    public /* non-final */ boolean isSQLUsable() {
         return getReturnValue() != null && getOutParameters().isEmpty();
     }
 

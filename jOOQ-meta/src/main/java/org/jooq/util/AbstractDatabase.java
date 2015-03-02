@@ -111,6 +111,7 @@ public abstract class AbstractDatabase implements Database {
     private String[]                                                         syntheticPrimaryKeys;
     private String[]                                                         overridePrimaryKeys;
     private boolean                                                          supportsUnsignedTypes;
+    private boolean                                                          ignoreProcedureReturnValues;
     private boolean                                                          dateAsTimestamp;
     private List<Schema>                                                     configuredSchemata;
     private List<CustomType>                                                 configuredCustomTypes;
@@ -539,6 +540,16 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final boolean supportsUnsignedTypes() {
         return supportsUnsignedTypes;
+    }
+
+    @Override
+    public final void setIgnoreProcedureReturnValues(boolean ignoreProcedureReturnValues) {
+        this.ignoreProcedureReturnValues = ignoreProcedureReturnValues;
+    }
+
+    @Override
+    public final boolean ignoreProcedureReturnValues() {
+        return ignoreProcedureReturnValues;
     }
 
     @Override

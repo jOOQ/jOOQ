@@ -688,7 +688,8 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         return name;
     }
 
-    protected final Parameter<?> getReturnParameter() {
+    @Override
+    public final Parameter<T> getReturnParameter() {
         return returnParameter;
     }
 

@@ -110,6 +110,15 @@ public interface Routine<T> extends QueryPart {
     Package getPackage();
 
     /**
+     * The parameter representing this routine's {@link #getReturnValue()}
+     *
+     * @return The return parameter or <code>null</code> if this routine doesn't
+     *         have a return value.
+     * @see #getParameters()
+     */
+    Parameter<T> getReturnParameter();
+
+    /**
      * A list of OUT parameters passed to the stored procedure as argument. This
      * list contains all parameters that are either OUT or INOUT in their
      * respective order of appearance in {@link #getParameters()}.
@@ -130,6 +139,11 @@ public interface Routine<T> extends QueryPart {
     List<Parameter<?>> getInParameters();
 
     /**
+     * @return A list of parameters passed to the stored object as argument
+     */
+    List<Parameter<?>> getParameters();
+
+    /**
      * @return The routine's return value (if it is a function)
      */
     T getReturnValue();
@@ -138,11 +152,6 @@ public interface Routine<T> extends QueryPart {
      * @return The routine's results (if available)
      */
     List<Result<Record>> getResults();
-
-    /**
-     * @return A list of parameters passed to the stored object as argument
-     */
-    List<Parameter<?>> getParameters();
 
     /**
      * Execute the stored object using a {@link Configuration} object

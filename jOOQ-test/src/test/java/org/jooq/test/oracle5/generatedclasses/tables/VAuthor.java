@@ -49,7 +49,7 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.oracle5.gener
 	/**
 	 * The column <code>TEST.V_AUTHOR.DATE_OF_BIRTH</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle5.generatedclasses.tables.records.VAuthorRecord, java.time.LocalDateTime> DATE_OF_BIRTH = createField("DATE_OF_BIRTH", org.jooq.impl.SQLDataType.DATE, this, "", new org.jooq.test.all.converters.LocalDateTimeConverter());
+	public final org.jooq.TableField<org.jooq.test.oracle5.generatedclasses.tables.records.VAuthorRecord, java.time.LocalDate> DATE_OF_BIRTH = createField("DATE_OF_BIRTH", org.jooq.impl.SQLDataType.DATE, this, "", new org.jooq.test.all.converters.LocalDateConverter());
 
 	/**
 	 * The column <code>TEST.V_AUTHOR.YEAR_OF_BIRTH</code>.

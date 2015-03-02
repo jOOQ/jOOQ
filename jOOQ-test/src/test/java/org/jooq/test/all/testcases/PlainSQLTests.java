@@ -275,10 +275,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         jOOQAbstractTest.reset = false;
 
         assertEquals(1, create()
-            .insertInto(
-                tableByName(TAuthor().getName()),
-                fieldByName(TAuthor().getName(), TAuthor_ID().getName()),
-                fieldByName(TAuthor().getName(), TAuthor_LAST_NAME().getName()))
+            .insertInto(table(name(TAuthor().getName())))
+            .columns(
+                field(name(TAuthor().getName(), TAuthor_ID().getName())),
+                field(name(TAuthor().getName(), TAuthor_LAST_NAME().getName())))
             .values(3, "X")
             .execute()
         );

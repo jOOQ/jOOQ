@@ -18,21 +18,21 @@ public class T_976ObjectType implements java.io.Serializable {
 
 	private static final long serialVersionUID = -1879987480;
 
-	private java.time.LocalDateTime d;
+	private java.time.LocalDate d;
 
 	public T_976ObjectType() {}
 
 	public T_976ObjectType(
-		java.time.LocalDateTime d
+		java.time.LocalDate d
 	) {
 		this.d = d;
 	}
 
-	public java.time.LocalDateTime getD() {
+	public java.time.LocalDate getD() {
 		return this.d;
 	}
 
-	public void setD(java.time.LocalDateTime d) {
+	public void setD(java.time.LocalDate d) {
 		this.d = d;
 	}
 }

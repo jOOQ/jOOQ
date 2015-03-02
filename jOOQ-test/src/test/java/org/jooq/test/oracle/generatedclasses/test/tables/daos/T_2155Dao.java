@@ -4,7 +4,7 @@
 package org.jooq.test.oracle.generatedclasses.test.tables.daos;
 
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.jooq.Configuration;
@@ -60,7 +60,7 @@ public class T_2155Dao extends DAOImpl<T_2155Record, org.jooq.test.oracle.genera
 	/**
 	 * Fetch records that have <code>D1 IN (values)</code>
 	 */
-	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.T_2155> fetchByD1(LocalDateTime... values) {
+	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.T_2155> fetchByD1(LocalDate... values) {
 		return fetch(T_2155.T_2155.D1, values);
 	}
 

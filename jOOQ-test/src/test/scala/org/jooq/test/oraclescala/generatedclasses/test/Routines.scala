@@ -8,7 +8,7 @@ import java.lang.Number
 import java.lang.String
 import java.math.BigDecimal
 import java.sql.Date
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 import org.jooq.AggregateFunction
 import org.jooq.Configuration
@@ -518,7 +518,7 @@ object Routines {
 	/**
 	 * Call <code>TEST.F2155</code>
 	 */
-	def f2155(configuration : Configuration, p1 : Number, p2 : LocalDateTime, p3 : Number, p4 : LocalDateTime) : LocalDateTime = {
+	def f2155(configuration : Configuration, p1 : Number, p2 : LocalDate, p3 : Number, p4 : LocalDate) : LocalDate = {
 		val f = new F2155()
 		f.setP1(p1)
 		f.setP2(p2)
@@ -532,7 +532,7 @@ object Routines {
 	/**
 	 * Get <code>TEST.F2155</code> as a field
 	 */
-	def f2155(p1 : Number, p2 : LocalDateTime, p3 : Number, p4 : LocalDateTime) : Field[LocalDateTime] = {
+	def f2155(p1 : Number, p2 : LocalDate, p3 : Number, p4 : LocalDate) : Field[LocalDate] = {
 		val f = new F2155
 		f.setP1(p1)
 		f.setP2(p2)
@@ -545,7 +545,7 @@ object Routines {
 	/**
 	 * Get <code>TEST.F2155</code> as a field
 	 */
-	def f2155(p1 : Field[_ <: Number], p2 : Field[LocalDateTime], p3 : Field[_ <: Number], p4 : Field[LocalDateTime]) : Field[LocalDateTime] = {
+	def f2155(p1 : Field[_ <: Number], p2 : Field[LocalDate], p3 : Field[_ <: Number], p4 : Field[LocalDate]) : Field[LocalDate] = {
 		val f = new F2155
 		f.setP1(p1)
 		f.setP2(p2)
@@ -888,7 +888,7 @@ object Routines {
 	/**
 	 * Call <code>TEST.P2155</code>
 	 */
-	def p2155(configuration : Configuration, p1 : Number, p2 : LocalDateTime) : P2155 = {
+	def p2155(configuration : Configuration, p1 : Number, p2 : LocalDate) : P2155 = {
 		val p = new P2155
 		p.setP1(p1)
 		p.setP2(p2)

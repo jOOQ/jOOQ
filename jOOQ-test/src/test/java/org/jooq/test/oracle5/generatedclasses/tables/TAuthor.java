@@ -49,7 +49,7 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.oracle5.gener
 	/**
 	 * The column <code>TEST.T_AUTHOR.DATE_OF_BIRTH</code>. The author's date of birth
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle5.generatedclasses.tables.records.TAuthorRecord, java.time.LocalDateTime> DATE_OF_BIRTH = createField("DATE_OF_BIRTH", org.jooq.impl.SQLDataType.DATE, this, "The author's date of birth", new org.jooq.test.all.converters.LocalDateTimeConverter());
+	public final org.jooq.TableField<org.jooq.test.oracle5.generatedclasses.tables.records.TAuthorRecord, java.time.LocalDate> DATE_OF_BIRTH = createField("DATE_OF_BIRTH", org.jooq.impl.SQLDataType.DATE, this, "The author's date of birth", new org.jooq.test.all.converters.LocalDateConverter());
 
 	/**
 	 * The column <code>TEST.T_AUTHOR.YEAR_OF_BIRTH</code>. The author's year of birth

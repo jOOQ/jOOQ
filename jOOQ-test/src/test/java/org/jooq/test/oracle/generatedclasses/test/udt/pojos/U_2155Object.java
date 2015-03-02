@@ -5,7 +5,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt.pojos;
 
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ArrayRecord;
 
@@ -18,7 +18,7 @@ public class U_2155Object implements Serializable {
 
 	private static final long serialVersionUID = 2073553904;
 
-	private LocalDateTime     d;
+	private LocalDate     d;
 	private U_2155ArrayRecord a;
 
 	public U_2155Object() {}
@@ -29,18 +29,18 @@ public class U_2155Object implements Serializable {
 	}
 
 	public U_2155Object(
-		LocalDateTime     d,
+		LocalDate     d,
 		U_2155ArrayRecord a
 	) {
 		this.d = d;
 		this.a = a;
 	}
 
-	public LocalDateTime getD() {
+	public LocalDate getD() {
 		return this.d;
 	}
 
-	public void setD(LocalDateTime d) {
+	public void setD(LocalDate d) {
 		this.d = d;
 	}
 

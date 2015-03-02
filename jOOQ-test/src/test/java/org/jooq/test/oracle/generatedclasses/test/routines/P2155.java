@@ -5,11 +5,11 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import org.jooq.Parameter;
 import org.jooq.impl.AbstractRoutine;
-import org.jooq.test.all.converters.LocalDateTimeConverter;
+import org.jooq.test.all.converters.LocalDateConverter;
 import org.jooq.test.oracle.generatedclasses.test.Test;
 
 
@@ -29,7 +29,7 @@ public class P2155 extends AbstractRoutine<java.lang.Void> {
 	/**
 	 * The parameter <code>TEST.P2155.P2</code>.
 	 */
-	public static final Parameter<LocalDateTime> P2 = createParameter("P2", org.jooq.impl.SQLDataType.DATE, false, new LocalDateTimeConverter());
+	public static final Parameter<LocalDate> P2 = createParameter("P2", org.jooq.impl.SQLDataType.DATE, false, new LocalDateConverter());
 
 	/**
 	 * The parameter <code>TEST.P2155.P3</code>.
@@ -39,12 +39,12 @@ public class P2155 extends AbstractRoutine<java.lang.Void> {
 	/**
 	 * The parameter <code>TEST.P2155.P4</code>.
 	 */
-	public static final Parameter<LocalDateTime> P4 = createParameter("P4", org.jooq.impl.SQLDataType.DATE, false, new LocalDateTimeConverter());
+	public static final Parameter<LocalDate> P4 = createParameter("P4", org.jooq.impl.SQLDataType.DATE, false, new LocalDateConverter());
 
 	/**
 	 * The parameter <code>TEST.P2155.P5</code>.
 	 */
-	public static final Parameter<LocalDateTime> P5 = createParameter("P5", org.jooq.impl.SQLDataType.DATE, false, new LocalDateTimeConverter());
+	public static final Parameter<LocalDate> P5 = createParameter("P5", org.jooq.impl.SQLDataType.DATE, false, new LocalDateConverter());
 
 	/**
 	 * Create a new routine call instance
@@ -69,7 +69,7 @@ public class P2155 extends AbstractRoutine<java.lang.Void> {
 	/**
 	 * Set the <code>P2</code> parameter IN value to the routine
 	 */
-	public void setP2(LocalDateTime value) {
+	public void setP2(LocalDate value) {
 		setValue(P2, value);
 	}
 
@@ -83,14 +83,14 @@ public class P2155 extends AbstractRoutine<java.lang.Void> {
 	/**
 	 * Get the <code>P4</code> parameter OUT value from the routine
 	 */
-	public LocalDateTime getP4() {
+	public LocalDate getP4() {
 		return getValue(P4);
 	}
 
 	/**
 	 * Get the <code>P5</code> parameter OUT value from the routine
 	 */
-	public LocalDateTime getP5() {
+	public LocalDate getP5() {
 		return getValue(P5);
 	}
 }

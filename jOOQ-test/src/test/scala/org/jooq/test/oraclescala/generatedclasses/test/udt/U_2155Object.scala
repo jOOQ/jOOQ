@@ -5,11 +5,11 @@ package org.jooq.test.oraclescala.generatedclasses.test.udt
 
 
 import java.lang.Class
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 import org.jooq.UDTField
 import org.jooq.impl.UDTImpl
-import org.jooq.test.all.converters.LocalDateTimeConverter
+import org.jooq.test.all.converters.LocalDateConverter
 import org.jooq.test.oraclescala.generatedclasses.test.Test
 import org.jooq.test.oraclescala.generatedclasses.test.udt.records.U_2155ArrayRecord
 import org.jooq.test.oraclescala.generatedclasses.test.udt.records.U_2155ObjectRecord
@@ -44,7 +44,7 @@ class U_2155Object extends UDTImpl[U_2155ObjectRecord]("U_2155_OBJECT", Test.TES
 	override def getRecordType : Class[U_2155ObjectRecord] = {
 		classOf[U_2155ObjectRecord]
 	}
-	private val D : UDTField[U_2155ObjectRecord, LocalDateTime] = UDTImpl.createField("D", org.jooq.impl.SQLDataType.DATE, this, "", new LocalDateTimeConverter)
+	private val D : UDTField[U_2155ObjectRecord, LocalDate] = UDTImpl.createField("D", org.jooq.impl.SQLDataType.DATE, this, "", new LocalDateConverter)
 	private val A : UDTField[U_2155ObjectRecord, U_2155ArrayRecord] = UDTImpl.createField("A", org.jooq.impl.SQLDataType.DATE.asArrayDataType(classOf[org.jooq.test.oraclescala.generatedclasses.test.udt.records.U_2155ArrayRecord]), this, "")
 
 	{

@@ -38,64 +38,37 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq;
+package org.jooq.test.all.converters;
 
-import static org.jooq.SQLDialect.DB2;
-import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.POSTGRES;
+import java.sql.Date;
+import java.time.LocalDate;
 
-import java.util.Collection;
+import org.jooq.Converter;
 
-/**
- * This type is used for the {@link Update}'s DSL API.
- * <p>
- * Example: <code><pre>
- * DSLContext create = DSL.using(configuration);
- *
- * TableRecord&lt;?> record =
- * create.update(table)
- *       .set(field1, value1)
- *       .set(field2, value2)
- *       .returning(field1)
- *       .fetchOne();
- * </pre></code>
- * <p>
- * This implemented differently for every dialect:
- * <ul>
- * <li>Firebird and Postgres have native support for
- * <code>UPDATE .. RETURNING</code> clauses</li>
- * </ul>
- *
- * @author Lukas Eder
- */
-public interface UpdateReturningStep<R extends Record> {
+public class LocalDateConverter implements Converter<Date, LocalDate> {
 
     /**
-     * Configure the <code>UPDATE</code> statement to return all fields in
-     * <code>R</code>.
-     *
-     * @see UpdateResultStep
+     * Generated UID
      */
-    @Support({ DB2, FIREBIRD, POSTGRES })
-    UpdateResultStep<R> returning();
+    private static final long serialVersionUID = -5060861060926377086L;
 
-    /**
-     * Configure the <code>UPDATE</code> statement to return a list of fields in
-     * <code>R</code>.
-     *
-     * @param fields Fields to be returned
-     * @see UpdateResultStep
-     */
-    @Support({ DB2, FIREBIRD, POSTGRES })
-    UpdateResultStep<R> returning(Field<?>... fields);
+    @Override
+    public LocalDate from(Date t) {
+        return t == null ? null : LocalDate.parse(t.toString());
+    }
 
-    /**
-     * Configure the <code>UPDATE</code> statement to return a list of fields in
-     * <code>R</code>.
-     *
-     * @param fields Fields to be returned
-     * @see UpdateResultStep
-     */
-    @Support({ DB2, FIREBIRD, POSTGRES })
-    UpdateResultStep<R> returning(Collection<? extends Field<?>> fields);
+    @Override
+    public Date to(LocalDate u) {
+        return u == null ? null : Date.valueOf(u.toString());
+    }
+
+    @Override
+    public Class<Date> fromType() {
+        return Date.class;
+    }
+
+    @Override
+    public Class<LocalDate> toType() {
+        return LocalDate.class;
+    }
 }

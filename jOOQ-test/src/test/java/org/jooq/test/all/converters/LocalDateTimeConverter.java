@@ -40,14 +40,13 @@
  */
 package org.jooq.test.all.converters;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.util.TimeZone;
 
 import org.jooq.Converter;
 
-public class LocalDateTimeConverter implements Converter<Date, LocalDateTime> {
+@SuppressWarnings("deprecation")
+public class LocalDateTimeConverter implements Converter<Timestamp, LocalDateTime> {
 
     /**
      * Generated UID
@@ -55,18 +54,20 @@ public class LocalDateTimeConverter implements Converter<Date, LocalDateTime> {
     private static final long serialVersionUID = -5060861060926377086L;
 
     @Override
-    public LocalDateTime from(Date t) {
-        return t == null ? null : LocalDateTime.ofEpochSecond((t.getTime() + TimeZone.getDefault().getRawOffset()) / 1000, 0, ZoneOffset.UTC);
+    public LocalDateTime from(Timestamp t) {
+
+        // Some troll probably implemented Timestamp.getDate()
+        return t == null ? null : LocalDateTime.of(t.getYear(), t.getMonth() + 1, t.getDate(), t.getHours(), t.getMinutes(), t.getSeconds());
     }
 
     @Override
-    public Date to(LocalDateTime u) {
-        return u == null ? null : new Date(u.toEpochSecond(ZoneOffset.UTC) * 1000);
+    public Timestamp to(LocalDateTime u) {
+        return u == null ? null : new Timestamp(u.getYear(), u.getMonthValue() - 1, u.getDayOfMonth(), u.getHour(), u.getMinute(), u.getSecond(), 0);
     }
 
     @Override
-    public Class<Date> fromType() {
-        return Date.class;
+    public Class<Timestamp> fromType() {
+        return Timestamp.class;
     }
 
     @Override

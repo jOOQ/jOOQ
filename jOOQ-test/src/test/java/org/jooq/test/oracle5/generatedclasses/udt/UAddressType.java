@@ -54,7 +54,7 @@ public class UAddressType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle5.ge
 	/**
 	 * The attribute <code>TEST.U_ADDRESS_TYPE.SINCE</code>.
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UAddressTypeRecord, java.time.LocalDateTime> SINCE = createField("SINCE", org.jooq.impl.SQLDataType.DATE, U_ADDRESS_TYPE, "", new org.jooq.test.all.converters.LocalDateTimeConverter());
+	public static final org.jooq.UDTField<org.jooq.test.oracle5.generatedclasses.udt.records.UAddressTypeRecord, java.time.LocalDate> SINCE = createField("SINCE", org.jooq.impl.SQLDataType.DATE, U_ADDRESS_TYPE, "", new org.jooq.test.all.converters.LocalDateConverter());
 
 	/**
 	 * The attribute <code>TEST.U_ADDRESS_TYPE.CODE</code>.

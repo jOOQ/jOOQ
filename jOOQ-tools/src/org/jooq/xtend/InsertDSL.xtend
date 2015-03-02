@@ -45,13 +45,33 @@ package org.jooq.xtend
  * @author Lukas Eder
  */
 import org.jooq.Constants
+import org.jooq.Field
 
 class InsertDSL extends Generators {
     
     def static void main(String[] args) {
         val insert = new InsertDSL();
+        insert.generateInsertSetStep();
         insert.generateInsertValuesStep();
         insert.generateInsertImpl();
+    }
+    
+    def generateInsertSetStep() {
+        val out = new StringBuilder();
+
+        for (degree : (1..Constants::MAX_ROW_DEGREE)) {
+            out.append('''
+            
+                /**
+                 * Set the columns for insert.
+                 */
+                «generatedAnnotation»
+                @Support
+                <«TN(degree)»> InsertValuesStep«degree»<R, «TN(degree)»> columns(«Field_TN_fieldn(degree)»);
+            ''');
+        }
+
+        insert("org.jooq.InsertSetStep", out, "columns");
     }
     
     def generateInsertValuesStep() {
@@ -179,14 +199,15 @@ class InsertDSL extends Generators {
              */
             private static final long serialVersionUID = 4222898879771679107L;
         
-            private final Field<?>[]  fields;
             private final Table<R>    into;
+            private Field<?>[]        fields;
             private boolean           onDuplicateKeyUpdate;
         
             InsertImpl(Configuration configuration, Table<R> into, Collection<? extends Field<?>> fields) {
                 super(new InsertQueryImpl<R>(configuration, into));
         
                 this.into = into;
+                columns(fields);
                 this.fields = (fields == null || fields.size() == 0)
                     ? into.fields()
                     : fields.toArray(new Field[fields.size()]);
@@ -263,6 +284,25 @@ class InsertDSL extends Generators {
                 }
         
                 return this;
+            }
+            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+            
+            @Override
+            @SuppressWarnings("hiding")
+            public final <«TN(degree)»> InsertImpl columns(«Field_TN_fieldn(degree)») {
+                return columns(new Field[] { «fieldn(degree)» });
+            }
+            «ENDFOR»
+        
+            @Override
+            public final InsertImpl columns(Field<?>... f) {
+                this.fields = (f == null || f.length == 0) ? into.fields() : f;
+                return this;
+            }
+        
+            @Override
+            public final InsertImpl columns(Collection<? extends Field<?>> f) {
+                return columns(f.toArray(new Field[f.size()]));
             }
 
             /**

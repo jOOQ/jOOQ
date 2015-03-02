@@ -1050,6 +1050,14 @@ public abstract class jOOQAbstractTest<
         return null;
     }
 
+    protected TableField<UU, String> TExoticTypes_PLAIN_SQL_CONVERTER_XML() {
+        return null;
+    }
+
+    protected TableField<UU, String> TExoticTypes_PLAIN_SQL_BINDING_XML() {
+        return null;
+    }
+
     protected abstract Table<DATE> TDates();
 
     protected abstract Table<X> TArrays();
@@ -1699,6 +1707,16 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testCustomConversion() throws Exception {
         new DataTypeTests(this).testCustomConversion();
+    }
+
+    @Test
+    public void testJava8TimeWithConverter() throws Exception {
+        new DataTypeTests(this).testJava8TimeWithConverter();
+    }
+
+    @Test
+    public void testJava8TimeWithBinding() throws Exception {
+        new DataTypeTests(this).testJava8TimeWithBinding();
     }
 
     @Test
@@ -3284,6 +3302,16 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testXMLasJAXB() throws Exception {
         new DataTypeTests(this).testXMLasJAXB();
+    }
+
+    @Test
+    public void testXMLusingPlainSQLConverters() throws Exception {
+        new DataTypeTests(this).testXMLusingPlainSQLConverters();
+    }
+
+    @Test
+    public void testXMLusingPlainSQLBindings() throws Exception {
+        new DataTypeTests(this).testXMLusingPlainSQLBindings();
     }
 
     @Test

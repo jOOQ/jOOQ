@@ -129,14 +129,15 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
      */
     private static final long serialVersionUID = 4222898879771679107L;
 
-    private final Field<?>[]  fields;
     private final Table<R>    into;
+    private Field<?>[]        fields;
     private boolean           onDuplicateKeyUpdate;
 
     InsertImpl(Configuration configuration, Table<R> into, Collection<? extends Field<?>> fields) {
         super(new InsertQueryImpl<R>(configuration, into));
 
         this.into = into;
+        columns(fields);
         this.fields = (fields == null || fields.size() == 0)
             ? into.fields()
             : fields.toArray(new Field[fields.size()]);
@@ -419,6 +420,149 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
         }
 
         return this;
+    }
+    
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1> InsertImpl columns(Field<T1> field1) {
+        return columns(new Field[] { field1 });
+    }
+    
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2> InsertImpl columns(Field<T1> field1, Field<T2> field2) {
+        return columns(new Field[] { field1, field2 });
+    }
+    
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3> InsertImpl columns(Field<T1> field1, Field<T2> field2, Field<T3> field3) {
+        return columns(new Field[] { field1, field2, field3 });
+    }
+    
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4> InsertImpl columns(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
+        return columns(new Field[] { field1, field2, field3, field4 });
+    }
+    
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5> InsertImpl columns(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
+        return columns(new Field[] { field1, field2, field3, field4, field5 });
+    }
+    
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6> InsertImpl columns(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
+        return columns(new Field[] { field1, field2, field3, field4, field5, field6 });
+    }
+    
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7> InsertImpl columns(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
+        return columns(new Field[] { field1, field2, field3, field4, field5, field6, field7 });
+    }
+    
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7, T8> InsertImpl columns(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
+        return columns(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8 });
+    }
+    
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9> InsertImpl columns(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
+        return columns(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9 });
+    }
+    
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> InsertImpl columns(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
+        return columns(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10 });
+    }
+    
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> InsertImpl columns(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
+        return columns(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11 });
+    }
+    
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> InsertImpl columns(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
+        return columns(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12 });
+    }
+    
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> InsertImpl columns(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
+        return columns(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13 });
+    }
+    
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> InsertImpl columns(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
+        return columns(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14 });
+    }
+    
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> InsertImpl columns(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
+        return columns(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15 });
+    }
+    
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> InsertImpl columns(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
+        return columns(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16 });
+    }
+    
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> InsertImpl columns(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
+        return columns(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17 });
+    }
+    
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> InsertImpl columns(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
+        return columns(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18 });
+    }
+    
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> InsertImpl columns(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
+        return columns(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19 });
+    }
+    
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> InsertImpl columns(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
+        return columns(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 });
+    }
+    
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> InsertImpl columns(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
+        return columns(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21 });
+    }
+    
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> InsertImpl columns(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
+        return columns(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
+    }
+
+    @Override
+    public final InsertImpl columns(Field<?>... f) {
+        this.fields = (f == null || f.length == 0) ? into.fields() : f;
+        return this;
+    }
+
+    @Override
+    public final InsertImpl columns(Collection<? extends Field<?>> f) {
+        return columns(f.toArray(new Field[f.size()]));
     }
 
     /**

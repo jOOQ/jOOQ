@@ -5,7 +5,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,7 +28,7 @@ public class T_2155 implements Serializable {
 	private static final long serialVersionUID = 380968846;
 
 	private Integer           id;
-	private LocalDateTime     d1;
+	private LocalDate     d1;
 	private U_2155Object      d2;
 	private U_2155ArrayRecord d3;
 
@@ -43,7 +43,7 @@ public class T_2155 implements Serializable {
 
 	public T_2155(
 		Integer           id,
-		LocalDateTime     d1,
+		LocalDate     d1,
 		U_2155Object      d2,
 		U_2155ArrayRecord d3
 	) {
@@ -65,11 +65,11 @@ public class T_2155 implements Serializable {
 	}
 
 	@Column(name = "D1")
-	public LocalDateTime getD1() {
+	public LocalDate getD1() {
 		return this.d1;
 	}
 
-	public void setD1(LocalDateTime d1) {
+	public void setD1(LocalDate d1) {
 		this.d1 = d1;
 	}
 

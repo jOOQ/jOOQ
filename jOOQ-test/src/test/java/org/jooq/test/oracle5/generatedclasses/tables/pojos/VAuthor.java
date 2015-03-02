@@ -21,7 +21,7 @@ public class VAuthor implements java.io.Serializable {
 	private java.math.BigDecimal                                          id;
 	private java.lang.String                                              firstName;
 	private java.lang.String                                              lastName;
-	private java.time.LocalDateTime                                       dateOfBirth;
+	private java.time.LocalDate                                       dateOfBirth;
 	private java.math.BigDecimal                                          yearOfBirth;
 	private org.jooq.test.oracle5.generatedclasses.udt.pojos.UAddressType address;
 
@@ -31,7 +31,7 @@ public class VAuthor implements java.io.Serializable {
 		java.math.BigDecimal                                          id,
 		java.lang.String                                              firstName,
 		java.lang.String                                              lastName,
-		java.time.LocalDateTime                                       dateOfBirth,
+		java.time.LocalDate                                       dateOfBirth,
 		java.math.BigDecimal                                          yearOfBirth,
 		org.jooq.test.oracle5.generatedclasses.udt.pojos.UAddressType address
 	) {
@@ -67,11 +67,11 @@ public class VAuthor implements java.io.Serializable {
 		this.lastName = lastName;
 	}
 
-	public java.time.LocalDateTime getDateOfBirth() {
+	public java.time.LocalDate getDateOfBirth() {
 		return this.dateOfBirth;
 	}
 
-	public void setDateOfBirth(java.time.LocalDateTime dateOfBirth) {
+	public void setDateOfBirth(java.time.LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 

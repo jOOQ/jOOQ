@@ -5,7 +5,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables.records
 
 
 import java.lang.Integer
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -28,7 +28,7 @@ import org.jooq.test.oraclescala.generatedclasses.test.udt.records.U_2155ObjectR
  */
 @Entity
 @Table(name = "T_2155", schema = "TEST")
-class T_2155Record extends UpdatableRecordImpl[T_2155Record](T_2155.T_2155) with Record4[Integer, LocalDateTime, U_2155ObjectRecord, U_2155ArrayRecord] {
+class T_2155Record extends UpdatableRecordImpl[T_2155Record](T_2155.T_2155) with Record4[Integer, LocalDate, U_2155ObjectRecord, U_2155ArrayRecord] {
 
 	/**
 	 * Setter for <code>TEST.T_2155.ID</code>.
@@ -51,7 +51,7 @@ class T_2155Record extends UpdatableRecordImpl[T_2155Record](T_2155.T_2155) with
 	/**
 	 * Setter for <code>TEST.T_2155.D1</code>.
 	 */
-	def setD1(value : LocalDateTime) : Unit = {
+	def setD1(value : LocalDate) : Unit = {
 		setValue(1, value)
 	}
 
@@ -59,9 +59,9 @@ class T_2155Record extends UpdatableRecordImpl[T_2155Record](T_2155.T_2155) with
 	 * Getter for <code>TEST.T_2155.D1</code>.
 	 */
 	@Column(name = "D1")
-	def getD1 : LocalDateTime = {
+	def getD1 : LocalDate = {
 		val r = getValue(1)
-		if (r == null) null else r.asInstanceOf[LocalDateTime]
+		if (r == null) null else r.asInstanceOf[LocalDate]
 	}
 
 	/**
@@ -107,19 +107,19 @@ class T_2155Record extends UpdatableRecordImpl[T_2155Record](T_2155.T_2155) with
 	// Record4 type implementation
 	// -------------------------------------------------------------------------
 
-	override def fieldsRow : Row4[Integer, LocalDateTime, U_2155ObjectRecord, U_2155ArrayRecord] = {
-		super.fieldsRow.asInstanceOf[ Row4[Integer, LocalDateTime, U_2155ObjectRecord, U_2155ArrayRecord] ]
+	override def fieldsRow : Row4[Integer, LocalDate, U_2155ObjectRecord, U_2155ArrayRecord] = {
+		super.fieldsRow.asInstanceOf[ Row4[Integer, LocalDate, U_2155ObjectRecord, U_2155ArrayRecord] ]
 	}
 
-	override def valuesRow : Row4[Integer, LocalDateTime, U_2155ObjectRecord, U_2155ArrayRecord] = {
-		super.valuesRow.asInstanceOf[ Row4[Integer, LocalDateTime, U_2155ObjectRecord, U_2155ArrayRecord] ]
+	override def valuesRow : Row4[Integer, LocalDate, U_2155ObjectRecord, U_2155ArrayRecord] = {
+		super.valuesRow.asInstanceOf[ Row4[Integer, LocalDate, U_2155ObjectRecord, U_2155ArrayRecord] ]
 	}
 	override def field1 : Field[Integer] = T_2155.T_2155.ID
-	override def field2 : Field[LocalDateTime] = T_2155.T_2155.D1
+	override def field2 : Field[LocalDate] = T_2155.T_2155.D1
 	override def field3 : Field[U_2155ObjectRecord] = T_2155.T_2155.D2
 	override def field4 : Field[U_2155ArrayRecord] = T_2155.T_2155.D3
 	override def value1 : Integer = getId
-	override def value2 : LocalDateTime = getD1
+	override def value2 : LocalDate = getD1
 	override def value3 : U_2155ObjectRecord = getD2
 	override def value4 : U_2155ArrayRecord = getD3
 
@@ -128,7 +128,7 @@ class T_2155Record extends UpdatableRecordImpl[T_2155Record](T_2155.T_2155) with
 		this
 	}
 
-	override def value2(value : LocalDateTime) : T_2155Record = {
+	override def value2(value : LocalDate) : T_2155Record = {
 		setD1(value)
 		this
 	}
@@ -143,14 +143,14 @@ class T_2155Record extends UpdatableRecordImpl[T_2155Record](T_2155.T_2155) with
 		this
 	}
 
-	override def values(value1 : Integer, value2 : LocalDateTime, value3 : U_2155ObjectRecord, value4 : U_2155ArrayRecord) : T_2155Record = {
+	override def values(value1 : Integer, value2 : LocalDate, value3 : U_2155ObjectRecord, value4 : U_2155ArrayRecord) : T_2155Record = {
 		this
 	}
 
 	/**
 	 * Create a detached, initialised T_2155Record
 	 */
-	def this(id : Integer, d1 : LocalDateTime, d2 : U_2155ObjectRecord, d3 : U_2155ArrayRecord) = {
+	def this(id : Integer, d1 : LocalDate, d2 : U_2155ObjectRecord, d3 : U_2155ArrayRecord) = {
 		this()
 
 		setValue(0, id)

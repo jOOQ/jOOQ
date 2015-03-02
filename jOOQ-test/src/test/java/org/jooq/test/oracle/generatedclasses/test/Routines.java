@@ -6,7 +6,7 @@ package org.jooq.test.oracle.generatedclasses.test;
 
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import org.jooq.AggregateFunction;
 import org.jooq.Configuration;
@@ -517,7 +517,7 @@ public class Routines {
 	/**
 	 * Call <code>TEST.F2155</code>
 	 */
-	public static LocalDateTime f2155(Configuration configuration, Number p1, LocalDateTime p2, Number p3, LocalDateTime p4) {
+	public static LocalDate f2155(Configuration configuration, Number p1, LocalDate p2, Number p3, LocalDate p4) {
 		F2155 f = new F2155();
 		f.setP1(p1);
 		f.setP2(p2);
@@ -531,7 +531,7 @@ public class Routines {
 	/**
 	 * Get <code>TEST.F2155</code> as a field
 	 */
-	public static Field<LocalDateTime> f2155(Number p1, LocalDateTime p2, Number p3, LocalDateTime p4) {
+	public static Field<LocalDate> f2155(Number p1, LocalDate p2, Number p3, LocalDate p4) {
 		F2155 f = new F2155();
 		f.setP1(p1);
 		f.setP2(p2);
@@ -544,7 +544,7 @@ public class Routines {
 	/**
 	 * Get <code>TEST.F2155</code> as a field
 	 */
-	public static Field<LocalDateTime> f2155(Field<? extends Number> p1, Field<LocalDateTime> p2, Field<? extends Number> p3, Field<LocalDateTime> p4) {
+	public static Field<LocalDate> f2155(Field<? extends Number> p1, Field<LocalDate> p2, Field<? extends Number> p3, Field<LocalDate> p4) {
 		F2155 f = new F2155();
 		f.setP1(p1);
 		f.setP2(p2);
@@ -887,7 +887,7 @@ public class Routines {
 	/**
 	 * Call <code>TEST.P2155</code>
 	 */
-	public static P2155 p2155(Configuration configuration, Number p1, LocalDateTime p2) {
+	public static P2155 p2155(Configuration configuration, Number p1, LocalDate p2) {
 		P2155 p = new P2155();
 		p.setP1(p1);
 		p.setP2(p2);

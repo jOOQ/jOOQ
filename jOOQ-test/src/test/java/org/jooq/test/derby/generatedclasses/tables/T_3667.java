@@ -27,17 +27,17 @@ public class T_3667 extends org.jooq.impl.TableImpl<org.jooq.test.derby.generate
 	/**
 	 * The column <code>TEST.T_3667.INSERT_DATE</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.T_3667Record, java.time.LocalDateTime> INSERT_DATE = createField("INSERT_DATE", org.jooq.impl.SQLDataType.DATE.nullable(false), T_3667, "", new org.jooq.test.all.converters.LocalDateTimeConverter());
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.T_3667Record, java.time.LocalDate> INSERT_DATE = createField("INSERT_DATE", org.jooq.impl.SQLDataType.DATE.nullable(false), T_3667, "", new org.jooq.test.all.converters.LocalDateConverter());
 
 	/**
 	 * The column <code>TEST.T_3667.CREATION_DATE</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.T_3667Record, java.time.LocalDateTime> CREATION_DATE = createField("CREATION_DATE", org.jooq.impl.SQLDataType.DATE.nullable(false), T_3667, "", new org.jooq.test.all.converters.LocalDateTimeConverter());
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.T_3667Record, java.time.LocalDate> CREATION_DATE = createField("CREATION_DATE", org.jooq.impl.SQLDataType.DATE.nullable(false), T_3667, "", new org.jooq.test.all.converters.LocalDateConverter());
 
 	/**
 	 * The column <code>TEST.T_3667.RELEASE_DATE</code>.
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.T_3667Record, java.time.LocalDateTime> RELEASE_DATE = createField("RELEASE_DATE", org.jooq.impl.SQLDataType.DATE.defaulted(true), T_3667, "", new org.jooq.test.all.converters.LocalDateTimeConverter());
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.T_3667Record, java.time.LocalDate> RELEASE_DATE = createField("RELEASE_DATE", org.jooq.impl.SQLDataType.DATE.defaulted(true), T_3667, "", new org.jooq.test.all.converters.LocalDateConverter());
 
 	/**
 	 * No further instances allowed

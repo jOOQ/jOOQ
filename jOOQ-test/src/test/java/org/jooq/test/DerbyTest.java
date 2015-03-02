@@ -57,8 +57,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.LocalDate;
 import java.util.UUID;
 
 import org.jooq.ArrayRecord;
@@ -802,7 +801,7 @@ public class DerbyTest extends jOOQAbstractTest<
 
     @Test
     public void testDerbyConvertedColumns() {
-        LocalDateTime now = LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC);
+        LocalDate now = LocalDate.ofEpochDay(0);
 
         try {
             assertEquals(1,

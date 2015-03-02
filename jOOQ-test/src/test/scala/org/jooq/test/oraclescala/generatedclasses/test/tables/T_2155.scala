@@ -7,7 +7,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables
 import java.lang.Class
 import java.lang.Integer
 import java.lang.String
-import java.time.LocalDateTime
+import java.time.LocalDate
 import java.util.Arrays
 import java.util.List
 
@@ -16,7 +16,7 @@ import org.jooq.Table
 import org.jooq.TableField
 import org.jooq.UniqueKey
 import org.jooq.impl.TableImpl
-import org.jooq.test.all.converters.LocalDateTimeConverter
+import org.jooq.test.all.converters.LocalDateConverter
 import org.jooq.test.oraclescala.generatedclasses.test.Keys
 import org.jooq.test.oraclescala.generatedclasses.test.Test
 import org.jooq.test.oraclescala.generatedclasses.test.tables.T_2155
@@ -53,7 +53,7 @@ class T_2155(alias : String, aliased : Table[T_2155Record], parameters : Array[ 
 	/**
 	 * The column <code>TEST.T_2155.D1</code>.
 	 */
-	val D1 : TableField[T_2155Record, LocalDateTime] = createField("D1", org.jooq.impl.SQLDataType.DATE, "", new LocalDateTimeConverter())
+	val D1 : TableField[T_2155Record, LocalDate] = createField("D1", org.jooq.impl.SQLDataType.DATE, "", new LocalDateConverter())
 
 	/**
 	 * The column <code>TEST.T_2155.D2</code>.

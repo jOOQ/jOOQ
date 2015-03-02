@@ -19,7 +19,7 @@ public class TDates implements java.io.Serializable {
 	private static final long serialVersionUID = 786044383;
 
 	private java.math.BigDecimal       id;
-	private java.time.LocalDateTime    d;
+	private java.time.LocalDate    d;
 	private java.sql.Timestamp         t;
 	private java.sql.Timestamp         ts;
 	private java.math.BigDecimal       dInt;
@@ -31,7 +31,7 @@ public class TDates implements java.io.Serializable {
 
 	public TDates(
 		java.math.BigDecimal       id,
-		java.time.LocalDateTime    d,
+		java.time.LocalDate    d,
 		java.sql.Timestamp         t,
 		java.sql.Timestamp         ts,
 		java.math.BigDecimal       dInt,
@@ -57,11 +57,11 @@ public class TDates implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public java.time.LocalDateTime getD() {
+	public java.time.LocalDate getD() {
 		return this.d;
 	}
 
-	public void setD(java.time.LocalDateTime d) {
+	public void setD(java.time.LocalDate d) {
 		this.d = d;
 	}
 

@@ -19,7 +19,7 @@ public class T_976 implements java.io.Serializable {
 	private static final long serialVersionUID = -62323373;
 
 	private java.math.BigDecimal                                                     id;
-	private java.time.LocalDateTime                                                  d;
+	private java.time.LocalDate                                                  d;
 	private org.jooq.test.oracle5.generatedclasses.udt.records.T_976VarrayTypeRecord t;
 	private org.jooq.test.oracle5.generatedclasses.udt.pojos.T_976ObjectType         o;
 
@@ -27,7 +27,7 @@ public class T_976 implements java.io.Serializable {
 
 	public T_976(
 		java.math.BigDecimal                                                     id,
-		java.time.LocalDateTime                                                  d,
+		java.time.LocalDate                                                  d,
 		org.jooq.test.oracle5.generatedclasses.udt.records.T_976VarrayTypeRecord t,
 		org.jooq.test.oracle5.generatedclasses.udt.pojos.T_976ObjectType         o
 	) {
@@ -45,11 +45,11 @@ public class T_976 implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public java.time.LocalDateTime getD() {
+	public java.time.LocalDate getD() {
 		return this.d;
 	}
 
-	public void setD(java.time.LocalDateTime d) {
+	public void setD(java.time.LocalDate d) {
 		this.d = d;
 	}
 

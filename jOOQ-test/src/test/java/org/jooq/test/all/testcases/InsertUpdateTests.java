@@ -140,7 +140,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         jOOQAbstractTest.reset = false;
 
         assertEquals(1,
-        create().insertInto(table(selectFrom(TAuthor())), TAuthor_ID(), TAuthor_LAST_NAME())
+        create().insertInto(table(selectFrom(TAuthor())))
+                .columns(TAuthor_ID(), TAuthor_LAST_NAME())
                 .values(3, "abc")
                 .execute());
         assertEquals("abc", create().fetchOne(TAuthor(), TAuthor_ID().eq(3)).getValue(TAuthor_LAST_NAME()));
@@ -693,10 +694,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // DSL querying
         // ------------
-        TableRecord<T> returned = create().insertInto(TTriggers(), TTriggers_COUNTER())
-                .values(0)
-                .returning()
-                .fetchOne();
+        TableRecord<T> returned = create()
+            .insertInto(TTriggers())
+            .columns(TTriggers_COUNTER())
+            .values(0)
+            .returning()
+            .fetchOne();
         assertNotNull(returned);
         assertEquals(++ID, (int) returned.getValue(TTriggers_ID_GENERATED()));
         assertEquals(  ID, (int) returned.getValue(TTriggers_ID()));

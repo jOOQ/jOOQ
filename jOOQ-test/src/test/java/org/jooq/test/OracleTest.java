@@ -114,8 +114,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
@@ -461,6 +460,16 @@ public class OracleTest extends jOOQAbstractTest<
     @Override
     protected TableField<TExoticTypesRecord, UUID> TExoticTypes_UU() {
         return T_EXOTIC_TYPES.UU;
+    }
+
+    @Override
+    protected TableField<TExoticTypesRecord, String> TExoticTypes_PLAIN_SQL_CONVERTER_XML() {
+        return T_EXOTIC_TYPES.PLAIN_SQL_CONVERTER_XML;
+    }
+
+    @Override
+    protected TableField<TExoticTypesRecord, String> TExoticTypes_PLAIN_SQL_BINDING_XML() {
+        return T_EXOTIC_TYPES.PLAIN_SQL_BINDING_XML;
     }
 
     @Override
@@ -1884,8 +1893,8 @@ public class OracleTest extends jOOQAbstractTest<
 
     @Test
     public void testOracleConverterOnProceduresAndUDTs() {
-        LocalDateTime zero = LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC);
-        LocalDateTime one = LocalDateTime.ofEpochSecond(24 * 3600, 0, ZoneOffset.UTC);
+        LocalDate zero = LocalDate.ofEpochDay(0);
+        LocalDate one = LocalDate.ofEpochDay(1);
         U_2155ObjectRecord record = new U_2155ObjectRecord(zero, new U_2155ArrayRecord(zero, zero));
         U_2155ArrayRecord array = new U_2155ArrayRecord();
 

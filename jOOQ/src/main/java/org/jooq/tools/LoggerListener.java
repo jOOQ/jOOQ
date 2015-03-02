@@ -41,18 +41,26 @@
 package org.jooq.tools;
 
 import static java.lang.Boolean.TRUE;
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.tools.StringUtils.abbreviate;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 
 import org.jooq.Configuration;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.ExecuteType;
+import org.jooq.Field;
 import org.jooq.Param;
+import org.jooq.Parameter;
 import org.jooq.QueryPart;
+import org.jooq.Record;
+import org.jooq.Routine;
 import org.jooq.VisitContext;
 import org.jooq.VisitListener;
 import org.jooq.VisitListenerProvider;
@@ -155,9 +163,45 @@ public class LoggerListener extends DefaultExecuteListener {
 
     @Override
     public void executeEnd(ExecuteContext ctx) {
-        if (log.isDebugEnabled() && ctx.rows() >= 0) {
-            log.debug("Affected row(s)", ctx.rows());
+        if (ctx.rows() >= 0) {
+            if (log.isDebugEnabled()) {
+                log.debug("Affected row(s)", ctx.rows());
+            }
         }
+    }
+
+    @Override
+    public void outEnd(ExecuteContext ctx) {
+        if (ctx.routine() != null) {
+            if (log.isDebugEnabled()) {
+                logMultiline("Fetched OUT parameters", "" + record(ctx.configuration(), ctx.routine()), Level.FINE);
+            }
+        }
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    private Record record(Configuration configuration, Routine<?> routine) {
+        Record result = null;
+
+        List<Field<?>> fields = new ArrayList<Field<?>>();
+        Parameter<?> returnParam = routine.getReturnParameter();
+        if (returnParam != null)
+            fields.add(field(name(returnParam.getName()), returnParam.getDataType()));
+
+        for (Parameter<?> param : routine.getOutParameters())
+            fields.add(field(name(param.getName()), param.getDataType()));
+
+        result = DSL.using(configuration).newRecord(fields.toArray(new Field[fields.size()]));
+
+        int i = 0;
+        if (returnParam != null)
+            result.setValue((Field) fields.get(i++), routine.getValue(returnParam));
+
+        for (Parameter<?> param : routine.getOutParameters())
+            result.setValue((Field) fields.get(i++), routine.getValue(param));
+
+        result.changed(false);
+        return result;
     }
 
     private void logMultiline(String comment, String message, Level level) {

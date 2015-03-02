@@ -14,6 +14,7 @@ import org.jooq.test.sqlserver.generatedclasses.routines.FNumber;
 import org.jooq.test.sqlserver.generatedclasses.routines.FOne;
 import org.jooq.test.sqlserver.generatedclasses.routines.P1490;
 import org.jooq.test.sqlserver.generatedclasses.routines.P391;
+import org.jooq.test.sqlserver.generatedclasses.routines.P4106;
 import org.jooq.test.sqlserver.generatedclasses.routines.PAuthorExists;
 import org.jooq.test.sqlserver.generatedclasses.routines.PCreateAuthor;
 import org.jooq.test.sqlserver.generatedclasses.routines.PCreateAuthorByName;
@@ -160,33 +161,35 @@ public class Routines {
 	/**
 	 * Call <code>dbo.p_author_exists</code>
 	 */
-	public static Integer pAuthorExists(Configuration configuration, String authorName, Integer result) {
+	public static PAuthorExists pAuthorExists(Configuration configuration, String authorName, Integer result) {
 		PAuthorExists p = new PAuthorExists();
 		p.setAuthorName(authorName);
 		p.setResult(result);
 
 		p.execute(configuration);
-		return p.getResult();
+		return p;
 	}
 
 	/**
 	 * Call <code>dbo.p_create_author</code>
 	 */
-	public static void pCreateAuthor(Configuration configuration) {
+	public static Integer pCreateAuthor(Configuration configuration) {
 		PCreateAuthor p = new PCreateAuthor();
 
 		p.execute(configuration);
+		return p.getReturnValue();
 	}
 
 	/**
 	 * Call <code>dbo.p_create_author_by_name</code>
 	 */
-	public static void pCreateAuthorByName(Configuration configuration, String firstName, String lastName) {
+	public static Integer pCreateAuthorByName(Configuration configuration, String firstName, String lastName) {
 		PCreateAuthorByName p = new PCreateAuthorByName();
 		p.setFirstName(firstName);
 		p.setLastName(lastName);
 
 		p.execute(configuration);
+		return p.getReturnValue();
 	}
 
 	/**
@@ -208,43 +211,46 @@ public class Routines {
 	/**
 	 * Call <code>dbo.p_raise</code>
 	 */
-	public static void pRaise(Configuration configuration, Integer mode) {
+	public static Integer pRaise(Configuration configuration, Integer mode) {
 		PRaise p = new PRaise();
 		p.setMode(mode);
 
 		p.execute(configuration);
+		return p.getReturnValue();
 	}
 
 	/**
 	 * Call <code>dbo.p_raise_3696</code>
 	 */
-	public static void pRaise_3696(Configuration configuration, Integer number) {
+	public static Integer pRaise_3696(Configuration configuration, Integer number) {
 		PRaise_3696 p = new PRaise_3696();
 		p.setNumber(number);
 
 		p.execute(configuration);
+		return p.getReturnValue();
 	}
 
 	/**
 	 * Call <code>dbo.p_results</code>
 	 */
-	public static void pResults(Configuration configuration, Integer pResultSets) {
+	public static Integer pResults(Configuration configuration, Integer pResultSets) {
 		PResults p = new PResults();
 		p.setPResultSets(pResultSets);
 
 		p.execute(configuration);
+		return p.getReturnValue();
 	}
 
 	/**
 	 * Call <code>dbo.p_results_and_out_parameters</code>
 	 */
-	public static Integer pResultsAndOutParameters(Configuration configuration, Integer pResultSets, Integer pCount) {
+	public static PResultsAndOutParameters pResultsAndOutParameters(Configuration configuration, Integer pResultSets, Integer pCount) {
 		PResultsAndOutParameters p = new PResultsAndOutParameters();
 		p.setPResultSets(pResultSets);
 		p.setPCount(pCount);
 
 		p.execute(configuration);
-		return p.getPCount();
+		return p;
 	}
 
 	/**
@@ -263,11 +269,12 @@ public class Routines {
 	/**
 	 * Call <code>dbo.p1490</code>
 	 */
-	public static void p1490(Configuration configuration, Integer value) {
+	public static Integer p1490(Configuration configuration, Integer value) {
 		P1490 p = new P1490();
 		p.setValue(value);
 
 		p.execute(configuration);
+		return p.getReturnValue();
 	}
 
 	/**
@@ -281,6 +288,18 @@ public class Routines {
 		p.setO2(o2);
 		p.setIo2(io2);
 		p.setI2(i2);
+
+		p.execute(configuration);
+		return p;
+	}
+
+	/**
+	 * Call <code>dbo.p4106</code>
+	 */
+	public static P4106 p4106(Configuration configuration, Integer param1, Integer param2) {
+		P4106 p = new P4106();
+		p.setParam1(param1);
+		p.setParam2(param2);
 
 		p.execute(configuration);
 		return p;

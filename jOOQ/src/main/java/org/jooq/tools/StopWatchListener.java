@@ -104,6 +104,16 @@ public class StopWatchListener implements ExecuteListener {
     }
 
     @Override
+    public void outStart(ExecuteContext ctx) {
+        watch.splitDebug("Fetching out values");
+    }
+
+    @Override
+    public void outEnd(ExecuteContext ctx) {
+        watch.splitDebug("Out values fetched");
+    }
+
+    @Override
     public void fetchStart(ExecuteContext ctx) {
         watch.splitTrace("Fetching results");
     }

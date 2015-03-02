@@ -335,6 +335,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         @Override
+        public void outStart(ExecuteContext ctx) {
+            events.add("outStart");
+        }
+
+        @Override
+        public void outEnd(ExecuteContext ctx) {
+            events.add("outEnd");
+        }
+
+        @Override
         public void fetchStart(ExecuteContext ctx) {
             events.add("fetchStart");
         }
@@ -1350,6 +1360,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         static int countBindEnd;
         static int countExecuteStart;
         static int countExecuteEnd;
+        static int countOutStart;
+        static int countOutEnd;
         static int countFetchStart;
         static int countResultStart;
         static int countRecordStart;
@@ -1414,6 +1426,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         @Override
         public void executeEnd(ExecuteContext ctx) {
             countExecuteEnd++;
+        }
+
+        @Override
+        public void outStart(ExecuteContext ctx) {
+            countOutStart++;
+        }
+
+        @Override
+        public void outEnd(ExecuteContext ctx) {
+            countOutEnd++;
         }
 
         @Override

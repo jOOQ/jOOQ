@@ -353,7 +353,10 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             if (ctx.family() != FIREBIRD)
                 Utils.consumeResultSets(ctx, listener, results, null);
 
+            listener.outStart(ctx);
             fetchOutParameters(ctx);
+            listener.outEnd(ctx);
+
             return 0;
         }
 

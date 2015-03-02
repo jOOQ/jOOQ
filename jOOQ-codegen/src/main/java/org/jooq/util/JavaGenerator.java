@@ -3836,6 +3836,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String className = out.ref(getStrategy().getFullJavaClassName(procedure));
         final String configurationArgument = disambiguateJavaMemberName(procedure.getInParameters(), "configuration");
         final String localVar = disambiguateJavaMemberName(procedure.getInParameters(), "p");
+        final List<ParameterDefinition> outParams = list(procedure.getReturnValue(), procedure.getOutParameters());
 
         out.tab(1).javadoc("Call <code>%s</code>", procedure.getQualifiedOutputName());
 
@@ -3849,11 +3850,11 @@ public class JavaGenerator extends AbstractGenerator {
                 out.print("static ");
             }
 
-            if (procedure.getOutParameters().size() == 0) {
+            if (outParams.size() == 0) {
                 out.print("void ");
             }
-            else if (procedure.getOutParameters().size() == 1) {
-                out.print(out.ref(getJavaType(procedure.getOutParameters().get(0).getType())));
+            else if (outParams.size() == 1) {
+                out.print(out.ref(getJavaType(outParams.get(0).getType())));
                 out.print(" ");
             }
             else {
@@ -3893,11 +3894,11 @@ public class JavaGenerator extends AbstractGenerator {
         if (scala) {
             out.print(") : ");
 
-            if (procedure.getOutParameters().size() == 0) {
+            if (outParams.size() == 0) {
                 out.print("Unit");
             }
-            else if (procedure.getOutParameters().size() == 1) {
-                out.print(out.ref(getJavaType(procedure.getOutParameters().get(0).getType())));
+            else if (outParams.size() == 1) {
+                out.print(out.ref(getJavaType(outParams.get(0).getType())));
             }
             else {
                 out.print(className);
@@ -3931,10 +3932,13 @@ public class JavaGenerator extends AbstractGenerator {
         else
             out.tab(2).println("%s.execute(%s);", localVar, instance ? "configuration()" : configurationArgument);
 
-        if (procedure.getOutParameters().size() > 0) {
-            final ParameterDefinition parameter = procedure.getOutParameters().get(0);
+        if (outParams.size() > 0) {
+            final ParameterDefinition parameter = outParams.get(0);
 
-            final String getter = getStrategy().getJavaGetterName(parameter, Mode.DEFAULT);
+            // Avoid disambiguation for RETURN_VALUE getter
+            final String getter = parameter == procedure.getReturnValue()
+                ? "getReturnValue"
+                : getStrategy().getJavaGetterName(parameter, Mode.DEFAULT);
             final boolean isUDT = parameter.getType().isUDT();
 
             if (instance) {
@@ -3956,13 +3960,13 @@ public class JavaGenerator extends AbstractGenerator {
                 }
             }
 
-            if (procedure.getOutParameters().size() == 1) {
+            if (outParams.size() == 1) {
             	if (scala)
                     out.tab(2).println("return %s.%s", localVar, getter);
             	else
             	    out.tab(2).println("return %s.%s();", localVar, getter);
             }
-            else if (procedure.getOutParameters().size() > 1) {
+            else if (outParams.size() > 1) {
             	if (scala)
                     out.tab(2).println("return %s", localVar);
             	else

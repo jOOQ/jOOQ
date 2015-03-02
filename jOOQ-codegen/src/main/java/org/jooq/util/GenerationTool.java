@@ -357,6 +357,8 @@ public class GenerationTool {
                 database.setDateAsTimestamp(d.isDateAsTimestamp());
             if (d.isUnsignedTypes() != null)
                 database.setSupportsUnsignedTypes(d.isUnsignedTypes());
+            if (d.isIgnoreProcedureReturnValues() != null)
+                database.setIgnoreProcedureReturnValues(d.isIgnoreProcedureReturnValues());
 
             if (StringUtils.isBlank(g.getTarget().getPackageName()))
                 g.getTarget().setPackageName("org.jooq.generated");

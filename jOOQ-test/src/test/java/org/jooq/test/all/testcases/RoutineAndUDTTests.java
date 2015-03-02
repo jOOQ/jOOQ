@@ -42,6 +42,7 @@ package org.jooq.test.all.testcases;
 
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.tools.reflect.Reflect.on;
@@ -135,9 +136,20 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // P_AUTHOR_EXISTS
         // ---------------------------------------------------------------------
         if (supportsOUTParameters()) {
-            assertEquals("0", "" + invoke(cRoutines(), "pAuthorExists", create().configuration(), null, DUMMY_OUT_INT));
-            assertEquals("1", "" + invoke(cRoutines(), "pAuthorExists", create().configuration(), "Paulo", DUMMY_OUT_INT));
-            assertEquals("0", "" + invoke(cRoutines(), "pAuthorExists", create().configuration(), "Shakespeare", DUMMY_OUT_INT));
+            Object r1 = invoke(cRoutines(), "pAuthorExists", create().configuration(), null, DUMMY_OUT_INT);
+            Object r2 = invoke(cRoutines(), "pAuthorExists", create().configuration(), "Paulo", DUMMY_OUT_INT);
+            Object r3 = invoke(cRoutines(), "pAuthorExists", create().configuration(), "Shakespeare", DUMMY_OUT_INT);
+
+            // [#4106] SQL Server always has a RETURN_VALUE in Procedures
+            if (family() == SQLSERVER) {
+                r1 = on(r1).call("getResult").get();
+                r2 = on(r2).call("getResult").get();
+                r3 = on(r3).call("getResult").get();
+            }
+
+            assertEquals("0", "" + r1);
+            assertEquals("1", "" + r2);
+            assertEquals("0", "" + r3);
         } else {
             log.info("SKIPPING", "procedure test for OUT parameters");
         }

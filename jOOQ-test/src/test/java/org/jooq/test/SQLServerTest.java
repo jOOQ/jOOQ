@@ -110,6 +110,7 @@ import org.jooq.test.all.pojos.jaxb.Book;
 import org.jooq.test.sqlserver.generatedclasses.Keys;
 import org.jooq.test.sqlserver.generatedclasses.Routines;
 import org.jooq.test.sqlserver.generatedclasses.Sequences;
+import org.jooq.test.sqlserver.generatedclasses.routines.P4106;
 import org.jooq.test.sqlserver.generatedclasses.tables.FTables4;
 import org.jooq.test.sqlserver.generatedclasses.tables.FTables5;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.FTables1Record;
@@ -1359,6 +1360,21 @@ public class SQLServerTest extends jOOQAbstractTest<
         create().execute("insert into t_3085 values (null, null)");
         T_3085Record record = create().resultQuery("select * from t_3085").fetchAnyInto(T_3085);
         assertEquals(asList(null, null), asList(record.intoArray()));
+    }
+
+    @Test
+    public void testSQLServerProceduresWithReturnValues() {
+        P4106 r1 = Routines.p4106(create().configuration(), 1, 0);
+        assertEquals(0, (int) r1.getReturnValue());
+        assertEquals(1, (int) r1.getParam2());
+
+        P4106 r2 = Routines.p4106(create().configuration(), 2, 0);
+        assertEquals(0, (int) r2.getReturnValue());
+        assertEquals(2, (int) r2.getParam2());
+
+        P4106 r3 = Routines.p4106(create().configuration(), 5, 0);
+        assertEquals(42, (int) r3.getReturnValue());
+        assertEquals(5, (int) r3.getParam2());
     }
 }
 

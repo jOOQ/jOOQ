@@ -14,6 +14,7 @@ DROP PROCEDURE p_raise/
 DROP PROCEDURE p_raise_3696/
 DROP PROCEDURE p_results/
 DROP PROCEDURE p_results_and_out_parameters/
+DROP PROCEDURE p4106/
 DROP FUNCTION f_tables1/
 DROP FUNCTION f_tables2/
 DROP FUNCTION f_tables3/
@@ -807,6 +808,17 @@ BEGIN
   END;
 
   SET @p_count = @p_result_sets;
+END;
+/
+
+CREATE PROCEDURE p4106 (
+    @param1 INT,
+    @param2 INT OUTPUT
+) AS BEGIN
+   SET @param2 = @param1
+   
+   IF @param1 = 5
+       RETURN 42
 END;
 /
 

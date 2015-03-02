@@ -3,14 +3,20 @@
  */
 package org.jooq.test.sqlserver.generatedclasses;
 
+
+import org.jooq.Sequence;
+import org.jooq.impl.SequenceImpl;
+import org.jooq.test.sqlserver.generatedclasses.Dbo;
+
+
 /**
  * Convenience access to all sequences in dbo
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sequences {
 
 	/**
 	 * The sequence <code>dbo.s_author_id</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> S_AUTHOR_ID = new org.jooq.impl.SequenceImpl<java.lang.Long>("s_author_id", org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.impl.SQLDataType.BIGINT);
+	public static final Sequence<Long> S_AUTHOR_ID = new SequenceImpl<Long>("s_author_id", Dbo.DBO, org.jooq.impl.SQLDataType.BIGINT);
 }

@@ -3502,17 +3502,18 @@ public class JavaGenerator extends AbstractGenerator {
             final String numberValue = parameter.getType().isGenericNumberType() ? "Number" : "Value";
             final String numberField = parameter.getType().isGenericNumberType() ? "Number" : "Field";
             final String paramId = getStrategy().getJavaIdentifier(parameter);
+            final String paramName = "value".equals(paramId) ? "value_" : "value";
 
             out.tab(1).javadoc("Set the <code>%s</code> parameter IN value to the routine", parameter.getOutputName());
 
             if (scala) {
-            	out.tab(1).println("def %s(value : %s) : Unit = {", setter, refNumberType(out, parameter.getType()));
-                out.tab(2).println("set%s(%s.%s, value)", numberValue, className, paramId);
+            	out.tab(1).println("def %s(%s : %s) : Unit = {", setter, paramName, refNumberType(out, parameter.getType()));
+                out.tab(2).println("set%s(%s.%s, %s)", numberValue, className, paramId, paramName);
                 out.tab(1).println("}");
             }
             else {
-                out.tab(1).println("public void %s(%s value) {", setter, refNumberType(out, parameter.getType()));
-                out.tab(2).println("set%s(%s, value);", numberValue, paramId);
+                out.tab(1).println("public void %s(%s %s) {", setter, refNumberType(out, parameter.getType()), paramName);
+                out.tab(2).println("set%s(%s, %s);", numberValue, paramId, paramName);
                 out.tab(1).println("}");
             }
 

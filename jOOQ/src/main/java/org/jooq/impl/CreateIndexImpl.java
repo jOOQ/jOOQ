@@ -1,6 +1,6 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
+ * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
  *
  * This work is dual-licensed
  * - under the Apache Software License 2.0 (the "ASL")
@@ -51,6 +51,7 @@ import org.jooq.Context;
 import org.jooq.CreateIndexFinalStep;
 import org.jooq.CreateIndexStep;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.Table;
 
@@ -69,11 +70,11 @@ class CreateIndexImpl extends AbstractQuery implements
     private static final long     serialVersionUID = 8904572826501186329L;
     private static final Clause[] CLAUSES          = { CREATE_INDEX };
 
-    private final String index;
-    private Table<?>     table;
-    private Field<?>[]   fields;
+    private final Name            index;
+    private Table<?>              table;
+    private Field<?>[]            fields;
 
-    CreateIndexImpl(Configuration configuration, String index) {
+    CreateIndexImpl(Configuration configuration, Name index) {
         super(configuration);
 
         this.index = index;
@@ -109,7 +110,7 @@ class CreateIndexImpl extends AbstractQuery implements
     public final void accept(Context<?> ctx) {
         ctx.keyword("create index")
            .sql(' ')
-           .visit(name(index))
+           .visit(index)
            .sql(' ')
            .keyword("on")
            .sql(' ')

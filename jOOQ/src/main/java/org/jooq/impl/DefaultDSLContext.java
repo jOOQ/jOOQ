@@ -150,6 +150,7 @@ import org.jooq.MergeKeyStep9;
 import org.jooq.MergeKeyStepN;
 import org.jooq.MergeUsingStep;
 import org.jooq.Meta;
+import org.jooq.Name;
 import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.QueryPart;
@@ -1596,8 +1597,13 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     // -------------------------------------------------------------------------
 
     @Override
-    public CreateViewAsStep<Record> createView(String viewName, String... fieldNames) {
-        return createView(table(name(viewName)), Utils.fieldsByName(viewName, fieldNames));
+    public CreateViewAsStep<Record> createView(String view, String... fields) {
+        return createView(table(name(view)), Utils.fieldsByName(view, fields));
+    }
+
+    @Override
+    public CreateViewAsStep<Record> createView(Name view, Name... fields) {
+        return createView(table(view), Utils.fieldsByName(fields));
     }
 
     @Override
@@ -1606,8 +1612,13 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public CreateTableAsStep<Record> createTable(String tableName) {
-        return createTable(table(name(tableName)));
+    public CreateTableAsStep<Record> createTable(String table) {
+        return createTable(name(table));
+    }
+
+    @Override
+    public CreateTableAsStep<Record> createTable(Name table) {
+        return createTable(table(table));
     }
 
     @Override
@@ -1616,8 +1627,13 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public CreateTableAsStep<Record> createTemporaryTable(String tableName) {
-        return createTemporaryTable(table(name(tableName)));
+    public CreateTableAsStep<Record> createTemporaryTable(String table) {
+        return createTemporaryTable(name(table));
+    }
+
+    @Override
+    public CreateTableAsStep<Record> createTemporaryTable(Name table) {
+        return createTemporaryTable(table(table));
     }
 
     @Override
@@ -1626,8 +1642,13 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public CreateTableAsStep<Record> createGlobalTemporaryTable(String tableName) {
-        return createGlobalTemporaryTable(table(name(tableName)));
+    public CreateTableAsStep<Record> createGlobalTemporaryTable(String table) {
+        return createGlobalTemporaryTable(name(table));
+    }
+
+    @Override
+    public CreateTableAsStep<Record> createGlobalTemporaryTable(Name table) {
+        return createGlobalTemporaryTable(table(table));
     }
 
     @Override
@@ -1637,7 +1658,22 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateIndexStep createIndex(String index) {
+        return createIndex(name(index));
+    }
+
+    @Override
+    public CreateIndexStep createIndex(Name index) {
         return new CreateIndexImpl(configuration(), index);
+    }
+
+    @Override
+    public CreateSequenceFinalStep createSequence(String sequence) {
+        return createSequence(name(sequence));
+    }
+
+    @Override
+    public CreateSequenceFinalStep createSequence(Name sequence) {
+        return createSequence(sequence(sequence));
     }
 
     @Override
@@ -1646,8 +1682,13 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public CreateSequenceFinalStep createSequence(String sequence) {
-        return createSequence(sequence(name(sequence)));
+    public AlterSequenceRestartStep<BigInteger> alterSequence(String sequence) {
+        return alterSequence(name(sequence));
+    }
+
+    @Override
+    public AlterSequenceRestartStep<BigInteger> alterSequence(Name sequence) {
+        return alterSequence(sequence(sequence));
     }
 
     @Override
@@ -1656,8 +1697,13 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public AlterSequenceRestartStep<BigInteger> alterSequence(String sequence) {
-        return alterSequence(sequence(name(sequence)));
+    public AlterTableStep alterTable(String table) {
+        return alterTable(name(table));
+    }
+
+    @Override
+    public AlterTableStep alterTable(Name table) {
+        return alterTable(table(table));
     }
 
     @Override
@@ -1666,28 +1712,43 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public AlterTableStep alterTable(String table) {
-        return alterTable(table(name(table)));
+    public DropViewFinalStep dropView(String view) {
+        return dropView(name(view));
     }
 
     @Override
-    public DropViewFinalStep dropView(Table<?> table) {
-        return new DropViewImpl(configuration(), table);
+    public DropViewFinalStep dropView(Name view) {
+        return dropView(table(view));
     }
 
     @Override
-    public DropViewFinalStep dropView(String table) {
-        return dropView(table(name(table)));
+    public DropViewFinalStep dropView(Table<?> view) {
+        return new DropViewImpl(configuration(), view);
     }
 
     @Override
-    public DropViewFinalStep dropViewIfExists(Table<?> table) {
-        return new DropViewImpl(configuration(), table, true);
+    public DropViewFinalStep dropViewIfExists(String view) {
+        return dropViewIfExists(name(view));
     }
 
     @Override
-    public DropViewFinalStep dropViewIfExists(String table) {
-        return dropViewIfExists(table(name(table)));
+    public DropViewFinalStep dropViewIfExists(Name view) {
+        return dropViewIfExists(table(view));
+    }
+
+    @Override
+    public DropViewFinalStep dropViewIfExists(Table<?> view) {
+        return new DropViewImpl(configuration(), view, true);
+    }
+
+    @Override
+    public DropTableStep dropTable(String table) {
+        return dropTable(name(table));
+    }
+
+    @Override
+    public DropTableStep dropTable(Name table) {
+        return dropTable(table(table));
     }
 
     @Override
@@ -1696,8 +1757,13 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public DropTableStep dropTable(String table) {
-        return dropTable(table(name(table)));
+    public DropTableStep dropTableIfExists(String table) {
+        return dropTableIfExists(name(table));
+    }
+
+    @Override
+    public DropTableStep dropTableIfExists(Name table) {
+        return dropTableIfExists(table(table));
     }
 
     @Override
@@ -1706,18 +1772,33 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public DropTableStep dropTableIfExists(String table) {
-        return dropTableIfExists(table(name(table)));
+    public DropIndexFinalStep dropIndex(String index) {
+        return dropIndex(name(index));
     }
 
     @Override
-    public DropIndexFinalStep dropIndex(String index) {
+    public DropIndexFinalStep dropIndex(Name index) {
         return new DropIndexImpl(configuration(), index);
     }
 
     @Override
     public DropIndexFinalStep dropIndexIfExists(String index) {
+        return dropIndexIfExists(name(index));
+    }
+
+    @Override
+    public DropIndexFinalStep dropIndexIfExists(Name index) {
         return new DropIndexImpl(configuration(), index, true);
+    }
+
+    @Override
+    public DropSequenceFinalStep dropSequence(String sequence) {
+        return dropSequence(name(sequence));
+    }
+
+    @Override
+    public DropSequenceFinalStep dropSequence(Name sequence) {
+        return dropSequence(sequence(sequence));
     }
 
     @Override
@@ -1726,8 +1807,13 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public DropSequenceFinalStep dropSequence(String sequence) {
-        return dropSequence(sequence(name(sequence)));
+    public DropSequenceFinalStep dropSequenceIfExists(String sequence) {
+        return dropSequenceIfExists(name(sequence));
+    }
+
+    @Override
+    public DropSequenceFinalStep dropSequenceIfExists(Name sequence) {
+        return dropSequenceIfExists(sequence(sequence));
     }
 
     @Override
@@ -1736,18 +1822,18 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public DropSequenceFinalStep dropSequenceIfExists(String sequence) {
-        return dropSequenceIfExists(sequence(name(sequence)));
+    public final TruncateIdentityStep<Record> truncate(String table) {
+        return truncate(name(table));
+    }
+
+    @Override
+    public final TruncateIdentityStep<Record> truncate(Name table) {
+        return truncate(table(table));
     }
 
     @Override
     public <R extends Record> TruncateIdentityStep<R> truncate(Table<R> table) {
         return new TruncateImpl<R>(configuration(), table);
-    }
-
-    @Override
-    public final TruncateIdentityStep<Record> truncate(String table) {
-        return truncate(table(name(table)));
     }
 
     // -------------------------------------------------------------------------

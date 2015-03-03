@@ -4251,8 +4251,18 @@ public class DSL {
      * @see DSLContext#createTable(String)
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static CreateTableAsStep<Record> createTable(String tableName) {
-        return createTable(table(name(tableName)));
+    public static CreateTableAsStep<Record> createTable(String table) {
+        return using(new DefaultConfiguration()).createTable(table);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE TABLE</code> statement.
+     *
+     * @see DSLContext#createTable(Name)
+     */
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static CreateTableAsStep<Record> createTable(Name table) {
+        return using(new DefaultConfiguration()).createTable(table);
     }
 
     /**
@@ -4271,8 +4281,18 @@ public class DSL {
      * @see DSLContext#createTemporaryTable(String)
      */
     @Support({ POSTGRES })
-    public static CreateTableAsStep<Record> createTemporaryTable(String tableName) {
-        return createTemporaryTable(table(name(tableName)));
+    public static CreateTableAsStep<Record> createTemporaryTable(String table) {
+        return using(new DefaultConfiguration()).createTemporaryTable(table);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
+     *
+     * @see DSLContext#createTemporaryTable(Name)
+     */
+    @Support({ POSTGRES })
+    public static CreateTableAsStep<Record> createTemporaryTable(Name table) {
+        return using(new DefaultConfiguration()).createTemporaryTable(table);
     }
 
     /**
@@ -4291,8 +4311,18 @@ public class DSL {
      * @see DSLContext#createGlobalTemporaryTable(String)
      */
     @Support({ POSTGRES })
-    public static CreateTableAsStep<Record> createGlobalTemporaryTable(String tableName) {
-        return createGlobalTemporaryTable(table(name(tableName)));
+    public static CreateTableAsStep<Record> createGlobalTemporaryTable(String table) {
+        return using(new DefaultConfiguration()).createGlobalTemporaryTable(table);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
+     *
+     * @see DSLContext#createGlobalTemporaryTable(Name)
+     */
+    @Support({ POSTGRES })
+    public static CreateTableAsStep<Record> createGlobalTemporaryTable(Name table) {
+        return using(new DefaultConfiguration()).createGlobalTemporaryTable(table);
     }
 
     /**
@@ -4311,8 +4341,18 @@ public class DSL {
      * @see DSLContext#createView(String, String...)
      */
     @Support
-    public static CreateViewAsStep createView(String viewName, String... fieldNames) {
-        return createView(tableByName(viewName), Utils.fieldsByName(viewName, fieldNames));
+    public static CreateViewAsStep createView(String view, String... fields) {
+        return using(new DefaultConfiguration()).createView(view, fields);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE VIEW</code> statement.
+     *
+     * @see DSLContext#createView(Name, Name...)
+     */
+    @Support
+    public static CreateViewAsStep createView(Name view, Name... fields) {
+        return using(new DefaultConfiguration()).createView(view, fields);
     }
 
     /**
@@ -4336,13 +4376,13 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL <code>CREATE SEQUENCE</code> statement.
+     * Create a new DSL <code>CREATE INDEX</code> statement.
      *
-     * @see DSLContext#createSequence(Sequence)
+     * @see DSLContext#createIndex(Name)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
-    public static CreateSequenceFinalStep createSequence(Sequence<?> sequence) {
-        return using(new DefaultConfiguration()).createSequence(sequence);
+    @Support
+    public static CreateIndexStep createIndex(Name index) {
+        return using(new DefaultConfiguration()).createIndex(index);
     }
 
     /**
@@ -4356,13 +4396,23 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL <code>ALTER SEQUENCE</code> statement.
+     * Create a new DSL <code>CREATE SEQUENCE</code> statement.
      *
-     * @see DSLContext#alterSequence(Sequence)
+     * @see DSLContext#createSequence(Name)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    public static <T extends Number> AlterSequenceRestartStep<T> alterSequence(Sequence<T> sequence) {
-        return using(new DefaultConfiguration()).alterSequence(sequence);
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static CreateSequenceFinalStep createSequence(Name sequence) {
+        return using(new DefaultConfiguration()).createSequence(sequence);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE SEQUENCE</code> statement.
+     *
+     * @see DSLContext#createSequence(Sequence)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static CreateSequenceFinalStep createSequence(Sequence<?> sequence) {
+        return using(new DefaultConfiguration()).createSequence(sequence);
     }
 
     /**
@@ -4376,13 +4426,23 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL <code>ALTER TABLE</code> statement.
+     * Create a new DSL <code>ALTER SEQUENCE</code> statement.
      *
-     * @see DSLContext#alterTable(Table)
+     * @see DSLContext#alterSequence(Name)
      */
-    @Support
-    public static AlterTableStep alterTable(Table<?> table) {
-        return using(new DefaultConfiguration()).alterTable(table);
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static AlterSequenceRestartStep<BigInteger> alterSequence(Name sequence) {
+        return using(new DefaultConfiguration()).alterSequence(sequence);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER SEQUENCE</code> statement.
+     *
+     * @see DSLContext#alterSequence(Sequence)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static <T extends Number> AlterSequenceRestartStep<T> alterSequence(Sequence<T> sequence) {
+        return using(new DefaultConfiguration()).alterSequence(sequence);
     }
 
     /**
@@ -4396,13 +4456,23 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL <code>DROP VIEW</code> statement.
+     * Create a new DSL <code>ALTER TABLE</code> statement.
      *
-     * @see DSLContext#dropView(Table)
+     * @see DSLContext#alterTable(Name)
      */
     @Support
-    public static DropViewFinalStep dropView(Table<?> table) {
-        return using(new DefaultConfiguration()).dropView(table);
+    public static AlterTableStep alterTable(Name table) {
+        return using(new DefaultConfiguration()).alterTable(table);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER TABLE</code> statement.
+     *
+     * @see DSLContext#alterTable(Table)
+     */
+    @Support
+    public static AlterTableStep alterTable(Table<?> table) {
+        return using(new DefaultConfiguration()).alterTable(table);
     }
 
     /**
@@ -4411,21 +4481,28 @@ public class DSL {
      * @see DSLContext#dropView(String)
      */
     @Support
-    public static DropViewFinalStep dropView(String table) {
-        return using(new DefaultConfiguration()).dropView(table);
+    public static DropViewFinalStep dropView(String view) {
+        return using(new DefaultConfiguration()).dropView(view);
     }
 
     /**
-     * Create a new DSL <code>DROP VIEW IF EXISTS</code> statement.
-     * <p>
-     * If your database doesn't natively support <code>IF EXISTS</code>, this is
-     * emulated by catching (and ignoring) the relevant {@link SQLException}.
+     * Create a new DSL <code>DROP VIEW</code> statement.
      *
-     * @see DSLContext#dropViewIfExists(Table)
+     * @see DSLContext#dropView(Name)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static DropViewFinalStep dropViewIfExists(Table<?> table) {
-        return using(new DefaultConfiguration()).dropViewIfExists(table);
+    @Support
+    public static DropViewFinalStep dropView(Name view) {
+        return using(new DefaultConfiguration()).dropView(view);
+    }
+
+    /**
+     * Create a new DSL <code>DROP VIEW</code> statement.
+     *
+     * @see DSLContext#dropView(Table)
+     */
+    @Support
+    public static DropViewFinalStep dropView(Table<?> view) {
+        return using(new DefaultConfiguration()).dropView(view);
     }
 
     /**
@@ -4437,8 +4514,60 @@ public class DSL {
      * @see DSLContext#dropViewIfExists(String)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static DropViewFinalStep dropViewIfExists(String table) {
-        return using(new DefaultConfiguration()).dropViewIfExists(table);
+    public static DropViewFinalStep dropViewIfExists(String view) {
+        return using(new DefaultConfiguration()).dropViewIfExists(view);
+    }
+
+    /**
+     * Create a new DSL <code>DROP VIEW IF EXISTS</code> statement.
+     * <p>
+     * If your database doesn't natively support <code>IF EXISTS</code>, this is
+     * emulated by catching (and ignoring) the relevant {@link SQLException}.
+     *
+     * @see DSLContext#dropViewIfExists(Name)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static DropViewFinalStep dropViewIfExists(Name view) {
+        return using(new DefaultConfiguration()).dropViewIfExists(view);
+    }
+
+    /**
+     * Create a new DSL <code>DROP VIEW IF EXISTS</code> statement.
+     * <p>
+     * If your database doesn't natively support <code>IF EXISTS</code>, this is
+     * emulated by catching (and ignoring) the relevant {@link SQLException}.
+     *
+     * @see DSLContext#dropViewIfExists(Table)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static DropViewFinalStep dropViewIfExists(Table<?> view) {
+        return using(new DefaultConfiguration()).dropViewIfExists(view);
+    }
+
+    /**
+     * Create a new DSL <code>DROP TABLE IF EXISTS</code> statement.
+     * <p>
+     * If your database doesn't natively support <code>IF EXISTS</code>, this is
+     * emulated by catching (and ignoring) the relevant {@link SQLException}.
+     *
+     * @see DSLContext#dropTable(String)
+     */
+    @Support
+    public static DropTableStep dropTable(String table) {
+        return using(new DefaultConfiguration()).dropTable(table);
+    }
+
+    /**
+     * Create a new DSL <code>DROP TABLE IF EXISTS</code> statement.
+     * <p>
+     * If your database doesn't natively support <code>IF EXISTS</code>, this is
+     * emulated by catching (and ignoring) the relevant {@link SQLException}.
+     *
+     * @see DSLContext#dropTable(Name)
+     */
+    @Support
+    public static DropTableStep dropTable(Name table) {
+        return using(new DefaultConfiguration()).dropTable(table);
     }
 
     /**
@@ -4462,6 +4591,16 @@ public class DSL {
     }
 
     /**
+     * Create a new DSL <code>DROP TABLE</code> statement.
+     *
+     * @see DSLContext#dropTable(Name)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static DropTableStep dropTableIfExists(Name table) {
+        return using(new DefaultConfiguration()).dropTableIfExists(table);
+    }
+
+    /**
      * Create a new DSL <code>DROP TABLE IF EXISTS</code> statement.
      * <p>
      * If your database doesn't natively support <code>IF EXISTS</code>, this is
@@ -4475,25 +4614,22 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL <code>DROP TABLE IF EXISTS</code> statement.
-     * <p>
-     * If your database doesn't natively support <code>IF EXISTS</code>, this is
-     * emulated by catching (and ignoring) the relevant {@link SQLException}.
-     *
-     * @see DSLContext#dropTableIfExists(String)
-     */
-    @Support
-    public static DropTableStep dropTable(String table) {
-        return using(new DefaultConfiguration()).dropTable(table);
-    }
-
-    /**
      * Create a new DSL <code>DROP INDEX</code> statement.
      *
      * @see DSLContext#dropIndex(String)
      */
     @Support
     public static DropIndexFinalStep dropIndex(String index) {
+        return using(new DefaultConfiguration()).dropIndex(index);
+    }
+
+    /**
+     * Create a new DSL <code>DROP INDEX</code> statement.
+     *
+     * @see DSLContext#dropIndex(Name)
+     */
+    @Support
+    public static DropIndexFinalStep dropIndex(Name index) {
         return using(new DefaultConfiguration()).dropIndex(index);
     }
 
@@ -4511,13 +4647,16 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL <code>DROP SEQUENCE</code> statement.
+     * Create a new DSL <code>DROP INDEX IF EXISTS</code> statement.
+     * <p>
+     * If your database doesn't natively support <code>IF EXISTS</code>, this is
+     * emulated by catching (and ignoring) the relevant {@link SQLException}.
      *
-     * @see DSLContext#dropSequence(Sequence)
+     * @see DSLContext#dropIndexIfExists(String)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    public static <T extends Number> DropSequenceFinalStep dropSequence(Sequence<?> sequence) {
-        return using(new DefaultConfiguration()).dropSequence(sequence);
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static DropIndexFinalStep dropIndexIfExists(Name index) {
+        return using(new DefaultConfiguration()).dropIndexIfExists(index);
     }
 
     /**
@@ -4528,6 +4667,52 @@ public class DSL {
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static <T extends Number> DropSequenceFinalStep dropSequence(String sequence) {
         return using(new DefaultConfiguration()).dropSequence(sequence);
+    }
+
+    /**
+     * Create a new DSL <code>DROP SEQUENCE</code> statement.
+     *
+     * @see DSLContext#dropSequence(Name)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static <T extends Number> DropSequenceFinalStep dropSequence(Name sequence) {
+        return using(new DefaultConfiguration()).dropSequence(sequence);
+    }
+
+    /**
+     * Create a new DSL <code>DROP SEQUENCE</code> statement.
+     *
+     * @see DSLContext#dropSequence(Sequence)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static <T extends Number> DropSequenceFinalStep dropSequence(Sequence<?> sequence) {
+        return using(new DefaultConfiguration()).dropSequence(sequence);
+    }
+
+    /**
+     * Create a new DSL <code>DROP SEQUENCE IF EXISTS</code> statement.
+     * <p>
+     * If your database doesn't natively support <code>IF EXISTS</code>, this is
+     * emulated by catching (and ignoring) the relevant {@link SQLException}.
+     *
+     * @see DSLContext#dropSequenceIfExists(String)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static <T extends Number> DropSequenceFinalStep dropSequenceIfExists(String sequence) {
+        return using(new DefaultConfiguration()).dropSequenceIfExists(sequence);
+    }
+
+    /**
+     * Create a new DSL <code>DROP SEQUENCE IF EXISTS</code> statement.
+     * <p>
+     * If your database doesn't natively support <code>IF EXISTS</code>, this is
+     * emulated by catching (and ignoring) the relevant {@link SQLException}.
+     *
+     * @see DSLContext#dropSequenceIfExists(Name)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static <T extends Number> DropSequenceFinalStep dropSequenceIfExists(Name sequence) {
+        return using(new DefaultConfiguration()).dropSequenceIfExists(sequence);
     }
 
     /**
@@ -4544,16 +4729,50 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL <code>DROP SEQUENCE IF EXISTS</code> statement.
+     * Create a new DSL truncate statement.
      * <p>
-     * If your database doesn't natively support <code>IF EXISTS</code>, this is
-     * emulated by catching (and ignoring) the relevant {@link SQLException}.
+     * Unlike {@link Delete} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>DELETE</code> statement.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * import static org.jooq.impl.DSL.*;
      *
-     * @see DSLContext#dropSequenceIfExists(String)
+     * // [...]
+     *
+     * truncate(table);
+     * </pre></code>
+     * <h3>Simulation of <code>TRUNCATE</code></h3>
+     * <p>
+     * Most dialects implement the <code>TRUNCATE</code> statement. If it is not
+     * supported, it is simulated using an equivalent <code>DELETE</code>
+     * statement. This is particularly true for these dialects:
+     * <ul>
+     * <li> {@link SQLDialect#FIREBIRD}</li>
+     * <li> {@link SQLDialect#INGRES}</li>
+     * <li> {@link SQLDialect#SQLITE}</li>
+     * </ul>
+     * <h3>Vendor-specific extensions of <code>TRUNCATE</code></h3>
+     * <p>
+     * Some statements also support extensions of the <code>TRUNCATE</code>
+     * statement, such as Postgres:
+     * <p>
+     * <code><pre>
+     * truncate(table)
+     *   .restartIdentity()
+     *   .cascade()
+     * </pre></code>
+     * <p>
+     * These vendor-specific extensions are currently not simulated for those
+     * dialects that do not support them natively.
+     *
+     * @see DSLContext#truncate(Name)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
-    public static <T extends Number> DropSequenceFinalStep dropSequenceIfExists(String sequence) {
-        return using(new DefaultConfiguration()).dropSequenceIfExists(sequence);
+    @Support
+    public static TruncateIdentityStep<Record> truncate(Name table) {
+        return using(new DefaultConfiguration()).truncate(table);
     }
 
     /**
@@ -4600,53 +4819,6 @@ public class DSL {
      */
     @Support
     public static <R extends Record> TruncateIdentityStep<R> truncate(Table<R> table) {
-        return using(new DefaultConfiguration()).truncate(table);
-    }
-
-    /**
-     * Create a new DSL truncate statement.
-     * <p>
-     * Unlike {@link Delete} factory methods in the {@link DSLContext} API, this
-     * creates an unattached, and thus not directly renderable or executable
-     * <code>DELETE</code> statement.
-     * <p>
-     * Example:
-     * <p>
-     * <code><pre>
-     * import static org.jooq.impl.DSL.*;
-     *
-     * // [...]
-     *
-     * truncate(table);
-     * </pre></code>
-     * <h3>Simulation of <code>TRUNCATE</code></h3>
-     * <p>
-     * Most dialects implement the <code>TRUNCATE</code> statement. If it is not
-     * supported, it is simulated using an equivalent <code>DELETE</code>
-     * statement. This is particularly true for these dialects:
-     * <ul>
-     * <li> {@link SQLDialect#FIREBIRD}</li>
-     * <li> {@link SQLDialect#INGRES}</li>
-     * <li> {@link SQLDialect#SQLITE}</li>
-     * </ul>
-     * <h3>Vendor-specific extensions of <code>TRUNCATE</code></h3>
-     * <p>
-     * Some statements also support extensions of the <code>TRUNCATE</code>
-     * statement, such as Postgres:
-     * <p>
-     * <code><pre>
-     * truncate(table)
-     *   .restartIdentity()
-     *   .cascade()
-     * </pre></code>
-     * <p>
-     * These vendor-specific extensions are currently not simulated for those
-     * dialects that do not support them natively.
-     *
-     * @see DSLContext#truncate(String)
-     */
-    @Support
-    public static TruncateIdentityStep<Record> truncate(String table) {
         return using(new DefaultConfiguration()).truncate(table);
     }
 

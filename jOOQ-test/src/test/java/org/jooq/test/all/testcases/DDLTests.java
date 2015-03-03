@@ -78,6 +78,7 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.util.Arrays;
 
+import org.jooq.CreateTableColumnStep;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
@@ -697,6 +698,50 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 fail();
             }
             catch (DataAccessException expected) {}
+        }
+        finally {
+            ignoreThrows(() -> create().dropTable("t").execute());
+        }
+    }
+
+    public void testCreateTableAllDataTypes() throws Exception {
+        try {
+            CreateTableColumnStep step =
+            create().createTable("t")
+                    .column("id", SQLDataType.INTEGER);
+
+            int i = 0;
+
+            step = step.column("c" + i++, SQLDataType.BIGINT);
+            step = step.column("c" + i++, SQLDataType.BIGINTUNSIGNED);
+            step = step.column("c" + i++, SQLDataType.BINARY);
+            step = step.column("c" + i++, SQLDataType.BIT);
+            step = step.column("c" + i++, SQLDataType.BLOB);
+            step = step.column("c" + i++, SQLDataType.BOOLEAN);
+            step = step.column("c" + i++, SQLDataType.CHAR);
+            step = step.column("c" + i++, SQLDataType.CLOB);
+            step = step.column("c" + i++, SQLDataType.DATE);
+            step = step.column("c" + i++, SQLDataType.DECIMAL);
+            step = step.column("c" + i++, SQLDataType.DECIMAL_INTEGER);
+            step = step.column("c" + i++, SQLDataType.DOUBLE);
+            step = step.column("c" + i++, SQLDataType.FLOAT);
+            step = step.column("c" + i++, SQLDataType.INTEGER);
+            step = step.column("c" + i++, SQLDataType.INTEGERUNSIGNED);
+            step = step.column("c" + i++, SQLDataType.REAL);
+            step = step.column("c" + i++, SQLDataType.SMALLINT);
+            step = step.column("c" + i++, SQLDataType.SMALLINTUNSIGNED);
+            step = step.column("c" + i++, SQLDataType.TIME);
+            step = step.column("c" + i++, SQLDataType.TIMESTAMP);
+            step = step.column("c" + i++, SQLDataType.TINYINT);
+            step = step.column("c" + i++, SQLDataType.TINYINTUNSIGNED);
+            step = step.column("c" + i++, SQLDataType.VARBINARY);
+            step = step.column("c" + i++, SQLDataType.VARCHAR);
+
+            step.execute();
+
+            Result<?> result = create().fetch(table(name("t")));
+            assertEquals(0, result.size());
+            assertEquals(25, result.fields().length);
         }
         finally {
             ignoreThrows(() -> create().dropTable("t").execute());

@@ -1560,6 +1560,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testCreateTableAllDataTypes() throws Exception {
+        new DDLTests(this).testCreateTableAllDataTypes();
+    }
+
+    @Test
     public void testCreateTableAsSelect() throws Exception {
         new DDLTests(this).testCreateTableAsSelect();
     }

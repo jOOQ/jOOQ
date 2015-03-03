@@ -89,6 +89,10 @@ import org.jooq.exception.DataAccessException;
  */
 public interface Routine<T> extends QueryPart {
 
+    // -------------------------------------------------------------------------
+    // XXX: Meta information
+    // -------------------------------------------------------------------------
+
     /**
      * Get the routine schema
      */
@@ -108,6 +112,15 @@ public interface Routine<T> extends QueryPart {
      *         there is no such container.
      */
     Package getPackage();
+
+    /**
+     * The parameter representing this routine's {@link #getReturnValue()}
+     *
+     * @return The return parameter or <code>null</code> if this routine doesn't
+     *         have a return value.
+     * @see #getParameters()
+     */
+    Parameter<T> getReturnParameter();
 
     /**
      * A list of OUT parameters passed to the stored procedure as argument. This
@@ -130,19 +143,13 @@ public interface Routine<T> extends QueryPart {
     List<Parameter<?>> getInParameters();
 
     /**
-     * @return The routine's return value (if it is a function)
-     */
-    T getReturnValue();
-
-    /**
-     * @return The routine's results (if available)
-     */
-    List<Result<Record>> getResults();
-
-    /**
      * @return A list of parameters passed to the stored object as argument
      */
     List<Parameter<?>> getParameters();
+
+    // -------------------------------------------------------------------------
+    // XXX: Call API
+    // -------------------------------------------------------------------------
 
     /**
      * Execute the stored object using a {@link Configuration} object
@@ -157,4 +164,28 @@ public interface Routine<T> extends QueryPart {
      * @throws DataAccessException if something went wrong executing the query
      */
     int execute() throws DataAccessException;
+
+    // -------------------------------------------------------------------------
+    // XXX: Call data
+    // -------------------------------------------------------------------------
+
+    /**
+     * Set the routine's IN value for an IN parameter.
+     */
+    <Z> void setValue(Parameter<Z> parameter, Z value);
+
+    /**
+     * @return The routine's OUT value for an OUT parameter.
+     */
+    <Z> Z getValue(Parameter<Z> parameter);
+
+    /**
+     * @return The routine's return value (if it is a function)
+     */
+    T getReturnValue();
+
+    /**
+     * @return The routine's results (if available)
+     */
+    List<Result<Record>> getResults();
 }

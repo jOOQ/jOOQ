@@ -198,7 +198,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     // Initialise a routine call
     // ------------------------------------------------------------------------
 
-    protected final void setNumber(Parameter<? extends Number> parameter, Number value) {
+    protected final <N extends Number> void setNumber(Parameter<N> parameter, Number value) {
         setValue(parameter, Convert.convert(value, parameter.getType()));
     }
 
@@ -206,7 +206,8 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         setField(parameter, value);
     }
 
-    protected final void setValue(Parameter<?> parameter, Object value) {
+    @Override
+    public final <Z> void setValue(Parameter<Z> parameter, Z value) {
         setField(parameter, val(value, parameter.getDataType()));
     }
 
@@ -352,7 +353,10 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             if (ctx.family() != FIREBIRD)
                 Utils.consumeResultSets(ctx, listener, results, null);
 
+            listener.outStart(ctx);
             fetchOutParameters(ctx);
+            listener.outEnd(ctx);
+
             return 0;
         }
 
@@ -645,8 +649,9 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         return results;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
-    protected final <Z> Z getValue(Parameter<Z> parameter) {
+    public final <Z> Z getValue(Parameter<Z> parameter) {
         return (Z) outValues.get(parameter);
     }
 
@@ -688,7 +693,8 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         return name;
     }
 
-    protected final Parameter<?> getReturnParameter() {
+    @Override
+    public final Parameter<T> getReturnParameter() {
         return returnParameter;
     }
 

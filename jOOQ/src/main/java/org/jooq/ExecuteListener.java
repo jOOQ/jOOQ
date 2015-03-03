@@ -172,6 +172,24 @@ import org.jooq.tools.StopWatchListener;
  * <td>Yes, 1x</td>
  * </tr>
  * <tr>
+ * <td> {@link #outStart(ExecuteContext)}</td>
+ * <td>No</td>
+ * <td>No</td>
+ * <td>No</td>
+ * <td>No</td>
+ * <td>No</td>
+ * <td>Yes, 1x</td>
+ * </tr>
+ * <tr>
+ * <td> {@link #outEnd(ExecuteContext)}</td>
+ * <td>No</td>
+ * <td>No</td>
+ * <td>No</td>
+ * <td>No</td>
+ * <td>No</td>
+ * <td>Yes, 1x</td>
+ * </tr>
+ * <tr>
  * <td> {@link #fetchStart(ExecuteContext)}</td>
  * <td>Yes, 1x (Nx for {@link ResultQuery#fetchMany()}</td>
  * <td>Yes, 1x (Nx for {@link ResultQuery#fetchMany()}</td>
@@ -592,6 +610,72 @@ public interface ExecuteListener extends EventListener, Serializable {
      * </ul>
      */
     void executeEnd(ExecuteContext ctx);
+
+    /**
+     * Called before fetching out parameter values from a
+     * <code>CallableStatement</code>.
+     * <p>
+     * Available attributes from <code>ExecuteContext</code>:
+     * <ul>
+     * <li> {@link ExecuteContext#connection()}: The connection used for
+     * execution</li>
+     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
+     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * a jOOQ routine is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * that is about to be executed, or <code>null</code> if the
+     * <code>SQL</code> statement is unknown..</li>
+     * <li> {@link ExecuteContext#statement()}: The
+     * <code>PreparedStatement</code> that is about to be executed, or
+     * <code>null</code> if no statement is known to jOOQ. This can be any of
+     * the following: <br/>
+     * <br/>
+     * <ul>
+     * <li>A <code>java.sql.CallableStatement</code> when you are executing a
+     * jOOQ <code>Routine</code></li>
+     * </ul>
+     * </li>
+     * <li> {@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
+     * emitted by the database or <code>null</code> if no warning was emitted.</li>
+     * </ul>
+     * </ul>
+     * <p>
+     * Note that this method is called only when executing standalone routine
+     * calls.
+     */
+    void outStart(ExecuteContext ctx);
+
+    /**
+     * Called after fetching out parameter values from a
+     * <code>CallableStatement</code>.
+     * <p>
+     * Available attributes from <code>ExecuteContext</code>:
+     * <ul>
+     * <li> {@link ExecuteContext#connection()}: The connection used for
+     * execution</li>
+     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
+     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * a jOOQ routine is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * that is about to be executed, or <code>null</code> if the
+     * <code>SQL</code> statement is unknown..</li>
+     * <li> {@link ExecuteContext#statement()}: The
+     * <code>PreparedStatement</code> that is about to be executed, or
+     * <code>null</code> if no statement is known to jOOQ. This can be any of
+     * the following: <br/>
+     * <br/>
+     * <ul>
+     * <li>A <code>java.sql.CallableStatement</code> when you are executing a
+     * jOOQ <code>Routine</code></li>
+     * </ul>
+     * <li> {@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
+     * emitted by the database or <code>null</code> if no warning was emitted.</li>
+     * </ul>
+     * <p>
+     * Note that this method is called only when executing standalone routine
+     * calls.
+     */
+    void outEnd(ExecuteContext ctx);
 
     /**
      * Called before fetching data from a <code>ResultSet</code>.

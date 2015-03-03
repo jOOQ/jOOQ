@@ -86,6 +86,12 @@ public class DefaultExecuteListener implements ExecuteListener {
     public void executeEnd(ExecuteContext ctx) {}
 
     @Override
+    public void outStart(ExecuteContext ctx) {}
+
+    @Override
+    public void outEnd(ExecuteContext ctx) {}
+
+    @Override
     public void fetchStart(ExecuteContext ctx) {}
 
     @Override

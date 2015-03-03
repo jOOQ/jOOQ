@@ -76,6 +76,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.UUID;
 import java.util.function.DoublePredicate;
@@ -828,6 +829,17 @@ public abstract class jOOQAbstractTest<
             if (config != null) {
                 Properties properties = new Properties();
                 properties.load(config);
+
+                String computerName = System.getenv("COMPUTERNAME");
+
+                for (String key : new ArrayList<String>((Set) properties.keySet())) {
+                    String override = key + "." + computerName;
+
+                    if (properties.containsKey(override)) {
+                        properties.setProperty(key, properties.getProperty(override));
+                    }
+                }
+
                 return properties;
             }
         }

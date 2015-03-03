@@ -3,17 +3,45 @@
  */
 package org.jooq.test.sqlserver.generatedclasses;
 
+
+import java.sql.Date;
+
+import org.jooq.Configuration;
+import org.jooq.Field;
+import org.jooq.test.sqlserver.generatedclasses.routines.F317;
+import org.jooq.test.sqlserver.generatedclasses.routines.FAuthorExists;
+import org.jooq.test.sqlserver.generatedclasses.routines.FNumber;
+import org.jooq.test.sqlserver.generatedclasses.routines.FOne;
+import org.jooq.test.sqlserver.generatedclasses.routines.P1490;
+import org.jooq.test.sqlserver.generatedclasses.routines.P391;
+import org.jooq.test.sqlserver.generatedclasses.routines.P4106;
+import org.jooq.test.sqlserver.generatedclasses.routines.PAuthorExists;
+import org.jooq.test.sqlserver.generatedclasses.routines.PCreateAuthor;
+import org.jooq.test.sqlserver.generatedclasses.routines.PCreateAuthorByName;
+import org.jooq.test.sqlserver.generatedclasses.routines.PDefault;
+import org.jooq.test.sqlserver.generatedclasses.routines.PRaise;
+import org.jooq.test.sqlserver.generatedclasses.routines.PRaise_3696;
+import org.jooq.test.sqlserver.generatedclasses.routines.PResults;
+import org.jooq.test.sqlserver.generatedclasses.routines.PResultsAndOutParameters;
+import org.jooq.test.sqlserver.generatedclasses.routines.PUnused;
+import org.jooq.test.sqlserver.generatedclasses.tables.FTables1;
+import org.jooq.test.sqlserver.generatedclasses.tables.FTables2;
+import org.jooq.test.sqlserver.generatedclasses.tables.FTables3;
+import org.jooq.test.sqlserver.generatedclasses.tables.FTables4;
+import org.jooq.test.sqlserver.generatedclasses.tables.FTables5;
+
+
 /**
  * Convenience access to all stored procedures and functions in dbo
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Routines {
 
 	/**
 	 * Call <code>dbo.f_author_exists</code>
 	 */
-	public static java.lang.Integer fAuthorExists(org.jooq.Configuration configuration, java.lang.String authorName) {
-		org.jooq.test.sqlserver.generatedclasses.routines.FAuthorExists f = new org.jooq.test.sqlserver.generatedclasses.routines.FAuthorExists();
+	public static Integer fAuthorExists(Configuration configuration, String authorName) {
+		FAuthorExists f = new FAuthorExists();
 		f.setAuthorName(authorName);
 
 		f.execute(configuration);
@@ -23,8 +51,8 @@ public class Routines {
 	/**
 	 * Get <code>dbo.f_author_exists</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Integer> fAuthorExists(java.lang.String authorName) {
-		org.jooq.test.sqlserver.generatedclasses.routines.FAuthorExists f = new org.jooq.test.sqlserver.generatedclasses.routines.FAuthorExists();
+	public static Field<Integer> fAuthorExists(String authorName) {
+		FAuthorExists f = new FAuthorExists();
 		f.setAuthorName(authorName);
 
 		return f.asField();
@@ -33,40 +61,9 @@ public class Routines {
 	/**
 	 * Get <code>dbo.f_author_exists</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Integer> fAuthorExists(org.jooq.Field<java.lang.String> authorName) {
-		org.jooq.test.sqlserver.generatedclasses.routines.FAuthorExists f = new org.jooq.test.sqlserver.generatedclasses.routines.FAuthorExists();
+	public static Field<Integer> fAuthorExists(Field<String> authorName) {
+		FAuthorExists f = new FAuthorExists();
 		f.setAuthorName(authorName);
-
-		return f.asField();
-	}
-
-	/**
-	 * Call <code>dbo.f_default</code>
-	 */
-	public static java.lang.Integer fDefault(org.jooq.Configuration configuration, java.lang.Integer pInNumber) {
-		org.jooq.test.sqlserver.generatedclasses.routines.FDefault f = new org.jooq.test.sqlserver.generatedclasses.routines.FDefault();
-		f.setPInNumber(pInNumber);
-
-		f.execute(configuration);
-		return f.getReturnValue();
-	}
-
-	/**
-	 * Get <code>dbo.f_default</code> as a field
-	 */
-	public static org.jooq.Field<java.lang.Integer> fDefault(java.lang.Integer pInNumber) {
-		org.jooq.test.sqlserver.generatedclasses.routines.FDefault f = new org.jooq.test.sqlserver.generatedclasses.routines.FDefault();
-		f.setPInNumber(pInNumber);
-
-		return f.asField();
-	}
-
-	/**
-	 * Get <code>dbo.f_default</code> as a field
-	 */
-	public static org.jooq.Field<java.lang.Integer> fDefault(org.jooq.Field<java.lang.Integer> pInNumber) {
-		org.jooq.test.sqlserver.generatedclasses.routines.FDefault f = new org.jooq.test.sqlserver.generatedclasses.routines.FDefault();
-		f.setPInNumber(pInNumber);
 
 		return f.asField();
 	}
@@ -74,8 +71,8 @@ public class Routines {
 	/**
 	 * Call <code>dbo.f_number</code>
 	 */
-	public static java.lang.Integer fNumber(org.jooq.Configuration configuration, java.lang.Integer n) {
-		org.jooq.test.sqlserver.generatedclasses.routines.FNumber f = new org.jooq.test.sqlserver.generatedclasses.routines.FNumber();
+	public static Integer fNumber(Configuration configuration, Integer n) {
+		FNumber f = new FNumber();
 		f.setN(n);
 
 		f.execute(configuration);
@@ -85,8 +82,8 @@ public class Routines {
 	/**
 	 * Get <code>dbo.f_number</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Integer> fNumber(java.lang.Integer n) {
-		org.jooq.test.sqlserver.generatedclasses.routines.FNumber f = new org.jooq.test.sqlserver.generatedclasses.routines.FNumber();
+	public static Field<Integer> fNumber(Integer n) {
+		FNumber f = new FNumber();
 		f.setN(n);
 
 		return f.asField();
@@ -95,8 +92,8 @@ public class Routines {
 	/**
 	 * Get <code>dbo.f_number</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Integer> fNumber(org.jooq.Field<java.lang.Integer> n) {
-		org.jooq.test.sqlserver.generatedclasses.routines.FNumber f = new org.jooq.test.sqlserver.generatedclasses.routines.FNumber();
+	public static Field<Integer> fNumber(Field<Integer> n) {
+		FNumber f = new FNumber();
 		f.setN(n);
 
 		return f.asField();
@@ -105,8 +102,8 @@ public class Routines {
 	/**
 	 * Call <code>dbo.f_one</code>
 	 */
-	public static java.lang.Integer fOne(org.jooq.Configuration configuration) {
-		org.jooq.test.sqlserver.generatedclasses.routines.FOne f = new org.jooq.test.sqlserver.generatedclasses.routines.FOne();
+	public static Integer fOne(Configuration configuration) {
+		FOne f = new FOne();
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -115,8 +112,8 @@ public class Routines {
 	/**
 	 * Get <code>dbo.f_one</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Integer> fOne() {
-		org.jooq.test.sqlserver.generatedclasses.routines.FOne f = new org.jooq.test.sqlserver.generatedclasses.routines.FOne();
+	public static Field<Integer> fOne() {
+		FOne f = new FOne();
 
 		return f.asField();
 	}
@@ -124,8 +121,8 @@ public class Routines {
 	/**
 	 * Call <code>dbo.f317</code>
 	 */
-	public static java.lang.Integer f317(org.jooq.Configuration configuration, java.lang.Integer p1, java.lang.Integer p2, java.lang.Integer p3, java.lang.Integer p4) {
-		org.jooq.test.sqlserver.generatedclasses.routines.F317 f = new org.jooq.test.sqlserver.generatedclasses.routines.F317();
+	public static Integer f317(Configuration configuration, Integer p1, Integer p2, Integer p3, Integer p4) {
+		F317 f = new F317();
 		f.setP1(p1);
 		f.setP2(p2);
 		f.setP3(p3);
@@ -138,8 +135,8 @@ public class Routines {
 	/**
 	 * Get <code>dbo.f317</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Integer> f317(java.lang.Integer p1, java.lang.Integer p2, java.lang.Integer p3, java.lang.Integer p4) {
-		org.jooq.test.sqlserver.generatedclasses.routines.F317 f = new org.jooq.test.sqlserver.generatedclasses.routines.F317();
+	public static Field<Integer> f317(Integer p1, Integer p2, Integer p3, Integer p4) {
+		F317 f = new F317();
 		f.setP1(p1);
 		f.setP2(p2);
 		f.setP3(p3);
@@ -151,8 +148,8 @@ public class Routines {
 	/**
 	 * Get <code>dbo.f317</code> as a field
 	 */
-	public static org.jooq.Field<java.lang.Integer> f317(org.jooq.Field<java.lang.Integer> p1, org.jooq.Field<java.lang.Integer> p2, org.jooq.Field<java.lang.Integer> p3, org.jooq.Field<java.lang.Integer> p4) {
-		org.jooq.test.sqlserver.generatedclasses.routines.F317 f = new org.jooq.test.sqlserver.generatedclasses.routines.F317();
+	public static Field<Integer> f317(Field<Integer> p1, Field<Integer> p2, Field<Integer> p3, Field<Integer> p4) {
+		F317 f = new F317();
 		f.setP1(p1);
 		f.setP2(p2);
 		f.setP3(p3);
@@ -164,40 +161,42 @@ public class Routines {
 	/**
 	 * Call <code>dbo.p_author_exists</code>
 	 */
-	public static java.lang.Integer pAuthorExists(org.jooq.Configuration configuration, java.lang.String authorName, java.lang.Integer result) {
-		org.jooq.test.sqlserver.generatedclasses.routines.PAuthorExists p = new org.jooq.test.sqlserver.generatedclasses.routines.PAuthorExists();
+	public static PAuthorExists pAuthorExists(Configuration configuration, String authorName, Integer result) {
+		PAuthorExists p = new PAuthorExists();
 		p.setAuthorName(authorName);
 		p.setResult(result);
 
 		p.execute(configuration);
-		return p.getResult();
+		return p;
 	}
 
 	/**
 	 * Call <code>dbo.p_create_author</code>
 	 */
-	public static void pCreateAuthor(org.jooq.Configuration configuration) {
-		org.jooq.test.sqlserver.generatedclasses.routines.PCreateAuthor p = new org.jooq.test.sqlserver.generatedclasses.routines.PCreateAuthor();
+	public static Integer pCreateAuthor(Configuration configuration) {
+		PCreateAuthor p = new PCreateAuthor();
 
 		p.execute(configuration);
+		return p.getReturnValue();
 	}
 
 	/**
 	 * Call <code>dbo.p_create_author_by_name</code>
 	 */
-	public static void pCreateAuthorByName(org.jooq.Configuration configuration, java.lang.String firstName, java.lang.String lastName) {
-		org.jooq.test.sqlserver.generatedclasses.routines.PCreateAuthorByName p = new org.jooq.test.sqlserver.generatedclasses.routines.PCreateAuthorByName();
+	public static Integer pCreateAuthorByName(Configuration configuration, String firstName, String lastName) {
+		PCreateAuthorByName p = new PCreateAuthorByName();
 		p.setFirstName(firstName);
 		p.setLastName(lastName);
 
 		p.execute(configuration);
+		return p.getReturnValue();
 	}
 
 	/**
 	 * Call <code>dbo.p_default</code>
 	 */
-	public static org.jooq.test.sqlserver.generatedclasses.routines.PDefault pDefault(org.jooq.Configuration configuration, java.lang.Integer pInNumber, java.lang.Integer pOutNumber, java.lang.String pInVarchar, java.lang.String pOutVarchar, java.sql.Date pInDate, java.sql.Date pOutDate) {
-		org.jooq.test.sqlserver.generatedclasses.routines.PDefault p = new org.jooq.test.sqlserver.generatedclasses.routines.PDefault();
+	public static PDefault pDefault(Configuration configuration, Integer pInNumber, Integer pOutNumber, String pInVarchar, String pOutVarchar, Date pInDate, Date pOutDate) {
+		PDefault p = new PDefault();
 		p.setPInNumber(pInNumber);
 		p.setPOutNumber(pOutNumber);
 		p.setPInVarchar(pInVarchar);
@@ -212,50 +211,53 @@ public class Routines {
 	/**
 	 * Call <code>dbo.p_raise</code>
 	 */
-	public static void pRaise(org.jooq.Configuration configuration, java.lang.Integer mode) {
-		org.jooq.test.sqlserver.generatedclasses.routines.PRaise p = new org.jooq.test.sqlserver.generatedclasses.routines.PRaise();
+	public static Integer pRaise(Configuration configuration, Integer mode) {
+		PRaise p = new PRaise();
 		p.setMode(mode);
 
 		p.execute(configuration);
+		return p.getReturnValue();
 	}
 
 	/**
 	 * Call <code>dbo.p_raise_3696</code>
 	 */
-	public static void pRaise_3696(org.jooq.Configuration configuration, java.lang.Integer number) {
-		org.jooq.test.sqlserver.generatedclasses.routines.PRaise_3696 p = new org.jooq.test.sqlserver.generatedclasses.routines.PRaise_3696();
+	public static Integer pRaise_3696(Configuration configuration, Integer number) {
+		PRaise_3696 p = new PRaise_3696();
 		p.setNumber(number);
 
 		p.execute(configuration);
+		return p.getReturnValue();
 	}
 
 	/**
 	 * Call <code>dbo.p_results</code>
 	 */
-	public static void pResults(org.jooq.Configuration configuration, java.lang.Integer pResultSets) {
-		org.jooq.test.sqlserver.generatedclasses.routines.PResults p = new org.jooq.test.sqlserver.generatedclasses.routines.PResults();
+	public static Integer pResults(Configuration configuration, Integer pResultSets) {
+		PResults p = new PResults();
 		p.setPResultSets(pResultSets);
 
 		p.execute(configuration);
+		return p.getReturnValue();
 	}
 
 	/**
 	 * Call <code>dbo.p_results_and_out_parameters</code>
 	 */
-	public static java.lang.Integer pResultsAndOutParameters(org.jooq.Configuration configuration, java.lang.Integer pResultSets, java.lang.Integer pCount) {
-		org.jooq.test.sqlserver.generatedclasses.routines.PResultsAndOutParameters p = new org.jooq.test.sqlserver.generatedclasses.routines.PResultsAndOutParameters();
+	public static PResultsAndOutParameters pResultsAndOutParameters(Configuration configuration, Integer pResultSets, Integer pCount) {
+		PResultsAndOutParameters p = new PResultsAndOutParameters();
 		p.setPResultSets(pResultSets);
 		p.setPCount(pCount);
 
 		p.execute(configuration);
-		return p.getPCount();
+		return p;
 	}
 
 	/**
 	 * Call <code>dbo.p_unused</code>
 	 */
-	public static org.jooq.test.sqlserver.generatedclasses.routines.PUnused pUnused(org.jooq.Configuration configuration, java.lang.String in1, java.lang.Integer out1, java.lang.Integer out2) {
-		org.jooq.test.sqlserver.generatedclasses.routines.PUnused p = new org.jooq.test.sqlserver.generatedclasses.routines.PUnused();
+	public static PUnused pUnused(Configuration configuration, String in1, Integer out1, Integer out2) {
+		PUnused p = new PUnused();
 		p.setIn1(in1);
 		p.setOut1(out1);
 		p.setOut2(out2);
@@ -267,18 +269,19 @@ public class Routines {
 	/**
 	 * Call <code>dbo.p1490</code>
 	 */
-	public static void p1490(org.jooq.Configuration configuration, java.lang.Integer value) {
-		org.jooq.test.sqlserver.generatedclasses.routines.P1490 p = new org.jooq.test.sqlserver.generatedclasses.routines.P1490();
+	public static Integer p1490(Configuration configuration, Integer value) {
+		P1490 p = new P1490();
 		p.setValue(value);
 
 		p.execute(configuration);
+		return p.getReturnValue();
 	}
 
 	/**
 	 * Call <code>dbo.p391</code>
 	 */
-	public static org.jooq.test.sqlserver.generatedclasses.routines.P391 p391(org.jooq.Configuration configuration, java.lang.Integer i1, java.lang.Integer io1, java.lang.Integer o1, java.lang.Integer o2, java.lang.Integer io2, java.lang.Integer i2) {
-		org.jooq.test.sqlserver.generatedclasses.routines.P391 p = new org.jooq.test.sqlserver.generatedclasses.routines.P391();
+	public static P391 p391(Configuration configuration, Integer i1, Integer io1, Integer o1, Integer o2, Integer io2, Integer i2) {
+		P391 p = new P391();
 		p.setI1(i1);
 		p.setIo1(io1);
 		p.setO1(o1);
@@ -291,51 +294,63 @@ public class Routines {
 	}
 
 	/**
+	 * Call <code>dbo.p4106</code>
+	 */
+	public static P4106 p4106(Configuration configuration, Integer param1, Integer param2) {
+		P4106 p = new P4106();
+		p.setParam1(param1);
+		p.setParam2(param2);
+
+		p.execute(configuration);
+		return p;
+	}
+
+	/**
 	 * Get <code>dbo.f_tables1</code> as a field
 	 */
-	public static org.jooq.test.sqlserver.generatedclasses.tables.FTables1 fTables1() {
-		return org.jooq.test.sqlserver.generatedclasses.tables.FTables1.F_TABLES1.call();
+	public static FTables1 fTables1() {
+		return FTables1.F_TABLES1.call();
 	}
 
 	/**
 	 * Get <code>dbo.f_tables2</code> as a field
 	 */
-	public static org.jooq.test.sqlserver.generatedclasses.tables.FTables2 fTables2() {
-		return org.jooq.test.sqlserver.generatedclasses.tables.FTables2.F_TABLES2.call();
+	public static FTables2 fTables2() {
+		return FTables2.F_TABLES2.call();
 	}
 
 	/**
 	 * Get <code>dbo.f_tables3</code> as a field
 	 */
-	public static org.jooq.test.sqlserver.generatedclasses.tables.FTables3 fTables3() {
-		return org.jooq.test.sqlserver.generatedclasses.tables.FTables3.F_TABLES3.call();
+	public static FTables3 fTables3() {
+		return FTables3.F_TABLES3.call();
 	}
 
 	/**
 	 * Get <code>dbo.f_tables4</code> as a field
 	 */
-	public static org.jooq.test.sqlserver.generatedclasses.tables.FTables4 fTables4(java.lang.Integer id) {
-		return org.jooq.test.sqlserver.generatedclasses.tables.FTables4.F_TABLES4.call(id);
+	public static FTables4 fTables4(Integer id) {
+		return FTables4.F_TABLES4.call(id);
 	}
 
 	/**
 	 * Get <code>dbo.f_tables4</code> as a field
 	 */
-	public static org.jooq.test.sqlserver.generatedclasses.tables.FTables4 fTables4(org.jooq.Field<java.lang.Integer> id) {
-		return org.jooq.test.sqlserver.generatedclasses.tables.FTables4.F_TABLES4.call(id);
+	public static FTables4 fTables4(Field<Integer> id) {
+		return FTables4.F_TABLES4.call(id);
 	}
 
 	/**
 	 * Get <code>dbo.f_tables5</code> as a field
 	 */
-	public static org.jooq.test.sqlserver.generatedclasses.tables.FTables5 fTables5(java.lang.Integer v1, java.lang.Integer v2, java.lang.Integer v3) {
-		return org.jooq.test.sqlserver.generatedclasses.tables.FTables5.F_TABLES5.call(v1, v2, v3);
+	public static FTables5 fTables5(Integer v1, Integer v2, Integer v3) {
+		return FTables5.F_TABLES5.call(v1, v2, v3);
 	}
 
 	/**
 	 * Get <code>dbo.f_tables5</code> as a field
 	 */
-	public static org.jooq.test.sqlserver.generatedclasses.tables.FTables5 fTables5(org.jooq.Field<java.lang.Integer> v1, org.jooq.Field<java.lang.Integer> v2, org.jooq.Field<java.lang.Integer> v3) {
-		return org.jooq.test.sqlserver.generatedclasses.tables.FTables5.F_TABLES5.call(v1, v2, v3);
+	public static FTables5 fTables5(Field<Integer> v1, Field<Integer> v2, Field<Integer> v3) {
+		return FTables5.F_TABLES5.call(v1, v2, v3);
 	}
 }

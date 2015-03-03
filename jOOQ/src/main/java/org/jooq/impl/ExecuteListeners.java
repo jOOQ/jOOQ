@@ -172,6 +172,20 @@ class ExecuteListeners implements ExecuteListener {
     }
 
     @Override
+    public final void outStart(ExecuteContext ctx) {
+        for (ExecuteListener listener : listeners) {
+            listener.outStart(ctx);
+        }
+    }
+
+    @Override
+    public final void outEnd(ExecuteContext ctx) {
+        for (ExecuteListener listener : listeners) {
+            listener.outEnd(ctx);
+        }
+    }
+
+    @Override
     public final void resultStart(ExecuteContext ctx) {
         resultStart = true;
 

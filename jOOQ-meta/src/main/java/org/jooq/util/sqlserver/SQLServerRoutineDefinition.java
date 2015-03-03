@@ -64,14 +64,30 @@ public class SQLServerRoutineDefinition extends AbstractRoutineDefinition {
     /**
      * internal name for the function used by HSQLDB / SQL Server
      */
-    private final String specificName;
+    private final String  specificName;
+    private final boolean isSQLUsable;
 
     public SQLServerRoutineDefinition(SchemaDefinition schema, String name, String specificName, String dataType, Number length, Number precision, Number scale) {
         super(schema, null, name, null, null);
 
         if (!StringUtils.isBlank(dataType)) {
             DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(), schema, dataType, length, precision, scale, null, null);
+
             this.returnValue = new DefaultParameterDefinition(this, "RETURN_VALUE", -1, type);
+            this.isSQLUsable = true;
+        }
+
+        // [#4106] In SQL Server, all procedures are allowed to return an
+        // optional int value
+        else if (!schema.getDatabase().ignoreProcedureReturnValues()) {
+            DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(), schema, SQLServerDataType.INT.getTypeName(), 0, 0, 0, null, null);
+
+            this.returnValue = new DefaultParameterDefinition(this, "RETURN_VALUE", -1, type);
+            this.isSQLUsable = false;
+        }
+
+        else {
+            this.isSQLUsable = false;
         }
 
         this.specificName = specificName;
@@ -120,5 +136,10 @@ public class SQLServerRoutineDefinition extends AbstractRoutineDefinition {
 
             addParameter(InOutDefinition.getFromString(inOut), parameter);
         }
+    }
+
+    @Override
+    public boolean isSQLUsable() {
+        return isSQLUsable && super.isSQLUsable();
     }
 }

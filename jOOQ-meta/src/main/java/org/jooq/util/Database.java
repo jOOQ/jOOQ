@@ -393,6 +393,16 @@ public interface Database {
     boolean supportsUnsignedTypes();
 
     /**
+     * Whether this database should ignore procedure return values.
+     */
+    void setIgnoreProcedureReturnValues(boolean ignoreProcedureReturnValues);
+
+    /**
+     * Whether this database should ignore procedure return values.
+     */
+    boolean ignoreProcedureReturnValues();
+
+    /**
      * Whether DATE columns should be treated as TIMESTAMP columns.
      */
     void setDateAsTimestamp(boolean dateAsTimestamp);

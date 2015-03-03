@@ -3,233 +3,272 @@
  */
 package org.jooq.test.sqlserver.generatedclasses;
 
+
+import org.jooq.Field;
+import org.jooq.test.sqlserver.generatedclasses.tables.FTables1;
+import org.jooq.test.sqlserver.generatedclasses.tables.FTables2;
+import org.jooq.test.sqlserver.generatedclasses.tables.FTables3;
+import org.jooq.test.sqlserver.generatedclasses.tables.FTables4;
+import org.jooq.test.sqlserver.generatedclasses.tables.FTables5;
+import org.jooq.test.sqlserver.generatedclasses.tables.TAuthor;
+import org.jooq.test.sqlserver.generatedclasses.tables.TBook;
+import org.jooq.test.sqlserver.generatedclasses.tables.TBookStore;
+import org.jooq.test.sqlserver.generatedclasses.tables.TBookToBookStore;
+import org.jooq.test.sqlserver.generatedclasses.tables.TBooleans;
+import org.jooq.test.sqlserver.generatedclasses.tables.TDates;
+import org.jooq.test.sqlserver.generatedclasses.tables.TErrorOnUpdate;
+import org.jooq.test.sqlserver.generatedclasses.tables.TExoticTypes;
+import org.jooq.test.sqlserver.generatedclasses.tables.TIdentity;
+import org.jooq.test.sqlserver.generatedclasses.tables.TIdentityPk;
+import org.jooq.test.sqlserver.generatedclasses.tables.TLanguage;
+import org.jooq.test.sqlserver.generatedclasses.tables.TTriggers;
+import org.jooq.test.sqlserver.generatedclasses.tables.TUnsigned;
+import org.jooq.test.sqlserver.generatedclasses.tables.T_3084;
+import org.jooq.test.sqlserver.generatedclasses.tables.T_3084A;
+import org.jooq.test.sqlserver.generatedclasses.tables.T_3084TwoUniqueKeys;
+import org.jooq.test.sqlserver.generatedclasses.tables.T_3085;
+import org.jooq.test.sqlserver.generatedclasses.tables.T_3090A;
+import org.jooq.test.sqlserver.generatedclasses.tables.T_3090B;
+import org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable;
+import org.jooq.test.sqlserver.generatedclasses.tables.T_725LobTest;
+import org.jooq.test.sqlserver.generatedclasses.tables.T_785;
+import org.jooq.test.sqlserver.generatedclasses.tables.VAuthor;
+import org.jooq.test.sqlserver.generatedclasses.tables.VBook;
+import org.jooq.test.sqlserver.generatedclasses.tables.VLibrary;
+import org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_2025;
+import org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_64_69;
+import org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_71;
+import org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_85;
+import org.jooq.test.sqlserver.generatedclasses.tables.XUnused;
+
+
 /**
  * Convenience access to all tables in dbo
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
 
 	/**
 	 * The table dbo.f_tables1
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.FTables1 F_TABLES1 = org.jooq.test.sqlserver.generatedclasses.tables.FTables1.F_TABLES1;
+	public static final FTables1 F_TABLES1 = org.jooq.test.sqlserver.generatedclasses.tables.FTables1.F_TABLES1;
 
 	/**
 	 * Get <code>dbo.f_tables1</code> as a field
 	 */
-	public static org.jooq.test.sqlserver.generatedclasses.tables.FTables1 F_TABLES1() {
-		return org.jooq.test.sqlserver.generatedclasses.tables.FTables1.F_TABLES1.call();
+	public static FTables1 F_TABLES1() {
+		return FTables1.F_TABLES1.call();
 	}
 
 	/**
 	 * The table dbo.f_tables2
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.FTables2 F_TABLES2 = org.jooq.test.sqlserver.generatedclasses.tables.FTables2.F_TABLES2;
+	public static final FTables2 F_TABLES2 = org.jooq.test.sqlserver.generatedclasses.tables.FTables2.F_TABLES2;
 
 	/**
 	 * Get <code>dbo.f_tables2</code> as a field
 	 */
-	public static org.jooq.test.sqlserver.generatedclasses.tables.FTables2 F_TABLES2() {
-		return org.jooq.test.sqlserver.generatedclasses.tables.FTables2.F_TABLES2.call();
+	public static FTables2 F_TABLES2() {
+		return FTables2.F_TABLES2.call();
 	}
 
 	/**
 	 * The table dbo.f_tables3
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.FTables3 F_TABLES3 = org.jooq.test.sqlserver.generatedclasses.tables.FTables3.F_TABLES3;
+	public static final FTables3 F_TABLES3 = org.jooq.test.sqlserver.generatedclasses.tables.FTables3.F_TABLES3;
 
 	/**
 	 * Get <code>dbo.f_tables3</code> as a field
 	 */
-	public static org.jooq.test.sqlserver.generatedclasses.tables.FTables3 F_TABLES3() {
-		return org.jooq.test.sqlserver.generatedclasses.tables.FTables3.F_TABLES3.call();
+	public static FTables3 F_TABLES3() {
+		return FTables3.F_TABLES3.call();
 	}
 
 	/**
 	 * The table dbo.f_tables4
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.FTables4 F_TABLES4 = org.jooq.test.sqlserver.generatedclasses.tables.FTables4.F_TABLES4;
+	public static final FTables4 F_TABLES4 = org.jooq.test.sqlserver.generatedclasses.tables.FTables4.F_TABLES4;
 
 	/**
 	 * Get <code>dbo.f_tables4</code> as a field
 	 */
-	public static org.jooq.test.sqlserver.generatedclasses.tables.FTables4 F_TABLES4(java.lang.Integer id) {
-		return org.jooq.test.sqlserver.generatedclasses.tables.FTables4.F_TABLES4.call(id);
+	public static FTables4 F_TABLES4(Integer id) {
+		return FTables4.F_TABLES4.call(id);
 	}
 
 	/**
 	 * Get <code>dbo.f_tables4</code> as a field
 	 */
-	public static org.jooq.test.sqlserver.generatedclasses.tables.FTables4 F_TABLES4(org.jooq.Field<java.lang.Integer> id) {
-		return org.jooq.test.sqlserver.generatedclasses.tables.FTables4.F_TABLES4.call(id);
+	public static FTables4 F_TABLES4(Field<Integer> id) {
+		return FTables4.F_TABLES4.call(id);
 	}
 
 	/**
 	 * The table dbo.f_tables5
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.FTables5 F_TABLES5 = org.jooq.test.sqlserver.generatedclasses.tables.FTables5.F_TABLES5;
+	public static final FTables5 F_TABLES5 = org.jooq.test.sqlserver.generatedclasses.tables.FTables5.F_TABLES5;
 
 	/**
 	 * Get <code>dbo.f_tables5</code> as a field
 	 */
-	public static org.jooq.test.sqlserver.generatedclasses.tables.FTables5 F_TABLES5(java.lang.Integer v1, java.lang.Integer v2, java.lang.Integer v3) {
-		return org.jooq.test.sqlserver.generatedclasses.tables.FTables5.F_TABLES5.call(v1, v2, v3);
+	public static FTables5 F_TABLES5(Integer v1, Integer v2, Integer v3) {
+		return FTables5.F_TABLES5.call(v1, v2, v3);
 	}
 
 	/**
 	 * Get <code>dbo.f_tables5</code> as a field
 	 */
-	public static org.jooq.test.sqlserver.generatedclasses.tables.FTables5 F_TABLES5(org.jooq.Field<java.lang.Integer> v1, org.jooq.Field<java.lang.Integer> v2, org.jooq.Field<java.lang.Integer> v3) {
-		return org.jooq.test.sqlserver.generatedclasses.tables.FTables5.F_TABLES5.call(v1, v2, v3);
+	public static FTables5 F_TABLES5(Field<Integer> v1, Field<Integer> v2, Field<Integer> v3) {
+		return FTables5.F_TABLES5.call(v1, v2, v3);
 	}
 
 	/**
 	 * The table dbo.t_3084
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.T_3084 T_3084 = org.jooq.test.sqlserver.generatedclasses.tables.T_3084.T_3084;
+	public static final T_3084 T_3084 = org.jooq.test.sqlserver.generatedclasses.tables.T_3084.T_3084;
 
 	/**
 	 * The table dbo.t_3084_a
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.T_3084A T_3084_A = org.jooq.test.sqlserver.generatedclasses.tables.T_3084A.T_3084_A;
+	public static final T_3084A T_3084_A = org.jooq.test.sqlserver.generatedclasses.tables.T_3084A.T_3084_A;
 
 	/**
 	 * The table dbo.t_3084_two_unique_keys
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.T_3084TwoUniqueKeys T_3084_TWO_UNIQUE_KEYS = org.jooq.test.sqlserver.generatedclasses.tables.T_3084TwoUniqueKeys.T_3084_TWO_UNIQUE_KEYS;
+	public static final T_3084TwoUniqueKeys T_3084_TWO_UNIQUE_KEYS = org.jooq.test.sqlserver.generatedclasses.tables.T_3084TwoUniqueKeys.T_3084_TWO_UNIQUE_KEYS;
 
 	/**
 	 * The table dbo.t_3085
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.T_3085 T_3085 = org.jooq.test.sqlserver.generatedclasses.tables.T_3085.T_3085;
+	public static final T_3085 T_3085 = org.jooq.test.sqlserver.generatedclasses.tables.T_3085.T_3085;
 
 	/**
 	 * The table dbo.t_3090_a
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.T_3090A T_3090_A = org.jooq.test.sqlserver.generatedclasses.tables.T_3090A.T_3090_A;
+	public static final T_3090A T_3090_A = org.jooq.test.sqlserver.generatedclasses.tables.T_3090A.T_3090_A;
 
 	/**
 	 * The table dbo.t_3090_b
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.T_3090B T_3090_B = org.jooq.test.sqlserver.generatedclasses.tables.T_3090B.T_3090_B;
+	public static final T_3090B T_3090_B = org.jooq.test.sqlserver.generatedclasses.tables.T_3090B.T_3090_B;
 
 	/**
 	 * The table dbo.t_639_numbers_table
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;
+	public static final T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;
 
 	/**
 	 * The table dbo.t_725_lob_test
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.T_725LobTest T_725_LOB_TEST = org.jooq.test.sqlserver.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST;
+	public static final T_725LobTest T_725_LOB_TEST = org.jooq.test.sqlserver.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST;
 
 	/**
 	 * The table dbo.t_785
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.T_785 T_785 = org.jooq.test.sqlserver.generatedclasses.tables.T_785.T_785;
+	public static final T_785 T_785 = org.jooq.test.sqlserver.generatedclasses.tables.T_785.T_785;
 
 	/**
 	 * The table dbo.t_author
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.TAuthor T_AUTHOR = org.jooq.test.sqlserver.generatedclasses.tables.TAuthor.T_AUTHOR;
+	public static final TAuthor T_AUTHOR = org.jooq.test.sqlserver.generatedclasses.tables.TAuthor.T_AUTHOR;
 
 	/**
 	 * The table dbo.t_book
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.TBook T_BOOK = org.jooq.test.sqlserver.generatedclasses.tables.TBook.T_BOOK;
+	public static final TBook T_BOOK = org.jooq.test.sqlserver.generatedclasses.tables.TBook.T_BOOK;
 
 	/**
 	 * The table dbo.t_book_store
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.TBookStore T_BOOK_STORE = org.jooq.test.sqlserver.generatedclasses.tables.TBookStore.T_BOOK_STORE;
+	public static final TBookStore T_BOOK_STORE = org.jooq.test.sqlserver.generatedclasses.tables.TBookStore.T_BOOK_STORE;
 
 	/**
 	 * The table dbo.t_book_to_book_store
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.TBookToBookStore T_BOOK_TO_BOOK_STORE = org.jooq.test.sqlserver.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE;
+	public static final TBookToBookStore T_BOOK_TO_BOOK_STORE = org.jooq.test.sqlserver.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE;
 
 	/**
 	 * The table dbo.t_booleans
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.TBooleans T_BOOLEANS = org.jooq.test.sqlserver.generatedclasses.tables.TBooleans.T_BOOLEANS;
+	public static final TBooleans T_BOOLEANS = org.jooq.test.sqlserver.generatedclasses.tables.TBooleans.T_BOOLEANS;
 
 	/**
 	 * The table dbo.t_dates
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.TDates T_DATES = org.jooq.test.sqlserver.generatedclasses.tables.TDates.T_DATES;
+	public static final TDates T_DATES = org.jooq.test.sqlserver.generatedclasses.tables.TDates.T_DATES;
 
 	/**
 	 * The table dbo.t_error_on_update
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.TErrorOnUpdate T_ERROR_ON_UPDATE = org.jooq.test.sqlserver.generatedclasses.tables.TErrorOnUpdate.T_ERROR_ON_UPDATE;
+	public static final TErrorOnUpdate T_ERROR_ON_UPDATE = org.jooq.test.sqlserver.generatedclasses.tables.TErrorOnUpdate.T_ERROR_ON_UPDATE;
 
 	/**
 	 * The table dbo.t_exotic_types
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.TExoticTypes T_EXOTIC_TYPES = org.jooq.test.sqlserver.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES;
+	public static final TExoticTypes T_EXOTIC_TYPES = org.jooq.test.sqlserver.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES;
 
 	/**
 	 * The table dbo.t_identity
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.TIdentity T_IDENTITY = org.jooq.test.sqlserver.generatedclasses.tables.TIdentity.T_IDENTITY;
+	public static final TIdentity T_IDENTITY = org.jooq.test.sqlserver.generatedclasses.tables.TIdentity.T_IDENTITY;
 
 	/**
 	 * The table dbo.t_identity_pk
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = org.jooq.test.sqlserver.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK;
+	public static final TIdentityPk T_IDENTITY_PK = org.jooq.test.sqlserver.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK;
 
 	/**
 	 * The table dbo.t_language
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.TLanguage T_LANGUAGE = org.jooq.test.sqlserver.generatedclasses.tables.TLanguage.T_LANGUAGE;
+	public static final TLanguage T_LANGUAGE = org.jooq.test.sqlserver.generatedclasses.tables.TLanguage.T_LANGUAGE;
 
 	/**
 	 * The table dbo.t_triggers
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.sqlserver.generatedclasses.tables.TTriggers.T_TRIGGERS;
+	public static final TTriggers T_TRIGGERS = org.jooq.test.sqlserver.generatedclasses.tables.TTriggers.T_TRIGGERS;
 
 	/**
 	 * The table dbo.t_unsigned
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.TUnsigned T_UNSIGNED = org.jooq.test.sqlserver.generatedclasses.tables.TUnsigned.T_UNSIGNED;
+	public static final TUnsigned T_UNSIGNED = org.jooq.test.sqlserver.generatedclasses.tables.TUnsigned.T_UNSIGNED;
 
 	/**
 	 * The table dbo.v_author
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.VAuthor V_AUTHOR = org.jooq.test.sqlserver.generatedclasses.tables.VAuthor.V_AUTHOR;
+	public static final VAuthor V_AUTHOR = org.jooq.test.sqlserver.generatedclasses.tables.VAuthor.V_AUTHOR;
 
 	/**
 	 * The table dbo.v_book
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.VBook V_BOOK = org.jooq.test.sqlserver.generatedclasses.tables.VBook.V_BOOK;
+	public static final VBook V_BOOK = org.jooq.test.sqlserver.generatedclasses.tables.VBook.V_BOOK;
 
 	/**
 	 * The table dbo.v_library
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.VLibrary V_LIBRARY = org.jooq.test.sqlserver.generatedclasses.tables.VLibrary.V_LIBRARY;
+	public static final VLibrary V_LIBRARY = org.jooq.test.sqlserver.generatedclasses.tables.VLibrary.V_LIBRARY;
 
 	/**
 	 * The table dbo.x_test_case_2025
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_2025 X_TEST_CASE_2025 = org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025;
+	public static final XTestCase_2025 X_TEST_CASE_2025 = org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025;
 
 	/**
 	 * The table dbo.x_test_case_64_69
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_64_69 X_TEST_CASE_64_69 = org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69;
+	public static final XTestCase_64_69 X_TEST_CASE_64_69 = org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69;
 
 	/**
 	 * The table dbo.x_test_case_71
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_71 X_TEST_CASE_71 = org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71;
+	public static final XTestCase_71 X_TEST_CASE_71 = org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71;
 
 	/**
 	 * The table dbo.x_test_case_85
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_85 X_TEST_CASE_85 = org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85;
+	public static final XTestCase_85 X_TEST_CASE_85 = org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85;
 
 	/**
 	 * The table dbo.x_unused
 	 */
-	public static final org.jooq.test.sqlserver.generatedclasses.tables.XUnused X_UNUSED = org.jooq.test.sqlserver.generatedclasses.tables.XUnused.X_UNUSED;
+	public static final XUnused X_UNUSED = org.jooq.test.sqlserver.generatedclasses.tables.XUnused.X_UNUSED;
 }

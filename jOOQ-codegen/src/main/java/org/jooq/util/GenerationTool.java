@@ -357,6 +357,11 @@ public class GenerationTool {
                 database.setDateAsTimestamp(d.isDateAsTimestamp());
             if (d.isUnsignedTypes() != null)
                 database.setSupportsUnsignedTypes(d.isUnsignedTypes());
+            if (d.isIgnoreProcedureReturnValues() != null)
+                database.setIgnoreProcedureReturnValues(d.isIgnoreProcedureReturnValues());
+
+            if (Boolean.TRUE.equals(d.isIgnoreProcedureReturnValues()))
+                log.warn("DEPRECATED", "The <ignoreProcedureReturnValues/> flag is deprecated and used for backwards-compatibility only. It will be removed in the future.");
 
             if (StringUtils.isBlank(g.getTarget().getPackageName()))
                 g.getTarget().setPackageName("org.jooq.generated");

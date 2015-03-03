@@ -50,13 +50,13 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DropStatementType.INDEX;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DropIndexFinalStep;
+import org.jooq.Name;
 
 /**
  * @author Lukas Eder
@@ -72,14 +72,14 @@ class DropIndexImpl extends AbstractQuery implements
     private static final long     serialVersionUID = 8904572826501186329L;
     private static final Clause[] CLAUSES          = { DROP_INDEX };
 
-    private final String          index;
+    private final Name            index;
     private final boolean         ifExists;
 
-    DropIndexImpl(Configuration configuration, String index) {
+    DropIndexImpl(Configuration configuration, Name index) {
         this(configuration, index, false);
     }
 
-    DropIndexImpl(Configuration configuration, String index, boolean ifExists) {
+    DropIndexImpl(Configuration configuration, Name index, boolean ifExists) {
         super(configuration);
 
         this.index = index;
@@ -112,7 +112,7 @@ class DropIndexImpl extends AbstractQuery implements
         if (ifExists && supportsIfExists(ctx))
             ctx.keyword("if exists").sql(' ');
 
-        ctx.visit(name(index));
+        ctx.visit(index);
     }
 
     @Override

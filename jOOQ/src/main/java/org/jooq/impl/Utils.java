@@ -748,6 +748,15 @@ final class Utils {
         return result;
     }
 
+    static final Field<?>[] fieldsByName(Name[] names) {
+        Field<?>[] result = new Field[names.length];
+
+        for (int i = 0; i < names.length; i++)
+            result[i] = DSL.field(names[i]);
+
+        return result;
+    }
+
     static final Name[] names(String[] names) {
         Name[] result = new Name[names.length];
 

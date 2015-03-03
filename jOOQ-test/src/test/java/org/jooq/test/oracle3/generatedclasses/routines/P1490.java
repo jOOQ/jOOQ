@@ -17,7 +17,7 @@ import org.jooq.test.oracle3.generatedclasses.DefaultSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class P1490 extends AbstractRoutine<java.lang.Void> implements Cloneable {
 
-	private static final long serialVersionUID = 2134480778;
+	private static final long serialVersionUID = 1348435372;
 
 	/**
 	 * The parameter <code>P1490.value</code>.
@@ -36,7 +36,7 @@ public class P1490 extends AbstractRoutine<java.lang.Void> implements Cloneable 
 	/**
 	 * Set the <code>value</code> parameter IN value to the routine
 	 */
-	public void setvalue(Number value) {
-		setNumber(value, value);
+	public void setvalue(Number value_) {
+		setNumber(value, value_);
 	}
 }

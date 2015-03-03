@@ -117,7 +117,6 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.WindowDefinition;
-import org.jooq.exception.DataAccessException;
 
 /**
  * A wrapper for a {@link SelectQuery}
@@ -1965,7 +1964,7 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     }
 
     @Override
-    public final SelectImpl onKey() throws DataAccessException {
+    public final SelectImpl onKey() {
         conditionStep = ConditionStep.ON;
         getQuery().addJoinOnKey(joinTable, joinType);
         joinTable = null;
@@ -1975,7 +1974,7 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     }
 
     @Override
-    public final SelectImpl onKey(TableField<?, ?>... keyFields) throws DataAccessException {
+    public final SelectImpl onKey(TableField<?, ?>... keyFields) {
         conditionStep = ConditionStep.ON;
         getQuery().addJoinOnKey(joinTable, joinType, keyFields);
         joinTable = null;
@@ -2538,8 +2537,58 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     }
 
     @Override
+    public final Map<?, R> fetchMap(int keyFieldIndex) {
+        return getDelegate().fetchMap(keyFieldIndex);
+    }
+
+    @Override
+    public final Map<?, R> fetchMap(String keyFieldName) {
+        return getDelegate().fetchMap(keyFieldName);
+    }
+
+    @Override
     public final <K, V> Map<K, V> fetchMap(Field<K> key, Field<V> value) {
         return getDelegate().fetchMap(key, value);
+    }
+
+    @Override
+    public final Map<?, ?> fetchMap(int keyFieldIndex, int valueFieldIndex) {
+        return getDelegate().fetchMap(keyFieldIndex, valueFieldIndex);
+    }
+
+    @Override
+    public final Map<?, ?> fetchMap(String keyFieldName, String valueFieldName) {
+        return getDelegate().fetchMap(keyFieldName, valueFieldName);
+    }
+
+    @Override
+    public final <K, E> Map<K, E> fetchMap(Field<K> key, Class<? extends E> type) {
+        return getDelegate().fetchMap(key, type);
+    }
+
+    @Override
+    public final <E> Map<?, E> fetchMap(int keyFieldIndex, Class<? extends E> type) {
+        return getDelegate().fetchMap(keyFieldIndex, type);
+    }
+
+    @Override
+    public final <E> Map<?, E> fetchMap(String keyFieldName, Class<? extends E> type) {
+        return getDelegate().fetchMap(keyFieldName, type);
+    }
+
+    @Override
+    public final <K, E> Map<K, E> fetchMap(Field<K> key, RecordMapper<? super R, E> mapper) {
+        return getDelegate().fetchMap(key, mapper);
+    }
+
+    @Override
+    public final <E> Map<?, E> fetchMap(int keyFieldIndex, RecordMapper<? super R, E> mapper) {
+        return getDelegate().fetchMap(keyFieldIndex, mapper);
+    }
+
+    @Override
+    public final <E> Map<?, E> fetchMap(String keyFieldName, RecordMapper<? super R, E> mapper) {
+        return getDelegate().fetchMap(keyFieldName, mapper);
     }
 
     @Override
@@ -2548,13 +2597,43 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     }
 
     @Override
+    public final Map<Record, R> fetchMap(int[] keyFieldIndexes) {
+        return getDelegate().fetchMap(keyFieldIndexes);
+    }
+
+    @Override
+    public final Map<Record, R> fetchMap(String[] keyFieldNames) {
+        return getDelegate().fetchMap(keyFieldNames);
+    }
+
+    @Override
     public final <E> Map<List<?>, E> fetchMap(Field<?>[] keys, Class<? extends E> type) {
         return getDelegate().fetchMap(keys, type);
     }
 
     @Override
+    public final <E> Map<List<?>, E> fetchMap(int[] keyFieldIndexes, Class<? extends E> type) {
+        return getDelegate().fetchMap(keyFieldIndexes, type);
+    }
+
+    @Override
+    public final <E> Map<List<?>, E> fetchMap(String[] keyFieldNames, Class<? extends E> type) {
+        return getDelegate().fetchMap(keyFieldNames, type);
+    }
+
+    @Override
     public final <E> Map<List<?>, E> fetchMap(Field<?>[] keys, RecordMapper<? super R, E> mapper) {
         return getDelegate().fetchMap(keys, mapper);
+    }
+
+    @Override
+    public final <E> Map<List<?>, E> fetchMap(int[] keyFieldIndexes, RecordMapper<? super R, E> mapper) {
+        return getDelegate().fetchMap(keyFieldIndexes, mapper);
+    }
+
+    @Override
+    public final <E> Map<List<?>, E> fetchMap(String[] keyFieldNames, RecordMapper<? super R, E> mapper) {
+        return getDelegate().fetchMap(keyFieldNames, mapper);
     }
 
     @Override
@@ -2573,16 +2652,6 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     }
 
     @Override
-    public final <K, E> Map<K, E> fetchMap(Field<K> key, Class<? extends E> type) {
-        return getDelegate().fetchMap(key, type);
-    }
-
-    @Override
-    public final <K, E> Map<K, E> fetchMap(Field<K> key, RecordMapper<? super R, E> mapper) {
-        return getDelegate().fetchMap(key, mapper);
-    }
-
-    @Override
     public final List<Map<String, Object>> fetchMaps() {
         return getDelegate().fetchMaps();
     }
@@ -2593,8 +2662,58 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     }
 
     @Override
+    public final Map<?, Result<R>> fetchGroups(int keyFieldIndex) {
+        return getDelegate().fetchGroups(keyFieldIndex);
+    }
+
+    @Override
+    public final Map<?, Result<R>> fetchGroups(String keyFieldName) {
+        return getDelegate().fetchGroups(keyFieldName);
+    }
+
+    @Override
     public final <K, V> Map<K, List<V>> fetchGroups(Field<K> key, Field<V> value) {
         return getDelegate().fetchGroups(key, value);
+    }
+
+    @Override
+    public final Map<?, List<?>> fetchGroups(int keyFieldIndex, int valueFieldIndex) {
+        return getDelegate().fetchGroups(keyFieldIndex, valueFieldIndex);
+    }
+
+    @Override
+    public final Map<?, List<?>> fetchGroups(String keyFieldName, String valueFieldName) {
+        return getDelegate().fetchGroups(keyFieldName, valueFieldName);
+    }
+
+    @Override
+    public final <K, E> Map<K, List<E>> fetchGroups(Field<K> key, Class<? extends E> type) {
+        return getDelegate().fetchGroups(key, type);
+    }
+
+    @Override
+    public final <E> Map<?, List<E>> fetchGroups(int keyFieldIndex, Class<? extends E> type) {
+        return getDelegate().fetchGroups(keyFieldIndex, type);
+    }
+
+    @Override
+    public final <E> Map<?, List<E>> fetchGroups(String keyFieldName, Class<? extends E> type) {
+        return getDelegate().fetchGroups(keyFieldName, type);
+    }
+
+    @Override
+    public final <K, E> Map<K, List<E>> fetchGroups(Field<K> key, RecordMapper<? super R, E> mapper) {
+        return getDelegate().fetchGroups(key, mapper);
+    }
+
+    @Override
+    public final <E> Map<?, List<E>> fetchGroups(int keyFieldIndex, RecordMapper<? super R, E> mapper) {
+        return getDelegate().fetchGroups(keyFieldIndex, mapper);
+    }
+
+    @Override
+    public final <E> Map<?, List<E>> fetchGroups(String keyFieldName, RecordMapper<? super R, E> mapper) {
+        return getDelegate().fetchGroups(keyFieldName, mapper);
     }
 
     @Override
@@ -2603,13 +2722,43 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     }
 
     @Override
+    public final Map<Record, Result<R>> fetchGroups(int[] keyFieldIndexes) {
+        return getDelegate().fetchGroups(keyFieldIndexes);
+    }
+
+    @Override
+    public final Map<Record, Result<R>> fetchGroups(String[] keyFieldNames) {
+        return getDelegate().fetchGroups(keyFieldNames);
+    }
+
+    @Override
     public final <E> Map<Record, List<E>> fetchGroups(Field<?>[] keys, Class<? extends E> type) {
         return getDelegate().fetchGroups(keys, type);
     }
 
     @Override
+    public final <E> Map<Record, List<E>> fetchGroups(int[] keyFieldIndexes, Class<? extends E> type) {
+        return getDelegate().fetchGroups(keyFieldIndexes, type);
+    }
+
+    @Override
+    public final <E> Map<Record, List<E>> fetchGroups(String[] keyFieldNames, Class<? extends E> type) {
+        return getDelegate().fetchGroups(keyFieldNames, type);
+    }
+
+    @Override
     public final <E> Map<Record, List<E>> fetchGroups(Field<?>[] keys, RecordMapper<? super R, E> mapper) {
         return getDelegate().fetchGroups(keys, mapper);
+    }
+
+    @Override
+    public final <E> Map<Record, List<E>> fetchGroups(int[] keyFieldIndexes, RecordMapper<? super R, E> mapper) {
+        return getDelegate().fetchGroups(keyFieldIndexes, mapper);
+    }
+
+    @Override
+    public final <E> Map<Record, List<E>> fetchGroups(String[] keyFieldNames, RecordMapper<? super R, E> mapper) {
+        return getDelegate().fetchGroups(keyFieldNames, mapper);
     }
 
     @Override
@@ -2625,16 +2774,6 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     @Override
     public final <E, S extends Record> Map<S, List<E>> fetchGroups(Table<S> table, RecordMapper<? super R, E> mapper) {
         return getDelegate().fetchGroups(table, mapper);
-    }
-
-    @Override
-    public final <K, E> Map<K, List<E>> fetchGroups(Field<K> key, Class<? extends E> type) {
-        return getDelegate().fetchGroups(key, type);
-    }
-
-    @Override
-    public final <K, E> Map<K, List<E>> fetchGroups(Field<K> key, RecordMapper<? super R, E> mapper) {
-        return getDelegate().fetchGroups(key, mapper);
     }
 
     @Override

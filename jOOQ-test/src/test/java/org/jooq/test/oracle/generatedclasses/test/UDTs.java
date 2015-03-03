@@ -15,6 +15,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.UNested_3;
 import org.jooq.test.oracle.generatedclasses.test.udt.UStreetType;
 import org.jooq.test.oracle.generatedclasses.test.udt.U_2155Object;
 import org.jooq.test.oracle.generatedclasses.test.udt.U_3005;
+import org.jooq.test.oracle.generatedclasses.test.udt.U_3709;
 
 
 /**
@@ -77,4 +78,9 @@ public class UDTs {
 	 * The type <code>TEST.U_3005</code>
 	 */
 	public static U_3005 U_3005 = org.jooq.test.oracle.generatedclasses.test.udt.U_3005.U_3005;
+
+	/**
+	 * The type <code>TEST.U_3709</code>
+	 */
+	public static U_3709 U_3709 = org.jooq.test.oracle.generatedclasses.test.udt.U_3709.U_3709;
 }

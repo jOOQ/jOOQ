@@ -31,7 +31,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ObjectRecord
 @Table(name = "T_2155", schema = "TEST")
 public class T_2155Record extends UpdatableRecordImpl<T_2155Record> implements Record4<Integer, LocalDate, U_2155ObjectRecord, U_2155ArrayRecord> {
 
-	private static final long serialVersionUID = 1515795341;
+	private static final long serialVersionUID = 106397325;
 
 	/**
 	 * Setter for <code>TEST.T_2155.ID</code>.

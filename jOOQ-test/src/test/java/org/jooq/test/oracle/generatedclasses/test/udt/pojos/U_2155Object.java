@@ -16,9 +16,9 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ArrayRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_2155Object implements Serializable {
 
-	private static final long serialVersionUID = 2073553904;
+	private static final long serialVersionUID = -588988303;
 
-	private LocalDate     d;
+	private LocalDate         d;
 	private U_2155ArrayRecord a;
 
 	public U_2155Object() {}
@@ -29,7 +29,7 @@ public class U_2155Object implements Serializable {
 	}
 
 	public U_2155Object(
-		LocalDate     d,
+		LocalDate         d,
 		U_2155ArrayRecord a
 	) {
 		this.d = d;

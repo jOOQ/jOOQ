@@ -19,7 +19,7 @@ import org.jooq.test.oracle.generatedclasses.test.Test;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class P2155 extends AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -661613029;
+	private static final long serialVersionUID = 1801527554;
 
 	/**
 	 * The parameter <code>TEST.P2155.P1</code>.

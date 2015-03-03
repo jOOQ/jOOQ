@@ -20,7 +20,7 @@ import org.jooq.test.oracle.generatedclasses.test.Test;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_2155ArrayRecord extends ArrayRecordImpl<LocalDate> {
 
-	private static final long serialVersionUID = -2127557951;
+	private static final long serialVersionUID = 654169248;
 
 	/**
 	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #U_2155ArrayRecord()} constructor instead

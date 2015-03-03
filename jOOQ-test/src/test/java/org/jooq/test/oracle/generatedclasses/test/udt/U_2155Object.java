@@ -20,7 +20,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ObjectRecord
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_2155Object extends UDTImpl<U_2155ObjectRecord> {
 
-	private static final long serialVersionUID = 871138063;
+	private static final long serialVersionUID = -1977441067;
 
 	/**
 	 * The reference instance of <code>TEST.U_2155_OBJECT</code>

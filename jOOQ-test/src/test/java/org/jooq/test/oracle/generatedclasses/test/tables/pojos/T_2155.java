@@ -25,10 +25,10 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ArrayRecord;
 @Table(name = "T_2155", schema = "TEST")
 public class T_2155 implements Serializable {
 
-	private static final long serialVersionUID = 380968846;
+	private static final long serialVersionUID = 1955768737;
 
 	private Integer           id;
-	private LocalDate     d1;
+	private LocalDate         d1;
 	private U_2155Object      d2;
 	private U_2155ArrayRecord d3;
 
@@ -43,7 +43,7 @@ public class T_2155 implements Serializable {
 
 	public T_2155(
 		Integer           id,
-		LocalDate     d1,
+		LocalDate         d1,
 		U_2155Object      d2,
 		U_2155ArrayRecord d3
 	) {

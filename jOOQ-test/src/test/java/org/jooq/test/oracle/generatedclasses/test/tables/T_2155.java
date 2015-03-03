@@ -27,7 +27,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ObjectRecord
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2155 extends TableImpl<T_2155Record> {
 
-	private static final long serialVersionUID = -334000948;
+	private static final long serialVersionUID = 1990490962;
 
 	/**
 	 * The reference instance of <code>TEST.T_2155</code>

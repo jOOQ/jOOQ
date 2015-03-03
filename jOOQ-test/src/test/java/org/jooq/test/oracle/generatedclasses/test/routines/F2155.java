@@ -20,7 +20,7 @@ import org.jooq.test.oracle.generatedclasses.test.Test;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class F2155 extends AbstractRoutine<LocalDate> {
 
-	private static final long serialVersionUID = 254584493;
+	private static final long serialVersionUID = -2080905715;
 
 	/**
 	 * The parameter <code>TEST.F2155.RETURN_VALUE</code>.

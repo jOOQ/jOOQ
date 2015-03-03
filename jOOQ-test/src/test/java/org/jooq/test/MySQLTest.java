@@ -45,8 +45,11 @@ import static java.util.Arrays.asList;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.md5;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.test.BaseTest.ignoreThrows;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_785;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_959;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_BOOK;
@@ -984,5 +987,32 @@ public class MySQLTest extends jOOQAbstractTest<
 
         assertEquals(2, result.length);
         assertEquals(asList(null, TBookStatus.ON_STOCK), create().fetchValues(select(TBook.STATUS).from(T_BOOK).where(TBook.ID.in(5, 6)).orderBy(TBook.ID)));
+    }
+
+    @Test
+    public void testMySQLDataTypeDDL() {
+        try {
+            create().createTable("t")
+                    .column("id", MySQLDataType.INTEGERUNSIGNED)
+                    .column("v1", MySQLDataType.TINYINTUNSIGNED)
+                    .column("v2", MySQLDataType.SMALLINTUNSIGNED)
+                    .column("v3", MySQLDataType.MEDIUMINTUNSIGNED)
+                    .column("v4", MySQLDataType.INTUNSIGNED)
+                    .column("v5", MySQLDataType.BIGINTUNSIGNED)
+                    .execute();
+
+            Result<Record> result1 = create().selectFrom(table(name("t"))).fetch();
+            assertEquals(0, result1.size());
+            assertEquals(6, result1.fields().length);
+            assertEquals(UInteger.class, result1.fieldsRow().dataType(0).getType());
+            assertEquals(UByte.class, result1.fieldsRow().dataType(1).getType());
+            assertEquals(UShort.class, result1.fieldsRow().dataType(2).getType());
+            assertEquals(UInteger.class, result1.fieldsRow().dataType(3).getType());
+            assertEquals(UInteger.class, result1.fieldsRow().dataType(4).getType());
+            assertEquals(ULong.class, result1.fieldsRow().dataType(5).getType());
+        }
+        finally {
+            ignoreThrows(() -> create().dropTable("t").execute());
+        }
     }
 }

@@ -71,17 +71,17 @@ public class MySQLDataType {
     // -------------------------------------------------------------------------
 
     public static final DataType<Byte>       TINYINT            = new DefaultDataType<Byte>(SQLDialect.MYSQL, SQLDataType.TINYINT, "tinyint", "signed");
-    public static final DataType<UByte>      TINYINTUNSIGNED    = new DefaultDataType<UByte>(SQLDialect.MYSQL, SQLDataType.TINYINTUNSIGNED, "tinyintunsigned", "unsigned");
+    public static final DataType<UByte>      TINYINTUNSIGNED    = new DefaultDataType<UByte>(SQLDialect.MYSQL, SQLDataType.TINYINTUNSIGNED, "tinyint unsigned", "unsigned");
     public static final DataType<Short>      SMALLINT           = new DefaultDataType<Short>(SQLDialect.MYSQL, SQLDataType.SMALLINT, "smallint", "signed");
-    public static final DataType<UShort>     SMALLINTUNSIGNED   = new DefaultDataType<UShort>(SQLDialect.MYSQL, SQLDataType.SMALLINTUNSIGNED, "smallintunsigned", "unsigned");
+    public static final DataType<UShort>     SMALLINTUNSIGNED   = new DefaultDataType<UShort>(SQLDialect.MYSQL, SQLDataType.SMALLINTUNSIGNED, "smallint unsigned", "unsigned");
     public static final DataType<Integer>    INT                = new DefaultDataType<Integer>(SQLDialect.MYSQL, SQLDataType.INTEGER, "int", "signed");
-    public static final DataType<UInteger>   INTUNSIGNED        = new DefaultDataType<UInteger>(SQLDialect.MYSQL, SQLDataType.INTEGERUNSIGNED, "intunsigned", "unsigned");
+    public static final DataType<UInteger>   INTUNSIGNED        = new DefaultDataType<UInteger>(SQLDialect.MYSQL, SQLDataType.INTEGERUNSIGNED, "int unsigned", "unsigned");
     public static final DataType<Integer>    MEDIUMINT          = new DefaultDataType<Integer>(SQLDialect.MYSQL, SQLDataType.INTEGER, "mediumint", "signed");
-    public static final DataType<UInteger>   MEDIUMINTUNSIGNED  = new DefaultDataType<UInteger>(SQLDialect.MYSQL, SQLDataType.INTEGERUNSIGNED, "mediumintunsigned", "unsigned");
+    public static final DataType<UInteger>   MEDIUMINTUNSIGNED  = new DefaultDataType<UInteger>(SQLDialect.MYSQL, SQLDataType.INTEGERUNSIGNED, "mediumint unsigned", "unsigned");
     public static final DataType<Integer>    INTEGER            = new DefaultDataType<Integer>(SQLDialect.MYSQL, SQLDataType.INTEGER, "integer", "signed");
-    public static final DataType<UInteger>   INTEGERUNSIGNED    = new DefaultDataType<UInteger>(SQLDialect.MYSQL, SQLDataType.INTEGERUNSIGNED, "integerunsigned", "unsigned");
+    public static final DataType<UInteger>   INTEGERUNSIGNED    = new DefaultDataType<UInteger>(SQLDialect.MYSQL, SQLDataType.INTEGERUNSIGNED, "integer unsigned", "unsigned");
     public static final DataType<Long>       BIGINT             = new DefaultDataType<Long>(SQLDialect.MYSQL, SQLDataType.BIGINT, "bigint", "signed");
-    public static final DataType<ULong>      BIGINTUNSIGNED     = new DefaultDataType<ULong>(SQLDialect.MYSQL, SQLDataType.BIGINTUNSIGNED, "bigintunsigned", "unsigned");
+    public static final DataType<ULong>      BIGINTUNSIGNED     = new DefaultDataType<ULong>(SQLDialect.MYSQL, SQLDataType.BIGINTUNSIGNED, "bigint unsigned", "unsigned");
     public static final DataType<Double>     DOUBLE             = new DefaultDataType<Double>(SQLDialect.MYSQL, SQLDataType.DOUBLE, "double", "decimal");
     public static final DataType<Double>     FLOAT              = new DefaultDataType<Double>(SQLDialect.MYSQL, SQLDataType.FLOAT, "float", "decimal");
     public static final DataType<Float>      REAL               = new DefaultDataType<Float>(SQLDialect.MYSQL, SQLDataType.REAL, "real", "decimal");

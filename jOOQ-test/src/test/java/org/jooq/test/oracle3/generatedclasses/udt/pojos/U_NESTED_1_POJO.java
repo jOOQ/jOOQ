@@ -14,12 +14,17 @@ import org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_NESTED_1_POJO extends ThreadDeath implements Cloneable, U_NESTED_1_INTERFACE {
 
-	private static final long serialVersionUID = 973871029;
+	private static final long serialVersionUID = 1859333204;
 
 	private Integer        ID;
 	private U_NUMBER_TABLE NESTED;
 
 	public U_NESTED_1_POJO() {}
+
+	public U_NESTED_1_POJO(U_NESTED_1_POJO value) {
+		this.ID = value.ID;
+		this.NESTED = value.NESTED;
+	}
 
 	public U_NESTED_1_POJO(
 		Integer        ID,

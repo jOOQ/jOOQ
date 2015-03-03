@@ -17,7 +17,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.pojos.U_STREET_TYPE_POJO;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_ADDRESS_TYPE_POJO extends ThreadDeath implements Cloneable, U_ADDRESS_TYPE_INTERFACE {
 
-	private static final long serialVersionUID = 1349306809;
+	private static final long serialVersionUID = 1910896808;
 
 	private U_STREET_TYPE_POJO STREET;
 	private String             ZIP;
@@ -29,6 +29,17 @@ public class U_ADDRESS_TYPE_POJO extends ThreadDeath implements Cloneable, U_ADD
 	private String             F_1326;
 
 	public U_ADDRESS_TYPE_POJO() {}
+
+	public U_ADDRESS_TYPE_POJO(U_ADDRESS_TYPE_POJO value) {
+		this.STREET = value.STREET;
+		this.ZIP = value.ZIP;
+		this.CITY = value.CITY;
+		this.COUNTRY = value.COUNTRY;
+		this.SINCE = value.SINCE;
+		this.CODE = value.CODE;
+		this.F_1323 = value.F_1323;
+		this.F_1326 = value.F_1326;
+	}
 
 	public U_ADDRESS_TYPE_POJO(
 		U_STREET_TYPE_POJO STREET,

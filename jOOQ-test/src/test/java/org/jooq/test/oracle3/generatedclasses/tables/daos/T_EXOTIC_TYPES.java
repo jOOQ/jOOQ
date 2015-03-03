@@ -66,4 +66,18 @@ public class T_EXOTIC_TYPES extends DAOImpl<org.jooq.test.oracle3.generatedclass
 	public List<T_EXOTIC_TYPES_POJO> fetchByJAVA_IO_SERIALIZABLE(byte[]... values) {
 		return fetch(org.jooq.test.oracle3.generatedclasses.tables.T_EXOTIC_TYPES.T_EXOTIC_TYPES.JAVA_IO_SERIALIZABLE, values);
 	}
+
+	/**
+	 * Fetch records that have <code>PLAIN_SQL_CONVERTER_XML IN (values)</code>
+	 */
+	public List<T_EXOTIC_TYPES_POJO> fetchByPLAIN_SQL_CONVERTER_XML(String... values) {
+		return fetch(org.jooq.test.oracle3.generatedclasses.tables.T_EXOTIC_TYPES.T_EXOTIC_TYPES.PLAIN_SQL_CONVERTER_XML, values);
+	}
+
+	/**
+	 * Fetch records that have <code>PLAIN_SQL_BINDING_XML IN (values)</code>
+	 */
+	public List<T_EXOTIC_TYPES_POJO> fetchByPLAIN_SQL_BINDING_XML(String... values) {
+		return fetch(org.jooq.test.oracle3.generatedclasses.tables.T_EXOTIC_TYPES.T_EXOTIC_TYPES.PLAIN_SQL_BINDING_XML, values);
+	}
 }

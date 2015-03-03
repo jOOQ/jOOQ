@@ -19,13 +19,19 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_785_INTERFACE;
 @Table(name = "T_785")
 public class T_785_POJO extends ThreadDeath implements Cloneable, T_785_INTERFACE {
 
-	private static final long serialVersionUID = -1020405768;
+	private static final long serialVersionUID = -1013078626;
 
 	private Integer ID;
 	private String  NAME;
 	private String  VALUE;
 
 	public T_785_POJO() {}
+
+	public T_785_POJO(T_785_POJO value) {
+		this.ID = value.ID;
+		this.NAME = value.NAME;
+		this.VALUE = value.VALUE;
+	}
 
 	public T_785_POJO(
 		Integer ID,

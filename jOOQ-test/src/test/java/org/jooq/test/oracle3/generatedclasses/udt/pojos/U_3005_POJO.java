@@ -13,11 +13,15 @@ import org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_3005_INTERFACE;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_3005_POJO extends ThreadDeath implements Cloneable, U_3005_INTERFACE {
 
-	private static final long serialVersionUID = 227676279;
+	private static final long serialVersionUID = 577996865;
 
 	private Integer ID;
 
 	public U_3005_POJO() {}
+
+	public U_3005_POJO(U_3005_POJO value) {
+		this.ID = value.ID;
+	}
 
 	public U_3005_POJO(
 		Integer ID

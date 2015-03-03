@@ -22,7 +22,7 @@ import org.jooq.test.oracle3.generatedclasses.Keys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_EXOTIC_TYPES extends TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_EXOTIC_TYPES> implements Cloneable {
 
-	private static final long serialVersionUID = -1763690023;
+	private static final long serialVersionUID = 482975098;
 
 	/**
 	 * The reference instance of <code>T_EXOTIC_TYPES</code>
@@ -51,6 +51,16 @@ public class T_EXOTIC_TYPES extends TableImpl<org.jooq.test.oracle3.generatedcla
 	 * The column <code>T_EXOTIC_TYPES.JAVA_IO_SERIALIZABLE</code>.
 	 */
 	public final TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_EXOTIC_TYPES, byte[]> JAVA_IO_SERIALIZABLE = createField("JAVA_IO_SERIALIZABLE", org.jooq.impl.SQLDataType.BLOB, this, "");
+
+	/**
+	 * The column <code>T_EXOTIC_TYPES.PLAIN_SQL_CONVERTER_XML</code>.
+	 */
+	public final TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_EXOTIC_TYPES, String> PLAIN_SQL_CONVERTER_XML = createField("PLAIN_SQL_CONVERTER_XML", org.jooq.impl.SQLDataType.CLOB, this, "");
+
+	/**
+	 * The column <code>T_EXOTIC_TYPES.PLAIN_SQL_BINDING_XML</code>.
+	 */
+	public final TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_EXOTIC_TYPES, String> PLAIN_SQL_BINDING_XML = createField("PLAIN_SQL_BINDING_XML", org.jooq.impl.SQLDataType.CLOB, this, "");
 
 	/**
 	 * Create a <code>T_EXOTIC_TYPES</code> table reference

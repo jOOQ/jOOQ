@@ -20,13 +20,19 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_TRIGGERS_INTER
 @Table(name = "T_TRIGGERS")
 public class T_TRIGGERS_POJO extends ThreadDeath implements Cloneable, T_TRIGGERS_INTERFACE {
 
-	private static final long serialVersionUID = 70815438;
+	private static final long serialVersionUID = -1661132620;
 
 	private Integer ID_GENERATED;
 	private Integer ID;
 	private Integer COUNTER;
 
 	public T_TRIGGERS_POJO() {}
+
+	public T_TRIGGERS_POJO(T_TRIGGERS_POJO value) {
+		this.ID_GENERATED = value.ID_GENERATED;
+		this.ID = value.ID;
+		this.COUNTER = value.COUNTER;
+	}
 
 	public T_TRIGGERS_POJO(
 		Integer ID_GENERATED,

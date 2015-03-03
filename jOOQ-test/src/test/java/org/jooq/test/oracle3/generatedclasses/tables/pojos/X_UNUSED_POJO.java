@@ -27,7 +27,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_UNUSED_INTERFA
 })
 public class X_UNUSED_POJO extends ThreadDeath implements Cloneable, X_UNUSED_INTERFACE {
 
-	private static final long serialVersionUID = 1121930445;
+	private static final long serialVersionUID = 382853406;
 
 	private Integer    ID;
 	private String     NAME;
@@ -47,6 +47,25 @@ public class X_UNUSED_POJO extends ThreadDeath implements Cloneable, X_UNUSED_IN
 	private String     MS_UNUSED_NAME_REF;
 
 	public X_UNUSED_POJO() {}
+
+	public X_UNUSED_POJO(X_UNUSED_POJO value) {
+		this.ID = value.ID;
+		this.NAME = value.NAME;
+		this.BIG_INTEGER = value.BIG_INTEGER;
+		this.ID_REF = value.ID_REF;
+		this.CLASS = value.CLASS;
+		this.FIELDS = value.FIELDS;
+		this.CONFIGURATION = value.CONFIGURATION;
+		this.U_D_T = value.U_D_T;
+		this.META_DATA = value.META_DATA;
+		this.TYPE0 = value.TYPE0;
+		this.PRIMARY_KEY = value.PRIMARY_KEY;
+		this.PRIMARYKEY = value.PRIMARYKEY;
+		this.NAME_REF = value.NAME_REF;
+		this.FIELD_737 = value.FIELD_737;
+		this.MS_UNUSED_ID_REF = value.MS_UNUSED_ID_REF;
+		this.MS_UNUSED_NAME_REF = value.MS_UNUSED_NAME_REF;
+	}
 
 	public X_UNUSED_POJO(
 		Integer    ID,

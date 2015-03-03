@@ -23,7 +23,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_639_NUMBERS_TA
 @Table(name = "T_639_NUMBERS_TABLE")
 public class T_639_NUMBERS_TABLE_POJO extends ThreadDeath implements Cloneable, T_639_NUMBERS_TABLE_INTERFACE {
 
-	private static final long serialVersionUID = -30928115;
+	private static final long serialVersionUID = -1985479457;
 
 	private Integer    ID;
 	private Byte       BYTE;
@@ -40,6 +40,22 @@ public class T_639_NUMBERS_TABLE_POJO extends ThreadDeath implements Cloneable, 
 	private Double     REAL;
 
 	public T_639_NUMBERS_TABLE_POJO() {}
+
+	public T_639_NUMBERS_TABLE_POJO(T_639_NUMBERS_TABLE_POJO value) {
+		this.ID = value.ID;
+		this.BYTE = value.BYTE;
+		this.SHORT = value.SHORT;
+		this.INTEGER = value.INTEGER;
+		this.LONG = value.LONG;
+		this.BYTE_DECIMAL = value.BYTE_DECIMAL;
+		this.SHORT_DECIMAL = value.SHORT_DECIMAL;
+		this.INTEGER_DECIMAL = value.INTEGER_DECIMAL;
+		this.LONG_DECIMAL = value.LONG_DECIMAL;
+		this.BIG_INTEGER = value.BIG_INTEGER;
+		this.BIG_DECIMAL = value.BIG_DECIMAL;
+		this.FLOAT = value.FLOAT;
+		this.REAL = value.REAL;
+	}
 
 	public T_639_NUMBERS_TABLE_POJO(
 		Integer    ID,

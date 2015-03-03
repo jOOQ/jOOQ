@@ -13,13 +13,19 @@ import org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_AUTHOR_TYPE_INTER
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_AUTHOR_TYPE_POJO extends ThreadDeath implements Cloneable, U_AUTHOR_TYPE_INTERFACE {
 
-	private static final long serialVersionUID = 134546527;
+	private static final long serialVersionUID = 264145269;
 
 	private Integer ID;
 	private String  FIRST_NAME;
 	private String  LAST_NAME;
 
 	public U_AUTHOR_TYPE_POJO() {}
+
+	public U_AUTHOR_TYPE_POJO(U_AUTHOR_TYPE_POJO value) {
+		this.ID = value.ID;
+		this.FIRST_NAME = value.FIRST_NAME;
+		this.LAST_NAME = value.LAST_NAME;
+	}
 
 	public U_AUTHOR_TYPE_POJO(
 		Integer ID,

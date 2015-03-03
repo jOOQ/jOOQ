@@ -19,7 +19,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_INCOMPLETE_INT
 @Table(name = "V_INCOMPLETE")
 public class V_INCOMPLETE_POJO extends ThreadDeath implements Cloneable, V_INCOMPLETE_INTERFACE {
 
-	private static final long serialVersionUID = 507668756;
+	private static final long serialVersionUID = 2086464004;
 
 	private Object ID;
 	private Object AUTHOR_ID;
@@ -34,6 +34,20 @@ public class V_INCOMPLETE_POJO extends ThreadDeath implements Cloneable, V_INCOM
 	private Object REC_TIMESTAMP;
 
 	public V_INCOMPLETE_POJO() {}
+
+	public V_INCOMPLETE_POJO(V_INCOMPLETE_POJO value) {
+		this.ID = value.ID;
+		this.AUTHOR_ID = value.AUTHOR_ID;
+		this.CO_AUTHOR_ID = value.CO_AUTHOR_ID;
+		this.DETAILS_ID = value.DETAILS_ID;
+		this.TITLE = value.TITLE;
+		this.PUBLISHED_IN = value.PUBLISHED_IN;
+		this.LANGUAGE_ID = value.LANGUAGE_ID;
+		this.CONTENT_TEXT = value.CONTENT_TEXT;
+		this.CONTENT_PDF = value.CONTENT_PDF;
+		this.REC_VERSION = value.REC_VERSION;
+		this.REC_TIMESTAMP = value.REC_TIMESTAMP;
+	}
 
 	public V_INCOMPLETE_POJO(
 		Object ID,

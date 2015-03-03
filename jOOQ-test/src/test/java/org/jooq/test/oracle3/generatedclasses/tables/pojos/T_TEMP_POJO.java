@@ -20,11 +20,15 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_TEMP_INTERFACE
 @Table(name = "T_TEMP")
 public class T_TEMP_POJO extends ThreadDeath implements Cloneable, T_TEMP_INTERFACE {
 
-	private static final long serialVersionUID = 1554462167;
+	private static final long serialVersionUID = 809791845;
 
 	private Integer ID;
 
 	public T_TEMP_POJO() {}
+
+	public T_TEMP_POJO(T_TEMP_POJO value) {
+		this.ID = value.ID;
+	}
 
 	public T_TEMP_POJO(
 		Integer ID

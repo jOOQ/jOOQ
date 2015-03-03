@@ -22,11 +22,15 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_STORE_INT
 @Table(name = "T_BOOK_STORE")
 public class T_BOOK_STORE_POJO extends Object implements Serializable, T_BOOK_STORE_INTERFACE {
 
-	private static final long serialVersionUID = -1165783410;
+	private static final long serialVersionUID = 444344222;
 
 	private String NAME;
 
 	public T_BOOK_STORE_POJO() {}
+
+	public T_BOOK_STORE_POJO(T_BOOK_STORE_POJO value) {
+		this.NAME = value.NAME;
+	}
 
 	public T_BOOK_STORE_POJO(
 		String NAME

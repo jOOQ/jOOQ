@@ -20,7 +20,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOLEANS_INTER
 @Table(name = "T_BOOLEANS")
 public class T_BOOLEANS_POJO extends ThreadDeath implements Cloneable, T_BOOLEANS_INTERFACE {
 
-	private static final long serialVersionUID = 802666358;
+	private static final long serialVersionUID = -297370006;
 
 	private Integer ID;
 	private Integer ONE_ZERO;
@@ -35,6 +35,20 @@ public class T_BOOLEANS_POJO extends ThreadDeath implements Cloneable, T_BOOLEAN
 	private Integer N_BOOLEAN;
 
 	public T_BOOLEANS_POJO() {}
+
+	public T_BOOLEANS_POJO(T_BOOLEANS_POJO value) {
+		this.ID = value.ID;
+		this.ONE_ZERO = value.ONE_ZERO;
+		this.TRUE_FALSE_LC = value.TRUE_FALSE_LC;
+		this.TRUE_FALSE_UC = value.TRUE_FALSE_UC;
+		this.YES_NO_LC = value.YES_NO_LC;
+		this.YES_NO_UC = value.YES_NO_UC;
+		this.Y_N_LC = value.Y_N_LC;
+		this.Y_N_UC = value.Y_N_UC;
+		this.VC_BOOLEAN = value.VC_BOOLEAN;
+		this.C_BOOLEAN = value.C_BOOLEAN;
+		this.N_BOOLEAN = value.N_BOOLEAN;
+	}
 
 	public T_BOOLEANS_POJO(
 		Integer ID,

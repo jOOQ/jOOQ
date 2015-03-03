@@ -61,7 +61,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.U_STREET_TYPE;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DefaultSchema extends SchemaImpl implements Cloneable {
 
-	private static final long serialVersionUID = 423039980;
+	private static final long serialVersionUID = -1445528501;
 
 	/**
 	 * The reference instance of <code></code>
@@ -85,6 +85,8 @@ public class DefaultSchema extends SchemaImpl implements Cloneable {
 	private final List<Sequence<?>> getSequences0() {
 		return Arrays.<Sequence<?>>asList(
 			Sequences.S_AUTHOR_ID,
+			Sequences.S_3899$,
+			Sequences.S_3899_$,
 			Sequences.S_961_BIG_INTEGER,
 			Sequences.S_961_BYTE,
 			Sequences.S_961_INT,

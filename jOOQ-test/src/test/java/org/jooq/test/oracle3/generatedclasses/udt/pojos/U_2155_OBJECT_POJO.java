@@ -16,12 +16,17 @@ import org.jooq.test.oracle3.generatedclasses.udt.records.U_2155_ARRAY;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_2155_OBJECT_POJO extends ThreadDeath implements Cloneable, U_2155_OBJECT_INTERFACE {
 
-	private static final long serialVersionUID = 404841762;
+	private static final long serialVersionUID = 1080770831;
 
 	private Date         D;
 	private U_2155_ARRAY A;
 
 	public U_2155_OBJECT_POJO() {}
+
+	public U_2155_OBJECT_POJO(U_2155_OBJECT_POJO value) {
+		this.D = value.D;
+		this.A = value.A;
+	}
 
 	public U_2155_OBJECT_POJO(
 		Date         D,

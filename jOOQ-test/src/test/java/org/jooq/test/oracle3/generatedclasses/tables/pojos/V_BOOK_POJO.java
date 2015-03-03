@@ -23,7 +23,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_BOOK_INTERFACE
 @Table(name = "V_BOOK")
 public class V_BOOK_POJO extends Object implements Serializable, V_BOOK_INTERFACE {
 
-	private static final long serialVersionUID = -805228709;
+	private static final long serialVersionUID = -1654092851;
 
 	private Integer    ID;
 	private Integer    AUTHOR_ID;
@@ -38,6 +38,20 @@ public class V_BOOK_POJO extends Object implements Serializable, V_BOOK_INTERFAC
 	private Timestamp  REC_TIMESTAMP;
 
 	public V_BOOK_POJO() {}
+
+	public V_BOOK_POJO(V_BOOK_POJO value) {
+		this.ID = value.ID;
+		this.AUTHOR_ID = value.AUTHOR_ID;
+		this.CO_AUTHOR_ID = value.CO_AUTHOR_ID;
+		this.DETAILS_ID = value.DETAILS_ID;
+		this.TITLE = value.TITLE;
+		this.PUBLISHED_IN = value.PUBLISHED_IN;
+		this.LANGUAGE_ID = value.LANGUAGE_ID;
+		this.CONTENT_TEXT = value.CONTENT_TEXT;
+		this.CONTENT_PDF = value.CONTENT_PDF;
+		this.REC_VERSION = value.REC_VERSION;
+		this.REC_TIMESTAMP = value.REC_TIMESTAMP;
+	}
 
 	public V_BOOK_POJO(
 		Integer    ID,

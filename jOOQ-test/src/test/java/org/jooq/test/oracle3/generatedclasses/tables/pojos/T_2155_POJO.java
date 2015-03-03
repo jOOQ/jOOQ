@@ -25,7 +25,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.records.U_2155_ARRAY;
 @Table(name = "T_2155")
 public class T_2155_POJO extends ThreadDeath implements Cloneable, T_2155_INTERFACE {
 
-	private static final long serialVersionUID = -1738139725;
+	private static final long serialVersionUID = -1196585920;
 
 	private Integer            ID;
 	private Date               D1;
@@ -33,6 +33,13 @@ public class T_2155_POJO extends ThreadDeath implements Cloneable, T_2155_INTERF
 	private U_2155_ARRAY       D3;
 
 	public T_2155_POJO() {}
+
+	public T_2155_POJO(T_2155_POJO value) {
+		this.ID = value.ID;
+		this.D1 = value.D1;
+		this.D2 = value.D2;
+		this.D3 = value.D3;
+	}
 
 	public T_2155_POJO(
 		Integer            ID,

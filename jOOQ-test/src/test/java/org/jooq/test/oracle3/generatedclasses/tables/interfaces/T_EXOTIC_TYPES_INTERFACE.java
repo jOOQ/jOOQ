@@ -54,6 +54,28 @@ public interface T_EXOTIC_TYPES_INTERFACE extends Cloneable, Serializable {
 	@Column(name = "JAVA_IO_SERIALIZABLE")
 	public byte[] getJAVA_IO_SERIALIZABLE();
 
+	/**
+	 * Setter for <code>T_EXOTIC_TYPES.PLAIN_SQL_CONVERTER_XML</code>.
+	 */
+	public void setPLAIN_SQL_CONVERTER_XML(String value);
+
+	/**
+	 * Getter for <code>T_EXOTIC_TYPES.PLAIN_SQL_CONVERTER_XML</code>.
+	 */
+	@Column(name = "PLAIN_SQL_CONVERTER_XML")
+	public String getPLAIN_SQL_CONVERTER_XML();
+
+	/**
+	 * Setter for <code>T_EXOTIC_TYPES.PLAIN_SQL_BINDING_XML</code>.
+	 */
+	public void setPLAIN_SQL_BINDING_XML(String value);
+
+	/**
+	 * Getter for <code>T_EXOTIC_TYPES.PLAIN_SQL_BINDING_XML</code>.
+	 */
+	@Column(name = "PLAIN_SQL_BINDING_XML")
+	public String getPLAIN_SQL_BINDING_XML();
+
 	// -------------------------------------------------------------------------
 	// FROM and INTO
 	// -------------------------------------------------------------------------

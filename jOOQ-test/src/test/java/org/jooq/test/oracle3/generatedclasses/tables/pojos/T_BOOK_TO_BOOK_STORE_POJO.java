@@ -24,13 +24,19 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_TO_BOOK_S
 })
 public class T_BOOK_TO_BOOK_STORE_POJO extends Object implements Serializable, T_BOOK_TO_BOOK_STORE_INTERFACE {
 
-	private static final long serialVersionUID = -1889108771;
+	private static final long serialVersionUID = -998692669;
 
 	private String  BOOK_STORE_NAME;
 	private Integer BOOK_ID;
 	private Integer STOCK;
 
 	public T_BOOK_TO_BOOK_STORE_POJO() {}
+
+	public T_BOOK_TO_BOOK_STORE_POJO(T_BOOK_TO_BOOK_STORE_POJO value) {
+		this.BOOK_STORE_NAME = value.BOOK_STORE_NAME;
+		this.BOOK_ID = value.BOOK_ID;
+		this.STOCK = value.STOCK;
+	}
 
 	public T_BOOK_TO_BOOK_STORE_POJO(
 		String  BOOK_STORE_NAME,

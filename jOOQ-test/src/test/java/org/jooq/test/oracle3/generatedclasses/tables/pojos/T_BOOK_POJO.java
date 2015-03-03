@@ -24,7 +24,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_INTERFACE
 @Table(name = "T_BOOK")
 public class T_BOOK_POJO extends Object implements Serializable, T_BOOK_INTERFACE {
 
-	private static final long serialVersionUID = -1891726613;
+	private static final long serialVersionUID = 1320129893;
 
 	private Integer    ID;
 	private Integer    AUTHOR_ID;
@@ -39,6 +39,20 @@ public class T_BOOK_POJO extends Object implements Serializable, T_BOOK_INTERFAC
 	private Timestamp  REC_TIMESTAMP;
 
 	public T_BOOK_POJO() {}
+
+	public T_BOOK_POJO(T_BOOK_POJO value) {
+		this.ID = value.ID;
+		this.AUTHOR_ID = value.AUTHOR_ID;
+		this.CO_AUTHOR_ID = value.CO_AUTHOR_ID;
+		this.DETAILS_ID = value.DETAILS_ID;
+		this.TITLE = value.TITLE;
+		this.PUBLISHED_IN = value.PUBLISHED_IN;
+		this.LANGUAGE_ID = value.LANGUAGE_ID;
+		this.CONTENT_TEXT = value.CONTENT_TEXT;
+		this.CONTENT_PDF = value.CONTENT_PDF;
+		this.REC_VERSION = value.REC_VERSION;
+		this.REC_TIMESTAMP = value.REC_TIMESTAMP;
+	}
 
 	public T_BOOK_POJO(
 		Integer    ID,

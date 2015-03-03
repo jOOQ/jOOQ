@@ -20,22 +20,36 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_EXOTIC_TYPES_I
 @Table(name = "T_EXOTIC_TYPES")
 public class T_EXOTIC_TYPES_POJO extends ThreadDeath implements Cloneable, T_EXOTIC_TYPES_INTERFACE {
 
-	private static final long serialVersionUID = -1803391744;
+	private static final long serialVersionUID = 1261734723;
 
 	private Integer ID;
 	private String  UU;
 	private byte[]  JAVA_IO_SERIALIZABLE;
+	private String  PLAIN_SQL_CONVERTER_XML;
+	private String  PLAIN_SQL_BINDING_XML;
 
 	public T_EXOTIC_TYPES_POJO() {}
+
+	public T_EXOTIC_TYPES_POJO(T_EXOTIC_TYPES_POJO value) {
+		this.ID = value.ID;
+		this.UU = value.UU;
+		this.JAVA_IO_SERIALIZABLE = value.JAVA_IO_SERIALIZABLE;
+		this.PLAIN_SQL_CONVERTER_XML = value.PLAIN_SQL_CONVERTER_XML;
+		this.PLAIN_SQL_BINDING_XML = value.PLAIN_SQL_BINDING_XML;
+	}
 
 	public T_EXOTIC_TYPES_POJO(
 		Integer ID,
 		String  UU,
-		byte[]  JAVA_IO_SERIALIZABLE
+		byte[]  JAVA_IO_SERIALIZABLE,
+		String  PLAIN_SQL_CONVERTER_XML,
+		String  PLAIN_SQL_BINDING_XML
 	) {
 		this.ID = ID;
 		this.UU = UU;
 		this.JAVA_IO_SERIALIZABLE = JAVA_IO_SERIALIZABLE;
+		this.PLAIN_SQL_CONVERTER_XML = PLAIN_SQL_CONVERTER_XML;
+		this.PLAIN_SQL_BINDING_XML = PLAIN_SQL_BINDING_XML;
 	}
 
 	@Id
@@ -72,6 +86,28 @@ public class T_EXOTIC_TYPES_POJO extends ThreadDeath implements Cloneable, T_EXO
 		this.JAVA_IO_SERIALIZABLE = JAVA_IO_SERIALIZABLE;
 	}
 
+	@Column(name = "PLAIN_SQL_CONVERTER_XML")
+	@Override
+	public String getPLAIN_SQL_CONVERTER_XML() {
+		return this.PLAIN_SQL_CONVERTER_XML;
+	}
+
+	@Override
+	public void setPLAIN_SQL_CONVERTER_XML(String PLAIN_SQL_CONVERTER_XML) {
+		this.PLAIN_SQL_CONVERTER_XML = PLAIN_SQL_CONVERTER_XML;
+	}
+
+	@Column(name = "PLAIN_SQL_BINDING_XML")
+	@Override
+	public String getPLAIN_SQL_BINDING_XML() {
+		return this.PLAIN_SQL_BINDING_XML;
+	}
+
+	@Override
+	public void setPLAIN_SQL_BINDING_XML(String PLAIN_SQL_BINDING_XML) {
+		this.PLAIN_SQL_BINDING_XML = PLAIN_SQL_BINDING_XML;
+	}
+
 	// -------------------------------------------------------------------------
 	// FROM and INTO
 	// -------------------------------------------------------------------------
@@ -84,6 +120,8 @@ public class T_EXOTIC_TYPES_POJO extends ThreadDeath implements Cloneable, T_EXO
 		setID(from.getID());
 		setUU(from.getUU());
 		setJAVA_IO_SERIALIZABLE(from.getJAVA_IO_SERIALIZABLE());
+		setPLAIN_SQL_CONVERTER_XML(from.getPLAIN_SQL_CONVERTER_XML());
+		setPLAIN_SQL_BINDING_XML(from.getPLAIN_SQL_BINDING_XML());
 	}
 
 	/**

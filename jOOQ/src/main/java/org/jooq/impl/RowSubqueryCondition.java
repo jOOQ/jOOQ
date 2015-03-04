@@ -234,7 +234,11 @@ class RowSubqueryCondition extends AbstractCondition {
                .sql(extraParentheses ? "(" : "");
             ctx.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true);
             ctx.subquery(true)
+               .formatIndentStart()
+               .formatNewLine()
                .visit(right != null ? right : rightQuantified)
+               .formatIndentEnd()
+               .formatNewLine()
                .subquery(subquery);
             ctx.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, null);
             ctx.sql(extraParentheses ? ")" : "")

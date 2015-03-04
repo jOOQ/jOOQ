@@ -42,7 +42,10 @@
 package org.jooq.test;
 
 import static org.jooq.impl.DSL.md5;
+import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.test.BaseTest.ignoreThrows;
 import static org.jooq.test.mariadb.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.mariadb.generatedclasses.Tables.T_BOOLEANS;
 import static org.jooq.test.mariadb.generatedclasses.Tables.T_DATES;
@@ -894,5 +897,48 @@ public class MariaDBTest extends jOOQAbstractTest<
         assertEquals(d1, dates.getValue(0, 1));
         assertEquals(d2, dates.getValue(1, 0));
         assertEquals(d2, dates.getValue(1, 1));
+    }
+
+    @Test
+    public void testMariaDBDataTypeDDL() {
+        try {
+            int i = 1;
+
+            create().createTable("t")
+
+                    // [#4117] Unsigned data types:
+                    .column("id", MariaDBDataType.INTEGERUNSIGNED)
+                    .column("n" + i++, MariaDBDataType.TINYINTUNSIGNED)
+                    .column("n" + i++, MariaDBDataType.SMALLINTUNSIGNED)
+                    .column("n" + i++, MariaDBDataType.MEDIUMINTUNSIGNED)
+                    .column("n" + i++, MariaDBDataType.INTUNSIGNED)
+                    .column("n" + i++, MariaDBDataType.BIGINTUNSIGNED)
+
+                    // [#4120] Text data types:
+                    .column("t" + i++, MariaDBDataType.TINYTEXT)
+                    .column("t" + i++, MariaDBDataType.MEDIUMTEXT)
+                    .column("t" + i++, MariaDBDataType.TEXT)
+                    .column("t" + i++, MariaDBDataType.LONGTEXT)
+                    .execute();
+
+            Result<Record> result1 = create().selectFrom(table(name("t"))).fetch();
+            assertEquals(0, result1.size());
+            assertEquals(i, result1.fields().length);
+
+            int j = 0;
+            assertEquals(UInteger.class, result1.fieldsRow().dataType(j++).getType());
+            assertEquals(UByte.class, result1.fieldsRow().dataType(j++).getType());
+            assertEquals(UShort.class, result1.fieldsRow().dataType(j++).getType());
+            assertEquals(UInteger.class, result1.fieldsRow().dataType(j++).getType());
+            assertEquals(UInteger.class, result1.fieldsRow().dataType(j++).getType());
+            assertEquals(ULong.class, result1.fieldsRow().dataType(j++).getType());
+            assertEquals(String.class, result1.fieldsRow().dataType(j++).getType());
+            assertEquals(String.class, result1.fieldsRow().dataType(j++).getType());
+            assertEquals(String.class, result1.fieldsRow().dataType(j++).getType());
+            assertEquals(String.class, result1.fieldsRow().dataType(j++).getType());
+        }
+        finally {
+            ignoreThrows(() -> create().dropTable("t").execute());
+        }
     }
 }

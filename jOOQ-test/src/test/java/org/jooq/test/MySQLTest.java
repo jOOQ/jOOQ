@@ -992,24 +992,40 @@ public class MySQLTest extends jOOQAbstractTest<
     @Test
     public void testMySQLDataTypeDDL() {
         try {
+            int i = 1;
+
             create().createTable("t")
+
+                    // [#4117] Unsigned data types:
                     .column("id", MySQLDataType.INTEGERUNSIGNED)
-                    .column("v1", MySQLDataType.TINYINTUNSIGNED)
-                    .column("v2", MySQLDataType.SMALLINTUNSIGNED)
-                    .column("v3", MySQLDataType.MEDIUMINTUNSIGNED)
-                    .column("v4", MySQLDataType.INTUNSIGNED)
-                    .column("v5", MySQLDataType.BIGINTUNSIGNED)
+                    .column("n" + i++, MySQLDataType.TINYINTUNSIGNED)
+                    .column("n" + i++, MySQLDataType.SMALLINTUNSIGNED)
+                    .column("n" + i++, MySQLDataType.MEDIUMINTUNSIGNED)
+                    .column("n" + i++, MySQLDataType.INTUNSIGNED)
+                    .column("n" + i++, MySQLDataType.BIGINTUNSIGNED)
+
+                    // [#4120] Text data types:
+                    .column("t" + i++, MySQLDataType.TINYTEXT)
+                    .column("t" + i++, MySQLDataType.MEDIUMTEXT)
+                    .column("t" + i++, MySQLDataType.TEXT)
+                    .column("t" + i++, MySQLDataType.LONGTEXT)
                     .execute();
 
             Result<Record> result1 = create().selectFrom(table(name("t"))).fetch();
             assertEquals(0, result1.size());
-            assertEquals(6, result1.fields().length);
-            assertEquals(UInteger.class, result1.fieldsRow().dataType(0).getType());
-            assertEquals(UByte.class, result1.fieldsRow().dataType(1).getType());
-            assertEquals(UShort.class, result1.fieldsRow().dataType(2).getType());
-            assertEquals(UInteger.class, result1.fieldsRow().dataType(3).getType());
-            assertEquals(UInteger.class, result1.fieldsRow().dataType(4).getType());
-            assertEquals(ULong.class, result1.fieldsRow().dataType(5).getType());
+            assertEquals(i, result1.fields().length);
+
+            int j = 0;
+            assertEquals(UInteger.class, result1.fieldsRow().dataType(j++).getType());
+            assertEquals(UByte.class, result1.fieldsRow().dataType(j++).getType());
+            assertEquals(UShort.class, result1.fieldsRow().dataType(j++).getType());
+            assertEquals(UInteger.class, result1.fieldsRow().dataType(j++).getType());
+            assertEquals(UInteger.class, result1.fieldsRow().dataType(j++).getType());
+            assertEquals(ULong.class, result1.fieldsRow().dataType(j++).getType());
+            assertEquals(String.class, result1.fieldsRow().dataType(j++).getType());
+            assertEquals(String.class, result1.fieldsRow().dataType(j++).getType());
+            assertEquals(String.class, result1.fieldsRow().dataType(j++).getType());
+            assertEquals(String.class, result1.fieldsRow().dataType(j++).getType());
         }
         finally {
             ignoreThrows(() -> create().dropTable("t").execute());

@@ -152,6 +152,7 @@ import org.jooq.test.all.testcases.JDBCTests;
 import org.jooq.test.all.testcases.JoinTests;
 import org.jooq.test.all.testcases.JsonLoaderTests;
 import org.jooq.test.all.testcases.MetaDataTests;
+import org.jooq.test.all.testcases.MockTests;
 import org.jooq.test.all.testcases.OrderByTests;
 import org.jooq.test.all.testcases.PlainSQLTests;
 import org.jooq.test.all.testcases.PredicateTests;
@@ -3562,5 +3563,10 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testCompletableFuture() {
         new AsyncTest(this).testCompletableFuture();
+    }
+
+    @Test
+    public void testResultCache() {
+        new MockTests(this).testResultCache();
     }
 }

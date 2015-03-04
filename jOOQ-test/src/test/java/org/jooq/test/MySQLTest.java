@@ -85,6 +85,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.jooq.ArrayRecord;
+import org.jooq.CreateTableColumnStep;
 import org.jooq.DAO;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -97,6 +98,7 @@ import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.conf.BackslashEscaping;
 import org.jooq.conf.Settings;
+import org.jooq.lambda.Seq;
 import org.jooq.test.all.converters.Boolean_10;
 import org.jooq.test.all.converters.Boolean_TF_LC;
 import org.jooq.test.all.converters.Boolean_TF_UC;
@@ -1026,6 +1028,38 @@ public class MySQLTest extends jOOQAbstractTest<
             assertEquals(String.class, result1.fieldsRow().dataType(j++).getType());
             assertEquals(String.class, result1.fieldsRow().dataType(j++).getType());
             assertEquals(String.class, result1.fieldsRow().dataType(j++).getType());
+        }
+        finally {
+            ignoreThrows(() -> create().dropTable("t").execute());
+        }
+    }
+
+    @Test
+    public void testMySQLDDLFromMeta() {
+        // [#4120] Ensure DDL can be executed from types obtained from org.jooq.Meta
+
+        try {
+            int i = 1;
+
+            Table<?> table =
+            Seq.seq(create().meta().getTables())
+               .filter(t -> "t_2926".equals(t.getName().toLowerCase()))
+               .findFirst()
+               .get();
+
+            CreateTableColumnStep step =
+            create().createTable("t")
+                    .column("id", MySQLDataType.INTEGERUNSIGNED);
+
+            for (Field<?> field : table.fields()) {
+                step = step.column("n" + i++, field.getDataType(create().configuration()));
+            }
+
+            step.execute();
+
+            Result<Record> result1 = create().selectFrom(table(name("t"))).fetch();
+            assertEquals(0, result1.size());
+            assertEquals(i, result1.fields().length);
         }
         finally {
             ignoreThrows(() -> create().dropTable("t").execute());

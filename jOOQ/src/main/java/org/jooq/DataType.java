@@ -301,7 +301,6 @@ public interface DataType<T> extends Serializable {
      */
     boolean hasLength();
 
-
     /**
      * Whether this data type is any numeric data type.
      * <p>

@@ -353,12 +353,14 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final DataType<T> precision(int p, int s) {
-        if (precision == p && scale == s) {
+        if (precision == p && scale == s)
             return this;
-        }
-        else {
+        
+        // [#4120] LOB types are not allowed to have precision
+        else if (isLob())
+            return this;
+        else
             return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, p, s, length, nullable, defaulted);
-        }
     }
 
     @Override
@@ -373,12 +375,14 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final DataType<T> scale(int s) {
-        if (scale == s) {
+        if (scale == s)
             return this;
-        }
-        else {
+        
+        // [#4120] LOB types are not allowed to have scale
+        if (isLob())
+            return this;
+        else
             return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, precision, s, length, nullable, defaulted);
-        }
     }
 
     @Override
@@ -393,12 +397,14 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final DataType<T> length(int l) {
-        if (length == l) {
+        if (length == l)
             return this;
-        }
-        else {
+        
+        // [#4120] LOB types are not allowed to have length
+        if (isLob())
+            return this;
+        else
             return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, precision, scale, l, nullable, defaulted);
-        }
     }
 
     @Override
@@ -408,7 +414,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final boolean hasLength() {
-        return type == byte[].class || type == String.class;
+        return (type == byte[].class || type == String.class) && !isLob();
     }
 
     @Override

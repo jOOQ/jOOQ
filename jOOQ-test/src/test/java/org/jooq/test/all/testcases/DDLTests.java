@@ -710,7 +710,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             create().createTable("t")
                     .column("id", SQLDataType.INTEGER);
 
-            int i = 0;
+            int i = 1;
 
             step = step.column("c" + i++, SQLDataType.BIGINT);
             step = step.column("c" + i++, SQLDataType.BIGINTUNSIGNED);
@@ -720,6 +720,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             step = step.column("c" + i++, SQLDataType.BOOLEAN);
             step = step.column("c" + i++, SQLDataType.CHAR);
             step = step.column("c" + i++, SQLDataType.CLOB);
+            step = step.column("c" + i++, SQLDataType.BLOB);
             step = step.column("c" + i++, SQLDataType.DATE);
             step = step.column("c" + i++, SQLDataType.DECIMAL);
             step = step.column("c" + i++, SQLDataType.DECIMAL_INTEGER);
@@ -741,7 +742,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             Result<?> result = create().fetch(table(name("t")));
             assertEquals(0, result.size());
-            assertEquals(25, result.fields().length);
+            assertEquals(i, result.fields().length);
         }
         finally {
             ignoreThrows(() -> create().dropTable("t").execute());

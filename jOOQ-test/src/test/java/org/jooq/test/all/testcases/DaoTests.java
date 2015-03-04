@@ -45,6 +45,7 @@ import static org.jooq.tools.reflect.Reflect.on;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.lang.reflect.Constructor;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -151,14 +152,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // [#1339] Immutable POJO
         catch (ReflectException e) {
-            author = (AP) type.getConstructors()[0].newInstance(3, null, "Hesse", null, null, null);
+            for (Constructor<?> c : type.getConstructors())
+                if (c.getParameterCount() == 6)
+                    author = (AP) c.newInstance(3, null, "Hesse", null, null, null);
         }
 
         TAuthorDao().insert(author);
         assertEquals(3, TAuthorDao().count());
         AP id3 = TAuthorDao().findById(3);
         assertEquals(3, (int) on(id3).get("id"));
-        assertEquals(null, (String) on(id3).get("firstName"));
+        assertEquals(null, on(id3).get("firstName"));
         assertEquals("Hesse", on(id3).get("lastName"));
 
         author = on(author).set("firstName", "Hermann").<AP>get();
@@ -188,10 +191,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // [#1339] Immutable POJO
         catch (ReflectException e) {
-            authors = asList(
-                (AP) type.getConstructors()[0].newInstance(4, null, "Koontz", null, null, null),
-                (AP) type.getConstructors()[0].newInstance(5, null, "Hitchcock", null, null, null)
-            );
+            for (Constructor<?> c : type.getConstructors())
+                if (c.getParameterCount() == 6)
+                    authors = asList(
+                        (AP) c.newInstance(4, null, "Koontz", null, null, null),
+                        (AP) c.newInstance(5, null, "Hitchcock", null, null, null)
+                    );
         }
 
         TAuthorDao().insert(authors);
@@ -200,10 +205,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         assertEquals(4, TAuthorDao().count());
         assertEquals(4, (int) on(id4).get("id"));
-        assertEquals(null, (String) on(id4).get("firstName"));
+        assertEquals(null, on(id4).get("firstName"));
         assertEquals("Koontz", on(id4).get("lastName"));
         assertEquals(5, (int) on(id5).get("id"));
-        assertEquals(null, (String) on(id5).get("firstName"));
+        assertEquals(null, on(id5).get("firstName"));
         assertEquals("Hitchcock", on(id5).get("lastName"));
 
         id4 = on(id4).set("firstName", "Dean").<AP>get();

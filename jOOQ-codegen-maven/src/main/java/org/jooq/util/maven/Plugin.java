@@ -116,18 +116,18 @@ public class Plugin extends AbstractMojo {
             StringWriter writer = new StringWriter();
             JAXB.marshal(configuration, writer);
 
-            getLog().info("Using this configuration:\n" + writer.toString());
-            GenerationTool.main(configuration);
+            getLog().debug("Using this configuration:\n" + writer.toString());
+            GenerationTool.generate(configuration);
         }
         catch (Exception ex) {
             throw new MojoExecutionException("Error running jOOQ code generation tool", ex);
         }
-        
+
         // [#2886] Restore old class loader
         finally {
             Thread.currentThread().setContextClassLoader(oldCL);
         }
-        
+
         project.addCompileSourceRoot(generator.getTarget().getDirectory());
     }
 

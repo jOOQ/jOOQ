@@ -148,7 +148,7 @@ public class GenerationTool {
         log.info("Initialising properties", args[0]);
 
         try {
-            main(load(in));
+            generate(load(in));
         } catch (Exception e) {
             log.error("Cannot read " + args[0] + ". Error : " + e.getMessage());
             e.printStackTrace();

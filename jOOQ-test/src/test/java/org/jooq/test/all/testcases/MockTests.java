@@ -95,9 +95,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testResultCache() {
+        ResultCache cache = new ResultCache(getConnection());
         DSLContext cached = DSL.using(new MockConfiguration(
             create().configuration(),
-            new ResultCache(getConnection())
+            cache
         ));
 
         assertEquals(AUTHOR_IDS, cached
@@ -141,6 +142,60 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .orderBy(TAuthor_FIRST_NAME())
             .fetch()
             .map(Record1::value1));
+    }
+
+    public void testResultCacheWithMockAPI() {
+        ResultCache cache = new ResultCache(getConnection());
+
+        assertEquals(AUTHOR_IDS, create().mockResult(cache, c -> DSL.using(c)
+            .select(TAuthor_ID())
+            .from(TAuthor())
+            .orderBy(TAuthor_ID())
+            .fetch()
+            .map(Record1::value1)));
+
+        create().mock(cache, c -> {
+            assertEquals(AUTHOR_FIRST_NAMES, DSL.using(c)
+                .select(TAuthor_FIRST_NAME())
+                .from(TAuthor())
+                .orderBy(TAuthor_FIRST_NAME())
+                .fetch()
+                .map(Record1::value1));
+
+            assertEquals(2, DSL.using(c).fetchCount(TAuthor()));
+        });
+
+        // Non-cached connection:
+        assertEquals(1, newAuthor(5).insert());
+
+        assertEquals(2, create().mockResult(cache, c -> DSL.using(c).fetchCount(TAuthor())));
+        assertEquals(3, create().mockResult(cache, c -> DSL.using(c).select(count(), count()).from(TAuthor()).fetchOne().value1()));
+        assertEquals(3, create().fetchCount(TAuthor()));
+
+        assertEquals(1, newAuthor(6).insert());
+
+        create().mock(cache, c -> {
+            assertEquals(2, DSL.using(c).fetchCount(TAuthor()));
+            assertEquals(3, DSL.using(c).select(count(), count()).from(TAuthor()).fetchOne().value1());
+
+            // Original configuration unmodified...
+            assertEquals(4, create().fetchCount(TAuthor()));
+
+            // Still the same values in the cache
+            assertEquals(AUTHOR_IDS, DSL.using(c)
+                .select(TAuthor_ID())
+                .from(TAuthor())
+                .orderBy(TAuthor_ID())
+                .fetch()
+                .map(Record1::value1));
+
+            assertEquals(AUTHOR_FIRST_NAMES, DSL.using(c)
+                .select(TAuthor_FIRST_NAME())
+                .from(TAuthor())
+                .orderBy(TAuthor_FIRST_NAME())
+                .fetch()
+                .map(Record1::value1));
+        });
     }
 
     class ResultCache implements MockDataProvider {

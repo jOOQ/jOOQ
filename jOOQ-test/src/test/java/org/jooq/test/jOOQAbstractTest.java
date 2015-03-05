@@ -3569,4 +3569,9 @@ public abstract class jOOQAbstractTest<
     public void testResultCache() {
         new MockTests(this).testResultCache();
     }
+
+    @Test
+    public void testResultCacheWithMockAPI() {
+        new MockTests(this).testResultCacheWithMockAPI();
+    }
 }

@@ -210,6 +210,8 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.BatchCRUD.Action;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.csv.CSVReader;
+import org.jooq.tools.jdbc.MockConfiguration;
+import org.jooq.tools.jdbc.MockDataProvider;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.tools.reflect.ReflectException;
 
@@ -299,7 +301,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     // -------------------------------------------------------------------------
-    // XXX Transaction API
+    // XXX APIs for creating scope for transactions, mocking, batching, etc.
     // -------------------------------------------------------------------------
 
     @Override
@@ -346,6 +348,30 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
             @Override
             public Void run(Configuration c) throws Exception {
                 transactional.run(c);
+                return null;
+            }
+        });
+    }
+
+    @Override
+    public <T> T mockResult(MockDataProvider provider, TransactionalCallable<T> mockable) {
+        try {
+            return mockable.run(new MockConfiguration(configuration, provider));
+        }
+        catch (RuntimeException e) {
+            throw e;
+        }
+        catch (Exception cause) {
+            throw new DataAccessException("Mock failed", cause);
+        }
+    }
+
+    @Override
+    public void mock(final MockDataProvider provider, final TransactionalRunnable mockable) {
+        mockResult(provider, new TransactionalCallable<Void>() {
+            @Override
+            public Void run(Configuration c) throws Exception {
+                mockable.run(c);
                 return null;
             }
         });

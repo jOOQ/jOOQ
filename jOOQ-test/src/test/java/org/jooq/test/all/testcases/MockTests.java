@@ -59,7 +59,7 @@ import org.jooq.UpdatableRecord;
 import org.jooq.impl.DSL;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
-import org.jooq.tools.jdbc.MockConnection;
+import org.jooq.tools.jdbc.MockConfiguration;
 import org.jooq.tools.jdbc.MockDataProvider;
 import org.jooq.tools.jdbc.MockExecuteContext;
 import org.jooq.tools.jdbc.MockResult;
@@ -95,7 +95,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testResultCache() {
-        DSLContext cached = DSL.using(create().configuration().derive(new MockConnection(new ResultCache(getConnection()))));
+        DSLContext cached = DSL.using(new MockConfiguration(
+            create().configuration(),
+            new ResultCache(getConnection())
+        ));
 
         assertEquals(AUTHOR_IDS, cached
             .select(TAuthor_ID())

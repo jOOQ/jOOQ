@@ -80,6 +80,9 @@ import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
 import org.jooq.exception.TooManyRowsException;
 import org.jooq.impl.DSL;
+import org.jooq.tools.jdbc.MockCallable;
+import org.jooq.tools.jdbc.MockDataProvider;
+import org.jooq.tools.jdbc.MockRunnable;
 
 /**
  * A contextual DSL providing "attached" implementations to the
@@ -158,7 +161,7 @@ public interface DSLContext extends Scope {
     Meta meta();
 
     // -------------------------------------------------------------------------
-    // XXX Transaction API
+    // XXX APIs for creating scope for transactions, mocking, batching, etc.
     // -------------------------------------------------------------------------
 
     /**
@@ -166,21 +169,6 @@ public interface DSLContext extends Scope {
      * <code>DSLContext</code>'s underlying {@link #configuration()}'s
      * {@link Configuration#transactionProvider()}, and return the
      * <code>transactional</code>'s outcome.
-     * <p>
-     * Both javac and Eclipse compilers contain bugs when overloading methods
-     * that take both "void-compatible" and "value-compatible" functional
-     * interfaces:
-     * <ul>
-     * <li><a
-     * href="https://bugs.openjdk.java.net/browse/JDK-8029718">JDK-8029718</a></li>
-     * <li><a
-     * href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=434642">Eclipse
-     * 434642</a></li>
-     * </ul>
-     * This is why this method was renamed to <code>transactionResult()</code>.
-     * Future versions of jOOQ may create a better synonym for this, called
-     * <code>transaction()</code>, which doesn't conflict with
-     * {@link #transaction(TransactionalRunnable)}
      *
      * @param transactional The transactional code
      * @return The transactional outcome
@@ -190,12 +178,25 @@ public interface DSLContext extends Scope {
     /**
      * Run a {@link TransactionalRunnable} in the context of this
      * <code>DSLContext</code>'s underlying {@link #configuration()}'s
-     * {@link Configuration#transactionProvider()}, and return the
-     * <code>transactional</code>'s outcome.
+     * {@link Configuration#transactionProvider()}.
      *
      * @param transactional The transactional code
      */
     void transaction(TransactionalRunnable transactional);
+
+    /**
+     * Run a {@link MockRunnable} in the context of this <code>DSLContext</code>
+     * 's underlying {@link #configuration()}'s, and of a
+     * {@link MockDataProvider} and return the <code>mockable</code>'s outcome.
+     */
+    <T> T mockResult(MockDataProvider provider, MockCallable<T> mockable);
+
+    /**
+     * Run a {@link MockRunnable} in the context of this <code>DSLContext</code>
+     * 's underlying {@link #configuration()}'s, and of a
+     * {@link MockDataProvider}.
+     */
+    void mock(MockDataProvider provider, MockRunnable mockable);
 
     // -------------------------------------------------------------------------
     // XXX RenderContext and BindContext accessors

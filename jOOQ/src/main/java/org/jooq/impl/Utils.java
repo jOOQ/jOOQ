@@ -2119,7 +2119,7 @@ final class Utils {
                     Column annotation = member.getAnnotation(Column.class);
 
                     if (annotation != null) {
-                        if (name.equals(annotation.name())) {
+                        if (namesMatch(name, annotation)) {
                             result.add(accessible(member));
                         }
                     }
@@ -2127,8 +2127,18 @@ final class Utils {
 
                 return result;
             }
-
         }, DATA_REFLECTION_CACHE_GET_ANNOTATED_MEMBERS, type, name);
+    }
+
+    private static final boolean namesMatch(String name, Column annotation) {
+
+        // [#4128] JPA @Column.name() properties are case-insensitive, unless
+        // the names are quoted using double quotes.
+
+        String a = annotation.name();
+        return a.startsWith("\"")
+            ? ('"' + name + '"').equals(a)
+            : name.equalsIgnoreCase(annotation.name());
     }
 
     /**
@@ -2173,7 +2183,7 @@ final class Utils {
                 for (Method method : getInstanceMethods(type)) {
                     Column annotation = method.getAnnotation(Column.class);
 
-                    if (annotation != null && name.equals(annotation.name())) {
+                    if (annotation != null && namesMatch(name, annotation)) {
 
                         // Annotated setter
                         if (method.getParameterTypes().length == 1) {
@@ -2221,7 +2231,7 @@ final class Utils {
                 for (Method method : getInstanceMethods(type)) {
                     Column annotation = method.getAnnotation(Column.class);
 
-                    if (annotation != null && name.equals(annotation.name())) {
+                    if (annotation != null && namesMatch(name, annotation)) {
 
                         // Annotated getter
                         if (method.getParameterTypes().length == 0) {
@@ -2361,11 +2371,18 @@ final class Utils {
     private static final List<java.lang.reflect.Field> getInstanceMembers(Class<?> type) {
         List<java.lang.reflect.Field> result = new ArrayList<java.lang.reflect.Field>();
 
-        for (java.lang.reflect.Field field : type.getFields()) {
-            if ((field.getModifiers() & Modifier.STATIC) == 0) {
+        for (java.lang.reflect.Field field : type.getFields())
+            if ((field.getModifiers() & Modifier.STATIC) == 0)
                 result.add(field);
-            }
+
+        do {
+            for (java.lang.reflect.Field field : type.getDeclaredFields())
+                if ((field.getModifiers() & Modifier.STATIC) == 0)
+                    result.add(field);
+
+            type = type.getSuperclass();
         }
+        while (type != null);
 
         return result;
     }

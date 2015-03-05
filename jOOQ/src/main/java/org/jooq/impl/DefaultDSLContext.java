@@ -210,8 +210,10 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.BatchCRUD.Action;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.csv.CSVReader;
+import org.jooq.tools.jdbc.MockCallable;
 import org.jooq.tools.jdbc.MockConfiguration;
 import org.jooq.tools.jdbc.MockDataProvider;
+import org.jooq.tools.jdbc.MockRunnable;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.tools.reflect.ReflectException;
 
@@ -354,7 +356,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public <T> T mockResult(MockDataProvider provider, TransactionalCallable<T> mockable) {
+    public <T> T mockResult(MockDataProvider provider, MockCallable<T> mockable) {
         try {
             return mockable.run(new MockConfiguration(configuration, provider));
         }
@@ -367,8 +369,8 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public void mock(final MockDataProvider provider, final TransactionalRunnable mockable) {
-        mockResult(provider, new TransactionalCallable<Void>() {
+    public void mock(final MockDataProvider provider, final MockRunnable mockable) {
+        mockResult(provider, new MockCallable<Void>() {
             @Override
             public Void run(Configuration c) throws Exception {
                 mockable.run(c);

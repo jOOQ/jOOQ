@@ -48,6 +48,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.Arrays;
 
 import javax.persistence.Column;
+import javax.persistence.Id;
 
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -119,7 +120,6 @@ public class RecordMappingTest extends AbstractTest {
         record.setValue(field1, true);
         record.setValue(field2, true);
 
-        // [#3101] Make sure this works for both "get" and "is" annotated getters
         CaseSensitiveWithAnnotations pojo = record.into(CaseSensitiveWithAnnotations.class);
         assertTrue(pojo.a1);
         assertTrue(pojo.a2);
@@ -179,6 +179,37 @@ public class RecordMappingTest extends AbstractTest {
         @Column(name = "\"b\"")
         public boolean getB4() {
             return b4;
+        }
+    }
+
+    @Test
+    public void testIdAnnotation() throws Exception {
+        Field<Long> field = field("xx", Long.class);
+        Record1<Long> record = create.newRecord(field);
+        record.setValue(field, 1L);
+
+        IdWithAnnotations1 pojo1 = record.into(IdWithAnnotations1.class);
+        assertEquals(1L, pojo1.xx);
+
+        IdWithAnnotations2 pojo2 = record.into(IdWithAnnotations2.class);
+        assertEquals(1L, pojo2.xx);
+    }
+
+    public static class IdWithAnnotations1 {
+        @Id
+        long xx;
+    }
+
+    public static class IdWithAnnotations2 {
+        long xx;
+
+        public void setXx(long xx) {
+            this.xx = xx;
+        }
+
+        @Id
+        public long getXx() {
+            return xx;
         }
     }
 

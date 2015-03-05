@@ -93,6 +93,7 @@ import java.util.regex.Pattern;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 import org.jooq.ArrayRecord;
 import org.jooq.Attachable;
@@ -2077,27 +2078,27 @@ final class Utils {
 
             @Override
             public Boolean call() {
-                if (!isJPAAvailable()) {
+                if (!isJPAAvailable())
                     return false;
-                }
 
                 // An @Entity or @Table usually has @Column annotations, too
-                if (type.getAnnotation(Entity.class) != null ||
-                    type.getAnnotation(javax.persistence.Table.class) != null) {
+                if (type.getAnnotation(Entity.class) != null)
                     return true;
-                }
+
+                if (type.getAnnotation(javax.persistence.Table.class) != null)
+                    return true;
 
                 for (java.lang.reflect.Field member : getInstanceMembers(type)) {
-                    if (member.getAnnotation(Column.class) != null) {
+                    if (member.getAnnotation(Column.class) != null)
                         return true;
-                    }
+
+                    if (member.getAnnotation(Id.class) != null)
+                        return true;
                 }
 
-                for (Method method : getInstanceMethods(type)) {
-                    if (method.getAnnotation(Column.class) != null) {
+                for (Method method : getInstanceMethods(type))
+                    if (method.getAnnotation(Column.class) != null)
                         return true;
-                    }
-                }
 
                 return false;
             }
@@ -2116,11 +2117,21 @@ final class Utils {
                 List<java.lang.reflect.Field> result = new ArrayList<java.lang.reflect.Field>();
 
                 for (java.lang.reflect.Field member : getInstanceMembers(type)) {
-                    Column annotation = member.getAnnotation(Column.class);
+                    Column column = member.getAnnotation(Column.class);
 
-                    if (annotation != null) {
-                        if (namesMatch(name, annotation)) {
+                    if (column != null) {
+                        if (namesMatch(name, column.name())) {
                             result.add(accessible(member));
+                        }
+                    }
+
+                    else {
+                        Id id = member.getAnnotation(Id.class);
+
+                        if (id != null) {
+                            if (namesMatch(name, member.getName())) {
+                                result.add(accessible(member));
+                            }
                         }
                     }
                 }
@@ -2130,15 +2141,13 @@ final class Utils {
         }, DATA_REFLECTION_CACHE_GET_ANNOTATED_MEMBERS, type, name);
     }
 
-    private static final boolean namesMatch(String name, Column annotation) {
+    private static final boolean namesMatch(String name, String annotation) {
 
         // [#4128] JPA @Column.name() properties are case-insensitive, unless
         // the names are quoted using double quotes.
-
-        String a = annotation.name();
-        return a.startsWith("\"")
-            ? ('"' + name + '"').equals(a)
-            : name.equalsIgnoreCase(annotation.name());
+        return annotation.startsWith("\"")
+            ? ('"' + name + '"').equals(annotation)
+            : name.equalsIgnoreCase(annotation);
     }
 
     /**
@@ -2181,9 +2190,9 @@ final class Utils {
                 List<Method> result = new ArrayList<Method>();
 
                 for (Method method : getInstanceMethods(type)) {
-                    Column annotation = method.getAnnotation(Column.class);
+                    Column column = method.getAnnotation(Column.class);
 
-                    if (annotation != null && namesMatch(name, annotation)) {
+                    if (column != null && namesMatch(name, column.name())) {
 
                         // Annotated setter
                         if (method.getParameterTypes().length == 1) {
@@ -2229,9 +2238,9 @@ final class Utils {
             @Override
             public Method call() {
                 for (Method method : getInstanceMethods(type)) {
-                    Column annotation = method.getAnnotation(Column.class);
+                    Column column = method.getAnnotation(Column.class);
 
-                    if (annotation != null && namesMatch(name, annotation)) {
+                    if (column != null && namesMatch(name, column.name())) {
 
                         // Annotated getter
                         if (method.getParameterTypes().length == 0) {

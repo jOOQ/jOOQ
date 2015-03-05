@@ -239,6 +239,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         this(dialect, null);
     }
 
+    @SuppressWarnings("deprecation")
     public DefaultDSLContext(SQLDialect dialect, Settings settings) {
         this(new DefaultConfiguration(new NoConnectionProvider(), null, null, null, null, null, dialect, settings, null));
     }
@@ -247,6 +248,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         this(connection, dialect, null);
     }
 
+    @SuppressWarnings("deprecation")
     public DefaultDSLContext(Connection connection, SQLDialect dialect, Settings settings) {
         this(new DefaultConfiguration(new DefaultConnectionProvider(connection), null, null, null, null, null, dialect, settings, null));
     }
@@ -255,6 +257,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         this(datasource, dialect, null);
     }
 
+    @SuppressWarnings("deprecation")
     public DefaultDSLContext(DataSource datasource, SQLDialect dialect, Settings settings) {
         this(new DefaultConfiguration(new DataSourceConnectionProvider(datasource), null, null, null, null, null, dialect, settings, null));
     }
@@ -263,6 +266,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         this(connectionProvider, dialect, null);
     }
 
+    @SuppressWarnings("deprecation")
     public DefaultDSLContext(ConnectionProvider connectionProvider, SQLDialect dialect, Settings settings) {
         this(new DefaultConfiguration(connectionProvider, null, null, null, null, null, dialect, settings, null));
     }
@@ -723,10 +727,10 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public Result<Record> fetchFromCSV(String string, char delimiter) {
         CSVReader reader = new CSVReader(new StringReader(string), delimiter);
-        List<String[]> data = null;
+        List<String[]> list = null;
 
         try {
-            data = reader.readAll();
+            list = reader.readAll();
         }
         catch (IOException e) {
             throw new DataAccessException("Could not read the CSV string", e);
@@ -738,19 +742,19 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
             catch (IOException ignore) {}
         }
 
-        return fetchFromStringData(data);
+        return fetchFromStringData(list);
     }
 
     @Override
     public Result<Record> fetchFromJSON(String string) {
-        List<String[]> data = new LinkedList<String[]>();
+        List<String[]> list = new LinkedList<String[]>();
         JSONReader reader = null;
         try {
             reader = new JSONReader(new StringReader(string));
             List<String[]> records = reader.readAll();
             String[] fields = reader.getFields();
-            data.add(fields);
-            data.addAll(records);
+            list.add(fields);
+            list.addAll(records);
         }
         catch (IOException e) {
             throw new DataAccessException("Could not read the JSON string", e);
@@ -764,30 +768,30 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
             catch (IOException ignore) {}
         }
 
-        return fetchFromStringData(data);
+        return fetchFromStringData(list);
     }
 
     @Override
-    public Result<Record> fetchFromStringData(String[]... data) {
-        return fetchFromStringData(list(data));
+    public Result<Record> fetchFromStringData(String[]... strings) {
+        return fetchFromStringData(list(strings));
     }
 
     @Override
-    public Result<Record> fetchFromStringData(List<String[]> data) {
-        if (data.size() == 0) {
+    public Result<Record> fetchFromStringData(List<String[]> strings) {
+        if (strings.size() == 0) {
             return new ResultImpl<Record>(configuration());
         }
         else {
             List<Field<?>> fields = new ArrayList<Field<?>>();
 
-            for (String name : data.get(0)) {
+            for (String name : strings.get(0)) {
                 fields.add(field(name(name), String.class));
             }
 
             Result<Record> result = new ResultImpl<Record>(configuration(), fields);
 
-            if (data.size() > 1) {
-                for (String[] values : data.subList(1, data.size())) {
+            if (strings.size() > 1) {
+                for (String[] values : strings.subList(1, strings.size())) {
                     RecordImpl record = new RecordImpl(fields);
 
                     for (int i = 0; i < Math.min(values.length, fields.size()); i++) {

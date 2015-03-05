@@ -43,6 +43,7 @@ import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Proxy;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -63,6 +64,7 @@ import java.util.Map;
  * // Retrieve the wrapped object
  *
  * @author Lukas Eder
+ * @author Irek Matysiewicz
  */
 public class Reflect {
 
@@ -202,22 +204,12 @@ public class Reflect {
      */
     public Reflect set(String name, Object value) throws ReflectException {
         try {
-
-            // Try setting a public field
-            Field field = type().getField(name);
+            Field field = field0(name);
             field.set(object, unwrap(value));
             return this;
         }
-        catch (Exception e1) {
-
-            // Try again, setting a non-public field
-            try {
-                accessible(type().getDeclaredField(name)).set(object, unwrap(value));
-                return this;
-            }
-            catch (Exception e2) {
-                throw new ReflectException(e2);
-            }
+        catch (Exception e) {
+            throw new ReflectException(e);
         }
     }
 
@@ -255,20 +247,35 @@ public class Reflect {
      */
     public Reflect field(String name) throws ReflectException {
         try {
-
-             // Try getting a public field
-            Field field = type().getField(name);
+            Field field = field0(name);
             return on(field.get(object));
         }
-        catch (Exception e1) {
+        catch (Exception e) {
+            throw new ReflectException(e);
+        }
+    }
 
-            // Try again, getting a non-public field
-            try {
-                return on(accessible(type().getDeclaredField(name)).get(object));
+    private Field field0(String name) throws ReflectException {
+        Class<?> type = type();
+
+        // Try getting a public field
+        try {
+            return type.getField(name);
+        }
+
+        // Try again, getting a non-public field
+        catch (NoSuchFieldException e) {
+            do {
+                try {
+                    return accessible(type.getDeclaredField(name));
+                }
+                catch (NoSuchFieldException ignore) {}
+
+                type = type.getSuperclass();
             }
-            catch (Exception e2) {
-                throw new ReflectException(e2);
-            }
+            while (type != null);
+
+            throw new ReflectException(e);
         }
     }
 
@@ -289,13 +296,21 @@ public class Reflect {
      */
     public Map<String, Reflect> fields() {
         Map<String, Reflect> result = new LinkedHashMap<String, Reflect>();
+        Class<?> type = type();
 
-        for (Field field : type().getFields()) {
-            if (!isClass ^ Modifier.isStatic(field.getModifiers())) {
-                String name = field.getName();
-                result.put(name, field(name));
+        do {
+            for (Field field : type.getDeclaredFields()) {
+                if (!isClass ^ Modifier.isStatic(field.getModifiers())) {
+                    String name = field.getName();
+
+                    if (!result.containsKey(name))
+                        result.put(name, field(name));
+                }
             }
+
+            type = type.getSuperclass();
         }
+        while (type != null);
 
         return result;
     }
@@ -338,6 +353,14 @@ public class Reflect {
      * public void method(Number param1, Object param2);
      * public void method(int param1, Object param2);
      * </pre></code>
+     * <p>
+     * The best matching method is searched for with the following strategy:
+     * <ol>
+     * <li>public method with exact signature match in class hierarchy</li>
+     * <li>non-public method with exact signature match on declaring class</li>
+     * <li>public method with similar signature in class hierarchy</li>
+     * <li>non-public method with similar signature on declaring class</li>
+     * </ol>
      *
      * @param name The method name
      * @param args The method arguments
@@ -352,21 +375,93 @@ public class Reflect {
         // Try invoking the "canonical" method, i.e. the one with exact
         // matching argument types
         try {
-            Method method = type().getMethod(name, types);
+            Method method = exactMethod(name, types);
             return on(method, object, args);
         }
 
-        // If there is no exact match, try to find one that has a "similar"
+        // If there is no exact match, try to find a method that has a "similar"
         // signature if primitive argument types are converted to their wrappers
         catch (NoSuchMethodException e) {
-            for (Method method : type().getMethods()) {
-                if (method.getName().equals(name) && match(method.getParameterTypes(), types)) {
-                    return on(method, object, args);
+            try {
+                Method method = similarMethod(name, types);
+                return on(method, object, args);
+            } catch (NoSuchMethodException e1) {
+                throw new ReflectException(e1);
+            }
+        }
+    }
+
+    /**
+     * Searches a method with the exact same signature as desired.
+     * <p>
+     * If a public method is found in the class hierarchy, this method is returned.
+     * Otherwise a private method with the exact same signature is returned.
+     * If no exact match could be found, we let the {@code NoSuchMethodException} pass through.
+     */
+    private Method exactMethod(String name, Class<?>[] types) throws NoSuchMethodException {
+        Class<?> type = type();
+
+        // first priority: find a public method with exact signature match in class hierarchy
+        try {
+            return type.getMethod(name, types);
+        }
+
+        // second priority: find a private method with exact signature match on declaring class
+        catch (NoSuchMethodException e) {
+            do {
+                try {
+                    return type.getDeclaredMethod(name, types);
+                }
+                catch (NoSuchMethodException ignore) {}
+
+                type = type.getSuperclass();
+            }
+            while (type != null);
+
+            throw new NoSuchMethodException();
+        }
+    }
+
+    /**
+     * Searches a method with a similar signature as desired using
+     * {@link #isSimilarSignature(java.lang.reflect.Method, String, Class[])}.
+     * <p>
+     * First public methods are searched in the class hierarchy, then private
+     * methods on the declaring class. If a method could be found, it is
+     * returned, otherwise a {@code NoSuchMethodException} is thrown.
+     */
+    private Method similarMethod(String name, Class<?>[] types) throws NoSuchMethodException {
+        Class<?> type = type();
+
+        // first priority: find a public method with a "similar" signature in class hierarchy
+        // similar interpreted in when primitive argument types are converted to their wrappers
+        for (Method method : type.getMethods()) {
+            if (isSimilarSignature(method, name, types)) {
+                return method;
+            }
+        }
+
+        // second priority: find a non-public method with a "similar" signature on declaring class
+        do {
+            for (Method method : type.getDeclaredMethods()) {
+                if (isSimilarSignature(method, name, types)) {
+                    return method;
                 }
             }
 
-            throw new ReflectException(e);
+            type = type.getSuperclass();
         }
+        while (type != null);
+
+        throw new NoSuchMethodException("No similar method " + name + " with params " + Arrays.toString(types) + " could be found on type " + type() + ".");
+    }
+
+    /**
+     * Determines if a method has a "similar" signature, especially if wrapping
+     * primitive argument types would result in an exactly matching signature.
+     */
+    private boolean isSimilarSignature(Method possiblyMatchingMethod, String desiredMethodName, Class<?>[] desiredParamTypes) {
+        return possiblyMatchingMethod.getName().equals(desiredMethodName) && match(possiblyMatchingMethod.getParameterTypes(), desiredParamTypes);
     }
 
     /**
@@ -415,14 +510,14 @@ public class Reflect {
         // Try invoking the "canonical" constructor, i.e. the one with exact
         // matching argument types
         try {
-            Constructor<?> constructor = type().getConstructor(types);
+            Constructor<?> constructor = type().getDeclaredConstructor(types);
             return on(constructor, args);
         }
 
         // If there is no exact match, try to find one that has a "similar"
         // signature if primitive argument types are converted to their wrappers
         catch (NoSuchMethodException e) {
-            for (Constructor<?> constructor : type().getConstructors()) {
+            for (Constructor<?> constructor : type().getDeclaredConstructors()) {
                 if (match(constructor.getParameterTypes(), types)) {
                     return on(constructor, args);
                 }
@@ -507,9 +602,13 @@ public class Reflect {
     private boolean match(Class<?>[] declaredTypes, Class<?>[] actualTypes) {
         if (declaredTypes.length == actualTypes.length) {
             for (int i = 0; i < actualTypes.length; i++) {
-                if (!wrapper(declaredTypes[i]).isAssignableFrom(wrapper(actualTypes[i]))) {
-                    return false;
-                }
+                if (actualTypes[i] == NULL.class)
+                    continue;
+
+                if (wrapper(declaredTypes[i]).isAssignableFrom(wrapper(actualTypes[i])))
+                    continue;
+
+                return false;
             }
 
             return true;
@@ -556,7 +655,7 @@ public class Reflect {
      */
     private static Reflect on(Constructor<?> constructor, Object... args) throws ReflectException {
         try {
-            return on(constructor.newInstance(args));
+            return on(accessible(constructor).newInstance(args));
         }
         catch (Exception e) {
             throw new ReflectException(e);
@@ -608,7 +707,7 @@ public class Reflect {
 
         for (int i = 0; i < values.length; i++) {
             Object value = values[i];
-            result[i] = value == null ? Object.class : value.getClass();
+            result[i] = value == null ? NULL.class : value.getClass();
         }
 
         return result;
@@ -682,4 +781,6 @@ public class Reflect {
 
         return type;
     }
+
+    private static class NULL {}
 }

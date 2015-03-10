@@ -64,6 +64,7 @@ import org.jooq.Field;
 import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.exception.ControlFlowSignal;
+import org.jooq.tools.JooqLogger;
 
 /**
  * @author Lukas Eder
@@ -74,24 +75,27 @@ class BatchSingle implements BatchBindStep {
      * Generated UID
      */
     private static final long                serialVersionUID = 3793967258181493207L;
+    private static final JooqLogger          log              = JooqLogger.getLogger(BatchSingle.class);
 
     private final DSLContext                 create;
     private final Configuration              configuration;
     private final Query                      query;
     private final Map<String, List<Integer>> nameToIndexMapping;
     private final List<Object[]>             allBindValues;
+    private final int                        expectedBindValues;
 
     public BatchSingle(Configuration configuration, Query query) {
+        int i = 0;
+
+        ParamCollector collector = new ParamCollector(configuration, false);
+        collector.visit(query);
+
         this.create = DSL.using(configuration);
         this.configuration = configuration;
         this.query = query;
         this.allBindValues = new ArrayList<Object[]>();
         this.nameToIndexMapping = new LinkedHashMap<String, List<Integer>>();
-
-        int i = 0;
-
-        ParamCollector collector = new ParamCollector(configuration, false);
-        collector.visit(query);
+        this.expectedBindValues = collector.resultList.size();
 
         for (Entry<String, Param<?>> entry : collector.resultList) {
             List<Integer> list = nameToIndexMapping.get(entry.getKey());
@@ -155,6 +159,7 @@ class BatchSingle implements BatchBindStep {
 
     @Override
     public final int[] execute() {
+        checkBindValues();
 
         // [#1180] Run batch queries with BatchMultiple, if no bind variables
         // should be used...
@@ -164,6 +169,12 @@ class BatchSingle implements BatchBindStep {
         else {
             return executePrepared();
         }
+    }
+
+    private final void checkBindValues() {
+        for (int i = 0; i < allBindValues.size(); i++)
+            if (allBindValues.get(i).length != expectedBindValues)
+                log.info("Bind value count", "Batch bind value set " + i + " has " + allBindValues.get(i).length + " values when " + expectedBindValues + " values were expected");
     }
 
     private final int[] executePrepared() {

@@ -42,6 +42,7 @@
 package org.jooq.test;
 
 import static org.jooq.impl.DSL.field;
+import static org.jooq.tools.reflect.Reflect.accessible;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -53,6 +54,7 @@ import javax.persistence.Id;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record2;
+import org.jooq.Record4;
 import org.jooq.Result;
 
 import org.junit.Test;
@@ -180,6 +182,38 @@ public class RecordMappingTest extends AbstractTest {
         public boolean getB4() {
             return b4;
         }
+    }
+
+    @Test
+    public void testInheritance() throws Exception {
+
+        // [#3614] [#3643] Check on inheritance of fields
+        Field<Boolean> a = field("a", Boolean.class);
+        Field<Boolean> b = field("b", Boolean.class);
+        Field<Boolean> c = field("c", Boolean.class);
+        Field<Boolean> d = field("d", Boolean.class);
+        Record4<Boolean, Boolean, Boolean, Boolean> record = create.newRecord(a, b, c, d);
+        record.setValue(a, true);
+        record.setValue(b, true);
+        record.setValue(c, true);
+        record.setValue(d, true);
+
+        Sub pojo = record.into(Sub.class);
+        assertTrue(pojo.a);
+        assertTrue(pojo.b);
+        assertTrue(pojo.c);
+        assertTrue((Boolean) accessible(Super.class.getDeclaredField("d")).get(pojo));
+    }
+
+    static class Sub extends Super {
+
+    }
+
+    static class Super {
+        public boolean a;
+        protected boolean b;
+        boolean c;
+        private boolean d;
     }
 
     @Test

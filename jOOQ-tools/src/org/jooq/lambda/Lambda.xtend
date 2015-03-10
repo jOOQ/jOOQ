@@ -51,9 +51,11 @@ class Lambda extends Generators {
     
     def static void main(String[] args) {
         val lambda = new Lambda();
+        
         lambda.generateTuple();
         lambda.generateTuples();
         lambda.generateFunctions();
+        lambda.generateZipStatic();
     }
     
     def max() {
@@ -78,6 +80,62 @@ class Lambda extends Generators {
          * limitations under the License.
          */
         '''
+    }
+    
+    def generateZipStatic() {
+        val out = new StringBuilder();
+        
+        for (degree : 2 .. max) {
+            out.append('''
+            
+                /**
+                 * Zip «degree» streams into one.
+                 * <p>
+                 * <code><pre>
+                 * // (tuple(1, "a"), tuple(2, "b"), tuple(3, "c"))
+                 * Seq.of(1, 2, 3).zip(Seq.of("a", "b", "c"))
+                 * </pre></code>
+                 */
+                static <«TN(degree)»> Seq<Tuple«degree»<«TN(degree)»>> zip(«(1 .. degree).map([d | '''Stream<T«d»> s«d»''']).join(", ")») {
+                    return zip(«XXXn(degree, "s")», Tuple::tuple);
+                }
+            ''')
+        }
+        
+        for (degree : 2 .. max) {
+            out.append('''
+            
+                /**
+                 * Zip «degree» streams into one using a «IF degree == 2»{@link BiFunction}«ELSE»{@link Function«degree»}«ENDIF» to produce resulting values.
+                 * <p>
+                 * <code><pre>
+                 * // ("1:a", "2:b", "3:c")
+                 * Seq.of(1, 2, 3).zip(Seq.of("a", "b", "c"), (i, s) -> i + ":" + s)
+                 * </pre></code>
+                 */
+                static <«TN(degree)», R> Seq<R> zip(«(1 .. degree).map([d | '''Stream<T«d»> s«d»''']).join(", ")», «IF degree == 2»BiFunction«ELSE»Function«degree»«ENDIF»<«TN(degree)», R> zipper) {
+                    «FOR d : (1 .. degree)»
+                    final Iterator<T«d»> it«d» = s«d».iterator();
+                    «ENDFOR»
+
+                    class Zip implements Iterator<R> {
+                        @Override
+                        public boolean hasNext() {
+                            return «FOR d : (1 .. degree) SEPARATOR " && "»it«d».hasNext()«ENDFOR»;
+                        }
+
+                        @Override
+                        public R next() {
+                            return zipper.apply(«FOR d : (1 .. degree) SEPARATOR ", "»it«d».next()«ENDFOR»);
+                        }
+                    }
+
+                    return seq(new Zip());
+                }
+            ''')
+        }
+        
+        insert("org.jooq.lambda.Seq", out, "zip-static")
     }
     
     def generateTuple() {

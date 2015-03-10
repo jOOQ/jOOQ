@@ -56,9 +56,9 @@ import org.jooq.tools.StringUtils;
  */
 public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
-    private String                           targetDirectory;
-    private String                           targetPackage;
-    private boolean                          instanceFields;
+    private String  targetDirectory;
+    private String  targetPackage;
+    private boolean instanceFields = true;
 
     // -------------------------------------------------------------------------
     // Initialisation

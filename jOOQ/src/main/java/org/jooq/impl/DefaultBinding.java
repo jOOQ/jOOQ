@@ -1861,7 +1861,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             String timestamp = rs.getString(index);
 
             if (timestamp != null) {
-                return new Timestamp(parse("yyyy-MM-dd HH:mm:ss", timestamp));
+                return new Timestamp(parse("yyyy-MM-dd HH:mm:ss.SSS", timestamp));
             }
 
             return null;
@@ -1880,7 +1880,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // If that fails, try reading a formatted date
             catch (NumberFormatException e) {
-                return new SimpleDateFormat(pattern).parse(date).getTime();
+
+                // [#4134] Fractional seconds may be optional depending on the
+                // JDBC driver implementation, specifically Xerial for SQLite
+                if (pattern.contains(".") && !date.contains("."))
+                    return new SimpleDateFormat(pattern).parse(date + ".0").getTime();
+                else
+                    return new SimpleDateFormat(pattern).parse(date).getTime();
             }
         }
         catch (ParseException e) {

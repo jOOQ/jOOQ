@@ -154,7 +154,8 @@ public class JDBCUtils {
         else if (url.startsWith("jdbc:postgresql:")) {
             return POSTGRES;
         }
-        else if (url.startsWith("jdbc:sqlite:")) {
+        else if (url.startsWith("jdbc:sqlite:")
+              || url.startsWith("jdbc:sqldroid:")) {
             return SQLITE;
         }
 

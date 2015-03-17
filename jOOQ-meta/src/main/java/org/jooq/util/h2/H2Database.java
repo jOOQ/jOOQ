@@ -212,18 +212,18 @@ public class H2Database extends AbstractDatabase {
             .and(Columns.TABLE_SCHEMA.in(getInputSchemata())))
             .fetch()) {
 
-        SchemaDefinition schema = getSchema(record.getValue(Constraints.TABLE_SCHEMA));
-        TableDefinition table = getTable(schema, record.getValue(Constraints.TABLE_NAME));
+            SchemaDefinition schema = getSchema(record.getValue(Constraints.TABLE_SCHEMA));
+            TableDefinition table = getTable(schema, record.getValue(Constraints.TABLE_NAME));
 
-        if (table != null) {
-            relations.addCheckConstraint(table, new DefaultCheckConstraintDefinition(
-                schema,
-                table,
-                record.getValue(Constraints.CONSTRAINT_NAME),
-                record.getValue(Constraints.CHECK_EXPRESSION)
-            ));
+            if (table != null) {
+                relations.addCheckConstraint(table, new DefaultCheckConstraintDefinition(
+                    schema,
+                    table,
+                    record.getValue(Constraints.CONSTRAINT_NAME),
+                    record.getValue(Constraints.CHECK_EXPRESSION)
+                ));
+            }
         }
-    }
     }
 
     @Override

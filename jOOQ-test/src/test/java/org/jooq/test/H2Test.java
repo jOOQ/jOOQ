@@ -47,6 +47,7 @@ import static org.jooq.impl.DSL.defaultValue;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.update;
+import static org.jooq.lambda.Seq.seq;
 import static org.jooq.lambda.Unchecked.runnable;
 import static org.jooq.test.h2.generatedclasses.Tables.T_2486;
 import static org.jooq.test.h2.generatedclasses.Tables.T_2698;
@@ -85,6 +86,12 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
 import org.jooq.ArrayRecord;
 import org.jooq.DAO;
 import org.jooq.DataType;
@@ -105,6 +112,7 @@ import org.jooq.test.all.converters.Boolean_YES_NO_LC;
 import org.jooq.test.all.converters.Boolean_YES_NO_UC;
 import org.jooq.test.all.converters.Boolean_YN_LC;
 import org.jooq.test.all.converters.Boolean_YN_UC;
+import org.jooq.test.all.pojos.jpa.JPAAuthor;
 import org.jooq.test.h2.generatedclasses.Keys;
 import org.jooq.test.h2.generatedclasses.Routines;
 import org.jooq.test.h2.generatedclasses.Sequences;
@@ -149,7 +157,9 @@ import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.util.h2.H2DataType;
 
+import org.apache.naming.java.javaURLContextFactory;
 import org.junit.Test;
+import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
 /**
  * Integration test for the H2 database
@@ -1150,6 +1160,76 @@ public class H2Test extends jOOQAbstractTest<
 
         for (int i = 0; i < repetitions; i++) {
 
+        }
+    }
+
+    @Test
+    public void testH2JPA() throws Exception {
+        ic();
+        EntityManager em = Persistence.createEntityManagerFactory("tutorialPU").createEntityManager();
+
+        em.getTransaction().begin();
+        try {
+            Query query = em.createQuery("from JPAAuthor a order by a.id");
+            List<JPAAuthor> authors;
+
+            authors = query.getResultList();
+
+            assertEquals(2, authors.size());
+            assertEquals(AUTHOR_IDS, seq(authors).map(JPAAuthor::getId).toList());
+            assertEquals(AUTHOR_FIRST_NAMES, seq(authors).map(JPAAuthor::getFirstName).toList());
+            assertEquals(AUTHOR_LAST_NAMES, seq(authors).map(JPAAuthor::getLastName).toList());
+
+            assertEquals(2, authors.get(0).getBooks().size());
+            assertEquals(2, authors.get(1).getBooks().size());
+
+
+            authors =
+            em.createNativeQuery(
+                create().select(
+                    org.jooq.test.jpa.generatedclasses.Tables.T_AUTHOR.ID,
+                    org.jooq.test.jpa.generatedclasses.Tables.T_AUTHOR.FIRST_NAME,
+                    org.jooq.test.jpa.generatedclasses.Tables.T_AUTHOR.LAST_NAME
+                )
+                .from(
+                    org.jooq.test.jpa.generatedclasses.Tables.T_AUTHOR
+                )
+                .orderBy(
+                    org.jooq.test.jpa.generatedclasses.Tables.T_AUTHOR.ID
+                )
+                .getSQL()
+            , JPAAuthor.class)
+            .getResultList();
+
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        }
+
+        em.close();
+    }
+
+    private void ic() {
+
+        // [#2899] This is used for setting up a JPA / Hibernate data source
+        System.setProperty(Context.INITIAL_CONTEXT_FACTORY, javaURLContextFactory.class.getName());
+        System.setProperty(Context.URL_PKG_PREFIXES, "org.apache.naming");
+
+        try {
+            InitialContext ic = new InitialContext();
+
+            ic.createSubcontext("java:");
+            ic.createSubcontext("java:comp");
+            ic.createSubcontext("java:comp/env");
+            ic.createSubcontext("java:comp/env/jdbc");
+
+            SingleConnectionDataSource ds = new SingleConnectionDataSource(connection, true);
+
+            ic.bind("java:comp/env/jdbc/tutorialDS", ds);
+        }
+        catch (Exception e) {
+            throw new Error(e);
         }
     }
 }

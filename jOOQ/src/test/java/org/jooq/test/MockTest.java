@@ -42,6 +42,7 @@ package org.jooq.test;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.nCopies;
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.test.data.Table1.FIELD_ID1;
@@ -59,6 +60,7 @@ import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.RandomAccessFile;
+import java.math.BigInteger;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -553,5 +555,25 @@ public class MockTest extends AbstractTest {
         assertFalse(stmt.wasNull());
         assertNull(stmt.getDate(5));
         assertTrue(stmt.wasNull());
+    }
+
+    @Test
+    public void testLastID() {
+        final BigInteger expected = BigInteger.valueOf(1234567);
+
+        // This test verifies that the behaviour explained here works:
+        // http://stackoverflow.com/q/29081837/521799
+        DSLContext ctx = DSL.using(new MockConnection(new MockDataProvider() {
+
+            @Override
+            public MockResult[] execute(MockExecuteContext c) throws SQLException {
+                Field<BigInteger> id = DSL.field("last_insert_id()", BigInteger.class);
+                Record record = DSL.using(MYSQL).newRecord(id);
+                record.setValue(id, expected);
+                return new MockResult[] { new MockResult(record) };
+            }
+        }), SQLDialect.MYSQL);
+
+        assertEquals(expected, ctx.lastID());
     }
 }

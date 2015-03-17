@@ -77,4 +77,9 @@ public interface Loader<R extends TableRecord<R>> {
      */
     int stored();
 
+    /**
+     * The results that are also returned from {@link Loader}.
+     */
+    LoaderContext result();
+
 }

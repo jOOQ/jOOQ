@@ -41,6 +41,7 @@
 package org.jooq.test.all.testcases;
 
 import static java.util.Arrays.asList;
+import static org.jooq.lambda.tuple.Tuple.tuple;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -58,6 +59,7 @@ import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultExecuteListener;
+import org.jooq.lambda.tuple.Tuple4;
 import org.jooq.test.jOOQAbstractTest;
 import org.jooq.test.all.converters.Boolean_10;
 import org.jooq.test.all.converters.Boolean_TF_LC;
@@ -102,6 +104,8 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
                 "9,Max,Frisch\n" +
                 "10,Friedrich,Dürrenmatt";
 
+        List<Tuple4<Integer, Integer, Integer, Integer>> events = new ArrayList<>();
+
         BatchListener listener;
         DSLContext create;
 
@@ -113,7 +117,20 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
               .bulkAll()
               .loadCSV(csv)
               .fields(TAuthor_ID(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
+              .onRow(ctx -> events.add(tuple(
+                  ctx.executed(),
+                  ctx.ignored(),
+                  ctx.processed(),
+                  ctx.stored()
+              )))
               .execute();
+
+        assertEquals(3, events.size());
+        assertEquals(asList(
+            tuple(0, 0, 1, 0),
+            tuple(0, 0, 2, 0),
+            tuple(0, 0, 3, 0)
+        ), events);
 
         assertEquals(1, loader.executed());
         assertEquals(3, loader.processed());
@@ -144,6 +161,8 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
                 "9,Max,Frisch\n" +
                 "10,Friedrich,Dürrenmatt";
 
+        List<Tuple4<Integer, Integer, Integer, Integer>> events = new ArrayList<>();
+
         BatchListener listener;
         DSLContext create;
 
@@ -155,7 +174,20 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
               .bulkAfter(2)
               .loadCSV(csv)
               .fields(TAuthor_ID(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
+              .onRow(ctx -> events.add(tuple(
+                  ctx.executed(),
+                  ctx.ignored(),
+                  ctx.processed(),
+                  ctx.stored()
+              )))
               .execute();
+
+        assertEquals(3, events.size());
+        assertEquals(asList(
+            tuple(0, 0, 1, 0),
+            tuple(1, 0, 2, 2),
+            tuple(1, 0, 3, 2)
+        ), events);
 
         assertEquals(2, loader.executed());
         assertEquals(3, loader.processed());
@@ -187,6 +219,8 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
                 "9,Max,Frisch\n" +
                 "10,Friedrich,Dürrenmatt";
 
+        List<Tuple4<Integer, Integer, Integer, Integer>> events = new ArrayList<>();
+
         BatchListener listener;
         DSLContext create;
 
@@ -198,7 +232,21 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
               .batchAll()
               .loadCSV(csv)
               .fields(TAuthor_ID(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
+              .onRow(ctx -> events.add(tuple(
+                  ctx.executed(),
+                  ctx.ignored(),
+                  ctx.processed(),
+                  ctx.stored()
+              )))
               .execute();
+
+        assertEquals(3, events.size());
+        assertEquals(asList(
+            tuple(0, 0, 1, 0),
+            tuple(0, 0, 2, 0),
+            tuple(0, 0, 3, 0)
+        ), events);
+
 
         assertEquals(1, loader.executed());
         assertEquals(3, loader.processed());
@@ -229,6 +277,8 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
                 "9,Max,Frisch\n" +
                 "10,Friedrich,Dürrenmatt";
 
+        List<Tuple4<Integer, Integer, Integer, Integer>> events = new ArrayList<>();
+
         BatchListener listener;
         DSLContext create;
 
@@ -240,7 +290,20 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
               .batchAfter(2)
               .loadCSV(csv)
               .fields(TAuthor_ID(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
+              .onRow(ctx -> events.add(tuple(
+                  ctx.executed(),
+                  ctx.ignored(),
+                  ctx.processed(),
+                  ctx.stored()
+              )))
               .execute();
+
+        assertEquals(3, events.size());
+        assertEquals(asList(
+            tuple(0, 0, 1, 0),
+            tuple(1, 0, 2, 2),
+            tuple(1, 0, 3, 2)
+        ), events);
 
         assertEquals(2, loader.executed());
         assertEquals(3, loader.processed());
@@ -274,6 +337,8 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
                 "11,D,D\n" +
                 "12,E,E";
 
+        List<Tuple4<Integer, Integer, Integer, Integer>> events = new ArrayList<>();
+
         BatchListener listener;
         DSLContext create;
 
@@ -286,7 +351,22 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
               .bulkAfter(2)
               .loadCSV(csv)
               .fields(TAuthor_ID(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
+              .onRow(ctx -> events.add(tuple(
+                  ctx.executed(),
+                  ctx.ignored(),
+                  ctx.processed(),
+                  ctx.stored()
+              )))
               .execute();
+
+        assertEquals(5, events.size());
+        assertEquals(asList(
+            tuple(0, 0, 1, 0),
+            tuple(0, 0, 2, 0),
+            tuple(0, 0, 3, 0),
+            tuple(1, 0, 4, 4),
+            tuple(1, 0, 5, 4)
+        ), events);
 
         assertEquals(2, loader.executed());
         assertEquals(5, loader.processed());

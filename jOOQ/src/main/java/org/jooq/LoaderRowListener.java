@@ -41,25 +41,14 @@
 package org.jooq;
 
 /**
- * The <code>Loader</code> API is used for configuring data loads.
- * <p>
- * The step in constructing the {@link org.jooq.Loader} object where you can set the
- * optional CSV loader options.
+ * A listener for {@link Loader} progress.
  *
  * @author Lukas Eder
- * @author Johannes Bühler
  */
-public interface LoaderJSONOptionsStep<R extends TableRecord<R>> extends LoaderListenerStep<R> {
+public interface LoaderRowListener {
 
     /**
-     * Specify that a certain number of rows should be ignored from the JSON
-     * input. This is useful for skipping processing information
-     * <p>
-     * By default, this is set to <code>1</code>, as CSV files are expected to
-     * hold a header row.
-     *
-     * @param number The number of rows to ignore.
+     * A row has been processed by the {@link Loader}
      */
-    @Support
-    LoaderJSONOptionsStep<R> ignoreRows(int number);
+    void row(LoaderContext ctx);
 }

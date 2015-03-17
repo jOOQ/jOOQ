@@ -69,10 +69,12 @@ import org.jooq.InsertQuery;
 import org.jooq.Loader;
 import org.jooq.LoaderCSVOptionsStep;
 import org.jooq.LoaderCSVStep;
+import org.jooq.LoaderContext;
 import org.jooq.LoaderError;
 import org.jooq.LoaderJSONOptionsStep;
 import org.jooq.LoaderJSONStep;
 import org.jooq.LoaderOptionsStep;
+import org.jooq.LoaderRowListener;
 import org.jooq.LoaderXMLStep;
 import org.jooq.SelectQuery;
 import org.jooq.Table;
@@ -152,6 +154,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
 
     // Result data
     // -----------
+    private LoaderRowListener       listener;
     private int                     ignored;
     private int                     processed;
     private int                     stored;
@@ -490,6 +493,16 @@ class LoaderImpl<R extends TableRecord<R>> implements
     // [...] to be specified
 
     // -------------------------------------------------------------------------
+    // Listening
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final LoaderImpl<R> onRow(LoaderRowListener l) {
+        listener = l;
+        return this;
+    }
+
+    // -------------------------------------------------------------------------
     // Execution
     // -------------------------------------------------------------------------
 
@@ -563,107 +576,114 @@ class LoaderImpl<R extends TableRecord<R>> implements
         String[] row = null;
         BatchBindStep bind = null;
         InsertQuery<R> insert = null;
+        LoaderContext ctx = new DefaultLoaderContext();
 
         execution: {
             rows: while (reader.hasNext() && ((row = reader.next()) != null)) {
+                try {
 
-                // [#1627] Handle NULL values
-                for (int i = 0; i < row.length; i++)
-                    if (StringUtils.equals(nullString, row[i]))
-                        row[i] = null;
+                    // [#1627] Handle NULL values
+                    for (int i = 0; i < row.length; i++)
+                        if (StringUtils.equals(nullString, row[i]))
+                            row[i] = null;
 
-                // TODO: In batch mode, we can probably optimise this by not creating
-                // new statements every time, just to convert bind values to their
-                // appropriate target types. But beware of SQL dialects that tend to
-                // need very explicit casting of bind values (e.g. Firebird)
-                processed++;
+                    // TODO: In batch mode, we can probably optimise this by not creating
+                    // new statements every time, just to convert bind values to their
+                    // appropriate target types. But beware of SQL dialects that tend to
+                    // need very explicit casting of bind values (e.g. Firebird)
+                    processed++;
 
-                // TODO: This can be implemented faster using a MERGE statement
-                // in some dialects
-                if (onDuplicate == ON_DUPLICATE_KEY_IGNORE) {
-                    SelectQuery<R> select = create.selectQuery(table);
+                    // TODO: This can be implemented faster using a MERGE statement
+                    // in some dialects
+                    if (onDuplicate == ON_DUPLICATE_KEY_IGNORE) {
+                        SelectQuery<R> select = create.selectQuery(table);
+
+                        for (int i = 0; i < row.length; i++)
+                            if (i < fields.length && primaryKey[i])
+                                select.addConditions(getCondition(fields[i], row[i]));
+
+                        try {
+                            if (create.fetchExists(select)) {
+                                ignored++;
+                                continue rows;
+                            }
+                        }
+                        catch (DataAccessException e) {
+                            errors.add(new LoaderErrorImpl(e, row, processed - 1, select));
+                        }
+                    }
+
+                    buffered++;
+
+                    if (insert == null)
+                        insert = create.insertQuery(table);
 
                     for (int i = 0; i < row.length; i++)
-                        if (i < fields.length && primaryKey[i])
-                            select.addConditions(getCondition(fields[i], row[i]));
+                        if (i < fields.length && fields[i] != null)
+                            addValue0(insert, fields[i], row[i]);
+
+                    // TODO: This is only supported by some dialects. Let other
+                    // dialects execute a SELECT and then either an INSERT or UPDATE
+                    if (onDuplicate == ON_DUPLICATE_KEY_UPDATE) {
+                        insert.onDuplicateKeyUpdate(true);
+
+                        for (int i = 0; i < row.length; i++)
+                            if (i < fields.length && fields[i] != null && !primaryKey[i])
+                                addValueForUpdate0(insert, fields[i], row[i]);
+                    }
+
+                    // Don't do anything. Let the execution fail
+                    else if (onDuplicate == ON_DUPLICATE_KEY_ERROR) {}
 
                     try {
-                        if (create.fetchExists(select)) {
-                            ignored++;
-                            continue rows;
+                        if (bulk != BULK_NONE) {
+                            if (bulk == BULK_ALL || processed % bulkAfter != 0) {
+                                insert.newRecord();
+                                continue rows;
+                            }
                         }
-                    }
-                    catch (DataAccessException e) {
-                        errors.add(new LoaderErrorImpl(e, row, processed - 1, select));
-                    }
-                }
 
-                buffered++;
+                        if (batch != BATCH_NONE) {
+                            if (bind == null)
+                                bind = create.batch(insert);
 
-                if (insert == null)
-                    insert = create.insertQuery(table);
+                            bind.bind(insert.getBindValues().toArray());
+                            insert = null;
 
-                for (int i = 0; i < row.length; i++)
-                    if (i < fields.length && fields[i] != null)
-                        addValue0(insert, fields[i], row[i]);
-
-                // TODO: This is only supported by some dialects. Let other
-                // dialects execute a SELECT and then either an INSERT or UPDATE
-                if (onDuplicate == ON_DUPLICATE_KEY_UPDATE) {
-                    insert.onDuplicateKeyUpdate(true);
-
-                    for (int i = 0; i < row.length; i++)
-                        if (i < fields.length && fields[i] != null && !primaryKey[i])
-                            addValueForUpdate0(insert, fields[i], row[i]);
-                }
-
-                // Don't do anything. Let the execution fail
-                else if (onDuplicate == ON_DUPLICATE_KEY_ERROR) {}
-
-                try {
-                    if (bulk != BULK_NONE) {
-                        if (bulk == BULK_ALL || processed % bulkAfter != 0) {
-                            insert.newRecord();
-                            continue rows;
+                            if (batch == BATCH_ALL || processed % (bulkAfter * batchAfter) != 0)
+                                continue rows;
                         }
-                    }
 
-                    if (batch != BATCH_NONE) {
-                        if (bind == null)
-                            bind = create.batch(insert);
+                        if (bind != null)
+                            bind.execute();
+                        else if (insert != null)
+                            insert.execute();
 
-                        bind.bind(insert.getBindValues().toArray());
+                        stored += buffered;
+                        executed++;
+
+                        buffered = 0;
+                        bind = null;
                         insert = null;
 
-                        if (batch == BATCH_ALL || processed % (bulkAfter * batchAfter) != 0)
-                            continue rows;
+                        if (commit == COMMIT_AFTER)
+                            if ((processed % batchAfter == 0) && ((processed / batchAfter) % commitAfter == 0))
+                                commit();
+                    }
+                    catch (DataAccessException e) {
+                        errors.add(new LoaderErrorImpl(e, row, processed - 1, insert));
+                        ignored += buffered;
+                        buffered = 0;
+
+                        if (onError == ON_ERROR_ABORT)
+                            break execution;
                     }
 
-                    if (bind != null)
-                        bind.execute();
-                    else if (insert != null)
-                        insert.execute();
-
-                    stored += buffered;
-                    executed++;
-
-                    buffered = 0;
-                    bind = null;
-                    insert = null;
-
-                    if (commit == COMMIT_AFTER)
-                        if ((processed % batchAfter == 0) && ((processed / batchAfter) % commitAfter == 0))
-                            commit();
                 }
-                catch (DataAccessException e) {
-                    errors.add(new LoaderErrorImpl(e, row, processed - 1, insert));
-                    ignored += buffered;
-                    buffered = 0;
-
-                    if (onError == ON_ERROR_ABORT)
-                        break execution;
+                finally {
+                    if (listener != null)
+                        listener.row(ctx);
                 }
-
                 // rows:
             }
 
@@ -785,5 +805,32 @@ class LoaderImpl<R extends TableRecord<R>> implements
     @Override
     public final int stored() {
         return stored;
+    }
+
+    private class DefaultLoaderContext implements LoaderContext {
+        @Override
+        public final List<LoaderError> errors() {
+            return errors;
+        }
+
+        @Override
+        public final int processed() {
+            return processed;
+        }
+
+        @Override
+        public final int executed() {
+            return executed;
+        }
+
+        @Override
+        public final int ignored() {
+            return ignored;
+        }
+
+        @Override
+        public final int stored() {
+            return stored;
+        }
     }
 }

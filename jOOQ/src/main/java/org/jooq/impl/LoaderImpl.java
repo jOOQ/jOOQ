@@ -155,6 +155,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
     // Result data
     // -----------
     private LoaderRowListener       listener;
+    private LoaderContext           result                  = new DefaultLoaderContext();
     private int                     ignored;
     private int                     processed;
     private int                     stored;
@@ -576,7 +577,6 @@ class LoaderImpl<R extends TableRecord<R>> implements
         String[] row = null;
         BatchBindStep bind = null;
         InsertQuery<R> insert = null;
-        LoaderContext ctx = new DefaultLoaderContext();
 
         execution: {
             rows: while (reader.hasNext() && ((row = reader.next()) != null)) {
@@ -682,7 +682,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
                 }
                 finally {
                     if (listener != null)
-                        listener.row(ctx);
+                        listener.row(result);
                 }
                 // rows:
             }
@@ -805,6 +805,11 @@ class LoaderImpl<R extends TableRecord<R>> implements
     @Override
     public final int stored() {
         return stored;
+    }
+
+    @Override
+    public final LoaderContext result() {
+        return result;
     }
 
     private class DefaultLoaderContext implements LoaderContext {

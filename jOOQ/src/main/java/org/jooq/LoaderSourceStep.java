@@ -44,6 +44,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
 
 import org.xml.sax.InputSource;
 
@@ -68,6 +71,24 @@ public interface LoaderSourceStep<R extends TableRecord<R>> {
      * Load CSV data
      */
     @Support
+    LoaderCSVStep<R> loadCSV(File file, String charsetName) throws FileNotFoundException, UnsupportedEncodingException;
+
+    /**
+     * Load CSV data
+     */
+    @Support
+    LoaderCSVStep<R> loadCSV(File file, Charset cs) throws FileNotFoundException;
+
+    /**
+     * Load CSV data
+     */
+    @Support
+    LoaderCSVStep<R> loadCSV(File file, CharsetDecoder dec) throws FileNotFoundException;
+
+    /**
+     * Load CSV data
+     */
+    @Support
     LoaderCSVStep<R> loadCSV(String data);
 
     /**
@@ -75,6 +96,24 @@ public interface LoaderSourceStep<R extends TableRecord<R>> {
      */
     @Support
     LoaderCSVStep<R> loadCSV(InputStream stream);
+
+    /**
+     * Load CSV data
+     */
+    @Support
+    LoaderCSVStep<R> loadCSV(InputStream stream, String charsetName) throws UnsupportedEncodingException;
+
+    /**
+     * Load CSV data
+     */
+    @Support
+    LoaderCSVStep<R> loadCSV(InputStream stream, Charset cs);
+
+    /**
+     * Load CSV data
+     */
+    @Support
+    LoaderCSVStep<R> loadCSV(InputStream stream, CharsetDecoder dec);
 
     /**
      * Load CSV data
@@ -92,6 +131,24 @@ public interface LoaderSourceStep<R extends TableRecord<R>> {
      * Load XML data
      */
     @Support
+    LoaderXMLStep<R> loadXML(File file, String charsetName) throws FileNotFoundException, UnsupportedEncodingException;
+
+    /**
+     * Load XML data
+     */
+    @Support
+    LoaderXMLStep<R> loadXML(File file, Charset cs) throws FileNotFoundException;
+
+    /**
+     * Load XML data
+     */
+    @Support
+    LoaderXMLStep<R> loadXML(File file, CharsetDecoder dec) throws FileNotFoundException;
+
+    /**
+     * Load XML data
+     */
+    @Support
     LoaderXMLStep<R> loadXML(String data);
 
     /**
@@ -99,6 +156,24 @@ public interface LoaderSourceStep<R extends TableRecord<R>> {
      */
     @Support
     LoaderXMLStep<R> loadXML(InputStream stream);
+
+    /**
+     * Load XML data
+     */
+    @Support
+    LoaderXMLStep<R> loadXML(InputStream stream, String charsetName) throws UnsupportedEncodingException;
+
+    /**
+     * Load XML data
+     */
+    @Support
+    LoaderXMLStep<R> loadXML(InputStream stream, Charset cs);
+
+    /**
+     * Load XML data
+     */
+    @Support
+    LoaderXMLStep<R> loadXML(InputStream stream, CharsetDecoder dec);
 
     /**
      * Load XML data
@@ -122,6 +197,24 @@ public interface LoaderSourceStep<R extends TableRecord<R>> {
      * Load JSON data
      */
     @Support
+    LoaderJSONStep<R> loadJSON(File file, String charsetName) throws FileNotFoundException, UnsupportedEncodingException;
+
+    /**
+     * Load JSON data
+     */
+    @Support
+    LoaderJSONStep<R> loadJSON(File file, Charset cs) throws FileNotFoundException;
+
+    /**
+     * Load JSON data
+     */
+    @Support
+    LoaderJSONStep<R> loadJSON(File file, CharsetDecoder dec) throws FileNotFoundException;
+
+    /**
+     * Load JSON data
+     */
+    @Support
     LoaderJSONStep<R> loadJSON(String data);
 
     /**
@@ -129,6 +222,24 @@ public interface LoaderSourceStep<R extends TableRecord<R>> {
      */
     @Support
     LoaderJSONStep<R> loadJSON(InputStream stream);
+
+    /**
+     * Load JSON data
+     */
+    @Support
+    LoaderJSONStep<R> loadJSON(InputStream stream, String charsetName) throws UnsupportedEncodingException;
+
+    /**
+     * Load JSON data
+     */
+    @Support
+    LoaderJSONStep<R> loadJSON(InputStream stream, Charset cs);
+
+    /**
+     * Load JSON data
+     */
+    @Support
+    LoaderJSONStep<R> loadJSON(InputStream stream, CharsetDecoder dec);
 
     /**
      * Load JSON data

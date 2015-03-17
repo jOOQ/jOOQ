@@ -42,6 +42,7 @@ package org.jooq.impl;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -49,6 +50,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -269,23 +273,47 @@ class LoaderImpl<R extends TableRecord<R>> implements
 
     @Override
     public final LoaderImpl<R> loadCSV(File file) throws FileNotFoundException {
-        content = CONTENT_CSV;
-        data = new BufferedReader(new FileReader(file));
-        return this;
+        return loadCSV(new FileReader(file));
+    }
+
+    @Override
+    public final LoaderImpl<R> loadCSV(File file, String charsetName) throws FileNotFoundException, UnsupportedEncodingException {
+        return loadCSV(new FileInputStream(file), charsetName);
+    }
+
+    @Override
+    public final LoaderImpl<R> loadCSV(File file, Charset cs) throws FileNotFoundException {
+        return loadCSV(new FileInputStream(file), cs);
+    }
+
+    @Override
+    public final LoaderImpl<R> loadCSV(File file, CharsetDecoder dec) throws FileNotFoundException {
+        return loadCSV(new FileInputStream(file), dec);
     }
 
     @Override
     public final LoaderImpl<R> loadCSV(String csv) {
-        content = CONTENT_CSV;
-        data = new BufferedReader(new StringReader(csv));
-        return this;
+        return loadCSV(new StringReader(csv));
     }
 
     @Override
     public final LoaderImpl<R> loadCSV(InputStream stream) {
-        content = CONTENT_CSV;
-        data = new BufferedReader(new InputStreamReader(stream));
-        return this;
+        return loadCSV(new InputStreamReader(stream));
+    }
+
+    @Override
+    public final LoaderImpl<R> loadCSV(InputStream stream, String charsetName) throws UnsupportedEncodingException {
+        return loadCSV(new InputStreamReader(stream, charsetName));
+    }
+
+    @Override
+    public final LoaderImpl<R> loadCSV(InputStream stream, Charset cs) {
+        return loadCSV(new InputStreamReader(stream, cs));
+    }
+
+    @Override
+    public final LoaderImpl<R> loadCSV(InputStream stream, CharsetDecoder dec) {
+        return loadCSV(new InputStreamReader(stream, dec));
     }
 
     @Override
@@ -297,20 +325,47 @@ class LoaderImpl<R extends TableRecord<R>> implements
 
     @Override
     public final LoaderImpl<R> loadXML(File file) throws FileNotFoundException {
-        content = CONTENT_XML;
-        throw new UnsupportedOperationException("This is not yet implemented");
+        return loadXML(new FileReader(file));
+    }
+
+    @Override
+    public final LoaderImpl<R> loadXML(File file, String charsetName) throws FileNotFoundException, UnsupportedEncodingException {
+        return loadXML(new FileInputStream(file), charsetName);
+    }
+
+    @Override
+    public final LoaderImpl<R> loadXML(File file, Charset cs) throws FileNotFoundException {
+        return loadXML(new FileInputStream(file), cs);
+    }
+
+    @Override
+    public final LoaderImpl<R> loadXML(File file, CharsetDecoder dec) throws FileNotFoundException {
+        return loadXML(new FileInputStream(file), dec);
     }
 
     @Override
     public final LoaderImpl<R> loadXML(String xml) {
-        content = CONTENT_XML;
-        throw new UnsupportedOperationException("This is not yet implemented");
+        return loadXML(new StringReader(xml));
     }
 
     @Override
     public final LoaderImpl<R> loadXML(InputStream stream) {
-        content = CONTENT_XML;
-        throw new UnsupportedOperationException("This is not yet implemented");
+        return loadXML(new InputStreamReader(stream));
+    }
+
+    @Override
+    public final LoaderImpl<R> loadXML(InputStream stream, String charsetName) throws UnsupportedEncodingException {
+        return loadXML(new InputStreamReader(stream, charsetName));
+    }
+
+    @Override
+    public final LoaderImpl<R> loadXML(InputStream stream, Charset cs) {
+        return loadXML(new InputStreamReader(stream, cs));
+    }
+
+    @Override
+    public final LoaderImpl<R> loadXML(InputStream stream, CharsetDecoder dec) {
+        return loadXML(new InputStreamReader(stream, dec));
     }
 
     @Override
@@ -323,6 +378,58 @@ class LoaderImpl<R extends TableRecord<R>> implements
     public final LoaderImpl<R> loadXML(InputSource source) {
         content = CONTENT_XML;
         throw new UnsupportedOperationException("This is not yet implemented");
+    }
+
+    @Override
+    public final LoaderImpl<R> loadJSON(File file) throws FileNotFoundException {
+        return loadJSON(new FileReader(file));
+    }
+
+    @Override
+    public final LoaderImpl<R> loadJSON(File file, String charsetName) throws FileNotFoundException, UnsupportedEncodingException {
+        return loadJSON(new FileInputStream(file), charsetName);
+    }
+
+    @Override
+    public final LoaderImpl<R> loadJSON(File file, Charset cs) throws FileNotFoundException {
+        return loadJSON(new FileInputStream(file), cs);
+    }
+
+    @Override
+    public final LoaderImpl<R> loadJSON(File file, CharsetDecoder dec) throws FileNotFoundException {
+        return loadJSON(new FileInputStream(file), dec);
+    }
+
+    @Override
+    public final LoaderImpl<R> loadJSON(String json) {
+        return loadJSON(new StringReader(json));
+    }
+
+    @Override
+    public final LoaderImpl<R> loadJSON(InputStream stream) {
+        return loadJSON(new InputStreamReader(stream));
+    }
+
+    @Override
+    public final LoaderImpl<R> loadJSON(InputStream stream, String charsetName) throws UnsupportedEncodingException {
+        return loadJSON(new InputStreamReader(stream, charsetName));
+    }
+
+    @Override
+    public final LoaderImpl<R> loadJSON(InputStream stream, Charset cs) {
+        return loadJSON(new InputStreamReader(stream, cs));
+    }
+
+    @Override
+    public final LoaderImpl<R> loadJSON(InputStream stream, CharsetDecoder dec) {
+        return loadJSON(new InputStreamReader(stream, dec));
+    }
+
+    @Override
+    public final LoaderImpl<R> loadJSON(Reader reader) {
+        content = CONTENT_JSON;
+        data = new BufferedReader(reader);
+        return this;
     }
 
     // -------------------------------------------------------------------------
@@ -373,35 +480,6 @@ class LoaderImpl<R extends TableRecord<R>> implements
     @Override
     public final LoaderImpl<R> nullString(String n) {
         this.nullString = n;
-        return this;
-    }
-
-    @Override
-    public final LoaderJSONStep<R> loadJSON(File file) throws FileNotFoundException {
-        content = CONTENT_JSON;
-        data = new BufferedReader(new FileReader(file));
-        return this;
-    }
-
-    @Override
-    public final LoaderJSONStep<R> loadJSON(String json) {
-        content = CONTENT_JSON;
-        data = new BufferedReader(new StringReader(json));
-        return this;
-
-    }
-
-    @Override
-    public final LoaderJSONStep<R> loadJSON(InputStream stream) {
-        content = CONTENT_JSON;
-        data = new BufferedReader(new InputStreamReader(stream));
-        return this;
-    }
-
-    @Override
-    public final LoaderJSONStep<R> loadJSON(Reader reader) {
-        content = CONTENT_JSON;
-        data = new BufferedReader(reader);
         return this;
     }
 

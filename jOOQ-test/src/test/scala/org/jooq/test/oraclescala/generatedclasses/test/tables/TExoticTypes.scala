@@ -60,6 +60,16 @@ class TExoticTypes(alias : String, aliased : Table[TExoticTypesRecord], paramete
 	val JAVA_IO_SERIALIZABLE : TableField[TExoticTypesRecord, Serializable] = createField("JAVA_IO_SERIALIZABLE", org.jooq.impl.SQLDataType.BLOB, "", new SerializedBinding())
 
 	/**
+	 * The column <code>TEST.T_EXOTIC_TYPES.PLAIN_SQL_CONVERTER_XML</code>.
+	 */
+	val PLAIN_SQL_CONVERTER_XML : TableField[TExoticTypesRecord, String] = createField("PLAIN_SQL_CONVERTER_XML", org.jooq.impl.SQLDataType.CLOB, "")
+
+	/**
+	 * The column <code>TEST.T_EXOTIC_TYPES.PLAIN_SQL_BINDING_XML</code>.
+	 */
+	val PLAIN_SQL_BINDING_XML : TableField[TExoticTypesRecord, String] = createField("PLAIN_SQL_BINDING_XML", org.jooq.impl.SQLDataType.CLOB, "")
+
+	/**
 	 * Create a <code>TEST.T_EXOTIC_TYPES</code> table reference
 	 */
 	def this() = {

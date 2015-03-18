@@ -53,6 +53,7 @@ import org.jooq.test.oraclescala.generatedclasses.test.udt.UNested_3
 import org.jooq.test.oraclescala.generatedclasses.test.udt.UStreetType
 import org.jooq.test.oraclescala.generatedclasses.test.udt.U_2155Object
 import org.jooq.test.oraclescala.generatedclasses.test.udt.U_3005
+import org.jooq.test.oraclescala.generatedclasses.test.udt.U_3709
 
 
 object Test {
@@ -142,6 +143,7 @@ class Test extends SchemaImpl("TEST") {
 			UNested_3.U_NESTED_3,
 			UStreetType.U_STREET_TYPE,
 			U_2155Object.U_2155_OBJECT,
-			U_3005.U_3005)
+			U_3005.U_3005,
+			U_3709.U_3709)
 	}
 }

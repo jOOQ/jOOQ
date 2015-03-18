@@ -25,7 +25,7 @@ import org.jooq.test.oraclescala.generatedclasses.test.udt.records.U_2155ArrayRe
 @Table(name = "T_2155", schema = "TEST")
 class T_2155(
 	  private var id : Integer          
-	, private var d1 : LocalDate    
+	, private var d1 : LocalDate        
 	, private var d2 : U_2155Object     
 	, private var d3 : U_2155ArrayRecord
 ) extends Serializable {

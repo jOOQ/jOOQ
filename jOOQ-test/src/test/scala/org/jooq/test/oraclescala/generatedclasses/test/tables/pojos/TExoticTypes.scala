@@ -6,6 +6,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables.pojos
 
 import java.io.Serializable
 import java.lang.Integer
+import java.lang.String
 import java.util.UUID
 
 import javax.persistence.Column
@@ -24,10 +25,12 @@ class TExoticTypes(
 	  private var id : Integer     
 	, private var uu : UUID        
 	, private var javaIoSerializable : Serializable
+	, private var plainSqlConverterXml : String      
+	, private var plainSqlBindingXml : String      
 ) extends Serializable {
 
 	def this() = {
-		this(null, null, null)
+		this(null, null, null, null, null)
 	}
 
 	def this (value : TExoticTypes) = {
@@ -35,6 +38,8 @@ class TExoticTypes(
 			  value.id
 			, value.uu
 			, value.javaIoSerializable
+			, value.plainSqlConverterXml
+			, value.plainSqlBindingXml
 		)
 	}
 
@@ -67,6 +72,24 @@ class TExoticTypes(
 		this.javaIoSerializable = javaIoSerializable
 	}
 
+	@Column(name = "PLAIN_SQL_CONVERTER_XML")
+	def getPlainSqlConverterXml : String = {
+		this.plainSqlConverterXml
+	}
+
+	def setPlainSqlConverterXml(plainSqlConverterXml : String) : Unit = {
+		this.plainSqlConverterXml = plainSqlConverterXml
+	}
+
+	@Column(name = "PLAIN_SQL_BINDING_XML")
+	def getPlainSqlBindingXml : String = {
+		this.plainSqlBindingXml
+	}
+
+	def setPlainSqlBindingXml(plainSqlBindingXml : String) : Unit = {
+		this.plainSqlBindingXml = plainSqlBindingXml
+	}
+
 	override def equals(obj : Any) : scala.Boolean = {
 		if (this == obj)
 			return true
@@ -93,6 +116,18 @@ class TExoticTypes(
 		}
 		else if (!javaIoSerializable.equals(other.javaIoSerializable))
 			return false
+		if (plainSqlConverterXml == null) {
+			if (other.plainSqlConverterXml != null)
+				return false
+		}
+		else if (!plainSqlConverterXml.equals(other.plainSqlConverterXml))
+			return false
+		if (plainSqlBindingXml == null) {
+			if (other.plainSqlBindingXml != null)
+				return false
+		}
+		else if (!plainSqlBindingXml.equals(other.plainSqlBindingXml))
+			return false
 		return true
 	}
 
@@ -102,6 +137,8 @@ class TExoticTypes(
 		result = prime * result + (if (id == null) 0 else id.hashCode())
 		result = prime * result + (if (uu == null) 0 else uu.hashCode())
 		result = prime * result + (if (javaIoSerializable == null) 0 else javaIoSerializable.hashCode())
+		result = prime * result + (if (plainSqlConverterXml == null) 0 else plainSqlConverterXml.hashCode())
+		result = prime * result + (if (plainSqlBindingXml == null) 0 else plainSqlBindingXml.hashCode())
 		return result
 	}
 }

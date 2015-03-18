@@ -368,9 +368,11 @@ public class JavaGenerator extends AbstractGenerator {
             generateRoutines(schema);
         }
 
-        if (database.getPackages(schema).size() > 0) {
-            generatePackages(schema);
-        }
+        /* [pro] xx
+        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xx x
+            xxxxxxxxxxxxxxxxxxxxxxxxx
+        x
+        xx [/pro] */
 
         /* [pro] xx
         xx xxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxx x
@@ -1843,28 +1845,30 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void printConstant(JavaWriter out, AttributeDefinition constant) {
-        final String constantType = out.ref(getJavaType(constant.getType()));
-        final String constantId = out.ref(getStrategy().getJavaIdentifier(constant));
+        /* [pro] xx
+        xxxxx xxxxxx xxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxx xxxxxx xxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        out.tab(1).javadoc("The constant <code>%s</code>.", constant.getQualifiedOutputName());
+        xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        if (scala) {
-            out.tab(1).println("val %s = %s.field(%s.name(\"%s\", \"%s\", \"%s\"), classOf[%s]);",
-                constantId, DSL.class, DSL.class,
-                constant.getSchema().getOutputName().replace("\"", "\\\""),
-                constant.getContainer().getOutputName().replace("\"", "\\\""),
-                constant.getOutputName().replace("\"", "\\\""),
-                constantType);
-        }
-        else {
-            out.tab(1).println("public static final %s<%s> %s = %s.field(%s.name(\"%s\", \"%s\", \"%s\"), %s.class);",
-                Field.class, constantType, constantId,
-                DSL.class, DSL.class,
-                constant.getSchema().getOutputName().replace("\"", "\\\""),
-                constant.getContainer().getOutputName().replace("\"", "\\\""),
-                constant.getOutputName().replace("\"", "\\\""),
-                constantType);
-        }
+        xx xxxxxxx x
+            xxxxxxxxxxxxxxxxxxxxxxx xx x xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxx xxxxxxxxxxxxxxx
+                xxxxxxxxxxx xxxxxxxxxx xxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
+                xxxxxxxxxxxxxx
+        x
+        xxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxx xxxxxx xx x xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxx xxxxxxxxxxxx
+                xxxxxxxxxxxx xxxxxxxxxxxxx xxxxxxxxxxx
+                xxxxxxxxxx xxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
+                xxxxxxxxxxxxxx
+        x
+        xx [/pro] */
     }
 
     protected void printRoutine(JavaWriter out, RoutineDefinition routine) {
@@ -1893,77 +1897,83 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generatePackages(SchemaDefinition schema) {
-        log.info("Generating packages");
+        /* [pro] xx
+        xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx
 
-        for (PackageDefinition pkg : database.getPackages(schema)) {
-            try {
-                generatePackage(schema, pkg);
-            } catch (Exception e) {
-                log.error("Error while generating package " + pkg, e);
-            }
-        }
+        xxx xxxxxxxxxxxxxxxxxx xxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxx x
+                xxxxxxxxxxxxxxxxxxxxxxx xxxxx
+            x xxxxx xxxxxxxxxx xx x
+                xxxxxxxxxxxxxxxx xxxxx xxxxxxxxxx xxxxxxx x x xxxx xxx
+            x
+        x
 
-        watch.splitInfo("Packages generated");
+        xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
+        xx [/pro] */
     }
 
     @SuppressWarnings("unused")
     protected void generatePackage(SchemaDefinition schema, PackageDefinition pkg) {
-        log.info("Generating package", pkg);
-        JavaWriter out = newJavaWriter(getStrategy().getFile(pkg));
-        generatePackage(pkg, out);
-        out.close();
+        /* [pro] xx
+        xxxxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxx
+        xxxxxxxxxx xxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxx xxxxx
+        xxxxxxxxxxxx
+        xx [/pro] */
     }
 
     protected void generatePackage(PackageDefinition pkg, JavaWriter out) {
-        final SchemaDefinition schema = pkg.getSchema();
-        final String className = getStrategy().getJavaClassName(pkg);
-        final String identifier = getStrategy().getJavaIdentifier(pkg);
-        final String schemaIdentifier = out.ref(getStrategy().getFullJavaIdentifier(schema), 2);
-        final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(pkg, Mode.DEFAULT));
+        /* [pro] xx
+        xxxxx xxxxxxxxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxx
+        xxxxx xxxxxx xxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxx xxxxxx xxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxx xxxxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
+        xxxxx xxxxxxxxxxxx xxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
 
-        // Static convenience methods
-        printPackage(out, pkg);
-        generatePackageClassJavadoc(pkg, out);
-        printClassAnnotations(out, schema);
+        xx xxxxxx xxxxxxxxxxx xxxxxxx
+        xxxxxxxxxxxxxxxxx xxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
 
-        if (scala) {
-            out.println("object %s extends %s(\"%s\", %s)[[before= with ][%s]] {", className, PackageImpl.class, pkg.getOutputName(), schemaIdentifier, interfaces);
+        xx xxxxxxx x
+            xxxxxxxxxxxxxxxxxxx xx xxxxxxx xxxxxxxxxx xxxxxxxxxxxx xxxx xxxxxx xxx xxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxx
 
-            out.tab(1).javadoc("The reference instance of <code>%s</code>", pkg.getQualifiedOutputName());
-            out.tab(1).println("val %s = %s", identifier, className);
-        }
-        else {
-        	out.println("public class %s extends %s[[before= implements ][%s]] {", className, PackageImpl.class, interfaces);
+            xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxxxx xx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxx xx x xxxx xxxxxxxxxxx xxxxxxxxxxx
+        x
+        xxxx x
+        	xxxxxxxxxxxxxxxxxxx xxxxx xx xxxxxxx xxxxxxxxxxx xxxxxxxxxx xxxxxx xxx xxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
 
-            out.printSerial();
-            printSingletonInstance(out, pkg);
-        }
+            xxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx
+        x
 
-        for (AttributeDefinition constant : pkg.getConstants()) {
-            printConstant(out, constant);
-        }
+        xxx xxxxxxxxxxxxxxxxxxxx xxxxxxxx x xxxxxxxxxxxxxxxxxxx x
+            xxxxxxxxxxxxxxxxxx xxxxxxxxxx
+        x
 
-        for (RoutineDefinition routine : pkg.getRoutines()) {
-            printRoutine(out, routine);
+        xxx xxxxxxxxxxxxxxxxxx xxxxxxx x xxxxxxxxxxxxxxxxxx x
+            xxxxxxxxxxxxxxxxx xxxxxxxxx
 
-            try {
-                generateRoutine(schema, routine);
-            } catch (Exception e) {
-                log.error("Error while generating routine " + routine, e);
-            }
-        }
+            xxx x
+                xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxx
+            x xxxxx xxxxxxxxxx xx x
+                xxxxxxxxxxxxxxxx xxxxx xxxxxxxxxx xxxxxxx x x xxxxxxxx xxx
+            x
+        x
 
-        if (scala) {
-        }
-        else {
-            out.tab(1).javadoc(NO_FURTHER_INSTANCES_ALLOWED);
-            out.tab(1).println("private %s() {", className);
-            out.tab(2).println("super(\"%s\", %s);", pkg.getOutputName(), schemaIdentifier);
-            out.tab(1).println("}");
-        }
+        xx xxxxxxx x
+        x
+        xxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxx xxx xxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxx
+        x
 
-        generatePackageClassFooter(pkg, out);
-        out.println("}");
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx
+        xxxxxxxxxxxxxxxxx
+        xx [/pro] */
     }
 
     /**

@@ -40,16 +40,25 @@
  */
 package org.jooq.util.oracle;
 
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.util.oracle.sys.Tables.ALL_ARGUMENTS;
+import static org.jooq.util.oracle.sys.Tables.ALL_IDENTIFIERS;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Record;
+import org.jooq.Record3;
 import org.jooq.util.AbstractPackageDefinition;
+import org.jooq.util.AttributeDefinition;
+import org.jooq.util.DataTypeDefinition;
+import org.jooq.util.DefaultAttributeDefinition;
+import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.RoutineDefinition;
 import org.jooq.util.SchemaDefinition;
+import org.jooq.util.oracle.sys.tables.AllIdentifiers;
 
 /**
  * @author Lukas Eder
@@ -81,6 +90,62 @@ public class OraclePackageDefinition extends AbstractPackageDefinition {
                 "",
                 record.getValue(ALL_ARGUMENTS.OBJECT_ID),
                 record.getValue(ALL_ARGUMENTS.OVERLOAD)));
+        }
+
+        return result;
+    }
+
+    @Override
+    protected List<AttributeDefinition> getConstants0() throws SQLException {
+        List<AttributeDefinition> result = new ArrayList<AttributeDefinition>();
+
+        AllIdentifiers pName = ALL_IDENTIFIERS.as("pName");
+        AllIdentifiers cName = ALL_IDENTIFIERS.as("cName");
+        AllIdentifiers cType = ALL_IDENTIFIERS.as("cType");
+
+        for (Record3<String, String, String> record : create()
+            .select(pName.NAME, cName.NAME, cType.NAME)
+            .from(pName)
+            .join(cName)
+                .on(pName.USAGE_ID.eq(cName.USAGE_CONTEXT_ID))
+                .and(pName.OWNER.eq(cName.OWNER))
+                .and(pName.OBJECT_NAME.eq(cName.OBJECT_NAME))
+                .and(pName.OBJECT_TYPE.eq(cName.OBJECT_TYPE))
+                .and(cName.TYPE.eq("CONSTANT"))
+            .join(cType)
+                .on(cName.USAGE_ID.eq(cType.USAGE_CONTEXT_ID))
+                .and(cName.OWNER.eq(cType.OWNER))
+                .and(cName.OBJECT_NAME.eq(cType.OBJECT_NAME))
+                .and(cName.OBJECT_TYPE.eq(cType.OBJECT_TYPE))
+                .and(cType.USAGE.eq("REFERENCE"))
+            .where(pName.USAGE_CONTEXT_ID.eq(inline(BigDecimal.ZERO)))
+            .and(pName.OWNER.eq(getSchema().getName()))
+            .and(pName.OBJECT_NAME.eq(getName()))
+            .and(pName.OBJECT_TYPE.eq("PACKAGE"))
+        ) {
+
+            // TODO: Support synonyms here, if this is possible at all...
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                getSchema(),
+                record.value3(),
+                0,
+                0,
+                0,
+                true,
+                false,
+                record.value3()
+            );
+
+            // TODO: Will we need to provide more meta information here?
+            AttributeDefinition attribute = new DefaultAttributeDefinition(
+                new OracleUDTDefinition(getSchema(), getName(), ""),
+                record.value2(),
+                1,
+                type
+            );
+
+            result.add(attribute);
         }
 
         return result;

@@ -11,6 +11,7 @@ import org.jooq.util.oracle.sys.tables.AllColComments;
 import org.jooq.util.oracle.sys.tables.AllCollTypes;
 import org.jooq.util.oracle.sys.tables.AllConsColumns;
 import org.jooq.util.oracle.sys.tables.AllConstraints;
+import org.jooq.util.oracle.sys.tables.AllIdentifiers;
 import org.jooq.util.oracle.sys.tables.AllMviewComments;
 import org.jooq.util.oracle.sys.tables.AllObjects;
 import org.jooq.util.oracle.sys.tables.AllProcedures;
@@ -62,6 +63,11 @@ public class Tables {
 	 * Constraint definitions on accessible tables
 	 */
 	public static final AllConstraints ALL_CONSTRAINTS = org.jooq.util.oracle.sys.tables.AllConstraints.ALL_CONSTRAINTS;
+
+	/**
+	 * All identifiers in stored objects accessible to the user
+	 */
+	public static final AllIdentifiers ALL_IDENTIFIERS = org.jooq.util.oracle.sys.tables.AllIdentifiers.ALL_IDENTIFIERS;
 
 	/**
 	 * Comments on materialized views accessible to the user

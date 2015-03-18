@@ -101,6 +101,7 @@ DROP FUNCTION f_get_one_cursor/
 DROP FUNCTION f691cursor_out/
 DROP FUNCTION f691cursor_in/
 DROP PACKAGE library/
+DROP PACKAGE pls_objects/
 
 DROP TYPE u_nested_3/
 DROP TYPE u_nested_2/
@@ -2063,4 +2064,35 @@ CREATE TABLE test.t_3711 (
   v7 multi_schema.number_table,
   v8 multi_schema.number_object
 )
+/
+
+DROP PACKAGE pls_objects;
+/
+CREATE PACKAGE pls_objects AS
+  
+  pls_i_c CONSTANT NUMBER(7) := 1;
+  pls_v_c CONSTANT VARCHAR2(50) := 'A';
+  
+  pls_i NUMBER(7) := 1;
+  pls_v VARCHAR2(50) := 1;
+  
+  TYPE pls_r_t IS RECORD (a NUMBER);
+  TYPE pls_r_tt IS TABLE OF pls_r_t;
+  
+  PROCEDURE pls_p (i IN NUMBER, v IN VARCHAR2, io OUT NUMBER, vo OUT VARCHAR2);
+  FUNCTION pls_f (i NUMBER, v VARCHAR2) RETURN NUMBER;
+END pls_objects;
+/
+CREATE PACKAGE BODY pls_objects AS  
+  PROCEDURE pls_p (i IN NUMBER, v IN VARCHAR2, io OUT NUMBER, vo OUT VARCHAR2) IS
+  BEGIN
+    io := i;
+    vo := v;
+  END pls_p;
+  
+  FUNCTION pls_f (i NUMBER, v VARCHAR2) RETURN NUMBER IS
+  BEGIN
+    RETURN i;
+  END pls_f;
+END pls_objects;
 /

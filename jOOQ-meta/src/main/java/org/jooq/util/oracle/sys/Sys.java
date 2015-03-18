@@ -17,6 +17,7 @@ import org.jooq.util.oracle.sys.tables.AllColComments;
 import org.jooq.util.oracle.sys.tables.AllCollTypes;
 import org.jooq.util.oracle.sys.tables.AllConsColumns;
 import org.jooq.util.oracle.sys.tables.AllConstraints;
+import org.jooq.util.oracle.sys.tables.AllIdentifiers;
 import org.jooq.util.oracle.sys.tables.AllMviewComments;
 import org.jooq.util.oracle.sys.tables.AllObjects;
 import org.jooq.util.oracle.sys.tables.AllProcedures;
@@ -44,7 +45,7 @@ import org.jooq.util.oracle.sys.tables.AllUsers;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sys extends SchemaImpl {
 
-	private static final long serialVersionUID = -11000396;
+	private static final long serialVersionUID = 2120012134;
 
 	/**
 	 * The reference instance of <code>SYS</code>
@@ -72,6 +73,7 @@ public class Sys extends SchemaImpl {
 			AllCollTypes.ALL_COLL_TYPES,
 			AllConsColumns.ALL_CONS_COLUMNS,
 			AllConstraints.ALL_CONSTRAINTS,
+			AllIdentifiers.ALL_IDENTIFIERS,
 			AllMviewComments.ALL_MVIEW_COMMENTS,
 			AllObjects.ALL_OBJECTS,
 			AllProcedures.ALL_PROCEDURES,

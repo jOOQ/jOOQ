@@ -50,7 +50,12 @@ import java.util.List;
 public interface PackageDefinition extends Definition {
 
     /**
-     * Fetch all routines from the package
+     * Fetch all routines from the package.
      */
     List<RoutineDefinition> getRoutines();
+
+    /**
+     * Fetch all constants from the package.
+     */
+    List<AttributeDefinition> getConstants();
 }

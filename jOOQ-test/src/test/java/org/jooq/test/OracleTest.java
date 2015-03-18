@@ -2101,6 +2101,11 @@ public class OracleTest extends jOOQAbstractTest<
 
         assertEquals(4, result.size());
     }
+
+    @Test
+    public void testOracleConstants() throws Exception {
+        // PlsObjects.plsP(create().configuration(), PlsObjects.PLS_I_C, PlsObjects.PLS_V_C)
+    }
 }
 
 /* [/pro] */

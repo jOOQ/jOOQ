@@ -1842,6 +1842,31 @@ public class JavaGenerator extends AbstractGenerator {
         watch.splitInfo("Routines generated");
     }
 
+    protected void printConstant(JavaWriter out, AttributeDefinition constant) {
+        final String constantType = out.ref(getJavaType(constant.getType()));
+        final String constantId = out.ref(getStrategy().getJavaIdentifier(constant));
+
+        out.tab(1).javadoc("The constant <code>%s</code>.", constant.getQualifiedOutputName());
+
+        if (scala) {
+            out.tab(1).println("val %s = %s.field(%s.name(\"%s\", \"%s\", \"%s\"), classOf[%s]);",
+                constantId, DSL.class, DSL.class,
+                constant.getSchema().getOutputName().replace("\"", "\\\""),
+                constant.getContainer().getOutputName().replace("\"", "\\\""),
+                constant.getOutputName().replace("\"", "\\\""),
+                constantType);
+        }
+        else {
+            out.tab(1).println("public static final %s<%s> %s = %s.field(%s.name(\"%s\", \"%s\", \"%s\"), %s.class);",
+                Field.class, constantType, constantId,
+                DSL.class, DSL.class,
+                constant.getSchema().getOutputName().replace("\"", "\\\""),
+                constant.getContainer().getOutputName().replace("\"", "\\\""),
+                constant.getOutputName().replace("\"", "\\\""),
+                constantType);
+        }
+    }
+
     protected void printRoutine(JavaWriter out, RoutineDefinition routine) {
         if (!routine.isSQLUsable()) {
 
@@ -1912,6 +1937,10 @@ public class JavaGenerator extends AbstractGenerator {
 
             out.printSerial();
             printSingletonInstance(out, pkg);
+        }
+
+        for (AttributeDefinition constant : pkg.getConstants()) {
+            printConstant(out, constant);
         }
 
         for (RoutineDefinition routine : pkg.getRoutines()) {

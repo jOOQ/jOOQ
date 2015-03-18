@@ -52,9 +52,10 @@ import org.jooq.tools.JooqLogger;
  */
 public abstract class AbstractPackageDefinition extends AbstractDefinition implements PackageDefinition {
 
-    private static final JooqLogger log = JooqLogger.getLogger(AbstractPackageDefinition.class);
+    private static final JooqLogger   log = JooqLogger.getLogger(AbstractPackageDefinition.class);
 
-    private List<RoutineDefinition> routines;
+    private List<RoutineDefinition>   routines;
+    private List<AttributeDefinition> constants;
 
     public AbstractPackageDefinition(SchemaDefinition schema, String name, String comment) {
         super(schema.getDatabase(), schema, name, comment);
@@ -82,4 +83,22 @@ public abstract class AbstractPackageDefinition extends AbstractDefinition imple
     }
 
     protected abstract List<RoutineDefinition> getRoutines0() throws SQLException;
+
+    @Override
+    public final List<AttributeDefinition> getConstants() {
+        if (constants == null) {
+            constants = new ArrayList<AttributeDefinition>();
+
+            try {
+                constants = getConstants0();
+            }
+            catch (SQLException e) {
+                log.error("Error while initialising package", e);
+            }
+        }
+
+        return constants;
+    }
+
+    protected abstract List<AttributeDefinition> getConstants0() throws SQLException;
 }

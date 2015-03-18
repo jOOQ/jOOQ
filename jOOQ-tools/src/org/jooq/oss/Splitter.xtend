@@ -118,6 +118,9 @@ class Splitter extends Generators {
                 && !canonicalPath.contains("\\target\\")
                 && !canonicalPath.contains("\\bin\\")
                 && !canonicalPath.contains("\\.idea\\")
+                && !canonicalPath.contains("\\.settings")
+                && !canonicalPath.endsWith("\\.project")
+                && !canonicalPath.endsWith("\\.classpath")
                 
                 // Activate this when we change anything to the Sakila db
                 && !canonicalPath.contains("\\Sakila\\")

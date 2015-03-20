@@ -368,9 +368,11 @@ public class JavaGenerator extends AbstractGenerator {
             generateRoutines(schema);
         }
 
+        /* [pro] */
         if (database.getPackages(schema).size() > 0) {
             generatePackages(schema);
         }
+        /* [/pro] */
 
         /* [pro] */
         if (database instanceof OracleDatabase) {
@@ -1843,6 +1845,7 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void printConstant(JavaWriter out, AttributeDefinition constant) {
+        /* [pro] */
         final String constantType = out.ref(getJavaType(constant.getType()));
         final String constantId = out.ref(getStrategy().getJavaIdentifier(constant));
 
@@ -1865,6 +1868,7 @@ public class JavaGenerator extends AbstractGenerator {
                 constant.getOutputName().replace("\"", "\\\""),
                 constantType);
         }
+        /* [/pro] */
     }
 
     protected void printRoutine(JavaWriter out, RoutineDefinition routine) {
@@ -1893,6 +1897,7 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generatePackages(SchemaDefinition schema) {
+        /* [pro] */
         log.info("Generating packages");
 
         for (PackageDefinition pkg : database.getPackages(schema)) {
@@ -1904,17 +1909,21 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         watch.splitInfo("Packages generated");
+        /* [/pro] */
     }
 
     @SuppressWarnings("unused")
     protected void generatePackage(SchemaDefinition schema, PackageDefinition pkg) {
+        /* [pro] */
         log.info("Generating package", pkg);
         JavaWriter out = newJavaWriter(getStrategy().getFile(pkg));
         generatePackage(pkg, out);
         out.close();
+        /* [/pro] */
     }
 
     protected void generatePackage(PackageDefinition pkg, JavaWriter out) {
+        /* [pro] */
         final SchemaDefinition schema = pkg.getSchema();
         final String className = getStrategy().getJavaClassName(pkg);
         final String identifier = getStrategy().getJavaIdentifier(pkg);
@@ -1964,6 +1973,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         generatePackageClassFooter(pkg, out);
         out.println("}");
+        /* [/pro] */
     }
 
     /**

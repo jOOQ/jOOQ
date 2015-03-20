@@ -134,6 +134,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Record;
+import org.jooq.Record1;
 import org.jooq.Record14;
 import org.jooq.Record2;
 import org.jooq.Record3;
@@ -2105,6 +2106,25 @@ public class OracleTest extends jOOQAbstractTest<
     @Test
     public void testOracleConstants() throws Exception {
         // PlsObjects.plsP(create().configuration(), PlsObjects.PLS_I_C, PlsObjects.PLS_V_C)
+    }
+
+    @Test
+    public void testOracleTableFunctionInNestedSelect() throws Exception {
+
+        // Crealogix IN-List use-case
+        UNumberTableRecord ids = new UNumberTableRecord(1, 2, 3);
+        Select<Record1<Integer>> selectIds = (Select<Record1<Integer>>) DSL.selectFrom(DSL.table(ids));
+
+        create()
+        .select()
+        .from(DSL.select(T_BOOK.ID,
+                         T_BOOK.AUTHOR_ID,
+                         T_BOOK.TITLE)
+                 .from(T_BOOK)
+                 .join(T_AUTHOR)
+                 .on(T_BOOK.AUTHOR_ID.eq(T_AUTHOR.ID))
+                 .where(T_BOOK.ID.in(selectIds)))
+        .fetch();
     }
 }
 

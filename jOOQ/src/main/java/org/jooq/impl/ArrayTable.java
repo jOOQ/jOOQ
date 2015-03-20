@@ -54,7 +54,6 @@ import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.UDTRecord;
 import org.jooq.exception.DataTypeException;
-import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.util.h2.H2DataType;
 
 /**
@@ -203,8 +202,16 @@ class ArrayTable extends AbstractTable<Record> {
                     return simulate();
                 }
 
+                /* [pro] xx
+                xx xxxxxxx xxxxxxxxxx xxx xxxxxxxxxx xx xxxxxxx xxxxxx xxxx
+                xx xxxxxxx xxxxxx xxxxxxx xxxxxxxxxxx
+                xxxx xx xxxxxx xxxxxxxxxx xxxxxxxxxxxxxx x
+                    xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                x
+                xx [/pro] */
+
                 else {
-                    throw new SQLDialectNotSupportedException("ARRAY TABLE is not supported for " + configuration.dialect());
+                    return simulate();
                 }
             }
         }

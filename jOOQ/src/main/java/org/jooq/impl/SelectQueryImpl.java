@@ -272,8 +272,28 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
     }
 
     @Override
+    public final <T> Field<T> field(String name, Class<T> type) {
+        return asTable().field(name, type);
+    }
+
+    @Override
+    public final <T> Field<T> field(String name, DataType<T> dataType) {
+        return asTable().field(name, dataType);
+    }
+
+    @Override
     public final Field<?> field(int index) {
         return asTable().field(index);
+    }
+
+    @Override
+    public final <T> Field<T> field(int index, Class<T> type) {
+        return asTable().field(index, type);
+    }
+
+    @Override
+    public final <T> Field<T> field(int index, DataType<T> dataType) {
+        return asTable().field(index, dataType);
     }
 
     @Override

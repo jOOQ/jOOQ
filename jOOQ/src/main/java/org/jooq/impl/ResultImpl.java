@@ -79,6 +79,7 @@ import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.DSLContext;
+import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -207,8 +208,28 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
+    public final <T> Field<T> field(String name, Class<T> type) {
+        return fields.field(name, type);
+    }
+
+    @Override
+    public final <T> Field<T> field(String name, DataType<T> dataType) {
+        return fields.field(name, dataType);
+    }
+
+    @Override
     public final Field<?> field(int index) {
         return fields.field(index);
+    }
+
+    @Override
+    public final <T> Field<T> field(int index, Class<T> type) {
+        return fields.field(index, type);
+    }
+
+    @Override
+    public final <T> Field<T> field(int index, DataType<T> dataType) {
+        return fields.field(index, dataType);
     }
 
     @Override

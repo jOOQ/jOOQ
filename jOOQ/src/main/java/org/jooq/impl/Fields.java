@@ -117,12 +117,36 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
     }
 
     @Override
+    public final <T> Field<T> field(String fieldName, Class<T> type) {
+        Field<?> result = field(fieldName);
+        return result == null ? null : result.coerce(type);
+    }
+
+    @Override
+    public final <T> Field<T> field(String fieldName, DataType<T> dataType) {
+        Field<?> result = field(fieldName);
+        return result == null ? null : result.coerce(dataType);
+    }
+
+    @Override
     public final Field<?> field(int index) {
         if (index >= 0 && index < fields.length) {
             return fields[index];
         }
 
         return null;
+    }
+
+    @Override
+    public final <T> Field<T> field(int fieldIndex, Class<T> type) {
+        Field<?> result = field(fieldIndex);
+        return result == null ? null : result.coerce(type);
+    }
+
+    @Override
+    public final <T> Field<T> field(int fieldIndex, DataType<T> dataType) {
+        Field<?> result = field(fieldIndex);
+        return result == null ? null : result.coerce(dataType);
     }
 
     @Override

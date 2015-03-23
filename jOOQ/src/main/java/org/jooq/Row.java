@@ -78,12 +78,48 @@ public interface Row extends QueryPart {
     Field<?> field(String fieldName);
 
     /**
+     * Get a specific field from this row and coerce it to <code>type</code>.
+     *
+     * @param fieldName The field to fetch
+     * @param type The type to coerce the resulting field to
+     * @return The field with the given name
+     */
+    <T> Field<T> field(String fieldName, Class<T> type);
+
+    /**
+     * Get a specific field from this row and coerce it to <code>dataType</code>.
+     *
+     * @param fieldName The field to fetch
+     * @param dataType The type to coerce the resulting field to
+     * @return The field with the given name
+     */
+    <T> Field<T> field(String fieldName, DataType<T> dataType);
+
+    /**
      * Get a specific field from this row.
      *
      * @param fieldIndex The field's index of the field to fetch
      * @return The field with the given name
      */
     Field<?> field(int fieldIndex);
+
+    /**
+     * Get a specific field from this row and coerce it to <code>type</code>.
+     *
+     * @param fieldIndex The field's index of the field to fetch
+     * @param type The type to coerce the resulting field to
+     * @return The field with the given name
+     */
+    <T> Field<T> field(int fieldIndex, Class<T> type);
+
+    /**
+     * Get a specific field from this row and coerce it to <code>dataType</code>.
+     *
+     * @param fieldIndex The field's index of the field to fetch
+     * @param dataType The type to coerce the resulting field to
+     * @return The field with the given name
+     */
+    <T> Field<T> field(int fieldIndex, DataType<T> dataType);
 
     /**
      * Get all fields from this row.

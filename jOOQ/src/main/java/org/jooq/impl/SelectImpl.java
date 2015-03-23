@@ -60,6 +60,7 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.Cursor;
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.GroupField;
@@ -2949,8 +2950,28 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     }
 
     @Override
+    public final <T> Field<T> field(String name, Class<T> type) {
+        return getDelegate().field(name, type);
+    }
+
+    @Override
+    public final <T> Field<T> field(String name, DataType<T> dataType) {
+        return getDelegate().field(name, dataType);
+    }
+
+    @Override
     public final Field<?> field(int index) {
         return getDelegate().field(index);
+    }
+
+    @Override
+    public final <T> Field<T> field(int index, Class<T> type) {
+        return getDelegate().field(index, type);
+    }
+
+    @Override
+    public final <T> Field<T> field(int index, DataType<T> dataType) {
+        return getDelegate().field(index, dataType);
     }
 
     @Override

@@ -97,11 +97,39 @@ public interface Result<R extends Record> extends List<R>, Attachable {
     Field<?> field(String name);
 
     /**
+     * Get a specific field from this Result, coerced to <code>type</code>.
+     *
+     * @see Row#field(String, Class)
+     */
+    <T> Field<T> field(String name, Class<T> type);
+
+    /**
+     * Get a specific field from this Result, coerced to <code>dataType</code>.
+     *
+     * @see Row#field(String, DataType)
+     */
+    <T> Field<T> field(String name, DataType<T> dataType);
+
+    /**
      * Get a specific field from this Result.
      *
      * @see Row#field(int)
      */
     Field<?> field(int index);
+
+    /**
+     * Get a specific field from this Result, coerced to <code>type</code>.
+     *
+     * @see Row#field(int, Class)
+     */
+    <T> Field<T> field(int index, Class<T> type);
+
+    /**
+     * Get a specific field from this Result, coerced to <code>dataType</code>.
+     *
+     * @see Row#field(int, DataType)
+     */
+    <T> Field<T> field(int index, DataType<T> dataType);
 
     /**
      * Get all fields from this Result.

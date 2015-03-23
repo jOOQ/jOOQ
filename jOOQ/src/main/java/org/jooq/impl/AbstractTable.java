@@ -98,9 +98,9 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     private static final long     serialVersionUID = 3155496238969274871L;
     private static final Clause[] CLAUSES          = { TABLE };
 
-    private final Schema          schema;
-    private final String          name;
-    private final String          comment;
+    private final Schema          tableschema;
+    private final String          tablename;
+    private final String          tablecomment;
 
     AbstractTable(String name) {
         this(name, null, null);
@@ -113,9 +113,9 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     AbstractTable(String name, Schema schema, String comment) {
         super();
 
-        this.schema = schema;
-        this.name = name;
-        this.comment = comment;
+        this.tableschema = schema;
+        this.tablename = name;
+        this.tablecomment = comment;
     }
 
     // ------------------------------------------------------------------------
@@ -166,8 +166,28 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     }
 
     @Override
+    public final <T> Field<T> field(String name, Class<T> type) {
+        return fieldsRow().field(name, type);
+    }
+
+    @Override
+    public final <T> Field<T> field(String name, DataType<T> dataType) {
+        return fieldsRow().field(name, dataType);
+    }
+
+    @Override
     public final Field<?> field(int index) {
         return fieldsRow().field(index);
+    }
+
+    @Override
+    public final <T> Field<T> field(int index, Class<T> type) {
+        return fieldsRow().field(index, type);
+    }
+
+    @Override
+    public final <T> Field<T> field(int index, DataType<T> dataType) {
+        return fieldsRow().field(index, dataType);
     }
 
     @Override
@@ -196,17 +216,17 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
 
     @Override
     public final Schema getSchema() {
-        return schema;
+        return tableschema;
     }
 
     @Override
     public final String getName() {
-        return name;
+        return tablename;
     }
 
     @Override
     public final String getComment() {
-        return comment;
+        return tablecomment;
     }
 
     /**
@@ -811,7 +831,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
         // [#2144] Non-equality can be decided early, without executing the
         // rather expensive implementation of AbstractQueryPart.equals()
         if (that instanceof AbstractTable) {
-            if (StringUtils.equals(name, (((AbstractTable<?>) that).name))) {
+            if (StringUtils.equals(tablename, (((AbstractTable<?>) that).tablename))) {
                 return super.equals(that);
             }
 
@@ -826,6 +846,6 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
 
         // [#1938] This is a much more efficient hashCode() implementation
         // compared to that of standard QueryParts
-        return name.hashCode();
+        return tablename.hashCode();
     }
 }

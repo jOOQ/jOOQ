@@ -134,12 +134,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         CommonTableExpression<Record2<Integer, String>> t1 = name("t1").fields("f1", "f2").as(select(val(1), val("a")));
         CommonTableExpression<Record2<Integer, String>> t2 = name("t2").fields("f3", "f4").as(select(val(2), val("b")));
 
-        Result<?> result2 =
+        Result<Record2<Integer, String>> result2 =
         create().with(t1)
                 .with(t2)
                 .select(
-                    t1.field("f1").add(t2.field("f3")).as("add"),
-                    t1.field("f2").concat(t2.field("f4")).as("concat"))
+                    t1.field("f1", Integer.class).add(t2.field("f3", Integer.class)).as("add"),
+                    t1.field("f2", String.class).concat(t2.field("f4", String.class)).as("concat"))
                 .from(t1, t2)
                 .fetch();
 
@@ -148,7 +148,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("add", result2.field(0).getName());
         assertEquals("concat", result2.field(1).getName());
         assertEquals(Integer.class, result2.field(0).getType());
+        assertEquals(Short.class, result2.field(0, Short.class).getType());
         assertEquals(String.class, result2.field(1).getType());
+        assertEquals(Integer.class, result2.field(1, Integer.class).getType());
         assertEquals(3, result2.getValue(0, 0));
         assertEquals("ab", result2.getValue(0, 1));
 

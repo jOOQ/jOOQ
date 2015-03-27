@@ -295,7 +295,7 @@ public class DefaultDataType<T> implements DataType<T> {
         // -----------------------------------
 
         // Dialect-specific data types
-        int ordinal = dialect == null ? SQLDialect.DEFAULT.ordinal() : dialect.ordinal();
+        int ordinal = dialect == null ? SQLDialect.DEFAULT.ordinal() : dialect.family().ordinal();
 
         // [#3225] Avoid normalisation if not necessary
         if (!TYPES_BY_NAME[ordinal].containsKey(typeName.toUpperCase())) {
@@ -355,7 +355,7 @@ public class DefaultDataType<T> implements DataType<T> {
     public final DataType<T> precision(int p, int s) {
         if (precision == p && scale == s)
             return this;
-        
+
         // [#4120] LOB types are not allowed to have precision
         else if (isLob())
             return this;
@@ -377,7 +377,7 @@ public class DefaultDataType<T> implements DataType<T> {
     public final DataType<T> scale(int s) {
         if (scale == s)
             return this;
-        
+
         // [#4120] LOB types are not allowed to have scale
         if (isLob())
             return this;
@@ -399,7 +399,7 @@ public class DefaultDataType<T> implements DataType<T> {
     public final DataType<T> length(int l) {
         if (length == l)
             return this;
-        
+
         // [#4120] LOB types are not allowed to have length
         if (isLob())
             return this;
@@ -674,12 +674,13 @@ public class DefaultDataType<T> implements DataType<T> {
     }
 
     public static DataType<?> getDataType(SQLDialect dialect, String typeName) {
-        DataType<?> result = TYPES_BY_NAME[dialect.ordinal()].get(typeName.toUpperCase());
+        int ordinal = dialect.ordinal();
+        DataType<?> result = TYPES_BY_NAME[ordinal].get(typeName.toUpperCase());
 
         // [#3225] Normalise only if necessary
         if (result == null) {
             typeName = DefaultDataType.normalise(typeName);
-            result = TYPES_BY_NAME[dialect.ordinal()].get(typeName);
+            result = TYPES_BY_NAME[ordinal].get(typeName);
         }
 
         // UDT data types and others are registered using DEFAULT
@@ -717,7 +718,7 @@ public class DefaultDataType<T> implements DataType<T> {
             DataType<?> result = null;
 
             if (dialect != null) {
-                result = TYPES_BY_TYPE[dialect.ordinal()].get(type);
+                result = TYPES_BY_TYPE[dialect.family().ordinal()].get(type);
             }
 
             if (result == null) {

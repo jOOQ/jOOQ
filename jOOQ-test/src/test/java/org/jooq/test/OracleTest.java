@@ -112,8 +112,11 @@ import static org.junit.Assert.assertTrue;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.sql.CallableStatement;
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.sql.Types;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -2125,6 +2128,31 @@ public class OracleTest extends jOOQAbstractTest<
                  .on(T_BOOK.AUTHOR_ID.eq(T_AUTHOR.ID))
                  .where(T_BOOK.ID.in(selectIds)))
         .fetch();
+    }
+
+    @Test
+    public void testOracleBooleanInPLSQL() throws Exception {
+Connection c = getConnection();
+CallableStatement call = c.prepareCall(
+    " DECLARE"
+  + "   vi1 BOOLEAN := CASE ? WHEN 1 THEN TRUE WHEN 0 THEN FALSE ELSE NULL END;"
+  + "   vi2 BOOLEAN := CASE ? WHEN 1 THEN TRUE WHEN 0 THEN FALSE ELSE NULL END;"
+  + "   vi3 BOOLEAN;"
+  + " BEGIN"
+  + "   pls_objects.p_bool(vi1, vi2, vi3);"
+  + ""
+  + "   ? := CASE vi2 WHEN TRUE THEN 1 WHEN FALSE THEN 0 ELSE NULL END;"
+  + "   ? := CASE vi3 WHEN TRUE THEN 1 WHEN FALSE THEN 0 ELSE NULL END;"
+  + " END;");
+
+call.setObject(1, 1);
+call.setObject(2, null);
+call.registerOutParameter(3, Types.INTEGER);
+call.registerOutParameter(4, Types.INTEGER);
+call.execute();
+
+System.out.println(call.getBoolean(3) + " (was null: " + call.wasNull() + ")");
+System.out.println(call.getBoolean(4) + " (was null: " + call.wasNull() + ")");
     }
 }
 

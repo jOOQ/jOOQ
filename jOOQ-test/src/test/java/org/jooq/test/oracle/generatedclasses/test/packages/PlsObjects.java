@@ -8,9 +8,10 @@ import java.math.BigDecimal;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
-import org.jooq.impl.DSL;
 import org.jooq.impl.PackageImpl;
 import org.jooq.test.oracle.generatedclasses.test.Test;
+import org.jooq.test.oracle.generatedclasses.test.packages.pls_objects.FBool;
+import org.jooq.test.oracle.generatedclasses.test.packages.pls_objects.PBool;
 import org.jooq.test.oracle.generatedclasses.test.packages.pls_objects.PlsF;
 import org.jooq.test.oracle.generatedclasses.test.packages.pls_objects.PlsP;
 
@@ -21,7 +22,7 @@ import org.jooq.test.oracle.generatedclasses.test.packages.pls_objects.PlsP;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PlsObjects extends PackageImpl {
 
-	private static final long serialVersionUID = -880975772;
+	private static final long serialVersionUID = 1903224027;
 
 	/**
 	 * The reference instance of <code>TEST.PLS_OBJECTS</code>
@@ -29,14 +30,47 @@ public class PlsObjects extends PackageImpl {
 	public static final PlsObjects PLS_OBJECTS = new PlsObjects();
 
 	/**
-	 * The constant <code>TEST.PLS_OBJECTS.PLS_V_C</code>.
+	 * Call <code>TEST.PLS_OBJECTS.F_BOOL</code>
 	 */
-	public static final Field<String> PLS_V_C = DSL.field(DSL.name("TEST", "PLS_OBJECTS", "PLS_V_C"), String.class);
+	public static Object fBool(Configuration configuration, Object i) {
+		FBool f = new FBool();
+		f.setI(i);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
 
 	/**
-	 * The constant <code>TEST.PLS_OBJECTS.PLS_I_C</code>.
+	 * Get <code>TEST.PLS_OBJECTS.F_BOOL</code> as a field
 	 */
-	public static final Field<BigDecimal> PLS_I_C = DSL.field(DSL.name("TEST", "PLS_OBJECTS", "PLS_I_C"), BigDecimal.class);
+	public static Field<Object> fBool(Object i) {
+		FBool f = new FBool();
+		f.setI(i);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get <code>TEST.PLS_OBJECTS.F_BOOL</code> as a field
+	 */
+	public static Field<Object> fBool(Field<Object> i) {
+		FBool f = new FBool();
+		f.setI(i);
+
+		return f.asField();
+	}
+
+	/**
+	 * Call <code>TEST.PLS_OBJECTS.P_BOOL</code>
+	 */
+	public static PBool pBool(Configuration configuration, Object i, Object io) {
+		PBool p = new PBool();
+		p.setI(i);
+		p.setIo(io);
+
+		p.execute(configuration);
+		return p;
+	}
 
 	/**
 	 * Call <code>TEST.PLS_OBJECTS.PLS_F</code>

@@ -18,7 +18,7 @@ import org.jooq.test.oracle.generatedclasses.test.packages.PlsObjects;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PlsP extends AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 532312772;
+	private static final long serialVersionUID = -1503625010;
 
 	/**
 	 * The parameter <code>TEST.PLS_OBJECTS.PLS_P.I</code>.
@@ -31,13 +31,25 @@ public class PlsP extends AbstractRoutine<java.lang.Void> {
 	public static final Parameter<String> V = createParameter("V", org.jooq.impl.SQLDataType.VARCHAR, false);
 
 	/**
+	 * The parameter <code>TEST.PLS_OBJECTS.PLS_P.IO</code>.
+	 */
+	public static final Parameter<BigDecimal> IO = createParameter("IO", org.jooq.impl.SQLDataType.NUMERIC, false);
+
+	/**
+	 * The parameter <code>TEST.PLS_OBJECTS.PLS_P.VO</code>.
+	 */
+	public static final Parameter<String> VO = createParameter("VO", org.jooq.impl.SQLDataType.VARCHAR, false);
+
+	/**
 	 * Create a new routine call instance
 	 */
 	public PlsP() {
 		super("PLS_P", Test.TEST, PlsObjects.PLS_OBJECTS);
 
-		addInOutParameter(I);
-		addInOutParameter(V);
+		addInParameter(I);
+		addInParameter(V);
+		addOutParameter(IO);
+		addOutParameter(VO);
 	}
 
 	/**
@@ -55,16 +67,16 @@ public class PlsP extends AbstractRoutine<java.lang.Void> {
 	}
 
 	/**
-	 * Get the <code>I</code> parameter OUT value from the routine
+	 * Get the <code>IO</code> parameter OUT value from the routine
 	 */
-	public BigDecimal getI() {
-		return getValue(I);
+	public BigDecimal getIo() {
+		return getValue(IO);
 	}
 
 	/**
-	 * Get the <code>V</code> parameter OUT value from the routine
+	 * Get the <code>VO</code> parameter OUT value from the routine
 	 */
-	public String getV() {
-		return getValue(V);
+	public String getVo() {
+		return getValue(VO);
 	}
 }

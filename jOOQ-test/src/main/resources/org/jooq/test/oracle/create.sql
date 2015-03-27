@@ -2081,6 +2081,8 @@ CREATE PACKAGE pls_objects AS
   
   PROCEDURE pls_p (i IN NUMBER, v IN VARCHAR2, io OUT NUMBER, vo OUT VARCHAR2);
   FUNCTION pls_f (i NUMBER, v VARCHAR2) RETURN NUMBER;
+  PROCEDURE p_bool (i IN BOOLEAN, io IN OUT BOOLEAN, o OUT BOOLEAN);
+  FUNCTION f_bool (i BOOLEAN) RETURN BOOLEAN;
 END pls_objects;
 /
 CREATE PACKAGE BODY pls_objects AS  
@@ -2094,5 +2096,16 @@ CREATE PACKAGE BODY pls_objects AS
   BEGIN
     RETURN i;
   END pls_f;
+  
+  PROCEDURE p_bool (i IN BOOLEAN, io IN OUT BOOLEAN, o OUT BOOLEAN) IS
+  BEGIN
+    o := io;
+    io := i;
+  END p_bool;
+  
+  FUNCTION f_bool (i BOOLEAN) RETURN BOOLEAN IS
+  BEGIN
+    RETURN i;
+  END f_bool;
 END pls_objects;
 /

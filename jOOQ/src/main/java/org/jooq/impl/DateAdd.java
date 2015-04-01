@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.econcom)
  * All rights reserved.
  *
  * This work is dual-licensed
@@ -253,16 +253,17 @@ class DateAdd<T extends java.util.Date> extends AbstractFunction<T> {
 
             xxxx xxxxxxx x
                 xxxxxx xxxxxxxxxx x
-                    xxxx xxxxx   xxxxxxx x xxxxxxx   xxxxxxxx x xxxxxxxxxxxxxxxxxx xxxxxx
-                    xxxx xxxxxx  xxxxxxx x xxxxxxxx  xxxxxxxx x xxxxxxxxxxxxxxxxxx xxxxxx
-                    xxxx xxxx    xxxxxxx x xxxxxx    xxxxxxxx x xxxxxxxxxxxxxxxxxx xxxxxx
-                    xxxx xxxxx   xxxxxxx x xxxxxxx   xxxxxxxx x xxxxxxxxxxxxxxxxxx xxxxxx
-                    xxxx xxxxxxx xxxxxxx x xxxxxxxxx xxxxxxxx x xxxxxxxxxxxxxxxxxx xxxxxx
-                    xxxx xxxxxxx xxxxxxx x xxxxxxxxx xxxxxxxx x xxxxxxxxxxxxxxxxxx xxxxxx
+
+                    xx xxxxxxx xx xxxxxx xxx xxxxxxxxxxxxxxx xxxxxxxx xx xxxxxx
+                    xx xxxx xxxxx xxxxxxxxx xx xxxx xxxx xxxxxxxx xxxxxxx xxxxx
+                    xxxx xxxxx   xxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxx xxxxxx  xxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxx xxxxxxxxxx
+                    xxxx xxxx    xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxx xxxxxxxxxxxxxxxx
+                    xxxx xxxxx   xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxx xxxxxxxxxxxxxxxxx
+                    xxxx xxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxx xxxxxxxxxxxxxxxxxxx
+                    xxxx xxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxx xxxxxxxxxxxxxxxxxxx
                     xxxxxxxx xxxxxxxxxxxxxxxxxxx
                 x
-
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxxxxxxxxxxxxxx
             x
 
             xxxx xxxxxxx x

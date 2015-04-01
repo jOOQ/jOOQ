@@ -255,7 +255,7 @@ class Yylex {
     private int yycolumn;
 
     /**
-     * zzAtBOL == true <=> the scanner is currently at the beginning of a line
+     * zzAtBOL == true &lt;=> the scanner is currently at the beginning of a line
      */
     private boolean zzAtBOL = true;
 

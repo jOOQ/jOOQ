@@ -71,17 +71,17 @@ public class MariaDBDataType {
     // -------------------------------------------------------------------------
 
     public static final DataType<Byte>       TINYINT            = new DefaultDataType<Byte>(SQLDialect.MARIADB, SQLDataType.TINYINT, "tinyint", "signed");
-    public static final DataType<UByte>      TINYINTUNSIGNED    = new DefaultDataType<UByte>(SQLDialect.MARIADB, SQLDataType.TINYINTUNSIGNED, "tinyintunsigned", "unsigned");
+    public static final DataType<UByte>      TINYINTUNSIGNED    = new DefaultDataType<UByte>(SQLDialect.MARIADB, SQLDataType.TINYINTUNSIGNED, "tinyint unsigned", "unsigned");
     public static final DataType<Short>      SMALLINT           = new DefaultDataType<Short>(SQLDialect.MARIADB, SQLDataType.SMALLINT, "smallint", "signed");
-    public static final DataType<UShort>     SMALLINTUNSIGNED   = new DefaultDataType<UShort>(SQLDialect.MARIADB, SQLDataType.SMALLINTUNSIGNED, "smallintunsigned", "unsigned");
+    public static final DataType<UShort>     SMALLINTUNSIGNED   = new DefaultDataType<UShort>(SQLDialect.MARIADB, SQLDataType.SMALLINTUNSIGNED, "smallint unsigned", "unsigned");
     public static final DataType<Integer>    INT                = new DefaultDataType<Integer>(SQLDialect.MARIADB, SQLDataType.INTEGER, "int", "signed");
-    public static final DataType<UInteger>   INTUNSIGNED        = new DefaultDataType<UInteger>(SQLDialect.MARIADB, SQLDataType.INTEGERUNSIGNED, "intunsigned", "unsigned");
+    public static final DataType<UInteger>   INTUNSIGNED        = new DefaultDataType<UInteger>(SQLDialect.MARIADB, SQLDataType.INTEGERUNSIGNED, "int unsigned", "unsigned");
     public static final DataType<Integer>    MEDIUMINT          = new DefaultDataType<Integer>(SQLDialect.MARIADB, SQLDataType.INTEGER, "mediumint", "signed");
-    public static final DataType<UInteger>   MEDIUMINTUNSIGNED  = new DefaultDataType<UInteger>(SQLDialect.MARIADB, SQLDataType.INTEGERUNSIGNED, "mediumintunsigned", "unsigned");
+    public static final DataType<UInteger>   MEDIUMINTUNSIGNED  = new DefaultDataType<UInteger>(SQLDialect.MARIADB, SQLDataType.INTEGERUNSIGNED, "mediumint unsigned", "unsigned");
     public static final DataType<Integer>    INTEGER            = new DefaultDataType<Integer>(SQLDialect.MARIADB, SQLDataType.INTEGER, "integer", "signed");
-    public static final DataType<UInteger>   INTEGERUNSIGNED    = new DefaultDataType<UInteger>(SQLDialect.MARIADB, SQLDataType.INTEGERUNSIGNED, "integerunsigned", "unsigned");
+    public static final DataType<UInteger>   INTEGERUNSIGNED    = new DefaultDataType<UInteger>(SQLDialect.MARIADB, SQLDataType.INTEGERUNSIGNED, "integer unsigned", "unsigned");
     public static final DataType<Long>       BIGINT             = new DefaultDataType<Long>(SQLDialect.MARIADB, SQLDataType.BIGINT, "bigint", "signed");
-    public static final DataType<ULong>      BIGINTUNSIGNED     = new DefaultDataType<ULong>(SQLDialect.MARIADB, SQLDataType.BIGINTUNSIGNED, "bigintunsigned", "unsigned");
+    public static final DataType<ULong>      BIGINTUNSIGNED     = new DefaultDataType<ULong>(SQLDialect.MARIADB, SQLDataType.BIGINTUNSIGNED, "bigint unsigned", "unsigned");
     public static final DataType<Double>     DOUBLE             = new DefaultDataType<Double>(SQLDialect.MARIADB, SQLDataType.DOUBLE, "double", "decimal");
     public static final DataType<Double>     FLOAT              = new DefaultDataType<Double>(SQLDialect.MARIADB, SQLDataType.FLOAT, "float", "decimal");
     public static final DataType<Float>      REAL               = new DefaultDataType<Float>(SQLDialect.MARIADB, SQLDataType.REAL, "real", "decimal");

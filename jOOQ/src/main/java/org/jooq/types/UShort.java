@@ -55,7 +55,7 @@ public final class UShort extends UNumber implements Comparable<UShort> {
 
     /**
      * A constant holding the maximum value an <code>unsigned short</code> can
-     * have, 2<sup>16</sup>-1.
+     * have, 2&lt;sup>16</sup>-1.
      */
     public static final int   MAX_VALUE        = 0xffff;
 

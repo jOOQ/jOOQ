@@ -64,7 +64,7 @@ public final class UByte extends UNumber implements Comparable<UByte> {
 
     /**
      * A constant holding the maximum value an <code>unsigned byte</code> can
-     * have, 2<sup>8</sup>-1.
+     * have, 2&lt;sup>8</sup>-1.
      */
     public static final short    MAX_VALUE        = 0xff;
 

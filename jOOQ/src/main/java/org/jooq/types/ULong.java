@@ -57,13 +57,13 @@ public final class ULong extends UNumber implements Comparable<ULong> {
 
     /**
      * A constant holding the maximum value an <code>unsigned long</code> can
-     * have, 2<sup>64</sup>-1.
+     * have, 2&lt;sup>64</sup>-1.
      */
     public static final BigInteger MAX_VALUE        = new BigInteger("18446744073709551615");
 
     /**
      * A constant holding the maximum value + 1 an <code>signed long</code> can
-     * have, 2<sup>63</sup>.
+     * have, 2&lt;sup>63</sup>.
      */
     public static final BigInteger MAX_VALUE_LONG   = new BigInteger("9223372036854775808");
 

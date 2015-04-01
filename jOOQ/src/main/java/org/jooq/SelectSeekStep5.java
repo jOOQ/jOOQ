@@ -319,7 +319,7 @@ public interface SelectSeekStep5<R extends Record, T1, T2, T3, T4, T5> extends S
      * <p>
      * <code><pre>
      * SELECT * FROM table
-     * WHERE (id, code) < (3, 'abc')
+     * WHERE (id, code) &lt; (3, 'abc')
      * ORDER BY id ASC, code ASC
      * </pre></code>
      * <p>
@@ -327,7 +327,7 @@ public interface SelectSeekStep5<R extends Record, T1, T2, T3, T4, T5> extends S
      * equivalent predicate:
      * <p>
      * <code><pre>
-     * WHERE (id < 3) OR (id = 3 AND code < 'abc')
+     * WHERE (id &lt; 3) OR (id = 3 AND code &lt; 'abc')
      * </pre></code>
      * <p>
      * The <code>SEEK BEFORE</code> method currently does not support seeking
@@ -369,7 +369,7 @@ public interface SelectSeekStep5<R extends Record, T1, T2, T3, T4, T5> extends S
      * <p>
      * <code><pre>
      * SELECT * FROM table
-     * WHERE (id, code) < (3, 'abc')
+     * WHERE (id, code) &lt; (3, 'abc')
      * ORDER BY id ASC, code ASC
      * </pre></code>
      * <p>
@@ -377,7 +377,7 @@ public interface SelectSeekStep5<R extends Record, T1, T2, T3, T4, T5> extends S
      * equivalent predicate:
      * <p>
      * <code><pre>
-     * WHERE (id < 3) OR (id = 3 AND code < 'abc')
+     * WHERE (id &lt; 3) OR (id = 3 AND code &lt; 'abc')
      * </pre></code>
      * <p>
      * The <code>SEEK BEFORE</code> method currently does not support seeking

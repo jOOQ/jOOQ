@@ -75,7 +75,7 @@ public final class UInteger extends UNumber implements Comparable<UInteger> {
 
     /**
      * A constant holding the maximum value an <code>unsigned int</code> can
-     * have, 2<sup>32</sup>-1.
+     * have, 2&lt;sup>32</sup>-1.
      */
     public static final long             MAX_VALUE             = 0xffffffffL;
 

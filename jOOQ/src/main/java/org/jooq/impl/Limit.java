@@ -272,7 +272,7 @@ class Limit extends AbstractQueryPart {
     }
 
     /**
-     * The upper bound, such that ROW_NUMBER() <= getUpperRownum()
+     * The upper bound, such that ROW_NUMBER() &lt;= getUpperRownum()
      */
     final Field<Integer> getUpperRownum() {
         return offsetOrZero.add(numberOfRows);

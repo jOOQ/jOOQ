@@ -2640,10 +2640,11 @@ public class JavaGenerator extends AbstractGenerator {
             final String numberField = parameter.getType().isGenericNumberType() ? "Number" : "Field";
             final String paramId = getStrategy().getJavaIdentifier(parameter);
             final String paramFullId = getStrategy().getFullJavaIdentifier(parameter);
+            final String paramName = "value".equals(paramId) ? "value_" : "value";
 
             out.tab(1).javadoc("Set the <code>%s</code> parameter IN value to the routine", parameter.getOutputName());
-            out.tab(1).println("public void %s(%s value) {", setter, getNumberType(parameter.getType()));
-            out.tab(2).println("set%s(%s, value);", numberValue, paramFullId);
+            out.tab(1).println("public void %s(%s %s) {", setter, getNumberType(parameter.getType()), paramName);
+            out.tab(2).println("set%s(%s, %s);", numberValue, paramFullId, paramName);
             out.tab(1).println("}");
 
             if (routine.isSQLUsable()) {

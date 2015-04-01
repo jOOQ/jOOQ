@@ -426,7 +426,7 @@ public final class StringUtils {
     /**
      * <p>Left pad a String with spaces (' ').</p>
      *
-     * <p>The String is padded to the size of <code>size<code>.</p>
+     * <p>The String is padded to the size of <code>size&lt;code>.</p>
      *
      * <pre>
      * StringUtils.leftPad(null, *)   = null
@@ -867,7 +867,7 @@ public final class StringUtils {
      * @param replacementList
      *            the Strings to replace them with, no-op if null
      * @param repeat if true, then replace repeatedly
-     *       until there are no more possible replacements or timeToLive < 0
+     *       until there are no more possible replacements or timeToLive &lt; 0
      * @param timeToLive
      *            if less than 0 then there is a circular reference and endless
      *            loop

@@ -185,22 +185,22 @@ public final class SQLDataType {
     /**
      * The unsigned {@link Types#TINYINT} type.
      */
-    public static final DataType<UByte> TINYINTUNSIGNED = new DefaultDataType<UByte>(null, UByte.class, "tinyintunsigned");
+    public static final DataType<UByte> TINYINTUNSIGNED = new DefaultDataType<UByte>(null, UByte.class, "tinyint unsigned");
 
     /**
      * The unsigned {@link Types#SMALLINT} type.
      */
-    public static final DataType<UShort> SMALLINTUNSIGNED = new DefaultDataType<UShort>(null, UShort.class, "smallintunsigned");
+    public static final DataType<UShort> SMALLINTUNSIGNED = new DefaultDataType<UShort>(null, UShort.class, "smallint unsigned");
 
     /**
      * The unsigned {@link Types#INTEGER} type.
      */
-    public static final DataType<UInteger> INTEGERUNSIGNED = new DefaultDataType<UInteger>(null, UInteger.class, "integerunsigned");
+    public static final DataType<UInteger> INTEGERUNSIGNED = new DefaultDataType<UInteger>(null, UInteger.class, "integer unsigned");
 
     /**
      * The unsigned {@link Types#BIGINT} type.
      */
-    public static final DataType<ULong> BIGINTUNSIGNED = new DefaultDataType<ULong>(null, ULong.class, "bigintunsigned");
+    public static final DataType<ULong> BIGINTUNSIGNED = new DefaultDataType<ULong>(null, ULong.class, "bigint unsigned");
 
     // -------------------------------------------------------------------------
     // Floating point types

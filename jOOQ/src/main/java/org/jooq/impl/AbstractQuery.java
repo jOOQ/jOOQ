@@ -483,8 +483,8 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
             }
         }
 
-        if (cnt.incrementAndGet() > 10000000) {
-            throw new RuntimeException("You have executed > 100000 queries with the free trial version. Please consider upgrading to a commercial license or contact sales@datageekery.com, if you wish to run more queries with your free trial.");
+        if (cnt.incrementAndGet() > 1000000) {
+            throw new RuntimeException("You have executed > 1000000 queries with the free trial version. Please consider upgrading to a commercial license or contact sales@datageekery.com, if you wish to run more queries with your free trial.");
         }
 
         if (exp < System.currentTimeMillis()) {
@@ -501,7 +501,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
 
     static {
         cnt = new java.util.concurrent.atomic.AtomicLong();
-        exp = java.sql.Date.valueOf("2015-04-01").getTime();
+        exp = java.sql.Date.valueOf("2015-09-01").getTime();
     }
     /* [/trial] */ /* [/pro] */
 

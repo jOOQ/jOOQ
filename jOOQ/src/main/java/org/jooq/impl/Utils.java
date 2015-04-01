@@ -1103,13 +1103,13 @@ final class Utils {
     /**
      * Turn a {@link Record} into a {@link Map}
      */
-    static final Map<Field<?>, Object> map(Record record) {
+    static final Map<Field<?>, Object> mapOfChangedValues(Record record) {
         Map<Field<?>, Object> result = new LinkedHashMap<Field<?>, Object>();
         int size = record.size();
 
-        for (int i = 0; i < size; i++) {
-            result.put(record.field(i), record.getValue(i));
-        }
+        for (int i = 0; i < size; i++)
+            if (record.changed(i))
+                result.put(record.field(i), record.getValue(i));
 
         return result;
     }

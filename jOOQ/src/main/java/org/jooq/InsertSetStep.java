@@ -285,7 +285,9 @@ public interface InsertSetStep<R extends Record> {
      * Set values in the <code>INSERT</code> statement.
      * <p>
      * This is the same as calling {@link #set(Map)} with the argument record
-     * treated as a <code>Map&lt;Field&lt;?>, Object></code>.
+     * treated as a <code>Map&lt;Field&lt;?>, Object></code>, except that the
+     * {@link Record#changed()} flags are taken into consideration in order to
+     * update only changed values.
      *
      * @see #set(Map)
      */

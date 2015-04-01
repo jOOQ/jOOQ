@@ -161,7 +161,7 @@ final class UpdateImpl<R extends Record>
 
     @Override
     public final UpdateImpl<R> set(Record record) {
-        return set(Utils.map(record));
+        return set(Utils.mapOfChangedValues(record));
     }
 
 // [jooq-tools] START [set]

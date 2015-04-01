@@ -743,7 +743,7 @@ implements
 
     @Override
     public final MergeImpl set(Record record) {
-        return set(Utils.map(record));
+        return set(Utils.mapOfChangedValues(record));
     }
 
     @Override

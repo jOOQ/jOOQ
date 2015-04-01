@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.econcom)
  * All rights reserved.
  *
  * This work is dual-licensed
@@ -253,16 +253,17 @@ class DateAdd<T extends java.util.Date> extends AbstractFunction<T> {
 
             case ORACLE: {
                 switch (datePart) {
-                    case YEAR:   keyword = "year";   function = "numtoyminterval"; break;
-                    case MONTH:  keyword = "month";  function = "numtoyminterval"; break;
-                    case DAY:    keyword = "day";    function = "numtodsinterval"; break;
-                    case HOUR:   keyword = "hour";   function = "numtodsinterval"; break;
-                    case MINUTE: keyword = "minute"; function = "numtodsinterval"; break;
-                    case SECOND: keyword = "second"; function = "numtodsinterval"; break;
+
+                    // [#4160] We cannot use NUMTOYMINTERVAL addition as Oracle
+                    // will raise ORA-01839 in case this produces invalid dates
+                    case YEAR:   return field("{add_months}({0}, {1})", date, interval.mul(inline(12)));
+                    case MONTH:  return field("{add_months}({0}, {1})", date, interval);
+                    case DAY:    return date.add(field("{numtodsinterval}({0}, {1})", interval, inline("day")));
+                    case HOUR:   return date.add(field("{numtodsinterval}({0}, {1})", interval, inline("hour")));
+                    case MINUTE: return date.add(field("{numtodsinterval}({0}, {1})", interval, inline("minute")));
+                    case SECOND: return date.add(field("{numtodsinterval}({0}, {1})", interval, inline("second")));
                     default: throwUnsupported();
                 }
-
-                return date.add(field("{0}({1}, {2})", keyword(function), interval, inline(keyword)));
             }
 
             case INGRES: {

@@ -107,6 +107,7 @@ import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record4;
 import org.jooq.Record6;
+import org.jooq.Record8;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
@@ -1640,7 +1641,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testFunctionsOnDates_DATE_DIFF_AND_DATE_ADD() throws Exception {
 
         // [#3824] Be sure that DATE types aren't converted to TIMESTAMP by any functions
-        Record6<Integer, Integer, Integer, Integer, Integer, Integer> dates = create()
+        Record6<Integer, Integer, Integer, Integer, Integer, Integer> d1 = create()
         .select(
             dateDiff(new Date(0), dateAdd(new Date(0), 2, DatePart.DAY)).as("d1"),
             dateDiff(new Date(0), val(new Date(0)).add(2)).as("d2"),
@@ -1653,12 +1654,36 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         )
         .fetchOne();
 
-        assertEquals(-2, dates.value1());
-        assertEquals(-2, dates.value2());
-        assertEquals(2,  dates.value3());
-        assertEquals(2,  dates.value4());
-        assertEquals(-2, dates.value5());
-        assertEquals(-2, dates.value6());
+        assertEquals(-2, d1.value1());
+        assertEquals(-2, d1.value2());
+        assertEquals(2,  d1.value3());
+        assertEquals(2,  d1.value4());
+        assertEquals(-2, d1.value5());
+        assertEquals(-2, d1.value6());
+
+        // [#4160] Some edge cases may appear when the calculated date does "not exist"
+        Record8<Date, Date, Date, Date, Timestamp, Timestamp, Timestamp, Timestamp> d2 = create()
+        .select(
+            dateAdd(Date.valueOf("2012-02-29"), 1, DatePart.YEAR),
+            dateAdd(Date.valueOf("2015-01-31"), 1, DatePart.MONTH),
+            dateAdd(Date.valueOf("2015-03-30"), -1, DatePart.MONTH),
+            dateAdd(Date.valueOf("2015-03-31"), 1, DatePart.MONTH),
+
+            timestampAdd(Timestamp.valueOf("2012-02-29 00:00:00"), 1, DatePart.YEAR),
+            timestampAdd(Timestamp.valueOf("2015-01-31 00:00:00"), 1, DatePart.MONTH),
+            timestampAdd(Timestamp.valueOf("2015-03-30 00:00:00"), -1, DatePart.MONTH),
+            timestampAdd(Timestamp.valueOf("2015-03-31 00:00:00"), 1, DatePart.MONTH)
+        )
+        .fetchOne();
+
+        assertEquals(Date.valueOf("2013-02-28"), d2.value1());
+        assertEquals(Date.valueOf("2015-02-28"), d2.value2());
+        assertEquals(Date.valueOf("2015-02-28"), d2.value3());
+        assertEquals(Date.valueOf("2015-04-30"), d2.value4());
+        assertEquals(Timestamp.valueOf("2013-02-28 00:00:00"), d2.value5());
+        assertEquals(Timestamp.valueOf("2015-02-28 00:00:00"), d2.value6());
+        assertEquals(Timestamp.valueOf("2015-02-28 00:00:00"), d2.value7());
+        assertEquals(Timestamp.valueOf("2015-04-30 00:00:00"), d2.value8());
     }
 
     public void testFunctionsOnDates_DATE_ADD() throws Exception {

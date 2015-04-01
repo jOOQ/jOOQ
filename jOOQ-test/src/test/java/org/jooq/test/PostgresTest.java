@@ -180,6 +180,7 @@ import org.jooq.test.postgres.generatedclasses.tables.records.VLibraryRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord;
 import org.jooq.test.postgres.generatedclasses.udt.UAddressType;
 import org.jooq.test.postgres.generatedclasses.udt.UStreetType;
+import org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord;
 import org.jooq.test.postgres.generatedclasses.udt.records.UUuidsRecord;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
@@ -1503,6 +1504,39 @@ public class PostgresTest extends jOOQAbstractTest<
         assertNull(countries.get(2)[0]);
         assertEquals(1, countries.get(3).length);
         assertEquals(UCountry.Brazil, countries.get(3)[0]);
+    }
+
+    @Test
+    public void testPostgresUDTArrays() {
+        jOOQAbstractTest.reset = false;
+
+        create().delete(T_ARRAYS).execute();
+        TArraysRecord record;
+
+        record = create().newRecord(T_ARRAYS);
+        record.setId(1);
+        record.setUdtArray(null);
+        assertEquals(1, record.insert());
+
+        record = create().newRecord(T_ARRAYS);
+        record.setId(2);
+        record.setUdtArray(new UStreetTypeRecord[0]);
+        assertEquals(1, record.insert());
+
+        record = create().newRecord(T_ARRAYS);
+        record.setId(3);
+        record.setUdtArray(new UStreetTypeRecord[] { new UStreetTypeRecord("A", "B", new Integer[] { 1, 2 }, "abc".getBytes()) });
+        assertEquals(1, record.insert());
+
+        Result<TArraysRecord> result =
+        create().selectFrom(T_ARRAYS)
+                .orderBy(T_ARRAYS.ID)
+                .fetch();
+
+        assertEquals(asList(1, 2, 3), result.getValues(T_ARRAYS.ID));
+        assertNull(result.get(0).getUdtArray());
+        assertEquals(0, result.get(1).getUdtArray().length);
+        assertEquals(1, result.get(2).getUdtArray().length);
     }
 
     @Test

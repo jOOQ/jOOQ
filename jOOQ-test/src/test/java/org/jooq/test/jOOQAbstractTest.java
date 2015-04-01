@@ -2266,6 +2266,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testUpdateSetRecord() throws Exception {
+        new InsertUpdateTests(this).testUpdateSetRecord();
+    }
+
+    @Test
     public void testUpdateJoin() throws Exception {
         new InsertUpdateTests(this).testUpdateJoin();
     }

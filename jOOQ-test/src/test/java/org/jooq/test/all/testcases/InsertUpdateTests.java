@@ -76,6 +76,7 @@ import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.tableByName;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.lambda.Seq.seq;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assume.assumeNotNull;
@@ -1376,6 +1377,28 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .from(TAuthor())
             .where(TAuthor_FIRST_NAME().equal(TAuthor_LAST_NAME()))
             .fetchOne(c));
+    }
+
+    public void testUpdateSetRecord() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        B record = create().newRecord(TBook());
+        record.setValue(TBook_TITLE(), "abc");
+        record.changed(TBook_ID(), false);
+
+        assertEquals(1,
+        create().update(TBook())
+                .set(record)
+                .where(TBook_ID().eq(2))
+                .execute());
+
+        Result<B> books =
+        create().selectFrom(TBook())
+                .orderBy(TBook_ID())
+                .fetch();
+
+        assertEquals(BOOK_AUTHOR_IDS, books.getValues(TBook_AUTHOR_ID()));
+        assertEquals(seq(BOOK_TITLES).zipWithIndex().map(t -> t.v2 == 1 ? "abc" : t.v1).toList(), books.getValues(TBook_TITLE()));
     }
 
     public void testUpdateJoin() throws Exception {

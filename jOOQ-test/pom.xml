@@ -5039,7 +5039,11 @@
                                         <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.oracle.OracleDatabase</name>
-                                            <includes>.*</includes>
+                                            <includes>
+                                            	${db.oracle.schema}\..*
+                                              | MULTI_SCHEMA\..*
+                                              | SYS\.XMLTYPE.*?
+                                           	</includes>
                                             <excludes>T_BOOK_DETAILS|S_TRIGGERS_SEQUENCE|.*976.*|.*1358.*|U_SECOND_MAX</excludes>
                                             <recordVersionFields>REC_VERSION</recordVersionFields>
                                             <recordTimestampFields>REC_TIMESTAMP</recordTimestampFields>
@@ -5050,6 +5054,9 @@
                                                 </schema>
                                                 <schema>
                                                     <inputSchema>MULTI_SCHEMA</inputSchema>
+                                                </schema>
+                                                <schema>
+                                                    <inputSchema>SYS</inputSchema>
                                                 </schema>
                                             </schemata>
 

@@ -358,7 +358,7 @@ public class OracleDatabase extends AbstractDatabase {
                 ALL_TYPES.TYPE_NAME)
             .from(ALL_TYPES)
             .where(ALL_TYPES.OWNER.upper().in(getInputSchemata()))
-            .and(ALL_TYPES.TYPECODE.equal("OBJECT"))
+            .and(ALL_TYPES.TYPECODE.in("OBJECT", "XMLTYPE"))
             .orderBy(
                 ALL_TYPES.OWNER,
                 ALL_TYPES.TYPE_NAME)
@@ -600,23 +600,23 @@ public class OracleDatabase extends AbstractDatabase {
                         .from(
                             select(s1.OWNER, s1.SYNONYM_NAME, s1.TABLE_OWNER, s1.TABLE_NAME)
                             .from(s1)
-                            
+
                             // If a PUBLIC SYNONYM is referenced, unfortunately, it doesn't generate
-                            // TABLE_OWNER = 'PUBLIC' in the ALL_SYNONYMS table. This simple trick will 
+                            // TABLE_OWNER = 'PUBLIC' in the ALL_SYNONYMS table. This simple trick will
                             // duplicate all SYNONYMs as they might potentially be PUBLIC
                             .union(
                             select(s1.OWNER, s1.SYNONYM_NAME, inline("PUBLIC"), s1.TABLE_NAME)
                             .from(s1))
                             .asTable("s2")
                         )
-                        
+
                         // Avoid dangling self-references from invalid SYNONYMs
                         .where(row(s2.OWNER, s2.SYNONYM_NAME).ne(s2.TABLE_OWNER, s2.TABLE_NAME))
                         .asTable("s3")
                     )
                     .connectBy(s3.TABLE_OWNER.eq(prior(s3.OWNER)))
                     .and(s3.TABLE_NAME.eq(prior(s3.SYNONYM_NAME)))
-                    
+
                     // Only consider SYNONYM hierarchies that end in a non-SYNONYM object from our
                     // input schemata
                     .startWith(DSL.exists(

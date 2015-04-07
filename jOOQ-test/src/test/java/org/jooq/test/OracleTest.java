@@ -165,6 +165,8 @@ import org.jooq.test.oracle.generatedclasses.multi_schema.packages.MsSynonymPack
 import org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord;
 import org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord;
 import org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord;
+import org.jooq.test.oracle.generatedclasses.sys.udt.Xmltype;
+import org.jooq.test.oracle.generatedclasses.sys.udt.records.XmltypeRecord;
 import org.jooq.test.oracle.generatedclasses.test.Keys;
 import org.jooq.test.oracle.generatedclasses.test.Routines;
 import org.jooq.test.oracle.generatedclasses.test.Sequences;
@@ -2132,27 +2134,55 @@ public class OracleTest extends jOOQAbstractTest<
 
     @Test
     public void testOracleBooleanInPLSQL() throws Exception {
-Connection c = getConnection();
-CallableStatement call = c.prepareCall(
-    " DECLARE"
-  + "   vi1 BOOLEAN := CASE ? WHEN 1 THEN TRUE WHEN 0 THEN FALSE ELSE NULL END;"
-  + "   vi2 BOOLEAN := CASE ? WHEN 1 THEN TRUE WHEN 0 THEN FALSE ELSE NULL END;"
-  + "   vi3 BOOLEAN;"
-  + " BEGIN"
-  + "   pls_objects.p_bool(vi1, vi2, vi3);"
-  + ""
-  + "   ? := CASE vi2 WHEN TRUE THEN 1 WHEN FALSE THEN 0 ELSE NULL END;"
-  + "   ? := CASE vi3 WHEN TRUE THEN 1 WHEN FALSE THEN 0 ELSE NULL END;"
-  + " END;");
+        Connection c = getConnection();
+        CallableStatement call = c.prepareCall(
+            " DECLARE"
+          + "   vi1 BOOLEAN := CASE ? WHEN 1 THEN TRUE WHEN 0 THEN FALSE ELSE NULL END;"
+          + "   vi2 BOOLEAN := CASE ? WHEN 1 THEN TRUE WHEN 0 THEN FALSE ELSE NULL END;"
+          + "   vi3 BOOLEAN;"
+          + " BEGIN"
+          + "   pls_objects.p_bool(vi1, vi2, vi3);"
+          + ""
+          + "   ? := CASE vi2 WHEN TRUE THEN 1 WHEN FALSE THEN 0 ELSE NULL END;"
+          + "   ? := CASE vi3 WHEN TRUE THEN 1 WHEN FALSE THEN 0 ELSE NULL END;"
+          + " END;");
 
-call.setObject(1, 1);
-call.setObject(2, null);
-call.registerOutParameter(3, Types.INTEGER);
-call.registerOutParameter(4, Types.INTEGER);
-call.execute();
+        call.setObject(1, 1);
+        call.setObject(2, null);
+        call.registerOutParameter(3, Types.INTEGER);
+        call.registerOutParameter(4, Types.INTEGER);
+        call.execute();
 
-System.out.println(call.getBoolean(3) + " (was null: " + call.wasNull() + ")");
-System.out.println(call.getBoolean(4) + " (was null: " + call.wasNull() + ")");
+        System.out.println(call.getBoolean(3) + " (was null: " + call.wasNull() + ")");
+        System.out.println(call.getBoolean(4) + " (was null: " + call.wasNull() + ")");
+    }
+
+    @Test
+    public void testOracleXMLTYPE() throws Exception {
+        clean(T_EXOTIC_TYPES);
+
+        assertEquals(1,
+        create().insertInto(T_EXOTIC_TYPES)
+                .set(T_EXOTIC_TYPES.ID, 1)
+                .set(T_EXOTIC_TYPES.ORACLE_XML_AS_IS, (XmltypeRecord) null)
+                .execute());
+
+        assertEquals(1,
+        create().insertInto(T_EXOTIC_TYPES)
+                .set(T_EXOTIC_TYPES.ID, 2)
+                .set(T_EXOTIC_TYPES.ORACLE_XML_AS_IS, Xmltype.createxml1("<a><b/></a>"))
+                .execute());
+
+        Result<TExoticTypesRecord> result =
+        create().selectFrom(T_EXOTIC_TYPES)
+                .orderBy(T_EXOTIC_TYPES.ID)
+                .fetch();
+
+        assertEquals(2, result.size());
+        assertNull(result.get(0).getOracleXmlAsIs());
+
+        XmltypeRecord record = result.get(1).getOracleXmlAsIs();
+        assertEquals("<a><b/></a>", record.getstringval1());
     }
 
     @Test

@@ -581,7 +581,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
             xx [/pro] */
             if (getPackage() != null) {
-                context.visit(getPackage());
+                context.visit(DSL.name(getPackage().getName()));
                 context.sql('.');
             }
         }

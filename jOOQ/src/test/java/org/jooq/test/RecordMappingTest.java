@@ -42,8 +42,13 @@
 package org.jooq.test;
 
 import static org.jooq.impl.DSL.field;
+import static org.jooq.test.data.Table1.FIELD_DATE1;
+import static org.jooq.test.data.Table1.FIELD_ID1;
+import static org.jooq.test.data.Table1.FIELD_NAME1;
+import static org.jooq.test.data.Table1.TABLE1;
 import static org.jooq.tools.reflect.Reflect.accessible;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -56,6 +61,7 @@ import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record4;
 import org.jooq.Result;
+import org.jooq.test.data.Table1Record;
 
 import org.junit.Test;
 
@@ -263,6 +269,32 @@ public class RecordMappingTest extends AbstractTest {
         assertEquals(Arrays.asList(1, 0, 0), result.into(int.class));
         assertEquals(Arrays.asList(1, 0, null), result.into(Integer.class));
         assertEquals(Arrays.asList("true", "false", null), result.into(String.class));
+    }
+
+    @Test
+    public void testRecordFrom() throws Exception {
+        Table1Record record = create.newRecord(TABLE1);
+        assertFalse(record.changed());
+
+        T1 t1 = new T1();
+        t1.ID1 = 1;
+        t1.NAME1 = "A";
+        t1.DUMMY = "X";
+
+        record.from(t1);
+        assertTrue(record.changed());
+        assertTrue(record.changed(FIELD_ID1));
+        assertTrue(record.changed(FIELD_NAME1));
+        assertFalse(record.changed(FIELD_DATE1));
+        assertEquals(1, (int) record.getValue(FIELD_ID1));
+        assertEquals("A", record.getValue(FIELD_NAME1));
+        assertNull(record.getValue(FIELD_DATE1));
+    }
+
+    static class T1 {
+        Integer ID1;
+        String NAME1;
+        String DUMMY;
     }
 
 }

@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import org.jooq.Configuration;
 import org.jooq.impl.DAOImpl;
+import org.jooq.test.oracle.generatedclasses.sys.udt.records.XmltypeRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.TExoticTypes;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TExoticTypesRecord;
 
@@ -82,5 +83,19 @@ public class TExoticTypesDao extends DAOImpl<TExoticTypesRecord, org.jooq.test.o
 	 */
 	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.TExoticTypes> fetchByPlainSqlBindingXml(String... values) {
 		return fetch(TExoticTypes.T_EXOTIC_TYPES.PLAIN_SQL_BINDING_XML, values);
+	}
+
+	/**
+	 * Fetch records that have <code>ORACLE_XML_AS_IS IN (values)</code>
+	 */
+	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.TExoticTypes> fetchByOracleXmlAsIs(XmltypeRecord... values) {
+		return fetch(TExoticTypes.T_EXOTIC_TYPES.ORACLE_XML_AS_IS, values);
+	}
+
+	/**
+	 * Fetch records that have <code>ORACLE_XML_AS_DOCUMENT IN (values)</code>
+	 */
+	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.TExoticTypes> fetchByOracleXmlAsDocument(XmltypeRecord... values) {
+		return fetch(TExoticTypes.T_EXOTIC_TYPES.ORACLE_XML_AS_DOCUMENT, values);
 	}
 }

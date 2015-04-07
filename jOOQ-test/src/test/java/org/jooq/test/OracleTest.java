@@ -2154,6 +2154,21 @@ call.execute();
 System.out.println(call.getBoolean(3) + " (was null: " + call.wasNull() + ")");
 System.out.println(call.getBoolean(4) + " (was null: " + call.wasNull() + ")");
     }
+
+    @Test
+    public void testOracleStaticMemberProcedure() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        UAuthorTypeRecord a1 = UAuthorType.newAuthor(create().configuration(), 3, "Alfred", "Hitchcock");
+        assertEquals(3, (int) a1.getId());
+        assertEquals("Alfred", a1.getFirstName());
+        assertEquals("Hitchcock", a1.getLastName());
+
+        TAuthorRecord a2 = create().fetchOne(T_AUTHOR, T_AUTHOR.ID.eq(3));
+        assertEquals(3, (int) a2.getId());
+        assertEquals("Alfred", a2.getFirstName());
+        assertEquals("Hitchcock", a2.getLastName());
+    }
 }
 
 /* [/pro] */

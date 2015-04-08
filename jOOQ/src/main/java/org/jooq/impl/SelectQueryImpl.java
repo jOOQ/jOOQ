@@ -469,8 +469,10 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                        .keyword("for update");
 
                 if (!forUpdateOf.isEmpty()) {
-                    context.sql(' ').keyword("of").sql(' ');
-                    Utils.fieldNames(context, forUpdateOf);
+                    context.sql(' ').keyword("of")
+                           .sql(' ').visit(forUpdateOf);
+
+                    // Utils.fieldNames(context, forUpdateOf);
                 }
                 else if (!forUpdateOfTables.isEmpty()) {
                     context.sql(' ').keyword("of").sql(' ');
@@ -486,7 +488,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                         case ORACLE:
                         /* [/pro] */
                         case DERBY: {
-                            forUpdateOfTables.toSQLFieldNames(context);
+                            forUpdateOfTables.toSQLFields(context);
                             break;
                         }
 

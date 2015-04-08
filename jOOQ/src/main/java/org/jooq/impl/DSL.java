@@ -6938,7 +6938,7 @@ public class DSL {
     // [jooq-tools] START [row-field]
 
     /**
-     * Turn a row value expression of degree <code>1</code> into a {@code Field}.
+     * EXPERIMENTAL: Turn a row value expression of degree <code>1</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be emulated on all databases. See relevant row
@@ -6951,7 +6951,7 @@ public class DSL {
     }
 
     /**
-     * Turn a row value expression of degree <code>2</code> into a {@code Field}.
+     * EXPERIMENTAL: Turn a row value expression of degree <code>2</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be emulated on all databases. See relevant row
@@ -6964,7 +6964,7 @@ public class DSL {
     }
 
     /**
-     * Turn a row value expression of degree <code>3</code> into a {@code Field}.
+     * EXPERIMENTAL: Turn a row value expression of degree <code>3</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be emulated on all databases. See relevant row
@@ -6977,7 +6977,7 @@ public class DSL {
     }
 
     /**
-     * Turn a row value expression of degree <code>4</code> into a {@code Field}.
+     * EXPERIMENTAL: Turn a row value expression of degree <code>4</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be emulated on all databases. See relevant row
@@ -6990,7 +6990,7 @@ public class DSL {
     }
 
     /**
-     * Turn a row value expression of degree <code>5</code> into a {@code Field}.
+     * EXPERIMENTAL: Turn a row value expression of degree <code>5</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be emulated on all databases. See relevant row
@@ -7003,7 +7003,7 @@ public class DSL {
     }
 
     /**
-     * Turn a row value expression of degree <code>6</code> into a {@code Field}.
+     * EXPERIMENTAL: Turn a row value expression of degree <code>6</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be emulated on all databases. See relevant row
@@ -7016,7 +7016,7 @@ public class DSL {
     }
 
     /**
-     * Turn a row value expression of degree <code>7</code> into a {@code Field}.
+     * EXPERIMENTAL: Turn a row value expression of degree <code>7</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be emulated on all databases. See relevant row
@@ -7029,7 +7029,7 @@ public class DSL {
     }
 
     /**
-     * Turn a row value expression of degree <code>8</code> into a {@code Field}.
+     * EXPERIMENTAL: Turn a row value expression of degree <code>8</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be emulated on all databases. See relevant row
@@ -7042,7 +7042,7 @@ public class DSL {
     }
 
     /**
-     * Turn a row value expression of degree <code>9</code> into a {@code Field}.
+     * EXPERIMENTAL: Turn a row value expression of degree <code>9</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be emulated on all databases. See relevant row
@@ -7055,7 +7055,7 @@ public class DSL {
     }
 
     /**
-     * Turn a row value expression of degree <code>10</code> into a {@code Field}.
+     * EXPERIMENTAL: Turn a row value expression of degree <code>10</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be emulated on all databases. See relevant row
@@ -7068,7 +7068,7 @@ public class DSL {
     }
 
     /**
-     * Turn a row value expression of degree <code>11</code> into a {@code Field}.
+     * EXPERIMENTAL: Turn a row value expression of degree <code>11</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be emulated on all databases. See relevant row
@@ -7081,7 +7081,7 @@ public class DSL {
     }
 
     /**
-     * Turn a row value expression of degree <code>12</code> into a {@code Field}.
+     * EXPERIMENTAL: Turn a row value expression of degree <code>12</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be emulated on all databases. See relevant row
@@ -7094,7 +7094,7 @@ public class DSL {
     }
 
     /**
-     * Turn a row value expression of degree <code>13</code> into a {@code Field}.
+     * EXPERIMENTAL: Turn a row value expression of degree <code>13</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be emulated on all databases. See relevant row
@@ -7107,7 +7107,7 @@ public class DSL {
     }
 
     /**
-     * Turn a row value expression of degree <code>14</code> into a {@code Field}.
+     * EXPERIMENTAL: Turn a row value expression of degree <code>14</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be emulated on all databases. See relevant row
@@ -7120,7 +7120,7 @@ public class DSL {
     }
 
     /**
-     * Turn a row value expression of degree <code>15</code> into a {@code Field}.
+     * EXPERIMENTAL: Turn a row value expression of degree <code>15</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be emulated on all databases. See relevant row
@@ -7133,7 +7133,7 @@ public class DSL {
     }
 
     /**
-     * Turn a row value expression of degree <code>16</code> into a {@code Field}.
+     * EXPERIMENTAL: Turn a row value expression of degree <code>16</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be emulated on all databases. See relevant row
@@ -7146,7 +7146,7 @@ public class DSL {
     }
 
     /**
-     * Turn a row value expression of degree <code>17</code> into a {@code Field}.
+     * EXPERIMENTAL: Turn a row value expression of degree <code>17</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be emulated on all databases. See relevant row
@@ -7159,7 +7159,7 @@ public class DSL {
     }
 
     /**
-     * Turn a row value expression of degree <code>18</code> into a {@code Field}.
+     * EXPERIMENTAL: Turn a row value expression of degree <code>18</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be emulated on all databases. See relevant row
@@ -7172,7 +7172,7 @@ public class DSL {
     }
 
     /**
-     * Turn a row value expression of degree <code>19</code> into a {@code Field}.
+     * EXPERIMENTAL: Turn a row value expression of degree <code>19</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be emulated on all databases. See relevant row
@@ -7185,7 +7185,7 @@ public class DSL {
     }
 
     /**
-     * Turn a row value expression of degree <code>20</code> into a {@code Field}.
+     * EXPERIMENTAL: Turn a row value expression of degree <code>20</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be emulated on all databases. See relevant row
@@ -7198,7 +7198,7 @@ public class DSL {
     }
 
     /**
-     * Turn a row value expression of degree <code>21</code> into a {@code Field}.
+     * EXPERIMENTAL: Turn a row value expression of degree <code>21</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be emulated on all databases. See relevant row
@@ -7211,7 +7211,7 @@ public class DSL {
     }
 
     /**
-     * Turn a row value expression of degree <code>22</code> into a {@code Field}.
+     * EXPERIMENTAL: Turn a row value expression of degree <code>22</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be emulated on all databases. See relevant row

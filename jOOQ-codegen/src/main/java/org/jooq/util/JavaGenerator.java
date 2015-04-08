@@ -4429,17 +4429,20 @@ public class JavaGenerator extends AbstractGenerator {
 
             // Otherwise, reference the dialect-specific DataType itself.
             else {
-                String typeClass =
-                    "org.jooq.util." +
-                    db.getDialect().getName().toLowerCase() +
-                    "." +
-                    db.getDialect().getName() +
-                    "DataType";
-
-                sb.append(typeClass);
-                sb.append(".");
-
                 try {
+
+                    // [#4173] DEFAULT and SQL99 data types
+                    String typeClass = (db.getDialect().getName() == null)
+                        ? SQLDataType.class.getName()
+                        : "org.jooq.util." +
+                          db.getDialect().getName().toLowerCase() +
+                          "." +
+                          db.getDialect().getName() +
+                          "DataType";
+
+                    sb.append(typeClass);
+                    sb.append(".");
+
                     String type1 = getType(db, schema, t, p, s, u, null);
                     String type2 = getType(db, schema, t, 0, 0, u, null);
                     String typeName = DefaultDataType.normalise(t);

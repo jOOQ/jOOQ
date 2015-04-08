@@ -111,7 +111,7 @@ import org.jooq.DatePart;
 import org.jooq.Delete;
 import org.jooq.DeleteWhereStep;
 import org.jooq.DerivedColumnList;
-import org.jooq.DropIndexFinalStep;
+import org.jooq.DropIndexOnStep;
 import org.jooq.DropSequenceFinalStep;
 import org.jooq.DropTableStep;
 import org.jooq.DropViewFinalStep;
@@ -4619,7 +4619,7 @@ public class DSL {
      * @see DSLContext#dropIndex(String)
      */
     @Support
-    public static DropIndexFinalStep dropIndex(String index) {
+    public static DropIndexOnStep dropIndex(String index) {
         return using(new DefaultConfiguration()).dropIndex(index);
     }
 
@@ -4629,7 +4629,7 @@ public class DSL {
      * @see DSLContext#dropIndex(Name)
      */
     @Support
-    public static DropIndexFinalStep dropIndex(Name index) {
+    public static DropIndexOnStep dropIndex(Name index) {
         return using(new DefaultConfiguration()).dropIndex(index);
     }
 
@@ -4642,7 +4642,7 @@ public class DSL {
      * @see DSLContext#dropIndexIfExists(String)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static DropIndexFinalStep dropIndexIfExists(String index) {
+    public static DropIndexOnStep dropIndexIfExists(String index) {
         return using(new DefaultConfiguration()).dropIndexIfExists(index);
     }
 
@@ -4655,7 +4655,7 @@ public class DSL {
      * @see DSLContext#dropIndexIfExists(String)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static DropIndexFinalStep dropIndexIfExists(Name index) {
+    public static DropIndexOnStep dropIndexIfExists(Name index) {
         return using(new DefaultConfiguration()).dropIndexIfExists(index);
     }
 

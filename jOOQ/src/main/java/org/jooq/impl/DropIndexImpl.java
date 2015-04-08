@@ -50,13 +50,17 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
+import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DropStatementType.INDEX;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DropIndexFinalStep;
+import org.jooq.DropIndexOnStep;
 import org.jooq.Name;
+import org.jooq.Table;
 
 /**
  * @author Lukas Eder
@@ -64,7 +68,7 @@ import org.jooq.Name;
 class DropIndexImpl extends AbstractQuery implements
 
     // Cascading interface implementations for DROP INDEX behaviour
-    DropIndexFinalStep {
+    DropIndexOnStep {
 
     /**
      * Generated UID
@@ -72,8 +76,9 @@ class DropIndexImpl extends AbstractQuery implements
     private static final long     serialVersionUID = 8904572826501186329L;
     private static final Clause[] CLAUSES          = { DROP_INDEX };
 
-    private final Name            index;
-    private final boolean         ifExists;
+    private final Name    index;
+    private final boolean ifExists;
+    private Table<?>      on;
 
     DropIndexImpl(Configuration configuration, Name index) {
         this(configuration, index, false);
@@ -84,6 +89,26 @@ class DropIndexImpl extends AbstractQuery implements
 
         this.index = index;
         this.ifExists = ifExists;
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: DropIndex API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final DropIndexFinalStep on(Table<?> table) {
+        this.on = table;
+        return this;
+    }
+
+    @Override
+    public final DropIndexFinalStep on(String tableName) {
+        return on(name(tableName));
+    }
+
+    @Override
+    public final DropIndexFinalStep on(Name tableName) {
+        return on(table(tableName));
     }
 
     // ------------------------------------------------------------------------
@@ -113,6 +138,9 @@ class DropIndexImpl extends AbstractQuery implements
             ctx.keyword("if exists").sql(' ');
 
         ctx.visit(index);
+
+        if (on != null)
+            ctx.sql(' ').keyword("on").sql(' ').visit(on);
     }
 
     @Override

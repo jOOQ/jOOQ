@@ -40,6 +40,23 @@
  */
 package org.jooq;
 
+// ...
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+// ...
+import static org.jooq.SQLDialect.HSQLDB;
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
+
 import javax.annotation.Generated;
 
 /**
@@ -401,6 +418,6 @@ public interface ConstraintTypeStep extends ConstraintFinalStep {
     /**
      * Create a <code>CHECK</code> constraint.
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     ConstraintFinalStep check(Condition condition);
 }

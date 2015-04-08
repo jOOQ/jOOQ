@@ -5146,7 +5146,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropIndex(String)
      */
     @Support
-    DropIndexFinalStep dropIndex(String index);
+    DropIndexOnStep dropIndex(String index);
 
     /**
      * Create a new DSL <code>DROP INDEX</code> statement.
@@ -5154,7 +5154,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropIndex(Name)
      */
     @Support
-    DropIndexFinalStep dropIndex(Name index);
+    DropIndexOnStep dropIndex(Name index);
 
     /**
      * Create a new DSL <code>DROP INDEX IF EXISTS</code> statement.
@@ -5165,7 +5165,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropIndexIfExists(String)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    DropIndexFinalStep dropIndexIfExists(String index);
+    DropIndexOnStep dropIndexIfExists(String index);
 
     /**
      * Create a new DSL <code>DROP INDEX IF EXISTS</code> statement.
@@ -5176,7 +5176,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropIndexIfExists(Name)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    DropIndexFinalStep dropIndexIfExists(Name index);
+    DropIndexOnStep dropIndexIfExists(Name index);
 
     /**
      * Create a new DSL <code>DROP SEQUENCE</code> statement.

@@ -66,7 +66,7 @@ public enum SQLDialect {
      *             pseudo-dialect.
      */
     @Deprecated
-    SQL99(null, false),
+    SQL99("", false),
 
     /**
      * The default SQL dialect.
@@ -75,7 +75,7 @@ public enum SQLDialect {
      * not intended to be used with any actual database as it may combined
      * dialect-specific things from various dialects.
      */
-    DEFAULT(null, false),
+    DEFAULT("", false),
 
     // -------------------------------------------------------------------------
     // SQL dialects for free usage

@@ -107,7 +107,7 @@ class DSL extends Generators {
             out.append('''
             
                 /**
-                 * Turn a row value expression of degree <code>«degree»</code> into a {@code Field}.
+                 * EXPERIMENTAL: Turn a row value expression of degree <code>«degree»</code> into a {@code Field}.
                  * <p>
                  * Note: Not all databases support row value expressions, but many row value
                  * expression operations can be emulated on all databases. See relevant row

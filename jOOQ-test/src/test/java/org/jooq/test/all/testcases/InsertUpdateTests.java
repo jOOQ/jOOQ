@@ -64,9 +64,11 @@ import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.defaultValue;
 import static org.jooq.impl.DSL.falseCondition;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.max;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectCount;
@@ -927,9 +929,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         int ID = testInsertReturningCreateDummyRecord();
 
         Record returned = create()
-            .insertInto(tableByName(TTriggers().getName()))
-            .set(fieldByName(TTriggers_COUNTER().getName()), 0)
-            .returning(fieldByName(TTriggers_ID_GENERATED().getName()))
+            .insertInto(table(name(TTriggers().getName())))
+            .set(field(name(TTriggers_COUNTER().getName())), 0)
+            .returning(field(name(TTriggers_ID_GENERATED().getName())))
             .fetchOne();
 
         assertNotNull(returned);

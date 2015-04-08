@@ -41,6 +41,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
+import static java.util.Arrays.asList;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -1235,6 +1236,7 @@ final class Utils {
 
         SQLDialect dialect = render.configuration().dialect();
         SQLDialect family = dialect.family();
+        boolean mysql = asList(MARIADB, MYSQL).contains(family);
         String[][] quotes = QUOTES.get(family);
 
         // [#3630] Depending on this setting, we need to consider backslashes as escape characters within string literals.
@@ -1246,7 +1248,13 @@ final class Utils {
             // select 1 x -- what's this ?'?
             // from t_book -- what's that ?'?
             // where id = ?
-            if (peek(sqlChars, i, "--")) {
+            if (peek(sqlChars, i, "--") ||
+
+            // [#4182] MySQL also supports # as a comment character, and requires
+            // -- to be followed by a whitespace, although the latter is also not
+            // handled correctly by the MySQL JDBC driver (yet). See
+    		// http://bugs.mysql.com/bug.php?id=76623
+                (mysql && peek(sqlChars, i, "#"))) {
 
                 // Consume the complete comment
                 for (; i < sqlChars.length && sqlChars[i] != '\r' && sqlChars[i] != '\n'; render.sql(sqlChars[i++]));

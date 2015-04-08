@@ -1065,4 +1065,27 @@ public class MySQLTest extends jOOQAbstractTest<
             ignoreThrows(() -> create().dropTable("t").execute());
         }
     }
+
+    @Test
+    public void testMySQLPlainSQLAndComments() {
+        // [#4182] MySQL also supports # as comment character
+        Result<Record> r1 = create().fetch(
+            "# comment\n"
+          + "# comment\n"
+          + "select 1 a from dual"
+        );
+
+        assertEquals(1, r1.size());
+        assertEquals(1, (int) r1.get(0).getValue(0, int.class));
+
+        Result<Record> r2 = create().fetch(
+            "# comment\n"
+          + "# funky '\"` characters\n"
+          + "# comment\n"
+          + "select 1 a from dual"
+        );
+
+        assertEquals(1, r2.size());
+        assertEquals(1, (int) r2.get(0).getValue(0, int.class));
+    }
 }

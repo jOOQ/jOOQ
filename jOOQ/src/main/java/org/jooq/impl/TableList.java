@@ -76,13 +76,13 @@ class TableList extends QueryPartList<Table<?>> {
      * Get a list of names of the <code>NamedQueryParts</code> contained in this
      * list.
      */
-    final void toSQLFieldNames(Context<?> ctx) {
+    final void toSQLFields(Context<?> ctx) {
         String separator = "";
 
         for (Table<?> table : this) {
             for (Field<?> field : table.fieldsRow().fields()) {
                 ctx.sql(separator);
-                ctx.literal(field.getName());
+                ctx.visit(field);
 
                 separator = ", ";
             }

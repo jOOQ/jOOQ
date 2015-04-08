@@ -81,7 +81,7 @@ class With extends Generators {
                  * statement from this {@link DSLContext}. If you don't need to render or
                  * execute this <code>SELECT</code> statement (e.g. because you want to
                  * create a subselect), consider using the static
-                 * {@link DSL#select(«FOR d : (1..degree) SEPARATOR ', '»Field«ENDFOR»)} instead.
+                 * {@link DSL#select(«FOR d : (1..degree) SEPARATOR ', '»SelectField«ENDFOR»)} instead.
                  * <p>
                  * Example: <code><pre>
                  * using(configuration)
@@ -93,20 +93,20 @@ class With extends Generators {
                  *       .orderBy(field2);
                  * </pre></code>
                  *
-                 * @see DSL#selectDistinct(Field...)
-                 * @see #selectDistinct(Field...)
+                 * @see DSL#selectDistinct(SelectField...)
+                 * @see #selectDistinct(SelectField...)
                  */
                 «generatedMethod»
                 @Support
-                <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> select(«Field_TN_fieldn(degree)»);
+                <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> select(«SelectField_TN_fieldn(degree)»);
             ''');
             
             outWithImpl.append('''
             
                 «generatedMethod»
                 @Override
-                public <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> select(«Field_TN_fieldn(degree)») {
-                    return (SelectSelectStep) select(new Field[] { «fieldn(degree)» });
+                public final <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> select(«SelectField_TN_fieldn(degree)») {
+                    return (SelectSelectStep) select(new SelectField[] { «fieldn(degree)» });
                 }
             ''');
         }
@@ -140,7 +140,7 @@ class With extends Generators {
                  * statement from this {@link DSLContext}. If you don't need to render or
                  * execute this <code>SELECT</code> statement (e.g. because you want to
                  * create a subselect), consider using the static
-                 * {@link DSL#selectDistinct(«FOR d : (1..degree) SEPARATOR ', '»Field«ENDFOR»)} instead.
+                 * {@link DSL#selectDistinct(«FOR d : (1..degree) SEPARATOR ', '»SelectField«ENDFOR»)} instead.
                  * <p>
                  * Example: <code><pre>
                  * using(configuration)
@@ -152,20 +152,20 @@ class With extends Generators {
                  *       .orderBy(field2);
                  * </pre></code>
                  *
-                 * @see DSL#selectDistinct(Field...)
-                 * @see #selectDistinct(Field...)
+                 * @see DSL#selectDistinct(SelectField...)
+                 * @see #selectDistinct(SelectField...)
                  */
                 «generatedMethod»
                 @Support
-                <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> selectDistinct(«Field_TN_fieldn(degree)»);
+                <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> selectDistinct(«SelectField_TN_fieldn(degree)»);
             ''');
             
             outWithImpl.append('''
             
                 «generatedMethod»
                 @Override
-                public <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> selectDistinct(«Field_TN_fieldn(degree)») {
-                    return (SelectSelectStep) selectDistinct(new Field[] { «fieldn(degree)» });
+                public final <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> selectDistinct(«SelectField_TN_fieldn(degree)») {
+                    return (SelectSelectStep) selectDistinct(new SelectField[] { «fieldn(degree)» });
                 }
             ''');
         }

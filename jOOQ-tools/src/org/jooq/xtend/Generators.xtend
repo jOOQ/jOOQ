@@ -397,7 +397,7 @@ abstract class Generators {
     def SelectField_TN_fieldn(int degree) {
         return
         if (degree == 0)
-            "Field<?>... fields"
+            "SelectField<?>... fields"
         else
             (1..degree).join(", ", [e | "SelectField<T" + e + "> field" + e])
     }

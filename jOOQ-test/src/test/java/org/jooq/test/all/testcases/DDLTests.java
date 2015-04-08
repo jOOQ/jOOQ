@@ -169,7 +169,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             create().execute("create table {0} ({1} int, {2} int)", name("t"), name("a"), name("b"));
             create().createIndex("idx1").on("t", "a").execute();
             create().createIndex("idx2").on("t", "a", "b").execute();
-            create().dropIndex("idx2").execute();
+
+            if (asList(MARIADB, MYSQL).contains(family()))
+                create().dropIndex("idx2").on("t").execute();
+            else
+                create().dropIndex("idx2").execute();
+
             create().createIndex("idx2").on("t", "b").execute();
         }
         finally {
@@ -405,6 +410,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testAlterTableAddConstraint_CHECK() throws Exception {
+        assumeFamilyNotIn(MARIADB, MYSQL);
+
         try {
             create().createTable("t").column("v", INTEGER).execute();
 
@@ -421,7 +428,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                         .values(3)
                         .execute();
             });
-
         }
 
         finally {

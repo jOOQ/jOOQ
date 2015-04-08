@@ -92,7 +92,7 @@ import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.DeleteQuery;
 import org.jooq.DeleteWhereStep;
-import org.jooq.DropIndexFinalStep;
+import org.jooq.DropIndexOnStep;
 import org.jooq.DropSequenceFinalStep;
 import org.jooq.DropTableStep;
 import org.jooq.DropViewFinalStep;
@@ -1804,22 +1804,22 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public DropIndexFinalStep dropIndex(String index) {
+    public DropIndexOnStep dropIndex(String index) {
         return dropIndex(name(index));
     }
 
     @Override
-    public DropIndexFinalStep dropIndex(Name index) {
+    public DropIndexOnStep dropIndex(Name index) {
         return new DropIndexImpl(configuration(), index);
     }
 
     @Override
-    public DropIndexFinalStep dropIndexIfExists(String index) {
+    public DropIndexOnStep dropIndexIfExists(String index) {
         return dropIndexIfExists(name(index));
     }
 
     @Override
-    public DropIndexFinalStep dropIndexIfExists(Name index) {
+    public DropIndexOnStep dropIndexIfExists(Name index) {
         return new DropIndexImpl(configuration(), index, true);
     }
 

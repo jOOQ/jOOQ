@@ -40,6 +40,23 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.ACCESS;
+import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HANA;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INFORMIX;
+import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
+
 import javax.annotation.Generated;
 
 /**
@@ -401,6 +418,6 @@ public interface ConstraintTypeStep extends ConstraintFinalStep {
     /**
      * Create a <code>CHECK</code> constraint.
      */
-    @Support
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     ConstraintFinalStep check(Condition condition);
 }

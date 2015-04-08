@@ -265,7 +265,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testInsertDefaultValue() throws Exception {
-        assumeFamilyNotIn(ACCESS, HANA, INFORMIX, FIREBIRD);
+        assumeFamilyNotIn(ACCESS, HANA, INFORMIX, FIREBIRD, SQLITE);
         jOOQAbstractTest.reset = false;
 
         assertEquals(1,
@@ -294,7 +294,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testUpdateDefaultValue() throws Exception {
-        assumeFamilyNotIn(ACCESS, HANA, INFORMIX, FIREBIRD);
+        assumeFamilyNotIn(ACCESS, HANA, INFORMIX, FIREBIRD, SQLITE);
         jOOQAbstractTest.reset = false;
 
         assertEquals(4,

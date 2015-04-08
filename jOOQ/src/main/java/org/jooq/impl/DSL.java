@@ -5311,7 +5311,7 @@ public class DSL {
      * <code>DEFAULT</code> value. In that case, use
      * {@link #defaultValue(Class)} or {@link #defaultValue(DataType)} instead.
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<Object> defaultValue() {
         return defaultValue(Object.class);
     }
@@ -5320,7 +5320,7 @@ public class DSL {
      * Create a <code>DEFAULT</code> keyword for use with <code>INSERT</code>,
      * <code>UPDATE</code>, or <code>MERGE</code> statements.
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static <T> Field<T> defaultValue(Class<T> type) {
         return defaultValue(getDataType(type));
     }
@@ -5329,7 +5329,7 @@ public class DSL {
      * Create a <code>DEFAULT</code> keyword for use with <code>INSERT</code>,
      * <code>UPDATE</code>, or <code>MERGE</code> statements.
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static <T> Field<T> defaultValue(DataType<T> type) {
         return new SQLField<T>(type, keyword("default"));
     }
@@ -5338,7 +5338,7 @@ public class DSL {
      * Create a <code>DEFAULT</code> keyword for use with <code>INSERT</code>,
      * <code>UPDATE</code>, or <code>MERGE</code> statements.
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static <T> Field<T> defaultValue(Field<T> field) {
         return new SQLField<T>(field.getDataType(), keyword("default"));
     }

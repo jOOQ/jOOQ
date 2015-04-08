@@ -1821,14 +1821,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 return;
         }
 
-        Field<Timestamp> ts = currentDate().cast(Timestamp.class).as("ts");
         Field<Date> d = currentDate().as("d");
 
-        Record2<Date, Timestamp> record =
-        create().select(d, ts)
+        Record1<Date> record =
+        create().select(d)
                 .fetchOne();
 
-        assertEquals(record.value1().getTime(), record.value2().getTime());
+        assertEquals(Date.valueOf(LocalDate.now()), record.value1().getTime());
     }
 
     public void testUUIDDataType() throws Exception {

@@ -1827,7 +1827,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         create().select(d)
                 .fetchOne();
 
-        assertEquals(Date.valueOf(LocalDate.now()), record.value1().getTime());
+        assertEquals(Date.valueOf(LocalDate.now()), record.value1());
     }
 
     public void testUUIDDataType() throws Exception {

@@ -46,7 +46,7 @@ package org.jooq;
 public enum ExecuteType {
 
     /**
-     * A <code>SELECT</code> query is being executed
+     * A <code>SELECT</code> query is being executed.
      * <p>
      * This may also apply to plain SQL <code>WITH .. SELECT</code> queries
      * (selections with common table expressions), <code>FETCH</code> queries
@@ -56,7 +56,7 @@ public enum ExecuteType {
 
     /**
      * An <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>,
-     * <code>MERGE</code> query is being executed
+     * <code>MERGE</code> query is being executed.
      * <p>
      * This may also apply to plain SQL <code>REPLACE</code>,
      * <code>UPSERT</code> and other vendor-specific queries.
@@ -64,24 +64,24 @@ public enum ExecuteType {
     WRITE,
 
     /**
-     * A DDL statement is being executed
+     * A DDL statement is being executed.
      * <p>
      * Currently, this only applies to <code>TRUNCATE</code> statements
      */
     DDL,
 
     /**
-     * A batch statement is being executed (not yet supported)
+     * A batch statement is being executed.
      */
     BATCH,
 
     /**
-     * A routine (stored procedure or function) is being executed
+     * A routine (stored procedure or function) is being executed.
      */
     ROUTINE,
 
     /**
-     * An other (unknown) type of database interaction is being executed
+     * An other (unknown) type of database interaction is being executed.
      */
     OTHER,
 }

@@ -2351,6 +2351,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testDateTimeFractionalSeconds() throws Exception {
+        new DataTypeTests(this).testDateTimeFractionalSeconds();
+    }
+
+    @Test
     public void testDateTimeArithmetic() throws Exception {
         new DataTypeTests(this).testDateTimeArithmetic();
     }

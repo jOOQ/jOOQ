@@ -1497,6 +1497,21 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
+    public void testDateTimeFractionalSeconds() throws Exception {
+        Record record =
+        create().select(
+            val(Timestamp.valueOf("2015-02-02 15:30:45")).as("ts0"),
+            val(Timestamp.valueOf("2015-02-02 15:30:45.0")).as("ts1"),
+            val(Timestamp.valueOf("2015-02-02 15:30:45.100")).as("ts2"),
+            val(Timestamp.valueOf("2015-02-02 15:30:45.123")).as("ts3")
+        ).fetchOne();
+
+        assertEquals(Timestamp.valueOf("2015-02-02 15:30:45.0"), record.getValue(0));
+        assertEquals(Timestamp.valueOf("2015-02-02 15:30:45.0"), record.getValue(1));
+        assertEquals(Timestamp.valueOf("2015-02-02 15:30:45.100"), record.getValue(2));
+        assertEquals(Timestamp.valueOf("2015-02-02 15:30:45.123"), record.getValue(3));
+    }
+
     public void testDateTimeArithmetic() throws Exception {
 
         /* [pro] */

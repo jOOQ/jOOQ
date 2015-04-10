@@ -1793,7 +1793,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             String date = rs.getString(index);
 
             if (date != null) {
-                return new Date(parse("yyyy-MM-dd", date));
+                return new Date(parse(Date.class, date));
             }
 
             return null;
@@ -1827,7 +1827,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             String time = rs.getString(index);
 
             if (time != null) {
-                return new Time(parse("HH:mm:ss", time));
+                return new Time(parse(Time.class, time));
             }
 
             return null;
@@ -1861,7 +1861,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             String timestamp = rs.getString(index);
 
             if (timestamp != null) {
-                return new Timestamp(parse("yyyy-MM-dd HH:mm:ss.SSS", timestamp));
+                return new Timestamp(parse(Timestamp.class, timestamp));
             }
 
             return null;
@@ -1870,26 +1870,26 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    private static final long parse(String pattern, String date) throws SQLException {
+    private static final long parse(Class<? extends java.util.Date> type, String date) throws SQLException {
+
+        // Try reading a plain number first
         try {
-
-            // Try reading a plain number first
-            try {
-                return Long.valueOf(date);
-            }
-
-            // If that fails, try reading a formatted date
-            catch (NumberFormatException e) {
-
-                // [#4134] Fractional seconds may be optional depending on the
-                // JDBC driver implementation, specifically Xerial for SQLite
-                if (pattern.contains(".") && !date.contains("."))
-                    return new SimpleDateFormat(pattern).parse(date + ".0").getTime();
-                else
-                    return new SimpleDateFormat(pattern).parse(date).getTime();
-            }
+            return Long.valueOf(date);
         }
-        catch (ParseException e) {
+
+        // If that fails, try reading a formatted date
+        catch (NumberFormatException e) {
+
+            if (type == Timestamp.class)
+                return Timestamp.valueOf(date).getTime();
+
+            // Dates may come with " 00:00:00". This is safely trimming time information
+            if (type == Date.class)
+                return Date.valueOf(date.split(" ")[0]).getTime();
+
+            if (type == Time.class)
+                return Time.valueOf(date).getTime();
+
             throw new SQLException("Could not parse date " + date, e);
         }
     }

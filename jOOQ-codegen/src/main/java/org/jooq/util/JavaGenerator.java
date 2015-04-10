@@ -1038,26 +1038,39 @@ public class JavaGenerator extends AbstractGenerator {
             }
 
             List<String> arguments = new ArrayList<String>();
+            List<String> calls = new ArrayList<String>();
             for (int i = 1; i <= degree; i++) {
                 TypedElementDefinition<?> column = columns.get(i - 1);
 
                 final String colType = out.ref(getJavaType(column.getType()));
 
-                if (scala)
+                if (scala) {
                     arguments.add("value" + i + " : " + colType);
-                else
+                    calls.add("this.value" + i + "(value" + i + ")");
+                }
+                else {
                     arguments.add(colType + " value" + i);
+                    calls.add("value" + i + "(value" + i + ");");
+                }
             }
 
             if (scala) {
                 out.println();
                 out.tab(1).println("override def values([[%s]]) : %s = {", arguments, className);
+
+                for (String call : calls)
+                    out.tab(2).println(call);
+
                 out.tab(2).println("this");
                 out.tab(1).println("}");
             }
             else {
                 out.tab(1).overrideInherit();
                 out.tab(1).println("public %s values([[%s]]) {", className, arguments);
+
+                for (String call : calls)
+                    out.tab(2).println(call);
+
                 out.tab(2).println("return this;");
                 out.tab(1).println("}");
             }

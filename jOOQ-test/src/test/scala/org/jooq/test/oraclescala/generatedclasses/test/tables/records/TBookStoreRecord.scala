@@ -73,6 +73,7 @@ class TBookStoreRecord extends UpdatableRecordImpl[TBookStoreRecord](TBookStore.
 	}
 
 	override def values(value1 : String) : TBookStoreRecord = {
+		this.value1(value1)
 		this
 	}
 

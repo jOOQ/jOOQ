@@ -19,7 +19,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_877;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_877Record extends TableRecordImpl<T_877Record> implements Record1<Integer>, IT_877 {
 
-	private static final long serialVersionUID = 1952238598;
+	private static final long serialVersionUID = -670481386;
 
 	/**
 	 * Setter for <code>PUBLIC.T_877.ID</code>.
@@ -88,6 +88,7 @@ public class T_877Record extends TableRecordImpl<T_877Record> implements Record1
 	 */
 	@Override
 	public T_877Record values(Integer value1) {
+		value1(value1);
 		return this;
 	}
 

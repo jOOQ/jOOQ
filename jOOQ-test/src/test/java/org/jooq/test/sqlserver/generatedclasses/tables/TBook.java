@@ -24,7 +24,7 @@ import org.jooq.test.sqlserver.generatedclasses.tables.records.TBookRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends TableImpl<TBookRecord> {
 
-	private static final long serialVersionUID = -525178902;
+	private static final long serialVersionUID = -1785835069;
 
 	/**
 	 * The reference instance of <code>dbo.t_book</code>
@@ -77,7 +77,7 @@ public class TBook extends TableImpl<TBookRecord> {
 	/**
 	 * The column <code>dbo.t_book.CONTENT_TEXT</code>.
 	 */
-	public final TableField<TBookRecord, String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.CLOB.length(2147483647), this, "");
+	public final TableField<TBookRecord, String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.CLOB, this, "");
 
 	/**
 	 * The column <code>dbo.t_book.CONTENT_PDF</code>.

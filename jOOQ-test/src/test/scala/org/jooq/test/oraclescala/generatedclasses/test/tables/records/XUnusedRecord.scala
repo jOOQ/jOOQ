@@ -432,6 +432,22 @@ class XUnusedRecord extends UpdatableRecordImpl[XUnusedRecord](XUnused.X_UNUSED)
 	}
 
 	override def values(value1 : Integer, value2 : String, value3 : BigInteger, value4 : Integer, value5 : Integer, value6 : Integer, value7 : Integer, value8 : Integer, value9 : Integer, value10 : Integer, value11 : Integer, value12 : Integer, value13 : String, value14 : BigDecimal, value15 : Integer, value16 : String) : XUnusedRecord = {
+		this.value1(value1)
+		this.value2(value2)
+		this.value3(value3)
+		this.value4(value4)
+		this.value5(value5)
+		this.value6(value6)
+		this.value7(value7)
+		this.value8(value8)
+		this.value9(value9)
+		this.value10(value10)
+		this.value11(value11)
+		this.value12(value12)
+		this.value13(value13)
+		this.value14(value14)
+		this.value15(value15)
+		this.value16(value16)
 		this
 	}
 

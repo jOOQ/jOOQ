@@ -26,7 +26,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.T_3711;
 @Table(name = "T_3711", schema = "TEST")
 public class T_3711Record extends TableRecordImpl<T_3711Record> implements Record6<NumberTableRecord, NumberObjectRecord, NumberTableRecord, NumberObjectRecord, NumberTableRecord, NumberObjectRecord> {
 
-	private static final long serialVersionUID = -1277246765;
+	private static final long serialVersionUID = -1306703981;
 
 	/**
 	 * Setter for <code>TEST.T_3711.V1</code>.
@@ -293,6 +293,12 @@ public class T_3711Record extends TableRecordImpl<T_3711Record> implements Recor
 	 */
 	@Override
 	public T_3711Record values(NumberTableRecord value1, NumberObjectRecord value2, NumberTableRecord value3, NumberObjectRecord value4, NumberTableRecord value5, NumberObjectRecord value6) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
 		return this;
 	}
 

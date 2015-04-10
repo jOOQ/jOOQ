@@ -20,7 +20,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.UBookType;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UBookTypeRecord extends UDTRecordImpl<UBookTypeRecord> implements Record2<Integer, String> {
 
-	private static final long serialVersionUID = 1424077896;
+	private static final long serialVersionUID = -1286334584;
 
 	/**
 	 * Setter for <code>TEST.U_BOOK_TYPE.ID</code>.
@@ -126,6 +126,8 @@ public class UBookTypeRecord extends UDTRecordImpl<UBookTypeRecord> implements R
 	 */
 	@Override
 	public UBookTypeRecord values(Integer value1, String value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

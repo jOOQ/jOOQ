@@ -29,8 +29,9 @@ public class Routines {
 	/**
 	 * Call <code>PUBLIC.F1256</code>
 	 */
-	public static String f1256(Configuration configuration, String p1) {
+	public static String f1256(Configuration configuration, String p0, String p1) {
 		F1256 f = new F1256();
+		f.setP0(p0);
 		f.setP1(p1);
 
 		f.execute(configuration);
@@ -40,8 +41,9 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F1256</code> as a field
 	 */
-	public static Field<String> f1256(String p1) {
+	public static Field<String> f1256(String p0, String p1) {
 		F1256 f = new F1256();
+		f.setP0(p0);
 		f.setP1(p1);
 
 		return f.asField();
@@ -50,8 +52,9 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F1256</code> as a field
 	 */
-	public static Field<String> f1256(Field<String> p1) {
+	public static Field<String> f1256(Field<String> p0, Field<String> p1) {
 		F1256 f = new F1256();
+		f.setP0(p0);
 		f.setP1(p1);
 
 		return f.asField();
@@ -60,8 +63,9 @@ public class Routines {
 	/**
 	 * Call <code>PUBLIC.F317</code>
 	 */
-	public static Integer f317(Configuration configuration, Integer p1, Integer p2, Integer p3, Integer p4) {
+	public static Integer f317(Configuration configuration, Integer p0, Integer p1, Integer p2, Integer p3, Integer p4) {
 		F317 f = new F317();
+		f.setP0(p0);
 		f.setP1(p1);
 		f.setP2(p2);
 		f.setP3(p3);
@@ -74,8 +78,9 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F317</code> as a field
 	 */
-	public static Field<Integer> f317(Integer p1, Integer p2, Integer p3, Integer p4) {
+	public static Field<Integer> f317(Integer p0, Integer p1, Integer p2, Integer p3, Integer p4) {
 		F317 f = new F317();
+		f.setP0(p0);
 		f.setP1(p1);
 		f.setP2(p2);
 		f.setP3(p3);
@@ -87,8 +92,9 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F317</code> as a field
 	 */
-	public static Field<Integer> f317(Field<Integer> p1, Field<Integer> p2, Field<Integer> p3, Field<Integer> p4) {
+	public static Field<Integer> f317(Field<Integer> p0, Field<Integer> p1, Field<Integer> p2, Field<Integer> p3, Field<Integer> p4) {
 		F317 f = new F317();
+		f.setP0(p0);
 		f.setP1(p1);
 		f.setP2(p2);
 		f.setP3(p3);
@@ -100,8 +106,9 @@ public class Routines {
 	/**
 	 * Call <code>PUBLIC.F_ARRAYS1</code>
 	 */
-	public static Object[] fArrays1(Configuration configuration, Object[] p1) {
+	public static Object[] fArrays1(Configuration configuration, Object[] p0, Object[] p1) {
 		FArrays1 f = new FArrays1();
+		f.setP0(p0);
 		f.setP1(p1);
 
 		f.execute(configuration);
@@ -111,8 +118,9 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_ARRAYS1</code> as a field
 	 */
-	public static Field<Object[]> fArrays1(Object[] p1) {
+	public static Field<Object[]> fArrays1(Object[] p0, Object[] p1) {
 		FArrays1 f = new FArrays1();
+		f.setP0(p0);
 		f.setP1(p1);
 
 		return f.asField();
@@ -121,8 +129,9 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_ARRAYS1</code> as a field
 	 */
-	public static Field<Object[]> fArrays1(Field<Object[]> p1) {
+	public static Field<Object[]> fArrays1(Field<Object[]> p0, Field<Object[]> p1) {
 		FArrays1 f = new FArrays1();
+		f.setP0(p0);
 		f.setP1(p1);
 
 		return f.asField();
@@ -131,8 +140,9 @@ public class Routines {
 	/**
 	 * Call <code>PUBLIC.F_ARRAYS2</code>
 	 */
-	public static Object[] fArrays2(Configuration configuration, Object[] p1) {
+	public static Object[] fArrays2(Configuration configuration, Object[] p0, Object[] p1) {
 		FArrays2 f = new FArrays2();
+		f.setP0(p0);
 		f.setP1(p1);
 
 		f.execute(configuration);
@@ -142,8 +152,9 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_ARRAYS2</code> as a field
 	 */
-	public static Field<Object[]> fArrays2(Object[] p1) {
+	public static Field<Object[]> fArrays2(Object[] p0, Object[] p1) {
 		FArrays2 f = new FArrays2();
+		f.setP0(p0);
 		f.setP1(p1);
 
 		return f.asField();
@@ -152,8 +163,9 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_ARRAYS2</code> as a field
 	 */
-	public static Field<Object[]> fArrays2(Field<Object[]> p1) {
+	public static Field<Object[]> fArrays2(Field<Object[]> p0, Field<Object[]> p1) {
 		FArrays2 f = new FArrays2();
+		f.setP0(p0);
 		f.setP1(p1);
 
 		return f.asField();
@@ -162,8 +174,9 @@ public class Routines {
 	/**
 	 * Call <code>PUBLIC.F_ARRAYS3</code>
 	 */
-	public static Object[] fArrays3(Configuration configuration, Object[] p1) {
+	public static Object[] fArrays3(Configuration configuration, Object[] p0, Object[] p1) {
 		FArrays3 f = new FArrays3();
+		f.setP0(p0);
 		f.setP1(p1);
 
 		f.execute(configuration);
@@ -173,8 +186,9 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_ARRAYS3</code> as a field
 	 */
-	public static Field<Object[]> fArrays3(Object[] p1) {
+	public static Field<Object[]> fArrays3(Object[] p0, Object[] p1) {
 		FArrays3 f = new FArrays3();
+		f.setP0(p0);
 		f.setP1(p1);
 
 		return f.asField();
@@ -183,8 +197,9 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_ARRAYS3</code> as a field
 	 */
-	public static Field<Object[]> fArrays3(Field<Object[]> p1) {
+	public static Field<Object[]> fArrays3(Field<Object[]> p0, Field<Object[]> p1) {
 		FArrays3 f = new FArrays3();
+		f.setP0(p0);
 		f.setP1(p1);
 
 		return f.asField();
@@ -193,8 +208,9 @@ public class Routines {
 	/**
 	 * Call <code>PUBLIC.F_AUTHOR_EXISTS</code>
 	 */
-	public static Integer fAuthorExists(Configuration configuration, String p2) {
+	public static Integer fAuthorExists(Configuration configuration, Integer p0, String p2) {
 		FAuthorExists f = new FAuthorExists();
+		f.setP0(p0);
 		f.setP2(p2);
 
 		f.execute(configuration);
@@ -204,8 +220,9 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_AUTHOR_EXISTS</code> as a field
 	 */
-	public static Field<Integer> fAuthorExists(String p2) {
+	public static Field<Integer> fAuthorExists(Integer p0, String p2) {
 		FAuthorExists f = new FAuthorExists();
+		f.setP0(p0);
 		f.setP2(p2);
 
 		return f.asField();
@@ -214,8 +231,9 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_AUTHOR_EXISTS</code> as a field
 	 */
-	public static Field<Integer> fAuthorExists(Field<String> p2) {
+	public static Field<Integer> fAuthorExists(Field<Integer> p0, Field<String> p2) {
 		FAuthorExists f = new FAuthorExists();
+		f.setP0(p0);
 		f.setP2(p2);
 
 		return f.asField();
@@ -224,8 +242,9 @@ public class Routines {
 	/**
 	 * Call <code>PUBLIC.F_GET_ONE_CURSOR</code>
 	 */
-	public static Result<org.jooq.Record> fGetOneCursor(Configuration configuration, Object[] p2) {
+	public static Result<org.jooq.Record> fGetOneCursor(Configuration configuration, Result<org.jooq.Record> p0, Object[] p2) {
 		FGetOneCursor f = new FGetOneCursor();
+		f.setP0(p0);
 		f.setP2(p2);
 
 		f.execute(configuration);
@@ -235,8 +254,9 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_GET_ONE_CURSOR</code> as a field
 	 */
-	public static Field<Result<org.jooq.Record>> fGetOneCursor(Object[] p2) {
+	public static Field<Result<org.jooq.Record>> fGetOneCursor(Result<org.jooq.Record> p0, Object[] p2) {
 		FGetOneCursor f = new FGetOneCursor();
+		f.setP0(p0);
 		f.setP2(p2);
 
 		return f.asField();
@@ -245,8 +265,9 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_GET_ONE_CURSOR</code> as a field
 	 */
-	public static Field<Result<org.jooq.Record>> fGetOneCursor(Field<Object[]> p2) {
+	public static Field<Result<org.jooq.Record>> fGetOneCursor(Field<Result<org.jooq.Record>> p0, Field<Object[]> p2) {
 		FGetOneCursor f = new FGetOneCursor();
+		f.setP0(p0);
 		f.setP2(p2);
 
 		return f.asField();
@@ -255,8 +276,9 @@ public class Routines {
 	/**
 	 * Call <code>PUBLIC.F_NUMBER</code>
 	 */
-	public static Integer fNumber(Configuration configuration, Integer p1) {
+	public static Integer fNumber(Configuration configuration, Integer p0, Integer p1) {
 		FNumber f = new FNumber();
+		f.setP0(p0);
 		f.setP1(p1);
 
 		f.execute(configuration);
@@ -266,8 +288,9 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_NUMBER</code> as a field
 	 */
-	public static Field<Integer> fNumber(Integer p1) {
+	public static Field<Integer> fNumber(Integer p0, Integer p1) {
 		FNumber f = new FNumber();
+		f.setP0(p0);
 		f.setP1(p1);
 
 		return f.asField();
@@ -276,8 +299,9 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_NUMBER</code> as a field
 	 */
-	public static Field<Integer> fNumber(Field<Integer> p1) {
+	public static Field<Integer> fNumber(Field<Integer> p0, Field<Integer> p1) {
 		FNumber f = new FNumber();
+		f.setP0(p0);
 		f.setP1(p1);
 
 		return f.asField();
@@ -286,8 +310,9 @@ public class Routines {
 	/**
 	 * Call <code>PUBLIC.F_ONE</code>
 	 */
-	public static Integer fOne(Configuration configuration) {
+	public static Integer fOne(Configuration configuration, Integer p0) {
 		FOne f = new FOne();
+		f.setP0(p0);
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -296,8 +321,19 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_ONE</code> as a field
 	 */
-	public static Field<Integer> fOne() {
+	public static Field<Integer> fOne(Integer p0) {
 		FOne f = new FOne();
+		f.setP0(p0);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get <code>PUBLIC.F_ONE</code> as a field
+	 */
+	public static Field<Integer> fOne(Field<Integer> p0) {
+		FOne f = new FOne();
+		f.setP0(p0);
 
 		return f.asField();
 	}

@@ -5,14 +5,16 @@ package org.jooq.test.oraclescala.generatedclasses.test.packages
 
 
 import java.lang.Number
+import java.lang.Object
 import java.lang.String
 import java.math.BigDecimal
 
 import org.jooq.Configuration
 import org.jooq.Field
-import org.jooq.impl.DSL
 import org.jooq.impl.PackageImpl
 import org.jooq.test.oraclescala.generatedclasses.test.Test
+import org.jooq.test.oraclescala.generatedclasses.test.packages.pls_objects.FBool
+import org.jooq.test.oraclescala.generatedclasses.test.packages.pls_objects.PBool
 import org.jooq.test.oraclescala.generatedclasses.test.packages.pls_objects.PlsF
 import org.jooq.test.oraclescala.generatedclasses.test.packages.pls_objects.PlsP
 
@@ -28,14 +30,47 @@ object PlsObjects extends PackageImpl("PLS_OBJECTS", Test.TEST) {
 	val PLS_OBJECTS = PlsObjects
 
 	/**
-	 * The constant <code>TEST.PLS_OBJECTS.PLS_V_C</code>.
+	 * Call <code>TEST.PLS_OBJECTS.F_BOOL</code>
 	 */
-	val PLS_V_C = DSL.field(DSL.name("TEST", "PLS_OBJECTS", "PLS_V_C"), classOf[String]);
+	def fBool(configuration : Configuration, i : Object) : Object = {
+		val f = new FBool()
+		f.setI(i)
+
+		f.execute(configuration)
+		f.getReturnValue
+	}
 
 	/**
-	 * The constant <code>TEST.PLS_OBJECTS.PLS_I_C</code>.
+	 * Get <code>TEST.PLS_OBJECTS.F_BOOL</code> as a field
 	 */
-	val PLS_I_C = DSL.field(DSL.name("TEST", "PLS_OBJECTS", "PLS_I_C"), classOf[BigDecimal]);
+	def fBool(i : Object) : Field[Object] = {
+		val f = new FBool
+		f.setI(i)
+
+		return f.asField
+	}
+
+	/**
+	 * Get <code>TEST.PLS_OBJECTS.F_BOOL</code> as a field
+	 */
+	def fBool(i : Field[Object]) : Field[Object] = {
+		val f = new FBool
+		f.setI(i)
+
+		return f.asField
+	}
+
+	/**
+	 * Call <code>TEST.PLS_OBJECTS.P_BOOL</code>
+	 */
+	def pBool(configuration : Configuration, i : Object, io : Object) : PBool = {
+		val p = new PBool
+		p.setI(i)
+		p.setIo(io)
+
+		p.execute(configuration)
+		return p
+	}
 
 	/**
 	 * Call <code>TEST.PLS_OBJECTS.PLS_F</code>

@@ -88,6 +88,8 @@ class VLibraryRecord extends TableRecordImpl[VLibraryRecord](VLibrary.V_LIBRARY)
 	}
 
 	override def values(value1 : String, value2 : String) : VLibraryRecord = {
+		this.value1(value1)
+		this.value2(value2)
 		this
 	}
 

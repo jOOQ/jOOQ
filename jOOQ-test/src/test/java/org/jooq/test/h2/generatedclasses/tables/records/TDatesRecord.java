@@ -24,7 +24,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.ITDates;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements Record6<Integer, Date, Time, Timestamp, Integer, Long>, ITDates {
 
-	private static final long serialVersionUID = -33427271;
+	private static final long serialVersionUID = 942829561;
 
 	/**
 	 * Setter for <code>PUBLIC.T_DATES.ID</code>.
@@ -315,6 +315,12 @@ public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements R
 	 */
 	@Override
 	public TDatesRecord values(Integer value1, Date value2, Time value3, Timestamp value4, Integer value5, Long value6) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
 		return this;
 	}
 

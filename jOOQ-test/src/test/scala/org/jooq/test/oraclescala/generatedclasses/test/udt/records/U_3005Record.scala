@@ -53,6 +53,7 @@ class U_3005Record extends UDTRecordImpl[U_3005Record](U_3005.U_3005) with Recor
 	}
 
 	override def values(value1 : Integer) : U_3005Record = {
+		this.value1(value1)
 		this
 	}
 

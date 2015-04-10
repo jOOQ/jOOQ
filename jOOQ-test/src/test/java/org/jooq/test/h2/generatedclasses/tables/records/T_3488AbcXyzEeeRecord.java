@@ -19,7 +19,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_3488AbcXyzEee;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_3488AbcXyzEeeRecord extends UpdatableRecordImpl<T_3488AbcXyzEeeRecord> implements Record1<Integer>, IT_3488AbcXyzEee {
 
-	private static final long serialVersionUID = -1455918064;
+	private static final long serialVersionUID = -1200346592;
 
 	/**
 	 * Setter for <code>PUBLIC.T_3488_ABC_XYZ_EEE.ID</code>.
@@ -100,6 +100,7 @@ public class T_3488AbcXyzEeeRecord extends UpdatableRecordImpl<T_3488AbcXyzEeeRe
 	 */
 	@Override
 	public T_3488AbcXyzEeeRecord values(Integer value1) {
+		value1(value1);
 		return this;
 	}
 

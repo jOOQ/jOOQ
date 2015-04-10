@@ -25,7 +25,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.T_785;
 @Table(name = "T_785", schema = "TEST")
 public class T_785Record extends TableRecordImpl<T_785Record> implements Record3<Integer, String, String> {
 
-	private static final long serialVersionUID = 1935167609;
+	private static final long serialVersionUID = 703654505;
 
 	/**
 	 * Setter for <code>TEST.T_785.ID</code>.
@@ -174,6 +174,9 @@ public class T_785Record extends TableRecordImpl<T_785Record> implements Record3
 	 */
 	@Override
 	public T_785Record values(Integer value1, String value2, String value3) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
 		return this;
 	}
 

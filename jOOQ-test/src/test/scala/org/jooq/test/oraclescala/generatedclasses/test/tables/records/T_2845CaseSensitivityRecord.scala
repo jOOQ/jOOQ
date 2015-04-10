@@ -164,6 +164,11 @@ class T_2845CaseSensitivityRecord extends UpdatableRecordImpl[T_2845CaseSensitiv
 	}
 
 	override def values(value1 : BigDecimal, value2 : BigDecimal, value3 : BigDecimal, value4 : BigDecimal, value5 : BigDecimal) : T_2845CaseSensitivityRecord = {
+		this.value1(value1)
+		this.value2(value2)
+		this.value3(value3)
+		this.value4(value4)
+		this.value5(value5)
 		this
 	}
 

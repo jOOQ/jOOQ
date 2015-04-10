@@ -27,7 +27,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.T_725LobTest;
 @Table(name = "T_725_LOB_TEST", schema = "TEST")
 public class T_725LobTestRecord extends UpdatableRecordImpl<T_725LobTestRecord> implements Record2<Integer, byte[]> {
 
-	private static final long serialVersionUID = 113440551;
+	private static final long serialVersionUID = -238752153;
 
 	/**
 	 * Setter for <code>TEST.T_725_LOB_TEST.ID</code>.
@@ -148,6 +148,8 @@ public class T_725LobTestRecord extends UpdatableRecordImpl<T_725LobTestRecord> 
 	 */
 	@Override
 	public T_725LobTestRecord values(Integer value1, byte[] value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

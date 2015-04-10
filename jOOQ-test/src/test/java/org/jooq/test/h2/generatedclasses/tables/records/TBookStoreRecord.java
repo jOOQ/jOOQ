@@ -19,7 +19,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookStore;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStoreRecord extends UpdatableRecordImpl<TBookStoreRecord> implements Record1<String>, ITBookStore {
 
-	private static final long serialVersionUID = 1241096911;
+	private static final long serialVersionUID = 1573998271;
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK_STORE.NAME</code>. The books store name
@@ -100,6 +100,7 @@ public class TBookStoreRecord extends UpdatableRecordImpl<TBookStoreRecord> impl
 	 */
 	@Override
 	public TBookStoreRecord values(String value1) {
+		value1(value1);
 		return this;
 	}
 

@@ -173,6 +173,11 @@ class TBookSaleRecord extends UpdatableRecordImpl[TBookSaleRecord](TBookSale.T_B
 	}
 
 	override def values(value1 : Integer, value2 : Integer, value3 : String, value4 : Date, value5 : BigDecimal) : TBookSaleRecord = {
+		this.value1(value1)
+		this.value2(value2)
+		this.value3(value3)
+		this.value4(value4)
+		this.value5(value5)
 		this
 	}
 

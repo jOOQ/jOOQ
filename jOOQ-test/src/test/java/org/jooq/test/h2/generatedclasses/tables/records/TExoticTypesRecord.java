@@ -22,7 +22,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.ITExoticTypes;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> implements Record2<Integer, UUID>, ITExoticTypes {
 
-	private static final long serialVersionUID = -436789915;
+	private static final long serialVersionUID = 897716901;
 
 	/**
 	 * Setter for <code>PUBLIC.T_EXOTIC_TYPES.ID</code>.
@@ -145,6 +145,8 @@ public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> 
 	 */
 	@Override
 	public TExoticTypesRecord values(Integer value1, UUID value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

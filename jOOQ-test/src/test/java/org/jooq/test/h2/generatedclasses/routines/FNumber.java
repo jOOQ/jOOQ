@@ -16,12 +16,17 @@ import org.jooq.test.h2.generatedclasses.Public;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FNumber extends AbstractRoutine<Integer> {
 
-	private static final long serialVersionUID = 589602110;
+	private static final long serialVersionUID = -194264615;
 
 	/**
 	 * The parameter <code>PUBLIC.F_NUMBER.RETURN_VALUE</code>.
 	 */
 	public static final Parameter<Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER, false);
+
+	/**
+	 * The parameter <code>PUBLIC.F_NUMBER.P0</code>.
+	 */
+	public static final Parameter<Integer> P0 = createParameter("P0", org.jooq.impl.SQLDataType.INTEGER.nullable(false), false);
 
 	/**
 	 * The parameter <code>PUBLIC.F_NUMBER.P1</code>.
@@ -35,7 +40,23 @@ public class FNumber extends AbstractRoutine<Integer> {
 		super("F_NUMBER", Public.PUBLIC, org.jooq.impl.SQLDataType.INTEGER);
 
 		setReturnParameter(RETURN_VALUE);
+		addInParameter(P0);
 		addInParameter(P1);
+	}
+
+	/**
+	 * Set the <code>P0</code> parameter IN value to the routine
+	 */
+	public void setP0(Integer value) {
+		setValue(P0, value);
+	}
+
+	/**
+	 * Set the <code>P0</code> parameter to the function to be used with a {@link org.jooq.Select} statement
+	 */
+	public FNumber setP0(Field<Integer> field) {
+		setField(P0, field);
+		return this;
 	}
 
 	/**

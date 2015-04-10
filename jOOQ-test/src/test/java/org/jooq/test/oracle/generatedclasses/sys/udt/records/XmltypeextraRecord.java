@@ -19,7 +19,7 @@ import org.jooq.test.oracle.generatedclasses.sys.udt.records.XmltypepiRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XmltypeextraRecord extends UDTRecordImpl<XmltypeextraRecord> implements Record2<XmltypepiRecord, XmltypepiRecord> {
 
-	private static final long serialVersionUID = 453555461;
+	private static final long serialVersionUID = -1241152059;
 
 	/**
 	 * Setter for <code>SYS.XMLTYPEEXTRA.NAMESPACES</code>.
@@ -124,6 +124,8 @@ public class XmltypeextraRecord extends UDTRecordImpl<XmltypeextraRecord> implem
 	 */
 	@Override
 	public XmltypeextraRecord values(XmltypepiRecord value1, XmltypepiRecord value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

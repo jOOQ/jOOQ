@@ -184,6 +184,12 @@ class VAuthorRecord extends TableRecordImpl[VAuthorRecord](VAuthor.V_AUTHOR) wit
 	}
 
 	override def values(value1 : Integer, value2 : String, value3 : String, value4 : Date, value5 : Integer, value6 : UAddressTypeRecord) : VAuthorRecord = {
+		this.value1(value1)
+		this.value2(value2)
+		this.value3(value3)
+		this.value4(value4)
+		this.value5(value5)
+		this.value6(value6)
 		this
 	}
 

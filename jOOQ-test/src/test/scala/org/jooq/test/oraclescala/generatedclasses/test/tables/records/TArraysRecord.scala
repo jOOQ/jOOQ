@@ -168,6 +168,11 @@ class TArraysRecord extends UpdatableRecordImpl[TArraysRecord](TArrays.T_ARRAYS)
 	}
 
 	override def values(value1 : Integer, value2 : UStringArrayRecord, value3 : UNumberArrayRecord, value4 : UNumberLongArrayRecord, value5 : UDateArrayRecord) : TArraysRecord = {
+		this.value1(value1)
+		this.value2(value2)
+		this.value3(value3)
+		this.value4(value4)
+		this.value5(value5)
 		this
 	}
 

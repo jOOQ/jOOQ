@@ -19,7 +19,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IV_2603;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class V_2603Record extends TableRecordImpl<V_2603Record> implements Record2<Integer, Integer>, IV_2603 {
 
-	private static final long serialVersionUID = -929471857;
+	private static final long serialVersionUID = 234787791;
 
 	/**
 	 * Setter for <code>PUBLIC.V_2603.COL1</code>.
@@ -130,6 +130,8 @@ public class V_2603Record extends TableRecordImpl<V_2603Record> implements Recor
 	 */
 	@Override
 	public V_2603Record values(Integer value1, Integer value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

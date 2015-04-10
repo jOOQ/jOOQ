@@ -20,7 +20,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.ITArrays;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TArraysRecord extends UpdatableRecordImpl<TArraysRecord> implements Record4<Integer, Object[], Object[], Object[]>, ITArrays {
 
-	private static final long serialVersionUID = 1713192657;
+	private static final long serialVersionUID = 1619286993;
 
 	/**
 	 * Setter for <code>PUBLIC.T_ARRAYS.ID</code>.
@@ -227,6 +227,10 @@ public class TArraysRecord extends UpdatableRecordImpl<TArraysRecord> implements
 	 */
 	@Override
 	public TArraysRecord values(Integer value1, Object[] value2, Object[] value3, Object[] value4) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
 		return this;
 	}
 

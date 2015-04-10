@@ -29,7 +29,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.T_2845CaseSensitivity;
 @Table(name = "T_2845_CASE_sensitivity", schema = "TEST")
 public class T_2845CaseSensitivityRecord extends UpdatableRecordImpl<T_2845CaseSensitivityRecord> implements Record5<BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal> {
 
-	private static final long serialVersionUID = 5798086;
+	private static final long serialVersionUID = 207308822;
 
 	/**
 	 * Setter for <code>TEST.T_2845_CASE_sensitivity.ID</code>.
@@ -270,6 +270,11 @@ public class T_2845CaseSensitivityRecord extends UpdatableRecordImpl<T_2845CaseS
 	 */
 	@Override
 	public T_2845CaseSensitivityRecord values(BigDecimal value1, BigDecimal value2, BigDecimal value3, BigDecimal value4, BigDecimal value5) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
 		return this;
 	}
 

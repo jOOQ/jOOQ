@@ -26,7 +26,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_2025;
 @Table(name = "X_TEST_CASE_2025", schema = "TEST")
 public class XTestCase_2025Record extends TableRecordImpl<XTestCase_2025Record> implements Record2<Integer, String> {
 
-	private static final long serialVersionUID = 785469157;
+	private static final long serialVersionUID = -430127963;
 
 	/**
 	 * Setter for <code>TEST.X_TEST_CASE_2025.REF_ID</code>.
@@ -136,6 +136,8 @@ public class XTestCase_2025Record extends TableRecordImpl<XTestCase_2025Record> 
 	 */
 	@Override
 	public XTestCase_2025Record values(Integer value1, String value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

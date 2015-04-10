@@ -22,7 +22,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.ITAuthor;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthorRecord extends UpdatableRecordImpl<TAuthorRecord> implements Record6<Integer, String, String, Date, Integer, String>, ITAuthor {
 
-	private static final long serialVersionUID = 778352958;
+	private static final long serialVersionUID = -1852099458;
 
 	/**
 	 * Setter for <code>PUBLIC.T_AUTHOR.ID</code>. The author ID
@@ -313,6 +313,12 @@ public class TAuthorRecord extends UpdatableRecordImpl<TAuthorRecord> implements
 	 */
 	@Override
 	public TAuthorRecord values(Integer value1, String value2, String value3, Date value4, Integer value5, String value6) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
 		return this;
 	}
 

@@ -21,7 +21,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_3666;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_3666Record extends TableRecordImpl<T_3666Record> implements Record6<Long, BigDecimal, Short, Short, Byte, BigDecimal>, IT_3666 {
 
-	private static final long serialVersionUID = -1694470936;
+	private static final long serialVersionUID = 1480864168;
 
 	/**
 	 * Setter for <code>PUBLIC.T_3666.E1</code>.
@@ -300,6 +300,12 @@ public class T_3666Record extends TableRecordImpl<T_3666Record> implements Recor
 	 */
 	@Override
 	public T_3666Record values(Long value1, BigDecimal value2, Short value3, Short value4, Byte value5, BigDecimal value6) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
 		return this;
 	}
 

@@ -19,7 +19,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IVLibrary;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibraryRecord extends TableRecordImpl<VLibraryRecord> implements Record2<String, String>, IVLibrary {
 
-	private static final long serialVersionUID = 840707027;
+	private static final long serialVersionUID = 1710657811;
 
 	/**
 	 * Setter for <code>PUBLIC.V_LIBRARY.AUTHOR</code>.
@@ -130,6 +130,8 @@ public class VLibraryRecord extends TableRecordImpl<VLibraryRecord> implements R
 	 */
 	@Override
 	public VLibraryRecord values(String value1, String value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

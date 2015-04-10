@@ -22,7 +22,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IVBook;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBookRecord extends UpdatableRecordImpl<VBookRecord> implements Record11<Integer, Integer, Integer, Integer, String, Integer, Integer, String, byte[], Integer, Timestamp>, IVBook {
 
-	private static final long serialVersionUID = -701076929;
+	private static final long serialVersionUID = 1693626189;
 
 	/**
 	 * Setter for <code>PUBLIC.V_BOOK.ID</code>.
@@ -523,6 +523,17 @@ public class VBookRecord extends UpdatableRecordImpl<VBookRecord> implements Rec
 	 */
 	@Override
 	public VBookRecord values(Integer value1, Integer value2, Integer value3, Integer value4, String value5, Integer value6, Integer value7, String value8, byte[] value9, Integer value10, Timestamp value11) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
+		value7(value7);
+		value8(value8);
+		value9(value9);
+		value10(value10);
+		value11(value11);
 		return this;
 	}
 

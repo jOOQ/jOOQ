@@ -16,12 +16,17 @@ import org.jooq.test.h2.generatedclasses.Public;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class F1256 extends AbstractRoutine<String> {
 
-	private static final long serialVersionUID = -1845948188;
+	private static final long serialVersionUID = 151584467;
 
 	/**
 	 * The parameter <code>PUBLIC.F1256.RETURN_VALUE</code>.
 	 */
 	public static final Parameter<String> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647), false);
+
+	/**
+	 * The parameter <code>PUBLIC.F1256.P0</code>.
+	 */
+	public static final Parameter<String> P0 = createParameter("P0", org.jooq.impl.SQLDataType.VARCHAR.length(2147483647).nullable(false), false);
 
 	/**
 	 * The parameter <code>PUBLIC.F1256.P1</code>.
@@ -35,7 +40,23 @@ public class F1256 extends AbstractRoutine<String> {
 		super("F1256", Public.PUBLIC, org.jooq.impl.SQLDataType.VARCHAR.length(2147483647));
 
 		setReturnParameter(RETURN_VALUE);
+		addInParameter(P0);
 		addInParameter(P1);
+	}
+
+	/**
+	 * Set the <code>P0</code> parameter IN value to the routine
+	 */
+	public void setP0(String value) {
+		setValue(P0, value);
+	}
+
+	/**
+	 * Set the <code>P0</code> parameter to the function to be used with a {@link org.jooq.Select} statement
+	 */
+	public F1256 setP0(Field<String> field) {
+		setField(P0, field);
+		return this;
 	}
 
 	/**

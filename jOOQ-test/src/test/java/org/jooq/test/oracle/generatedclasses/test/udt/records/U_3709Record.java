@@ -22,7 +22,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.u_3709.Value2;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_3709Record extends UDTRecordImpl<U_3709Record> implements Record1<String> {
 
-	private static final long serialVersionUID = 2063506291;
+	private static final long serialVersionUID = -1363861117;
 
 	/**
 	 * Setter for <code>TEST.U_3709.V</code>.
@@ -112,6 +112,7 @@ public class U_3709Record extends UDTRecordImpl<U_3709Record> implements Record1
 	 */
 	@Override
 	public U_3709Record values(String value1) {
+		value1(value1);
 		return this;
 	}
 

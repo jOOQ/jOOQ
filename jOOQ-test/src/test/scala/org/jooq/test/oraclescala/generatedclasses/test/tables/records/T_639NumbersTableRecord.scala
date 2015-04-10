@@ -354,6 +354,19 @@ class T_639NumbersTableRecord extends UpdatableRecordImpl[T_639NumbersTableRecor
 	}
 
 	override def values(value1 : Integer, value2 : Byte, value3 : Short, value4 : Integer, value5 : Long, value6 : Byte, value7 : Short, value8 : Integer, value9 : Long, value10 : BigInteger, value11 : BigDecimal, value12 : Double, value13 : Double) : T_639NumbersTableRecord = {
+		this.value1(value1)
+		this.value2(value2)
+		this.value3(value3)
+		this.value4(value4)
+		this.value5(value5)
+		this.value6(value6)
+		this.value7(value7)
+		this.value8(value8)
+		this.value9(value9)
+		this.value10(value10)
+		this.value11(value11)
+		this.value12(value12)
+		this.value13(value13)
 		this
 	}
 

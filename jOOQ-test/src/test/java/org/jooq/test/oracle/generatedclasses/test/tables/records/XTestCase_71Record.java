@@ -27,7 +27,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_71;
 @Table(name = "X_TEST_CASE_71", schema = "TEST")
 public class XTestCase_71Record extends UpdatableRecordImpl<XTestCase_71Record> implements Record2<Integer, Short> {
 
-	private static final long serialVersionUID = -1266114331;
+	private static final long serialVersionUID = -2025052763;
 
 	/**
 	 * Setter for <code>TEST.X_TEST_CASE_71.ID</code>.
@@ -148,6 +148,8 @@ public class XTestCase_71Record extends UpdatableRecordImpl<XTestCase_71Record> 
 	 */
 	@Override
 	public XTestCase_71Record values(Integer value1, Short value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

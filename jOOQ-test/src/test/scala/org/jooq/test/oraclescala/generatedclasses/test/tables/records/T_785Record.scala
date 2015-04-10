@@ -110,6 +110,9 @@ class T_785Record extends TableRecordImpl[T_785Record](T_785.T_785) with Record3
 	}
 
 	override def values(value1 : Integer, value2 : String, value3 : String) : T_785Record = {
+		this.value1(value1)
+		this.value2(value2)
+		this.value3(value3)
 		this
 	}
 

@@ -31,7 +31,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord
 @Table(name = "T_ARRAYS", schema = "TEST")
 public class TArraysRecord extends UpdatableRecordImpl<TArraysRecord> implements Record5<Integer, UStringArrayRecord, UNumberArrayRecord, UNumberLongArrayRecord, UDateArrayRecord> {
 
-	private static final long serialVersionUID = -815425799;
+	private static final long serialVersionUID = 1977967721;
 
 	/**
 	 * Setter for <code>TEST.T_ARRAYS.ID</code>.
@@ -272,6 +272,11 @@ public class TArraysRecord extends UpdatableRecordImpl<TArraysRecord> implements
 	 */
 	@Override
 	public TArraysRecord values(Integer value1, UStringArrayRecord value2, UNumberArrayRecord value3, UNumberLongArrayRecord value4, UDateArrayRecord value5) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
 		return this;
 	}
 

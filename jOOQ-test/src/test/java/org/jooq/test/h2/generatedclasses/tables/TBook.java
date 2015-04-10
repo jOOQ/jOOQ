@@ -25,7 +25,7 @@ import org.jooq.test.h2.generatedclasses.tables.records.TBookRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends TableImpl<TBookRecord> {
 
-	private static final long serialVersionUID = 2046908121;
+	private static final long serialVersionUID = 1553649875;
 
 	/**
 	 * The reference instance of <code>PUBLIC.T_BOOK</code>
@@ -78,12 +78,12 @@ public class TBook extends TableImpl<TBookRecord> {
 	/**
 	 * The column <code>PUBLIC.T_BOOK.CONTENT_TEXT</code>. Some textual content of the book
 	 */
-	public final TableField<TBookRecord, String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.CLOB.length(2147483647), this, "Some textual content of the book");
+	public final TableField<TBookRecord, String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.CLOB, this, "Some textual content of the book");
 
 	/**
 	 * The column <code>PUBLIC.T_BOOK.CONTENT_PDF</code>. Some binary content of the book
 	 */
-	public final TableField<TBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB.length(2147483647), this, "Some binary content of the book");
+	public final TableField<TBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB, this, "Some binary content of the book");
 
 	/**
 	 * The column <code>PUBLIC.T_BOOK.REC_VERSION</code>.

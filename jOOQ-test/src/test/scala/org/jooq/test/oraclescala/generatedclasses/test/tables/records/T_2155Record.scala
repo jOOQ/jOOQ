@@ -144,6 +144,10 @@ class T_2155Record extends UpdatableRecordImpl[T_2155Record](T_2155.T_2155) with
 	}
 
 	override def values(value1 : Integer, value2 : LocalDate, value3 : U_2155ObjectRecord, value4 : U_2155ArrayRecord) : T_2155Record = {
+		this.value1(value1)
+		this.value2(value2)
+		this.value3(value3)
+		this.value4(value4)
 		this
 	}
 

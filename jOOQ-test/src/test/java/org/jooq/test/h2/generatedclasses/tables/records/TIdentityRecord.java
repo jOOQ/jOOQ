@@ -19,7 +19,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.ITIdentity;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentityRecord extends TableRecordImpl<TIdentityRecord> implements Record2<Integer, Integer>, ITIdentity {
 
-	private static final long serialVersionUID = 1041537352;
+	private static final long serialVersionUID = -129660920;
 
 	/**
 	 * Setter for <code>PUBLIC.T_IDENTITY.ID</code>.
@@ -130,6 +130,8 @@ public class TIdentityRecord extends TableRecordImpl<TIdentityRecord> implements
 	 */
 	@Override
 	public TIdentityRecord values(Integer value1, Integer value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

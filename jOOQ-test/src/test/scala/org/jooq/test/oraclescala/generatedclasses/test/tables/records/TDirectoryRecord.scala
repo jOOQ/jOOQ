@@ -144,6 +144,10 @@ class TDirectoryRecord extends UpdatableRecordImpl[TDirectoryRecord](TDirectory.
 	}
 
 	override def values(value1 : Integer, value2 : Integer, value3 : Integer, value4 : String) : TDirectoryRecord = {
+		this.value1(value1)
+		this.value2(value2)
+		this.value3(value3)
+		this.value4(value4)
 		this
 	}
 

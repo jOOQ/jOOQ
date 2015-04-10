@@ -310,6 +310,17 @@ class TBooleansRecord extends UpdatableRecordImpl[TBooleansRecord](TBooleans.T_B
 	}
 
 	override def values(value1 : Integer, value2 : Boolean_10, value3 : Boolean_TF_LC, value4 : Boolean_TF_UC, value5 : Boolean_YES_NO_LC, value6 : Boolean_YES_NO_UC, value7 : Boolean_YN_LC, value8 : Boolean_YN_UC, value9 : Boolean, value10 : Boolean, value11 : Boolean) : TBooleansRecord = {
+		this.value1(value1)
+		this.value2(value2)
+		this.value3(value3)
+		this.value4(value4)
+		this.value5(value5)
+		this.value6(value6)
+		this.value7(value7)
+		this.value8(value8)
+		this.value9(value9)
+		this.value10(value10)
+		this.value11(value11)
 		this
 	}
 

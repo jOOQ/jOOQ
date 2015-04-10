@@ -238,6 +238,14 @@ class TDatesRecord extends UpdatableRecordImpl[TDatesRecord](TDates.T_DATES) wit
 	}
 
 	override def values(value1 : Integer, value2 : Date, value3 : Timestamp, value4 : Timestamp, value5 : Integer, value6 : Long, value7 : YearToMonth, value8 : DayToSecond) : TDatesRecord = {
+		this.value1(value1)
+		this.value2(value2)
+		this.value3(value3)
+		this.value4(value4)
+		this.value5(value5)
+		this.value6(value6)
+		this.value7(value7)
+		this.value8(value8)
 		this
 	}
 

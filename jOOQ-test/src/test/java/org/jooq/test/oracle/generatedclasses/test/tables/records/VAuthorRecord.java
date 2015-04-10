@@ -29,7 +29,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord
 @Table(name = "V_AUTHOR", schema = "TEST")
 public class VAuthorRecord extends TableRecordImpl<VAuthorRecord> implements Record6<Integer, String, String, Date, Integer, UAddressTypeRecord> {
 
-	private static final long serialVersionUID = -1353611820;
+	private static final long serialVersionUID = 1680576788;
 
 	/**
 	 * Setter for <code>TEST.V_AUTHOR.ID</code>.
@@ -300,6 +300,12 @@ public class VAuthorRecord extends TableRecordImpl<VAuthorRecord> implements Rec
 	 */
 	@Override
 	public VAuthorRecord values(Integer value1, String value2, String value3, Date value4, Integer value5, UAddressTypeRecord value6) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
 		return this;
 	}
 

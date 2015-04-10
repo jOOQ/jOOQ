@@ -20,7 +20,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.ITPerformance;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TPerformanceRecord extends UpdatableRecordImpl<TPerformanceRecord> implements Record3<Integer, Integer, String>, ITPerformance {
 
-	private static final long serialVersionUID = -1740305627;
+	private static final long serialVersionUID = -997420075;
 
 	/**
 	 * Setter for <code>PUBLIC.T_PERFORMANCE.ID</code>.
@@ -185,6 +185,9 @@ public class TPerformanceRecord extends UpdatableRecordImpl<TPerformanceRecord> 
 	 */
 	@Override
 	public TPerformanceRecord values(Integer value1, Integer value2, String value3) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
 		return this;
 	}
 

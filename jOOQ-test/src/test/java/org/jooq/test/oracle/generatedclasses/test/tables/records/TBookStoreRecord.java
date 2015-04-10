@@ -27,7 +27,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.TBookStore;
 @Table(name = "T_BOOK_STORE", schema = "TEST")
 public class TBookStoreRecord extends UpdatableRecordImpl<TBookStoreRecord> implements Record1<String> {
 
-	private static final long serialVersionUID = 760499587;
+	private static final long serialVersionUID = -84570733;
 
 	/**
 	 * Setter for <code>TEST.T_BOOK_STORE.NAME</code>. The books store name
@@ -109,6 +109,7 @@ public class TBookStoreRecord extends UpdatableRecordImpl<TBookStoreRecord> impl
 	 */
 	@Override
 	public TBookStoreRecord values(String value1) {
+		value1(value1);
 		return this;
 	}
 

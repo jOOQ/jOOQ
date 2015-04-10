@@ -27,7 +27,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.TTriggers;
 @Table(name = "T_TRIGGERS", schema = "TEST")
 public class TTriggersRecord extends UpdatableRecordImpl<TTriggersRecord> implements Record3<Integer, Integer, Integer> {
 
-	private static final long serialVersionUID = 181911916;
+	private static final long serialVersionUID = -1762783972;
 
 	/**
 	 * Setter for <code>TEST.T_TRIGGERS.ID_GENERATED</code>.
@@ -190,6 +190,9 @@ public class TTriggersRecord extends UpdatableRecordImpl<TTriggersRecord> implem
 	 */
 	@Override
 	public TTriggersRecord values(Integer value1, Integer value2, Integer value3) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
 		return this;
 	}
 

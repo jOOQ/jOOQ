@@ -97,6 +97,10 @@ public class H2RoutineDefinition extends AbstractRoutineDefinition {
                 .from(FUNCTION_COLUMNS)
                 .where(FunctionColumns.ALIAS_SCHEMA.equal(getSchema().getName()))
                 .and(FunctionColumns.ALIAS_NAME.equal(getName()))
+
+                // [#4193] recent versions of H2 produce a row for the function
+                // return value at position 0
+                .and(FunctionColumns.POS.gt(0))
                 .orderBy(FunctionColumns.POS.asc()).fetch()) {
 
             String paramName = record.getValue(FunctionColumns.COLUMN_NAME);

@@ -2445,6 +2445,11 @@ public abstract class jOOQAbstractTest<
         new CRUDTests(this).testStoreWithOptimisticLock();
     }
 
+    // [#3862] @Test
+    public void testExecuteWithOptimisticLock() throws Exception {
+        new CRUDTests(this).testExecuteWithOptimisticLock();
+    }
+
     @Test
     public void testStoreVsExecuteInsert() throws Exception {
         new CRUDTests(this).testStoreVsExecuteInsert();

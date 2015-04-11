@@ -17,17 +17,12 @@ import org.jooq.test.h2.generatedclasses.Public;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FGetOneCursor extends AbstractRoutine<Result<org.jooq.Record>> {
 
-	private static final long serialVersionUID = -1968379612;
+	private static final long serialVersionUID = -946351991;
 
 	/**
 	 * The parameter <code>PUBLIC.F_GET_ONE_CURSOR.RETURN_VALUE</code>.
 	 */
 	public static final Parameter<Result<org.jooq.Record>> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.RESULT, false);
-
-	/**
-	 * The parameter <code>PUBLIC.F_GET_ONE_CURSOR.P0</code>.
-	 */
-	public static final Parameter<Result<org.jooq.Record>> P0 = createParameter("P0", org.jooq.impl.SQLDataType.RESULT.nullable(false), false);
 
 	/**
 	 * The parameter <code>PUBLIC.F_GET_ONE_CURSOR.P2</code>.
@@ -41,23 +36,7 @@ public class FGetOneCursor extends AbstractRoutine<Result<org.jooq.Record>> {
 		super("F_GET_ONE_CURSOR", Public.PUBLIC, org.jooq.impl.SQLDataType.RESULT);
 
 		setReturnParameter(RETURN_VALUE);
-		addInParameter(P0);
 		addInParameter(P2);
-	}
-
-	/**
-	 * Set the <code>P0</code> parameter IN value to the routine
-	 */
-	public void setP0(Result<org.jooq.Record> value) {
-		setValue(P0, value);
-	}
-
-	/**
-	 * Set the <code>P0</code> parameter to the function to be used with a {@link org.jooq.Select} statement
-	 */
-	public FGetOneCursor setP0(Field<Result<org.jooq.Record>> field) {
-		setField(P0, field);
-		return this;
 	}
 
 	/**

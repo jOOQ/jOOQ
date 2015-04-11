@@ -16,17 +16,12 @@ import org.jooq.test.h2.generatedclasses.Public;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FArrays2 extends AbstractRoutine<Object[]> {
 
-	private static final long serialVersionUID = -952632306;
+	private static final long serialVersionUID = 964312149;
 
 	/**
 	 * The parameter <code>PUBLIC.F_ARRAYS2.RETURN_VALUE</code>.
 	 */
 	public static final Parameter<Object[]> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.OTHER.getArrayDataType(), false);
-
-	/**
-	 * The parameter <code>PUBLIC.F_ARRAYS2.P0</code>.
-	 */
-	public static final Parameter<Object[]> P0 = createParameter("P0", org.jooq.impl.SQLDataType.OTHER.getArrayDataType(), false);
 
 	/**
 	 * The parameter <code>PUBLIC.F_ARRAYS2.P1</code>.
@@ -40,23 +35,7 @@ public class FArrays2 extends AbstractRoutine<Object[]> {
 		super("F_ARRAYS2", Public.PUBLIC, org.jooq.impl.SQLDataType.OTHER.getArrayDataType());
 
 		setReturnParameter(RETURN_VALUE);
-		addInParameter(P0);
 		addInParameter(P1);
-	}
-
-	/**
-	 * Set the <code>P0</code> parameter IN value to the routine
-	 */
-	public void setP0(Object[] value) {
-		setValue(P0, value);
-	}
-
-	/**
-	 * Set the <code>P0</code> parameter to the function to be used with a {@link org.jooq.Select} statement
-	 */
-	public FArrays2 setP0(Field<Object[]> field) {
-		setField(P0, field);
-		return this;
 	}
 
 	/**

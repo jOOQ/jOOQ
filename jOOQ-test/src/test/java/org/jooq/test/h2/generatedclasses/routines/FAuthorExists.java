@@ -16,17 +16,12 @@ import org.jooq.test.h2.generatedclasses.Public;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FAuthorExists extends AbstractRoutine<Integer> {
 
-	private static final long serialVersionUID = 1628424374;
+	private static final long serialVersionUID = -2099392168;
 
 	/**
 	 * The parameter <code>PUBLIC.F_AUTHOR_EXISTS.RETURN_VALUE</code>.
 	 */
 	public static final Parameter<Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER, false);
-
-	/**
-	 * The parameter <code>PUBLIC.F_AUTHOR_EXISTS.P0</code>.
-	 */
-	public static final Parameter<Integer> P0 = createParameter("P0", org.jooq.impl.SQLDataType.INTEGER.nullable(false), false);
 
 	/**
 	 * The parameter <code>PUBLIC.F_AUTHOR_EXISTS.P2</code>.
@@ -40,23 +35,7 @@ public class FAuthorExists extends AbstractRoutine<Integer> {
 		super("F_AUTHOR_EXISTS", Public.PUBLIC, org.jooq.impl.SQLDataType.INTEGER);
 
 		setReturnParameter(RETURN_VALUE);
-		addInParameter(P0);
 		addInParameter(P2);
-	}
-
-	/**
-	 * Set the <code>P0</code> parameter IN value to the routine
-	 */
-	public void setP0(Integer value) {
-		setValue(P0, value);
-	}
-
-	/**
-	 * Set the <code>P0</code> parameter to the function to be used with a {@link org.jooq.Select} statement
-	 */
-	public FAuthorExists setP0(Field<Integer> field) {
-		setField(P0, field);
-		return this;
 	}
 
 	/**

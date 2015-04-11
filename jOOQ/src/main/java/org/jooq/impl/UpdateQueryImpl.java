@@ -474,7 +474,7 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
            .keyword("update")
            .sql(' ')
            .declareTables(true)
-           .visit(getInto())
+           .visit(table)
            .declareTables(false)
            .end(UPDATE_UPDATE);
 

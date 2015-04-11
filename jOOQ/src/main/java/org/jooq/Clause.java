@@ -638,6 +638,17 @@ public enum Clause {
      */
     DELETE_WHERE,
 
+    /**
+     * A <code>RETURNING</code> clause within an {@link #DELETE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>RETURNING</code> keyword</li>
+     * <li>several {@link #FIELD} clauses</li>
+     * </ul>
+     */
+    DELETE_RETURNING,
+
     // -------------------------------------------------------------------------
     // Clauses that are used in an MERGE statement
     // -------------------------------------------------------------------------

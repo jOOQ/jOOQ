@@ -41,6 +41,10 @@
 
 package org.jooq;
 
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.POSTGRES;
+
 import java.util.Collection;
 
 /**
@@ -83,5 +87,85 @@ public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete
     @Override
     @Support
     void addConditions(Operator operator, Collection<? extends Condition> conditions);
+
+    // ------------------------------------------------------------------------
+    // XXX: Methods for the DELETE .. RETURNING syntax
+    // ------------------------------------------------------------------------
+
+    /**
+     * Configure the <code>DELETE</code> statement to return all fields in
+     * <code>R</code>.
+     *
+     * @see #getReturnedRecords()
+     */
+    @Support({ DB2, FIREBIRD, POSTGRES })
+    void setReturning();
+
+    /**
+     * Configure the <code>DELETE</code> statement to return a list of fields in
+     * <code>R</code>.
+     *
+     * @param fields Fields to be returned
+     * @see #getReturnedRecords()
+     */
+    @Support({ DB2, FIREBIRD, POSTGRES })
+    void setReturning(Field<?>... fields);
+
+    /**
+     * Configure the <code>DELETE</code> statement to return a list of fields in
+     * <code>R</code>.
+     *
+     * @param fields Fields to be returned
+     * @see #getReturnedRecords()
+     */
+    @Support({ DB2, FIREBIRD, POSTGRES })
+    void setReturning(Collection<? extends Field<?>> fields);
+
+    /**
+     * The record holding returned values as specified by any of the
+     * {@link #setReturning()} methods.
+     * <p>
+     * If the <code>DELETE</code> statement returns several records, this is the
+     * same as calling <code>getReturnedRecords().get(0)</code>
+     * <p>
+     * This implemented differently for every dialect:
+     * <ul>
+     * <li>Firebird and Postgres have native support for
+     * <code>DELETE .. RETURNING</code> clauses</li>
+     * </ul>
+     *
+     * @return The returned value as specified by any of the
+     *         {@link #setReturning()} methods. This may return
+     *         <code>null</code> in case jOOQ could not retrieve any generated
+     *         keys from the JDBC driver.
+     * @see #getReturnedRecords()
+     */
+    @Support({ DB2, FIREBIRD, POSTGRES })
+    R getReturnedRecord();
+
+    /**
+     * The records holding returned values as specified by any of the
+     * {@link #setReturning()} methods.
+     * <p>
+     * If the <code>DELETE</code> statement returns several records, this is the
+     * same as calling <code>getReturnedRecords().get(0)</code>
+     * <p>
+     * This implemented differently for every dialect:
+     * <ul>
+     * <li>Firebird and Postgres have native support for
+     * <code>DELETE .. RETURNING</code> clauses</li>
+     * </ul>
+     *
+     * @return The returned values as specified by any of the
+     *         {@link #setReturning()} methods. Note:
+     *         <ul>
+     *         <li>Not all databases / JDBC drivers support returning several
+     *         values on multi-row inserts!</li><li>This may return an empty
+     *         <code>Result</code> in case jOOQ could not retrieve any generated
+     *         keys from the JDBC driver.</li>
+     *         </ul>
+     */
+    @Support({ DB2, FIREBIRD, POSTGRES })
+    Result<R> getReturnedRecords();
 
 }

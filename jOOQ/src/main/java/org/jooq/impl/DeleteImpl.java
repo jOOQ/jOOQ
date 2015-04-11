@@ -49,11 +49,13 @@ import java.util.Collection;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.DeleteConditionStep;
+import org.jooq.DeleteResultStep;
 import org.jooq.DeleteWhereStep;
 import org.jooq.Field;
 import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+import org.jooq.Result;
 import org.jooq.Select;
 import org.jooq.Table;
 
@@ -66,7 +68,8 @@ class DeleteImpl<R extends Record>
 
     // Cascading interface implementations for Delete behaviour
     DeleteWhereStep<R>,
-    DeleteConditionStep<R> {
+    DeleteConditionStep<R>,
+    DeleteResultStep<R> {
 
     /**
      * Generated UID
@@ -209,5 +212,35 @@ class DeleteImpl<R extends Record>
     @Override
     public final DeleteImpl<R> orNotExists(Select<?> select) {
         return or(notExists(select));
+    }
+
+    @Override
+    public final DeleteImpl<R> returning() {
+        getDelegate().setReturning();
+        return this;
+    }
+
+    @Override
+    public final DeleteImpl<R> returning(Field<?>... f) {
+        getDelegate().setReturning(f);
+        return this;
+    }
+
+    @Override
+    public final DeleteImpl<R> returning(Collection<? extends Field<?>> f) {
+        getDelegate().setReturning(f);
+        return this;
+    }
+
+    @Override
+    public final Result<R> fetch() {
+        getDelegate().execute();
+        return getDelegate().getReturnedRecords();
+    }
+
+    @Override
+    public final R fetchOne() {
+        getDelegate().execute();
+        return getDelegate().getReturnedRecord();
     }
 }

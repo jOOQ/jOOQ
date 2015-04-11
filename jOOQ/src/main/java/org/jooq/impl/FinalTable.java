@@ -40,53 +40,36 @@
  */
 package org.jooq.impl;
 
-import java.util.Map;
-
-import org.jooq.Configuration;
-import org.jooq.Field;
-import org.jooq.Record;
-import org.jooq.StoreQuery;
-import org.jooq.Table;
+/* [pro] */
+import org.jooq.Context;
+import org.jooq.Query;
 
 /**
- * A default implementation for store queries.
- *
  * @author Lukas Eder
  */
-abstract class AbstractStoreQuery<R extends Record> extends AbstractDMLQuery<R> implements StoreQuery<R> {
+class FinalTable extends CustomQueryPart {
 
     /**
      * Generated UID
      */
-    private static final long     serialVersionUID = 6864591335823160569L;
+    private static final long serialVersionUID = 2722190100084947406L;
 
-    AbstractStoreQuery(Configuration configuration, Table<R> table) {
-        super(configuration, table);
-    }
+    private final Query query;
 
-    protected abstract Map<Field<?>, Field<?>> getValues();
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
-    public final void setRecord(R record) {
-        for (int i = 0; i < record.size(); i++) {
-            if (record.changed(i)) {
-                addValue((Field) record.field(i), record.getValue(i));
-            }
-        }
-    }
-
-    final <T> void addValue(R record, Field<T> field) {
-        addValue(field, record.getValue(field));
+    FinalTable(Query query) {
+        this.query = query;
     }
 
     @Override
-    public final <T> void addValue(Field<T> field, T value) {
-        getValues().put(field, Utils.field(value, field));
-    }
-
-    @Override
-    public final <T> void addValue(Field<T> field, Field<T> value) {
-        getValues().put(field, Utils.field(value, field));
+    public final void accept(Context<?> ctx) {
+        ctx.keyword("final table")
+           .sql(" (")
+           .formatIndentStart()
+           .formatNewLine()
+           .visit(query)
+           .formatIndentEnd()
+           .formatNewLine()
+           .sql(')');
     }
 }
+/* [/pro] */

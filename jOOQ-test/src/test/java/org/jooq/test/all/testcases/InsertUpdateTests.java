@@ -994,6 +994,60 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
+    public void testDeleteReturning() throws Exception {
+        switch (dialect().family()) {
+            /* [pro] */
+            case ASE:
+            case INGRES:
+            case ORACLE:
+            case SQLSERVER:
+            case SYBASE:
+            /* [/pro] */
+            case CUBRID:
+            case DERBY:
+            case H2:
+            case HSQLDB:
+            case MARIADB:
+            case MYSQL:
+            case SQLITE:
+                log.info("SKIPPING", "DELETE .. RETURNING tests");
+                return;
+        }
+
+        jOOQAbstractTest.reset = false;
+        Result<?> result1 =
+        create().delete(TBook())
+                .where(TBook_ID().eq(1))
+                .returning(TBook_ID(), TBook_TITLE())
+                .fetch();
+
+        assertEquals(1, result1.size());
+        assertEquals(1, (int) result1.get(0).getValue(TBook_ID()));
+        assertEquals(BOOK_TITLES.get(0), result1.get(0).getValue(TBook_TITLE()));
+
+        switch (dialect()) {
+//            case FIREBIRD: {
+//                break;
+//            }
+
+            // Some databases do not support RETURNING clauses that affect more
+            // than one row.
+            default: {
+                Result<?> result2 =
+                create().delete(TBook())
+                        .where(TBook_ID().in(2, 3))
+                        .returning(TBook_ID(), TBook_TITLE())
+                        .fetch();
+
+                assertEquals(2, result2.size());
+
+                // The order is not guaranteed in UPDATE .. RETURNING clauses
+                assertSame(asList(2, 3), result2.getValues(TBook_ID()));
+                assertSame(BOOK_TITLES.subList(1, 3), result2.getValues(TBook_TITLE()));
+            }
+        }
+    }
+
     public void testInsertOnDuplicateKeyUpdate() throws Exception {
         assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, H2, INGRES, POSTGRES, SQLITE);
 

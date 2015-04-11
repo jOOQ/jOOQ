@@ -61,6 +61,8 @@ import java.util.Collection;
  * <ul>
  * <li>Firebird and Postgres have native support for
  * <code>UPDATE .. RETURNING</code> clauses</li>
+ * <li>DB2 allows to execute
+ * <code>SELECT .. FROM FINAL TABLE (DELETE ...)</code></li>
  * </ul>
  *
  * @author Lukas Eder

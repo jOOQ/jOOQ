@@ -38,55 +38,61 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq.impl;
+package org.jooq;
 
-import java.util.Map;
+// ...
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.POSTGRES;
 
-import org.jooq.Configuration;
-import org.jooq.Field;
-import org.jooq.Record;
-import org.jooq.StoreQuery;
-import org.jooq.Table;
+import java.util.Collection;
 
 /**
- * A default implementation for store queries.
+ * This type is used for the {@link Delete}'s DSL API.
+ * <p>
+ * Example: <code><pre>
+ * DSLContext create = DSL.using(configuration);
+ *
+ * create.delete(table)
+ *       .where(field1.greaterThan(100))
+ *       .execute();
+ * </pre></code>
+ * <p>
+ * This implemented differently for every dialect:
+ * <ul>
+ * <li>Firebird and Postgres have native support for
+ * <code>UPDATE .. RETURNING</code> clauses</li>
+ * </ul>
  *
  * @author Lukas Eder
  */
-abstract class AbstractStoreQuery<R extends Record> extends AbstractDMLQuery<R> implements StoreQuery<R> {
+public interface DeleteReturningStep<R extends Record> {
 
     /**
-     * Generated UID
+     * Configure the <code>DELETE</code> statement to return all fields in
+     * <code>R</code>.
+     *
+     * @see UpdateResultStep
      */
-    private static final long     serialVersionUID = 6864591335823160569L;
+    @Support({ FIREBIRD, POSTGRES })
+    DeleteResultStep<R> returning();
 
-    AbstractStoreQuery(Configuration configuration, Table<R> table) {
-        super(configuration, table);
-    }
+    /**
+     * Configure the <code>DELETE</code> statement to return a list of fields in
+     * <code>R</code>.
+     *
+     * @param fields Fields to be returned
+     * @see UpdateResultStep
+     */
+    @Support({ FIREBIRD, POSTGRES })
+    DeleteResultStep<R> returning(Field<?>... fields);
 
-    protected abstract Map<Field<?>, Field<?>> getValues();
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
-    public final void setRecord(R record) {
-        for (int i = 0; i < record.size(); i++) {
-            if (record.changed(i)) {
-                addValue((Field) record.field(i), record.getValue(i));
-            }
-        }
-    }
-
-    final <T> void addValue(R record, Field<T> field) {
-        addValue(field, record.getValue(field));
-    }
-
-    @Override
-    public final <T> void addValue(Field<T> field, T value) {
-        getValues().put(field, Utils.field(value, field));
-    }
-
-    @Override
-    public final <T> void addValue(Field<T> field, Field<T> value) {
-        getValues().put(field, Utils.field(value, field));
-    }
+    /**
+     * Configure the <code>DELETE</code> statement to return a list of fields in
+     * <code>R</code>.
+     *
+     * @param fields Fields to be returned
+     * @see UpdateResultStep
+     */
+    @Support({ FIREBIRD, POSTGRES })
+    DeleteResultStep<R> returning(Collection<? extends Field<?>> fields);
 }

@@ -204,7 +204,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 // CUBRID can simulate this using ON DUPLICATE KEY UPDATE
                 case CUBRID: {
                     FieldMapForUpdate update = new FieldMapForUpdate(INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT);
-                    Field<?> field = getInto().field(0);
+                    Field<?> field = table.field(0);
                     update.put(field, field);
 
                     toSQLInsert(ctx);
@@ -270,7 +270,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
            .keyword("into")
            .sql(' ')
            .declareTables(true)
-           .visit(getInto())
+           .visit(table)
            .declareTables(declareTables);
 
         // [#1506] with DEFAULT VALUES, we might not have any columns to render
@@ -294,7 +294,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 case MYSQL:
                     ctx.sql(' ').keyword("values").sql('(');
 
-                    int count = getInto().fields().length;
+                    int count = table.fields().length;
                     String separator = "";
 
                     for (int i = 0; i < count; i++) {
@@ -318,13 +318,11 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
     @SuppressWarnings("unchecked")
     private final Merge<R> toMerge(Configuration configuration) {
-        Table<R> i = getInto();
-
-        if (i.getPrimaryKey() != null) {
+        if (table.getPrimaryKey() != null) {
             Condition condition = null;
             List<Field<?>> key = new ArrayList<Field<?>>();
 
-            for (Field<?> f : i.getPrimaryKey().getFields()) {
+            for (Field<?> f : table.getPrimaryKey().getFields()) {
                 Field<Object> field = (Field<Object>) f;
                 Field<Object> value = (Field<Object>) insertMaps.getMap().get(field);
 
@@ -340,7 +338,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
             }
 
             MergeOnConditionStep<R> on =
-            create(configuration).mergeInto(i)
+            create(configuration).mergeInto(table)
                                  .usingDual()
                                  .on(condition);
 
@@ -356,7 +354,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                              .values(insertMaps.getMap().values());
         }
         else {
-            throw new IllegalStateException("The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be simulated when inserting into non-updatable tables : " + getInto());
+            throw new IllegalStateException("The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be simulated when inserting into non-updatable tables : " + table);
         }
     }
 

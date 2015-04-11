@@ -40,53 +40,36 @@
  */
 package org.jooq.impl;
 
-import java.util.Map;
+/* [pro] xx
+xxxxxx xxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxx
 
-import org.jooq.Configuration;
-import org.jooq.Field;
-import org.jooq.Record;
-import org.jooq.StoreQuery;
-import org.jooq.Table;
+xxx
+ x xxxxxxx xxxxx xxxx
+ xx
+xxxxx xxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxx x
 
-/**
- * A default implementation for store queries.
- *
- * @author Lukas Eder
- */
-abstract class AbstractStoreQuery<R extends Record> extends AbstractDMLQuery<R> implements StoreQuery<R> {
+    xxx
+     x xxxxxxxxx xxx
+     xx
+    xxxxxxx xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxx
 
-    /**
-     * Generated UID
-     */
-    private static final long     serialVersionUID = 6864591335823160569L;
+    xxxxxxx xxxxx xxxxx xxxxxx
 
-    AbstractStoreQuery(Configuration configuration, Table<R> table) {
-        super(configuration, table);
-    }
+    xxxxxxxxxxxxxxxx xxxxxx x
+        xxxxxxxxxx x xxxxxx
+    x
 
-    protected abstract Map<Field<?>, Field<?>> getValues();
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
-    public final void setRecord(R record) {
-        for (int i = 0; i < record.size(); i++) {
-            if (record.changed(i)) {
-                addValue((Field) record.field(i), record.getValue(i));
-            }
-        }
-    }
-
-    final <T> void addValue(R record, Field<T> field) {
-        addValue(field, record.getValue(field));
-    }
-
-    @Override
-    public final <T> void addValue(Field<T> field, T value) {
-        getValues().put(field, Utils.field(value, field));
-    }
-
-    @Override
-    public final <T> void addValue(Field<T> field, Field<T> value) {
-        getValues().put(field, Utils.field(value, field));
-    }
-}
+    xxxxxxxxx
+    xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxx xxxx x
+        xxxxxxxxxxxxxxxxxx xxxxxxx
+           xxxxxx xxx
+           xxxxxxxxxxxxxxxxxxxx
+           xxxxxxxxxxxxxxxx
+           xxxxxxxxxxxxx
+           xxxxxxxxxxxxxxxxxx
+           xxxxxxxxxxxxxxxx
+           xxxxxxxxxx
+    x
+x
+xx [/pro] */

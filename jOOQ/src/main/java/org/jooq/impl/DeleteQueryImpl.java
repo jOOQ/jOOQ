@@ -44,6 +44,7 @@ package org.jooq.impl;
 import static java.util.Arrays.asList;
 import static org.jooq.Clause.DELETE;
 import static org.jooq.Clause.DELETE_DELETE;
+import static org.jooq.Clause.DELETE_RETURNING;
 import static org.jooq.Clause.DELETE_WHERE;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -62,23 +63,17 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-class DeleteQueryImpl<R extends Record> extends AbstractQuery implements DeleteQuery<R> {
+class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implements DeleteQuery<R> {
 
     private static final long           serialVersionUID = -1943687511774150929L;
     private static final Clause[]       CLAUSES          = { DELETE };
 
-    private final Table<R>              table;
     private final ConditionProviderImpl condition;
 
     DeleteQueryImpl(Configuration configuration, Table<R> table) {
-        super(configuration);
+        super(configuration, table);
 
-        this.table = table;
         this.condition = new ConditionProviderImpl();
-    }
-
-    final Table<R> getFrom() {
-        return table;
     }
 
     final Condition getWhere() {
@@ -106,7 +101,7 @@ class DeleteQueryImpl<R extends Record> extends AbstractQuery implements DeleteQ
     }
 
     @Override
-    public final void accept(Context<?> ctx) {
+    final void accept0(Context<?> ctx) {
         boolean declare = ctx.declareTables();
 
         ctx.start(DELETE_DELETE)
@@ -118,16 +113,16 @@ class DeleteQueryImpl<R extends Record> extends AbstractQuery implements DeleteQ
 
             // [#2579] TODO: Improve Table API to discover aliased tables more
             // reliably instead of resorting to instanceof:
-            if (getFrom() instanceof TableAlias ||
-               (getFrom() instanceof TableImpl && ((TableImpl<R>)getFrom()).getAliasedTable() != null)) {
-                ctx.visit(getFrom())
+            if (table instanceof TableAlias ||
+               (table instanceof TableImpl && ((TableImpl<R>) table).getAliasedTable() != null)) {
+                ctx.visit(table)
                    .sql(' ');
             }
         }
 
         ctx.keyword("from").sql(' ')
            .declareTables(true)
-           .visit(getFrom())
+           .visit(table)
            .declareTables(declare)
            .end(DELETE_DELETE)
            .start(DELETE_WHERE);
@@ -138,7 +133,12 @@ class DeleteQueryImpl<R extends Record> extends AbstractQuery implements DeleteQ
                .visit(getWhere());
         }
 
-        ctx.end(DELETE_WHERE);
+        ctx.end(DELETE_WHERE)
+           .start(DELETE_RETURNING);
+
+        toSQLReturning(ctx);
+
+        ctx.end(DELETE_RETURNING);
     }
 
     @Override

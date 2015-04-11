@@ -57,10 +57,10 @@ import org.jooq.exception.DataAccessException;
  * <p>
  * This implemented differently for every dialect:
  * <ul>
- * <li>Firebird and Postgres have native support for
- * <code>INSERT .. RETURNING</code> clauses</li>
- * <li>HSQLDB, Oracle, and DB2 JDBC drivers allow for retrieving any table
- * column as "generated key" in one statement</li>
+ * <li>DB2 allows to execute
+ * <code>SELECT .. FROM FINAL TABLE (INSERT ...)</code></li>
+ * <li>HSQLDB, and Oracle JDBC drivers allow for retrieving any table column as
+ * "generated key" in one statement</li>
  * <li>Derby, H2, Ingres, MySQL, SQL Server only allow for retrieving IDENTITY
  * column values as "generated key". If other fields are requested, a second
  * statement is issued. Client code must assure transactional integrity between
@@ -79,8 +79,6 @@ public interface InsertResultStep<R extends Record> extends Insert<R> {
     /**
      * The result holding returned values as specified by the
      * {@link InsertReturningStep}
-     * <p>
-     * This currently only works well for DB2, HSQLDB, MySQL, and Postgres
      *
      * @return The returned values as specified by the
      *         {@link InsertReturningStep}. Note:

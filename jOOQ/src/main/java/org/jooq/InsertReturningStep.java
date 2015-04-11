@@ -59,8 +59,10 @@ import java.util.Collection;
  * <ul>
  * <li>Firebird and Postgres have native support for
  * <code>INSERT .. RETURNING</code> clauses</li>
- * <li>HSQLDB, Oracle, and DB2 JDBC drivers allow for retrieving any table
- * column as "generated key" in one statement</li>
+ * <li>DB2 allows to execute
+ * <code>SELECT .. FROM FINAL TABLE (INSERT ...)</code></li>
+ * <li>HSQLDB, and Oracle JDBC drivers allow for retrieving any table column as
+ * "generated key" in one statement</li>
  * <li>Derby, H2, Ingres, MySQL, SQL Server only allow for retrieving IDENTITY
  * column values as "generated key". If other fields are requested, a second
  * statement is issued. Client code must assure transactional integrity between

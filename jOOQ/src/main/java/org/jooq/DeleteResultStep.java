@@ -40,6 +40,7 @@
  */
 package org.jooq;
 
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.POSTGRES;
 
@@ -60,6 +61,8 @@ import org.jooq.exception.DataAccessException;
  * <ul>
  * <li>Firebird and Postgres have native support for
  * <code>UPDATE .. RETURNING</code> clauses</li>
+ * <li>DB2 allows to execute
+ * <code>SELECT .. FROM FINAL TABLE (DELETE ...)</code></li>
  * </ul>
  *
  * @author Lukas Eder
@@ -69,16 +72,14 @@ public interface DeleteResultStep<R extends Record> extends Delete<R> {
     /**
      * The result holding returned values as specified by the
      * {@link UpdateReturningStep}
-     * <p>
-     * This currently only works well for DB2, HSQLDB, MySQL, and Postgres
      *
      * @return The returned values as specified by the
      *         {@link UpdateReturningStep}. Note:
      *         <ul>
      *         <li>Not all databases / JDBC drivers support returning several
-     *         values on multi-row inserts!</li><li>This may return an empty
-     *         <code>Result</code> in case jOOQ could not retrieve any generated
-     *         keys from the JDBC driver.</li>
+     *         values on multi-row inserts!</li>
+     *         <li>This may return an empty <code>Result</code> in case jOOQ
+     *         could not retrieve any generated keys from the JDBC driver.</li>
      *         </ul>
      * @throws DataAccessException if something went wrong executing the query
      * @see UpdateQuery#getReturnedRecords()

@@ -40,6 +40,7 @@
  */
 package org.jooq;
 
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.POSTGRES;
 
@@ -63,6 +64,8 @@ import org.jooq.exception.DataAccessException;
  * <ul>
  * <li>Firebird and Postgres have native support for
  * <code>UPDATE .. RETURNING</code> clauses</li>
+ * <li>DB2 allows to execute
+ * <code>SELECT .. FROM FINAL TABLE (UPDATE ...)</code></li>
  * </ul>
  *
  * @author Lukas Eder
@@ -72,8 +75,6 @@ public interface UpdateResultStep<R extends Record> extends Update<R> {
     /**
      * The result holding returned values as specified by the
      * {@link UpdateReturningStep}
-     * <p>
-     * This currently only works well for DB2, HSQLDB, MySQL, and Postgres
      *
      * @return The returned values as specified by the
      *         {@link UpdateReturningStep}. Note:

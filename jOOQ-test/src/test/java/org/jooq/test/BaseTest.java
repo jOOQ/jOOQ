@@ -1120,7 +1120,7 @@ public abstract class BaseTest<
         }
 
         if (fail)
-            Assert.fail("No exception was thrown");
+            Assert.fail("No exception was thrown. Expected: " + throwable.getName());
     }
 
     public static void ignoreThrows(ThrowableRunnable runnable) {

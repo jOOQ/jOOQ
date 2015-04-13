@@ -76,6 +76,7 @@ import static org.jooq.Clause.CREATE_VIEW_AS;
 import static org.jooq.Clause.CREATE_VIEW_NAME;
 import static org.jooq.Clause.DELETE;
 import static org.jooq.Clause.DELETE_DELETE;
+import static org.jooq.Clause.DELETE_RETURNING;
 import static org.jooq.Clause.DELETE_WHERE;
 import static org.jooq.Clause.DROP_INDEX;
 import static org.jooq.Clause.DROP_SEQUENCE;
@@ -596,7 +597,8 @@ public class VisitContextTest extends AbstractTest {
             asList(DELETE, DELETE_DELETE),
             asList(DELETE, DELETE_DELETE, TABLE),
             asList(DELETE, DELETE_DELETE, TABLE, TABLE_REFERENCE),
-            asList(DELETE, DELETE_WHERE)
+            asList(DELETE, DELETE_WHERE),
+            asList(DELETE, DELETE_RETURNING)
         ),
         ctx.delete(TABLE1));
     }
@@ -618,7 +620,8 @@ public class VisitContextTest extends AbstractTest {
             asList(DELETE, DELETE_WHERE, CONDITION, CONDITION_COMPARISON, FIELD),
             asList(DELETE, DELETE_WHERE, CONDITION, CONDITION_COMPARISON, FIELD, FIELD_REFERENCE),
             asList(DELETE, DELETE_WHERE, CONDITION, CONDITION_COMPARISON, FIELD),
-            asList(DELETE, DELETE_WHERE, CONDITION, CONDITION_COMPARISON, FIELD, FIELD_VALUE)
+            asList(DELETE, DELETE_WHERE, CONDITION, CONDITION_COMPARISON, FIELD, FIELD_VALUE),
+            asList(DELETE, DELETE_RETURNING)
         ), part);
     }
 

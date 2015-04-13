@@ -7642,7 +7642,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> cast(Object value, DataType<T> type) {
-        return Utils.field(value, type).cast(type);
+        return Utils.field(value).cast(type);
     }
 
     /**

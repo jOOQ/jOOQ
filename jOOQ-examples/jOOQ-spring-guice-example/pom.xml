@@ -6,7 +6,7 @@
     <groupId>org.jooq</groupId>
     <artifactId>jooq-spring-guice-example</artifactId>
     <version>${org.jooq.version}</version>
-    <name>jOOQ Spring Example</name>
+    <name>jOOQ Spring Guice Example</name>
 
     <licenses>
         <license>

@@ -290,6 +290,17 @@ class VIncompleteRecord extends TableRecordImpl[VIncompleteRecord](VIncomplete.V
 	}
 
 	override def values(value1 : Object, value2 : Object, value3 : Object, value4 : Object, value5 : Object, value6 : Object, value7 : Object, value8 : Object, value9 : Object, value10 : Object, value11 : Object) : VIncompleteRecord = {
+		this.value1(value1)
+		this.value2(value2)
+		this.value3(value3)
+		this.value4(value4)
+		this.value5(value5)
+		this.value6(value6)
+		this.value7(value7)
+		this.value8(value8)
+		this.value9(value9)
+		this.value10(value10)
+		this.value11(value11)
 		this
 	}
 

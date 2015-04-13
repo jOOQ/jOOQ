@@ -28,7 +28,7 @@ import org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook;
 @Table(name = "T_BOOK", schema = "MULTI_SCHEMA")
 public class TBookRecord extends UpdatableRecordImpl<TBookRecord> implements Record9<Integer, Integer, Integer, Integer, String, Integer, Integer, String, byte[]> {
 
-	private static final long serialVersionUID = -549994337;
+	private static final long serialVersionUID = -2119955601;
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_BOOK.ID</code>.
@@ -434,6 +434,15 @@ public class TBookRecord extends UpdatableRecordImpl<TBookRecord> implements Rec
 	 */
 	@Override
 	public TBookRecord values(Integer value1, Integer value2, Integer value3, Integer value4, String value5, Integer value6, Integer value7, String value8, byte[] value9) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
+		value7(value7);
+		value8(value8);
+		value9(value9);
 		return this;
 	}
 

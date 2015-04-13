@@ -19,7 +19,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_2025;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_2025Record extends TableRecordImpl<XTestCase_2025Record> implements Record2<Integer, String>, IXTestCase_2025 {
 
-	private static final long serialVersionUID = -1675174821;
+	private static final long serialVersionUID = -2116233061;
 
 	/**
 	 * Setter for <code>PUBLIC.X_TEST_CASE_2025.REF_ID</code>.
@@ -130,6 +130,8 @@ public class XTestCase_2025Record extends TableRecordImpl<XTestCase_2025Record> 
 	 */
 	@Override
 	public XTestCase_2025Record values(Integer value1, String value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

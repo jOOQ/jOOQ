@@ -28,7 +28,7 @@ import org.jooq.types.UShort;
 @Table(name = "T_UNSIGNED", schema = "TEST")
 public class TUnsignedRecord extends TableRecordImpl<TUnsignedRecord> implements Record4<UByte, UShort, UInteger, ULong> {
 
-	private static final long serialVersionUID = 959425471;
+	private static final long serialVersionUID = -159436609;
 
 	/**
 	 * Setter for <code>TEST.T_UNSIGNED.U_BYTE</code>.
@@ -215,6 +215,10 @@ public class TUnsignedRecord extends TableRecordImpl<TUnsignedRecord> implements
 	 */
 	@Override
 	public TUnsignedRecord values(UByte value1, UShort value2, UInteger value3, ULong value4) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
 		return this;
 	}
 

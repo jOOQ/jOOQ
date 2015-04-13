@@ -29,7 +29,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.VBook;
 @Table(name = "V_BOOK", schema = "TEST")
 public class VBookRecord extends TableRecordImpl<VBookRecord> implements Record11<Integer, Integer, Integer, Integer, String, Integer, Integer, String, byte[], BigDecimal, Timestamp> {
 
-	private static final long serialVersionUID = -313687920;
+	private static final long serialVersionUID = 1867818526;
 
 	/**
 	 * Setter for <code>TEST.V_BOOK.ID</code>.
@@ -502,6 +502,17 @@ public class VBookRecord extends TableRecordImpl<VBookRecord> implements Record1
 	 */
 	@Override
 	public VBookRecord values(Integer value1, Integer value2, Integer value3, Integer value4, String value5, Integer value6, Integer value7, String value8, byte[] value9, BigDecimal value10, Timestamp value11) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
+		value7(value7);
+		value8(value8);
+		value9(value9);
+		value10(value10);
+		value11(value11);
 		return this;
 	}
 

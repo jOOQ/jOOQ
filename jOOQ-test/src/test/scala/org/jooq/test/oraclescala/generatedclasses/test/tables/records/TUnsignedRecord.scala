@@ -131,6 +131,10 @@ class TUnsignedRecord extends TableRecordImpl[TUnsignedRecord](TUnsigned.T_UNSIG
 	}
 
 	override def values(value1 : UByte, value2 : UShort, value3 : UInteger, value4 : ULong) : TUnsignedRecord = {
+		this.value1(value1)
+		this.value2(value2)
+		this.value3(value3)
+		this.value4(value4)
 		this
 	}
 

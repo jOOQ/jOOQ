@@ -120,6 +120,9 @@ class TTriggersRecord extends UpdatableRecordImpl[TTriggersRecord](TTriggers.T_T
 	}
 
 	override def values(value1 : Integer, value2 : Integer, value3 : Integer) : TTriggersRecord = {
+		this.value1(value1)
+		this.value2(value2)
+		this.value3(value3)
 		this
 	}
 

@@ -79,6 +79,8 @@ class UBookTypeRecord extends UDTRecordImpl[UBookTypeRecord](UBookType.U_BOOK_TY
 	}
 
 	override def values(value1 : Integer, value2 : String) : UBookTypeRecord = {
+		this.value1(value1)
+		this.value2(value2)
 		this
 	}
 

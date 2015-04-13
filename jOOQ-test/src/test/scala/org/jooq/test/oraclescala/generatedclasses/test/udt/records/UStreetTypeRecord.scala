@@ -148,6 +148,11 @@ class UStreetTypeRecord extends UDTRecordImpl[UStreetTypeRecord](UStreetType.U_S
 	}
 
 	override def values(value1 : String, value2 : String, value3 : UNumberArrayRecord, value4 : Array[scala.Byte], value5 : String) : UStreetTypeRecord = {
+		this.value1(value1)
+		this.value2(value2)
+		this.value3(value3)
+		this.value4(value4)
+		this.value5(value5)
 		this
 	}
 

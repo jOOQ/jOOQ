@@ -31,7 +31,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord
 @Table(name = "T_AUTHOR", schema = "MULTI_SCHEMA")
 public class TAuthorRecord extends UpdatableRecordImpl<TAuthorRecord> implements Record6<Integer, String, String, Date, Integer, UAddressTypeRecord> {
 
-	private static final long serialVersionUID = -755390721;
+	private static final long serialVersionUID = 854956479;
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_AUTHOR.ID</code>.
@@ -315,6 +315,12 @@ public class TAuthorRecord extends UpdatableRecordImpl<TAuthorRecord> implements
 	 */
 	@Override
 	public TAuthorRecord values(Integer value1, String value2, String value3, Date value4, Integer value5, UAddressTypeRecord value6) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
 		return this;
 	}
 

@@ -20,7 +20,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_725LobTest;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTestRecord extends UpdatableRecordImpl<T_725LobTestRecord> implements Record2<Integer, byte[]>, IT_725LobTest {
 
-	private static final long serialVersionUID = 219524744;
+	private static final long serialVersionUID = -710022712;
 
 	/**
 	 * Setter for <code>PUBLIC.T_725_LOB_TEST.ID</code>.
@@ -143,6 +143,8 @@ public class T_725LobTestRecord extends UpdatableRecordImpl<T_725LobTestRecord> 
 	 */
 	@Override
 	public T_725LobTestRecord values(Integer value1, byte[] value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

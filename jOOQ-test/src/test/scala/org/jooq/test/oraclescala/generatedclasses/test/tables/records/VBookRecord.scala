@@ -303,6 +303,17 @@ class VBookRecord extends TableRecordImpl[VBookRecord](VBook.V_BOOK) with Record
 	}
 
 	override def values(value1 : Integer, value2 : Integer, value3 : Integer, value4 : Integer, value5 : String, value6 : Integer, value7 : Integer, value8 : String, value9 : Array[scala.Byte], value10 : BigDecimal, value11 : Timestamp) : VBookRecord = {
+		this.value1(value1)
+		this.value2(value2)
+		this.value3(value3)
+		this.value4(value4)
+		this.value5(value5)
+		this.value6(value6)
+		this.value7(value7)
+		this.value8(value8)
+		this.value9(value9)
+		this.value10(value10)
+		this.value11(value11)
 		this
 	}
 

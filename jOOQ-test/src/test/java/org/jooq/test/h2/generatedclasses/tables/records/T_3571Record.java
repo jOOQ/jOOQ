@@ -19,7 +19,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_3571;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_3571Record extends TableRecordImpl<T_3571Record> implements Record4<org.jooq.test.all.converters.T_3571, org.jooq.test.all.converters.T_3571, org.jooq.test.all.converters.T_3571, org.jooq.test.all.converters.T_3571>, IT_3571 {
 
-	private static final long serialVersionUID = 605468503;
+	private static final long serialVersionUID = 1548980567;
 
 	/**
 	 * Setter for <code>PUBLIC.T_3571.E1</code>.
@@ -214,6 +214,10 @@ public class T_3571Record extends TableRecordImpl<T_3571Record> implements Recor
 	 */
 	@Override
 	public T_3571Record values(org.jooq.test.all.converters.T_3571 value1, org.jooq.test.all.converters.T_3571 value2, org.jooq.test.all.converters.T_3571 value3, org.jooq.test.all.converters.T_3571 value4) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
 		return this;
 	}
 

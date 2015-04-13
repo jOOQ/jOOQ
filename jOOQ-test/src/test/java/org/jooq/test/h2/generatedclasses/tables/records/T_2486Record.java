@@ -22,7 +22,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2486;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2486Record extends TableRecordImpl<T_2486Record> implements Record8<BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigInteger, BigInteger>, IT_2486 {
 
-	private static final long serialVersionUID = 1889380714;
+	private static final long serialVersionUID = 1916386666;
 
 	/**
 	 * Setter for <code>PUBLIC.T_2486.VAL1</code>.
@@ -385,6 +385,14 @@ public class T_2486Record extends TableRecordImpl<T_2486Record> implements Recor
 	 */
 	@Override
 	public T_2486Record values(BigDecimal value1, BigDecimal value2, BigDecimal value3, BigDecimal value4, BigDecimal value5, BigDecimal value6, BigInteger value7, BigInteger value8) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
+		value7(value7);
+		value8(value8);
 		return this;
 	}
 

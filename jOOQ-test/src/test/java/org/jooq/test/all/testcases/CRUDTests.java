@@ -854,6 +854,99 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         });
     }
 
+    public void testExecuteWithOptimisticLock() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        /* [pro] */
+        // No ON DELETE CASCADE constraints for Sybase ASE
+        if (dialect() == SQLDialect.ASE) {
+            create().truncate(table("t_book_to_book_store")).execute();
+        }
+        /* [/pro] */
+
+        testExecuteWithOptimisticLock0(TBook(), TBook_ID(), TBook_TITLE());
+
+        // Avoid referential integrity problems for subsequent test
+        create().delete(TBook()).execute();
+        testExecuteWithOptimisticLock0(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME());
+    }
+
+    private <R extends UpdatableRecord<R>> void testExecuteWithOptimisticLock0(
+        Table<R> table, TableField<R, Integer> id, TableField<R, String> string) throws Exception {
+
+        DSLContext create = create(new Settings().withExecuteWithOptimisticLocking(true));
+
+        // jOOQ may render FOR UPDATE statement when running optimistic locking. This may require a running
+        // transaction in some dialects.
+        create.transaction(c -> {
+            DSLContext ctx = DSL.using(c);
+
+            // Storing without changing shouldn't execute any queries
+            R record1 = ctx.fetchOne(table, id.equal(1));
+            assertEquals(0, ctx.executeUpdate(record1));
+            assertEquals(0, ctx.executeUpdate(record1));
+
+            // Succeed if there are no concurrency issues
+            record1.setValue(string, "New Title 1");
+            assertEquals(1, ctx.executeUpdate(record1));
+            assertEquals("New Title 1", ctx.fetchOne(table, id.equal(1)).getValue(string));
+
+            // Get new books
+            R record2 = ctx.fetchOne(table, id.equal(1));
+            R record3 = ctx.fetchOne(table, id.equal(1));
+
+            // Still won't fail, but this will cause record3 to be stale
+            record2.setValue(string, "New Title 2");
+            assertEquals(1, ctx.executeUpdate(record2));
+            assertEquals("New Title 2", ctx.fetchOne(table, id.equal(1)).getValue(string));
+
+            // Storing without changing shouldn't execute any queries
+            assertEquals(0, ctx.executeUpdate(record3));
+
+            // This should fail as record3 is stale
+            record3.setValue(string, "New Title 3");
+            assertThrows(DataChangedException.class, () -> ctx.executeUpdate(record3));
+            assertEquals("New Title 2", ctx.fetchOne(table, id.equal(1)).getValue(string));
+
+            // Refreshing first will work, though
+            record3.refresh();
+            record3.setValue(string, "New Title 3");
+            assertEquals(1, ctx.executeUpdate(record3));
+            assertEquals("New Title 3", ctx.fetchOne(table, id.equal(1)).getValue(string));
+
+            // Get new books
+            R record4 = ctx.fetchOne(table, id.equal(1));
+            R record5 = ctx.fetchOne(table, id.equal(1));
+
+            // Delete the book
+            assertEquals(1, ctx.executeDelete(record4));
+
+            // Storing without changing shouldn't execute any queries
+            assertEquals(0, ctx.executeUpdate(record5));
+
+            // This should fail, as the database record no longer exists
+            record5.setValue(string, "New Title 5");
+            assertThrows(DataChangedException.class, () -> ctx.executeUpdate(record5));
+
+            // Restore the book, refresh the copy, then it should work
+            assertEquals(1, ctx.executeInsert(record5));
+            record5.refresh();
+            record5.setValue(string, "New Title 5");
+            assertEquals(1, ctx.executeUpdate(record5));
+            assertEquals("New Title 5", ctx.fetchOne(table, id.equal(1)).getValue(string));
+
+            // Deleting the original should no longer be possible
+            assertThrows(DataChangedException.class, () -> ctx.executeDelete(record4));
+
+            // Refreshing and deleting should work
+            record4.refresh();
+            assertEquals(1, ctx.executeDelete(record4));
+
+            // Now the other record cannot be deleted anymore
+            assertThrows(DataChangedException.class, () -> ctx.executeDelete(record5));
+        });
+    }
+
     public void testStoreVsExecuteInsert() throws Exception {
         Assume.assumeNotNull(TIdentityPK());
 

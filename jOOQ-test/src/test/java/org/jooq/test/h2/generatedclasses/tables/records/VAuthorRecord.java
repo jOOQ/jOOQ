@@ -22,7 +22,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IVAuthor;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthorRecord extends UpdatableRecordImpl<VAuthorRecord> implements Record6<Integer, String, String, Date, Integer, String>, IVAuthor {
 
-	private static final long serialVersionUID = -213792517;
+	private static final long serialVersionUID = -134102853;
 
 	/**
 	 * Setter for <code>PUBLIC.V_AUTHOR.ID</code>.
@@ -313,6 +313,12 @@ public class VAuthorRecord extends UpdatableRecordImpl<VAuthorRecord> implements
 	 */
 	@Override
 	public VAuthorRecord values(Integer value1, String value2, String value3, Date value4, Integer value5, String value6) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
 		return this;
 	}
 

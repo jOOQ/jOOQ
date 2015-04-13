@@ -71,6 +71,7 @@ class TTempRecord extends UpdatableRecordImpl[TTempRecord](TTemp.T_TEMP) with Re
 	}
 
 	override def values(value1 : Integer) : TTempRecord = {
+		this.value1(value1)
 		this
 	}
 

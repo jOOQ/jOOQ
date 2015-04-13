@@ -97,6 +97,8 @@ class T_725LobTestRecord extends UpdatableRecordImpl[T_725LobTestRecord](T_725Lo
 	}
 
 	override def values(value1 : Integer, value2 : Array[scala.Byte]) : T_725LobTestRecord = {
+		this.value1(value1)
+		this.value2(value2)
 		this
 	}
 

@@ -28,7 +28,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.NewAuthor;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UAuthorTypeRecord extends UDTRecordImpl<UAuthorTypeRecord> implements Record3<Integer, String, String> {
 
-	private static final long serialVersionUID = -2022827054;
+	private static final long serialVersionUID = -2093472254;
 
 	/**
 	 * Setter for <code>TEST.U_AUTHOR_TYPE.ID</code>.
@@ -233,6 +233,9 @@ public class UAuthorTypeRecord extends UDTRecordImpl<UAuthorTypeRecord> implemen
 	 */
 	@Override
 	public UAuthorTypeRecord values(Integer value1, String value2, String value3) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
 		return this;
 	}
 

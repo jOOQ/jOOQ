@@ -76,6 +76,8 @@ class UNested_3Record extends UDTRecordImpl[UNested_3Record](UNested_3.U_NESTED_
 	}
 
 	override def values(value1 : Integer, value2 : UNested_2Record) : UNested_3Record = {
+		this.value1(value1)
+		this.value2(value2)
 		this
 	}
 

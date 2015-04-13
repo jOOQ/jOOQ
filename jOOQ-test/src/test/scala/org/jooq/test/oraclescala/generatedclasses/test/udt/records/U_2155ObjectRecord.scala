@@ -76,6 +76,8 @@ class U_2155ObjectRecord extends UDTRecordImpl[U_2155ObjectRecord](U_2155Object.
 	}
 
 	override def values(value1 : LocalDate, value2 : U_2155ArrayRecord) : U_2155ObjectRecord = {
+		this.value1(value1)
+		this.value2(value2)
 		this
 	}
 

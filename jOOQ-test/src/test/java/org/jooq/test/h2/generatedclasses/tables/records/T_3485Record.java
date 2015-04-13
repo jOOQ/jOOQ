@@ -20,7 +20,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_3485;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_3485Record extends UpdatableRecordImpl<T_3485Record> implements Record2<Integer, String>, IT_3485 {
 
-	private static final long serialVersionUID = -2053988619;
+	private static final long serialVersionUID = -1401653707;
 
 	/**
 	 * Setter for <code>PUBLIC.T_3485.ID</code>.
@@ -143,6 +143,8 @@ public class T_3485Record extends UpdatableRecordImpl<T_3485Record> implements R
 	 */
 	@Override
 	public T_3485Record values(Integer value1, String value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

@@ -89,6 +89,8 @@ class XTestCase_2025Record extends TableRecordImpl[XTestCase_2025Record](XTestCa
 	}
 
 	override def values(value1 : Integer, value2 : String) : XTestCase_2025Record = {
+		this.value1(value1)
+		this.value2(value2)
 		this
 	}
 

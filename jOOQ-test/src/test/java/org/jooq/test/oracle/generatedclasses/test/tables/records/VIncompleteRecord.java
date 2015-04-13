@@ -24,7 +24,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete;
 @Table(name = "V_INCOMPLETE", schema = "TEST")
 public class VIncompleteRecord extends TableRecordImpl<VIncompleteRecord> implements Record11<Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object> {
 
-	private static final long serialVersionUID = -1137516581;
+	private static final long serialVersionUID = -232507699;
 
 	/**
 	 * Setter for <code>TEST.V_INCOMPLETE.ID</code>.
@@ -491,6 +491,17 @@ public class VIncompleteRecord extends TableRecordImpl<VIncompleteRecord> implem
 	 */
 	@Override
 	public VIncompleteRecord values(Object value1, Object value2, Object value3, Object value4, Object value5, Object value6, Object value7, Object value8, Object value9, Object value10, Object value11) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
+		value7(value7);
+		value8(value8);
+		value9(value9);
+		value10(value10);
+		value11(value11);
 		return this;
 	}
 

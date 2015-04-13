@@ -27,7 +27,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.ITBooleans;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleansRecord extends UpdatableRecordImpl<TBooleansRecord> implements Record11<Integer, Boolean_10, Boolean_TF_LC, Boolean_TF_UC, Boolean_YES_NO_LC, Boolean_YES_NO_UC, Boolean_YN_LC, Boolean_YN_UC, Boolean, Boolean, Boolean>, ITBooleans {
 
-	private static final long serialVersionUID = 2094402809;
+	private static final long serialVersionUID = -1584847161;
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOLEANS.ID</code>.
@@ -528,6 +528,17 @@ public class TBooleansRecord extends UpdatableRecordImpl<TBooleansRecord> implem
 	 */
 	@Override
 	public TBooleansRecord values(Integer value1, Boolean_10 value2, Boolean_TF_LC value3, Boolean_TF_UC value4, Boolean_YES_NO_LC value5, Boolean_YES_NO_UC value6, Boolean_YN_LC value7, Boolean_YN_UC value8, Boolean value9, Boolean value10, Boolean value11) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
+		value7(value7);
+		value8(value8);
+		value9(value9);
+		value10(value10);
+		value11(value11);
 		return this;
 	}
 

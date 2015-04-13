@@ -2326,6 +2326,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testDeleteReturning() throws Exception {
+        new InsertUpdateTests(this).testDeleteReturning();
+    }
+
+    @Test
     public void testMerge() throws Exception {
         new InsertUpdateTests(this).testMerge();
     }
@@ -2348,6 +2353,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testDateTime() throws Exception {
         new DataTypeTests(this).testDateTime();
+    }
+
+    @Test
+    public void testDateTimeFractionalSeconds() throws Exception {
+        new DataTypeTests(this).testDateTimeFractionalSeconds();
     }
 
     @Test
@@ -2438,6 +2448,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testStoreWithOptimisticLock() throws Exception {
         new CRUDTests(this).testStoreWithOptimisticLock();
+    }
+
+    // [#3862] @Test
+    public void testExecuteWithOptimisticLock() throws Exception {
+        new CRUDTests(this).testExecuteWithOptimisticLock();
     }
 
     @Test

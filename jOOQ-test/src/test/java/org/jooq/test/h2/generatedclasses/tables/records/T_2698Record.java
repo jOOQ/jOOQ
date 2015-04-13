@@ -20,7 +20,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2698;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2698Record extends UpdatableRecordImpl<T_2698Record> implements Record3<Integer, Integer, Integer>, IT_2698 {
 
-	private static final long serialVersionUID = -1274960123;
+	private static final long serialVersionUID = -1238383083;
 
 	/**
 	 * Setter for <code>PUBLIC.T_2698.ID</code>.
@@ -185,6 +185,9 @@ public class T_2698Record extends UpdatableRecordImpl<T_2698Record> implements R
 	 */
 	@Override
 	public T_2698Record values(Integer value1, Integer value2, Integer value3) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
 		return this;
 	}
 

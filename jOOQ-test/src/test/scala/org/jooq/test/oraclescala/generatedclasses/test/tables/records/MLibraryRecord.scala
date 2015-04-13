@@ -88,6 +88,8 @@ class MLibraryRecord extends TableRecordImpl[MLibraryRecord](MLibrary.M_LIBRARY)
 	}
 
 	override def values(value1 : String, value2 : String) : MLibraryRecord = {
+		this.value1(value1)
+		this.value2(value2)
 		this
 	}
 

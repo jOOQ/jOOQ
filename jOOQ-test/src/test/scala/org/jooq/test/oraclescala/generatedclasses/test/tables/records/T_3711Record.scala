@@ -175,6 +175,12 @@ class T_3711Record extends TableRecordImpl[T_3711Record](T_3711.T_3711) with Rec
 	}
 
 	override def values(value1 : NumberTableRecord, value2 : NumberObjectRecord, value3 : NumberTableRecord, value4 : NumberObjectRecord, value5 : NumberTableRecord, value6 : NumberObjectRecord) : T_3711Record = {
+		this.value1(value1)
+		this.value2(value2)
+		this.value3(value3)
+		this.value4(value4)
+		this.value5(value5)
+		this.value6(value6)
 		this
 	}
 

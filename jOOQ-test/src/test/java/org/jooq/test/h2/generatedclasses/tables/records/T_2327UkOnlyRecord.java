@@ -19,7 +19,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2327UkOnly;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2327UkOnlyRecord extends TableRecordImpl<T_2327UkOnlyRecord> implements Record1<Integer>, IT_2327UkOnly {
 
-	private static final long serialVersionUID = -549211514;
+	private static final long serialVersionUID = 59600278;
 
 	/**
 	 * Setter for <code>PUBLIC.T_2327_UK_ONLY.ID</code>.
@@ -88,6 +88,7 @@ public class T_2327UkOnlyRecord extends TableRecordImpl<T_2327UkOnlyRecord> impl
 	 */
 	@Override
 	public T_2327UkOnlyRecord values(Integer value1) {
+		value1(value1);
 		return this;
 	}
 

@@ -24,6 +24,7 @@ import org.jooq.test.h2.generatedclasses.tables.T_2327UkOnly;
 import org.jooq.test.h2.generatedclasses.tables.T_2486;
 import org.jooq.test.h2.generatedclasses.tables.T_2698;
 import org.jooq.test.h2.generatedclasses.tables.T_2718;
+import org.jooq.test.h2.generatedclasses.tables.T_2926;
 import org.jooq.test.h2.generatedclasses.tables.T_3485;
 import org.jooq.test.h2.generatedclasses.tables.T_3488AbcXyzEee;
 import org.jooq.test.h2.generatedclasses.tables.T_3571;
@@ -85,6 +86,11 @@ public class Tables {
 	 * The table PUBLIC.T_2327_UK_ONLY
 	 */
 	public static final T_2327UkOnly T_2327_UK_ONLY = org.jooq.test.h2.generatedclasses.tables.T_2327UkOnly.T_2327_UK_ONLY;
+
+	/**
+	 * The table PUBLIC.T_2926
+	 */
+	public static final T_2926 T_2926 = org.jooq.test.h2.generatedclasses.tables.T_2926.T_2926;
 
 	/**
 	 * The table PUBLIC.T_IDENTITY_PK

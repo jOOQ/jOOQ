@@ -18,7 +18,7 @@ import org.jooq.test.sqlserver.generatedclasses.tables.records.VBookRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBook extends TableImpl<VBookRecord> {
 
-	private static final long serialVersionUID = -780826532;
+	private static final long serialVersionUID = 1296312995;
 
 	/**
 	 * The reference instance of <code>dbo.v_book</code>
@@ -71,7 +71,7 @@ public class VBook extends TableImpl<VBookRecord> {
 	/**
 	 * The column <code>dbo.v_book.CONTENT_TEXT</code>.
 	 */
-	public final TableField<VBookRecord, String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.CLOB.length(2147483647), this, "");
+	public final TableField<VBookRecord, String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.CLOB, this, "");
 
 	/**
 	 * The column <code>dbo.v_book.CONTENT_PDF</code>.

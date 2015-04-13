@@ -217,6 +217,14 @@ class UAddressTypeRecord extends UDTRecordImpl[UAddressTypeRecord](UAddressType.
 	}
 
 	override def values(value1 : UStreetTypeRecord, value2 : String, value3 : String, value4 : String, value5 : Date, value6 : Integer, value7 : Array[scala.Byte], value8 : String) : UAddressTypeRecord = {
+		this.value1(value1)
+		this.value2(value2)
+		this.value3(value3)
+		this.value4(value4)
+		this.value5(value5)
+		this.value6(value6)
+		this.value7(value7)
+		this.value8(value8)
 		this
 	}
 

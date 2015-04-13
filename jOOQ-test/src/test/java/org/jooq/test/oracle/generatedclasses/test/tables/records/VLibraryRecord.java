@@ -26,7 +26,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.VLibrary;
 @Table(name = "V_LIBRARY", schema = "TEST")
 public class VLibraryRecord extends TableRecordImpl<VLibraryRecord> implements Record2<String, String> {
 
-	private static final long serialVersionUID = 1634222161;
+	private static final long serialVersionUID = -1452027119;
 
 	/**
 	 * Setter for <code>TEST.V_LIBRARY.AUTHOR</code>.
@@ -136,6 +136,8 @@ public class VLibraryRecord extends TableRecordImpl<VLibraryRecord> implements R
 	 */
 	@Override
 	public VLibraryRecord values(String value1, String value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

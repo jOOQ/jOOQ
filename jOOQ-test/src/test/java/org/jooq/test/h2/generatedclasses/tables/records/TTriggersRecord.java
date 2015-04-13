@@ -20,7 +20,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.ITTriggers;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggersRecord extends UpdatableRecordImpl<TTriggersRecord> implements Record3<Integer, Integer, Integer>, ITTriggers {
 
-	private static final long serialVersionUID = -565853847;
+	private static final long serialVersionUID = -1294594695;
 
 	/**
 	 * Setter for <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>.
@@ -185,6 +185,9 @@ public class TTriggersRecord extends UpdatableRecordImpl<TTriggersRecord> implem
 	 */
 	@Override
 	public TTriggersRecord values(Integer value1, Integer value2, Integer value3) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
 		return this;
 	}
 

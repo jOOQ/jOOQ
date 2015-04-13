@@ -32,6 +32,7 @@ import org.jooq.test.h2.generatedclasses.tables.T_2327UkOnly;
 import org.jooq.test.h2.generatedclasses.tables.T_2486;
 import org.jooq.test.h2.generatedclasses.tables.T_2698;
 import org.jooq.test.h2.generatedclasses.tables.T_2718;
+import org.jooq.test.h2.generatedclasses.tables.T_2926;
 import org.jooq.test.h2.generatedclasses.tables.T_3485;
 import org.jooq.test.h2.generatedclasses.tables.T_3488AbcXyzEee;
 import org.jooq.test.h2.generatedclasses.tables.T_3571;
@@ -59,7 +60,7 @@ import org.jooq.test.h2.generatedclasses.tables.Ää;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-	private static final long serialVersionUID = 756203820;
+	private static final long serialVersionUID = -1902973522;
 
 	/**
 	 * The reference instance of <code>PUBLIC</code>
@@ -102,6 +103,7 @@ public class Public extends SchemaImpl {
 			T_3666.T_3666,
 			T_3571.T_3571,
 			T_2327UkOnly.T_2327_UK_ONLY,
+			T_2926.T_2926,
 			TIdentityPk.T_IDENTITY_PK,
 			TIdentity.T_IDENTITY,
 			TDates.T_DATES,

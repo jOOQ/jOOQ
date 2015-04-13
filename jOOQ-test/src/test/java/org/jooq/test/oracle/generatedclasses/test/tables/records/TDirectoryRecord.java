@@ -28,7 +28,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.TDirectory;
 @Table(name = "T_DIRECTORY", schema = "TEST")
 public class TDirectoryRecord extends UpdatableRecordImpl<TDirectoryRecord> implements Record4<Integer, Integer, Integer, String> {
 
-	private static final long serialVersionUID = 1996348362;
+	private static final long serialVersionUID = -817802550;
 
 	/**
 	 * Setter for <code>TEST.T_DIRECTORY.ID</code>.
@@ -230,6 +230,10 @@ public class TDirectoryRecord extends UpdatableRecordImpl<TDirectoryRecord> impl
 	 */
 	@Override
 	public TDirectoryRecord values(Integer value1, Integer value2, Integer value3, String value4) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
 		return this;
 	}
 

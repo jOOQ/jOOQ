@@ -26,7 +26,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.TTemp;
 @Table(name = "T_TEMP", schema = "TEST")
 public class TTempRecord extends UpdatableRecordImpl<TTempRecord> implements Record1<Integer> {
 
-	private static final long serialVersionUID = -1683671248;
+	private static final long serialVersionUID = -1781453152;
 
 	/**
 	 * Setter for <code>TEST.T_TEMP.ID</code>.
@@ -107,6 +107,7 @@ public class TTempRecord extends UpdatableRecordImpl<TTempRecord> implements Rec
 	 */
 	@Override
 	public TTempRecord values(Integer value1) {
+		value1(value1);
 		return this;
 	}
 

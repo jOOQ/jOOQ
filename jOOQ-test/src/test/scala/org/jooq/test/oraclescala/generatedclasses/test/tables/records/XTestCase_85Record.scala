@@ -121,6 +121,9 @@ class XTestCase_85Record extends UpdatableRecordImpl[XTestCase_85Record](XTestCa
 	}
 
 	override def values(value1 : Integer, value2 : Integer, value3 : String) : XTestCase_85Record = {
+		this.value1(value1)
+		this.value2(value2)
+		this.value3(value3)
 		this
 	}
 

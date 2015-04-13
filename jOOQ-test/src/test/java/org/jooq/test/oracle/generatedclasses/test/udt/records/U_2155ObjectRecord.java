@@ -21,7 +21,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ArrayRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_2155ObjectRecord extends UDTRecordImpl<U_2155ObjectRecord> implements Record2<LocalDate, U_2155ArrayRecord> {
 
-	private static final long serialVersionUID = -2053802343;
+	private static final long serialVersionUID = 113580377;
 
 	/**
 	 * Setter for <code>TEST.U_2155_OBJECT.D</code>.
@@ -126,6 +126,8 @@ public class U_2155ObjectRecord extends UDTRecordImpl<U_2155ObjectRecord> implem
 	 */
 	@Override
 	public U_2155ObjectRecord values(LocalDate value1, U_2155ArrayRecord value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

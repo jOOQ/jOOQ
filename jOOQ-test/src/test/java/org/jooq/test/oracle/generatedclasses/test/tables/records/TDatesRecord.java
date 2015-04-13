@@ -32,7 +32,7 @@ import org.jooq.types.YearToMonth;
 @Table(name = "T_DATES", schema = "TEST")
 public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements Record8<Integer, Date, Timestamp, Timestamp, Integer, Long, YearToMonth, DayToSecond> {
 
-	private static final long serialVersionUID = -1202866669;
+	private static final long serialVersionUID = -263420909;
 
 	/**
 	 * Setter for <code>TEST.T_DATES.ID</code>.
@@ -393,6 +393,14 @@ public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements R
 	 */
 	@Override
 	public TDatesRecord values(Integer value1, Date value2, Timestamp value3, Timestamp value4, Integer value5, Long value6, YearToMonth value7, DayToSecond value8) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
+		value7(value7);
+		value8(value8);
 		return this;
 	}
 

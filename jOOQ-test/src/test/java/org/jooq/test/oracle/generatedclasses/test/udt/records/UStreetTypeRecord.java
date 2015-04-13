@@ -21,7 +21,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UStreetTypeRecord extends UDTRecordImpl<UStreetTypeRecord> implements Record5<String, String, UNumberArrayRecord, byte[], String> {
 
-	private static final long serialVersionUID = 1621844692;
+	private static final long serialVersionUID = 1196997668;
 
 	/**
 	 * Setter for <code>TEST.U_STREET_TYPE.STREET</code>.
@@ -245,6 +245,11 @@ public class UStreetTypeRecord extends UDTRecordImpl<UStreetTypeRecord> implemen
 	 */
 	@Override
 	public UStreetTypeRecord values(String value1, String value2, UNumberArrayRecord value3, byte[] value4, String value5) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
 		return this;
 	}
 

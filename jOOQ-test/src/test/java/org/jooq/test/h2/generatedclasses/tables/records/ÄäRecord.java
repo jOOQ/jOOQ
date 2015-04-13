@@ -19,7 +19,7 @@ import org.jooq.test.h2.generatedclasses.tables.Ää;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ÄäRecord extends TableRecordImpl<ÄäRecord> implements Record1<Integer>, IÄä {
 
-	private static final long serialVersionUID = -1414424285;
+	private static final long serialVersionUID = 791789299;
 
 	/**
 	 * Setter for <code>PUBLIC.Ää.Öö</code>.
@@ -88,6 +88,7 @@ public class ÄäRecord extends TableRecordImpl<ÄäRecord> implements Record1<I
 	 */
 	@Override
 	public ÄäRecord values(Integer value1) {
+		value1(value1);
 		return this;
 	}
 

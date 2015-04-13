@@ -23,7 +23,7 @@ import org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTest extends TableImpl<T_725LobTestRecord> {
 
-	private static final long serialVersionUID = -415786810;
+	private static final long serialVersionUID = -2074648241;
 
 	/**
 	 * The reference instance of <code>PUBLIC.T_725_LOB_TEST</code>
@@ -46,7 +46,7 @@ public class T_725LobTest extends TableImpl<T_725LobTestRecord> {
 	/**
 	 * The column <code>PUBLIC.T_725_LOB_TEST.LOB</code>.
 	 */
-	public final TableField<T_725LobTestRecord, byte[]> LOB = createField("LOB", org.jooq.impl.SQLDataType.BLOB.length(2147483647), this, "");
+	public final TableField<T_725LobTestRecord, byte[]> LOB = createField("LOB", org.jooq.impl.SQLDataType.BLOB, this, "");
 
 	/**
 	 * Create a <code>PUBLIC.T_725_LOB_TEST</code> table reference

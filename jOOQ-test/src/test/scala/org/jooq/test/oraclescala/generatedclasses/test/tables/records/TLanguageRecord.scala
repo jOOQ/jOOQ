@@ -153,6 +153,10 @@ class TLanguageRecord extends UpdatableRecordImpl[TLanguageRecord](TLanguage.T_L
 	}
 
 	override def values(value1 : String, value2 : String, value3 : String, value4 : Integer) : TLanguageRecord = {
+		this.value1(value1)
+		this.value2(value2)
+		this.value3(value3)
+		this.value4(value4)
 		this
 	}
 

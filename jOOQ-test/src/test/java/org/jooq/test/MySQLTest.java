@@ -42,6 +42,7 @@
 package org.jooq.test;
 
 import static java.util.Arrays.asList;
+import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.md5;
@@ -1064,5 +1065,16 @@ public class MySQLTest extends jOOQAbstractTest<
         finally {
             ignoreThrows(() -> create().dropTable("t").execute());
         }
+    }
+
+    @Test
+    public void testMySQLBinaryCast() {
+
+        // [#3255]
+        assertEquals("1984",
+        create().selectFrom(T_BOOK)
+                .where(cast(TBook.TITLE, MySQLDataType.BINARY)
+                   .eq(cast("1984", MySQLDataType.BINARY)))
+                .fetchOne(TBook.TITLE));
     }
 }

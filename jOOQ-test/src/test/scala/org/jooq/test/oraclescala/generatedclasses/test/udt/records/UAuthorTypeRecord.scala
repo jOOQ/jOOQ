@@ -17,7 +17,6 @@ import org.jooq.Record3
 import org.jooq.Row3
 import org.jooq.impl.UDTRecordImpl
 import org.jooq.test.oraclescala.generatedclasses.test.udt.UAuthorType
-import org.jooq.test.oraclescala.generatedclasses.test.udt.records.UAuthorTypeRecord
 import org.jooq.test.oraclescala.generatedclasses.test.udt.u_author_type.CountBooks
 import org.jooq.test.oraclescala.generatedclasses.test.udt.u_author_type.GetAuthor
 import org.jooq.test.oraclescala.generatedclasses.test.udt.u_author_type.GetBooks
@@ -91,7 +90,7 @@ class UAuthorTypeRecord extends UDTRecordImpl[UAuthorTypeRecord](UAuthorType.U_A
 	/**
 	 * Call <code>TEST.U_AUTHOR_TYPE.GET_AUTHOR</code>
 	 */
-	def getAuthor(configuration : Configuration, pId : Number) : UAuthorTypeRecord = {
+	def getAuthor(configuration : Configuration, pId : Number) : org.jooq.test.oraclescala.generatedclasses.test.udt.records.UAuthorTypeRecord = {
 		val f = new GetAuthor()
 		f.setPId(pId)
 
@@ -114,7 +113,7 @@ class UAuthorTypeRecord extends UDTRecordImpl[UAuthorTypeRecord](UAuthorType.U_A
 	/**
 	 * Call <code>TEST.U_AUTHOR_TYPE.LOAD</code>
 	 */
-	def load() : UAuthorTypeRecord = {
+	def load() : org.jooq.test.oraclescala.generatedclasses.test.udt.records.UAuthorTypeRecord = {
 		val p = new Load
 		p.setSelf(this)
 
@@ -126,7 +125,7 @@ class UAuthorTypeRecord extends UDTRecordImpl[UAuthorTypeRecord](UAuthorType.U_A
 	/**
 	 * Call <code>TEST.U_AUTHOR_TYPE.NEW_AUTHOR</code>
 	 */
-	def newAuthor(configuration : Configuration, pId : Number, pFirstName : String, pLastName : String) : UAuthorTypeRecord = {
+	def newAuthor(configuration : Configuration, pId : Number, pFirstName : String, pLastName : String) : org.jooq.test.oraclescala.generatedclasses.test.udt.records.UAuthorTypeRecord = {
 		val p = new NewAuthor
 		p.setPId(pId)
 		p.setPFirstName(pFirstName)

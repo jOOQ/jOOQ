@@ -17,7 +17,6 @@ import org.jooq.UniqueKey
 import org.jooq.impl.TableImpl
 import org.jooq.test.oraclescala.generatedclasses.test.Keys
 import org.jooq.test.oraclescala.generatedclasses.test.Test
-import org.jooq.test.oraclescala.generatedclasses.test.tables.TTemp
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.TTempRecord
 
 
@@ -57,7 +56,7 @@ class TTemp(alias : String, aliased : Table[TTempRecord], parameters : Array[ Fi
 	 * Create an aliased <code>TEST.T_TEMP</code> table reference
 	 */
 	def this(alias : String) = {
-		this(alias, TTemp.T_TEMP, null)
+		this(alias, org.jooq.test.oraclescala.generatedclasses.test.tables.TTemp.T_TEMP, null)
 	}
 
 	private def this(alias : String, aliased : Table[TTempRecord]) = {

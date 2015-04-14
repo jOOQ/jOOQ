@@ -20,7 +20,6 @@ import org.jooq.UniqueKey
 import org.jooq.impl.TableImpl
 import org.jooq.test.oraclescala.generatedclasses.test.Keys
 import org.jooq.test.oraclescala.generatedclasses.test.Test
-import org.jooq.test.oraclescala.generatedclasses.test.tables.XUnused
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.XUnusedRecord
 
 
@@ -139,7 +138,7 @@ class XUnused(alias : String, aliased : Table[XUnusedRecord], parameters : Array
 	 * Create an aliased <code>TEST.X_UNUSED</code> table reference
 	 */
 	def this(alias : String) = {
-		this(alias, XUnused.X_UNUSED, null)
+		this(alias, org.jooq.test.oraclescala.generatedclasses.test.tables.XUnused.X_UNUSED, null)
 	}
 
 	private def this(alias : String, aliased : Table[XUnusedRecord]) = {

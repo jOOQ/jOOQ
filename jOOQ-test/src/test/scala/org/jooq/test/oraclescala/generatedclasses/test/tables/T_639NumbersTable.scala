@@ -23,7 +23,6 @@ import org.jooq.UniqueKey
 import org.jooq.impl.TableImpl
 import org.jooq.test.oraclescala.generatedclasses.test.Keys
 import org.jooq.test.oraclescala.generatedclasses.test.Test
-import org.jooq.test.oraclescala.generatedclasses.test.tables.T_639NumbersTable
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.T_639NumbersTableRecord
 
 
@@ -123,7 +122,7 @@ class T_639NumbersTable(alias : String, aliased : Table[T_639NumbersTableRecord]
 	 * Create an aliased <code>TEST.T_639_NUMBERS_TABLE</code> table reference
 	 */
 	def this(alias : String) = {
-		this(alias, T_639NumbersTable.T_639_NUMBERS_TABLE, null)
+		this(alias, org.jooq.test.oraclescala.generatedclasses.test.tables.T_639NumbersTable.T_639_NUMBERS_TABLE, null)
 	}
 
 	private def this(alias : String, aliased : Table[T_639NumbersTableRecord]) = {

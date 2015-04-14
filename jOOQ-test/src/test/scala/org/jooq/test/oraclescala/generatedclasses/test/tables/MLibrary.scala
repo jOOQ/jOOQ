@@ -12,7 +12,6 @@ import org.jooq.Table
 import org.jooq.TableField
 import org.jooq.impl.TableImpl
 import org.jooq.test.oraclescala.generatedclasses.test.Test
-import org.jooq.test.oraclescala.generatedclasses.test.tables.MLibrary
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.MLibraryRecord
 
 
@@ -57,7 +56,7 @@ class MLibrary(alias : String, aliased : Table[MLibraryRecord], parameters : Arr
 	 * Create an aliased <code>TEST.M_LIBRARY</code> table reference
 	 */
 	def this(alias : String) = {
-		this(alias, MLibrary.M_LIBRARY, null)
+		this(alias, org.jooq.test.oraclescala.generatedclasses.test.tables.MLibrary.M_LIBRARY, null)
 	}
 
 	private def this(alias : String, aliased : Table[MLibraryRecord]) = {

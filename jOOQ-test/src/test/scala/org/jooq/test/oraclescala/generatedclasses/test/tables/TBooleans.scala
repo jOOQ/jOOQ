@@ -32,7 +32,6 @@ import org.jooq.test.all.converters.Boolean_YN_UC
 import org.jooq.test.all.converters.Boolean_YN_UC_Converter
 import org.jooq.test.oraclescala.generatedclasses.test.Keys
 import org.jooq.test.oraclescala.generatedclasses.test.Test
-import org.jooq.test.oraclescala.generatedclasses.test.tables.TBooleans
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.TBooleansRecord
 
 
@@ -122,7 +121,7 @@ class TBooleans(alias : String, aliased : Table[TBooleansRecord], parameters : A
 	 * Create an aliased <code>TEST.T_BOOLEANS</code> table reference
 	 */
 	def this(alias : String) = {
-		this(alias, TBooleans.T_BOOLEANS, null)
+		this(alias, org.jooq.test.oraclescala.generatedclasses.test.tables.TBooleans.T_BOOLEANS, null)
 	}
 
 	private def this(alias : String, aliased : Table[TBooleansRecord]) = {

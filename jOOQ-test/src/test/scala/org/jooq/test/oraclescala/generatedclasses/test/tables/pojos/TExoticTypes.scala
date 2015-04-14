@@ -6,6 +6,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables.pojos
 
 import java.io.Serializable
 import java.lang.Integer
+import java.lang.Object
 import java.lang.String
 import java.util.UUID
 
@@ -27,10 +28,12 @@ class TExoticTypes(
 	, private var javaIoSerializable : Serializable
 	, private var plainSqlConverterXml : String      
 	, private var plainSqlBindingXml : String      
+	, private var oracleXmlAsIs : Object      
+	, private var oracleXmlAsDocument : Object      
 ) extends Serializable {
 
 	def this() = {
-		this(null, null, null, null, null)
+		this(null, null, null, null, null, null, null)
 	}
 
 	def this (value : TExoticTypes) = {
@@ -40,6 +43,8 @@ class TExoticTypes(
 			, value.javaIoSerializable
 			, value.plainSqlConverterXml
 			, value.plainSqlBindingXml
+			, value.oracleXmlAsIs
+			, value.oracleXmlAsDocument
 		)
 	}
 
@@ -90,6 +95,24 @@ class TExoticTypes(
 		this.plainSqlBindingXml = plainSqlBindingXml
 	}
 
+	@Column(name = "ORACLE_XML_AS_IS")
+	def getOracleXmlAsIs : Object = {
+		this.oracleXmlAsIs
+	}
+
+	def setOracleXmlAsIs(oracleXmlAsIs : Object) : Unit = {
+		this.oracleXmlAsIs = oracleXmlAsIs
+	}
+
+	@Column(name = "ORACLE_XML_AS_DOCUMENT")
+	def getOracleXmlAsDocument : Object = {
+		this.oracleXmlAsDocument
+	}
+
+	def setOracleXmlAsDocument(oracleXmlAsDocument : Object) : Unit = {
+		this.oracleXmlAsDocument = oracleXmlAsDocument
+	}
+
 	override def equals(obj : Any) : scala.Boolean = {
 		if (this == obj)
 			return true
@@ -128,6 +151,18 @@ class TExoticTypes(
 		}
 		else if (!plainSqlBindingXml.equals(other.plainSqlBindingXml))
 			return false
+		if (oracleXmlAsIs == null) {
+			if (other.oracleXmlAsIs != null)
+				return false
+		}
+		else if (!oracleXmlAsIs.equals(other.oracleXmlAsIs))
+			return false
+		if (oracleXmlAsDocument == null) {
+			if (other.oracleXmlAsDocument != null)
+				return false
+		}
+		else if (!oracleXmlAsDocument.equals(other.oracleXmlAsDocument))
+			return false
 		return true
 	}
 
@@ -139,6 +174,8 @@ class TExoticTypes(
 		result = prime * result + (if (javaIoSerializable == null) 0 else javaIoSerializable.hashCode())
 		result = prime * result + (if (plainSqlConverterXml == null) 0 else plainSqlConverterXml.hashCode())
 		result = prime * result + (if (plainSqlBindingXml == null) 0 else plainSqlBindingXml.hashCode())
+		result = prime * result + (if (oracleXmlAsIs == null) 0 else oracleXmlAsIs.hashCode())
+		result = prime * result + (if (oracleXmlAsDocument == null) 0 else oracleXmlAsDocument.hashCode())
 		return result
 	}
 }

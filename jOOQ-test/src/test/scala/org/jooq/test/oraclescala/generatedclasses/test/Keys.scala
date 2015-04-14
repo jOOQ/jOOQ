@@ -7,7 +7,6 @@ package org.jooq.test.oraclescala.generatedclasses.test
 import org.jooq.ForeignKey
 import org.jooq.UniqueKey
 import org.jooq.impl.AbstractKeys
-import org.jooq.test.oraclescala.generatedclasses.test.Keys
 import org.jooq.test.oraclescala.generatedclasses.test.tables.TArrays
 import org.jooq.test.oraclescala.generatedclasses.test.tables.TAuthor
 import org.jooq.test.oraclescala.generatedclasses.test.tables.TBook
@@ -137,19 +136,19 @@ object Keys {
 	}
 
 	private object ForeignKeys0 extends AbstractKeys {
-		val FK_T_BOOK_AUTHOR_ID : ForeignKey[TBookRecord, TAuthorRecord] = AbstractKeys.createForeignKey(Keys.PK_T_AUTHOR, TBook.T_BOOK, TBook.T_BOOK.AUTHOR_ID)
-		val FK_T_BOOK_CO_AUTHOR_ID : ForeignKey[TBookRecord, TAuthorRecord] = AbstractKeys.createForeignKey(Keys.PK_T_AUTHOR, TBook.T_BOOK, TBook.T_BOOK.CO_AUTHOR_ID)
-		val FK_T_BOOK_LANGUAGE_ID : ForeignKey[TBookRecord, TLanguageRecord] = AbstractKeys.createForeignKey(Keys.PK_T_LANGUAGE, TBook.T_BOOK, TBook.T_BOOK.LANGUAGE_ID)
-		val FK_B2BS_BS_NAME : ForeignKey[TBookToBookStoreRecord, TBookStoreRecord] = AbstractKeys.createForeignKey(Keys.UK_T_BOOK_STORE_NAME, TBookToBookStore.T_BOOK_TO_BOOK_STORE, TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME)
-		val FK_B2BS_B_ID : ForeignKey[TBookToBookStoreRecord, TBookRecord] = AbstractKeys.createForeignKey(Keys.PK_T_BOOK, TBookToBookStore.T_BOOK_TO_BOOK_STORE, TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID)
-		val PK_T_DIRECTORY_SELF : ForeignKey[TDirectoryRecord, TDirectoryRecord] = AbstractKeys.createForeignKey(Keys.PK_T_DIRECTORY, TDirectory.T_DIRECTORY, TDirectory.T_DIRECTORY.PARENT_ID)
-		val FK_X_TEST_CASE_2025_1 : ForeignKey[XTestCase_2025Record, XTestCase_85Record] = AbstractKeys.createForeignKey(Keys.PK_X_TEST_CASE_85, XTestCase_2025.X_TEST_CASE_2025, XTestCase_2025.X_TEST_CASE_2025.REF_ID)
-		val FK_X_TEST_CASE_2025_2 : ForeignKey[XTestCase_2025Record, XTestCase_71Record] = AbstractKeys.createForeignKey(Keys.PK_X_TEST_CASE_71, XTestCase_2025.X_TEST_CASE_2025, XTestCase_2025.X_TEST_CASE_2025.REF_ID)
-		val FK_X_TEST_CASE_2025_3 : ForeignKey[XTestCase_2025Record, XUnusedRecord] = AbstractKeys.createForeignKey(Keys.PK_X_UNUSED, XTestCase_2025.X_TEST_CASE_2025, XTestCase_2025.X_TEST_CASE_2025.REF_ID, XTestCase_2025.X_TEST_CASE_2025.REF_NAME)
-		val FK_X_TEST_CASE_64_69A : ForeignKey[XTestCase_64_69Record, XUnusedRecord] = AbstractKeys.createForeignKey(Keys.UK_X_UNUSED_ID, XTestCase_64_69.X_TEST_CASE_64_69, XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID)
-		val FK_X_TEST_CASE_64_69B : ForeignKey[XTestCase_64_69Record, XUnusedRecord] = AbstractKeys.createForeignKey(Keys.UK_X_UNUSED_ID, XTestCase_64_69.X_TEST_CASE_64_69, XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID)
-		val FK_X_TEST_CASE_71 : ForeignKey[XTestCase_71Record, XTestCase_64_69Record] = AbstractKeys.createForeignKey(Keys.PK_X_TEST_CASE_64_69, XTestCase_71.X_TEST_CASE_71, XTestCase_71.X_TEST_CASE_71.TEST_CASE_64_69_ID)
-		val FK_X_TEST_CASE_85 : ForeignKey[XTestCase_85Record, XUnusedRecord] = AbstractKeys.createForeignKey(Keys.PK_X_UNUSED, XTestCase_85.X_TEST_CASE_85, XTestCase_85.X_TEST_CASE_85.X_UNUSED_ID, XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME)
-		val FK_X_UNUSED_SELF : ForeignKey[XUnusedRecord, XUnusedRecord] = AbstractKeys.createForeignKey(Keys.PK_X_UNUSED, XUnused.X_UNUSED, XUnused.X_UNUSED.ID_REF, XUnused.X_UNUSED.NAME_REF)
+		val FK_T_BOOK_AUTHOR_ID : ForeignKey[TBookRecord, TAuthorRecord] = AbstractKeys.createForeignKey(org.jooq.test.oraclescala.generatedclasses.test.Keys.PK_T_AUTHOR, TBook.T_BOOK, TBook.T_BOOK.AUTHOR_ID)
+		val FK_T_BOOK_CO_AUTHOR_ID : ForeignKey[TBookRecord, TAuthorRecord] = AbstractKeys.createForeignKey(org.jooq.test.oraclescala.generatedclasses.test.Keys.PK_T_AUTHOR, TBook.T_BOOK, TBook.T_BOOK.CO_AUTHOR_ID)
+		val FK_T_BOOK_LANGUAGE_ID : ForeignKey[TBookRecord, TLanguageRecord] = AbstractKeys.createForeignKey(org.jooq.test.oraclescala.generatedclasses.test.Keys.PK_T_LANGUAGE, TBook.T_BOOK, TBook.T_BOOK.LANGUAGE_ID)
+		val FK_B2BS_BS_NAME : ForeignKey[TBookToBookStoreRecord, TBookStoreRecord] = AbstractKeys.createForeignKey(org.jooq.test.oraclescala.generatedclasses.test.Keys.UK_T_BOOK_STORE_NAME, TBookToBookStore.T_BOOK_TO_BOOK_STORE, TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME)
+		val FK_B2BS_B_ID : ForeignKey[TBookToBookStoreRecord, TBookRecord] = AbstractKeys.createForeignKey(org.jooq.test.oraclescala.generatedclasses.test.Keys.PK_T_BOOK, TBookToBookStore.T_BOOK_TO_BOOK_STORE, TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID)
+		val PK_T_DIRECTORY_SELF : ForeignKey[TDirectoryRecord, TDirectoryRecord] = AbstractKeys.createForeignKey(org.jooq.test.oraclescala.generatedclasses.test.Keys.PK_T_DIRECTORY, TDirectory.T_DIRECTORY, TDirectory.T_DIRECTORY.PARENT_ID)
+		val FK_X_TEST_CASE_2025_1 : ForeignKey[XTestCase_2025Record, XTestCase_85Record] = AbstractKeys.createForeignKey(org.jooq.test.oraclescala.generatedclasses.test.Keys.PK_X_TEST_CASE_85, XTestCase_2025.X_TEST_CASE_2025, XTestCase_2025.X_TEST_CASE_2025.REF_ID)
+		val FK_X_TEST_CASE_2025_2 : ForeignKey[XTestCase_2025Record, XTestCase_71Record] = AbstractKeys.createForeignKey(org.jooq.test.oraclescala.generatedclasses.test.Keys.PK_X_TEST_CASE_71, XTestCase_2025.X_TEST_CASE_2025, XTestCase_2025.X_TEST_CASE_2025.REF_ID)
+		val FK_X_TEST_CASE_2025_3 : ForeignKey[XTestCase_2025Record, XUnusedRecord] = AbstractKeys.createForeignKey(org.jooq.test.oraclescala.generatedclasses.test.Keys.PK_X_UNUSED, XTestCase_2025.X_TEST_CASE_2025, XTestCase_2025.X_TEST_CASE_2025.REF_ID, XTestCase_2025.X_TEST_CASE_2025.REF_NAME)
+		val FK_X_TEST_CASE_64_69A : ForeignKey[XTestCase_64_69Record, XUnusedRecord] = AbstractKeys.createForeignKey(org.jooq.test.oraclescala.generatedclasses.test.Keys.UK_X_UNUSED_ID, XTestCase_64_69.X_TEST_CASE_64_69, XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID)
+		val FK_X_TEST_CASE_64_69B : ForeignKey[XTestCase_64_69Record, XUnusedRecord] = AbstractKeys.createForeignKey(org.jooq.test.oraclescala.generatedclasses.test.Keys.UK_X_UNUSED_ID, XTestCase_64_69.X_TEST_CASE_64_69, XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID)
+		val FK_X_TEST_CASE_71 : ForeignKey[XTestCase_71Record, XTestCase_64_69Record] = AbstractKeys.createForeignKey(org.jooq.test.oraclescala.generatedclasses.test.Keys.PK_X_TEST_CASE_64_69, XTestCase_71.X_TEST_CASE_71, XTestCase_71.X_TEST_CASE_71.TEST_CASE_64_69_ID)
+		val FK_X_TEST_CASE_85 : ForeignKey[XTestCase_85Record, XUnusedRecord] = AbstractKeys.createForeignKey(org.jooq.test.oraclescala.generatedclasses.test.Keys.PK_X_UNUSED, XTestCase_85.X_TEST_CASE_85, XTestCase_85.X_TEST_CASE_85.X_UNUSED_ID, XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME)
+		val FK_X_UNUSED_SELF : ForeignKey[XUnusedRecord, XUnusedRecord] = AbstractKeys.createForeignKey(org.jooq.test.oraclescala.generatedclasses.test.Keys.PK_X_UNUSED, XUnused.X_UNUSED, XUnused.X_UNUSED.ID_REF, XUnused.X_UNUSED.NAME_REF)
 	}
 }

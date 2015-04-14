@@ -19,7 +19,6 @@ import org.jooq.impl.TableImpl
 import org.jooq.test.all.converters.LocalDateConverter
 import org.jooq.test.oraclescala.generatedclasses.test.Keys
 import org.jooq.test.oraclescala.generatedclasses.test.Test
-import org.jooq.test.oraclescala.generatedclasses.test.tables.T_2155
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.T_2155Record
 import org.jooq.test.oraclescala.generatedclasses.test.udt.records.U_2155ArrayRecord
 import org.jooq.test.oraclescala.generatedclasses.test.udt.records.U_2155ObjectRecord
@@ -76,7 +75,7 @@ class T_2155(alias : String, aliased : Table[T_2155Record], parameters : Array[ 
 	 * Create an aliased <code>TEST.T_2155</code> table reference
 	 */
 	def this(alias : String) = {
-		this(alias, T_2155.T_2155, null)
+		this(alias, org.jooq.test.oraclescala.generatedclasses.test.tables.T_2155.T_2155, null)
 	}
 
 	private def this(alias : String, aliased : Table[T_2155Record]) = {

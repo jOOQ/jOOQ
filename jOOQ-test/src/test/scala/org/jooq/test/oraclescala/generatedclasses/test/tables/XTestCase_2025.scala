@@ -17,7 +17,6 @@ import org.jooq.TableField
 import org.jooq.impl.TableImpl
 import org.jooq.test.oraclescala.generatedclasses.test.Keys
 import org.jooq.test.oraclescala.generatedclasses.test.Test
-import org.jooq.test.oraclescala.generatedclasses.test.tables.XTestCase_2025
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.XTestCase_2025Record
 
 
@@ -62,7 +61,7 @@ class XTestCase_2025(alias : String, aliased : Table[XTestCase_2025Record], para
 	 * Create an aliased <code>TEST.X_TEST_CASE_2025</code> table reference
 	 */
 	def this(alias : String) = {
-		this(alias, XTestCase_2025.X_TEST_CASE_2025, null)
+		this(alias, org.jooq.test.oraclescala.generatedclasses.test.tables.XTestCase_2025.X_TEST_CASE_2025, null)
 	}
 
 	private def this(alias : String, aliased : Table[XTestCase_2025Record]) = {

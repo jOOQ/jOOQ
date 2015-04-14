@@ -7,6 +7,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables
 import java.io.Serializable
 import java.lang.Class
 import java.lang.Integer
+import java.lang.Object
 import java.lang.String
 import java.util.Arrays
 import java.util.List
@@ -20,7 +21,6 @@ import org.jooq.impl.TableImpl
 import org.jooq.test.all.bindings.SerializedBinding
 import org.jooq.test.oraclescala.generatedclasses.test.Keys
 import org.jooq.test.oraclescala.generatedclasses.test.Test
-import org.jooq.test.oraclescala.generatedclasses.test.tables.TExoticTypes
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.TExoticTypesRecord
 
 
@@ -70,6 +70,16 @@ class TExoticTypes(alias : String, aliased : Table[TExoticTypesRecord], paramete
 	val PLAIN_SQL_BINDING_XML : TableField[TExoticTypesRecord, String] = createField("PLAIN_SQL_BINDING_XML", org.jooq.impl.SQLDataType.CLOB, "")
 
 	/**
+	 * The column <code>TEST.T_EXOTIC_TYPES.ORACLE_XML_AS_IS</code>.
+	 */
+	val ORACLE_XML_AS_IS : TableField[TExoticTypesRecord, Object] = createField("ORACLE_XML_AS_IS", org.jooq.impl.DefaultDataType.getDefaultDataType("XMLTYPE"), "")
+
+	/**
+	 * The column <code>TEST.T_EXOTIC_TYPES.ORACLE_XML_AS_DOCUMENT</code>.
+	 */
+	val ORACLE_XML_AS_DOCUMENT : TableField[TExoticTypesRecord, Object] = createField("ORACLE_XML_AS_DOCUMENT", org.jooq.impl.DefaultDataType.getDefaultDataType("XMLTYPE"), "")
+
+	/**
 	 * Create a <code>TEST.T_EXOTIC_TYPES</code> table reference
 	 */
 	def this() = {
@@ -80,7 +90,7 @@ class TExoticTypes(alias : String, aliased : Table[TExoticTypesRecord], paramete
 	 * Create an aliased <code>TEST.T_EXOTIC_TYPES</code> table reference
 	 */
 	def this(alias : String) = {
-		this(alias, TExoticTypes.T_EXOTIC_TYPES, null)
+		this(alias, org.jooq.test.oraclescala.generatedclasses.test.tables.TExoticTypes.T_EXOTIC_TYPES, null)
 	}
 
 	private def this(alias : String, aliased : Table[TExoticTypesRecord]) = {

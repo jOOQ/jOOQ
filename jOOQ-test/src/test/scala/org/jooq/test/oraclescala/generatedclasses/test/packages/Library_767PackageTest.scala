@@ -10,7 +10,6 @@ import org.jooq.Configuration
 import org.jooq.Field
 import org.jooq.impl.PackageImpl
 import org.jooq.test.oraclescala.generatedclasses.test.Test
-import org.jooq.test.oraclescala.generatedclasses.test.packages.library_767_package_test.Library_767PackageTest
 
 
 /**
@@ -27,7 +26,7 @@ object Library_767PackageTest extends PackageImpl("LIBRARY_767_PACKAGE_TEST", Te
 	 * Call <code>TEST.LIBRARY_767_PACKAGE_TEST.LIBRARY_767_PACKAGE_TEST</code>
 	 */
 	def library_767PackageTest(configuration : Configuration) : BigDecimal = {
-		val f = new Library_767PackageTest()
+		val f = new org.jooq.test.oraclescala.generatedclasses.test.packages.library_767_package_test.Library_767PackageTest()
 
 		f.execute(configuration)
 		f.getReturnValue
@@ -37,7 +36,7 @@ object Library_767PackageTest extends PackageImpl("LIBRARY_767_PACKAGE_TEST", Te
 	 * Get <code>TEST.LIBRARY_767_PACKAGE_TEST.LIBRARY_767_PACKAGE_TEST</code> as a field
 	 */
 	def library_767PackageTest() : Field[BigDecimal] = {
-		val f = new Library_767PackageTest
+		val f = new org.jooq.test.oraclescala.generatedclasses.test.packages.library_767_package_test.Library_767PackageTest
 
 		return f.asField
 	}

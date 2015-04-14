@@ -13,7 +13,6 @@ import org.jooq.Table
 import org.jooq.TableField
 import org.jooq.impl.TableImpl
 import org.jooq.test.oraclescala.generatedclasses.test.Test
-import org.jooq.test.oraclescala.generatedclasses.test.tables.T_785
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.T_785Record
 
 
@@ -63,7 +62,7 @@ class T_785(alias : String, aliased : Table[T_785Record], parameters : Array[ Fi
 	 * Create an aliased <code>TEST.T_785</code> table reference
 	 */
 	def this(alias : String) = {
-		this(alias, T_785.T_785, null)
+		this(alias, org.jooq.test.oraclescala.generatedclasses.test.tables.T_785.T_785, null)
 	}
 
 	private def this(alias : String, aliased : Table[T_785Record]) = {

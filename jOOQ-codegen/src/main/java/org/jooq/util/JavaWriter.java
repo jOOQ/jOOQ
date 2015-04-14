@@ -39,7 +39,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     public JavaWriter(File file, String fullyQualifiedTypes) {
         super(file);
 
-        this.className = file.getName().replace(".java", "");
+        this.className = file.getName().replaceAll("\\.(java|scala)$", "");
         this.isJava = file.getName().endsWith(".java");
         this.isScala = file.getName().endsWith(".scala");
         this.fullyQualifiedTypes = fullyQualifiedTypes == null ? null : Pattern.compile(fullyQualifiedTypes);

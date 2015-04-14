@@ -17,7 +17,6 @@ import org.jooq.UniqueKey
 import org.jooq.impl.TableImpl
 import org.jooq.test.oraclescala.generatedclasses.test.Keys
 import org.jooq.test.oraclescala.generatedclasses.test.Test
-import org.jooq.test.oraclescala.generatedclasses.test.tables.TTriggers
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.TTriggersRecord
 
 
@@ -67,7 +66,7 @@ class TTriggers(alias : String, aliased : Table[TTriggersRecord], parameters : A
 	 * Create an aliased <code>TEST.T_TRIGGERS</code> table reference
 	 */
 	def this(alias : String) = {
-		this(alias, TTriggers.T_TRIGGERS, null)
+		this(alias, org.jooq.test.oraclescala.generatedclasses.test.tables.TTriggers.T_TRIGGERS, null)
 	}
 
 	private def this(alias : String, aliased : Table[TTriggersRecord]) = {

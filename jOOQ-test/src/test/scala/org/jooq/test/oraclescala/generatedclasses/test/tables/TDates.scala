@@ -20,7 +20,6 @@ import org.jooq.UniqueKey
 import org.jooq.impl.TableImpl
 import org.jooq.test.oraclescala.generatedclasses.test.Keys
 import org.jooq.test.oraclescala.generatedclasses.test.Test
-import org.jooq.test.oraclescala.generatedclasses.test.tables.TDates
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.TDatesRecord
 import org.jooq.types.DayToSecond
 import org.jooq.types.YearToMonth
@@ -97,7 +96,7 @@ class TDates(alias : String, aliased : Table[TDatesRecord], parameters : Array[ 
 	 * Create an aliased <code>TEST.T_DATES</code> table reference
 	 */
 	def this(alias : String) = {
-		this(alias, TDates.T_DATES, null)
+		this(alias, org.jooq.test.oraclescala.generatedclasses.test.tables.TDates.T_DATES, null)
 	}
 
 	private def this(alias : String, aliased : Table[TDatesRecord]) = {

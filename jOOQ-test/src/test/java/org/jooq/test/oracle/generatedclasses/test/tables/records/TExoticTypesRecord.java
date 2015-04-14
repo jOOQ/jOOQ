@@ -15,10 +15,11 @@ import javax.validation.constraints.NotNull;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Record5;
+import org.jooq.Record7;
 import org.jooq.Row;
-import org.jooq.Row5;
+import org.jooq.Row7;
 import org.jooq.impl.UpdatableRecordImpl;
+import org.jooq.test.oracle.generatedclasses.sys.udt.records.XmltypeRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.TExoticTypes;
 
 
@@ -28,9 +29,9 @@ import org.jooq.test.oracle.generatedclasses.test.tables.TExoticTypes;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @Entity
 @Table(name = "T_EXOTIC_TYPES", schema = "TEST")
-public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> implements Record5<Integer, UUID, Serializable, String, String> {
+public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> implements Record7<Integer, UUID, Serializable, String, String, XmltypeRecord, XmltypeRecord> {
 
-	private static final long serialVersionUID = 1629129797;
+	private static final long serialVersionUID = 1472793276;
 
 	/**
 	 * Setter for <code>TEST.T_EXOTIC_TYPES.ID</code>.
@@ -109,6 +110,36 @@ public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> 
 		return (String) getValue(4);
 	}
 
+	/**
+	 * Setter for <code>TEST.T_EXOTIC_TYPES.ORACLE_XML_AS_IS</code>.
+	 */
+	public void setOracleXmlAsIs(XmltypeRecord value) {
+		setValue(5, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.T_EXOTIC_TYPES.ORACLE_XML_AS_IS</code>.
+	 */
+	@Column(name = "ORACLE_XML_AS_IS")
+	public XmltypeRecord getOracleXmlAsIs() {
+		return (XmltypeRecord) getValue(5);
+	}
+
+	/**
+	 * Setter for <code>TEST.T_EXOTIC_TYPES.ORACLE_XML_AS_DOCUMENT</code>.
+	 */
+	public void setOracleXmlAsDocument(XmltypeRecord value) {
+		setValue(6, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.T_EXOTIC_TYPES.ORACLE_XML_AS_DOCUMENT</code>.
+	 */
+	@Column(name = "ORACLE_XML_AS_DOCUMENT")
+	public XmltypeRecord getOracleXmlAsDocument() {
+		return (XmltypeRecord) getValue(6);
+	}
+
 	// -------------------------------------------------------------------------
 	// Primary key information
 	// -------------------------------------------------------------------------
@@ -122,23 +153,23 @@ public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> 
 	}
 
 	// -------------------------------------------------------------------------
-	// Record5 type implementation
+	// Record7 type implementation
 	// -------------------------------------------------------------------------
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Row5<Integer, UUID, Serializable, String, String> fieldsRow() {
-		return (Row5) super.fieldsRow();
+	public Row7<Integer, UUID, Serializable, String, String, XmltypeRecord, XmltypeRecord> fieldsRow() {
+		return (Row7) super.fieldsRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Row5<Integer, UUID, Serializable, String, String> valuesRow() {
-		return (Row5) super.valuesRow();
+	public Row7<Integer, UUID, Serializable, String, String, XmltypeRecord, XmltypeRecord> valuesRow() {
+		return (Row7) super.valuesRow();
 	}
 
 	/**
@@ -185,6 +216,22 @@ public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> 
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Field<XmltypeRecord> field6() {
+		return TExoticTypes.T_EXOTIC_TYPES.ORACLE_XML_AS_IS;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Field<XmltypeRecord> field7() {
+		return TExoticTypes.T_EXOTIC_TYPES.ORACLE_XML_AS_DOCUMENT;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Integer value1() {
 		return getId();
 	}
@@ -219,6 +266,22 @@ public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> 
 	@Override
 	public String value5() {
 		return getPlainSqlBindingXml();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XmltypeRecord value6() {
+		return getOracleXmlAsIs();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public XmltypeRecord value7() {
+		return getOracleXmlAsDocument();
 	}
 
 	/**
@@ -270,12 +333,32 @@ public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> 
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TExoticTypesRecord values(Integer value1, UUID value2, Serializable value3, String value4, String value5) {
+	public TExoticTypesRecord value6(XmltypeRecord value) {
+		setOracleXmlAsIs(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TExoticTypesRecord value7(XmltypeRecord value) {
+		setOracleXmlAsDocument(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TExoticTypesRecord values(Integer value1, UUID value2, Serializable value3, String value4, String value5, XmltypeRecord value6, XmltypeRecord value7) {
 		value1(value1);
 		value2(value2);
 		value3(value3);
 		value4(value4);
 		value5(value5);
+		value6(value6);
+		value7(value7);
 		return this;
 	}
 
@@ -293,7 +376,7 @@ public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> 
 	/**
 	 * Create a detached, initialised TExoticTypesRecord
 	 */
-	public TExoticTypesRecord(Integer id, UUID uu, Serializable javaIoSerializable, String plainSqlConverterXml, String plainSqlBindingXml) {
+	public TExoticTypesRecord(Integer id, UUID uu, Serializable javaIoSerializable, String plainSqlConverterXml, String plainSqlBindingXml, XmltypeRecord oracleXmlAsIs, XmltypeRecord oracleXmlAsDocument) {
 		super(TExoticTypes.T_EXOTIC_TYPES);
 
 		setValue(0, id);
@@ -301,5 +384,7 @@ public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> 
 		setValue(2, javaIoSerializable);
 		setValue(3, plainSqlConverterXml);
 		setValue(4, plainSqlBindingXml);
+		setValue(5, oracleXmlAsIs);
+		setValue(6, oracleXmlAsDocument);
 	}
 }

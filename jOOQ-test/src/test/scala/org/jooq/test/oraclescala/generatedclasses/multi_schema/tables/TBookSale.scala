@@ -20,7 +20,6 @@ import org.jooq.UniqueKey
 import org.jooq.impl.TableImpl
 import org.jooq.test.oraclescala.generatedclasses.multi_schema.Keys
 import org.jooq.test.oraclescala.generatedclasses.multi_schema.MultiSchema
-import org.jooq.test.oraclescala.generatedclasses.multi_schema.tables.TBookSale
 import org.jooq.test.oraclescala.generatedclasses.multi_schema.tables.records.TBookSaleRecord
 
 
@@ -80,7 +79,7 @@ class TBookSale(alias : String, aliased : Table[TBookSaleRecord], parameters : A
 	 * Create an aliased <code>MULTI_SCHEMA.T_BOOK_SALE</code> table reference
 	 */
 	def this(alias : String) = {
-		this(alias, TBookSale.T_BOOK_SALE, null)
+		this(alias, org.jooq.test.oraclescala.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE, null)
 	}
 
 	private def this(alias : String, aliased : Table[TBookSaleRecord]) = {

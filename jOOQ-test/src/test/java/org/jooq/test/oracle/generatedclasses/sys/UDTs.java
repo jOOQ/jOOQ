@@ -4,6 +4,7 @@
 package org.jooq.test.oracle.generatedclasses.sys;
 
 
+import org.jooq.test.oracle.generatedclasses.sys.udt.Xmltype;
 import org.jooq.test.oracle.generatedclasses.sys.udt.Xmltypeextra;
 
 
@@ -12,6 +13,11 @@ import org.jooq.test.oracle.generatedclasses.sys.udt.Xmltypeextra;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UDTs {
+
+	/**
+	 * The type <code>SYS.XMLTYPE</code>
+	 */
+	public static Xmltype XMLTYPE = org.jooq.test.oracle.generatedclasses.sys.udt.Xmltype.XMLTYPE;
 
 	/**
 	 * The type <code>SYS.XMLTYPEEXTRA</code>

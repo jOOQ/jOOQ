@@ -14,7 +14,6 @@ import org.jooq.impl.TableImpl
 import org.jooq.test.oraclescala.generatedclasses.multi_schema.udt.records.NumberObjectRecord
 import org.jooq.test.oraclescala.generatedclasses.multi_schema.udt.records.NumberTableRecord
 import org.jooq.test.oraclescala.generatedclasses.test.Test
-import org.jooq.test.oraclescala.generatedclasses.test.tables.T_3711
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.T_3711Record
 
 
@@ -79,7 +78,7 @@ class T_3711(alias : String, aliased : Table[T_3711Record], parameters : Array[ 
 	 * Create an aliased <code>TEST.T_3711</code> table reference
 	 */
 	def this(alias : String) = {
-		this(alias, T_3711.T_3711, null)
+		this(alias, org.jooq.test.oraclescala.generatedclasses.test.tables.T_3711.T_3711, null)
 	}
 
 	private def this(alias : String, aliased : Table[T_3711Record]) = {

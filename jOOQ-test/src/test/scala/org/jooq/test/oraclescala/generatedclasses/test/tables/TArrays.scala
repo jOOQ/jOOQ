@@ -17,7 +17,6 @@ import org.jooq.UniqueKey
 import org.jooq.impl.TableImpl
 import org.jooq.test.oraclescala.generatedclasses.test.Keys
 import org.jooq.test.oraclescala.generatedclasses.test.Test
-import org.jooq.test.oraclescala.generatedclasses.test.tables.TArrays
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.TArraysRecord
 import org.jooq.test.oraclescala.generatedclasses.test.udt.records.UDateArrayRecord
 import org.jooq.test.oraclescala.generatedclasses.test.udt.records.UNumberArrayRecord
@@ -81,7 +80,7 @@ class TArrays(alias : String, aliased : Table[TArraysRecord], parameters : Array
 	 * Create an aliased <code>TEST.T_ARRAYS</code> table reference
 	 */
 	def this(alias : String) = {
-		this(alias, TArrays.T_ARRAYS, null)
+		this(alias, org.jooq.test.oraclescala.generatedclasses.test.tables.TArrays.T_ARRAYS, null)
 	}
 
 	private def this(alias : String, aliased : Table[TArraysRecord]) = {

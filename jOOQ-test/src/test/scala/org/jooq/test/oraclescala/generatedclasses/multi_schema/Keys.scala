@@ -7,7 +7,6 @@ package org.jooq.test.oraclescala.generatedclasses.multi_schema
 import org.jooq.ForeignKey
 import org.jooq.UniqueKey
 import org.jooq.impl.AbstractKeys
-import org.jooq.test.oraclescala.generatedclasses.multi_schema.Keys
 import org.jooq.test.oraclescala.generatedclasses.multi_schema.tables.TAuthor
 import org.jooq.test.oraclescala.generatedclasses.multi_schema.tables.TBook
 import org.jooq.test.oraclescala.generatedclasses.multi_schema.tables.TBookSale
@@ -57,8 +56,8 @@ object Keys {
 	}
 
 	private object ForeignKeys0 extends AbstractKeys {
-		val FK_T_BOOK_AUTHOR_ID : ForeignKey[TBookRecord, TAuthorRecord] = AbstractKeys.createForeignKey(Keys.PK_T_AUTHOR, TBook.T_BOOK, TBook.T_BOOK.AUTHOR_ID)
-		val FK_T_BOOK_CO_AUTHOR_ID : ForeignKey[TBookRecord, TAuthorRecord] = AbstractKeys.createForeignKey(Keys.PK_T_AUTHOR, TBook.T_BOOK, TBook.T_BOOK.CO_AUTHOR_ID)
+		val FK_T_BOOK_AUTHOR_ID : ForeignKey[TBookRecord, TAuthorRecord] = AbstractKeys.createForeignKey(org.jooq.test.oraclescala.generatedclasses.multi_schema.Keys.PK_T_AUTHOR, TBook.T_BOOK, TBook.T_BOOK.AUTHOR_ID)
+		val FK_T_BOOK_CO_AUTHOR_ID : ForeignKey[TBookRecord, TAuthorRecord] = AbstractKeys.createForeignKey(org.jooq.test.oraclescala.generatedclasses.multi_schema.Keys.PK_T_AUTHOR, TBook.T_BOOK, TBook.T_BOOK.CO_AUTHOR_ID)
 		val FK_T_BOOK_LANGUAGE_ID : ForeignKey[TBookRecord, TLanguageRecord] = AbstractKeys.createForeignKey(org.jooq.test.oraclescala.generatedclasses.test.Keys.PK_T_LANGUAGE, TBook.T_BOOK, TBook.T_BOOK.LANGUAGE_ID)
 		val FK_T_BOOK_TO_BOOK_STORE : ForeignKey[TBookSaleRecord, TBookToBookStoreRecord] = AbstractKeys.createForeignKey(org.jooq.test.oraclescala.generatedclasses.test.Keys.PK_B2BS, TBookSale.T_BOOK_SALE, TBookSale.T_BOOK_SALE.BOOK_STORE_NAME, TBookSale.T_BOOK_SALE.BOOK_ID)
 	}

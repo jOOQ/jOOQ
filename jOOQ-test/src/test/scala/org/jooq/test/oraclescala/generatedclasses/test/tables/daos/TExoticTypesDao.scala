@@ -6,6 +6,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables.daos
 
 import java.io.Serializable
 import java.lang.Integer
+import java.lang.Object
 import java.lang.String
 import java.util.List
 import java.util.UUID
@@ -72,5 +73,19 @@ class TExoticTypesDao(configuration : Configuration) extends DAOImpl[TExoticType
 	 */
 	def fetchByPlainSqlBindingXml(values : String*) : List[org.jooq.test.oraclescala.generatedclasses.test.tables.pojos.TExoticTypes] = {
 		fetch(TExoticTypes.T_EXOTIC_TYPES.PLAIN_SQL_BINDING_XML, values:_*)
+	}
+
+	/**
+	 * Fetch records that have <code>ORACLE_XML_AS_IS IN (values)</code>
+	 */
+	def fetchByOracleXmlAsIs(values : Object*) : List[org.jooq.test.oraclescala.generatedclasses.test.tables.pojos.TExoticTypes] = {
+		fetch(TExoticTypes.T_EXOTIC_TYPES.ORACLE_XML_AS_IS, values:_*)
+	}
+
+	/**
+	 * Fetch records that have <code>ORACLE_XML_AS_DOCUMENT IN (values)</code>
+	 */
+	def fetchByOracleXmlAsDocument(values : Object*) : List[org.jooq.test.oraclescala.generatedclasses.test.tables.pojos.TExoticTypes] = {
+		fetch(TExoticTypes.T_EXOTIC_TYPES.ORACLE_XML_AS_DOCUMENT, values:_*)
 	}
 }

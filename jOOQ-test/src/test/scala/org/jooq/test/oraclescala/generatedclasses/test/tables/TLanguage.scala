@@ -17,7 +17,6 @@ import org.jooq.UniqueKey
 import org.jooq.impl.TableImpl
 import org.jooq.test.oraclescala.generatedclasses.test.Keys
 import org.jooq.test.oraclescala.generatedclasses.test.Test
-import org.jooq.test.oraclescala.generatedclasses.test.tables.TLanguage
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.TLanguageRecord
 
 
@@ -78,7 +77,7 @@ class TLanguage(alias : String, aliased : Table[TLanguageRecord], parameters : A
 	 * Create an aliased <code>TEST.T_LANGUAGE</code> table reference
 	 */
 	def this(alias : String) = {
-		this(alias, TLanguage.T_LANGUAGE, null)
+		this(alias, org.jooq.test.oraclescala.generatedclasses.test.tables.TLanguage.T_LANGUAGE, null)
 	}
 
 	private def this(alias : String, aliased : Table[TLanguageRecord]) = {

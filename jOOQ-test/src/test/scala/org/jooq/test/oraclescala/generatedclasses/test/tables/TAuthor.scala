@@ -18,7 +18,6 @@ import org.jooq.UniqueKey
 import org.jooq.impl.TableImpl
 import org.jooq.test.oraclescala.generatedclasses.test.Keys
 import org.jooq.test.oraclescala.generatedclasses.test.Test
-import org.jooq.test.oraclescala.generatedclasses.test.tables.TAuthor
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.TAuthorRecord
 import org.jooq.test.oraclescala.generatedclasses.test.udt.records.UAddressTypeRecord
 
@@ -84,7 +83,7 @@ class TAuthor(alias : String, aliased : Table[TAuthorRecord], parameters : Array
 	 * Create an aliased <code>TEST.T_AUTHOR</code> table reference
 	 */
 	def this(alias : String) = {
-		this(alias, TAuthor.T_AUTHOR, null)
+		this(alias, org.jooq.test.oraclescala.generatedclasses.test.tables.TAuthor.T_AUTHOR, null)
 	}
 
 	private def this(alias : String, aliased : Table[TAuthorRecord]) = {

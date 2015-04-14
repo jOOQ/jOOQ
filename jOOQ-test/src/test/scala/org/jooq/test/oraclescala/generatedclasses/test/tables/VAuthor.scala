@@ -14,7 +14,6 @@ import org.jooq.Table
 import org.jooq.TableField
 import org.jooq.impl.TableImpl
 import org.jooq.test.oraclescala.generatedclasses.test.Test
-import org.jooq.test.oraclescala.generatedclasses.test.tables.VAuthor
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.VAuthorRecord
 import org.jooq.test.oraclescala.generatedclasses.test.udt.records.UAddressTypeRecord
 
@@ -80,7 +79,7 @@ class VAuthor(alias : String, aliased : Table[VAuthorRecord], parameters : Array
 	 * Create an aliased <code>TEST.V_AUTHOR</code> table reference
 	 */
 	def this(alias : String) = {
-		this(alias, VAuthor.V_AUTHOR, null)
+		this(alias, org.jooq.test.oraclescala.generatedclasses.test.tables.VAuthor.V_AUTHOR, null)
 	}
 
 	private def this(alias : String, aliased : Table[VAuthorRecord]) = {

@@ -13,7 +13,6 @@ import org.jooq.Table
 import org.jooq.TableField
 import org.jooq.impl.TableImpl
 import org.jooq.test.oraclescala.generatedclasses.test.Test
-import org.jooq.test.oraclescala.generatedclasses.test.tables.VIncomplete
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.VIncompleteRecord
 
 
@@ -103,7 +102,7 @@ class VIncomplete(alias : String, aliased : Table[VIncompleteRecord], parameters
 	 * Create an aliased <code>TEST.V_INCOMPLETE</code> table reference
 	 */
 	def this(alias : String) = {
-		this(alias, VIncomplete.V_INCOMPLETE, null)
+		this(alias, org.jooq.test.oraclescala.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE, null)
 	}
 
 	private def this(alias : String, aliased : Table[VIncompleteRecord]) = {

@@ -12,7 +12,6 @@ import org.jooq.Table
 import org.jooq.TableField
 import org.jooq.impl.TableImpl
 import org.jooq.test.oraclescala.generatedclasses.test.Test
-import org.jooq.test.oraclescala.generatedclasses.test.tables.TUnsigned
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.TUnsignedRecord
 import org.jooq.types.UByte
 import org.jooq.types.UInteger
@@ -71,7 +70,7 @@ class TUnsigned(alias : String, aliased : Table[TUnsignedRecord], parameters : A
 	 * Create an aliased <code>TEST.T_UNSIGNED</code> table reference
 	 */
 	def this(alias : String) = {
-		this(alias, TUnsigned.T_UNSIGNED, null)
+		this(alias, org.jooq.test.oraclescala.generatedclasses.test.tables.TUnsigned.T_UNSIGNED, null)
 	}
 
 	private def this(alias : String, aliased : Table[TUnsignedRecord]) = {

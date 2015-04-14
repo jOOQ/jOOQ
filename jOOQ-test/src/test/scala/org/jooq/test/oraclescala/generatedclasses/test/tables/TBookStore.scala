@@ -16,7 +16,6 @@ import org.jooq.UniqueKey
 import org.jooq.impl.TableImpl
 import org.jooq.test.oraclescala.generatedclasses.test.Keys
 import org.jooq.test.oraclescala.generatedclasses.test.Test
-import org.jooq.test.oraclescala.generatedclasses.test.tables.TBookStore
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.TBookStoreRecord
 
 
@@ -56,7 +55,7 @@ class TBookStore(alias : String, aliased : Table[TBookStoreRecord], parameters :
 	 * Create an aliased <code>TEST.T_BOOK_STORE</code> table reference
 	 */
 	def this(alias : String) = {
-		this(alias, TBookStore.T_BOOK_STORE, null)
+		this(alias, org.jooq.test.oraclescala.generatedclasses.test.tables.TBookStore.T_BOOK_STORE, null)
 	}
 
 	private def this(alias : String, aliased : Table[TBookStoreRecord]) = {

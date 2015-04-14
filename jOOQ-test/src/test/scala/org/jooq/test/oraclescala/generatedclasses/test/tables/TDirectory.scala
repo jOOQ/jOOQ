@@ -18,7 +18,6 @@ import org.jooq.UniqueKey
 import org.jooq.impl.TableImpl
 import org.jooq.test.oraclescala.generatedclasses.test.Keys
 import org.jooq.test.oraclescala.generatedclasses.test.Test
-import org.jooq.test.oraclescala.generatedclasses.test.tables.TDirectory
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.TDirectoryRecord
 
 
@@ -73,7 +72,7 @@ class TDirectory(alias : String, aliased : Table[TDirectoryRecord], parameters :
 	 * Create an aliased <code>TEST.T_DIRECTORY</code> table reference
 	 */
 	def this(alias : String) = {
-		this(alias, TDirectory.T_DIRECTORY, null)
+		this(alias, org.jooq.test.oraclescala.generatedclasses.test.tables.TDirectory.T_DIRECTORY, null)
 	}
 
 	private def this(alias : String, aliased : Table[TDirectoryRecord]) = {

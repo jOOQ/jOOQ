@@ -12,8 +12,7 @@ import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.impl.UDTRecordImpl;
 import org.jooq.test.oracle.generatedclasses.test.udt.U_3709;
-import org.jooq.test.oracle.generatedclasses.test.udt.u_3709.Value1;
-import org.jooq.test.oracle.generatedclasses.test.udt.u_3709.Value2;
+import org.jooq.test.oracle.generatedclasses.test.udt.u_3709.Value;
 
 
 /**
@@ -22,7 +21,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.u_3709.Value2;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_3709Record extends UDTRecordImpl<U_3709Record> implements Record1<String> {
 
-	private static final long serialVersionUID = -1363861117;
+	private static final long serialVersionUID = 1616891338;
 
 	/**
 	 * Setter for <code>TEST.U_3709.V</code>.
@@ -42,19 +41,8 @@ public class U_3709Record extends UDTRecordImpl<U_3709Record> implements Record1
 	/**
 	 * Call <code>TEST.U_3709.VALUE</code>
 	 */
-	public String value1() {
-		Value1 f = new Value1();
-		f.setSelf(this);
-
-		f.execute(configuration());
-		return f.getReturnValue();
-	}
-
-	/**
-	 * Call <code>TEST.U_3709.VALUE</code>
-	 */
-	public String value2(String value) {
-		Value2 f = new Value2();
+	public String value(String value) {
+		Value f = new Value();
 		f.setSelf(this);
 		f.setValue(value);
 

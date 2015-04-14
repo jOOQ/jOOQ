@@ -17,7 +17,6 @@ import org.jooq.UniqueKey
 import org.jooq.impl.TableImpl
 import org.jooq.test.oraclescala.generatedclasses.test.Keys
 import org.jooq.test.oraclescala.generatedclasses.test.Test
-import org.jooq.test.oraclescala.generatedclasses.test.tables.T_2845CaseSensitivity
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.T_2845CaseSensitivityRecord
 
 
@@ -77,7 +76,7 @@ class T_2845CaseSensitivity(alias : String, aliased : Table[T_2845CaseSensitivit
 	 * Create an aliased <code>TEST.T_2845_CASE_sensitivity</code> table reference
 	 */
 	def this(alias : String) = {
-		this(alias, T_2845CaseSensitivity.T_2845_CASE_SENSITIVITY, null)
+		this(alias, org.jooq.test.oraclescala.generatedclasses.test.tables.T_2845CaseSensitivity.T_2845_CASE_SENSITIVITY, null)
 	}
 
 	private def this(alias : String, aliased : Table[T_2845CaseSensitivityRecord]) = {

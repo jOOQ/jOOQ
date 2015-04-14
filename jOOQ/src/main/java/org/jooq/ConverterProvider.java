@@ -45,7 +45,9 @@ package org.jooq;
  * for any combination of types <code>&lt;T></code> and <code>&lt;U></code>.
  *
  * @author Lukas Eder
+ * @deprecated - This API is still EXPERIMENTAL. Do not use yet
  */
+@Deprecated
 public interface ConverterProvider {
 
     /**

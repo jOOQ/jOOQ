@@ -60,7 +60,9 @@ import org.jooq.Converters;
 
 /**
  * @author Lukas Eder
+ * @deprecated - This API is still EXPERIMENTAL. Do not use yet
  */
+@Deprecated
 public class DefaultConverterProvider implements ConverterProvider {
 
     final Graph graph = new Graph();

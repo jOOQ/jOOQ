@@ -302,7 +302,10 @@ public interface Configuration extends Serializable {
     /**
      * Get the configured <code>ConverterProvider</code> from this
      * configuration.
+     *
+     * @deprecated - This API is still EXPERIMENTAL. Do not use yet
      */
+    @Deprecated
     ConverterProvider converterProvider();
 
     /**
@@ -439,7 +442,9 @@ public interface Configuration extends Serializable {
      * @param newConverterProvider The new converter provider to be contained in
      *            the changed configuration.
      * @return The changed configuration.
+     * @deprecated - This API is still EXPERIMENTAL. Do not use yet
      */
+    @Deprecated
     Configuration set(ConverterProvider newConverterProvider);
 
     /**
@@ -562,10 +567,12 @@ public interface Configuration extends Serializable {
      * Create a derived configuration from this one, with new converter
      * provider.
      *
-     * @param newConverterProvider The new converter provider to
-     *            be contained in the derived configuration.
+     * @param newConverterProvider The new converter provider to be contained in
+     *            the derived configuration.
      * @return The derived configuration.
+     * @deprecated - This API is still EXPERIMENTAL. Do not use yet
      */
+    @Deprecated
     Configuration derive(ConverterProvider newConverterProvider);
 
     /**

@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.jooq.UDT;
 import org.jooq.impl.SchemaImpl;
+import org.jooq.test.oracle.generatedclasses.sys.udt.Xmltype;
 import org.jooq.test.oracle.generatedclasses.sys.udt.Xmltypeextra;
 
 
@@ -19,7 +20,7 @@ import org.jooq.test.oracle.generatedclasses.sys.udt.Xmltypeextra;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sys extends SchemaImpl {
 
-	private static final long serialVersionUID = 1986324620;
+	private static final long serialVersionUID = -1322556960;
 
 	/**
 	 * The reference instance of <code>SYS</code>
@@ -42,6 +43,7 @@ public class Sys extends SchemaImpl {
 
 	private final List<UDT<?>> getUDTs0() {
 		return Arrays.<UDT<?>>asList(
+			Xmltype.XMLTYPE,
 			Xmltypeextra.XMLTYPEEXTRA);
 	}
 }

@@ -13,8 +13,7 @@ import org.jooq.Record1
 import org.jooq.Row1
 import org.jooq.impl.UDTRecordImpl
 import org.jooq.test.oraclescala.generatedclasses.test.udt.U_3709
-import org.jooq.test.oraclescala.generatedclasses.test.udt.u_3709.Value1
-import org.jooq.test.oraclescala.generatedclasses.test.udt.u_3709.Value2
+import org.jooq.test.oraclescala.generatedclasses.test.udt.u_3709.Value
 
 
 /**
@@ -41,19 +40,8 @@ class U_3709Record extends UDTRecordImpl[U_3709Record](U_3709.U_3709) with Recor
 	/**
 	 * Call <code>TEST.U_3709.VALUE</code>
 	 */
-	def value1() : String = {
-		val f = new Value1()
-		f.setSelf(this)
-
-		f.execute(configuration())
-		f.getReturnValue
-	}
-
-	/**
-	 * Call <code>TEST.U_3709.VALUE</code>
-	 */
-	def value2(value : String) : String = {
-		val f = new Value2()
+	def value(value : String) : String = {
+		val f = new Value()
 		f.setSelf(this)
 		f.setValue(value)
 

@@ -11,8 +11,7 @@ import org.jooq.UDTField;
 import org.jooq.impl.UDTImpl;
 import org.jooq.test.oracle.generatedclasses.test.Test;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.U_3709Record;
-import org.jooq.test.oracle.generatedclasses.test.udt.u_3709.Value1;
-import org.jooq.test.oracle.generatedclasses.test.udt.u_3709.Value2;
+import org.jooq.test.oracle.generatedclasses.test.udt.u_3709.Value;
 
 
 /**
@@ -21,7 +20,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.u_3709.Value2;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_3709 extends UDTImpl<U_3709Record> implements Package {
 
-	private static final long serialVersionUID = -1488201260;
+	private static final long serialVersionUID = -457660264;
 
 	/**
 	 * The reference instance of <code>TEST.U_3709</code>
@@ -44,39 +43,8 @@ public class U_3709 extends UDTImpl<U_3709Record> implements Package {
 	/**
 	 * Call <code>TEST.U_3709.VALUE</code>
 	 */
-	public static String value1(Configuration configuration, U_3709Record self) {
-		Value1 f = new Value1();
-		f.setSelf(self);
-
-		f.execute(configuration);
-		return f.getReturnValue();
-	}
-
-	/**
-	 * Get <code>TEST.U_3709.VALUE</code> as a field
-	 */
-	public static Field<String> value1(U_3709Record self) {
-		Value1 f = new Value1();
-		f.setSelf(self);
-
-		return f.asField();
-	}
-
-	/**
-	 * Get <code>TEST.U_3709.VALUE</code> as a field
-	 */
-	public static Field<String> value1(Field<U_3709Record> self) {
-		Value1 f = new Value1();
-		f.setSelf(self);
-
-		return f.asField();
-	}
-
-	/**
-	 * Call <code>TEST.U_3709.VALUE</code>
-	 */
-	public static String value2(Configuration configuration, U_3709Record self, String value) {
-		Value2 f = new Value2();
+	public static String value(Configuration configuration, U_3709Record self, String value) {
+		Value f = new Value();
 		f.setSelf(self);
 		f.setValue(value);
 
@@ -87,8 +55,8 @@ public class U_3709 extends UDTImpl<U_3709Record> implements Package {
 	/**
 	 * Get <code>TEST.U_3709.VALUE</code> as a field
 	 */
-	public static Field<String> value2(U_3709Record self, String value) {
-		Value2 f = new Value2();
+	public static Field<String> value(U_3709Record self, String value) {
+		Value f = new Value();
 		f.setSelf(self);
 		f.setValue(value);
 
@@ -98,8 +66,8 @@ public class U_3709 extends UDTImpl<U_3709Record> implements Package {
 	/**
 	 * Get <code>TEST.U_3709.VALUE</code> as a field
 	 */
-	public static Field<String> value2(Field<U_3709Record> self, Field<String> value) {
-		Value2 f = new Value2();
+	public static Field<String> value(Field<U_3709Record> self, Field<String> value) {
+		Value f = new Value();
 		f.setSelf(self);
 		f.setValue(value);
 

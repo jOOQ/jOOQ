@@ -14,8 +14,7 @@ import org.jooq.UDTField
 import org.jooq.impl.UDTImpl
 import org.jooq.test.oraclescala.generatedclasses.test.Test
 import org.jooq.test.oraclescala.generatedclasses.test.udt.records.U_3709Record
-import org.jooq.test.oraclescala.generatedclasses.test.udt.u_3709.Value1
-import org.jooq.test.oraclescala.generatedclasses.test.udt.u_3709.Value2
+import org.jooq.test.oraclescala.generatedclasses.test.udt.u_3709.Value
 
 
 object U_3709 {
@@ -47,39 +46,8 @@ class U_3709 extends UDTImpl[U_3709Record]("U_3709", Test.TEST) with Package {
 	/**
 	 * Call <code>TEST.U_3709.VALUE</code>
 	 */
-	def value1(configuration : Configuration, self : U_3709Record) : String = {
-		val f = new Value1()
-		f.setSelf(self)
-
-		f.execute(configuration)
-		f.getReturnValue
-	}
-
-	/**
-	 * Get <code>TEST.U_3709.VALUE</code> as a field
-	 */
-	def value1(self : U_3709Record) : Field[String] = {
-		val f = new Value1
-		f.setSelf(self)
-
-		return f.asField
-	}
-
-	/**
-	 * Get <code>TEST.U_3709.VALUE</code> as a field
-	 */
-	def value1(self : Field[U_3709Record]) : Field[String] = {
-		val f = new Value1
-		f.setSelf(self)
-
-		return f.asField
-	}
-
-	/**
-	 * Call <code>TEST.U_3709.VALUE</code>
-	 */
-	def value2(configuration : Configuration, self : U_3709Record, value : String) : String = {
-		val f = new Value2()
+	def value(configuration : Configuration, self : U_3709Record, value : String) : String = {
+		val f = new Value()
 		f.setSelf(self)
 		f.setValue(value)
 
@@ -90,8 +58,8 @@ class U_3709 extends UDTImpl[U_3709Record]("U_3709", Test.TEST) with Package {
 	/**
 	 * Get <code>TEST.U_3709.VALUE</code> as a field
 	 */
-	def value2(self : U_3709Record, value : String) : Field[String] = {
-		val f = new Value2
+	def value(self : U_3709Record, value : String) : Field[String] = {
+		val f = new Value
 		f.setSelf(self)
 		f.setValue(value)
 
@@ -101,8 +69,8 @@ class U_3709 extends UDTImpl[U_3709Record]("U_3709", Test.TEST) with Package {
 	/**
 	 * Get <code>TEST.U_3709.VALUE</code> as a field
 	 */
-	def value2(self : Field[U_3709Record], value : Field[String]) : Field[String] = {
-		val f = new Value2
+	def value(self : Field[U_3709Record], value : Field[String]) : Field[String] = {
+		val f = new Value
 		f.setSelf(self)
 		f.setValue(value)
 

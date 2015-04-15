@@ -55,6 +55,7 @@ import org.jooq.BindingSQLContext;
 import org.jooq.BindingSetSQLOutputContext;
 import org.jooq.BindingSetStatementContext;
 import org.jooq.Converter;
+import org.jooq.Converters;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 
@@ -77,7 +78,7 @@ public class DateAsTimestampBinding implements Binding<Timestamp, Timestamp> {
     private final DefaultBinding<Timestamp, Timestamp> delegate;
 
     public DateAsTimestampBinding() {
-        this.converter = new IdentityConverter<Timestamp>(Timestamp.class);
+        this.converter = Converters.identity(Timestamp.class);
         this.delegate = new DefaultBinding<Timestamp, Timestamp>(converter);
     }
 

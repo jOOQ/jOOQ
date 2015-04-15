@@ -65,6 +65,7 @@ import org.jooq.ArrayRecord;
 import org.jooq.Binding;
 import org.jooq.Configuration;
 import org.jooq.Converter;
+import org.jooq.Converters;
 import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.Result;
@@ -323,7 +324,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
         this.binding = binding != null
             ? binding
-            : new DefaultBinding<T, T>(new IdentityConverter<T>(type), this.isLob());
+            : new DefaultBinding<T, T>(Converters.identity(type), this.isLob());
     }
 
     @Override
@@ -630,7 +631,7 @@ public class DefaultDataType<T> implements DataType<T> {
             return (DataType<U>) this;
 
         if (newBinding == null)
-            newBinding = (Binding<? super T, U>) new DefaultBinding<T, T>(new IdentityConverter<T>(getType()), isLob());
+            newBinding = (Binding<? super T, U>) new DefaultBinding<T, T>(Converters.identity(getType()), isLob());
 
         return new ConvertedDataType<T, U>(this, newBinding);
     }

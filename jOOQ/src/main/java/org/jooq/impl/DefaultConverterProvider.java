@@ -71,7 +71,7 @@ public class DefaultConverterProvider implements ConverterProvider {
     @Override
     public <T, U> Converter<T, U> provide(Class<T> tType, Class<U> uType) {
         if (tType == uType)
-            return (Converter<T, U>) new IdentityConverter<T>(tType);
+            return (Converter<T, U>) Converters.identity(tType);
         else
             return graph.get(new Endpoints<T, U>(tType, uType));
     }

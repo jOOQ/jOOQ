@@ -5,6 +5,8 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 
 
 import java.io.Serializable;
+import java.sql.Blob;
+import java.sql.Clob;
 import java.util.Arrays;
 
 import javax.persistence.Column;
@@ -22,24 +24,40 @@ import javax.validation.constraints.NotNull;
 @Table(name = "T_725_LOB_TEST", schema = "TEST")
 public class T_725LobTest implements Serializable {
 
-	private static final long serialVersionUID = -1172954814;
+	private static final long serialVersionUID = 497556007;
 
 	private Integer id;
 	private byte[]  lob;
+	private Clob    userJavaSqlClob;
+	private Blob    userJavaSqlBlob;
+	private String  jooqJavaSqlClob;
+	private byte[]  jooqJavaSqlBlob;
 
 	public T_725LobTest() {}
 
 	public T_725LobTest(T_725LobTest value) {
 		this.id = value.id;
 		this.lob = value.lob;
+		this.userJavaSqlClob = value.userJavaSqlClob;
+		this.userJavaSqlBlob = value.userJavaSqlBlob;
+		this.jooqJavaSqlClob = value.jooqJavaSqlClob;
+		this.jooqJavaSqlBlob = value.jooqJavaSqlBlob;
 	}
 
 	public T_725LobTest(
 		Integer id,
-		byte[]  lob
+		byte[]  lob,
+		Clob    userJavaSqlClob,
+		Blob    userJavaSqlBlob,
+		String  jooqJavaSqlClob,
+		byte[]  jooqJavaSqlBlob
 	) {
 		this.id = id;
 		this.lob = lob;
+		this.userJavaSqlClob = userJavaSqlClob;
+		this.userJavaSqlBlob = userJavaSqlBlob;
+		this.jooqJavaSqlClob = jooqJavaSqlClob;
+		this.jooqJavaSqlBlob = jooqJavaSqlBlob;
 	}
 
 	@Id
@@ -60,6 +78,42 @@ public class T_725LobTest implements Serializable {
 
 	public void setLob(byte[] lob) {
 		this.lob = lob;
+	}
+
+	@Column(name = "USER_JAVA_SQL_CLOB")
+	public Clob getUserJavaSqlClob() {
+		return this.userJavaSqlClob;
+	}
+
+	public void setUserJavaSqlClob(Clob userJavaSqlClob) {
+		this.userJavaSqlClob = userJavaSqlClob;
+	}
+
+	@Column(name = "USER_JAVA_SQL_BLOB")
+	public Blob getUserJavaSqlBlob() {
+		return this.userJavaSqlBlob;
+	}
+
+	public void setUserJavaSqlBlob(Blob userJavaSqlBlob) {
+		this.userJavaSqlBlob = userJavaSqlBlob;
+	}
+
+	@Column(name = "JOOQ_JAVA_SQL_CLOB")
+	public String getJooqJavaSqlClob() {
+		return this.jooqJavaSqlClob;
+	}
+
+	public void setJooqJavaSqlClob(String jooqJavaSqlClob) {
+		this.jooqJavaSqlClob = jooqJavaSqlClob;
+	}
+
+	@Column(name = "JOOQ_JAVA_SQL_BLOB")
+	public byte[] getJooqJavaSqlBlob() {
+		return this.jooqJavaSqlBlob;
+	}
+
+	public void setJooqJavaSqlBlob(byte[] jooqJavaSqlBlob) {
+		this.jooqJavaSqlBlob = jooqJavaSqlBlob;
 	}
 
 	@Override
@@ -83,6 +137,30 @@ public class T_725LobTest implements Serializable {
 		}
 		else if (!Arrays.equals(lob, other.lob))
 			return false;
+		if (userJavaSqlClob == null) {
+			if (other.userJavaSqlClob != null)
+				return false;
+		}
+		else if (!userJavaSqlClob.equals(other.userJavaSqlClob))
+			return false;
+		if (userJavaSqlBlob == null) {
+			if (other.userJavaSqlBlob != null)
+				return false;
+		}
+		else if (!userJavaSqlBlob.equals(other.userJavaSqlBlob))
+			return false;
+		if (jooqJavaSqlClob == null) {
+			if (other.jooqJavaSqlClob != null)
+				return false;
+		}
+		else if (!jooqJavaSqlClob.equals(other.jooqJavaSqlClob))
+			return false;
+		if (jooqJavaSqlBlob == null) {
+			if (other.jooqJavaSqlBlob != null)
+				return false;
+		}
+		else if (!Arrays.equals(jooqJavaSqlBlob, other.jooqJavaSqlBlob))
+			return false;
 		return true;
 	}
 
@@ -92,6 +170,10 @@ public class T_725LobTest implements Serializable {
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((lob == null) ? 0 : Arrays.hashCode(lob));
+		result = prime * result + ((userJavaSqlClob == null) ? 0 : userJavaSqlClob.hashCode());
+		result = prime * result + ((userJavaSqlBlob == null) ? 0 : userJavaSqlBlob.hashCode());
+		result = prime * result + ((jooqJavaSqlClob == null) ? 0 : jooqJavaSqlClob.hashCode());
+		result = prime * result + ((jooqJavaSqlBlob == null) ? 0 : Arrays.hashCode(jooqJavaSqlBlob));
 		return result;
 	}
 }

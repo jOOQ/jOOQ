@@ -4,6 +4,8 @@
 package org.jooq.test.oracle.generatedclasses.test.tables;
 
 
+import java.sql.Blob;
+import java.sql.Clob;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,6 +14,10 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.impl.TableImpl;
+import org.jooq.test.all.bindings.JooqBlobBinding;
+import org.jooq.test.all.bindings.JooqClobBinding;
+import org.jooq.test.all.bindings.UserBlobBinding;
+import org.jooq.test.all.bindings.UserClobBinding;
 import org.jooq.test.oracle.generatedclasses.test.Keys;
 import org.jooq.test.oracle.generatedclasses.test.Test;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.T_725LobTestRecord;
@@ -23,7 +29,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.records.T_725LobTestRec
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTest extends TableImpl<T_725LobTestRecord> {
 
-	private static final long serialVersionUID = -345353457;
+	private static final long serialVersionUID = -287522574;
 
 	/**
 	 * The reference instance of <code>TEST.T_725_LOB_TEST</code>
@@ -47,6 +53,26 @@ public class T_725LobTest extends TableImpl<T_725LobTestRecord> {
 	 * The column <code>TEST.T_725_LOB_TEST.LOB</code>.
 	 */
 	public final TableField<T_725LobTestRecord, byte[]> LOB = createField("LOB", org.jooq.impl.SQLDataType.BLOB, this, "");
+
+	/**
+	 * The column <code>TEST.T_725_LOB_TEST.USER_JAVA_SQL_CLOB</code>.
+	 */
+	public final TableField<T_725LobTestRecord, Clob> USER_JAVA_SQL_CLOB = createField("USER_JAVA_SQL_CLOB", org.jooq.impl.SQLDataType.CLOB, this, "", new UserClobBinding());
+
+	/**
+	 * The column <code>TEST.T_725_LOB_TEST.USER_JAVA_SQL_BLOB</code>.
+	 */
+	public final TableField<T_725LobTestRecord, Blob> USER_JAVA_SQL_BLOB = createField("USER_JAVA_SQL_BLOB", org.jooq.impl.SQLDataType.BLOB, this, "", new UserBlobBinding());
+
+	/**
+	 * The column <code>TEST.T_725_LOB_TEST.JOOQ_JAVA_SQL_CLOB</code>.
+	 */
+	public final TableField<T_725LobTestRecord, String> JOOQ_JAVA_SQL_CLOB = createField("JOOQ_JAVA_SQL_CLOB", org.jooq.impl.SQLDataType.CLOB, this, "", new JooqClobBinding());
+
+	/**
+	 * The column <code>TEST.T_725_LOB_TEST.JOOQ_JAVA_SQL_BLOB</code>.
+	 */
+	public final TableField<T_725LobTestRecord, byte[]> JOOQ_JAVA_SQL_BLOB = createField("JOOQ_JAVA_SQL_BLOB", org.jooq.impl.SQLDataType.BLOB, this, "", new JooqBlobBinding());
 
 	/**
 	 * Create a <code>TEST.T_725_LOB_TEST</code> table reference

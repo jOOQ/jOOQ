@@ -4,6 +4,8 @@
 package org.jooq.test.oracle.generatedclasses.test.tables.daos;
 
 
+import java.sql.Blob;
+import java.sql.Clob;
 import java.util.List;
 
 import org.jooq.Configuration;
@@ -59,5 +61,33 @@ public class T_725LobTestDao extends DAOImpl<T_725LobTestRecord, org.jooq.test.o
 	 */
 	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.T_725LobTest> fetchByLob(byte[]... values) {
 		return fetch(T_725LobTest.T_725_LOB_TEST.LOB, values);
+	}
+
+	/**
+	 * Fetch records that have <code>USER_JAVA_SQL_CLOB IN (values)</code>
+	 */
+	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.T_725LobTest> fetchByUserJavaSqlClob(Clob... values) {
+		return fetch(T_725LobTest.T_725_LOB_TEST.USER_JAVA_SQL_CLOB, values);
+	}
+
+	/**
+	 * Fetch records that have <code>USER_JAVA_SQL_BLOB IN (values)</code>
+	 */
+	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.T_725LobTest> fetchByUserJavaSqlBlob(Blob... values) {
+		return fetch(T_725LobTest.T_725_LOB_TEST.USER_JAVA_SQL_BLOB, values);
+	}
+
+	/**
+	 * Fetch records that have <code>JOOQ_JAVA_SQL_CLOB IN (values)</code>
+	 */
+	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.T_725LobTest> fetchByJooqJavaSqlClob(String... values) {
+		return fetch(T_725LobTest.T_725_LOB_TEST.JOOQ_JAVA_SQL_CLOB, values);
+	}
+
+	/**
+	 * Fetch records that have <code>JOOQ_JAVA_SQL_BLOB IN (values)</code>
+	 */
+	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.T_725LobTest> fetchByJooqJavaSqlBlob(byte[]... values) {
+		return fetch(T_725LobTest.T_725_LOB_TEST.JOOQ_JAVA_SQL_BLOB, values);
 	}
 }

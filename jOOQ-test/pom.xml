@@ -5101,9 +5101,47 @@
                                                     <type>java.io.Serializable</type>
                                                     <binding>org.jooq.test.all.bindings.SerializedBinding</binding>
                                                 </customType>
+                                                
+                                                <customType>
+                                                    <name>UserClob</name>
+                                                    <type>java.sql.Clob</type>
+                                                    <binding>org.jooq.test.all.bindings.UserClobBinding</binding>
+                                                </customType>
+                                                <customType>
+                                                    <name>UserBlob</name>
+                                                    <type>java.sql.Blob</type>
+                                                    <binding>org.jooq.test.all.bindings.UserBlobBinding</binding>
+                                                </customType>
+                                                <customType>
+                                                    <name>JooqClob</name>
+                                                    <type>java.lang.String</type>
+                                                    <binding>org.jooq.test.all.bindings.JooqClobBinding</binding>
+                                                </customType>
+                                                <customType>
+                                                    <name>JooqBlob</name>
+                                                    <type>byte[]</type>
+                                                    <binding>org.jooq.test.all.bindings.JooqBlobBinding</binding>
+                                                </customType>
                                             </customTypes>
 
                                             <forcedTypes>
+                                                <forcedType>
+                                                    <name>UserClob</name>
+                                                    <expression>USER_JAVA_SQL_CLOB</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>UserBlob</name>
+                                                    <expression>USER_JAVA_SQL_BLOB</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>JooqClob</name>
+                                                    <expression>JOOQ_JAVA_SQL_CLOB</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>JooqBlob</name>
+                                                    <expression>JOOQ_JAVA_SQL_BLOB</expression>
+                                                </forcedType>
+                                                
                                                 <forcedType>
                                                     <name>Serializable</name>
                                                     <expression>JAVA_IO_SERIALIZABLE</expression>

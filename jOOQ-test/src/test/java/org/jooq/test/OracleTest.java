@@ -47,6 +47,7 @@ import static java.lang.System.currentTimeMillis;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
+import static java.util.stream.Collectors.toList;
 import static org.apache.commons.collections4.ListUtils.union;
 import static org.jooq.impl.DSL.currentUser;
 import static org.jooq.impl.DSL.max;
@@ -154,6 +155,7 @@ import org.jooq.UDTRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultConfiguration;
 import org.jooq.impl.DefaultRecordMapper;
+import org.jooq.lambda.Unchecked;
 import org.jooq.test.all.converters.Boolean_10;
 import org.jooq.test.all.converters.Boolean_TF_LC;
 import org.jooq.test.all.converters.Boolean_TF_UC;
@@ -174,6 +176,7 @@ import org.jooq.test.oracle.generatedclasses.test.packages.Library;
 import org.jooq.test.oracle.generatedclasses.test.packages.TestSynonymPackage;
 import org.jooq.test.oracle.generatedclasses.test.routines.P2155;
 import org.jooq.test.oracle.generatedclasses.test.routines.PNested;
+import org.jooq.test.oracle.generatedclasses.test.tables.T_725LobTest;
 import org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete;
 import org.jooq.test.oracle.generatedclasses.test.tables.pojos.TAuthor;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord;
@@ -224,6 +227,7 @@ import org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampTDat
 import org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record;
 import org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord;
 import org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976VarrayTypeRecord;
+import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
@@ -236,6 +240,9 @@ import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
 
 import com.jolbox.bonecp.BoneCPDataSource;
+
+import oracle.sql.BLOB;
+import oracle.sql.CLOB;
 
 
 /**
@@ -2198,6 +2205,96 @@ public class OracleTest extends jOOQAbstractTest<
         assertEquals(3, (int) a2.getId());
         assertEquals("Alfred", a2.getFirstName());
         assertEquals("Hitchcock", a2.getLastName());
+    }
+
+    @Test
+    public void testOracleNativeLOBs() throws Exception {
+        T_725LobTest t = T_725_LOB_TEST;
+        clean(t);
+
+        assertEquals(1,
+        create().insertInto(t, t.ID, t.USER_JAVA_SQL_BLOB, t.USER_JAVA_SQL_CLOB)
+                .values(1, null, null)
+                .execute());
+
+        BLOB blob = null;
+        CLOB clob = null;
+
+        try {
+            blob = BLOB.createTemporary(connection, false, BLOB.DURATION_SESSION);
+            clob = CLOB.createTemporary(connection, false, CLOB.DURATION_SESSION);
+
+            blob.setBytes(1, "abc".getBytes());
+            clob.setString(1, "xyz");
+
+            assertEquals(1,
+            create().insertInto(t,
+                        t.ID,
+                        t.USER_JAVA_SQL_BLOB,
+                        t.JOOQ_JAVA_SQL_BLOB,
+                        t.USER_JAVA_SQL_CLOB,
+                        t.JOOQ_JAVA_SQL_CLOB)
+                    .values(
+                        2,
+                        blob,
+                        "ABC".getBytes(),
+                        clob,
+                        "XYZ")
+                    .execute());
+
+            Result<T_725LobTestRecord> records =
+            create().selectFrom(t)
+                    .orderBy(t.ID)
+                    .fetch();
+
+            assertEquals(
+                asList(1, 2),
+                records.stream()
+                       .map(T_725LobTestRecord::getId)
+                       .collect(toList()));
+
+            assertEquals(
+                asList(null, "abc"),
+                records.stream()
+                       .map(Unchecked.function(
+                           (T_725LobTestRecord r) -> r.getUserJavaSqlBlob() == null
+                               ? null
+                               : new String(r.getUserJavaSqlBlob().getBytes(1, (int) r.getUserJavaSqlBlob().length()))
+                       ))
+                       .collect(toList()));
+
+            assertEquals(
+                asList(null, "ABC"),
+                records.stream()
+                       .map(Unchecked.function(
+                           (T_725LobTestRecord r) -> r.getJooqJavaSqlBlob() == null
+                               ? null
+                               : new String(r.getJooqJavaSqlBlob())
+                       ))
+                       .collect(toList()));
+
+            assertEquals(
+                asList(null, "xyz"),
+                records.stream()
+                       .map(Unchecked.function(
+                           (T_725LobTestRecord r) -> r.getUserJavaSqlClob() == null
+                               ? null
+                               : r.getUserJavaSqlClob().getSubString(1, (int) r.getUserJavaSqlClob().length())
+                       ))
+                       .collect(toList()));
+
+            assertEquals(
+                asList(null, "XYZ"),
+                records.stream()
+                       .map(Unchecked.function(
+                           (T_725LobTestRecord r) -> r.getJooqJavaSqlClob()
+                       ))
+                       .collect(toList()));
+        }
+        finally {
+            JDBCUtils.safeFree(blob);
+            JDBCUtils.safeFree(clob);
+        }
     }
 }
 

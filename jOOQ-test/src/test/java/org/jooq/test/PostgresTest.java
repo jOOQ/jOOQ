@@ -43,6 +43,7 @@ package org.jooq.test;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.nCopies;
+import static java.util.stream.Collectors.toList;
 import static org.jooq.conf.StatementType.STATIC_STATEMENT;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.countDistinct;
@@ -155,6 +156,7 @@ import org.jooq.test.postgres.generatedclasses.tables.FTables3;
 import org.jooq.test.postgres.generatedclasses.tables.FTables4;
 import org.jooq.test.postgres.generatedclasses.tables.TArrays;
 import org.jooq.test.postgres.generatedclasses.tables.records.FArrayTablesRecord;
+import org.jooq.test.postgres.generatedclasses.tables.records.FSearchBooksRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.FTables2Record;
 import org.jooq.test.postgres.generatedclasses.tables.records.FTables3Record;
 import org.jooq.test.postgres.generatedclasses.tables.records.FTables4Record;
@@ -1130,7 +1132,7 @@ public class PostgresTest extends jOOQAbstractTest<
         // - Those returning a SETOF [ table type ]
         // - Those returning a TABLE type
 
-        Result<Record2<Integer, String>> books =
+        Result<Record2<Integer, String>> books1 =
         create().select(
                     F_SEARCH_BOOKS.ID,
                     F_SEARCH_BOOKS.TITLE)
@@ -1138,9 +1140,20 @@ public class PostgresTest extends jOOQAbstractTest<
                 .orderBy(F_SEARCH_BOOKS.ID)
                 .fetch();
 
-        assertEquals(2, books.size());
-        assertEquals(asList(2, 3), books.getValues(F_SEARCH_BOOKS.ID));
-        assertEquals(BOOK_TITLES.subList(1, 3), books.getValues(F_SEARCH_BOOKS.TITLE));
+        assertEquals(2, books1.size());
+        assertEquals(asList(2, 3), books1.getValues(F_SEARCH_BOOKS.ID));
+        assertEquals(BOOK_TITLES.subList(1, 3), books1.getValues(F_SEARCH_BOOKS.TITLE));
+
+        Result<FSearchBooksRecord> books2 =
+        create().selectFrom(F_SEARCH_BOOKS("A", 2L, 0L))
+                .orderBy(F_SEARCH_BOOKS.ID)
+                .fetch();
+
+        assertEquals(2, books2.size());
+        assertEquals(asList(2, 3), books2.getValues(F_SEARCH_BOOKS.ID));
+        assertEquals(asList(2, 3), books2.stream().map(FSearchBooksRecord::getId).collect(toList()));
+        assertEquals(BOOK_TITLES.subList(1, 3), books2.getValues(F_SEARCH_BOOKS.TITLE));
+        assertEquals(BOOK_TITLES.subList(1, 3), books2.stream().map(FSearchBooksRecord::getTitle).collect(toList()));
 
         // [#3378] PostgreSQL has issues with fully qualified references to
         // columns of table-valued functions

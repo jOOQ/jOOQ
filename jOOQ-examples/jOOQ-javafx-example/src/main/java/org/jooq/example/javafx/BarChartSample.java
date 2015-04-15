@@ -45,8 +45,7 @@ import static java.util.stream.Collectors.toList;
 import static javafx.collections.FXCollections.observableArrayList;
 import static org.jooq.example.db.h2.Tables.COUNTRIES;
 import static org.jooq.impl.DSL.avg;
-import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
@@ -56,6 +55,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
 
+import org.jooq.TableField;
+import org.jooq.example.db.h2.tables.records.CountriesRecord;
+import org.jooq.impl.DSL;
+import org.jooq.tools.jdbc.JDBCUtils;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
@@ -64,11 +68,6 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-
-import org.jooq.TableField;
-import org.jooq.example.db.h2.tables.records.CountriesRecord;
-import org.jooq.impl.DSL;
-import org.jooq.tools.jdbc.JDBCUtils;
 
 @SuppressWarnings("restriction")
 public class BarChartSample extends Application {
@@ -116,11 +115,11 @@ public class BarChartSample extends Application {
                        .groupBy(COUNTRIES.CODE)
                    ).as("c1")
                )
-               .on(COUNTRIES.CODE.eq(field(name("c1", COUNTRIES.CODE.getName()), String.class)))
+               .on(COUNTRIES.CODE.eq(fieldByName(String.class, "c1", COUNTRIES.CODE.getName())))
 
                // order countries by their average projected value
                .orderBy(
-                   field(name("avg")),
+                   fieldByName("avg"),
                    COUNTRIES.CODE,
                    COUNTRIES.YEAR)
 

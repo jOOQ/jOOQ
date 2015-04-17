@@ -58,6 +58,7 @@ import org.jooq.BindingSetStatementContext;
 import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.Converters;
+import org.jooq.tools.jdbc.JDBCUtils;
 
 /**
  * A binding that takes binary values but binds them as {@link Blob} to at the
@@ -93,36 +94,51 @@ public class BlobBinding implements Binding<byte[], byte[]> {
     @Override
     public final void set(BindingSetStatementContext<byte[]> ctx) throws SQLException {
         Blob blob = newBlob(ctx.configuration(), ctx.value());
-        // [#4205] register blob for free()
+        DefaultExecuteContext.register(blob);
         ctx.statement().setBlob(ctx.index(), blob);
     }
 
     @Override
     public final void set(BindingSetSQLOutputContext<byte[]> ctx) throws SQLException {
         Blob blob = newBlob(ctx.configuration(), ctx.value());
-        // [#4205] register blob for free()
+        DefaultExecuteContext.register(blob);
         ctx.output().writeBlob(blob);
     }
 
     @Override
     public final void get(BindingGetResultSetContext<byte[]> ctx) throws SQLException {
         Blob blob = ctx.resultSet().getBlob(ctx.index());
-        // [#4205] register blob for free()
-        ctx.value(blob == null ? null : blob.getBytes(1, (int) blob.length()));
+
+        try {
+            ctx.value(blob == null ? null : blob.getBytes(1, (int) blob.length()));
+        }
+        finally {
+            JDBCUtils.safeFree(blob);
+        }
     }
 
     @Override
     public final void get(BindingGetStatementContext<byte[]> ctx) throws SQLException {
         Blob blob = ctx.statement().getBlob(ctx.index());
-        // [#4205] register blob for free()
-        ctx.value(blob == null ? null : blob.getBytes(1, (int) blob.length()));
+
+        try {
+            ctx.value(blob == null ? null : blob.getBytes(1, (int) blob.length()));
+        }
+        finally {
+            JDBCUtils.safeFree(blob);
+        }
     }
 
     @Override
     public final void get(BindingGetSQLInputContext<byte[]> ctx) throws SQLException {
         Blob blob = ctx.input().readBlob();
-        // [#4205] register blob for free()
-        ctx.value(blob == null ? null : blob.getBytes(1, (int) blob.length()));
+
+        try {
+            ctx.value(blob == null ? null : blob.getBytes(1, (int) blob.length()));
+        }
+        finally {
+            JDBCUtils.safeFree(blob);
+        }
     }
 
     private final Blob newBlob(Configuration configuration, byte[] bytes) throws SQLException {

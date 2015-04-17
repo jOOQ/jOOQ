@@ -5115,12 +5115,12 @@
                                                 <customType>
                                                     <name>JooqClob</name>
                                                     <type>java.lang.String</type>
-                                                    <binding>org.jooq.test.all.bindings.JooqClobBinding</binding>
+                                                    <binding>org.jooq.impl.ClobBinding</binding>
                                                 </customType>
                                                 <customType>
                                                     <name>JooqBlob</name>
                                                     <type>byte[]</type>
-                                                    <binding>org.jooq.test.all.bindings.JooqBlobBinding</binding>
+                                                    <binding>org.jooq.impl.BlobBinding</binding>
                                                 </customType>
                                             </customTypes>
 

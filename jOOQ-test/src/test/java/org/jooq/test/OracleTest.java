@@ -2228,18 +2228,21 @@ public class OracleTest extends jOOQAbstractTest<
             clob.setString(1, "xyz");
 
             assertEquals(1,
-            create().insertInto(t,
-                        t.ID,
-                        t.USER_JAVA_SQL_BLOB,
-                        t.JOOQ_JAVA_SQL_BLOB,
-                        t.USER_JAVA_SQL_CLOB,
-                        t.JOOQ_JAVA_SQL_CLOB)
+            create().insertInto(
+                      t
+                    , t.ID
+                    , t.USER_JAVA_SQL_BLOB
+                    , t.JOOQ_JAVA_SQL_BLOB
+                    , t.USER_JAVA_SQL_CLOB
+                    , t.JOOQ_JAVA_SQL_CLOB
+                    )
                     .values(
-                        2,
-                        blob,
-                        "ABC".getBytes(),
-                        clob,
-                        "XYZ")
+                      2
+                    , blob
+                    , "ABC".getBytes()
+                    , clob
+                    , "XYZ"
+                    )
                     .execute());
 
             Result<T_725LobTestRecord> records =

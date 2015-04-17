@@ -374,6 +374,20 @@
             <systemPath>${basedir}/lib/ojdbc6.jar</systemPath>
         </dependency>
         <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>xdb6</artifactId>
+            <version>${db.oracle.version}</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/xdb6.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>xmlparserv2</artifactId>
+            <version>${db.oracle.version}</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/xmlparserv2.jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>sqljdbc4</artifactId>
             <version>${db.sqlserver.version}</version>
@@ -5122,9 +5136,20 @@
                                                     <type>byte[]</type>
                                                     <binding>org.jooq.impl.BlobBinding</binding>
                                                 </customType>
+                                                
+                                                <customType>
+                                                    <name>OracleXmlAsSQLXML</name>
+                                                    <type>java.sql.SQLXML</type>
+                                                    <binding>org.jooq.test.all.bindings.OracleXmlAsSQLXMLBinding</binding>
+                                                </customType>
                                             </customTypes>
 
                                             <forcedTypes>
+                                                <forcedType>
+                                                    <name>OracleXmlAsSQLXML</name>
+                                                    <expression>ORACLE_XML_AS_SQLXML</expression>
+                                                </forcedType>
+                                                
                                                 <forcedType>
                                                     <name>UserClob</name>
                                                     <expression>USER_JAVA_SQL_CLOB</expression>

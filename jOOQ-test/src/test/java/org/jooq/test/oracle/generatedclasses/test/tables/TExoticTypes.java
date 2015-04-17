@@ -5,6 +5,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 
 
 import java.io.Serializable;
+import java.sql.SQLXML;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -14,6 +15,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.impl.TableImpl;
+import org.jooq.test.all.bindings.OracleXmlAsSQLXMLBinding;
 import org.jooq.test.all.bindings.SerializedBinding;
 import org.jooq.test.oracle.generatedclasses.sys.udt.records.XmltypeRecord;
 import org.jooq.test.oracle.generatedclasses.test.Keys;
@@ -27,7 +29,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.records.TExoticTypesRec
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes extends TableImpl<TExoticTypesRecord> {
 
-	private static final long serialVersionUID = -1843119473;
+	private static final long serialVersionUID = 63461505;
 
 	/**
 	 * The reference instance of <code>TEST.T_EXOTIC_TYPES</code>
@@ -76,6 +78,11 @@ public class TExoticTypes extends TableImpl<TExoticTypesRecord> {
 	 * The column <code>TEST.T_EXOTIC_TYPES.ORACLE_XML_AS_DOCUMENT</code>.
 	 */
 	public final TableField<TExoticTypesRecord, XmltypeRecord> ORACLE_XML_AS_DOCUMENT = createField("ORACLE_XML_AS_DOCUMENT", org.jooq.test.oracle.generatedclasses.sys.udt.Xmltype.XMLTYPE.getDataType(), this, "");
+
+	/**
+	 * The column <code>TEST.T_EXOTIC_TYPES.ORACLE_XML_AS_SQLXML</code>.
+	 */
+	public final TableField<TExoticTypesRecord, SQLXML> ORACLE_XML_AS_SQLXML = createField("ORACLE_XML_AS_SQLXML", org.jooq.impl.DefaultDataType.getDefaultDataType("XMLTYPE"), this, "", new OracleXmlAsSQLXMLBinding());
 
 	/**
 	 * Create a <code>TEST.T_EXOTIC_TYPES</code> table reference

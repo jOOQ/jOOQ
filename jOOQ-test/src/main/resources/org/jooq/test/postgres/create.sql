@@ -479,6 +479,9 @@ CREATE TABLE t_exotic_types (
   
   HSTORE                 HSTORE,
   HSTORE_MAP             HSTORE,
+  
+  PG_XML_AS_IS           XML,
+  PG_XML_AS_DOCUMENT     XML,
 
   CONSTRAINT pk_t_exotic_types PRIMARY KEY(ID)
 )

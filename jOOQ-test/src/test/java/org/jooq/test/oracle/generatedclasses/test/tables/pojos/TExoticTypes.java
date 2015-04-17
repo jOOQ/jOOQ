@@ -5,6 +5,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 
 
 import java.io.Serializable;
+import java.sql.SQLXML;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -24,7 +25,7 @@ import org.jooq.test.oracle.generatedclasses.sys.udt.pojos.Xmltype;
 @Table(name = "T_EXOTIC_TYPES", schema = "TEST")
 public class TExoticTypes implements Serializable {
 
-	private static final long serialVersionUID = -657858464;
+	private static final long serialVersionUID = 196233047;
 
 	private Integer      id;
 	private UUID         uu;
@@ -33,6 +34,7 @@ public class TExoticTypes implements Serializable {
 	private String       plainSqlBindingXml;
 	private Xmltype      oracleXmlAsIs;
 	private Xmltype      oracleXmlAsDocument;
+	private SQLXML       oracleXmlAsSqlxml;
 
 	public TExoticTypes() {}
 
@@ -44,6 +46,7 @@ public class TExoticTypes implements Serializable {
 		this.plainSqlBindingXml = value.plainSqlBindingXml;
 		this.oracleXmlAsIs = value.oracleXmlAsIs;
 		this.oracleXmlAsDocument = value.oracleXmlAsDocument;
+		this.oracleXmlAsSqlxml = value.oracleXmlAsSqlxml;
 	}
 
 	public TExoticTypes(
@@ -53,7 +56,8 @@ public class TExoticTypes implements Serializable {
 		String       plainSqlConverterXml,
 		String       plainSqlBindingXml,
 		Xmltype      oracleXmlAsIs,
-		Xmltype      oracleXmlAsDocument
+		Xmltype      oracleXmlAsDocument,
+		SQLXML       oracleXmlAsSqlxml
 	) {
 		this.id = id;
 		this.uu = uu;
@@ -62,6 +66,7 @@ public class TExoticTypes implements Serializable {
 		this.plainSqlBindingXml = plainSqlBindingXml;
 		this.oracleXmlAsIs = oracleXmlAsIs;
 		this.oracleXmlAsDocument = oracleXmlAsDocument;
+		this.oracleXmlAsSqlxml = oracleXmlAsSqlxml;
 	}
 
 	@Id
@@ -129,6 +134,15 @@ public class TExoticTypes implements Serializable {
 		this.oracleXmlAsDocument = oracleXmlAsDocument;
 	}
 
+	@Column(name = "ORACLE_XML_AS_SQLXML")
+	public SQLXML getOracleXmlAsSqlxml() {
+		return this.oracleXmlAsSqlxml;
+	}
+
+	public void setOracleXmlAsSqlxml(SQLXML oracleXmlAsSqlxml) {
+		this.oracleXmlAsSqlxml = oracleXmlAsSqlxml;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -180,6 +194,12 @@ public class TExoticTypes implements Serializable {
 		}
 		else if (!oracleXmlAsDocument.equals(other.oracleXmlAsDocument))
 			return false;
+		if (oracleXmlAsSqlxml == null) {
+			if (other.oracleXmlAsSqlxml != null)
+				return false;
+		}
+		else if (!oracleXmlAsSqlxml.equals(other.oracleXmlAsSqlxml))
+			return false;
 		return true;
 	}
 
@@ -194,6 +214,7 @@ public class TExoticTypes implements Serializable {
 		result = prime * result + ((plainSqlBindingXml == null) ? 0 : plainSqlBindingXml.hashCode());
 		result = prime * result + ((oracleXmlAsIs == null) ? 0 : oracleXmlAsIs.hashCode());
 		result = prime * result + ((oracleXmlAsDocument == null) ? 0 : oracleXmlAsDocument.hashCode());
+		result = prime * result + ((oracleXmlAsSqlxml == null) ? 0 : oracleXmlAsSqlxml.hashCode());
 		return result;
 	}
 }

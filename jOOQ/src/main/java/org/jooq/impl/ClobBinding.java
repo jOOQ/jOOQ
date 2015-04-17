@@ -58,6 +58,7 @@ import org.jooq.BindingSetStatementContext;
 import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.Converters;
+import org.jooq.tools.jdbc.JDBCUtils;
 
 /**
  * A binding that takes binary values but binds them as {@link Clob} to at the
@@ -93,36 +94,51 @@ public class ClobBinding implements Binding<String, String> {
     @Override
     public final void set(BindingSetStatementContext<String> ctx) throws SQLException {
         Clob clob = newClob(ctx.configuration(), ctx.value());
-        // [#4205] register clob for free()
+        DefaultExecuteContext.register(clob);
         ctx.statement().setClob(ctx.index(), clob);
     }
 
     @Override
     public final void set(BindingSetSQLOutputContext<String> ctx) throws SQLException {
         Clob clob = newClob(ctx.configuration(), ctx.value());
-        // [#4205] register clob for free()
+        DefaultExecuteContext.register(clob);
         ctx.output().writeClob(clob);
     }
 
     @Override
     public final void get(BindingGetResultSetContext<String> ctx) throws SQLException {
         Clob clob = ctx.resultSet().getClob(ctx.index());
-        // [#4205] register blob for free()
-        ctx.value(clob == null ? null : clob.getSubString(1, (int) clob.length()));
+
+        try {
+            ctx.value(clob == null ? null : clob.getSubString(1, (int) clob.length()));
+        }
+        finally {
+            JDBCUtils.safeFree(clob);
+        }
     }
 
     @Override
     public final void get(BindingGetStatementContext<String> ctx) throws SQLException {
         Clob clob = ctx.statement().getClob(ctx.index());
-        // [#4205] register clob for free()
-        ctx.value(clob == null ? null : clob.getSubString(1, (int) clob.length()));
+
+        try {
+            ctx.value(clob == null ? null : clob.getSubString(1, (int) clob.length()));
+        }
+        finally {
+            JDBCUtils.safeFree(clob);
+        }
     }
 
     @Override
     public final void get(BindingGetSQLInputContext<String> ctx) throws SQLException {
         Clob clob = ctx.input().readClob();
-        // [#4205] register clob for free()
-        ctx.value(clob == null ? null : clob.getSubString(1, (int) clob.length()));
+
+        try {
+            ctx.value(clob == null ? null : clob.getSubString(1, (int) clob.length()));
+        }
+        finally {
+            JDBCUtils.safeFree(clob);
+        }
     }
 
     private final Clob newClob(Configuration configuration, String string) throws SQLException {

@@ -31,7 +31,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.springframework.version>4.1.2.RELEASE</org.springframework.version>
+        <org.hibernate.version>4.3.9.Final</org.hibernate.version>
+        <org.springframework.version>4.1.6.RELEASE</org.springframework.version>
         <scala.version>2.10.4</scala.version>
         <org.jooq.version>3.6.0-SNAPSHOT</org.jooq.version>
 
@@ -166,6 +167,11 @@
             <version>${org.springframework.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+        <dependency>
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
             <version>1.4</version>
@@ -174,6 +180,15 @@
             <groupId>com.jolbox</groupId>
             <artifactId>bonecp</artifactId>
             <version>0.8.0.RELEASE</version>
+        </dependency>
+
+
+
+        <!-- Hibernate -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${org.hibernate.version}</version>
         </dependency>
 
 

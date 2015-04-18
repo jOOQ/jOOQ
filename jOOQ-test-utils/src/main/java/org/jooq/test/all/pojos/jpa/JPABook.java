@@ -51,12 +51,16 @@ import javax.persistence.Table;
 public class JPABook {
 
     @Id
-    int id;
+    public int id;
 
     @Column(name = "title")
-    String title;
+    public String title;
 
     @ManyToOne
-    JPAAuthor author;
+    public JPAAuthor author;
 
+    @Override
+    public String toString() {
+        return "JPABook [id=" + id + ", title=" + title + ", author=" + author + "]";
+    }
 }

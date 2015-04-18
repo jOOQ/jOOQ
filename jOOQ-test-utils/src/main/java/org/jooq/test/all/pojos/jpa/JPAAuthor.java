@@ -88,4 +88,9 @@ public class JPAAuthor {
     public void setBooks(Set<JPABook> books) {
         this.books = books;
     }
+
+    @Override
+    public String toString() {
+        return "JPAAuthor [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", book size=" + books.size() + "]";
+    }
 }

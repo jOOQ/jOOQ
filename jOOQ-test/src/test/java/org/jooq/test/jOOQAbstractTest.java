@@ -85,6 +85,9 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityManager;
+import javax.sql.DataSource;
+
 import org.jooq.AggregateFunction;
 import org.jooq.ArrayRecord;
 import org.jooq.DAO;
@@ -149,6 +152,7 @@ import org.jooq.test.all.testcases.GeneralTests;
 import org.jooq.test.all.testcases.GroupByTests;
 import org.jooq.test.all.testcases.InsertUpdateTests;
 import org.jooq.test.all.testcases.JDBCTests;
+import org.jooq.test.all.testcases.JPAIntegrationTests;
 import org.jooq.test.all.testcases.JoinTests;
 import org.jooq.test.all.testcases.JsonLoaderTests;
 import org.jooq.test.all.testcases.MetaDataTests;
@@ -176,6 +180,7 @@ import org.jooq.test.all.testcases.TruncateTests;
 import org.jooq.test.all.testcases.UnionTests;
 import org.jooq.test.all.testcases.ValuesConstructorTests;
 import org.jooq.test.all.testcases.VisitListenerTests;
+import org.jooq.test.utils.LoggingConnection;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
 import org.jooq.tools.StringUtils;
@@ -192,6 +197,7 @@ import org.jooq.util.jaxb.Jdbc;
 import org.jooq.util.jaxb.Property;
 
 import org.apache.commons.io.FileUtils;
+import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -199,6 +205,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.internal.AssumptionViolatedException;
 import org.postgresql.util.PSQLException;
+import org.springframework.jdbc.datasource.SingleConnectionDataSource;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.w3c.dom.Node;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
@@ -280,6 +289,8 @@ public abstract class jOOQAbstractTest<
     public static final StopWatch           testSQLWatch       = new StopWatch();
     public static boolean                   initialised;
     public static boolean                   reset;
+    public static EntityManager             em;
+    public static DataSource                datasource;
     public static Connection                connection;
     public static boolean                   connectionInitialised;
     public static Connection                connectionMultiSchema;
@@ -628,6 +639,7 @@ public abstract class jOOQAbstractTest<
 
             connection.close();
             connection = null;
+            datasource = null;
         }
 
         JooqLogger logStat = JooqLogger.getLogger(TestStatisticsListener.class);
@@ -689,6 +701,12 @@ public abstract class jOOQAbstractTest<
                 !all.contains(coveredDialect.family()))
                 log.info("No " + coveredDialect + " support on " + methodName);
         });
+
+        log.info("");
+        log.info("LOGGING CONNECTION SQL STATEMENTS");
+        log.info("---------------------------------");
+        log.info("");
+        LoggingConnection.statements.forEach(sql -> log.info("  " + sql));
     }
 
     private static int extracted(JooqLogger logger, int unbalanced, Map<Method, Integer> startCount, Map<Method, Integer> endCount) {
@@ -717,79 +735,97 @@ public abstract class jOOQAbstractTest<
 
                 connectionInitialised = false;
                 connection = null;
+                datasource = null;
+                em = null;
             }
         }
         catch (SQLException e) {
         }
 
         if (!connectionInitialised) {
-            connectionInitialised = true;
-            connection = getConnection0(null, null);
+            try {
 
-            /* [pro] */
-            // Informix. Only Informix...
-            if (dialect().family() == INFORMIX)
-                DSL.using(connection).execute("execute procedure ifx_allow_newline('t');");
-            /* [/pro] */
+                connectionInitialised = true;
+                connection = getConnection0(null, null);
 
-            final Connection c = connection;
+                /* [pro] */
+                // Informix. Only Informix...
+                if (dialect().family() == INFORMIX)
+                    DSL.using(connection).execute("execute procedure ifx_allow_newline('t');");
+                /* [/pro] */
 
-            // Reactivate this, to enable mock connections
-            if (false)
-            connection = new MockConnection(context -> {
-                DSLContext executor = DSL.using(c, getDialect());
+                final Connection c = connection;
 
-                if (context.batchSingle()) {
-                    Query query = executor.query(context.sql(), new Object[context.batchBindings()[0].length]);
-                    int[] result =
-                    executor.batch(query)
-                            .bind(context.batchBindings())
-                            .execute();
+                // Reactivate this, to enable mock connections
+                if (false)
+                connection = new MockConnection(context -> {
+                    DSLContext executor = DSL.using(c, getDialect());
 
-                    MockResult[] r = new MockResult[result.length];
-                    for (int i = 0; i < r.length; i++) {
-                        r[i] = new MockResult(result[i], null);
+                    if (context.batchSingle()) {
+                        Query query = executor.query(context.sql(), new Object[context.batchBindings()[0].length]);
+                        int[] result =
+                        executor.batch(query)
+                                .bind(context.batchBindings())
+                                .execute();
+
+                        MockResult[] r = new MockResult[result.length];
+                        for (int i = 0; i < r.length; i++) {
+                            r[i] = new MockResult(result[i], null);
+                        }
+
+                        return r;
                     }
+                    else if (context.batchMultiple()) {
+                        List<Query> queries = new ArrayList<Query>();
 
-                    return r;
-                }
-                else if (context.batchMultiple()) {
-                    List<Query> queries = new ArrayList<Query>();
+                        for (String sql : context.batchSQL()) {
+                            queries.add(executor.query(sql));
+                        }
 
-                    for (String sql : context.batchSQL()) {
-                        queries.add(executor.query(sql));
+                        int[] result =
+                        executor.batch(queries)
+                                .execute();
+
+                        MockResult[] r = new MockResult[result.length];
+                        for (int i = 0; i < r.length; i++) {
+                            r[i] = new MockResult(result[i], null);
+                        }
+
+                        return r;
                     }
+                    else if (context.sql().toLowerCase().matches("(?s:\\W*(select|with).*)")) {
+                        List<Result<Record>> result = executor.fetchMany(context.sql(), context.bindings());
+                        MockResult[] r = new MockResult[result.size()];
 
-                    int[] result =
-                    executor.batch(queries)
-                            .execute();
+                        for (int i = 0; i < result.size(); i++) {
+                            r[i] = new MockResult(result.get(i).size(), result.get(i));
+                        }
 
-                    MockResult[] r = new MockResult[result.length];
-                    for (int i = 0; i < r.length; i++) {
-                        r[i] = new MockResult(result[i], null);
+                        return r;
                     }
+                    else {
+                        int result = executor.execute(context.sql(), context.bindings());
 
-                    return r;
-                }
-                else if (context.sql().toLowerCase().matches("(?s:\\W*(select|with).*)")) {
-                    List<Result<Record>> result = executor.fetchMany(context.sql(), context.bindings());
-                    MockResult[] r = new MockResult[result.size()];
+                        MockResult[] r = new MockResult[1];
+                        r[0] = new MockResult(result, null);
 
-                    for (int i = 0; i < result.size(); i++) {
-                        r[i] = new MockResult(result.get(i).size(), result.get(i));
+                        return r;
                     }
+                });
+            }
+            finally {
+                datasource = new SingleConnectionDataSource(new LoggingConnection(connection), true);
 
-                    return r;
-                }
-                else {
-                    int result = executor.execute(context.sql(), context.bindings());
+                LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
+                emf.setDataSource(datasource);
+                emf.setPackagesToScan("org.jooq.test.all.pojos.jpa");
+                emf.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+                emf.setPersistenceUnitName("test");
+                emf.setPersistenceProviderClass(HibernatePersistenceProvider.class);
+                emf.afterPropertiesSet();
 
-                    MockResult[] r = new MockResult[1];
-                    r[0] = new MockResult(result, null);
-
-                    return r;
-                }
-            });
+                em = emf.getObject().createEntityManager();
+            }
         }
 
         return connection;
@@ -3593,5 +3629,15 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testResultCacheWithMockAPI() {
         new MockTests(this).testResultCacheWithMockAPI();
+    }
+
+    @Test
+    public void testJPANativeQuery() {
+        new JPAIntegrationTests(this).testJPANativeQuery();
+    }
+
+    @Test
+    public void testJPANativeQueryAndEntites() {
+        new JPAIntegrationTests(this).testJPANativeQueryAndEntites();
     }
 }

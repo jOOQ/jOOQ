@@ -102,8 +102,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .select(T_BOOK.ID, T_BOOK.AUTHOR_ID, T_BOOK.TITLE)
                 .from(T_BOOK)
                 .where(T_BOOK.ID.gt(1))
-                .orderBy(T_BOOK.ID))
-                .getResultList();
+                .orderBy(T_BOOK.ID));
 
             assertEquals(3, books.size());
             assertEquals(BOOK_IDS.subList(1, 4), seq(books).map(a -> a[0]).toList());
@@ -112,7 +111,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         });
     }
 
-    Query nativeQuery(EntityManager em, org.jooq.Query query) {
+    List<Object[]> nativeQuery(EntityManager em, org.jooq.Query query) {
         Query result = em.createNativeQuery(query.getSQL());
 
         List<Object> values = query.getBindValues();
@@ -120,19 +119,28 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             result.setParameter(i + 1, values.get(i));
         }
 
-        return result;
+        return result.getResultList();
+    }
+
+    <E> List<E> nativeQuery(EntityManager em, org.jooq.Query query, Class<E> type) {
+        Query result = em.createNativeQuery(query.getSQL(), type);
+
+        List<Object> values = query.getBindValues();
+        for (int i = 0; i < values.size(); i++) {
+            result.setParameter(i + 1, values.get(i));
+        }
+
+        return result.getResultList();
     }
 
     public void testJPANativeQueryAndEntites() {
         emTx(em -> {
             List<JPAAuthor> authors =
-            em.createNativeQuery(
+            nativeQuery(em,
                 create().select()
                         .from(T_AUTHOR)
                         .orderBy(T_AUTHOR.ID)
-                        .getSQL()
-            , JPAAuthor.class)
-            .getResultList();
+            , JPAAuthor.class);
 
             assertEquals(2, authors.size());
             assertEquals(AUTHOR_IDS, seq(authors).map(JPAAuthor::getId).toList());

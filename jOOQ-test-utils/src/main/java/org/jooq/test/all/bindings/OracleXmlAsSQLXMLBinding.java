@@ -41,6 +41,8 @@
 package org.jooq.test.all.bindings;
 
 import java.sql.SQLException;
+import java.sql.SQLXML;
+import java.sql.SQLXML;
 import java.sql.Types;
 
 import org.jooq.Binding;
@@ -52,9 +54,8 @@ import org.jooq.BindingSQLContext;
 import org.jooq.BindingSetSQLOutputContext;
 import org.jooq.BindingSetStatementContext;
 import org.jooq.Converter;
-import org.jooq.Converters;
 
-public class JooqBlobBinding implements Binding<byte[], byte[]> {
+public class OracleXmlAsSQLXMLBinding implements Binding<Object, SQLXML> {
 
     /**
      * Generated UID
@@ -62,42 +63,69 @@ public class JooqBlobBinding implements Binding<byte[], byte[]> {
     private static final long serialVersionUID = 358789452467943117L;
 
     @Override
-    public Converter<byte[], byte[]> converter() {
-        return Converters.identity(byte[].class);
+    public Converter<Object, SQLXML> converter() {
+        return new Converter<Object, SQLXML>() {
+
+            @Override
+            public SQLXML from(Object databaseObject) {
+                return null;
+            }
+
+            @Override
+            public Object to(SQLXML userObject) {
+                return null;
+            }
+
+            @Override
+            public Class<Object> fromType() {
+                return Object.class;
+            }
+
+            @Override
+            public Class<SQLXML> toType() {
+                return SQLXML.class;
+            }
+        };
     }
 
     @Override
-    public void sql(BindingSQLContext<byte[]> ctx) throws SQLException {
+    public void sql(BindingSQLContext<SQLXML> ctx) throws SQLException {
         ctx.render().sql("?");
     }
 
     @Override
-    public void register(BindingRegisterContext<byte[]> ctx) throws SQLException {
-        ctx.statement().registerOutParameter(ctx.index(), Types.BLOB);
+    public void register(BindingRegisterContext<SQLXML> ctx) throws SQLException {
+        ctx.statement().registerOutParameter(ctx.index(), Types.SQLXML);
     }
 
     @Override
-    public void set(BindingSetStatementContext<byte[]> ctx) throws SQLException {
-        ctx.statement().setBlob(ctx.index(), ctx.value());
+    public void set(BindingSetStatementContext<SQLXML> ctx) throws SQLException {
+        if (ctx.value() == null)
+            ctx.statement().setObject(ctx.index(), null);
+        else
+            ctx.statement().setSQLXML(ctx.index(), ctx.value());
     }
 
     @Override
-    public void set(BindingSetSQLOutputContext<byte[]> ctx) throws SQLException {
-        ctx.output().writeBlob(ctx.value());
+    public void set(BindingSetSQLOutputContext<SQLXML> ctx) throws SQLException {
+        if (ctx.value() == null)
+            ctx.output().writeObject(null);
+        else
+            ctx.output().writeSQLXML(ctx.value());
     }
 
     @Override
-    public void get(BindingGetResultSetContext<byte[]> ctx) throws SQLException {
-        ctx.value(ctx.resultSet().getBlob(ctx.index()));
+    public void get(BindingGetResultSetContext<SQLXML> ctx) throws SQLException {
+        ctx.value(ctx.resultSet().getSQLXML(ctx.index()));
     }
 
     @Override
-    public void get(BindingGetStatementContext<byte[]> ctx) throws SQLException {
-        ctx.value(ctx.statement().getBlob(ctx.index()));
+    public void get(BindingGetStatementContext<SQLXML> ctx) throws SQLException {
+        ctx.value(ctx.statement().getSQLXML(ctx.index()));
     }
 
     @Override
-    public void get(BindingGetSQLInputContext<byte[]> ctx) throws SQLException {
-        ctx.value(ctx.input().readBlob());
+    public void get(BindingGetSQLInputContext<SQLXML> ctx) throws SQLException {
+        ctx.value(ctx.input().readSQLXML());
     }
 }

@@ -5,6 +5,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.daos;
 
 
 import java.io.Serializable;
+import java.sql.SQLXML;
 import java.util.List;
 import java.util.UUID;
 
@@ -97,5 +98,12 @@ public class TExoticTypesDao extends DAOImpl<TExoticTypesRecord, org.jooq.test.o
 	 */
 	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.TExoticTypes> fetchByOracleXmlAsDocument(XmltypeRecord... values) {
 		return fetch(TExoticTypes.T_EXOTIC_TYPES.ORACLE_XML_AS_DOCUMENT, values);
+	}
+
+	/**
+	 * Fetch records that have <code>ORACLE_XML_AS_SQLXML IN (values)</code>
+	 */
+	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.TExoticTypes> fetchByOracleXmlAsSqlxml(SQLXML... values) {
+		return fetch(TExoticTypes.T_EXOTIC_TYPES.ORACLE_XML_AS_SQLXML, values);
 	}
 }

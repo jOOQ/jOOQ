@@ -13,9 +13,9 @@ import org.jooq.Field;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
+import org.jooq.impl.BlobBinding;
+import org.jooq.impl.ClobBinding;
 import org.jooq.impl.TableImpl;
-import org.jooq.test.all.bindings.JooqBlobBinding;
-import org.jooq.test.all.bindings.JooqClobBinding;
 import org.jooq.test.all.bindings.UserBlobBinding;
 import org.jooq.test.all.bindings.UserClobBinding;
 import org.jooq.test.oracle.generatedclasses.test.Keys;
@@ -29,7 +29,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.records.T_725LobTestRec
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTest extends TableImpl<T_725LobTestRecord> {
 
-	private static final long serialVersionUID = -287522574;
+	private static final long serialVersionUID = 1794408456;
 
 	/**
 	 * The reference instance of <code>TEST.T_725_LOB_TEST</code>
@@ -67,12 +67,12 @@ public class T_725LobTest extends TableImpl<T_725LobTestRecord> {
 	/**
 	 * The column <code>TEST.T_725_LOB_TEST.JOOQ_JAVA_SQL_CLOB</code>.
 	 */
-	public final TableField<T_725LobTestRecord, String> JOOQ_JAVA_SQL_CLOB = createField("JOOQ_JAVA_SQL_CLOB", org.jooq.impl.SQLDataType.CLOB, this, "", new JooqClobBinding());
+	public final TableField<T_725LobTestRecord, String> JOOQ_JAVA_SQL_CLOB = createField("JOOQ_JAVA_SQL_CLOB", org.jooq.impl.SQLDataType.CLOB, this, "", new ClobBinding());
 
 	/**
 	 * The column <code>TEST.T_725_LOB_TEST.JOOQ_JAVA_SQL_BLOB</code>.
 	 */
-	public final TableField<T_725LobTestRecord, byte[]> JOOQ_JAVA_SQL_BLOB = createField("JOOQ_JAVA_SQL_BLOB", org.jooq.impl.SQLDataType.BLOB, this, "", new JooqBlobBinding());
+	public final TableField<T_725LobTestRecord, byte[]> JOOQ_JAVA_SQL_BLOB = createField("JOOQ_JAVA_SQL_BLOB", org.jooq.impl.SQLDataType.BLOB, this, "", new BlobBinding());
 
 	/**
 	 * Create a <code>TEST.T_725_LOB_TEST</code> table reference

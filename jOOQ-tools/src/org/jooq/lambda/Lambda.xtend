@@ -46,6 +46,7 @@ package org.jooq.lambda
  */
 
 import org.jooq.xtend.Generators
+import org.jooq.lambda.function.Function0
 
 class Lambda extends Generators {
     
@@ -483,7 +484,10 @@ class Lambda extends Generators {
                 «IF degree == 2»
                 import java.util.function.BiFunction;
                 «ENDIF»
-                import org.jooq.lambda.tuple.Tuple«degree»;
+                
+                «FOR d : (1 .. degree)»
+                import org.jooq.lambda.tuple.Tuple«d»;
+                «ENDFOR»
 
                 /**
                  * A function with «degree» arguments
@@ -495,6 +499,8 @@ class Lambda extends Generators {
                 
                     /**
                      * Apply this function to the arguments.
+                     *
+                     * @param args The arguments as a tuple.
                      */
                     default R apply(Tuple«degree»<«TN(degree)»> args) {
                         return apply(«XXXn(degree, "args.v")»);
@@ -537,6 +543,26 @@ class Lambda extends Generators {
                     static <T1, T2, R> Function2<T1, T2, R> from(BiFunction<T1, T2, R> function) {
                         return function::apply;
                     }
+                    «ENDIF»
+                    «IF degree > 0»
+                    «FOR d : (1 .. degree)»
+
+                    /**
+                     * Partially apply this function to the arguments.
+                     */
+                    default Function«degree - d»<«IF degree - d > 0»«TN(d + 1, degree)», «ENDIF»R> curry(«TN_XXXn(d, "v")») {
+                        return («XXXn(d + 1, degree, "v")») -> apply(«XXXn(degree, "v")»);
+                    }
+                    «ENDFOR»
+                    «FOR d : (1 .. degree)»
+
+                    /**
+                     * Partially apply this function to the arguments.
+                     */
+                    default Function«degree - d»<«IF degree - d > 0»«TN(d + 1, degree)», «ENDIF»R> curry(Tuple«d»<«TN(d)»> args) {
+                        return («XXXn(d + 1, degree, "v")») -> apply(«XXXn(d, "args.v")»«IF degree - d > 0», «XXXn(d + 1, degree, "v")»«ENDIF»);
+                    }
+                    «ENDFOR»
                     «ENDIF»
                 }
                 '''

@@ -317,11 +317,20 @@ abstract class Generators {
      * <code>T1 t1, T2 t2, .., T[N] t[N]</code>
      */
     def TN_XXXn(int degree, String XXX) {
-    	return
-    	if (degree == 0)
-    		"Object... " + XXX + "s"
-		else
-	        (1..degree).join(", ", [e | "T" + e + " " + XXX + e])
+        TN_XXXn(1, degree, XXX)
+    }
+    
+    /** 
+     * A comma-separated list of identifier declarations
+     * <p>
+     * <code>T1 t1, T2 t2, .., T[N] t[N]</code>
+     */
+    def TN_XXXn(int from, int to, String XXX) {
+        return
+        if (to == 0)
+            "Object... " + XXX + "s"
+        else
+            (from..to).join(", ", [e | "T" + e + " " + XXX + e])
     }
     
     /**

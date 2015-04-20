@@ -229,6 +229,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord
 import org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ArrayRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ObjectRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.GetBooks;
+import org.jooq.test.oracle.generatedclasses.usr_2522_a.udt.records.U_2522Record;
 import org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampTDatesRecord;
 import org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record;
 import org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord;
@@ -2369,6 +2370,12 @@ public class OracleTest extends jOOQAbstractTest<
                 ctx.visit(DSL.field("extract({0}, {1}).getStringVal()", String.class, xml, inline(xpath)));
             }
         };
+    }
+
+    @Test
+    public void testOracleUDTCodeGenSchemaMapping() {
+        U_2522Record record = org.jooq.test.oracle.generatedclasses.usr_2522_a.Routines.f_2522(create().configuration());
+        assertEquals(2, (int) record.getV());
     }
 }
 

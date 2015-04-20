@@ -5072,6 +5072,7 @@
                                             	${db.oracle.schema}\..*
                                               | MULTI_SCHEMA\..*
                                               | SYS\.XMLTYPE.*?
+                                              | USR_2522\..*
                                            	</includes>
                                             <excludes>T_BOOK_DETAILS|S_TRIGGERS_SEQUENCE|.*976.*|.*1358.*|U_SECOND_MAX</excludes>
                                             <recordVersionFields>REC_VERSION</recordVersionFields>
@@ -5083,6 +5084,10 @@
                                                 </schema>
                                                 <schema>
                                                     <inputSchema>MULTI_SCHEMA</inputSchema>
+                                                </schema>
+                                                <schema>
+                                                    <inputSchema>USR_2522</inputSchema>
+                                                    <outputSchema>USR_2522_A</outputSchema>
                                                 </schema>
                                                 <schema>
                                                     <inputSchema>SYS</inputSchema>

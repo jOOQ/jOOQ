@@ -83,7 +83,7 @@ public class JPADatabase extends H2Database {
             }
 
             try {
-                connection = DriverManager.getConnection("jdbc:h2:mem:jooq-meta-jpa", "sa", "");
+                connection = DriverManager.getConnection("jdbc:h2:mem:jooq-meta-extensions", "sa", "");
 
                 final Configuration configuration = new Configuration()
                     .setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect")

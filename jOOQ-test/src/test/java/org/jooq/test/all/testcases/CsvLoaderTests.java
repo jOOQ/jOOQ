@@ -438,7 +438,7 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
     @Override
     protected Loader<A> createLoaderWithRollbackOnDuplicateKeys() throws java.io.IOException {
         Loader<A> loader;
-        String csv = "\"ID\",\"First Qualifier\",\"Last Qualifier\"\r" +
+        String csv = "\"ID\",\"First Qualifier\",Last Qualifier\r" +
                 "8,Hermann,Hesse\n" +
                 "1,\"Max\",Frisch\n" +
                 "2,Friedrich,Dürrenmatt";

@@ -46,7 +46,6 @@ package org.jooq.lambda
  */
 
 import org.jooq.xtend.Generators
-import org.jooq.lambda.function.Function0
 
 class Lambda extends Generators {
     

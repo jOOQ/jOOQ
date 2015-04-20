@@ -30,7 +30,6 @@
 
     <build>
         <plugins>
-            <!-- XJC-generate JAXB artefacts. Contribution is the courtesy of Sergey Epik -->
             <plugin>
                 <groupId>org.jvnet.jaxb2.maven2</groupId>
                 <artifactId>maven-jaxb2-plugin</artifactId>

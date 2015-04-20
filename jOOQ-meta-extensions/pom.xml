@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>org.jooq</groupId>
-    <artifactId>jooq-meta-jpa</artifactId>
+    <artifactId>jooq-meta-extensions</artifactId>
     <name>jOOQ Meta JPA</name>
 
     <licenses>

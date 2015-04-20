@@ -172,7 +172,7 @@
             </dependency>
             <dependency>
                 <groupId>org.jooq</groupId>
-                <artifactId>jooq-meta-jpa</artifactId>
+                <artifactId>jooq-meta-extensions</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -264,7 +264,7 @@
         <module>jOOQ-codegen</module>
         <module>jOOQ-codegen-maven</module>
         <module>jOOQ-meta</module>
-        <module>jOOQ-meta-jpa</module>
+        <module>jOOQ-meta-extensions</module>
         <module>jOOQ-scala</module>
 
         <!-- [pro] -->

@@ -3602,42 +3602,42 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testStreamsCollectRecords() {
+    public void testStreamsCollectRecords() throws Exception {
         new StreamsTest(this).testStreamsCollectRecords();
     }
 
     @Test
-    public void testStreamsReduceResultsIntoBatch() {
+    public void testStreamsReduceResultsIntoBatch() throws Exception {
         new StreamsTest(this).testStreamsReduceResultsIntoBatch();
     }
 
     @Test
-    public void testStreamsCollectPOJOs() {
+    public void testStreamsCollectPOJOs() throws Exception {
         new StreamsTest(this).testStreamsCollectPOJOs();
     }
 
     @Test
-    public void testCompletableFuture() {
+    public void testCompletableFuture() throws Exception {
         new AsyncTest(this).testCompletableFuture();
     }
 
     @Test
-    public void testResultCache() {
+    public void testResultCache() throws Exception {
         new MockTests(this).testResultCache();
     }
 
     @Test
-    public void testResultCacheWithMockAPI() {
+    public void testResultCacheWithMockAPI() throws Exception {
         new MockTests(this).testResultCacheWithMockAPI();
     }
 
     @Test
-    public void testJPANativeQuery() {
+    public void testJPANativeQuery() throws Exception {
         new JPAIntegrationTests(this).testJPANativeQuery();
     }
 
     @Test
-    public void testJPANativeQueryAndEntites() {
+    public void testJPANativeQueryAndEntites() throws Exception {
         new JPAIntegrationTests(this).testJPANativeQueryAndEntites();
     }
 }

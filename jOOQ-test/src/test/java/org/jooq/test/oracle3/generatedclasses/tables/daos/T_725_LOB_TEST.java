@@ -59,4 +59,32 @@ public class T_725_LOB_TEST extends DAOImpl<org.jooq.test.oracle3.generatedclass
 	public List<T_725_LOB_TEST_POJO> fetchByLOB(byte[]... values) {
 		return fetch(org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST.T_725_LOB_TEST.LOB, values);
 	}
+
+	/**
+	 * Fetch records that have <code>USER_JAVA_SQL_CLOB IN (values)</code>
+	 */
+	public List<T_725_LOB_TEST_POJO> fetchByUSER_JAVA_SQL_CLOB(String... values) {
+		return fetch(org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST.T_725_LOB_TEST.USER_JAVA_SQL_CLOB, values);
+	}
+
+	/**
+	 * Fetch records that have <code>USER_JAVA_SQL_BLOB IN (values)</code>
+	 */
+	public List<T_725_LOB_TEST_POJO> fetchByUSER_JAVA_SQL_BLOB(byte[]... values) {
+		return fetch(org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST.T_725_LOB_TEST.USER_JAVA_SQL_BLOB, values);
+	}
+
+	/**
+	 * Fetch records that have <code>JOOQ_JAVA_SQL_CLOB IN (values)</code>
+	 */
+	public List<T_725_LOB_TEST_POJO> fetchByJOOQ_JAVA_SQL_CLOB(String... values) {
+		return fetch(org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST.T_725_LOB_TEST.JOOQ_JAVA_SQL_CLOB, values);
+	}
+
+	/**
+	 * Fetch records that have <code>JOOQ_JAVA_SQL_BLOB IN (values)</code>
+	 */
+	public List<T_725_LOB_TEST_POJO> fetchByJOOQ_JAVA_SQL_BLOB(byte[]... values) {
+		return fetch(org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST.T_725_LOB_TEST.JOOQ_JAVA_SQL_BLOB, values);
+	}
 }

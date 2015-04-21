@@ -26,7 +26,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_UNSIGNED_INTER
 @Table(name = "T_UNSIGNED")
 public class T_UNSIGNED extends TableRecordImpl<T_UNSIGNED> implements Cloneable, Record4<Short, Integer, Long, BigInteger>, T_UNSIGNED_INTERFACE {
 
-	private static final long serialVersionUID = 1822983527;
+	private static final long serialVersionUID = 600125287;
 
 	/**
 	 * Setter for <code>T_UNSIGNED.U_BYTE</code>.
@@ -221,6 +221,10 @@ public class T_UNSIGNED extends TableRecordImpl<T_UNSIGNED> implements Cloneable
 	 */
 	@Override
 	public T_UNSIGNED values(Short value1, Integer value2, Long value3, BigInteger value4) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
 		return this;
 	}
 

@@ -80,4 +80,25 @@ public class T_EXOTIC_TYPES extends DAOImpl<org.jooq.test.oracle3.generatedclass
 	public List<T_EXOTIC_TYPES_POJO> fetchByPLAIN_SQL_BINDING_XML(String... values) {
 		return fetch(org.jooq.test.oracle3.generatedclasses.tables.T_EXOTIC_TYPES.T_EXOTIC_TYPES.PLAIN_SQL_BINDING_XML, values);
 	}
+
+	/**
+	 * Fetch records that have <code>ORACLE_XML_AS_IS IN (values)</code>
+	 */
+	public List<T_EXOTIC_TYPES_POJO> fetchByORACLE_XML_AS_IS(Object... values) {
+		return fetch(org.jooq.test.oracle3.generatedclasses.tables.T_EXOTIC_TYPES.T_EXOTIC_TYPES.ORACLE_XML_AS_IS, values);
+	}
+
+	/**
+	 * Fetch records that have <code>ORACLE_XML_AS_DOCUMENT IN (values)</code>
+	 */
+	public List<T_EXOTIC_TYPES_POJO> fetchByORACLE_XML_AS_DOCUMENT(Object... values) {
+		return fetch(org.jooq.test.oracle3.generatedclasses.tables.T_EXOTIC_TYPES.T_EXOTIC_TYPES.ORACLE_XML_AS_DOCUMENT, values);
+	}
+
+	/**
+	 * Fetch records that have <code>ORACLE_XML_AS_SQLXML IN (values)</code>
+	 */
+	public List<T_EXOTIC_TYPES_POJO> fetchByORACLE_XML_AS_SQLXML(Object... values) {
+		return fetch(org.jooq.test.oracle3.generatedclasses.tables.T_EXOTIC_TYPES.T_EXOTIC_TYPES.ORACLE_XML_AS_SQLXML, values);
+	}
 }

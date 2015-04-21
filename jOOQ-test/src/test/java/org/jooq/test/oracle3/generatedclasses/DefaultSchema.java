@@ -44,7 +44,9 @@ import org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85;
 import org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED;
 import org.jooq.test.oracle3.generatedclasses.udt.O_INVALID_TYPE;
 import org.jooq.test.oracle3.generatedclasses.udt.U_2155_OBJECT;
+import org.jooq.test.oracle3.generatedclasses.udt.U_2522;
 import org.jooq.test.oracle3.generatedclasses.udt.U_3005;
+import org.jooq.test.oracle3.generatedclasses.udt.U_3709;
 import org.jooq.test.oracle3.generatedclasses.udt.U_ADDRESS_TYPE;
 import org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE;
 import org.jooq.test.oracle3.generatedclasses.udt.U_BOOK_TYPE;
@@ -61,7 +63,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.U_STREET_TYPE;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DefaultSchema extends SchemaImpl implements Cloneable {
 
-	private static final long serialVersionUID = -1445528501;
+	private static final long serialVersionUID = 1877799765;
 
 	/**
 	 * The reference instance of <code></code>
@@ -153,6 +155,8 @@ public class DefaultSchema extends SchemaImpl implements Cloneable {
 			U_NESTED_3.U_NESTED_3,
 			U_STREET_TYPE.U_STREET_TYPE,
 			U_2155_OBJECT.U_2155_OBJECT,
-			U_3005.U_3005);
+			U_2522.U_2522,
+			U_3005.U_3005,
+			U_3709.U_3709);
 	}
 }

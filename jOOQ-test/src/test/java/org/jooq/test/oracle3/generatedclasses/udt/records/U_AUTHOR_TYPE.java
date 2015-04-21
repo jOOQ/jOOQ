@@ -26,7 +26,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.u_author_type.NEW_AUTHOR;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_AUTHOR_TYPE extends UDTRecordImpl<U_AUTHOR_TYPE> implements Cloneable, Record3<Integer, String, String>, U_AUTHOR_TYPE_INTERFACE {
 
-	private static final long serialVersionUID = -1270256311;
+	private static final long serialVersionUID = -991241767;
 
 	/**
 	 * Setter for <code>U_AUTHOR_TYPE.ID</code>.
@@ -235,6 +235,9 @@ public class U_AUTHOR_TYPE extends UDTRecordImpl<U_AUTHOR_TYPE> implements Clone
 	 */
 	@Override
 	public U_AUTHOR_TYPE values(Integer value1, String value2, String value3) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
 		return this;
 	}
 

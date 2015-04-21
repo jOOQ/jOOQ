@@ -24,7 +24,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_INCOMPLETE_INT
 @Table(name = "V_INCOMPLETE")
 public class V_INCOMPLETE extends TableRecordImpl<V_INCOMPLETE> implements Cloneable, Record11<Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object>, V_INCOMPLETE_INTERFACE {
 
-	private static final long serialVersionUID = -1440336225;
+	private static final long serialVersionUID = 940923373;
 
 	/**
 	 * Setter for <code>V_INCOMPLETE.ID</code>.
@@ -513,6 +513,17 @@ public class V_INCOMPLETE extends TableRecordImpl<V_INCOMPLETE> implements Clone
 	 */
 	@Override
 	public V_INCOMPLETE values(Object value1, Object value2, Object value3, Object value4, Object value5, Object value6, Object value7, Object value8, Object value9, Object value10, Object value11) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
+		value7(value7);
+		value8(value8);
+		value9(value9);
+		value10(value10);
+		value11(value11);
 		return this;
 	}
 

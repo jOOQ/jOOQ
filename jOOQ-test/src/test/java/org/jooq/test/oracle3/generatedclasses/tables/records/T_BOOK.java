@@ -29,7 +29,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_INTERFACE
 @Table(name = "T_BOOK")
 public class T_BOOK extends UpdatableRecordImpl<T_BOOK> implements Cloneable, Record11<Integer, Integer, Integer, Integer, String, Integer, Integer, String, byte[], BigDecimal, Timestamp>, T_BOOK_INTERFACE {
 
-	private static final long serialVersionUID = -1784627509;
+	private static final long serialVersionUID = -1832589251;
 
 	/**
 	 * Setter for <code>T_BOOK.ID</code>. The book ID
@@ -531,6 +531,17 @@ public class T_BOOK extends UpdatableRecordImpl<T_BOOK> implements Cloneable, Re
 	 */
 	@Override
 	public T_BOOK values(Integer value1, Integer value2, Integer value3, Integer value4, String value5, Integer value6, Integer value7, String value8, byte[] value9, BigDecimal value10, Timestamp value11) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
+		value7(value7);
+		value8(value8);
+		value9(value9);
+		value10(value10);
+		value11(value11);
 		return this;
 	}
 

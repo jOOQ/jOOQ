@@ -22,7 +22,7 @@ import org.jooq.test.oracle3.generatedclasses.Keys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725_LOB_TEST extends TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_725_LOB_TEST> implements Cloneable {
 
-	private static final long serialVersionUID = 705939856;
+	private static final long serialVersionUID = -1608507362;
 
 	/**
 	 * The reference instance of <code>T_725_LOB_TEST</code>
@@ -46,6 +46,26 @@ public class T_725_LOB_TEST extends TableImpl<org.jooq.test.oracle3.generatedcla
 	 * The column <code>T_725_LOB_TEST.LOB</code>.
 	 */
 	public final TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_725_LOB_TEST, byte[]> LOB = createField("LOB", org.jooq.impl.SQLDataType.BLOB, this, "");
+
+	/**
+	 * The column <code>T_725_LOB_TEST.USER_JAVA_SQL_CLOB</code>.
+	 */
+	public final TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_725_LOB_TEST, String> USER_JAVA_SQL_CLOB = createField("USER_JAVA_SQL_CLOB", org.jooq.impl.SQLDataType.CLOB, this, "");
+
+	/**
+	 * The column <code>T_725_LOB_TEST.USER_JAVA_SQL_BLOB</code>.
+	 */
+	public final TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_725_LOB_TEST, byte[]> USER_JAVA_SQL_BLOB = createField("USER_JAVA_SQL_BLOB", org.jooq.impl.SQLDataType.BLOB, this, "");
+
+	/**
+	 * The column <code>T_725_LOB_TEST.JOOQ_JAVA_SQL_CLOB</code>.
+	 */
+	public final TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_725_LOB_TEST, String> JOOQ_JAVA_SQL_CLOB = createField("JOOQ_JAVA_SQL_CLOB", org.jooq.impl.SQLDataType.CLOB, this, "");
+
+	/**
+	 * The column <code>T_725_LOB_TEST.JOOQ_JAVA_SQL_BLOB</code>.
+	 */
+	public final TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_725_LOB_TEST, byte[]> JOOQ_JAVA_SQL_BLOB = createField("JOOQ_JAVA_SQL_BLOB", org.jooq.impl.SQLDataType.BLOB, this, "");
 
 	/**
 	 * Create a <code>T_725_LOB_TEST</code> table reference

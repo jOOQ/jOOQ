@@ -31,7 +31,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.records.U_2155_OBJECT;
 @Table(name = "T_2155")
 public class T_2155 extends UpdatableRecordImpl<T_2155> implements Cloneable, Record4<Integer, Date, U_2155_OBJECT, U_2155_ARRAY>, T_2155_INTERFACE {
 
-	private static final long serialVersionUID = -1419028354;
+	private static final long serialVersionUID = 1533640062;
 
 	/**
 	 * Setter for <code>T_2155.ID</code>.
@@ -249,6 +249,10 @@ public class T_2155 extends UpdatableRecordImpl<T_2155> implements Cloneable, Re
 	 */
 	@Override
 	public T_2155 values(Integer value1, Date value2, U_2155_OBJECT value3, U_2155_ARRAY value4) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
 		return this;
 	}
 

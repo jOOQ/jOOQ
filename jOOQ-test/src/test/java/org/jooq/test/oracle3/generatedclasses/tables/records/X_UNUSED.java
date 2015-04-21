@@ -33,7 +33,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_UNUSED_INTERFA
 })
 public class X_UNUSED extends UpdatableRecordImpl<X_UNUSED> implements Cloneable, Record16<Integer, String, BigInteger, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, String, BigDecimal, Integer, String>, X_UNUSED_INTERFACE {
 
-	private static final long serialVersionUID = -1932697435;
+	private static final long serialVersionUID = -252225729;
 
 	/**
 	 * Setter for <code>X_UNUSED.ID</code>. An unused column of an unused table in the same schema.
@@ -748,6 +748,22 @@ public class X_UNUSED extends UpdatableRecordImpl<X_UNUSED> implements Cloneable
 	 */
 	@Override
 	public X_UNUSED values(Integer value1, String value2, BigInteger value3, Integer value4, Integer value5, Integer value6, Integer value7, Integer value8, Integer value9, Integer value10, Integer value11, Integer value12, String value13, BigDecimal value14, Integer value15, String value16) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
+		value7(value7);
+		value8(value8);
+		value9(value9);
+		value10(value10);
+		value11(value11);
+		value12(value12);
+		value13(value13);
+		value14(value14);
+		value15(value15);
+		value16(value16);
 		return this;
 	}
 

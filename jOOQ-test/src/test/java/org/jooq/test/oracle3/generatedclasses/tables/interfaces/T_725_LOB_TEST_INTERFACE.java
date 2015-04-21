@@ -43,6 +43,50 @@ public interface T_725_LOB_TEST_INTERFACE extends Cloneable, Serializable {
 	@Column(name = "LOB")
 	public byte[] getLOB();
 
+	/**
+	 * Setter for <code>T_725_LOB_TEST.USER_JAVA_SQL_CLOB</code>.
+	 */
+	public void setUSER_JAVA_SQL_CLOB(String value);
+
+	/**
+	 * Getter for <code>T_725_LOB_TEST.USER_JAVA_SQL_CLOB</code>.
+	 */
+	@Column(name = "USER_JAVA_SQL_CLOB")
+	public String getUSER_JAVA_SQL_CLOB();
+
+	/**
+	 * Setter for <code>T_725_LOB_TEST.USER_JAVA_SQL_BLOB</code>.
+	 */
+	public void setUSER_JAVA_SQL_BLOB(byte[] value);
+
+	/**
+	 * Getter for <code>T_725_LOB_TEST.USER_JAVA_SQL_BLOB</code>.
+	 */
+	@Column(name = "USER_JAVA_SQL_BLOB")
+	public byte[] getUSER_JAVA_SQL_BLOB();
+
+	/**
+	 * Setter for <code>T_725_LOB_TEST.JOOQ_JAVA_SQL_CLOB</code>.
+	 */
+	public void setJOOQ_JAVA_SQL_CLOB(String value);
+
+	/**
+	 * Getter for <code>T_725_LOB_TEST.JOOQ_JAVA_SQL_CLOB</code>.
+	 */
+	@Column(name = "JOOQ_JAVA_SQL_CLOB")
+	public String getJOOQ_JAVA_SQL_CLOB();
+
+	/**
+	 * Setter for <code>T_725_LOB_TEST.JOOQ_JAVA_SQL_BLOB</code>.
+	 */
+	public void setJOOQ_JAVA_SQL_BLOB(byte[] value);
+
+	/**
+	 * Getter for <code>T_725_LOB_TEST.JOOQ_JAVA_SQL_BLOB</code>.
+	 */
+	@Column(name = "JOOQ_JAVA_SQL_BLOB")
+	public byte[] getJOOQ_JAVA_SQL_BLOB();
+
 	// -------------------------------------------------------------------------
 	// FROM and INTO
 	// -------------------------------------------------------------------------

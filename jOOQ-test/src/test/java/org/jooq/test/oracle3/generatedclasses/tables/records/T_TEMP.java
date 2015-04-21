@@ -25,7 +25,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_TEMP_INTERFACE
 @Table(name = "T_TEMP")
 public class T_TEMP extends UpdatableRecordImpl<T_TEMP> implements Cloneable, Record1<Integer>, T_TEMP_INTERFACE {
 
-	private static final long serialVersionUID = 1222104984;
+	private static final long serialVersionUID = -178030424;
 
 	/**
 	 * Setter for <code>T_TEMP.ID</code>.
@@ -107,6 +107,7 @@ public class T_TEMP extends UpdatableRecordImpl<T_TEMP> implements Cloneable, Re
 	 */
 	@Override
 	public T_TEMP values(Integer value1) {
+		value1(value1);
 		return this;
 	}
 

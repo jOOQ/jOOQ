@@ -19,7 +19,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.records.U_NESTED_2;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_NESTED_3 extends UDTRecordImpl<U_NESTED_3> implements Cloneable, Record2<Integer, U_NESTED_2>, U_NESTED_3_INTERFACE {
 
-	private static final long serialVersionUID = 1720903170;
+	private static final long serialVersionUID = -1832340926;
 
 	/**
 	 * Setter for <code>U_NESTED_3.ID</code>.
@@ -128,6 +128,8 @@ public class U_NESTED_3 extends UDTRecordImpl<U_NESTED_3> implements Cloneable, 
 	 */
 	@Override
 	public U_NESTED_3 values(Integer value1, U_NESTED_2 value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

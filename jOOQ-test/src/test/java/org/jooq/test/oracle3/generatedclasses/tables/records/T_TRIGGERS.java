@@ -26,7 +26,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_TRIGGERS_INTER
 @Table(name = "T_TRIGGERS")
 public class T_TRIGGERS extends UpdatableRecordImpl<T_TRIGGERS> implements Cloneable, Record3<Integer, Integer, Integer>, T_TRIGGERS_INTERFACE {
 
-	private static final long serialVersionUID = -170643355;
+	private static final long serialVersionUID = 113082997;
 
 	/**
 	 * Setter for <code>T_TRIGGERS.ID_GENERATED</code>.
@@ -192,6 +192,9 @@ public class T_TRIGGERS extends UpdatableRecordImpl<T_TRIGGERS> implements Clone
 	 */
 	@Override
 	public T_TRIGGERS values(Integer value1, Integer value2, Integer value3) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
 		return this;
 	}
 

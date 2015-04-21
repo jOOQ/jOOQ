@@ -26,7 +26,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_LIBRARY_INTERF
 @Table(name = "V_LIBRARY")
 public class V_LIBRARY extends TableRecordImpl<V_LIBRARY> implements Serializable, Cloneable, Record2<String, String>, V_LIBRARY_INTERFACE {
 
-	private static final long serialVersionUID = -511839522;
+	private static final long serialVersionUID = 1805203870;
 
 	/**
 	 * Setter for <code>V_LIBRARY.AUTHOR</code>.
@@ -137,6 +137,8 @@ public class V_LIBRARY extends TableRecordImpl<V_LIBRARY> implements Serializabl
 	 */
 	@Override
 	public V_LIBRARY values(String value1, String value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

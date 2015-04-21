@@ -24,7 +24,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_2025
 @Table(name = "X_TEST_CASE_2025")
 public class X_TEST_CASE_2025 extends TableRecordImpl<X_TEST_CASE_2025> implements Cloneable, Record2<Integer, String>, X_TEST_CASE_2025_INTERFACE {
 
-	private static final long serialVersionUID = -1221417956;
+	private static final long serialVersionUID = 331501788;
 
 	/**
 	 * Setter for <code>X_TEST_CASE_2025.REF_ID</code>.
@@ -135,6 +135,8 @@ public class X_TEST_CASE_2025 extends TableRecordImpl<X_TEST_CASE_2025> implemen
 	 */
 	@Override
 	public X_TEST_CASE_2025 values(Integer value1, String value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

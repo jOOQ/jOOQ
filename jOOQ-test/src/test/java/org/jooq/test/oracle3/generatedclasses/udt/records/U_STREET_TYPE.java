@@ -19,7 +19,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_STREET_TYPE extends UDTRecordImpl<U_STREET_TYPE> implements Cloneable, Record5<String, String, U_NUMBER_ARRAY, byte[], String>, U_STREET_TYPE_INTERFACE {
 
-	private static final long serialVersionUID = 117092552;
+	private static final long serialVersionUID = -37708744;
 
 	/**
 	 * Setter for <code>U_STREET_TYPE.STREET</code>.
@@ -251,6 +251,11 @@ public class U_STREET_TYPE extends UDTRecordImpl<U_STREET_TYPE> implements Clone
 	 */
 	@Override
 	public U_STREET_TYPE values(String value1, String value2, U_NUMBER_ARRAY value3, byte[] value4, String value5) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
 		return this;
 	}
 

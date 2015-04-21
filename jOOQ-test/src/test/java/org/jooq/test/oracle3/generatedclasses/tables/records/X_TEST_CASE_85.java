@@ -26,7 +26,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_85_I
 @Table(name = "X_TEST_CASE_85")
 public class X_TEST_CASE_85 extends UpdatableRecordImpl<X_TEST_CASE_85> implements Cloneable, Record3<Integer, Integer, String>, X_TEST_CASE_85_INTERFACE {
 
-	private static final long serialVersionUID = 1998697826;
+	private static final long serialVersionUID = -124339758;
 
 	/**
 	 * Setter for <code>X_TEST_CASE_85.ID</code>.
@@ -192,6 +192,9 @@ public class X_TEST_CASE_85 extends UpdatableRecordImpl<X_TEST_CASE_85> implemen
 	 */
 	@Override
 	public X_TEST_CASE_85 values(Integer value1, Integer value2, String value3) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
 		return this;
 	}
 

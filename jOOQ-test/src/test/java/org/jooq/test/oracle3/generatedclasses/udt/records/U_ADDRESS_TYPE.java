@@ -22,7 +22,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.records.U_STREET_TYPE;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_ADDRESS_TYPE extends UDTRecordImpl<U_ADDRESS_TYPE> implements Cloneable, Record8<U_STREET_TYPE, String, String, String, Date, Integer, byte[], String>, U_ADDRESS_TYPE_INTERFACE {
 
-	private static final long serialVersionUID = 923756629;
+	private static final long serialVersionUID = -1358296491;
 
 	/**
 	 * Setter for <code>U_ADDRESS_TYPE.STREET</code>.
@@ -387,6 +387,14 @@ public class U_ADDRESS_TYPE extends UDTRecordImpl<U_ADDRESS_TYPE> implements Clo
 	 */
 	@Override
 	public U_ADDRESS_TYPE values(U_STREET_TYPE value1, String value2, String value3, String value4, Date value5, Integer value6, byte[] value7, String value8) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
+		value7(value7);
+		value8(value8);
 		return this;
 	}
 

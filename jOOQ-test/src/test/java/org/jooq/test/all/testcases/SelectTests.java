@@ -323,7 +323,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             final Vector<String> execOrder = new Vector<String>();
             final Thread t1 = new Thread(() -> {
-                sleep(2000);
+                sleep(3000);
                 execOrder.add("t1-block");
                 try {
                     create1
@@ -362,10 +362,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             // This is the test case:
             // 0.0s: Both threads start
-            // 0.0s: t1 sleeps for 2s
+            // 0.0s: t1 sleeps for 3s
             // 0.0s: t2 locks the T_AUTHOR table
             // 0.1s: t2 sleeps for 4s
-            // 2.0s: t1 blocks on the T_AUTHOR table
+            // 3.0s: t1 blocks on the T_AUTHOR table
             // ???s: t1 fails
             // 4.0s: t2 commits and unlocks T_AUTHOR
             t1.start();

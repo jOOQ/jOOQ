@@ -40,6 +40,7 @@
  */
 package org.jooq.test.all.testcases;
 
+import static org.jooq.SQLDialect.HANA;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
@@ -173,6 +174,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testTransactionsWithJDBCNestedWithSavepoints() throws Exception {
+        assumeFamilyNotIn(HANA);
+
         jOOQAbstractTest.reset = false;
 
         final int[] inserted = new int[1];
@@ -230,6 +233,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
 
     public void testTransactionsWithJDBCNestedWithoutSavepoints() throws Exception {
+        assumeFamilyNotIn(HANA);
+
         final int[] inserted = new int[1];
         final int[] updated = new int[1];
 

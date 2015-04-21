@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
@@ -419,7 +420,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * <p>
      * This is only possible where the underlying RDBMS supports it
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     TablePartitionByStep rightOuterJoin(TableLike<?> table);
 
     /**
@@ -434,7 +435,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *
      * @see DSL#table(String)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @PlainSQL
     TablePartitionByStep rightOuterJoin(String sql);
 
@@ -450,7 +451,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *
      * @see DSL#table(String, Object...)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @PlainSQL
     TablePartitionByStep rightOuterJoin(String sql, Object... bindings);
 
@@ -466,7 +467,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *
      * @see DSL#table(String, QueryPart...)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @PlainSQL
     TablePartitionByStep rightOuterJoin(String sql, QueryPart... parts);
 
@@ -475,7 +476,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * <p>
      * This is only possible where the underlying RDBMS supports it
      */
-    @Support({ DB2, FIREBIRD, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, HANA, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     TableOnStep fullOuterJoin(TableLike<?> table);
 
     /**
@@ -490,7 +491,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *
      * @see DSL#table(String)
      */
-    @Support({ DB2, FIREBIRD, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, HANA, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @PlainSQL
     TableOnStep fullOuterJoin(String sql);
 
@@ -506,7 +507,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *
      * @see DSL#table(String, Object...)
      */
-    @Support({ DB2, FIREBIRD, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, HANA, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @PlainSQL
     TableOnStep fullOuterJoin(String sql, Object... bindings);
 
@@ -522,7 +523,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *
      * @see DSL#table(String, QueryPart...)
      */
-    @Support({ DB2, FIREBIRD, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, HANA, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @PlainSQL
     TableOnStep fullOuterJoin(String sql, QueryPart... parts);
 
@@ -536,7 +537,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * A join B on 1 = 1
      * </pre></code>
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     Table<Record> crossJoin(TableLike<?> table);
 
     /**
@@ -556,7 +557,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *
      * @see DSL#table(String)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     @PlainSQL
     Table<Record> crossJoin(String sql);
 
@@ -577,7 +578,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *
      * @see DSL#table(String, Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     @PlainSQL
     Table<Record> crossJoin(String sql, Object... bindings);
 
@@ -598,7 +599,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *
      * @see DSL#table(String, QueryPart...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     @PlainSQL
     Table<Record> crossJoin(String sql, QueryPart... parts);
 

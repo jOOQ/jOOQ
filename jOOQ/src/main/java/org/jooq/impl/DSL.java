@@ -4390,7 +4390,7 @@ public class DSL {
      *
      * @see DSLContext#createSequence(String)
      */
-    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     public static CreateSequenceFinalStep createSequence(String sequence) {
         return using(new DefaultConfiguration()).createSequence(sequence);
     }
@@ -4400,7 +4400,7 @@ public class DSL {
      *
      * @see DSLContext#createSequence(Name)
      */
-    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     public static CreateSequenceFinalStep createSequence(Name sequence) {
         return using(new DefaultConfiguration()).createSequence(sequence);
     }
@@ -4410,7 +4410,7 @@ public class DSL {
      *
      * @see DSLContext#createSequence(Sequence)
      */
-    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     public static CreateSequenceFinalStep createSequence(Sequence<?> sequence) {
         return using(new DefaultConfiguration()).createSequence(sequence);
     }
@@ -4420,7 +4420,7 @@ public class DSL {
      *
      * @see DSLContext#alterSequence(String)
      */
-    @Support({ DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
     public static AlterSequenceRestartStep<BigInteger> alterSequence(String sequence) {
         return using(new DefaultConfiguration()).alterSequence(sequence);
     }
@@ -4430,7 +4430,7 @@ public class DSL {
      *
      * @see DSLContext#alterSequence(Name)
      */
-    @Support({ DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
     public static AlterSequenceRestartStep<BigInteger> alterSequence(Name sequence) {
         return using(new DefaultConfiguration()).alterSequence(sequence);
     }
@@ -4440,7 +4440,7 @@ public class DSL {
      *
      * @see DSLContext#alterSequence(Sequence)
      */
-    @Support({ DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
     public static <T extends Number> AlterSequenceRestartStep<T> alterSequence(Sequence<T> sequence) {
         return using(new DefaultConfiguration()).alterSequence(sequence);
     }
@@ -4664,7 +4664,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequence(String)
      */
-    @Support({ DB2, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ DB2, FIREBIRD, HANA, H2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     public static <T extends Number> DropSequenceFinalStep dropSequence(String sequence) {
         return using(new DefaultConfiguration()).dropSequence(sequence);
     }
@@ -4674,7 +4674,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequence(Name)
      */
-    @Support({ DB2, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ DB2, FIREBIRD, HANA, H2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     public static <T extends Number> DropSequenceFinalStep dropSequence(Name sequence) {
         return using(new DefaultConfiguration()).dropSequence(sequence);
     }
@@ -4684,7 +4684,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequence(Sequence)
      */
-    @Support({ DB2, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ DB2, FIREBIRD, HANA, H2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     public static <T extends Number> DropSequenceFinalStep dropSequence(Sequence<?> sequence) {
         return using(new DefaultConfiguration()).dropSequence(sequence);
     }
@@ -4837,7 +4837,7 @@ public class DSL {
      * @see Field#lessThan(QuantifiedSelect)
      * @see Field#lessOrEqual(QuantifiedSelect)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static <R extends Record> QuantifiedSelect<R> all(Select<R> select) {
         return new QuantifiedSelectImpl<R>(Quantifier.ALL, select);
     }
@@ -4856,7 +4856,7 @@ public class DSL {
      * @see Field#lessThan(QuantifiedSelect)
      * @see Field#lessOrEqual(QuantifiedSelect)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static <T> QuantifiedSelect<Record1<T>> all(T... array) {
         return all(val(array));
     }
@@ -4891,7 +4891,7 @@ public class DSL {
      * @see Field#lessThan(QuantifiedSelect)
      * @see Field#lessOrEqual(QuantifiedSelect)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static <R extends Record> QuantifiedSelect<R> any(Select<R> select) {
         return new QuantifiedSelectImpl<R>(Quantifier.ANY, select);
     }
@@ -4910,7 +4910,7 @@ public class DSL {
      * @see Field#lessThan(QuantifiedSelect)
      * @see Field#lessOrEqual(QuantifiedSelect)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static <T> QuantifiedSelect<Record1<T>> any(T... array) {
         return any(val(array));
     }
@@ -8244,7 +8244,7 @@ public class DSL {
      * @see #replace(Field, String, String)
      * @see Field#like(Field, char)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static String escape(String value, char escape) {
         String esc = "" + escape;
         return value.replace(esc, esc + esc).replace("%", esc + "%").replace("_", esc + "_");
@@ -8259,7 +8259,7 @@ public class DSL {
      * @see #replace(Field, String, String)
      * @see Field#like(Field, char)
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, HANA, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static Field<String> escape(Field<String> field, char escape) {
         Field<String> replace = field;
 
@@ -9269,7 +9269,7 @@ public class DSL {
     /**
      * Convert a string value to a <code>DATE</code>.
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<Date> date(String value) {
         return Utils.field(Convert.convert(value, Date.class), Date.class);
     }
@@ -9277,7 +9277,7 @@ public class DSL {
     /**
      * Convert a temporal value to a <code>DATE</code>.
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<Date> date(java.util.Date value) {
         return date(Utils.field(value));
     }
@@ -9285,7 +9285,7 @@ public class DSL {
     /**
      * Convert a temporal value to a <code>DATE</code>.
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<Date> date(Field<? extends java.util.Date> field) {
         return new DateOrTime<Date>(field, SQLDataType.DATE);
     }
@@ -9293,7 +9293,7 @@ public class DSL {
     /**
      * Convert a string value to a <code>TIME</code>.
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<Time> time(String value) {
         return Utils.field(Convert.convert(value, Time.class), Time.class);
     }
@@ -9301,7 +9301,7 @@ public class DSL {
     /**
      * Convert a temporal value to a <code>TIME</code>.
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<Time> time(java.util.Date value) {
         return time(Utils.field(value));
     }
@@ -9309,7 +9309,7 @@ public class DSL {
     /**
      * Convert a temporal value to a <code>TIME</code>.
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<Time> time(Field<? extends java.util.Date> field) {
         return new DateOrTime<Time>(field, SQLDataType.TIME);
     }
@@ -9317,7 +9317,7 @@ public class DSL {
     /**
      * Convert a string value to a <code>TIMESTAMP</code>.
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<Timestamp> timestamp(String value) {
         return Utils.field(Convert.convert(value, Timestamp.class), Timestamp.class);
     }
@@ -9325,7 +9325,7 @@ public class DSL {
     /**
      * Convert a temporal value to a <code>TIMESTAMP</code>.
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<Timestamp> timestamp(java.util.Date value) {
         return timestamp(Utils.field(value));
     }
@@ -9333,7 +9333,7 @@ public class DSL {
     /**
      * Convert a temporal value to a <code>TIMESTAMP</code>.
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<Timestamp> timestamp(Field<? extends java.util.Date> field) {
         return new DateOrTime<Timestamp>(field, SQLDataType.TIMESTAMP);
     }
@@ -9365,7 +9365,7 @@ public class DSL {
      *            function
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
-    @Support({ CUBRID, DB2, MARIADB, MYSQL, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HANA, MARIADB, MYSQL, ORACLE, SQLSERVER, SYBASE })
     public static GroupField rollup(Field<?>... fields) {
         return new Rollup(nullSafe(fields));
     }
@@ -9392,7 +9392,7 @@ public class DSL {
      *            function
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
-    @Support({ DB2, ORACLE, SQLSERVER, SYBASE })
+    @Support({ DB2, HANA, ORACLE, SQLSERVER, SYBASE })
     public static GroupField cube(Field<?>... fields) {
         return function("cube", Object.class, nullSafe(fields));
     }
@@ -9419,7 +9419,7 @@ public class DSL {
      *            function
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
-    @Support({ DB2, ORACLE, SQLSERVER, SYBASE })
+    @Support({ DB2, HANA, ORACLE, SQLSERVER, SYBASE })
     public static GroupField groupingSets(Field<?>... fields) {
         List<Field<?>>[] array = new List[fields.length];
 
@@ -9452,7 +9452,7 @@ public class DSL {
      *            function
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
-    @Support({ DB2, ORACLE, SQLSERVER, SYBASE })
+    @Support({ DB2, HANA, ORACLE, SQLSERVER, SYBASE })
     public static GroupField groupingSets(Field<?>[]... fieldSets) {
         List<Field<?>>[] array = new List[fieldSets.length];
 
@@ -9485,7 +9485,7 @@ public class DSL {
      *            function
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
-    @Support({ DB2, ORACLE, SQLSERVER, SYBASE })
+    @Support({ DB2, HANA, ORACLE, SQLSERVER, SYBASE })
     public static GroupField groupingSets(Collection<? extends Field<?>>... fieldSets) {
         WrappedList[] array = new WrappedList[fieldSets.length];
 
@@ -9514,7 +9514,7 @@ public class DSL {
      * @see #cube(Field...)
      * @see #rollup(Field...)
      */
-    @Support({ DB2, ORACLE, SQLSERVER, SYBASE })
+    @Support({ DB2, HANA, ORACLE, SQLSERVER, SYBASE })
     public static Field<Integer> grouping(Field<?> field) {
         return function("grouping", Integer.class, nullSafe(field));
     }
@@ -9535,7 +9535,7 @@ public class DSL {
      * @see #cube(Field...)
      * @see #rollup(Field...)
      */
-    @Support({ ORACLE, SQLSERVER})
+    @Support({ HANA, ORACLE, SQLSERVER})
     public static Field<Integer> groupingId(Field<?>... fields) {
         return function("grouping_id", Integer.class, nullSafe(fields));
     }
@@ -9981,7 +9981,7 @@ public class DSL {
     /**
      * Get the rand() function.
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<BigDecimal> rand() {
         return new Rand();
     }
@@ -10831,7 +10831,7 @@ public class DSL {
     /**
      * Get the count(distinct field) function.
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, FIREBIRD, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, HANA, H2, HSQLDB, FIREBIRD, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static AggregateFunction<Integer> countDistinct(Field<?> field) {
         return new Function<Integer>("count", true, SQLDataType.INTEGER, nullSafe(field));
     }

@@ -183,6 +183,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testDropIndexIfExists() throws Exception {
+        assumeFamilyNotIn(HANA);
+
         try {
             // TODO: Re-use jOOQ API for this
             create().execute("create table {0} ({1} int, {2} int)", name("t"), name("a"), name("b"));
@@ -225,6 +227,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public void testDropSequenceIfExists() throws Exception {
         assumeNotNull(SAuthorID());
+        assumeFamilyNotIn(HANA);
 
         create().dropSequenceIfExists(SAuthorID()).execute();
         create().dropSequenceIfExists(SAuthorID()).execute();
@@ -651,7 +654,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testDropTableIfExists() throws Exception {
-        assumeFamilyNotIn(INFORMIX);
+        assumeFamilyNotIn(HANA, INFORMIX);
 
         try {
             // TODO: Re-use jOOQ API for this

@@ -4959,7 +4959,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createSequence(String)
      */
-    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     CreateSequenceFinalStep createSequence(String sequence);
 
     /**
@@ -4967,7 +4967,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createSequence(Name)
      */
-    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     CreateSequenceFinalStep createSequence(Name sequence);
 
     /**
@@ -4975,7 +4975,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createSequence(String)
      */
-    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     CreateSequenceFinalStep createSequence(Sequence<?> sequence);
 
     /**
@@ -4983,7 +4983,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterSequence(String)
      */
-    @Support({ DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
     AlterSequenceRestartStep<BigInteger> alterSequence(String sequence);
 
     /**
@@ -4991,7 +4991,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterSequence(Name)
      */
-    @Support({ DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
     AlterSequenceRestartStep<BigInteger> alterSequence(Name sequence);
 
     /**
@@ -4999,7 +4999,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterSequence(Sequence)
      */
-    @Support({ DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
     <T extends Number> AlterSequenceRestartStep<T> alterSequence(Sequence<T> sequence);
 
     /**
@@ -5183,7 +5183,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropSequence(String)
      */
-    @Support({ DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     DropSequenceFinalStep dropSequence(String sequence);
 
     /**
@@ -5191,7 +5191,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropSequence(Name)
      */
-    @Support({ DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     DropSequenceFinalStep dropSequence(Name sequence);
 
     /**
@@ -5199,7 +5199,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropSequence(Sequence)
      */
-    @Support({ DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     DropSequenceFinalStep dropSequence(Sequence<?> sequence);
 
     /**
@@ -5395,7 +5395,7 @@ public interface DSLContext extends Scope {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
-    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     BigInteger nextval(String sequence) throws DataAccessException;
 
     /**
@@ -5404,7 +5404,7 @@ public interface DSLContext extends Scope {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
-    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     <T extends Number> T nextval(Sequence<T> sequence) throws DataAccessException;
 
     /**
@@ -5413,7 +5413,7 @@ public interface DSLContext extends Scope {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
-    @Support({ CUBRID, DB2, FIREBIRD, H2, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, DB2, FIREBIRD, HANA, H2, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     BigInteger currval(String sequence) throws DataAccessException;
 
     /**
@@ -5422,7 +5422,7 @@ public interface DSLContext extends Scope {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
-    @Support({ CUBRID, DB2, FIREBIRD, H2, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, DB2, FIREBIRD, HANA, H2, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     <T extends Number> T currval(Sequence<T> sequence) throws DataAccessException;
 
     // -------------------------------------------------------------------------

@@ -85,7 +85,6 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 
 import org.jooq.AggregateFunction;
@@ -197,7 +196,6 @@ import org.jooq.util.jaxb.Jdbc;
 import org.jooq.util.jaxb.Property;
 
 import org.apache.commons.io.FileUtils;
-import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -206,8 +204,6 @@ import org.junit.Test;
 import org.junit.internal.AssumptionViolatedException;
 import org.postgresql.util.PSQLException;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.w3c.dom.Node;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
@@ -289,7 +285,6 @@ public abstract class jOOQAbstractTest<
     public static final StopWatch           testSQLWatch       = new StopWatch();
     public static boolean                   initialised;
     public static boolean                   reset;
-    public static EntityManager             em;
     public static DataSource                datasource;
     public static Connection                connection;
     public static boolean                   connectionInitialised;
@@ -736,7 +731,6 @@ public abstract class jOOQAbstractTest<
                 connectionInitialised = false;
                 connection = null;
                 datasource = null;
-                em = null;
             }
         }
         catch (SQLException e) {
@@ -815,16 +809,6 @@ public abstract class jOOQAbstractTest<
             }
             finally {
                 datasource = new SingleConnectionDataSource(new LoggingConnection(connection), true);
-
-                LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
-                emf.setDataSource(datasource);
-                emf.setPackagesToScan("org.jooq.test.all.pojos.jpa");
-                emf.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-                emf.setPersistenceUnitName("test");
-                emf.setPersistenceProviderClass(HibernatePersistenceProvider.class);
-                emf.afterPropertiesSet();
-
-                em = emf.getObject().createEntityManager();
             }
         }
 

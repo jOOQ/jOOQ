@@ -42,6 +42,7 @@ package org.jooq.test.all.testcases;
 
 import static java.util.Arrays.asList;
 import static org.jooq.lambda.Seq.seq;
+import static org.jooq.test.jOOQAbstractTest.datasource;
 import static org.jooq.test.jpa.generatedclasses.Tables.T_AUTHOR;
 import static org.jooq.test.jpa.generatedclasses.Tables.T_BOOK;
 
@@ -51,6 +52,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 
 import org.jooq.Record1;
@@ -63,6 +65,10 @@ import org.jooq.lambda.Seq;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 import org.jooq.test.all.pojos.jpa.JPAAuthor;
+
+import org.hibernate.jpa.HibernatePersistenceProvider;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 /**
  * @author Lukas Eder
@@ -152,17 +158,31 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     void emTx(Consumer<EntityManager> consumer) {
-        jOOQAbstractTest.em.getTransaction().begin();
+        LocalContainerEntityManagerFactoryBean bean = new LocalContainerEntityManagerFactoryBean();
+
+        bean.setDataSource(datasource);
+        bean.setPackagesToScan("org.jooq.test.all.pojos.jpa");
+        bean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+        bean.setPersistenceUnitName("test");
+        bean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
+        bean.afterPropertiesSet();
+
+        EntityManagerFactory emf = bean.getObject();
+        EntityManager em = emf.createEntityManager();
+
+        em.getTransaction().begin();
 
         try {
-            consumer.accept(jOOQAbstractTest.em);
-            jOOQAbstractTest.em.getTransaction().commit();
+            consumer.accept(em);
+            em.getTransaction().commit();
         }
         catch (Exception e) {
-            jOOQAbstractTest.em.getTransaction().rollback();
+            em.getTransaction().rollback();
             throw e;
         }
-
-        jOOQAbstractTest.em.close();
+        finally {
+            em.close();
+            emf.close();
+        }
     }
 }

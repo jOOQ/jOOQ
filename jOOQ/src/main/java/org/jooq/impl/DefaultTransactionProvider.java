@@ -45,6 +45,7 @@ import static org.jooq.impl.Utils.DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION;
 import static org.jooq.impl.Utils.DATA_DEFAULT_TRANSACTION_PROVIDER_SAVEPOINTS;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.util.Stack;
 
@@ -67,8 +68,14 @@ import org.jooq.exception.DataAccessException;
  */
 public class DefaultTransactionProvider implements TransactionProvider {
 
-    private final ConnectionProvider  provider;
-    private Connection                connection;
+    /**
+     * This dummy {@link Savepoint} serves as a marker for top level
+     * transactions in dialects that do not support Savepoints.
+     */
+    private static final Savepoint   DUMMY_SAVEPOINT = new DefaultSavepoint();
+
+    private final ConnectionProvider provider;
+    private Connection               connection;
 
     public DefaultTransactionProvider(ConnectionProvider provider) {
         this.provider = provider;
@@ -117,7 +124,23 @@ public class DefaultTransactionProvider implements TransactionProvider {
             brace(ctx.configuration(), true);
         }
 
-        savepoints.push(connection(ctx.configuration()).setSavepoint());
+        Savepoint savepoint = setSavepoint(ctx.configuration());
+
+        if (savepoint == DUMMY_SAVEPOINT && savepoints.size() > 0)
+            throw new DataAccessException("Cannot nest transactions because Savepoints are not supported");
+
+        savepoints.push(savepoint);
+    }
+
+    private Savepoint setSavepoint(Configuration configuration) {
+        switch (configuration.family()) {
+            /* [pro] xx
+            xxxx xxxxx
+                xxxxxx xxxxxxxxxxxxxxxx
+            xx [/pro] */
+            default:
+                return connection(configuration).setSavepoint();
+        }
     }
 
     @Override
@@ -126,7 +149,7 @@ public class DefaultTransactionProvider implements TransactionProvider {
         Savepoint savepoint = savepoints.pop();
 
         // [#3489] Explicitly release savepoints prior to commit
-        if (savepoint != null)
+        if (savepoint != null && savepoint != DUMMY_SAVEPOINT)
             try {
                 connection(ctx.configuration()).releaseSavepoint(savepoint);
             }
@@ -156,7 +179,7 @@ public class DefaultTransactionProvider implements TransactionProvider {
             savepoint = savepoints.pop();
 
         try {
-            if (savepoint == null)
+            if (savepoint == null || savepoint == DUMMY_SAVEPOINT)
                 connection(ctx.configuration()).rollback();
             else
                 connection(ctx.configuration()).rollback(savepoint);
@@ -196,6 +219,18 @@ public class DefaultTransactionProvider implements TransactionProvider {
                 connection = null;
                 configuration.data().remove(DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION);
             }
+        }
+    }
+
+    private static class DefaultSavepoint implements Savepoint {
+        @Override
+        public int getSavepointId() throws SQLException {
+            return 0;
+        }
+
+        @Override
+        public String getSavepointName() throws SQLException {
+            return null;
         }
     }
 }

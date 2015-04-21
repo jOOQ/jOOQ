@@ -123,6 +123,10 @@ public class JSONObject extends HashMap{
         return sb.toString();
     }
 
+    @Override public String toString() {
+        return toJSONString(this);
+    }
+
     /**
      * Escape quotes, \, /, \r, \n, \b, \f, \t and other control characters
      * (U+0000 through U+001F). It's the same as JSONValue.escape() only for

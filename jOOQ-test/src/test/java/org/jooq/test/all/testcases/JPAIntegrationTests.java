@@ -43,8 +43,6 @@ package org.jooq.test.all.testcases;
 import static java.util.Arrays.asList;
 import static org.jooq.lambda.Seq.seq;
 import static org.jooq.test.jOOQAbstractTest.datasource;
-import static org.jooq.test.jpa.generatedclasses.Tables.T_AUTHOR;
-import static org.jooq.test.jpa.generatedclasses.Tables.T_BOOK;
 
 import java.sql.Date;
 import java.util.Collection;
@@ -105,16 +103,20 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         emTx(em -> {
             List<Object[]> books =
             nativeQuery(em, create()
-                .select(T_BOOK.ID, T_BOOK.AUTHOR_ID, T_BOOK.TITLE)
-                .from(T_BOOK)
-                .where(T_BOOK.ID.gt(1))
-                .orderBy(T_BOOK.ID));
+                .select(TBook_ID(), TBook_AUTHOR_ID(), TBook_TITLE())
+                .from(TBook())
+                .where(TBook_ID().gt(1))
+                .orderBy(TBook_ID()));
 
             assertEquals(3, books.size());
-            assertEquals(BOOK_IDS.subList(1, 4), seq(books).map(a -> a[0]).toList());
-            assertEquals(BOOK_AUTHOR_IDS.subList(1, 4), seq(books).map(a -> a[1]).toList());
+            assertEquals(BOOK_IDS.subList(1, 4), seq(books).map(a -> a[0]).map(this::toInteger).toList());
+            assertEquals(BOOK_AUTHOR_IDS.subList(1, 4), seq(books).map(a -> a[1]).map(this::toInteger).toList());
             assertEquals(BOOK_TITLES.subList(1, 4), seq(books).map(a -> a[2]).toList());
         });
+    }
+
+    Integer toInteger(Object o) {
+        return Integer.valueOf("" + o);
     }
 
     List<Object[]> nativeQuery(EntityManager em, org.jooq.Query query) {
@@ -144,8 +146,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             List<JPAAuthor> authors =
             nativeQuery(em,
                 create().select()
-                        .from(T_AUTHOR)
-                        .orderBy(T_AUTHOR.ID)
+                        .from(TAuthor())
+                        .orderBy(TAuthor_ID())
             , JPAAuthor.class);
 
             assertEquals(2, authors.size());

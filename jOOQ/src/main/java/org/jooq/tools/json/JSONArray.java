@@ -115,4 +115,9 @@ public class JSONArray extends ArrayList {
         sb.append(']');
         return sb.toString();
     }
+
+    @Override
+    public String toString() {
+        return toJSONString(this);
+    }
 }

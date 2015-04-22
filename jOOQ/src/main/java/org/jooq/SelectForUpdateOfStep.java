@@ -44,6 +44,7 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
@@ -104,7 +105,7 @@ public interface SelectForUpdateOfStep<R extends Record> extends SelectForUpdate
      * @see SelectQuery#setForUpdateOf(Field...) see LockProvider for more
      *      details
      */
-    @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, ORACLE, SYBASE })
+    @Support({ DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, ORACLE, SYBASE })
     SelectForUpdateWaitStep<R> of(Field<?>... fields);
 
     /**
@@ -114,7 +115,7 @@ public interface SelectForUpdateOfStep<R extends Record> extends SelectForUpdate
      * @see SelectQuery#setForUpdateOf(Collection) see LockProvider for
      *      more details
      */
-    @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, ORACLE, SYBASE })
+    @Support({ DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, ORACLE, SYBASE })
     SelectForUpdateWaitStep<R> of(Collection<? extends Field<?>> fields);
 
     /**
@@ -124,7 +125,7 @@ public interface SelectForUpdateOfStep<R extends Record> extends SelectForUpdate
      * @see SelectQuery#setForUpdateOf(Table...) see LockProvider for more
      *      details
      */
-    @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, POSTGRES, ORACLE, SYBASE })
+    @Support({ DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, POSTGRES, ORACLE, SYBASE })
     SelectForUpdateWaitStep<R> of(Table<?>... tables);
 
 }

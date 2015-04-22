@@ -682,7 +682,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param forUpdate The flag's value
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     void setForUpdate(boolean forUpdate);
 
     /**
@@ -709,7 +709,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param fields The fields that should be locked
      */
-    @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, ORACLE, SYBASE })
+    @Support({ DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, ORACLE, SYBASE })
     void setForUpdateOf(Field<?>... fields);
 
     /**
@@ -719,7 +719,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @see #setForUpdateOf(Field...)
      */
-    @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, ORACLE, SYBASE })
+    @Support({ DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, ORACLE, SYBASE })
     void setForUpdateOf(Collection<? extends Field<?>> fields);
 
     /**
@@ -748,7 +748,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param tables The tables that should be locked
      */
-    @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, POSTGRES, ORACLE, SYBASE })
+    @Support({ DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, POSTGRES, ORACLE, SYBASE })
     void setForUpdateOf(Table<?>... tables);
 
     /* [pro] */

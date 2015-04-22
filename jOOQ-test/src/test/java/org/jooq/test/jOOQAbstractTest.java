@@ -1896,8 +1896,13 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testRowValueExpressionQuantifiedComparisonPredicates() throws Exception {
-        new RowValueExpressionTests(this).testRowValueExpressionQuantifiedComparisonPredicates();
+    public void testRowValueExpressionQuantifiedComparisonPredicates_EQ_NE() throws Exception {
+        new RowValueExpressionTests(this).testRowValueExpressionQuantifiedComparisonPredicates_EQ_NE();
+    }
+
+    @Test
+    public void testRowValueExpressionQuantifiedComparisonPredicates_LE_LT_GE_GT() throws Exception {
+        new RowValueExpressionTests(this).testRowValueExpressionQuantifiedComparisonPredicates_LE_LT_GE_GT();
     }
 
     @Test

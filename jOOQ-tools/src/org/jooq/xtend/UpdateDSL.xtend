@@ -65,7 +65,7 @@ class UpdateDSL extends Generators {
              * Specify a multi-column set clause for the <code>UPDATE</code> statement.
              */
             «generatedMethod»
-            @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+            @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES })
             <«TN(degree)»> void addValues(Row«degree»<«TN(degree)»> row, Row«degree»<«TN(degree)»> value);
         «ENDFOR»
         «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
@@ -74,7 +74,7 @@ class UpdateDSL extends Generators {
              * Specify a multi-column set clause for the <code>UPDATE</code> statement.
              */
             «generatedMethod»
-            @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+            @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE })
             <«TN(degree)»> void addValues(Row«degree»<«TN(degree)»> row, Select<? extends Record«degree»<«TN(degree)»>> select);
         «ENDFOR»
         ''');
@@ -116,6 +116,7 @@ class UpdateDSL extends Generators {
 
         import static org.jooq.SQLDialect.DB2;
         import static org.jooq.SQLDialect.H2;
+        import static org.jooq.SQLDialect.HANA;
         import static org.jooq.SQLDialect.HSQLDB;
         import static org.jooq.SQLDialect.INGRES;
         import static org.jooq.SQLDialect.ORACLE;
@@ -147,7 +148,7 @@ class UpdateDSL extends Generators {
              * This is simulated using a subquery for the <code>value</code>, where row
              * value expressions aren't supported.
              */
-            @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+            @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES })
             <«TN(degree)»> UpdateFromStep<R> set(Row«degree»<«TN(degree)»> row, Row«degree»<«TN(degree)»> value);
         «ENDFOR»
         «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
@@ -155,7 +156,7 @@ class UpdateDSL extends Generators {
             /**
              * Specify a multi-column set clause for the <code>UPDATE</code> statement.
              */
-            @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+            @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE })
             <«TN(degree)»> UpdateFromStep<R> set(Row«degree»<«TN(degree)»> row, Select<? extends Record«degree»<«TN(degree)»>> select);
         «ENDFOR»
         

@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
@@ -339,7 +340,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition equal(QuantifiedSelect<? extends Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> select);
 
     /**
@@ -395,7 +396,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition eq(QuantifiedSelect<? extends Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> select);
 
     /**
@@ -454,7 +455,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition notEqual(QuantifiedSelect<? extends Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> select);
 
     /**
@@ -510,7 +511,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition ne(QuantifiedSelect<? extends Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> select);
 
     // ------------------------------------------------------------------------

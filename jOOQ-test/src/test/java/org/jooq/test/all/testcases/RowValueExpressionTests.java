@@ -41,6 +41,7 @@
 package org.jooq.test.all.testcases;
 
 import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.impl.DSL.all;
 import static org.jooq.impl.DSL.any;
@@ -339,7 +340,43 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .fetchOne(0, Integer.class));
     }
 
-    public void testRowValueExpressionQuantifiedComparisonPredicates() throws Exception {
+    public void testRowValueExpressionQuantifiedComparisonPredicates_EQ_NE() throws Exception {
+        Field<Integer> _1 = inline(1);
+        Field<Integer> _2 = inline(2);
+
+        assertEquals(1, (int)
+        create().selectOne()
+                .where(trueCondition())
+                .and(row(1).eq(any(  select(_1).unionAll(select(_2))  )))
+                .and(row(1).eq(all(  select(_1).unionAll(select(_1))  )))
+                .and(row(1).ne(any(  select(_1).unionAll(select(_2))  )))
+                .and(row(1).ne(all(  select(_2).unionAll(select(_2))  )))
+                .fetchOne(0, Integer.class));
+
+        assertEquals(1, (int)
+        create().selectOne()
+                .where(trueCondition())
+                .and(row(1, 1).eq(any(  select(_1, _1).unionAll(select(_1, _2))  )))
+                .and(row(1, 1).eq(all(  select(_1, _1).unionAll(select(_1, _1))  )))
+                .and(row(1, 1).ne(any(  select(_1, _1).unionAll(select(_1, _2))  )))
+                .and(row(1, 1).ne(all(  select(_1, _2).unionAll(select(_2, _2))  )))
+                .fetchOne(0, Integer.class));
+
+        assertEquals(1, (int)
+        create().selectOne()
+                .where(trueCondition())
+                .and(row(1, 1, 1).eq(any(  select(_1, _1, _1).unionAll(select(_1, _1, _2))  )))
+                .and(row(1, 1, 1).eq(all(  select(_1, _1, _1).unionAll(select(_1, _1, _1))  )))
+                .and(row(1, 1, 1).ne(any(  select(_1, _1, _1).unionAll(select(_1, _1, _2))  )))
+                .and(row(1, 1, 1).ne(all(  select(_1, _1, _2).unionAll(select(_2, _2, _2))  )))
+                .fetchOne(0, Integer.class));
+    }
+
+
+    public void testRowValueExpressionQuantifiedComparisonPredicates_LE_LT_GE_GT() throws Exception {
+        // [#3505] TODO Emulate this
+        assumeFamilyNotIn(HANA);
+
         Field<Integer> _0 = inline(0);
         Field<Integer> _1 = inline(1);
         Field<Integer> _2 = inline(2);

@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
@@ -254,7 +255,7 @@ public interface Row2<T1, T2> extends Row {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition equal(QuantifiedSelect<? extends Record2<T1, T2>> select);
 
     /**
@@ -310,7 +311,7 @@ public interface Row2<T1, T2> extends Row {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition eq(QuantifiedSelect<? extends Record2<T1, T2>> select);
 
     /**
@@ -369,7 +370,7 @@ public interface Row2<T1, T2> extends Row {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition notEqual(QuantifiedSelect<? extends Record2<T1, T2>> select);
 
     /**
@@ -425,7 +426,7 @@ public interface Row2<T1, T2> extends Row {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition ne(QuantifiedSelect<? extends Record2<T1, T2>> select);
 
     // ------------------------------------------------------------------------

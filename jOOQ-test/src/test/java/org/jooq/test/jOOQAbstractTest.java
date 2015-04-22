@@ -3629,4 +3629,9 @@ public abstract class jOOQAbstractTest<
     public void testJPANativeQueryAndEntites() throws Exception {
         new JPAIntegrationTests(this).testJPANativeQueryAndEntites();
     }
+
+    @Test
+    public void testJPANativeQueryAndSqlResultSetMapping() throws Exception {
+        new JPAIntegrationTests(this).testJPANativeQueryAndSqlResultSetMapping();
+    }
 }

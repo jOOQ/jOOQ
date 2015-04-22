@@ -42,9 +42,35 @@ package org.jooq.test.all.pojos.jpa;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityResult;
+import javax.persistence.FieldResult;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
+
+
+@SqlResultSetMapping(
+    name = "bookmapping",
+    entities = {
+        @EntityResult(
+            entityClass = JPABook.class,
+            fields = {
+                @FieldResult(name = "id", column = "b_id"),
+                @FieldResult(name = "title", column = "b_title"),
+                @FieldResult(name = "author", column = "b_author_id")
+            }
+        ),
+        @EntityResult(
+            entityClass = JPAAuthor.class,
+            fields = {
+                @FieldResult(name = "id", column = "a_id"),
+                @FieldResult(name = "firstName", column = "a_first_name"),
+                @FieldResult(name = "lastName", column = "a_last_name")
+            }
+        )
+    }
+)
 
 @Entity
 @Table(name = "t_book")

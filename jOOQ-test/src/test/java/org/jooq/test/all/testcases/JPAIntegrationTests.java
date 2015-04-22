@@ -63,6 +63,7 @@ import org.jooq.lambda.Seq;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 import org.jooq.test.all.pojos.jpa.JPAAuthor;
+import org.jooq.test.all.pojos.jpa.JPABook;
 
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -141,6 +142,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         return result.getResultList();
     }
 
+    <E> List<E> nativeQuery(EntityManager em, org.jooq.Query query, String resultSetMapping) {
+        Query result = em.createNativeQuery(query.getSQL(), resultSetMapping);
+
+        List<Object> values = query.getBindValues();
+        for (int i = 0; i < values.size(); i++) {
+            result.setParameter(i + 1, values.get(i));
+        }
+
+        return result.getResultList();
+    }
+
     public void testJPANativeQueryAndEntites() {
         emTx(em -> {
             List<JPAAuthor> authors =
@@ -156,6 +168,36 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(AUTHOR_LAST_NAMES, seq(authors).map(JPAAuthor::getLastName).toList());
             assertEquals(asList(2, 2), seq(authors).map(JPAAuthor::getBooks).map(Collection::size).toList());
             assertSame(BOOK_TITLES, seq(authors).map(JPAAuthor::getBooks).flatMap(Seq::seq).map(b -> b.title).toList());
+        });
+    }
+
+    public void testJPANativeQueryAndSqlResultSetMapping() {
+        emTx(em -> {
+            List<Object[]> books =
+            nativeQuery(em,
+                create().select(
+                            TAuthor_ID().as("a_id"),
+                            TAuthor_FIRST_NAME().as("a_first_name"),
+                            TAuthor_LAST_NAME().as("a_last_name"),
+                            TBook_ID().as("b_id"),
+                            TBook_AUTHOR_ID().as("b_author_id"),
+                            TBook_TITLE().as("b_title")
+                        )
+                        .from(TAuthor())
+                        .join(TBook())
+                        .on(TBook_AUTHOR_ID().eq(TAuthor_ID()))
+                        .orderBy(TBook_ID())
+            , "bookmapping");
+
+            assertEquals(4, books.size());
+            assertEquals(BOOK_AUTHOR_IDS, seq(books).map(a -> (JPABook) a[0]).map(b -> b.author.getId()).toList());
+            assertEquals(BOOK_FIRST_NAMES, seq(books).map(a -> (JPABook) a[0]).map(b -> b.author.getFirstName()).toList());
+            assertEquals(BOOK_LAST_NAMES, seq(books).map(a -> (JPABook) a[0]).map(b -> b.author.getLastName()).toList());
+            assertEquals(BOOK_AUTHOR_IDS, seq(books).map(a -> (JPAAuthor) a[1]).map(a -> a.getId()).toList());
+            assertEquals(BOOK_FIRST_NAMES, seq(books).map(a -> (JPAAuthor) a[1]).map(a -> a.getFirstName()).toList());
+            assertEquals(BOOK_LAST_NAMES, seq(books).map(a -> (JPAAuthor) a[1]).map(a -> a.getLastName()).toList());
+            assertEquals(BOOK_IDS, seq(books).map(a -> (JPABook) a[0]).map(b -> b.id).toList());
+            assertEquals(BOOK_TITLES, seq(books).map(a -> (JPABook) a[0]).map(b -> b.title).toList());
         });
     }
 

@@ -26,7 +26,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_DIRECTORY_INTE
 @Table(name = "T_DIRECTORY")
 public class T_DIRECTORY extends UpdatableRecordImpl<T_DIRECTORY> implements Cloneable, Record4<Integer, Integer, Integer, String>, T_DIRECTORY_INTERFACE {
 
-	private static final long serialVersionUID = 1008421680;
+	private static final long serialVersionUID = -1056793296;
 
 	/**
 	 * Setter for <code>T_DIRECTORY.ID</code>.
@@ -234,6 +234,10 @@ public class T_DIRECTORY extends UpdatableRecordImpl<T_DIRECTORY> implements Clo
 	 */
 	@Override
 	public T_DIRECTORY values(Integer value1, Integer value2, Integer value3, String value4) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
 		return this;
 	}
 

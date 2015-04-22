@@ -11,9 +11,9 @@ import javax.persistence.Table;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Record5;
+import org.jooq.Record8;
 import org.jooq.Row;
-import org.jooq.Row5;
+import org.jooq.Row8;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_EXOTIC_TYPES_INTERFACE;
 
@@ -24,9 +24,9 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_EXOTIC_TYPES_I
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @Entity
 @Table(name = "T_EXOTIC_TYPES")
-public class T_EXOTIC_TYPES extends UpdatableRecordImpl<T_EXOTIC_TYPES> implements Cloneable, Record5<Integer, String, byte[], String, String>, T_EXOTIC_TYPES_INTERFACE {
+public class T_EXOTIC_TYPES extends UpdatableRecordImpl<T_EXOTIC_TYPES> implements Cloneable, Record8<Integer, String, byte[], String, String, Object, Object, Object>, T_EXOTIC_TYPES_INTERFACE {
 
-	private static final long serialVersionUID = 1978724592;
+	private static final long serialVersionUID = 21467215;
 
 	/**
 	 * Setter for <code>T_EXOTIC_TYPES.ID</code>.
@@ -114,6 +114,57 @@ public class T_EXOTIC_TYPES extends UpdatableRecordImpl<T_EXOTIC_TYPES> implemen
 		return (String) getValue(4);
 	}
 
+	/**
+	 * Setter for <code>T_EXOTIC_TYPES.ORACLE_XML_AS_IS</code>.
+	 */
+	@Override
+	public void setORACLE_XML_AS_IS(Object value) {
+		setValue(5, value);
+	}
+
+	/**
+	 * Getter for <code>T_EXOTIC_TYPES.ORACLE_XML_AS_IS</code>.
+	 */
+	@Column(name = "ORACLE_XML_AS_IS")
+	@Override
+	public Object getORACLE_XML_AS_IS() {
+		return (Object) getValue(5);
+	}
+
+	/**
+	 * Setter for <code>T_EXOTIC_TYPES.ORACLE_XML_AS_DOCUMENT</code>.
+	 */
+	@Override
+	public void setORACLE_XML_AS_DOCUMENT(Object value) {
+		setValue(6, value);
+	}
+
+	/**
+	 * Getter for <code>T_EXOTIC_TYPES.ORACLE_XML_AS_DOCUMENT</code>.
+	 */
+	@Column(name = "ORACLE_XML_AS_DOCUMENT")
+	@Override
+	public Object getORACLE_XML_AS_DOCUMENT() {
+		return (Object) getValue(6);
+	}
+
+	/**
+	 * Setter for <code>T_EXOTIC_TYPES.ORACLE_XML_AS_SQLXML</code>.
+	 */
+	@Override
+	public void setORACLE_XML_AS_SQLXML(Object value) {
+		setValue(7, value);
+	}
+
+	/**
+	 * Getter for <code>T_EXOTIC_TYPES.ORACLE_XML_AS_SQLXML</code>.
+	 */
+	@Column(name = "ORACLE_XML_AS_SQLXML")
+	@Override
+	public Object getORACLE_XML_AS_SQLXML() {
+		return (Object) getValue(7);
+	}
+
 	// -------------------------------------------------------------------------
 	// Primary key information
 	// -------------------------------------------------------------------------
@@ -127,23 +178,23 @@ public class T_EXOTIC_TYPES extends UpdatableRecordImpl<T_EXOTIC_TYPES> implemen
 	}
 
 	// -------------------------------------------------------------------------
-	// Record5 type implementation
+	// Record8 type implementation
 	// -------------------------------------------------------------------------
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Row5<Integer, String, byte[], String, String> fieldsRow() {
-		return (Row5) super.fieldsRow();
+	public Row8<Integer, String, byte[], String, String, Object, Object, Object> fieldsRow() {
+		return (Row8) super.fieldsRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Row5<Integer, String, byte[], String, String> valuesRow() {
-		return (Row5) super.valuesRow();
+	public Row8<Integer, String, byte[], String, String, Object, Object, Object> valuesRow() {
+		return (Row8) super.valuesRow();
 	}
 
 	/**
@@ -190,6 +241,30 @@ public class T_EXOTIC_TYPES extends UpdatableRecordImpl<T_EXOTIC_TYPES> implemen
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Field<Object> field6() {
+		return org.jooq.test.oracle3.generatedclasses.tables.T_EXOTIC_TYPES.T_EXOTIC_TYPES.ORACLE_XML_AS_IS;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Field<Object> field7() {
+		return org.jooq.test.oracle3.generatedclasses.tables.T_EXOTIC_TYPES.T_EXOTIC_TYPES.ORACLE_XML_AS_DOCUMENT;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Field<Object> field8() {
+		return org.jooq.test.oracle3.generatedclasses.tables.T_EXOTIC_TYPES.T_EXOTIC_TYPES.ORACLE_XML_AS_SQLXML;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Integer value1() {
 		return getID();
 	}
@@ -224,6 +299,30 @@ public class T_EXOTIC_TYPES extends UpdatableRecordImpl<T_EXOTIC_TYPES> implemen
 	@Override
 	public String value5() {
 		return getPLAIN_SQL_BINDING_XML();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Object value6() {
+		return getORACLE_XML_AS_IS();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Object value7() {
+		return getORACLE_XML_AS_DOCUMENT();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Object value8() {
+		return getORACLE_XML_AS_SQLXML();
 	}
 
 	/**
@@ -275,7 +374,42 @@ public class T_EXOTIC_TYPES extends UpdatableRecordImpl<T_EXOTIC_TYPES> implemen
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T_EXOTIC_TYPES values(Integer value1, String value2, byte[] value3, String value4, String value5) {
+	public T_EXOTIC_TYPES value6(Object value) {
+		setORACLE_XML_AS_IS(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_EXOTIC_TYPES value7(Object value) {
+		setORACLE_XML_AS_DOCUMENT(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_EXOTIC_TYPES value8(Object value) {
+		setORACLE_XML_AS_SQLXML(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_EXOTIC_TYPES values(Integer value1, String value2, byte[] value3, String value4, String value5, Object value6, Object value7, Object value8) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
+		value7(value7);
+		value8(value8);
 		return this;
 	}
 
@@ -293,6 +427,9 @@ public class T_EXOTIC_TYPES extends UpdatableRecordImpl<T_EXOTIC_TYPES> implemen
 		setJAVA_IO_SERIALIZABLE(from.getJAVA_IO_SERIALIZABLE());
 		setPLAIN_SQL_CONVERTER_XML(from.getPLAIN_SQL_CONVERTER_XML());
 		setPLAIN_SQL_BINDING_XML(from.getPLAIN_SQL_BINDING_XML());
+		setORACLE_XML_AS_IS(from.getORACLE_XML_AS_IS());
+		setORACLE_XML_AS_DOCUMENT(from.getORACLE_XML_AS_DOCUMENT());
+		setORACLE_XML_AS_SQLXML(from.getORACLE_XML_AS_SQLXML());
 	}
 
 	/**
@@ -318,7 +455,7 @@ public class T_EXOTIC_TYPES extends UpdatableRecordImpl<T_EXOTIC_TYPES> implemen
 	/**
 	 * Create a detached, initialised T_EXOTIC_TYPES
 	 */
-	public T_EXOTIC_TYPES(Integer ID, String UU, byte[] JAVA_IO_SERIALIZABLE, String PLAIN_SQL_CONVERTER_XML, String PLAIN_SQL_BINDING_XML) {
+	public T_EXOTIC_TYPES(Integer ID, String UU, byte[] JAVA_IO_SERIALIZABLE, String PLAIN_SQL_CONVERTER_XML, String PLAIN_SQL_BINDING_XML, Object ORACLE_XML_AS_IS, Object ORACLE_XML_AS_DOCUMENT, Object ORACLE_XML_AS_SQLXML) {
 		super(org.jooq.test.oracle3.generatedclasses.tables.T_EXOTIC_TYPES.T_EXOTIC_TYPES);
 
 		setValue(0, ID);
@@ -326,5 +463,8 @@ public class T_EXOTIC_TYPES extends UpdatableRecordImpl<T_EXOTIC_TYPES> implemen
 		setValue(2, JAVA_IO_SERIALIZABLE);
 		setValue(3, PLAIN_SQL_CONVERTER_XML);
 		setValue(4, PLAIN_SQL_BINDING_XML);
+		setValue(5, ORACLE_XML_AS_IS);
+		setValue(6, ORACLE_XML_AS_DOCUMENT);
+		setValue(7, ORACLE_XML_AS_SQLXML);
 	}
 }

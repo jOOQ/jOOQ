@@ -28,7 +28,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_TO_BOOK_S
 })
 public class T_BOOK_TO_BOOK_STORE extends UpdatableRecordImpl<T_BOOK_TO_BOOK_STORE> implements Cloneable, Record3<String, Integer, Integer>, T_BOOK_TO_BOOK_STORE_INTERFACE {
 
-	private static final long serialVersionUID = -1244428065;
+	private static final long serialVersionUID = -553799665;
 
 	/**
 	 * Setter for <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
@@ -193,6 +193,9 @@ public class T_BOOK_TO_BOOK_STORE extends UpdatableRecordImpl<T_BOOK_TO_BOOK_STO
 	 */
 	@Override
 	public T_BOOK_TO_BOOK_STORE values(String value1, Integer value2, Integer value3) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
 		return this;
 	}
 

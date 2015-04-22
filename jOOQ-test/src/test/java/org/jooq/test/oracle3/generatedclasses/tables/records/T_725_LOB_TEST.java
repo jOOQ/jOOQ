@@ -11,9 +11,9 @@ import javax.persistence.Table;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Record2;
+import org.jooq.Record6;
 import org.jooq.Row;
-import org.jooq.Row2;
+import org.jooq.Row6;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_725_LOB_TEST_INTERFACE;
 
@@ -24,9 +24,9 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_725_LOB_TEST_I
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @Entity
 @Table(name = "T_725_LOB_TEST")
-public class T_725_LOB_TEST extends UpdatableRecordImpl<T_725_LOB_TEST> implements Cloneable, Record2<Integer, byte[]>, T_725_LOB_TEST_INTERFACE {
+public class T_725_LOB_TEST extends UpdatableRecordImpl<T_725_LOB_TEST> implements Cloneable, Record6<Integer, byte[], String, byte[], String, byte[]>, T_725_LOB_TEST_INTERFACE {
 
-	private static final long serialVersionUID = -1732640402;
+	private static final long serialVersionUID = -1394630530;
 
 	/**
 	 * Setter for <code>T_725_LOB_TEST.ID</code>.
@@ -63,6 +63,74 @@ public class T_725_LOB_TEST extends UpdatableRecordImpl<T_725_LOB_TEST> implemen
 		return (byte[]) getValue(1);
 	}
 
+	/**
+	 * Setter for <code>T_725_LOB_TEST.USER_JAVA_SQL_CLOB</code>.
+	 */
+	@Override
+	public void setUSER_JAVA_SQL_CLOB(String value) {
+		setValue(2, value);
+	}
+
+	/**
+	 * Getter for <code>T_725_LOB_TEST.USER_JAVA_SQL_CLOB</code>.
+	 */
+	@Column(name = "USER_JAVA_SQL_CLOB")
+	@Override
+	public String getUSER_JAVA_SQL_CLOB() {
+		return (String) getValue(2);
+	}
+
+	/**
+	 * Setter for <code>T_725_LOB_TEST.USER_JAVA_SQL_BLOB</code>.
+	 */
+	@Override
+	public void setUSER_JAVA_SQL_BLOB(byte[] value) {
+		setValue(3, value);
+	}
+
+	/**
+	 * Getter for <code>T_725_LOB_TEST.USER_JAVA_SQL_BLOB</code>.
+	 */
+	@Column(name = "USER_JAVA_SQL_BLOB")
+	@Override
+	public byte[] getUSER_JAVA_SQL_BLOB() {
+		return (byte[]) getValue(3);
+	}
+
+	/**
+	 * Setter for <code>T_725_LOB_TEST.JOOQ_JAVA_SQL_CLOB</code>.
+	 */
+	@Override
+	public void setJOOQ_JAVA_SQL_CLOB(String value) {
+		setValue(4, value);
+	}
+
+	/**
+	 * Getter for <code>T_725_LOB_TEST.JOOQ_JAVA_SQL_CLOB</code>.
+	 */
+	@Column(name = "JOOQ_JAVA_SQL_CLOB")
+	@Override
+	public String getJOOQ_JAVA_SQL_CLOB() {
+		return (String) getValue(4);
+	}
+
+	/**
+	 * Setter for <code>T_725_LOB_TEST.JOOQ_JAVA_SQL_BLOB</code>.
+	 */
+	@Override
+	public void setJOOQ_JAVA_SQL_BLOB(byte[] value) {
+		setValue(5, value);
+	}
+
+	/**
+	 * Getter for <code>T_725_LOB_TEST.JOOQ_JAVA_SQL_BLOB</code>.
+	 */
+	@Column(name = "JOOQ_JAVA_SQL_BLOB")
+	@Override
+	public byte[] getJOOQ_JAVA_SQL_BLOB() {
+		return (byte[]) getValue(5);
+	}
+
 	// -------------------------------------------------------------------------
 	// Primary key information
 	// -------------------------------------------------------------------------
@@ -76,23 +144,23 @@ public class T_725_LOB_TEST extends UpdatableRecordImpl<T_725_LOB_TEST> implemen
 	}
 
 	// -------------------------------------------------------------------------
-	// Record2 type implementation
+	// Record6 type implementation
 	// -------------------------------------------------------------------------
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Row2<Integer, byte[]> fieldsRow() {
-		return (Row2) super.fieldsRow();
+	public Row6<Integer, byte[], String, byte[], String, byte[]> fieldsRow() {
+		return (Row6) super.fieldsRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Row2<Integer, byte[]> valuesRow() {
-		return (Row2) super.valuesRow();
+	public Row6<Integer, byte[], String, byte[], String, byte[]> valuesRow() {
+		return (Row6) super.valuesRow();
 	}
 
 	/**
@@ -115,6 +183,38 @@ public class T_725_LOB_TEST extends UpdatableRecordImpl<T_725_LOB_TEST> implemen
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Field<String> field3() {
+		return org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST.T_725_LOB_TEST.USER_JAVA_SQL_CLOB;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Field<byte[]> field4() {
+		return org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST.T_725_LOB_TEST.USER_JAVA_SQL_BLOB;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Field<String> field5() {
+		return org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST.T_725_LOB_TEST.JOOQ_JAVA_SQL_CLOB;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Field<byte[]> field6() {
+		return org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST.T_725_LOB_TEST.JOOQ_JAVA_SQL_BLOB;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Integer value1() {
 		return getID();
 	}
@@ -125,6 +225,38 @@ public class T_725_LOB_TEST extends UpdatableRecordImpl<T_725_LOB_TEST> implemen
 	@Override
 	public byte[] value2() {
 		return getLOB();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String value3() {
+		return getUSER_JAVA_SQL_CLOB();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public byte[] value4() {
+		return getUSER_JAVA_SQL_BLOB();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String value5() {
+		return getJOOQ_JAVA_SQL_CLOB();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public byte[] value6() {
+		return getJOOQ_JAVA_SQL_BLOB();
 	}
 
 	/**
@@ -149,7 +281,49 @@ public class T_725_LOB_TEST extends UpdatableRecordImpl<T_725_LOB_TEST> implemen
 	 * {@inheritDoc}
 	 */
 	@Override
-	public T_725_LOB_TEST values(Integer value1, byte[] value2) {
+	public T_725_LOB_TEST value3(String value) {
+		setUSER_JAVA_SQL_CLOB(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_725_LOB_TEST value4(byte[] value) {
+		setUSER_JAVA_SQL_BLOB(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_725_LOB_TEST value5(String value) {
+		setJOOQ_JAVA_SQL_CLOB(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_725_LOB_TEST value6(byte[] value) {
+		setJOOQ_JAVA_SQL_BLOB(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T_725_LOB_TEST values(Integer value1, byte[] value2, String value3, byte[] value4, String value5, byte[] value6) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
 		return this;
 	}
 
@@ -164,6 +338,10 @@ public class T_725_LOB_TEST extends UpdatableRecordImpl<T_725_LOB_TEST> implemen
 	public void from(T_725_LOB_TEST_INTERFACE from) {
 		setID(from.getID());
 		setLOB(from.getLOB());
+		setUSER_JAVA_SQL_CLOB(from.getUSER_JAVA_SQL_CLOB());
+		setUSER_JAVA_SQL_BLOB(from.getUSER_JAVA_SQL_BLOB());
+		setJOOQ_JAVA_SQL_CLOB(from.getJOOQ_JAVA_SQL_CLOB());
+		setJOOQ_JAVA_SQL_BLOB(from.getJOOQ_JAVA_SQL_BLOB());
 	}
 
 	/**
@@ -189,10 +367,14 @@ public class T_725_LOB_TEST extends UpdatableRecordImpl<T_725_LOB_TEST> implemen
 	/**
 	 * Create a detached, initialised T_725_LOB_TEST
 	 */
-	public T_725_LOB_TEST(Integer ID, byte[] LOB) {
+	public T_725_LOB_TEST(Integer ID, byte[] LOB, String USER_JAVA_SQL_CLOB, byte[] USER_JAVA_SQL_BLOB, String JOOQ_JAVA_SQL_CLOB, byte[] JOOQ_JAVA_SQL_BLOB) {
 		super(org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST.T_725_LOB_TEST);
 
 		setValue(0, ID);
 		setValue(1, LOB);
+		setValue(2, USER_JAVA_SQL_CLOB);
+		setValue(3, USER_JAVA_SQL_BLOB);
+		setValue(4, JOOQ_JAVA_SQL_CLOB);
+		setValue(5, JOOQ_JAVA_SQL_BLOB);
 	}
 }

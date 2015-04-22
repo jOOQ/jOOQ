@@ -28,7 +28,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_2845_CASE_sens
 @Table(name = "T_2845_CASE_sensitivity")
 public class T_2845_CASE_sensitivity extends UpdatableRecordImpl<T_2845_CASE_sensitivity> implements Cloneable, Record5<BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal>, T_2845_CASE_sensitivity_INTERFACE {
 
-	private static final long serialVersionUID = 928066038;
+	private static final long serialVersionUID = -1161828442;
 
 	/**
 	 * Setter for <code>T_2845_CASE_sensitivity.ID</code>.
@@ -278,6 +278,11 @@ public class T_2845_CASE_sensitivity extends UpdatableRecordImpl<T_2845_CASE_sen
 	 */
 	@Override
 	public T_2845_CASE_sensitivity values(BigDecimal value1, BigDecimal value2, BigDecimal value3, BigDecimal value4, BigDecimal value5) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
 		return this;
 	}
 

@@ -32,7 +32,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_LANGUAGE_INTER
 @Table(name = "T_LANGUAGE")
 public class T_LANGUAGE extends UpdatableRecordImpl<T_LANGUAGE> implements Cloneable, Record4<String, String, String, Integer>, T_LANGUAGE_INTERFACE {
 
-	private static final long serialVersionUID = -71301465;
+	private static final long serialVersionUID = 801152423;
 
 	/**
 	 * Setter for <code>T_LANGUAGE.CD</code>. The language ISO code
@@ -240,6 +240,10 @@ public class T_LANGUAGE extends UpdatableRecordImpl<T_LANGUAGE> implements Clone
 	 */
 	@Override
 	public T_LANGUAGE values(String value1, String value2, String value3, Integer value4) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
 		return this;
 	}
 

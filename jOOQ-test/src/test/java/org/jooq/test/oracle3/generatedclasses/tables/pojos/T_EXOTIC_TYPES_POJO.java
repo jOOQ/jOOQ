@@ -20,13 +20,16 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_EXOTIC_TYPES_I
 @Table(name = "T_EXOTIC_TYPES")
 public class T_EXOTIC_TYPES_POJO extends ThreadDeath implements Cloneable, T_EXOTIC_TYPES_INTERFACE {
 
-	private static final long serialVersionUID = 1261734723;
+	private static final long serialVersionUID = -1632325775;
 
 	private Integer ID;
 	private String  UU;
 	private byte[]  JAVA_IO_SERIALIZABLE;
 	private String  PLAIN_SQL_CONVERTER_XML;
 	private String  PLAIN_SQL_BINDING_XML;
+	private Object  ORACLE_XML_AS_IS;
+	private Object  ORACLE_XML_AS_DOCUMENT;
+	private Object  ORACLE_XML_AS_SQLXML;
 
 	public T_EXOTIC_TYPES_POJO() {}
 
@@ -36,6 +39,9 @@ public class T_EXOTIC_TYPES_POJO extends ThreadDeath implements Cloneable, T_EXO
 		this.JAVA_IO_SERIALIZABLE = value.JAVA_IO_SERIALIZABLE;
 		this.PLAIN_SQL_CONVERTER_XML = value.PLAIN_SQL_CONVERTER_XML;
 		this.PLAIN_SQL_BINDING_XML = value.PLAIN_SQL_BINDING_XML;
+		this.ORACLE_XML_AS_IS = value.ORACLE_XML_AS_IS;
+		this.ORACLE_XML_AS_DOCUMENT = value.ORACLE_XML_AS_DOCUMENT;
+		this.ORACLE_XML_AS_SQLXML = value.ORACLE_XML_AS_SQLXML;
 	}
 
 	public T_EXOTIC_TYPES_POJO(
@@ -43,13 +49,19 @@ public class T_EXOTIC_TYPES_POJO extends ThreadDeath implements Cloneable, T_EXO
 		String  UU,
 		byte[]  JAVA_IO_SERIALIZABLE,
 		String  PLAIN_SQL_CONVERTER_XML,
-		String  PLAIN_SQL_BINDING_XML
+		String  PLAIN_SQL_BINDING_XML,
+		Object  ORACLE_XML_AS_IS,
+		Object  ORACLE_XML_AS_DOCUMENT,
+		Object  ORACLE_XML_AS_SQLXML
 	) {
 		this.ID = ID;
 		this.UU = UU;
 		this.JAVA_IO_SERIALIZABLE = JAVA_IO_SERIALIZABLE;
 		this.PLAIN_SQL_CONVERTER_XML = PLAIN_SQL_CONVERTER_XML;
 		this.PLAIN_SQL_BINDING_XML = PLAIN_SQL_BINDING_XML;
+		this.ORACLE_XML_AS_IS = ORACLE_XML_AS_IS;
+		this.ORACLE_XML_AS_DOCUMENT = ORACLE_XML_AS_DOCUMENT;
+		this.ORACLE_XML_AS_SQLXML = ORACLE_XML_AS_SQLXML;
 	}
 
 	@Id
@@ -108,6 +120,39 @@ public class T_EXOTIC_TYPES_POJO extends ThreadDeath implements Cloneable, T_EXO
 		this.PLAIN_SQL_BINDING_XML = PLAIN_SQL_BINDING_XML;
 	}
 
+	@Column(name = "ORACLE_XML_AS_IS")
+	@Override
+	public Object getORACLE_XML_AS_IS() {
+		return this.ORACLE_XML_AS_IS;
+	}
+
+	@Override
+	public void setORACLE_XML_AS_IS(Object ORACLE_XML_AS_IS) {
+		this.ORACLE_XML_AS_IS = ORACLE_XML_AS_IS;
+	}
+
+	@Column(name = "ORACLE_XML_AS_DOCUMENT")
+	@Override
+	public Object getORACLE_XML_AS_DOCUMENT() {
+		return this.ORACLE_XML_AS_DOCUMENT;
+	}
+
+	@Override
+	public void setORACLE_XML_AS_DOCUMENT(Object ORACLE_XML_AS_DOCUMENT) {
+		this.ORACLE_XML_AS_DOCUMENT = ORACLE_XML_AS_DOCUMENT;
+	}
+
+	@Column(name = "ORACLE_XML_AS_SQLXML")
+	@Override
+	public Object getORACLE_XML_AS_SQLXML() {
+		return this.ORACLE_XML_AS_SQLXML;
+	}
+
+	@Override
+	public void setORACLE_XML_AS_SQLXML(Object ORACLE_XML_AS_SQLXML) {
+		this.ORACLE_XML_AS_SQLXML = ORACLE_XML_AS_SQLXML;
+	}
+
 	// -------------------------------------------------------------------------
 	// FROM and INTO
 	// -------------------------------------------------------------------------
@@ -122,6 +167,9 @@ public class T_EXOTIC_TYPES_POJO extends ThreadDeath implements Cloneable, T_EXO
 		setJAVA_IO_SERIALIZABLE(from.getJAVA_IO_SERIALIZABLE());
 		setPLAIN_SQL_CONVERTER_XML(from.getPLAIN_SQL_CONVERTER_XML());
 		setPLAIN_SQL_BINDING_XML(from.getPLAIN_SQL_BINDING_XML());
+		setORACLE_XML_AS_IS(from.getORACLE_XML_AS_IS());
+		setORACLE_XML_AS_DOCUMENT(from.getORACLE_XML_AS_DOCUMENT());
+		setORACLE_XML_AS_SQLXML(from.getORACLE_XML_AS_SQLXML());
 	}
 
 	/**

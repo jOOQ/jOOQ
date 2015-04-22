@@ -469,10 +469,20 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                        .keyword("for update");
 
                 if (!forUpdateOf.isEmpty()) {
+
+                    // [#4151] Some databases don't allow for qualifying column
+                    // names here. Copy also to TableList
+                    boolean unqualified = asList(DERBY, H2, HSQLDB).contains(context.family());
+                    boolean qualify = context.qualify();
+
+                    if (unqualified)
+                        context.qualify(false);
+
                     context.sql(' ').keyword("of")
                            .sql(' ').visit(forUpdateOf);
 
-                    // Utils.fieldNames(context, forUpdateOf);
+                    if (unqualified)
+                        context.qualify(qualify);
                 }
                 else if (!forUpdateOfTables.isEmpty()) {
                     context.sql(' ').keyword("of").sql(' ');

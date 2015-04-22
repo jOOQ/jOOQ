@@ -24,7 +24,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_3711_INTERFACE
 @Table(name = "T_3711")
 public class T_3711 extends TableRecordImpl<T_3711> implements Cloneable, Record6<Object, Object, Object, Object, Object, Object>, T_3711_INTERFACE {
 
-	private static final long serialVersionUID = 405113435;
+	private static final long serialVersionUID = 2095207835;
 
 	/**
 	 * Setter for <code>T_3711.V1</code>.
@@ -303,6 +303,12 @@ public class T_3711 extends TableRecordImpl<T_3711> implements Cloneable, Record
 	 */
 	@Override
 	public T_3711 values(Object value1, Object value2, Object value3, Object value4, Object value5, Object value6) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
 		return this;
 	}
 

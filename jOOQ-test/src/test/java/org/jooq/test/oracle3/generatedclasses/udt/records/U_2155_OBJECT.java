@@ -21,7 +21,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.records.U_2155_ARRAY;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_2155_OBJECT extends UDTRecordImpl<U_2155_OBJECT> implements Cloneable, Record2<Date, U_2155_ARRAY>, U_2155_OBJECT_INTERFACE {
 
-	private static final long serialVersionUID = 1438206901;
+	private static final long serialVersionUID = -1066020747;
 
 	/**
 	 * Setter for <code>U_2155_OBJECT.D</code>.
@@ -130,6 +130,8 @@ public class U_2155_OBJECT extends UDTRecordImpl<U_2155_OBJECT> implements Clone
 	 */
 	@Override
 	public U_2155_OBJECT values(Date value1, U_2155_ARRAY value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

@@ -1722,7 +1722,7 @@ public class PostgresTest extends jOOQAbstractTest<
         Record record = create().fetchOne("select id, string_array, number_array, date_array from f_get_arrays(?)", 4);
         TArraysRecord into = record.into(TArraysRecord.class);
 
-        assertEquals(4, record.getValue(TArrays_ID()));
+        assertEquals(4, (int) record.getValue(TArrays_ID()));
         assertEquals(4, (int) into.getId());
 
         assertEquals(asList("a", "b"), asList(record.getValue(TArrays_STRING().getName(), String[].class)));

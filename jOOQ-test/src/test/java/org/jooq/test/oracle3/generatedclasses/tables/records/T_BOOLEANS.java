@@ -26,7 +26,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOLEANS_INTER
 @Table(name = "T_BOOLEANS")
 public class T_BOOLEANS extends UpdatableRecordImpl<T_BOOLEANS> implements Cloneable, Record11<Integer, Integer, String, String, String, String, String, String, String, String, Integer>, T_BOOLEANS_INTERFACE {
 
-	private static final long serialVersionUID = 1040985174;
+	private static final long serialVersionUID = 297747784;
 
 	/**
 	 * Setter for <code>T_BOOLEANS.ID</code>.
@@ -528,6 +528,17 @@ public class T_BOOLEANS extends UpdatableRecordImpl<T_BOOLEANS> implements Clone
 	 */
 	@Override
 	public T_BOOLEANS values(Integer value1, Integer value2, String value3, String value4, String value5, String value6, String value7, String value8, String value9, String value10, Integer value11) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
+		value7(value7);
+		value8(value8);
+		value9(value9);
+		value10(value10);
+		value11(value11);
 		return this;
 	}
 

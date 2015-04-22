@@ -31,7 +31,7 @@ import org.jooq.types.YearToMonth;
 @Table(name = "T_DATES")
 public class T_DATES extends UpdatableRecordImpl<T_DATES> implements Cloneable, Record8<Integer, Date, Timestamp, Timestamp, Integer, Long, YearToMonth, DayToSecond>, T_DATES_INTERFACE {
 
-	private static final long serialVersionUID = -1086625050;
+	private static final long serialVersionUID = 2045995238;
 
 	/**
 	 * Setter for <code>T_DATES.ID</code>.
@@ -407,6 +407,14 @@ public class T_DATES extends UpdatableRecordImpl<T_DATES> implements Cloneable, 
 	 */
 	@Override
 	public T_DATES values(Integer value1, Date value2, Timestamp value3, Timestamp value4, Integer value5, Long value6, YearToMonth value7, DayToSecond value8) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
+		value7(value7);
+		value8(value8);
 		return this;
 	}
 

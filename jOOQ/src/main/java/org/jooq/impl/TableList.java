@@ -41,6 +41,11 @@
 
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
+
 import java.util.List;
 
 import org.jooq.Context;
@@ -79,6 +84,14 @@ class TableList extends QueryPartList<Table<?>> {
     final void toSQLFields(Context<?> ctx) {
         String separator = "";
 
+        // [#4151] Some databases don't allow for qualifying column
+        // names here. Copy also to SelectQueryImpl
+        boolean unqualified = asList(DERBY, H2, HSQLDB).contains(ctx.family());
+        boolean qualify = ctx.qualify();
+
+        if (unqualified)
+            ctx.qualify(false);
+
         for (Table<?> table : this) {
             for (Field<?> field : table.fieldsRow().fields()) {
                 ctx.sql(separator);
@@ -87,5 +100,8 @@ class TableList extends QueryPartList<Table<?>> {
                 separator = ", ";
             }
         }
+
+        if (unqualified)
+            ctx.qualify(qualify);
     }
 }

@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
@@ -78,12 +79,12 @@ public interface Sequence<T extends Number> extends QueryPart {
     /**
      * Get the current value of this sequence
      */
-    @Support({ CUBRID, DB2, FIREBIRD, H2, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, DB2, FIREBIRD, HANA, H2, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     Field<T> currval();
 
     /**
      * Increment the sequence and get the next value
      */
-    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     Field<T> nextval();
 }

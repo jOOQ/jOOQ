@@ -26,7 +26,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.M_LIBRARY_INTERF
 @Table(name = "M_LIBRARY")
 public class M_LIBRARY extends TableRecordImpl<M_LIBRARY> implements Serializable, Cloneable, Record2<String, String>, M_LIBRARY_INTERFACE {
 
-	private static final long serialVersionUID = -1753005953;
+	private static final long serialVersionUID = 1632487359;
 
 	/**
 	 * Setter for <code>M_LIBRARY.AUTHOR</code>.
@@ -137,6 +137,8 @@ public class M_LIBRARY extends TableRecordImpl<M_LIBRARY> implements Serializabl
 	 */
 	@Override
 	public M_LIBRARY values(String value1, String value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

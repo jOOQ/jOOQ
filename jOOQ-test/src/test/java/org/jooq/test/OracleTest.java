@@ -1351,7 +1351,9 @@ public class OracleTest extends jOOQAbstractTest<
 
         // [#2133] Some checks verifying that the default schema generated code
         // is similar to the test schema generated code
-        assertEquals(TEST.getSequences().size(), DEFAULT_SCHEMA.getSequences().size());
+        // [#3899] The TEST generation has a sequence less, because of a naming
+        // collision caused by naming sequences 3899_$ and 3899$
+        assertEquals(TEST.getSequences().size() + 1, DEFAULT_SCHEMA.getSequences().size());
         assertEquals(TEST.getTables().size(), DEFAULT_SCHEMA.getTables().size());
         assertEquals(TEST.getUDTs().size(), DEFAULT_SCHEMA.getUDTs().size());
 

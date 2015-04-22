@@ -24,7 +24,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_785_INTERFACE;
 @Table(name = "T_785")
 public class T_785 extends TableRecordImpl<T_785> implements Cloneable, Record3<Integer, String, String>, T_785_INTERFACE {
 
-	private static final long serialVersionUID = 1492299743;
+	private static final long serialVersionUID = -1431396369;
 
 	/**
 	 * Setter for <code>T_785.ID</code>.
@@ -177,6 +177,9 @@ public class T_785 extends TableRecordImpl<T_785> implements Cloneable, Record3<
 	 */
 	@Override
 	public T_785 values(Integer value1, String value2, String value3) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
 		return this;
 	}
 

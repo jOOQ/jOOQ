@@ -30,7 +30,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY;
 @Table(name = "T_ARRAYS")
 public class T_ARRAYS extends UpdatableRecordImpl<T_ARRAYS> implements Cloneable, Record5<Integer, U_STRING_ARRAY, U_NUMBER_ARRAY, U_NUMBER_LONG_ARRAY, U_DATE_ARRAY>, T_ARRAYS_INTERFACE {
 
-	private static final long serialVersionUID = 606078641;
+	private static final long serialVersionUID = -1000040351;
 
 	/**
 	 * Setter for <code>T_ARRAYS.ID</code>.
@@ -280,6 +280,11 @@ public class T_ARRAYS extends UpdatableRecordImpl<T_ARRAYS> implements Cloneable
 	 */
 	@Override
 	public T_ARRAYS values(Integer value1, U_STRING_ARRAY value2, U_NUMBER_ARRAY value3, U_NUMBER_LONG_ARRAY value4, U_DATE_ARRAY value5) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
 		return this;
 	}
 

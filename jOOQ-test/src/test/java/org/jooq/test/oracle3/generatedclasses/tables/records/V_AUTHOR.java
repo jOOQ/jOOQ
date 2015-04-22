@@ -28,7 +28,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE;
 @Table(name = "V_AUTHOR")
 public class V_AUTHOR extends TableRecordImpl<V_AUTHOR> implements Cloneable, Record6<Integer, String, String, Date, Integer, U_ADDRESS_TYPE>, V_AUTHOR_INTERFACE {
 
-	private static final long serialVersionUID = 850322292;
+	private static final long serialVersionUID = 1031932340;
 
 	/**
 	 * Setter for <code>V_AUTHOR.ID</code>.
@@ -317,6 +317,12 @@ public class V_AUTHOR extends TableRecordImpl<V_AUTHOR> implements Cloneable, Re
 	 */
 	@Override
 	public V_AUTHOR values(Integer value1, String value2, String value3, Date value4, Integer value5, U_ADDRESS_TYPE value6) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
 		return this;
 	}
 

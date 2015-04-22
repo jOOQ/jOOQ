@@ -76,6 +76,39 @@ public interface T_EXOTIC_TYPES_INTERFACE extends Cloneable, Serializable {
 	@Column(name = "PLAIN_SQL_BINDING_XML")
 	public String getPLAIN_SQL_BINDING_XML();
 
+	/**
+	 * Setter for <code>T_EXOTIC_TYPES.ORACLE_XML_AS_IS</code>.
+	 */
+	public void setORACLE_XML_AS_IS(Object value);
+
+	/**
+	 * Getter for <code>T_EXOTIC_TYPES.ORACLE_XML_AS_IS</code>.
+	 */
+	@Column(name = "ORACLE_XML_AS_IS")
+	public Object getORACLE_XML_AS_IS();
+
+	/**
+	 * Setter for <code>T_EXOTIC_TYPES.ORACLE_XML_AS_DOCUMENT</code>.
+	 */
+	public void setORACLE_XML_AS_DOCUMENT(Object value);
+
+	/**
+	 * Getter for <code>T_EXOTIC_TYPES.ORACLE_XML_AS_DOCUMENT</code>.
+	 */
+	@Column(name = "ORACLE_XML_AS_DOCUMENT")
+	public Object getORACLE_XML_AS_DOCUMENT();
+
+	/**
+	 * Setter for <code>T_EXOTIC_TYPES.ORACLE_XML_AS_SQLXML</code>.
+	 */
+	public void setORACLE_XML_AS_SQLXML(Object value);
+
+	/**
+	 * Getter for <code>T_EXOTIC_TYPES.ORACLE_XML_AS_SQLXML</code>.
+	 */
+	@Column(name = "ORACLE_XML_AS_SQLXML")
+	public Object getORACLE_XML_AS_SQLXML();
+
 	// -------------------------------------------------------------------------
 	// FROM and INTO
 	// -------------------------------------------------------------------------

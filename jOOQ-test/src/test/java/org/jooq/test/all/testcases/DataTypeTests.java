@@ -245,9 +245,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         record.refresh();
         assertEquals("Blah", new String(record.getValue(T725_LOB())));
 
-        assertEquals(1, create.query("insert into " + T725().getName() + " values (?, ?)", 2, (Object) null).execute());
-        assertEquals(1, create.query("insert into " + T725().getName() + " values (?, ?)", 3, new byte[0]).execute());
-        assertEquals(1, create.query("insert into " + T725().getName() + " values (?, ?)", 4, "abc".getBytes()).execute());
+        String query = "insert into "
+            + T725().getName()
+            + " ("
+            + T725_ID().getName()
+            + ", "
+            + T725_LOB().getName()
+            + ") values (?, ?)";
+        assertEquals(1, create.query(query, 2, (Object) null).execute());
+        assertEquals(1, create.query(query, 3, new byte[0]).execute());
+        assertEquals(1, create.query(query, 4, "abc".getBytes()).execute());
 
         record.setValue(T725_ID(), 2);
         record.refresh();

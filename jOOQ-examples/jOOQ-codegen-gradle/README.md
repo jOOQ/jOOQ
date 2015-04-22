@@ -26,7 +26,7 @@ repositories {
 }
 
 dependencies {
-    compile 'org.jooq:jooq:3.5.0-SNAPSHOT'
+    compile 'org.jooq:jooq:3.6.0'
 
     runtime 'com.h2database:h2:1.4.177'
     testCompile 'junit:junit:4.11'
@@ -39,7 +39,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'org.jooq:jooq-codegen:3.5.0-SNAPSHOT'
+        classpath 'org.jooq:jooq-codegen:3.6.0'
         classpath 'com.h2database:h2:1.4.177'
     }
 }
@@ -48,7 +48,7 @@ buildscript {
 // ----------------------------------------------------------------------------------
 def writer = new StringWriter()
 def xml = new groovy.xml.MarkupBuilder(writer)
-.configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.5.0.xsd') {
+.configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.6.0.xsd') {
     jdbc() {
         driver('org.h2.Driver')
         url('jdbc:h2:~/test-gradle')

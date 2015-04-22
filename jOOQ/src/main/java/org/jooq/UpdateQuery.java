@@ -44,6 +44,7 @@ package org.jooq;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.ORACLE;
@@ -381,7 +382,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      *
      * @param from The added tables
      */
-    @Support({ INGRES, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ HANA, INGRES, POSTGRES, SQLSERVER, SYBASE })
     void addFrom(TableLike<?> from);
 
     /**
@@ -389,7 +390,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      *
      * @param from The added tables
      */
-    @Support({ INGRES, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ HANA, INGRES, POSTGRES, SQLSERVER, SYBASE })
     void addFrom(TableLike<?>... from);
 
     /**
@@ -397,7 +398,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      *
      * @param from The added tables
      */
-    @Support({ INGRES, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ HANA, INGRES, POSTGRES, SQLSERVER, SYBASE })
     void addFrom(Collection<? extends TableLike<?>> from);
 
     // ------------------------------------------------------------------------

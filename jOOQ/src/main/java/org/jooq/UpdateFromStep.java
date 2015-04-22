@@ -40,6 +40,7 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
@@ -69,19 +70,19 @@ public interface UpdateFromStep<R extends Record> extends UpdateWhereStep<R> {
     /**
      * Add a <code>FROM</code> clause to the query.
      */
-    @Support({ INGRES, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ HANA, INGRES, POSTGRES, SQLSERVER, SYBASE })
     UpdateWhereStep<R> from(TableLike<?> table);
 
     /**
      * Add a <code>FROM</code> clause to the query.
      */
-    @Support({ INGRES, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ HANA, INGRES, POSTGRES, SQLSERVER, SYBASE })
     UpdateWhereStep<R> from(TableLike<?>... table);
 
     /**
      * Add a <code>FROM</code> clause to the query.
      */
-    @Support({ INGRES, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ HANA, INGRES, POSTGRES, SQLSERVER, SYBASE })
     UpdateWhereStep<R> from(Collection<? extends TableLike<?>> tables);
 
     /**
@@ -94,7 +95,7 @@ public interface UpdateFromStep<R extends Record> extends UpdateWhereStep<R> {
      *
      * @see DSL#table(String)
      */
-    @Support({ INGRES, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ HANA, INGRES, POSTGRES, SQLSERVER, SYBASE })
     @PlainSQL
     UpdateWhereStep<R> from(String sql);
 
@@ -108,7 +109,7 @@ public interface UpdateFromStep<R extends Record> extends UpdateWhereStep<R> {
      *
      * @see DSL#table(String, Object...)
      */
-    @Support({ INGRES, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ HANA, INGRES, POSTGRES, SQLSERVER, SYBASE })
     @PlainSQL
     UpdateWhereStep<R> from(String sql, Object... bindings);
 
@@ -122,7 +123,7 @@ public interface UpdateFromStep<R extends Record> extends UpdateWhereStep<R> {
      *
      * @see DSL#table(String, QueryPart...)
      */
-    @Support({ INGRES, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ HANA, INGRES, POSTGRES, SQLSERVER, SYBASE })
     @PlainSQL
     UpdateWhereStep<R> from(String sql, QueryPart... parts);
 }

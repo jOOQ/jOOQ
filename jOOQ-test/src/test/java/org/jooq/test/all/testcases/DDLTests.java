@@ -325,7 +325,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testAlterTableAlterDefault() throws Exception {
-        assumeFamilyNotIn(INFORMIX, SQLITE);
+        assumeFamilyNotIn(HANA, INFORMIX, SQLITE);
 
         try {
             // TODO: Re-use jOOQ API for this

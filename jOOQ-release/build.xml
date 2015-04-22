@@ -32,12 +32,12 @@
         <copy todir="${dir.release}/${version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-scala/target/jooq-scala-${version-prefix}-javadoc.jar"/>
 		
         <copy todir="${dir.release}/${version}/jOOQ-pom"                      file="${dir.workspace}/pom.xml"/>
-        <copy todir="${dir.release}/${version}/jOOQ-pom/jooq"                 file="${dir.workspace}/jooq/pom.xml"/>
-        <copy todir="${dir.release}/${version}/jOOQ-pom/jooq-meta"            file="${dir.workspace}/jooq-meta/pom.xml"/>
-        <copy todir="${dir.release}/${version}/jOOQ-pom/jooq-meta-extensions" file="${dir.workspace}/jooq-meta-extensions/pom.xml"/>
-        <copy todir="${dir.release}/${version}/jOOQ-pom/jooq-codegen"         file="${dir.workspace}/jooq-codegen/pom.xml"/>
-        <copy todir="${dir.release}/${version}/jOOQ-pom/jooq-codegen-maven"   file="${dir.workspace}/jooq-codegen-maven/pom.xml"/>
-        <copy todir="${dir.release}/${version}/jOOQ-pom/jooq-scala"           file="${dir.workspace}/jooq-scala/pom.xml"/>
+        <copy todir="${dir.release}/${version}/jOOQ-pom/jooq"                 file="${dir.workspace}/jOOQ/pom.xml"/>
+        <copy todir="${dir.release}/${version}/jOOQ-pom/jooq-meta"            file="${dir.workspace}/jOOQ-meta/pom.xml"/>
+        <copy todir="${dir.release}/${version}/jOOQ-pom/jooq-meta-extensions" file="${dir.workspace}/jOOQ-meta-extensions/pom.xml"/>
+        <copy todir="${dir.release}/${version}/jOOQ-pom/jooq-codegen"         file="${dir.workspace}/jOOQ-codegen/pom.xml"/>
+        <copy todir="${dir.release}/${version}/jOOQ-pom/jooq-codegen-maven"   file="${dir.workspace}/jOOQ-codegen-maven/pom.xml"/>
+        <copy todir="${dir.release}/${version}/jOOQ-pom/jooq-scala"           file="${dir.workspace}/jOOQ-scala/pom.xml"/>
 	</target>
     
     <target name="copy-src">

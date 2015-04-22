@@ -111,6 +111,7 @@ class Splitter extends Generators {
                 && !canonicalPath.contains("jOOQ-explorer")
                 && !canonicalPath.contains("jOOQ-test")
                 && !canonicalPath.contains("jOOQ-tools")
+                && !canonicalPath.contains("jOOQ-vaadin-example")
                 && !canonicalPath.contains("jOOQ-website")
                 && !canonicalPath.contains("jOOQ-websites")
                 && !canonicalPath.contains("jOOQ-webservices")

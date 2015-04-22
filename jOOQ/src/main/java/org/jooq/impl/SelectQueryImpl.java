@@ -493,6 +493,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                         // It can be emulated by listing the table's fields, though
                         /* [pro] xx
                         xxxx xxxx
+                        xxxx xxxxx
                         xxxx xxxxxxxxx
                         xxxx xxxxxxx
                         xxxx xxxxxxx

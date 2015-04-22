@@ -79,12 +79,12 @@ public interface Sequence<T extends Number> extends QueryPart {
     /**
      * Get the current value of this sequence
      */
-    @Support({ CUBRID, DB2, FIREBIRD, HANA, H2, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, DB2, FIREBIRD, H2, HANA, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     Field<T> currval();
 
     /**
      * Increment the sequence and get the next value
      */
-    @Support({ CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     Field<T> nextval();
 }

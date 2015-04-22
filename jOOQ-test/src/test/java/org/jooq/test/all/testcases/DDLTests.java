@@ -778,7 +778,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testCreateGlobalTemporaryTable() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, SQLITE, SQLSERVER, SYBASE);
+        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, SQLITE, SQLSERVER, SYBASE);
 
         try {
             create().createGlobalTemporaryTable("t1").column("f1", SQLDataType.INTEGER).execute();

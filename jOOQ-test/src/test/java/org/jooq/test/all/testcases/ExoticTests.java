@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
@@ -580,19 +581,33 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testWithCheckOption() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE, SQLSERVER, SYBASE);
+        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE, SQLSERVER, SYBASE);
+
+        jOOQAbstractTest.reset = false;
+
+        create()
+            .insertInto(
+                table(selectFrom(TAuthor())
+                .where(TAuthor_ID().eq(3))
+                .withCheckOption()),
+
+                TAuthor_ID(),
+                TAuthor_LAST_NAME()
+            )
+            .values(3, "abc")
+            .execute();
 
         try {
             create()
                 .insertInto(
                     table(selectFrom(TAuthor())
-                    .where(TAuthor_ID().lt(3))
+                    .where(TAuthor_ID().lt(4))
                     .withCheckOption()),
 
                     TAuthor_ID(),
                     TAuthor_LAST_NAME()
                 )
-                .values(3, "abc")
+                .values(4, "abc")
                 .execute();
 
             fail();
@@ -601,13 +616,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testWithReadOnly() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE, SQLSERVER, SYBASE);
+        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE, SQLSERVER, SYBASE);
 
         try {
             create()
                 .insertInto(
                     table(selectFrom(TAuthor())
-                    .where(TAuthor_ID().lt(3))
+                    .where(TAuthor_ID().lt(10))
                     .withReadOnly()),
 
                     TAuthor_ID(),

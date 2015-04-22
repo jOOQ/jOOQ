@@ -1051,7 +1051,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testInsertOnDuplicateKeyUpdate() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, HANA, H2, INGRES, POSTGRES, SQLITE);
+        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, H2, HANA, INGRES, POSTGRES, SQLITE);
 
         jOOQAbstractTest.reset = false;
 
@@ -1079,7 +1079,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testInsertOnDuplicateKeyIgnore() throws Exception {
-        assumeFamilyNotIn(ASE, DERBY, FIREBIRD, HANA, H2, INGRES, POSTGRES, SQLITE);
+        assumeFamilyNotIn(ASE, DERBY, FIREBIRD, H2, HANA, INGRES, POSTGRES, SQLITE);
 
         jOOQAbstractTest.reset = false;
 

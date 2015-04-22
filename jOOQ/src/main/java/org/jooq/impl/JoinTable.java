@@ -271,11 +271,11 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
     }
 
     private final boolean emulateNaturalLeftOuterJoin(Context<?> context) {
-        return type == NATURAL_LEFT_OUTER_JOIN && asList(ACCESS, ASE, CUBRID, DB2, HANA, H2, INFORMIX, INGRES, SQLSERVER).contains(context.family());
+        return type == NATURAL_LEFT_OUTER_JOIN && asList(ACCESS, ASE, CUBRID, DB2, H2, HANA, INFORMIX, INGRES, SQLSERVER).contains(context.family());
     }
 
     private final boolean emulateNaturalRightOuterJoin(Context<?> context) {
-        return type == NATURAL_RIGHT_OUTER_JOIN && asList(ACCESS, ASE, CUBRID, DB2, HANA, H2, INFORMIX, INGRES, SQLSERVER).contains(context.family());
+        return type == NATURAL_RIGHT_OUTER_JOIN && asList(ACCESS, ASE, CUBRID, DB2, H2, HANA, INFORMIX, INGRES, SQLSERVER).contains(context.family());
     }
 
     private final void toSQLJoinCondition(Context<?> context) {

@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
@@ -103,6 +104,6 @@ public interface SelectIntoStep<R extends Record> extends SelectFromStep<R> {
     /**
      * Add an <code>INTO</code> clause to the <code>SELECT</code> statement.
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SQLITE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, H2, HANA, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SQLITE })
     SelectIntoStep<Record> into(Table<?> table);
 }

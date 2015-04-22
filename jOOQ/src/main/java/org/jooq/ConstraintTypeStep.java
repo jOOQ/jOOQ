@@ -418,6 +418,6 @@ public interface ConstraintTypeStep extends ConstraintFinalStep {
     /**
      * Create a <code>CHECK</code> constraint.
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     ConstraintFinalStep check(Condition condition);
 }

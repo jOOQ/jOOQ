@@ -67,6 +67,6 @@ public interface AlterSequenceRestartStep<T extends Number> {
     /**
      * Restart the sequence at a given value.
      */
-    @Support({ DB2, FIREBIRD, HANA, H2, HSQLDB, INFORMIX, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ DB2, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
     AlterSequenceFinalStep restartWith(T value);
 }

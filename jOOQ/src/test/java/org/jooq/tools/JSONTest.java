@@ -18,8 +18,11 @@ package org.jooq.tools;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import org.jooq.tools.json.JSONArray;
 import org.jooq.tools.json.JSONObject;
 
 import org.junit.Test;
@@ -27,15 +30,15 @@ import org.junit.Test;
 /**
  * @author Alok Menghrajani
  */
-public class JSONObjectTest {
+public class JSONTest {
 
     @Test
     public void testJSONObjectToString() {
         HashMap<String, String> map = new HashMap<String, String>();
 
         map.put("foo", "bar");
-        assertEquals(new JSONObject(map).toString(), "{\"foo\":\"bar\"}");
-        assertEquals(JSONObject.toJSONString(map), "{\"foo\":\"bar\"}");
+        assertEquals("{\"foo\":\"bar\"}", new JSONObject(map).toString());
+        assertEquals("{\"foo\":\"bar\"}", JSONObject.toJSONString(map));
 
         map.put("jOOQ", "isfun!");
         String s = new JSONObject(map).toString();
@@ -45,5 +48,15 @@ public class JSONObjectTest {
         s = JSONObject.toJSONString(map);
         assertTrue(s.equals("{\"foo\":\"bar\",\"jOOQ\":\"isfun!\"}") ||
             s.equals("{\"jOOQ\":\"isfun!\",\"foo\":\"bar\"}"));
+    }
+
+    @Test
+    public void testJSONArrayToString() {
+        List<String> list = new ArrayList<String>();
+
+        list.add("foo");
+        list.add("bar");
+        assertEquals("[\"foo\",\"bar\"]", new JSONArray(list).toString());
+        assertEquals("[\"foo\",\"bar\"]", JSONArray.toJSONString(list));
     }
 }

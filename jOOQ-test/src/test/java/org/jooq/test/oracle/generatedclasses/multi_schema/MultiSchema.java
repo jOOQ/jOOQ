@@ -15,7 +15,6 @@ import org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor;
 import org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook;
 import org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale;
 import org.jooq.test.oracle.generatedclasses.multi_schema.udt.NumberObject;
-import org.jooq.test.oracle.generatedclasses.multi_schema.udt.U_2522;
 
 
 /**
@@ -24,7 +23,7 @@ import org.jooq.test.oracle.generatedclasses.multi_schema.udt.U_2522;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class MultiSchema extends SchemaImpl {
 
-	private static final long serialVersionUID = 1163157854;
+	private static final long serialVersionUID = 1419826854;
 
 	/**
 	 * The reference instance of <code>MULTI_SCHEMA</code>
@@ -61,7 +60,6 @@ public class MultiSchema extends SchemaImpl {
 
 	private final List<UDT<?>> getUDTs0() {
 		return Arrays.<UDT<?>>asList(
-			NumberObject.NUMBER_OBJECT,
-			U_2522.U_2522);
+			NumberObject.NUMBER_OBJECT);
 	}
 }

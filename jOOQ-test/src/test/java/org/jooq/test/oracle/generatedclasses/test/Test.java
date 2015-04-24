@@ -52,7 +52,6 @@ import org.jooq.test.oracle.generatedclasses.test.udt.UNested_1;
 import org.jooq.test.oracle.generatedclasses.test.udt.UNested_3;
 import org.jooq.test.oracle.generatedclasses.test.udt.UStreetType;
 import org.jooq.test.oracle.generatedclasses.test.udt.U_2155Object;
-import org.jooq.test.oracle.generatedclasses.test.udt.U_2522;
 import org.jooq.test.oracle.generatedclasses.test.udt.U_3005;
 import org.jooq.test.oracle.generatedclasses.test.udt.U_3709;
 
@@ -63,7 +62,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.U_3709;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Test extends SchemaImpl {
 
-	private static final long serialVersionUID = -1265260448;
+	private static final long serialVersionUID = 895974077;
 
 	/**
 	 * The reference instance of <code>TEST</code>
@@ -154,7 +153,6 @@ public class Test extends SchemaImpl {
 			UNested_3.U_NESTED_3,
 			UStreetType.U_STREET_TYPE,
 			U_2155Object.U_2155_OBJECT,
-			U_2522.U_2522,
 			U_3005.U_3005,
 			U_3709.U_3709);
 	}

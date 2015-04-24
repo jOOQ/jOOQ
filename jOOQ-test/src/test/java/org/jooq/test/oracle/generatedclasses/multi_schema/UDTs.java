@@ -5,7 +5,6 @@ package org.jooq.test.oracle.generatedclasses.multi_schema;
 
 
 import org.jooq.test.oracle.generatedclasses.multi_schema.udt.NumberObject;
-import org.jooq.test.oracle.generatedclasses.multi_schema.udt.U_2522;
 
 
 /**
@@ -18,9 +17,4 @@ public class UDTs {
 	 * The type <code>MULTI_SCHEMA.NUMBER_OBJECT</code>
 	 */
 	public static NumberObject NUMBER_OBJECT = org.jooq.test.oracle.generatedclasses.multi_schema.udt.NumberObject.NUMBER_OBJECT;
-
-	/**
-	 * The type <code>MULTI_SCHEMA.U_2522</code>
-	 */
-	public static U_2522 U_2522 = org.jooq.test.oracle.generatedclasses.multi_schema.udt.U_2522.U_2522;
 }

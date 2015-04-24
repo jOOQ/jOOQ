@@ -58,7 +58,6 @@ import org.jooq.test.oracle.generatedclasses.test.routines.PTables2;
 import org.jooq.test.oracle.generatedclasses.test.routines.PTables3;
 import org.jooq.test.oracle.generatedclasses.test.routines.PTables4;
 import org.jooq.test.oracle.generatedclasses.test.routines.PUnused;
-import org.jooq.test.oracle.generatedclasses.test.routines.Pkg_2522;
 import org.jooq.test.oracle.generatedclasses.test.routines.SecondMax;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UBookArrayRecord;
@@ -70,7 +69,6 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongTableRe
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberTableRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UStringTableRecord;
-import org.jooq.test.oracle.generatedclasses.test.udt.records.U_2522Record;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.U_3005Record;
 
 
@@ -806,25 +804,6 @@ public class Routines {
 
 		p.execute(configuration);
 		return p;
-	}
-
-	/**
-	 * Call <code>TEST.PKG_2522</code>
-	 */
-	public static U_2522Record pkg_2522(Configuration configuration) {
-		Pkg_2522 f = new Pkg_2522();
-
-		f.execute(configuration);
-		return f.getReturnValue();
-	}
-
-	/**
-	 * Get <code>TEST.PKG_2522</code> as a field
-	 */
-	public static Field<U_2522Record> pkg_2522() {
-		Pkg_2522 f = new Pkg_2522();
-
-		return f.asField();
 	}
 
 	/**

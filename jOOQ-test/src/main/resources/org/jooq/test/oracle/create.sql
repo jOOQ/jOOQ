@@ -2113,8 +2113,6 @@ END;
 
 
 
-DROP PACKAGE pls_objects;
-/
 CREATE PACKAGE pls_objects AS
   
   pls_i_c CONSTANT NUMBER(7) := 1;

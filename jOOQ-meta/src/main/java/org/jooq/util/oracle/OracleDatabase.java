@@ -425,7 +425,10 @@ public class OracleDatabase extends AbstractDatabase {
                 .from(ALL_OBJECTS)
                 .leftOuterJoin(ALL_PROCEDURES)
                     .on(ALL_OBJECTS.OWNER.equal(ALL_PROCEDURES.OWNER))
-                    .and(ALL_OBJECTS.OBJECT_ID.equal(ALL_PROCEDURES.OBJECT_ID))
+                // [#4224] ALL_PROCEDURES.OBJECT_ID didn't exist in 10g
+                //         The join predicate doesn't seem to be required, as
+                //         Procedures are unique by (OWNER, OBJECT_NAME)
+                //  .and(ALL_OBJECTS.OBJECT_ID.equal(ALL_PROCEDURES.OBJECT_ID))
                     .and(ALL_OBJECTS.OBJECT_NAME.equal(ALL_PROCEDURES.OBJECT_NAME))
                 .where(ALL_OBJECTS.OWNER.upper().in(getInputSchemata())
                     .and(ALL_OBJECTS.OBJECT_TYPE.in("FUNCTION", "PROCEDURE")))
@@ -524,7 +527,7 @@ public class OracleDatabase extends AbstractDatabase {
         return DSL.using(getConnection(), SQLDialect.ORACLE);
     }
 
-    private boolean is10g() {
+    boolean is10g() {
         if (is10g == null) {
 
             // [#2864] The ALL_MVIEW_COMMENTS view was introduced in Oracle 10g

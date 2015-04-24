@@ -41,7 +41,9 @@
 package org.jooq.util.oracle;
 
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.util.oracle.sys.Tables.ALL_ARGUMENTS;
 import static org.jooq.util.oracle.sys.Tables.ALL_IDENTIFIERS;
+import static org.jooq.util.oracle.sys.Tables.ALL_OBJECTS;
 import static org.jooq.util.oracle.sys.Tables.ALL_PROCEDURES;
 
 import java.math.BigDecimal;
@@ -76,23 +78,43 @@ public class OraclePackageDefinition extends AbstractPackageDefinition {
         for (Record record : create()
                 .selectDistinct(
                     ALL_PROCEDURES.PROCEDURE_NAME,
-                    ALL_PROCEDURES.OBJECT_ID,
-                    ALL_PROCEDURES.OVERLOAD)
-                .from(ALL_PROCEDURES)
-                .where(ALL_PROCEDURES.OWNER.in(getSchema().getName()))
+
+                 // [#4224] ALL_PROCEDURES.OBJECT_ID didn't exist in 10g
+                 // ALL_PROCEDURES.OBJECT_ID,
+                    ALL_OBJECTS.OBJECT_ID,
+
+                 // [#4224] ... neither did ALL_PROCEDURES.OVERLOAD
+                 // ALL_PROCEDURES.OVERLOAD
+                    ALL_ARGUMENTS.OVERLOAD
+                )
+                .from(ALL_OBJECTS)
+                .join(ALL_PROCEDURES)
+                    .on(ALL_OBJECTS.OWNER.eq(ALL_PROCEDURES.OWNER))
+                    .and(ALL_OBJECTS.OBJECT_NAME.eq(ALL_PROCEDURES.OBJECT_NAME))
+                .leftOuterJoin(ALL_ARGUMENTS)
+                    .on(ALL_ARGUMENTS.OWNER.eq(ALL_PROCEDURES.OWNER))
+                    .and(ALL_ARGUMENTS.PACKAGE_NAME.eq(ALL_PROCEDURES.OBJECT_NAME))
+                    .and(ALL_ARGUMENTS.OBJECT_NAME.eq(ALL_PROCEDURES.PROCEDURE_NAME))
+                .where(ALL_OBJECTS.OWNER.in(getSchema().getName()))
+
+                // Exclude "PACKAGE BODY"
+                .and(ALL_OBJECTS.OBJECT_TYPE.eq("PACKAGE"))
+
                 // There is this weird entry in ALL_PROCEDURES where
                 // PROCEDURE_NAME IS NULL AND SUBPROGRAM_ID = 0
                 .and(ALL_PROCEDURES.PROCEDURE_NAME.isNotNull())
                 .and(ALL_PROCEDURES.OBJECT_NAME.equal(getName()))
-                .orderBy(ALL_PROCEDURES.PROCEDURE_NAME, ALL_PROCEDURES.OVERLOAD)
+                .orderBy(
+                    ALL_PROCEDURES.PROCEDURE_NAME,
+                    ALL_ARGUMENTS.OVERLOAD)
                 .fetch()) {
 
             result.add(new OracleRoutineDefinition(getSchema(),
                 this,
                 record.getValue(ALL_PROCEDURES.PROCEDURE_NAME),
                 "",
-                record.getValue(ALL_PROCEDURES.OBJECT_ID),
-                record.getValue(ALL_PROCEDURES.OVERLOAD)));
+                record.getValue(ALL_OBJECTS.OBJECT_ID),
+                record.getValue(ALL_ARGUMENTS.OVERLOAD)));
         }
 
         return result;

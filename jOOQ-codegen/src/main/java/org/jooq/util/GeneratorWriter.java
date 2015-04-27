@@ -91,6 +91,10 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
         this.sb = new StringBuilder();
     }
 
+    public final File file() {
+        return file;
+    }
+
     @SuppressWarnings("unchecked")
     public final W print(char value) {
         print("" + value);

@@ -744,15 +744,15 @@ public class JavaGenerator extends AbstractGenerator {
 
 
     protected void generateRecord(TableDefinition table) {
-        log.info("Generating record", getStrategy().getFileName(table, Mode.RECORD));
         JavaWriter out = newJavaWriter(getStrategy().getFile(table, Mode.RECORD));
+        log.info("Generating record", out.file().getName());
         generateRecord(table, out);
         out.close();
     }
 
     protected void generateUDTRecord(UDTDefinition udt) {
-        log.info("Generating record", getStrategy().getFileName(udt, Mode.RECORD));
         JavaWriter out = newJavaWriter(getStrategy().getFile(udt, Mode.RECORD));
+        log.info("Generating record", out.file().getName());
         generateRecord(udt, out);
         out.close();
     }
@@ -1192,15 +1192,15 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generateInterface(TableDefinition table) {
-        log.info("Generating interface", getStrategy().getFileName(table, Mode.INTERFACE));
         JavaWriter out = newJavaWriter(getStrategy().getFile(table, Mode.INTERFACE));
+        log.info("Generating interface", out.file().getName());
         generateInterface(table, out);
         out.close();
     }
 
     protected void generateUDTInterface(UDTDefinition udt) {
-        log.info("Generating interface", getStrategy().getFileName(udt, Mode.INTERFACE));
         JavaWriter out = newJavaWriter(getStrategy().getFile(udt, Mode.INTERFACE));
+        log.info("Generating interface", out.file().getName());
         generateInterface(udt, out);
         out.close();
     }
@@ -1323,8 +1323,8 @@ public class JavaGenerator extends AbstractGenerator {
 
     @SuppressWarnings("unused")
     protected void generateUDT(SchemaDefinition schema, UDTDefinition udt) {
-        log.info("Generating UDT ", getStrategy().getFileName(udt));
         JavaWriter out = newJavaWriter(getStrategy().getFile(udt));
+        log.info("Generating UDT ", out.file().getName());
         generateUDT(udt, out);
         out.close();
     }
@@ -1615,8 +1615,8 @@ public class JavaGenerator extends AbstractGenerator {
 
     @SuppressWarnings("unused")
     protected void generateArray(SchemaDefinition schema, ArrayDefinition array) {
-        log.info("Generating ARRAY", getStrategy().getFileName(array, Mode.RECORD));
         JavaWriter out = newJavaWriter(getStrategy().getFile(array, Mode.RECORD));
+        log.info("Generating ARRAY", out.file().getName());
         generateArray(array, out);
         out.close();
     }
@@ -1745,8 +1745,8 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generateEnum(EnumDefinition e) {
-        log.info("Generating ENUM", getStrategy().getFileName(e, Mode.ENUM));
         JavaWriter out = newJavaWriter(getStrategy().getFile(e, Mode.ENUM));
+        log.info("Generating ENUM", out.file().getName());
         generateEnum(e, out);
         out.close();
     }
@@ -1928,8 +1928,8 @@ public class JavaGenerator extends AbstractGenerator {
     @SuppressWarnings("unused")
     protected void generatePackage(SchemaDefinition schema, PackageDefinition pkg) {
         /* [pro] */
-        log.info("Generating package", pkg);
         JavaWriter out = newJavaWriter(getStrategy().getFile(pkg));
+        log.info("Generating package", pkg);
         generatePackage(pkg, out);
         out.close();
         /* [/pro] */
@@ -2062,8 +2062,8 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generateDao(TableDefinition table) {
-        log.info("Generating DAO", getStrategy().getFileName(table, Mode.DAO));
         JavaWriter out = newJavaWriter(getStrategy().getFile(table, Mode.DAO));
+        log.info("Generating DAO", out.file().getName());
         generateDao(table, out);
         out.close();
     }
@@ -2079,7 +2079,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         UniqueKeyDefinition key = table.getPrimaryKey();
         if (key == null) {
-            log.info("Skipping DAO generation", getStrategy().getFileName(table, Mode.DAO));
+            log.info("Skipping DAO generation", out.file().getName());
             return;
         }
 
@@ -2264,15 +2264,15 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generatePojo(TableDefinition table) {
-        log.info("Generating POJO", getStrategy().getFileName(table, Mode.POJO));
         JavaWriter out = newJavaWriter(getStrategy().getFile(table, Mode.POJO));
+        log.info("Generating POJO", out.file().getName());
         generatePojo(table, out);
         out.close();
     }
 
     protected void generateUDTPojo(UDTDefinition udt) {
-        log.info("Generating POJO", getStrategy().getFileName(udt, Mode.POJO));
         JavaWriter out = newJavaWriter(getStrategy().getFile(udt, Mode.POJO));
+        log.info("Generating POJO", out.file().getName());
         generatePojo(udt, out);
         out.close();
     }
@@ -2714,7 +2714,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String schemaId = out.ref(getStrategy().getFullJavaIdentifier(schema), 2);
         final String comment = defaultString(table.getComment());
 
-        log.info("Generating table", getStrategy().getFileName(table) +
+        log.info("Generating table", out.file().getName() +
             " [input=" + table.getInputName() +
             ", output=" + table.getOutputName() +
             ", pk=" + (primaryKey != null ? primaryKey.getName() : "N/A") +
@@ -3126,9 +3126,9 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generateSchema(SchemaDefinition schema) {
-        log.info("Generating schema", getStrategy().getFileName(schema));
-        log.info("----------------------------------------------------------");
         JavaWriter out = newJavaWriter(getStrategy().getFile(schema));
+        log.info("Generating schema", out.file().getName());
+        log.info("----------------------------------------------------------");
         generateSchema(schema, out);
         out.close();
     }
@@ -3407,8 +3407,8 @@ public class JavaGenerator extends AbstractGenerator {
 
     @SuppressWarnings("unused")
     protected void generateRoutine(SchemaDefinition schema, RoutineDefinition routine) {
-        log.info("Generating routine", getStrategy().getFileName(routine));
         JavaWriter out = newJavaWriter(getStrategy().getFile(routine));
+        log.info("Generating routine", out.file().getName());
         generateRoutine(routine, out);
         out.close();
     }

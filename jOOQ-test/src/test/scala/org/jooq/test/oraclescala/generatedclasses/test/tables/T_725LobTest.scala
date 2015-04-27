@@ -53,6 +53,26 @@ class T_725LobTest(alias : String, aliased : Table[T_725LobTestRecord], paramete
 	val LOB : TableField[T_725LobTestRecord, Array[scala.Byte]] = createField("LOB", org.jooq.impl.SQLDataType.BLOB, "")
 
 	/**
+	 * The column <code>TEST.T_725_LOB_TEST.USER_JAVA_SQL_CLOB</code>.
+	 */
+	val USER_JAVA_SQL_CLOB : TableField[T_725LobTestRecord, String] = createField("USER_JAVA_SQL_CLOB", org.jooq.impl.SQLDataType.CLOB, "")
+
+	/**
+	 * The column <code>TEST.T_725_LOB_TEST.USER_JAVA_SQL_BLOB</code>.
+	 */
+	val USER_JAVA_SQL_BLOB : TableField[T_725LobTestRecord, Array[scala.Byte]] = createField("USER_JAVA_SQL_BLOB", org.jooq.impl.SQLDataType.BLOB, "")
+
+	/**
+	 * The column <code>TEST.T_725_LOB_TEST.JOOQ_JAVA_SQL_CLOB</code>.
+	 */
+	val JOOQ_JAVA_SQL_CLOB : TableField[T_725LobTestRecord, String] = createField("JOOQ_JAVA_SQL_CLOB", org.jooq.impl.SQLDataType.CLOB, "")
+
+	/**
+	 * The column <code>TEST.T_725_LOB_TEST.JOOQ_JAVA_SQL_BLOB</code>.
+	 */
+	val JOOQ_JAVA_SQL_BLOB : TableField[T_725LobTestRecord, Array[scala.Byte]] = createField("JOOQ_JAVA_SQL_BLOB", org.jooq.impl.SQLDataType.BLOB, "")
+
+	/**
 	 * Create a <code>TEST.T_725_LOB_TEST</code> table reference
 	 */
 	def this() = {

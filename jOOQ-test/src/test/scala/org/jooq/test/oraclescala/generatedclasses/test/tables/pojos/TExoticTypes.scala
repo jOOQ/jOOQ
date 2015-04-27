@@ -30,10 +30,11 @@ class TExoticTypes(
 	, private var plainSqlBindingXml : String      
 	, private var oracleXmlAsIs : Object      
 	, private var oracleXmlAsDocument : Object      
+	, private var oracleXmlAsSqlxml : Object      
 ) extends Serializable {
 
 	def this() = {
-		this(null, null, null, null, null, null, null)
+		this(null, null, null, null, null, null, null, null)
 	}
 
 	def this (value : TExoticTypes) = {
@@ -45,6 +46,7 @@ class TExoticTypes(
 			, value.plainSqlBindingXml
 			, value.oracleXmlAsIs
 			, value.oracleXmlAsDocument
+			, value.oracleXmlAsSqlxml
 		)
 	}
 
@@ -113,6 +115,15 @@ class TExoticTypes(
 		this.oracleXmlAsDocument = oracleXmlAsDocument
 	}
 
+	@Column(name = "ORACLE_XML_AS_SQLXML")
+	def getOracleXmlAsSqlxml : Object = {
+		this.oracleXmlAsSqlxml
+	}
+
+	def setOracleXmlAsSqlxml(oracleXmlAsSqlxml : Object) : Unit = {
+		this.oracleXmlAsSqlxml = oracleXmlAsSqlxml
+	}
+
 	override def equals(obj : Any) : scala.Boolean = {
 		if (this == obj)
 			return true
@@ -163,6 +174,12 @@ class TExoticTypes(
 		}
 		else if (!oracleXmlAsDocument.equals(other.oracleXmlAsDocument))
 			return false
+		if (oracleXmlAsSqlxml == null) {
+			if (other.oracleXmlAsSqlxml != null)
+				return false
+		}
+		else if (!oracleXmlAsSqlxml.equals(other.oracleXmlAsSqlxml))
+			return false
 		return true
 	}
 
@@ -176,6 +193,7 @@ class TExoticTypes(
 		result = prime * result + (if (plainSqlBindingXml == null) 0 else plainSqlBindingXml.hashCode())
 		result = prime * result + (if (oracleXmlAsIs == null) 0 else oracleXmlAsIs.hashCode())
 		result = prime * result + (if (oracleXmlAsDocument == null) 0 else oracleXmlAsDocument.hashCode())
+		result = prime * result + (if (oracleXmlAsSqlxml == null) 0 else oracleXmlAsSqlxml.hashCode())
 		return result
 	}
 }

@@ -88,4 +88,11 @@ class TExoticTypesDao(configuration : Configuration) extends DAOImpl[TExoticType
 	def fetchByOracleXmlAsDocument(values : Object*) : List[org.jooq.test.oraclescala.generatedclasses.test.tables.pojos.TExoticTypes] = {
 		fetch(TExoticTypes.T_EXOTIC_TYPES.ORACLE_XML_AS_DOCUMENT, values:_*)
 	}
+
+	/**
+	 * Fetch records that have <code>ORACLE_XML_AS_SQLXML IN (values)</code>
+	 */
+	def fetchByOracleXmlAsSqlxml(values : Object*) : List[org.jooq.test.oraclescala.generatedclasses.test.tables.pojos.TExoticTypes] = {
+		fetch(TExoticTypes.T_EXOTIC_TYPES.ORACLE_XML_AS_SQLXML, values:_*)
+	}
 }

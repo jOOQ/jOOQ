@@ -18,8 +18,8 @@ import javax.validation.constraints.NotNull
 
 import org.jooq.Field
 import org.jooq.Record1
-import org.jooq.Record7
-import org.jooq.Row7
+import org.jooq.Record8
+import org.jooq.Row8
 import org.jooq.impl.UpdatableRecordImpl
 import org.jooq.test.oraclescala.generatedclasses.test.tables.TExoticTypes
 
@@ -29,7 +29,7 @@ import org.jooq.test.oraclescala.generatedclasses.test.tables.TExoticTypes
  */
 @Entity
 @Table(name = "T_EXOTIC_TYPES", schema = "TEST")
-class TExoticTypesRecord extends UpdatableRecordImpl[TExoticTypesRecord](TExoticTypes.T_EXOTIC_TYPES) with Record7[Integer, UUID, Serializable, String, String, Object, Object] {
+class TExoticTypesRecord extends UpdatableRecordImpl[TExoticTypesRecord](TExoticTypes.T_EXOTIC_TYPES) with Record8[Integer, UUID, Serializable, String, String, Object, Object, Object] {
 
 	/**
 	 * Setter for <code>TEST.T_EXOTIC_TYPES.ID</code>.
@@ -145,6 +145,22 @@ class TExoticTypesRecord extends UpdatableRecordImpl[TExoticTypesRecord](TExotic
 		if (r == null) null else r.asInstanceOf[Object]
 	}
 
+	/**
+	 * Setter for <code>TEST.T_EXOTIC_TYPES.ORACLE_XML_AS_SQLXML</code>.
+	 */
+	def setOracleXmlAsSqlxml(value : Object) : Unit = {
+		setValue(7, value)
+	}
+
+	/**
+	 * Getter for <code>TEST.T_EXOTIC_TYPES.ORACLE_XML_AS_SQLXML</code>.
+	 */
+	@Column(name = "ORACLE_XML_AS_SQLXML")
+	def getOracleXmlAsSqlxml : Object = {
+		val r = getValue(7)
+		if (r == null) null else r.asInstanceOf[Object]
+	}
+
 	// -------------------------------------------------------------------------
 	// Primary key information
 	// -------------------------------------------------------------------------
@@ -153,15 +169,15 @@ class TExoticTypesRecord extends UpdatableRecordImpl[TExoticTypesRecord](TExotic
 	}
 
 	// -------------------------------------------------------------------------
-	// Record7 type implementation
+	// Record8 type implementation
 	// -------------------------------------------------------------------------
 
-	override def fieldsRow : Row7[Integer, UUID, Serializable, String, String, Object, Object] = {
-		super.fieldsRow.asInstanceOf[ Row7[Integer, UUID, Serializable, String, String, Object, Object] ]
+	override def fieldsRow : Row8[Integer, UUID, Serializable, String, String, Object, Object, Object] = {
+		super.fieldsRow.asInstanceOf[ Row8[Integer, UUID, Serializable, String, String, Object, Object, Object] ]
 	}
 
-	override def valuesRow : Row7[Integer, UUID, Serializable, String, String, Object, Object] = {
-		super.valuesRow.asInstanceOf[ Row7[Integer, UUID, Serializable, String, String, Object, Object] ]
+	override def valuesRow : Row8[Integer, UUID, Serializable, String, String, Object, Object, Object] = {
+		super.valuesRow.asInstanceOf[ Row8[Integer, UUID, Serializable, String, String, Object, Object, Object] ]
 	}
 	override def field1 : Field[Integer] = TExoticTypes.T_EXOTIC_TYPES.ID
 	override def field2 : Field[UUID] = TExoticTypes.T_EXOTIC_TYPES.UU
@@ -170,6 +186,7 @@ class TExoticTypesRecord extends UpdatableRecordImpl[TExoticTypesRecord](TExotic
 	override def field5 : Field[String] = TExoticTypes.T_EXOTIC_TYPES.PLAIN_SQL_BINDING_XML
 	override def field6 : Field[Object] = TExoticTypes.T_EXOTIC_TYPES.ORACLE_XML_AS_IS
 	override def field7 : Field[Object] = TExoticTypes.T_EXOTIC_TYPES.ORACLE_XML_AS_DOCUMENT
+	override def field8 : Field[Object] = TExoticTypes.T_EXOTIC_TYPES.ORACLE_XML_AS_SQLXML
 	override def value1 : Integer = getId
 	override def value2 : UUID = getUu
 	override def value3 : Serializable = getJavaIoSerializable
@@ -177,6 +194,7 @@ class TExoticTypesRecord extends UpdatableRecordImpl[TExoticTypesRecord](TExotic
 	override def value5 : String = getPlainSqlBindingXml
 	override def value6 : Object = getOracleXmlAsIs
 	override def value7 : Object = getOracleXmlAsDocument
+	override def value8 : Object = getOracleXmlAsSqlxml
 
 	override def value1(value : Integer) : TExoticTypesRecord = {
 		setId(value)
@@ -213,7 +231,12 @@ class TExoticTypesRecord extends UpdatableRecordImpl[TExoticTypesRecord](TExotic
 		this
 	}
 
-	override def values(value1 : Integer, value2 : UUID, value3 : Serializable, value4 : String, value5 : String, value6 : Object, value7 : Object) : TExoticTypesRecord = {
+	override def value8(value : Object) : TExoticTypesRecord = {
+		setOracleXmlAsSqlxml(value)
+		this
+	}
+
+	override def values(value1 : Integer, value2 : UUID, value3 : Serializable, value4 : String, value5 : String, value6 : Object, value7 : Object, value8 : Object) : TExoticTypesRecord = {
 		this.value1(value1)
 		this.value2(value2)
 		this.value3(value3)
@@ -221,13 +244,14 @@ class TExoticTypesRecord extends UpdatableRecordImpl[TExoticTypesRecord](TExotic
 		this.value5(value5)
 		this.value6(value6)
 		this.value7(value7)
+		this.value8(value8)
 		this
 	}
 
 	/**
 	 * Create a detached, initialised TExoticTypesRecord
 	 */
-	def this(id : Integer, uu : UUID, javaIoSerializable : Serializable, plainSqlConverterXml : String, plainSqlBindingXml : String, oracleXmlAsIs : Object, oracleXmlAsDocument : Object) = {
+	def this(id : Integer, uu : UUID, javaIoSerializable : Serializable, plainSqlConverterXml : String, plainSqlBindingXml : String, oracleXmlAsIs : Object, oracleXmlAsDocument : Object, oracleXmlAsSqlxml : Object) = {
 		this()
 
 		setValue(0, id)
@@ -237,5 +261,6 @@ class TExoticTypesRecord extends UpdatableRecordImpl[TExoticTypesRecord](TExotic
 		setValue(4, plainSqlBindingXml)
 		setValue(5, oracleXmlAsIs)
 		setValue(6, oracleXmlAsDocument)
+		setValue(7, oracleXmlAsSqlxml)
 	}
 }

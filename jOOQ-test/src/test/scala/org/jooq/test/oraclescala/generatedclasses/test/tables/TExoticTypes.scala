@@ -80,6 +80,11 @@ class TExoticTypes(alias : String, aliased : Table[TExoticTypesRecord], paramete
 	val ORACLE_XML_AS_DOCUMENT : TableField[TExoticTypesRecord, Object] = createField("ORACLE_XML_AS_DOCUMENT", org.jooq.impl.DefaultDataType.getDefaultDataType("XMLTYPE"), "")
 
 	/**
+	 * The column <code>TEST.T_EXOTIC_TYPES.ORACLE_XML_AS_SQLXML</code>.
+	 */
+	val ORACLE_XML_AS_SQLXML : TableField[TExoticTypesRecord, Object] = createField("ORACLE_XML_AS_SQLXML", org.jooq.impl.DefaultDataType.getDefaultDataType("XMLTYPE"), "")
+
+	/**
 	 * Create a <code>TEST.T_EXOTIC_TYPES</code> table reference
 	 */
 	def this() = {

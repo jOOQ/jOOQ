@@ -6,6 +6,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables.pojos
 
 import java.io.Serializable
 import java.lang.Integer
+import java.lang.String
 
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -24,16 +25,24 @@ import scala.Array
 class T_725LobTest(
 	  private var id : Integer          
 	, private var lob : Array[scala.Byte]
+	, private var userJavaSqlClob : String           
+	, private var userJavaSqlBlob : Array[scala.Byte]
+	, private var jooqJavaSqlClob : String           
+	, private var jooqJavaSqlBlob : Array[scala.Byte]
 ) extends Serializable {
 
 	def this() = {
-		this(null, null)
+		this(null, null, null, null, null, null)
 	}
 
 	def this (value : T_725LobTest) = {
 		this(
 			  value.id
 			, value.lob
+			, value.userJavaSqlClob
+			, value.userJavaSqlBlob
+			, value.jooqJavaSqlClob
+			, value.jooqJavaSqlBlob
 		)
 	}
 
@@ -57,6 +66,42 @@ class T_725LobTest(
 		this.lob = lob
 	}
 
+	@Column(name = "USER_JAVA_SQL_CLOB")
+	def getUserJavaSqlClob : String = {
+		this.userJavaSqlClob
+	}
+
+	def setUserJavaSqlClob(userJavaSqlClob : String) : Unit = {
+		this.userJavaSqlClob = userJavaSqlClob
+	}
+
+	@Column(name = "USER_JAVA_SQL_BLOB")
+	def getUserJavaSqlBlob : Array[scala.Byte] = {
+		this.userJavaSqlBlob
+	}
+
+	def setUserJavaSqlBlob(userJavaSqlBlob : Array[scala.Byte]) : Unit = {
+		this.userJavaSqlBlob = userJavaSqlBlob
+	}
+
+	@Column(name = "JOOQ_JAVA_SQL_CLOB")
+	def getJooqJavaSqlClob : String = {
+		this.jooqJavaSqlClob
+	}
+
+	def setJooqJavaSqlClob(jooqJavaSqlClob : String) : Unit = {
+		this.jooqJavaSqlClob = jooqJavaSqlClob
+	}
+
+	@Column(name = "JOOQ_JAVA_SQL_BLOB")
+	def getJooqJavaSqlBlob : Array[scala.Byte] = {
+		this.jooqJavaSqlBlob
+	}
+
+	def setJooqJavaSqlBlob(jooqJavaSqlBlob : Array[scala.Byte]) : Unit = {
+		this.jooqJavaSqlBlob = jooqJavaSqlBlob
+	}
+
 	override def equals(obj : Any) : scala.Boolean = {
 		if (this == obj)
 			return true
@@ -77,6 +122,30 @@ class T_725LobTest(
 		}
 		else if (!lob.equals(other.lob))
 			return false
+		if (userJavaSqlClob == null) {
+			if (other.userJavaSqlClob != null)
+				return false
+		}
+		else if (!userJavaSqlClob.equals(other.userJavaSqlClob))
+			return false
+		if (userJavaSqlBlob == null) {
+			if (other.userJavaSqlBlob != null)
+				return false
+		}
+		else if (!userJavaSqlBlob.equals(other.userJavaSqlBlob))
+			return false
+		if (jooqJavaSqlClob == null) {
+			if (other.jooqJavaSqlClob != null)
+				return false
+		}
+		else if (!jooqJavaSqlClob.equals(other.jooqJavaSqlClob))
+			return false
+		if (jooqJavaSqlBlob == null) {
+			if (other.jooqJavaSqlBlob != null)
+				return false
+		}
+		else if (!jooqJavaSqlBlob.equals(other.jooqJavaSqlBlob))
+			return false
 		return true
 	}
 
@@ -85,6 +154,10 @@ class T_725LobTest(
 		var result = 1
 		result = prime * result + (if (id == null) 0 else id.hashCode())
 		result = prime * result + (if (lob == null) 0 else lob.hashCode())
+		result = prime * result + (if (userJavaSqlClob == null) 0 else userJavaSqlClob.hashCode())
+		result = prime * result + (if (userJavaSqlBlob == null) 0 else userJavaSqlBlob.hashCode())
+		result = prime * result + (if (jooqJavaSqlClob == null) 0 else jooqJavaSqlClob.hashCode())
+		result = prime * result + (if (jooqJavaSqlBlob == null) 0 else jooqJavaSqlBlob.hashCode())
 		return result
 	}
 }

@@ -43,8 +43,9 @@ package org.jooq.util;
 
 import static org.jooq.tools.StringUtils.defaultIfBlank;
 import static org.jooq.tools.StringUtils.defaultString;
-import static org.jooq.util.JavaGenerator.Language.JAVA;
-import static org.jooq.util.JavaGenerator.Language.SCALA;
+import static org.jooq.util.AbstractGenerator.Language.JAVA;
+import static org.jooq.util.AbstractGenerator.Language.SCALA;
+import static org.jooq.util.GenerationUtil.convertToIdentifier;
 
 import java.io.File;
 import java.io.IOException;
@@ -167,7 +168,6 @@ public class JavaGenerator extends AbstractGenerator {
      */
     private Set<File>                     files                        = new LinkedHashSet<File>();
 
-    private final Language                language;
     private final boolean                 scala;
     private final String                  tokenVoid;
 
@@ -176,13 +176,10 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     JavaGenerator(Language language) {
-        this.language = language;
+        super(language);
+
         this.scala = (language == SCALA);
         this.tokenVoid = (scala ? "Unit" : "void");
-    }
-
-    enum Language {
-        JAVA, SCALA;
     }
 
     @Override
@@ -1768,7 +1765,7 @@ public class JavaGenerator extends AbstractGenerator {
             String literal = literals.get(i);
             String terminator = (i == literals.size() - 1) ? ";" : ",";
 
-            String identifier = GenerationUtil.convertToJavaIdentifier(literal);
+            String identifier = convertToIdentifier(literal, language);
 
             // [#2781] Disambiguate collisions with the leading package name
             if (identifier.equals(getStrategy().getJavaPackageName(e).replaceAll("\\..*", ""))) {

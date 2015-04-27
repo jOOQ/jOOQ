@@ -18,6 +18,7 @@ DROP TABLE multi_schema.t_book_sale/
 DROP TABLE multi_schema.t_book/
 DROP TABLE multi_schema.t_author/
 
+DROP TABLE t_reserved/
 DROP TABLE t_dates/
 DROP TABLE t_triggers/
 DROP TABLE t_arrays/
@@ -2153,4 +2154,48 @@ CREATE PACKAGE BODY pls_objects AS
     RETURN i;
   END f_bool;
 END pls_objects;
+/
+
+
+CREATE TABLE t_reserved(
+  "abstract" INT,
+  "case" INT,
+  "catch" INT,
+  "class" INT,
+  "def" INT,
+  "do" INT,
+  "else" INT,
+  "extends" INT,
+  "false" INT,
+  "final" INT,
+  "finally" INT,
+  "for" INT,
+  "forSome" INT,
+  "if" INT,
+  "implicit" INT,
+  "import" INT,
+  "lazy" INT,
+  "match" INT,
+  "new" INT,
+  "null" INT,
+  "object" INT,
+  "override" INT,
+  "package" INT,
+  "private" INT,
+  "protected" INT,
+  "return" INT,
+  "sealed" INT,
+  "super" INT,
+  "this" INT,
+  "throw" INT,
+  "trait" INT,
+  "try" INT,
+  "true" INT,
+  "type" INT,
+  "val" INT,
+  "var" INT,
+  "while" INT,
+  "with" INT,
+  "yield" INT
+)
 /

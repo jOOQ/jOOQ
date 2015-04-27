@@ -40,8 +40,6 @@
  */
 package org.jooq.util;
 
-import static org.jooq.util.GenerationUtil.convertToJavaIdentifier;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,7 +98,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
     @Override
     public String getJavaIdentifier(Definition definition) {
-        return GenerationUtil.convertToJavaIdentifier(definition.getOutputName().toUpperCase());
+        return definition.getOutputName().toUpperCase();
     }
 
     @Override
@@ -161,7 +159,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
         // [#282] In multi-schema setups, the schema name goes into the package
         if (definition.getDatabase().getSchemata().size() > 1) {
             sb.append(".");
-            sb.append(convertToJavaIdentifier(definition.getSchema().getOutputName()).toLowerCase());
+            sb.append(getJavaIdentifier(definition.getSchema()).toLowerCase());
         }
 
         // Some definitions have their dedicated subpackages, e.g. "tables", "routines"
@@ -212,8 +210,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
     private String getJavaClassName0(Definition definition, Mode mode) {
         StringBuilder result = new StringBuilder();
 
-        String cc = StringUtils.toCamelCase(definition.getOutputName());
-        result.append(GenerationUtil.convertToJavaIdentifier(cc));
+        result.append(StringUtils.toCamelCase(definition.getOutputName()));
 
         if (mode == Mode.RECORD) {
             result.append("Record");

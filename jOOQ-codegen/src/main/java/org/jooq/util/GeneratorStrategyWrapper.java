@@ -40,7 +40,7 @@
  */
 package org.jooq.util;
 
-import static org.jooq.util.GenerationUtil.convertToJavaIdentifier;
+import static org.jooq.util.GenerationUtil.convertToIdentifier;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
@@ -59,6 +59,7 @@ import org.jooq.impl.TableRecordImpl;
 import org.jooq.impl.UDTRecordImpl;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.tools.StringUtils;
+import org.jooq.util.AbstractGenerator.Language;
 
 /**
  * A wrapper for generator strategies preventing some common compilation errors
@@ -70,12 +71,14 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
 
     private final Map<Class<?>, Set<String>> reservedColumns = new HashMap<Class<?>, Set<String>>();
 
-    final Generator                          generator;
-    final GeneratorStrategy                  delegate;
+    final Generator         generator;
+    final GeneratorStrategy delegate;
+    final Language          language;
 
-    GeneratorStrategyWrapper(Generator generator, GeneratorStrategy delegate) {
+    GeneratorStrategyWrapper(Generator generator, GeneratorStrategy delegate, Language language) {
         this.generator = generator;
         this.delegate = delegate;
+        this.language = language;
     }
 
     @Override
@@ -121,7 +124,7 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
             return "DEFAULT_SCHEMA";
         }
 
-        String identifier = convertToJavaIdentifier(delegate.getJavaIdentifier(definition));
+        String identifier = convertToIdentifier(delegate.getJavaIdentifier(definition), language);
 
         // [#1212] Don't trust custom strategies and disambiguate identifiers here
         if (definition instanceof ColumnDefinition ||
@@ -145,13 +148,13 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
     @Override
     public String getJavaSetterName(Definition definition, Mode mode) {
         return disambiguateMethod(definition,
-            convertToJavaIdentifier(delegate.getJavaSetterName(definition, mode)));
+            convertToIdentifier(delegate.getJavaSetterName(definition, mode), language));
     }
 
     @Override
     public String getJavaGetterName(Definition definition, Mode mode) {
         return disambiguateMethod(definition,
-            convertToJavaIdentifier(delegate.getJavaGetterName(definition, mode)));
+            convertToIdentifier(delegate.getJavaGetterName(definition, mode), language));
     }
 
     @Override
@@ -160,7 +163,7 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
 
         methodName = delegate.getJavaMethodName(definition, mode);
         methodName = overload(definition, mode, methodName);
-        methodName = convertToJavaIdentifier(methodName);
+        methodName = convertToIdentifier(methodName, language);
 
         return disambiguateMethod(definition, methodName);
     }
@@ -297,7 +300,7 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
 
         className = delegate.getJavaClassName(definition, mode);
         className = overload(definition, mode, className);
-        className = convertToJavaIdentifier(className);
+        className = convertToIdentifier(className, language);
 
         return className;
     }
@@ -313,7 +316,7 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
         String[] split = delegate.getJavaPackageName(definition, mode).split("\\.");
 
         for (int i = 0; i < split.length; i++) {
-            split[i] = convertToJavaIdentifier(split[i]);
+            split[i] = convertToIdentifier(split[i], language);
         }
 
         return StringUtils.join(split, ".");
@@ -321,7 +324,7 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
 
     @Override
     public String getJavaMemberName(Definition definition, Mode mode) {
-        String identifier = convertToJavaIdentifier(delegate.getJavaMemberName(definition, mode));
+        String identifier = convertToIdentifier(delegate.getJavaMemberName(definition, mode), language);
 
         // [#2781] Disambiguate collisions with the leading package name
         if (identifier.equals(getJavaPackageName(definition, mode).replaceAll("\\..*", ""))) {

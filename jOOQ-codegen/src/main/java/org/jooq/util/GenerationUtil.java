@@ -91,6 +91,7 @@ class GenerationUtil {
         "long",
         "native",
         "new",
+        "null",
         "package",
         "private",
         "protected",

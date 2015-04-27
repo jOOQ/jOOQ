@@ -40,7 +40,7 @@
  */
 package org.jooq.util;
 
-import static org.jooq.util.JavaGenerator.Language.SCALA;
+import static org.jooq.util.AbstractGenerator.Language.SCALA;
 
 /**
  * @author Lukas Eder

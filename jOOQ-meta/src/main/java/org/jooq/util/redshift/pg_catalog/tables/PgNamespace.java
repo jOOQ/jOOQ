@@ -27,7 +27,7 @@ import org.jooq.util.redshift.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgNamespace extends TableImpl<Record> {
 
-	private static final long serialVersionUID = 2088860501;
+	private static final long serialVersionUID = 1473647408;
 
 	/**
 	 * The reference instance of <code>pg_catalog.pg_namespace</code>
@@ -55,7 +55,7 @@ public class PgNamespace extends TableImpl<Record> {
 	/**
 	 * The column <code>pg_catalog.pg_namespace.nspacl</code>.
 	 */
-	public final TableField<Record, Object> NSPACL = createField("nspacl", org.jooq.impl.DefaultDataType.getDefaultDataType("ARRAY"), this, "");
+	public final TableField<Record, String[]> NSPACL = createField("nspacl", org.jooq.impl.SQLDataType.VARCHAR.getArrayDataType(), this, "");
 
 	/**
 	 * Create a <code>pg_catalog.pg_namespace</code> table reference

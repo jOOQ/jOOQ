@@ -8,6 +8,7 @@ import javax.annotation.Generated;
 
 import org.jooq.util.redshift.pg_catalog.tables.PgAttribute;
 import org.jooq.util.redshift.pg_catalog.tables.PgClass;
+import org.jooq.util.redshift.pg_catalog.tables.PgConstraint;
 import org.jooq.util.redshift.pg_catalog.tables.PgDescription;
 import org.jooq.util.redshift.pg_catalog.tables.PgNamespace;
 import org.jooq.util.redshift.pg_catalog.tables.PgProc;
@@ -36,6 +37,11 @@ public class Tables {
 	 * The table pg_catalog.pg_class
 	 */
 	public static final PgClass PG_CLASS = org.jooq.util.redshift.pg_catalog.tables.PgClass.PG_CLASS;
+
+	/**
+	 * The table pg_catalog.pg_constraint
+	 */
+	public static final PgConstraint PG_CONSTRAINT = org.jooq.util.redshift.pg_catalog.tables.PgConstraint.PG_CONSTRAINT;
 
 	/**
 	 * The table pg_catalog.pg_description

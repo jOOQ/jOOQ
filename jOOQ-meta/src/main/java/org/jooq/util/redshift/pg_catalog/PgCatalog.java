@@ -14,6 +14,7 @@ import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
 import org.jooq.util.redshift.pg_catalog.tables.PgAttribute;
 import org.jooq.util.redshift.pg_catalog.tables.PgClass;
+import org.jooq.util.redshift.pg_catalog.tables.PgConstraint;
 import org.jooq.util.redshift.pg_catalog.tables.PgDescription;
 import org.jooq.util.redshift.pg_catalog.tables.PgNamespace;
 import org.jooq.util.redshift.pg_catalog.tables.PgProc;
@@ -33,7 +34,7 @@ import org.jooq.util.redshift.pg_catalog.tables.PgType;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgCatalog extends SchemaImpl {
 
-	private static final long serialVersionUID = -1223564890;
+	private static final long serialVersionUID = -532819724;
 
 	/**
 	 * The reference instance of <code>pg_catalog</code>
@@ -58,6 +59,7 @@ public class PgCatalog extends SchemaImpl {
 		return Arrays.<Table<?>>asList(
 			PgAttribute.PG_ATTRIBUTE,
 			PgClass.PG_CLASS,
+			PgConstraint.PG_CONSTRAINT,
 			PgDescription.PG_DESCRIPTION,
 			PgNamespace.PG_NAMESPACE,
 			PgProc.PG_PROC,

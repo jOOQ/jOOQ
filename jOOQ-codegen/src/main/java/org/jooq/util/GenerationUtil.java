@@ -229,6 +229,9 @@ class GenerationUtil {
      */
     static String getArrayBaseType(SQLDialect dialect, String t, String u) {
         switch (dialect.family()) {
+            /* [pro] */
+            case REDSHIFT:
+            /* [/pro] */
             case POSTGRES: {
 
                 // The convention is to prepend a "_" to a type to get an array type

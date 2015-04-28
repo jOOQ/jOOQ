@@ -44,6 +44,7 @@ package org.jooq.util.redshift;
 import static org.jooq.util.postgres.PostgresDSL.oid;
 import static org.jooq.util.redshift.information_schema.Tables.TABLES;
 import static org.jooq.util.redshift.pg_catalog.Tables.PG_CLASS;
+import static org.jooq.util.redshift.pg_catalog.Tables.PG_CONSTRAINT;
 import static org.jooq.util.redshift.pg_catalog.Tables.PG_DESCRIPTION;
 import static org.jooq.util.redshift.pg_catalog.Tables.PG_NAMESPACE;
 
@@ -53,6 +54,8 @@ import java.util.List;
 
 import org.jooq.DSLContext;
 import org.jooq.Record;
+import org.jooq.Record4;
+import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 import org.jooq.tools.JooqLogger;
@@ -81,11 +84,61 @@ public class RedshiftDatabase extends AbstractDatabase {
         return DSL.using(getConnection(), SQLDialect.REDSHIFT);
     }
 
-    @Override
-    protected void loadPrimaryKeys(DefaultRelations r) throws SQLException {}
+    private Result<Record4<String, String, String, Short[]>> fetchKeys(String constraintType) {
+        // There is a strange limitation in Redshift which prevents querying
+        // information_schema.key_column_usage, even if the view itself is available
+        // See: https://forums.aws.amazon.com/thread.jspa?messageID=620023&#620023
+
+        return create()
+            .select(
+              PG_CONSTRAINT.CONNAME
+            , PG_NAMESPACE.NSPNAME
+            , PG_CLASS.RELNAME
+            , PG_CONSTRAINT.CONKEY
+            )
+            .from(PG_CONSTRAINT)
+            .join(PG_NAMESPACE)
+                .on(PG_CONSTRAINT.CONNAMESPACE.eq(oid(PG_NAMESPACE)))
+            .join(PG_CLASS)
+                .on(PG_CONSTRAINT.CONRELID.eq(oid(PG_CLASS)))
+            .where(PG_CONSTRAINT.CONTYPE.equal(constraintType))
+            .and(PG_NAMESPACE.NSPNAME.in(getInputSchemata()))
+            .orderBy(
+                PG_NAMESPACE.NSPNAME.asc(),
+                PG_CLASS.RELNAME.asc(),
+                PG_CONSTRAINT.CONNAME.asc())
+            .fetch();
+    }
 
     @Override
-    protected void loadUniqueKeys(DefaultRelations r) throws SQLException {}
+    protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
+        for (Record record : fetchKeys("p")) {
+            SchemaDefinition schema = getSchema(record.getValue(PG_NAMESPACE.NSPNAME));
+            String key = record.getValue(PG_CONSTRAINT.CONNAME);
+            String tableName = record.getValue(PG_CLASS.RELNAME);
+            Short[] columnIndexes = record.getValue(PG_CONSTRAINT.CONKEY);
+
+            TableDefinition table = getTable(schema, tableName);
+            if (table != null)
+                for (Short index : columnIndexes)
+                    relations.addPrimaryKey(key, table.getColumn(index - 1));
+        }
+    }
+
+    @Override
+    protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
+        for (Record record : fetchKeys("u")) {
+            SchemaDefinition schema = getSchema(record.getValue(PG_NAMESPACE.NSPNAME));
+            String key = record.getValue(PG_CONSTRAINT.CONNAME);
+            String tableName = record.getValue(PG_CLASS.RELNAME);
+            Short[] columnIndexes = record.getValue(PG_CONSTRAINT.CONKEY);
+
+            TableDefinition table = getTable(schema, tableName);
+            if (table != null)
+                for (Short index : columnIndexes)
+                    relations.addPrimaryKey(key, table.getColumn(index - 1));
+        }
+    }
 
     @Override
     protected void loadForeignKeys(DefaultRelations r) throws SQLException {}

@@ -27,7 +27,7 @@ import org.jooq.util.redshift.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgProc extends TableImpl<Record> {
 
-	private static final long serialVersionUID = -1663831781;
+	private static final long serialVersionUID = -917229642;
 
 	/**
 	 * The reference instance of <code>pg_catalog.pg_proc</code>
@@ -105,7 +105,7 @@ public class PgProc extends TableImpl<Record> {
 	/**
 	 * The column <code>pg_catalog.pg_proc.proargnames</code>.
 	 */
-	public final TableField<Record, Object> PROARGNAMES = createField("proargnames", org.jooq.impl.DefaultDataType.getDefaultDataType("ARRAY"), this, "");
+	public final TableField<Record, String[]> PROARGNAMES = createField("proargnames", org.jooq.impl.SQLDataType.CLOB.getArrayDataType(), this, "");
 
 	/**
 	 * The column <code>pg_catalog.pg_proc.prosrc</code>.
@@ -120,7 +120,7 @@ public class PgProc extends TableImpl<Record> {
 	/**
 	 * The column <code>pg_catalog.pg_proc.proacl</code>.
 	 */
-	public final TableField<Record, Object> PROACL = createField("proacl", org.jooq.impl.DefaultDataType.getDefaultDataType("ARRAY"), this, "");
+	public final TableField<Record, String[]> PROACL = createField("proacl", org.jooq.impl.SQLDataType.VARCHAR.getArrayDataType(), this, "");
 
 	/**
 	 * Create a <code>pg_catalog.pg_proc</code> table reference

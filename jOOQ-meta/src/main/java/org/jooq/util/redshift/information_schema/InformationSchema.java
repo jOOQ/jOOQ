@@ -14,8 +14,6 @@ import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
 import org.jooq.util.redshift.information_schema.tables.CheckConstraints;
 import org.jooq.util.redshift.information_schema.tables.Columns;
-import org.jooq.util.redshift.information_schema.tables.ConstraintColumnUsage;
-import org.jooq.util.redshift.information_schema.tables.KeyColumnUsage;
 import org.jooq.util.redshift.information_schema.tables.ReferentialConstraints;
 import org.jooq.util.redshift.information_schema.tables.Schemata;
 import org.jooq.util.redshift.information_schema.tables.TableConstraints;
@@ -35,7 +33,7 @@ import org.jooq.util.redshift.information_schema.tables.Tables;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class InformationSchema extends SchemaImpl {
 
-	private static final long serialVersionUID = -1685362665;
+	private static final long serialVersionUID = 1113109123;
 
 	/**
 	 * The reference instance of <code>information_schema</code>
@@ -60,8 +58,6 @@ public class InformationSchema extends SchemaImpl {
 		return Arrays.<Table<?>>asList(
 			CheckConstraints.CHECK_CONSTRAINTS,
 			Columns.COLUMNS,
-			ConstraintColumnUsage.CONSTRAINT_COLUMN_USAGE,
-			KeyColumnUsage.KEY_COLUMN_USAGE,
 			ReferentialConstraints.REFERENTIAL_CONSTRAINTS,
 			Schemata.SCHEMATA,
 			TableConstraints.TABLE_CONSTRAINTS,

@@ -8,8 +8,6 @@ import javax.annotation.Generated;
 
 import org.jooq.util.redshift.information_schema.tables.CheckConstraints;
 import org.jooq.util.redshift.information_schema.tables.Columns;
-import org.jooq.util.redshift.information_schema.tables.ConstraintColumnUsage;
-import org.jooq.util.redshift.information_schema.tables.KeyColumnUsage;
 import org.jooq.util.redshift.information_schema.tables.ReferentialConstraints;
 import org.jooq.util.redshift.information_schema.tables.Schemata;
 import org.jooq.util.redshift.information_schema.tables.TableConstraints;
@@ -37,16 +35,6 @@ public class Tables {
 	 * The table information_schema.columns
 	 */
 	public static final Columns COLUMNS = org.jooq.util.redshift.information_schema.tables.Columns.COLUMNS;
-
-	/**
-	 * The table information_schema.constraint_column_usage
-	 */
-	public static final ConstraintColumnUsage CONSTRAINT_COLUMN_USAGE = org.jooq.util.redshift.information_schema.tables.ConstraintColumnUsage.CONSTRAINT_COLUMN_USAGE;
-
-	/**
-	 * The table information_schema.key_column_usage
-	 */
-	public static final KeyColumnUsage KEY_COLUMN_USAGE = org.jooq.util.redshift.information_schema.tables.KeyColumnUsage.KEY_COLUMN_USAGE;
 
 	/**
 	 * The table information_schema.referential_constraints

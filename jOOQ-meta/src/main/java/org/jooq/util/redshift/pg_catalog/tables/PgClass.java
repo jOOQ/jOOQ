@@ -27,7 +27,7 @@ import org.jooq.util.redshift.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgClass extends TableImpl<Record> {
 
-	private static final long serialVersionUID = -1551209979;
+	private static final long serialVersionUID = -1652450584;
 
 	/**
 	 * The reference instance of <code>pg_catalog.pg_class</code>
@@ -190,7 +190,7 @@ public class PgClass extends TableImpl<Record> {
 	/**
 	 * The column <code>pg_catalog.pg_class.relacl</code>.
 	 */
-	public final TableField<Record, Object> RELACL = createField("relacl", org.jooq.impl.DefaultDataType.getDefaultDataType("ARRAY"), this, "");
+	public final TableField<Record, String[]> RELACL = createField("relacl", org.jooq.impl.SQLDataType.VARCHAR.getArrayDataType(), this, "");
 
 	/**
 	 * Create a <code>pg_catalog.pg_class</code> table reference

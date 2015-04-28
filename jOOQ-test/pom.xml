@@ -2899,7 +2899,7 @@
                                         </generate>
                                         <target>
                                             <packageName>org.jooq.test.mysql2.generatedclasses</packageName>
-                                            <directory>./src</directory>
+                                            <directory>./src/test/java</directory>
                                         </target>
                                     </generator>
                                 </configuration>
@@ -5769,7 +5769,7 @@
                                         </generate>
                                         <target>
                                             <packageName>org.jooq.test.jdbcoracle.generatedclasses</packageName>
-                                            <directory>./src</directory>
+                                            <directory>./src/test/java</directory>
                                         </target>
                                     </generator>
                                 </configuration>

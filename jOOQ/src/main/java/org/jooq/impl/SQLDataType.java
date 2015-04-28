@@ -65,6 +65,7 @@ import org.jooq.util.cubrid.CUBRIDDataType;
 import org.jooq.util.derby.DerbyDataType;
 import org.jooq.util.firebird.FirebirdDataType;
 import org.jooq.util.h2.H2DataType;
+// ...
 import org.jooq.util.hsqldb.HSQLDBDataType;
 // ...
 // ...
@@ -332,6 +333,7 @@ public final class SQLDataType {
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

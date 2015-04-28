@@ -23,7 +23,7 @@ import org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UAddressTypeRecord extends UDTRecordImpl<UAddressTypeRecord> implements Record7<UStreetTypeRecord, String, String, UCountry, Date, Integer, byte[]>, IUAddressType {
 
-	private static final long serialVersionUID = 1332469558;
+	private static final long serialVersionUID = -338517626;
 
 	/**
 	 * Setter for <code>public.u_address_type.street</code>.
@@ -337,6 +337,13 @@ public class UAddressTypeRecord extends UDTRecordImpl<UAddressTypeRecord> implem
 	 */
 	@Override
 	public UAddressTypeRecord values(UStreetTypeRecord value1, String value2, String value3, UCountry value4, Date value5, Integer value6, byte[] value7) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
+		value7(value7);
 		return this;
 	}
 

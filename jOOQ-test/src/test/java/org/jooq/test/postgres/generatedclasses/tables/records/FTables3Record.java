@@ -19,7 +19,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IFTables3;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FTables3Record extends TableRecordImpl<FTables3Record> implements Record1<String>, IFTables3 {
 
-	private static final long serialVersionUID = 1444014089;
+	private static final long serialVersionUID = 1078060441;
 
 	/**
 	 * Setter for <code>public.f_tables3.column_value</code>.
@@ -87,6 +87,7 @@ public class FTables3Record extends TableRecordImpl<FTables3Record> implements R
 	 */
 	@Override
 	public FTables3Record values(String value1) {
+		value1(value1);
 		return this;
 	}
 

@@ -20,7 +20,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IT_725LobTest;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTestRecord extends UpdatableRecordImpl<T_725LobTestRecord> implements Record2<Integer, byte[]>, IT_725LobTest {
 
-	private static final long serialVersionUID = 1648936968;
+	private static final long serialVersionUID = 1361289928;
 
 	/**
 	 * Setter for <code>public.t_725_lob_test.id</code>.
@@ -141,6 +141,8 @@ public class T_725LobTestRecord extends UpdatableRecordImpl<T_725LobTestRecord> 
 	 */
 	@Override
 	public T_725LobTestRecord values(Integer value1, byte[] value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

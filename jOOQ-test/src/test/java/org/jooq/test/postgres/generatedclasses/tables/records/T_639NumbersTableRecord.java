@@ -23,7 +23,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IT_639NumbersTa
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTableRecord extends UpdatableRecordImpl<T_639NumbersTableRecord> implements Record12<Integer, Short, Integer, Long, Byte, Short, Integer, Long, BigInteger, BigDecimal, Float, Double>, IT_639NumbersTable {
 
-	private static final long serialVersionUID = -31509559;
+	private static final long serialVersionUID = 2051964499;
 
 	/**
 	 * Setter for <code>public.t_639_numbers_table.id</code>.
@@ -554,6 +554,18 @@ public class T_639NumbersTableRecord extends UpdatableRecordImpl<T_639NumbersTab
 	 */
 	@Override
 	public T_639NumbersTableRecord values(Integer value1, Short value2, Integer value3, Long value4, Byte value5, Short value6, Integer value7, Long value8, BigInteger value9, BigDecimal value10, Float value11, Double value12) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
+		value7(value7);
+		value8(value8);
+		value9(value9);
+		value10(value10);
+		value11(value11);
+		value12(value12);
 		return this;
 	}
 

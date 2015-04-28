@@ -20,7 +20,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITLanguage;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguageRecord extends UpdatableRecordImpl<TLanguageRecord> implements Record4<String, String, String, Integer>, ITLanguage {
 
-	private static final long serialVersionUID = 1775399989;
+	private static final long serialVersionUID = 1806926389;
 
 	/**
 	 * Setter for <code>public.t_language.cd</code>. The language ISO code
@@ -223,6 +223,10 @@ public class TLanguageRecord extends UpdatableRecordImpl<TLanguageRecord> implem
 	 */
 	@Override
 	public TLanguageRecord values(String value1, String value2, String value3, Integer value4) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
 		return this;
 	}
 

@@ -19,7 +19,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IT_785;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_785Record extends TableRecordImpl<T_785Record> implements Record3<Integer, String, String>, IT_785 {
 
-	private static final long serialVersionUID = -1021212851;
+	private static final long serialVersionUID = 751581757;
 
 	/**
 	 * Setter for <code>public.t_785.id</code>.
@@ -169,6 +169,9 @@ public class T_785Record extends TableRecordImpl<T_785Record> implements Record3
 	 */
 	@Override
 	public T_785Record values(Integer value1, String value2, String value3) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
 		return this;
 	}
 

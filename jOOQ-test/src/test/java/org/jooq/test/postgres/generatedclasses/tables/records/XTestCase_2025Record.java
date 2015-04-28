@@ -19,7 +19,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IXTestCase_2025
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_2025Record extends TableRecordImpl<XTestCase_2025Record> implements Record2<Integer, String>, IXTestCase_2025 {
 
-	private static final long serialVersionUID = -325320055;
+	private static final long serialVersionUID = -141724087;
 
 	/**
 	 * Setter for <code>public.x_test_case_2025.ref_id</code>.
@@ -128,6 +128,8 @@ public class XTestCase_2025Record extends TableRecordImpl<XTestCase_2025Record> 
 	 */
 	@Override
 	public XTestCase_2025Record values(Integer value1, String value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

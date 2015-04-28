@@ -20,7 +20,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IT_3111;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_3111Record extends UpdatableRecordImpl<T_3111Record> implements Record4<Integer, Integer, Integer, Integer>, IT_3111 {
 
-	private static final long serialVersionUID = 781607795;
+	private static final long serialVersionUID = -344195469;
 
 	/**
 	 * Setter for <code>public.t_3111.id</code>.
@@ -223,6 +223,10 @@ public class T_3111Record extends UpdatableRecordImpl<T_3111Record> implements R
 	 */
 	@Override
 	public T_3111Record values(Integer value1, Integer value2, Integer value3, Integer value4) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
 		return this;
 	}
 

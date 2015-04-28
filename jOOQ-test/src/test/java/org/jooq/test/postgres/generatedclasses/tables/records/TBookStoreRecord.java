@@ -19,7 +19,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITBookStore;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStoreRecord extends UpdatableRecordImpl<TBookStoreRecord> implements Record1<String>, ITBookStore {
 
-	private static final long serialVersionUID = -1984246155;
+	private static final long serialVersionUID = -439585275;
 
 	/**
 	 * Setter for <code>public.t_book_store.name</code>. The books store name
@@ -99,6 +99,7 @@ public class TBookStoreRecord extends UpdatableRecordImpl<TBookStoreRecord> impl
 	 */
 	@Override
 	public TBookStoreRecord values(String value1) {
+		value1(value1);
 		return this;
 	}
 

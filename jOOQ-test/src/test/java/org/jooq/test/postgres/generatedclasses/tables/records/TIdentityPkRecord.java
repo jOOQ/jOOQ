@@ -20,7 +20,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITIdentityPk;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentityPkRecord extends UpdatableRecordImpl<TIdentityPkRecord> implements Record2<Integer, Integer>, ITIdentityPk {
 
-	private static final long serialVersionUID = 1860931970;
+	private static final long serialVersionUID = -1959687742;
 
 	/**
 	 * Setter for <code>public.t_identity_pk.id</code>.
@@ -141,6 +141,8 @@ public class TIdentityPkRecord extends UpdatableRecordImpl<TIdentityPkRecord> im
 	 */
 	@Override
 	public TIdentityPkRecord values(Integer value1, Integer value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

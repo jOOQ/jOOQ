@@ -20,7 +20,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IT_959;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_959Record extends TableRecordImpl<T_959Record> implements Record1<U_959>, IT_959 {
 
-	private static final long serialVersionUID = -359555093;
+	private static final long serialVersionUID = -874852901;
 
 	/**
 	 * Setter for <code>public.t_959.java_keywords</code>.
@@ -88,6 +88,7 @@ public class T_959Record extends TableRecordImpl<T_959Record> implements Record1
 	 */
 	@Override
 	public T_959Record values(U_959 value1) {
+		value1(value1);
 		return this;
 	}
 

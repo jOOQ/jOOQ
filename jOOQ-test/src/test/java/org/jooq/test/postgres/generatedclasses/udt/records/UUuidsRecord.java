@@ -21,7 +21,7 @@ import org.jooq.test.postgres.generatedclasses.udt.interfaces.IUUuids;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UUuidsRecord extends UDTRecordImpl<UUuidsRecord> implements Record2<UUID, UUID[]>, IUUuids {
 
-	private static final long serialVersionUID = -949400522;
+	private static final long serialVersionUID = -509471882;
 
 	/**
 	 * Setter for <code>public.u_uuids.u1</code>.
@@ -130,6 +130,8 @@ public class UUuidsRecord extends UDTRecordImpl<UUuidsRecord> implements Record2
 	 */
 	@Override
 	public UUuidsRecord values(UUID value1, UUID[] value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

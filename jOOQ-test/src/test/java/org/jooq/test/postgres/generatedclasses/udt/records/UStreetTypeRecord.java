@@ -19,7 +19,7 @@ import org.jooq.test.postgres.generatedclasses.udt.interfaces.IUStreetType;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UStreetTypeRecord extends UDTRecordImpl<UStreetTypeRecord> implements Record4<String, String, Integer[], byte[]>, IUStreetType {
 
-	private static final long serialVersionUID = 1365009526;
+	private static final long serialVersionUID = -952813450;
 
 	/**
 	 * Setter for <code>public.u_street_type.street</code>.
@@ -210,6 +210,10 @@ public class UStreetTypeRecord extends UDTRecordImpl<UStreetTypeRecord> implemen
 	 */
 	@Override
 	public UStreetTypeRecord values(String value1, String value2, Integer[] value3, byte[] value4) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
 		return this;
 	}
 

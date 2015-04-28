@@ -19,7 +19,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IFArrayTables;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FArrayTablesRecord extends TableRecordImpl<FArrayTablesRecord> implements Record2<String[], Integer[]>, IFArrayTables {
 
-	private static final long serialVersionUID = -88991010;
+	private static final long serialVersionUID = 1176763422;
 
 	/**
 	 * Setter for <code>public.f_array_tables.out_text</code>.
@@ -128,6 +128,8 @@ public class FArrayTablesRecord extends TableRecordImpl<FArrayTablesRecord> impl
 	 */
 	@Override
 	public FArrayTablesRecord values(String[] value1, Integer[] value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

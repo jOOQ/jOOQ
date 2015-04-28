@@ -23,7 +23,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IXUnused;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnusedRecord extends UpdatableRecordImpl<XUnusedRecord> implements Record15<Integer, String, BigInteger, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, String, BigDecimal>, IXUnused {
 
-	private static final long serialVersionUID = -1188988511;
+	private static final long serialVersionUID = 1701058003;
 
 	/**
 	 * Setter for <code>public.x_unused.id</code>.
@@ -677,6 +677,21 @@ public class XUnusedRecord extends UpdatableRecordImpl<XUnusedRecord> implements
 	 */
 	@Override
 	public XUnusedRecord values(Integer value1, String value2, BigInteger value3, Integer value4, Integer value5, Integer value6, Integer value7, Integer value8, Integer value9, Integer value10, Integer value11, Integer value12, Integer value13, String value14, BigDecimal value15) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
+		value7(value7);
+		value8(value8);
+		value9(value9);
+		value10(value10);
+		value11(value11);
+		value12(value12);
+		value13(value13);
+		value14(value14);
+		value15(value15);
 		return this;
 	}
 

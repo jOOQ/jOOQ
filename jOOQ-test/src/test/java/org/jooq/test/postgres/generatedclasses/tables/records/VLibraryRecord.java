@@ -19,7 +19,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IVLibrary;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibraryRecord extends TableRecordImpl<VLibraryRecord> implements Record2<String, String>, IVLibrary {
 
-	private static final long serialVersionUID = 353165499;
+	private static final long serialVersionUID = 1657144955;
 
 	/**
 	 * Setter for <code>public.v_library.author</code>.
@@ -128,6 +128,8 @@ public class VLibraryRecord extends TableRecordImpl<VLibraryRecord> implements R
 	 */
 	@Override
 	public VLibraryRecord values(String value1, String value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

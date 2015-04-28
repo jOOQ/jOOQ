@@ -24,7 +24,7 @@ import org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TArraysRecord extends UpdatableRecordImpl<TArraysRecord> implements Record10<Integer, String[], Integer[], Date[], UStreetTypeRecord[], UCountry[], Integer[], String[], String[], String[]>, ITArrays {
 
-	private static final long serialVersionUID = 922284872;
+	private static final long serialVersionUID = 665737112;
 
 	/**
 	 * Setter for <code>public.t_arrays.id</code>.
@@ -473,6 +473,16 @@ public class TArraysRecord extends UpdatableRecordImpl<TArraysRecord> implements
 	 */
 	@Override
 	public TArraysRecord values(Integer value1, String[] value2, Integer[] value3, Date[] value4, UStreetTypeRecord[] value5, UCountry[] value6, Integer[] value7, String[] value8, String[] value9, String[] value10) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
+		value7(value7);
+		value8(value8);
+		value9(value9);
+		value10(value10);
 		return this;
 	}
 

@@ -21,7 +21,7 @@ import org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthorRecord extends TableRecordImpl<VAuthorRecord> implements Record6<Integer, String, String, Date, Integer, UAddressTypeRecord>, IVAuthor {
 
-	private static final long serialVersionUID = -435876289;
+	private static final long serialVersionUID = 2004725247;
 
 	/**
 	 * Setter for <code>public.v_author.id</code>.
@@ -294,6 +294,12 @@ public class VAuthorRecord extends TableRecordImpl<VAuthorRecord> implements Rec
 	 */
 	@Override
 	public VAuthorRecord values(Integer value1, String value2, String value3, Date value4, Integer value5, UAddressTypeRecord value6) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
 		return this;
 	}
 

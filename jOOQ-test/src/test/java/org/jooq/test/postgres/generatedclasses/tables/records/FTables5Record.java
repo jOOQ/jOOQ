@@ -19,7 +19,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IFTables5;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FTables5Record extends TableRecordImpl<FTables5Record> implements Record2<Integer, Integer>, IFTables5 {
 
-	private static final long serialVersionUID = 1313171431;
+	private static final long serialVersionUID = 873095591;
 
 	/**
 	 * Setter for <code>public.f_tables5.v</code>.
@@ -128,6 +128,8 @@ public class FTables5Record extends TableRecordImpl<FTables5Record> implements R
 	 */
 	@Override
 	public FTables5Record values(Integer value1, Integer value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

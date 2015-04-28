@@ -20,7 +20,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IFSearchBooks;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FSearchBooksRecord extends TableRecordImpl<FSearchBooksRecord> implements Record10<Integer, Integer, Integer, Integer, String, Integer, Integer, String, byte[], UBookStatus>, IFSearchBooks {
 
-	private static final long serialVersionUID = -668140436;
+	private static final long serialVersionUID = 1460318748;
 
 	/**
 	 * Setter for <code>public.f_search_books.id</code>.
@@ -457,6 +457,16 @@ public class FSearchBooksRecord extends TableRecordImpl<FSearchBooksRecord> impl
 	 */
 	@Override
 	public FSearchBooksRecord values(Integer value1, Integer value2, Integer value3, Integer value4, String value5, Integer value6, Integer value7, String value8, byte[] value9, UBookStatus value10) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
+		value7(value7);
+		value8(value8);
+		value9(value9);
+		value10(value10);
 		return this;
 	}
 

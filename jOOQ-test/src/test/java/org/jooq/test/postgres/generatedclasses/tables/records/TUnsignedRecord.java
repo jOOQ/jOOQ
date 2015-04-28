@@ -23,7 +23,7 @@ import org.jooq.types.UShort;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TUnsignedRecord extends TableRecordImpl<TUnsignedRecord> implements Record4<UByte, UShort, UInteger, ULong>, ITUnsigned {
 
-	private static final long serialVersionUID = 1896422484;
+	private static final long serialVersionUID = 206967892;
 
 	/**
 	 * Setter for <code>public.t_unsigned.u_byte</code>.
@@ -214,6 +214,10 @@ public class TUnsignedRecord extends TableRecordImpl<TUnsignedRecord> implements
 	 */
 	@Override
 	public TUnsignedRecord values(UByte value1, UShort value2, UInteger value3, ULong value4) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
 		return this;
 	}
 

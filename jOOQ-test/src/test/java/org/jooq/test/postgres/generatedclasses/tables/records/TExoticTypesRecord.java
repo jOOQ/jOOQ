@@ -27,7 +27,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITExoticTypes;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> implements Record9<Integer, UUID, Object, JsonElement, Object, JSONJacksonHelloWorld, JsonNode, Object, Map<String, String>>, ITExoticTypes {
 
-	private static final long serialVersionUID = -1761935797;
+	private static final long serialVersionUID = -682471589;
 
 	/**
 	 * Setter for <code>public.t_exotic_types.id</code>.
@@ -435,6 +435,15 @@ public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> 
 	 */
 	@Override
 	public TExoticTypesRecord values(Integer value1, UUID value2, Object value3, JsonElement value4, Object value5, JSONJacksonHelloWorld value6, JsonNode value7, Object value8, Map<String, String> value9) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
+		value7(value7);
+		value8(value8);
+		value9(value9);
 		return this;
 	}
 

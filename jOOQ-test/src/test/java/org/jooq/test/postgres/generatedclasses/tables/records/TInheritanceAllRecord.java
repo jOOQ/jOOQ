@@ -19,7 +19,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITInheritanceAl
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TInheritanceAllRecord extends TableRecordImpl<TInheritanceAllRecord> implements Record4<String, String, String, String>, ITInheritanceAll {
 
-	private static final long serialVersionUID = -81965094;
+	private static final long serialVersionUID = -1135614502;
 
 	/**
 	 * Setter for <code>public.t_inheritance_all.text_1</code>.
@@ -210,6 +210,10 @@ public class TInheritanceAllRecord extends TableRecordImpl<TInheritanceAllRecord
 	 */
 	@Override
 	public TInheritanceAllRecord values(String value1, String value2, String value3, String value4) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
 		return this;
 	}
 

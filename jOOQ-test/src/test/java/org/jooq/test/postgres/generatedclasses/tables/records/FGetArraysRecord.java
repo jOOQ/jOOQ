@@ -23,7 +23,7 @@ import org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FGetArraysRecord extends TableRecordImpl<FGetArraysRecord> implements Record10<Integer, String[], Integer[], Date[], UStreetTypeRecord[], UCountry[], Integer[], String[], String[], String[]>, IFGetArrays {
 
-	private static final long serialVersionUID = -1241277790;
+	private static final long serialVersionUID = -1274156046;
 
 	/**
 	 * Setter for <code>public.f_get_arrays.id</code>.
@@ -460,6 +460,16 @@ public class FGetArraysRecord extends TableRecordImpl<FGetArraysRecord> implemen
 	 */
 	@Override
 	public FGetArraysRecord values(Integer value1, String[] value2, Integer[] value3, Date[] value4, UStreetTypeRecord[] value5, UCountry[] value6, Integer[] value7, String[] value8, String[] value9, String[] value10) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
+		value7(value7);
+		value8(value8);
+		value9(value9);
+		value10(value10);
 		return this;
 	}
 

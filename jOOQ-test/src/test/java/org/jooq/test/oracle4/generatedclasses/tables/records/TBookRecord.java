@@ -27,7 +27,7 @@ import org.jooq.test.oracle4.generatedclasses.tables.TBook;
 @Table(name = "T_BOOK", schema = "TEST")
 public class TBookRecord extends UpdatableRecordImpl<TBookRecord> implements Record2<Integer, Integer> {
 
-	private static final long serialVersionUID = -205470873;
+	private static final long serialVersionUID = -1864485337;
 
 	/**
 	 * Setter for <code>TEST.T_BOOK.ID</code>.
@@ -149,6 +149,8 @@ public class TBookRecord extends UpdatableRecordImpl<TBookRecord> implements Rec
 	 */
 	@Override
 	public TBookRecord values(Integer value1, Integer value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

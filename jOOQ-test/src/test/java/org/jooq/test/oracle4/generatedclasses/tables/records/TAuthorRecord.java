@@ -26,7 +26,7 @@ import org.jooq.test.oracle4.generatedclasses.tables.TAuthor;
 @Table(name = "T_AUTHOR", schema = "TEST")
 public class TAuthorRecord extends UpdatableRecordImpl<TAuthorRecord> implements Record1<Integer> {
 
-	private static final long serialVersionUID = -1720416234;
+	private static final long serialVersionUID = -1498451450;
 
 	/**
 	 * Setter for <code>TEST.T_AUTHOR.ID</code>.
@@ -107,6 +107,7 @@ public class TAuthorRecord extends UpdatableRecordImpl<TAuthorRecord> implements
 	 */
 	@Override
 	public TAuthorRecord values(Integer value1) {
+		value1(value1);
 		return this;
 	}
 

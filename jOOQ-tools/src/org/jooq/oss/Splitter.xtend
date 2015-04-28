@@ -134,6 +134,7 @@ class Splitter extends Generators {
                     && !canonicalPath.contains("\\informix\\")
                     && !canonicalPath.contains("\\ingres\\")
                     && !canonicalPath.contains("\\jdbcoracle\\")
+                    && !canonicalPath.contains("\\redshift\\")
                     && !canonicalPath.contains("\\oracle\\")
                     && !canonicalPath.contains("\\oracle2\\")
                     && !canonicalPath.contains("\\oracle3\\")

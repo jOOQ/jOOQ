@@ -52,6 +52,7 @@
         <db.hana.version>1.00.48.372847</db.hana.version>
         <db.informix.version>12.10</db.informix.version>
         <db.ingres.version>10.0-4.0.6</db.ingres.version>
+        <db.redshift.version>1</db.redshift.version>
         <db.oracle.version>10.2.0.3.0</db.oracle.version>
         <db.sqlserver.version>3.0</db.sqlserver.version>
         <db.sybase.version>6.0</db.sybase.version>
@@ -380,6 +381,13 @@
             <version>${db.sybase.version}</version>
             <scope>system</scope>
             <systemPath>${basedir}/lib/jconn3.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.amazon</groupId>
+            <artifactId>redshift-jdbc</artifactId>
+            <version>${db.redshift.version}</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/RedshiftJDBC41.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.oracle</groupId>
@@ -3601,6 +3609,326 @@
                                 <groupId>org.postgresql</groupId>
                                 <artifactId>postgresql</artifactId>
                                 <version>${db.postgres.version}</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+
+        <profile>
+            <id>codegen-redshift</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-codegen-maven</artifactId>
+                        <version>${org.jooq.version}</version>
+
+                        <executions>
+                            <execution>
+                                <id>generate-redshift</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+
+                                <configuration>
+                                    <jdbc>
+                                        <driver>${db.redshift.driver}</driver>
+                                        <url>${db.redshift.url}</url>
+                                        <schema>${db.redshift.schema}</schema>
+                                        <user>${db.redshift.username}</user>
+                                        <password>${db.redshift.password}</password>
+                                    </jdbc>
+                                    <generator>
+                                        <name>org.jooq.util.DefaultGenerator</name>
+                                        <database>
+                                            <name>org.jooq.util.redshift.RedshiftDatabase</name>
+                                            <includes>t_.*|x_.*|v_.*|m_.*|V_.*|p(_.*)?|f(_.*)?|u_.*|(f|p)[0-9]+|s_.*</includes>
+                                            <excludes>t_book_details|.*?_seq|_.*</excludes>
+                                            <customTypes>
+                                                <customType>
+                                                    <name>3111_INVERSE</name>
+                                                    <type>java.lang.Integer</type>
+                                                    <converter>org.jooq.test.all.converters.T_3111_InverseConverter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>3111_BOOL1</name>
+                                                    <type>java.lang.Integer</type>
+                                                    <converter>org.jooq.test.all.converters.T_3111_Bool1Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>3111_BOOL2</name>
+                                                    <type>java.lang.Integer</type>
+                                                    <converter>org.jooq.test.all.converters.T_3111_Bool2Converter</converter>
+                                                </customType>
+
+                                                <customType>
+                                                    <name>B10</name>
+                                                    <type>org.jooq.test.all.converters.Boolean_10</type>
+                                                    <converter>org.jooq.test.all.converters.Boolean_10_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_LC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_TF_LC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_UC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_TF_UC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_LC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YN_LC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_UC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YN_UC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_LC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YES_NO_LC_Converter</converter>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_UC</name>
+                                                    <converter>org.jooq.test.all.converters.Boolean_YES_NO_UC_Converter</converter>
+                                                </customType>
+                                            </customTypes>
+
+                                            <forcedTypes>
+
+                                                <!-- [#3111] Several forced types should be able to map to the same U type -->
+                                                <forcedType>
+                                                    <name>3111_INVERSE</name>
+                                                    <expression>(?i:(.*?\.)?T_3111\.INVERSE)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>3111_BOOL1</name>
+                                                    <expression>(?i:(.*?\.)?T_3111\.BOOL1)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>3111_BOOL2</name>
+                                                    <expression>(?i:(.*?\.)?T_3111\.BOOL2)</expression>
+                                                </forcedType>
+
+
+                                                <forcedType>
+                                                    <name>BOOLEAN</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.(VC|C|N)_BOOLEAN)</expression>
+                                                </forcedType>
+
+                                                <!-- [#2477] Check if unsigned types work correctly -->
+                                                <forcedType>
+                                                    <name>TINYINTUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_BYTE)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>SMALLINTUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_SHORT)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>INTEGERUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_INT)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>BIGINTUNSIGNED</name>
+                                                    <expression>(?i:(.*?.)?T_UNSIGNED.U_LONG)</expression>
+                                                </forcedType>
+
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_LC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.YES_NO_LC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YES_NO_UC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.YES_NO_UC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_LC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.Y_N_LC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_YN_UC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.Y_N_UC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_LC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.TRUE_FALSE_LC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.converters.Boolean_TF_UC</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.TRUE_FALSE_UC)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>B10</name>
+                                                    <expression>(?i:(.*?.)?T_BOOLEANS.ONE_ZERO)</expression>
+                                                </forcedType>
+                                            </forcedTypes>
+                                        </database>
+                                        <generate>
+                                            <relations>true</relations>
+                                            <deprecated>false</deprecated>
+                                            <instanceFields>true</instanceFields>
+                                            <generatedAnnotation>false</generatedAnnotation>
+                                            <records>true</records>
+                                            <immutablePojos>true</immutablePojos>
+                                            <interfaces>true</interfaces>
+                                            <jpaAnnotations>false</jpaAnnotations>
+                                            <fluentSetters>true</fluentSetters>
+                                            <fullyQualifiedTypes>.*AUTHOR.*</fullyQualifiedTypes>
+                                        </generate>
+                                        <target>
+                                            <packageName>org.jooq.test.redshift.generatedclasses</packageName>
+                                            <directory>./src/test/java</directory>
+                                        </target>
+                                    </generator>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>com.amazon</groupId>
+                                <artifactId>redshift-jdbc</artifactId>
+                                <version>${db.redshift.version}</version>
+                                <scope>system</scope>
+                                <systemPath>${basedir}/lib/RedshiftJDBC41.jar</systemPath>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+
+        <profile>
+            <id>codegen-redshift-information-schema</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-codegen-maven</artifactId>
+                        <version>${org.jooq.version}</version>
+
+                        <executions>
+                            <execution>
+                                <id>generate-redshift-information-schema</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+
+                                <configuration>
+                                    <jdbc>
+                                        <driver>${db.redshift.driver}</driver>
+                                        <url>${db.redshift.url}</url>
+                                        <schema>information_schema</schema>
+                                        <user>${db.redshift.username}</user>
+                                        <password>${db.redshift.password}</password>
+                                    </jdbc>
+                                    <generator>
+                                        <name>org.jooq.util.DefaultGenerator</name>
+                                        <database>
+                                            <name>org.jooq.util.redshift.RedshiftDatabase</name>
+                                            <includes>check_constraints|columns|constraint_column_usage|key_column_usage|referential_constraints|schemata|table_constraints|tables</includes>
+                                            <excludes></excludes>
+                                        </database>
+                                        <generate>
+                                            <relations>false</relations>
+                                            <deprecated>false</deprecated>
+                                            <instanceFields>true</instanceFields>
+                                            <generatedAnnotation>true</generatedAnnotation>
+                                            <records>false</records>
+                                            <pojos>false</pojos>
+                                            <immutablePojos>false</immutablePojos>
+                                            <interfaces>false</interfaces>
+                                            <daos>false</daos>
+                                            <jpaAnnotations>false</jpaAnnotations>
+                                            <validationAnnotations>false</validationAnnotations>
+                                        </generate>
+                                        <target>
+                                            <packageName>org.jooq.util.redshift.information_schema</packageName>
+                                            <directory>../jOOQ-meta/src/main/java</directory>
+                                        </target>
+                                    </generator>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>com.amazon</groupId>
+                                <artifactId>redshift-jdbc</artifactId>
+                                <version>${db.redshift.version}</version>
+                                <scope>system</scope>
+                                <systemPath>${basedir}/lib/RedshiftJDBC41.jar</systemPath>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+
+        <profile>
+            <id>codegen-redshift-pg-catalog</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-codegen-maven</artifactId>
+                        <version>${org.jooq.version}</version>
+
+                        <executions>
+                            <execution>
+                                <id>generate-redshift-pg-catalog</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+
+                                <configuration>
+                                    <jdbc>
+                                        <driver>${db.redshift.driver}</driver>
+                                        <url>${db.redshift.url}</url>
+                                        <schema>pg_catalog</schema>
+                                        <user>${db.redshift.username}</user>
+                                        <password>${db.redshift.password}</password>
+                                    </jdbc>
+                                    <generator>
+                                        <name>org.jooq.util.DefaultGenerator</name>
+                                        <database>
+                                            <name>org.jooq.util.redshift.RedshiftDatabase</name>
+                                            <includes>pg_attribute|pg_class|pg_cursor|pg_description|pg_namespace|pg_proc|pg_type|format_type</includes>
+                                            <excludes></excludes>
+                                        </database>
+                                        <generate>
+                                            <relations>false</relations>
+                                            <deprecated>false</deprecated>
+                                            <instanceFields>true</instanceFields>
+                                            <generatedAnnotation>true</generatedAnnotation>
+                                            <records>false</records>
+                                            <pojos>false</pojos>
+                                            <immutablePojos>false</immutablePojos>
+                                            <interfaces>false</interfaces>
+                                            <daos>false</daos>
+                                            <jpaAnnotations>false</jpaAnnotations>
+                                            <validationAnnotations>false</validationAnnotations>
+                                        </generate>
+                                        <target>
+                                            <packageName>org.jooq.util.redshift.pg_catalog</packageName>
+                                            <directory>../jOOQ-meta/src/main/java</directory>
+                                        </target>
+                                    </generator>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>com.amazon</groupId>
+                                <artifactId>redshift-jdbc</artifactId>
+                                <version>${db.redshift.version}</version>
+                                <scope>system</scope>
+                                <systemPath>${basedir}/lib/RedshiftJDBC41.jar</systemPath>
                             </dependency>
                         </dependencies>
                     </plugin>

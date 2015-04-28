@@ -73,6 +73,7 @@ import org.jooq.util.mariadb.MariaDBDataType;
 import org.jooq.util.mysql.MySQLDataType;
 import org.jooq.util.oracle.OracleDataType;
 import org.jooq.util.postgres.PostgresDataType;
+import org.jooq.util.redshift.RedshiftDataType;
 import org.jooq.util.sqlite.SQLiteDataType;
 import org.jooq.util.sqlserver.SQLServerDataType;
 import org.jooq.util.sybase.SybaseDataType;
@@ -337,6 +338,7 @@ public final class SQLDataType {
             Class.forName(InformixDataType.class.getName());
             Class.forName(IngresDataType.class.getName());
             Class.forName(OracleDataType.class.getName());
+            Class.forName(RedshiftDataType.class.getName());
             Class.forName(SQLServerDataType.class.getName());
             Class.forName(SybaseDataType.class.getName());
             /* [/pro] */

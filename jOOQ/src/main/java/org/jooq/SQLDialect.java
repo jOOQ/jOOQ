@@ -234,6 +234,13 @@ public enum SQLDialect {
     ORACLE12C("Oracle", true, ORACLE, ORACLE11G),
 
     /**
+     * The Amazon Redshift dialect.
+     * <p>
+     * This dialect is available in commercial jOOQ distributions, only.
+     */
+    REDSHIFT("Redshift", true),
+
+    /**
      * The SQL Server dialect family.
      * <p>
      * This dialect is available in commercial jOOQ distributions, only.

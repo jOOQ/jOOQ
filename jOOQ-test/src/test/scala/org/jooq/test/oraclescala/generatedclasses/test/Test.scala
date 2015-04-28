@@ -24,6 +24,7 @@ import org.jooq.test.oraclescala.generatedclasses.test.tables.TDates
 import org.jooq.test.oraclescala.generatedclasses.test.tables.TDirectory
 import org.jooq.test.oraclescala.generatedclasses.test.tables.TExoticTypes
 import org.jooq.test.oraclescala.generatedclasses.test.tables.TLanguage
+import org.jooq.test.oraclescala.generatedclasses.test.tables.TReserved
 import org.jooq.test.oraclescala.generatedclasses.test.tables.TTemp
 import org.jooq.test.oraclescala.generatedclasses.test.tables.TTriggers
 import org.jooq.test.oraclescala.generatedclasses.test.tables.TUnsigned
@@ -77,7 +78,6 @@ class Test extends SchemaImpl("TEST") {
 
 	private def getSequences0() : List[Sequence[_]] = {
 		return Arrays.asList[Sequence[_]](
-			Sequences.S_AUTHOR_ID,
 			Sequences.S_3899$,
 			Sequences.S_961_BIG_INTEGER,
 			Sequences.S_961_BYTE,
@@ -105,6 +105,7 @@ class Test extends SchemaImpl("TEST") {
 			TDirectory.T_DIRECTORY,
 			TExoticTypes.T_EXOTIC_TYPES,
 			TLanguage.T_LANGUAGE,
+			TReserved.T_RESERVED,
 			TTemp.T_TEMP,
 			TTriggers.T_TRIGGERS,
 			TUnsigned.T_UNSIGNED,

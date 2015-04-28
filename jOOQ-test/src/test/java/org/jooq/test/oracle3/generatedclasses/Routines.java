@@ -38,7 +38,6 @@ import org.jooq.test.oracle3.generatedclasses.routines.P2155;
 import org.jooq.test.oracle3.generatedclasses.routines.P3005;
 import org.jooq.test.oracle3.generatedclasses.routines.P377;
 import org.jooq.test.oracle3.generatedclasses.routines.P391;
-import org.jooq.test.oracle3.generatedclasses.routines.PKG_2522;
 import org.jooq.test.oracle3.generatedclasses.routines.P_ARRAYS1;
 import org.jooq.test.oracle3.generatedclasses.routines.P_ARRAYS2;
 import org.jooq.test.oracle3.generatedclasses.routines.P_ARRAYS3;
@@ -59,7 +58,6 @@ import org.jooq.test.oracle3.generatedclasses.routines.P_TABLES3;
 import org.jooq.test.oracle3.generatedclasses.routines.P_TABLES4;
 import org.jooq.test.oracle3.generatedclasses.routines.P_UNUSED;
 import org.jooq.test.oracle3.generatedclasses.routines.SECOND_MAX;
-import org.jooq.test.oracle3.generatedclasses.udt.records.U_2522;
 import org.jooq.test.oracle3.generatedclasses.udt.records.U_3005;
 import org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE;
 import org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_ARRAY;
@@ -805,25 +803,6 @@ public class Routines {
 
 		p.execute(configuration);
 		return p;
-	}
-
-	/**
-	 * Call <code>PKG_2522</code>
-	 */
-	public static U_2522 call_PKG_2522(Configuration configuration) {
-		PKG_2522 f = new PKG_2522();
-
-		f.execute(configuration);
-		return f.getReturnValue();
-	}
-
-	/**
-	 * Get <code>PKG_2522</code> as a field
-	 */
-	public static Field<U_2522> call_PKG_2522() {
-		PKG_2522 f = new PKG_2522();
-
-		return f.asField();
 	}
 
 	/**

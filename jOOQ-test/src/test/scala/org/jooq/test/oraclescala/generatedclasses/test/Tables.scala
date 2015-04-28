@@ -15,6 +15,7 @@ import org.jooq.test.oraclescala.generatedclasses.test.tables.TDates
 import org.jooq.test.oraclescala.generatedclasses.test.tables.TDirectory
 import org.jooq.test.oraclescala.generatedclasses.test.tables.TExoticTypes
 import org.jooq.test.oraclescala.generatedclasses.test.tables.TLanguage
+import org.jooq.test.oraclescala.generatedclasses.test.tables.TReserved
 import org.jooq.test.oraclescala.generatedclasses.test.tables.TTemp
 import org.jooq.test.oraclescala.generatedclasses.test.tables.TTriggers
 import org.jooq.test.oraclescala.generatedclasses.test.tables.TUnsigned
@@ -100,6 +101,11 @@ Oh oh. Newline character.
 Oh, and beware of end-of-javadoc * /
 	 */
 	val T_LANGUAGE = org.jooq.test.oraclescala.generatedclasses.test.tables.TLanguage.T_LANGUAGE
+
+	/**
+	 * The table TEST.T_RESERVED
+	 */
+	val T_RESERVED = org.jooq.test.oraclescala.generatedclasses.test.tables.TReserved.T_RESERVED
 
 	/**
 	 * The table TEST.T_TEMP

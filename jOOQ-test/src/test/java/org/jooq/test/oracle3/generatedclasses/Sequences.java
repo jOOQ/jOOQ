@@ -18,11 +18,6 @@ import org.jooq.test.oracle3.generatedclasses.DefaultSchema;
 public class Sequences {
 
 	/**
-	 * The sequence <code>S_AUTHOR_ID</code>
-	 */
-	public static final Sequence<Integer> S_AUTHOR_ID = new SequenceImpl<Integer>("S_AUTHOR_ID", DefaultSchema.DEFAULT_SCHEMA, org.jooq.impl.SQLDataType.INTEGER.nullable(false));
-
-	/**
 	 * The sequence <code>S_3899$</code>
 	 */
 	public static final Sequence<BigInteger> S_3899$ = new SequenceImpl<BigInteger>("S_3899$", DefaultSchema.DEFAULT_SCHEMA, org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(38).nullable(false));

@@ -30,6 +30,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.T_DATES;
 import org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY;
 import org.jooq.test.oracle3.generatedclasses.tables.T_EXOTIC_TYPES;
 import org.jooq.test.oracle3.generatedclasses.tables.T_LANGUAGE;
+import org.jooq.test.oracle3.generatedclasses.tables.T_RESERVED;
 import org.jooq.test.oracle3.generatedclasses.tables.T_TEMP;
 import org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS;
 import org.jooq.test.oracle3.generatedclasses.tables.T_UNSIGNED;
@@ -44,7 +45,6 @@ import org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85;
 import org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED;
 import org.jooq.test.oracle3.generatedclasses.udt.O_INVALID_TYPE;
 import org.jooq.test.oracle3.generatedclasses.udt.U_2155_OBJECT;
-import org.jooq.test.oracle3.generatedclasses.udt.U_2522;
 import org.jooq.test.oracle3.generatedclasses.udt.U_3005;
 import org.jooq.test.oracle3.generatedclasses.udt.U_3709;
 import org.jooq.test.oracle3.generatedclasses.udt.U_ADDRESS_TYPE;
@@ -63,7 +63,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.U_STREET_TYPE;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DefaultSchema extends SchemaImpl implements Cloneable {
 
-	private static final long serialVersionUID = 1877799765;
+	private static final long serialVersionUID = 1273877727;
 
 	/**
 	 * The reference instance of <code></code>
@@ -86,7 +86,6 @@ public class DefaultSchema extends SchemaImpl implements Cloneable {
 
 	private final List<Sequence<?>> getSequences0() {
 		return Arrays.<Sequence<?>>asList(
-			Sequences.S_AUTHOR_ID,
 			Sequences.S_3899$,
 			Sequences.S_3899_$,
 			Sequences.S_961_BIG_INTEGER,
@@ -116,6 +115,7 @@ public class DefaultSchema extends SchemaImpl implements Cloneable {
 			T_DIRECTORY.T_DIRECTORY,
 			T_EXOTIC_TYPES.T_EXOTIC_TYPES,
 			T_LANGUAGE.T_LANGUAGE,
+			T_RESERVED.T_RESERVED,
 			T_TEMP.T_TEMP,
 			T_TRIGGERS.T_TRIGGERS,
 			T_UNSIGNED.T_UNSIGNED,
@@ -155,7 +155,6 @@ public class DefaultSchema extends SchemaImpl implements Cloneable {
 			U_NESTED_3.U_NESTED_3,
 			U_STREET_TYPE.U_STREET_TYPE,
 			U_2155_OBJECT.U_2155_OBJECT,
-			U_2522.U_2522,
 			U_3005.U_3005,
 			U_3709.U_3709);
 	}

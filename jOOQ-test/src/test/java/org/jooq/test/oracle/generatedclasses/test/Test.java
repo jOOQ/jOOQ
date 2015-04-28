@@ -24,6 +24,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.TDates;
 import org.jooq.test.oracle.generatedclasses.test.tables.TDirectory;
 import org.jooq.test.oracle.generatedclasses.test.tables.TExoticTypes;
 import org.jooq.test.oracle.generatedclasses.test.tables.TLanguage;
+import org.jooq.test.oracle.generatedclasses.test.tables.TReserved;
 import org.jooq.test.oracle.generatedclasses.test.tables.TTemp;
 import org.jooq.test.oracle.generatedclasses.test.tables.TTriggers;
 import org.jooq.test.oracle.generatedclasses.test.tables.TUnsigned;
@@ -62,7 +63,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.U_3709;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Test extends SchemaImpl {
 
-	private static final long serialVersionUID = 895974077;
+	private static final long serialVersionUID = 1501980212;
 
 	/**
 	 * The reference instance of <code>TEST</code>
@@ -85,7 +86,6 @@ public class Test extends SchemaImpl {
 
 	private final List<Sequence<?>> getSequences0() {
 		return Arrays.<Sequence<?>>asList(
-			Sequences.S_AUTHOR_ID,
 			Sequences.S_3899$,
 			Sequences.S_961_BIG_INTEGER,
 			Sequences.S_961_BYTE,
@@ -114,6 +114,7 @@ public class Test extends SchemaImpl {
 			TDirectory.T_DIRECTORY,
 			TExoticTypes.T_EXOTIC_TYPES,
 			TLanguage.T_LANGUAGE,
+			TReserved.T_RESERVED,
 			TTemp.T_TEMP,
 			TTriggers.T_TRIGGERS,
 			TUnsigned.T_UNSIGNED,

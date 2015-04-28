@@ -15,6 +15,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.TDates;
 import org.jooq.test.oracle.generatedclasses.test.tables.TDirectory;
 import org.jooq.test.oracle.generatedclasses.test.tables.TExoticTypes;
 import org.jooq.test.oracle.generatedclasses.test.tables.TLanguage;
+import org.jooq.test.oracle.generatedclasses.test.tables.TReserved;
 import org.jooq.test.oracle.generatedclasses.test.tables.TTemp;
 import org.jooq.test.oracle.generatedclasses.test.tables.TTriggers;
 import org.jooq.test.oracle.generatedclasses.test.tables.TUnsigned;
@@ -101,6 +102,11 @@ Oh oh. Newline character.
 Oh, and beware of end-of-javadoc * /
 	 */
 	public static final TLanguage T_LANGUAGE = org.jooq.test.oracle.generatedclasses.test.tables.TLanguage.T_LANGUAGE;
+
+	/**
+	 * The table TEST.T_RESERVED
+	 */
+	public static final TReserved T_RESERVED = org.jooq.test.oracle.generatedclasses.test.tables.TReserved.T_RESERVED;
 
 	/**
 	 * The table TEST.T_TEMP

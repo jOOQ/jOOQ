@@ -27,17 +27,17 @@ import javax.validation.constraints.NotNull
 @Table(name = "T_639_NUMBERS_TABLE", schema = "TEST")
 class T_639NumbersTable(
 	  private var id : Integer   
-	, private var byte_ : Byte      
-	, private var short_ : Short     
+	, private var byte : Byte      
+	, private var short : Short     
 	, private var integer : Integer   
-	, private var long_ : Long      
+	, private var long : Long      
 	, private var byteDecimal : Byte      
 	, private var shortDecimal : Short     
 	, private var integerDecimal : Integer   
 	, private var longDecimal : Long      
 	, private var bigInteger : BigInteger
 	, private var bigDecimal : BigDecimal
-	, private var float_ : Double    
+	, private var float : Double    
 	, private var real : Double    
 ) extends Serializable {
 
@@ -48,17 +48,17 @@ class T_639NumbersTable(
 	def this (value : T_639NumbersTable) = {
 		this(
 			  value.id
-			, value.byte_
-			, value.short_
+			, value.byte
+			, value.short
 			, value.integer
-			, value.long_
+			, value.long
 			, value.byteDecimal
 			, value.shortDecimal
 			, value.integerDecimal
 			, value.longDecimal
 			, value.bigInteger
 			, value.bigDecimal
-			, value.float_
+			, value.float
 			, value.real
 		)
 	}
@@ -76,20 +76,20 @@ class T_639NumbersTable(
 
 	@Column(name = "BYTE", precision = 2)
 	def getByte : Byte = {
-		this.byte_
+		this.byte
 	}
 
-	def setByte(byte_ : Byte) : Unit = {
-		this.byte_ = byte_
+	def setByte(byte : Byte) : Unit = {
+		this.byte = byte
 	}
 
 	@Column(name = "SHORT", precision = 4)
 	def getShort : Short = {
-		this.short_
+		this.short
 	}
 
-	def setShort(short_ : Short) : Unit = {
-		this.short_ = short_
+	def setShort(short : Short) : Unit = {
+		this.short = short
 	}
 
 	@Column(name = "INTEGER", precision = 7)
@@ -103,11 +103,11 @@ class T_639NumbersTable(
 
 	@Column(name = "LONG", precision = 18)
 	def getLong : Long = {
-		this.long_
+		this.long
 	}
 
-	def setLong(long_ : Long) : Unit = {
-		this.long_ = long_
+	def setLong(long : Long) : Unit = {
+		this.long = long
 	}
 
 	@Column(name = "BYTE_DECIMAL", precision = 2)
@@ -166,11 +166,11 @@ class T_639NumbersTable(
 
 	@Column(name = "FLOAT", precision = 126)
 	def getFloat : Double = {
-		this.float_
+		this.float
 	}
 
-	def setFloat(float_ : Double) : Unit = {
-		this.float_ = float_
+	def setFloat(float : Double) : Unit = {
+		this.float = float
 	}
 
 	@Column(name = "REAL", precision = 63)
@@ -196,17 +196,17 @@ class T_639NumbersTable(
 		}
 		else if (!id.equals(other.id))
 			return false
-		if (byte_ == null) {
-			if (other.byte_ != null)
+		if (byte == null) {
+			if (other.byte != null)
 				return false
 		}
-		else if (!byte_.equals(other.byte_))
+		else if (!byte.equals(other.byte))
 			return false
-		if (short_ == null) {
-			if (other.short_ != null)
+		if (short == null) {
+			if (other.short != null)
 				return false
 		}
-		else if (!short_.equals(other.short_))
+		else if (!short.equals(other.short))
 			return false
 		if (integer == null) {
 			if (other.integer != null)
@@ -214,11 +214,11 @@ class T_639NumbersTable(
 		}
 		else if (!integer.equals(other.integer))
 			return false
-		if (long_ == null) {
-			if (other.long_ != null)
+		if (long == null) {
+			if (other.long != null)
 				return false
 		}
-		else if (!long_.equals(other.long_))
+		else if (!long.equals(other.long))
 			return false
 		if (byteDecimal == null) {
 			if (other.byteDecimal != null)
@@ -256,11 +256,11 @@ class T_639NumbersTable(
 		}
 		else if (!bigDecimal.equals(other.bigDecimal))
 			return false
-		if (float_ == null) {
-			if (other.float_ != null)
+		if (float == null) {
+			if (other.float != null)
 				return false
 		}
-		else if (!float_.equals(other.float_))
+		else if (!float.equals(other.float))
 			return false
 		if (real == null) {
 			if (other.real != null)
@@ -275,17 +275,17 @@ class T_639NumbersTable(
 		val prime = 31
 		var result = 1
 		result = prime * result + (if (id == null) 0 else id.hashCode())
-		result = prime * result + (if (byte_ == null) 0 else byte_.hashCode())
-		result = prime * result + (if (short_ == null) 0 else short_.hashCode())
+		result = prime * result + (if (byte == null) 0 else byte.hashCode())
+		result = prime * result + (if (short == null) 0 else short.hashCode())
 		result = prime * result + (if (integer == null) 0 else integer.hashCode())
-		result = prime * result + (if (long_ == null) 0 else long_.hashCode())
+		result = prime * result + (if (long == null) 0 else long.hashCode())
 		result = prime * result + (if (byteDecimal == null) 0 else byteDecimal.hashCode())
 		result = prime * result + (if (shortDecimal == null) 0 else shortDecimal.hashCode())
 		result = prime * result + (if (integerDecimal == null) 0 else integerDecimal.hashCode())
 		result = prime * result + (if (longDecimal == null) 0 else longDecimal.hashCode())
 		result = prime * result + (if (bigInteger == null) 0 else bigInteger.hashCode())
 		result = prime * result + (if (bigDecimal == null) 0 else bigDecimal.hashCode())
-		result = prime * result + (if (float_ == null) 0 else float_.hashCode())
+		result = prime * result + (if (float == null) 0 else float.hashCode())
 		result = prime * result + (if (real == null) 0 else real.hashCode())
 		return result
 	}

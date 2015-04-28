@@ -373,21 +373,21 @@ class T_639NumbersTableRecord extends UpdatableRecordImpl[T_639NumbersTableRecor
 	/**
 	 * Create a detached, initialised T_639NumbersTableRecord
 	 */
-	def this(id : Integer, byte_ : Byte, short_ : Short, integer : Integer, long_ : Long, byteDecimal : Byte, shortDecimal : Short, integerDecimal : Integer, longDecimal : Long, bigInteger : BigInteger, bigDecimal : BigDecimal, float_ : Double, real : Double) = {
+	def this(id : Integer, byte : Byte, short : Short, integer : Integer, long : Long, byteDecimal : Byte, shortDecimal : Short, integerDecimal : Integer, longDecimal : Long, bigInteger : BigInteger, bigDecimal : BigDecimal, float : Double, real : Double) = {
 		this()
 
 		setValue(0, id)
-		setValue(1, byte_)
-		setValue(2, short_)
+		setValue(1, byte)
+		setValue(2, short)
 		setValue(3, integer)
-		setValue(4, long_)
+		setValue(4, long)
 		setValue(5, byteDecimal)
 		setValue(6, shortDecimal)
 		setValue(7, integerDecimal)
 		setValue(8, longDecimal)
 		setValue(9, bigInteger)
 		setValue(10, bigDecimal)
-		setValue(11, float_)
+		setValue(11, float)
 		setValue(12, real)
 	}
 }

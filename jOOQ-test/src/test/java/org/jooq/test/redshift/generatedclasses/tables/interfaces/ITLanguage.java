@@ -16,17 +16,17 @@ public interface ITLanguage extends Serializable {
 	/**
 	 * Getter for <code>public.t_language.cd</code>. The language ISO code
 	 */
-	public Object getCd();
+	public String getCd();
 
 	/**
 	 * Getter for <code>public.t_language.description</code>. The language description
 	 */
-	public Object getDescription();
+	public String getDescription();
 
 	/**
 	 * Getter for <code>public.t_language.description_english</code>.
 	 */
-	public Object getDescriptionEnglish();
+	public String getDescriptionEnglish();
 
 	/**
 	 * Getter for <code>public.t_language.id</code>. The language ID

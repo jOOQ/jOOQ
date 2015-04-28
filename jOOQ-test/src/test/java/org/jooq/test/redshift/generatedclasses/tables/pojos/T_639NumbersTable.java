@@ -16,7 +16,7 @@ import org.jooq.test.redshift.generatedclasses.tables.interfaces.IT_639NumbersTa
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTable implements IT_639NumbersTable {
 
-	private static final long serialVersionUID = -52000445;
+	private static final long serialVersionUID = 412762317;
 
 	private final Integer    id;
 	private final Short      short_;
@@ -29,7 +29,7 @@ public class T_639NumbersTable implements IT_639NumbersTable {
 	private final BigInteger bigInteger;
 	private final BigDecimal bigDecimal;
 	private final Float      float_;
-	private final Object     double_;
+	private final Double     double_;
 
 	public T_639NumbersTable(T_639NumbersTable value) {
 		this.id = value.id;
@@ -58,7 +58,7 @@ public class T_639NumbersTable implements IT_639NumbersTable {
 		BigInteger bigInteger,
 		BigDecimal bigDecimal,
 		Float      float_,
-		Object     double_
+		Double     double_
 	) {
 		this.id = id;
 		this.short_ = short_;
@@ -130,7 +130,7 @@ public class T_639NumbersTable implements IT_639NumbersTable {
 	}
 
 	@Override
-	public Object getDouble() {
+	public Double getDouble() {
 		return this.double_;
 	}
 }

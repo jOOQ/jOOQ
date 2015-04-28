@@ -21,10 +21,10 @@ public interface IT_785 extends Serializable {
 	/**
 	 * Getter for <code>public.t_785.name</code>.
 	 */
-	public Object getName();
+	public String getName();
 
 	/**
 	 * Getter for <code>public.t_785.value</code>.
 	 */
-	public Object getValue();
+	public String getValue();
 }

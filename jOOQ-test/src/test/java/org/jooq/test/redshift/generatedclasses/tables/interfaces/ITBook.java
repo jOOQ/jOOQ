@@ -36,7 +36,7 @@ public interface ITBook extends Serializable {
 	/**
 	 * Getter for <code>public.t_book.title</code>. The book's title
 	 */
-	public Object getTitle();
+	public String getTitle();
 
 	/**
 	 * Getter for <code>public.t_book.published_in</code>. The year the book was published in
@@ -51,10 +51,10 @@ public interface ITBook extends Serializable {
 	/**
 	 * Getter for <code>public.t_book.content_text</code>. Some textual content of the book
 	 */
-	public Object getContentText();
+	public String getContentText();
 
 	/**
 	 * Getter for <code>public.t_book.content_pdf</code>.
 	 */
-	public Object getContentPdf();
+	public String getContentPdf();
 }

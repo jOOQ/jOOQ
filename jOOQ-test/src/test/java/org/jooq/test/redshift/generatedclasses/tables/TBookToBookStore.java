@@ -4,10 +4,15 @@
 package org.jooq.test.redshift.generatedclasses.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.UniqueKey;
 import org.jooq.impl.TableImpl;
+import org.jooq.test.redshift.generatedclasses.Keys;
 import org.jooq.test.redshift.generatedclasses.Public;
 import org.jooq.test.redshift.generatedclasses.tables.records.TBookToBookStoreRecord;
 
@@ -18,7 +23,7 @@ import org.jooq.test.redshift.generatedclasses.tables.records.TBookToBookStoreRe
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStore extends TableImpl<TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 1605808355;
+	private static final long serialVersionUID = 891089951;
 
 	/**
 	 * The reference instance of <code>public.t_book_to_book_store</code>
@@ -36,7 +41,7 @@ public class TBookToBookStore extends TableImpl<TBookToBookStoreRecord> {
 	/**
 	 * The column <code>public.t_book_to_book_store.book_store_name</code>.
 	 */
-	public final TableField<TBookToBookStoreRecord, Object> BOOK_STORE_NAME = createField("book_store_name", org.jooq.impl.DefaultDataType.getDefaultDataType("character varying"), this, "");
+	public final TableField<TBookToBookStoreRecord, String> BOOK_STORE_NAME = createField("book_store_name", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "");
 
 	/**
 	 * The column <code>public.t_book_to_book_store.book_id</code>.
@@ -68,6 +73,22 @@ public class TBookToBookStore extends TableImpl<TBookToBookStoreRecord> {
 
 	private TBookToBookStore(String alias, Table<TBookToBookStoreRecord> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public UniqueKey<TBookToBookStoreRecord> getPrimaryKey() {
+		return Keys.PK_B2BS;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<UniqueKey<TBookToBookStoreRecord>> getKeys() {
+		return Arrays.<UniqueKey<TBookToBookStoreRecord>>asList(Keys.PK_B2BS);
 	}
 
 	/**

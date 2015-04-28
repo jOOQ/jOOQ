@@ -5,11 +5,16 @@ package org.jooq.test.redshift.generatedclasses.tables;
 
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.Arrays;
+import java.util.List;
 
 import org.jooq.Field;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.UniqueKey;
 import org.jooq.impl.TableImpl;
+import org.jooq.test.redshift.generatedclasses.Keys;
 import org.jooq.test.redshift.generatedclasses.Public;
 import org.jooq.test.redshift.generatedclasses.tables.records.TDatesRecord;
 
@@ -20,7 +25,7 @@ import org.jooq.test.redshift.generatedclasses.tables.records.TDatesRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates extends TableImpl<TDatesRecord> {
 
-	private static final long serialVersionUID = -593959982;
+	private static final long serialVersionUID = -1535212406;
 
 	/**
 	 * The reference instance of <code>public.t_dates</code>
@@ -48,12 +53,12 @@ public class TDates extends TableImpl<TDatesRecord> {
 	/**
 	 * The column <code>public.t_dates.t</code>.
 	 */
-	public final TableField<TDatesRecord, Object> T = createField("t", org.jooq.impl.DefaultDataType.getDefaultDataType("timestamp without time zone"), this, "");
+	public final TableField<TDatesRecord, Timestamp> T = createField("t", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
 	/**
 	 * The column <code>public.t_dates.ts</code>.
 	 */
-	public final TableField<TDatesRecord, Object> TS = createField("ts", org.jooq.impl.DefaultDataType.getDefaultDataType("timestamp without time zone"), this, "");
+	public final TableField<TDatesRecord, Timestamp> TS = createField("ts", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
 	/**
 	 * The column <code>public.t_dates.d_int</code>.
@@ -85,6 +90,22 @@ public class TDates extends TableImpl<TDatesRecord> {
 
 	private TDates(String alias, Table<TDatesRecord> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public UniqueKey<TDatesRecord> getPrimaryKey() {
+		return Keys.PK_T_DATES;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<UniqueKey<TDatesRecord>> getKeys() {
+		return Arrays.<UniqueKey<TDatesRecord>>asList(Keys.PK_T_DATES);
 	}
 
 	/**

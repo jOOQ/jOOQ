@@ -13,11 +13,11 @@ import org.jooq.test.redshift.generatedclasses.tables.interfaces.IT_785;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_785 implements IT_785 {
 
-	private static final long serialVersionUID = -6626840;
+	private static final long serialVersionUID = 1023349672;
 
 	private final Integer id;
-	private final Object  name;
-	private final Object  value;
+	private final String  name;
+	private final String  value;
 
 	public T_785(T_785 value) {
 		this.id = value.id;
@@ -27,8 +27,8 @@ public class T_785 implements IT_785 {
 
 	public T_785(
 		Integer id,
-		Object  name,
-		Object  value
+		String  name,
+		String  value
 	) {
 		this.id = id;
 		this.name = name;
@@ -41,12 +41,12 @@ public class T_785 implements IT_785 {
 	}
 
 	@Override
-	public Object getName() {
+	public String getName() {
 		return this.name;
 	}
 
 	@Override
-	public Object getValue() {
+	public String getValue() {
 		return this.value;
 	}
 }

@@ -16,5 +16,5 @@ public interface ITBookStore extends Serializable {
 	/**
 	 * Getter for <code>public.t_book_store.name</code>.
 	 */
-	public Object getName();
+	public String getName();
 }

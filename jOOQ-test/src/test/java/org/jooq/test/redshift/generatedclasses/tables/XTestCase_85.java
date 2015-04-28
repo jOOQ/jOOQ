@@ -4,10 +4,15 @@
 package org.jooq.test.redshift.generatedclasses.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.UniqueKey;
 import org.jooq.impl.TableImpl;
+import org.jooq.test.redshift.generatedclasses.Keys;
 import org.jooq.test.redshift.generatedclasses.Public;
 import org.jooq.test.redshift.generatedclasses.tables.records.XTestCase_85Record;
 
@@ -18,7 +23,7 @@ import org.jooq.test.redshift.generatedclasses.tables.records.XTestCase_85Record
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_85 extends TableImpl<XTestCase_85Record> {
 
-	private static final long serialVersionUID = -1178678210;
+	private static final long serialVersionUID = 927038940;
 
 	/**
 	 * The reference instance of <code>public.x_test_case_85</code>
@@ -46,7 +51,7 @@ public class XTestCase_85 extends TableImpl<XTestCase_85Record> {
 	/**
 	 * The column <code>public.x_test_case_85.x_unused_name</code>.
 	 */
-	public final TableField<XTestCase_85Record, Object> X_UNUSED_NAME = createField("x_unused_name", org.jooq.impl.DefaultDataType.getDefaultDataType("character varying"), this, "");
+	public final TableField<XTestCase_85Record, String> X_UNUSED_NAME = createField("x_unused_name", org.jooq.impl.SQLDataType.VARCHAR.length(10), this, "");
 
 	/**
 	 * Create a <code>public.x_test_case_85</code> table reference
@@ -68,6 +73,22 @@ public class XTestCase_85 extends TableImpl<XTestCase_85Record> {
 
 	private XTestCase_85(String alias, Table<XTestCase_85Record> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public UniqueKey<XTestCase_85Record> getPrimaryKey() {
+		return Keys.PK_X_TEST_CASE_85;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<UniqueKey<XTestCase_85Record>> getKeys() {
+		return Arrays.<UniqueKey<XTestCase_85Record>>asList(Keys.PK_X_TEST_CASE_85);
 	}
 
 	/**

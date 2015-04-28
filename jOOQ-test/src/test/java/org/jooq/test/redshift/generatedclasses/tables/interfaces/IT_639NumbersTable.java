@@ -73,5 +73,5 @@ public interface IT_639NumbersTable extends Serializable {
 	/**
 	 * Getter for <code>public.t_639_numbers_table.double</code>.
 	 */
-	public Object getDouble();
+	public Double getDouble();
 }

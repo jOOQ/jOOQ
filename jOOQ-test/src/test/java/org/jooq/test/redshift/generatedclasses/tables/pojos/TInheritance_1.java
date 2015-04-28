@@ -13,22 +13,22 @@ import org.jooq.test.redshift.generatedclasses.tables.interfaces.ITInheritance_1
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TInheritance_1 implements ITInheritance_1 {
 
-	private static final long serialVersionUID = 318180421;
+	private static final long serialVersionUID = 668231511;
 
-	private final Object text_1;
+	private final String text_1;
 
 	public TInheritance_1(TInheritance_1 value) {
 		this.text_1 = value.text_1;
 	}
 
 	public TInheritance_1(
-		Object text_1
+		String text_1
 	) {
 		this.text_1 = text_1;
 	}
 
 	@Override
-	public Object getText_1() {
+	public String getText_1() {
 		return this.text_1;
 	}
 }

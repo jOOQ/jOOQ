@@ -18,7 +18,7 @@ import org.jooq.test.redshift.generatedclasses.tables.records.VLibraryRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibrary extends TableImpl<VLibraryRecord> {
 
-	private static final long serialVersionUID = -1629514442;
+	private static final long serialVersionUID = -1944907064;
 
 	/**
 	 * The reference instance of <code>public.v_library</code>
@@ -36,12 +36,12 @@ public class VLibrary extends TableImpl<VLibraryRecord> {
 	/**
 	 * The column <code>public.v_library.author</code>.
 	 */
-	public final TableField<VLibraryRecord, Object> AUTHOR = createField("author", org.jooq.impl.DefaultDataType.getDefaultDataType("text"), this, "");
+	public final TableField<VLibraryRecord, String> AUTHOR = createField("author", org.jooq.impl.SQLDataType.CLOB, this, "");
 
 	/**
 	 * The column <code>public.v_library.title</code>.
 	 */
-	public final TableField<VLibraryRecord, Object> TITLE = createField("title", org.jooq.impl.DefaultDataType.getDefaultDataType("character varying"), this, "");
+	public final TableField<VLibraryRecord, String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR.length(400), this, "");
 
 	/**
 	 * Create a <code>public.v_library</code> table reference

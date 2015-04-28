@@ -1,6 +1,8 @@
 import java.sql.Connection;
 import java.util.Properties;
 
+import org.jooq.Record;
+import org.jooq.Result;
 import org.jooq.impl.DSL;
 
 /**
@@ -62,7 +64,15 @@ public class Redshift {
             Connection cn = new com.amazon.redshift.jdbc41.Driver().connect(url, properties);
 
             System.out.println("Select");
-            System.out.println(DSL.using(cn).fetch("select 1"));
+            Result<Record> result = DSL.using(cn).fetch(
+                " select"
+              + "   cl.relname"
+              + " , c.conkey"
+              + " from pg_constraint c"
+              + " join pg_namespace n on c.connamespace = n.oid"
+              + " join pg_class cl on c.conrelid = cl.oid"
+              + " where c.contype = 'p';");
+            System.out.println(result);
     /*
             System.out.println(Routines.fOne(conf));
             System.out.println(DSL.using(conf).select(Routines.fOne()).fetchOne());

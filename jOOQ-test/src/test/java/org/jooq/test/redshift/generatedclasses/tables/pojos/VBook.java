@@ -13,17 +13,17 @@ import org.jooq.test.redshift.generatedclasses.tables.interfaces.IVBook;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBook implements IVBook {
 
-	private static final long serialVersionUID = 2112515217;
+	private static final long serialVersionUID = 91329835;
 
 	private final Integer id;
 	private final Integer authorId;
 	private final Integer coAuthorId;
 	private final Integer detailsId;
-	private final Object  title;
+	private final String  title;
 	private final Integer publishedIn;
 	private final Integer languageId;
-	private final Object  contentText;
-	private final Object  contentPdf;
+	private final String  contentText;
+	private final String  contentPdf;
 
 	public VBook(VBook value) {
 		this.id = value.id;
@@ -42,11 +42,11 @@ public class VBook implements IVBook {
 		Integer authorId,
 		Integer coAuthorId,
 		Integer detailsId,
-		Object  title,
+		String  title,
 		Integer publishedIn,
 		Integer languageId,
-		Object  contentText,
-		Object  contentPdf
+		String  contentText,
+		String  contentPdf
 	) {
 		this.id = id;
 		this.authorId = authorId;
@@ -80,7 +80,7 @@ public class VBook implements IVBook {
 	}
 
 	@Override
-	public Object getTitle() {
+	public String getTitle() {
 		return this.title;
 	}
 
@@ -95,12 +95,12 @@ public class VBook implements IVBook {
 	}
 
 	@Override
-	public Object getContentText() {
+	public String getContentText() {
 		return this.contentText;
 	}
 
 	@Override
-	public Object getContentPdf() {
+	public String getContentPdf() {
 		return this.contentPdf;
 	}
 }

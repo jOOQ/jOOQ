@@ -15,14 +15,14 @@ import org.jooq.test.redshift.generatedclasses.tables.interfaces.IVAuthor;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthor implements IVAuthor {
 
-	private static final long serialVersionUID = -713023167;
+	private static final long serialVersionUID = 516467475;
 
 	private final Integer id;
-	private final Object  firstName;
-	private final Object  lastName;
+	private final String  firstName;
+	private final String  lastName;
 	private final Date    dateOfBirth;
 	private final Integer yearOfBirth;
-	private final Object  address;
+	private final String  address;
 
 	public VAuthor(VAuthor value) {
 		this.id = value.id;
@@ -35,11 +35,11 @@ public class VAuthor implements IVAuthor {
 
 	public VAuthor(
 		Integer id,
-		Object  firstName,
-		Object  lastName,
+		String  firstName,
+		String  lastName,
 		Date    dateOfBirth,
 		Integer yearOfBirth,
-		Object  address
+		String  address
 	) {
 		this.id = id;
 		this.firstName = firstName;
@@ -55,12 +55,12 @@ public class VAuthor implements IVAuthor {
 	}
 
 	@Override
-	public Object getFirstName() {
+	public String getFirstName() {
 		return this.firstName;
 	}
 
 	@Override
-	public Object getLastName() {
+	public String getLastName() {
 		return this.lastName;
 	}
 
@@ -75,7 +75,7 @@ public class VAuthor implements IVAuthor {
 	}
 
 	@Override
-	public Object getAddress() {
+	public String getAddress() {
 		return this.address;
 	}
 }

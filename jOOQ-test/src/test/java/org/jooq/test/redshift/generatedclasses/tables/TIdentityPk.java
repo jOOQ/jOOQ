@@ -4,10 +4,15 @@
 package org.jooq.test.redshift.generatedclasses.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.UniqueKey;
 import org.jooq.impl.TableImpl;
+import org.jooq.test.redshift.generatedclasses.Keys;
 import org.jooq.test.redshift.generatedclasses.Public;
 import org.jooq.test.redshift.generatedclasses.tables.records.TIdentityPkRecord;
 
@@ -18,7 +23,7 @@ import org.jooq.test.redshift.generatedclasses.tables.records.TIdentityPkRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentityPk extends TableImpl<TIdentityPkRecord> {
 
-	private static final long serialVersionUID = -966398327;
+	private static final long serialVersionUID = 1491345369;
 
 	/**
 	 * The reference instance of <code>public.t_identity_pk</code>
@@ -63,6 +68,22 @@ public class TIdentityPk extends TableImpl<TIdentityPkRecord> {
 
 	private TIdentityPk(String alias, Table<TIdentityPkRecord> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public UniqueKey<TIdentityPkRecord> getPrimaryKey() {
+		return Keys.PK_T_IDENTITY_PK;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<UniqueKey<TIdentityPkRecord>> getKeys() {
+		return Arrays.<UniqueKey<TIdentityPkRecord>>asList(Keys.PK_T_IDENTITY_PK);
 	}
 
 	/**

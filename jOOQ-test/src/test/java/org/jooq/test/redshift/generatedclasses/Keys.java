@@ -4,6 +4,36 @@
 package org.jooq.test.redshift.generatedclasses;
 
 
+import org.jooq.UniqueKey;
+import org.jooq.impl.AbstractKeys;
+import org.jooq.test.redshift.generatedclasses.tables.TBook;
+import org.jooq.test.redshift.generatedclasses.tables.TBookStore;
+import org.jooq.test.redshift.generatedclasses.tables.TBookToBookStore;
+import org.jooq.test.redshift.generatedclasses.tables.TBooleans;
+import org.jooq.test.redshift.generatedclasses.tables.TDates;
+import org.jooq.test.redshift.generatedclasses.tables.TIdentityPk;
+import org.jooq.test.redshift.generatedclasses.tables.TLanguage;
+import org.jooq.test.redshift.generatedclasses.tables.T_3111;
+import org.jooq.test.redshift.generatedclasses.tables.T_639NumbersTable;
+import org.jooq.test.redshift.generatedclasses.tables.XTestCase_64_69;
+import org.jooq.test.redshift.generatedclasses.tables.XTestCase_71;
+import org.jooq.test.redshift.generatedclasses.tables.XTestCase_85;
+import org.jooq.test.redshift.generatedclasses.tables.XUnused;
+import org.jooq.test.redshift.generatedclasses.tables.records.TAuthorRecord;
+import org.jooq.test.redshift.generatedclasses.tables.records.TBookRecord;
+import org.jooq.test.redshift.generatedclasses.tables.records.TBookStoreRecord;
+import org.jooq.test.redshift.generatedclasses.tables.records.TBookToBookStoreRecord;
+import org.jooq.test.redshift.generatedclasses.tables.records.TBooleansRecord;
+import org.jooq.test.redshift.generatedclasses.tables.records.TDatesRecord;
+import org.jooq.test.redshift.generatedclasses.tables.records.TIdentityPkRecord;
+import org.jooq.test.redshift.generatedclasses.tables.records.TLanguageRecord;
+import org.jooq.test.redshift.generatedclasses.tables.records.T_3111Record;
+import org.jooq.test.redshift.generatedclasses.tables.records.T_639NumbersTableRecord;
+import org.jooq.test.redshift.generatedclasses.tables.records.XTestCase_64_69Record;
+import org.jooq.test.redshift.generatedclasses.tables.records.XTestCase_71Record;
+import org.jooq.test.redshift.generatedclasses.tables.records.XTestCase_85Record;
+import org.jooq.test.redshift.generatedclasses.tables.records.XUnusedRecord;
+
 
 /**
  * A class modelling foreign key relationships between tables of the <code>public</code> 
@@ -21,6 +51,21 @@ public class Keys {
 	// UNIQUE and PRIMARY KEY definitions
 	// -------------------------------------------------------------------------
 
+	public static final UniqueKey<T_3111Record> PK_T_3111 = UniqueKeys0.PK_T_3111;
+	public static final UniqueKey<T_639NumbersTableRecord> PK_T_639_NUMBERS_TABLE = UniqueKeys0.PK_T_639_NUMBERS_TABLE;
+	public static final UniqueKey<TAuthorRecord> PK_T_AUTHOR = UniqueKeys0.PK_T_AUTHOR;
+	public static final UniqueKey<TBookRecord> PK_T_BOOK = UniqueKeys0.PK_T_BOOK;
+	public static final UniqueKey<TBookStoreRecord> UK_T_BOOK_STORE_NAME = UniqueKeys0.UK_T_BOOK_STORE_NAME;
+	public static final UniqueKey<TBookToBookStoreRecord> PK_B2BS = UniqueKeys0.PK_B2BS;
+	public static final UniqueKey<TBooleansRecord> PK_T_BOOLEANS = UniqueKeys0.PK_T_BOOLEANS;
+	public static final UniqueKey<TDatesRecord> PK_T_DATES = UniqueKeys0.PK_T_DATES;
+	public static final UniqueKey<TIdentityPkRecord> PK_T_IDENTITY_PK = UniqueKeys0.PK_T_IDENTITY_PK;
+	public static final UniqueKey<TLanguageRecord> PK_T_LANGUAGE = UniqueKeys0.PK_T_LANGUAGE;
+	public static final UniqueKey<XTestCase_64_69Record> PK_X_TEST_CASE_64_69 = UniqueKeys0.PK_X_TEST_CASE_64_69;
+	public static final UniqueKey<XTestCase_71Record> PK_X_TEST_CASE_71 = UniqueKeys0.PK_X_TEST_CASE_71;
+	public static final UniqueKey<XTestCase_85Record> PK_X_TEST_CASE_85 = UniqueKeys0.PK_X_TEST_CASE_85;
+	public static final UniqueKey<XUnusedRecord> PK_X_UNUSED = UniqueKeys0.PK_X_UNUSED;
+	public static final UniqueKey<XUnusedRecord> UK_X_UNUSED_ID = UniqueKeys0.UK_X_UNUSED_ID;
 
 	// -------------------------------------------------------------------------
 	// FOREIGN KEY definitions
@@ -30,4 +75,22 @@ public class Keys {
 	// -------------------------------------------------------------------------
 	// [#1459] distribute members to avoid static initialisers > 64kb
 	// -------------------------------------------------------------------------
+
+	private static class UniqueKeys0 extends AbstractKeys {
+		public static final UniqueKey<T_3111Record> PK_T_3111 = createUniqueKey(T_3111.T_3111, T_3111.T_3111.ID);
+		public static final UniqueKey<T_639NumbersTableRecord> PK_T_639_NUMBERS_TABLE = createUniqueKey(T_639NumbersTable.T_639_NUMBERS_TABLE, T_639NumbersTable.T_639_NUMBERS_TABLE.ID);
+		public static final UniqueKey<TAuthorRecord> PK_T_AUTHOR = createUniqueKey(org.jooq.test.redshift.generatedclasses.tables.TAuthor.T_AUTHOR, org.jooq.test.redshift.generatedclasses.tables.TAuthor.T_AUTHOR.ID);
+		public static final UniqueKey<TBookRecord> PK_T_BOOK = createUniqueKey(TBook.T_BOOK, TBook.T_BOOK.ID);
+		public static final UniqueKey<TBookStoreRecord> UK_T_BOOK_STORE_NAME = createUniqueKey(TBookStore.T_BOOK_STORE, TBookStore.T_BOOK_STORE.NAME);
+		public static final UniqueKey<TBookToBookStoreRecord> PK_B2BS = createUniqueKey(TBookToBookStore.T_BOOK_TO_BOOK_STORE, TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME, TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID);
+		public static final UniqueKey<TBooleansRecord> PK_T_BOOLEANS = createUniqueKey(TBooleans.T_BOOLEANS, TBooleans.T_BOOLEANS.ID);
+		public static final UniqueKey<TDatesRecord> PK_T_DATES = createUniqueKey(TDates.T_DATES, TDates.T_DATES.ID);
+		public static final UniqueKey<TIdentityPkRecord> PK_T_IDENTITY_PK = createUniqueKey(TIdentityPk.T_IDENTITY_PK, TIdentityPk.T_IDENTITY_PK.ID);
+		public static final UniqueKey<TLanguageRecord> PK_T_LANGUAGE = createUniqueKey(TLanguage.T_LANGUAGE, TLanguage.T_LANGUAGE.ID);
+		public static final UniqueKey<XTestCase_64_69Record> PK_X_TEST_CASE_64_69 = createUniqueKey(XTestCase_64_69.X_TEST_CASE_64_69, XTestCase_64_69.X_TEST_CASE_64_69.ID);
+		public static final UniqueKey<XTestCase_71Record> PK_X_TEST_CASE_71 = createUniqueKey(XTestCase_71.X_TEST_CASE_71, XTestCase_71.X_TEST_CASE_71.ID);
+		public static final UniqueKey<XTestCase_85Record> PK_X_TEST_CASE_85 = createUniqueKey(XTestCase_85.X_TEST_CASE_85, XTestCase_85.X_TEST_CASE_85.ID);
+		public static final UniqueKey<XUnusedRecord> PK_X_UNUSED = createUniqueKey(XUnused.X_UNUSED, XUnused.X_UNUSED.ID, XUnused.X_UNUSED.NAME);
+		public static final UniqueKey<XUnusedRecord> UK_X_UNUSED_ID = createUniqueKey(XUnused.X_UNUSED, XUnused.X_UNUSED.ID);
+	}
 }

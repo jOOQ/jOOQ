@@ -4,13 +4,18 @@
 package org.jooq.test.redshift.generatedclasses.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.UniqueKey;
 import org.jooq.impl.TableImpl;
 import org.jooq.test.all.converters.T_3111_Bool1Converter;
 import org.jooq.test.all.converters.T_3111_Bool2Converter;
 import org.jooq.test.all.converters.T_3111_InverseConverter;
+import org.jooq.test.redshift.generatedclasses.Keys;
 import org.jooq.test.redshift.generatedclasses.Public;
 import org.jooq.test.redshift.generatedclasses.tables.records.T_3111Record;
 
@@ -21,7 +26,7 @@ import org.jooq.test.redshift.generatedclasses.tables.records.T_3111Record;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_3111 extends TableImpl<T_3111Record> {
 
-	private static final long serialVersionUID = 2033050026;
+	private static final long serialVersionUID = 1796287866;
 
 	/**
 	 * The reference instance of <code>public.t_3111</code>
@@ -76,6 +81,22 @@ public class T_3111 extends TableImpl<T_3111Record> {
 
 	private T_3111(String alias, Table<T_3111Record> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public UniqueKey<T_3111Record> getPrimaryKey() {
+		return Keys.PK_T_3111;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<UniqueKey<T_3111Record>> getKeys() {
+		return Arrays.<UniqueKey<T_3111Record>>asList(Keys.PK_T_3111);
 	}
 
 	/**

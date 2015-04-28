@@ -22,12 +22,12 @@ public interface ITAuthor extends Serializable {
 	/**
 	 * Getter for <code>public.t_author.first_name</code>. The author's first name
 	 */
-	public Object getFirstName();
+	public String getFirstName();
 
 	/**
 	 * Getter for <code>public.t_author.last_name</code>. The author's last name
 	 */
-	public Object getLastName();
+	public String getLastName();
 
 	/**
 	 * Getter for <code>public.t_author.date_of_birth</code>. The author's date of birth
@@ -42,5 +42,5 @@ public interface ITAuthor extends Serializable {
 	/**
 	 * Getter for <code>public.t_author.address</code>. The author's address
 	 */
-	public Object getAddress();
+	public String getAddress();
 }

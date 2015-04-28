@@ -26,5 +26,5 @@ public interface IXTestCase_85 extends Serializable {
 	/**
 	 * Getter for <code>public.x_test_case_85.x_unused_name</code>.
 	 */
-	public Object getXUnusedName();
+	public String getXUnusedName();
 }

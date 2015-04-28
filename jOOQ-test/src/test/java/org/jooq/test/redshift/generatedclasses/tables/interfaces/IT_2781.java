@@ -16,10 +16,10 @@ public interface IT_2781 extends Serializable {
 	/**
 	 * Getter for <code>public.t_2781.org</code>.
 	 */
-	public Object getOrg();
+	public String getOrg();
 
 	/**
 	 * Getter for <code>public.t_2781.jooq</code>.
 	 */
-	public Object getJooq();
+	public String getJooq();
 }

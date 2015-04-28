@@ -22,12 +22,12 @@ public interface IVAuthor extends Serializable {
 	/**
 	 * Getter for <code>public.v_author.first_name</code>.
 	 */
-	public Object getFirstName();
+	public String getFirstName();
 
 	/**
 	 * Getter for <code>public.v_author.last_name</code>.
 	 */
-	public Object getLastName();
+	public String getLastName();
 
 	/**
 	 * Getter for <code>public.v_author.date_of_birth</code>.
@@ -42,5 +42,5 @@ public interface IVAuthor extends Serializable {
 	/**
 	 * Getter for <code>public.v_author.address</code>.
 	 */
-	public Object getAddress();
+	public String getAddress();
 }

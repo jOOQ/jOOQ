@@ -7,10 +7,11 @@ package org.jooq.test.redshift.generatedclasses.tables.records;
 import java.sql.Date;
 
 import org.jooq.Field;
+import org.jooq.Record1;
 import org.jooq.Record6;
 import org.jooq.Row;
 import org.jooq.Row6;
-import org.jooq.impl.TableRecordImpl;
+import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.redshift.generatedclasses.tables.interfaces.ITAuthor;
 
 
@@ -18,9 +19,9 @@ import org.jooq.test.redshift.generatedclasses.tables.interfaces.ITAuthor;
  * An entity holding authors of books
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TAuthorRecord extends TableRecordImpl<TAuthorRecord> implements Record6<Integer, Object, Object, Date, Integer, Object>, ITAuthor {
+public class TAuthorRecord extends UpdatableRecordImpl<TAuthorRecord> implements Record6<Integer, String, String, Date, Integer, String>, ITAuthor {
 
-	private static final long serialVersionUID = -928337747;
+	private static final long serialVersionUID = 1103507489;
 
 	/**
 	 * Setter for <code>public.t_author.id</code>. The author ID
@@ -41,7 +42,7 @@ public class TAuthorRecord extends TableRecordImpl<TAuthorRecord> implements Rec
 	/**
 	 * Setter for <code>public.t_author.first_name</code>. The author's first name
 	 */
-	public TAuthorRecord setFirstName(Object value) {
+	public TAuthorRecord setFirstName(String value) {
 		setValue(1, value);
 		return this;
 	}
@@ -50,14 +51,14 @@ public class TAuthorRecord extends TableRecordImpl<TAuthorRecord> implements Rec
 	 * Getter for <code>public.t_author.first_name</code>. The author's first name
 	 */
 	@Override
-	public Object getFirstName() {
-		return (Object) getValue(1);
+	public String getFirstName() {
+		return (String) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>public.t_author.last_name</code>. The author's last name
 	 */
-	public TAuthorRecord setLastName(Object value) {
+	public TAuthorRecord setLastName(String value) {
 		setValue(2, value);
 		return this;
 	}
@@ -66,8 +67,8 @@ public class TAuthorRecord extends TableRecordImpl<TAuthorRecord> implements Rec
 	 * Getter for <code>public.t_author.last_name</code>. The author's last name
 	 */
 	@Override
-	public Object getLastName() {
-		return (Object) getValue(2);
+	public String getLastName() {
+		return (String) getValue(2);
 	}
 
 	/**
@@ -105,7 +106,7 @@ public class TAuthorRecord extends TableRecordImpl<TAuthorRecord> implements Rec
 	/**
 	 * Setter for <code>public.t_author.address</code>. The author's address
 	 */
-	public TAuthorRecord setAddress(Object value) {
+	public TAuthorRecord setAddress(String value) {
 		setValue(5, value);
 		return this;
 	}
@@ -114,8 +115,20 @@ public class TAuthorRecord extends TableRecordImpl<TAuthorRecord> implements Rec
 	 * Getter for <code>public.t_author.address</code>. The author's address
 	 */
 	@Override
-	public Object getAddress() {
-		return (Object) getValue(5);
+	public String getAddress() {
+		return (String) getValue(5);
+	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Record1<Integer> key() {
+		return (Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -126,7 +139,7 @@ public class TAuthorRecord extends TableRecordImpl<TAuthorRecord> implements Rec
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Row6<Integer, Object, Object, Date, Integer, Object> fieldsRow() {
+	public Row6<Integer, String, String, Date, Integer, String> fieldsRow() {
 		return (Row6) super.fieldsRow();
 	}
 
@@ -134,7 +147,7 @@ public class TAuthorRecord extends TableRecordImpl<TAuthorRecord> implements Rec
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Row6<Integer, Object, Object, Date, Integer, Object> valuesRow() {
+	public Row6<Integer, String, String, Date, Integer, String> valuesRow() {
 		return (Row6) super.valuesRow();
 	}
 
@@ -150,7 +163,7 @@ public class TAuthorRecord extends TableRecordImpl<TAuthorRecord> implements Rec
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Field<Object> field2() {
+	public Field<String> field2() {
 		return org.jooq.test.redshift.generatedclasses.tables.TAuthor.T_AUTHOR.FIRST_NAME;
 	}
 
@@ -158,7 +171,7 @@ public class TAuthorRecord extends TableRecordImpl<TAuthorRecord> implements Rec
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Field<Object> field3() {
+	public Field<String> field3() {
 		return org.jooq.test.redshift.generatedclasses.tables.TAuthor.T_AUTHOR.LAST_NAME;
 	}
 
@@ -182,7 +195,7 @@ public class TAuthorRecord extends TableRecordImpl<TAuthorRecord> implements Rec
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Field<Object> field6() {
+	public Field<String> field6() {
 		return org.jooq.test.redshift.generatedclasses.tables.TAuthor.T_AUTHOR.ADDRESS;
 	}
 
@@ -198,7 +211,7 @@ public class TAuthorRecord extends TableRecordImpl<TAuthorRecord> implements Rec
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object value2() {
+	public String value2() {
 		return getFirstName();
 	}
 
@@ -206,7 +219,7 @@ public class TAuthorRecord extends TableRecordImpl<TAuthorRecord> implements Rec
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object value3() {
+	public String value3() {
 		return getLastName();
 	}
 
@@ -230,7 +243,7 @@ public class TAuthorRecord extends TableRecordImpl<TAuthorRecord> implements Rec
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object value6() {
+	public String value6() {
 		return getAddress();
 	}
 
@@ -247,7 +260,7 @@ public class TAuthorRecord extends TableRecordImpl<TAuthorRecord> implements Rec
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TAuthorRecord value2(Object value) {
+	public TAuthorRecord value2(String value) {
 		setFirstName(value);
 		return this;
 	}
@@ -256,7 +269,7 @@ public class TAuthorRecord extends TableRecordImpl<TAuthorRecord> implements Rec
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TAuthorRecord value3(Object value) {
+	public TAuthorRecord value3(String value) {
 		setLastName(value);
 		return this;
 	}
@@ -283,7 +296,7 @@ public class TAuthorRecord extends TableRecordImpl<TAuthorRecord> implements Rec
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TAuthorRecord value6(Object value) {
+	public TAuthorRecord value6(String value) {
 		setAddress(value);
 		return this;
 	}
@@ -292,7 +305,7 @@ public class TAuthorRecord extends TableRecordImpl<TAuthorRecord> implements Rec
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TAuthorRecord values(Integer value1, Object value2, Object value3, Date value4, Integer value5, Object value6) {
+	public TAuthorRecord values(Integer value1, String value2, String value3, Date value4, Integer value5, String value6) {
 		value1(value1);
 		value2(value2);
 		value3(value3);
@@ -316,7 +329,7 @@ public class TAuthorRecord extends TableRecordImpl<TAuthorRecord> implements Rec
 	/**
 	 * Create a detached, initialised TAuthorRecord
 	 */
-	public TAuthorRecord(Integer id, Object firstName, Object lastName, Date dateOfBirth, Integer yearOfBirth, Object address) {
+	public TAuthorRecord(Integer id, String firstName, String lastName, Date dateOfBirth, Integer yearOfBirth, String address) {
 		super(org.jooq.test.redshift.generatedclasses.tables.TAuthor.T_AUTHOR);
 
 		setValue(0, id);

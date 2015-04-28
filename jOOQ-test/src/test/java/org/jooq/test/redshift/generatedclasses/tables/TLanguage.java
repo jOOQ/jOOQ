@@ -4,10 +4,15 @@
 package org.jooq.test.redshift.generatedclasses.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.UniqueKey;
 import org.jooq.impl.TableImpl;
+import org.jooq.test.redshift.generatedclasses.Keys;
 import org.jooq.test.redshift.generatedclasses.Public;
 import org.jooq.test.redshift.generatedclasses.tables.records.TLanguageRecord;
 
@@ -18,7 +23,7 @@ import org.jooq.test.redshift.generatedclasses.tables.records.TLanguageRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage extends TableImpl<TLanguageRecord> {
 
-	private static final long serialVersionUID = 257449306;
+	private static final long serialVersionUID = 2032518433;
 
 	/**
 	 * The reference instance of <code>public.t_language</code>
@@ -36,17 +41,17 @@ public class TLanguage extends TableImpl<TLanguageRecord> {
 	/**
 	 * The column <code>public.t_language.cd</code>. The language ISO code
 	 */
-	public final TableField<TLanguageRecord, Object> CD = createField("cd", org.jooq.impl.DefaultDataType.getDefaultDataType("character"), this, "The language ISO code");
+	public final TableField<TLanguageRecord, String> CD = createField("cd", org.jooq.impl.SQLDataType.CHAR.length(2).nullable(false), this, "The language ISO code");
 
 	/**
 	 * The column <code>public.t_language.description</code>. The language description
 	 */
-	public final TableField<TLanguageRecord, Object> DESCRIPTION = createField("description", org.jooq.impl.DefaultDataType.getDefaultDataType("character varying"), this, "The language description");
+	public final TableField<TLanguageRecord, String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "The language description");
 
 	/**
 	 * The column <code>public.t_language.description_english</code>.
 	 */
-	public final TableField<TLanguageRecord, Object> DESCRIPTION_ENGLISH = createField("description_english", org.jooq.impl.DefaultDataType.getDefaultDataType("character varying"), this, "");
+	public final TableField<TLanguageRecord, String> DESCRIPTION_ENGLISH = createField("description_english", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
 	/**
 	 * The column <code>public.t_language.id</code>. The language ID
@@ -73,6 +78,22 @@ public class TLanguage extends TableImpl<TLanguageRecord> {
 
 	private TLanguage(String alias, Table<TLanguageRecord> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "An entity holding language master data");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public UniqueKey<TLanguageRecord> getPrimaryKey() {
+		return Keys.PK_T_LANGUAGE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<UniqueKey<TLanguageRecord>> getKeys() {
+		return Arrays.<UniqueKey<TLanguageRecord>>asList(Keys.PK_T_LANGUAGE);
 	}
 
 	/**

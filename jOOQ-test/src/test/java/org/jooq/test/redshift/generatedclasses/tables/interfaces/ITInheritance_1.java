@@ -16,5 +16,5 @@ public interface ITInheritance_1 extends Serializable {
 	/**
 	 * Getter for <code>public.t_inheritance_1.text_1</code>.
 	 */
-	public Object getText_1();
+	public String getText_1();
 }

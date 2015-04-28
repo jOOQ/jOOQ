@@ -13,11 +13,11 @@ import org.jooq.test.redshift.generatedclasses.tables.interfaces.IXTestCase_85;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_85 implements IXTestCase_85 {
 
-	private static final long serialVersionUID = 1900191833;
+	private static final long serialVersionUID = 247320911;
 
 	private final Integer id;
 	private final Integer xUnusedId;
-	private final Object  xUnusedName;
+	private final String  xUnusedName;
 
 	public XTestCase_85(XTestCase_85 value) {
 		this.id = value.id;
@@ -28,7 +28,7 @@ public class XTestCase_85 implements IXTestCase_85 {
 	public XTestCase_85(
 		Integer id,
 		Integer xUnusedId,
-		Object  xUnusedName
+		String  xUnusedName
 	) {
 		this.id = id;
 		this.xUnusedId = xUnusedId;
@@ -46,7 +46,7 @@ public class XTestCase_85 implements IXTestCase_85 {
 	}
 
 	@Override
-	public Object getXUnusedName() {
+	public String getXUnusedName() {
 		return this.xUnusedName;
 	}
 }

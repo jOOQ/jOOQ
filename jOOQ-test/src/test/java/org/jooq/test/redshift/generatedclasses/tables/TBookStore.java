@@ -4,10 +4,15 @@
 package org.jooq.test.redshift.generatedclasses.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.UniqueKey;
 import org.jooq.impl.TableImpl;
+import org.jooq.test.redshift.generatedclasses.Keys;
 import org.jooq.test.redshift.generatedclasses.Public;
 import org.jooq.test.redshift.generatedclasses.tables.records.TBookStoreRecord;
 
@@ -18,7 +23,7 @@ import org.jooq.test.redshift.generatedclasses.tables.records.TBookStoreRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStore extends TableImpl<TBookStoreRecord> {
 
-	private static final long serialVersionUID = 731282591;
+	private static final long serialVersionUID = -1689000539;
 
 	/**
 	 * The reference instance of <code>public.t_book_store</code>
@@ -36,7 +41,7 @@ public class TBookStore extends TableImpl<TBookStoreRecord> {
 	/**
 	 * The column <code>public.t_book_store.name</code>.
 	 */
-	public final TableField<TBookStoreRecord, Object> NAME = createField("name", org.jooq.impl.DefaultDataType.getDefaultDataType("character varying"), this, "");
+	public final TableField<TBookStoreRecord, String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "");
 
 	/**
 	 * Create a <code>public.t_book_store</code> table reference
@@ -58,6 +63,22 @@ public class TBookStore extends TableImpl<TBookStoreRecord> {
 
 	private TBookStore(String alias, Table<TBookStoreRecord> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public UniqueKey<TBookStoreRecord> getPrimaryKey() {
+		return Keys.UK_T_BOOK_STORE_NAME;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<UniqueKey<TBookStoreRecord>> getKeys() {
+		return Arrays.<UniqueKey<TBookStoreRecord>>asList(Keys.UK_T_BOOK_STORE_NAME);
 	}
 
 	/**

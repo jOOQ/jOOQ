@@ -20,7 +20,7 @@ import org.jooq.test.redshift.generatedclasses.tables.records.VAuthorRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthor extends TableImpl<VAuthorRecord> {
 
-	private static final long serialVersionUID = -1080419582;
+	private static final long serialVersionUID = -131695219;
 
 	/**
 	 * The reference instance of <code>public.v_author</code>
@@ -43,12 +43,12 @@ public class VAuthor extends TableImpl<VAuthorRecord> {
 	/**
 	 * The column <code>public.v_author.first_name</code>.
 	 */
-	public final TableField<VAuthorRecord, Object> FIRST_NAME = createField("first_name", org.jooq.impl.DefaultDataType.getDefaultDataType("character varying"), this, "");
+	public final TableField<VAuthorRecord, String> FIRST_NAME = createField("first_name", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
 	/**
 	 * The column <code>public.v_author.last_name</code>.
 	 */
-	public final TableField<VAuthorRecord, Object> LAST_NAME = createField("last_name", org.jooq.impl.DefaultDataType.getDefaultDataType("character varying"), this, "");
+	public final TableField<VAuthorRecord, String> LAST_NAME = createField("last_name", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
 	/**
 	 * The column <code>public.v_author.date_of_birth</code>.
@@ -63,7 +63,7 @@ public class VAuthor extends TableImpl<VAuthorRecord> {
 	/**
 	 * The column <code>public.v_author.address</code>.
 	 */
-	public final TableField<VAuthorRecord, Object> ADDRESS = createField("address", org.jooq.impl.DefaultDataType.getDefaultDataType("character varying"), this, "");
+	public final TableField<VAuthorRecord, String> ADDRESS = createField("address", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
 	/**
 	 * Create a <code>public.v_author</code> table reference

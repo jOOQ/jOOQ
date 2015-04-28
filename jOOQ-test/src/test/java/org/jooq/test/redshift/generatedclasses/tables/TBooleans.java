@@ -4,9 +4,13 @@
 package org.jooq.test.redshift.generatedclasses.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.UniqueKey;
 import org.jooq.impl.TableImpl;
 import org.jooq.test.all.converters.Boolean_10;
 import org.jooq.test.all.converters.Boolean_10_Converter;
@@ -22,6 +26,7 @@ import org.jooq.test.all.converters.Boolean_YN_LC;
 import org.jooq.test.all.converters.Boolean_YN_LC_Converter;
 import org.jooq.test.all.converters.Boolean_YN_UC;
 import org.jooq.test.all.converters.Boolean_YN_UC_Converter;
+import org.jooq.test.redshift.generatedclasses.Keys;
 import org.jooq.test.redshift.generatedclasses.Public;
 import org.jooq.test.redshift.generatedclasses.tables.records.TBooleansRecord;
 
@@ -32,7 +37,7 @@ import org.jooq.test.redshift.generatedclasses.tables.records.TBooleansRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleans extends TableImpl<TBooleansRecord> {
 
-	private static final long serialVersionUID = -1315029851;
+	private static final long serialVersionUID = -62173877;
 
 	/**
 	 * The reference instance of <code>public.t_booleans</code>
@@ -60,32 +65,32 @@ public class TBooleans extends TableImpl<TBooleansRecord> {
 	/**
 	 * The column <code>public.t_booleans.true_false_lc</code>.
 	 */
-	public final TableField<TBooleansRecord, Boolean_TF_LC> TRUE_FALSE_LC = createField("true_false_lc", org.jooq.impl.DefaultDataType.getDefaultDataType("character varying"), this, "", new Boolean_TF_LC_Converter());
+	public final TableField<TBooleansRecord, Boolean_TF_LC> TRUE_FALSE_LC = createField("true_false_lc", org.jooq.impl.SQLDataType.VARCHAR.length(5), this, "", new Boolean_TF_LC_Converter());
 
 	/**
 	 * The column <code>public.t_booleans.true_false_uc</code>.
 	 */
-	public final TableField<TBooleansRecord, Boolean_TF_UC> TRUE_FALSE_UC = createField("true_false_uc", org.jooq.impl.DefaultDataType.getDefaultDataType("character varying"), this, "", new Boolean_TF_UC_Converter());
+	public final TableField<TBooleansRecord, Boolean_TF_UC> TRUE_FALSE_UC = createField("true_false_uc", org.jooq.impl.SQLDataType.VARCHAR.length(5), this, "", new Boolean_TF_UC_Converter());
 
 	/**
 	 * The column <code>public.t_booleans.yes_no_lc</code>.
 	 */
-	public final TableField<TBooleansRecord, Boolean_YES_NO_LC> YES_NO_LC = createField("yes_no_lc", org.jooq.impl.DefaultDataType.getDefaultDataType("character varying"), this, "", new Boolean_YES_NO_LC_Converter());
+	public final TableField<TBooleansRecord, Boolean_YES_NO_LC> YES_NO_LC = createField("yes_no_lc", org.jooq.impl.SQLDataType.VARCHAR.length(3), this, "", new Boolean_YES_NO_LC_Converter());
 
 	/**
 	 * The column <code>public.t_booleans.yes_no_uc</code>.
 	 */
-	public final TableField<TBooleansRecord, Boolean_YES_NO_UC> YES_NO_UC = createField("yes_no_uc", org.jooq.impl.DefaultDataType.getDefaultDataType("character varying"), this, "", new Boolean_YES_NO_UC_Converter());
+	public final TableField<TBooleansRecord, Boolean_YES_NO_UC> YES_NO_UC = createField("yes_no_uc", org.jooq.impl.SQLDataType.VARCHAR.length(3), this, "", new Boolean_YES_NO_UC_Converter());
 
 	/**
 	 * The column <code>public.t_booleans.y_n_lc</code>.
 	 */
-	public final TableField<TBooleansRecord, Boolean_YN_LC> Y_N_LC = createField("y_n_lc", org.jooq.impl.DefaultDataType.getDefaultDataType("character"), this, "", new Boolean_YN_LC_Converter());
+	public final TableField<TBooleansRecord, Boolean_YN_LC> Y_N_LC = createField("y_n_lc", org.jooq.impl.SQLDataType.CHAR.length(1), this, "", new Boolean_YN_LC_Converter());
 
 	/**
 	 * The column <code>public.t_booleans.y_n_uc</code>.
 	 */
-	public final TableField<TBooleansRecord, Boolean_YN_UC> Y_N_UC = createField("y_n_uc", org.jooq.impl.DefaultDataType.getDefaultDataType("character"), this, "", new Boolean_YN_UC_Converter());
+	public final TableField<TBooleansRecord, Boolean_YN_UC> Y_N_UC = createField("y_n_uc", org.jooq.impl.SQLDataType.CHAR.length(1), this, "", new Boolean_YN_UC_Converter());
 
 	/**
 	 * The column <code>public.t_booleans.vc_boolean</code>.
@@ -122,6 +127,22 @@ public class TBooleans extends TableImpl<TBooleansRecord> {
 
 	private TBooleans(String alias, Table<TBooleansRecord> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public UniqueKey<TBooleansRecord> getPrimaryKey() {
+		return Keys.PK_T_BOOLEANS;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<UniqueKey<TBooleansRecord>> getKeys() {
+		return Arrays.<UniqueKey<TBooleansRecord>>asList(Keys.PK_T_BOOLEANS);
 	}
 
 	/**

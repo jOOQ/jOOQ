@@ -13,22 +13,22 @@ import org.jooq.test.redshift.generatedclasses.tables.interfaces.ITBookStore;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStore implements ITBookStore {
 
-	private static final long serialVersionUID = 200635013;
+	private static final long serialVersionUID = -293366249;
 
-	private final Object name;
+	private final String name;
 
 	public TBookStore(TBookStore value) {
 		this.name = value.name;
 	}
 
 	public TBookStore(
-		Object name
+		String name
 	) {
 		this.name = name;
 	}
 
 	@Override
-	public Object getName() {
+	public String getName() {
 		return this.name;
 	}
 }

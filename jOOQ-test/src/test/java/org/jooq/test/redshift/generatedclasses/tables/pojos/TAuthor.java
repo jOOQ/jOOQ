@@ -15,14 +15,14 @@ import org.jooq.test.redshift.generatedclasses.tables.interfaces.ITAuthor;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor implements ITAuthor {
 
-	private static final long serialVersionUID = 726517418;
+	private static final long serialVersionUID = 1956008060;
 
 	private final Integer id;
-	private final Object  firstName;
-	private final Object  lastName;
+	private final String  firstName;
+	private final String  lastName;
 	private final Date    dateOfBirth;
 	private final Integer yearOfBirth;
-	private final Object  address;
+	private final String  address;
 
 	public TAuthor(TAuthor value) {
 		this.id = value.id;
@@ -35,11 +35,11 @@ public class TAuthor implements ITAuthor {
 
 	public TAuthor(
 		Integer id,
-		Object  firstName,
-		Object  lastName,
+		String  firstName,
+		String  lastName,
 		Date    dateOfBirth,
 		Integer yearOfBirth,
-		Object  address
+		String  address
 	) {
 		this.id = id;
 		this.firstName = firstName;
@@ -55,12 +55,12 @@ public class TAuthor implements ITAuthor {
 	}
 
 	@Override
-	public Object getFirstName() {
+	public String getFirstName() {
 		return this.firstName;
 	}
 
 	@Override
-	public Object getLastName() {
+	public String getLastName() {
 		return this.lastName;
 	}
 
@@ -75,7 +75,7 @@ public class TAuthor implements ITAuthor {
 	}
 
 	@Override
-	public Object getAddress() {
+	public String getAddress() {
 		return this.address;
 	}
 }

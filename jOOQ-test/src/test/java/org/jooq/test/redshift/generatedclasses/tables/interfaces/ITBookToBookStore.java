@@ -16,7 +16,7 @@ public interface ITBookToBookStore extends Serializable {
 	/**
 	 * Getter for <code>public.t_book_to_book_store.book_store_name</code>.
 	 */
-	public Object getBookStoreName();
+	public String getBookStoreName();
 
 	/**
 	 * Getter for <code>public.t_book_to_book_store.book_id</code>.

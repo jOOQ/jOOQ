@@ -13,9 +13,9 @@ import org.jooq.test.redshift.generatedclasses.tables.interfaces.ITBookToBookSto
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStore implements ITBookToBookStore {
 
-	private static final long serialVersionUID = -532928389;
+	private static final long serialVersionUID = -860032343;
 
-	private final Object  bookStoreName;
+	private final String  bookStoreName;
 	private final Integer bookId;
 	private final Integer stock;
 
@@ -26,7 +26,7 @@ public class TBookToBookStore implements ITBookToBookStore {
 	}
 
 	public TBookToBookStore(
-		Object  bookStoreName,
+		String  bookStoreName,
 		Integer bookId,
 		Integer stock
 	) {
@@ -36,7 +36,7 @@ public class TBookToBookStore implements ITBookToBookStore {
 	}
 
 	@Override
-	public Object getBookStoreName() {
+	public String getBookStoreName() {
 		return this.bookStoreName;
 	}
 

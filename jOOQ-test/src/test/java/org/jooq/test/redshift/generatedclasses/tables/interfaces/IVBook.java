@@ -36,7 +36,7 @@ public interface IVBook extends Serializable {
 	/**
 	 * Getter for <code>public.v_book.title</code>.
 	 */
-	public Object getTitle();
+	public String getTitle();
 
 	/**
 	 * Getter for <code>public.v_book.published_in</code>.
@@ -51,10 +51,10 @@ public interface IVBook extends Serializable {
 	/**
 	 * Getter for <code>public.v_book.content_text</code>.
 	 */
-	public Object getContentText();
+	public String getContentText();
 
 	/**
 	 * Getter for <code>public.v_book.content_pdf</code>.
 	 */
-	public Object getContentPdf();
+	public String getContentPdf();
 }

@@ -6,11 +6,15 @@ package org.jooq.test.redshift.generatedclasses.tables;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Arrays;
+import java.util.List;
 
 import org.jooq.Field;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.UniqueKey;
 import org.jooq.impl.TableImpl;
+import org.jooq.test.redshift.generatedclasses.Keys;
 import org.jooq.test.redshift.generatedclasses.Public;
 import org.jooq.test.redshift.generatedclasses.tables.records.T_639NumbersTableRecord;
 
@@ -21,7 +25,7 @@ import org.jooq.test.redshift.generatedclasses.tables.records.T_639NumbersTableR
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTable extends TableImpl<T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = -2106661109;
+	private static final long serialVersionUID = 894932628;
 
 	/**
 	 * The reference instance of <code>public.t_639_numbers_table</code>
@@ -94,7 +98,7 @@ public class T_639NumbersTable extends TableImpl<T_639NumbersTableRecord> {
 	/**
 	 * The column <code>public.t_639_numbers_table.double</code>.
 	 */
-	public final TableField<T_639NumbersTableRecord, Object> DOUBLE = createField("double", org.jooq.impl.DefaultDataType.getDefaultDataType("double precision"), this, "");
+	public final TableField<T_639NumbersTableRecord, Double> DOUBLE = createField("double", org.jooq.impl.SQLDataType.DOUBLE, this, "");
 
 	/**
 	 * Create a <code>public.t_639_numbers_table</code> table reference
@@ -116,6 +120,22 @@ public class T_639NumbersTable extends TableImpl<T_639NumbersTableRecord> {
 
 	private T_639NumbersTable(String alias, Table<T_639NumbersTableRecord> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public UniqueKey<T_639NumbersTableRecord> getPrimaryKey() {
+		return Keys.PK_T_639_NUMBERS_TABLE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<UniqueKey<T_639NumbersTableRecord>> getKeys() {
+		return Arrays.<UniqueKey<T_639NumbersTableRecord>>asList(Keys.PK_T_639_NUMBERS_TABLE);
 	}
 
 	/**

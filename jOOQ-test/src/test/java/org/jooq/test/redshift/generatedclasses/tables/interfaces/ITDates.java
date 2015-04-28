@@ -6,6 +6,7 @@ package org.jooq.test.redshift.generatedclasses.tables.interfaces;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 
 /**
@@ -27,12 +28,12 @@ public interface ITDates extends Serializable {
 	/**
 	 * Getter for <code>public.t_dates.t</code>.
 	 */
-	public Object getT();
+	public Timestamp getT();
 
 	/**
 	 * Getter for <code>public.t_dates.ts</code>.
 	 */
-	public Object getTs();
+	public Timestamp getTs();
 
 	/**
 	 * Getter for <code>public.t_dates.d_int</code>.

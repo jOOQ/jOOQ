@@ -18,7 +18,7 @@ import org.jooq.test.redshift.generatedclasses.tables.records.T_785Record;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_785 extends TableImpl<T_785Record> {
 
-	private static final long serialVersionUID = 118360273;
+	private static final long serialVersionUID = 954904263;
 
 	/**
 	 * The reference instance of <code>public.t_785</code>
@@ -41,12 +41,12 @@ public class T_785 extends TableImpl<T_785Record> {
 	/**
 	 * The column <code>public.t_785.name</code>.
 	 */
-	public final TableField<T_785Record, Object> NAME = createField("name", org.jooq.impl.DefaultDataType.getDefaultDataType("character varying"), this, "");
+	public final TableField<T_785Record, String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
 	/**
 	 * The column <code>public.t_785.value</code>.
 	 */
-	public final TableField<T_785Record, Object> VALUE = createField("value", org.jooq.impl.DefaultDataType.getDefaultDataType("character varying"), this, "");
+	public final TableField<T_785Record, String> VALUE = createField("value", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
 	/**
 	 * Create a <code>public.t_785</code> table reference

@@ -4,10 +4,15 @@
 package org.jooq.test.redshift.generatedclasses.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.UniqueKey;
 import org.jooq.impl.TableImpl;
+import org.jooq.test.redshift.generatedclasses.Keys;
 import org.jooq.test.redshift.generatedclasses.Public;
 import org.jooq.test.redshift.generatedclasses.tables.records.XTestCase_64_69Record;
 
@@ -18,7 +23,7 @@ import org.jooq.test.redshift.generatedclasses.tables.records.XTestCase_64_69Rec
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_64_69 extends TableImpl<XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = 1834848009;
+	private static final long serialVersionUID = -1126211813;
 
 	/**
 	 * The reference instance of <code>public.x_test_case_64_69</code>
@@ -63,6 +68,22 @@ public class XTestCase_64_69 extends TableImpl<XTestCase_64_69Record> {
 
 	private XTestCase_64_69(String alias, Table<XTestCase_64_69Record> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public UniqueKey<XTestCase_64_69Record> getPrimaryKey() {
+		return Keys.PK_X_TEST_CASE_64_69;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<UniqueKey<XTestCase_64_69Record>> getKeys() {
+		return Arrays.<UniqueKey<XTestCase_64_69Record>>asList(Keys.PK_X_TEST_CASE_64_69);
 	}
 
 	/**

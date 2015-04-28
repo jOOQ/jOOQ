@@ -18,7 +18,7 @@ import org.jooq.test.redshift.generatedclasses.tables.records.VBookRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBook extends TableImpl<VBookRecord> {
 
-	private static final long serialVersionUID = -1423778113;
+	private static final long serialVersionUID = -1152407535;
 
 	/**
 	 * The reference instance of <code>public.v_book</code>
@@ -56,7 +56,7 @@ public class VBook extends TableImpl<VBookRecord> {
 	/**
 	 * The column <code>public.v_book.title</code>.
 	 */
-	public final TableField<VBookRecord, Object> TITLE = createField("title", org.jooq.impl.DefaultDataType.getDefaultDataType("character varying"), this, "");
+	public final TableField<VBookRecord, String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR.length(400), this, "");
 
 	/**
 	 * The column <code>public.v_book.published_in</code>.
@@ -71,12 +71,12 @@ public class VBook extends TableImpl<VBookRecord> {
 	/**
 	 * The column <code>public.v_book.content_text</code>.
 	 */
-	public final TableField<VBookRecord, Object> CONTENT_TEXT = createField("content_text", org.jooq.impl.DefaultDataType.getDefaultDataType("character varying"), this, "");
+	public final TableField<VBookRecord, String> CONTENT_TEXT = createField("content_text", org.jooq.impl.SQLDataType.VARCHAR.length(1000), this, "");
 
 	/**
 	 * The column <code>public.v_book.content_pdf</code>.
 	 */
-	public final TableField<VBookRecord, Object> CONTENT_PDF = createField("content_pdf", org.jooq.impl.DefaultDataType.getDefaultDataType("character varying"), this, "");
+	public final TableField<VBookRecord, String> CONTENT_PDF = createField("content_pdf", org.jooq.impl.SQLDataType.VARCHAR.length(1000), this, "");
 
 	/**
 	 * Create a <code>public.v_book</code> table reference

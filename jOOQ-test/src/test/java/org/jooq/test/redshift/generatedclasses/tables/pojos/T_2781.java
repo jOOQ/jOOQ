@@ -13,10 +13,10 @@ import org.jooq.test.redshift.generatedclasses.tables.interfaces.IT_2781;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2781 implements IT_2781 {
 
-	private static final long serialVersionUID = -1949931813;
+	private static final long serialVersionUID = 594793527;
 
-	private final Object org_;
-	private final Object jooq;
+	private final String org_;
+	private final String jooq;
 
 	public T_2781(T_2781 value) {
 		this.org_ = value.org_;
@@ -24,20 +24,20 @@ public class T_2781 implements IT_2781 {
 	}
 
 	public T_2781(
-		Object org_,
-		Object jooq
+		String org_,
+		String jooq
 	) {
 		this.org_ = org_;
 		this.jooq = jooq;
 	}
 
 	@Override
-	public Object getOrg() {
+	public String getOrg() {
 		return this.org_;
 	}
 
 	@Override
-	public Object getJooq() {
+	public String getJooq() {
 		return this.jooq;
 	}
 }

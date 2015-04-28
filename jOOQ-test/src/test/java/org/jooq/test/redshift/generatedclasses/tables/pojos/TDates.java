@@ -5,6 +5,7 @@ package org.jooq.test.redshift.generatedclasses.tables.pojos;
 
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import org.jooq.test.redshift.generatedclasses.tables.interfaces.ITDates;
 
@@ -15,14 +16,14 @@ import org.jooq.test.redshift.generatedclasses.tables.interfaces.ITDates;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates implements ITDates {
 
-	private static final long serialVersionUID = 1623293348;
+	private static final long serialVersionUID = 156093422;
 
-	private final Integer id;
-	private final Date    d;
-	private final Object  t;
-	private final Object  ts;
-	private final Integer dInt;
-	private final Long    tsBigint;
+	private final Integer   id;
+	private final Date      d;
+	private final Timestamp t;
+	private final Timestamp ts;
+	private final Integer   dInt;
+	private final Long      tsBigint;
 
 	public TDates(TDates value) {
 		this.id = value.id;
@@ -34,12 +35,12 @@ public class TDates implements ITDates {
 	}
 
 	public TDates(
-		Integer id,
-		Date    d,
-		Object  t,
-		Object  ts,
-		Integer dInt,
-		Long    tsBigint
+		Integer   id,
+		Date      d,
+		Timestamp t,
+		Timestamp ts,
+		Integer   dInt,
+		Long      tsBigint
 	) {
 		this.id = id;
 		this.d = d;
@@ -60,12 +61,12 @@ public class TDates implements ITDates {
 	}
 
 	@Override
-	public Object getT() {
+	public Timestamp getT() {
 		return this.t;
 	}
 
 	@Override
-	public Object getTs() {
+	public Timestamp getTs() {
 		return this.ts;
 	}
 

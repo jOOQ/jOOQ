@@ -13,10 +13,10 @@ import org.jooq.test.redshift.generatedclasses.tables.interfaces.IXTestCase_2025
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_2025 implements IXTestCase_2025 {
 
-	private static final long serialVersionUID = 863439821;
+	private static final long serialVersionUID = 2074740603;
 
 	private final Integer refId;
-	private final Object  refName;
+	private final String  refName;
 
 	public XTestCase_2025(XTestCase_2025 value) {
 		this.refId = value.refId;
@@ -25,7 +25,7 @@ public class XTestCase_2025 implements IXTestCase_2025 {
 
 	public XTestCase_2025(
 		Integer refId,
-		Object  refName
+		String  refName
 	) {
 		this.refId = refId;
 		this.refName = refName;
@@ -37,7 +37,7 @@ public class XTestCase_2025 implements IXTestCase_2025 {
 	}
 
 	@Override
-	public Object getRefName() {
+	public String getRefName() {
 		return this.refName;
 	}
 }

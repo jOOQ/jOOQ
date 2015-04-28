@@ -18,7 +18,7 @@ import org.jooq.test.redshift.generatedclasses.tables.records.TInheritance_1Reco
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TInheritance_1 extends TableImpl<TInheritance_1Record> {
 
-	private static final long serialVersionUID = 743231076;
+	private static final long serialVersionUID = -1290036427;
 
 	/**
 	 * The reference instance of <code>public.t_inheritance_1</code>
@@ -36,7 +36,7 @@ public class TInheritance_1 extends TableImpl<TInheritance_1Record> {
 	/**
 	 * The column <code>public.t_inheritance_1.text_1</code>.
 	 */
-	public final TableField<TInheritance_1Record, Object> TEXT_1 = createField("text_1", org.jooq.impl.DefaultDataType.getDefaultDataType("character varying"), this, "");
+	public final TableField<TInheritance_1Record, String> TEXT_1 = createField("text_1", org.jooq.impl.SQLDataType.VARCHAR.length(256), this, "");
 
 	/**
 	 * Create a <code>public.t_inheritance_1</code> table reference

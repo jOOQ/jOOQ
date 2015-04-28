@@ -16,10 +16,10 @@ public interface IVLibrary extends Serializable {
 	/**
 	 * Getter for <code>public.v_library.author</code>.
 	 */
-	public Object getAuthor();
+	public String getAuthor();
 
 	/**
 	 * Getter for <code>public.v_library.title</code>.
 	 */
-	public Object getTitle();
+	public String getTitle();
 }

@@ -5,10 +5,13 @@ package org.jooq.test.redshift.generatedclasses.tables;
 
 
 import java.sql.Date;
+import java.util.Arrays;
+import java.util.List;
 
 import org.jooq.Field;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.UniqueKey;
 import org.jooq.impl.TableImpl;
 import org.jooq.test.redshift.generatedclasses.Public;
 import org.jooq.test.redshift.generatedclasses.tables.records.TAuthorRecord;
@@ -20,7 +23,7 @@ import org.jooq.test.redshift.generatedclasses.tables.records.TAuthorRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor extends TableImpl<TAuthorRecord> {
 
-	private static final long serialVersionUID = 1589699062;
+	private static final long serialVersionUID = -2116401939;
 
 	/**
 	 * The reference instance of <code>public.t_author</code>
@@ -43,12 +46,12 @@ public class TAuthor extends TableImpl<TAuthorRecord> {
 	/**
 	 * The column <code>public.t_author.first_name</code>. The author's first name
 	 */
-	public final TableField<TAuthorRecord, Object> FIRST_NAME = createField("first_name", org.jooq.impl.DefaultDataType.getDefaultDataType("character varying"), this, "The author's first name");
+	public final TableField<TAuthorRecord, String> FIRST_NAME = createField("first_name", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "The author's first name");
 
 	/**
 	 * The column <code>public.t_author.last_name</code>. The author's last name
 	 */
-	public final TableField<TAuthorRecord, Object> LAST_NAME = createField("last_name", org.jooq.impl.DefaultDataType.getDefaultDataType("character varying"), this, "The author's last name");
+	public final TableField<TAuthorRecord, String> LAST_NAME = createField("last_name", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false), this, "The author's last name");
 
 	/**
 	 * The column <code>public.t_author.date_of_birth</code>. The author's date of birth
@@ -63,7 +66,7 @@ public class TAuthor extends TableImpl<TAuthorRecord> {
 	/**
 	 * The column <code>public.t_author.address</code>. The author's address
 	 */
-	public final TableField<TAuthorRecord, Object> ADDRESS = createField("address", org.jooq.impl.DefaultDataType.getDefaultDataType("character varying"), this, "The author's address");
+	public final TableField<TAuthorRecord, String> ADDRESS = createField("address", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "The author's address");
 
 	/**
 	 * Create a <code>public.t_author</code> table reference
@@ -85,6 +88,22 @@ public class TAuthor extends TableImpl<TAuthorRecord> {
 
 	private TAuthor(String alias, Table<TAuthorRecord> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "An entity holding authors of books");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public UniqueKey<TAuthorRecord> getPrimaryKey() {
+		return org.jooq.test.redshift.generatedclasses.Keys.PK_T_AUTHOR;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<UniqueKey<TAuthorRecord>> getKeys() {
+		return Arrays.<UniqueKey<TAuthorRecord>>asList(org.jooq.test.redshift.generatedclasses.Keys.PK_T_AUTHOR);
 	}
 
 	/**

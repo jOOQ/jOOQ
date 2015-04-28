@@ -6,11 +6,15 @@ package org.jooq.test.redshift.generatedclasses.tables;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Arrays;
+import java.util.List;
 
 import org.jooq.Field;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.UniqueKey;
 import org.jooq.impl.TableImpl;
+import org.jooq.test.redshift.generatedclasses.Keys;
 import org.jooq.test.redshift.generatedclasses.Public;
 import org.jooq.test.redshift.generatedclasses.tables.records.XUnusedRecord;
 
@@ -21,7 +25,7 @@ import org.jooq.test.redshift.generatedclasses.tables.records.XUnusedRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnused extends TableImpl<XUnusedRecord> {
 
-	private static final long serialVersionUID = 2067169414;
+	private static final long serialVersionUID = -1566842239;
 
 	/**
 	 * The reference instance of <code>public.x_unused</code>
@@ -44,7 +48,7 @@ public class XUnused extends TableImpl<XUnusedRecord> {
 	/**
 	 * The column <code>public.x_unused.name</code>.
 	 */
-	public final TableField<XUnusedRecord, Object> NAME = createField("name", org.jooq.impl.DefaultDataType.getDefaultDataType("character varying"), this, "");
+	public final TableField<XUnusedRecord, String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(10).nullable(false), this, "");
 
 	/**
 	 * The column <code>public.x_unused.big_integer</code>.
@@ -104,7 +108,7 @@ public class XUnused extends TableImpl<XUnusedRecord> {
 	/**
 	 * The column <code>public.x_unused.name_ref</code>.
 	 */
-	public final TableField<XUnusedRecord, Object> NAME_REF = createField("name_ref", org.jooq.impl.DefaultDataType.getDefaultDataType("character varying"), this, "");
+	public final TableField<XUnusedRecord, String> NAME_REF = createField("name_ref", org.jooq.impl.SQLDataType.VARCHAR.length(10), this, "");
 
 	/**
 	 * The column <code>public.x_unused.field 737</code>.
@@ -131,6 +135,22 @@ public class XUnused extends TableImpl<XUnusedRecord> {
 
 	private XUnused(String alias, Table<XUnusedRecord> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public UniqueKey<XUnusedRecord> getPrimaryKey() {
+		return Keys.UK_X_UNUSED_ID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<UniqueKey<XUnusedRecord>> getKeys() {
+		return Arrays.<UniqueKey<XUnusedRecord>>asList(Keys.PK_X_UNUSED, Keys.UK_X_UNUSED_ID);
 	}
 
 	/**

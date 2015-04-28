@@ -5,10 +5,11 @@ package org.jooq.test.redshift.generatedclasses.tables.records;
 
 
 import org.jooq.Field;
+import org.jooq.Record1;
 import org.jooq.Record4;
 import org.jooq.Row;
 import org.jooq.Row4;
-import org.jooq.impl.TableRecordImpl;
+import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.redshift.generatedclasses.tables.TLanguage;
 import org.jooq.test.redshift.generatedclasses.tables.interfaces.ITLanguage;
 
@@ -17,14 +18,14 @@ import org.jooq.test.redshift.generatedclasses.tables.interfaces.ITLanguage;
  * An entity holding language master data
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TLanguageRecord extends TableRecordImpl<TLanguageRecord> implements Record4<Object, Object, Object, Integer>, ITLanguage {
+public class TLanguageRecord extends UpdatableRecordImpl<TLanguageRecord> implements Record4<String, String, String, Integer>, ITLanguage {
 
-	private static final long serialVersionUID = 418459853;
+	private static final long serialVersionUID = -2037615539;
 
 	/**
 	 * Setter for <code>public.t_language.cd</code>. The language ISO code
 	 */
-	public TLanguageRecord setCd(Object value) {
+	public TLanguageRecord setCd(String value) {
 		setValue(0, value);
 		return this;
 	}
@@ -33,14 +34,14 @@ public class TLanguageRecord extends TableRecordImpl<TLanguageRecord> implements
 	 * Getter for <code>public.t_language.cd</code>. The language ISO code
 	 */
 	@Override
-	public Object getCd() {
-		return (Object) getValue(0);
+	public String getCd() {
+		return (String) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>public.t_language.description</code>. The language description
 	 */
-	public TLanguageRecord setDescription(Object value) {
+	public TLanguageRecord setDescription(String value) {
 		setValue(1, value);
 		return this;
 	}
@@ -49,14 +50,14 @@ public class TLanguageRecord extends TableRecordImpl<TLanguageRecord> implements
 	 * Getter for <code>public.t_language.description</code>. The language description
 	 */
 	@Override
-	public Object getDescription() {
-		return (Object) getValue(1);
+	public String getDescription() {
+		return (String) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>public.t_language.description_english</code>.
 	 */
-	public TLanguageRecord setDescriptionEnglish(Object value) {
+	public TLanguageRecord setDescriptionEnglish(String value) {
 		setValue(2, value);
 		return this;
 	}
@@ -65,8 +66,8 @@ public class TLanguageRecord extends TableRecordImpl<TLanguageRecord> implements
 	 * Getter for <code>public.t_language.description_english</code>.
 	 */
 	@Override
-	public Object getDescriptionEnglish() {
-		return (Object) getValue(2);
+	public String getDescriptionEnglish() {
+		return (String) getValue(2);
 	}
 
 	/**
@@ -86,6 +87,18 @@ public class TLanguageRecord extends TableRecordImpl<TLanguageRecord> implements
 	}
 
 	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Record1<Integer> key() {
+		return (Record1) super.key();
+	}
+
+	// -------------------------------------------------------------------------
 	// Record4 type implementation
 	// -------------------------------------------------------------------------
 
@@ -93,7 +106,7 @@ public class TLanguageRecord extends TableRecordImpl<TLanguageRecord> implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Row4<Object, Object, Object, Integer> fieldsRow() {
+	public Row4<String, String, String, Integer> fieldsRow() {
 		return (Row4) super.fieldsRow();
 	}
 
@@ -101,7 +114,7 @@ public class TLanguageRecord extends TableRecordImpl<TLanguageRecord> implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Row4<Object, Object, Object, Integer> valuesRow() {
+	public Row4<String, String, String, Integer> valuesRow() {
 		return (Row4) super.valuesRow();
 	}
 
@@ -109,7 +122,7 @@ public class TLanguageRecord extends TableRecordImpl<TLanguageRecord> implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Field<Object> field1() {
+	public Field<String> field1() {
 		return TLanguage.T_LANGUAGE.CD;
 	}
 
@@ -117,7 +130,7 @@ public class TLanguageRecord extends TableRecordImpl<TLanguageRecord> implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Field<Object> field2() {
+	public Field<String> field2() {
 		return TLanguage.T_LANGUAGE.DESCRIPTION;
 	}
 
@@ -125,7 +138,7 @@ public class TLanguageRecord extends TableRecordImpl<TLanguageRecord> implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Field<Object> field3() {
+	public Field<String> field3() {
 		return TLanguage.T_LANGUAGE.DESCRIPTION_ENGLISH;
 	}
 
@@ -141,7 +154,7 @@ public class TLanguageRecord extends TableRecordImpl<TLanguageRecord> implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object value1() {
+	public String value1() {
 		return getCd();
 	}
 
@@ -149,7 +162,7 @@ public class TLanguageRecord extends TableRecordImpl<TLanguageRecord> implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object value2() {
+	public String value2() {
 		return getDescription();
 	}
 
@@ -157,7 +170,7 @@ public class TLanguageRecord extends TableRecordImpl<TLanguageRecord> implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object value3() {
+	public String value3() {
 		return getDescriptionEnglish();
 	}
 
@@ -173,7 +186,7 @@ public class TLanguageRecord extends TableRecordImpl<TLanguageRecord> implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TLanguageRecord value1(Object value) {
+	public TLanguageRecord value1(String value) {
 		setCd(value);
 		return this;
 	}
@@ -182,7 +195,7 @@ public class TLanguageRecord extends TableRecordImpl<TLanguageRecord> implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TLanguageRecord value2(Object value) {
+	public TLanguageRecord value2(String value) {
 		setDescription(value);
 		return this;
 	}
@@ -191,7 +204,7 @@ public class TLanguageRecord extends TableRecordImpl<TLanguageRecord> implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TLanguageRecord value3(Object value) {
+	public TLanguageRecord value3(String value) {
 		setDescriptionEnglish(value);
 		return this;
 	}
@@ -209,7 +222,7 @@ public class TLanguageRecord extends TableRecordImpl<TLanguageRecord> implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TLanguageRecord values(Object value1, Object value2, Object value3, Integer value4) {
+	public TLanguageRecord values(String value1, String value2, String value3, Integer value4) {
 		value1(value1);
 		value2(value2);
 		value3(value3);
@@ -231,7 +244,7 @@ public class TLanguageRecord extends TableRecordImpl<TLanguageRecord> implements
 	/**
 	 * Create a detached, initialised TLanguageRecord
 	 */
-	public TLanguageRecord(Object cd, Object description, Object descriptionEnglish, Integer id) {
+	public TLanguageRecord(String cd, String description, String descriptionEnglish, Integer id) {
 		super(TLanguage.T_LANGUAGE);
 
 		setValue(0, cd);

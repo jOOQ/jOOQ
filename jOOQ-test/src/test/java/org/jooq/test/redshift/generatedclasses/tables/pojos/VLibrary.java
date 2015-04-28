@@ -13,10 +13,10 @@ import org.jooq.test.redshift.generatedclasses.tables.interfaces.IVLibrary;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibrary implements IVLibrary {
 
-	private static final long serialVersionUID = -1020022956;
+	private static final long serialVersionUID = 752987484;
 
-	private final Object author;
-	private final Object title;
+	private final String author;
+	private final String title;
 
 	public VLibrary(VLibrary value) {
 		this.author = value.author;
@@ -24,20 +24,20 @@ public class VLibrary implements IVLibrary {
 	}
 
 	public VLibrary(
-		Object author,
-		Object title
+		String author,
+		String title
 	) {
 		this.author = author;
 		this.title = title;
 	}
 
 	@Override
-	public Object getAuthor() {
+	public String getAuthor() {
 		return this.author;
 	}
 
 	@Override
-	public Object getTitle() {
+	public String getTitle() {
 		return this.title;
 	}
 }

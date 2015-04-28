@@ -13,11 +13,11 @@ import org.jooq.test.redshift.generatedclasses.tables.interfaces.ITLanguage;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage implements ITLanguage {
 
-	private static final long serialVersionUID = 1719283613;
+	private static final long serialVersionUID = -1646592445;
 
-	private final Object  cd;
-	private final Object  description;
-	private final Object  descriptionEnglish;
+	private final String  cd;
+	private final String  description;
+	private final String  descriptionEnglish;
 	private final Integer id;
 
 	public TLanguage(TLanguage value) {
@@ -28,9 +28,9 @@ public class TLanguage implements ITLanguage {
 	}
 
 	public TLanguage(
-		Object  cd,
-		Object  description,
-		Object  descriptionEnglish,
+		String  cd,
+		String  description,
+		String  descriptionEnglish,
 		Integer id
 	) {
 		this.cd = cd;
@@ -40,17 +40,17 @@ public class TLanguage implements ITLanguage {
 	}
 
 	@Override
-	public Object getCd() {
+	public String getCd() {
 		return this.cd;
 	}
 
 	@Override
-	public Object getDescription() {
+	public String getDescription() {
 		return this.description;
 	}
 
 	@Override
-	public Object getDescriptionEnglish() {
+	public String getDescriptionEnglish() {
 		return this.descriptionEnglish;
 	}
 

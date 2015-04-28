@@ -23,7 +23,7 @@ public interface IXUnused extends Serializable {
 	/**
 	 * Getter for <code>public.x_unused.name</code>.
 	 */
-	public Object getName();
+	public String getName();
 
 	/**
 	 * Getter for <code>public.x_unused.big_integer</code>.
@@ -83,7 +83,7 @@ public interface IXUnused extends Serializable {
 	/**
 	 * Getter for <code>public.x_unused.name_ref</code>.
 	 */
-	public Object getNameRef();
+	public String getNameRef();
 
 	/**
 	 * Getter for <code>public.x_unused.field 737</code>.

@@ -5,10 +5,11 @@ package org.jooq.test.redshift.generatedclasses.tables.records;
 
 
 import org.jooq.Field;
+import org.jooq.Record1;
 import org.jooq.Record9;
 import org.jooq.Row;
 import org.jooq.Row9;
-import org.jooq.impl.TableRecordImpl;
+import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.redshift.generatedclasses.tables.TBook;
 import org.jooq.test.redshift.generatedclasses.tables.interfaces.ITBook;
 
@@ -17,9 +18,9 @@ import org.jooq.test.redshift.generatedclasses.tables.interfaces.ITBook;
  * An entity holding books
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class TBookRecord extends TableRecordImpl<TBookRecord> implements Record9<Integer, Integer, Integer, Integer, Object, Integer, Integer, Object, Object>, ITBook {
+public class TBookRecord extends UpdatableRecordImpl<TBookRecord> implements Record9<Integer, Integer, Integer, Integer, String, Integer, Integer, String, String>, ITBook {
 
-	private static final long serialVersionUID = -1023606504;
+	private static final long serialVersionUID = 210868388;
 
 	/**
 	 * Setter for <code>public.t_book.id</code>. The book ID
@@ -88,7 +89,7 @@ public class TBookRecord extends TableRecordImpl<TBookRecord> implements Record9
 	/**
 	 * Setter for <code>public.t_book.title</code>. The book's title
 	 */
-	public TBookRecord setTitle(Object value) {
+	public TBookRecord setTitle(String value) {
 		setValue(4, value);
 		return this;
 	}
@@ -97,8 +98,8 @@ public class TBookRecord extends TableRecordImpl<TBookRecord> implements Record9
 	 * Getter for <code>public.t_book.title</code>. The book's title
 	 */
 	@Override
-	public Object getTitle() {
-		return (Object) getValue(4);
+	public String getTitle() {
+		return (String) getValue(4);
 	}
 
 	/**
@@ -136,7 +137,7 @@ public class TBookRecord extends TableRecordImpl<TBookRecord> implements Record9
 	/**
 	 * Setter for <code>public.t_book.content_text</code>. Some textual content of the book
 	 */
-	public TBookRecord setContentText(Object value) {
+	public TBookRecord setContentText(String value) {
 		setValue(7, value);
 		return this;
 	}
@@ -145,14 +146,14 @@ public class TBookRecord extends TableRecordImpl<TBookRecord> implements Record9
 	 * Getter for <code>public.t_book.content_text</code>. Some textual content of the book
 	 */
 	@Override
-	public Object getContentText() {
-		return (Object) getValue(7);
+	public String getContentText() {
+		return (String) getValue(7);
 	}
 
 	/**
 	 * Setter for <code>public.t_book.content_pdf</code>.
 	 */
-	public TBookRecord setContentPdf(Object value) {
+	public TBookRecord setContentPdf(String value) {
 		setValue(8, value);
 		return this;
 	}
@@ -161,8 +162,20 @@ public class TBookRecord extends TableRecordImpl<TBookRecord> implements Record9
 	 * Getter for <code>public.t_book.content_pdf</code>.
 	 */
 	@Override
-	public Object getContentPdf() {
-		return (Object) getValue(8);
+	public String getContentPdf() {
+		return (String) getValue(8);
+	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Record1<Integer> key() {
+		return (Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -173,7 +186,7 @@ public class TBookRecord extends TableRecordImpl<TBookRecord> implements Record9
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Row9<Integer, Integer, Integer, Integer, Object, Integer, Integer, Object, Object> fieldsRow() {
+	public Row9<Integer, Integer, Integer, Integer, String, Integer, Integer, String, String> fieldsRow() {
 		return (Row9) super.fieldsRow();
 	}
 
@@ -181,7 +194,7 @@ public class TBookRecord extends TableRecordImpl<TBookRecord> implements Record9
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Row9<Integer, Integer, Integer, Integer, Object, Integer, Integer, Object, Object> valuesRow() {
+	public Row9<Integer, Integer, Integer, Integer, String, Integer, Integer, String, String> valuesRow() {
 		return (Row9) super.valuesRow();
 	}
 
@@ -221,7 +234,7 @@ public class TBookRecord extends TableRecordImpl<TBookRecord> implements Record9
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Field<Object> field5() {
+	public Field<String> field5() {
 		return TBook.T_BOOK.TITLE;
 	}
 
@@ -245,7 +258,7 @@ public class TBookRecord extends TableRecordImpl<TBookRecord> implements Record9
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Field<Object> field8() {
+	public Field<String> field8() {
 		return TBook.T_BOOK.CONTENT_TEXT;
 	}
 
@@ -253,7 +266,7 @@ public class TBookRecord extends TableRecordImpl<TBookRecord> implements Record9
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Field<Object> field9() {
+	public Field<String> field9() {
 		return TBook.T_BOOK.CONTENT_PDF;
 	}
 
@@ -293,7 +306,7 @@ public class TBookRecord extends TableRecordImpl<TBookRecord> implements Record9
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object value5() {
+	public String value5() {
 		return getTitle();
 	}
 
@@ -317,7 +330,7 @@ public class TBookRecord extends TableRecordImpl<TBookRecord> implements Record9
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object value8() {
+	public String value8() {
 		return getContentText();
 	}
 
@@ -325,7 +338,7 @@ public class TBookRecord extends TableRecordImpl<TBookRecord> implements Record9
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object value9() {
+	public String value9() {
 		return getContentPdf();
 	}
 
@@ -369,7 +382,7 @@ public class TBookRecord extends TableRecordImpl<TBookRecord> implements Record9
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TBookRecord value5(Object value) {
+	public TBookRecord value5(String value) {
 		setTitle(value);
 		return this;
 	}
@@ -396,7 +409,7 @@ public class TBookRecord extends TableRecordImpl<TBookRecord> implements Record9
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TBookRecord value8(Object value) {
+	public TBookRecord value8(String value) {
 		setContentText(value);
 		return this;
 	}
@@ -405,7 +418,7 @@ public class TBookRecord extends TableRecordImpl<TBookRecord> implements Record9
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TBookRecord value9(Object value) {
+	public TBookRecord value9(String value) {
 		setContentPdf(value);
 		return this;
 	}
@@ -414,7 +427,7 @@ public class TBookRecord extends TableRecordImpl<TBookRecord> implements Record9
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TBookRecord values(Integer value1, Integer value2, Integer value3, Integer value4, Object value5, Integer value6, Integer value7, Object value8, Object value9) {
+	public TBookRecord values(Integer value1, Integer value2, Integer value3, Integer value4, String value5, Integer value6, Integer value7, String value8, String value9) {
 		value1(value1);
 		value2(value2);
 		value3(value3);
@@ -441,7 +454,7 @@ public class TBookRecord extends TableRecordImpl<TBookRecord> implements Record9
 	/**
 	 * Create a detached, initialised TBookRecord
 	 */
-	public TBookRecord(Integer id, Integer authorId, Integer coAuthorId, Integer detailsId, Object title, Integer publishedIn, Integer languageId, Object contentText, Object contentPdf) {
+	public TBookRecord(Integer id, Integer authorId, Integer coAuthorId, Integer detailsId, String title, Integer publishedIn, Integer languageId, String contentText, String contentPdf) {
 		super(TBook.T_BOOK);
 
 		setValue(0, id);

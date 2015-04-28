@@ -21,5 +21,5 @@ public interface IXTestCase_2025 extends Serializable {
 	/**
 	 * Getter for <code>public.x_test_case_2025.ref_name</code>.
 	 */
-	public Object getRefName();
+	public String getRefName();
 }

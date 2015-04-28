@@ -13,17 +13,17 @@ import org.jooq.test.redshift.generatedclasses.tables.interfaces.ITBook;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook implements ITBook {
 
-	private static final long serialVersionUID = 377109969;
+	private static final long serialVersionUID = -1644075413;
 
 	private final Integer id;
 	private final Integer authorId;
 	private final Integer coAuthorId;
 	private final Integer detailsId;
-	private final Object  title;
+	private final String  title;
 	private final Integer publishedIn;
 	private final Integer languageId;
-	private final Object  contentText;
-	private final Object  contentPdf;
+	private final String  contentText;
+	private final String  contentPdf;
 
 	public TBook(TBook value) {
 		this.id = value.id;
@@ -42,11 +42,11 @@ public class TBook implements ITBook {
 		Integer authorId,
 		Integer coAuthorId,
 		Integer detailsId,
-		Object  title,
+		String  title,
 		Integer publishedIn,
 		Integer languageId,
-		Object  contentText,
-		Object  contentPdf
+		String  contentText,
+		String  contentPdf
 	) {
 		this.id = id;
 		this.authorId = authorId;
@@ -80,7 +80,7 @@ public class TBook implements ITBook {
 	}
 
 	@Override
-	public Object getTitle() {
+	public String getTitle() {
 		return this.title;
 	}
 
@@ -95,12 +95,12 @@ public class TBook implements ITBook {
 	}
 
 	@Override
-	public Object getContentText() {
+	public String getContentText() {
 		return this.contentText;
 	}
 
 	@Override
-	public Object getContentPdf() {
+	public String getContentPdf() {
 		return this.contentPdf;
 	}
 }

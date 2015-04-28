@@ -16,10 +16,10 @@ import org.jooq.test.redshift.generatedclasses.tables.interfaces.IXUnused;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnused implements IXUnused {
 
-	private static final long serialVersionUID = -981324219;
+	private static final long serialVersionUID = 481977477;
 
 	private final Integer    id;
-	private final Object     name;
+	private final String     name;
 	private final BigInteger bigInteger;
 	private final Integer    idRef;
 	private final Integer    class_;
@@ -31,7 +31,7 @@ public class XUnused implements IXUnused {
 	private final Integer    type0;
 	private final Integer    primaryKey;
 	private final Integer    primarykey;
-	private final Object     nameRef;
+	private final String     nameRef;
 	private final BigDecimal field_737;
 
 	public XUnused(XUnused value) {
@@ -54,7 +54,7 @@ public class XUnused implements IXUnused {
 
 	public XUnused(
 		Integer    id,
-		Object     name,
+		String     name,
 		BigInteger bigInteger,
 		Integer    idRef,
 		Integer    class_,
@@ -66,7 +66,7 @@ public class XUnused implements IXUnused {
 		Integer    type0,
 		Integer    primaryKey,
 		Integer    primarykey,
-		Object     nameRef,
+		String     nameRef,
 		BigDecimal field_737
 	) {
 		this.id = id;
@@ -92,7 +92,7 @@ public class XUnused implements IXUnused {
 	}
 
 	@Override
-	public Object getName() {
+	public String getName() {
 		return this.name;
 	}
 
@@ -152,7 +152,7 @@ public class XUnused implements IXUnused {
 	}
 
 	@Override
-	public Object getNameRef() {
+	public String getNameRef() {
 		return this.nameRef;
 	}
 

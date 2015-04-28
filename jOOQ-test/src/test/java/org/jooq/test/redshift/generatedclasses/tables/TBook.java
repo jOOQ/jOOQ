@@ -4,10 +4,15 @@
 package org.jooq.test.redshift.generatedclasses.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.UniqueKey;
 import org.jooq.impl.TableImpl;
+import org.jooq.test.redshift.generatedclasses.Keys;
 import org.jooq.test.redshift.generatedclasses.Public;
 import org.jooq.test.redshift.generatedclasses.tables.records.TBookRecord;
 
@@ -18,7 +23,7 @@ import org.jooq.test.redshift.generatedclasses.tables.records.TBookRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends TableImpl<TBookRecord> {
 
-	private static final long serialVersionUID = 1731968653;
+	private static final long serialVersionUID = -887831018;
 
 	/**
 	 * The reference instance of <code>public.t_book</code>
@@ -56,7 +61,7 @@ public class TBook extends TableImpl<TBookRecord> {
 	/**
 	 * The column <code>public.t_book.title</code>. The book's title
 	 */
-	public final TableField<TBookRecord, Object> TITLE = createField("title", org.jooq.impl.DefaultDataType.getDefaultDataType("character varying"), this, "The book's title");
+	public final TableField<TBookRecord, String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this, "The book's title");
 
 	/**
 	 * The column <code>public.t_book.published_in</code>. The year the book was published in
@@ -71,12 +76,12 @@ public class TBook extends TableImpl<TBookRecord> {
 	/**
 	 * The column <code>public.t_book.content_text</code>. Some textual content of the book
 	 */
-	public final TableField<TBookRecord, Object> CONTENT_TEXT = createField("content_text", org.jooq.impl.DefaultDataType.getDefaultDataType("character varying"), this, "Some textual content of the book");
+	public final TableField<TBookRecord, String> CONTENT_TEXT = createField("content_text", org.jooq.impl.SQLDataType.VARCHAR.length(1000), this, "Some textual content of the book");
 
 	/**
 	 * The column <code>public.t_book.content_pdf</code>.
 	 */
-	public final TableField<TBookRecord, Object> CONTENT_PDF = createField("content_pdf", org.jooq.impl.DefaultDataType.getDefaultDataType("character varying"), this, "");
+	public final TableField<TBookRecord, String> CONTENT_PDF = createField("content_pdf", org.jooq.impl.SQLDataType.VARCHAR.length(1000), this, "");
 
 	/**
 	 * Create a <code>public.t_book</code> table reference
@@ -98,6 +103,22 @@ public class TBook extends TableImpl<TBookRecord> {
 
 	private TBook(String alias, Table<TBookRecord> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "An entity holding books");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public UniqueKey<TBookRecord> getPrimaryKey() {
+		return Keys.PK_T_BOOK;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<UniqueKey<TBookRecord>> getKeys() {
+		return Arrays.<UniqueKey<TBookRecord>>asList(Keys.PK_T_BOOK);
 	}
 
 	/**

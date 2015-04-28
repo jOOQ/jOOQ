@@ -3830,7 +3830,7 @@
                                         <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.redshift.RedshiftDatabase</name>
-                                            <includes>check_constraints|columns|constraint_column_usage|key_column_usage|referential_constraints|schemata|table_constraints|tables</includes>
+                                            <includes>check_constraints|columns|referential_constraints|schemata|table_constraints|tables</includes>
                                             <excludes></excludes>
                                         </database>
                                         <generate>
@@ -3898,7 +3898,7 @@
                                         <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.redshift.RedshiftDatabase</name>
-                                            <includes>pg_attribute|pg_class|pg_cursor|pg_description|pg_namespace|pg_proc|pg_type|format_type</includes>
+                                            <includes>pg_constraint|pg_attribute|pg_class|pg_cursor|pg_description|pg_namespace|pg_proc|pg_type|format_type</includes>
                                             <excludes></excludes>
                                         </database>
                                         <generate>

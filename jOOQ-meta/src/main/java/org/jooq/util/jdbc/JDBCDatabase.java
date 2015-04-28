@@ -125,7 +125,11 @@ public class JDBCDatabase extends AbstractDatabase {
 
     private List<Schema> getSchemasFromMeta() {
         if (schemas == null) {
-            schemas = create().meta().getSchemas();
+            schemas = new ArrayList<Schema>();
+
+            for (Schema schema : create().meta().getSchemas())
+                if (getInputSchemata().contains(schema.getName()))
+                    schemas.add(schema);
         }
 
         return schemas;

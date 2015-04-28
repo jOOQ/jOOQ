@@ -65,6 +65,7 @@ import org.jooq.util.db2.DB2DataType;
 import org.jooq.util.derby.DerbyDataType;
 import org.jooq.util.firebird.FirebirdDataType;
 import org.jooq.util.h2.H2DataType;
+import org.jooq.util.hana.HanaDataType;
 import org.jooq.util.hsqldb.HSQLDBDataType;
 import org.jooq.util.informix.InformixDataType;
 import org.jooq.util.ingres.IngresDataType;
@@ -332,6 +333,7 @@ public final class SQLDataType {
             Class.forName(AccessDataType.class.getName());
             Class.forName(ASEDataType.class.getName());
             Class.forName(DB2DataType.class.getName());
+            Class.forName(HanaDataType.class.getName());
             Class.forName(InformixDataType.class.getName());
             Class.forName(IngresDataType.class.getName());
             Class.forName(OracleDataType.class.getName());

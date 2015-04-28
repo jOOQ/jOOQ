@@ -114,6 +114,7 @@ class Dual extends AbstractTable<Record> {
             switch (ctx.family()) {
                 /* [pro] */
                 case ASE:
+                case REDSHIFT:
                 case SQLSERVER:
                 /* [/pro] */
                 case POSTGRES:

@@ -41,6 +41,7 @@
 package org.jooq.test.all.testcases;
 
 import static org.jooq.SQLDialect.HANA;
+import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.conf.ParamType.INDEXED;
 
 import java.sql.Date;
@@ -103,7 +104,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public void testBenchmarkNewRecord() throws Exception {
         // No benchmarks to the cloud
-        assumeFamilyNotIn(HANA);
+        assumeFamilyNotIn(HANA, REDSHIFT);
 
         DSLContext create = create();
 
@@ -114,7 +115,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public void testBenchmarkRecordIntoWithoutAnnotations() throws Exception {
         // No benchmarks to the cloud
-        assumeFamilyNotIn(HANA);
+        assumeFamilyNotIn(HANA, REDSHIFT);
 
         Result<B> books = create().fetch(TBook());
 
@@ -125,7 +126,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public void testBenchmarkRecordIntoWithAnnotations() throws Exception {
         // No benchmarks to the cloud
-        assumeFamilyNotIn(HANA);
+        assumeFamilyNotIn(HANA, REDSHIFT);
 
 //        System.out.print("X:");
 //        System.out.println(System.in.read());
@@ -148,7 +149,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public void testBenchmarkRecordIntoTableRecord() throws Exception {
         // No benchmarks to the cloud
-        assumeFamilyNotIn(HANA);
+        assumeFamilyNotIn(HANA, REDSHIFT);
 
         // This benchmark should heavily outperform the preceding one due to the optimisations done in [#2989]
         Result<B> books = create().fetch(TBook());
@@ -160,7 +161,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public void testBenchmarkFieldAccess() throws Exception {
         // No benchmarks to the cloud
-        assumeFamilyNotIn(HANA);
+        assumeFamilyNotIn(HANA, REDSHIFT);
 
         // This benchmark is inspired by a private contribution by Roberto Giacco
 
@@ -177,7 +178,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public void testBenchmarkSelect() throws Exception {
         // No benchmarks to the cloud
-        assumeFamilyNotIn(HANA);
+        assumeFamilyNotIn(HANA, REDSHIFT);
 
         // This benchmark is contributed by "jjYBdx4IL" on GitHub:
         // https://github.com/jOOQ/jOOQ/issues/1625
@@ -207,7 +208,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public void testBenchmarkPlainSQL() throws Exception {
         // No benchmarks to the cloud
-        assumeFamilyNotIn(HANA);
+        assumeFamilyNotIn(HANA, REDSHIFT);
 
         Configuration configuration = create().configuration().derive(new ExecuteListenerProvider[0]);
         configuration.settings().setExecuteLogging(false);

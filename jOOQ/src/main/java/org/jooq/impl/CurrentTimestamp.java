@@ -84,6 +84,7 @@ class CurrentTimestamp extends AbstractFunction<Timestamp> {
             case DB2:
             case HANA:
             case INGRES:
+            case REDSHIFT:
             case SQLSERVER:
             /* [/pro] */
             case DERBY:

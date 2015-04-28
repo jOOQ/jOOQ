@@ -116,6 +116,7 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
                 case ACCESS:
                 case ASE:
                 case INGRES:
+                case REDSHIFT:
                 case SQLSERVER:
                 case SYBASE:
                 /* [/pro] */

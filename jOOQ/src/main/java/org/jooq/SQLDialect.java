@@ -440,6 +440,36 @@ public enum SQLDialect {
     public final class ThirdParty {
 
         /**
+         * The Spring DB name or <code>null</code>, if the db name is not
+         * supported by Spring.
+         * <p>
+         * The name returned by this method corresponds to the DB id as
+         * referenced in
+         * <code>org/springframework/jdbc/support/sql-error-codes.xml</code>
+         */
+        public final String springDbName() {
+            switch (SQLDialect.this.family) {
+                /* [pro] */
+                case ASE:       return "Sybase";
+                case DB2:       return "DB2";
+                case HANA:      return "Hana";
+                case INFORMIX:  return "Informix";
+                case ORACLE:    return "Oracle";
+                case SQLSERVER: return "MS-SQL";
+                /* [/pro] */
+
+                case DERBY:     return "Derby";
+                case H2:        return "H2";
+                case HSQLDB:    return "HSQL";
+                case MARIADB:
+                case MYSQL:     return "MySQL";
+                case POSTGRES:  return "PostgreSQL";
+
+                default:        return null;
+            }
+        }
+
+        /**
          * The Hibernate dialect name or <code>null</code>, if the dialect is
          * not supported by Hibernate.
          * <p>
@@ -453,83 +483,39 @@ public enum SQLDialect {
             switch (SQLDialect.this) {
                 /* [pro] */
                 case ACCESS:
-                case ACCESS2013:
-                    return null;
-
-                case ASE:
-                    return "org.hibernate.dialect.SybaseASE15Dialect";
-
+                case ACCESS2013:    return null;
+                case ASE:           return "org.hibernate.dialect.SybaseASE15Dialect";
                 case DB2_9:
                 case DB2_10:
-                case DB2:
-                    return "org.hibernate.dialect.DB2Dialect";
-
-                case HANA:
-                    return "org.hibernate.dialect.HANARowStoreDialect";
-
-                case INFORMIX:
-                    return "org.hibernate.dialect.InformixDialect";
-
-                case INGRES:
-                    return "org.hibernate.dialect.Ingres10Dialect";
-
+                case DB2:           return "org.hibernate.dialect.DB2Dialect";
+                case HANA:          return "org.hibernate.dialect.HANARowStoreDialect";
+                case INFORMIX:      return "org.hibernate.dialect.InformixDialect";
+                case INGRES:        return "org.hibernate.dialect.Ingres10Dialect";
                 case ORACLE10G:
-                case ORACLE11G:
-                    return "org.hibernate.dialect.Oracle10gDialect";
-
+                case ORACLE11G:     return "org.hibernate.dialect.Oracle10gDialect";
                 case ORACLE12C:
-                case ORACLE:
-                    return "org.hibernate.dialect.Oracle12cDialect";
-
-                case REDSHIFT:
-                    return "org.hibernate.dialect.PostgreSQL81Dialect";
-
-                case SQLSERVER2008:
-                    return "org.hibernate.dialect.SQLServer2008Dialect";
-
+                case ORACLE:        return "org.hibernate.dialect.Oracle12cDialect";
+                case REDSHIFT:      return "org.hibernate.dialect.PostgreSQL81Dialect";
+                case SQLSERVER2008: return "org.hibernate.dialect.SQLServer2008Dialect";
                 case SQLSERVER2012:
                 case SQLSERVER2014:
-                case SQLSERVER:
-                    return "org.hibernate.dialect.SQLServer2012Dialect";
-
-                case SYBASE:
-                    return "org.hibernate.dialect.SybaseAnywhereDialect";
-
+                case SQLSERVER:     return "org.hibernate.dialect.SQLServer2012Dialect";
+                case SYBASE:        return "org.hibernate.dialect.SybaseAnywhereDialect";
                 /* [/pro] */
 
-                case CUBRID:
-                    return "org.hibernate.dialect.CUBRIDDialect";
-
-                case DERBY:
-                    return "org.hibernate.dialect.DerbyTenSevenDialect";
-
-                case FIREBIRD:
-                    return "org.hibernate.dialect.FirebirdDialect";
-
-                case H2:
-                    return "org.hibernate.dialect.H2Dialect";
-
-                case HSQLDB:
-                    return "org.hibernate.dialect.HSQLDialect";
-
+                case CUBRID:        return "org.hibernate.dialect.CUBRIDDialect";
+                case DERBY:         return "org.hibernate.dialect.DerbyTenSevenDialect";
+                case FIREBIRD:      return "org.hibernate.dialect.FirebirdDialect";
+                case H2:            return "org.hibernate.dialect.H2Dialect";
+                case HSQLDB:        return "org.hibernate.dialect.HSQLDialect";
                 case MARIADB:
-                case MYSQL:
-                    return "org.hibernate.dialect.MySQL5Dialect";
-
-                case POSTGRES_9_3:
-                    return "org.hibernate.dialect.PostgreSQL92Dialect";
-
+                case MYSQL:         return "org.hibernate.dialect.MySQL5Dialect";
+                case POSTGRES_9_3:  return "org.hibernate.dialect.PostgreSQL92Dialect";
                 case POSTGRES_9_4:
-                case POSTGRES:
-                    return "org.hibernate.dialect.PostgreSQL94Dialect";
+                case POSTGRES:      return "org.hibernate.dialect.PostgreSQL94Dialect";
+                case SQLITE:        return null;
 
-                case SQLITE:
-                    return null;
-
-                case DEFAULT:
-                case SQL99:
-                default:
-                    return null;
+                default:            return null;
             }
         }
     }

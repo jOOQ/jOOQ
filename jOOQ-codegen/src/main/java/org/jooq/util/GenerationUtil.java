@@ -170,7 +170,7 @@ class GenerationUtil {
         if (language == JAVA && JAVA_KEYWORDS.contains(literal))
             return literal + "_";
         if (language == SCALA && SCALA_KEYWORDS.contains(literal))
-            return literal + "_";
+            return "`" + literal + "`";
 
         StringBuilder sb = new StringBuilder();
 
@@ -229,6 +229,9 @@ class GenerationUtil {
      */
     static String getArrayBaseType(SQLDialect dialect, String t, String u) {
         switch (dialect.family()) {
+            /* [pro] xx
+            xxxx xxxxxxxxx
+            xx [/pro] */
             case POSTGRES: {
 
                 // The convention is to prepend a "_" to a type to get an array type

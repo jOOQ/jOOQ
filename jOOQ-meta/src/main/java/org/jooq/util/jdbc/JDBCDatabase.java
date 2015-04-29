@@ -87,17 +87,22 @@ public class JDBCDatabase extends AbstractDatabase {
 
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
-        for (UniqueKey<?> key : create().meta().getPrimaryKeys()) {
-            Schema schema = key.getTable().getSchema();
-            SchemaDefinition s = getSchema(schema == null ? "" : schema.getName());
+        for (Schema schema : getSchemasFromMeta()) {
+            SchemaDefinition s = getSchema(schema.getName());
 
             if (s != null) {
-                TableDefinition t = getTable(s, key.getTable().getName());
+                for (Table<?> table : schema.getTables()) {
+                    TableDefinition t = getTable(s, table.getName());
 
-                if (t != null) {
-                    for (Field<?> field : key.getFields()) {
-                        ColumnDefinition c = t.getColumn(field.getName());
-                        relations.addPrimaryKey("PK_" + key.getTable().getName(), c);
+                    if (t != null) {
+                        UniqueKey<?> key = table.getPrimaryKey();
+
+                        if (key != null) {
+                            for (Field<?> field : key.getFields()) {
+                                ColumnDefinition c = t.getColumn(field.getName());
+                                relations.addPrimaryKey("PK_" + key.getTable().getName(), c);
+                            }
+                        }
                     }
                 }
             }
@@ -125,7 +130,11 @@ public class JDBCDatabase extends AbstractDatabase {
 
     private List<Schema> getSchemasFromMeta() {
         if (schemas == null) {
-            schemas = create().meta().getSchemas();
+            schemas = new ArrayList<Schema>();
+
+            for (Schema schema : create().meta().getSchemas())
+                if (getInputSchemata().contains(schema.getName()))
+                    schemas.add(schema);
         }
 
         return schemas;

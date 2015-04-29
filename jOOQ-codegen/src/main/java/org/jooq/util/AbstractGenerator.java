@@ -74,10 +74,19 @@ abstract class AbstractGenerator implements Generator {
     String                             fullyQualifiedTypes              = "";
 
     protected GeneratorStrategyWrapper strategy;
+    final Language                     language;
+
+    AbstractGenerator(Language language) {
+        this.language = language;
+    }
+
+    enum Language {
+        JAVA, SCALA;
+    }
 
     @Override
     public void setStrategy(GeneratorStrategy strategy) {
-        this.strategy = new GeneratorStrategyWrapper(this, strategy);
+        this.strategy = new GeneratorStrategyWrapper(this, strategy, language);
     }
 
     @Override

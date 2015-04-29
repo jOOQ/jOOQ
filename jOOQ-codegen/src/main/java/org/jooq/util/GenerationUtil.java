@@ -42,12 +42,15 @@ package org.jooq.util;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableSet;
+import static org.jooq.util.AbstractGenerator.Language.JAVA;
+import static org.jooq.util.AbstractGenerator.Language.SCALA;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import org.jooq.SQLDialect;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.util.AbstractGenerator.Language;
 import org.jooq.util.h2.H2DataType;
 
 /**
@@ -56,58 +59,101 @@ import org.jooq.util.h2.H2DataType;
 class GenerationUtil {
 
     private static Set<String> JAVA_KEYWORDS = unmodifiableSet(new HashSet<String>(asList(
-         "abstract",
-         "assert",
-         "boolean",
-         "break",
-         "byte",
-         "case",
-         "catch",
-         "char",
-         "class",
-         "const",
-         "continue",
-         "default",
-         "double",
-         "do",
-         "else",
-         "enum",
-         "extends",
-         "false",
-         "final",
-         "finally",
-         "float",
-         "for",
-         "goto",
-         "if",
-         "implements",
-         "import",
-         "instanceof",
-         "interface",
-         "int",
-         "long",
-         "native",
-         "new",
-         "package",
-         "private",
-         "protected",
-         "public",
-         "return",
-         "short",
-         "static",
-         "strictfp",
-         "super",
-         "switch",
-         "synchronized",
-         "this",
-         "throw",
-         "throws",
-         "transient",
-         "true",
-         "try",
-         "void",
-         "volatile",
-         "while")));
+        "abstract",
+        "assert",
+        "boolean",
+        "break",
+        "byte",
+        "case",
+        "catch",
+        "char",
+        "class",
+        "const",
+        "continue",
+        "default",
+        "double",
+        "do",
+        "else",
+        "enum",
+        "extends",
+        "false",
+        "final",
+        "finally",
+        "float",
+        "for",
+        "goto",
+        "if",
+        "implements",
+        "import",
+        "instanceof",
+        "interface",
+        "int",
+        "long",
+        "native",
+        "new",
+        "null",
+        "package",
+        "private",
+        "protected",
+        "public",
+        "return",
+        "short",
+        "static",
+        "strictfp",
+        "super",
+        "switch",
+        "synchronized",
+        "this",
+        "throw",
+        "throws",
+        "transient",
+        "true",
+        "try",
+        "void",
+        "volatile",
+        "while")));
+
+    private static Set<String> SCALA_KEYWORDS = unmodifiableSet(new HashSet<String>(asList(
+        "abstract",
+        "case",
+        "catch",
+        "class",
+        "def",
+        "do",
+        "else",
+        "extends",
+        "false",
+        "final",
+        "finally",
+        "for",
+        "forSome",
+        "if",
+        "implicit",
+        "import",
+        "lazy",
+        "match",
+        "new",
+        "null",
+        "object",
+        "override",
+        "package",
+        "private",
+        "protected",
+        "return",
+        "sealed",
+        "super",
+        "this",
+        "throw",
+        "trait",
+        "try",
+        "true",
+        "type",
+        "val",
+        "var",
+        "while",
+        "with",
+        "yield"
+    )));
 
     /**
      * Take a literal (e.g. database column) and make it a Java identifier to be
@@ -117,11 +163,14 @@ class GenerationUtil {
      * This implementation is meant as a fix for [#959]. These types of
      * collisions have to be generally reviewed again, when allowing for more
      * control over generated source code, as of [#408][#911]
+     * <p>
+     *
      */
-    public static String convertToJavaIdentifier(String literal) {
-        if (JAVA_KEYWORDS.contains(literal)) {
+    public static String convertToIdentifier(String literal, Language language) {
+        if (language == JAVA && JAVA_KEYWORDS.contains(literal))
             return literal + "_";
-        }
+        if (language == SCALA && SCALA_KEYWORDS.contains(literal))
+            return "`" + literal + "`";
 
         StringBuilder sb = new StringBuilder();
 
@@ -145,6 +194,14 @@ class GenerationUtil {
         }
 
         return sb.toString();
+    }
+
+    /**
+     * @deprecated - Use {@link #convertToIdentifier(String, Language)} instead.
+     */
+    @Deprecated
+    public static String convertToJavaIdentifier(String literal) {
+        return convertToIdentifier(literal, Language.JAVA);
     }
 
     private static String escape(char c) {

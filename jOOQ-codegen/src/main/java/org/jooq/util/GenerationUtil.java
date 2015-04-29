@@ -170,7 +170,7 @@ class GenerationUtil {
         if (language == JAVA && JAVA_KEYWORDS.contains(literal))
             return literal + "_";
         if (language == SCALA && SCALA_KEYWORDS.contains(literal))
-            return literal + "_";
+            return "`" + literal + "`";
 
         StringBuilder sb = new StringBuilder();
 

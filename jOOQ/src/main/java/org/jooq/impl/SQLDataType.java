@@ -73,6 +73,7 @@ import org.jooq.util.mariadb.MariaDBDataType;
 import org.jooq.util.mysql.MySQLDataType;
 // ...
 import org.jooq.util.postgres.PostgresDataType;
+// ...
 import org.jooq.util.sqlite.SQLiteDataType;
 // ...
 // ...
@@ -337,6 +338,7 @@ public final class SQLDataType {
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xx [/pro] */

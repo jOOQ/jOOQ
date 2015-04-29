@@ -40,6 +40,8 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
+// ...
 // ...
 // ...
 import static org.jooq.conf.RenderNameStyle.LOWER;
@@ -194,8 +196,8 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
         }
 
         /* [pro] xx
-        xx xxxx xxxxxxx xxxxxxx xxxxxxxx xxxxxxxxx xxxx
-        xxxx xx xxxxxxxxxxxxx xx xxxxx x
+        xx xxxx xxx xxxxxxxx xxxxx xxxxxxx xxxxxxxx xxxxxxxxx xxxx
+        xxxx xx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
             xxxxxxxxxxxxxxxxxxx
             xxxxxxx
         x
@@ -231,6 +233,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                 xxxx xxxxxxxxx
                 xxxx xxxxxxx
                 xxxx xxxxxxxxxx
+                xxxx xxxxxxxxx
                 xx [/pro] */
                 case DERBY:
                 case H2:
@@ -276,8 +279,8 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
             return super.execute(ctx, listener);
         }
         /* [pro] xx
-        xx xxxx xxxxxxx xxxxxxx xxxxxxxx xxxxxxxxx xxxx
-        xxxx xx xxxxxxxxxxxxx xx xxxxx x
+        xx xxxx xxx xxxxxxxx xxxxx xxxxxxx xxxxxxxx xxxxxxxxx xxxx
+        xxxx xx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
             xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxx
         x
         xx [/pro] */
@@ -331,6 +334,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                 xxxx xxxxxxxxx
                 xxxx xxxxxxx
                 xxxx xxxxxxxxxx
+                xxxx xxxxxxxxx
                 xx [/pro] */
                 case DERBY:
                 case H2:

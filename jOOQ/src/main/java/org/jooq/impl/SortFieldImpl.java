@@ -116,6 +116,7 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
                 xxxx xxxxxxx
                 xxxx xxxx
                 xxxx xxxxxxx
+                xxxx xxxxxxxxx
                 xxxx xxxxxxxxxx
                 xxxx xxxxxxx
                 xx [/pro] */

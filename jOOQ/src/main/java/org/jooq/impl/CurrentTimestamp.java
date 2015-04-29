@@ -84,6 +84,7 @@ class CurrentTimestamp extends AbstractFunction<Timestamp> {
             xxxx xxxx
             xxxx xxxxx
             xxxx xxxxxxx
+            xxxx xxxxxxxxx
             xxxx xxxxxxxxxx
             xx [/pro] */
             case DERBY:

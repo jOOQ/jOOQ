@@ -1094,9 +1094,13 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final boolean isArrayType(String dataType) {
         switch (getDialect().family()) {
+            /* [pro] xx
+            xxxx xxxxxxxxx
+            xx [/pro] */
             case POSTGRES:
             case H2:
                 return "ARRAY".equals(dataType);
+
             case HSQLDB:
             /* [pro] xx
             xxxx xxxxx

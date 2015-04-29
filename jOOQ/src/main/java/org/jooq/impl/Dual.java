@@ -114,6 +114,7 @@ class Dual extends AbstractTable<Record> {
             switch (ctx.family()) {
                 /* [pro] xx
                 xxxx xxxx
+                xxxx xxxxxxxxx
                 xxxx xxxxxxxxxx
                 xx [/pro] */
                 case POSTGRES:

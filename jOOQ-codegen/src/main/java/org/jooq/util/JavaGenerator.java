@@ -2066,19 +2066,20 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generateDao(TableDefinition table, JavaWriter out) {
+        UniqueKeyDefinition key = table.getPrimaryKey();
+        if (key == null) {
+            log.info("Skipping DAO generation", out.file().getName());
+            return;
+        }
+
         final String className = getStrategy().getJavaClassName(table, Mode.DAO);
+        final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(table, Mode.DAO));
         final String tableRecord = out.ref(getStrategy().getFullJavaClassName(table, Mode.RECORD));
         final String daoImpl = out.ref(DAOImpl.class);
         final String tableIdentifier = out.ref(getStrategy().getFullJavaIdentifier(table), 2);
 
         String tType = (scala ? "Unit" : "Void");
         String pType = out.ref(getStrategy().getFullJavaClassName(table, Mode.POJO));
-
-        UniqueKeyDefinition key = table.getPrimaryKey();
-        if (key == null) {
-            log.info("Skipping DAO generation", out.file().getName());
-            return;
-        }
 
         List<ColumnDefinition> keyColumns = key.getKeyColumns();
 
@@ -2110,10 +2111,10 @@ public class JavaGenerator extends AbstractGenerator {
         printClassAnnotations(out, table.getSchema());
 
         if (scala)
-            out.println("class %s(configuration : %s) extends %s[%s, %s, %s](%s, classOf[%s], configuration) {",
-                    className, Configuration.class, daoImpl, tableRecord, pType, tType, tableIdentifier, pType);
+            out.println("class %s(configuration : %s) extends %s[%s, %s, %s](%s, classOf[%s], configuration)[[before= with ][%s]] {",
+                    className, Configuration.class, daoImpl, tableRecord, pType, tType, tableIdentifier, pType, interfaces);
         else
-            out.println("public class %s extends %s<%s, %s, %s> {", className, daoImpl, tableRecord, pType, tType);
+            out.println("public class %s extends %s<%s, %s, %s>[[before= implements ][%s]] {", className, daoImpl, tableRecord, pType, tType, interfaces);
 
         // Default constructor
         // -------------------

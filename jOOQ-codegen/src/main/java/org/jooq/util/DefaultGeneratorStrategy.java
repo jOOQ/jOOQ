@@ -43,7 +43,6 @@ package org.jooq.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.DAO;
 import org.jooq.tools.StringUtils;
 import org.jooq.util.oracle.OracleQueueDefinition;
 
@@ -123,26 +122,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
     @Override
     public List<String> getJavaClassImplements(Definition definition, Mode mode) {
-        List<String> result = new ArrayList<String>();
-
-        if (mode == Mode.DAO) {
-            TableDefinition table = (TableDefinition) definition;
-            List<ColumnDefinition> keyColumns = table.getPrimaryKey().getKeyColumns();
-
-            String name = DAO.class.getName();
-
-            name += "<";
-            name += getFullJavaClassName(table, Mode.POJO);
-            name += ", ";
-            name += keyColumns.size() == 1
-                        ? "Void" // keyColumns.get(0).getType()
-                        : "Void";
-            name += ">";
-
-            result.add(name);
-        }
-
-        return result;
+        return new ArrayList<String>();
     }
 
     @Override

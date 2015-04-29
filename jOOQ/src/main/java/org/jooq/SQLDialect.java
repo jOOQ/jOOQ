@@ -295,6 +295,7 @@ public enum SQLDialect {
     private final boolean             commercial;
     private final SQLDialect          family;
     private SQLDialect                predecessor;
+    private final ThirdParty          thirdParty;
 
     private SQLDialect(String name, boolean commercial) {
         this(name, commercial, null, null);
@@ -312,6 +313,8 @@ public enum SQLDialect {
 
         if (family != null)
             family.predecessor = this;
+
+        this.thirdParty = new ThirdParty();
     }
 
     /**
@@ -422,5 +425,112 @@ public enum SQLDialect {
      */
     public static final SQLDialect[] families() {
         return FAMILIES.clone();
+    }
+
+    /**
+     * Get access to third party representations of this {@link SQLDialect}.
+     */
+    public final ThirdParty thirdParty() {
+        return thirdParty;
+    }
+
+    /**
+     * Third party representations of the enclosing {@link SQLDialect}.
+     */
+    public final class ThirdParty {
+
+        /**
+         * The Hibernate dialect name or <code>null</code>, if the dialect is
+         * not supported by Hibernate.
+         * <p>
+         *
+         * @see <a href=
+         *      "http://docs.jboss.org/hibernate/orm/5.0/javadocs/org/hibernate/dialect/package-summary.html">
+         *      http://docs.jboss.org/hibernate/orm/5.0/javadocs/org/hibernate/
+         *      dialect/package-summary.html</a>
+         */
+        public final String hibernateDialect() {
+            switch (SQLDialect.this) {
+                /* [pro] */
+                case ACCESS:
+                case ACCESS2013:
+                    return null;
+
+                case ASE:
+                    return "org.hibernate.dialect.SybaseASE15Dialect";
+
+                case DB2_9:
+                case DB2_10:
+                case DB2:
+                    return "org.hibernate.dialect.DB2Dialect";
+
+                case HANA:
+                    return "org.hibernate.dialect.HANARowStoreDialect";
+
+                case INFORMIX:
+                    return "org.hibernate.dialect.InformixDialect";
+
+                case INGRES:
+                    return "org.hibernate.dialect.Ingres10Dialect";
+
+                case ORACLE10G:
+                case ORACLE11G:
+                    return "org.hibernate.dialect.Oracle10gDialect";
+
+                case ORACLE12C:
+                case ORACLE:
+                    return "org.hibernate.dialect.Oracle12cDialect";
+
+                case REDSHIFT:
+                    return "org.hibernate.dialect.PostgreSQL81Dialect";
+
+                case SQLSERVER2008:
+                    return "org.hibernate.dialect.SQLServer2008Dialect";
+
+                case SQLSERVER2012:
+                case SQLSERVER2014:
+                case SQLSERVER:
+                    return "org.hibernate.dialect.SQLServer2012Dialect";
+
+                case SYBASE:
+                    return "org.hibernate.dialect.SybaseAnywhereDialect";
+
+                /* [/pro] */
+
+                case CUBRID:
+                    return "org.hibernate.dialect.CUBRIDDialect";
+
+                case DERBY:
+                    return "org.hibernate.dialect.DerbyTenSevenDialect";
+
+                case FIREBIRD:
+                    return "org.hibernate.dialect.FirebirdDialect";
+
+                case H2:
+                    return "org.hibernate.dialect.H2Dialect";
+
+                case HSQLDB:
+                    return "org.hibernate.dialect.HSQLDialect";
+
+                case MARIADB:
+                case MYSQL:
+                    return "org.hibernate.dialect.MySQL5Dialect";
+
+                case POSTGRES_9_3:
+                    return "org.hibernate.dialect.PostgreSQL92Dialect";
+
+                case POSTGRES_9_4:
+                case POSTGRES:
+                    return "org.hibernate.dialect.PostgreSQL94Dialect";
+
+                case SQLITE:
+                    return null;
+
+                case DEFAULT:
+                case SQL99:
+                default:
+                    return null;
+            }
+        }
     }
 }

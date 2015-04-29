@@ -32,7 +32,7 @@ class XUnused(
 	, private var name : String    
 	, private var bigInteger : BigInteger
 	, private var idRef : Integer   
-	, private var class_ : Integer   
+	, private var `class` : Integer   
 	, private var fields : Integer   
 	, private var configuration : Integer   
 	, private var uDT : Integer   
@@ -56,7 +56,7 @@ class XUnused(
 			, value.name
 			, value.bigInteger
 			, value.idRef
-			, value.class_
+			, value.`class`
 			, value.fields
 			, value.configuration
 			, value.uDT
@@ -112,11 +112,11 @@ class XUnused(
 
 	@Column(name = "CLASS", precision = 7)
 	def getClass_ : Integer = {
-		this.class_
+		this.`class`
 	}
 
-	def setClass_(class_ : Integer) : Unit = {
-		this.class_ = class_
+	def setClass_(`class` : Integer) : Unit = {
+		this.`class` = `class`
 	}
 
 	@Column(name = "FIELDS", precision = 7)
@@ -252,11 +252,11 @@ class XUnused(
 		}
 		else if (!idRef.equals(other.idRef))
 			return false
-		if (class_ == null) {
-			if (other.class_ != null)
+		if (`class` == null) {
+			if (other.`class` != null)
 				return false
 		}
-		else if (!class_.equals(other.class_))
+		else if (!`class`.equals(other.`class`))
 			return false
 		if (fields == null) {
 			if (other.fields != null)
@@ -334,7 +334,7 @@ class XUnused(
 		result = prime * result + (if (name == null) 0 else name.hashCode())
 		result = prime * result + (if (bigInteger == null) 0 else bigInteger.hashCode())
 		result = prime * result + (if (idRef == null) 0 else idRef.hashCode())
-		result = prime * result + (if (class_ == null) 0 else class_.hashCode())
+		result = prime * result + (if (`class` == null) 0 else `class`.hashCode())
 		result = prime * result + (if (fields == null) 0 else fields.hashCode())
 		result = prime * result + (if (configuration == null) 0 else configuration.hashCode())
 		result = prime * result + (if (uDT == null) 0 else uDT.hashCode())

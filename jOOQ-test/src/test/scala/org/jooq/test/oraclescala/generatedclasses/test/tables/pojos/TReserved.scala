@@ -18,45 +18,45 @@ import javax.persistence.Table
 @Entity
 @Table(name = "T_RESERVED", schema = "TEST")
 class TReserved(
-	  private var abstract_ : BigDecimal
-	, private var case_ : BigDecimal
-	, private var catch_ : BigDecimal
-	, private var class_ : BigDecimal
-	, private var def_ : BigDecimal
-	, private var do_ : BigDecimal
-	, private var else_ : BigDecimal
-	, private var extends_ : BigDecimal
-	, private var false_ : BigDecimal
-	, private var final_ : BigDecimal
-	, private var finally_ : BigDecimal
-	, private var for_ : BigDecimal
+	  private var `abstract` : BigDecimal
+	, private var `case` : BigDecimal
+	, private var `catch` : BigDecimal
+	, private var `class` : BigDecimal
+	, private var `def` : BigDecimal
+	, private var `do` : BigDecimal
+	, private var `else` : BigDecimal
+	, private var `extends` : BigDecimal
+	, private var `false` : BigDecimal
+	, private var `final` : BigDecimal
+	, private var `finally` : BigDecimal
+	, private var `for` : BigDecimal
 	, private var forsome : BigDecimal
-	, private var if_ : BigDecimal
-	, private var implicit_ : BigDecimal
-	, private var import_ : BigDecimal
-	, private var lazy_ : BigDecimal
-	, private var match_ : BigDecimal
-	, private var new_ : BigDecimal
-	, private var null_ : BigDecimal
-	, private var object_ : BigDecimal
-	, private var override_ : BigDecimal
-	, private var package_ : BigDecimal
-	, private var private_ : BigDecimal
-	, private var protected_ : BigDecimal
-	, private var return_ : BigDecimal
-	, private var sealed_ : BigDecimal
-	, private var super_ : BigDecimal
-	, private var this_ : BigDecimal
-	, private var throw_ : BigDecimal
-	, private var trait_ : BigDecimal
-	, private var try_ : BigDecimal
-	, private var true_ : BigDecimal
-	, private var type_ : BigDecimal
-	, private var val_ : BigDecimal
-	, private var var_ : BigDecimal
-	, private var while_ : BigDecimal
-	, private var with_ : BigDecimal
-	, private var yield_ : BigDecimal
+	, private var `if` : BigDecimal
+	, private var `implicit` : BigDecimal
+	, private var `import` : BigDecimal
+	, private var `lazy` : BigDecimal
+	, private var `match` : BigDecimal
+	, private var `new` : BigDecimal
+	, private var `null` : BigDecimal
+	, private var `object` : BigDecimal
+	, private var `override` : BigDecimal
+	, private var `package` : BigDecimal
+	, private var `private` : BigDecimal
+	, private var `protected` : BigDecimal
+	, private var `return` : BigDecimal
+	, private var `sealed` : BigDecimal
+	, private var `super` : BigDecimal
+	, private var `this` : BigDecimal
+	, private var `throw` : BigDecimal
+	, private var `trait` : BigDecimal
+	, private var `try` : BigDecimal
+	, private var `true` : BigDecimal
+	, private var `type` : BigDecimal
+	, private var `val` : BigDecimal
+	, private var `var` : BigDecimal
+	, private var `while` : BigDecimal
+	, private var `with` : BigDecimal
+	, private var `yield` : BigDecimal
 ) extends Serializable {
 
 	def this() = {
@@ -65,154 +65,154 @@ class TReserved(
 
 	def this (value : TReserved) = {
 		this(
-			  value.abstract_
-			, value.case_
-			, value.catch_
-			, value.class_
-			, value.def_
-			, value.do_
-			, value.else_
-			, value.extends_
-			, value.false_
-			, value.final_
-			, value.finally_
-			, value.for_
+			  value.`abstract`
+			, value.`case`
+			, value.`catch`
+			, value.`class`
+			, value.`def`
+			, value.`do`
+			, value.`else`
+			, value.`extends`
+			, value.`false`
+			, value.`final`
+			, value.`finally`
+			, value.`for`
 			, value.forsome
-			, value.if_
-			, value.implicit_
-			, value.import_
-			, value.lazy_
-			, value.match_
-			, value.new_
-			, value.null_
-			, value.object_
-			, value.override_
-			, value.package_
-			, value.private_
-			, value.protected_
-			, value.return_
-			, value.sealed_
-			, value.super_
-			, value.this_
-			, value.throw_
-			, value.trait_
-			, value.try_
-			, value.true_
-			, value.type_
-			, value.val_
-			, value.var_
-			, value.while_
-			, value.with_
-			, value.yield_
+			, value.`if`
+			, value.`implicit`
+			, value.`import`
+			, value.`lazy`
+			, value.`match`
+			, value.`new`
+			, value.`null`
+			, value.`object`
+			, value.`override`
+			, value.`package`
+			, value.`private`
+			, value.`protected`
+			, value.`return`
+			, value.`sealed`
+			, value.`super`
+			, value.`this`
+			, value.`throw`
+			, value.`trait`
+			, value.`try`
+			, value.`true`
+			, value.`type`
+			, value.`val`
+			, value.`var`
+			, value.`while`
+			, value.`with`
+			, value.`yield`
 		)
 	}
 
 	@Column(name = "abstract")
 	def getAbstract : BigDecimal = {
-		this.abstract_
+		this.`abstract`
 	}
 
-	def setAbstract(abstract_ : BigDecimal) : Unit = {
-		this.abstract_ = abstract_
+	def setAbstract(`abstract` : BigDecimal) : Unit = {
+		this.`abstract` = `abstract`
 	}
 
 	@Column(name = "case")
 	def getCase : BigDecimal = {
-		this.case_
+		this.`case`
 	}
 
-	def setCase(case_ : BigDecimal) : Unit = {
-		this.case_ = case_
+	def setCase(`case` : BigDecimal) : Unit = {
+		this.`case` = `case`
 	}
 
 	@Column(name = "catch")
 	def getCatch : BigDecimal = {
-		this.catch_
+		this.`catch`
 	}
 
-	def setCatch(catch_ : BigDecimal) : Unit = {
-		this.catch_ = catch_
+	def setCatch(`catch` : BigDecimal) : Unit = {
+		this.`catch` = `catch`
 	}
 
 	@Column(name = "class")
 	def getClass_ : BigDecimal = {
-		this.class_
+		this.`class`
 	}
 
-	def setClass_(class_ : BigDecimal) : Unit = {
-		this.class_ = class_
+	def setClass_(`class` : BigDecimal) : Unit = {
+		this.`class` = `class`
 	}
 
 	@Column(name = "def")
 	def getDef : BigDecimal = {
-		this.def_
+		this.`def`
 	}
 
-	def setDef(def_ : BigDecimal) : Unit = {
-		this.def_ = def_
+	def setDef(`def` : BigDecimal) : Unit = {
+		this.`def` = `def`
 	}
 
 	@Column(name = "do")
 	def getDo : BigDecimal = {
-		this.do_
+		this.`do`
 	}
 
-	def setDo(do_ : BigDecimal) : Unit = {
-		this.do_ = do_
+	def setDo(`do` : BigDecimal) : Unit = {
+		this.`do` = `do`
 	}
 
 	@Column(name = "else")
 	def getElse : BigDecimal = {
-		this.else_
+		this.`else`
 	}
 
-	def setElse(else_ : BigDecimal) : Unit = {
-		this.else_ = else_
+	def setElse(`else` : BigDecimal) : Unit = {
+		this.`else` = `else`
 	}
 
 	@Column(name = "extends")
 	def getExtends : BigDecimal = {
-		this.extends_
+		this.`extends`
 	}
 
-	def setExtends(extends_ : BigDecimal) : Unit = {
-		this.extends_ = extends_
+	def setExtends(`extends` : BigDecimal) : Unit = {
+		this.`extends` = `extends`
 	}
 
 	@Column(name = "false")
 	def getFalse : BigDecimal = {
-		this.false_
+		this.`false`
 	}
 
-	def setFalse(false_ : BigDecimal) : Unit = {
-		this.false_ = false_
+	def setFalse(`false` : BigDecimal) : Unit = {
+		this.`false` = `false`
 	}
 
 	@Column(name = "final")
 	def getFinal : BigDecimal = {
-		this.final_
+		this.`final`
 	}
 
-	def setFinal(final_ : BigDecimal) : Unit = {
-		this.final_ = final_
+	def setFinal(`final` : BigDecimal) : Unit = {
+		this.`final` = `final`
 	}
 
 	@Column(name = "finally")
 	def getFinally : BigDecimal = {
-		this.finally_
+		this.`finally`
 	}
 
-	def setFinally(finally_ : BigDecimal) : Unit = {
-		this.finally_ = finally_
+	def setFinally(`finally` : BigDecimal) : Unit = {
+		this.`finally` = `finally`
 	}
 
 	@Column(name = "for")
 	def getFor : BigDecimal = {
-		this.for_
+		this.`for`
 	}
 
-	def setFor(for_ : BigDecimal) : Unit = {
-		this.for_ = for_
+	def setFor(`for` : BigDecimal) : Unit = {
+		this.`for` = `for`
 	}
 
 	@Column(name = "forSome")
@@ -226,236 +226,236 @@ class TReserved(
 
 	@Column(name = "if")
 	def getIf : BigDecimal = {
-		this.if_
+		this.`if`
 	}
 
-	def setIf(if_ : BigDecimal) : Unit = {
-		this.if_ = if_
+	def setIf(`if` : BigDecimal) : Unit = {
+		this.`if` = `if`
 	}
 
 	@Column(name = "implicit")
 	def getImplicit : BigDecimal = {
-		this.implicit_
+		this.`implicit`
 	}
 
-	def setImplicit(implicit_ : BigDecimal) : Unit = {
-		this.implicit_ = implicit_
+	def setImplicit(`implicit` : BigDecimal) : Unit = {
+		this.`implicit` = `implicit`
 	}
 
 	@Column(name = "import")
 	def getImport : BigDecimal = {
-		this.import_
+		this.`import`
 	}
 
-	def setImport(import_ : BigDecimal) : Unit = {
-		this.import_ = import_
+	def setImport(`import` : BigDecimal) : Unit = {
+		this.`import` = `import`
 	}
 
 	@Column(name = "lazy")
 	def getLazy : BigDecimal = {
-		this.lazy_
+		this.`lazy`
 	}
 
-	def setLazy(lazy_ : BigDecimal) : Unit = {
-		this.lazy_ = lazy_
+	def setLazy(`lazy` : BigDecimal) : Unit = {
+		this.`lazy` = `lazy`
 	}
 
 	@Column(name = "match")
 	def getMatch : BigDecimal = {
-		this.match_
+		this.`match`
 	}
 
-	def setMatch(match_ : BigDecimal) : Unit = {
-		this.match_ = match_
+	def setMatch(`match` : BigDecimal) : Unit = {
+		this.`match` = `match`
 	}
 
 	@Column(name = "new")
 	def getNew : BigDecimal = {
-		this.new_
+		this.`new`
 	}
 
-	def setNew(new_ : BigDecimal) : Unit = {
-		this.new_ = new_
+	def setNew(`new` : BigDecimal) : Unit = {
+		this.`new` = `new`
 	}
 
 	@Column(name = "null")
 	def getNull : BigDecimal = {
-		this.null_
+		this.`null`
 	}
 
-	def setNull(null_ : BigDecimal) : Unit = {
-		this.null_ = null_
+	def setNull(`null` : BigDecimal) : Unit = {
+		this.`null` = `null`
 	}
 
 	@Column(name = "object")
 	def getObject : BigDecimal = {
-		this.object_
+		this.`object`
 	}
 
-	def setObject(object_ : BigDecimal) : Unit = {
-		this.object_ = object_
+	def setObject(`object` : BigDecimal) : Unit = {
+		this.`object` = `object`
 	}
 
 	@Column(name = "override")
 	def getOverride : BigDecimal = {
-		this.override_
+		this.`override`
 	}
 
-	def setOverride(override_ : BigDecimal) : Unit = {
-		this.override_ = override_
+	def setOverride(`override` : BigDecimal) : Unit = {
+		this.`override` = `override`
 	}
 
 	@Column(name = "package")
 	def getPackage : BigDecimal = {
-		this.package_
+		this.`package`
 	}
 
-	def setPackage(package_ : BigDecimal) : Unit = {
-		this.package_ = package_
+	def setPackage(`package` : BigDecimal) : Unit = {
+		this.`package` = `package`
 	}
 
 	@Column(name = "private")
 	def getPrivate : BigDecimal = {
-		this.private_
+		this.`private`
 	}
 
-	def setPrivate(private_ : BigDecimal) : Unit = {
-		this.private_ = private_
+	def setPrivate(`private` : BigDecimal) : Unit = {
+		this.`private` = `private`
 	}
 
 	@Column(name = "protected")
 	def getProtected : BigDecimal = {
-		this.protected_
+		this.`protected`
 	}
 
-	def setProtected(protected_ : BigDecimal) : Unit = {
-		this.protected_ = protected_
+	def setProtected(`protected` : BigDecimal) : Unit = {
+		this.`protected` = `protected`
 	}
 
 	@Column(name = "return")
 	def getReturn : BigDecimal = {
-		this.return_
+		this.`return`
 	}
 
-	def setReturn(return_ : BigDecimal) : Unit = {
-		this.return_ = return_
+	def setReturn(`return` : BigDecimal) : Unit = {
+		this.`return` = `return`
 	}
 
 	@Column(name = "sealed")
 	def getSealed : BigDecimal = {
-		this.sealed_
+		this.`sealed`
 	}
 
-	def setSealed(sealed_ : BigDecimal) : Unit = {
-		this.sealed_ = sealed_
+	def setSealed(`sealed` : BigDecimal) : Unit = {
+		this.`sealed` = `sealed`
 	}
 
 	@Column(name = "super")
 	def getSuper : BigDecimal = {
-		this.super_
+		this.`super`
 	}
 
-	def setSuper(super_ : BigDecimal) : Unit = {
-		this.super_ = super_
+	def setSuper(`super` : BigDecimal) : Unit = {
+		this.`super` = `super`
 	}
 
 	@Column(name = "this")
 	def getThis : BigDecimal = {
-		this.this_
+		this.`this`
 	}
 
-	def setThis(this_ : BigDecimal) : Unit = {
-		this.this_ = this_
+	def setThis(`this` : BigDecimal) : Unit = {
+		this.`this` = `this`
 	}
 
 	@Column(name = "throw")
 	def getThrow : BigDecimal = {
-		this.throw_
+		this.`throw`
 	}
 
-	def setThrow(throw_ : BigDecimal) : Unit = {
-		this.throw_ = throw_
+	def setThrow(`throw` : BigDecimal) : Unit = {
+		this.`throw` = `throw`
 	}
 
 	@Column(name = "trait")
 	def getTrait : BigDecimal = {
-		this.trait_
+		this.`trait`
 	}
 
-	def setTrait(trait_ : BigDecimal) : Unit = {
-		this.trait_ = trait_
+	def setTrait(`trait` : BigDecimal) : Unit = {
+		this.`trait` = `trait`
 	}
 
 	@Column(name = "try")
 	def getTry : BigDecimal = {
-		this.try_
+		this.`try`
 	}
 
-	def setTry(try_ : BigDecimal) : Unit = {
-		this.try_ = try_
+	def setTry(`try` : BigDecimal) : Unit = {
+		this.`try` = `try`
 	}
 
 	@Column(name = "true")
 	def getTrue : BigDecimal = {
-		this.true_
+		this.`true`
 	}
 
-	def setTrue(true_ : BigDecimal) : Unit = {
-		this.true_ = true_
+	def setTrue(`true` : BigDecimal) : Unit = {
+		this.`true` = `true`
 	}
 
 	@Column(name = "type")
 	def getType : BigDecimal = {
-		this.type_
+		this.`type`
 	}
 
-	def setType(type_ : BigDecimal) : Unit = {
-		this.type_ = type_
+	def setType(`type` : BigDecimal) : Unit = {
+		this.`type` = `type`
 	}
 
 	@Column(name = "val")
 	def getVal : BigDecimal = {
-		this.val_
+		this.`val`
 	}
 
-	def setVal(val_ : BigDecimal) : Unit = {
-		this.val_ = val_
+	def setVal(`val` : BigDecimal) : Unit = {
+		this.`val` = `val`
 	}
 
 	@Column(name = "var")
 	def getVar : BigDecimal = {
-		this.var_
+		this.`var`
 	}
 
-	def setVar(var_ : BigDecimal) : Unit = {
-		this.var_ = var_
+	def setVar(`var` : BigDecimal) : Unit = {
+		this.`var` = `var`
 	}
 
 	@Column(name = "while")
 	def getWhile : BigDecimal = {
-		this.while_
+		this.`while`
 	}
 
-	def setWhile(while_ : BigDecimal) : Unit = {
-		this.while_ = while_
+	def setWhile(`while` : BigDecimal) : Unit = {
+		this.`while` = `while`
 	}
 
 	@Column(name = "with")
 	def getWith : BigDecimal = {
-		this.with_
+		this.`with`
 	}
 
-	def setWith(with_ : BigDecimal) : Unit = {
-		this.with_ = with_
+	def setWith(`with` : BigDecimal) : Unit = {
+		this.`with` = `with`
 	}
 
 	@Column(name = "yield")
 	def getYield : BigDecimal = {
-		this.yield_
+		this.`yield`
 	}
 
-	def setYield(yield_ : BigDecimal) : Unit = {
-		this.yield_ = yield_
+	def setYield(`yield` : BigDecimal) : Unit = {
+		this.`yield` = `yield`
 	}
 
 	override def equals(obj : Any) : scala.Boolean = {
@@ -466,77 +466,77 @@ class TReserved(
 		if (getClass() != obj.getClass())
 			return false
 		val other = obj.asInstanceOf[TReserved]
-		if (abstract_ == null) {
-			if (other.abstract_ != null)
+		if (`abstract` == null) {
+			if (other.`abstract` != null)
 				return false
 		}
-		else if (!abstract_.equals(other.abstract_))
+		else if (!`abstract`.equals(other.`abstract`))
 			return false
-		if (case_ == null) {
-			if (other.case_ != null)
+		if (`case` == null) {
+			if (other.`case` != null)
 				return false
 		}
-		else if (!case_.equals(other.case_))
+		else if (!`case`.equals(other.`case`))
 			return false
-		if (catch_ == null) {
-			if (other.catch_ != null)
+		if (`catch` == null) {
+			if (other.`catch` != null)
 				return false
 		}
-		else if (!catch_.equals(other.catch_))
+		else if (!`catch`.equals(other.`catch`))
 			return false
-		if (class_ == null) {
-			if (other.class_ != null)
+		if (`class` == null) {
+			if (other.`class` != null)
 				return false
 		}
-		else if (!class_.equals(other.class_))
+		else if (!`class`.equals(other.`class`))
 			return false
-		if (def_ == null) {
-			if (other.def_ != null)
+		if (`def` == null) {
+			if (other.`def` != null)
 				return false
 		}
-		else if (!def_.equals(other.def_))
+		else if (!`def`.equals(other.`def`))
 			return false
-		if (do_ == null) {
-			if (other.do_ != null)
+		if (`do` == null) {
+			if (other.`do` != null)
 				return false
 		}
-		else if (!do_.equals(other.do_))
+		else if (!`do`.equals(other.`do`))
 			return false
-		if (else_ == null) {
-			if (other.else_ != null)
+		if (`else` == null) {
+			if (other.`else` != null)
 				return false
 		}
-		else if (!else_.equals(other.else_))
+		else if (!`else`.equals(other.`else`))
 			return false
-		if (extends_ == null) {
-			if (other.extends_ != null)
+		if (`extends` == null) {
+			if (other.`extends` != null)
 				return false
 		}
-		else if (!extends_.equals(other.extends_))
+		else if (!`extends`.equals(other.`extends`))
 			return false
-		if (false_ == null) {
-			if (other.false_ != null)
+		if (`false` == null) {
+			if (other.`false` != null)
 				return false
 		}
-		else if (!false_.equals(other.false_))
+		else if (!`false`.equals(other.`false`))
 			return false
-		if (final_ == null) {
-			if (other.final_ != null)
+		if (`final` == null) {
+			if (other.`final` != null)
 				return false
 		}
-		else if (!final_.equals(other.final_))
+		else if (!`final`.equals(other.`final`))
 			return false
-		if (finally_ == null) {
-			if (other.finally_ != null)
+		if (`finally` == null) {
+			if (other.`finally` != null)
 				return false
 		}
-		else if (!finally_.equals(other.finally_))
+		else if (!`finally`.equals(other.`finally`))
 			return false
-		if (for_ == null) {
-			if (other.for_ != null)
+		if (`for` == null) {
+			if (other.`for` != null)
 				return false
 		}
-		else if (!for_.equals(other.for_))
+		else if (!`for`.equals(other.`for`))
 			return false
 		if (forsome == null) {
 			if (other.forsome != null)
@@ -544,161 +544,161 @@ class TReserved(
 		}
 		else if (!forsome.equals(other.forsome))
 			return false
-		if (if_ == null) {
-			if (other.if_ != null)
+		if (`if` == null) {
+			if (other.`if` != null)
 				return false
 		}
-		else if (!if_.equals(other.if_))
+		else if (!`if`.equals(other.`if`))
 			return false
-		if (implicit_ == null) {
-			if (other.implicit_ != null)
+		if (`implicit` == null) {
+			if (other.`implicit` != null)
 				return false
 		}
-		else if (!implicit_.equals(other.implicit_))
+		else if (!`implicit`.equals(other.`implicit`))
 			return false
-		if (import_ == null) {
-			if (other.import_ != null)
+		if (`import` == null) {
+			if (other.`import` != null)
 				return false
 		}
-		else if (!import_.equals(other.import_))
+		else if (!`import`.equals(other.`import`))
 			return false
-		if (lazy_ == null) {
-			if (other.lazy_ != null)
+		if (`lazy` == null) {
+			if (other.`lazy` != null)
 				return false
 		}
-		else if (!lazy_.equals(other.lazy_))
+		else if (!`lazy`.equals(other.`lazy`))
 			return false
-		if (match_ == null) {
-			if (other.match_ != null)
+		if (`match` == null) {
+			if (other.`match` != null)
 				return false
 		}
-		else if (!match_.equals(other.match_))
+		else if (!`match`.equals(other.`match`))
 			return false
-		if (new_ == null) {
-			if (other.new_ != null)
+		if (`new` == null) {
+			if (other.`new` != null)
 				return false
 		}
-		else if (!new_.equals(other.new_))
+		else if (!`new`.equals(other.`new`))
 			return false
-		if (null_ == null) {
-			if (other.null_ != null)
+		if (`null` == null) {
+			if (other.`null` != null)
 				return false
 		}
-		else if (!null_.equals(other.null_))
+		else if (!`null`.equals(other.`null`))
 			return false
-		if (object_ == null) {
-			if (other.object_ != null)
+		if (`object` == null) {
+			if (other.`object` != null)
 				return false
 		}
-		else if (!object_.equals(other.object_))
+		else if (!`object`.equals(other.`object`))
 			return false
-		if (override_ == null) {
-			if (other.override_ != null)
+		if (`override` == null) {
+			if (other.`override` != null)
 				return false
 		}
-		else if (!override_.equals(other.override_))
+		else if (!`override`.equals(other.`override`))
 			return false
-		if (package_ == null) {
-			if (other.package_ != null)
+		if (`package` == null) {
+			if (other.`package` != null)
 				return false
 		}
-		else if (!package_.equals(other.package_))
+		else if (!`package`.equals(other.`package`))
 			return false
-		if (private_ == null) {
-			if (other.private_ != null)
+		if (`private` == null) {
+			if (other.`private` != null)
 				return false
 		}
-		else if (!private_.equals(other.private_))
+		else if (!`private`.equals(other.`private`))
 			return false
-		if (protected_ == null) {
-			if (other.protected_ != null)
+		if (`protected` == null) {
+			if (other.`protected` != null)
 				return false
 		}
-		else if (!protected_.equals(other.protected_))
+		else if (!`protected`.equals(other.`protected`))
 			return false
-		if (return_ == null) {
-			if (other.return_ != null)
+		if (`return` == null) {
+			if (other.`return` != null)
 				return false
 		}
-		else if (!return_.equals(other.return_))
+		else if (!`return`.equals(other.`return`))
 			return false
-		if (sealed_ == null) {
-			if (other.sealed_ != null)
+		if (`sealed` == null) {
+			if (other.`sealed` != null)
 				return false
 		}
-		else if (!sealed_.equals(other.sealed_))
+		else if (!`sealed`.equals(other.`sealed`))
 			return false
-		if (super_ == null) {
-			if (other.super_ != null)
+		if (`super` == null) {
+			if (other.`super` != null)
 				return false
 		}
-		else if (!super_.equals(other.super_))
+		else if (!`super`.equals(other.`super`))
 			return false
-		if (this_ == null) {
-			if (other.this_ != null)
+		if (`this` == null) {
+			if (other.`this` != null)
 				return false
 		}
-		else if (!this_.equals(other.this_))
+		else if (!`this`.equals(other.`this`))
 			return false
-		if (throw_ == null) {
-			if (other.throw_ != null)
+		if (`throw` == null) {
+			if (other.`throw` != null)
 				return false
 		}
-		else if (!throw_.equals(other.throw_))
+		else if (!`throw`.equals(other.`throw`))
 			return false
-		if (trait_ == null) {
-			if (other.trait_ != null)
+		if (`trait` == null) {
+			if (other.`trait` != null)
 				return false
 		}
-		else if (!trait_.equals(other.trait_))
+		else if (!`trait`.equals(other.`trait`))
 			return false
-		if (try_ == null) {
-			if (other.try_ != null)
+		if (`try` == null) {
+			if (other.`try` != null)
 				return false
 		}
-		else if (!try_.equals(other.try_))
+		else if (!`try`.equals(other.`try`))
 			return false
-		if (true_ == null) {
-			if (other.true_ != null)
+		if (`true` == null) {
+			if (other.`true` != null)
 				return false
 		}
-		else if (!true_.equals(other.true_))
+		else if (!`true`.equals(other.`true`))
 			return false
-		if (type_ == null) {
-			if (other.type_ != null)
+		if (`type` == null) {
+			if (other.`type` != null)
 				return false
 		}
-		else if (!type_.equals(other.type_))
+		else if (!`type`.equals(other.`type`))
 			return false
-		if (val_ == null) {
-			if (other.val_ != null)
+		if (`val` == null) {
+			if (other.`val` != null)
 				return false
 		}
-		else if (!val_.equals(other.val_))
+		else if (!`val`.equals(other.`val`))
 			return false
-		if (var_ == null) {
-			if (other.var_ != null)
+		if (`var` == null) {
+			if (other.`var` != null)
 				return false
 		}
-		else if (!var_.equals(other.var_))
+		else if (!`var`.equals(other.`var`))
 			return false
-		if (while_ == null) {
-			if (other.while_ != null)
+		if (`while` == null) {
+			if (other.`while` != null)
 				return false
 		}
-		else if (!while_.equals(other.while_))
+		else if (!`while`.equals(other.`while`))
 			return false
-		if (with_ == null) {
-			if (other.with_ != null)
+		if (`with` == null) {
+			if (other.`with` != null)
 				return false
 		}
-		else if (!with_.equals(other.with_))
+		else if (!`with`.equals(other.`with`))
 			return false
-		if (yield_ == null) {
-			if (other.yield_ != null)
+		if (`yield` == null) {
+			if (other.`yield` != null)
 				return false
 		}
-		else if (!yield_.equals(other.yield_))
+		else if (!`yield`.equals(other.`yield`))
 			return false
 		return true
 	}
@@ -706,45 +706,45 @@ class TReserved(
 	override def hashCode : Int = {
 		val prime = 31
 		var result = 1
-		result = prime * result + (if (abstract_ == null) 0 else abstract_.hashCode())
-		result = prime * result + (if (case_ == null) 0 else case_.hashCode())
-		result = prime * result + (if (catch_ == null) 0 else catch_.hashCode())
-		result = prime * result + (if (class_ == null) 0 else class_.hashCode())
-		result = prime * result + (if (def_ == null) 0 else def_.hashCode())
-		result = prime * result + (if (do_ == null) 0 else do_.hashCode())
-		result = prime * result + (if (else_ == null) 0 else else_.hashCode())
-		result = prime * result + (if (extends_ == null) 0 else extends_.hashCode())
-		result = prime * result + (if (false_ == null) 0 else false_.hashCode())
-		result = prime * result + (if (final_ == null) 0 else final_.hashCode())
-		result = prime * result + (if (finally_ == null) 0 else finally_.hashCode())
-		result = prime * result + (if (for_ == null) 0 else for_.hashCode())
+		result = prime * result + (if (`abstract` == null) 0 else `abstract`.hashCode())
+		result = prime * result + (if (`case` == null) 0 else `case`.hashCode())
+		result = prime * result + (if (`catch` == null) 0 else `catch`.hashCode())
+		result = prime * result + (if (`class` == null) 0 else `class`.hashCode())
+		result = prime * result + (if (`def` == null) 0 else `def`.hashCode())
+		result = prime * result + (if (`do` == null) 0 else `do`.hashCode())
+		result = prime * result + (if (`else` == null) 0 else `else`.hashCode())
+		result = prime * result + (if (`extends` == null) 0 else `extends`.hashCode())
+		result = prime * result + (if (`false` == null) 0 else `false`.hashCode())
+		result = prime * result + (if (`final` == null) 0 else `final`.hashCode())
+		result = prime * result + (if (`finally` == null) 0 else `finally`.hashCode())
+		result = prime * result + (if (`for` == null) 0 else `for`.hashCode())
 		result = prime * result + (if (forsome == null) 0 else forsome.hashCode())
-		result = prime * result + (if (if_ == null) 0 else if_.hashCode())
-		result = prime * result + (if (implicit_ == null) 0 else implicit_.hashCode())
-		result = prime * result + (if (import_ == null) 0 else import_.hashCode())
-		result = prime * result + (if (lazy_ == null) 0 else lazy_.hashCode())
-		result = prime * result + (if (match_ == null) 0 else match_.hashCode())
-		result = prime * result + (if (new_ == null) 0 else new_.hashCode())
-		result = prime * result + (if (null_ == null) 0 else null_.hashCode())
-		result = prime * result + (if (object_ == null) 0 else object_.hashCode())
-		result = prime * result + (if (override_ == null) 0 else override_.hashCode())
-		result = prime * result + (if (package_ == null) 0 else package_.hashCode())
-		result = prime * result + (if (private_ == null) 0 else private_.hashCode())
-		result = prime * result + (if (protected_ == null) 0 else protected_.hashCode())
-		result = prime * result + (if (return_ == null) 0 else return_.hashCode())
-		result = prime * result + (if (sealed_ == null) 0 else sealed_.hashCode())
-		result = prime * result + (if (super_ == null) 0 else super_.hashCode())
-		result = prime * result + (if (this_ == null) 0 else this_.hashCode())
-		result = prime * result + (if (throw_ == null) 0 else throw_.hashCode())
-		result = prime * result + (if (trait_ == null) 0 else trait_.hashCode())
-		result = prime * result + (if (try_ == null) 0 else try_.hashCode())
-		result = prime * result + (if (true_ == null) 0 else true_.hashCode())
-		result = prime * result + (if (type_ == null) 0 else type_.hashCode())
-		result = prime * result + (if (val_ == null) 0 else val_.hashCode())
-		result = prime * result + (if (var_ == null) 0 else var_.hashCode())
-		result = prime * result + (if (while_ == null) 0 else while_.hashCode())
-		result = prime * result + (if (with_ == null) 0 else with_.hashCode())
-		result = prime * result + (if (yield_ == null) 0 else yield_.hashCode())
+		result = prime * result + (if (`if` == null) 0 else `if`.hashCode())
+		result = prime * result + (if (`implicit` == null) 0 else `implicit`.hashCode())
+		result = prime * result + (if (`import` == null) 0 else `import`.hashCode())
+		result = prime * result + (if (`lazy` == null) 0 else `lazy`.hashCode())
+		result = prime * result + (if (`match` == null) 0 else `match`.hashCode())
+		result = prime * result + (if (`new` == null) 0 else `new`.hashCode())
+		result = prime * result + (if (`null` == null) 0 else `null`.hashCode())
+		result = prime * result + (if (`object` == null) 0 else `object`.hashCode())
+		result = prime * result + (if (`override` == null) 0 else `override`.hashCode())
+		result = prime * result + (if (`package` == null) 0 else `package`.hashCode())
+		result = prime * result + (if (`private` == null) 0 else `private`.hashCode())
+		result = prime * result + (if (`protected` == null) 0 else `protected`.hashCode())
+		result = prime * result + (if (`return` == null) 0 else `return`.hashCode())
+		result = prime * result + (if (`sealed` == null) 0 else `sealed`.hashCode())
+		result = prime * result + (if (`super` == null) 0 else `super`.hashCode())
+		result = prime * result + (if (`this` == null) 0 else `this`.hashCode())
+		result = prime * result + (if (`throw` == null) 0 else `throw`.hashCode())
+		result = prime * result + (if (`trait` == null) 0 else `trait`.hashCode())
+		result = prime * result + (if (`try` == null) 0 else `try`.hashCode())
+		result = prime * result + (if (`true` == null) 0 else `true`.hashCode())
+		result = prime * result + (if (`type` == null) 0 else `type`.hashCode())
+		result = prime * result + (if (`val` == null) 0 else `val`.hashCode())
+		result = prime * result + (if (`var` == null) 0 else `var`.hashCode())
+		result = prime * result + (if (`while` == null) 0 else `while`.hashCode())
+		result = prime * result + (if (`with` == null) 0 else `with`.hashCode())
+		result = prime * result + (if (`yield` == null) 0 else `yield`.hashCode())
 		return result
 	}
 }

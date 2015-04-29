@@ -454,14 +454,14 @@ class XUnusedRecord extends UpdatableRecordImpl[XUnusedRecord](XUnused.X_UNUSED)
 	/**
 	 * Create a detached, initialised XUnusedRecord
 	 */
-	def this(id : Integer, name : String, bigInteger : BigInteger, idRef : Integer, class_ : Integer, fields : Integer, configuration : Integer, uDT : Integer, metaData : Integer, type0 : Integer, primaryKey : Integer, primarykey : Integer, nameRef : String, field_737 : BigDecimal, msUnusedIdRef : Integer, msUnusedNameRef : String) = {
+	def this(id : Integer, name : String, bigInteger : BigInteger, idRef : Integer, `class` : Integer, fields : Integer, configuration : Integer, uDT : Integer, metaData : Integer, type0 : Integer, primaryKey : Integer, primarykey : Integer, nameRef : String, field_737 : BigDecimal, msUnusedIdRef : Integer, msUnusedNameRef : String) = {
 		this()
 
 		setValue(0, id)
 		setValue(1, name)
 		setValue(2, bigInteger)
 		setValue(3, idRef)
-		setValue(4, class_)
+		setValue(4, `class`)
 		setValue(5, fields)
 		setValue(6, configuration)
 		setValue(7, uDT)

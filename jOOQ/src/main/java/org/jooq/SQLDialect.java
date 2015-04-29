@@ -295,6 +295,7 @@ public enum SQLDialect {
     private final boolean             commercial;
     private final SQLDialect          family;
     private SQLDialect                predecessor;
+    private final ThirdParty          thirdParty;
 
     private SQLDialect(String name, boolean commercial) {
         this(name, commercial, null, null);
@@ -312,6 +313,8 @@ public enum SQLDialect {
 
         if (family != null)
             family.predecessor = this;
+
+        this.thirdParty = new ThirdParty();
     }
 
     /**
@@ -422,5 +425,112 @@ public enum SQLDialect {
      */
     public static final SQLDialect[] families() {
         return FAMILIES.clone();
+    }
+
+    /**
+     * Get access to third party representations of this {@link SQLDialect}.
+     */
+    public final ThirdParty thirdParty() {
+        return thirdParty;
+    }
+
+    /**
+     * Third party representations of the enclosing {@link SQLDialect}.
+     */
+    public final class ThirdParty {
+
+        /**
+         * The Hibernate dialect name or <code>null</code>, if the dialect is
+         * not supported by Hibernate.
+         * <p>
+         *
+         * @see <a href=
+         *      "http://docs.jboss.org/hibernate/orm/5.0/javadocs/org/hibernate/dialect/package-summary.html">
+         *      http://docs.jboss.org/hibernate/orm/5.0/javadocs/org/hibernate/
+         *      dialect/package-summary.html</a>
+         */
+        public final String hibernateDialect() {
+            switch (SQLDialect.this) {
+                /* [pro] xx
+                xxxx xxxxxxx
+                xxxx xxxxxxxxxxx
+                    xxxxxx xxxxx
+
+                xxxx xxxx
+                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+                xxxx xxxxxx
+                xxxx xxxxxxx
+                xxxx xxxx
+                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+                xxxx xxxxx
+                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+                xxxx xxxxxxxxx
+                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+                xxxx xxxxxxx
+                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+                xxxx xxxxxxxxxx
+                xxxx xxxxxxxxxx
+                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+                xxxx xxxxxxxxxx
+                xxxx xxxxxxx
+                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+                xxxx xxxxxxxxx
+                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+                xxxx xxxxxxxxxxxxxx
+                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+                xxxx xxxxxxxxxxxxxx
+                xxxx xxxxxxxxxxxxxx
+                xxxx xxxxxxxxxx
+                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+                xxxx xxxxxxx
+                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+                xx [/pro] */
+
+                case CUBRID:
+                    return "org.hibernate.dialect.CUBRIDDialect";
+
+                case DERBY:
+                    return "org.hibernate.dialect.DerbyTenSevenDialect";
+
+                case FIREBIRD:
+                    return "org.hibernate.dialect.FirebirdDialect";
+
+                case H2:
+                    return "org.hibernate.dialect.H2Dialect";
+
+                case HSQLDB:
+                    return "org.hibernate.dialect.HSQLDialect";
+
+                case MARIADB:
+                case MYSQL:
+                    return "org.hibernate.dialect.MySQL5Dialect";
+
+                case POSTGRES_9_3:
+                    return "org.hibernate.dialect.PostgreSQL92Dialect";
+
+                case POSTGRES_9_4:
+                case POSTGRES:
+                    return "org.hibernate.dialect.PostgreSQL94Dialect";
+
+                case SQLITE:
+                    return null;
+
+                case DEFAULT:
+                case SQL99:
+                default:
+                    return null;
+            }
+        }
     }
 }

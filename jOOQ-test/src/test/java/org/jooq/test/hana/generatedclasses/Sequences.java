@@ -3,14 +3,20 @@
  */
 package org.jooq.test.hana.generatedclasses;
 
+
+import org.jooq.Sequence;
+import org.jooq.impl.SequenceImpl;
+import org.jooq.test.hana.generatedclasses.Dev_2zuu8jbrepcg8swgl0xwk7ntf;
+
+
 /**
  * Convenience access to all sequences in DEV_2ZUU8JBREPCG8SWGL0XWK7NTF
  */
-@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sequences {
 
 	/**
 	 * The sequence <code>DEV_2ZUU8JBREPCG8SWGL0XWK7NTF.S_AUTHOR_ID</code>
 	 */
-	public static final org.jooq.Sequence<java.lang.Long> S_AUTHOR_ID = new org.jooq.impl.SequenceImpl<java.lang.Long>("S_AUTHOR_ID", org.jooq.test.hana.generatedclasses.Dev_2zuu8jbrepcg8swgl0xwk7ntf.DEV_2ZUU8JBREPCG8SWGL0XWK7NTF, org.jooq.impl.SQLDataType.BIGINT);
+	public static final Sequence<Long> S_AUTHOR_ID = new SequenceImpl<Long>("S_AUTHOR_ID", Dev_2zuu8jbrepcg8swgl0xwk7ntf.DEV_2ZUU8JBREPCG8SWGL0XWK7NTF, org.jooq.impl.SQLDataType.BIGINT);
 }

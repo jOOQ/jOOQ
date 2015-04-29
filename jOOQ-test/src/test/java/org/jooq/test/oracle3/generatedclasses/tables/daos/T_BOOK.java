@@ -17,7 +17,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.pojos.T_BOOK_POJO;
  * An entity holding books
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class T_BOOK extends DAOImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, T_BOOK_POJO, Integer> {
+public class T_BOOK extends DAOImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK, T_BOOK_POJO, Integer> implements Cloneable {
 
 	/**
 	 * Create a new T_BOOK without any configuration

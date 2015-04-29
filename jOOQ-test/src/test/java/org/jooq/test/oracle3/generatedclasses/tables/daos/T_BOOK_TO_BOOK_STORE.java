@@ -16,7 +16,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.pojos.T_BOOK_TO_BOOK_STORE_
  * An m:n relation between books and book stores
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class T_BOOK_TO_BOOK_STORE extends DAOImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_TO_BOOK_STORE, T_BOOK_TO_BOOK_STORE_POJO, Record2<String, Integer>> {
+public class T_BOOK_TO_BOOK_STORE extends DAOImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_TO_BOOK_STORE, T_BOOK_TO_BOOK_STORE_POJO, Record2<String, Integer>> implements Cloneable {
 
 	/**
 	 * Create a new T_BOOK_TO_BOOK_STORE without any configuration

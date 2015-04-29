@@ -15,7 +15,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.pojos.T_BOOK_STORE_POJO;
  * A book store
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class T_BOOK_STORE extends DAOImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE, T_BOOK_STORE_POJO, String> {
+public class T_BOOK_STORE extends DAOImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE, T_BOOK_STORE_POJO, String> implements Cloneable {
 
 	/**
 	 * Create a new T_BOOK_STORE without any configuration

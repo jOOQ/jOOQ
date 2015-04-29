@@ -20,7 +20,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.pojos.X_UNUSED_POJO;
  * "Its comments contain special characters"
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class X_UNUSED extends DAOImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED, X_UNUSED_POJO, Record2<Integer, String>> {
+public class X_UNUSED extends DAOImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED, X_UNUSED_POJO, Record2<Integer, String>> implements Cloneable {
 
 	/**
 	 * Create a new X_UNUSED without any configuration

@@ -21,7 +21,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.pojos.T_LANGUAGE_POJO;
  * Oh, and beware of end-of-javadoc * /
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class T_LANGUAGE extends DAOImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE, T_LANGUAGE_POJO, Integer> {
+public class T_LANGUAGE extends DAOImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE, T_LANGUAGE_POJO, Integer> implements Cloneable {
 
 	/**
 	 * Create a new T_LANGUAGE without any configuration

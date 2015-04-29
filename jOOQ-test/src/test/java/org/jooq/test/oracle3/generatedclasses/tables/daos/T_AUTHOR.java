@@ -17,7 +17,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE;
  * An entity holding authors of books
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class T_AUTHOR extends DAOImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_AUTHOR, T_AUTHOR_POJO, Integer> {
+public class T_AUTHOR extends DAOImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_AUTHOR, T_AUTHOR_POJO, Integer> implements Cloneable {
 
 	/**
 	 * Create a new T_AUTHOR without any configuration

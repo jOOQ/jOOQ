@@ -58,6 +58,7 @@ import static org.jooq.impl.DSL.rank;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.lambda.tuple.Tuple.range;
 import static org.jooq.test.postgres.generatedclasses.Tables.F_ARRAY_TABLES;
 import static org.jooq.test.postgres.generatedclasses.Tables.F_SEARCH_BOOKS;
 import static org.jooq.test.postgres.generatedclasses.Tables.F_TABLES1;
@@ -116,6 +117,7 @@ import java.util.UUID;
 
 import org.jooq.AggregateFunction;
 import org.jooq.ArrayRecord;
+import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -140,6 +142,7 @@ import org.jooq.conf.RenderMapping;
 import org.jooq.conf.RenderNameStyle;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
+import org.jooq.lambda.tuple.Range;
 import org.jooq.test.all.converters.Boolean_10;
 import org.jooq.test.all.converters.Boolean_TF_LC;
 import org.jooq.test.all.converters.Boolean_TF_UC;
@@ -1738,6 +1741,50 @@ public class PostgresTest extends jOOQAbstractTest<
             asList(Date.valueOf("1981-07-10"), Date.valueOf("2000-01-01")),
             asList(into.getDateArray()));
 
+    }
+
+    @Test
+    public void testPostgresRangeTypes() throws Exception {
+        clean(T_EXOTIC_TYPES);
+
+        assertEquals(1,
+            create().insertInto(T_EXOTIC_TYPES)
+                    .columns(T_EXOTIC_TYPES.ID, T_EXOTIC_TYPES.RANGE_INT4)
+                    .values(1, null)
+                    .execute()
+        );
+
+        assertEquals(1,
+            create().insertInto(T_EXOTIC_TYPES)
+                    .columns(T_EXOTIC_TYPES.ID, T_EXOTIC_TYPES.RANGE_INT4)
+                    .values(2, range(1, 5))
+                    .execute()
+        );
+
+        assertEquals(1,
+            create().insertInto(T_EXOTIC_TYPES)
+                    .columns(T_EXOTIC_TYPES.ID, T_EXOTIC_TYPES.RANGE_INT4)
+                    .values(3, range(3, 7))
+                    .execute()
+        );
+
+        Result<TExoticTypesRecord> result1 =
+        create().selectFrom(T_EXOTIC_TYPES)
+                .orderBy(T_EXOTIC_TYPES.ID)
+                .fetch();
+
+        assertEquals(3, result1.size());
+        assertEquals(asList(1, 2, 3), result1.getValues(T_EXOTIC_TYPES.ID));
+        assertEquals(asList(null, range(1, 5), range(3, 7)), result1.getValues(T_EXOTIC_TYPES.RANGE_INT4));
+        assertEquals(range(1, 5), create().fetchValue(
+            select(T_EXOTIC_TYPES.RANGE_INT4)
+            .from(T_EXOTIC_TYPES)
+            .where(rangeOverlaps(T_EXOTIC_TYPES.RANGE_INT4, range(0, 2))))
+        );
+    }
+
+    private static <T extends Comparable<T>> Condition rangeOverlaps(Field<Range<T>> f1, Range<T> f2) {
+        return DSL.condition("range_overlaps({0}, {1})", f1, val(f2, f1.getDataType()));
     }
 
     @Test

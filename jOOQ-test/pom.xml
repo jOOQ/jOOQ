@@ -3336,9 +3336,22 @@
                                                     <type>java.util.Map&lt;String, String></type>
                                                     <binding>org.jooq.test.all.bindings.PostgresHstoreMapBinding</binding>
                                                 </customType>
+                                                
+                                                <!-- [#2968] The PostgreSQL "range" data types -->
+                                                <customType>
+                                                    <name>org.jooq.test.all.bindings.PostgresInt4RangeBinding</name>
+                                                    <type>org.jooq.lambda.tuple.Range&lt;Integer></type>
+                                                    <binding>org.jooq.test.all.bindings.PostgresInt4RangeBinding</binding>
+                                                </customType>
                                             </customTypes>
 
                                             <forcedTypes>
+                                                <!-- [#2968] The PostgreSQL "range" data types -->
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.bindings.PostgresInt4RangeBinding</name>
+                                                    <expression>(?i:(.*?\.)T_EXOTIC_TYPES\.RANGE_INT4)</expression>
+                                                </forcedType>
+                                                
                                             
                                                 <!-- [#2788] The PostgreSQL "json" data type -->
                                                 <forcedType>

@@ -17,7 +17,9 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.impl.TableImpl;
+import org.jooq.lambda.tuple.Range;
 import org.jooq.test.all.bindings.PostgresHstoreMapBinding;
+import org.jooq.test.all.bindings.PostgresInt4RangeBinding;
 import org.jooq.test.all.bindings.PostgresJSONGsonBinding;
 import org.jooq.test.all.bindings.PostgresJSONJacksonBinding;
 import org.jooq.test.all.bindings.PostgresJSONJacksonJsonNodeBinding;
@@ -33,7 +35,7 @@ import org.jooq.test.postgres.generatedclasses.tables.records.TExoticTypesRecord
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes extends TableImpl<TExoticTypesRecord> {
 
-	private static final long serialVersionUID = 490537930;
+	private static final long serialVersionUID = -286861723;
 
 	/**
 	 * The reference instance of <code>public.t_exotic_types</code>
@@ -92,6 +94,26 @@ public class TExoticTypes extends TableImpl<TExoticTypesRecord> {
 	 * The column <code>public.t_exotic_types.hstore_map</code>.
 	 */
 	public final TableField<TExoticTypesRecord, Map<String, String>> HSTORE_MAP = createField("hstore_map", org.jooq.impl.DefaultDataType.getDefaultDataType("USER-DEFINED"), this, "", new PostgresHstoreMapBinding());
+
+	/**
+	 * The column <code>public.t_exotic_types.range_int4</code>.
+	 */
+	public final TableField<TExoticTypesRecord, Range<Integer>> RANGE_INT4 = createField("range_int4", org.jooq.impl.DefaultDataType.getDefaultDataType("int4range"), this, "", new PostgresInt4RangeBinding());
+
+	/**
+	 * The column <code>public.t_exotic_types.range_int8</code>.
+	 */
+	public final TableField<TExoticTypesRecord, Object> RANGE_INT8 = createField("range_int8", org.jooq.impl.DefaultDataType.getDefaultDataType("int8range"), this, "");
+
+	/**
+	 * The column <code>public.t_exotic_types.pg_xml_as_is</code>.
+	 */
+	public final TableField<TExoticTypesRecord, Object> PG_XML_AS_IS = createField("pg_xml_as_is", org.jooq.impl.DefaultDataType.getDefaultDataType("xml"), this, "");
+
+	/**
+	 * The column <code>public.t_exotic_types.pg_xml_as_document</code>.
+	 */
+	public final TableField<TExoticTypesRecord, Object> PG_XML_AS_DOCUMENT = createField("pg_xml_as_document", org.jooq.impl.DefaultDataType.getDefaultDataType("xml"), this, "");
 
 	/**
 	 * Create a <code>public.t_exotic_types</code> table reference

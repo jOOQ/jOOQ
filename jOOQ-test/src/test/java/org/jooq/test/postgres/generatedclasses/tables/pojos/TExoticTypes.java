@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.codehaus.jackson.JsonNode;
+import org.jooq.lambda.tuple.Range;
 import org.jooq.test.all.types.JSONJacksonHelloWorld;
 import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITExoticTypes;
 
@@ -20,7 +21,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITExoticTypes;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes implements ITExoticTypes {
 
-	private static final long serialVersionUID = -529589088;
+	private static final long serialVersionUID = -30516485;
 
 	private final Integer               id;
 	private final UUID                  uu;
@@ -31,6 +32,10 @@ public class TExoticTypes implements ITExoticTypes {
 	private final JsonNode              jsJacksonJsonNode;
 	private final Object                hstore;
 	private final Map<String, String>   hstoreMap;
+	private final Range<Integer>        rangeInt4;
+	private final Object                rangeInt8;
+	private final Object                pgXmlAsIs;
+	private final Object                pgXmlAsDocument;
 
 	public TExoticTypes(TExoticTypes value) {
 		this.id = value.id;
@@ -42,6 +47,10 @@ public class TExoticTypes implements ITExoticTypes {
 		this.jsJacksonJsonNode = value.jsJacksonJsonNode;
 		this.hstore = value.hstore;
 		this.hstoreMap = value.hstoreMap;
+		this.rangeInt4 = value.rangeInt4;
+		this.rangeInt8 = value.rangeInt8;
+		this.pgXmlAsIs = value.pgXmlAsIs;
+		this.pgXmlAsDocument = value.pgXmlAsDocument;
 	}
 
 	public TExoticTypes(
@@ -53,7 +62,11 @@ public class TExoticTypes implements ITExoticTypes {
 		JSONJacksonHelloWorld jsJackson,
 		JsonNode              jsJacksonJsonNode,
 		Object                hstore,
-		Map<String, String>   hstoreMap
+		Map<String, String>   hstoreMap,
+		Range<Integer>        rangeInt4,
+		Object                rangeInt8,
+		Object                pgXmlAsIs,
+		Object                pgXmlAsDocument
 	) {
 		this.id = id;
 		this.uu = uu;
@@ -64,6 +77,10 @@ public class TExoticTypes implements ITExoticTypes {
 		this.jsJacksonJsonNode = jsJacksonJsonNode;
 		this.hstore = hstore;
 		this.hstoreMap = hstoreMap;
+		this.rangeInt4 = rangeInt4;
+		this.rangeInt8 = rangeInt8;
+		this.pgXmlAsIs = pgXmlAsIs;
+		this.pgXmlAsDocument = pgXmlAsDocument;
 	}
 
 	@Override
@@ -109,5 +126,25 @@ public class TExoticTypes implements ITExoticTypes {
 	@Override
 	public Map<String, String> getHstoreMap() {
 		return this.hstoreMap;
+	}
+
+	@Override
+	public Range<Integer> getRangeInt4() {
+		return this.rangeInt4;
+	}
+
+	@Override
+	public Object getRangeInt8() {
+		return this.rangeInt8;
+	}
+
+	@Override
+	public Object getPgXmlAsIs() {
+		return this.pgXmlAsIs;
+	}
+
+	@Override
+	public Object getPgXmlAsDocument() {
+		return this.pgXmlAsDocument;
 	}
 }

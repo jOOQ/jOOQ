@@ -480,6 +480,9 @@ CREATE TABLE t_exotic_types (
   HSTORE                 HSTORE,
   HSTORE_MAP             HSTORE,
   
+  RANGE_INT4             INT4RANGE,
+  RANGE_INT8             INT8RANGE,
+  
   PG_XML_AS_IS           XML,
   PG_XML_AS_DOCUMENT     XML,
 

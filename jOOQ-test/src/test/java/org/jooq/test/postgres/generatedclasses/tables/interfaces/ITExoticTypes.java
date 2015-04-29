@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.codehaus.jackson.JsonNode;
+import org.jooq.lambda.tuple.Range;
 import org.jooq.test.all.types.JSONJacksonHelloWorld;
 
 
@@ -64,4 +65,24 @@ public interface ITExoticTypes extends Serializable {
 	 * Getter for <code>public.t_exotic_types.hstore_map</code>.
 	 */
 	public Map<String, String> getHstoreMap();
+
+	/**
+	 * Getter for <code>public.t_exotic_types.range_int4</code>.
+	 */
+	public Range<Integer> getRangeInt4();
+
+	/**
+	 * Getter for <code>public.t_exotic_types.range_int8</code>.
+	 */
+	public Object getRangeInt8();
+
+	/**
+	 * Getter for <code>public.t_exotic_types.pg_xml_as_is</code>.
+	 */
+	public Object getPgXmlAsIs();
+
+	/**
+	 * Getter for <code>public.t_exotic_types.pg_xml_as_document</code>.
+	 */
+	public Object getPgXmlAsDocument();
 }

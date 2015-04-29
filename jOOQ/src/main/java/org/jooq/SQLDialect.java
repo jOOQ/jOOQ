@@ -440,6 +440,36 @@ public enum SQLDialect {
     public final class ThirdParty {
 
         /**
+         * The Spring DB name or <code>null</code>, if the db name is not
+         * supported by Spring.
+         * <p>
+         * The name returned by this method corresponds to the DB id as
+         * referenced in
+         * <code>org/springframework/jdbc/support/sql-error-codes.xml</code>
+         */
+        public final String springDbName() {
+            switch (SQLDialect.this.family) {
+                /* [pro] xx
+                xxxx xxxx       xxxxxx xxxxxxxxx
+                xxxx xxxx       xxxxxx xxxxxx
+                xxxx xxxxx      xxxxxx xxxxxxx
+                xxxx xxxxxxxxx  xxxxxx xxxxxxxxxxx
+                xxxx xxxxxxx    xxxxxx xxxxxxxxx
+                xxxx xxxxxxxxxx xxxxxx xxxxxxxxx
+                xx [/pro] */
+
+                case DERBY:     return "Derby";
+                case H2:        return "H2";
+                case HSQLDB:    return "HSQL";
+                case MARIADB:
+                case MYSQL:     return "MySQL";
+                case POSTGRES:  return "PostgreSQL";
+
+                default:        return null;
+            }
+        }
+
+        /**
          * The Hibernate dialect name or <code>null</code>, if the dialect is
          * not supported by Hibernate.
          * <p>
@@ -453,83 +483,39 @@ public enum SQLDialect {
             switch (SQLDialect.this) {
                 /* [pro] xx
                 xxxx xxxxxxx
-                xxxx xxxxxxxxxxx
-                    xxxxxx xxxxx
-
-                xxxx xxxx
-                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
+                xxxx xxxxxxxxxxx    xxxxxx xxxxx
+                xxxx xxxx           xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                 xxxx xxxxxx
                 xxxx xxxxxxx
-                xxxx xxxx
-                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-                xxxx xxxxx
-                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-                xxxx xxxxxxxxx
-                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-                xxxx xxxxxxx
-                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
+                xxxx xxxx           xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxx xxxxx          xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxx xxxxxxxxx      xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxx xxxxxxx        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                 xxxx xxxxxxxxxx
+                xxxx xxxxxxxxxx     xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                 xxxx xxxxxxxxxx
-                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-                xxxx xxxxxxxxxx
-                xxxx xxxxxxx
-                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-                xxxx xxxxxxxxx
-                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-                xxxx xxxxxxxxxxxxxx
-                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
+                xxxx xxxxxxx        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxx xxxxxxxxx      xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxx xxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                 xxxx xxxxxxxxxxxxxx
                 xxxx xxxxxxxxxxxxxx
-                xxxx xxxxxxxxxx
-                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-                xxxx xxxxxxx
-                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
+                xxxx xxxxxxxxxx     xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxx xxxxxxx        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                 xx [/pro] */
 
-                case CUBRID:
-                    return "org.hibernate.dialect.CUBRIDDialect";
-
-                case DERBY:
-                    return "org.hibernate.dialect.DerbyTenSevenDialect";
-
-                case FIREBIRD:
-                    return "org.hibernate.dialect.FirebirdDialect";
-
-                case H2:
-                    return "org.hibernate.dialect.H2Dialect";
-
-                case HSQLDB:
-                    return "org.hibernate.dialect.HSQLDialect";
-
+                case CUBRID:        return "org.hibernate.dialect.CUBRIDDialect";
+                case DERBY:         return "org.hibernate.dialect.DerbyTenSevenDialect";
+                case FIREBIRD:      return "org.hibernate.dialect.FirebirdDialect";
+                case H2:            return "org.hibernate.dialect.H2Dialect";
+                case HSQLDB:        return "org.hibernate.dialect.HSQLDialect";
                 case MARIADB:
-                case MYSQL:
-                    return "org.hibernate.dialect.MySQL5Dialect";
-
-                case POSTGRES_9_3:
-                    return "org.hibernate.dialect.PostgreSQL92Dialect";
-
+                case MYSQL:         return "org.hibernate.dialect.MySQL5Dialect";
+                case POSTGRES_9_3:  return "org.hibernate.dialect.PostgreSQL92Dialect";
                 case POSTGRES_9_4:
-                case POSTGRES:
-                    return "org.hibernate.dialect.PostgreSQL94Dialect";
+                case POSTGRES:      return "org.hibernate.dialect.PostgreSQL94Dialect";
+                case SQLITE:        return null;
 
-                case SQLITE:
-                    return null;
-
-                case DEFAULT:
-                case SQL99:
-                default:
-                    return null;
+                default:            return null;
             }
         }
     }

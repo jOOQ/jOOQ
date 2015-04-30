@@ -4,6 +4,8 @@
 package org.jooq.test.postgres.generatedclasses;
 
 
+import java.sql.Date;
+
 import org.jooq.AggregateFunction;
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -26,6 +28,7 @@ import org.jooq.test.postgres.generatedclasses.routines.PArrays3;
 import org.jooq.test.postgres.generatedclasses.routines.PAuthorExists;
 import org.jooq.test.postgres.generatedclasses.routines.PCreateAuthor;
 import org.jooq.test.postgres.generatedclasses.routines.PCreateAuthorByName;
+import org.jooq.test.postgres.generatedclasses.routines.PDefault;
 import org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress1;
 import org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress2;
 import org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress3;
@@ -434,6 +437,19 @@ public class Routines {
 		p.setLastName(lastName);
 
 		p.execute(configuration);
+	}
+
+	/**
+	 * Call <code>public.p_default</code>
+	 */
+	public static PDefault pDefault(Configuration configuration, Integer pInNumber, String pInVarchar, Date pInDate) {
+		PDefault p = new PDefault();
+		p.setPInNumber(pInNumber);
+		p.setPInVarchar(pInVarchar);
+		p.setPInDate(pInDate);
+
+		p.execute(configuration);
+		return p;
 	}
 
 	/**

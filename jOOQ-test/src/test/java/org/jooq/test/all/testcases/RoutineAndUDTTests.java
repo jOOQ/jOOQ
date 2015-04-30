@@ -51,7 +51,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeNotNull;
-import static org.junit.Assume.assumeTrue;
 
 import java.sql.Date;
 import java.util.Arrays;
@@ -345,7 +344,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         try {
             pdefault = Reflect.on(cRoutines().getPackage().getName() + ".routines.PDefault");
 
-            assumeTrue(pdefault.field("P_IN_NUMBER").call("isDefaulted").<Boolean>get());
+            assertTrue(pdefault.field("P_IN_NUMBER").call("isDefaulted").<Boolean>get());
         }
         catch (ReflectException e) {
             log.info("SKIPPING", "procedure tests with default parameters");
@@ -358,6 +357,22 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(0, executedWithDefaults.call("getPOutNumber").<Number>get().intValue());
         assertEquals("0", executedWithDefaults.call("getPOutVarchar").get());
         assertEquals(Date.valueOf("1981-07-10"), executedWithDefaults.call("getPOutDate").get());
+
+        // Call with some values provided
+        Reflect executedWithSomeDefaults1 = pdefault.create();
+        executedWithSomeDefaults1.call("setPInNumber", 456);
+        executedWithSomeDefaults1.call("execute", create().configuration());
+        assertEquals(456, executedWithSomeDefaults1.call("getPOutNumber").<Number>get().intValue());
+        assertEquals("0", executedWithSomeDefaults1.call("getPOutVarchar").get());
+        assertEquals(Date.valueOf("1981-07-10"), executedWithSomeDefaults1.call("getPOutDate").get());
+
+        // Call with some values provided
+        Reflect executedWithSomeDefaults2 = pdefault.create();
+        executedWithSomeDefaults2.call("setPInVarchar", "xyz");
+        executedWithSomeDefaults2.call("execute", create().configuration());
+        assertEquals(0, executedWithSomeDefaults2.call("getPOutNumber").<Number>get().intValue());
+        assertEquals("xyz", executedWithSomeDefaults2.call("getPOutVarchar").get());
+        assertEquals(Date.valueOf("1981-07-10"), executedWithSomeDefaults2.call("getPOutDate").get());
 
         // Call with all values provided
         Reflect executedWithoutDefault = pdefault.create();

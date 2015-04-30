@@ -5,6 +5,10 @@ DROP VIEW IF EXISTS v_library/
 DROP VIEW IF EXISTS v_author/
 DROP VIEW IF EXISTS v_book/
 
+DROP FUNCTION p_default (
+  p_in_number IN INTEGER, p_out_number OUT INTEGER, 
+  p_in_varchar IN  VARCHAR(50), p_out_varchar OUT VARCHAR(50),
+  p_in_date IN DATE, p_out_date OUT DATE)/
 DROP AGGREGATE second_max(INTEGER)/
 DROP FUNCTION second_max_sfunc (state INTEGER[], data INTEGER)/
 DROP FUNCTION second_max_ffunc (state INTEGER[])/
@@ -972,4 +976,22 @@ CREATE AGGREGATE second_max (INTEGER) (
     STYPE     = INTEGER[],
     FINALFUNC = second_max_ffunc
 );
+/
+
+CREATE FUNCTION p_default (
+  p_in_number   IN  INTEGER     = 0,
+  p_out_number  OUT INTEGER,
+  p_in_varchar  IN  VARCHAR(50) = '0',
+  p_out_varchar OUT VARCHAR(50),
+  p_in_date     IN  DATE        = date '1981-07-10',
+  p_out_date    OUT DATE
+)
+AS
+$$
+BEGIN
+    p_out_number := p_in_number;
+    p_out_varchar := p_in_varchar;
+    p_out_date := p_in_date;
+END;
+$$ LANGUAGE plpgsql;
 /

@@ -47,7 +47,9 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DSL.val;
@@ -84,6 +86,7 @@ import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.Routine;
+import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.UDTField;
 import org.jooq.exception.ControlFlowSignal;
@@ -263,15 +266,24 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
     @Override
     public final int execute() {
+        SQLDialect family = configuration.family();
+
         results.clear();
         outValues.clear();
 
+        // [#4254] In PostgreSQL, there are only functions, no procedures. Some
+        // functions cannot be called using a CallableStatement, e.g. those with
+        // DEFAULT parameters
+        if (family == POSTGRES) {
+            return executeSelectFromPOSTGRES();
+        }
+
         // Procedures (no return value) are always executed as CallableStatement
-        if (type == null) {
+        else if (type == null) {
             return executeCallableStatement();
         }
         else {
-            switch (configuration.dialect().family()) {
+            switch (family) {
 
                 // [#852] Some RDBMS don't allow for using JDBC procedure escape
                 // syntax for functions. Select functions from DUAL instead
@@ -280,7 +292,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                     // [#692] HSQLDB cannot SELECT f() FROM [...] when f()
                     // returns a cursor. Instead, SELECT * FROM table(f()) works
                     if (SQLDataType.RESULT.equals(type.getSQLDataType())) {
-                        return executeSelectFrom();
+                        return executeSelectFromHSQLDB();
                     }
 
                     // Fall through
@@ -306,10 +318,24 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         }
     }
 
-    private final int executeSelectFrom() {
+    private final int executeSelectFromHSQLDB() {
         DSLContext create = create(configuration);
         Result<?> result = create.selectFrom(table(asField())).fetch();
         outValues.put(returnParameter, result);
+        return 0;
+    }
+
+    private final int executeSelectFromPOSTGRES() {
+        DSLContext create = create(configuration);
+        Result<?> result = create.select().from("{0}", asField()).fetch();
+
+        int i = 0;
+
+        if (returnParameter != null)
+            outValues.put(returnParameter, returnParameter.getDataType().convert(result.getValue(0, i++)));
+        for (Parameter<?> p : outParameters)
+            outValues.put(p, p.getDataType().convert(result.getValue(0, i++)));
+
         return 0;
     }
 
@@ -469,15 +495,8 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
             // IN parameters are rendered normally
             else {
-                Field<?> value = getInValues().get(parameter);
-
-                // Disambiguate overloaded procedure signatures
-                if (POSTGRES == context.family() && isOverloaded()) {
-                    value = value.cast(parameter.getType());
-                }
-
                 context.sql(separator);
-                toSQLInParam(context, parameter, value);
+                toSQLInParam(context, parameter, getInValues().get(parameter));
             }
 
             separator = ", ";
@@ -858,9 +877,16 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
          */
         private static final long serialVersionUID = -5730297947647252624L;
 
+        @SuppressWarnings("unchecked")
         RoutineField() {
             super(AbstractRoutine.this.getName(),
-                  AbstractRoutine.this.type);
+                  AbstractRoutine.this.type == null
+
+                  // [#4254] PostgreSQL may have stored functions that don't
+                  // declare an explicit return type. Those function's return
+                  // type is in fact a RECORD type, consisting of OUT paramterers
+                  ? (DataType<T>) SQLDataType.RESULT
+                  : AbstractRoutine.this.type);
         }
 
         @Override
@@ -868,23 +894,25 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             RenderContext local = create(ctx).renderContext();
             toSQLQualifiedName(local);
 
-            Field<?>[] array = new Field<?>[getInParameters().size()];
+            List<Field<?>> fields = new ArrayList<Field<?>>();
+            for (Parameter<?> parameter : getInParameters()) {
 
-            int i = 0;
-            for (Parameter<?> p : getInParameters()) {
+                // [#1183] [#3533] Skip defaulted parameters
+                if (inValuesDefaulted.contains(parameter))
+                    continue;
 
                 // Disambiguate overloaded function signatures
-                if (POSTGRES == ctx.family() && isOverloaded()) {
-                    array[i] = getInValues().get(p).cast(p.getType());
-                }
-                else {
-                    array[i] = getInValues().get(p);
-                }
-
-                i++;
+                if (ctx.family() == POSTGRES)
+                    if (isOverloaded())
+                        fields.add(field("{0} := {1}", name(parameter.getName()), getInValues().get(parameter).cast(parameter.getType())));
+                    else
+                        fields.add(field("{0} := {1}", name(parameter.getName()), getInValues().get(parameter)));
+                else
+                    fields.add(getInValues().get(parameter));
             }
 
-            Field<T> result = function(local.render(), getDataType(), array);
+            Field<T> result = function(local.render(), getDataType(), fields.toArray(new Field[fields.size()]));
+
 
             // [#3592] Decrease SQL -> PL/SQL context switches with Oracle Scalar Subquery Caching
             if (TRUE.equals(settings(ctx.configuration()).isRenderScalarSubqueriesForStoredFunctions())) {

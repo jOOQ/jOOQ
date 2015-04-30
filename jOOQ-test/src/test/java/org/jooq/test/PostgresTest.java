@@ -106,9 +106,7 @@ import static org.junit.Assert.assertNull;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -1789,11 +1787,11 @@ public class PostgresTest extends jOOQAbstractTest<
 
     @Test
     public void testXML() throws SQLException {
-        Statement s = connection.createStatement();
-        s.executeUpdate("insert into t_exotic_types(id, pg_xml_as_is) values(1, '<a><b/></a>'::xml)");
-
-        ResultSet rs = s.executeQuery("select PG_XML_AS_IS from t_exotic_types");
-        rs.next();
-        System.out.println(rs.getSQLXML(1).getString());
+//        Statement s = connection.createStatement();
+//        s.executeUpdate("insert into t_exotic_types(id, pg_xml_as_is) values(1, '<a><b/></a>'::xml)");
+//
+//        ResultSet rs = s.executeQuery("select PG_XML_AS_IS from t_exotic_types");
+//        rs.next();
+//        System.out.println(rs.getSQLXML(1).getString());
     }
 }

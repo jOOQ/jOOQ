@@ -422,6 +422,7 @@ CREATE TABLE t_arrays (
   number_array INTEGER[],
   date_array DATE[],
   udt_array u_street_type[],
+  address_array u_address_type[],
   enum_array u_country[],
   array_array INTEGER[][],
   number_list VARCHAR(20)[],

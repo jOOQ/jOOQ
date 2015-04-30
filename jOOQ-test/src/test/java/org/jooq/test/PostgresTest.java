@@ -186,6 +186,7 @@ import org.jooq.test.postgres.generatedclasses.tables.records.VLibraryRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord;
 import org.jooq.test.postgres.generatedclasses.udt.UAddressType;
 import org.jooq.test.postgres.generatedclasses.udt.UStreetType;
+import org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord;
 import org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord;
 import org.jooq.test.postgres.generatedclasses.udt.records.UUuidsRecord;
 import org.jooq.types.UByte;
@@ -1286,7 +1287,7 @@ public class PostgresTest extends jOOQAbstractTest<
 
         // [#3778] Be sure that all settings are applied to explicit casts to
         // PostgreSQL enum array types
-        assertEquals("ARRAY['England']::\"public\".\"u_country\"[]", create().renderInlined(array));
+        assertEquals("'{\"England\"}'", create().renderInlined(array));
         assertEquals("?::\"public\".\"u_country\"[]",
             create().render(array));
         assertEquals("?::\"u_country\"[]",
@@ -1533,16 +1534,31 @@ public class PostgresTest extends jOOQAbstractTest<
         record = create().newRecord(T_ARRAYS);
         record.setId(1);
         record.setUdtArray(null);
+        record.setAddressArray(null);
         assertEquals(1, record.insert());
 
         record = create().newRecord(T_ARRAYS);
         record.setId(2);
         record.setUdtArray(new UStreetTypeRecord[0]);
+        record.setAddressArray(new UAddressTypeRecord[0]);
         assertEquals(1, record.insert());
 
         record = create().newRecord(T_ARRAYS);
         record.setId(3);
-        record.setUdtArray(new UStreetTypeRecord[] { new UStreetTypeRecord("A", "B", new Integer[] { 1, 2 }, "abc".getBytes()) });
+        record.setUdtArray(new UStreetTypeRecord[2]);
+        record.setAddressArray(new UAddressTypeRecord[2]);
+        assertEquals(1, record.insert());
+
+        record = create().newRecord(T_ARRAYS);
+        record.setId(4);
+        record.setUdtArray(new UStreetTypeRecord[] {
+            new UStreetTypeRecord(),
+            new UStreetTypeRecord("X", "Y", new Integer[] { 1, 2 }, "xyz".getBytes()),
+        });
+        record.setAddressArray(new UAddressTypeRecord[] {
+            new UAddressTypeRecord(),
+            new UAddressTypeRecord(new UStreetTypeRecord("A", "B", new Integer[] { 1, 2 }, "abc".getBytes()), "zip", "city", UCountry.England, Date.valueOf("1999-12-31"), 1, "xyz".getBytes())
+        });
         assertEquals(1, record.insert());
 
         Result<TArraysRecord> result =
@@ -1550,10 +1566,23 @@ public class PostgresTest extends jOOQAbstractTest<
                 .orderBy(T_ARRAYS.ID)
                 .fetch();
 
-        assertEquals(asList(1, 2, 3), result.getValues(T_ARRAYS.ID));
+        assertEquals(asList(1, 2, 3, 4), result.getValues(T_ARRAYS.ID));
         assertNull(result.get(0).getUdtArray());
+        assertNull(result.get(0).getAddressArray());
+
         assertEquals(0, result.get(1).getUdtArray().length);
-        assertEquals(1, result.get(2).getUdtArray().length);
+        assertEquals(0, result.get(1).getAddressArray().length);
+
+        assertEquals(2, result.get(2).getUdtArray().length);
+        assertNull(result.get(2).getUdtArray()[0]);
+        assertNull(result.get(2).getUdtArray()[1]);
+        assertEquals(2, result.get(2).getAddressArray().length);
+        assertNull(result.get(2).getAddressArray()[0]);
+        assertNull(result.get(2).getAddressArray()[1]);
+
+        assertEquals(2, result.get(3).getUdtArray().length);
+        assertEquals(new UStreetTypeRecord(), result.get(3).getUdtArray()[0]);
+        assertEquals(new UStreetTypeRecord("X", "Y", new Integer[] { 1, 2 }, "xyz".getBytes()), result.get(3).getUdtArray()[1]);
     }
 
     @Test

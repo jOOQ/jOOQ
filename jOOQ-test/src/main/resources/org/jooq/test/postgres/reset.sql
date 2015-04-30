@@ -55,10 +55,10 @@ INSERT INTO t_book_to_book_store VALUES ('Ex Libris', 1, 1)/
 INSERT INTO t_book_to_book_store VALUES ('Ex Libris', 3, 2)/
 INSERT INTO t_book_to_book_store VALUES ('Buchhandlung im Volkshaus', 3, 1)/
 
-INSERT INTO t_arrays VALUES (1, null, null, null, null, null, null)/
-INSERT INTO t_arrays VALUES (2, '{}', '{}', '{}', '{}', '{}', '{}')/
-INSERT INTO t_arrays VALUES (3, '{"a"}', '{1}', ARRAY[TO_DATE('1981-07-10', 'YYYY-MM-DD')], ARRAY[ROW('Downing Street', '10', null, E'\\x6969')]::u_street_type[], '{"England"}', ARRAY[ARRAY[1]])/
-INSERT INTO t_arrays VALUES (4, '{"a", "b"}', '{1, 2}', ARRAY[TO_DATE('1981-07-10', 'YYYY-MM-DD'), TO_DATE('2000-01-01', 'YYYY-MM-DD')], ARRAY[ROW('Downing Street', '10', '{}', E'\\x6969'), ROW('Bahnhofstrasse', '12', '{1, 2}', E'\\x6969')]::u_street_type[], '{"England", "Germany"}', ARRAY[ARRAY[1], ARRAY[2]])/
+INSERT INTO t_arrays VALUES (1, null, null, null, null, null, null, null)/
+INSERT INTO t_arrays VALUES (2, '{}', '{}', '{}', '{}', '{}', '{}', '{}')/
+INSERT INTO t_arrays VALUES (3, '{"a"}', '{1}', ARRAY[TO_DATE('1981-07-10', 'YYYY-MM-DD')], ARRAY[ROW('Downing Street', '10', null, E'\\x6969')]::u_street_type[], ARRAY[ROW(ROW('Downing Street', '10', null, E'\\x6969'), 1234, 'London', 'England', '1990-01-01', 13, E'\\x6969')]::u_address_type[], '{"England"}', ARRAY[ARRAY[1]])/
+INSERT INTO t_arrays VALUES (4, '{"a", "b"}', '{1, 2}', ARRAY[TO_DATE('1981-07-10', 'YYYY-MM-DD'), TO_DATE('2000-01-01', 'YYYY-MM-DD')], ARRAY[ROW('Downing Street', '10', '{}', E'\\x6969'), ROW('Bahnhofstrasse', '12', '{1, 2}', E'\\x6969')]::u_street_type[], ARRAY[ROW(ROW('Downing Street', '10', null, E'\\x6969'), 1234, 'London', 'England', '1990-01-01', 13, E'\\x6969'), ROW(ROW('Bahnhofstrasse', '12', '{1, 2}', E'\\x6969'), 1234, 'London', 'England', '1990-01-01', 13, E'\\x6969')]::u_address_type[], '{"England", "Germany"}', ARRAY[ARRAY[1], ARRAY[2]])/
 
 INSERT INTO t_inheritance_1_1 VALUES ('1', '1')/
 INSERT INTO t_inheritance_1   VALUES ('2')/

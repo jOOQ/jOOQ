@@ -41,7 +41,6 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
-import static java.lang.Integer.toOctalString;
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ASE;
@@ -62,11 +61,11 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.impl.Utils.needsBackslashEscaping;
-import static org.jooq.tools.StringUtils.leftPad;
 import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
 import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
 import static org.jooq.tools.jdbc.JDBCUtils.wasNull;
@@ -479,7 +478,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 }
                 else if (family == POSTGRES) {
                     render.sql("E'")
-                          .sql(convertBytesToPostgresOctal(binary))
+                          .sql(PostgresUtils.toPGString(binary))
                           .keyword("'::bytea");
                 }
 
@@ -631,6 +630,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     render.sql(')');
                 }
 
+                else if (family == POSTGRES) {
+                    render.visit(inline(PostgresUtils.toPGArrayString((Object[]) val)));
+                }
+
                 // By default, render HSQLDB / POSTGRES syntax
                 else {
                     render.keyword("ARRAY");
@@ -745,22 +748,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             buff[i + i + 1] = hex[c & 0xf];
         }
         return new String(buff);
-    }
-
-    /**
-     * Postgres uses octals instead of hex encoding
-     */
-    private static final String convertBytesToPostgresOctal(byte[] binary) {
-        StringBuilder sb = new StringBuilder();
-
-        for (byte b : binary) {
-
-            // [#3924] Beware of signed vs unsigned bytes!
-            sb.append("\\\\");
-            sb.append(leftPad(toOctalString(b & 0x000000ff), 3, '0'));
-        }
-
-        return sb.toString();
     }
 
     @Override

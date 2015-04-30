@@ -40,6 +40,8 @@
  */
 package org.jooq.util.postgres;
 
+import static java.lang.Integer.toOctalString;
+import static org.jooq.tools.StringUtils.leftPad;
 import static org.jooq.tools.reflect.Reflect.on;
 
 import java.io.ByteArrayOutputStream;
@@ -50,6 +52,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.Record;
 import org.jooq.exception.DataTypeException;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.types.DayToSecond;
@@ -420,19 +423,81 @@ public class PostgresUtils {
             sb.append(separator);
 
             // [#753] null must be set as a literal
-            if (o == null) {
+            if (o == null)
                 sb.append(o);
-            }
-            else {
-                sb.append("\"");
-                sb.append(o.toString().replace("\\", "\\\\").replace("\"", "\\\""));
-                sb.append("\"");
-            }
+            else if (o instanceof byte[])
+                sb.append(toPGString((byte[]) o));
+            else
+                sb.append("\"")
+                  .append(toPGString(o).replace("\\", "\\\\").replace("\"", "\\\""))
+                  .append("\"");
 
-            separator = ", ";
+            separator = ",";
         }
 
         sb.append("}");
+        return sb.toString();
+    }
+
+    /**
+     * Create a PostgreSQL string representation of any object.
+     */
+    public static String toPGString(Object o) {
+        if (o instanceof byte[]) {
+            return toPGString((byte[]) o);
+        }
+        else if (o instanceof Object[]) {
+            return toPGArrayString((Object[]) o);
+        }
+        else if (o instanceof Record) {
+            return toPGString((Record) o);
+        }
+        else {
+            return "" + o;
+        }
+    }
+
+    /**
+     * Create a PostgreSQL string representation of a record.
+     */
+    public static String toPGString(Record r) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("(");
+
+        String separator = "";
+        for (Object a : r.intoArray()) {
+            sb.append(separator);
+
+            // [#753] null must not be set as a literal
+            if (a != null) {
+                if (a instanceof byte[])
+                    sb.append(toPGString((byte[]) a));
+                else
+                    sb.append("\"")
+                      .append(toPGString(a).replace("\\", "\\\\").replace("\"", "\\\""))
+                      .append("\"");
+            }
+
+            separator = ",";
+        }
+
+        sb.append(")");
+        return sb.toString();
+    }
+
+    /**
+     * Create a PostgreSQL string representation of a binary.
+     */
+    public static String toPGString(byte[] binary) {
+        StringBuilder sb = new StringBuilder();
+
+        for (byte b : binary) {
+
+            // [#3924] Beware of signed vs unsigned bytes!
+            sb.append("\\\\");
+            sb.append(leftPad(toOctalString(b & 0x000000ff), 3, '0'));
+        }
+
         return sb.toString();
     }
 }

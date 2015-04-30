@@ -110,7 +110,8 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
                 PARAMETERS.NUMERIC_SCALE,
                 PARAMETERS.UDT_NAME,
                 PARAMETERS.ORDINAL_POSITION,
-                PARAMETERS.PARAMETER_MODE)
+                PARAMETERS.PARAMETER_MODE,
+                PARAMETERS.PARAMETER_DEFAULT)
             .from(PARAMETERS)
             .where(PARAMETERS.SPECIFIC_SCHEMA.equal(getSchema().getName()))
             .and(PARAMETERS.SPECIFIC_NAME.equal(specificName))
@@ -127,7 +128,7 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
                 record.getValue(PARAMETERS.NUMERIC_PRECISION),
                 record.getValue(PARAMETERS.NUMERIC_SCALE),
                 null,
-                null,
+                record.getValue(PARAMETERS.PARAMETER_DEFAULT) != null,
                 record.getValue(PARAMETERS.UDT_NAME)
             );
 
@@ -135,7 +136,8 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
                 this,
                 record.getValue(PARAMETERS.PARAMETER_NAME),
                 record.getValue(PARAMETERS.ORDINAL_POSITION),
-                type
+                type,
+                record.getValue(PARAMETERS.PARAMETER_DEFAULT) != null
             );
 
             addParameter(InOutDefinition.getFromString(inOut), parameter);

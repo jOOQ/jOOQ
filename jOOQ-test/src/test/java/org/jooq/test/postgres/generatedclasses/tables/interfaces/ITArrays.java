@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.sql.Date;
 
 import org.jooq.test.postgres.generatedclasses.enums.UCountry;
+import org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord;
 import org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord;
 
 
@@ -41,6 +42,11 @@ public interface ITArrays extends Serializable {
 	 * Getter for <code>public.t_arrays.udt_array</code>.
 	 */
 	public UStreetTypeRecord[] getUdtArray();
+
+	/**
+	 * Getter for <code>public.t_arrays.address_array</code>.
+	 */
+	public UAddressTypeRecord[] getAddressArray();
 
 	/**
 	 * Getter for <code>public.t_arrays.enum_array</code>.

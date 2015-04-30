@@ -8,6 +8,7 @@ import java.sql.Date;
 
 import org.jooq.test.postgres.generatedclasses.enums.UCountry;
 import org.jooq.test.postgres.generatedclasses.tables.interfaces.IFGetArrays;
+import org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord;
 import org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord;
 
 
@@ -17,18 +18,19 @@ import org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FGetArrays implements IFGetArrays {
 
-	private static final long serialVersionUID = -968309999;
+	private static final long serialVersionUID = 1748788147;
 
-	private final Integer             id;
-	private final String[]            stringArray;
-	private final Integer[]           numberArray;
-	private final Date[]              dateArray;
-	private final UStreetTypeRecord[] udtArray;
-	private final UCountry[]          enumArray;
-	private final Integer[]           arrayArray;
-	private final String[]            numberList;
-	private final String[]            stringList;
-	private final String[]            dateList;
+	private final Integer              id;
+	private final String[]             stringArray;
+	private final Integer[]            numberArray;
+	private final Date[]               dateArray;
+	private final UStreetTypeRecord[]  udtArray;
+	private final UAddressTypeRecord[] addressArray;
+	private final UCountry[]           enumArray;
+	private final Integer[]            arrayArray;
+	private final String[]             numberList;
+	private final String[]             stringList;
+	private final String[]             dateList;
 
 	public FGetArrays(FGetArrays value) {
 		this.id = value.id;
@@ -36,6 +38,7 @@ public class FGetArrays implements IFGetArrays {
 		this.numberArray = value.numberArray;
 		this.dateArray = value.dateArray;
 		this.udtArray = value.udtArray;
+		this.addressArray = value.addressArray;
 		this.enumArray = value.enumArray;
 		this.arrayArray = value.arrayArray;
 		this.numberList = value.numberList;
@@ -44,22 +47,24 @@ public class FGetArrays implements IFGetArrays {
 	}
 
 	public FGetArrays(
-		Integer             id,
-		String[]            stringArray,
-		Integer[]           numberArray,
-		Date[]              dateArray,
-		UStreetTypeRecord[] udtArray,
-		UCountry[]          enumArray,
-		Integer[]           arrayArray,
-		String[]            numberList,
-		String[]            stringList,
-		String[]            dateList
+		Integer              id,
+		String[]             stringArray,
+		Integer[]            numberArray,
+		Date[]               dateArray,
+		UStreetTypeRecord[]  udtArray,
+		UAddressTypeRecord[] addressArray,
+		UCountry[]           enumArray,
+		Integer[]            arrayArray,
+		String[]             numberList,
+		String[]             stringList,
+		String[]             dateList
 	) {
 		this.id = id;
 		this.stringArray = stringArray;
 		this.numberArray = numberArray;
 		this.dateArray = dateArray;
 		this.udtArray = udtArray;
+		this.addressArray = addressArray;
 		this.enumArray = enumArray;
 		this.arrayArray = arrayArray;
 		this.numberList = numberList;
@@ -90,6 +95,11 @@ public class FGetArrays implements IFGetArrays {
 	@Override
 	public UStreetTypeRecord[] getUdtArray() {
 		return this.udtArray;
+	}
+
+	@Override
+	public UAddressTypeRecord[] getAddressArray() {
+		return this.addressArray;
 	}
 
 	@Override

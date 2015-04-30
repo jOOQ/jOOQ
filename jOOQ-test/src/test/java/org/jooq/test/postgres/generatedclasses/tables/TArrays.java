@@ -17,6 +17,7 @@ import org.jooq.test.postgres.generatedclasses.Keys;
 import org.jooq.test.postgres.generatedclasses.Public;
 import org.jooq.test.postgres.generatedclasses.enums.UCountry;
 import org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord;
+import org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord;
 import org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord;
 
 
@@ -26,7 +27,7 @@ import org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TArrays extends TableImpl<TArraysRecord> {
 
-	private static final long serialVersionUID = 140191975;
+	private static final long serialVersionUID = 2082297609;
 
 	/**
 	 * The reference instance of <code>public.t_arrays</code>
@@ -65,6 +66,11 @@ public class TArrays extends TableImpl<TArraysRecord> {
 	 * The column <code>public.t_arrays.udt_array</code>.
 	 */
 	public final TableField<TArraysRecord, UStreetTypeRecord[]> UDT_ARRAY = createField("udt_array", org.jooq.test.postgres.generatedclasses.udt.UStreetType.U_STREET_TYPE.getDataType().getArrayDataType(), this, "");
+
+	/**
+	 * The column <code>public.t_arrays.address_array</code>.
+	 */
+	public final TableField<TArraysRecord, UAddressTypeRecord[]> ADDRESS_ARRAY = createField("address_array", org.jooq.test.postgres.generatedclasses.udt.UAddressType.U_ADDRESS_TYPE.getDataType().getArrayDataType(), this, "");
 
 	/**
 	 * The column <code>public.t_arrays.enum_array</code>.

@@ -85,6 +85,7 @@
                                 <password></password>
                             </jdbc>
                             <generator>
+                                <name>org.jooq.util.ScalaGenerator</name>
                                 <database>
                                     <inputSchema>PUBLIC</inputSchema>
                                 </database>

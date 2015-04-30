@@ -41,7 +41,6 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
-import static java.util.Arrays.asList;
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_FUNCTION;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -272,9 +271,9 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         results.clear();
         outValues.clear();
 
-        // In PostgreSQL, there are only functions, no procedures. Some functions
-        // cannot be called using a CallableStatement, e.g. those with DEFAULT
-        // parameters
+        // [#4254] In PostgreSQL, there are only functions, no procedures. Some
+        // functions cannot be called using a CallableStatement, e.g. those with
+        // DEFAULT parameters
         if (family == POSTGRES) {
             return executeSelectFromPOSTGRES();
         }
@@ -328,9 +327,12 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
     private final int executeSelectFromPOSTGRES() {
         DSLContext create = create(configuration);
-        Result<?> result = create.selectFrom(table(asField())).fetch();
+        Result<?> result = create.select().from("{0}", asField()).fetch();
 
         int i = 0;
+
+        if (returnParameter != null)
+            outValues.put(returnParameter, returnParameter.getDataType().convert(result.getValue(0, i++)));
         for (Parameter<?> p : outParameters)
             outValues.put(p, p.getDataType().convert(result.getValue(0, i++)));
 
@@ -493,15 +495,8 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
             // IN parameters are rendered normally
             else {
-                Field<?> value = getInValues().get(parameter);
-
-                // Disambiguate overloaded procedure signatures
-                if (POSTGRES == context.family() && isOverloaded()) {
-                    value = value.cast(parameter.getType());
-                }
-
                 context.sql(separator);
-                toSQLInParam(context, parameter, value);
+                toSQLInParam(context, parameter, getInValues().get(parameter));
             }
 
             separator = ", ";
@@ -512,40 +507,53 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLEnd(RenderContext context) {
-        if (hasDefaultedParameters() && asList(ORACLE, POSTGRES).contains(context.family())) {
+        /* [pro] */
+        if (hasDefaultedParameters() && context.family() == ORACLE) {
             context.sql(';')
                    .formatIndentEnd()
                    .formatSeparator()
                    .keyword("end;");
         }
-        else {
+        else
+        /* [/pro] */
+        {
             context.sql(" }");
         }
     }
 
     private final void toSQLBegin(RenderContext context) {
-        if (hasDefaultedParameters() && asList(ORACLE, POSTGRES).contains(context.family())) {
+        /* [pro] */
+        if (hasDefaultedParameters() && context.family() == ORACLE) {
             context.keyword("begin")
                    .formatIndentStart()
                    .formatSeparator();
         }
-        else {
+        else
+        /* [/pro] */
+        {
             context.sql("{ ");
         }
     }
 
     private final void toSQLAssign(RenderContext context) {
-        if (hasDefaultedParameters() && asList(ORACLE, POSTGRES).contains(context.family())) {
+        /* [pro] */
+        if (hasDefaultedParameters() && context.family() == ORACLE) {
             context.sql("? := ");
         }
-        else {
+        else
+        /* [/pro] */
+        {
             context.sql("? = ");
         }
     }
 
     private final void toSQLCall(RenderContext context) {
-        if (hasDefaultedParameters() && asList(ORACLE, POSTGRES).contains(context.family()));
-        else {
+        /* [pro] */
+        if (hasDefaultedParameters() && context.family() == ORACLE) {
+        }
+        else
+        /* [/pro] */
+        {
             context.sql("call ");
         }
 
@@ -553,44 +561,24 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLOutParam(RenderContext context, Parameter<?> parameter) {
-        if (hasDefaultedParameters()) {
-            switch (context.family()) {
-
-                /* [pro] */
-                case ORACLE:
-                    context.visit(parameter)
-                           .sql(" => ");
-                    break;
-                /* [/pro] */
-
-                case POSTGRES:
-                    context.visit(parameter)
-                           .sql(" := ");
-                    break;
-            }
+        /* [pro] */
+        if (hasDefaultedParameters() && context.family() == ORACLE) {
+            context.visit(parameter)
+                   .sql(" => ");
         }
 
+        /* [/pro] */
         context.sql('?');
     }
 
     private final void toSQLInParam(RenderContext context, Parameter<?> parameter, Field<?> value) {
-        if (hasDefaultedParameters()) {
-            switch (context.family()) {
-
-                /* [pro] */
-                case ORACLE:
-                    context.visit(parameter)
-                           .sql(" => ");
-                    break;
-                /* [/pro] */
-
-                case POSTGRES:
-                    context.visit(parameter)
-                           .sql(" := ");
-                    break;
-            }
+        /* [pro] */
+        if (hasDefaultedParameters() && context.family() == ORACLE) {
+            context.visit(parameter)
+                   .sql(" => ");
         }
 
+        /* [/pro] */
         context.visit(value);
     }
 
@@ -889,9 +877,14 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
          */
         private static final long serialVersionUID = -5730297947647252624L;
 
+        @SuppressWarnings("unchecked")
         RoutineField() {
             super(AbstractRoutine.this.getName(),
                   AbstractRoutine.this.type == null
+
+                  // [#4254] PostgreSQL may have stored functions that don't
+                  // declare an explicit return type. Those function's return
+                  // type is in fact a RECORD type, consisting of OUT paramterers
                   ? (DataType<T>) SQLDataType.RESULT
                   : AbstractRoutine.this.type);
         }
@@ -900,43 +893,25 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         public void accept(Context<?> ctx) {
             RenderContext local = create(ctx).renderContext();
             toSQLQualifiedName(local);
-            Field<T> result;
 
-            switch (ctx.family()) {
-                case POSTGRES: {
-                    List<Field<?>> fields = new ArrayList<Field<?>>();
+            List<Field<?>> fields = new ArrayList<Field<?>>();
+            for (Parameter<?> parameter : getInParameters()) {
 
-                    for (Parameter<?> parameter : getInParameters()) {
+                // [#1183] [#3533] Skip defaulted parameters
+                if (inValuesDefaulted.contains(parameter))
+                    continue;
 
-                        // [#1183] [#3533] Skip defaulted parameters
-                        if (inValuesDefaulted.contains(parameter))
-                            continue;
-
-                        // Disambiguate overloaded function signatures
-                        if (isOverloaded()) {
-                            fields.add(field("{0} := {1}", name(parameter.getName()), getInValues().get(parameter).cast(parameter.getType())));
-                        }
-                        else {
-                            fields.add(field("{0} := {1}", name(parameter.getName()), getInValues().get(parameter)));
-                        }
-                    }
-
-                    result = function(local.render(), getDataType(), fields.toArray(new Field[fields.size()]));
-                    break;
-                }
-
-                default: {
-                    Field<?>[] array = new Field<?>[getInParameters().size()];
-
-                    int i = 0;
-                    for (Parameter<?> p : getInParameters()) {
-                        array[i++] = getInValues().get(p);
-                    }
-
-                    result = function(local.render(), getDataType(), array);
-                    break;
-                }
+                // Disambiguate overloaded function signatures
+                if (ctx.family() == POSTGRES)
+                    if (isOverloaded())
+                        fields.add(field("{0} := {1}", name(parameter.getName()), getInValues().get(parameter).cast(parameter.getType())));
+                    else
+                        fields.add(field("{0} := {1}", name(parameter.getName()), getInValues().get(parameter)));
+                else
+                    fields.add(getInValues().get(parameter));
             }
+
+            Field<T> result = function(local.render(), getDataType(), fields.toArray(new Field[fields.size()]));
 
 
             // [#3592] Decrease SQL -> PL/SQL context switches with Oracle Scalar Subquery Caching

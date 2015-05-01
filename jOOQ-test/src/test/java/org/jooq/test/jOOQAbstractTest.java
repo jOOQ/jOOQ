@@ -2321,6 +2321,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testInsertSelectReturning() throws Exception {
+        new InsertUpdateTests(this).testInsertSelectReturning();
+    }
+
+    @Test
     public void testInsertReturningWithModelAPI() throws Exception {
         new InsertUpdateTests(this).testInsertReturningWithModelAPI();
     }

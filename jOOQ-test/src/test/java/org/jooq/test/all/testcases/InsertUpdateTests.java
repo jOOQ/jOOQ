@@ -765,7 +765,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
 
-        returned = create().insertInto(TTriggers(), TTriggers_COUNTER())
+        returned =
+        create().insertInto(TTriggers(), TTriggers_COUNTER())
                 .values(0)
                 .returning(TTriggers_ID())
                 .fetchOne();
@@ -784,6 +785,87 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         triggered.refresh();
         assertEquals(  ID, (int) triggered.getValue(TTriggers_ID()));
         assertEquals(2*ID, (int) triggered.getValue(TTriggers_COUNTER()));
+    }
+
+    public void testInsertSelectReturning() throws Exception {
+        if (TTriggers() == null) {
+            log.info("SKIPPING", "INSERT RETURNING tests");
+            return;
+        }
+
+        jOOQAbstractTest.reset = false;
+
+        // Create a dummy record, generating the original ID
+        int ID = testInsertReturningCreateDummyRecord();
+
+        assertEquals(  ID, (int) create().selectFrom(TTriggers()).fetchOne(TTriggers_ID()));
+        assertEquals(2*ID, (int) create().selectFrom(TTriggers()).fetchOne(TTriggers_COUNTER()));
+
+        TableRecord<T> returned = create()
+            .insertInto(TTriggers())
+            .columns(TTriggers_COUNTER())
+            .select(select(val(0)))
+            .returning()
+            .fetchOne();
+        assertNotNull(returned);
+        assertEquals(++ID, (int) returned.getValue(TTriggers_ID_GENERATED()));
+        assertEquals(  ID, (int) returned.getValue(TTriggers_ID()));
+        assertEquals(2*ID, (int) returned.getValue(TTriggers_COUNTER()));
+
+        switch (dialect().family()) {
+            /* [pro] */
+            case ASE:
+            case INGRES:
+            case ORACLE:
+            case SQLSERVER:
+            case SYBASE:
+            /* [/pro] */
+            // TODO [#1260] This should work eventually, when CUBRID fixes this
+            // JDBC bug
+            case CUBRID:
+            case DERBY:
+
+            // TODO Firebird supports the INSERT .. RETURNING syntax, but doesn't
+            // support true multi-record inserts. This should be fixed in Firebird
+            case FIREBIRD:
+            case H2:
+
+            // TODO [#832] Fix this. This might be a driver issue for Sybase
+            case SQLITE:
+                log.info("SKIPPING", "Multiple INSERT RETURNING");
+                break;
+
+            default:
+                Result<?> many =
+                create().insertInto(TTriggers(), TTriggers_COUNTER())
+                        .select(select(val(-1))
+                         .union(select(val(-2)))
+                         .union(select(val(-3))))
+                        .returning()
+                        .fetch();
+                assertNotNull(many);
+                assertEquals(3, many.size());
+                assertEquals(++ID, (int) many.getValue(0, TTriggers_ID_GENERATED()));
+                assertEquals(  ID, (int) many.getValue(0, TTriggers_ID()));
+                assertEquals(2*ID, (int) many.getValue(0, TTriggers_COUNTER()));
+                assertEquals(++ID, (int) many.getValue(1, TTriggers_ID_GENERATED()));
+                assertEquals(  ID, (int) many.getValue(1, TTriggers_ID()));
+                assertEquals(2*ID, (int) many.getValue(1, TTriggers_COUNTER()));
+                assertEquals(++ID, (int) many.getValue(2, TTriggers_ID_GENERATED()));
+                assertEquals(  ID, (int) many.getValue(2, TTriggers_ID()));
+                assertEquals(2*ID, (int) many.getValue(2, TTriggers_COUNTER()));
+                break;
+        }
+
+        returned =
+        create().insertInto(TTriggers(), TTriggers_COUNTER())
+                .select(select(val(0)))
+                .returning(TTriggers_ID())
+                .fetchOne();
+        assertNotNull(returned);
+        assertEquals(++ID, (int) returned.getValue(TTriggers_ID()));
+        assertNull(returned.getValue(TTriggers_ID_GENERATED()));
+        assertNull(returned.getValue(TTriggers_COUNTER()));
     }
 
     private int testInsertReturningCreateDummyRecord() {

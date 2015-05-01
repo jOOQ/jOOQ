@@ -190,6 +190,13 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
     void setDefaultValues();
 
     /**
+     * Use a <code>SELECT</code> statement as the source of values for the
+     * <code>INSERT</code> statement.
+     */
+    @Support
+    void setSelect(Field<?>[] fields, Select<?> select);
+
+    /**
      * {@inheritDoc}
      * <p>
      * This feature works with <code>INSERT</code> statements for all SQL dialects

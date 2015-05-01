@@ -45,7 +45,6 @@ package org.jooq.xtend
  * @author Lukas Eder
  */
 import org.jooq.Constants
-import org.jooq.Field
 
 class InsertDSL extends Generators {
     
@@ -133,7 +132,7 @@ class InsertDSL extends Generators {
                  * {@link DSLContext#insertInto(Table, «(1..degree).join(", ", [e | 'Field'])»)}
                  */
                 @Support
-                Insert<R> select(Select<? extends Record«degree»<«TN(degree)»>> select);
+                InsertReturningStep<R> select(Select<? extends Record«degree»<«TN(degree)»>> select);
             }
             ''');
              
@@ -218,9 +217,9 @@ class InsertDSL extends Generators {
             // -------------------------------------------------------------------------
         
             @Override
-            public final Insert<R> select(Select select) {
-                Configuration configuration = ((AttachableInternal) getDelegate()).configuration();
-                return new InsertSelectQueryImpl<R>(configuration, into, fields, select);
+            public final InsertImpl select(Select select) {
+                getDelegate().setSelect(select);
+                return this;
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
             
@@ -370,7 +369,7 @@ class InsertDSL extends Generators {
 
             @Override
             public final InsertImpl set(Record record) {
-                return set(Utils.map(record));
+                return set(Utils.mapOfChangedValues(record));
             }
 
             @Override

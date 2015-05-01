@@ -330,5 +330,5 @@ public interface InsertSetStep<R extends Record> {
      * define a field set for insertion.
      */
     @Support
-    Insert<R> select(Select<?> select);
+    InsertReturningStep<R> select(Select<?> select);
 }

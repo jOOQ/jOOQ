@@ -47,10 +47,12 @@ import static org.jooq.Clause.INSERT_INSERT_INTO;
 import static org.jooq.Clause.INSERT_ON_DUPLICATE_KEY_UPDATE;
 import static org.jooq.Clause.INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT;
 import static org.jooq.Clause.INSERT_RETURNING;
+import static org.jooq.Clause.INSERT_SELECT;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -64,6 +66,7 @@ import org.jooq.Merge;
 import org.jooq.MergeNotMatchedStep;
 import org.jooq.MergeOnConditionStep;
 import org.jooq.Record;
+import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.exception.SQLDialectNotSupportedException;
 
@@ -77,6 +80,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
     private final FieldMapForUpdate  updateMap;
     private final FieldMapsForInsert insertMaps;
+    private Select<?>                select;
     private boolean                  defaultValues;
     private boolean                  onDuplicateKeyUpdate;
     private boolean                  onDuplicateKeyIgnore;
@@ -134,6 +138,12 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     @Override
     public final void setDefaultValues() {
         defaultValues = true;
+    }
+
+    @Override
+    public final void setSelect(Field<?>[] f, Select<?> s) {
+        insertMaps.getMap().putFields(Arrays.asList(f));
+        select = s;
     }
 
     @Override
@@ -281,7 +291,13 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
         ctx.end(INSERT_INSERT_INTO);
 
-        if (defaultValues) {
+        if (select != null) {
+            ctx.formatSeparator()
+               .start(INSERT_SELECT)
+               .visit(select)
+               .end(INSERT_SELECT);
+        }
+        else if (defaultValues) {
             switch (ctx.configuration().dialect().family()) {
                 /* [pro] */
                 case ACCESS:
@@ -360,6 +376,6 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
     @Override
     public final boolean isExecutable() {
-        return insertMaps.isExecutable() || defaultValues;
+        return insertMaps.isExecutable() || defaultValues || select != null;
     }
 }

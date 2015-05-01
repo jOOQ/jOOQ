@@ -40,9 +40,12 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
+// ...
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.Utils.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -83,21 +86,23 @@ class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart implement
 
     @Override
     public final void accept(Context<?> ctx) {
+        Object data = ctx.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY);
+        boolean extraParentheses = data != null && asList().contains(ctx.family());
 
         // If this is already a subquery, proceed
         if (ctx.subquery()) {
             ctx.keyword(quantifier.toSQL())
-               .sql(" (")
+               .sql(extraParentheses ? " ((" : " (")
                .formatIndentStart()
                .formatNewLine()
                .visit(delegate(ctx.configuration()))
                .formatIndentEnd()
                .formatNewLine()
-               .sql(')');
+               .sql(extraParentheses ? "))" : ")");
         }
         else {
             ctx.keyword(quantifier.toSQL())
-               .sql(" (")
+            .sql(extraParentheses ? " ((" : " (")
                .subquery(true)
                .formatIndentStart()
                .formatNewLine()
@@ -105,7 +110,7 @@ class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart implement
                .formatIndentEnd()
                .formatNewLine()
                .subquery(false)
-               .sql(')');
+               .sql(extraParentheses ? "))" : ")");
         }
     }
 

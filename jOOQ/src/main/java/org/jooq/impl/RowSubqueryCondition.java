@@ -218,31 +218,39 @@ class RowSubqueryCondition extends AbstractCondition {
 
         @Override
         public final void accept(Context<?> ctx) {
-
-            // [#2054] Quantified row value expression comparison predicates shouldn't have parentheses before ANY or ALL
-            boolean parentheses = rightQuantified == null;
-
-            // Some databases need extra parentheses around the RHS
-            boolean extraParentheses = asList().contains(ctx.configuration().dialect().family());
             boolean subquery = ctx.subquery();
 
             ctx.visit(left)
                .sql(' ')
                .keyword(comparator.toSQL())
-               .sql(' ')
-               .sql(     parentheses ? "(" : "")
-               .sql(extraParentheses ? "(" : "");
-            ctx.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true);
-            ctx.subquery(true)
-               .formatIndentStart()
-               .formatNewLine()
-               .visit(right != null ? right : rightQuantified)
-               .formatIndentEnd()
-               .formatNewLine()
-               .subquery(subquery);
-            ctx.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, null);
-            ctx.sql(extraParentheses ? ")" : "")
-               .sql(     parentheses ? ")" : "");
+               .sql(' ');
+
+            if (rightQuantified == null) {
+
+                // Some databases need extra parentheses around the RHS
+                boolean extraParentheses = asList().contains(ctx.family());
+
+                ctx.sql(extraParentheses ? "((" : "(");
+                ctx.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true);
+                ctx.subquery(true)
+                   .formatIndentStart()
+                   .formatNewLine()
+                   .visit(right)
+                   .formatIndentEnd()
+                   .formatNewLine()
+                   .subquery(subquery);
+                ctx.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, null);
+                ctx.sql(extraParentheses ? "))" : ")");
+            }
+
+            // [#2054] Quantified row value expression comparison predicates shouldn't have parentheses before ANY or ALL
+            else {
+                ctx.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true);
+                ctx.subquery(true)
+                   .visit(rightQuantified)
+                   .subquery(subquery);
+                ctx.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, null);
+            }
         }
 
         @Override

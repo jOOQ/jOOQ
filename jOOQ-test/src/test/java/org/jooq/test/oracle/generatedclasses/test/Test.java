@@ -63,7 +63,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.U_3709;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Test extends SchemaImpl {
 
-	private static final long serialVersionUID = 1501980212;
+	private static final long serialVersionUID = 882896176;
 
 	/**
 	 * The reference instance of <code>TEST</code>
@@ -86,6 +86,7 @@ public class Test extends SchemaImpl {
 
 	private final List<Sequence<?>> getSequences0() {
 		return Arrays.<Sequence<?>>asList(
+			Sequences.S_AUTHOR_ID,
 			Sequences.S_3899$,
 			Sequences.S_961_BIG_INTEGER,
 			Sequences.S_961_BYTE,

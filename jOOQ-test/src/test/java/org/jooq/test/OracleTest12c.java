@@ -47,10 +47,10 @@ import org.jooq.SQLDialect;
 /**
  * @author Lukas Eder
  */
-public class OracleTest11g extends OracleTest {
+public class OracleTest12c extends OracleTest {
 
     @Override
     protected SQLDialect dialect() {
-        return SQLDialect.ORACLE11G;
+        return SQLDialect.ORACLE12C;
     }
 }

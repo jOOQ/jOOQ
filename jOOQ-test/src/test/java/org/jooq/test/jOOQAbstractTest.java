@@ -299,6 +299,7 @@ public abstract class jOOQAbstractTest<
     public static Table<?>[]                clean;
     public static Map<String, SQLDialect[]> coveredMethods     = new TreeMap<String, SQLDialect[]>();
     public static SQLDialect                coveredDialect;
+    public static Properties                properties;
 
     /**
      * Used by instrumentation to register a call to a {@link Support}-annotated method.
@@ -845,35 +846,37 @@ public abstract class jOOQAbstractTest<
 
     public static final Properties getProperties() {
 
-        // [#682] We reuse the config.properties that is also used for the Maven pom.xml
-        try (InputStream config = GenerationTool.class.getResourceAsStream("/config.properties")) {
-            if (config != null) {
-                Properties properties = new Properties();
-                properties.load(config);
+        if (properties == null) {
+            // [#682] We reuse the config.properties that is also used for the Maven pom.xml
+            try (InputStream config = GenerationTool.class.getResourceAsStream("/config.properties")) {
+                if (config != null) {
+                    properties = new Properties();
+                    properties.load(config);
 
-                String computerName = System.getenv("COMPUTERNAME");
+                    String computerName = System.getenv("COMPUTERNAME");
 
-                for (String key : new ArrayList<String>((Set) properties.keySet())) {
-                    String override = key + "." + computerName;
+                    for (String key : new ArrayList<String>((Set) properties.keySet())) {
+                        String override = key + "." + computerName;
 
-                    if (properties.containsKey(override)) {
-                        properties.setProperty(key, properties.getProperty(override));
+                        if (properties.containsKey(override)) {
+                            properties.setProperty(key, properties.getProperty(override));
+                        }
                     }
                 }
+            }
 
-                return properties;
+            catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
 
-        catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        return null;
+        return properties;
     }
 
     public static final String getDriver(SQLDialect dialect) {
-        return getProperties().getProperty("db." + dialect.family().name().toLowerCase() + ".driver");
+        return StringUtils.defaultIfNull(
+            getProperties().getProperty("db." + dialect.name().toLowerCase() + ".driver"),
+            getProperties().getProperty("db." + dialect.family().name().toLowerCase() + ".driver"));
     }
 
     public static final String getURL(SQLDialect dialect) {
@@ -881,7 +884,9 @@ public abstract class jOOQAbstractTest<
     }
 
     public static final String getURL(SQLDialect dialect, String schemaSuffix) {
-        return getProperties().getProperty("db." + dialect.family().name().toLowerCase() + ".url") + schemaSuffix;
+        return StringUtils.defaultIfNull(
+            getProperties().getProperty("db." + dialect.name().toLowerCase() + ".url"),
+            getProperties().getProperty("db." + dialect.family().name().toLowerCase() + ".url")) + schemaSuffix;
     }
 
     public static final String getSchema(SQLDialect dialect) {
@@ -889,15 +894,21 @@ public abstract class jOOQAbstractTest<
     }
 
     public static final String getSchema(SQLDialect dialect, String schemaSuffix) {
-        return getProperties().getProperty("db." + dialect.family().name().toLowerCase() + ".schema") + schemaSuffix;
+        return StringUtils.defaultIfNull(
+            getProperties().getProperty("db." + dialect.name().toLowerCase() + ".schema"),
+            getProperties().getProperty("db." + dialect.family().name().toLowerCase() + ".schema")) + schemaSuffix;
     }
 
     public static final String getUsername(SQLDialect dialect) {
-        return getProperties().getProperty("db." + dialect.family().name().toLowerCase() + ".username");
+        return StringUtils.defaultIfNull(
+            getProperties().getProperty("db." + dialect.name().toLowerCase() + ".username"),
+            getProperties().getProperty("db." + dialect.family().name().toLowerCase() + ".username"));
     }
 
     public static final String getPassword(SQLDialect dialect) {
-        return getProperties().getProperty("db." + dialect.family().name().toLowerCase() + ".password");
+        return StringUtils.defaultIfNull(
+            getProperties().getProperty("db." + dialect.name().toLowerCase() + ".password"),
+            getProperties().getProperty("db." + dialect.family().name().toLowerCase() + ".password"));
     }
 
     public final String getDriver() {

@@ -79,6 +79,7 @@ import org.jooq.Record1;
 import org.jooq.RecordMapper;
 import org.jooq.RecordMapperProvider;
 import org.jooq.RecordType;
+import org.jooq.conf.Settings;
 import org.jooq.exception.MappingException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.StringUtils;
@@ -115,9 +116,9 @@ import org.jooq.tools.reflect.Reflect;
  * <code>0.0</code> for <code>double</code>, <code>false</code> for
  * <code>boolean</code>.</li>
  * </ul>
- * <h5>If a default constructor is available and any JPA {@link Column}
- * annotations are found on the provided <code>&lt;E></code>, only those are
- * used:</h5>
+ * <h5>(Deprecated) If a default constructor is available and any JPA
+ * {@link Column} annotations are found on the provided <code>&lt;E></code>,
+ * only those are used:</h5>
  * <p>
  * <ul>
  * <li>If <code>&lt;E></code> contains public single-argument instance methods
@@ -137,6 +138,14 @@ import org.jooq.tools.reflect.Reflect;
  * <li>Static methods / member fields are ignored</li>
  * <li>Final member fields are ignored</li>
  * </ul>
+ * <p>
+ * <strong>Deprecation remark:</strong>
+ * <p>
+ * This functionality has been deprecated in jOOQ 3.7 and will be removed in
+ * jOOQ 4.0. In order to keep this functionality enabled, in jOOQ 3.x, use
+ * {@link Settings#isMapJPAAnnotations()}. More details here:
+ * <a href="https://github.com/jOOQ/jOOQ/issues/4263">https://github.com/jOOQ/
+ * jOOQ/issues/4263</a>
  * <p>
  * <h5>If a default constructor is available and if there are no JPA
  * <code>Column</code> annotations, or jOOQ can't find the
@@ -175,7 +184,8 @@ import org.jooq.tools.reflect.Reflect;
  * <li>The standard JavaBeans {@link ConstructorProperties} annotation is used
  * to match constructor arguments against POJO members or getters.</li>
  * <li>If the property names provided to the constructor match the record's
- * columns via the aforementioned naming conventions, that information is used.</li>
+ * columns via the aforementioned naming conventions, that information is used.
+ * </li>
  * <li>If those POJO members or getters have JPA annotations, those will be used
  * according to the aforementioned rules, in order to map <code>Record</code>
  * values onto constructor arguments.</li>

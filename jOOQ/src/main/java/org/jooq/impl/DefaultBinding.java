@@ -291,6 +291,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     // [#1029] Postgres and [#632] Sybase need explicit casting
                     // in very rare cases.
                     /* [pro] */
+                    case REDSHIFT:
                     case SYBASE:
                     /* [/pro] */
                     case POSTGRES: {

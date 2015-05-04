@@ -41,6 +41,7 @@
 package org.jooq.test.all.testcases;
 
 import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.param;
@@ -403,6 +404,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testExecuteListenerCustomExceptionOnConstraintViolation() throws Exception {
+
+        // Redshift doesn't enforce constraints
+        assumeFamilyNotIn(REDSHIFT);
+
+        jOOQAbstractTest.reset = false;
+
         DSLContext create = create(new CustomExceptionListener());
 
         try {

@@ -53,6 +53,7 @@ import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
@@ -623,7 +624,7 @@ class Expression<T> extends AbstractFunction<T> {
         public final void accept(Context<?> ctx) {
             String op = operator.toSQL();
 
-            if (operator == BIT_XOR && ctx.family() == POSTGRES) {
+            if (operator == BIT_XOR && asList(POSTGRES, REDSHIFT).contains(ctx.family())) {
                 op = "#";
             }
 

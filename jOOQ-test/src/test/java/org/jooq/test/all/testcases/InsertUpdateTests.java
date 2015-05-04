@@ -1120,7 +1120,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testInsertOnDuplicateKeyUpdate() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, H2, HANA, INGRES, POSTGRES, SQLITE);
+        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, H2, HANA, INGRES, POSTGRES, REDSHIFT, SQLITE);
 
         jOOQAbstractTest.reset = false;
 
@@ -1148,7 +1148,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testInsertOnDuplicateKeyIgnore() throws Exception {
-        assumeFamilyNotIn(ASE, DERBY, FIREBIRD, H2, HANA, INGRES, POSTGRES, SQLITE);
+        assumeFamilyNotIn(ASE, DERBY, FIREBIRD, H2, HANA, INGRES, REDSHIFT, POSTGRES, SQLITE);
 
         jOOQAbstractTest.reset = false;
 
@@ -1175,7 +1175,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testMerge() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, H2, HANA, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE);
+        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, H2, HANA, INGRES, MARIADB, MYSQL, POSTGRES, REDSHIFT, SQLITE);
 
         jOOQAbstractTest.reset = false;
 
@@ -1286,29 +1286,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testMergeWithOracleSyntaxExtension() throws Exception {
-        switch (family()) {
-            /* [pro] */
-            case ACCESS:
-            case ASE:
-            case DB2:
-            case INGRES:
-            case SQLSERVER:
-            case SYBASE:
-            /* [/pro] */
-            case DERBY:
-            case FIREBIRD:
-            case H2:
-            case HANA:
-            case HSQLDB:
-            case MARIADB:
-            case MYSQL:
-            case POSTGRES:
-            case SQLITE:
-                log.info("SKIPPING", "Oracle-specific MERGE syntax test");
-                return;
-        }
+        assumeFamilyNotIn(ACCESS, ASE, DB2, INGRES, REDSHIFT, SQLSERVER, SYBASE, DERBY, FIREBIRD, H2, HANA, HSQLDB,
+            MARIADB, MYSQL, POSTGRES, SQLITE);
 
         jOOQAbstractTest.reset = false;
+
         A author;
 
         // Test updating with a positive condition
@@ -1384,7 +1366,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testMergeWithH2SyntaxExtension() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, HANA, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE);
+        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, HANA, INGRES, MARIADB, MYSQL, POSTGRES, REDSHIFT, SQLITE);
 
         jOOQAbstractTest.reset = false;
 

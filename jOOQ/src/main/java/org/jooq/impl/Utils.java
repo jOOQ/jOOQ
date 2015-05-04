@@ -41,6 +41,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
@@ -2086,29 +2087,37 @@ final class Utils {
 
             @Override
             public Boolean call() {
-                if (!isJPAAvailable())
-                    return false;
+                boolean result = false;
 
-                // An @Entity or @Table usually has @Column annotations, too
-                if (type.getAnnotation(Entity.class) != null)
-                    return true;
+                try {
+                    if (!isJPAAvailable())
+                        return result = false;
 
-                if (type.getAnnotation(javax.persistence.Table.class) != null)
-                    return true;
+                    // An @Entity or @Table usually has @Column annotations, too
+                    if (type.getAnnotation(Entity.class) != null)
+                        return result = true;
 
-                for (java.lang.reflect.Field member : getInstanceMembers(type)) {
-                    if (member.getAnnotation(Column.class) != null)
-                        return true;
+                    if (type.getAnnotation(javax.persistence.Table.class) != null)
+                        return result = true;
 
-                    if (member.getAnnotation(Id.class) != null)
-                        return true;
+                    for (java.lang.reflect.Field member : getInstanceMembers(type)) {
+                        if (member.getAnnotation(Column.class) != null)
+                            return result = true;
+
+                        if (member.getAnnotation(Id.class) != null)
+                            return result = true;
+                    }
+
+                    for (Method method : getInstanceMethods(type))
+                        if (method.getAnnotation(Column.class) != null)
+                            return result = true;
+
+                    return result = false;
                 }
-
-                for (Method method : getInstanceMethods(type))
-                    if (method.getAnnotation(Column.class) != null)
-                        return true;
-
-                return false;
+                finally {
+                    if (result && TRUE.equals(configuration.settings().isMapJPAAnnotations()))
+                        log.info("DEPRECATION", "Mapping by JPA annotations has been deprecated in jOOQ 3.7 and will be removed in jOOQ 4.0");
+                }
             }
 
         }, DATA_REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS, type);

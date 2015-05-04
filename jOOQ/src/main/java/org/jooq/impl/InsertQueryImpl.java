@@ -298,7 +298,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                .end(INSERT_SELECT);
         }
         else if (defaultValues) {
-            switch (ctx.configuration().dialect().family()) {
+            switch (ctx.family()) {
                 /* [pro] xx
                 xxxx xxxxxxx
                 xxxx xxxx
@@ -308,7 +308,9 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 case DERBY:
                 case MARIADB:
                 case MYSQL:
-                    ctx.sql(' ').keyword("values").sql('(');
+                    ctx.formatSeparator()
+                       .keyword("values")
+                       .sql('(');
 
                     int count = table.fields().length;
                     String separator = "";
@@ -323,7 +325,8 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                     break;
 
                 default:
-                    ctx.sql(' ').keyword("default values");
+                    ctx.formatSeparator()
+                       .keyword("default values");
                     break;
             }
         }

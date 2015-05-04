@@ -97,6 +97,9 @@ class RegexpLike extends AbstractCondition {
             }
 
             // [#620] Postgres has its own syntax
+            /* [pro] xx
+            xxxx xxxxxxxxx
+            xx [/pro] */
             case POSTGRES: {
 
                 // [#1570] TODO: Replace this by SQL.condition(String, QueryPart...)

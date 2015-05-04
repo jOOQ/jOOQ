@@ -75,6 +75,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -1076,7 +1077,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                     context.sql('1');
                 }
 
-                // Few dialects support the SQL standard empty grouping set
+                // Few dialects support the SQL standard "grand total" (i.e. empty grouping set)
                 else {
                     context.sql("()");
                 }

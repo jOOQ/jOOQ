@@ -47,13 +47,13 @@ import static org.jooq.Comparator.EQUALS;
 import static org.jooq.Comparator.IN;
 import static org.jooq.Comparator.NOT_EQUALS;
 import static org.jooq.Comparator.NOT_IN;
-// ...
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
@@ -137,22 +137,24 @@ class RowSubqueryCondition extends AbstractCondition {
             return new Native();
         }
 
-        // [#2395] These dialects have native support for = and <>
-        else if (
-            asList(H2, HSQLDB, MARIADB, MYSQL, POSTGRES).contains(family) &&
-            asList(EQUALS, NOT_EQUALS).contains(comparator)) {
+        /* [pro] xx
+        xx xxxxxxx xxxxx xxxxxxxx xxxx xxxxxx xxxxxxx xxx x xxx xx
+        xxxx xx x
+            xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xx
+            xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
 
-            return new Native();
-        }
+            xxxxxx xxx xxxxxxxxx
+        x
 
-        // [#2395] These dialects have native support for IN and NOT IN
-        else if (
-            asList(H2, HSQLDB, MARIADB, MYSQL, POSTGRES).contains(family) &&
-            asList(IN, NOT_IN).contains(comparator)) {
+        xx xxxxxxx xxxxx xxxxxxxx xxxx xxxxxx xxxxxxx xxx xx xxx xxx xx
+        xxxx xx x
+            xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xx
+            xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
 
-            return new Native();
-        }
+            xxxxxx xxx xxxxxxxxx
+        x
 
+        xx [/pro] */
         // [#2395] All other configurations have to be emulated
         else {
             String table = render == null ? "t" : render.nextAlias();

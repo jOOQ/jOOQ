@@ -254,7 +254,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         if (!many) {
             if (ctx.resultSet() != null) {
                 Field<?>[] fields = getFields(ctx.resultSet().getMetaData());
-                cursor = new CursorImpl<R>(ctx, listener, fields, intern.internIndexes(fields), keepStatement(), keepResultSet(), getRecordType());
+                cursor = new CursorImpl<R>(ctx, listener, fields, intern.internIndexes(fields), keepStatement(), keepResultSet(), getRecordType(), maxRows);
 
                 if (!lazy) {
                     result = cursor.fetch();

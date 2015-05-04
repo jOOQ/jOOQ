@@ -41,6 +41,29 @@
 package org.jooq.xtend
 
 import org.jooq.Constants
+import org.jooq.Configuration
+import org.jooq.RowN
+import org.jooq.QueryPartInternal
+import org.jooq.impl.RowBetweenCondition.Native
+import org.jooq.Condition
+import static org.jooq.SQLDialect.DERBY
+import static org.jooq.SQLDialect.HANA
+import static org.jooq.SQLDialect.INGRES
+import static java.util.Arrays.asList
+import static org.jooq.SQLDialect.FIREBIRD
+import static org.jooq.SQLDialect.ASE
+import static org.jooq.SQLDialect.CUBRID
+import static org.jooq.SQLDialect.DB2
+import static org.jooq.SQLDialect.ACCESS
+import static org.jooq.SQLDialect.SYBASE
+import static org.jooq.SQLDialect.INFORMIX
+import static org.jooq.SQLDialect.SQLITE
+import static org.jooq.SQLDialect.H2
+import static org.jooq.SQLDialect.REDSHIFT
+import static org.jooq.SQLDialect.MARIADB
+import static org.jooq.SQLDialect.SQLSERVER
+import static org.jooq.SQLDialect.ORACLE
+import static org.jooq.SQLDialect.MYSQL
 
 /**
  * @author Lukas Eder
@@ -129,6 +152,7 @@ class BetweenAndSteps extends Generators {
         import static org.jooq.SQLDialect.MARIADB;
         import static org.jooq.SQLDialect.MYSQL;
         import static org.jooq.SQLDialect.ORACLE;
+        import static org.jooq.SQLDialect.REDSHIFT;
         import static org.jooq.SQLDialect.SQLITE;
         import static org.jooq.SQLDialect.SQLSERVER;
         import static org.jooq.SQLDialect.SYBASE;
@@ -278,13 +302,10 @@ class BetweenAndSteps extends Generators {
                 RowN max = (RowN) maxValue;
         
                 // These dialects don't support the SYMMETRIC keyword at all
-                if (symmetric && asList(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, SQLITE, SQLSERVER, SYBASE).contains(configuration.dialect().family())) {
-                    if (not) {
-                        return (QueryPartInternal) r.notBetween(min, max).and(r.notBetween(max, min));
-                    }
-                    else {
-                        return (QueryPartInternal) r.between(min, max).or(r.between(max, min));
-                    }
+                if (symmetric && asList(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, REDSHIFT, SQLITE, SQLSERVER, SYBASE).contains(configuration.dialect().family())) {
+                    return not
+                        ? (QueryPartInternal) r.notBetween(min, max).and(r.notBetween(max, min))
+                        : (QueryPartInternal) r.between(min, max).or(r.between(max, min));
                 }
         
                 // These dialects either don't support row value expressions, or they

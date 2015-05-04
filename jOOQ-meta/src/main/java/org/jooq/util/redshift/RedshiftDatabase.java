@@ -58,7 +58,6 @@ import org.jooq.Record4;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
-import org.jooq.tools.JooqLogger;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.DefaultRelations;
@@ -76,8 +75,6 @@ import org.jooq.util.UDTDefinition;
  * @author Lukas Eder
  */
 public class RedshiftDatabase extends AbstractDatabase {
-
-    private static final JooqLogger log = JooqLogger.getLogger(RedshiftDatabase.class);
 
     @Override
     protected DSLContext create0() {

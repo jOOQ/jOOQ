@@ -55,6 +55,7 @@ import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
@@ -129,13 +130,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testTableWithHint() throws Exception {
-        /* [pro] */
         switch (family()) {
             case ACCESS:
             case ASE:
             case DB2:
             case INFORMIX:
             case INGRES:
+            case REDSHIFT:
             case ORACLE:
             case CUBRID:
             case DERBY:
@@ -164,32 +165,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         assertEquals(4, result.size());
         assertEquals(BOOK_IDS, result.getValues(TBook_ID()));
-        /* [/pro] */
     }
 
     public void testPivotClause() throws Exception {
-        /* [pro] */
-        switch (family()) {
-            case ACCESS:
-            case ASE:
-            case DB2:
-            case INGRES:
-            case SQLSERVER:
-            case SYBASE:
-            case CUBRID:
-            case DERBY:
-            case FIREBIRD:
-            case H2:
-            case HANA:
-            case HSQLDB:
-            case INFORMIX:
-            case MARIADB:
-            case MYSQL:
-            case POSTGRES:
-            case SQLITE:
-                log.info("SKIPPING", "PIVOT clause tests");
-                return;
-        }
+        assumeFamilyNotIn(ACCESS, ASE, DB2, INGRES, REDSHIFT, SQLSERVER, SYBASE, CUBRID, DERBY, FIREBIRD, H2, HANA,
+            HSQLDB, INFORMIX, MARIADB, MYSQL, POSTGRES, SQLITE);
 
         // Simple pivoting, no aliasing
         // ----------------------------
@@ -300,32 +280,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(
             asList(1, 2, 0, 0, 0),
             asList(result3.get(0).into(Integer[].class)));
-        /* [/pro] */
     }
 
     public void testAliasingPivot() throws Exception {
-        /* [pro] */
-        switch (family()) {
-            case ACCESS:
-            case ASE:
-            case DB2:
-            case INFORMIX:
-            case INGRES:
-            case SQLSERVER:
-            case SYBASE:
-            case CUBRID:
-            case DERBY:
-            case FIREBIRD:
-            case H2:
-            case HANA:
-            case HSQLDB:
-            case MARIADB:
-            case MYSQL:
-            case POSTGRES:
-            case SQLITE:
-                log.info("SKIPPING", "PIVOT clause tests");
-                return;
-        }
+        assumeFamilyNotIn(ACCESS, ASE, DB2, INFORMIX, INGRES, REDSHIFT, SQLSERVER, SYBASE, CUBRID, DERBY, FIREBIRD, H2, HANA, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
 
         Result<?> r1 =
         create().select()
@@ -368,7 +326,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(3, (int) r2.get(0).getValue("c", Integer.class));
         assertEquals(4, (int) r2.get(0).getValue("d", Integer.class));
         assertEquals(5, (int) r2.get(0).getValue("e", Integer.class));
-        /* [/pro] */
     }
 
     public void testRelationalDivision() throws Exception {
@@ -430,6 +387,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             case ASE:
             case DB2:
             case INGRES:
+            case REDSHIFT:
             case SQLSERVER:
             case SYBASE:
             /* [/pro] */
@@ -494,6 +452,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             case DB2:
             case HANA:
             case INGRES:
+            case REDSHIFT:
             case SQLSERVER:
             case SYBASE:
             /* [/pro] */

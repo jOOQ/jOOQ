@@ -42,6 +42,7 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static org.jooq.Comparator.IS_DISTINCT_FROM;
+import static org.jooq.Comparator.IS_NOT_DISTINCT_FROM;
 import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
@@ -53,6 +54,7 @@ import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
@@ -149,38 +151,43 @@ class IsDistinctFrom<T> extends AbstractCondition {
 
         // MySQL knows the <=> operator
         else if (asList(MARIADB, MYSQL).contains(configuration.family())) {
-            if (mySQLCondition == null) {
-                if (comparator == IS_DISTINCT_FROM) {
-                    mySQLCondition = (QueryPartInternal) condition("{not}({0} <=> {1})", lhs, rhs);
-                }
-                else {
-                    mySQLCondition = (QueryPartInternal) condition("{0} <=> {1}", lhs, rhs);
-                }
-            }
+            if (mySQLCondition == null)
+                mySQLCondition = (QueryPartInternal) ((comparator == IS_DISTINCT_FROM)
+                    ? condition("{not}({0} <=> {1})", lhs, rhs)
+                    : condition("{0} <=> {1}", lhs, rhs));
 
             return mySQLCondition;
         }
 
         // SQLite knows the IS / IS NOT predicate
         else if (SQLITE == configuration.family()) {
-            if (sqliteCondition == null) {
-                if (comparator == IS_DISTINCT_FROM) {
-                    sqliteCondition = (QueryPartInternal) condition("{0} {is not} {1}", lhs, rhs);
-                }
-                else {
-                    sqliteCondition = (QueryPartInternal) condition("{0} {is} {1}", lhs, rhs);
-                }
-            }
+            if (sqliteCondition == null)
+                sqliteCondition = (QueryPartInternal) ((comparator == IS_DISTINCT_FROM)
+                    ? condition("{0} {is not} {1}", lhs, rhs)
+                    : condition("{0} {is} {1}", lhs, rhs));
 
             return sqliteCondition;
         }
 
+        /* [pro] */
+        // Redshift knows IS DISTINCT FROM but doesn't know IS NOT DISTINCT FROM
+        else if (REDSHIFT == configuration.family()) {
+            if (compareCondition == null)
+                compareCondition = (QueryPartInternal) ((comparator == IS_NOT_DISTINCT_FROM)
+                    ? new CompareCondition(lhs, rhs, IS_DISTINCT_FROM).not()
+                    : new CompareCondition(lhs, rhs, comparator));
+
+
+            return compareCondition;
+        }
+
+        /* [/pro] */
+
         // These dialects natively support the IS DISTINCT FROM predicate:
         // H2, Postgres
         else {
-            if (compareCondition == null) {
+            if (compareCondition == null)
                 compareCondition = new CompareCondition(lhs, rhs, comparator);
-            }
 
             return compareCondition;
         }

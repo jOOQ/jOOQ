@@ -42,6 +42,7 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
 
 import java.util.Map;
@@ -78,7 +79,7 @@ class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
             // disambiguated columns in queries like
             // UPDATE t1 JOIN t2 .. SET t1.val = ..., t2.val = ...
             boolean restoreQualify = ctx.qualify();
-            boolean supportsQualify = asList(POSTGRES, SQLITE).contains(ctx.family()) ? false : restoreQualify;
+            boolean supportsQualify = asList(POSTGRES, REDSHIFT, SQLITE).contains(ctx.family()) ? false : restoreQualify;
 
             for (Entry<Field<?>, Field<?>> entry : entrySet()) {
                 ctx.sql(separator);

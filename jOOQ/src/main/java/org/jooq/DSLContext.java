@@ -4943,7 +4943,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createIndex(String)
      */
-    @Support
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     CreateIndexStep createIndex(String index);
 
     /**
@@ -4951,7 +4951,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createIndex(Name)
      */
-    @Support
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     CreateIndexStep createIndex(Name index);
 
     /**
@@ -5145,7 +5145,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropIndex(String)
      */
-    @Support
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     DropIndexOnStep dropIndex(String index);
 
     /**
@@ -5153,7 +5153,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropIndex(Name)
      */
-    @Support
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     DropIndexOnStep dropIndex(Name index);
 
     /**

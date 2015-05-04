@@ -75,6 +75,7 @@ class Mod<T> extends AbstractFunction<T> {
                 return field("{0} {mod} {1}", getDataType(), arg1, arg2);
 
             case ASE:
+            case REDSHIFT:
             case SQLSERVER:
             /* [/pro] */
             case SQLITE:

@@ -44,6 +44,7 @@ import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.junit.Assert.assertTrue;
@@ -92,10 +93,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testResultSetType() throws Exception {
-        if (asList(HANA, SQLITE).contains(dialect())) {
-            log.info("SKIPPING", "ResultSet type tests");
-            return;
-        }
+        assumeFamilyNotIn(HANA, REDSHIFT, SQLITE);
 
         ResultSet rs =
         create().select(TBook_ID())
@@ -120,10 +118,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @SuppressWarnings("serial")
 
     public void testResultSetTypeWithListener() throws Exception {
-        if (asList(SQLITE).contains(dialect())) {
-            log.info("SKIPPING", "ResultSet type tests");
-            return;
-        }
+        assumeFamilyNotIn(SQLITE);
 
         assertEquals(
             asList(1, 1, 1, 2),
@@ -154,7 +149,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @SuppressWarnings("serial")
 
     public void testResultSetConcurrency() throws Exception {
-        assumeFamilyNotIn(HANA, INFORMIX, MARIADB, SQLITE, SYBASE);
+        assumeFamilyNotIn(HANA, INFORMIX, MARIADB, REDSHIFT, SQLITE, SYBASE);
         jOOQAbstractTest.reset = false;
 
         assertEquals(

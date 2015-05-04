@@ -40,6 +40,25 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.ACCESS;
+import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HANA;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INFORMIX;
+import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
+
 /**
  * A {@link Query} that can create indexes.
  *
@@ -50,12 +69,12 @@ public interface CreateIndexStep {
     /**
      * Specify the table and column expressions on which to create an index.
      */
-    @Support
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     CreateIndexFinalStep on(Table<?> table, Field<?>... fields);
 
     /**
      * Specify the table and column expressions on which to create an index.
      */
-    @Support
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     CreateIndexFinalStep on(String tableName, String... fieldNames);
 }

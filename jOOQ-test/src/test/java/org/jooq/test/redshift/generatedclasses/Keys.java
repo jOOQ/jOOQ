@@ -4,6 +4,7 @@
 package org.jooq.test.redshift.generatedclasses;
 
 
+import org.jooq.Identity;
 import org.jooq.UniqueKey;
 import org.jooq.impl.AbstractKeys;
 import org.jooq.test.redshift.generatedclasses.tables.TBook;
@@ -11,6 +12,7 @@ import org.jooq.test.redshift.generatedclasses.tables.TBookStore;
 import org.jooq.test.redshift.generatedclasses.tables.TBookToBookStore;
 import org.jooq.test.redshift.generatedclasses.tables.TBooleans;
 import org.jooq.test.redshift.generatedclasses.tables.TDates;
+import org.jooq.test.redshift.generatedclasses.tables.TIdentity;
 import org.jooq.test.redshift.generatedclasses.tables.TIdentityPk;
 import org.jooq.test.redshift.generatedclasses.tables.TLanguage;
 import org.jooq.test.redshift.generatedclasses.tables.T_3111;
@@ -26,6 +28,7 @@ import org.jooq.test.redshift.generatedclasses.tables.records.TBookToBookStoreRe
 import org.jooq.test.redshift.generatedclasses.tables.records.TBooleansRecord;
 import org.jooq.test.redshift.generatedclasses.tables.records.TDatesRecord;
 import org.jooq.test.redshift.generatedclasses.tables.records.TIdentityPkRecord;
+import org.jooq.test.redshift.generatedclasses.tables.records.TIdentityRecord;
 import org.jooq.test.redshift.generatedclasses.tables.records.TLanguageRecord;
 import org.jooq.test.redshift.generatedclasses.tables.records.T_3111Record;
 import org.jooq.test.redshift.generatedclasses.tables.records.T_639NumbersTableRecord;
@@ -46,6 +49,8 @@ public class Keys {
 	// IDENTITY definitions
 	// -------------------------------------------------------------------------
 
+	public static final Identity<TIdentityRecord, Integer> IDENTITY_T_IDENTITY = Identities0.IDENTITY_T_IDENTITY;
+	public static final Identity<TIdentityPkRecord, Integer> IDENTITY_T_IDENTITY_PK = Identities0.IDENTITY_T_IDENTITY_PK;
 
 	// -------------------------------------------------------------------------
 	// UNIQUE and PRIMARY KEY definitions
@@ -75,6 +80,11 @@ public class Keys {
 	// -------------------------------------------------------------------------
 	// [#1459] distribute members to avoid static initialisers > 64kb
 	// -------------------------------------------------------------------------
+
+	private static class Identities0 extends AbstractKeys {
+		public static Identity<TIdentityRecord, Integer> IDENTITY_T_IDENTITY = createIdentity(TIdentity.T_IDENTITY, TIdentity.T_IDENTITY.ID);
+		public static Identity<TIdentityPkRecord, Integer> IDENTITY_T_IDENTITY_PK = createIdentity(TIdentityPk.T_IDENTITY_PK, TIdentityPk.T_IDENTITY_PK.ID);
+	}
 
 	private static class UniqueKeys0 extends AbstractKeys {
 		public static final UniqueKey<T_3111Record> PK_T_3111 = createUniqueKey(T_3111.T_3111, T_3111.T_3111.ID);

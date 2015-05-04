@@ -47,13 +47,13 @@ import static org.jooq.Comparator.EQUALS;
 import static org.jooq.Comparator.IN;
 import static org.jooq.Comparator.NOT_EQUALS;
 import static org.jooq.Comparator.NOT_IN;
-import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
@@ -137,9 +137,10 @@ class RowSubqueryCondition extends AbstractCondition {
             return new Native();
         }
 
+        /* [pro] */
         // [#2395] These dialects have native support for = and <>
         else if (
-            asList(H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES).contains(family) &&
+            asList(ORACLE, REDSHIFT).contains(family) &&
             asList(EQUALS, NOT_EQUALS).contains(comparator)) {
 
             return new Native();
@@ -147,12 +148,13 @@ class RowSubqueryCondition extends AbstractCondition {
 
         // [#2395] These dialects have native support for IN and NOT IN
         else if (
-            asList(H2, DB2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES).contains(family) &&
+            asList(ORACLE, REDSHIFT).contains(family) &&
             asList(IN, NOT_IN).contains(comparator)) {
 
             return new Native();
         }
 
+        /* [/pro] */
         // [#2395] All other configurations have to be emulated
         else {
             String table = render == null ? "t" : render.nextAlias();

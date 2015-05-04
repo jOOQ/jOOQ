@@ -55,6 +55,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
@@ -124,12 +125,22 @@ public class JDBCUtils {
      * "Guess" the {@link SQLDialect} from a connection URL.
      */
     public static final SQLDialect dialect(String url) {
-        if (url == null)
+        if (url == null) {
             return DEFAULT;
+        }
 
         // The below list might not be accurate or complete. Feel free to
-        // contribute fixes related to new / different JDBC driver configuraitons
-        if (url.startsWith("jdbc:cubrid:")) {
+        // contribute fixes related to new / different JDBC driver configurations
+
+        /* [pro] */
+        // This has to go first
+        else if (url.startsWith("jdbc:redshift:")
+             || (url.startsWith("jdbc:postgresql:") && url.contains("redshift.amazonaws.com"))) {
+            return REDSHIFT;
+        }
+        /* [/pro] */
+
+        else if (url.startsWith("jdbc:cubrid:")) {
             return CUBRID;
         }
         else if (url.startsWith("jdbc:derby:")) {
@@ -233,6 +244,8 @@ public class JDBCUtils {
                 return "com.ingres.jdbc.IngresDriver";
             case ORACLE:
                 return "oracle.jdbc.OracleDriver";
+            case REDSHIFT:
+                return "com.amazon.redshift.jdbc41.Driver";
             case SQLSERVER:
                 return "com.microsoft.sqlserver.jdbc.SQLServerDriver";
             case SYBASE:

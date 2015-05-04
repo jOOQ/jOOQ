@@ -1853,6 +1853,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testUUIDDataType() throws Exception {
+        assumeNotNull(TExoticTypes());
+
         jOOQAbstractTest.reset = false;
 
         UUID uuid1 = UUID.randomUUID();
@@ -1878,10 +1880,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testUUIDArrayDataType() throws Exception {
-        if (TArrays_STRING() == null) {
-            log.info("SKIPPING", "Skipping UUID ARRAY data type tests");
-            return;
-        }
+        assumeNotNull(TArrays_STRING());
 
         // [#2278] Run the subsequent test twice, once with bind values and once
         // with inlined bind values
@@ -1907,6 +1906,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testXMLasJAXB() throws Exception {
+        assumeNotNull(TExoticTypes());
         assumeNotNull(TExoticTypes_UNTYPED_XML_AS_JAXB());
         clean(TExoticTypes());
 
@@ -1940,11 +1940,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testXMLasDOM() throws Exception {
+        assumeNotNull(TExoticTypes());
         assumeNotNull(TExoticTypes_UNTYPED_XML_AS_DOM());
         testXMLasDOM0(TExoticTypes(), TExoticTypes_ID(), TExoticTypes_UNTYPED_XML_AS_DOM());
     }
 
     public void testXMLusingPlainSQLConverters() {
+        assumeNotNull(TExoticTypes());
         assumeNotNull(TExoticTypes_PLAIN_SQL_CONVERTER_XML());
         clean(TExoticTypes());
 
@@ -1962,6 +1964,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testXMLusingPlainSQLBindings() {
+        assumeNotNull(TExoticTypes());
         assumeNotNull(TExoticTypes_PLAIN_SQL_CONVERTER_XML());
         clean(TExoticTypes());
 
@@ -1978,6 +1981,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     private void testXMLasDOM0(Table<?> table, Field<Integer> id, Field<Node> xml) {
+        assumeNotNull(TExoticTypes());
         clean(TExoticTypes());
 
         assertEquals(1,

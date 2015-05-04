@@ -115,7 +115,7 @@ public class RedshiftTableDefinition extends AbstractTableDefinition {
 			    record.getValue(COLUMNS.COLUMN_NAME),
 			    record.getValue(COLUMNS.ORDINAL_POSITION, int.class),
 			    type,
-			    defaultString(record.getValue(COLUMNS.COLUMN_DEFAULT)).startsWith("nextval"),
+			    defaultString(record.getValue(COLUMNS.COLUMN_DEFAULT)).contains("identity"),
 			    record.getValue(PG_DESCRIPTION.DESCRIPTION)
 		    );
 

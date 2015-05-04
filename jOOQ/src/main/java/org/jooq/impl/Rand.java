@@ -73,6 +73,7 @@ class Rand extends AbstractFunction<BigDecimal> {
                 return field("dbms_random.random", BigDecimal.class);
 
             case INGRES:
+            case REDSHIFT:
             /* [/pro] */
             case DERBY:
             case POSTGRES:

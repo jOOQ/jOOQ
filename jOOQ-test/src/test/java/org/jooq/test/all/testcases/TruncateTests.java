@@ -40,14 +40,26 @@
  */
 package org.jooq.test.all.testcases;
 
+import static org.jooq.SQLDialect.ACCESS;
+import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HANA;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
-import static org.junit.Assert.fail;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
 
 import java.sql.Date;
-import java.util.Arrays;
 
 import org.jooq.InsertResultStep;
 import org.jooq.Record1;
@@ -89,16 +101,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testTruncate() throws Exception {
         jOOQAbstractTest.reset = false;
 
-        try {
-            create().truncate(TAuthor()).execute();
-
-            // The above should fail if foreign keys are supported
-            if (!Arrays.asList(CUBRID, FIREBIRD, INGRES, SQLITE).contains(dialect())) {
-                fail();
-            }
-        } catch (Exception expected) {
-        }
-
         // This is being tested with an unreferenced table as some RDBMS don't
         // Allow this
         create().truncate(TDates()).execute();
@@ -106,29 +108,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testTruncateCascade() throws Exception {
-        switch (dialect().family()) {
-            /* [pro] */
-            case ACCESS:
-            case ASE:
-            case DB2:
-            case HANA:
-            case INFORMIX:
-            case INGRES:
-            case ORACLE:
-            case SQLSERVER:
-            case SYBASE:
-            /* [/pro] */
-            case CUBRID:
-            case DERBY:
-            case FIREBIRD:
-            case H2:
-            case HSQLDB:
-            case MARIADB:
-            case MYSQL:
-            case SQLITE:
-                log.info("SKIPPING", "TRUNCATE CASCADE tests");
-                return;
-        }
+        assumeFamilyNotIn(ACCESS, ASE, DB2, HANA, INFORMIX, INGRES, ORACLE, REDSHIFT, SQLSERVER, SYBASE, CUBRID, DERBY,
+            FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
 
         jOOQAbstractTest.reset = false;
 
@@ -149,28 +130,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testTruncateRestartIdentity() throws Exception {
-        switch (dialect().family()) {
-            /* [pro] */
-            case ACCESS:
-            case ASE:
-            case DB2:
-            case HANA:
-            case INFORMIX:
-            case INGRES:
-            case ORACLE:
-            case SQLSERVER:
-            case SYBASE:
-            /* [/pro] */
-            case CUBRID:
-            case DERBY:
-            case FIREBIRD:
-            case H2:
-            case MARIADB:
-            case MYSQL:
-            case SQLITE:
-                log.info("SKIPPING", "RESTART IDENTITY tests");
-                return;
-        }
+        assumeFamilyNotIn(ACCESS, ASE, DB2, HANA, INFORMIX, INGRES, ORACLE, REDSHIFT, SQLSERVER, SYBASE, CUBRID, DERBY, FIREBIRD,
+            H2, MARIADB, MYSQL, SQLITE);
 
         jOOQAbstractTest.reset = false;
 

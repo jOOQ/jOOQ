@@ -95,7 +95,7 @@ class Values<R extends Record> extends AbstractTable<R> {
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 
-            // [#915] Simulate VALUES(..) with SELECT .. UNION ALL SELECT ..
+            // [#915] Emulate VALUES(..) with SELECT .. UNION ALL SELECT ..
             // for those dialects that do not support a VALUES() constructor
             /* [pro] */
             case ACCESS:
@@ -103,6 +103,7 @@ class Values<R extends Record> extends AbstractTable<R> {
             case INFORMIX:
             case INGRES:
             case ORACLE:
+            case REDSHIFT:
             case SYBASE:
             /* [/pro] */
             case FIREBIRD:

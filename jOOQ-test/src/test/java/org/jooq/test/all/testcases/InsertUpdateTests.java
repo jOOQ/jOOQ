@@ -50,11 +50,14 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HANA;
+import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
@@ -1021,27 +1024,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testUpdateReturning() throws Exception {
-        switch (dialect().family()) {
-            /* [pro] */
-            case ASE:
-            case INGRES:
-            case ORACLE:
-            case SQLSERVER:
-            case SYBASE:
-            /* [/pro] */
-            case CUBRID:
-            case DERBY:
-            case HANA:
-            case H2:
-            case HSQLDB:
-            case MARIADB:
-            case MYSQL:
-            case SQLITE:
-                log.info("SKIPPING", "UPDATE .. RETURNING tests");
-                return;
-        }
+        assumeFamilyNotIn(ASE, INGRES, ORACLE, REDSHIFT, SQLSERVER, SYBASE, CUBRID, DERBY, HANA, H2, HSQLDB, MARIADB,
+            MYSQL, SQLITE);
 
         jOOQAbstractTest.reset = false;
+
         Result<?> result1 =
         create().update(TBook())
                 .set(TBook_TITLE(), "XYZ")
@@ -1542,22 +1529,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testUpdateJoin() throws Exception {
-        switch (family()) {
-            /* [pro] */
-            case DB2:
-            case INGRES:
-            case ORACLE:
-            case SQLSERVER:
-            /* [/pro] */
-            case DERBY:
-            case FIREBIRD:
-            case H2:
-            case HSQLDB:
-            case POSTGRES:
-            case SQLITE:
-                log.info("SKIPPING", "UPDATE T1 JOIN T2 .. integration test. This syntax is not supported by " + dialect());
-                return;
-        }
+        assumeFamilyNotIn(DB2, INGRES, ORACLE, REDSHIFT, SQLSERVER, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE);
 
         jOOQAbstractTest.reset = false;
 
@@ -1613,11 +1585,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         jOOQAbstractTest.reset = false;
 
         switch (family()) {
-            /* [pro] */
             // Ingres has yet another understanding of this FROM clause.
             case INGRES:
-            /* [/pro] */
-
             case POSTGRES:
                 Table<B> b1 = TBook().as("b1");
 

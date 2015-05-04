@@ -99,6 +99,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     private final boolean[]                                intern;
     private final boolean                                  keepResultSet;
     private final boolean                                  keepStatement;
+    private final int                                      maxRows;
     private final RecordFactory<? extends R>               factory;
     private boolean                                        isClosed;
 
@@ -107,12 +108,13 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     private transient Iterator<R>                          iterator;
     private transient int                                  rows;
 
+
     @SuppressWarnings("unchecked")
     CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement, boolean keepResultSet) {
-        this(ctx, listener, fields, internIndexes, keepStatement, keepResultSet, (Class<? extends R>) RecordImpl.class);
+        this(ctx, listener, fields, internIndexes, keepStatement, keepResultSet, (Class<? extends R>) RecordImpl.class, 0);
     }
 
-    CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement, boolean keepResultSet, Class<? extends R> type) {
+    CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement, boolean keepResultSet, Class<? extends R> type, int maxRows) {
         this.ctx = ctx;
         this.listener = (listener != null ? listener : new ExecuteListeners(ctx));
         this.cursorFields = fields;
@@ -122,6 +124,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         this.rs = new CursorResultSet();
         this.rsContext = new DefaultBindingGetResultSetContext<Object>(ctx.configuration(), ctx.data(), rs, 0);
         this.intern = new boolean[fields.length];
+        this.maxRows = maxRows;
 
         if (internIndexes != null) {
             for (int i : internIndexes) {
@@ -1361,7 +1364,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         /**
          * The (potentially) pre-fetched next record
          */
-        private R                             next;
+        private R next;
 
         /**
          * Whether the underlying {@link ResultSet} has a next record. This
@@ -1372,11 +1375,16 @@ class CursorImpl<R extends Record> implements Cursor<R> {
          * <li>false: there aren't any next records</li>
          * </ul>
          */
-        private Boolean                       hasNext;
+        private Boolean hasNext;
 
         @Override
         public final boolean hasNext() {
             if (hasNext == null) {
+
+                // Some databases (e.g. Redshift) do not implement JDBC's maxRows.
+                if (maxRows > 0 && rows >= maxRows)
+                    return false;
+
                 next = fetchOne();
                 hasNext = (next != null);
             }

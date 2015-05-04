@@ -5,9 +5,11 @@ package org.jooq.test.redshift.generatedclasses.tables;
 
 
 import org.jooq.Field;
+import org.jooq.Identity;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.impl.TableImpl;
+import org.jooq.test.redshift.generatedclasses.Keys;
 import org.jooq.test.redshift.generatedclasses.Public;
 import org.jooq.test.redshift.generatedclasses.tables.records.TIdentityRecord;
 
@@ -18,7 +20,7 @@ import org.jooq.test.redshift.generatedclasses.tables.records.TIdentityRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentity extends TableImpl<TIdentityRecord> {
 
-	private static final long serialVersionUID = -1332217694;
+	private static final long serialVersionUID = 1579202149;
 
 	/**
 	 * The reference instance of <code>public.t_identity</code>
@@ -63,6 +65,14 @@ public class TIdentity extends TableImpl<TIdentityRecord> {
 
 	private TIdentity(String alias, Table<TIdentityRecord> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Identity<TIdentityRecord, Integer> getIdentity() {
+		return Keys.IDENTITY_T_IDENTITY;
 	}
 
 	/**

@@ -62,6 +62,7 @@ import static org.jooq.SQLDialect.ORACLE12C;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.POSTGRES_9_3;
 import static org.jooq.SQLDialect.POSTGRES_9_4;
+import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SQLSERVER2012;
@@ -9981,7 +9982,7 @@ public class DSL {
     /**
      * Get the rand() function.
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLITE, SQLSERVER, SYBASE })
     public static Field<BigDecimal> rand() {
         return new Rand();
     }

@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.conf.StatementType.STATIC_STATEMENT;
 import static org.jooq.impl.DSL.all;
 import static org.jooq.impl.DSL.any;
@@ -369,6 +370,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testLargeINCondition() throws Exception {
+
+        // This seems to take forever in Redshift. Let's just skip...
+        assumeFamilyNotIn(REDSHIFT);
+
         Field<Integer> count = count();
         assertEquals(1, (int) create().select(count)
                                       .from(TBook())
@@ -419,6 +424,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testLargeINConditionWithExecuteListener() throws Exception {
+
+        // This seems to take forever in Redshift. Let's just skip...
+        assumeFamilyNotIn(REDSHIFT);
 
         NoControlFlowSignals listener = new NoControlFlowSignals();
 

@@ -57,6 +57,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES_9_3;
+import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
@@ -494,7 +495,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // [#1728] COUNT(DISTINCT expr1, expr2, ...)
         // -----------------------------------------
-        if (asList(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, INFORMIX, INGRES, ORACLE, SQLITE, SQLSERVER, SYBASE).contains(dialect().family())) {
+        if (asList(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, INFORMIX, INGRES, ORACLE, REDSHIFT, SQLITE, SQLSERVER, SYBASE).contains(dialect().family())) {
             log.info("SKIPPING", "Multi-expression COUNT(DISTINCT) test");
         }
         else {

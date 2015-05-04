@@ -55,6 +55,7 @@ import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
@@ -144,6 +145,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testCreateIndex() throws Exception {
+        assumeFamilyNotIn(REDSHIFT);
+
         try {
             // TODO: Re-use jOOQ API for this
             create().execute("create table {0} ({1} int, {2} int)", name("t"), name("a"), name("b"));
@@ -164,6 +167,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testDropIndex() throws Exception {
+        assumeFamilyNotIn(REDSHIFT);
+
         try {
             // TODO: Re-use jOOQ API for this
             create().execute("create table {0} ({1} int, {2} int)", name("t"), name("a"), name("b"));
@@ -183,7 +188,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testDropIndexIfExists() throws Exception {
-        assumeFamilyNotIn(HANA);
+        assumeFamilyNotIn(HANA, REDSHIFT);
 
         try {
             // TODO: Re-use jOOQ API for this

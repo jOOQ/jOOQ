@@ -7,6 +7,8 @@ package org.jooq.test.postgres.generatedclasses;
 import org.jooq.Field;
 import org.jooq.test.postgres.generatedclasses.tables.FArrayTables;
 import org.jooq.test.postgres.generatedclasses.tables.FGetArrays;
+import org.jooq.test.postgres.generatedclasses.tables.FSearchBookIds;
+import org.jooq.test.postgres.generatedclasses.tables.FSearchBookTitles;
 import org.jooq.test.postgres.generatedclasses.tables.FSearchBooks;
 import org.jooq.test.postgres.generatedclasses.tables.FTables1;
 import org.jooq.test.postgres.generatedclasses.tables.FTables2;
@@ -91,6 +93,44 @@ public class Tables {
 	 */
 	public static FGetArrays F_GET_ARRAYS(Field<Integer> pId) {
 		return FGetArrays.F_GET_ARRAYS.call(pId);
+	}
+
+	/**
+	 * The table public.f_search_book_ids
+	 */
+	public static final FSearchBookIds F_SEARCH_BOOK_IDS = org.jooq.test.postgres.generatedclasses.tables.FSearchBookIds.F_SEARCH_BOOK_IDS;
+
+	/**
+	 * Get <code>public.f_search_book_ids</code> as a field
+	 */
+	public static FSearchBookIds F_SEARCH_BOOK_IDS(String pTitle, Long pLimit, Long pOffset) {
+		return FSearchBookIds.F_SEARCH_BOOK_IDS.call(pTitle, pLimit, pOffset);
+	}
+
+	/**
+	 * Get <code>public.f_search_book_ids</code> as a field
+	 */
+	public static FSearchBookIds F_SEARCH_BOOK_IDS(Field<String> pTitle, Field<Long> pLimit, Field<Long> pOffset) {
+		return FSearchBookIds.F_SEARCH_BOOK_IDS.call(pTitle, pLimit, pOffset);
+	}
+
+	/**
+	 * The table public.f_search_book_titles
+	 */
+	public static final FSearchBookTitles F_SEARCH_BOOK_TITLES = org.jooq.test.postgres.generatedclasses.tables.FSearchBookTitles.F_SEARCH_BOOK_TITLES;
+
+	/**
+	 * Get <code>public.f_search_book_titles</code> as a field
+	 */
+	public static FSearchBookTitles F_SEARCH_BOOK_TITLES(String pTitle, Long pLimit, Long pOffset) {
+		return FSearchBookTitles.F_SEARCH_BOOK_TITLES.call(pTitle, pLimit, pOffset);
+	}
+
+	/**
+	 * Get <code>public.f_search_book_titles</code> as a field
+	 */
+	public static FSearchBookTitles F_SEARCH_BOOK_TITLES(Field<String> pTitle, Field<Long> pLimit, Field<Long> pOffset) {
+		return FSearchBookTitles.F_SEARCH_BOOK_TITLES.call(pTitle, pLimit, pOffset);
 	}
 
 	/**

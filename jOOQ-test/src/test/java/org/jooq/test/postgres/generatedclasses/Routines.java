@@ -39,6 +39,8 @@ import org.jooq.test.postgres.generatedclasses.routines.PUnused;
 import org.jooq.test.postgres.generatedclasses.routines.SecondMax;
 import org.jooq.test.postgres.generatedclasses.tables.FArrayTables;
 import org.jooq.test.postgres.generatedclasses.tables.FGetArrays;
+import org.jooq.test.postgres.generatedclasses.tables.FSearchBookIds;
+import org.jooq.test.postgres.generatedclasses.tables.FSearchBookTitles;
 import org.jooq.test.postgres.generatedclasses.tables.FSearchBooks;
 import org.jooq.test.postgres.generatedclasses.tables.FTables1;
 import org.jooq.test.postgres.generatedclasses.tables.FTables2;
@@ -596,6 +598,34 @@ public class Routines {
 	 */
 	public static FGetArrays fGetArrays(Field<Integer> pId) {
 		return FGetArrays.F_GET_ARRAYS.call(pId);
+	}
+
+	/**
+	 * Get <code>public.f_search_book_ids</code> as a field
+	 */
+	public static FSearchBookIds fSearchBookIds(String pTitle, Long pLimit, Long pOffset) {
+		return FSearchBookIds.F_SEARCH_BOOK_IDS.call(pTitle, pLimit, pOffset);
+	}
+
+	/**
+	 * Get <code>public.f_search_book_ids</code> as a field
+	 */
+	public static FSearchBookIds fSearchBookIds(Field<String> pTitle, Field<Long> pLimit, Field<Long> pOffset) {
+		return FSearchBookIds.F_SEARCH_BOOK_IDS.call(pTitle, pLimit, pOffset);
+	}
+
+	/**
+	 * Get <code>public.f_search_book_titles</code> as a field
+	 */
+	public static FSearchBookTitles fSearchBookTitles(String pTitle, Long pLimit, Long pOffset) {
+		return FSearchBookTitles.F_SEARCH_BOOK_TITLES.call(pTitle, pLimit, pOffset);
+	}
+
+	/**
+	 * Get <code>public.f_search_book_titles</code> as a field
+	 */
+	public static FSearchBookTitles fSearchBookTitles(Field<String> pTitle, Field<Long> pLimit, Field<Long> pOffset) {
+		return FSearchBookTitles.F_SEARCH_BOOK_TITLES.call(pTitle, pLimit, pOffset);
 	}
 
 	/**

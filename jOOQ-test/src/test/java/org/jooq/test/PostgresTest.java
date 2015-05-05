@@ -61,6 +61,8 @@ import static org.jooq.impl.DSL.val;
 import static org.jooq.lambda.tuple.Tuple.range;
 import static org.jooq.test.postgres.generatedclasses.Tables.F_ARRAY_TABLES;
 import static org.jooq.test.postgres.generatedclasses.Tables.F_SEARCH_BOOKS;
+import static org.jooq.test.postgres.generatedclasses.Tables.F_SEARCH_BOOK_IDS;
+import static org.jooq.test.postgres.generatedclasses.Tables.F_SEARCH_BOOK_TITLES;
 import static org.jooq.test.postgres.generatedclasses.Tables.F_TABLES1;
 import static org.jooq.test.postgres.generatedclasses.Tables.F_TABLES2;
 import static org.jooq.test.postgres.generatedclasses.Tables.F_TABLES3;
@@ -160,6 +162,8 @@ import org.jooq.test.postgres.generatedclasses.tables.FTables3;
 import org.jooq.test.postgres.generatedclasses.tables.FTables4;
 import org.jooq.test.postgres.generatedclasses.tables.TArrays;
 import org.jooq.test.postgres.generatedclasses.tables.records.FArrayTablesRecord;
+import org.jooq.test.postgres.generatedclasses.tables.records.FSearchBookIdsRecord;
+import org.jooq.test.postgres.generatedclasses.tables.records.FSearchBookTitlesRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.FSearchBooksRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.FTables2Record;
 import org.jooq.test.postgres.generatedclasses.tables.records.FTables3Record;
@@ -1209,6 +1213,21 @@ public class PostgresTest extends jOOQAbstractTest<
 
         assertEquals(BOOK_IDS.subList(1, 4), result4b.getValues(t4b.ID));
         assertEquals(BOOK_TITLES.subList(1, 4), result4b.getValues(t4b.TITLE));
+    }
+
+    @Test
+    public void testPostgresSetofIntFunction() throws Exception {
+        Result<FSearchBookIdsRecord> r1 =
+        create().selectFrom(Routines.fSearchBookIds("", 3L, 0L))
+                .fetch();
+
+        assertEquals(BOOK_IDS.subList(0, 3), r1.getValues(F_SEARCH_BOOK_IDS.F_SEARCH_BOOK_IDS_, int.class));
+
+        Result<FSearchBookTitlesRecord> r2 =
+        create().selectFrom(Routines.fSearchBookTitles("", 3L, 0L))
+                .fetch();
+
+        assertEquals(BOOK_TITLES.subList(0, 3), r2.getValues(F_SEARCH_BOOK_TITLES.F_SEARCH_BOOK_TITLES_, String.class));
     }
 
 //    @Test

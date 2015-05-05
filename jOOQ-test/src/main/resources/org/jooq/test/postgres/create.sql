@@ -44,6 +44,8 @@ DROP FUNCTION f317(p1 int, p2 int, p3 int, p4 int);/
 DROP FUNCTION p_get_two_cursors(books OUT refcursor, authors OUT refcursor)/
 DROP FUNCTION p_get_one_cursor(total OUT int, books OUT refcursor, book_ids in int[])/
 DROP FUNCTION f_get_one_cursor(book_ids IN int[])/
+DROP FUNCTION f_search_book_ids(p_title character varying, p_limit bigint, p_offset bigint)/
+DROP FUNCTION f_search_book_titles(p_title character varying, p_limit bigint, p_offset bigint)/
 DROP FUNCTION f_search_books(p_title character varying, p_limit bigint, p_offset bigint)/
 DROP FUNCTION f_search_book(p_title character varying)/
 DROP FUNCTION f_get_arrays(p_id integer)/
@@ -576,6 +578,30 @@ SELECT * FROM t_author
 
 CREATE VIEW v_book AS
 SELECT * FROM t_book
+/
+
+CREATE OR REPLACE FUNCTION f_search_book_ids(p_title character varying, p_limit bigint, p_offset bigint)
+  RETURNS SETOF INT AS
+$BODY$
+SELECT id FROM t_book
+WHERE (LOWER(title) LIKE LOWER('%' || $1 || '%'))
+LIMIT $2 OFFSET $3;
+$BODY$
+  LANGUAGE sql VOLATILE
+  COST 100
+  ROWS 1000;
+/
+
+CREATE OR REPLACE FUNCTION f_search_book_titles(p_title character varying, p_limit bigint, p_offset bigint)
+  RETURNS SETOF VARCHAR(50) AS
+$BODY$
+SELECT title FROM t_book
+WHERE (LOWER(title) LIKE LOWER('%' || $1 || '%'))
+LIMIT $2 OFFSET $3;
+$BODY$
+  LANGUAGE sql VOLATILE
+  COST 100
+  ROWS 1000;
 /
 
 CREATE OR REPLACE FUNCTION f_search_books(p_title character varying, p_limit bigint, p_offset bigint)

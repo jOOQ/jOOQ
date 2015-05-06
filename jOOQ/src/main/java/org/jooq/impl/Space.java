@@ -63,6 +63,21 @@ class Space extends AbstractFunction<String> {
     final QueryPart getFunction0(Configuration configuration) {
         switch (configuration.family()) {
             /* [pro] xx
+            xxxx xxxxx
+            xxxx xxxxxxxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxx
+            xxxx xxxxxxxxx
+            xx [/pro] */
+
+            case DERBY:
+            case FIREBIRD:
+            case HSQLDB:
+            case POSTGRES:
+            case SQLITE:
+                return DSL.repeat(DSL.inline(" "), count);
+
+            /* [pro] xx
             xxxx xxxx
             xxxx xxxxxxx
             xxxx xxxx
@@ -74,20 +89,8 @@ class Space extends AbstractFunction<String> {
             case MARIADB:
             case MYSQL:
             case H2:
-                return DSL.field("{space}({0})", getDataType(), count);
-
-            /* [pro] xx
-            xxxx xxxxxxx
-            xxxx xxxxxxx
-            xx [/pro] */
-
-            case DERBY:
-            case FIREBIRD:
-            case HSQLDB:
-            case POSTGRES:
-            case SQLITE:
             default:
-                return DSL.repeat(DSL.inline(" "), count);
+                return DSL.field("{space}({0})", getDataType(), count);
         }
     }
 

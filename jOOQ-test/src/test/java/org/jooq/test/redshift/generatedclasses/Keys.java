@@ -4,6 +4,7 @@
 package org.jooq.test.redshift.generatedclasses;
 
 
+import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.UniqueKey;
 import org.jooq.impl.AbstractKeys;
@@ -17,6 +18,9 @@ import org.jooq.test.redshift.generatedclasses.tables.TIdentityPk;
 import org.jooq.test.redshift.generatedclasses.tables.TLanguage;
 import org.jooq.test.redshift.generatedclasses.tables.T_3111;
 import org.jooq.test.redshift.generatedclasses.tables.T_639NumbersTable;
+import org.jooq.test.redshift.generatedclasses.tables.T_986_1;
+import org.jooq.test.redshift.generatedclasses.tables.T_986_2;
+import org.jooq.test.redshift.generatedclasses.tables.XTestCase_2025;
 import org.jooq.test.redshift.generatedclasses.tables.XTestCase_64_69;
 import org.jooq.test.redshift.generatedclasses.tables.XTestCase_71;
 import org.jooq.test.redshift.generatedclasses.tables.XTestCase_85;
@@ -32,6 +36,9 @@ import org.jooq.test.redshift.generatedclasses.tables.records.TIdentityRecord;
 import org.jooq.test.redshift.generatedclasses.tables.records.TLanguageRecord;
 import org.jooq.test.redshift.generatedclasses.tables.records.T_3111Record;
 import org.jooq.test.redshift.generatedclasses.tables.records.T_639NumbersTableRecord;
+import org.jooq.test.redshift.generatedclasses.tables.records.T_986_1Record;
+import org.jooq.test.redshift.generatedclasses.tables.records.T_986_2Record;
+import org.jooq.test.redshift.generatedclasses.tables.records.XTestCase_2025Record;
 import org.jooq.test.redshift.generatedclasses.tables.records.XTestCase_64_69Record;
 import org.jooq.test.redshift.generatedclasses.tables.records.XTestCase_71Record;
 import org.jooq.test.redshift.generatedclasses.tables.records.XTestCase_85Record;
@@ -76,6 +83,21 @@ public class Keys {
 	// FOREIGN KEY definitions
 	// -------------------------------------------------------------------------
 
+	public static final ForeignKey<T_986_1Record, XUnusedRecord> T_986_1__FK_986 = ForeignKeys0.T_986_1__FK_986;
+	public static final ForeignKey<T_986_2Record, XUnusedRecord> T_986_2__FK_986 = ForeignKeys0.T_986_2__FK_986;
+	public static final ForeignKey<TBookRecord, TAuthorRecord> T_BOOK__FK_T_BOOK_AUTHOR_ID = ForeignKeys0.T_BOOK__FK_T_BOOK_AUTHOR_ID;
+	public static final ForeignKey<TBookRecord, TAuthorRecord> T_BOOK__FK_T_BOOK_CO_AUTHOR_ID = ForeignKeys0.T_BOOK__FK_T_BOOK_CO_AUTHOR_ID;
+	public static final ForeignKey<TBookRecord, TLanguageRecord> T_BOOK__FK_T_BOOK_LANGUAGE_ID = ForeignKeys0.T_BOOK__FK_T_BOOK_LANGUAGE_ID;
+	public static final ForeignKey<TBookToBookStoreRecord, TBookStoreRecord> T_BOOK_TO_BOOK_STORE__FK_B2BS_BS_NAME = ForeignKeys0.T_BOOK_TO_BOOK_STORE__FK_B2BS_BS_NAME;
+	public static final ForeignKey<TBookToBookStoreRecord, TBookRecord> T_BOOK_TO_BOOK_STORE__FK_B2BS_B_ID = ForeignKeys0.T_BOOK_TO_BOOK_STORE__FK_B2BS_B_ID;
+	public static final ForeignKey<XTestCase_2025Record, XTestCase_85Record> X_TEST_CASE_2025__FK_X_TEST_CASE_2025_1 = ForeignKeys0.X_TEST_CASE_2025__FK_X_TEST_CASE_2025_1;
+	public static final ForeignKey<XTestCase_2025Record, XTestCase_71Record> X_TEST_CASE_2025__FK_X_TEST_CASE_2025_2 = ForeignKeys0.X_TEST_CASE_2025__FK_X_TEST_CASE_2025_2;
+	public static final ForeignKey<XTestCase_2025Record, XUnusedRecord> X_TEST_CASE_2025__FK_X_TEST_CASE_2025_3 = ForeignKeys0.X_TEST_CASE_2025__FK_X_TEST_CASE_2025_3;
+	public static final ForeignKey<XTestCase_64_69Record, XUnusedRecord> X_TEST_CASE_64_69__FK_X_TEST_CASE_64_69A = ForeignKeys0.X_TEST_CASE_64_69__FK_X_TEST_CASE_64_69A;
+	public static final ForeignKey<XTestCase_64_69Record, XUnusedRecord> X_TEST_CASE_64_69__FK_X_TEST_CASE_64_69B = ForeignKeys0.X_TEST_CASE_64_69__FK_X_TEST_CASE_64_69B;
+	public static final ForeignKey<XTestCase_71Record, XTestCase_64_69Record> X_TEST_CASE_71__FK_X_TEST_CASE_71 = ForeignKeys0.X_TEST_CASE_71__FK_X_TEST_CASE_71;
+	public static final ForeignKey<XTestCase_85Record, XUnusedRecord> X_TEST_CASE_85__FK_X_TEST_CASE_85 = ForeignKeys0.X_TEST_CASE_85__FK_X_TEST_CASE_85;
+	public static final ForeignKey<XUnusedRecord, XUnusedRecord> X_UNUSED__FK_X_UNUSED_SELF = ForeignKeys0.X_UNUSED__FK_X_UNUSED_SELF;
 
 	// -------------------------------------------------------------------------
 	// [#1459] distribute members to avoid static initialisers > 64kb
@@ -102,5 +124,23 @@ public class Keys {
 		public static final UniqueKey<XTestCase_85Record> PK_X_TEST_CASE_85 = createUniqueKey(XTestCase_85.X_TEST_CASE_85, XTestCase_85.X_TEST_CASE_85.ID);
 		public static final UniqueKey<XUnusedRecord> PK_X_UNUSED = createUniqueKey(XUnused.X_UNUSED, XUnused.X_UNUSED.ID, XUnused.X_UNUSED.NAME);
 		public static final UniqueKey<XUnusedRecord> UK_X_UNUSED_ID = createUniqueKey(XUnused.X_UNUSED, XUnused.X_UNUSED.ID);
+	}
+
+	private static class ForeignKeys0 extends AbstractKeys {
+		public static final ForeignKey<T_986_1Record, XUnusedRecord> T_986_1__FK_986 = createForeignKey(org.jooq.test.redshift.generatedclasses.Keys.PK_X_UNUSED, T_986_1.T_986_1, T_986_1.T_986_1.REF);
+		public static final ForeignKey<T_986_2Record, XUnusedRecord> T_986_2__FK_986 = createForeignKey(org.jooq.test.redshift.generatedclasses.Keys.PK_X_UNUSED, T_986_2.T_986_2, T_986_2.T_986_2.REF);
+		public static final ForeignKey<TBookRecord, TAuthorRecord> T_BOOK__FK_T_BOOK_AUTHOR_ID = createForeignKey(org.jooq.test.redshift.generatedclasses.Keys.PK_T_AUTHOR, TBook.T_BOOK, org.jooq.test.redshift.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID);
+		public static final ForeignKey<TBookRecord, TAuthorRecord> T_BOOK__FK_T_BOOK_CO_AUTHOR_ID = createForeignKey(org.jooq.test.redshift.generatedclasses.Keys.PK_T_AUTHOR, TBook.T_BOOK, org.jooq.test.redshift.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID);
+		public static final ForeignKey<TBookRecord, TLanguageRecord> T_BOOK__FK_T_BOOK_LANGUAGE_ID = createForeignKey(org.jooq.test.redshift.generatedclasses.Keys.PK_T_LANGUAGE, TBook.T_BOOK, TBook.T_BOOK.LANGUAGE_ID);
+		public static final ForeignKey<TBookToBookStoreRecord, TBookStoreRecord> T_BOOK_TO_BOOK_STORE__FK_B2BS_BS_NAME = createForeignKey(org.jooq.test.redshift.generatedclasses.Keys.UK_T_BOOK_STORE_NAME, TBookToBookStore.T_BOOK_TO_BOOK_STORE, TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME);
+		public static final ForeignKey<TBookToBookStoreRecord, TBookRecord> T_BOOK_TO_BOOK_STORE__FK_B2BS_B_ID = createForeignKey(org.jooq.test.redshift.generatedclasses.Keys.PK_T_BOOK, TBookToBookStore.T_BOOK_TO_BOOK_STORE, TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID);
+		public static final ForeignKey<XTestCase_2025Record, XTestCase_85Record> X_TEST_CASE_2025__FK_X_TEST_CASE_2025_1 = createForeignKey(org.jooq.test.redshift.generatedclasses.Keys.PK_X_TEST_CASE_85, XTestCase_2025.X_TEST_CASE_2025, XTestCase_2025.X_TEST_CASE_2025.REF_ID);
+		public static final ForeignKey<XTestCase_2025Record, XTestCase_71Record> X_TEST_CASE_2025__FK_X_TEST_CASE_2025_2 = createForeignKey(org.jooq.test.redshift.generatedclasses.Keys.PK_X_TEST_CASE_71, XTestCase_2025.X_TEST_CASE_2025, XTestCase_2025.X_TEST_CASE_2025.REF_ID);
+		public static final ForeignKey<XTestCase_2025Record, XUnusedRecord> X_TEST_CASE_2025__FK_X_TEST_CASE_2025_3 = createForeignKey(org.jooq.test.redshift.generatedclasses.Keys.PK_X_UNUSED, XTestCase_2025.X_TEST_CASE_2025, XTestCase_2025.X_TEST_CASE_2025.REF_ID, XTestCase_2025.X_TEST_CASE_2025.REF_NAME);
+		public static final ForeignKey<XTestCase_64_69Record, XUnusedRecord> X_TEST_CASE_64_69__FK_X_TEST_CASE_64_69A = createForeignKey(org.jooq.test.redshift.generatedclasses.Keys.PK_X_UNUSED, XTestCase_64_69.X_TEST_CASE_64_69, XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID);
+		public static final ForeignKey<XTestCase_64_69Record, XUnusedRecord> X_TEST_CASE_64_69__FK_X_TEST_CASE_64_69B = createForeignKey(org.jooq.test.redshift.generatedclasses.Keys.PK_X_UNUSED, XTestCase_64_69.X_TEST_CASE_64_69, XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID);
+		public static final ForeignKey<XTestCase_71Record, XTestCase_64_69Record> X_TEST_CASE_71__FK_X_TEST_CASE_71 = createForeignKey(org.jooq.test.redshift.generatedclasses.Keys.PK_X_TEST_CASE_64_69, XTestCase_71.X_TEST_CASE_71, XTestCase_71.X_TEST_CASE_71.TEST_CASE_64_69_ID);
+		public static final ForeignKey<XTestCase_85Record, XUnusedRecord> X_TEST_CASE_85__FK_X_TEST_CASE_85 = createForeignKey(org.jooq.test.redshift.generatedclasses.Keys.PK_X_UNUSED, XTestCase_85.X_TEST_CASE_85, XTestCase_85.X_TEST_CASE_85.X_UNUSED_ID, XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME);
+		public static final ForeignKey<XUnusedRecord, XUnusedRecord> X_UNUSED__FK_X_UNUSED_SELF = createForeignKey(org.jooq.test.redshift.generatedclasses.Keys.PK_X_UNUSED, XUnused.X_UNUSED, XUnused.X_UNUSED.ID_REF, XUnused.X_UNUSED.NAME_REF);
 	}
 }

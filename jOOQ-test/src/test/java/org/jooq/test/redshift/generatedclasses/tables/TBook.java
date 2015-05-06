@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -23,7 +24,7 @@ import org.jooq.test.redshift.generatedclasses.tables.records.TBookRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends TableImpl<TBookRecord> {
 
-	private static final long serialVersionUID = -887831018;
+	private static final long serialVersionUID = -764071733;
 
 	/**
 	 * The reference instance of <code>public.t_book</code>
@@ -119,6 +120,14 @@ public class TBook extends TableImpl<TBookRecord> {
 	@Override
 	public List<UniqueKey<TBookRecord>> getKeys() {
 		return Arrays.<UniqueKey<TBookRecord>>asList(Keys.PK_T_BOOK);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<ForeignKey<TBookRecord, ?>> getReferences() {
+		return Arrays.<ForeignKey<TBookRecord, ?>>asList(org.jooq.test.redshift.generatedclasses.Keys.T_BOOK__FK_T_BOOK_AUTHOR_ID, org.jooq.test.redshift.generatedclasses.Keys.T_BOOK__FK_T_BOOK_CO_AUTHOR_ID, Keys.T_BOOK__FK_T_BOOK_LANGUAGE_ID);
 	}
 
 	/**

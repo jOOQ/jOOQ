@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -23,7 +24,7 @@ import org.jooq.test.redshift.generatedclasses.tables.records.XTestCase_85Record
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_85 extends TableImpl<XTestCase_85Record> {
 
-	private static final long serialVersionUID = 927038940;
+	private static final long serialVersionUID = 767481913;
 
 	/**
 	 * The reference instance of <code>public.x_test_case_85</code>
@@ -89,6 +90,14 @@ public class XTestCase_85 extends TableImpl<XTestCase_85Record> {
 	@Override
 	public List<UniqueKey<XTestCase_85Record>> getKeys() {
 		return Arrays.<UniqueKey<XTestCase_85Record>>asList(Keys.PK_X_TEST_CASE_85);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<ForeignKey<XTestCase_85Record, ?>> getReferences() {
+		return Arrays.<ForeignKey<XTestCase_85Record, ?>>asList(Keys.X_TEST_CASE_85__FK_X_TEST_CASE_85);
 	}
 
 	/**

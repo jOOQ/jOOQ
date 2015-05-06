@@ -771,6 +771,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testRowValueExpressionInSelectClause() throws Exception {
+        Field<Integer> authorId = TAuthor_ID().as("author_id");
+        Field<Integer> bookId = TBook_ID().as("book_id");
+
         Result<Record4<
             Integer,
             Record2<String, String>,
@@ -778,9 +781,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             Record2<String, Integer>
         >> result =
         create().select(
-                    TAuthor_ID(),
+                    authorId,
                     field(row(TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())).as("row1"),
-                    TBook_ID(),
+                    bookId,
                     field(row(TBook_TITLE(), TBook_LANGUAGE_ID())).as("row2")
                 )
                 .from(TAuthor())
@@ -798,10 +801,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .fetch();
 
         assertEquals(4, result.fields().length);
-        assertEquals(BOOK_AUTHOR_IDS, result.getValues(TAuthor_ID()));
+        assertEquals(BOOK_AUTHOR_IDS, result.getValues(authorId));
         assertEquals(BOOK_FIRST_NAMES, result.map(r -> r.value2().value1()));
         assertEquals(BOOK_LAST_NAMES, result.map(r -> r.value2().value2()));
-        assertEquals(BOOK_IDS, result.getValues(TBook_ID()));
+        assertEquals(BOOK_IDS, result.getValues(bookId));
         assertEquals(BOOK_TITLES, result.map(r -> r.value4().value1()));
         assertEquals(BOOK_LANGUAGES, result.map(r -> r.value4().value2()));
     }

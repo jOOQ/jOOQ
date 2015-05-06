@@ -4,10 +4,15 @@
 package org.jooq.test.redshift.generatedclasses.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.impl.TableImpl;
+import org.jooq.test.redshift.generatedclasses.Keys;
 import org.jooq.test.redshift.generatedclasses.Public;
 import org.jooq.test.redshift.generatedclasses.tables.records.T_986_2Record;
 
@@ -18,7 +23,7 @@ import org.jooq.test.redshift.generatedclasses.tables.records.T_986_2Record;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_986_2 extends TableImpl<T_986_2Record> {
 
-	private static final long serialVersionUID = 1323576211;
+	private static final long serialVersionUID = 896515499;
 
 	/**
 	 * The reference instance of <code>public.t_986_2</code>
@@ -58,6 +63,14 @@ public class T_986_2 extends TableImpl<T_986_2Record> {
 
 	private T_986_2(String alias, Table<T_986_2Record> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<ForeignKey<T_986_2Record, ?>> getReferences() {
+		return Arrays.<ForeignKey<T_986_2Record, ?>>asList(Keys.T_986_2__FK_986);
 	}
 
 	/**

@@ -60,6 +60,7 @@ import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
+import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.EnumDefinition;
 import org.jooq.util.PackageDefinition;
@@ -138,7 +139,43 @@ public class RedshiftDatabase extends AbstractDatabase {
     }
 
     @Override
-    protected void loadForeignKeys(DefaultRelations r) throws SQLException {}
+    protected void loadForeignKeys(DefaultRelations r) throws SQLException {
+
+        // Avoid loading foreign keys for all schemas as network latency may be
+        // substantial on Redshift
+        for (SchemaDefinition schema : getSchemata()) {
+
+            // [#3520] PostgreSQL INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS contains incomplete information about foreign keys
+            // The (CONSTRAINT_CATALOG, CONSTRAINT_SCHEMA, CONSTRAINT_NAME) tuple is non-unique, in case two tables share the
+            // same CONSTRAINT_NAME.
+            Result<Record> result = create()
+                .fetch(getConnection().getMetaData().getExportedKeys(null, schema.getName(), null))
+                .sortAsc("KEY_SEQ")
+                .sortAsc("FK_NAME")
+                .sortAsc("FKTABLE_NAME")
+                .sortAsc("FKTABLE_SCHEM");
+
+            for (Record record : result) {
+                SchemaDefinition foreignKeySchema = getSchema(record.getValue("FKTABLE_SCHEM", String.class));
+                SchemaDefinition uniqueKeySchema = getSchema(record.getValue("PKTABLE_SCHEM", String.class));
+
+                String foreignKey = record.getValue("FK_NAME", String.class);
+                String foreignKeyTable = record.getValue("FKTABLE_NAME", String.class);
+                String foreignKeyColumn = record.getValue("FKCOLUMN_NAME", String.class);
+                String uniqueKey = record.getValue("PK_NAME", String.class);
+
+                TableDefinition referencingTable = getTable(foreignKeySchema, foreignKeyTable);
+
+                if (referencingTable != null) {
+
+                    // [#986] Add the table name as a namespace prefix to the key
+                    // name. In Postgres, foreign key names are only unique per table
+                    ColumnDefinition referencingColumn = referencingTable.getColumn(foreignKeyColumn);
+                    r.addForeignKey(foreignKeyTable + "__" + foreignKey, uniqueKey, referencingColumn, uniqueKeySchema);
+                }
+            }
+        }
+    }
 
     @Override
     protected void loadCheckConstraints(DefaultRelations r) throws SQLException {}

@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -23,7 +24,7 @@ import org.jooq.test.redshift.generatedclasses.tables.records.TBookToBookStoreRe
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStore extends TableImpl<TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 891089951;
+	private static final long serialVersionUID = 561944733;
 
 	/**
 	 * The reference instance of <code>public.t_book_to_book_store</code>
@@ -89,6 +90,14 @@ public class TBookToBookStore extends TableImpl<TBookToBookStoreRecord> {
 	@Override
 	public List<UniqueKey<TBookToBookStoreRecord>> getKeys() {
 		return Arrays.<UniqueKey<TBookToBookStoreRecord>>asList(Keys.PK_B2BS);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<ForeignKey<TBookToBookStoreRecord, ?>> getReferences() {
+		return Arrays.<ForeignKey<TBookToBookStoreRecord, ?>>asList(Keys.T_BOOK_TO_BOOK_STORE__FK_B2BS_BS_NAME, Keys.T_BOOK_TO_BOOK_STORE__FK_B2BS_B_ID);
 	}
 
 	/**

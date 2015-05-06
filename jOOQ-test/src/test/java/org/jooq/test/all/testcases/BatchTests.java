@@ -53,6 +53,7 @@ import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.delete;
 import static org.jooq.impl.DSL.inline;
@@ -231,7 +232,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testBatchSingleMerge() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, H2, HANA, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE);
+        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, H2, HANA, INGRES, MARIADB, MYSQL, POSTGRES, REDSHIFT, SQLITE);
         jOOQAbstractTest.reset = false;
 
         BatchBindStep batch = create().batch(

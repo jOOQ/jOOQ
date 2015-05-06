@@ -4,10 +4,15 @@
 package org.jooq.test.redshift.generatedclasses.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.impl.TableImpl;
+import org.jooq.test.redshift.generatedclasses.Keys;
 import org.jooq.test.redshift.generatedclasses.Public;
 import org.jooq.test.redshift.generatedclasses.tables.records.XTestCase_2025Record;
 
@@ -18,7 +23,7 @@ import org.jooq.test.redshift.generatedclasses.tables.records.XTestCase_2025Reco
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_2025 extends TableImpl<XTestCase_2025Record> {
 
-	private static final long serialVersionUID = 108437222;
+	private static final long serialVersionUID = 203264693;
 
 	/**
 	 * The reference instance of <code>public.x_test_case_2025</code>
@@ -63,6 +68,14 @@ public class XTestCase_2025 extends TableImpl<XTestCase_2025Record> {
 
 	private XTestCase_2025(String alias, Table<XTestCase_2025Record> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<ForeignKey<XTestCase_2025Record, ?>> getReferences() {
+		return Arrays.<ForeignKey<XTestCase_2025Record, ?>>asList(Keys.X_TEST_CASE_2025__FK_X_TEST_CASE_2025_1, Keys.X_TEST_CASE_2025__FK_X_TEST_CASE_2025_2, Keys.X_TEST_CASE_2025__FK_X_TEST_CASE_2025_3);
 	}
 
 	/**

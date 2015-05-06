@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -25,7 +26,7 @@ import org.jooq.test.redshift.generatedclasses.tables.records.XUnusedRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnused extends TableImpl<XUnusedRecord> {
 
-	private static final long serialVersionUID = -1566842239;
+	private static final long serialVersionUID = 1253555253;
 
 	/**
 	 * The reference instance of <code>public.x_unused</code>
@@ -151,6 +152,14 @@ public class XUnused extends TableImpl<XUnusedRecord> {
 	@Override
 	public List<UniqueKey<XUnusedRecord>> getKeys() {
 		return Arrays.<UniqueKey<XUnusedRecord>>asList(Keys.PK_X_UNUSED, Keys.UK_X_UNUSED_ID);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<ForeignKey<XUnusedRecord, ?>> getReferences() {
+		return Arrays.<ForeignKey<XUnusedRecord, ?>>asList(Keys.X_UNUSED__FK_X_UNUSED_SELF);
 	}
 
 	/**

@@ -507,7 +507,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testLinearRegressionFunctions() throws Exception {
-        assumeFamilyNotIn(ASE, CUBRID, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, SQLITE, SQLSERVER);
+        assumeFamilyNotIn(ASE, CUBRID, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, REDSHIFT, SQLITE, SQLSERVER);
 
         // [#600] As aggregate functions
         Record record =

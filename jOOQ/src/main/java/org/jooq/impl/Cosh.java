@@ -74,6 +74,7 @@ class Cosh extends AbstractFunction<BigDecimal> {
             case ACCESS:
             case ASE:
             case INGRES:
+            case REDSHIFT:
             case SQLSERVER:
             case SYBASE:
             /* [/pro] */

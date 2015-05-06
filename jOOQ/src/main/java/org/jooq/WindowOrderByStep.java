@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
@@ -72,18 +73,18 @@ public interface WindowOrderByStep<T> extends WindowFinalStep<T> {
     /**
      * Add an <code>ORDER BY</code> clause to the window function.
      */
-    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, ORACLE, REDSHIFT, SQLSERVER, SYBASE })
     WindowRowsStep<T> orderBy(Field<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the window function.
      */
-    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, ORACLE, REDSHIFT, SQLSERVER, SYBASE })
     WindowRowsStep<T> orderBy(SortField<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the window function.
      */
-    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, ORACLE, REDSHIFT, SQLSERVER, SYBASE })
     WindowRowsStep<T> orderBy(Collection<? extends SortField<?>> fields);
 }

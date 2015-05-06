@@ -571,6 +571,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             case H2:
             case POSTGRES:
             /* [pro] */
+            case REDSHIFT:
             case SQLSERVER:
                 log.info("SKIPPING", "[#3575] Emulated OFFSET pagination with expressions using aliases in ORDER BY");
                 break;
@@ -596,6 +597,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             case DERBY:
             /* [pro] */
             case DB2:
+            case REDSHIFT:
             case SYBASE:
                 log.info("SKIPPING", "Emulated OFFSET pagination with ORDER BY (SELECT)");
                 break;

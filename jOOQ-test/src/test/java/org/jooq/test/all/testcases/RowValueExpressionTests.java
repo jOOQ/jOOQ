@@ -44,6 +44,7 @@ import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.impl.DSL.all;
 import static org.jooq.impl.DSL.any;
 import static org.jooq.impl.DSL.currentDate;
@@ -376,7 +377,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public void testRowValueExpressionQuantifiedComparisonPredicates_LE_LT_GE_GT() throws Exception {
         // [#3505] TODO Emulate this
-        assumeFamilyNotIn(HANA, ORACLE);
+        assumeFamilyNotIn(HANA, ORACLE, REDSHIFT);
 
         Field<Integer> _0 = inline(0);
         Field<Integer> _1 = inline(1);

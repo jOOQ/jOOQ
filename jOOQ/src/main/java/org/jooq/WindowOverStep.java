@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
@@ -78,12 +79,10 @@ public interface WindowOverStep<T> {
      * <p>
      * An example: <code><pre>
      * MAX(id) OVER (PARTITION BY 1)
-     * </code></pre>
-     * <p>
-     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
-     * Server and Sybase.
+     * </code>
+     * </pre>
      */
-    @Support({ CUBRID, DB2, DERBY, H2, HANA, HSQLDB, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, H2, HANA, HSQLDB, INFORMIX, POSTGRES, ORACLE, REDSHIFT, SQLSERVER, SYBASE })
     WindowPartitionByStep<T> over();
 
     /**
@@ -92,14 +91,14 @@ public interface WindowOverStep<T> {
      * <p>
      * An example: <code><pre>
      * MAX(id) OVER my_window
-     * </code></pre>
+     * </code>
+     * </pre>
      * <p>
-     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
-     * Server and Sybase. If the <code>WINDOW</code> clause is not supported
-     * (see {@link SelectWindowStep#window(WindowDefinition...)}, then
-     * referenced windows will be inlined.
+     * If the <code>WINDOW</code> clause is not supported (see
+     * {@link SelectWindowStep#window(WindowDefinition...)}, then referenced
+     * windows will be inlined.
      */
-    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, ORACLE, REDSHIFT, SQLSERVER, SYBASE })
     WindowFinalStep<T> over(Name name);
 
     /**
@@ -108,14 +107,14 @@ public interface WindowOverStep<T> {
      * <p>
      * An example: <code><pre>
      * MAX(id) OVER my_window
-     * </code></pre>
+     * </code>
+     * </pre>
      * <p>
-     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
-     * Server and Sybase. If the <code>WINDOW</code> clause is not supported
-     * (see {@link SelectWindowStep#window(WindowDefinition...)}, then
-     * referenced windows will be inlined.
+     * If the <code>WINDOW</code> clause is not supported (see
+     * {@link SelectWindowStep#window(WindowDefinition...)}, then referenced
+     * windows will be inlined.
      */
-    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, ORACLE, REDSHIFT, SQLSERVER, SYBASE })
     WindowFinalStep<T> over(String name);
 
     /**
@@ -123,12 +122,10 @@ public interface WindowOverStep<T> {
      * <p>
      * An example: <code><pre>
      * MAX(id) OVER (PARTITION BY 1)
-     * </code></pre>
-     * <p>
-     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
-     * Server and Sybase.
+     * </code>
+     * </pre>
      */
-    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, ORACLE, REDSHIFT, SQLSERVER, SYBASE })
     WindowFinalStep<T> over(WindowSpecification specification);
 
     /**
@@ -137,12 +134,12 @@ public interface WindowOverStep<T> {
      * <p>
      * An example: <code><pre>
      * MAX(id) OVER my_window
-     * </code></pre>
+     * </code>
+     * </pre>
      * <p>
-     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
-     * Server and Sybase. If the <code>WINDOW</code> clause is not supported
-     * (see {@link SelectWindowStep#window(WindowDefinition...)}, then
-     * referenced windows will be inlined.
+     * If the <code>WINDOW</code> clause is not supported (see
+     * {@link SelectWindowStep#window(WindowDefinition...)}, then referenced
+     * windows will be inlined.
      */
     @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowFinalStep<T> over(WindowDefinition definition);

@@ -50,6 +50,7 @@ import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.conf.ParamType.INLINED;
@@ -1415,7 +1416,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testFetchIntoCustomTable() throws Exception {
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
-        assumeFamilyNotIn(ACCESS, ASE, INFORMIX, INGRES, CUBRID, POSTGRES);
+        assumeFamilyNotIn(ACCESS, ASE, INFORMIX, INGRES, CUBRID, POSTGRES, REDSHIFT);
 
         Result<BookRecord> result =
             create().select(

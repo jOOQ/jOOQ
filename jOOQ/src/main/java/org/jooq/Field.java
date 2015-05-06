@@ -56,6 +56,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
@@ -2280,7 +2281,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
      *
      * @see DSL#sqrt(Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE })
     Field<BigDecimal> sqrt();
 
     /**
@@ -2290,7 +2291,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
      *
      * @see DSL#exp(Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE })
     Field<BigDecimal> exp();
 
     /**
@@ -2300,7 +2301,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
      *
      * @see DSL#ln(Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE })
     Field<BigDecimal> ln();
 
     /**
@@ -2310,7 +2311,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
      *
      * @see DSL#log(Field, int)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE })
     Field<BigDecimal> log(int base);
 
     /**
@@ -2320,7 +2321,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
      *
      * @see DSL#power(Field, Number)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE })
     Field<BigDecimal> pow(Number exponent);
 
     /**
@@ -2328,7 +2329,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
      *
      * @see #power(Number)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE })
     Field<BigDecimal> power(Number exponent);
 
     /**
@@ -2338,7 +2339,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
      *
      * @see DSL#acos(Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE })
     Field<BigDecimal> acos();
 
     /**
@@ -2348,7 +2349,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
      *
      * @see DSL#asin(Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE })
     Field<BigDecimal> asin();
 
     /**
@@ -2358,7 +2359,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
      *
      * @see DSL#atan(Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE })
     Field<BigDecimal> atan();
 
     /**
@@ -2368,7 +2369,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
      *
      * @see DSL#atan2(Field, Number)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE })
     Field<BigDecimal> atan2(Number y);
 
     /**
@@ -2378,7 +2379,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
      *
      * @see DSL#atan2(Field, Field)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE })
     Field<BigDecimal> atan2(Field<? extends Number> y);
 
     /**
@@ -2388,7 +2389,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
      *
      * @see DSL#cos(Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE })
     Field<BigDecimal> cos();
 
     /**
@@ -2398,7 +2399,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
      *
      * @see DSL#sin(Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE })
     Field<BigDecimal> sin();
 
     /**
@@ -2408,7 +2409,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
      *
      * @see DSL#tan(Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE })
     Field<BigDecimal> tan();
 
     /**
@@ -2418,7 +2419,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
      *
      * @see DSL#cot(Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE })
     Field<BigDecimal> cot();
 
     /**
@@ -2428,7 +2429,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
      *
      * @see DSL#sinh(Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE })
     Field<BigDecimal> sinh();
 
     /**
@@ -2438,7 +2439,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
      *
      * @see DSL#cosh(Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE })
     Field<BigDecimal> cosh();
 
     /**
@@ -2448,7 +2449,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
      *
      * @see DSL#tanh(Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE })
     Field<BigDecimal> tanh();
 
     /**
@@ -2458,7 +2459,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
      *
      * @see DSL#coth(Field)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE })
     Field<BigDecimal> coth();
 
     /**

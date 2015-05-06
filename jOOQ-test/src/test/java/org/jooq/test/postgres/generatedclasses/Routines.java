@@ -42,6 +42,8 @@ import org.jooq.test.postgres.generatedclasses.tables.FGetArrays;
 import org.jooq.test.postgres.generatedclasses.tables.FSearchBookIds;
 import org.jooq.test.postgres.generatedclasses.tables.FSearchBookTitles;
 import org.jooq.test.postgres.generatedclasses.tables.FSearchBooks;
+import org.jooq.test.postgres.generatedclasses.tables.FSetofBigint;
+import org.jooq.test.postgres.generatedclasses.tables.FSetofVoid;
 import org.jooq.test.postgres.generatedclasses.tables.FTables1;
 import org.jooq.test.postgres.generatedclasses.tables.FTables2;
 import org.jooq.test.postgres.generatedclasses.tables.FTables3;
@@ -640,6 +642,34 @@ public class Routines {
 	 */
 	public static FSearchBooks fSearchBooks(Field<String> pTitle, Field<Long> pLimit, Field<Long> pOffset) {
 		return FSearchBooks.F_SEARCH_BOOKS.call(pTitle, pLimit, pOffset);
+	}
+
+	/**
+	 * Get <code>public.f_setof_bigint</code> as a field
+	 */
+	public static FSetofBigint fSetofBigint(Long arg) {
+		return FSetofBigint.F_SETOF_BIGINT.call(arg);
+	}
+
+	/**
+	 * Get <code>public.f_setof_bigint</code> as a field
+	 */
+	public static FSetofBigint fSetofBigint(Field<Long> arg) {
+		return FSetofBigint.F_SETOF_BIGINT.call(arg);
+	}
+
+	/**
+	 * Get <code>public.f_setof_void</code> as a field
+	 */
+	public static FSetofVoid fSetofVoid(Long arg) {
+		return FSetofVoid.F_SETOF_VOID.call(arg);
+	}
+
+	/**
+	 * Get <code>public.f_setof_void</code> as a field
+	 */
+	public static FSetofVoid fSetofVoid(Field<Long> arg) {
+		return FSetofVoid.F_SETOF_VOID.call(arg);
 	}
 
 	/**

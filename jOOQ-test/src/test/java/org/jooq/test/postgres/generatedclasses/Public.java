@@ -17,6 +17,8 @@ import org.jooq.test.postgres.generatedclasses.tables.FGetArrays;
 import org.jooq.test.postgres.generatedclasses.tables.FSearchBookIds;
 import org.jooq.test.postgres.generatedclasses.tables.FSearchBookTitles;
 import org.jooq.test.postgres.generatedclasses.tables.FSearchBooks;
+import org.jooq.test.postgres.generatedclasses.tables.FSetofBigint;
+import org.jooq.test.postgres.generatedclasses.tables.FSetofVoid;
 import org.jooq.test.postgres.generatedclasses.tables.FTables1;
 import org.jooq.test.postgres.generatedclasses.tables.FTables2;
 import org.jooq.test.postgres.generatedclasses.tables.FTables3;
@@ -65,7 +67,7 @@ import org.jooq.test.postgres.generatedclasses.udt.UUuids;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-	private static final long serialVersionUID = -971365624;
+	private static final long serialVersionUID = -1979567803;
 
 	/**
 	 * The reference instance of <code>public</code>
@@ -105,6 +107,8 @@ public class Public extends SchemaImpl {
 			FSearchBookIds.F_SEARCH_BOOK_IDS,
 			FSearchBookTitles.F_SEARCH_BOOK_TITLES,
 			FSearchBooks.F_SEARCH_BOOKS,
+			FSetofBigint.F_SETOF_BIGINT,
+			FSetofVoid.F_SETOF_VOID,
 			FTables1.F_TABLES1,
 			FTables2.F_TABLES2,
 			FTables3.F_TABLES3,

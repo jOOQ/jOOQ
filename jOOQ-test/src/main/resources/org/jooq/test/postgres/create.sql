@@ -5,6 +5,8 @@ DROP VIEW IF EXISTS v_library/
 DROP VIEW IF EXISTS v_author/
 DROP VIEW IF EXISTS v_book/
 
+DROP FUNCTION f_setof_void (arg BIGINT);
+DROP FUNCTION f_setof_bigint (arg BIGINT);
 DROP FUNCTION p_default (
   p_in_number IN INTEGER, p_out_number OUT INTEGER, 
   p_in_varchar IN  VARCHAR(50), p_out_varchar OUT VARCHAR(50),
@@ -1022,3 +1024,17 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 /
+
+CREATE OR REPLACE FUNCTION f_setof_void (arg BIGINT) RETURNS SETOF VOID AS $$
+BEGIN
+  RETURN;
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION f_setof_bigint (arg BIGINT) RETURNS SETOF BIGINT AS $$
+BEGIN
+  RETURN QUERY SELECT COUNT(*) FROM information_schema.tables;
+END;
+$$
+LANGUAGE plpgsql;

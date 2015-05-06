@@ -397,37 +397,37 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Record.equals()
         // ---------------
-        assertEquals(create().selectFrom(TBook()).fetchAny(),
-                     create().selectFrom(TBook()).fetchAny());
-        assertEquals(create().selectFrom   (TBook()).fetchAny(),
-                     create().select().from(TBook()).fetchAny());
+        assertEquals(create().selectFrom(TBook()).orderBy(TBook_ID()).fetchAny(),
+                     create().selectFrom(TBook()).orderBy(TBook_ID()).fetchAny());
+        assertEquals(create().selectFrom   (TBook()).orderBy(TBook_ID()).fetchAny(),
+                     create().select().from(TBook()).orderBy(TBook_ID()).fetchAny());
 
-        assertEquals(create().select(TBook_ID(), TBook_TITLE()).from(TBook()).fetchAny(),
-                     create().select(TBook_ID(), TBook_TITLE()).from(TBook()).fetchAny());
-        assertEquals(create().select(TBook_ID(), TBook_TITLE()).from(TBook()).fetchAny(),
-                     create().select(TBook_ID(), trim(TBook_TITLE())).from(TBook()).fetchAny());
+        assertEquals(create().select(TBook_ID(), TBook_TITLE()).from(TBook()).orderBy(TBook_ID()).fetchAny(),
+                     create().select(TBook_ID(), TBook_TITLE()).from(TBook()).orderBy(TBook_ID()).fetchAny());
+        assertEquals(create().select(TBook_ID(), TBook_TITLE()).from(TBook()).orderBy(TBook_ID()).fetchAny(),
+                     create().select(TBook_ID(), trim(TBook_TITLE())).from(TBook()).orderBy(TBook_ID()).fetchAny());
 
-        assertFalse(create().select(TBook_ID(), TBook_TITLE()).from(TBook()).fetchAny().equals(
-                    create().select(TBook_TITLE(), TBook_ID()).from(TBook()).fetchAny()));
+        assertFalse(create().select(TBook_ID(), TBook_TITLE()).from(TBook()).orderBy(TBook_ID()).fetchAny().equals(
+                    create().select(TBook_TITLE(), TBook_ID()).from(TBook()).orderBy(TBook_ID()).fetchAny()));
 
         // Result.equals()
         // ---------------
-        assertEquals(create().selectFrom(TBook()).fetch(),
-                     create().selectFrom(TBook()).fetch());
-        assertEquals(create().selectFrom   (TBook()).fetch(),
-                     create().select().from(TBook()).fetch());
-        assertEquals(create().selectFrom   (TBook()).limit(1).fetch(),
-                     create().select().from(TBook()).limit(1).fetch());
+        assertEquals(create().selectFrom(TBook()).orderBy(TBook_ID()).fetch(),
+                     create().selectFrom(TBook()).orderBy(TBook_ID()).fetch());
+        assertEquals(create().selectFrom   (TBook()).orderBy(TBook_ID()).fetch(),
+                     create().select().from(TBook()).orderBy(TBook_ID()).fetch());
+        assertEquals(create().selectFrom   (TBook()).orderBy(TBook_ID()).limit(1).fetch(),
+                     create().select().from(TBook()).orderBy(TBook_ID()).limit(1).fetch());
 
-        assertEquals(create().select(TBook_ID(), TBook_TITLE()).from(TBook()).fetch(),
-                     create().select(TBook_ID(), TBook_TITLE()).from(TBook()).fetch());
-        assertEquals(create().select(TBook_ID(), TBook_TITLE()).from(TBook()).fetch(),
-                     create().select(TBook_ID(), trim(TBook_TITLE())).from(TBook()).fetch());
+        assertEquals(create().select(TBook_ID(), TBook_TITLE()).from(TBook()).orderBy(TBook_ID()).fetch(),
+                     create().select(TBook_ID(), TBook_TITLE()).from(TBook()).orderBy(TBook_ID()).fetch());
+        assertEquals(create().select(TBook_ID(), TBook_TITLE()).from(TBook()).orderBy(TBook_ID()).fetch(),
+                     create().select(TBook_ID(), trim(TBook_TITLE())).from(TBook()).orderBy(TBook_ID()).fetch());
 
         assertFalse(create().selectFrom(TBook()).orderBy(TBook_ID().asc()).fetch().equals(
                     create().selectFrom(TBook()).orderBy(TBook_ID().desc()).fetch()));
 
-        assertFalse(create().select(TBook_ID(), TBook_TITLE()).from(TBook()).fetch().equals(
-                    create().select(TBook_TITLE(), TBook_ID()).from(TBook()).fetch()));
+        assertFalse(create().select(TBook_ID(), TBook_TITLE()).from(TBook()).orderBy(TBook_ID()).fetch().equals(
+                    create().select(TBook_TITLE(), TBook_ID()).from(TBook()).orderBy(TBook_ID()).fetch()));
     }
 }

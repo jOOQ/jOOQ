@@ -8201,7 +8201,7 @@ public class DSL {
      * @see <a
      *      href="http://technet.microsoft.com/en-us/library/ms187950.aspx">http://technet.microsoft.com/en-us/library/ms187950.aspx</a>
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> space(int value) {
         return space(val(value));
     }
@@ -8215,7 +8215,7 @@ public class DSL {
      * @see <a
      *      href="http://technet.microsoft.com/en-us/library/ms187950.aspx">http://technet.microsoft.com/en-us/library/ms187950.aspx</a>
      */
-    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> space(Field<Integer> value) {
         return new Space(nullSafe(value));
     }

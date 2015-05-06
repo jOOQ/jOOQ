@@ -63,9 +63,9 @@ class ScalaConversions extends Generators {
           /**
            * Enrich any {@link org.jooq.Record«degree»} with the {@link Tuple«degree»} case class
            */
-          implicit def asTuple«degree»[«TN(degree)»](r : Record«degree»[«TN(degree)»]): Tuple«degree»[«TN(degree)»] = r match {
+          implicit def asTuple«degree»[«TN(degree)»](r : Record«degree»[«TN(degree)»]): «IF degree == 1»Tuple«degree»[«TN(degree)»]«ELSE»(«TN(degree)»)«ENDIF» = r match {
             case null => null
-            case _ => Tuple«degree»(«FOR d : (1..degree) SEPARATOR ', '»r.value«d»«ENDFOR»)
+            case _ => «IF degree == 1»Tuple«degree»«ENDIF»(«FOR d : (1..degree) SEPARATOR ', '»r.value«d»«ENDFOR»)
           }
         «ENDFOR»
         ''');
@@ -91,8 +91,8 @@ class ScalaConversions extends Generators {
           /**
            * Wrap a Scala <code>Tuple«degree» => E</code> function in a jOOQ <code>RecordMapper</code> type.
            */
-          implicit def asMapperFromTuple«degree»[«TN(degree)», E](f: Tuple«degree»[«TN(degree)»] => E): RecordMapper[Record«degree»[«TN(degree)»], E] = new RecordMapper[Record«degree»[«TN(degree)»], E] {
-            def map(record: Record«degree»[«TN(degree)»]) = f(Tuple«degree»(«XXXn(degree, "record.value")»))
+          implicit def asMapperFromTuple«degree»[«TN(degree)», E](f: «IF degree == 1»Tuple«degree»[«TN(degree)»]«ELSE»((«TN(degree)»))«ENDIF» => E): RecordMapper[Record«degree»[«TN(degree)»], E] = new RecordMapper[Record«degree»[«TN(degree)»], E] {
+            def map(record: Record«degree»[«TN(degree)»]) = f(«IF degree == 1»Tuple«degree»(«XXXn(degree, "record.value")»)«ELSE»(«XXXn(degree, "record.value")»)«ENDIF»)
           }
         «ENDFOR»
         ''');

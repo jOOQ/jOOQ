@@ -40,6 +40,8 @@
  */
 package org.jooq.scala.example
 
+import org.jooq.scala.Conversions
+
 import collection.JavaConversions._
 
 import java.sql.DriverManager
@@ -110,13 +112,28 @@ object Test {
     )
 
     // Option conversions
-    for (i <- 1 to 3) {
-      f.select (T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME)
-        .from (T_AUTHOR)
-        .where (T_AUTHOR.ID === i)
+    for (i <- 1 to 5) {
+      f.select (T_BOOK.TITLE)
+        .from (T_BOOK)
+        .where (T_BOOK.ID === i)
         .fetchOneOption() match {
-          case Some(author) => println("Author found: " + author.getValue(T_AUTHOR.FIRST_NAME) + " " + author.getValue(T_AUTHOR.LAST_NAME))
-          case None => println("No author found for ID: " + i)
+          case Some(record) =>
+            println("Book found: " + record.value1)
+          case None =>
+            println("No book found for ID: " + i)
+        }
+    }
+
+    for (i <- 1 to 3) {
+      f fetchOneOption (
+          select (T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME)
+          .from (T_AUTHOR)
+          .where (T_AUTHOR.ID === i)
+        ) match {
+          case Some(record) =>
+            println("Author found: " + record.value1 + " " + record.value2)
+          case None =>
+            println("No author found for ID: " + i)
         }
     }
   }

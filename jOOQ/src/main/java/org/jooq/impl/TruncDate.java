@@ -122,6 +122,10 @@ class TruncDate<T extends java.util.Date> extends AbstractFunction<T> {
 //                }
 //            }
 
+            /* [pro] xx
+            xxxx xxxxxxxxx
+            xx [/pro] */
+
             case POSTGRES: {
                 switch (part) {
                     case YEAR:   keyword = "year";   break;

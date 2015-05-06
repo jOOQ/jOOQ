@@ -78,7 +78,6 @@ class DateAdd<T extends java.util.Date> extends AbstractFunction<T> {
     @Override
     final QueryPart getFunction0(Configuration configuration) {
         String keyword = null;
-        String function = null;
 
         switch (configuration.family()) {
             case CUBRID:
@@ -140,6 +139,13 @@ class DateAdd<T extends java.util.Date> extends AbstractFunction<T> {
                 return field("{dateadd}({0}, {1}, {2})", getDataType(), inline(keyword), interval, date);
             }
 
+            /* [pro] xx
+            xx xx xxxxxxx xxxx xxxxx xxxxxxxx xxxxxxxxxx xx xxxxxxxxxxx xxxx
+            xx xxxxx xxxxxxx xx xxxxxxxx xx xxxxxxxxxxx xxxxx
+            xx x xxxxxxxxxxxxxxx xx xxxx xxxxxxxxxxxxx x xxxxxxxxxx
+            xx x xxxx xxxxxxxxxxxx x xx xxxxxxxxxxxxxxx x xxxxxxxxxx xxxxxxxxxx
+            xxxx xxxxxxxxx
+            xx [/pro] */
             case POSTGRES: {
                 switch (datePart) {
                     case YEAR:   keyword = " year";   break;

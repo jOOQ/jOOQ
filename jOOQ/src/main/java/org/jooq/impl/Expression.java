@@ -460,6 +460,31 @@ class Expression<T> extends AbstractFunction<T> {
                     xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxx xx xxx xxx xxxxxxxxxxxxxx
                 x
 
+                xxxx xxxxxxxxx x
+                    xx xxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxx x
+                        xx xxxxxxxxx xx xxxx x
+                            xxxxxx xxxxxxxxxxxxxxxxxxx xx x xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        x
+                        xxxx x
+                            xxxxxx xxxxxxxxxxxxxxxxxxx xx x xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        x
+                    x
+                    xxxx x
+                        xxxxxxxxxxx xxxx x xxxxxxxxxxxxxxxxxx
+
+                        xx xxxxxxxxx xx xxxx x
+                            xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
+                                xxxxxxxxxxxxxxxx xx x xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                xxxxxxxxxxxx
+                        x
+                        xxxx x
+                            xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
+                                xxxxxxxxxxxxxxxx xx x xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                xxxxxxxxxxxx
+                        x
+                    x
+                x
+
                 xxxx xxxxxxx
                 xx [/pro] */
                 case POSTGRES:
@@ -576,6 +601,7 @@ class Expression<T> extends AbstractFunction<T> {
                     x
                 x
 
+                xxxx xxxxxxxxx
                 xx [/pro] */
                 case POSTGRES: {
 

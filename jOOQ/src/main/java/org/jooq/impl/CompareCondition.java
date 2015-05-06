@@ -53,12 +53,15 @@ import static org.jooq.Comparator.NOT_LIKE_IGNORE_CASE;
 import static org.jooq.SQLDialect.DERBY;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
+import static org.jooq.conf.ParamType.INLINED;
 
 import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.SQLDialect;
+import org.jooq.conf.ParamType;
 
 /**
  * @author Lukas Eder
@@ -115,6 +118,8 @@ class CompareCondition extends AbstractCondition {
            .sql(' ');
 
         boolean castRhs = false;
+        ParamType previousParamType = ctx.paramType();
+        ParamType forcedParamType = previousParamType;
 
         /* [pro] xx
         xx xxxxxxx xxxx xxxxx xxx xxxxx xxxxx xxxxxx xxxx xxxxxxx xxxx x
@@ -122,11 +127,18 @@ class CompareCondition extends AbstractCondition {
         xx xxxxxxxxxx xxxx
         xx xxxxxxx xx xxx xx xxx xxxxxxxxxx xxxxxxx
             xxxxxxx x xxxxx
+
+        xx xxxxxxxx xxx x xxx xxxx xxxx xxxxxxxxx xxx xxxx xxxx xxxxxxx
+        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xx xxxxxxx xx xxxxxxxx xx xxxxxx xx xxxxx
+            xxxxxxxxxxxxxxx x xxxxxxxx
         xx [/pro] */
 
                      ctx.keyword(op.toSQL()).sql(' ');
         if (castRhs) ctx.keyword("cast").sql('(');
-                     ctx.visit(rhs);
+                     ctx.paramType(forcedParamType)
+                        .visit(rhs)
+                        .paramType(previousParamType);
         if (castRhs) ctx.sql(' ').keyword("as").sql(' ').keyword("varchar").sql("(4000))");
 
         if (escape != null) {

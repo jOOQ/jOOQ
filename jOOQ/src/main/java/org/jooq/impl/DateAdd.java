@@ -78,7 +78,6 @@ class DateAdd<T extends java.util.Date> extends AbstractFunction<T> {
     @Override
     final QueryPart getFunction0(Configuration configuration) {
         String keyword = null;
-        String function = null;
 
         switch (configuration.family()) {
             case CUBRID:
@@ -140,6 +139,13 @@ class DateAdd<T extends java.util.Date> extends AbstractFunction<T> {
                 return field("{dateadd}({0}, {1}, {2})", getDataType(), inline(keyword), interval, date);
             }
 
+            /* [pro] */
+            // It appears that using interval arithmetic is preferrable over
+            // using dateadd in Redshift in edge-cases. E.g.:
+            // - dateadd('year', 1, date '2012-02-29') = 2013-03-01
+            // - date '2012-02-29' + '1 year'::interval = 2013-02-28 (expected)
+            case REDSHIFT:
+            /* [/pro] */
             case POSTGRES: {
                 switch (datePart) {
                     case YEAR:   keyword = " year";   break;

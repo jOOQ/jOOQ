@@ -460,6 +460,31 @@ class Expression<T> extends AbstractFunction<T> {
                     throw new SQLDialectNotSupportedException("The SQLite integration is not yet implemented");
                 }
 
+                case REDSHIFT: {
+                    if (rhs.get(0).getType() == YearToMonth.class) {
+                        if (operator == ADD) {
+                            return lhs.add(field("({0} || ' month')::interval", val(rhsAsYTM().intValue())));
+                        }
+                        else {
+                            return lhs.sub(field("({0} || ' month')::interval", val(rhsAsYTM().intValue())));
+                        }
+                    }
+                    else {
+                        DataType<T> type = lhs.getDataType();
+
+                        if (operator == ADD) {
+                            return lhs.cast(Timestamp.class)
+                                .add(field("({0} || ' second')::interval", val(rhsAsDTS().getTotalSeconds())))
+                                .cast(type);
+                        }
+                        else {
+                            return lhs.cast(Timestamp.class)
+                                .sub(field("({0} || ' second')::interval", val(rhsAsDTS().getTotalSeconds())))
+                                .cast(type);
+                        }
+                    }
+                }
+
                 case ORACLE:
                 /* [/pro] */
                 case POSTGRES:
@@ -576,6 +601,7 @@ class Expression<T> extends AbstractFunction<T> {
                     }
                 }
 
+                case REDSHIFT:
                 /* [/pro] */
                 case POSTGRES: {
 

@@ -53,12 +53,15 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.REDSHIFT;
+import static org.jooq.conf.ParamType.INLINED;
 
 import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.SQLDialect;
+import org.jooq.conf.ParamType;
 
 /**
  * @author Lukas Eder
@@ -115,6 +118,8 @@ class CompareCondition extends AbstractCondition {
            .sql(' ');
 
         boolean castRhs = false;
+        ParamType previousParamType = ctx.paramType();
+        ParamType forcedParamType = previousParamType;
 
         /* [pro] */
         // [#1131] Some weird DB2 issue stops "LIKE" from working with a
@@ -122,11 +127,18 @@ class CompareCondition extends AbstractCondition {
         // characters long
         if (family == DB2 && rhs instanceof Concat)
             castRhs = true;
+
+        // Redshift has a bug when bind variables are used with ESCAPE:
+        // https://forums.aws.amazon.com/thread.jspa?threadID=179987
+        if (family == REDSHIFT && escape != null)
+            forcedParamType = INLINED;
         /* [/pro] */
 
                      ctx.keyword(op.toSQL()).sql(' ');
         if (castRhs) ctx.keyword("cast").sql('(');
-                     ctx.visit(rhs);
+                     ctx.paramType(forcedParamType)
+                        .visit(rhs)
+                        .paramType(previousParamType);
         if (castRhs) ctx.sql(' ').keyword("as").sql(' ').keyword("varchar").sql("(4000))");
 
         if (escape != null) {

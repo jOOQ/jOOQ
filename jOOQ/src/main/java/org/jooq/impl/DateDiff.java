@@ -83,6 +83,9 @@ class DateDiff extends AbstractFunction<Integer> {
 
             case H2:
             case HSQLDB:
+            /* [pro] */
+            case REDSHIFT:
+            /* [/pro] */
                 return field("{datediff}('day', {0}, {1})", getDataType(), date2, date1);
 
             case SQLITE:

@@ -418,7 +418,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testAlterTableAddConstraint_CHECK() throws Exception {
-        assumeFamilyNotIn(MARIADB, MYSQL);
+        assumeFamilyNotIn(MARIADB, MYSQL, REDSHIFT);
 
         try {
             create().createTable("t").column("v", INTEGER).execute();

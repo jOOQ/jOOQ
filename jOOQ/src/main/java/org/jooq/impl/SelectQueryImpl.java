@@ -958,7 +958,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
             if (actualInto != null
                     && context.data(DATA_OMIT_INTO_CLAUSE) == null
-                    && asList(ACCESS, ASE, HSQLDB, POSTGRES, SQLSERVER, SYBASE).contains(family)) {
+                    && asList(ACCESS, ASE, HSQLDB, POSTGRES, REDSHIFT, SQLSERVER, SYBASE).contains(family)) {
 
                 context.formatSeparator()
                        .keyword("into")

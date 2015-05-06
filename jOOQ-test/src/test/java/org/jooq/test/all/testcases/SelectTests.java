@@ -41,7 +41,10 @@
 package org.jooq.test.all.testcases;
 
 import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.REDSHIFT;
+import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectOne;
@@ -300,14 +303,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testForUpdateClauses() throws Exception {
-        switch (dialect().family()) {
-            /* [pro] */
-            case ACCESS:
-            /* [/pro] */
-            case SQLITE:
-                log.info("SKIPPING", "FOR UPDATE tests");
-                return;
-        }
+        assumeFamilyNotIn(ACCESS, REDSHIFT, SQLITE);
 
         // Checking for syntax correctness and locking behaviour
         // -----------------------------------------------------

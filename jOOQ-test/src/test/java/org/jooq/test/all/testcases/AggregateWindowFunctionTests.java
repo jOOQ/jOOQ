@@ -295,7 +295,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testAggregateFunction_MEDIAN() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, DB2, DERBY, FIREBIRD, H2, HANA, INFORMIX, INGRES, MARIADB, MYSQL, SQLITE, SQLSERVER);
+        assumeFamilyNotIn(ACCESS, ASE, DB2, DERBY, FIREBIRD, H2, HANA, INFORMIX, INGRES, MARIADB, MYSQL, REDSHIFT, SQLITE, SQLSERVER);
         assumeDialectNotIn(POSTGRES_9_3);
 
         // Round this, as HSQLDB calculates MEDIAN() wrong
@@ -1072,7 +1072,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testWindowFunctionsWithRowValueExpressions_LEAD_LAG() {
-        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, FIREBIRD, MARIADB, MYSQL, ORACLE, SQLITE, SQLSERVER, SYBASE);
+        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, FIREBIRD, MARIADB, MYSQL, ORACLE, REDSHIFT, SQLITE, SQLSERVER, SYBASE);
 
         Field<Record2<Integer, String>> x = field(row(TBook_ID(), TBook_TITLE()));
         System.out.println(x);
@@ -1099,7 +1099,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testListAgg() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, INFORMIX, INGRES, SQLSERVER);
+        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, INFORMIX, INGRES, REDSHIFT, SQLSERVER);
 
         // [#3045] Skip this test for the time being
         if (!asList(ORACLE).contains(dialect().family())) {

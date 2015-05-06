@@ -74,6 +74,7 @@ class Euler extends AbstractFunction<BigDecimal> {
             case INFORMIX:
             case INGRES:
             case ORACLE:
+            case REDSHIFT:
             case SQLSERVER:
             case SYBASE:
             /* [/pro] */

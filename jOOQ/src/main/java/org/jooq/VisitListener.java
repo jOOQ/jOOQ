@@ -81,12 +81,6 @@ import java.util.EventListener;
  * </pre>
  * <p>
  * Whatever is not a {@link Clause} in the above example is a {@link QueryPart}.
- * <p>
- * Note: [#2694] [#2695] As of jOOQ 3.2, {@link VisitListener} receive events
- * only in the context of a {@link RenderContext}, not of a {@link BindContext}.
- * <p>
- * <h3>Disclaimer</h3> This SPI is still <strong>experimental</strong>! Some SPI
- * elements and/or behavioural elements may change in future minor releases.
  *
  * @author Lukas Eder
  */

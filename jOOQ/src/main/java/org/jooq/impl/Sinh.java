@@ -74,6 +74,7 @@ class Sinh extends AbstractFunction<BigDecimal> {
             xxxx xxxxxxx
             xxxx xxxx
             xxxx xxxxxxx
+            xxxx xxxxxxxxx
             xxxx xxxxxxxxxx
             xxxx xxxxxxx
             xx [/pro] */

@@ -40,53 +40,79 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
-import static org.jooq.impl.DSL.one;
-import static org.jooq.impl.DSL.two;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.keyword;
 
-import java.math.BigDecimal;
-
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-class Tanh extends AbstractFunction<BigDecimal> {
+class LeadLag<T> extends Function<T> {
 
     /**
      * Generated UID
      */
-    private static final long             serialVersionUID = -7273879239726265322L;
+    private static final long serialVersionUID = 7292087943334025737L;
 
-    private final Field<? extends Number> argument;
+    private final String   function;
+    private final Field<T> field;
+    private final int      offset;
+    private final Field<T> defaultValue;
 
-    Tanh(Field<? extends Number> argument) {
-        super("tanh", SQLDataType.NUMERIC, argument);
+    LeadLag(String function, Field<T> field) {
+        super(function, field.getDataType(), field);
 
-        this.argument = argument;
+        this.function = function;
+        this.field = field;
+        this.offset = 0;
+        this.defaultValue = null;
+    }
+
+    LeadLag(String function, Field<T> field, int offset) {
+        super(function, field.getDataType(), field, inline(offset));
+
+        this.function = function;
+        this.field = field;
+        this.offset = offset;
+        this.defaultValue = null;
+    }
+
+    LeadLag(String function, Field<T> field, int offset, Field<T> defaultValue) {
+        super(function, field.getDataType(), field, inline(offset), defaultValue);
+
+        this.function = function;
+        this.field = field;
+        this.offset = offset;
+        this.defaultValue = defaultValue;
     }
 
     @Override
-    final Field<BigDecimal> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-            xxxx xxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxx
-            xx [/pro] */
-            case CUBRID:
-            case HSQLDB:
-            case MARIADB:
-            case MYSQL:
-            case POSTGRES:
-                return DSL.exp(argument.mul(two())).sub(one()).div(DSL.exp(argument.mul(two())).add(one()));
+    public final void accept(Context<?> ctx) {
+        if (defaultValue == null) {
+            super.accept(ctx);
+        }
+        else {
+            switch (ctx.family()) {
+                /* [pro] xx
+                xxxx xxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxx
+                       xxxxxxxxxx
 
-            default:
-                return function("tanh", SQLDataType.NUMERIC, argument);
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxx
+
+                    xxxxxxxxxx xx
+                       xxxxxxxxxxxxxxxxxxxx
+                       xxxxxxxxxx
+                    xxxxxx
+                xx [/pro] */
+
+                default:
+                    super.accept(ctx);
+                    break;
+            }
         }
     }
 }

@@ -41,6 +41,8 @@
 package org.jooq.util.postgres;
 
 
+import static org.jooq.impl.DSL.falseCondition;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.util.postgres.information_schema.Tables.PARAMETERS;
 import static org.jooq.util.postgres.information_schema.Tables.ROUTINES;
 import static org.jooq.util.postgres.pg_catalog.Tables.PG_PROC;
@@ -49,6 +51,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 
 import org.jooq.Record;
+import org.jooq.exception.DataAccessException;
 import org.jooq.util.AbstractRoutineDefinition;
 import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.Database;
@@ -64,7 +67,8 @@ import org.jooq.util.ParameterDefinition;
  */
 public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
 
-    private final String specificName;
+    private static Boolean is94;
+    private final String   specificName;
 
     public PostgresRoutineDefinition(Database database, Record record) {
         super(database.getSchema(record.getValue(ROUTINES.ROUTINE_SCHEMA)),
@@ -111,7 +115,9 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
                 PARAMETERS.UDT_NAME,
                 PARAMETERS.ORDINAL_POSITION,
                 PARAMETERS.PARAMETER_MODE,
-                PARAMETERS.PARAMETER_DEFAULT)
+                is94()
+                    ? PARAMETERS.PARAMETER_DEFAULT
+                    : inline((String) null).as(PARAMETERS.PARAMETER_DEFAULT))
             .from(PARAMETERS)
             .where(PARAMETERS.SPECIFIC_SCHEMA.equal(getSchema().getName()))
             .and(PARAMETERS.SPECIFIC_NAME.equal(specificName))
@@ -142,5 +148,26 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
 
             addParameter(InOutDefinition.getFromString(inOut), parameter);
         }
+    }
+
+    private boolean is94() {
+        if (is94 == null) {
+
+            // [#4254] INFORMATION_SCHEMA.PARAMETERS.PARAMETER_DEFAULT was added
+            // in PostgreSQL 9.4 only
+            try {
+                create().select(PARAMETERS.PARAMETER_DEFAULT)
+                        .from(PARAMETERS)
+                        .where(falseCondition())
+                        .fetch();
+
+                is94 = true;
+            }
+            catch (DataAccessException e) {
+                is94 = false;
+            }
+        }
+
+        return is94;
     }
 }

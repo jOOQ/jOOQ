@@ -60,6 +60,7 @@ import static org.jooq.impl.DSL.val;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeNotNull;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -617,6 +618,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testPlainSQLBlobAndClob() throws Exception {
+        assumeNotNull(TBook_CONTENT_PDF());
+
         jOOQAbstractTest.reset = false;
 
         // [#2534] BLOB and CLOB should be auto-converted to byte[] and Spring

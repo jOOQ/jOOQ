@@ -59,6 +59,7 @@ import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
@@ -134,7 +135,7 @@ class RowCondition extends AbstractCondition {
 
         // Ordering comparison predicate simulation
         else if (asList(GREATER, GREATER_OR_EQUAL, LESS, LESS_OR_EQUAL).contains(comparator) &&
-                 asList(ACCESS, DERBY, CUBRID, FIREBIRD, HANA, INFORMIX, INGRES, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(dialect.family())) {
+                 asList(ACCESS, DERBY, CUBRID, FIREBIRD, HANA, INFORMIX, INGRES, ORACLE, REDSHIFT, SQLSERVER, SQLITE, SYBASE).contains(dialect.family())) {
 
             // The order component of the comparator (stripping the equal component)
             Comparator order

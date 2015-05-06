@@ -508,7 +508,7 @@ public class RedshiftTest extends jOOQAbstractTest<
 
     @Override
     protected TableField<TBookRecord, byte[]> TBook_CONTENT_PDF() {
-        return T_BOOK.CONTENT_PDF;
+        return null;
     }
 
     @Override

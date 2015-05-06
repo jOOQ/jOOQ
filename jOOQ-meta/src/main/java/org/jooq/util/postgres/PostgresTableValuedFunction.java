@@ -132,13 +132,13 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
             // from INFORMATION_SCHEMA.TABLES
              select(
                 nvl(c.COLUMN_NAME               , getName()                   ).as(c.COLUMN_NAME),
-                nvl(c.ORDINAL_POSITION          , 1                           ).as(c.ORDINAL_POSITION),
+                nvl(c.ORDINAL_POSITION          , inline(1)                   ).as(c.ORDINAL_POSITION),
                 nvl(c.DATA_TYPE                 , r.DATA_TYPE                 ).as(c.DATA_TYPE),
                 nvl(c.CHARACTER_MAXIMUM_LENGTH  , r.CHARACTER_MAXIMUM_LENGTH  ).as(c.CHARACTER_MAXIMUM_LENGTH),
                 nvl(c.NUMERIC_PRECISION         , r.NUMERIC_PRECISION         ).as(c.NUMERIC_PRECISION),
                 nvl(c.NUMERIC_SCALE             , r.NUMERIC_SCALE             ).as(c.NUMERIC_SCALE),
                 nvl(c.IS_NULLABLE               , "true"                      ).as(c.IS_NULLABLE),
-                nvl(c.COLUMN_DEFAULT            , (String) null               ).as(c.COLUMN_DEFAULT),
+                nvl(c.COLUMN_DEFAULT            , inline((String) null)       ).as(c.COLUMN_DEFAULT),
                 nvl(c.UDT_NAME                  , r.UDT_NAME                  ).as(c.UDT_NAME)
             )
             .from(r)

@@ -44,6 +44,9 @@ import org.jooq._
 import org.jooq.impl._
 import org.jooq.impl.DSL._
 
+import _root_.scala.collection.convert.WrapAsScala
+import _root_.scala.collection.convert.Wrappers.JMapWrapper
+
 /**
  * jOOQ type conversions used to enhance the jOOQ Java API with Scala Traits
  * <p>
@@ -82,6 +85,46 @@ import org.jooq.impl.DSL._
  * @author Lukas Eder
  */
 object Conversions {
+
+  // -------------------------------------------------------------------------
+  // Enhanced jOOQ types
+  // -------------------------------------------------------------------------
+
+  implicit class ScalaResultQuery[R <: Record](val query: ResultQuery[R]) {
+    import _root_.scala.collection.mutable._
+
+    def fetchAnyOption                 ()                                                    : Option[R]                   = Option(query.fetchAny)
+    def fetchAnyOption[E]              (mapper : RecordMapper[_ >: R, E])                    : Option[E]                   = Option(query.fetchAny(mapper))
+    def fetchAnyOption[T]              (field : Field[T])                                    : Option[T]                   = Option(query.fetchAny(field))
+    def fetchAnyOption[T]              (field : Field[_], newType : Class[_ <: T])           : Option[T]                   = Option(query.fetchAny(field, newType))
+    def fetchAnyOption[T, U]           (field : Field[T], converter : Converter[_ >: T, U])  : Option[U]                   = Option(query.fetchAny[T, U](field, converter))
+    def fetchAnyOption                 (fieldIndex : Int)                                    : Option[_]                   = Option(query.fetchAny(fieldIndex))
+    def fetchAnyOption[T]              (fieldIndex : Int, newType : Class[_ <: T])           : Option[_]                   = Option(query.fetchAny(fieldIndex, newType))
+    def fetchAnyOption[T, U]           (fieldIndex : Int, converter : Converter[_ >: T, U])  : Option[_]                   = Option(query.fetchAny(fieldIndex, converter))
+    def fetchAnyOption                 (fieldName : String)                                  : Option[_]                   = Option(query.fetchAny(fieldName))
+    def fetchAnyOption[T]              (fieldName : String, newType : Class[_ <: T])         : Option[_]                   = Option(query.fetchAny(fieldName, newType))
+    def fetchAnyOption[U]              (fieldName : String, converter : Converter[_, U])     : Option[_]                   = Option(query.fetchAny(fieldName, converter))
+    def fetchAnyOptionArray            ()                                                    : Option[Array[AnyRef]]       = Option(query.fetchAnyArray)
+    def fetchAnyOptionInto[E]          (newType : Class[_ <: E])                             : Option[E]                   = Option(query.fetchAnyInto(newType))
+    def fetchAnyOptionInto[Z <: Record](table : Table[Z])                                    : Option[Z]                   = Option(query.fetchAnyInto(table))
+    def fetchAnyOptionMap              ()                                                    : Option[Map[String, AnyRef]] = Option(query.fetchAnyMap).map(m => WrapAsScala.mapAsScalaMap(m))
+
+    def fetchOneOption                 ()                                                    : Option[R]                   = Option(query.fetchOne)
+    def fetchOneOption[E]              (mapper : RecordMapper[_ >: R, E])                    : Option[E]                   = Option(query.fetchOne(mapper))
+    def fetchOneOption[T]              (field : Field[T])                                    : Option[T]                   = Option(query.fetchOne(field))
+    def fetchOneOption[T]              (field : Field[_], newType : Class[_ <: T])           : Option[T]                   = Option(query.fetchOne(field, newType))
+    def fetchOneOption[T, U]           (field : Field[T], converter : Converter[_ >: T, U])  : Option[U]                   = Option(query.fetchOne[T, U](field, converter))
+    def fetchOneOption                 (fieldIndex : Int)                                    : Option[_]                   = Option(query.fetchOne(fieldIndex))
+    def fetchOneOption[T]              (fieldIndex : Int, newType : Class[_ <: T])           : Option[_]                   = Option(query.fetchOne(fieldIndex, newType))
+    def fetchOneOption[T, U]           (fieldIndex : Int, converter : Converter[_ >: T, U])  : Option[_]                   = Option(query.fetchOne(fieldIndex, converter))
+    def fetchOneOption                 (fieldName : String)                                  : Option[_]                   = Option(query.fetchOne(fieldName))
+    def fetchOneOption[T]              (fieldName : String, newType : Class[_ <: T])         : Option[_]                   = Option(query.fetchOne(fieldName, newType))
+    def fetchOneOption[U]              (fieldName : String, converter : Converter[_, U])     : Option[_]                   = Option(query.fetchOne(fieldName, converter))
+    def fetchOneOptionArray            ()                                                    : Option[Array[AnyRef]]       = Option(query.fetchOneArray)
+    def fetchOneOptionInto[E]          (newType : Class[_ <: E])                             : Option[E]                   = Option(query.fetchOneInto(newType))
+    def fetchOneOptionInto[Z <: Record](table : Table[Z])                                    : Option[Z]                   = Option(query.fetchOneInto(table))
+    def fetchOneOptionMap              ()                                                    : Option[Map[String, AnyRef]] = Option(query.fetchOneMap).map(m => WrapAsScala.mapAsScalaMap(m))
+  }
 
   // -------------------------------------------------------------------------
   // Traits

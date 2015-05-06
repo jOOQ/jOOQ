@@ -108,5 +108,16 @@ object Test {
       ORDER BY a.id, b.id
       """)
     )
+
+    // Option conversions
+    for (i <- 1 to 3) {
+      f.select (T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME)
+        .from (T_AUTHOR)
+        .where (T_AUTHOR.ID === i)
+        .fetchOneOption() match {
+          case Some(author) => println("Author found: " + author.getValue(T_AUTHOR.FIRST_NAME) + " " + author.getValue(T_AUTHOR.LAST_NAME))
+          case None => println("No author found for ID: " + i)
+        }
+    }
   }
 }

@@ -676,6 +676,19 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     R fetchAny() throws DataAccessException;
 
     /**
+     * Execute the query and return at most one resulting record.
+     * <p>
+     * The resulting record is attached to the original {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     *
+     * @return The first resulting record or <code>null</code> if the query
+     *         returns no records.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    <E> E fetchAny(RecordMapper<? super R, E> mapper) throws DataAccessException;
+
+    /**
      * Execute the query and return at most one resulting record as a name/value
      * map.
      *

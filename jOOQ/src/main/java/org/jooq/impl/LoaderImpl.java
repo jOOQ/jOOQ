@@ -56,6 +56,7 @@ import java.nio.charset.CharsetDecoder;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -75,6 +76,7 @@ import org.jooq.LoaderJSONOptionsStep;
 import org.jooq.LoaderJSONStep;
 import org.jooq.LoaderOptionsStep;
 import org.jooq.LoaderRowListener;
+import org.jooq.LoaderRowsStep;
 import org.jooq.LoaderXMLStep;
 import org.jooq.SelectQuery;
 import org.jooq.Table;
@@ -95,6 +97,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
 
     // Cascading interface implementations for Loader behaviour
     LoaderOptionsStep<R>,
+    LoaderRowsStep<R>,
     LoaderXMLStep<R>,
     LoaderCSVStep<R>,
     LoaderCSVOptionsStep<R>,
@@ -104,58 +107,60 @@ class LoaderImpl<R extends TableRecord<R>> implements
 
     // Configuration constants
     // -----------------------
-    private static final int        ON_DUPLICATE_KEY_ERROR  = 0;
-    private static final int        ON_DUPLICATE_KEY_IGNORE = 1;
-    private static final int        ON_DUPLICATE_KEY_UPDATE = 2;
+    private static final int ON_DUPLICATE_KEY_ERROR  = 0;
+    private static final int ON_DUPLICATE_KEY_IGNORE = 1;
+    private static final int ON_DUPLICATE_KEY_UPDATE = 2;
 
-    private static final int        ON_ERROR_ABORT          = 0;
-    private static final int        ON_ERROR_IGNORE         = 1;
+    private static final int ON_ERROR_ABORT  = 0;
+    private static final int ON_ERROR_IGNORE = 1;
 
-    private static final int        COMMIT_NONE             = 0;
-    private static final int        COMMIT_AFTER            = 1;
-    private static final int        COMMIT_ALL              = 2;
+    private static final int COMMIT_NONE  = 0;
+    private static final int COMMIT_AFTER = 1;
+    private static final int COMMIT_ALL   = 2;
 
-    private static final int        BATCH_NONE              = 0;
-    private static final int        BATCH_AFTER             = 1;
-    private static final int        BATCH_ALL               = 2;
+    private static final int BATCH_NONE  = 0;
+    private static final int BATCH_AFTER = 1;
+    private static final int BATCH_ALL   = 2;
 
-    private static final int        BULK_NONE               = 0;
-    private static final int        BULK_AFTER              = 1;
-    private static final int        BULK_ALL                = 2;
+    private static final int BULK_NONE  = 0;
+    private static final int BULK_AFTER = 1;
+    private static final int BULK_ALL   = 2;
 
-    private static final int        CONTENT_CSV             = 0;
-    private static final int        CONTENT_XML             = 1;
-    private static final int        CONTENT_JSON            = 2;
+    private static final int CONTENT_CSV  = 0;
+    private static final int CONTENT_XML  = 1;
+    private static final int CONTENT_JSON = 2;
+    private static final int CONTENT_ROWS = 3;
 
     // Configuration data
     // ------------------
-    private final DSLContext        create;
-    private final Configuration     configuration;
-    private final Table<R>          table;
-    private int                     onDuplicate             = ON_DUPLICATE_KEY_ERROR;
-    private int                     onError                 = ON_ERROR_ABORT;
-    private int                     commit                  = COMMIT_NONE;
-    private int                     commitAfter             = 1;
-    private int                     batch                   = BATCH_NONE;
-    private int                     batchAfter              = 1;
-    private int                     bulk                    = BULK_NONE;
-    private int                     bulkAfter               = 1;
-    private int                     content                 = CONTENT_CSV;
-    private BufferedReader          data;
+    private final DSLContext             create;
+    private final Configuration          configuration;
+    private final Table<R>               table;
+    private int                          onDuplicate = ON_DUPLICATE_KEY_ERROR;
+    private int                          onError     = ON_ERROR_ABORT;
+    private int                          commit      = COMMIT_NONE;
+    private int                          commitAfter = 1;
+    private int                          batch       = BATCH_NONE;
+    private int                          batchAfter  = 1;
+    private int                          bulk        = BULK_NONE;
+    private int                          bulkAfter   = 1;
+    private int                          content     = CONTENT_CSV;
+    private BufferedReader               data;
+    private Iterator<? extends Object[]> rows;
 
     // CSV configuration data
     // ----------------------
-    private int                     ignoreRows              = 1;
-    private char                    quote                   = CSVParser.DEFAULT_QUOTE_CHARACTER;
-    private char                    separator               = CSVParser.DEFAULT_SEPARATOR;
-    private String                  nullString              = null;
-    private Field<?>[]              fields;
-    private boolean[]               primaryKey;
+    private int        ignoreRows = 1;
+    private char       quote      = CSVParser.DEFAULT_QUOTE_CHARACTER;
+    private char       separator  = CSVParser.DEFAULT_SEPARATOR;
+    private String     nullString = null;
+    private Field<?>[] fields;
+    private boolean[]  primaryKey;
 
     // Result data
     // -----------
     private LoaderRowListener       listener;
-    private LoaderContext           result                  = new DefaultLoaderContext();
+    private LoaderContext           result = new DefaultLoaderContext();
     private int                     ignored;
     private int                     processed;
     private int                     stored;
@@ -272,6 +277,23 @@ class LoaderImpl<R extends TableRecord<R>> implements
     public final LoaderImpl<R> bulkAfter(int number) {
         bulk = BULK_AFTER;
         bulkAfter = number;
+        return this;
+    }
+
+    @Override
+    public final LoaderRowsStep<R> loadRows(Object[]... r) {
+        return loadRows(Arrays.asList(r));
+    }
+
+    @Override
+    public final LoaderRowsStep<R> loadRows(Iterable<? extends Object[]> r) {
+        return loadRows(r.iterator());
+    }
+
+    @Override
+    public final LoaderRowsStep<R> loadRows(Iterator<? extends Object[]> r) {
+        content = CONTENT_ROWS;
+        this.rows = r;
         return this;
     }
 
@@ -520,6 +542,9 @@ class LoaderImpl<R extends TableRecord<R>> implements
         else if (content == CONTENT_JSON) {
             executeJSON();
         }
+        else if (content == CONTENT_ROWS) {
+            executeRows();
+        }
         else {
             throw new IllegalStateException();
         }
@@ -573,13 +598,25 @@ class LoaderImpl<R extends TableRecord<R>> implements
         }
     }
 
-    private void executeSQL(Iterator<String[]> reader) throws SQLException {
-        String[] row = null;
+    private void executeRows() {
+        try {
+            executeSQL(rows);
+        }
+
+        // SQLExceptions originating from rollbacks or commits are always fatal
+        // They are propagated, and not swallowed
+        catch (SQLException e) {
+            throw Utils.translate(null, e);
+        }
+    }
+
+    private void executeSQL(Iterator<? extends Object[]> iterator) throws SQLException {
+        Object[] row = null;
         BatchBindStep bind = null;
         InsertQuery<R> insert = null;
 
         execution: {
-            rows: while (reader.hasNext() && ((row = reader.next()) != null)) {
+            rows: while (iterator.hasNext() && ((row = iterator.next()) != null)) {
                 try {
 
                     // [#1627] Handle NULL values
@@ -760,21 +797,21 @@ class LoaderImpl<R extends TableRecord<R>> implements
     /**
      * Type-safety...
      */
-    private <T> void addValue0(InsertQuery<R> insert, Field<T> field, String row) {
+    private <T> void addValue0(InsertQuery<R> insert, Field<T> field, Object row) {
         insert.addValue(field, field.getDataType().convert(row));
     }
 
     /**
      * Type-safety...
      */
-    private <T> void addValueForUpdate0(InsertQuery<R> insert, Field<T> field, String row) {
+    private <T> void addValueForUpdate0(InsertQuery<R> insert, Field<T> field, Object row) {
         insert.addValueForUpdate(field, field.getDataType().convert(row));
     }
 
     /**
      * Get a type-safe condition
      */
-    private <T> Condition getCondition(Field<T> field, String string) {
+    private <T> Condition getCondition(Field<T> field, Object string) {
         return field.equal(field.getDataType().convert(string));
     }
 

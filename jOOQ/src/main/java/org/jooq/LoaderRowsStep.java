@@ -38,57 +38,30 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq.impl;
+package org.jooq;
 
-import org.jooq.LoaderError;
-import org.jooq.Query;
-import org.jooq.exception.DataAccessException;
+import java.util.Collection;
 
 /**
+ * The <code>Loader</code> API is used for configuring data loads.
+ * <p>
+ * The step in constructing the {@link Loader} object where you can set the
+ * mandatory row loader options.
+ *
  * @author Lukas Eder
  */
-class LoaderErrorImpl implements LoaderError {
+public interface LoaderRowsStep<R extends TableRecord<R>> {
 
-    private final DataAccessException exception;
-    private final int                 rowIndex;
-    private final String[]            row;
-    private final Query               query;
+    /**
+     * Specify the the fields to be loaded into the table in the correct order.
+     */
+    @Support
+    LoaderListenerStep<R> fields(Field<?>... fields);
 
-    LoaderErrorImpl(DataAccessException exception, Object[] row, int rowIndex, Query query) {
-        this.exception = exception;
-        this.row = strings(row);
-        this.rowIndex = rowIndex;
-        this.query = query;
-    }
+    /**
+     * Specify the the fields to be loaded into the table in the correct order.
+     */
+    @Support
+    LoaderListenerStep<R> fields(Collection<? extends Field<?>> fields);
 
-    private static String[] strings(Object[] row) {
-        if (row == null)
-            return null;
-
-        String[] result = new String[row.length];
-        for (int i = 0; i < result.length; i++)
-            result[i] = row[i] == null ? null : row[i].toString();
-
-        return result;
-    }
-
-    @Override
-    public DataAccessException exception() {
-        return exception;
-    }
-
-    @Override
-    public int rowIndex() {
-        return rowIndex;
-    }
-
-    @Override
-    public String[] row() {
-        return row;
-    }
-
-    @Override
-    public Query query() {
-        return query;
-    }
 }

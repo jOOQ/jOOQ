@@ -167,6 +167,7 @@ import org.jooq.test.all.testcases.RenderAndBindTests;
 import org.jooq.test.all.testcases.ResultSetTests;
 import org.jooq.test.all.testcases.ResultTests;
 import org.jooq.test.all.testcases.RoutineAndUDTTests;
+import org.jooq.test.all.testcases.RowLoaderTests;
 import org.jooq.test.all.testcases.RowValueExpressionTests;
 import org.jooq.test.all.testcases.SchemaAndMappingTests;
 import org.jooq.test.all.testcases.SelectTests;
@@ -3479,6 +3480,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testRenderKeywordStyle() throws Exception {
         new RenderAndBindTests(this).testRenderKeywordStyle();
+    }
+
+    @Test
+    public void testRowLoader() throws Exception {
+        new RowLoaderTests(this).testLoader();
     }
 
     @Test

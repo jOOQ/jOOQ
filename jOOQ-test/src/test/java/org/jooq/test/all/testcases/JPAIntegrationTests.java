@@ -120,7 +120,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         return Integer.valueOf("" + o);
     }
 
-    List<Object[]> nativeQuery(EntityManager em, org.jooq.Query query) {
+    static List<Object[]> nativeQuery(EntityManager em, org.jooq.Query query) {
         Query result = em.createNativeQuery(query.getSQL());
 
         List<Object> values = query.getBindValues();
@@ -131,7 +131,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         return result.getResultList();
     }
 
-    <E> List<E> nativeQuery(EntityManager em, org.jooq.Query query, Class<E> type) {
+    static <E> List<E> nativeQuery(EntityManager em, org.jooq.Query query, Class<E> type) {
         Query result = em.createNativeQuery(query.getSQL(), type);
 
         List<Object> values = query.getBindValues();
@@ -142,7 +142,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         return result.getResultList();
     }
 
-    <E> List<E> nativeQuery(EntityManager em, org.jooq.Query query, String resultSetMapping) {
+    static <E> List<E> nativeQuery(EntityManager em, org.jooq.Query query, String resultSetMapping) {
         Query result = em.createNativeQuery(query.getSQL(), resultSetMapping);
 
         List<Object> values = query.getBindValues();
@@ -172,6 +172,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public void testJPANativeQueryAndSqlResultSetMapping() {
+        jOOQAbstractTest.reset = false;
+
         emTx(em -> {
             List<Object[]> books =
             nativeQuery(em,
@@ -198,7 +200,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(BOOK_LAST_NAMES, seq(books).map(a -> (JPAAuthor) a[1]).map(a -> a.getLastName()).toList());
             assertEquals(BOOK_IDS, seq(books).map(a -> (JPABook) a[0]).map(b -> b.id).toList());
             assertEquals(BOOK_TITLES, seq(books).map(a -> (JPABook) a[0]).map(b -> b.title).toList());
+
+            seq(books).map(b -> (JPABook) b[0]).zipWithIndex().forEach(t -> t.v1.title = "title " + (t.v2 + 1));
         });
+
+        assertEquals(asList("title 1", "title 2", "title 3", "title 4"), create().fetchValues(TBook_TITLE()));
     }
 
     void emTx(Consumer<EntityManager> consumer) {

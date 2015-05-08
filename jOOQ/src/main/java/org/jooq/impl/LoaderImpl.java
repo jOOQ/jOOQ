@@ -78,6 +78,7 @@ import org.jooq.LoaderOptionsStep;
 import org.jooq.LoaderRowListener;
 import org.jooq.LoaderRowsStep;
 import org.jooq.LoaderXMLStep;
+import org.jooq.Record;
 import org.jooq.SelectQuery;
 import org.jooq.Table;
 import org.jooq.TableRecord;
@@ -295,6 +296,29 @@ class LoaderImpl<R extends TableRecord<R>> implements
         content = CONTENT_ROWS;
         this.rows = r;
         return this;
+    }
+
+    @Override
+    public final LoaderRowsStep<R> loadRecords(Record... records) {
+        return loadRecords(Arrays.asList(records));
+    }
+
+    @Override
+    public final LoaderRowsStep<R> loadRecords(Iterable<? extends Record> records) {
+        return loadRecords(records.iterator());
+    }
+
+    @Override
+    public final LoaderRowsStep<R> loadRecords(Iterator<? extends Record> records) {
+        return loadRows(new MappingIterator<Record, Object[]>(records, new MappingIterator.Function<Record, Object[]>() {
+            @Override
+            public final Object[] map(Record value) {
+                if (value == null)
+                    return null;
+
+                return value.intoArray();
+            }
+        }));
     }
 
     @Override

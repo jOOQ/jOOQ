@@ -95,7 +95,7 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
             Loader<BOOL> loader =
             DSL.using(c)
                .loadInto(TBooleans())
-               .loadRows(
+               .loadArrays(
                    new Object[] { 1, 0, false },
                    new Object[] { 2, 1, true }
                )
@@ -126,7 +126,7 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
                 .commitAll()
                 .onDuplicateKeyError()
                 .onErrorAbort()
-                .loadRows(
+                .loadArrays(
                     new Object[] { 8, "Hermann", "Hesse" },
                     new Object[] { 1, "Max", "Frisch" },
                     new Object[] { 2, "Friedrich", "Dürrenmatt" }
@@ -140,7 +140,7 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
         return
         create().loadInto(TAuthor())
                 .onDuplicateKeyUpdate()
-                .loadRows(
+                .loadArrays(
                     new Object[] { 1, "Hermann", "Hesse" },
                     new Object[] { 7, "Max", "Frisch" }
                 )
@@ -152,7 +152,7 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
     protected Loader<A> createLoaderButDontLoadAllColumns() throws java.io.IOException {
         return
         create().loadInto(TAuthor())
-                .loadRows(
+                .loadArrays(
                     new Object[] { 5, "asdf", null, "Hesse" },
                     new Object[] { 6, "asdf", "", "Frisch" }
                 )
@@ -164,7 +164,7 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
     protected Loader<A> createLoaderWithDifferentNulls() throws java.io.IOException {
         return
         create().loadInto(TAuthor())
-                .loadRows(
+                .loadArrays(
                     new Object[] { 3, "", "Hesse" },
                     new Object[] { 4, "", "Frisch" }
                 )
@@ -178,7 +178,7 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
         create().loadInto(TAuthor())
                 .onDuplicateKeyIgnore()
                 .onErrorAbort()
-                .loadRows(
+                .loadArrays(
                     new Object[] { 1, "Kafka" },
                     new Object[] { 2, "Frisch" }
                 )
@@ -192,7 +192,7 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
         create().loadInto(TAuthor())
                 .onDuplicateKeyError()
                 .onErrorAbort()
-                .loadRows(
+                .loadArrays(
                     new Object[] { 1, "Kafka" },
                     new Object[] { 2, "Frisch" }
                 )
@@ -205,7 +205,7 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
         return
         create().loadInto(TAuthor())
                 .onErrorIgnore()
-                .loadRows(
+                .loadArrays(
                     new Object[] { 3 },
                     new Object[] { 4 }
                 )
@@ -220,7 +220,7 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
                 .commitAll()
                 .onDuplicateKeyIgnore()
                 .onErrorAbort()
-                .loadRows(
+                .loadArrays(
                     new Object[] { 8, "Hermann", "Hesse" },
                     new Object[] { 1, "Max", "Frisch" },
                     new Object[] { 2, "Friedrich", "Dürrenmatt" }
@@ -233,7 +233,7 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
     protected Loader<A> createLoaderAbortingOnConstraintViolationOnLAST_NAME() throws java.io.IOException {
         return
         create().loadInto(TAuthor())
-                .loadRows(
+                .loadArrays(
                     new Object[] { 3 },
                     new Object[] { 4 }
                 )
@@ -245,7 +245,7 @@ extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU,
     protected Loader<A> createForEmptyFile() throws java.io.IOException {
         return
         create().loadInto(TAuthor())
-                .loadRows()
+                .loadArrays()
                 .fields(TAuthor_ID())
                 .execute();
     }

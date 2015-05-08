@@ -65,17 +65,32 @@ public interface LoaderSourceStep<R extends TableRecord<R>> {
     /**
      * Load in-memory data.
      */
-    LoaderRowsStep<R> loadRows(Object[]... rows);
+    LoaderRowsStep<R> loadArrays(Object[]... arrays);
 
     /**
      * Load in-memory data.
      */
-    LoaderRowsStep<R> loadRows(Iterable<? extends Object[]> rows);
+    LoaderRowsStep<R> loadArrays(Iterable<? extends Object[]> arrays);
 
     /**
      * Load in-memory data.
      */
-    LoaderRowsStep<R> loadRows(Iterator<? extends Object[]> rows);
+    LoaderRowsStep<R> loadArrays(Iterator<? extends Object[]> arrays);
+
+    /**
+     * Load in-memory data.
+     */
+    LoaderRowsStep<R> loadRecords(Record... records);
+
+    /**
+     * Load in-memory data.
+     */
+    LoaderRowsStep<R> loadRecords(Iterable<? extends Record> records);
+
+    /**
+     * Load in-memory data.
+     */
+    LoaderRowsStep<R> loadRecords(Iterator<? extends Record> records);
 
     /**
      * Load CSV data.

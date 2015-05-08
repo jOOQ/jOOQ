@@ -160,6 +160,7 @@ import org.jooq.test.all.testcases.OrderByTests;
 import org.jooq.test.all.testcases.PlainSQLTests;
 import org.jooq.test.all.testcases.PredicateTests;
 import org.jooq.test.all.testcases.RecordListenerTests;
+import org.jooq.test.all.testcases.RecordLoaderTests;
 import org.jooq.test.all.testcases.RecordMapperTests;
 import org.jooq.test.all.testcases.RecordTests;
 import org.jooq.test.all.testcases.ReferentialTests;
@@ -3485,6 +3486,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testRowLoader() throws Exception {
         new RowLoaderTests(this).testLoader();
+    }
+
+    @Test
+    public void testRecordLoader() throws Exception {
+        new RecordLoaderTests(this).testLoader();
     }
 
     @Test

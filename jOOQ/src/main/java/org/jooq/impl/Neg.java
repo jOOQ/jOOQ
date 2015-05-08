@@ -79,7 +79,7 @@ class Neg<T> extends AbstractField<T> {
         SQLDialect family = ctx.configuration().dialect().family();
 
         if (operator == BIT_NOT && asList(H2, HSQLDB).contains(family)) {
-            ctx.sql("(0 -")
+            ctx.sql("(0 - ")
                .visit(field)
                .sql(" - 1)");
         }

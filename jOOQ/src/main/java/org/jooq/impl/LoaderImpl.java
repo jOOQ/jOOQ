@@ -127,10 +127,10 @@ class LoaderImpl<R extends TableRecord<R>> implements
     private static final int BULK_AFTER = 1;
     private static final int BULK_ALL   = 2;
 
-    private static final int CONTENT_CSV  = 0;
-    private static final int CONTENT_XML  = 1;
-    private static final int CONTENT_JSON = 2;
-    private static final int CONTENT_ROWS = 3;
+    private static final int CONTENT_CSV    = 0;
+    private static final int CONTENT_XML    = 1;
+    private static final int CONTENT_JSON   = 2;
+    private static final int CONTENT_ARRAYS = 3;
 
     // Configuration data
     // ------------------
@@ -147,7 +147,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
     private int                          bulkAfter   = 1;
     private int                          content     = CONTENT_CSV;
     private BufferedReader               data;
-    private Iterator<? extends Object[]> rows;
+    private Iterator<? extends Object[]> arrays;
 
     // CSV configuration data
     // ----------------------
@@ -282,19 +282,19 @@ class LoaderImpl<R extends TableRecord<R>> implements
     }
 
     @Override
-    public final LoaderRowsStep<R> loadRows(Object[]... r) {
-        return loadRows(Arrays.asList(r));
+    public final LoaderRowsStep<R> loadArrays(Object[]... a) {
+        return loadArrays(Arrays.asList(a));
     }
 
     @Override
-    public final LoaderRowsStep<R> loadRows(Iterable<? extends Object[]> r) {
-        return loadRows(r.iterator());
+    public final LoaderRowsStep<R> loadArrays(Iterable<? extends Object[]> a) {
+        return loadArrays(a.iterator());
     }
 
     @Override
-    public final LoaderRowsStep<R> loadRows(Iterator<? extends Object[]> r) {
-        content = CONTENT_ROWS;
-        this.rows = r;
+    public final LoaderRowsStep<R> loadArrays(Iterator<? extends Object[]> a) {
+        content = CONTENT_ARRAYS;
+        this.arrays = a;
         return this;
     }
 
@@ -310,7 +310,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
 
     @Override
     public final LoaderRowsStep<R> loadRecords(Iterator<? extends Record> records) {
-        return loadRows(new MappingIterator<Record, Object[]>(records, new MappingIterator.Function<Record, Object[]>() {
+        return loadArrays(new MappingIterator<Record, Object[]>(records, new MappingIterator.Function<Record, Object[]>() {
             @Override
             public final Object[] map(Record value) {
                 if (value == null)
@@ -566,7 +566,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
         else if (content == CONTENT_JSON) {
             executeJSON();
         }
-        else if (content == CONTENT_ROWS) {
+        else if (content == CONTENT_ARRAYS) {
             executeRows();
         }
         else {
@@ -624,7 +624,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
 
     private void executeRows() {
         try {
-            executeSQL(rows);
+            executeSQL(arrays);
         }
 
         // SQLExceptions originating from rollbacks or commits are always fatal

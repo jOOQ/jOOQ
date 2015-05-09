@@ -2091,12 +2091,21 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * not to fetch all data in memory. However, you may influence how your JDBC
      * driver interacts with your database through specifying a fetch size.
      * <p>
-     * Note that some databases (in particular PostgreSQL) do not like fetch
-     * sizes being combined with
+     * Dialect-specific remarks:
+     * <ul>
+     * <li>MySQL uses {@link Integer#MIN_VALUE} as an indicator to fetch
+     * resulting rows row-by-row in conjunction with
+     * {@link ResultSet#TYPE_FORWARD_ONLY} (set in {@link #resultSetType(int)})
+     * and {@link ResultSet#CONCUR_READ_ONLY} (set in
+     * {@link #resultSetConcurrency(int)}). See <a href=
+     * "http://dev.mysql.com/doc/connector-j/en/connector-j-reference-implementation-notes.html">
+     * this page here</a> for details.</li>
+     * <li>PostgreSQL does not like fetch sizes being combined with
      * <code>{@link Connection#getAutoCommit()} == true</code>. For more
      * information, see <a href=
      * "http://jdbc.postgresql.org/documentation/head/query.html#query-with-cursor"
-     * >this page here</a>
+     * >this page here</a></li>
+     * </ul>
      *
      * @see Statement#setFetchSize(int)
      */

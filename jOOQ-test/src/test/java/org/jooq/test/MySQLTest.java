@@ -1100,4 +1100,13 @@ public class MySQLTest extends jOOQAbstractTest<
                    .eq(cast("1984", MySQLDataType.BINARY)))
                 .fetchOne(TBook.TITLE));
     }
+
+    @Test
+    public void testMySQLStraightJoin() {
+        assertEquals(BOOK_IDS, create()
+            .select(TBook_ID())
+            .from(TBook()).straightJoin(TAuthor()).on(TBook_AUTHOR_ID().eq(TAuthor_ID()))
+            .orderBy(TBook_ID())
+            .fetch(TBook_ID()));
+    }
 }

@@ -887,6 +887,38 @@ public interface Table<R extends Record> extends TableLike<R> {
 
     /* [/pro] */
 
+    /**
+     * <code>STRAIGHT_JOIN</code> a table to this table.
+     */
+    @Support({ MYSQL })
+    TableOnStep straightJoin(TableLike<?> table);
+
+    /**
+     * <code>STRAIGHT_JOIN</code> a table to this table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, Object...)
+     */
+    @Support({ MYSQL })
+    TableOnStep straightJoin(String sql, Object... bindings);
+
+    /**
+     * <code>STRAIGHT_JOIN</code> a table to this table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, QueryPart...)
+     */
+    @Support({ MYSQL })
+    TableOnStep straightJoin(String sql, QueryPart... parts);
+
     // -------------------------------------------------------------------------
     // XXX: Exotic and vendor-specific clauses on tables
     // -------------------------------------------------------------------------

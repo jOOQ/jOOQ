@@ -51,6 +51,7 @@ import static org.jooq.JoinType.NATURAL_LEFT_OUTER_JOIN;
 import static org.jooq.JoinType.NATURAL_RIGHT_OUTER_JOIN;
 import static org.jooq.JoinType.OUTER_APPLY;
 import static org.jooq.JoinType.RIGHT_OUTER_JOIN;
+import static org.jooq.JoinType.STRAIGHT_JOIN;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
 
@@ -817,6 +818,21 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     }
 
     /* [/pro] */
+
+    @Override
+    public final TableOptionalOnStep straightJoin(TableLike<?> table) {
+        return join(table, STRAIGHT_JOIN);
+    }
+
+    @Override
+    public final TableOptionalOnStep straightJoin(String sql, Object... bindings) {
+        return straightJoin(table(sql, bindings));
+    }
+
+    @Override
+    public final TableOptionalOnStep straightJoin(String sql, QueryPart... parts) {
+        return straightJoin(table(sql, parts));
+    }
 
     // ------------------------------------------------------------------------
     // XXX: Object API

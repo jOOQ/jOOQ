@@ -41,6 +41,7 @@
 
 package org.jooq;
 
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 // ...
@@ -112,6 +113,12 @@ public enum JoinType {
      */
     @Support({})
     OUTER_APPLY("outer apply"),
+
+    /**
+     * <code>STRAIGHT_JOIN</code> two tables.
+     */
+    @Support({ MYSQL })
+    STRAIGHT_JOIN("straight_join")
 
     ;
 

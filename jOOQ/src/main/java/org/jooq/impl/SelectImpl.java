@@ -2250,16 +2250,6 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     x
 
     xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxx xxxxxxxxx xxxxxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx
-    x
-
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxx xxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
-    x
-
-    xxxxxxxxx
     xxxxxx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
         xxxxxxxxxxxxxxx x xxxxxxx
         xxxxxx xxxxx
@@ -2271,6 +2261,17 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     x
 
     xx [/pro] */
+
+    @Override
+    public final SelectImpl straightJoin(String sql, Object... bindings) {
+        return straightJoin(table(sql, bindings));
+    }
+
+    @Override
+    public final SelectImpl straightJoin(String sql, QueryPart... parts) {
+        return straightJoin(table(sql, parts));
+    }
+
     @Override
     public final ResultQuery<R> maxRows(int rows) {
         return getDelegate().maxRows(rows);

@@ -108,7 +108,6 @@ import static org.junit.Assert.assertNull;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -1833,13 +1832,28 @@ public class PostgresTest extends jOOQAbstractTest<
         return DSL.condition("range_overlaps({0}, {1})", f1, val(f2, f1.getDataType()));
     }
 
-    @Test
-    public void testXML() throws SQLException {
+//    @Test
+//    public void testPostgresCrossJoinLateralUnnest() {
+//        Table<?> unnest = unnest(T_ARRAYS.STRING_ARRAY);
+//
+//        Result<Record2<Integer, String>> result =
+//        create().select(T_ARRAYS.ID, field("unnest", String.class))
+//                .from(T_ARRAYS)
+//                .crossJoin(lateral(unnest))
+//                .orderBy(1, 2)
+//                .fetch();
+//
+//        assertEquals(asList(3, 4, 4), result.getValues(T_ARRAYS.STRING_ARRAY));
+//        assertEquals(asList("a", "a", "B"), result.getValues("unnest"));
+//     }
+
+//    @Test
+//    public void testXML() throws SQLException {
 //        Statement s = connection.createStatement();
 //        s.executeUpdate("insert into t_exotic_types(id, pg_xml_as_is) values(1, '<a><b/></a>'::xml)");
 //
 //        ResultSet rs = s.executeQuery("select PG_XML_AS_IS from t_exotic_types");
 //        rs.next();
 //        System.out.println(rs.getSQLXML(1).getString());
-    }
+//    }
 }

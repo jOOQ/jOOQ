@@ -77,6 +77,7 @@ import org.jooq.util.redshift.RedshiftDataType;
 import org.jooq.util.sqlite.SQLiteDataType;
 import org.jooq.util.sqlserver.SQLServerDataType;
 import org.jooq.util.sybase.SybaseDataType;
+import org.jooq.util.vertica.VerticaDataType;
 
 
 
@@ -341,6 +342,7 @@ public final class SQLDataType {
             Class.forName(RedshiftDataType.class.getName());
             Class.forName(SQLServerDataType.class.getName());
             Class.forName(SybaseDataType.class.getName());
+            Class.forName(VerticaDataType.class.getName());
             /* [/pro] */
             Class.forName(CUBRIDDataType.class.getName());
             Class.forName(DerbyDataType.class.getName());

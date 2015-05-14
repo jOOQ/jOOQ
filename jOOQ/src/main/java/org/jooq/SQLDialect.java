@@ -275,6 +275,13 @@ public enum SQLDialect {
      */
     SYBASE("Sybase", true),
 
+    /**
+     * The Vertica dialect family.
+     * <p>
+     * This dialect is available in commercial jOOQ distributions, only.
+     */
+    VERTICA("Vertica", true),
+
     /* [/pro] */
 
     ;

@@ -56,9 +56,11 @@ import org.jooq.util.mariadb.MariaDBDatabase;
 import org.jooq.util.mysql.MySQLDatabase;
 import org.jooq.util.oracle.OracleDatabase;
 import org.jooq.util.postgres.PostgresDatabase;
+import org.jooq.util.redshift.RedshiftDatabase;
 import org.jooq.util.sqlite.SQLiteDatabase;
 import org.jooq.util.sqlserver.SQLServerDatabase;
 import org.jooq.util.sybase.SybaseDatabase;
+import org.jooq.util.vertica.VerticaDatabase;
 
 /**
  * A common utility class that provides access to various {@link Database}
@@ -71,31 +73,48 @@ public class Databases {
     /**
      * Get a reference to a {@link Database} class for a given {@link SQLDialect}.
      */
+    @SuppressWarnings("deprecation")
     public static final Class<? extends Database> databaseClass(SQLDialect dialect) {
         Class<? extends Database> result = JDBCDatabase.class;
 
-        switch (dialect.family()) {
+        switch (dialect) {
             /* [pro] */
-            case ACCESS:    result = JDBCDatabase.class;      break;
-            case ASE:       result = ASEDatabase.class;       break;
-            case DB2:       result = DB2Database.class;       break;
-            case HANA:      result = HanaDatabase.class;      break;
-            case INFORMIX:  result = InformixDatabase.class;  break;
-            case INGRES:    result = IngresDatabase.class;    break;
-            case ORACLE:    result = OracleDatabase.class;    break;
-            case SQLSERVER: result = SQLServerDatabase.class; break;
-            case SYBASE:    result = SybaseDatabase.class;    break;
+            case ACCESS2013:
+            case ACCESS:        result = JDBCDatabase.class;      break;
+            case ASE:           result = ASEDatabase.class;       break;
+            case DB2_9:
+            case DB2_10:
+            case DB2:           result = DB2Database.class;       break;
+            case HANA:          result = HanaDatabase.class;      break;
+            case INFORMIX:      result = InformixDatabase.class;  break;
+            case INGRES:        result = IngresDatabase.class;    break;
+            case ORACLE10G:
+            case ORACLE11G:
+            case ORACLE12C:
+            case ORACLE:        result = OracleDatabase.class;    break;
+            case REDSHIFT:      result = RedshiftDatabase.class;  break;
+            case SQLSERVER2008:
+            case SQLSERVER2012:
+            case SQLSERVER2014:
+            case SQLSERVER:     result = SQLServerDatabase.class; break;
+            case SYBASE:        result = SybaseDatabase.class;    break;
+            case VERTICA:       result = VerticaDatabase.class;   break;
             /* [/pro] */
 
-            case CUBRID:    result = CUBRIDDatabase.class;    break;
-            case DERBY:     result = DerbyDatabase.class;     break;
-            case FIREBIRD:  result = FirebirdDatabase.class;  break;
-            case H2:        result = H2Database.class;        break;
-            case HSQLDB:    result = HSQLDBDatabase.class;    break;
-            case MARIADB:   result = MariaDBDatabase.class;   break;
-            case MYSQL:     result = MySQLDatabase.class;     break;
-            case POSTGRES:  result = PostgresDatabase.class;  break;
-            case SQLITE:    result = SQLiteDatabase.class;    break;
+            case CUBRID:        result = CUBRIDDatabase.class;    break;
+            case DERBY:         result = DerbyDatabase.class;     break;
+            case FIREBIRD:      result = FirebirdDatabase.class;  break;
+            case H2:            result = H2Database.class;        break;
+            case HSQLDB:        result = HSQLDBDatabase.class;    break;
+            case MARIADB:       result = MariaDBDatabase.class;   break;
+            case MYSQL:         result = MySQLDatabase.class;     break;
+            case POSTGRES_9_3:
+            case POSTGRES_9_4:
+            case POSTGRES:      result = PostgresDatabase.class;  break;
+            case SQLITE:        result = SQLiteDatabase.class;    break;
+
+            case DEFAULT:
+            case SQL99:         result = JDBCDatabase.class;      break;
         }
 
         return result;

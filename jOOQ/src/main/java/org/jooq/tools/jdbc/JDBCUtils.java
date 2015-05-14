@@ -59,6 +59,7 @@ import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.SQLDialect.VERTICA;
 
 import java.sql.Array;
 import java.sql.Blob;
@@ -200,6 +201,9 @@ public class JDBCUtils {
         else if (url.startsWith("jdbc:sybase:")) {
             return SYBASE;
         }
+        else if (url.startsWith("jdbc:vertica:")) {
+            return VERTICA;
+        }
         /* [/pro] */
 
         return DEFAULT;
@@ -250,6 +254,8 @@ public class JDBCUtils {
                 return "com.microsoft.sqlserver.jdbc.SQLServerDriver";
             case SYBASE:
                 return "com.sybase.jdbc3.jdbc.SybDriver";
+            case VERTICA:
+                return "com.vertica.jdbc.Driver";
             /* [/pro] */
         }
 

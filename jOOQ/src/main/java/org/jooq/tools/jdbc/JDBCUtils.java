@@ -59,6 +59,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
+// ...
 
 import java.sql.Array;
 import java.sql.Blob;
@@ -200,6 +201,9 @@ public class JDBCUtils {
         xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
             xxxxxx xxxxxxx
         x
+        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxxx xxxxxxxx
+        x
         xx [/pro] */
 
         return DEFAULT;
@@ -250,6 +254,8 @@ public class JDBCUtils {
                 xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxx xxxxxxx
                 xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxx xxxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx
             xx [/pro] */
         }
 

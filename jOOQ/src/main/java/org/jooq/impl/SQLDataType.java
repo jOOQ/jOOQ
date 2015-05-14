@@ -77,6 +77,7 @@ import org.jooq.util.postgres.PostgresDataType;
 import org.jooq.util.sqlite.SQLiteDataType;
 // ...
 // ...
+// ...
 
 
 
@@ -341,6 +342,7 @@ public final class SQLDataType {
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xx [/pro] */
             Class.forName(CUBRIDDataType.class.getName());
             Class.forName(DerbyDataType.class.getName());

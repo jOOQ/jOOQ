@@ -56,7 +56,9 @@ import org.jooq.util.mariadb.MariaDBDatabase;
 import org.jooq.util.mysql.MySQLDatabase;
 // ...
 import org.jooq.util.postgres.PostgresDatabase;
+// ...
 import org.jooq.util.sqlite.SQLiteDatabase;
+// ...
 // ...
 // ...
 
@@ -71,31 +73,48 @@ public class Databases {
     /**
      * Get a reference to a {@link Database} class for a given {@link SQLDialect}.
      */
+    @SuppressWarnings("deprecation")
     public static final Class<? extends Database> databaseClass(SQLDialect dialect) {
         Class<? extends Database> result = JDBCDatabase.class;
 
-        switch (dialect.family()) {
+        switch (dialect) {
             /* [pro] xx
-            xxxx xxxxxxx    xxxxxx x xxxxxxxxxxxxxxxxxxx      xxxxxx
-            xxxx xxxx       xxxxxx x xxxxxxxxxxxxxxxxxx       xxxxxx
-            xxxx xxxx       xxxxxx x xxxxxxxxxxxxxxxxxx       xxxxxx
-            xxxx xxxxx      xxxxxx x xxxxxxxxxxxxxxxxxxx      xxxxxx
-            xxxx xxxxxxxxx  xxxxxx x xxxxxxxxxxxxxxxxxxxxxxx  xxxxxx
-            xxxx xxxxxxx    xxxxxx x xxxxxxxxxxxxxxxxxxxxx    xxxxxx
-            xxxx xxxxxxx    xxxxxx x xxxxxxxxxxxxxxxxxxxxx    xxxxxx
-            xxxx xxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
-            xxxx xxxxxxx    xxxxxx x xxxxxxxxxxxxxxxxxxxxx    xxxxxx
+            xxxx xxxxxxxxxxx
+            xxxx xxxxxxx        xxxxxx x xxxxxxxxxxxxxxxxxxx      xxxxxx
+            xxxx xxxx           xxxxxx x xxxxxxxxxxxxxxxxxx       xxxxxx
+            xxxx xxxxxx
+            xxxx xxxxxxx
+            xxxx xxxx           xxxxxx x xxxxxxxxxxxxxxxxxx       xxxxxx
+            xxxx xxxxx          xxxxxx x xxxxxxxxxxxxxxxxxxx      xxxxxx
+            xxxx xxxxxxxxx      xxxxxx x xxxxxxxxxxxxxxxxxxxxxxx  xxxxxx
+            xxxx xxxxxxx        xxxxxx x xxxxxxxxxxxxxxxxxxxxx    xxxxxx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxxxxx
+            xxxx xxxxxxx        xxxxxx x xxxxxxxxxxxxxxxxxxxxx    xxxxxx
+            xxxx xxxxxxxxx      xxxxxx x xxxxxxxxxxxxxxxxxxxxxxx  xxxxxx
+            xxxx xxxxxxxxxxxxxx
+            xxxx xxxxxxxxxxxxxx
+            xxxx xxxxxxxxxxxxxx
+            xxxx xxxxxxxxxx     xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
+            xxxx xxxxxxx        xxxxxx x xxxxxxxxxxxxxxxxxxxxx    xxxxxx
+            xxxx xxxxxxxx       xxxxxx x xxxxxxxxxxxxxxxxxxxxxx   xxxxxx
             xx [/pro] */
 
-            case CUBRID:    result = CUBRIDDatabase.class;    break;
-            case DERBY:     result = DerbyDatabase.class;     break;
-            case FIREBIRD:  result = FirebirdDatabase.class;  break;
-            case H2:        result = H2Database.class;        break;
-            case HSQLDB:    result = HSQLDBDatabase.class;    break;
-            case MARIADB:   result = MariaDBDatabase.class;   break;
-            case MYSQL:     result = MySQLDatabase.class;     break;
-            case POSTGRES:  result = PostgresDatabase.class;  break;
-            case SQLITE:    result = SQLiteDatabase.class;    break;
+            case CUBRID:        result = CUBRIDDatabase.class;    break;
+            case DERBY:         result = DerbyDatabase.class;     break;
+            case FIREBIRD:      result = FirebirdDatabase.class;  break;
+            case H2:            result = H2Database.class;        break;
+            case HSQLDB:        result = HSQLDBDatabase.class;    break;
+            case MARIADB:       result = MariaDBDatabase.class;   break;
+            case MYSQL:         result = MySQLDatabase.class;     break;
+            case POSTGRES_9_3:
+            case POSTGRES_9_4:
+            case POSTGRES:      result = PostgresDatabase.class;  break;
+            case SQLITE:        result = SQLiteDatabase.class;    break;
+
+            case DEFAULT:
+            case SQL99:         result = JDBCDatabase.class;      break;
         }
 
         return result;

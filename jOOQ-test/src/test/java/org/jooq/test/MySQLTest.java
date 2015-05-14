@@ -56,6 +56,7 @@ import static org.jooq.test.mysql.generatedclasses.Tables.T_959;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_BOOK;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_BOOLEANS;
+import static org.jooq.test.mysql.generatedclasses.Tables.T_CHARSETS;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_DATES;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_EXOTIC_TYPES;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_IDENTITY_PK;
@@ -116,6 +117,7 @@ import org.jooq.test.mysql.generatedclasses.tables.TBook;
 import org.jooq.test.mysql.generatedclasses.tables.TBookStore;
 import org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore;
 import org.jooq.test.mysql.generatedclasses.tables.TBooleans;
+import org.jooq.test.mysql.generatedclasses.tables.TCharsets;
 import org.jooq.test.mysql.generatedclasses.tables.TDates;
 import org.jooq.test.mysql.generatedclasses.tables.TExoticTypes;
 import org.jooq.test.mysql.generatedclasses.tables.TIdentityPk;
@@ -130,6 +132,7 @@ import org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TBookStoreRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TBooleansRecord;
+import org.jooq.test.mysql.generatedclasses.tables.records.TCharsetsRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TDatesRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TExoticTypesRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TIdentityPkRecord;
@@ -168,6 +171,7 @@ public class MySQLTest extends jOOQAbstractTest<
         TTriggersRecord,
         TUnsignedRecord,
         TExoticTypesRecord,
+        TCharsetsRecord,
         XUnusedRecord,
         TIdentityPkRecord,
         T_725LobTestRecord,
@@ -428,6 +432,21 @@ public class MySQLTest extends jOOQAbstractTest<
     @Override
     protected TableField<TExoticTypesRecord, UUID> TExoticTypes_UU() {
         return TExoticTypes.UU;
+    }
+
+    @Override
+    protected Table<TCharsetsRecord> TCharsets() {
+        return T_CHARSETS;
+    }
+
+    @Override
+    protected TableField<TCharsetsRecord, Integer> TCharsets_ID() {
+        return TCharsets.ID;
+    }
+
+    @Override
+    protected TableField<TCharsetsRecord, String> TCharsets_UTF8() {
+        return TCharsets.UTF8;
     }
 
     @Override

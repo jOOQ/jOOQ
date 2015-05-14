@@ -126,6 +126,7 @@ public class SQLiteTest extends jOOQAbstractTest<
         TExoticTypesRecord,
         XUnusedRecord,
         XUnusedRecord,
+        XUnusedRecord,
         T_725LobTestRecord,
         T_639NumbersTableRecord,
         T_785Record,

@@ -82,13 +82,14 @@ public class BenchmarkTests<
     T    extends UpdatableRecord<T>,
     U    extends TableRecord<U>,
     UU   extends UpdatableRecord<UU>,
+    CS   extends UpdatableRecord<CS>,
     I    extends TableRecord<I>,
     IPK  extends UpdatableRecord<IPK>,
     T725 extends UpdatableRecord<T725>,
     T639 extends UpdatableRecord<T639>,
     T785 extends TableRecord<T785>,
     CASE extends UpdatableRecord<CASE>>
-extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> {
+extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK, T725, T639, T785, CASE> {
 
     private static final int    REPETITIONS_NEW_RECORD               = 1000000;
     private static final int    REPETITIONS_RECORD_INTO              = 20000;
@@ -98,7 +99,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     private static final int    REPETITIONS_PLAIN_SQL                = 10000;
     private static final String RANDOM                               = "" + new Random().nextLong();
 
-    public BenchmarkTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> delegate) {
+    public BenchmarkTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK, T725, T639, T785, CASE> delegate) {
         super(delegate);
     }
 

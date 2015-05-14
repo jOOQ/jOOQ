@@ -9,6 +9,7 @@ import org.jooq.test.mysql.generatedclasses.tables.TBook;
 import org.jooq.test.mysql.generatedclasses.tables.TBookStore;
 import org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore;
 import org.jooq.test.mysql.generatedclasses.tables.TBooleans;
+import org.jooq.test.mysql.generatedclasses.tables.TCharsets;
 import org.jooq.test.mysql.generatedclasses.tables.TDates;
 import org.jooq.test.mysql.generatedclasses.tables.TExoticTypes;
 import org.jooq.test.mysql.generatedclasses.tables.TIdentityPk;
@@ -85,6 +86,11 @@ public class Tables {
 	 * The table test.t_booleans
 	 */
 	public static final TBooleans T_BOOLEANS = org.jooq.test.mysql.generatedclasses.tables.TBooleans.T_BOOLEANS;
+
+	/**
+	 * The table test.t_charsets
+	 */
+	public static final TCharsets T_CHARSETS = org.jooq.test.mysql.generatedclasses.tables.TCharsets.T_CHARSETS;
 
 	/**
 	 * The table test.t_dates

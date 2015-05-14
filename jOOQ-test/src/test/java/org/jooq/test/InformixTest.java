@@ -130,6 +130,7 @@ public class InformixTest extends jOOQAbstractTest<
         TTriggersRecord,
         XUnusedRecord,
         TExoticTypesRecord,
+        XUnusedRecord,
         TIdentityRecord,
         TIdentityPkRecord,
         T_725LobTestRecord,

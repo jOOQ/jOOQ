@@ -137,6 +137,7 @@ import org.jooq.test.all.testcases.BatchTests;
 import org.jooq.test.all.testcases.BenchmarkTests;
 import org.jooq.test.all.testcases.CRUDTests;
 import org.jooq.test.all.testcases.CTETests;
+import org.jooq.test.all.testcases.CollationTests;
 import org.jooq.test.all.testcases.CsvLoaderTests;
 import org.jooq.test.all.testcases.DDLTests;
 import org.jooq.test.all.testcases.DaoTests;
@@ -260,6 +261,9 @@ public abstract class jOOQAbstractTest<
 
         // T_EXOTIC_TYPES table
         UU extends UpdatableRecord<UU>,
+
+        // T_CHARSETS table
+        CS extends UpdatableRecord<CS>,
 
         // T_IDENTITY table
         I extends TableRecord<I>,
@@ -1089,6 +1093,18 @@ public abstract class jOOQAbstractTest<
     }
 
     protected TableField<UU, String> TExoticTypes_PLAIN_SQL_BINDING_XML() {
+        return null;
+    }
+
+    protected Table<CS> TCharsets() {
+        return null;
+    }
+
+    protected TableField<CS, Integer> TCharsets_ID() {
+        return null;
+    }
+
+    protected TableField<CS, String> TCharsets_UTF8() {
         return null;
     }
 
@@ -3661,5 +3677,10 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testJPANativeQueryAndSqlResultSetMapping() throws Exception {
         new JPAIntegrationTests(this).testJPANativeQueryAndSqlResultSetMapping();
+    }
+
+    @Test
+    public void testCollations() throws Exception {
+        new CollationTests(this).testCollations();
     }
 }

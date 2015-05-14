@@ -15,6 +15,7 @@ import org.jooq.test.mysql.generatedclasses.tables.TBook;
 import org.jooq.test.mysql.generatedclasses.tables.TBookStore;
 import org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore;
 import org.jooq.test.mysql.generatedclasses.tables.TBooleans;
+import org.jooq.test.mysql.generatedclasses.tables.TCharsets;
 import org.jooq.test.mysql.generatedclasses.tables.TDates;
 import org.jooq.test.mysql.generatedclasses.tables.TExoticTypes;
 import org.jooq.test.mysql.generatedclasses.tables.TIdentityPk;
@@ -42,7 +43,7 @@ import org.jooq.test.mysql.generatedclasses.tables.XUnused;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Test extends SchemaImpl {
 
-	private static final long serialVersionUID = 745429573;
+	private static final long serialVersionUID = -106739421;
 
 	/**
 	 * The reference instance of <code>test</code>
@@ -75,6 +76,7 @@ public class Test extends SchemaImpl {
 			TBookStore.T_BOOK_STORE,
 			TBookToBookStore.T_BOOK_TO_BOOK_STORE,
 			TBooleans.T_BOOLEANS,
+			TCharsets.T_CHARSETS,
 			TDates.T_DATES,
 			TExoticTypes.T_EXOTIC_TYPES,
 			TIdentityPk.T_IDENTITY_PK,

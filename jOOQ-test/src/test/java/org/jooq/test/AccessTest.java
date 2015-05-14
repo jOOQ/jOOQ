@@ -76,13 +76,6 @@ import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
-import org.jooq.test.all.converters.Boolean_10;
-import org.jooq.test.all.converters.Boolean_TF_LC;
-import org.jooq.test.all.converters.Boolean_TF_UC;
-import org.jooq.test.all.converters.Boolean_YES_NO_LC;
-import org.jooq.test.all.converters.Boolean_YES_NO_UC;
-import org.jooq.test.all.converters.Boolean_YN_LC;
-import org.jooq.test.all.converters.Boolean_YN_UC;
 import org.jooq.test.access.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.access.generatedclasses.tables.records.TBookRecord;
 import org.jooq.test.access.generatedclasses.tables.records.TBookStoreRecord;
@@ -99,6 +92,13 @@ import org.jooq.test.access.generatedclasses.tables.records.T_725LobTestRecord;
 import org.jooq.test.access.generatedclasses.tables.records.T_785Record;
 import org.jooq.test.access.generatedclasses.tables.records.VLibraryRecord;
 import org.jooq.test.access.generatedclasses.tables.records.XUnusedRecord;
+import org.jooq.test.all.converters.Boolean_10;
+import org.jooq.test.all.converters.Boolean_TF_LC;
+import org.jooq.test.all.converters.Boolean_TF_UC;
+import org.jooq.test.all.converters.Boolean_YES_NO_LC;
+import org.jooq.test.all.converters.Boolean_YES_NO_UC;
+import org.jooq.test.all.converters.Boolean_YN_LC;
+import org.jooq.test.all.converters.Boolean_YN_UC;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
@@ -123,6 +123,7 @@ public class AccessTest extends jOOQAbstractTest<
         TTriggersRecord,
         TUnsignedRecord,
         TExoticTypesRecord,
+        XUnusedRecord,
         TIdentityRecord,
         TIdentityPkRecord,
         T_725LobTestRecord,

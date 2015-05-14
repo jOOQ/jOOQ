@@ -123,6 +123,7 @@ public class MySQLTestSchemaRewrite extends jOOQAbstractTest<
         TUnsignedRecord,
         TExoticTypesRecord,
         XUnusedRecord,
+        XUnusedRecord,
         TIdentityPkRecord,
         T_725LobTestRecord,
         T_639NumbersTableRecord,

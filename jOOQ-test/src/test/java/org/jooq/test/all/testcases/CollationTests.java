@@ -40,38 +40,25 @@
  */
 package org.jooq.test.all.testcases;
 
-import static org.jooq.SQLDialect.ACCESS;
-import static org.jooq.SQLDialect.ASE;
-import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.HANA;
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.INFORMIX;
-import static org.jooq.SQLDialect.INGRES;
-import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.SQLDialect.REDSHIFT;
-import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
+import static java.util.Arrays.asList;
+import static org.junit.Assume.assumeNotNull;
 
 import java.sql.Date;
 
-import org.jooq.InsertResultStep;
 import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record6;
+import org.jooq.Result;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
-public class TruncateTests<
+/**
+ * @author Lukas Eder
+ */
+public class CollationTests<
     A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
     AP,
     B    extends UpdatableRecord<B>,
@@ -95,65 +82,23 @@ public class TruncateTests<
     CASE extends UpdatableRecord<CASE>>
 extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK, T725, T639, T785, CASE> {
 
-    public TruncateTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK, T725, T639, T785, CASE> delegate) {
+    public CollationTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK, T725, T639, T785, CASE> delegate) {
         super(delegate);
     }
 
-    public void testTruncate() throws Exception {
-        jOOQAbstractTest.reset = false;
+    public void testCollations() throws Exception {
+        assumeNotNull(TCharsets());
+        clean(TCharsets());
 
-        // This is being tested with an unreferenced table as some RDBMS don't
-        // Allow this
-        create().truncate(TDates()).execute();
-        assertEquals(0, create().fetch(TDates()).size());
-    }
+        assertEquals(2,
+        create().insertInto(TCharsets(), TCharsets_ID(), TCharsets_UTF8())
+                .values(1, "abc")
+                .values(2, "Здравствуйте")
+                .execute());
 
-    public void testTruncateCascade() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, DB2, HANA, INFORMIX, INGRES, ORACLE, REDSHIFT, SQLSERVER, SYBASE, CUBRID, DERBY,
-            FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
-
-        jOOQAbstractTest.reset = false;
-
-        try {
-            create().truncate(TAuthor())
-                    .restrict()
-                    .execute();
-        } catch (Exception expected) {
-        }
-
-        // This is being tested with an unreferenced table as some RDBMS don't
-        // Allow this
-        create().truncate(TAuthor())
-                .cascade()
-                .execute();
-        assertEquals(0, create().fetch(TAuthor()).size());
-        assertEquals(0, create().fetch(TBook()).size());
-    }
-
-    public void testTruncateRestartIdentity() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, DB2, HANA, INFORMIX, INGRES, ORACLE, REDSHIFT, SQLSERVER, SYBASE, CUBRID, DERBY, FIREBIRD,
-            H2, MARIADB, MYSQL, SQLITE);
-
-        jOOQAbstractTest.reset = false;
-
-        InsertResultStep<I> insert =
-        create().insertInto(TIdentity(), TIdentity_VAL())
-                .values(1)
-                .returning(TIdentity_ID());
-        int id1 = insert.fetchOne().getValue(TIdentity_ID());
-
-
-        create().truncate(TIdentity())
-                .continueIdentity()
-                .execute();
-        int id2 = insert.fetchOne().getValue(TIdentity_ID());
-        assertEquals(id1 + 1, id2);
-
-
-        create().truncate(TIdentity())
-                .restartIdentity()
-                .execute();
-        int id3 = insert.fetchOne().getValue(TIdentity_ID());
-        assertEquals(1, id3);
+        Result<CS> result = create().fetch(TCharsets()).sortAsc(TCharsets_ID());
+        assertEquals(2, result.size());
+        assertEquals(asList(1, 2), result.getValues(TCharsets_ID()));
+        assertEquals(asList("abc", "Здравствуйте"), result.getValues(TCharsets_UTF8()));
     }
 }

@@ -13,6 +13,7 @@ import org.jooq.test.mysql.generatedclasses.tables.TBook;
 import org.jooq.test.mysql.generatedclasses.tables.TBookStore;
 import org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore;
 import org.jooq.test.mysql.generatedclasses.tables.TBooleans;
+import org.jooq.test.mysql.generatedclasses.tables.TCharsets;
 import org.jooq.test.mysql.generatedclasses.tables.TDates;
 import org.jooq.test.mysql.generatedclasses.tables.TExoticTypes;
 import org.jooq.test.mysql.generatedclasses.tables.TIdentityPk;
@@ -30,6 +31,7 @@ import org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TBookStoreRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TBooleansRecord;
+import org.jooq.test.mysql.generatedclasses.tables.records.TCharsetsRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TDatesRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TExoticTypesRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TIdentityPkRecord;
@@ -55,6 +57,7 @@ public class Keys {
 	// IDENTITY definitions
 	// -------------------------------------------------------------------------
 
+	public static final Identity<TCharsetsRecord, Integer> IDENTITY_T_CHARSETS = Identities0.IDENTITY_T_CHARSETS;
 	public static final Identity<TIdentityPkRecord, Integer> IDENTITY_T_IDENTITY_PK = Identities0.IDENTITY_T_IDENTITY_PK;
 	public static final Identity<TTriggersRecord, Integer> IDENTITY_T_TRIGGERS = Identities0.IDENTITY_T_TRIGGERS;
 
@@ -69,6 +72,7 @@ public class Keys {
 	public static final UniqueKey<TBookStoreRecord> KEY_T_BOOK_STORE_PRIMARY = UniqueKeys0.KEY_T_BOOK_STORE_PRIMARY;
 	public static final UniqueKey<TBookToBookStoreRecord> KEY_T_BOOK_TO_BOOK_STORE_PRIMARY = UniqueKeys0.KEY_T_BOOK_TO_BOOK_STORE_PRIMARY;
 	public static final UniqueKey<TBooleansRecord> KEY_T_BOOLEANS_PRIMARY = UniqueKeys0.KEY_T_BOOLEANS_PRIMARY;
+	public static final UniqueKey<TCharsetsRecord> KEY_T_CHARSETS_PRIMARY = UniqueKeys0.KEY_T_CHARSETS_PRIMARY;
 	public static final UniqueKey<TDatesRecord> KEY_T_DATES_PRIMARY = UniqueKeys0.KEY_T_DATES_PRIMARY;
 	public static final UniqueKey<TExoticTypesRecord> KEY_T_EXOTIC_TYPES_PRIMARY = UniqueKeys0.KEY_T_EXOTIC_TYPES_PRIMARY;
 	public static final UniqueKey<TIdentityPkRecord> KEY_T_IDENTITY_PK_PRIMARY = UniqueKeys0.KEY_T_IDENTITY_PK_PRIMARY;
@@ -103,6 +107,7 @@ public class Keys {
 	// -------------------------------------------------------------------------
 
 	private static class Identities0 extends AbstractKeys {
+		public static Identity<TCharsetsRecord, Integer> IDENTITY_T_CHARSETS = createIdentity(TCharsets.T_CHARSETS, TCharsets.ID);
 		public static Identity<TIdentityPkRecord, Integer> IDENTITY_T_IDENTITY_PK = createIdentity(TIdentityPk.T_IDENTITY_PK, TIdentityPk.ID);
 		public static Identity<TTriggersRecord, Integer> IDENTITY_T_TRIGGERS = createIdentity(TTriggers.T_TRIGGERS, TTriggers.ID_GENERATED);
 	}
@@ -115,6 +120,7 @@ public class Keys {
 		public static final UniqueKey<TBookStoreRecord> KEY_T_BOOK_STORE_PRIMARY = createUniqueKey(TBookStore.T_BOOK_STORE, TBookStore.NAME);
 		public static final UniqueKey<TBookToBookStoreRecord> KEY_T_BOOK_TO_BOOK_STORE_PRIMARY = createUniqueKey(TBookToBookStore.T_BOOK_TO_BOOK_STORE, TBookToBookStore.BOOK_STORE_NAME, TBookToBookStore.BOOK_ID);
 		public static final UniqueKey<TBooleansRecord> KEY_T_BOOLEANS_PRIMARY = createUniqueKey(TBooleans.T_BOOLEANS, TBooleans.ID);
+		public static final UniqueKey<TCharsetsRecord> KEY_T_CHARSETS_PRIMARY = createUniqueKey(TCharsets.T_CHARSETS, TCharsets.ID);
 		public static final UniqueKey<TDatesRecord> KEY_T_DATES_PRIMARY = createUniqueKey(TDates.T_DATES, TDates.ID);
 		public static final UniqueKey<TExoticTypesRecord> KEY_T_EXOTIC_TYPES_PRIMARY = createUniqueKey(TExoticTypes.T_EXOTIC_TYPES, TExoticTypes.ID);
 		public static final UniqueKey<TIdentityPkRecord> KEY_T_IDENTITY_PK_PRIMARY = createUniqueKey(TIdentityPk.T_IDENTITY_PK, TIdentityPk.ID);

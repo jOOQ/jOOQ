@@ -126,6 +126,7 @@ public class HanaTest extends jOOQAbstractTest<
         XUnusedRecord,
         TUnsignedRecord,
         TExoticTypesRecord,
+        XUnusedRecord,
         TIdentityRecord,
         TIdentityPkRecord,
         T_725LobTestRecord,

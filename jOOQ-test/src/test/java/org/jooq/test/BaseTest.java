@@ -152,6 +152,9 @@ public abstract class BaseTest<
     // T_1624_UUID table
     UU extends UpdatableRecord<UU>,
 
+    // T_CHARSETS table
+    CS extends UpdatableRecord<CS>,
+
     // T_IDENTITY table
     I extends TableRecord<I>,
 
@@ -180,9 +183,9 @@ public abstract class BaseTest<
 
     protected static final JooqLogger      log                = JooqLogger.getLogger(jOOQAbstractTest.class);
 
-    protected final jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> delegate;
+    protected final jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK, T725, T639, T785, CASE> delegate;
 
-    protected BaseTest(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> delegate) {
+    protected BaseTest(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK, T725, T639, T785, CASE> delegate) {
         this.delegate = delegate;
     }
 
@@ -340,6 +343,18 @@ public abstract class BaseTest<
 
     protected TableField<UU, String> TExoticTypes_PLAIN_SQL_CONVERTER_XML() {
         return delegate.TExoticTypes_PLAIN_SQL_CONVERTER_XML();
+    }
+
+    protected Table<CS> TCharsets() {
+        return delegate.TCharsets();
+    }
+
+    protected TableField<CS, Integer> TCharsets_ID() {
+        return delegate.TCharsets_ID();
+    }
+
+    protected TableField<CS, String> TCharsets_UTF8() {
+        return delegate.TCharsets_UTF8();
     }
 
     public Table<DATE> TDates() {

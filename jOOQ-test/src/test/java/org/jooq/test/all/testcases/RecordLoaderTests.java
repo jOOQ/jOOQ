@@ -64,29 +64,30 @@ import org.jooq.test.all.converters.Boolean_TF_LC;
  * @author Lukas Eder
  */
 public class RecordLoaderTests<
-    A extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
+    A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
     AP,
-    B extends UpdatableRecord<B>,
-    S extends UpdatableRecord<S> & Record1<String>,
-    B2S extends UpdatableRecord<B2S> & Record3<String, Integer, Integer>,
-    BS extends UpdatableRecord<BS>,
-    L extends TableRecord<L> & Record2<String, String>,
-    X extends TableRecord<X>,
+    B    extends UpdatableRecord<B>,
+    S    extends UpdatableRecord<S> & Record1<String>,
+    B2S  extends UpdatableRecord<B2S> & Record3<String, Integer, Integer>,
+    BS   extends UpdatableRecord<BS>,
+    L    extends TableRecord<L> & Record2<String, String>,
+    X    extends TableRecord<X>,
     DATE extends UpdatableRecord<DATE>,
     BOOL extends UpdatableRecord<BOOL>,
-    D extends UpdatableRecord<D>,
-    T extends UpdatableRecord<T>,
-    U extends TableRecord<U>,
-    UU extends UpdatableRecord<UU>,
-    I extends TableRecord<I>,
-    IPK extends UpdatableRecord<IPK>,
+    D    extends UpdatableRecord<D>,
+    T    extends UpdatableRecord<T>,
+    U    extends TableRecord<U>,
+    UU   extends UpdatableRecord<UU>,
+    CS   extends UpdatableRecord<CS>,
+    I    extends TableRecord<I>,
+    IPK  extends UpdatableRecord<IPK>,
     T725 extends UpdatableRecord<T725>,
     T639 extends UpdatableRecord<T639>,
     T785 extends TableRecord<T785>,
     CASE extends UpdatableRecord<CASE>>
-extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> {
+extends AbstractLoaderTests<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK, T725, T639, T785, CASE> {
 
-    public RecordLoaderTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785, CASE> delegate) {
+    public RecordLoaderTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK, T725, T639, T785, CASE> delegate) {
         super(delegate);
     }
 

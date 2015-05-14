@@ -132,6 +132,7 @@ public class DB2Test extends jOOQAbstractTest<
         TTriggersRecord,
         XUnusedRecord,
         TExoticTypesRecord,
+        XUnusedRecord,
         TIdentityRecord,
         TIdentityPkRecord,
         T_725LobTestRecord,

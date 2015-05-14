@@ -127,6 +127,7 @@ public class ASETest extends jOOQAbstractTest<
         TTriggersRecord,
         XUnusedRecord,
         XUnusedRecord,
+        XUnusedRecord,
         TIdentityRecord,
         TIdentityPkRecord,
         T_725LobTestRecord,

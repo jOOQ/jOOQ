@@ -162,6 +162,7 @@ public class SQLServerTest extends jOOQAbstractTest<
         TTriggersRecord,
         TUnsignedRecord,
         TExoticTypesRecord,
+        XUnusedRecord,
         TIdentityRecord,
         TIdentityPkRecord,
         T_725LobTestRecord,

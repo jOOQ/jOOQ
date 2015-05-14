@@ -117,6 +117,7 @@ public class RedshiftTest extends jOOQAbstractTest<
         XUnusedRecord,
         TUnsignedRecord,
         XUnusedRecord,
+        XUnusedRecord,
         TIdentityRecord,
         TIdentityPkRecord,
         XUnusedRecord,

@@ -22,7 +22,7 @@ import org.jooq.test.mysql.generatedclasses.tables.XUnused;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnusedRecord extends UpdatableRecordImpl<XUnusedRecord> implements Record14<Integer, String, BigInteger, Integer, String, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, BigDecimal> {
 
-	private static final long serialVersionUID = 1266216285;
+	private static final long serialVersionUID = 1308043289;
 
 	/**
 	 * Setter for <code>test.x_unused.ID</code>.
@@ -607,6 +607,20 @@ public class XUnusedRecord extends UpdatableRecordImpl<XUnusedRecord> implements
 	 */
 	@Override
 	public XUnusedRecord values(Integer value1, String value2, BigInteger value3, Integer value4, String value5, Integer value6, Integer value7, Integer value8, Integer value9, Integer value10, Integer value11, Integer value12, Integer value13, BigDecimal value14) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
+		value7(value7);
+		value8(value8);
+		value9(value9);
+		value10(value10);
+		value11(value11);
+		value12(value12);
+		value13(value13);
+		value14(value14);
 		return this;
 	}
 

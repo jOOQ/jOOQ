@@ -25,7 +25,7 @@ import org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends TableImpl<TBookRecord> {
 
-	private static final long serialVersionUID = -624028774;
+	private static final long serialVersionUID = -1123393665;
 
 	/**
 	 * The reference instance of <code>test.t_book</code>
@@ -63,7 +63,7 @@ public class TBook extends TableImpl<TBookRecord> {
 	/**
 	 * The column <code>test.t_book.TITLE</code>. The book's title
 	 */
-	public static final TableField<TBookRecord, String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.CLOB.length(65535).nullable(false), T_BOOK, "The book's title");
+	public static final TableField<TBookRecord, String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.CLOB.nullable(false), T_BOOK, "The book's title");
 
 	/**
 	 * The column <code>test.t_book.PUBLISHED_IN</code>. The year the book was published in

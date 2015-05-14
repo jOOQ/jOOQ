@@ -18,7 +18,7 @@ import org.jooq.test.mysql.generatedclasses.tables.T_785;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_785Record extends TableRecordImpl<T_785Record> implements Record3<Integer, String, String> {
 
-	private static final long serialVersionUID = 1053150196;
+	private static final long serialVersionUID = 1645812644;
 
 	/**
 	 * Setter for <code>test.t_785.ID</code>.
@@ -162,6 +162,9 @@ public class T_785Record extends TableRecordImpl<T_785Record> implements Record3
 	 */
 	@Override
 	public T_785Record values(Integer value1, String value2, String value3) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
 		return this;
 	}
 

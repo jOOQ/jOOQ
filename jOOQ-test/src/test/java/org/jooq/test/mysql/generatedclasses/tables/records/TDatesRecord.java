@@ -23,7 +23,7 @@ import org.jooq.test.mysql.generatedclasses.tables.TDates;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements Record8<Integer, Date, Time, Timestamp, Integer, Long, Date, Date> {
 
-	private static final long serialVersionUID = -2035478046;
+	private static final long serialVersionUID = 440987106;
 
 	/**
 	 * Setter for <code>test.t_dates.id</code>.
@@ -374,6 +374,14 @@ public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements R
 	 */
 	@Override
 	public TDatesRecord values(Integer value1, Date value2, Time value3, Timestamp value4, Integer value5, Long value6, Date value7, Date value8) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
+		value7(value7);
+		value8(value8);
 		return this;
 	}
 

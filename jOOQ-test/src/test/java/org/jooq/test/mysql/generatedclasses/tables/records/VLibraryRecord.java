@@ -18,7 +18,7 @@ import org.jooq.test.mysql.generatedclasses.tables.VLibrary;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibraryRecord extends TableRecordImpl<VLibraryRecord> implements Record2<String, String> {
 
-	private static final long serialVersionUID = 1826896005;
+	private static final long serialVersionUID = 1718272325;
 
 	/**
 	 * Setter for <code>test.v_library.AUTHOR</code>.
@@ -123,6 +123,8 @@ public class VLibraryRecord extends TableRecordImpl<VLibraryRecord> implements R
 	 */
 	@Override
 	public VLibraryRecord values(String value1, String value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

@@ -19,7 +19,7 @@ import org.jooq.test.mysql.generatedclasses.tables.TLanguage;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguageRecord extends UpdatableRecordImpl<TLanguageRecord> implements Record4<String, String, String, Integer> {
 
-	private static final long serialVersionUID = -2093340403;
+	private static final long serialVersionUID = -963502323;
 
 	/**
 	 * Setter for <code>test.t_language.CD</code>. The language ISO code
@@ -214,6 +214,10 @@ public class TLanguageRecord extends UpdatableRecordImpl<TLanguageRecord> implem
 	 */
 	@Override
 	public TLanguageRecord values(String value1, String value2, String value3, Integer value4) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
 		return this;
 	}
 

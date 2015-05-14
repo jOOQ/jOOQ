@@ -18,7 +18,7 @@ import org.jooq.test.mysql.generatedclasses.tables.T_2926;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2926Record extends TableRecordImpl<T_2926Record> implements Record4<String, String, String, String> {
 
-	private static final long serialVersionUID = -765601463;
+	private static final long serialVersionUID = -674380215;
 
 	/**
 	 * Setter for <code>test.t_2926.t1</code>.
@@ -201,6 +201,10 @@ public class T_2926Record extends TableRecordImpl<T_2926Record> implements Recor
 	 */
 	@Override
 	public T_2926Record values(String value1, String value2, String value3, String value4) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
 		return this;
 	}
 

@@ -19,7 +19,7 @@ import org.jooq.test.mysql.generatedclasses.tables.records.VBookRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBook extends TableImpl<VBookRecord> {
 
-	private static final long serialVersionUID = 1174775684;
+	private static final long serialVersionUID = -1991408257;
 
 	/**
 	 * The reference instance of <code>test.v_book</code>
@@ -57,7 +57,7 @@ public class VBook extends TableImpl<VBookRecord> {
 	/**
 	 * The column <code>test.v_book.TITLE</code>. The book's title
 	 */
-	public static final TableField<VBookRecord, String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.CLOB.length(65535).nullable(false), V_BOOK, "The book's title");
+	public static final TableField<VBookRecord, String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.CLOB.nullable(false), V_BOOK, "The book's title");
 
 	/**
 	 * The column <code>test.v_book.PUBLISHED_IN</code>. The year the book was published in

@@ -19,7 +19,7 @@ import org.jooq.test.mysql.generatedclasses.tables.TTriggers;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggersRecord extends UpdatableRecordImpl<TTriggersRecord> implements Record3<Integer, Integer, Integer> {
 
-	private static final long serialVersionUID = 1621077327;
+	private static final long serialVersionUID = -2122362689;
 
 	/**
 	 * Setter for <code>test.t_triggers.id_generated</code>.
@@ -175,6 +175,9 @@ public class TTriggersRecord extends UpdatableRecordImpl<TTriggersRecord> implem
 	 */
 	@Override
 	public TTriggersRecord values(Integer value1, Integer value2, Integer value3) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
 		return this;
 	}
 

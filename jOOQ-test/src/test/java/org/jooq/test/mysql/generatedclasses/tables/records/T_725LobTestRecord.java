@@ -19,7 +19,7 @@ import org.jooq.test.mysql.generatedclasses.tables.T_725LobTest;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTestRecord extends UpdatableRecordImpl<T_725LobTestRecord> implements Record2<Integer, byte[]> {
 
-	private static final long serialVersionUID = 1798667558;
+	private static final long serialVersionUID = 1246011622;
 
 	/**
 	 * Setter for <code>test.t_725_lob_test.ID</code>.
@@ -136,6 +136,8 @@ public class T_725LobTestRecord extends UpdatableRecordImpl<T_725LobTestRecord> 
 	 */
 	@Override
 	public T_725LobTestRecord values(Integer value1, byte[] value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

@@ -22,7 +22,7 @@ import org.jooq.test.mysql.generatedclasses.tables.T_639NumbersTable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTableRecord extends UpdatableRecordImpl<T_639NumbersTableRecord> implements Record13<Integer, Byte, Short, Integer, Long, Byte, Short, Integer, Long, BigInteger, BigDecimal, Double, Double> {
 
-	private static final long serialVersionUID = -1768272548;
+	private static final long serialVersionUID = -1395664160;
 
 	/**
 	 * Setter for <code>test.t_639_numbers_table.ID</code>.
@@ -568,6 +568,19 @@ public class T_639NumbersTableRecord extends UpdatableRecordImpl<T_639NumbersTab
 	 */
 	@Override
 	public T_639NumbersTableRecord values(Integer value1, Byte value2, Short value3, Integer value4, Long value5, Byte value6, Short value7, Integer value8, Long value9, BigInteger value10, BigDecimal value11, Double value12, Double value13) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
+		value7(value7);
+		value8(value8);
+		value9(value9);
+		value10(value10);
+		value11(value11);
+		value12(value12);
+		value13(value13);
 		return this;
 	}
 

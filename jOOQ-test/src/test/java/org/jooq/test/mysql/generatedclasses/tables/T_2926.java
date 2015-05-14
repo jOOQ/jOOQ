@@ -18,7 +18,7 @@ import org.jooq.test.mysql.generatedclasses.tables.records.T_2926Record;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2926 extends TableImpl<T_2926Record> {
 
-	private static final long serialVersionUID = 84117341;
+	private static final long serialVersionUID = -452985662;
 
 	/**
 	 * The reference instance of <code>test.t_2926</code>
@@ -36,17 +36,17 @@ public class T_2926 extends TableImpl<T_2926Record> {
 	/**
 	 * The column <code>test.t_2926.t1</code>.
 	 */
-	public static final TableField<T_2926Record, String> T1 = createField("t1", org.jooq.impl.SQLDataType.CLOB.length(255), T_2926, "");
+	public static final TableField<T_2926Record, String> T1 = createField("t1", org.jooq.impl.SQLDataType.CLOB, T_2926, "");
 
 	/**
 	 * The column <code>test.t_2926.t2</code>.
 	 */
-	public static final TableField<T_2926Record, String> T2 = createField("t2", org.jooq.impl.SQLDataType.CLOB.length(65535), T_2926, "");
+	public static final TableField<T_2926Record, String> T2 = createField("t2", org.jooq.impl.SQLDataType.CLOB, T_2926, "");
 
 	/**
 	 * The column <code>test.t_2926.t3</code>.
 	 */
-	public static final TableField<T_2926Record, String> T3 = createField("t3", org.jooq.impl.SQLDataType.CLOB.length(16777215), T_2926, "");
+	public static final TableField<T_2926Record, String> T3 = createField("t3", org.jooq.impl.SQLDataType.CLOB, T_2926, "");
 
 	/**
 	 * The column <code>test.t_2926.t4</code>.

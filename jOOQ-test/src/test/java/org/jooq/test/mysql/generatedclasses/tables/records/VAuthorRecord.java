@@ -20,7 +20,7 @@ import org.jooq.test.mysql.generatedclasses.tables.VAuthor;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthorRecord extends TableRecordImpl<VAuthorRecord> implements Record6<Integer, String, String, Date, Integer, String> {
 
-	private static final long serialVersionUID = 601696189;
+	private static final long serialVersionUID = -727074051;
 
 	/**
 	 * Setter for <code>test.v_author.ID</code>. The author ID
@@ -281,6 +281,12 @@ public class VAuthorRecord extends TableRecordImpl<VAuthorRecord> implements Rec
 	 */
 	@Override
 	public VAuthorRecord values(Integer value1, String value2, String value3, Date value4, Integer value5, String value6) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
 		return this;
 	}
 

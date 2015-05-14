@@ -20,7 +20,7 @@ import org.jooq.test.mysql.generatedclasses.tables.T_959;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_959Record extends TableRecordImpl<T_959Record> implements Record2<T_959JavaKeywords, T_959SpecialCharacters> {
 
-	private static final long serialVersionUID = 1712426365;
+	private static final long serialVersionUID = 626817597;
 
 	/**
 	 * Setter for <code>test.t_959.java_keywords</code>.
@@ -125,6 +125,8 @@ public class T_959Record extends TableRecordImpl<T_959Record> implements Record2
 	 */
 	@Override
 	public T_959Record values(T_959JavaKeywords value1, T_959SpecialCharacters value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

@@ -18,7 +18,7 @@ import org.jooq.test.mysql.generatedclasses.tables.XTestCase_2025;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_2025Record extends TableRecordImpl<XTestCase_2025Record> implements Record2<Integer, String> {
 
-	private static final long serialVersionUID = 837923120;
+	private static final long serialVersionUID = -627106448;
 
 	/**
 	 * Setter for <code>test.x_test_case_2025.ref_id</code>.
@@ -123,6 +123,8 @@ public class XTestCase_2025Record extends TableRecordImpl<XTestCase_2025Record> 
 	 */
 	@Override
 	public XTestCase_2025Record values(Integer value1, String value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

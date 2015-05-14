@@ -18,7 +18,7 @@ import org.jooq.test.mysql.generatedclasses.tables.records.VLibraryRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibrary extends TableImpl<VLibraryRecord> {
 
-	private static final long serialVersionUID = -854508690;
+	private static final long serialVersionUID = 929188307;
 
 	/**
 	 * The reference instance of <code>test.v_library</code>
@@ -41,7 +41,7 @@ public class VLibrary extends TableImpl<VLibraryRecord> {
 	/**
 	 * The column <code>test.v_library.TITLE</code>. The book's title
 	 */
-	public static final TableField<VLibraryRecord, String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.CLOB.length(65535).nullable(false), V_LIBRARY, "The book's title");
+	public static final TableField<VLibraryRecord, String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.CLOB.nullable(false), V_LIBRARY, "The book's title");
 
 	/**
 	 * No further instances allowed

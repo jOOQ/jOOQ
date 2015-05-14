@@ -18,7 +18,7 @@ import org.jooq.test.mysql.generatedclasses.tables.TBookStore;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStoreRecord extends UpdatableRecordImpl<TBookStoreRecord> implements Record1<String> {
 
-	private static final long serialVersionUID = 1998889562;
+	private static final long serialVersionUID = 317782698;
 
 	/**
 	 * Setter for <code>test.t_book_store.name</code>. The books store name
@@ -96,6 +96,7 @@ public class TBookStoreRecord extends UpdatableRecordImpl<TBookStoreRecord> impl
 	 */
 	@Override
 	public TBookStoreRecord values(String value1) {
+		value1(value1);
 		return this;
 	}
 

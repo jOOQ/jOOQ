@@ -19,7 +19,7 @@ import org.jooq.test.mysql.generatedclasses.tables.TIdentityPk;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentityPkRecord extends UpdatableRecordImpl<TIdentityPkRecord> implements Record2<Integer, Integer> {
 
-	private static final long serialVersionUID = -1975443570;
+	private static final long serialVersionUID = 1664483790;
 
 	/**
 	 * Setter for <code>test.t_identity_pk.id</code>.
@@ -136,6 +136,8 @@ public class TIdentityPkRecord extends UpdatableRecordImpl<TIdentityPkRecord> im
 	 */
 	@Override
 	public TIdentityPkRecord values(Integer value1, Integer value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

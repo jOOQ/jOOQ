@@ -19,7 +19,7 @@ import org.jooq.test.mysql.generatedclasses.tables.VBook;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBookRecord extends TableRecordImpl<VBookRecord> implements Record10<Integer, Integer, Integer, Integer, String, Integer, Integer, String, byte[], VBookStatus> {
 
-	private static final long serialVersionUID = -847860691;
+	private static final long serialVersionUID = 294505053;
 
 	/**
 	 * Setter for <code>test.v_book.ID</code>. The book ID
@@ -436,6 +436,16 @@ public class VBookRecord extends TableRecordImpl<VBookRecord> implements Record1
 	 */
 	@Override
 	public VBookRecord values(Integer value1, Integer value2, Integer value3, Integer value4, String value5, Integer value6, Integer value7, String value8, byte[] value9, VBookStatus value10) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
+		value7(value7);
+		value8(value8);
+		value9(value9);
+		value10(value10);
 		return this;
 	}
 

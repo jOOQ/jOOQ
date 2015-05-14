@@ -56,6 +56,7 @@
         <db.oracle.version>10.2.0.3.0</db.oracle.version>
         <db.sqlserver.version>3.0</db.sqlserver.version>
         <db.sybase.version>6.0</db.sybase.version>
+        <db.vertica.version>7.1.1</db.vertica.version>
         <!-- [/pro] -->
     </properties>
 
@@ -381,6 +382,13 @@
             <version>${db.sybase.version}</version>
             <scope>system</scope>
             <systemPath>${basedir}/lib/jconn3.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>vertica</groupId>
+            <artifactId>vertica</artifactId>
+            <version>${db.vertica.version}</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/vertica-jdbc-7.1.1-0.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.amazon</groupId>

@@ -41,6 +41,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.name;
 
 import java.io.Serializable;
 import java.sql.ResultSetMetaData;
@@ -51,6 +52,7 @@ import java.util.List;
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.JooqLogger;
@@ -100,7 +102,21 @@ class MetaDataFieldProvider implements Serializable {
 
         try {
             for (int i = 1; i <= columnCount; i++) {
-                String name = meta.getColumnLabel(i);
+                Name name;
+
+                String columnLabel = meta.getColumnLabel(i);
+                String columnName = meta.getColumnName(i);
+
+                if (columnName.equals(columnLabel)) {
+                    String columnSchema = meta.getSchemaName(i);
+                    String columnTable = meta.getTableName(i);
+
+                    name = name(columnSchema, columnTable, columnName);
+                }
+                else {
+                    name = name(columnLabel);
+                }
+
                 int precision = meta.getPrecision(i);
                 int scale = meta.getScale(i);
                 DataType<?> dataType = SQLDataType.OTHER;

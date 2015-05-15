@@ -1690,6 +1690,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testPlainSQLAmbiguousColumnNames() throws Exception {
+        new PlainSQLTests(this).testPlainSQLAmbiguousColumnNames();
+    }
+
+    @Test
     public void testPlainSQLWithSelfJoins() throws Exception {
         new PlainSQLTests(this).testPlainSQLWithSelfJoins();
     }

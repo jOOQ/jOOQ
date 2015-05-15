@@ -289,6 +289,23 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         assertEquals(3, create().fetchCount(TAuthor()));
     }
 
+    public void testPlainSQLAmbiguousColumnNames() throws Exception {
+        String schema = TBook().getSchema().getName();
+        String book = TBook().getName();
+        String bookID = TBook_ID().getName();
+        String author = TAuthor().getName();
+        String authorID = TAuthor_ID().getName();
+
+        Result<Record> result =
+        create().fetch("select b.id, a.id from t_author a join t_book b on a.id = b.author_id order by b.id, a.id");
+
+        assertEquals(BOOK_IDS, result.getValues(0, int.class));
+        assertEquals(BOOK_AUTHOR_IDS, result.getValues(1, int.class));
+
+        assertEquals(BOOK_IDS, result.getValues(field(name(schema, book, bookID), int.class)));
+        assertEquals(BOOK_AUTHOR_IDS, result.getValues(field(name(schema, author, authorID), int.class)));
+    }
+
     public void testPlainSQLWithSelfJoins()  throws Exception {
 
         // [#1860] In case of ambiguous field names in plain SQL, access by

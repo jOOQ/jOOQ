@@ -68,6 +68,7 @@ import org.jooq.Attachable;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record10;
@@ -174,6 +175,11 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
+    public final Field<?> field(Name name) {
+        return fieldsRow().field(name);
+    }
+
+    @Override
     public final Field<?> field(int index) {
         return index >= 0 && index < fields.size() ? fields.field(index) : null;
     }
@@ -190,6 +196,11 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final Field<?>[] fields(String... fieldNames) {
+        return fields.fields(fieldNames);
+    }
+
+    @Override
+    public final Field<?>[] fields(Name... fieldNames) {
         return fields.fields(fieldNames);
     }
 
@@ -312,6 +323,21 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     public final <U> U getValue(String fieldName, Converter<?, U> converter, U defaultValue) {
         final U result = getValue(fieldName, converter);
         return result == null ? defaultValue : result;
+    }
+
+    @Override
+    public final Object getValue(Name fieldName) {
+        return getValue(indexOrFail(fieldsRow(), fieldName));
+    }
+
+    @Override
+    public final <T> T getValue(Name fieldName, Class<? extends T> type) {
+        return Convert.convert(getValue(fieldName), type);
+    }
+
+    @Override
+    public final <U> U getValue(Name fieldName, Converter<?, U> converter) {
+        return Convert.convert(getValue(fieldName), converter);
     }
 
     /**
@@ -449,6 +475,11 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
+    public final Object original(Name fieldName) {
+        return original(indexOrFail(fieldsRow(), fieldName));
+    }
+
+    @Override
     public final boolean changed() {
         return !changed.isEmpty();
     }
@@ -465,6 +496,11 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final boolean changed(String fieldName) {
+        return changed(indexOrFail(fieldsRow(), fieldName));
+    }
+
+    @Override
+    public final boolean changed(Name fieldName) {
         return changed(indexOrFail(fieldsRow(), fieldName));
     }
 
@@ -502,6 +538,11 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
+    public final void changed(Name fieldName, boolean c) {
+        changed(indexOrFail(fieldsRow(), fieldName), c);
+    }
+
+    @Override
     public final void reset() {
         changed.clear();
 
@@ -523,6 +564,11 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final void reset(String fieldName) {
+        reset(indexOrFail(fieldsRow(), fieldName));
+    }
+
+    @Override
+    public final void reset(Name fieldName) {
         reset(indexOrFail(fieldsRow(), fieldName));
     }
 
@@ -861,6 +907,11 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
+    public final void from(Object source, Name... fieldNames) {
+        from(source, fields(fieldNames));
+    }
+
+    @Override
     public final void from(Object source, int... fieldIndexes) {
         from(source, fields(fieldIndexes));
     }
@@ -884,6 +935,11 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final void fromMap(Map<String, ?> map, String... fieldNames) {
+        fromMap(map, fields(fieldNames));
+    }
+
+    @Override
+    public final void fromMap(Map<String, ?> map, Name... fieldNames) {
         fromMap(map, fields(fieldNames));
     }
 
@@ -913,6 +969,11 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final void fromArray(Object[] array, String... fieldNames) {
+        fromArray(array, fields(fieldNames));
+    }
+
+    @Override
+    public final void fromArray(Object[] array, Name... fieldNames) {
         fromArray(array, fields(fieldNames));
     }
 

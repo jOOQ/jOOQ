@@ -72,6 +72,13 @@ public interface UDT<R extends UDTRecord<R>> extends QueryPart {
     /**
      * Get a specific field from this UDT.
      *
+     * @see Row#field(Name)
+     */
+    Field<?> field(Name name);
+
+    /**
+     * Get a specific field from this UDT.
+     *
      * @see Row#field(int)
      */
     Field<?> field(int index);

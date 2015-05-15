@@ -126,6 +126,13 @@ public interface Record extends Attachable, Comparable<Record> {
     Field<?> field(String name);
 
     /**
+     * Get a specific qualified field from this Record.
+     *
+     * @see Row#field(Name)
+     */
+    Field<?> field(Name name);
+
+    /**
      * Get a specific field from this Record.
      *
      * @see Row#field(int)
@@ -154,6 +161,14 @@ public interface Record extends Attachable, Comparable<Record> {
      * @see Row#fields(String...)
      */
     Field<?>[] fields(String... fieldNames);
+
+    /**
+     * Get all fields from this Record, providing some field names.
+     *
+     * @return All available fields
+     * @see Row#fields(Name...)
+     */
+    Field<?>[] fields(Name... fieldNames);
 
     /**
      * Get all fields from this Record, providing some field indexes.
@@ -372,6 +387,47 @@ public interface Record extends Attachable, Comparable<Record> {
     <U> U getValue(String fieldName, Converter<?, U> converter, U defaultValue) throws IllegalArgumentException,
         DataTypeException;
 
+
+    /**
+     * Get a value from this Record, providing a field name.
+     *
+     * @param fieldName The field's name
+     * @return The value of a field's name contained in this record
+     * @throws IllegalArgumentException If the argument fieldName is not
+     *             contained in the record
+     */
+    Object getValue(Name fieldName) throws IllegalArgumentException;
+
+    /**
+     * Get a converted value from this Record, providing a field name.
+     *
+     * @param <T> The conversion type parameter
+     * @param fieldName The field's name
+     * @param type The conversion type
+     * @return The value of a field's name contained in this record
+     * @throws IllegalArgumentException If the argument fieldName is not
+     *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
+     * @see Convert#convert(Object, Class)
+     */
+    <T> T getValue(Name fieldName, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
+
+    /**
+     * Get a converted value from this Record, providing a field name.
+     *
+     * @param <U> The conversion type parameter
+     * @param fieldName The field's name
+     * @param converter The data type converter
+     * @return The value of a field's name contained in this record
+     * @throws IllegalArgumentException If the argument fieldName is not
+     *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
+     * @see Convert#convert(Object, Converter)
+     */
+    <U> U getValue(Name fieldName, Converter<?, U> converter) throws IllegalArgumentException, DataTypeException;
+
     /**
      * Get a value from this record, providing a field index.
      *
@@ -558,6 +614,17 @@ public interface Record extends Attachable, Comparable<Record> {
     Object original(String fieldName);
 
     /**
+     * Get an original value from this record as fetched from the database.
+     * <p>
+     * Record values can be freely modified after having fetched a record from
+     * the database. Every record also references the originally fetched values.
+     * This method returns such an original value for a field.
+     *
+     * @see #original()
+     */
+    Object original(Name fieldName);
+
+    /**
      * Check if this record has been changed from its original as fetched from
      * the database.
      * <p>
@@ -597,6 +664,15 @@ public interface Record extends Attachable, Comparable<Record> {
      * @see #original(String)
      */
     boolean changed(String fieldName);
+
+    /**
+     * Check if a field's value has been changed from its original as fetched
+     * from the database.
+     *
+     * @see #changed()
+     * @see #original(Name)
+     */
+    boolean changed(Name fieldName);
 
     /**
      * Set all of this record's internal changed flags to the supplied value.
@@ -652,6 +728,19 @@ public interface Record extends Attachable, Comparable<Record> {
     void changed(String fieldName, boolean changed);
 
     /**
+     * Set this record's internal changed flag to the supplied value for a given
+     * field.
+     * <p>
+     * If the <code>changed</code> argument is <code>false</code>, the
+     * {@link #original(Name)} value will be reset to the corresponding
+     * "current" value as well
+     *
+     * @see #changed()
+     * @see #changed(Name)
+     */
+    void changed(Name fieldName, boolean changed);
+
+    /**
      * Reset all values to their {@link #original()} values and all
      * {@link #changed()} flags to <code>false</code>.
      */
@@ -674,6 +763,12 @@ public interface Record extends Attachable, Comparable<Record> {
      * {@link #changed(String)} flag to <code>false</code>.
      */
     void reset(String fieldName);
+
+    /**
+     * Reset a given value to its {@link #original(Name)} value and its
+     * {@link #changed(Name)} flag to <code>false</code>.
+     */
+    void reset(Name fieldName);
 
     /**
      * Convert this record into an array.
@@ -1164,6 +1259,21 @@ public interface Record extends Attachable, Comparable<Record> {
     void from(Object source, String... fieldNames) throws MappingException;
 
     /**
+     * Load data into this record from a source, providing some field names.
+     * <p>
+     * This is the same as {@link #from(Object)}, except that only fields
+     * contained in the <code>fieldNames</code> argument will be mapped.
+     *
+     * @param source The source object to copy data from
+     * @param fieldNames The record's fields names to use for mapping
+     * @throws MappingException wrapping any reflection exception that might
+     *             have occurred while mapping records
+     * @see #into(Class)
+     * @see #from(Object)
+     */
+    void from(Object source, Name... fieldNames) throws MappingException;
+
+    /**
      * Load data into this record from a source, providing some field indexes.
      * <p>
      * This is the same as {@link #from(Object)}, except that only fields
@@ -1227,6 +1337,22 @@ public interface Record extends Attachable, Comparable<Record> {
     void fromMap(Map<String, ?> map, String... fieldNames);
 
     /**
+     * Load data from a map into this record, providing some field names.
+     * <p>
+     * The argument map is expected to hold field-name / value pairs where
+     * field-names correspond to actual field names as provided by
+     * {@link #field(Name)}. Missing fields will be left untouched. Excess
+     * fields will be ignored.
+     * <p>
+     * This is the same as {@link #fromMap(Map)}, except that only fields
+     * contained in the <code>fieldNames</code> argument will be mapped.
+     *
+     * @see #intoMap()
+     * @see #fromMap(Map)
+     */
+    void fromMap(Map<String, ?> map, Name... fieldNames);
+
+    /**
      * Load data from a map into this record, providing some field indexes.
      * <p>
      * The argument map is expected to hold field-name / value pairs where
@@ -1285,6 +1411,21 @@ public interface Record extends Attachable, Comparable<Record> {
      * @see #fromArray(Object...)
      */
     void fromArray(Object[] array, String... fieldNames);
+
+    /**
+     * Load data from an array into this record, providing some fields names.
+     * <p>
+     * The argument array is expected to hold values for this record's field
+     * indexes. Missing values will be left untouched. Excess values will be
+     * ignored.
+     * <p>
+     * This is the same as {@link #fromArray(Object...)}, except that only
+     * fields contained in the <code>fieldNames</code> argument will be mapped.
+     *
+     * @see #intoArray()
+     * @see #fromArray(Object...)
+     */
+    void fromArray(Object[] array, Name... fieldNames);
 
     /**
      * Load data from an array into this record, providing some fields indexes.

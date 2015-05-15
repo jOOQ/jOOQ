@@ -74,6 +74,7 @@ import org.jooq.Cursor;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.RecordHandler;
 import org.jooq.RecordMapper;
@@ -152,6 +153,11 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
     @Override
     public final Field<?> field(String name) {
+        return fieldsRow().field(name);
+    }
+
+    @Override
+    public final Field<?> field(Name name) {
         return fieldsRow().field(name);
     }
 

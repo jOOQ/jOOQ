@@ -83,6 +83,7 @@ import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record10;
@@ -218,6 +219,21 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
+    public final Field<?> field(Name name) {
+        return fields.field(name);
+    }
+
+    @Override
+    public final <T> Field<T> field(Name name, Class<T> type) {
+        return fields.field(name, type);
+    }
+
+    @Override
+    public final <T> Field<T> field(Name name, DataType<T> dataType) {
+        return fields.field(name, dataType);
+    }
+
+    @Override
     public final Field<?> field(int index) {
         return fields.field(index);
     }
@@ -259,6 +275,16 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     // @Override [#4113] TODO: Make this public
     final Field<?>[] fields(String... names) {
+        Field<?>[] result = new Field[names.length];
+
+        for (int i = 0; i < names.length; i++)
+            result[i] = field(names[i]);
+
+        return result;
+    }
+
+    // @Override [#4113] TODO: Make this public
+    final Field<?>[] fields(Name... names) {
         Field<?>[] result = new Field[names.length];
 
         for (int i = 0; i < names.length; i++)
@@ -358,6 +384,21 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final <U> List<U> getValues(String fieldName, Converter<?, U> converter) {
+        return Convert.convert(getValues(fieldName), converter);
+    }
+
+    @Override
+    public final List<?> getValues(Name fieldName) {
+        return getValues(field(fieldName));
+    }
+
+    @Override
+    public final <T> List<T> getValues(Name fieldName, Class<? extends T> type) {
+        return Convert.convert(getValues(fieldName), type);
+    }
+
+    @Override
+    public final <U> List<U> getValues(Name fieldName, Converter<?, U> converter) {
         return Convert.convert(getValues(fieldName), converter);
     }
 
@@ -1046,6 +1087,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return intoMap(field(keyFieldName));
     }
 
+    @Override
+    public final Map<?, R> intoMap(Name keyFieldName) {
+        return intoMap(field(keyFieldName));
+    }
+
     private final <K> Map<K, R> intoMap0(int keyFieldIndex) {
         Map<K, R> map = new LinkedHashMap<K, R>();
 
@@ -1074,6 +1120,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return intoMap(field(keyFieldName), field(valueFieldName));
     }
 
+    @Override
+    public final Map<?, ?> intoMap(Name keyFieldName, Name valueFieldName) {
+        return intoMap(field(keyFieldName), field(valueFieldName));
+    }
+
     private final <K, V> Map<K, V> intoMap0(int kIndex, int vIndex) {
         Map<K, V> map = new LinkedHashMap<K, V>();
 
@@ -1091,6 +1142,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final Map<Record, R> intoMap(String[] keyFieldNames) {
+        return intoMap(fields(keyFieldNames));
+    }
+
+    @Override
+    public final Map<Record, R> intoMap(Name[] keyFieldNames) {
         return intoMap(fields(keyFieldNames));
     }
 
@@ -1127,6 +1183,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
+    public final <E> Map<List<?>, E> intoMap(Name[] keyFieldNames, Class<? extends E> type) {
+        return intoMap(fields(keyFieldNames), type);
+    }
+
+    @Override
     public final <E> Map<List<?>, E> intoMap(Field<?>[] keys, Class<? extends E> type) {
         return intoMap(keys, Utils.configuration(this).recordMapperProvider().provide(fields, type));
     }
@@ -1138,6 +1199,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final <E> Map<List<?>, E> intoMap(String[] keyFieldNames, RecordMapper<? super R, E> mapper) {
+        return intoMap(fields(keyFieldNames), mapper);
+    }
+
+    @Override
+    public final <E> Map<List<?>, E> intoMap(Name[] keyFieldNames, RecordMapper<? super R, E> mapper) {
         return intoMap(fields(keyFieldNames), mapper);
     }
 
@@ -1209,6 +1275,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
+    public final <E> Map<?, E> intoMap(Name keyFieldName, Class<? extends E> type) {
+        return intoMap(keyFieldName, Utils.configuration(this).recordMapperProvider().provide(fields, type));
+    }
+
+    @Override
     public final <K, E> Map<K, E> intoMap(Field<K> key, Class<? extends E> type) {
         return intoMap(key, Utils.configuration(this).recordMapperProvider().provide(fields, type));
     }
@@ -1220,6 +1291,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final <E> Map<?, E> intoMap(String keyFieldName, RecordMapper<? super R, E> mapper) {
+        return intoMap(field(keyFieldName), mapper);
+    }
+
+    @Override
+    public final <E> Map<?, E> intoMap(Name keyFieldName, RecordMapper<? super R, E> mapper) {
         return intoMap(field(keyFieldName), mapper);
     }
 
@@ -1250,6 +1326,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final Map<?, Result<R>> intoGroups(String keyFieldName) {
+        return intoGroups(field(keyFieldName));
+    }
+
+    @Override
+    public final Map<?, Result<R>> intoGroups(Name keyFieldName) {
         return intoGroups(field(keyFieldName));
     }
 
@@ -1289,6 +1370,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return (Map) intoGroups(field(keyFieldName), field(valueFieldName));
     }
 
+    @Override
+    public final Map<?, List<?>> intoGroups(Name keyFieldName, Name valueFieldName) {
+        return (Map) intoGroups(field(keyFieldName), field(valueFieldName));
+    }
+
     private final <K, V> Map<K, List<V>> intoGroups0(int kIndex, int vIndex) {
         Map<K, List<V>> map = new LinkedHashMap<K, List<V>>();
 
@@ -1319,6 +1405,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
+    public final <E> Map<?, List<E>> intoGroups(Name keyFieldName, Class<? extends E> type) {
+        return intoGroups(keyFieldName, Utils.configuration(this).recordMapperProvider().provide(fields, type));
+    }
+
+    @Override
     public final <K, E> Map<K, List<E>> intoGroups(Field<K> key, Class<? extends E> type) {
         return intoGroups(key, Utils.configuration(this).recordMapperProvider().provide(fields, type));
     }
@@ -1335,6 +1426,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final <E> Map<?, List<E>> intoGroups(String keyFieldName, RecordMapper<? super R, E> mapper) {
+        return intoGroups(field(keyFieldName), mapper);
+    }
+
+    @Override
+    public final <E> Map<?, List<E>> intoGroups(Name keyFieldName, RecordMapper<? super R, E> mapper) {
         return intoGroups(field(keyFieldName), mapper);
     }
 
@@ -1363,6 +1459,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final Map<Record, Result<R>> intoGroups(String[] keyFieldNames) {
+        return intoGroups(fields(keyFieldNames));
+    }
+
+    @Override
+    public final Map<Record, Result<R>> intoGroups(Name[] keyFieldNames) {
         return intoGroups(fields(keyFieldNames));
     }
 
@@ -1403,6 +1504,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
+    public <E> Map<Record, List<E>> intoGroups(Name[] keyFieldNames, Class<? extends E> type) {
+        return intoGroups(keyFieldNames, Utils.configuration(this).recordMapperProvider().provide(fields, type));
+    }
+
+    @Override
     public final <E> Map<Record, List<E>> intoGroups(Field<?>[] keys, Class<? extends E> type) {
         return intoGroups(keys, Utils.configuration(this).recordMapperProvider().provide(fields, type));
     }
@@ -1414,6 +1520,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final <E> Map<Record, List<E>> intoGroups(String[] keyFieldNames, RecordMapper<? super R, E> mapper) {
+        return intoGroups(fields(keyFieldNames), mapper);
+    }
+
+    @Override
+    public final <E> Map<Record, List<E>> intoGroups(Name[] keyFieldNames, RecordMapper<? super R, E> mapper) {
         return intoGroups(fields(keyFieldNames), mapper);
     }
 
@@ -1539,6 +1650,23 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
+    public final Object[] intoArray(Name fieldName) {
+        Class<?> type = field(fieldName).getType();
+        List<?> list = getValues(fieldName);
+        return list.toArray((Object[]) Array.newInstance(type, list.size()));
+    }
+
+    @Override
+    public final <T> T[] intoArray(Name fieldName, Class<? extends T> type) {
+        return (T[]) Convert.convertArray(intoArray(fieldName), type);
+    }
+
+    @Override
+    public final <U> U[] intoArray(Name fieldName, Converter<?, U> converter) {
+        return Convert.convertArray(intoArray(fieldName), converter);
+    }
+
+    @Override
     public final <T> T[] intoArray(Field<T> field) {
         return getValues(field).toArray((T[]) Array.newInstance(field.getType(), 0));
     }
@@ -1580,6 +1708,21 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final <U> Set<U> intoSet(String fieldName, Converter<?, U> converter) {
+        return new LinkedHashSet<U>(getValues(fieldName, converter));
+    }
+
+    @Override
+    public final Set<?> intoSet(Name fieldName) {
+        return new LinkedHashSet<Object>(getValues(fieldName));
+    }
+
+    @Override
+    public final <T> Set<T> intoSet(Name fieldName, Class<? extends T> type) {
+        return new LinkedHashSet<T>(getValues(fieldName, type));
+    }
+
+    @Override
+    public final <U> Set<U> intoSet(Name fieldName, Converter<?, U> converter) {
         return new LinkedHashSet<U>(getValues(fieldName, converter));
     }
 
@@ -1786,6 +1929,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
+    public final Result<R> sortAsc(Name fieldName) {
+        return sortAsc(fieldName, new NaturalComparator());
+    }
+
+    @Override
     public final <T> Result<R> sortAsc(Field<T> field, Comparator<? super T> comparator) {
         return sortAsc(indexOrFail(fieldsRow(), field), comparator);
     }
@@ -1797,6 +1945,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final Result<R> sortAsc(String fieldName, Comparator<?> comparator) {
+        return sortAsc(indexOrFail(fieldsRow(), fieldName), comparator);
+    }
+
+    @Override
+    public final Result<R> sortAsc(Name fieldName, Comparator<?> comparator) {
         return sortAsc(indexOrFail(fieldsRow(), fieldName), comparator);
     }
 
@@ -1822,6 +1975,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
+    public final Result<R> sortDesc(Name fieldName) {
+        return sortAsc(fieldName, Collections.reverseOrder(new NaturalComparator()));
+    }
+
+    @Override
     public final <T> Result<R> sortDesc(Field<T> field, Comparator<? super T> comparator) {
         return sortAsc(field, Collections.reverseOrder(comparator));
     }
@@ -1833,6 +1991,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final Result<R> sortDesc(String fieldName, Comparator<?> comparator) {
+        return sortAsc(fieldName, Collections.reverseOrder(comparator));
+    }
+
+    @Override
+    public final Result<R> sortDesc(Name fieldName, Comparator<?> comparator) {
         return sortAsc(fieldName, Collections.reverseOrder(comparator));
     }
 
@@ -1861,6 +2024,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final Result<R> intern(String... fieldNames) {
+        return intern(fields.indexesOf(fieldNames));
+    }
+
+    @Override
+    public final Result<R> intern(Name... fieldNames) {
         return intern(fields.indexesOf(fieldNames));
     }
 

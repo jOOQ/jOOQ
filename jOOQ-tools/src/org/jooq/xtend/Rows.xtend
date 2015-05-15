@@ -1448,6 +1448,7 @@ class Rows extends Generators {
     import org.jooq.Context;
     import org.jooq.DataType;
     import org.jooq.Field;
+    import org.jooq.Name;
     import org.jooq.QuantifiedSelect;
     «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
     import org.jooq.Record«recTypeSuffixRaw(degree)»;
@@ -1556,6 +1557,21 @@ class Rows extends Generators {
         }
 
         @Override
+        public final Field<?> field(Name name) {
+            return fields.field(name);
+        }
+
+        @Override
+        public final <T> Field<T> field(Name name, Class<T> type) {
+            return fields.field(name, type);
+        }
+
+        @Override
+        public final <T> Field<T> field(Name name, DataType<T> dataType) {
+            return fields.field(name, dataType);
+        }
+
+        @Override
         public final Field<?> field(int index) {
             return fields.field(index);
         }
@@ -1584,6 +1600,11 @@ class Rows extends Generators {
         public final Field<?>[] fields(String... fieldNames) {
             return fields.fields(fieldNames);
         }
+
+        @Override
+        public final Field<?>[] fields(Name... fieldNames) {
+            return fields.fields(fieldNames);
+        }
     
         @Override
         public final Field<?>[] fields(int... fieldIndexes) {
@@ -1597,6 +1618,11 @@ class Rows extends Generators {
 
         @Override
         public final int indexOf(String fieldName) {
+            return fields.indexOf(fieldName);
+        }
+
+        @Override
+        public final int indexOf(Name fieldName) {
             return fields.indexOf(fieldName);
         }
 
@@ -1616,6 +1642,11 @@ class Rows extends Generators {
         }
     
         @Override
+        public final Class<?> type(Name fieldName) {
+            return fields.type(fieldName);
+        }
+    
+        @Override
         public final DataType<?>[] dataTypes() {
             return fields.dataTypes();
         }
@@ -1627,6 +1658,11 @@ class Rows extends Generators {
     
         @Override
         public final DataType<?> dataType(String fieldName) {
+            return fields.dataType(fieldName);
+        }
+    
+        @Override
+        public final DataType<?> dataType(Name fieldName) {
             return fields.dataType(fieldName);
         }
         «FOR degree : (1..Constants::MAX_ROW_DEGREE)»

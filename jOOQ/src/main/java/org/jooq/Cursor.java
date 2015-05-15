@@ -93,6 +93,13 @@ public interface Cursor<R extends Record> extends Iterable<R> {
     Field<?> field(String name);
 
     /**
+     * Get a specific qualified field from this Cursor.
+     *
+     * @see Row#field(Name)
+     */
+    Field<?> field(Name name);
+
+    /**
      * Get a specific field from this Cursor.
      *
      * @see Row#field(int)

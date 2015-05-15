@@ -71,6 +71,7 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.JoinType;
+import org.jooq.Name;
 import org.jooq.PivotForStep;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -173,6 +174,21 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
 
     @Override
     public final <T> Field<T> field(String name, DataType<T> dataType) {
+        return fieldsRow().field(name, dataType);
+    }
+
+    @Override
+    public final Field<?> field(Name name) {
+        return fieldsRow().field(name);
+    }
+
+    @Override
+    public final <T> Field<T> field(Name name, Class<T> type) {
+        return fieldsRow().field(name, type);
+    }
+
+    @Override
+    public final <T> Field<T> field(Name name, DataType<T> dataType) {
         return fieldsRow().field(name, dataType);
     }
 

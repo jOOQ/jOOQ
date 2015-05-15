@@ -113,6 +113,27 @@ public interface Result<R extends Record> extends List<R>, Attachable {
     /**
      * Get a specific field from this Result.
      *
+     * @see Row#field(Name)
+     */
+    Field<?> field(Name name);
+
+    /**
+     * Get a specific field from this Result, coerced to <code>type</code>.
+     *
+     * @see Row#field(Name, Class)
+     */
+    <T> Field<T> field(Name name, Class<T> type);
+
+    /**
+     * Get a specific field from this Result, coerced to <code>dataType</code>.
+     *
+     * @see Row#field(Name, DataType)
+     */
+    <T> Field<T> field(Name name, DataType<T> dataType);
+
+    /**
+     * Get a specific field from this Result.
+     *
      * @see Row#field(int)
      */
     Field<?> field(int index);
@@ -355,6 +376,50 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      *             that might have occurred
      */
     <U> List<U> getValues(String fieldName, Converter<?, U> converter) throws IllegalArgumentException,
+        DataTypeException;
+
+    /**
+     * Convenience method to fetch all values for a given field. This is
+     * especially useful, when selecting only a single field.
+     *
+     * @param fieldName The values' field name
+     * @return The values
+     * @throws IllegalArgumentException If the argument fieldName is not
+     *             contained in {@link #fieldsRow()}
+     */
+    List<?> getValues(Name fieldName) throws IllegalArgumentException;
+
+    /**
+     * Convenience method to fetch all values for a given field. This is
+     * especially useful, when selecting only a single field.
+     *
+     * @param fieldName The values' field name
+     * @param type The type used for type conversion
+     * @return The values
+     * @see Record#getValue(Name, Class)
+     * @see Convert#convert(Object, Class)
+     * @throws IllegalArgumentException If the argument fieldName is not
+     *             contained in {@link #fieldsRow()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
+     */
+    <T> List<T> getValues(Name fieldName, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
+
+    /**
+     * Convenience method to fetch all values for a given field. This is
+     * especially useful, when selecting only a single field.
+     *
+     * @param fieldName The values' field name
+     * @param converter The data type converter used for type conversion
+     * @return The values
+     * @see Record#getValue(Name, Converter)
+     * @see Convert#convert(Object, Converter)
+     * @throws IllegalArgumentException If the argument fieldName is not
+     *             contained in {@link #fieldsRow()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
+     */
+    <U> List<U> getValues(Name fieldName, Converter<?, U> converter) throws IllegalArgumentException,
         DataTypeException;
 
     /**
@@ -718,6 +783,24 @@ public interface Result<R extends Record> extends List<R>, Attachable {
     Map<?, R> intoMap(String keyFieldName) throws IllegalArgumentException, InvalidResultException;
 
     /**
+     * Return a {@link Map} with one of the result's columns as key and the
+     * corresponding records as value.
+     * <p>
+     * An {@link InvalidResultException} is thrown, if the key turns out to be
+     * non-unique in the result set. Use {@link #intoGroups(Name)} instead, if
+     * your keys are non-unique
+     *
+     * @param keyFieldName The key field name. Client code must assure that this
+     *            field is unique in the result set.
+     * @return A Map containing the results
+     * @throws IllegalArgumentException If the argument keyFieldName is not
+     *             contained in {@link #fieldsRow()}
+     * @throws InvalidResultException if the key field returned two or more
+     *             equal values from the result set.
+     */
+    Map<?, R> intoMap(Name keyFieldName) throws IllegalArgumentException, InvalidResultException;
+
+    /**
      * Return a {@link Map} with one of the result's columns as key and another
      * one of the result's columns as value
      * <p>
@@ -776,6 +859,26 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      *             equal values from the result set.
      */
     Map<?, ?> intoMap(String keyFieldName, String valueFieldName) throws IllegalArgumentException,
+        InvalidResultException;
+
+    /**
+     * Return a {@link Map} with one of the result's columns as key and another
+     * one of the result's columns as value
+     * <p>
+     * An {@link InvalidResultException} is thrown, if the key turns out to be
+     * non-unique in the result set. Use {@link #intoGroups(Name, Name)}
+     * instead, if your keys are non-unique
+     *
+     * @param key The key field name. Client code must assure that this field is
+     *            unique in the result set.
+     * @param value The value field name
+     * @return A Map containing the results
+     * @throws IllegalArgumentException If any of the argument field names is
+     *             not contained in {@link #fieldsRow()}
+     * @throws InvalidResultException if the key field returned two or more
+     *             equal values from the result set.
+     */
+    Map<?, ?> intoMap(Name keyFieldName, Name valueFieldName) throws IllegalArgumentException,
         InvalidResultException;
 
     /**
@@ -848,6 +951,29 @@ public interface Result<R extends Record> extends List<R>, Attachable {
         InvalidResultException, MappingException;
 
     /**
+     * Return a {@link Map} with results grouped by the given key and mapped
+     * into the given entity type.
+     * <p>
+     * An {@link InvalidResultException} is thrown, if the key is non-unique in
+     * the result set. Use {@link #intoGroups(Name, Class)} instead, if your
+     * key is non-unique.
+     *
+     * @param keyFieldName The key. Client code must assure that key is unique
+     *            in the result set.
+     * @param type The entity type.
+     * @return A Map containing the result.
+     * @throws IllegalArgumentException If the argument field name is not
+     *             contained in {@link #fieldsRow()}
+     * @throws InvalidResultException if the key is non-unique in the result
+     *             set.
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see DefaultRecordMapper
+     */
+    <E> Map<?, E> intoMap(Name keyFieldName, Class<? extends E> type) throws IllegalArgumentException,
+        InvalidResultException, MappingException;
+
+    /**
      * Return a {@link Map} with results grouped by the given key and mapped by
      * the given mapper.
      * <p>
@@ -917,6 +1043,29 @@ public interface Result<R extends Record> extends List<R>, Attachable {
         InvalidResultException, MappingException;
 
     /**
+     * Return a {@link Map} with results grouped by the given key and mapped by
+     * the given mapper.
+     * <p>
+     * An {@link InvalidResultException} is thrown, if the key is non-unique in
+     * the result set. Use {@link #intoGroups(Name, Class)} instead, if your key
+     * is non-unique.
+     *
+     * @param keyFieldName The key. Client code must assure that key is unique
+     *            in the result set.
+     * @param mapper The mapper callback.
+     * @return A Map containing the result.
+     * @throws IllegalArgumentException If the argument field name is not
+     *             contained in {@link #fieldsRow()}
+     * @throws InvalidResultException if the key is non-unique in the result
+     *             set.
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see DefaultRecordMapper
+     */
+    <E> Map<?, E> intoMap(Name keyFieldName, RecordMapper<? super R, E> mapper) throws IllegalArgumentException,
+        InvalidResultException, MappingException;
+
+    /**
      * Return a {@link Map} with the given keys as a map key and the
      * corresponding record as value.
      * <p>
@@ -972,6 +1121,25 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      *             set.
      */
     Map<Record, R> intoMap(String[] keyFieldNames) throws IllegalArgumentException, InvalidResultException;
+
+    /**
+     * Return a {@link Map} with the given keys as a map key and the
+     * corresponding record as value.
+     * <p>
+     * An {@link InvalidResultException} is thrown, if the keys are non-unique
+     * in the result set. Use {@link #intoGroups(Name[])} instead, if your
+     * keys are non-unique.
+     *
+     * @param keyFieldNames The keys. Client code must assure that keys are
+     *            unique in the result set. If this is <code>null</code> or an
+     *            empty array, the resulting map will contain at most one entry.
+     * @return A Map containing the results.
+     * @throws IllegalArgumentException If any of the argument field names is
+     *             not contained in {@link #fieldsRow()}
+     * @throws InvalidResultException if the keys are non-unique in the result
+     *             set.
+     */
+    Map<Record, R> intoMap(Name[] keyFieldNames) throws IllegalArgumentException, InvalidResultException;
 
     /**
      * Return a {@link Map} with results grouped by the given keys and mapped
@@ -1046,6 +1214,30 @@ public interface Result<R extends Record> extends List<R>, Attachable {
         InvalidResultException, MappingException;
 
     /**
+     * Return a {@link Map} with results grouped by the given keys and mapped
+     * into the given entity type.
+     * <p>
+     * An {@link InvalidResultException} is thrown, if the keys are non-unique
+     * in the result set. Use {@link #intoGroups(Name[], Class)} instead, if your
+     * keys are non-unique.
+     *
+     * @param keyFieldNames The keys. Client code must assure that keys are
+     *            unique in the result set. If this is <code>null</code> or an
+     *            empty array, the resulting map will contain at most one entry.
+     * @param type The entity type.
+     * @return A Map containing the results.
+     * @throws IllegalArgumentException If any of the argument field names is
+     *             not contained in {@link #fieldsRow()}
+     * @throws InvalidResultException if the keys are non-unique in the result
+     *             set.
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see DefaultRecordMapper
+     */
+    <E> Map<List<?>, E> intoMap(Name[] keyFieldNames, Class<? extends E> type) throws IllegalArgumentException,
+        InvalidResultException, MappingException;
+
+    /**
      * Return a {@link Map} with results grouped by the given keys and mapped by
      * the given mapper.
      * <p>
@@ -1115,6 +1307,30 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @see DefaultRecordMapper
      */
     <E> Map<List<?>, E> intoMap(String[] keyFieldNames, RecordMapper<? super R, E> mapper) throws IllegalArgumentException,
+        InvalidResultException, MappingException;
+
+    /**
+     * Return a {@link Map} with results grouped by the given keys and mapped by
+     * the given mapper.
+     * <p>
+     * An {@link InvalidResultException} is thrown, if the keys are non-unique
+     * in the result set. Use {@link #intoGroups(Name[], Class)} instead, if
+     * your keys are non-unique.
+     *
+     * @param keyFieldNames The keys. Client code must assure that keys are
+     *            unique in the result set. If this is <code>null</code> or an
+     *            empty array, the resulting map will contain at most one entry.
+     * @param mapper The mapper callback.
+     * @return A Map containing the results.
+     * @throws IllegalArgumentException If any of the argument field names is
+     *             not contained in {@link #fieldsRow()}
+     * @throws InvalidResultException if the keys are non-unique in the result
+     *             set.
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see DefaultRecordMapper
+     */
+    <E> Map<List<?>, E> intoMap(Name[] keyFieldNames, RecordMapper<? super R, E> mapper) throws IllegalArgumentException,
         InvalidResultException, MappingException;
 
     /**
@@ -1225,6 +1441,20 @@ public interface Result<R extends Record> extends List<R>, Attachable {
     Map<?, Result<R>> intoGroups(String keyFieldName) throws IllegalArgumentException;
 
     /**
+     * Return a {@link Map} with one of the result's columns as key and a list
+     * of corresponding records as value.
+     * <p>
+     * Unlike {@link #intoMap(Name)}, this method allows for non-unique keys in
+     * the result set.
+     *
+     * @param keyFieldName The key field name.
+     * @return A Map containing the results
+     * @throws IllegalArgumentException If the argument field name is not
+     *             contained in {@link #fieldsRow()}
+     */
+    Map<?, Result<R>> intoGroups(Name keyFieldName) throws IllegalArgumentException;
+
+    /**
      * Return a {@link Map} with one of the result's columns as key and another
      * one of the result's columns as value.
      * <p>
@@ -1270,6 +1500,21 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      *             not contained in {@link #fieldsRow()}
      */
     Map<?, List<?>> intoGroups(String keyFieldName, String valueFieldName) throws IllegalArgumentException;
+
+    /**
+     * Return a {@link Map} with one of the result's columns as key and another
+     * one of the result's columns as value.
+     * <p>
+     * Unlike {@link #intoMap(Name, Name)}, this method allows for
+     * non-unique keys in the result set.
+     *
+     * @param keyFieldName The key field name.
+     * @param valueFieldName The value field name.
+     * @return A Map containing the results
+     * @throws IllegalArgumentException If any of the argument field names is
+     *             not contained in {@link #fieldsRow()}
+     */
+    Map<?, List<?>> intoGroups(Name keyFieldName, Name valueFieldName) throws IllegalArgumentException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped
@@ -1322,6 +1567,22 @@ public interface Result<R extends Record> extends List<R>, Attachable {
         MappingException;
 
     /**
+     * Return a {@link Map} with results grouped by the given key and mapped
+     * into the given entity type.
+     * <p>
+     *
+     * @param keyFieldName The key field name.
+     * @param type The entity type.
+     * @throws IllegalArgumentException If the argument field name is not
+     *             contained in {@link #fieldsRow()}
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see DefaultRecordMapper
+     */
+    <E> Map<?, List<E>> intoGroups(Name keyFieldName, Class<? extends E> type) throws IllegalArgumentException,
+        MappingException;
+
+    /**
      * Return a {@link Map} with results grouped by the given key and mapped by
      * the given mapper.
      *
@@ -1366,6 +1627,20 @@ public interface Result<R extends Record> extends List<R>, Attachable {
         MappingException;
 
     /**
+     * Return a {@link Map} with results grouped by the given key and mapped by
+     * the given mapper.
+     *
+     * @param keyFieldName The key field name.
+     * @param mapper The mapper callback.
+     * @throws IllegalArgumentException If the argument field name is not
+     *             contained in {@link #fieldsRow()}
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     */
+    <E> Map<?, List<E>> intoGroups(Name keyFieldName, RecordMapper<? super R, E> mapper) throws IllegalArgumentException,
+        MappingException;
+
+    /**
      * Return a {@link Map} with the result grouped by the given keys.
      * <p>
      * Unlike {@link #intoMap(Field[])}, this method allows for non-unique keys
@@ -1406,6 +1681,20 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      *             not contained in {@link #fieldsRow()}
      */
     Map<Record, Result<R>> intoGroups(String[] keyFieldNames) throws IllegalArgumentException;
+
+    /**
+     * Return a {@link Map} with the result grouped by the given keys.
+     * <p>
+     * Unlike {@link #intoMap(Name[])}, this method allows for non-unique keys
+     * in the result set.
+     *
+     * @param keyFieldNames The keys. If this is <code>null</code> or an empty
+     *            array, the resulting map will contain at most one entry.
+     * @return A Map containing grouped results
+     * @throws IllegalArgumentException If any of the argument field names is
+     *             not contained in {@link #fieldsRow()}
+     */
+    Map<Record, Result<R>> intoGroups(Name[] keyFieldNames) throws IllegalArgumentException;
 
     /**
      * Return a {@link Map} with results grouped by the given keys and mapped
@@ -1471,6 +1760,26 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * Return a {@link Map} with results grouped by the given keys and mapped
      * into the given entity type.
      * <p>
+     * Unlike {@link #intoMap(Name[], Class)}, this method allows for
+     * non-unique keys in the result set.
+     *
+     * @param keyFieldNames The keys. If this is <code>null</code> or an empty
+     *            array, the resulting map will contain at most one entry.
+     * @param type The entity type.
+     * @return A Map containing grouped results
+     * @throws IllegalArgumentException If the any of the argument field names
+     *             is not contained in {@link #fieldsRow()}
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see DefaultRecordMapper
+     */
+    <E> Map<Record, List<E>> intoGroups(Name[] keyFieldNames, Class<? extends E> type) throws IllegalArgumentException,
+        MappingException;
+
+    /**
+     * Return a {@link Map} with results grouped by the given keys and mapped
+     * into the given entity type.
+     * <p>
      * Unlike {@link #intoMap(Field[], RecordMapper)}, this method allows for
      * non-unique keys in the result set.
      *
@@ -1525,6 +1834,26 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @see DefaultRecordMapper
      */
     <E> Map<Record, List<E>> intoGroups(String[] keyFieldNames, RecordMapper<? super R, E> mapper)
+        throws IllegalArgumentException, MappingException;
+
+    /**
+     * Return a {@link Map} with results grouped by the given keys and mapped
+     * into the given entity type.
+     * <p>
+     * Unlike {@link #intoMap(Name[], RecordMapper)}, this method allows for
+     * non-unique keys in the result set.
+     *
+     * @param keyFieldNames The keys. If this is <code>null</code> or an empty
+     *            array, the resulting map will contain at most one entry.
+     * @param mapper The mapper callback.
+     * @return A Map containing grouped results
+     * @throws IllegalArgumentException If the any of the argument field indexes
+     *             is not contained in {@link #fieldsRow()}
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see DefaultRecordMapper
+     */
+    <E> Map<Record, List<E>> intoGroups(Name[] keyFieldNames, RecordMapper<? super R, E> mapper)
         throws IllegalArgumentException, MappingException;
 
     /**
@@ -1693,6 +2022,51 @@ public interface Result<R extends Record> extends List<R>, Attachable {
     <U> U[] intoArray(String fieldName, Converter<?, U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
+     * Return all values for a field name from the result.
+     * <p>
+     * You can access data like this
+     * <code><pre>result.intoArray(fieldName)[recordIndex]</pre></code>
+     *
+     * @return The resulting values. This may be an array type more concrete
+     *         than <code>Object[]</code>, depending on whether jOOQ has any
+     *         knowledge about <code>fieldName</code>'s actual type.
+     * @see #getValues(Name)
+     * @throws IllegalArgumentException If the argument fieldName is not
+     *             contained in {@link #fieldsRow()}
+     */
+    Object[] intoArray(Name fieldName) throws IllegalArgumentException;
+
+    /**
+     * Return all values for a field name from the result.
+     * <p>
+     * You can access data like this
+     * <code><pre>result.intoArray(fieldName)[recordIndex]</pre></code>
+     *
+     * @return The resulting values.
+     * @see #getValues(Name, Class)
+     * @throws IllegalArgumentException If the argument fieldName is not
+     *             contained in {@link #fieldsRow()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
+     */
+    <T> T[] intoArray(Name fieldName, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
+
+    /**
+     * Return all values for a field name from the result.
+     * <p>
+     * You can access data like this
+     * <code><pre>result.intoArray(fieldName)[recordIndex]</pre></code>
+     *
+     * @return The resulting values.
+     * @see #getValues(Name, Converter)
+     * @throws IllegalArgumentException If the argument fieldName is not
+     *             contained in {@link #fieldsRow()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
+     */
+    <U> U[] intoArray(Name fieldName, Converter<?, U> converter) throws IllegalArgumentException, DataTypeException;
+
+    /**
      * Return all values for a field from the result.
      * <p>
      * You can access data like this
@@ -1807,6 +2181,42 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      *             that might have occurred
      */
     <U> Set<U> intoSet(String fieldName, Converter<?, U> converter) throws IllegalArgumentException, DataTypeException;
+
+    /**
+     * Return all values for a field name from the result.
+     *
+     * @return The resulting values. This may be an array type more concrete
+     *         than <code>Object[]</code>, depending on whether jOOQ has any
+     *         knowledge about <code>fieldName</code>'s actual type.
+     * @see #getValues(Name)
+     * @throws IllegalArgumentException If the argument fieldName is not
+     *             contained in {@link #fieldsRow()}
+     */
+    Set<?> intoSet(Name fieldName) throws IllegalArgumentException;
+
+    /**
+     * Return all values for a field name from the result.
+     *
+     * @return The resulting values.
+     * @see #getValues(Name, Class)
+     * @throws IllegalArgumentException If the argument fieldName is not
+     *             contained in {@link #fieldsRow()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
+     */
+    <T> Set<T> intoSet(Name fieldName, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
+
+    /**
+     * Return all values for a field name from the result.
+     *
+     * @return The resulting values.
+     * @see #getValues(Name, Converter)
+     * @throws IllegalArgumentException If the argument fieldName is not
+     *             contained in {@link #fieldsRow()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
+     */
+    <U> Set<U> intoSet(Name fieldName, Converter<?, U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Return all values for a field from the result.
@@ -2224,6 +2634,30 @@ public interface Result<R extends Record> extends List<R>, Attachable {
     Result<R> sortDesc(String fieldName) throws IllegalArgumentException;
 
     /**
+     * Sort this result by one of its contained fields.
+     * <p>
+     * <code>nulls</code> are sorted last by this method.
+     *
+     * @param fieldName The sort field name
+     * @return The result itself
+     * @throws IllegalArgumentException If the argument field is not contained
+     *             in {@link #fieldsRow()}
+     */
+    Result<R> sortAsc(Name fieldName) throws IllegalArgumentException;
+
+    /**
+     * Reverse-sort this result by one of its contained fields.
+     * <p>
+     * <code>nulls</code> are sorted last by this method.
+     *
+     * @param fieldName The sort field name
+     * @return The result itself
+     * @throws IllegalArgumentException If the argument field is not contained
+     *             in {@link #fieldsRow()}
+     */
+    Result<R> sortDesc(Name fieldName) throws IllegalArgumentException;
+
+    /**
      * Sort this result by one of its contained fields using a comparator.
      * <p>
      * <code>null</code> sorting must be handled by the supplied
@@ -2311,6 +2745,35 @@ public interface Result<R extends Record> extends List<R>, Attachable {
     Result<R> sortDesc(String fieldName, java.util.Comparator<?> comparator) throws IllegalArgumentException;
 
     /**
+     * Sort this result by one of its contained fields using a comparator.
+     * <p>
+     * <code>null</code> sorting must be handled by the supplied
+     * <code>comparator</code>.
+     *
+     * @param fieldName The sort field name
+     * @param comparator The comparator used to sort this result.
+     * @return The result itself
+     * @throws IllegalArgumentException If the argument field is not contained
+     *             in {@link #fieldsRow()}
+     */
+    Result<R> sortAsc(Name fieldName, java.util.Comparator<?> comparator) throws IllegalArgumentException;
+
+    /**
+     * Reverse-sort this result by one of its contained fields using a
+     * comparator.
+     * <p>
+     * <code>null</code> sorting must be handled by the supplied
+     * <code>comparator</code>.
+     *
+     * @param fieldName The sort field name
+     * @param comparator The comparator used to sort this result.
+     * @return The result itself
+     * @throws IllegalArgumentException If the argument field is not contained
+     *             in {@link #fieldsRow()}
+     */
+    Result<R> sortDesc(Name fieldName, java.util.Comparator<?> comparator) throws IllegalArgumentException;
+
+    /**
      * Sort this result using a comparator that can compare records.
      *
      * @param comparator The comparator used to sort this result.
@@ -2370,6 +2833,18 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @see String#intern()
      */
     Result<R> intern(String... fieldNames);
+
+    /**
+     * Specify a set of field names whose values should be interned.
+     * <p>
+     * See {@link Result#intern(int...)} for more details.
+     *
+     * @param fieldNames The field names whose values should be interned
+     * @return The same result
+     * @see Result#intern(Field...)
+     * @see String#intern()
+     */
+    Result<R> intern(Name... fieldNames);
 
     // ------------------------------------------------------------------------
     // Fetching of new results based on records in this result

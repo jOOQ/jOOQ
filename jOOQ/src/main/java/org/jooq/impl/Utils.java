@@ -1063,6 +1063,19 @@ final class Utils {
 
     /**
      * A utility method that fails with an exception if
+     * {@link Row#indexOf(Name)} doesn't return any index.
+     */
+    static final int indexOrFail(Row row, Name fieldName) {
+        int result = row.indexOf(fieldName);
+
+        if (result < 0)
+            throw new IllegalArgumentException("Field (" + fieldName + ") is not contained in Row " + row);
+
+        return result;
+    }
+
+    /**
+     * A utility method that fails with an exception if
      * {@link RecordType#indexOf(Field)} doesn't return any index.
      */
     static final int indexOrFail(RecordType<?> row, Field<?> field) {
@@ -1079,6 +1092,19 @@ final class Utils {
      * {@link RecordType#indexOf(String)} doesn't return any index.
      */
     static final int indexOrFail(RecordType<?> row, String fieldName) {
+        int result = row.indexOf(fieldName);
+
+        if (result < 0)
+            throw new IllegalArgumentException("Field (" + fieldName + ") is not contained in RecordType " + row);
+
+        return result;
+    }
+
+    /**
+     * A utility method that fails with an exception if
+     * {@link RecordType#indexOf(Name)} doesn't return any index.
+     */
+    static final int indexOrFail(RecordType<?> row, Name fieldName) {
         int result = row.indexOf(fieldName);
 
         if (result < 0)

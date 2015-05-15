@@ -318,6 +318,44 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     <U> List<U> fetch(String fieldName, Converter<?, U> converter) throws DataAccessException;
 
     /**
+     * Execute the query and return all values for a field name from the
+     * generated result.
+     * <p>
+     * This is the same as calling {@link #fetch()} and then
+     * {@link Result#getValues(Name)}
+     *
+     * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    List<?> fetch(Name fieldName) throws DataAccessException;
+
+    /**
+     * Execute the query and return all values for a field name from the
+     * generated result.
+     * <p>
+     * This is the same as calling {@link #fetch()} and then
+     * {@link Result#getValues(Name, Class)}
+     *
+     * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Record#getValue(Name, Class)
+     */
+    <T> List<T> fetch(Name fieldName, Class<? extends T> type) throws DataAccessException;
+
+    /**
+     * Execute the query and return all values for a field name from the
+     * generated result.
+     * <p>
+     * This is the same as calling {@link #fetch()} and then
+     * {@link Result#getValues(Name, Converter)}
+     *
+     * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Record#getValue(Name, Converter)
+     */
+    <U> List<U> fetch(Name fieldName, Converter<?, U> converter) throws DataAccessException;
+
+    /**
      * Execute the query and return at most one resulting value for a
      * field from the generated result.
      * <p>
@@ -406,7 +444,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#getValue(int)}
+     * {@link Record#getValue(String)}
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -442,6 +480,48 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws TooManyRowsException if the query returned more than one record
      */
     <U> U fetchOne(String fieldName, Converter<?, U> converter) throws DataAccessException, TooManyRowsException;
+
+    /**
+     * Execute the query and return at most one resulting value for a
+     * field name from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOne()} and then
+     * {@link Record#getValue(Name)}
+     *
+     * @return The resulting value or <code>null</code> if the query returned no
+     *         records.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    Object fetchOne(Name fieldName) throws DataAccessException, TooManyRowsException;
+
+    /**
+     * Execute the query and return at most one resulting value for a
+     * field name from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOne()} and then
+     * {@link Record#getValue(Name, Class)}
+     *
+     * @return The resulting value or <code>null</code> if the query returned no
+     *         records.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    <T> T fetchOne(Name fieldName, Class<? extends T> type) throws DataAccessException, TooManyRowsException;
+
+    /**
+     * Execute the query and return at most one resulting value for a
+     * field name from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOne()} and then
+     * {@link Record#getValue(Name, Converter)}
+     *
+     * @return The resulting value or <code>null</code> if the query returned no
+     *         records.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    <U> U fetchOne(Name fieldName, Converter<?, U> converter) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting record.
@@ -628,7 +708,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#getValue(int)}
+     * {@link Record#getValue(String)}
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -661,6 +741,45 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      */
     <U> U fetchAny(String fieldName, Converter<?, U> converter) throws DataAccessException;
+
+    /**
+     * Execute the query and return at most one resulting value for a
+     * field name from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOne()} and then
+     * {@link Record#getValue(Name)}
+     *
+     * @return The resulting value or <code>null</code> if the query returned no
+     *         records.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    Object fetchAny(Name fieldName) throws DataAccessException;
+
+    /**
+     * Execute the query and return at most one resulting value for a
+     * field name from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOne()} and then
+     * {@link Record#getValue(Name, Class)}
+     *
+     * @return The resulting value or <code>null</code> if the query returned no
+     *         records.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    <T> T fetchAny(Name fieldName, Class<? extends T> type) throws DataAccessException;
+
+    /**
+     * Execute the query and return at most one resulting value for a
+     * field name from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOne()} and then
+     * {@link Record#getValue(Name, Converter)}
+     *
+     * @return The resulting value or <code>null</code> if the query returned no
+     *         records.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    <U> U fetchAny(Name fieldName, Converter<?, U> converter) throws DataAccessException;
 
     /**
      * Execute the query and return at most one resulting record.
@@ -843,6 +962,28 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
 
     /**
      * Execute the query and return a {@link Map} with one of the result's
+     * columns as key and the corresponding records as value.
+     * <p>
+     * An exception is thrown, if the key turns out to be non-unique in the
+     * result set. Use {@link #fetchGroups(Name)} instead, if your keys are
+     * non-unique
+     * <p>
+     * The resulting records are attached to the original {@link Configuration}
+     * by default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     *
+     * @param keyFieldName The key field. Client code must assure that this
+     *            field is unique in the result set.
+     * @return A Map containing the results
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the key field returned two or more
+     *             equal values from the result set.
+     * @see Result#intoMap(Name)
+     */
+    Map<?, R> fetchMap(Name keyFieldName) throws DataAccessException;
+
+    /**
+     * Execute the query and return a {@link Map} with one of the result's
      * columns as key and another one of the result's columns as value
      * <p>
      * An exception is thrown, if the key turns out to be non-unique in the
@@ -901,6 +1042,25 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     Map<?, ?> fetchMap(String keyFieldName, String valueFieldName) throws DataAccessException;
 
     /**
+     * Execute the query and return a {@link Map} with one of the result's
+     * columns as key and another one of the result's columns as value
+     * <p>
+     * An exception is thrown, if the key turns out to be non-unique in the
+     * result set. Use {@link #fetchGroups(Name, Name)} instead, if your keys
+     * are non-unique
+     *
+     * @param keyFieldName The key field. Client code must assure that this
+     *            field is unique in the result set.
+     * @param valueFieldName The value field
+     * @return A Map containing the results
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the key field returned two or more
+     *             equal values from the result set.
+     * @see Result#intoMap(Name, Name)
+     */
+    Map<?, ?> fetchMap(Name keyFieldName, Name valueFieldName) throws DataAccessException;
+
+    /**
      * Execute the query and return a {@link Map} with keys as a map key and the
      * corresponding record as value.
      * <p>
@@ -953,6 +1113,24 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @see Result#intoMap(String[])
      */
     Map<Record, R> fetchMap(String[] keyFieldNames) throws DataAccessException;
+
+    /**
+     * Execute the query and return a {@link Map} with keys as a map key and the
+     * corresponding record as value.
+     * <p>
+     * An exception is thrown, if the keys turn out to be non-unique in the
+     * result set. Use {@link #fetchGroups(Name[])} instead, if your keys are
+     * non-unique.
+     *
+     * @param keyFieldNames The keys. Client code must assure that keys are
+     *            unique in the result set.
+     * @return A Map containing the results.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the key list is non-unique in the
+     *             result set.
+     * @see Result#intoMap(Name[])
+     */
+    Map<Record, R> fetchMap(Name[] keyFieldNames) throws DataAccessException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -1027,6 +1205,30 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
+     * given keys and mapped into the given entity type.
+     * <p>
+     * An {@link InvalidResultException} is thrown, if the keys are non-unique
+     * in the result set. Use {@link #fetchGroups(Name[], Class)} instead, if
+     * your keys are non-unique.
+     *
+     * @param keyFieldNames The keys. Client code must assure that keys are
+     *            unique in the result set. If this is <code>null</code> or an
+     *            empty array, the resulting map will contain at most one entry.
+     * @param type The entity type.
+     * @return A Map containing the results.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the keys are non-unique in the result
+     *             set.
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see Result#intoMap(Name[], Class)
+     * @see DefaultRecordMapper
+     */
+    <E> Map<List<?>, E> fetchMap(Name[] keyFieldNames, Class<? extends E> type) throws DataAccessException,
+        MappingException;
+
+    /**
+     * Execute the query and return a {@link Map} with results grouped by the
      * given keys and mapped by the given mapper.
      * <p>
      * An {@link InvalidResultException} is thrown, if the keys are non-unique
@@ -1095,6 +1297,30 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @see DefaultRecordMapper
      */
     <E> Map<List<?>, E> fetchMap(String[] keyFieldNames, RecordMapper<? super R, E> mapper) throws DataAccessException,
+        MappingException;
+
+    /**
+     * Execute the query and return a {@link Map} with results grouped by the
+     * given keys and mapped by the given mapper.
+     * <p>
+     * An {@link InvalidResultException} is thrown, if the keys are non-unique
+     * in the result set. Use {@link #fetchGroups(Name[], RecordMapper)}
+     * instead, if your keys are non-unique.
+     *
+     * @param keyFieldNames The keys. Client code must assure that keys are
+     *            unique in the result set. If this is <code>null</code> or an
+     *            empty array, the resulting map will contain at most one entry.
+     * @param mapper The mapper callback.
+     * @return A Map containing the results.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the keys are non-unique in the result
+     *             set.
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see Result#intoMap(Name[], Class)
+     * @see DefaultRecordMapper
+     */
+    <E> Map<List<?>, E> fetchMap(Name[] keyFieldNames, RecordMapper<? super R, E> mapper) throws DataAccessException,
         MappingException;
 
     /**
@@ -1220,6 +1446,25 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
+     * given key and mapped into the given entity type.
+     * <p>
+     * An exception is thrown, if the key turn out to be non-unique in the
+     * result set. Use {@link #fetchGroups(Name, Class)} instead, if your key
+     * is non-unique.
+     *
+     * @param keyFieldName The key. Client code must assure that key is unique
+     *            in the result set.
+     * @param type The entity type.
+     * @return A Map containing the result.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the key is non-unique in the result
+     *             set.
+     * @see Result#intoMap(Name, Class)
+     */
+    <E> Map<?, E> fetchMap(Name keyFieldName, Class<? extends E> type) throws DataAccessException;
+
+    /**
+     * Execute the query and return a {@link Map} with results grouped by the
      * given key and mapped by the given mapper.
      * <p>
      * An exception is thrown, if the key turn out to be non-unique in the
@@ -1274,6 +1519,25 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @see Result#intoMap(String, Class)
      */
     <E> Map<?, E> fetchMap(String keyFieldName, RecordMapper<? super R, E> mapper) throws DataAccessException;
+
+    /**
+     * Execute the query and return a {@link Map} with results grouped by the
+     * given key and mapped by the given mapper.
+     * <p>
+     * An exception is thrown, if the key turn out to be non-unique in the
+     * result set. Use {@link #fetchGroups(Name, Class)} instead, if your key
+     * is non-unique.
+     *
+     * @param keyFieldName The key. Client code must assure that key is unique
+     *            in the result set.
+     * @param mapper The mapper callback.
+     * @return A Map containing the result.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the key is non-unique in the result
+     *             set.
+     * @see Result#intoMap(Name, Class)
+     */
+    <E> Map<?, E> fetchMap(Name keyFieldName, RecordMapper<? super R, E> mapper) throws DataAccessException;
 
     /**
      * Execute the query and return a {@link Map} with one of the result's
@@ -1332,6 +1596,24 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
 
     /**
      * Execute the query and return a {@link Map} with one of the result's
+     * columns as key and a list of corresponding records as value.
+     * <p>
+     * Unlike {@link #fetchMap(Name)}, this method allows for non-unique keys
+     * in the result set.
+     * <p>
+     * The resulting records are attached to the original {@link Configuration}
+     * by default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     *
+     * @param keyFieldName The key field name.
+     * @return A Map containing the results
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoGroups(Name)
+     */
+    Map<?, Result<R>> fetchGroups(Name keyFieldName) throws DataAccessException;
+
+    /**
+     * Execute the query and return a {@link Map} with one of the result's
      * columns as key and another one of the result's columns as value
      * <p>
      * Unlike {@link #fetchMap(Field, Field)}, this method allows for non-unique
@@ -1376,6 +1658,21 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @see Result#intoGroups(String, String)
      */
     Map<?, List<?>> fetchGroups(String keyFieldName, String valueFieldName) throws DataAccessException;
+
+    /**
+     * Execute the query and return a {@link Map} with one of the result's
+     * columns as key and another one of the result's columns as value
+     * <p>
+     * Unlike {@link #fetchMap(Name, Name)}, this method allows for
+     * non-unique keys in the result set.
+     *
+     * @param keyFieldName The key field name.
+     * @param valueFieldName The value field name.
+     * @return A Map containing the results
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoGroups(Name, Name)
+     */
+    Map<?, List<?>> fetchGroups(Name keyFieldName, Name valueFieldName) throws DataAccessException;
 
     /**
      * Execute the query and return a {@link Map} with the result grouped by the
@@ -1424,6 +1721,22 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @see Result#intoGroups(String[])
      */
     Map<Record, Result<R>> fetchGroups(String[] keyFieldNames) throws DataAccessException;
+
+    /**
+     * Execute the query and return a {@link Map} with the result grouped by the
+     * given keys.
+     * <p>
+     * Unlike {@link #fetchMap(Name[])}, this method allows for non-unique
+     * keys in the result set.
+     *
+     * @param keyFieldNames The keys used for result grouping. If this is
+     *            <code>null</code> or an empty array, the resulting map will
+     *            contain at most one entry.
+     * @return A Map containing grouped results
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoGroups(Name[])
+     */
+    Map<Record, Result<R>> fetchGroups(Name[] keyFieldNames) throws DataAccessException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -1484,6 +1797,25 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
+     * given keys and mapped into the given entity type.
+     * <p>
+     * Unlike {@link #fetchMap(Name[], Class)}, this method allows for
+     * non-unique keys in the result set.
+     *
+     * @param keyFieldNames The keys. If this is <code>null</code> or an empty
+     *            array, the resulting map will contain at most one entry.
+     * @param type The entity type.
+     * @return A Map containing grouped results
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see Result#intoGroups(Name[], Class)
+     * @see DefaultRecordMapper
+     */
+    <E> Map<Record, List<E>> fetchGroups(Name[] keyFieldNames, Class<? extends E> type) throws MappingException;
+
+    /**
+     * Execute the query and return a {@link Map} with results grouped by the
      * given keys and mapped by the given mapper.
      * <p>
      * Unlike {@link #fetchMap(Field[], RecordMapper)}, this method allows for
@@ -1539,6 +1871,26 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @see DefaultRecordMapper
      */
     <E> Map<Record, List<E>> fetchGroups(String[] keyFieldNames, RecordMapper<? super R, E> mapper)
+        throws MappingException;
+
+    /**
+     * Execute the query and return a {@link Map} with results grouped by the
+     * given keys and mapped by the given mapper.
+     * <p>
+     * Unlike {@link #fetchMap(Name[], RecordMapper)}, this method allows for
+     * non-unique keys in the result set.
+     *
+     * @param keyFieldNames The keys. If this is <code>null</code> or an empty
+     *            array, the resulting map will contain at most one entry.
+     * @param mapper The mapper callback.
+     * @return A Map containing grouped results
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see Result#intoGroups(Name[], Class)
+     * @see DefaultRecordMapper
+     */
+    <E> Map<Record, List<E>> fetchGroups(Name[] keyFieldNames, RecordMapper<? super R, E> mapper)
         throws MappingException;
 
     /**
@@ -1641,6 +1993,21 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
         MappingException;
 
     /**
+     * Return a {@link Map} with results grouped by the given key and mapped
+     * into the given entity type.
+     *
+     * @param keyFieldName The key field name.
+     * @param type The entity type.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see Result#intoGroups(Name, Class)
+     * @see DefaultRecordMapper
+     */
+    <E> Map<?, List<E>> fetchGroups(Name keyFieldName, Class<? extends E> type) throws DataAccessException,
+        MappingException;
+
+    /**
      * Return a {@link Map} with results grouped by the given key and mapped by
      * the given mapper.
      *
@@ -1685,6 +2052,21 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @see DefaultRecordMapper
      */
     <E> Map<?, List<E>> fetchGroups(String keyFieldName, RecordMapper<? super R, E> mapper) throws DataAccessException,
+        MappingException;
+
+    /**
+     * Return a {@link Map} with results grouped by the given key and mapped by
+     * the given mapper.
+     *
+     * @param keyFieldName The key field name.
+     * @param mapper The mapper callback.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see Result#intoGroups(Name, Class)
+     * @see DefaultRecordMapper
+     */
+    <E> Map<?, List<E>> fetchGroups(Name keyFieldName, RecordMapper<? super R, E> mapper) throws DataAccessException,
         MappingException;
 
     /**
@@ -1792,6 +2174,47 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     <U> U[] fetchArray(String fieldName, Converter<?, U> converter) throws DataAccessException;
 
     /**
+     * Execute the query and return all values for a field name from the
+     * generated result.
+     * <p>
+     * You can access data like this
+     * <code><pre>query.fetchArray(fieldName)[recordIndex]</pre></code>
+     *
+     * @return The resulting values. This may be an array type more concrete
+     *         than <code>Object[]</code>, depending on whether jOOQ has any
+     *         knowledge about <code>fieldName</code>'s actual type.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoArray(Name)
+     */
+    Object[] fetchArray(Name fieldName) throws DataAccessException;
+
+    /**
+     * Execute the query and return all values for a field name from the
+     * generated result.
+     * <p>
+     * You can access data like this
+     * <code><pre>query.fetchArray(fieldName)[recordIndex]</pre></code>
+     *
+     * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoArray(Name, Converter)
+     */
+    <T> T[] fetchArray(Name fieldName, Class<? extends T> type) throws DataAccessException;
+
+    /**
+     * Execute the query and return all values for a field name from the
+     * generated result.
+     * <p>
+     * You can access data like this
+     * <code><pre>query.fetchArray(fieldName)[recordIndex]</pre></code>
+     *
+     * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoArray(Name, Class)
+     */
+    <U> U[] fetchArray(Name fieldName, Converter<?, U> converter) throws DataAccessException;
+
+    /**
      * Execute the query and return all values for a field from the generated
      * result.
      * <p>
@@ -1889,6 +2312,36 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @see Result#intoArray(String, Class)
      */
     <U> Set<U> fetchSet(String fieldName, Converter<?, U> converter) throws DataAccessException;
+
+    /**
+     * Execute the query and return all values for a field name from the
+     * generated result.
+     *
+     * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoArray(Name)
+     */
+    Set<?> fetchSet(Name fieldName) throws DataAccessException;
+
+    /**
+     * Execute the query and return all values for a field name from the
+     * generated result.
+     *
+     * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoArray(Name, Converter)
+     */
+    <T> Set<T> fetchSet(Name fieldName, Class<? extends T> type) throws DataAccessException;
+
+    /**
+     * Execute the query and return all values for a field name from the
+     * generated result.
+     *
+     * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Result#intoArray(Name, Class)
+     */
+    <U> Set<U> fetchSet(Name fieldName, Converter<?, U> converter) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field from the generated
@@ -2192,7 +2645,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * <p>
      * Unlike {@link Result}'s <code>intern()</code> methods, this already
      * interns values right after fetching them from a JDBC result set. See
-     * {@link Result#intern(int...)} for more details.
+     * {@link Result#intern(String...)} for more details.
      *
      * @param fieldNames The field names whose values should be interned
      * @return The same result query
@@ -2200,5 +2653,19 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @see String#intern()
      */
     ResultQuery<R> intern(String... fieldNames);
+
+    /**
+     * Specify a set of field names whose values should be interned.
+     * <p>
+     * Unlike {@link Result}'s <code>intern()</code> methods, this already
+     * interns values right after fetching them from a JDBC result set. See
+     * {@link Result#intern(Name...)} for more details.
+     *
+     * @param fieldNames The field names whose values should be interned
+     * @return The same result query
+     * @see Result#intern(Name...)
+     * @see String#intern()
+     */
+    ResultQuery<R> intern(Name... fieldNames);
 
 }

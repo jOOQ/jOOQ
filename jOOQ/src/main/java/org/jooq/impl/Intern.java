@@ -43,6 +43,7 @@ package org.jooq.impl;
 import java.io.Serializable;
 
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.Record;
 
 /**
@@ -58,7 +59,8 @@ class Intern implements Serializable {
     // Some temp variables for String interning
     int[]      internIndexes;
     Field<?>[] internFields;
-    String[]   internNames;
+    String[]   internNameStrings;
+    Name[]     internNames;
 
     final int[] internIndexes(Field<?>[] fields) {
         if (internIndexes != null) {
@@ -66,6 +68,9 @@ class Intern implements Serializable {
         }
         else if (internFields != null) {
             return new Fields<Record>(fields).indexesOf(internFields);
+        }
+        else if (internNameStrings != null) {
+            return new Fields<Record>(fields).indexesOf(internNameStrings);
         }
         else if (internNames != null) {
             return new Fields<Record>(fields).indexesOf(internNames);

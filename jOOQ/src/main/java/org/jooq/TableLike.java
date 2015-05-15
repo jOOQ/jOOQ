@@ -54,28 +54,28 @@ public interface TableLike<R extends Record> extends QueryPart {
     Row fieldsRow();
 
     /**
-     * Get a specific field from this Record.
+     * Get a specific field from this table.
      *
      * @see Row#field(Field)
      */
     <T> Field<T> field(Field<T> field);
 
     /**
-     * Get a specific field from this Record.
+     * Get a specific field from this table.
      *
      * @see Row#field(String)
      */
     Field<?> field(String name);
 
     /**
-     * Get a specific field from this Record and coerce it to <code>type</code>.
+     * Get a specific field from this table and coerce it to <code>type</code>.
      *
      * @see Row#field(String, Class)
      */
     <T> Field<T> field(String name, Class<T> type);
 
     /**
-     * Get a specific field from this Record and coerce it to
+     * Get a specific field from this table and coerce it to
      * <code>dataType</code>.
      *
      * @see Row#field(String, DataType)
@@ -83,21 +83,43 @@ public interface TableLike<R extends Record> extends QueryPart {
     <T> Field<T> field(String name, DataType<T> dataType);
 
     /**
-     * Get a specific field from this Record.
+     * Get a specific field from this table.
+     *
+     * @see Row#field(Name)
+     */
+    Field<?> field(Name name);
+
+    /**
+     * Get a specific field from this table and coerce it to <code>type</code>.
+     *
+     * @see Row#field(Name, Class)
+     */
+    <T> Field<T> field(Name name, Class<T> type);
+
+    /**
+     * Get a specific field from this table and coerce it to
+     * <code>dataType</code>.
+     *
+     * @see Row#field(Name, DataType)
+     */
+    <T> Field<T> field(Name name, DataType<T> dataType);
+
+    /**
+     * Get a specific field from this table.
      *
      * @see Row#field(int)
      */
     Field<?> field(int index);
 
     /**
-     * Get a specific field from this Record and coerce it to <code>type</code>.
+     * Get a specific field from this table and coerce it to <code>type</code>.
      *
      * @see Row#field(int, Class)
      */
     <T> Field<T> field(int index, Class<T> type);
 
     /**
-     * Get a specific field from this Record and coerce it to
+     * Get a specific field from this table and coerce it to
      * <code>dataType</code>.
      *
      * @see Row#field(int, DataType)
@@ -105,7 +127,7 @@ public interface TableLike<R extends Record> extends QueryPart {
     <T> Field<T> field(int index, DataType<T> dataType);
 
     /**
-     * Get all fields from this Record.
+     * Get all fields from this table.
      *
      * @see Row#fields()
      */

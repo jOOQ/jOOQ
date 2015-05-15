@@ -49,6 +49,7 @@ import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.RecordType;
 
@@ -129,6 +130,26 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
     }
 
     @Override
+    public final Field<?> field(Name name) {
+        if (name == null)
+            return null;
+
+        return field(DSL.field(name));
+    }
+
+    @Override
+    public final <T> Field<T> field(Name fieldName, Class<T> type) {
+        Field<?> result = field(fieldName);
+        return result == null ? null : result.coerce(type);
+    }
+
+    @Override
+    public final <T> Field<T> field(Name fieldName, DataType<T> dataType) {
+        Field<?> result = field(fieldName);
+        return result == null ? null : result.coerce(dataType);
+    }
+
+    @Override
     public final Field<?> field(int index) {
         if (index >= 0 && index < fields.length) {
             return fields[index];
@@ -177,6 +198,17 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
     }
 
     @Override
+    public final Field<?>[] fields(Name... f) {
+        Field<?>[] result = new Field[f.length];
+
+        for (int i = 0; i < result.length; i++) {
+            result[i] = field(f[i]);
+        }
+
+        return result;
+    }
+
+    @Override
     public final Field<?>[] fields(int... f) {
         Field<?>[] result = new Field[f.length];
 
@@ -211,6 +243,11 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
     }
 
     @Override
+    public final int indexOf(Name fieldName) {
+        return indexOf(field(fieldName));
+    }
+
+    @Override
     public final Class<?>[] types() {
         int size = fields.length;
         Class<?>[] result = new Class[size];
@@ -229,6 +266,11 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
 
     @Override
     public final Class<?> type(String fieldName) {
+        return type(indexOrFail(this, fieldName));
+    }
+
+    @Override
+    public final Class<?> type(Name fieldName) {
         return type(indexOrFail(this, fieldName));
     }
 
@@ -254,6 +296,11 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
         return dataType(indexOrFail(this, fieldName));
     }
 
+    @Override
+    public final DataType<?> dataType(Name fieldName) {
+        return dataType(indexOrFail(this, fieldName));
+    }
+
     final int[] indexesOf(Field<?>... f) {
         int[] result = new int[f.length];
 
@@ -265,6 +312,16 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
     }
 
     final int[] indexesOf(String... fieldNames) {
+        int[] result = new int[fieldNames.length];
+
+        for (int i = 0; i < fieldNames.length; i++) {
+            result[i] = indexOrFail(this, fieldNames[i]);
+        }
+
+        return result;
+    }
+
+    final int[] indexesOf(Name... fieldNames) {
         int[] result = new int[fieldNames.length];
 
         for (int i = 0; i < fieldNames.length; i++) {

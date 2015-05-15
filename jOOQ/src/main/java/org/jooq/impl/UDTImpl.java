@@ -46,6 +46,7 @@ import org.jooq.Context;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.Schema;
@@ -99,6 +100,11 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
     @Override
     public final Field<?> field(String string) {
         return fieldsRow().field(string);
+    }
+
+    @Override
+    public final Field<?> field(Name fieldName) {
+        return fieldsRow().field(fieldName);
     }
 
     @Override

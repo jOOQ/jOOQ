@@ -122,6 +122,7 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.GroupField;
 import org.jooq.JoinType;
+import org.jooq.Name;
 import org.jooq.Operator;
 import org.jooq.Param;
 import org.jooq.Record;
@@ -279,6 +280,21 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
     @Override
     public final <T> Field<T> field(String name, DataType<T> dataType) {
+        return asTable().field(name, dataType);
+    }
+
+    @Override
+    public final Field<?> field(Name string) {
+        return asTable().field(string);
+    }
+
+    @Override
+    public final <T> Field<T> field(Name name, Class<T> type) {
+        return asTable().field(name, type);
+    }
+
+    @Override
+    public final <T> Field<T> field(Name name, DataType<T> dataType) {
         return asTable().field(name, dataType);
     }
 

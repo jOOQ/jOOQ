@@ -970,8 +970,8 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else {
                 out.tab(1).overrideInherit();
-                out.tab(1).println("public %s%s<%s> valuesRow() {", Row.class, degree, rowType);
-                out.tab(2).println("return (%s%s) super.valuesRow();", Row.class, degree);
+                out.tab(1).println("public %s<%s> valuesRow() {", out.ref(Row.class.getName() + degree), rowType);
+                out.tab(2).println("return (%s) super.valuesRow();", out.ref(Row.class.getName() + degree));
                 out.tab(1).println("}");
             }
 

@@ -6,7 +6,6 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.h2.generatedclasses.tables.T_877;
@@ -19,7 +18,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_877;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_877Record extends TableRecordImpl<T_877Record> implements Record1<Integer>, IT_877 {
 
-	private static final long serialVersionUID = -670481386;
+	private static final long serialVersionUID = 1407683451;
 
 	/**
 	 * Setter for <code>PUBLIC.T_877.ID</code>.

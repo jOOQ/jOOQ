@@ -6,7 +6,6 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.h2.generatedclasses.tables.interfaces.IÄä;
@@ -19,7 +18,7 @@ import org.jooq.test.h2.generatedclasses.tables.Ää;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ÄäRecord extends TableRecordImpl<ÄäRecord> implements Record1<Integer>, IÄä {
 
-	private static final long serialVersionUID = 791789299;
+	private static final long serialVersionUID = 1644970904;
 
 	/**
 	 * Setter for <code>PUBLIC.Ää.Öö</code>.

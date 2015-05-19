@@ -7,7 +7,6 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.h2.generatedclasses.tables.T_3485;
@@ -20,7 +19,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_3485;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_3485Record extends UpdatableRecordImpl<T_3485Record> implements Record2<Integer, String>, IT_3485 {
 
-	private static final long serialVersionUID = -1401653707;
+	private static final long serialVersionUID = -2083510776;
 
 	/**
 	 * Setter for <code>PUBLIC.T_3485.ID</code>.

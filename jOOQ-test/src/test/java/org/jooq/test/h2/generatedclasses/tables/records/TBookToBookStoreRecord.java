@@ -7,7 +7,6 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 import org.jooq.Field;
 import org.jooq.Record2;
 import org.jooq.Record3;
-import org.jooq.Row;
 import org.jooq.Row3;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.h2.generatedclasses.tables.TBookToBookStore;
@@ -20,7 +19,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookToBookStore;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStoreRecord extends UpdatableRecordImpl<TBookToBookStoreRecord> implements Record3<String, Integer, Integer>, ITBookToBookStore {
 
-	private static final long serialVersionUID = -684313796;
+	private static final long serialVersionUID = -1428709495;
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name

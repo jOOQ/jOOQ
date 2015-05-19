@@ -6,7 +6,6 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 
 import org.jooq.Field;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.h2.generatedclasses.tables.XTestCase_2025;
@@ -19,7 +18,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_2025;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_2025Record extends TableRecordImpl<XTestCase_2025Record> implements Record2<Integer, String>, IXTestCase_2025 {
 
-	private static final long serialVersionUID = -2116233061;
+	private static final long serialVersionUID = -1864964386;
 
 	/**
 	 * Setter for <code>PUBLIC.X_TEST_CASE_2025.REF_ID</code>.

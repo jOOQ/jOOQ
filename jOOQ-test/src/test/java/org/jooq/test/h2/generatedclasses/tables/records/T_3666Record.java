@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 
 import org.jooq.Field;
 import org.jooq.Record6;
-import org.jooq.Row;
 import org.jooq.Row6;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.h2.generatedclasses.tables.T_3666;
@@ -21,7 +20,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_3666;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_3666Record extends TableRecordImpl<T_3666Record> implements Record6<Long, BigDecimal, Short, Short, Byte, BigDecimal>, IT_3666 {
 
-	private static final long serialVersionUID = 1480864168;
+	private static final long serialVersionUID = -375441385;
 
 	/**
 	 * Setter for <code>PUBLIC.T_3666.E1</code>.

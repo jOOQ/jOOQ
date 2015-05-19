@@ -9,7 +9,6 @@ import java.math.BigInteger;
 
 import org.jooq.Field;
 import org.jooq.Record8;
-import org.jooq.Row;
 import org.jooq.Row8;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.h2.generatedclasses.tables.T_2486;
@@ -22,7 +21,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2486;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2486Record extends TableRecordImpl<T_2486Record> implements Record8<BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigInteger, BigInteger>, IT_2486 {
 
-	private static final long serialVersionUID = 1916386666;
+	private static final long serialVersionUID = 1132893313;
 
 	/**
 	 * Setter for <code>PUBLIC.T_2486.VAL1</code>.

@@ -6,7 +6,6 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 
 import org.jooq.Field;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.h2.generatedclasses.tables.TIdentity;
@@ -19,7 +18,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.ITIdentity;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentityRecord extends TableRecordImpl<TIdentityRecord> implements Record2<Integer, Integer>, ITIdentity {
 
-	private static final long serialVersionUID = -129660920;
+	private static final long serialVersionUID = 366694603;
 
 	/**
 	 * Setter for <code>PUBLIC.T_IDENTITY.ID</code>.

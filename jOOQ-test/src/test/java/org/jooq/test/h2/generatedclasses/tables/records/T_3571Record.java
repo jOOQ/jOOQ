@@ -6,7 +6,6 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 
 import org.jooq.Field;
 import org.jooq.Record4;
-import org.jooq.Row;
 import org.jooq.Row4;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.h2.generatedclasses.tables.T_3571;
@@ -19,7 +18,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_3571;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_3571Record extends TableRecordImpl<T_3571Record> implements Record4<org.jooq.test.all.converters.T_3571, org.jooq.test.all.converters.T_3571, org.jooq.test.all.converters.T_3571, org.jooq.test.all.converters.T_3571>, IT_3571 {
 
-	private static final long serialVersionUID = 1548980567;
+	private static final long serialVersionUID = 475327480;
 
 	/**
 	 * Setter for <code>PUBLIC.T_3571.E1</code>.

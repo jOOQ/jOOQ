@@ -7,7 +7,6 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record4;
-import org.jooq.Row;
 import org.jooq.Row4;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.h2.generatedclasses.tables.TArrays;
@@ -20,7 +19,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.ITArrays;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TArraysRecord extends UpdatableRecordImpl<TArraysRecord> implements Record4<Integer, Object[], Object[], Object[]>, ITArrays {
 
-	private static final long serialVersionUID = 1619286993;
+	private static final long serialVersionUID = -624291864;
 
 	/**
 	 * Setter for <code>PUBLIC.T_ARRAYS.ID</code>.

@@ -15,16 +15,12 @@ import org.jooq.test.h2.generatedclasses.tables.TExoticTypes;
 import org.jooq.test.h2.generatedclasses.tables.TIdentity;
 import org.jooq.test.h2.generatedclasses.tables.TIdentityPk;
 import org.jooq.test.h2.generatedclasses.tables.TLanguage;
-import org.jooq.test.h2.generatedclasses.tables.TPerformance;
-import org.jooq.test.h2.generatedclasses.tables.TPerformanceJdbc;
-import org.jooq.test.h2.generatedclasses.tables.TPerformanceJooq;
 import org.jooq.test.h2.generatedclasses.tables.TTriggers;
 import org.jooq.test.h2.generatedclasses.tables.TUnsigned;
 import org.jooq.test.h2.generatedclasses.tables.T_2327UkOnly;
 import org.jooq.test.h2.generatedclasses.tables.T_2486;
 import org.jooq.test.h2.generatedclasses.tables.T_2698;
 import org.jooq.test.h2.generatedclasses.tables.T_2718;
-import org.jooq.test.h2.generatedclasses.tables.T_2926;
 import org.jooq.test.h2.generatedclasses.tables.T_3485;
 import org.jooq.test.h2.generatedclasses.tables.T_3488AbcXyzEee;
 import org.jooq.test.h2.generatedclasses.tables.T_3571;
@@ -53,21 +49,6 @@ import org.jooq.test.h2.generatedclasses.tables.Ää;
 public class Tables {
 
 	/**
-	 * The table PUBLIC.T_PERFORMANCE
-	 */
-	public static final TPerformance T_PERFORMANCE = org.jooq.test.h2.generatedclasses.tables.TPerformance.T_PERFORMANCE;
-
-	/**
-	 * The table PUBLIC.T_PERFORMANCE_JDBC
-	 */
-	public static final TPerformanceJdbc T_PERFORMANCE_JDBC = org.jooq.test.h2.generatedclasses.tables.TPerformanceJdbc.T_PERFORMANCE_JDBC;
-
-	/**
-	 * The table PUBLIC.T_PERFORMANCE_JOOQ
-	 */
-	public static final TPerformanceJooq T_PERFORMANCE_JOOQ = org.jooq.test.h2.generatedclasses.tables.TPerformanceJooq.T_PERFORMANCE_JOOQ;
-
-	/**
 	 * The table PUBLIC.T_3485
 	 */
 	public static final T_3485 T_3485 = org.jooq.test.h2.generatedclasses.tables.T_3485.T_3485;
@@ -86,11 +67,6 @@ public class Tables {
 	 * The table PUBLIC.T_2327_UK_ONLY
 	 */
 	public static final T_2327UkOnly T_2327_UK_ONLY = org.jooq.test.h2.generatedclasses.tables.T_2327UkOnly.T_2327_UK_ONLY;
-
-	/**
-	 * The table PUBLIC.T_2926
-	 */
-	public static final T_2926 T_2926 = org.jooq.test.h2.generatedclasses.tables.T_2926.T_2926;
 
 	/**
 	 * The table PUBLIC.T_IDENTITY_PK

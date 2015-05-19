@@ -9,7 +9,6 @@ import java.sql.Date;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record6;
-import org.jooq.Row;
 import org.jooq.Row6;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.h2.generatedclasses.tables.VAuthor;
@@ -22,7 +21,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IVAuthor;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthorRecord extends UpdatableRecordImpl<VAuthorRecord> implements Record6<Integer, String, String, Date, Integer, String>, IVAuthor {
 
-	private static final long serialVersionUID = -134102853;
+	private static final long serialVersionUID = -1418182260;
 
 	/**
 	 * Setter for <code>PUBLIC.V_AUTHOR.ID</code>.

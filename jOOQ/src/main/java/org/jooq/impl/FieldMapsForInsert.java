@@ -118,6 +118,7 @@ class FieldMapsForInsert extends AbstractQueryPart {
                 xxxx xxxxx
                 xxxx xxxxxxx
                 xxxx xxxxxxx
+                xxxx xxxxxxxx
                 xx [/pro] */
                 case FIREBIRD:
                 case SQLITE: {

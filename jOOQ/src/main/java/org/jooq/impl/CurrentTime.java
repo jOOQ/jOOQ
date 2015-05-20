@@ -78,6 +78,7 @@ class CurrentTime extends AbstractFunction<Time> {
             xxxx xxxx
             xxxx xxxxx
             xxxx xxxxxxx
+            xxxx xxxxxxxx
             xx [/pro] */
             case DERBY:
             case FIREBIRD:

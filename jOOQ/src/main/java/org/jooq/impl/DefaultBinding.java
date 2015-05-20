@@ -60,6 +60,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
+// ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
@@ -293,6 +294,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     /* [pro] xx
                     xxxx xxxxxxxxx
                     xxxx xxxxxxx
+                    xxxx xxxxxxxx
                     xx [/pro] */
                     case POSTGRES: {
                         return true;
@@ -838,7 +840,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             /* [pro] xx
             xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx x
 
-                xx xxxx xxxxxxxxxx xxxx xx xxxx xxxxxx xxxx xxx xxx xxxxxxxxx xxxxxx
+                xx xxxx xx xxxx xxxxxx xxxx xxx xxx xxxxxxxxx xxxxxx
                 xx xxxxxxxxxxx xxxxx xxxxxxx xxx xxxxxxx
                 xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                 xxxxxx xxxxxxxxx x
@@ -870,12 +872,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             /* [pro] xx
             xx xxxxxx xxx xxx xxxxxxx xxxxxxx xxxxx xxxxxx xx xxx xx xxxx
             xx xxxxxxxxxxx xxx
-            xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxx x
+            xxxx xx xxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxx x
                 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxx
             x
 
             xx xxxxxx xxx xxxxxxx xxxxxxx xxxxx xxx xx xxx xx xxxx xxxxx xxxxxxx
-            xxxx xx xxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx x
+            xxxx xx xxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx x
                 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
             x
 

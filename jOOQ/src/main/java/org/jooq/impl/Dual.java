@@ -116,6 +116,7 @@ class Dual extends AbstractTable<Record> {
                 xxxx xxxx
                 xxxx xxxxxxxxx
                 xxxx xxxxxxxxxx
+                xxxx xxxxxxxx
                 xx [/pro] */
                 case POSTGRES:
                 case SQLITE:

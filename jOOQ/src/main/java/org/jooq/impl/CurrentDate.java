@@ -85,6 +85,7 @@ class CurrentDate extends AbstractFunction<Date> {
             xxxx xxxxx
             xxxx xxxxxxx
             xxxx xxxxxxxxx
+            xxxx xxxxxxxx
             xx [/pro] */
 
             case DERBY:

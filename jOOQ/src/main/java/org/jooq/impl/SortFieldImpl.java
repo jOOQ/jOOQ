@@ -119,6 +119,7 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
                 xxxx xxxxxxxxx
                 xxxx xxxxxxxxxx
                 xxxx xxxxxxx
+                xxxx xxxxxxxx
                 xx [/pro] */
 
                 // These OSS dialects don't support this syntax at all

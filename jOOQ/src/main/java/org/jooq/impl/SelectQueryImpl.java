@@ -81,6 +81,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SortOrder.ASC;
 import static org.jooq.impl.CombineOperator.EXCEPT;
 import static org.jooq.impl.CombineOperator.INTERSECT;
@@ -1090,7 +1091,9 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
                 // Some dialects don't support empty GROUP BY () clauses
                 else if (asList(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE).contains(dialect)) {
-                    context.sql('1');
+                    context.sql('(')
+                           .visit(DSL.select(one()))
+                           .sql(')');
                 }
 
                 // Few dialects support the SQL standard "grand total" (i.e. empty grouping set)

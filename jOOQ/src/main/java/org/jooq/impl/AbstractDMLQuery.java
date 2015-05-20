@@ -44,6 +44,7 @@ import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.REDSHIFT;
+import static org.jooq.SQLDialect.VERTICA;
 import static org.jooq.conf.RenderNameStyle.LOWER;
 import static org.jooq.conf.RenderNameStyle.UPPER;
 import static org.jooq.impl.DSL.select;
@@ -196,8 +197,8 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
         }
 
         /* [pro] */
-        // HANA and RedShift don't support fetching generated keys
-        else if (asList(HANA, REDSHIFT).contains(ctx.family())) {
+        // Column stores don't seem support fetching generated keys
+        else if (asList(HANA, REDSHIFT, VERTICA).contains(ctx.family())) {
             super.prepare(ctx);
             return;
         }
@@ -279,8 +280,8 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
             return super.execute(ctx, listener);
         }
         /* [pro] */
-        // HANA and RedShift don't support fetching generated keys
-        else if (asList(HANA, REDSHIFT).contains(ctx.family())) {
+        // Column stores don't seem support fetching generated keys
+        else if (asList(HANA, REDSHIFT, VERTICA).contains(ctx.family())) {
             return super.execute(ctx, listener);
         }
         /* [/pro] */

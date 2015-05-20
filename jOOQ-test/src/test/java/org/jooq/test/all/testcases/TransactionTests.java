@@ -332,7 +332,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                    .execute();
 
                 // This code should never be reached, as exception should propagate
-                fail();
+                fail("No exception was thrown. Are constraints supported?");
             });
         }
 

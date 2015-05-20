@@ -19,7 +19,6 @@ import org.jooq.test.vertica.generatedclasses.tables.TLanguage;
 import org.jooq.test.vertica.generatedclasses.tables.T_2845CaseSensitivity;
 import org.jooq.test.vertica.generatedclasses.tables.T_639NumbersTable;
 import org.jooq.test.vertica.generatedclasses.tables.T_725LobTest;
-import org.jooq.test.vertica.generatedclasses.tables.T_937;
 import org.jooq.test.vertica.generatedclasses.tables.XTestCase_85;
 import org.jooq.test.vertica.generatedclasses.tables.XUnused;
 import org.jooq.test.vertica.generatedclasses.tables.records.TAuthorRecord;
@@ -34,13 +33,12 @@ import org.jooq.test.vertica.generatedclasses.tables.records.TLanguageRecord;
 import org.jooq.test.vertica.generatedclasses.tables.records.T_2845CaseSensitivityRecord;
 import org.jooq.test.vertica.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.vertica.generatedclasses.tables.records.T_725LobTestRecord;
-import org.jooq.test.vertica.generatedclasses.tables.records.T_937Record;
 import org.jooq.test.vertica.generatedclasses.tables.records.XTestCase_85Record;
 import org.jooq.test.vertica.generatedclasses.tables.records.XUnusedRecord;
 
 
 /**
- * A class modelling foreign key relationships between tables of the <code>public</code> 
+ * A class modelling foreign key relationships between tables of the <code>public</code>
  * schema
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
@@ -56,7 +54,6 @@ public class Keys {
 	// -------------------------------------------------------------------------
 
 	public static final UniqueKey<T_2845CaseSensitivityRecord> PK_T_2845_CASE_SENSITIVITY = UniqueKeys0.PK_T_2845_CASE_SENSITIVITY;
-	public static final UniqueKey<T_937Record> T_937 = UniqueKeys0.T_937;
 	public static final UniqueKey<T_639NumbersTableRecord> PK_T_639_NUMBERS_TABLE = UniqueKeys0.PK_T_639_NUMBERS_TABLE;
 	public static final UniqueKey<T_725LobTestRecord> PK_T_725_LOB_TEST = UniqueKeys0.PK_T_725_LOB_TEST;
 	public static final UniqueKey<TAuthorRecord> PK_T_AUTHOR = UniqueKeys0.PK_T_AUTHOR;
@@ -90,7 +87,6 @@ public class Keys {
 
 	private static class UniqueKeys0 extends AbstractKeys {
 		public static final UniqueKey<T_2845CaseSensitivityRecord> PK_T_2845_CASE_SENSITIVITY = createUniqueKey(T_2845CaseSensitivity.T_2845_CASE_SENSITIVITY, T_2845CaseSensitivity.T_2845_CASE_SENSITIVITY.ID);
-		public static final UniqueKey<T_937Record> T_937 = createUniqueKey(T_937.T_937, T_937.T_937.T_937_);
 		public static final UniqueKey<T_639NumbersTableRecord> PK_T_639_NUMBERS_TABLE = createUniqueKey(T_639NumbersTable.T_639_NUMBERS_TABLE, T_639NumbersTable.T_639_NUMBERS_TABLE.ID);
 		public static final UniqueKey<T_725LobTestRecord> PK_T_725_LOB_TEST = createUniqueKey(T_725LobTest.T_725_LOB_TEST, T_725LobTest.T_725_LOB_TEST.ID);
 		public static final UniqueKey<TAuthorRecord> PK_T_AUTHOR = createUniqueKey(TAuthor.T_AUTHOR, TAuthor.T_AUTHOR.ID);

@@ -63,6 +63,7 @@ import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.SQLDialect.VERTICA;
 import static org.jooq.impl.DSL.val;
 
 import org.jooq.BetweenAndStep;
@@ -125,7 +126,7 @@ class BetweenCondition<T> extends AbstractCondition implements BetweenAndStep<T>
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {
-        if (symmetric && asList(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, INFORMIX, MARIADB, MYSQL, ORACLE, REDSHIFT, SQLSERVER, SQLITE, SYBASE).contains(configuration.dialect().family())) {
+        if (symmetric && asList(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, INFORMIX, MARIADB, MYSQL, ORACLE, REDSHIFT, SQLSERVER, SQLITE, SYBASE, VERTICA).contains(configuration.family())) {
             return not
                 ? (QueryPartInternal) field.notBetween(minValue, maxValue).and(field.notBetween(maxValue, minValue))
                 : (QueryPartInternal) field.between(minValue, maxValue).or(field.between(maxValue, minValue));

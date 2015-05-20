@@ -59,6 +59,7 @@ import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.SQLDialect.VERTICA;
 import static org.jooq.impl.DSL.constraint;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
@@ -146,7 +147,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testCreateIndex() throws Exception {
-        assumeFamilyNotIn(REDSHIFT);
+        assumeFamilyNotIn(REDSHIFT, VERTICA);
 
         try {
             // TODO: Re-use jOOQ API for this
@@ -168,7 +169,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testDropIndex() throws Exception {
-        assumeFamilyNotIn(REDSHIFT);
+        assumeFamilyNotIn(REDSHIFT, VERTICA);
 
         try {
             // TODO: Re-use jOOQ API for this
@@ -189,7 +190,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testDropIndexIfExists() throws Exception {
-        assumeFamilyNotIn(HANA, REDSHIFT);
+        assumeFamilyNotIn(HANA, REDSHIFT, VERTICA);
 
         try {
             // TODO: Re-use jOOQ API for this

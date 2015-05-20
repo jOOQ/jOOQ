@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.SQLDialect.VERTICA;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.Date;
@@ -94,7 +95,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testResultSetType() throws Exception {
-        assumeFamilyNotIn(HANA, REDSHIFT, SQLITE);
+        assumeFamilyNotIn(HANA, REDSHIFT, SQLITE, VERTICA);
 
         ResultSet rs =
         create().select(TBook_ID())

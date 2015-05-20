@@ -156,6 +156,7 @@ class BetweenAndSteps extends Generators {
         import static org.jooq.SQLDialect.SQLITE;
         import static org.jooq.SQLDialect.SQLSERVER;
         import static org.jooq.SQLDialect.SYBASE;
+        import static org.jooq.SQLDialect.VERTICA;
         import static org.jooq.impl.DSL.row;
 
         import javax.annotation.Generated;
@@ -302,7 +303,7 @@ class BetweenAndSteps extends Generators {
                 RowN max = (RowN) maxValue;
         
                 // These dialects don't support the SYMMETRIC keyword at all
-                if (symmetric && asList(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, REDSHIFT, SQLITE, SQLSERVER, SYBASE).contains(configuration.dialect().family())) {
+                if (symmetric && asList(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, REDSHIFT, SQLITE, SQLSERVER, SYBASE, VERTICA).contains(configuration.family())) {
                     return not
                         ? (QueryPartInternal) r.notBetween(min, max).and(r.notBetween(max, min))
                         : (QueryPartInternal) r.between(min, max).or(r.between(max, min));
@@ -310,7 +311,7 @@ class BetweenAndSteps extends Generators {
         
                 // These dialects either don't support row value expressions, or they
                 // Can't handle row value expressions with the BETWEEN predicate
-                else if (row.size() > 1 && asList(ACCESS, CUBRID, DERBY, FIREBIRD, HANA, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, SQLITE, SQLSERVER, SYBASE).contains(configuration.dialect().family())) {
+                else if (row.size() > 1 && asList(ACCESS, CUBRID, DERBY, FIREBIRD, HANA, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, SQLITE, SQLSERVER, SYBASE).contains(configuration.family())) {
                     Condition result = r.ge(min).and(r.le(max));
         
                     if (not) {

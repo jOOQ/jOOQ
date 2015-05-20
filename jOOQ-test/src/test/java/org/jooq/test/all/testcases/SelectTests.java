@@ -45,10 +45,13 @@ import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.VERTICA;
 import static org.jooq.impl.DSL.count;
+import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.selectZero;
+import static org.jooq.impl.DSL.sum;
 import static org.jooq.impl.DSL.trim;
 import static org.jooq.impl.DSL.val;
 import static org.junit.Assert.assertTrue;
@@ -237,7 +240,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testSelectWithSubselectProjection() throws Exception {
-        Field<Object> books = create().select(count())
+        // Workaround for:
+        // ERROR 2792:  Correlated subquery with aggregate function COUNT is not supported
+        Field<Object> books = create().select(family() == VERTICA ? sum(one()).coerce(Integer.class) : count())
                 .from(TBook())
                 .where(TBook_AUTHOR_ID().equal(TAuthor_ID())).asField("books");
 
@@ -420,6 +425,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             case INFORMIX:
             case INGRES:
             case SYBASE:
+            case VERTICA:
             /* [/pro] */
             case DERBY:
             case FIREBIRD:

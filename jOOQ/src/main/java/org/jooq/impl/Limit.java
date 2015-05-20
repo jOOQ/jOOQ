@@ -78,6 +78,33 @@ class Limit extends AbstractQueryPart {
 
             // True LIMIT / OFFSET support provided by the following dialects
             // -----------------------------------------------------------------
+            /* [pro] */
+            case VERTICA: {
+
+                // Prevent [Vertica][VJDBC](2013) ERROR: n of LIMIT n clause is not supported for expressions
+                // It appears that Vertica doesn't support expressions in LIMIT .. OFFSET
+                // clauses if they're placed in derived tables.
+                if (context.subquery())
+                    context.paramType(INLINED);
+
+                context.castMode(NEVER)
+                       .formatSeparator()
+                       .keyword("limit")
+                       .sql(' ').visit(numberOfRows);
+
+                if (!offsetZero())
+                    context.sql(' ').keyword("offset")
+                           .sql(' ').visit(offsetOrZero);
+
+                context.castMode(castMode);
+
+                if (context.subquery())
+                    context.paramType(paramType);
+
+                break;
+            }
+            /* [/pro] */
+
             case MARIADB:
             case MYSQL:
             case H2:

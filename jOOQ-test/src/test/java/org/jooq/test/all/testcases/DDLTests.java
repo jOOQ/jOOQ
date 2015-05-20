@@ -66,6 +66,7 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.two;
 import static org.jooq.impl.DSL.val;
@@ -254,12 +255,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         jOOQAbstractTest.reset = false;
         Sequence<Number> S_AUTHOR_ID = (Sequence<Number>) SAuthorID();
 
-        switch (dialect().family()) {
+        switch (family()) {
 
             // These dialects have a mandatory WITH clause
             /* [pro] */
             case INGRES:
             case SYBASE:
+            case VERTICA:
             /* [/pro] */
 
             case FIREBIRD:
@@ -321,7 +323,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
         try {
             // TODO: Re-use jOOQ API for this
-            create().execute("create table {0} ({1} int)", name("t"), name("a"));
+            // Vertica doesn't support changing data types if a conversion would be needed
+            create().execute("create table {0} ({1} {2})",
+                name("t"),
+                name("a"),
+                sql(family() == VERTICA
+                    ? SQLDataType.VARCHAR.length(3).getCastTypeName(create().configuration())
+                    : SQLDataType.INTEGER.getTypeName())
+            );
+
             create().alterTable("t").alter("a").set(SQLDataType.VARCHAR).execute();
             create().insertInto(table(name("t")), field(name("a"))).values("1").execute();
             assertEquals("1", create().fetchOne("select * from {0}", name("t")).getValue(0));
@@ -420,7 +430,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testAlterTableAddConstraint_CHECK() throws Exception {
-        assumeFamilyNotIn(MARIADB, MYSQL, REDSHIFT);
+        assumeFamilyNotIn(MARIADB, MYSQL, REDSHIFT, VERTICA);
 
         try {
             create().createTable("t").column("v", INTEGER).execute();

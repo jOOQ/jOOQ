@@ -40,68 +40,51 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
-import static org.jooq.impl.DSL.val;
-import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.impl.DSL.sql;
 
-import org.jooq.Configuration;
-import org.jooq.Field;
+import org.jooq.Clause;
+import org.jooq.Context;
+import org.jooq.QueryPart;
+import org.jooq.SQL;
+import org.jooq.conf.ParamType;
 
 /**
  * @author Lukas Eder
  */
-class Replace extends AbstractFunction<String> {
+class SQLInline extends AbstractQueryPart implements SQL {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -7273879239726265322L;
+    private static final long serialVersionUID = 5352233054249655126L;
 
-    Replace(Field<?>... arguments) {
-        super("replace", SQLDataType.VARCHAR, arguments);
+    private SQL sql;
+
+    SQLInline(QueryPart part) {
+        this(sql("{0}", part));
+    }
+
+    SQLInline(SQL sql) {
+        this.sql = sql;
     }
 
     @Override
-    final Field<String> getFunction0(Configuration configuration) {
-        Field<?>[] args = getArguments();
+    public final void accept(Context<?> ctx) {
+        ParamType paramType = ctx.paramType();
 
-        // [#861] Most dialects don't ship with a two-argument replace function:
-        switch (configuration.family()) {
-            /* [pro] */
-            case ASE: {
-                if (args.length == 2) {
-                    return function("str_replace", VARCHAR, args[0], args[1], val(null));
-                }
-                else {
-                    return function("str_replace", VARCHAR, args);
-                }
-            }
+        ctx.paramType(INLINED)
+           .visit(sql)
+           .paramType(paramType);
+    }
 
-            case ACCESS:
-            case DB2:
-            case HANA:
-            case INGRES:
-            case SQLSERVER:
-            case SYBASE:
-            case VERTICA:
-            /* [/pro] */
-            case FIREBIRD:
-            case HSQLDB:
-            case MARIADB:
-            case MYSQL:
-            case POSTGRES:
-            case SQLITE: {
-                if (args.length == 2) {
-                    return function("replace", VARCHAR, args[0], args[1], val(""));
-                }
-                else {
-                    return function("replace", VARCHAR, args);
-                }
-            }
+    @Override
+    public Clause[] clauses(Context<?> ctx) {
+        return null;
+    }
 
-            default: {
-                return function("replace", VARCHAR, args);
-            }
-        }
+    @Override
+    public String toString() {
+        return sql.toString();
     }
 }

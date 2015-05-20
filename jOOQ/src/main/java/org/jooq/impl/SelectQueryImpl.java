@@ -591,7 +591,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
             /* [pro] */
             // INTO clauses
             // ------------
-            if (asList(INFORMIX).contains(family)) {
+            if (asList(INFORMIX, VERTICA).contains(family)) {
                 context.start(SELECT_INTO);
 
                 Table<?> actualInto = (Table<?>) context.data(DATA_SELECT_INTO_TABLE);

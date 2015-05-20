@@ -298,6 +298,7 @@ class AlterTableImpl extends AbstractQuery implements
                     break;
 
                 case SQLSERVER:
+                case VERTICA:
                     ctx.sql(' ').keyword("alter column");
                     break;
                 /* [/pro] */
@@ -323,6 +324,7 @@ class AlterTableImpl extends AbstractQuery implements
                 switch (family) {
                     /* [pro] */
                     case DB2:
+                    case VERTICA:
                         ctx.sql(' ').keyword("set data type");
                         break;
                     /* [/pro] */

@@ -105,6 +105,7 @@ class DateDiff extends AbstractFunction<Integer> {
             case ASE:
             case SQLSERVER:
             case SYBASE:
+            case VERTICA:
                 return field("{datediff}(day, {0}, {1})", getDataType(), date2, date1);
 
             case DB2:

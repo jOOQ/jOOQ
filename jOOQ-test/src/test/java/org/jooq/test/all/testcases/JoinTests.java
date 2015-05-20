@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.VERTICA;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
@@ -178,7 +179,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
         // This query causes a failure in Ingres. Potentially a bug. See E_OP039F_BOOLFACT on
         // http://docs.ingres.com/ingres/9.2/ingres-92-message-guide/1283-errors-from-opf#E_OP039F_BOOLFACT
-        if (!asList(ACCESS, CUBRID, DB2, INGRES).contains(dialect())) {
+
+        // https://github.com/jOOQ/jOOQ/issues/4297
+        if (!asList(ACCESS, CUBRID, DB2, INGRES, VERTICA).contains(dialect())) {
 
             // Advanced JOIN usages with single JOIN condition
             Result<Record> result = create().select()

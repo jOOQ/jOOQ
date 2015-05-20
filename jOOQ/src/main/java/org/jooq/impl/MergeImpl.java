@@ -939,7 +939,7 @@ implements
     // -------------------------------------------------------------------------
 
     /**
-     * Return a standard MERGE statement simulating the H2-specific syntax
+     * Return a standard MERGE statement emulating the H2-specific syntax
      */
     private final QueryPart getStandardMerge(Configuration config) {
         switch (config.dialect().family()) {
@@ -949,6 +949,7 @@ implements
             case ORACLE:
             case SQLSERVER:
             case SYBASE:
+            case VERTICA:
             /* [/pro] */
             case CUBRID:
             case HSQLDB: {

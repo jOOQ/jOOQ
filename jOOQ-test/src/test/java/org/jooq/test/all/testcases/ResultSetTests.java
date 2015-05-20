@@ -120,7 +120,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     @SuppressWarnings("serial")
 
     public void testResultSetTypeWithListener() throws Exception {
-        assumeFamilyNotIn(SQLITE);
+        assumeFamilyNotIn(SQLITE, VERTICA);
 
         assertEquals(
             asList(1, 1, 1, 2),
@@ -151,7 +151,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     @SuppressWarnings("serial")
 
     public void testResultSetConcurrency() throws Exception {
-        assumeFamilyNotIn(HANA, INFORMIX, MARIADB, REDSHIFT, SQLITE, SYBASE);
+        assumeFamilyNotIn(HANA, INFORMIX, MARIADB, REDSHIFT, SQLITE, SYBASE, VERTICA);
         jOOQAbstractTest.reset = false;
 
         assertEquals(

@@ -59,6 +59,7 @@ import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.SQLDialect.VERTICA;
 import static org.jooq.impl.DSL.avg;
 import static org.jooq.impl.DSL.connectByIsCycle;
 import static org.jooq.impl.DSL.connectByIsLeaf;
@@ -150,6 +151,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             case MYSQL:
             case POSTGRES:
             case SQLITE:
+            case VERTICA:
                 log.info("SKIPPING", "[ table ] WITH [ hint ] tests");
                 return;
         }
@@ -171,7 +173,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
     public void testPivotClause() throws Exception {
         assumeFamilyNotIn(ACCESS, ASE, DB2, INGRES, REDSHIFT, SQLSERVER, SYBASE, CUBRID, DERBY, FIREBIRD, H2, HANA,
-            HSQLDB, INFORMIX, MARIADB, MYSQL, POSTGRES, SQLITE);
+            HSQLDB, INFORMIX, MARIADB, MYSQL, POSTGRES, SQLITE, VERTICA);
 
         // Simple pivoting, no aliasing
         // ----------------------------
@@ -285,7 +287,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testAliasingPivot() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, DB2, INFORMIX, INGRES, REDSHIFT, SQLSERVER, SYBASE, CUBRID, DERBY, FIREBIRD, H2, HANA, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
+        assumeFamilyNotIn(ACCESS, ASE, DB2, INFORMIX, INGRES, REDSHIFT, SQLSERVER, SYBASE, CUBRID, DERBY, FIREBIRD, H2, HANA, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, VERTICA);
 
         Result<?> r1 =
         create().select()
@@ -500,7 +502,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testWithCheckOption() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, POSTGRES, REDSHIFT, SQLITE, SQLSERVER, SYBASE);
+        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL,
+            POSTGRES, REDSHIFT, SQLITE, SQLSERVER, SYBASE, VERTICA);
 
         jOOQAbstractTest.reset = false;
 

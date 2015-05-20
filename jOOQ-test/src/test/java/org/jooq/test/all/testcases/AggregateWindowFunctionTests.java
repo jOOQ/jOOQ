@@ -297,13 +297,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testAggregateFunction_MEDIAN() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, DB2, DERBY, FIREBIRD, H2, HANA, INFORMIX, INGRES, MARIADB, MYSQL, REDSHIFT, SQLITE, SQLSERVER);
+        assumeFamilyNotIn(ACCESS, ASE, DB2, DERBY, FIREBIRD, H2, HANA, INFORMIX, INGRES, MARIADB, MYSQL, REDSHIFT, SQLITE, SQLSERVER, VERTICA);
         assumeDialectNotIn(POSTGRES_9_3);
 
         // Round this, as HSQLDB calculates MEDIAN() wrong
         // https://sourceforge.net/p/hsqldb/bugs/1383/
         // https://sourceforge.net/p/hsqldb/bugs/1384/
         // https://sourceforge.net/p/hsqldb/bugs/1385/
+
+        // Redshift, SQL Server, and Vertica support this function, and other
+        // ordered set aggregates, but only as window functions
         if (family() == HSQLDB) {
             assertEquals(2, create().fetchValue(select(median(TBook_ID())).from(TBook())).intValue());
             assertEquals(1, create().fetchValue(select(median(TBook_ID()).filterWhere(TBook_ID().ne(4))).from(TBook())).intValue());
@@ -497,7 +500,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
         // [#1728] COUNT(DISTINCT expr1, expr2, ...)
         // -----------------------------------------
-        if (asList(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, INFORMIX, INGRES, ORACLE, REDSHIFT, SQLITE, SQLSERVER, SYBASE).contains(dialect().family())) {
+        if (asList(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, INFORMIX, INGRES, ORACLE, REDSHIFT, SQLITE, SQLSERVER, SYBASE, VERTICA).contains(dialect().family())) {
             log.info("SKIPPING", "Multi-expression COUNT(DISTINCT) test");
         }
         else {
@@ -1074,7 +1077,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testWindowFunctionsWithRowValueExpressions_LEAD_LAG() {
-        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, FIREBIRD, MARIADB, MYSQL, ORACLE, REDSHIFT, SQLITE, SQLSERVER, SYBASE);
+        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, FIREBIRD, MARIADB, MYSQL, ORACLE, REDSHIFT, SQLITE, SQLSERVER, SYBASE, VERTICA);
 
         Field<Record2<Integer, String>> x = field(row(TBook_ID(), TBook_TITLE()));
         System.out.println(x);
@@ -1101,7 +1104,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testListAgg() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, INFORMIX, INGRES, REDSHIFT, SQLSERVER);
+        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, INFORMIX, INGRES, REDSHIFT, SQLSERVER, VERTICA);
 
         // [#3045] Skip this test for the time being
         if (!asList(ORACLE).contains(dialect().family())) {

@@ -107,6 +107,13 @@ class LeadLag<T> extends Function<T> {
                        .visit(defaultValue)
                        .sql(')');
                     break;
+
+                // In vertica, the defaultValue must be a constant
+                case VERTICA:
+                    ctx.visit(DSL.field("{0}({1}, {2}, {3})", getDataType(), keyword(function), field, inline(offset), new SQLInline(defaultValue)));
+                    toSQLOverClause(ctx);
+                    break;
+
                 /* [/pro] */
 
                 default:

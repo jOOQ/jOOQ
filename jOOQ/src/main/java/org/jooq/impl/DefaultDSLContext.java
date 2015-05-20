@@ -1886,6 +1886,10 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
                 return select(field).fetchOne(field);
             }
 
+            /* [pro] */
+            case VERTICA:
+            /* [/pro] */
+
             case CUBRID:
             case MARIADB:
             case MYSQL: {

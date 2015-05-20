@@ -297,7 +297,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         String authorID = TAuthor_ID().getName();
 
         Result<Record> result =
-        create().fetch("select b.id, a.id from t_author a join t_book b on a.id = b.author_id order by b.id, a.id");
+        create().fetch("select b.{0}, a.{1} from t_author a join t_book b on a.id = b.author_id order by b.{0}, a.{1}",
+            name(bookID),
+            name(authorID));
 
         assertEquals(BOOK_IDS, result.getValues(0, int.class));
         assertEquals(BOOK_AUTHOR_IDS, result.getValues(1, int.class));

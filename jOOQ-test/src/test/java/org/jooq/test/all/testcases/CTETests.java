@@ -55,6 +55,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.VERTICA;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
@@ -246,7 +247,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     public void testRecursiveCTESimple() throws Exception {
 
         // This is currently the only use case supported by H2
-        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DERBY, HANA, INFORMIX, INGRES, MARIADB, MYSQL, REDSHIFT, SQLITE);
+        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DERBY, HANA, INFORMIX, INGRES, MARIADB, MYSQL, REDSHIFT, SQLITE, VERTICA);
 
         CommonTableExpression<Record2<Integer, String>> t1 =
         name("t1").fields("f1", "f2").as(
@@ -285,7 +286,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testRecursiveCTEMultiple() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DERBY, H2, HANA, INFORMIX, INGRES, MARIADB, MYSQL, REDSHIFT, SQLITE);
+        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DERBY, H2, HANA, INFORMIX, INGRES, MARIADB, MYSQL, REDSHIFT, SQLITE, VERTICA);
 
         CommonTableExpression<Record2<Integer, String>> t1 =
         name("t1").fields("f1", "f2").as(

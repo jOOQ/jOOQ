@@ -5380,6 +5380,7 @@ public interface DSLContext extends Scope {
      * <li>{@link SQLDialect#SQLITE}: Using <code>last_insert_rowid()</code></li>
      * <li>{@link SQLDialect#SQLSERVER}: Using <code>@@identity</code></li>
      * <li>{@link SQLDialect#SYBASE}: Using <code>@@identity</code></li>
+     * <li>{@link SQLDialect#VERTICA}: Using <code>last_insert_id()</code></li>
      * </ul>
      *
      * @return The last inserted ID. This may be <code>null</code> in some

@@ -109,7 +109,8 @@ class RegexpLike extends AbstractCondition {
 
             /* [pro] */
             // [#620] Oracle has its own syntax
-            case ORACLE: {
+            case ORACLE:
+            case VERTICA: {
 
                 // [#1570] TODO: Replace this by SQL.condition(String, QueryPart...)
                 ctx.visit(DSL.condition("{regexp_like}({0}, {1})", search, pattern));

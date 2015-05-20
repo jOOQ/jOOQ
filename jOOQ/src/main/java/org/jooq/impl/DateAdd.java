@@ -51,7 +51,6 @@ import org.jooq.Configuration;
 import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.QueryPart;
-import org.jooq.exception.SQLDialectNotSupportedException;
 
 /**
  * @author Lukas Eder
@@ -272,8 +271,18 @@ class DateAdd<T extends java.util.Date> extends AbstractFunction<T> {
                 }
             }
 
-            case INGRES: {
-                throw new SQLDialectNotSupportedException("The Ingres integration is not yet implemented");
+            case VERTICA: {
+                switch (datePart) {
+                    case YEAR:   keyword = "year";   break;
+                    case MONTH:  keyword = "month";  break;
+                    case DAY:    keyword = "day";    break;
+                    case HOUR:   keyword = "hour";   break;
+                    case MINUTE: keyword = "minute"; break;
+                    case SECOND: keyword = "second"; break;
+                    default: throwUnsupported();
+                }
+
+                return date.add(field("{cast}({0} {as} {interval} {1})", interval, keyword(keyword)));
             }
             /* [/pro] */
         }

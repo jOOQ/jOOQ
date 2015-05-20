@@ -574,6 +574,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             /* [pro] */
             case REDSHIFT:
             case SQLSERVER:
+            case VERTICA:
                 log.info("SKIPPING", "[#3575] Emulated OFFSET pagination with expressions using aliases in ORDER BY");
                 break;
             /* [/pro] */

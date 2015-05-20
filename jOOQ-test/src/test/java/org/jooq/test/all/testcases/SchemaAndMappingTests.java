@@ -176,6 +176,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             case REDSHIFT:
             case SQLSERVER:
             case SYBASE:
+            case VERTICA:
             /* [/pro] */
             case CUBRID:
             case DERBY:

@@ -124,6 +124,7 @@ class TruncDate<T extends java.util.Date> extends AbstractFunction<T> {
 
             /* [pro] */
             case REDSHIFT:
+            case VERTICA:
             /* [/pro] */
 
             case POSTGRES: {

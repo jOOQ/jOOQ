@@ -1727,6 +1727,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             DSL.timestampAdd(new Timestamp(cal.getTimeInMillis()), 2, DatePart.SECOND).as("ss")
         ).fetchOne();
 
+        // This test fails for Vertica but the jOOQ-generated SQL is correct.
+        // https://community.dev.hp.com/t5/Vertica-Forum/Date-time-arithmetic-bug/m-p/229329#U229329
+
         cal = cal(); cal.add(Calendar.YEAR       , 2); assertEquals(new Timestamp(cal.getTimeInMillis()), r1.value1());
         cal = cal(); cal.add(Calendar.MONTH      , 2); assertEquals(new Timestamp(cal.getTimeInMillis()), r1.value2());
         cal = cal(); cal.add(Calendar.DAY_OF_YEAR, 2); assertEquals(new Timestamp(cal.getTimeInMillis()), r1.value3());

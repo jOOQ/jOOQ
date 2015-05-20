@@ -94,15 +94,19 @@ class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R> imple
     @Override
     public final void accept(Context<?> ctx) {
         if (ctx.declareCTE()) {
+            boolean subquery = ctx.subquery();
+
             ctx.visit(name)
                .sql(' ')
                .keyword("as")
                .sql(" (")
+               .subquery(true)
                .formatIndentStart()
                .formatNewLine()
                .visit(select)
                .formatIndentEnd()
                .formatNewLine()
+               .subquery(subquery)
                .sql(')');
         }
         else {

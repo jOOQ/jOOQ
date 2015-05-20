@@ -54,6 +54,7 @@ import static org.jooq.impl.DSL.groupingSets;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.rollup;
 import static org.jooq.impl.DSL.selectOne;
+import static org.junit.Assert.assertNull;
 
 import java.sql.Date;
 import java.util.Arrays;
@@ -108,12 +109,22 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             .groupBy()
             .fetchOne(0, Integer.class));
 
-        // [#1665] Test the empty GROUP BY clause
         assertEquals(1, (int) create().selectOne()
             .from(TBook())
             .groupBy()
             .having("1 = 1")
             .fetchOne(0, Integer.class));
+
+        assertEquals(4, (int) create().selectCount()
+            .from(TBook())
+            .groupBy()
+            .fetchOne(0, Integer.class));
+
+        assertNull(create().selectCount()
+            .from(TBook())
+            .where(TBook_ID().gt(4))
+            .groupBy()
+            .fetchOne());
     }
 
     public void testGrouping() throws Exception {

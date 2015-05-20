@@ -298,6 +298,7 @@ class AlterTableImpl extends AbstractQuery implements
                     xxxxxx
 
                 xxxx xxxxxxxxxx
+                xxxx xxxxxxxx
                     xxxxxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxx
                     xxxxxx
                 xx [/pro] */
@@ -323,6 +324,7 @@ class AlterTableImpl extends AbstractQuery implements
                 switch (family) {
                     /* [pro] xx
                     xxxx xxxx
+                    xxxx xxxxxxxx
                         xxxxxxxxx xxxxxxxxxxxxxxx xxxx xxxxxxx
                         xxxxxx
                     xx [/pro] */

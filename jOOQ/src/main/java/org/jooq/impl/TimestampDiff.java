@@ -115,6 +115,10 @@ class TimestampDiff extends AbstractFunction<DayToSecond> {
             case DERBY:
                 return (Field) field("1000 * {fn {timestampdiff}({sql_tsi_second}, {0}, {1}) }", INTEGER, timestamp2, timestamp1);
 
+            /* [pro] xx
+            xxxx xxxxxxxx
+            xx [/pro] */
+
             case FIREBIRD:
                 return field("{datediff}(millisecond, {0}, {1})", getDataType(), timestamp2, timestamp1);
 

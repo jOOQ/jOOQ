@@ -107,6 +107,13 @@ class LeadLag<T> extends Function<T> {
                        xxxxxxxxxxxxxxxxxxxx
                        xxxxxxxxxx
                     xxxxxx
+
+                xx xx xxxxxxxx xxx xxxxxxxxxxxx xxxx xx x xxxxxxxx
+                xxxx xxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxx
+                    xxxxxx
+
                 xx [/pro] */
 
                 default:

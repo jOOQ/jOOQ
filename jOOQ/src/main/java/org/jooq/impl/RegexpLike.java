@@ -109,7 +109,8 @@ class RegexpLike extends AbstractCondition {
 
             /* [pro] xx
             xx xxxxxx xxxxxx xxx xxx xxx xxxxxx
-            xxxx xxxxxxx x
+            xxxx xxxxxxx
+            xxxx xxxxxxxx x
 
                 xx xxxxxxx xxxxx xxxxxxx xxxx xx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
                 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxx xxxxxxxxxx

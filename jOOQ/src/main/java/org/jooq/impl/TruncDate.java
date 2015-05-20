@@ -124,6 +124,7 @@ class TruncDate<T extends java.util.Date> extends AbstractFunction<T> {
 
             /* [pro] xx
             xxxx xxxxxxxxx
+            xxxx xxxxxxxx
             xx [/pro] */
 
             case POSTGRES: {

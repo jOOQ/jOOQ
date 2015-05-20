@@ -51,7 +51,6 @@ import org.jooq.Configuration;
 import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.QueryPart;
-import org.jooq.exception.SQLDialectNotSupportedException;
 
 /**
  * @author Lukas Eder
@@ -272,8 +271,18 @@ class DateAdd<T extends java.util.Date> extends AbstractFunction<T> {
                 x
             x
 
-            xxxx xxxxxxx x
-                xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxx xx xxx xxx xxxxxxxxxxxxxx
+            xxxx xxxxxxxx x
+                xxxxxx xxxxxxxxxx x
+                    xxxx xxxxx   xxxxxxx x x xxxxxx   xxxxxx
+                    xxxx xxxxxx  xxxxxxx x x xxxxxxx  xxxxxx
+                    xxxx xxxx    xxxxxxx x x xxxxx    xxxxxx
+                    xxxx xxxxx   xxxxxxx x x xxxxxx   xxxxxx
+                    xxxx xxxxxxx xxxxxxx x x xxxxxxxx xxxxxx
+                    xxxx xxxxxxx xxxxxxx x x xxxxxxxx xxxxxx
+                    xxxxxxxx xxxxxxxxxxxxxxxxxxx
+                x
+
+                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xx xxx xx xxxxxxxxxxxxx xxxxxxxxx xxxxxxxxxxxxxxxxxx
             x
             xx [/pro] */
         }

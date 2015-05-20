@@ -78,6 +78,33 @@ class Limit extends AbstractQueryPart {
 
             // True LIMIT / OFFSET support provided by the following dialects
             // -----------------------------------------------------------------
+            /* [pro] xx
+            xxxx xxxxxxxx x
+
+                xx xxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxx x xx xxxxx x xxxxxx xx xxx xxxxxxxxx xxx xxxxxxxxxxx
+                xx xx xxxxxxx xxxx xxxxxxx xxxxxxx xxxxxxx xxxxxxxxxxx xx xxxxx xx xxxxxx
+                xx xxxxxxx xx xxxxxxx xxxxxx xx xxxxxxx xxxxxxx
+                xx xxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+                xxxxxxxxxxxxxxxxxxxxxxx
+                       xxxxxxxxxxxxxxxxxx
+                       xxxxxxxxxxxxxxxxx
+                       xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
+
+                xx xxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx
+                           xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
+
+                xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+                xx xxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+                xxxxxx
+            x
+            xx [/pro] */
+
             case MARIADB:
             case MYSQL:
             case H2:

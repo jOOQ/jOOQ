@@ -83,6 +83,7 @@ class Replace extends AbstractFunction<String> {
             xxxx xxxxxxx
             xxxx xxxxxxxxxx
             xxxx xxxxxxx
+            xxxx xxxxxxxx
             xx [/pro] */
             case FIREBIRD:
             case HSQLDB:

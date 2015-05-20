@@ -105,6 +105,7 @@ class DateDiff extends AbstractFunction<Integer> {
             xxxx xxxx
             xxxx xxxxxxxxxx
             xxxx xxxxxxx
+            xxxx xxxxxxxx
                 xxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxx xxxxxxxxxxxxxx xxxxxx xxxxxxx
 
             xxxx xxxx

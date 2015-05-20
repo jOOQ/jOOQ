@@ -40,61 +40,51 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
-import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.one;
+import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.impl.DSL.sql;
 
-import java.math.BigDecimal;
-
-import org.jooq.Configuration;
-import org.jooq.Field;
+import org.jooq.Clause;
+import org.jooq.Context;
+import org.jooq.QueryPart;
+import org.jooq.SQL;
+import org.jooq.conf.ParamType;
 
 /**
  * @author Lukas Eder
  */
-class Euler extends AbstractFunction<BigDecimal> {
+class SQLInline extends AbstractQueryPart implements SQL {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -420788300355442056L;
+    private static final long serialVersionUID = 5352233054249655126L;
 
-    Euler() {
-        super("e", SQLDataType.NUMERIC);
+    private SQL sql;
+
+    SQLInline(QueryPart part) {
+        this(sql("{0}", part));
+    }
+
+    SQLInline(SQL sql) {
+        this.sql = sql;
     }
 
     @Override
-    final Field<BigDecimal> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-            xxxx xxxx
-            xxxx xxxx
-            xxxx xxxxx
-            xxxx xxxxxxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxx
-            xx [/pro] */
-            case CUBRID:
-            case DERBY:
-            case FIREBIRD:
-            case H2:
-            case HSQLDB:
-            case MARIADB:
-            case MYSQL:
-            case POSTGRES:
-                return DSL.exp(one());
+    public final void accept(Context<?> ctx) {
+        ParamType paramType = ctx.paramType();
 
-            case SQLITE:
-                return inline(Math.E, BigDecimal.class);
+        ctx.paramType(INLINED)
+           .visit(sql)
+           .paramType(paramType);
+    }
 
-            // The Euler number doesn't seem to exist in any dialect...
-            default:
-                return function("e", getDataType());
-        }
+    @Override
+    public Clause[] clauses(Context<?> ctx) {
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return sql.toString();
     }
 }

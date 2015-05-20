@@ -6,7 +6,6 @@ package org.jooq.test.vertica.generatedclasses.tables.records;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.vertica.generatedclasses.tables.T_937;
@@ -19,7 +18,7 @@ import org.jooq.test.vertica.generatedclasses.tables.interfaces.IT_937;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_937Record extends UpdatableRecordImpl<T_937Record> implements Record1<Integer>, IT_937 {
 
-	private static final long serialVersionUID = 368612269;
+	private static final long serialVersionUID = 171574464;
 
 	/**
 	 * Setter for <code>public.T_937.T_937</code>.

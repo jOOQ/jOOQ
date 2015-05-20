@@ -7,7 +7,6 @@ package org.jooq.test.vertica.generatedclasses.tables.records;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record3;
-import org.jooq.Row;
 import org.jooq.Row3;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.vertica.generatedclasses.tables.XTestCase_85;
@@ -20,7 +19,7 @@ import org.jooq.test.vertica.generatedclasses.tables.interfaces.IXTestCase_85;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_85Record extends UpdatableRecordImpl<XTestCase_85Record> implements Record3<Integer, Integer, String>, IXTestCase_85 {
 
-	private static final long serialVersionUID = 2030147478;
+	private static final long serialVersionUID = -930490573;
 
 	/**
 	 * Setter for <code>public.x_test_case_85.id</code>.

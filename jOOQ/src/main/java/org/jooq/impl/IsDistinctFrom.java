@@ -58,6 +58,7 @@ import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.SQLDialect.VERTICA;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.exists;
@@ -117,7 +118,7 @@ class IsDistinctFrom<T> extends AbstractCondition {
     private final QueryPartInternal delegate(Configuration configuration) {
 
         // [#3511] These dialects need to emulate the IS DISTINCT FROM predicate, optimally using INTERSECT...
-        if (asList(ACCESS, ASE, CUBRID, DB2, DERBY, HANA, INFORMIX, INGRES, ORACLE, SQLSERVER, SYBASE).contains(configuration.family())) {
+        if (asList(ACCESS, ASE, CUBRID, DB2, DERBY, HANA, INFORMIX, INGRES, ORACLE, SQLSERVER, SYBASE, VERTICA).contains(configuration.family())) {
             return (comparator == IS_DISTINCT_FROM)
                 ? (QueryPartInternal) notExists(select(lhs).intersect(select(rhs)))
                 : (QueryPartInternal) exists(select(lhs).intersect(select(rhs)));

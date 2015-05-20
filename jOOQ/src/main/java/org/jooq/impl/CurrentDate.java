@@ -85,6 +85,7 @@ class CurrentDate extends AbstractFunction<Date> {
             case HANA:
             case INGRES:
             case REDSHIFT:
+            case VERTICA:
             /* [/pro] */
 
             case DERBY:

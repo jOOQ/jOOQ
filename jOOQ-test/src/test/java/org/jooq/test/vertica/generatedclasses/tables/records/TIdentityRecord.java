@@ -6,7 +6,6 @@ package org.jooq.test.vertica.generatedclasses.tables.records;
 
 import org.jooq.Field;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.vertica.generatedclasses.tables.TIdentity;
@@ -19,7 +18,7 @@ import org.jooq.test.vertica.generatedclasses.tables.interfaces.ITIdentity;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentityRecord extends TableRecordImpl<TIdentityRecord> implements Record2<Integer, Integer>, ITIdentity {
 
-	private static final long serialVersionUID = 913904638;
+	private static final long serialVersionUID = -745336087;
 
 	/**
 	 * Setter for <code>public.t_identity.id</code>.

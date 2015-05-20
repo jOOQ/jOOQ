@@ -116,6 +116,7 @@ class Dual extends AbstractTable<Record> {
                 case ASE:
                 case REDSHIFT:
                 case SQLSERVER:
+                case VERTICA:
                 /* [/pro] */
                 case POSTGRES:
                 case SQLITE:

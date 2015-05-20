@@ -60,6 +60,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.SQLDialect.VERTICA;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
@@ -293,6 +294,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     /* [pro] */
                     case REDSHIFT:
                     case SYBASE:
+                    case VERTICA:
                     /* [/pro] */
                     case POSTGRES: {
                         return true;
@@ -831,14 +833,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // [#1225] [#1227] TODO Put this logic into DataType
             // Some dialects have trouble binding binary data as BLOB
-            else if (asList(POSTGRES, SYBASE).contains(configuration.family()) && sqlType == Types.BLOB) {
+            else if (asList(POSTGRES, SYBASE, VERTICA).contains(configuration.family()) && sqlType == Types.BLOB) {
                 ctx.statement().setNull(ctx.index(), Types.BINARY);
             }
 
             /* [pro] */
             else if (configuration.dialect().family() == ACCESS) {
 
-                // This incredible mess is only needed with the Sun JDBC-ODBC bridge
+                // This is only needed with the Sun JDBC-ODBC bridge
                 // Apparently, other drivers are better:
                 // http://stackoverflow.com/a/19712785/521799
                 switch (sqlType) {
@@ -870,12 +872,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             /* [pro] */
             // [#725] For SQL Server, unknown types should be set to null
             // explicitly, too
-            else if (configuration.dialect().family() == SQLSERVER) {
+            else if (configuration.family() == SQLSERVER) {
                 ctx.statement().setNull(ctx.index(), sqlType);
             }
 
             // [#730] For Sybase, unknown types can be set to null using varchar
-            else if (configuration.dialect() == SYBASE) {
+            else if (configuration.family() == SYBASE) {
                 ctx.statement().setNull(ctx.index(), Types.VARCHAR);
             }
 

@@ -7,7 +7,6 @@ package org.jooq.test.vertica.generatedclasses.tables.records;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record5;
-import org.jooq.Row;
 import org.jooq.Row5;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.vertica.generatedclasses.tables.T_2845CaseSensitivity;
@@ -20,7 +19,7 @@ import org.jooq.test.vertica.generatedclasses.tables.interfaces.IT_2845CaseSensi
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2845CaseSensitivityRecord extends UpdatableRecordImpl<T_2845CaseSensitivityRecord> implements Record5<Integer, Integer, Integer, Integer, Integer>, IT_2845CaseSensitivity {
 
-	private static final long serialVersionUID = 522164934;
+	private static final long serialVersionUID = -1369888921;
 
 	/**
 	 * Setter for <code>public.T_2845_CASE_sensitivity.id</code>.

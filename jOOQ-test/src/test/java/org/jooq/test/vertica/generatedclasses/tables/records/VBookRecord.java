@@ -8,7 +8,6 @@ import java.sql.Timestamp;
 
 import org.jooq.Field;
 import org.jooq.Record11;
-import org.jooq.Row;
 import org.jooq.Row11;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.vertica.generatedclasses.tables.VBook;
@@ -21,7 +20,7 @@ import org.jooq.test.vertica.generatedclasses.tables.interfaces.IVBook;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBookRecord extends TableRecordImpl<VBookRecord> implements Record11<Integer, Integer, Integer, Integer, String, Integer, Integer, String, byte[], Integer, Timestamp>, IVBook {
 
-	private static final long serialVersionUID = -325781318;
+	private static final long serialVersionUID = -1016570967;
 
 	/**
 	 * Setter for <code>public.v_book.ID</code>.

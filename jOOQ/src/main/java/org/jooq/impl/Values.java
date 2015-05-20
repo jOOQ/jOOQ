@@ -105,6 +105,7 @@ class Values<R extends Record> extends AbstractTable<R> {
             case ORACLE:
             case REDSHIFT:
             case SYBASE:
+            case VERTICA:
             /* [/pro] */
             case FIREBIRD:
             case MARIADB:

@@ -9,7 +9,6 @@ import java.sql.Timestamp;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record11;
-import org.jooq.Row;
 import org.jooq.Row11;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.vertica.generatedclasses.tables.TBook;
@@ -22,7 +21,7 @@ import org.jooq.test.vertica.generatedclasses.tables.interfaces.ITBook;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookRecord extends UpdatableRecordImpl<TBookRecord> implements Record11<Integer, Integer, Integer, Integer, String, Integer, Integer, String, byte[], Integer, Timestamp>, ITBook {
 
-	private static final long serialVersionUID = 1421865982;
+	private static final long serialVersionUID = 885328321;
 
 	/**
 	 * Setter for <code>public.t_book.ID</code>.

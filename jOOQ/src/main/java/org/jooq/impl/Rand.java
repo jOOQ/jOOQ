@@ -74,6 +74,7 @@ class Rand extends AbstractFunction<BigDecimal> {
 
             case INGRES:
             case REDSHIFT:
+            case VERTICA:
             /* [/pro] */
             case DERBY:
             case POSTGRES:

@@ -7,7 +7,6 @@ package org.jooq.test.vertica.generatedclasses.tables.records;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record11;
-import org.jooq.Row;
 import org.jooq.Row11;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.all.converters.Boolean_10;
@@ -27,7 +26,7 @@ import org.jooq.test.vertica.generatedclasses.tables.interfaces.ITBooleans;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleansRecord extends UpdatableRecordImpl<TBooleansRecord> implements Record11<Integer, Boolean_10, Boolean_TF_LC, Boolean_TF_UC, Boolean_YES_NO_LC, Boolean_YES_NO_UC, Boolean_YN_LC, Boolean_YN_UC, Boolean, Boolean, Boolean>, ITBooleans {
 
-	private static final long serialVersionUID = -137634678;
+	private static final long serialVersionUID = 463501601;
 
 	/**
 	 * Setter for <code>public.t_booleans.id</code>.

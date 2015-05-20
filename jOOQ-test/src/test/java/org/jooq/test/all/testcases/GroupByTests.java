@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.SQLDialect.VERTICA;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.cube;
 import static org.jooq.impl.DSL.grouping;
@@ -221,7 +222,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         assertEquals(Arrays.asList(1, 1, 2, 2, 3, 3, 4, 4, null), result.getValues(0));
         assertEquals(Arrays.asList(1, null, 1, null, 2, null, 2, null, null), result.getValues(1));
 
-        if (asList(MARIADB, MYSQL).contains(dialect())) {
+        if (asList(MARIADB, MYSQL, VERTICA).contains(dialect())) {
             log.info("SKIPPING", "CUBE and GROUPING SETS tests");
             return;
         }

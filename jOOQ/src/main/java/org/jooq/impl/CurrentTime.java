@@ -78,6 +78,7 @@ class CurrentTime extends AbstractFunction<Time> {
             case DB2:
             case HANA:
             case INGRES:
+            case VERTICA:
             /* [/pro] */
             case DERBY:
             case FIREBIRD:

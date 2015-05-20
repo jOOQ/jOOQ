@@ -86,6 +86,7 @@ class CurrentTimestamp extends AbstractFunction<Timestamp> {
             case INGRES:
             case REDSHIFT:
             case SQLSERVER:
+            case VERTICA:
             /* [/pro] */
             case DERBY:
             case FIREBIRD:

@@ -51,6 +51,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeFalse;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -673,9 +674,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testUpdatablesVersionAndTimestamp() throws Exception {
-        if (TBook_REC_TIMESTAMP() == null && TBook_REC_VERSION() == null) {
-            log.info("SKIPPING", "Record version and timestamp tests");
-        }
+        assumeFalse(TBook_REC_TIMESTAMP() == null && TBook_REC_VERSION() == null);
 
         jOOQAbstractTest.reset = false;
 

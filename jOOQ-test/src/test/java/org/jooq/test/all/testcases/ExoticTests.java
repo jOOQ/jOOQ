@@ -82,6 +82,7 @@ import static org.jooq.impl.DSL.two;
 import static org.jooq.impl.DSL.val;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeNotNull;
 
 import java.sql.Date;
 import java.util.Arrays;
@@ -382,28 +383,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testConnectBySimple() throws Exception {
-        switch (family()) {
-            /* [pro] */
-            case ACCESS:
-            case ASE:
-            case DB2:
-            case INGRES:
-            case REDSHIFT:
-            case SQLSERVER:
-            case SYBASE:
-            /* [/pro] */
-            case DERBY:
-            case FIREBIRD:
-            case H2:
-            case HANA:
-            case HSQLDB:
-            case MARIADB:
-            case MYSQL:
-            case POSTGRES:
-            case SQLITE:
-                log.info("SKIPPING", "Connect by tests");
-                return;
-        }
+        assumeNotNull(TDirectory());
 
         assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9),
             create().select(level())
@@ -446,28 +426,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testConnectByDirectory() throws Exception {
-        switch (family()) {
-            /* [pro] */
-            case ACCESS:
-            case ASE:
-            case DB2:
-            case HANA:
-            case INGRES:
-            case REDSHIFT:
-            case SQLSERVER:
-            case SYBASE:
-            /* [/pro] */
-            case DERBY:
-            case FIREBIRD:
-            case H2:
-            case HSQLDB:
-            case MARIADB:
-            case MYSQL:
-            case POSTGRES:
-            case SQLITE:
-                log.info("SKIPPING", "Connect by tests");
-                return;
-        }
+        assumeNotNull(TDirectory());
 
         Result<Record4<String, Boolean, Boolean, String>> paths =
         create().select(

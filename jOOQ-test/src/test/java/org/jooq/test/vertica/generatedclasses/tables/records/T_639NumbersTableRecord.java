@@ -10,7 +10,6 @@ import java.math.BigInteger;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record13;
-import org.jooq.Row;
 import org.jooq.Row13;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.vertica.generatedclasses.tables.T_639NumbersTable;
@@ -23,7 +22,7 @@ import org.jooq.test.vertica.generatedclasses.tables.interfaces.IT_639NumbersTab
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTableRecord extends UpdatableRecordImpl<T_639NumbersTableRecord> implements Record13<Integer, Integer, Integer, Integer, Integer, Byte, Short, Integer, Long, BigInteger, BigDecimal, Double, Double>, IT_639NumbersTable {
 
-	private static final long serialVersionUID = -927857116;
+	private static final long serialVersionUID = 1863601963;
 
 	/**
 	 * Setter for <code>public.t_639_numbers_table.ID</code>.

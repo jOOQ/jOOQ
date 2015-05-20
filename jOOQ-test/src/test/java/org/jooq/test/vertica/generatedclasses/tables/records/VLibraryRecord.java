@@ -6,7 +6,6 @@ package org.jooq.test.vertica.generatedclasses.tables.records;
 
 import org.jooq.Field;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.vertica.generatedclasses.tables.VLibrary;
@@ -19,7 +18,7 @@ import org.jooq.test.vertica.generatedclasses.tables.interfaces.IVLibrary;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibraryRecord extends TableRecordImpl<VLibraryRecord> implements Record2<String, String>, IVLibrary {
 
-	private static final long serialVersionUID = -1851681913;
+	private static final long serialVersionUID = 1390398898;
 
 	/**
 	 * Setter for <code>public.V_LIBRARY.AUTHOR</code>.

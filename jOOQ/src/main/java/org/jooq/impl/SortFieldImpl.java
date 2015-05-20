@@ -119,6 +119,7 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
                 case REDSHIFT:
                 case SQLSERVER:
                 case SYBASE:
+                case VERTICA:
                 /* [/pro] */
 
                 // These OSS dialects don't support this syntax at all

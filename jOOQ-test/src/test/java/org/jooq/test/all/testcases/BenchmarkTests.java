@@ -42,6 +42,7 @@ package org.jooq.test.all.testcases;
 
 import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.REDSHIFT;
+import static org.jooq.SQLDialect.VERTICA;
 import static org.jooq.conf.ParamType.INDEXED;
 
 import java.sql.Date;
@@ -104,8 +105,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testBenchmarkNewRecord() throws Exception {
-        // No benchmarks to the cloud
-        assumeFamilyNotIn(HANA, REDSHIFT);
+        // No benchmarks to the cloud or on local column stores
+        assumeFamilyNotIn(HANA, REDSHIFT, VERTICA);
 
         DSLContext create = create();
 
@@ -115,8 +116,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testBenchmarkRecordIntoWithoutAnnotations() throws Exception {
-        // No benchmarks to the cloud
-        assumeFamilyNotIn(HANA, REDSHIFT);
+        // No benchmarks to the cloud or on local column stores
+        assumeFamilyNotIn(HANA, REDSHIFT, VERTICA);
 
         Result<B> books = create().fetch(TBook());
 
@@ -126,8 +127,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testBenchmarkRecordIntoWithAnnotations() throws Exception {
-        // No benchmarks to the cloud
-        assumeFamilyNotIn(HANA, REDSHIFT);
+        // No benchmarks to the cloud or on local column stores
+        assumeFamilyNotIn(HANA, REDSHIFT, VERTICA);
 
 //        System.out.print("X:");
 //        System.out.println(System.in.read());
@@ -149,8 +150,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testBenchmarkRecordIntoTableRecord() throws Exception {
-        // No benchmarks to the cloud
-        assumeFamilyNotIn(HANA, REDSHIFT);
+        // No benchmarks to the cloud or on local column stores
+        assumeFamilyNotIn(HANA, REDSHIFT, VERTICA);
 
         // This benchmark should heavily outperform the preceding one due to the optimisations done in [#2989]
         Result<B> books = create().fetch(TBook());
@@ -178,8 +179,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testBenchmarkSelect() throws Exception {
-        // No benchmarks to the cloud
-        assumeFamilyNotIn(HANA, REDSHIFT);
+        // No benchmarks to the cloud or on local column stores
+        assumeFamilyNotIn(HANA, REDSHIFT, VERTICA);
 
         // This benchmark is contributed by "jjYBdx4IL" on GitHub:
         // https://github.com/jOOQ/jOOQ/issues/1625
@@ -208,8 +209,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testBenchmarkPlainSQL() throws Exception {
-        // No benchmarks to the cloud
-        assumeFamilyNotIn(HANA, REDSHIFT);
+        // No benchmarks to the cloud or on local column stores
+        assumeFamilyNotIn(HANA, REDSHIFT, VERTICA);
 
         Configuration configuration = create().configuration().derive(new ExecuteListenerProvider[0]);
         configuration.settings().setExecuteLogging(false);

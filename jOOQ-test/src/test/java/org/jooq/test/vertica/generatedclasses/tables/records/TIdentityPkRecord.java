@@ -7,7 +7,6 @@ package org.jooq.test.vertica.generatedclasses.tables.records;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.vertica.generatedclasses.tables.TIdentityPk;
@@ -20,7 +19,7 @@ import org.jooq.test.vertica.generatedclasses.tables.interfaces.ITIdentityPk;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentityPkRecord extends UpdatableRecordImpl<TIdentityPkRecord> implements Record2<Integer, Integer>, ITIdentityPk {
 
-	private static final long serialVersionUID = -1395786964;
+	private static final long serialVersionUID = 1237434855;
 
 	/**
 	 * Setter for <code>public.t_identity_pk.id</code>.

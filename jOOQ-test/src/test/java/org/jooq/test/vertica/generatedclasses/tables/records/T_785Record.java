@@ -6,7 +6,6 @@ package org.jooq.test.vertica.generatedclasses.tables.records;
 
 import org.jooq.Field;
 import org.jooq.Record3;
-import org.jooq.Row;
 import org.jooq.Row3;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.vertica.generatedclasses.tables.T_785;
@@ -19,7 +18,7 @@ import org.jooq.test.vertica.generatedclasses.tables.interfaces.IT_785;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_785Record extends TableRecordImpl<T_785Record> implements Record3<Integer, String, String>, IT_785 {
 
-	private static final long serialVersionUID = -1139708980;
+	private static final long serialVersionUID = 1749116067;
 
 	/**
 	 * Setter for <code>public.t_785.ID</code>.

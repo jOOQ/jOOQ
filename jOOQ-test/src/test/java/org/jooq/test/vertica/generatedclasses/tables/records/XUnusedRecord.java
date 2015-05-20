@@ -10,7 +10,6 @@ import java.math.BigInteger;
 import org.jooq.Field;
 import org.jooq.Record16;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row16;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.vertica.generatedclasses.tables.XUnused;
@@ -23,7 +22,7 @@ import org.jooq.test.vertica.generatedclasses.tables.interfaces.IXUnused;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnusedRecord extends UpdatableRecordImpl<XUnusedRecord> implements Record16<Integer, String, BigInteger, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, String, BigDecimal, Integer, Integer>, IXUnused {
 
-	private static final long serialVersionUID = -1164218616;
+	private static final long serialVersionUID = 1274025933;
 
 	/**
 	 * Setter for <code>public.x_unused.ID</code>.

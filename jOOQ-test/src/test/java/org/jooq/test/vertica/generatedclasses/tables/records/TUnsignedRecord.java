@@ -6,7 +6,6 @@ package org.jooq.test.vertica.generatedclasses.tables.records;
 
 import org.jooq.Field;
 import org.jooq.Record4;
-import org.jooq.Row;
 import org.jooq.Row4;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.vertica.generatedclasses.tables.TUnsigned;
@@ -23,7 +22,7 @@ import org.jooq.types.UShort;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TUnsignedRecord extends TableRecordImpl<TUnsignedRecord> implements Record4<UByte, UShort, UInteger, ULong>, ITUnsigned {
 
-	private static final long serialVersionUID = 1339242396;
+	private static final long serialVersionUID = -1964557739;
 
 	/**
 	 * Setter for <code>public.t_unsigned.u_byte</code>.

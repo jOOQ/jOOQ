@@ -220,10 +220,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
     void emTx(Consumer<EntityManager> consumer) {
         LocalContainerEntityManagerFactoryBean bean = new LocalContainerEntityManagerFactoryBean();
+        HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
+        adapter.setDatabasePlatform(dialect().thirdParty().hibernateDialect());
 
         bean.setDataSource(datasource);
         bean.setPackagesToScan("org.jooq.test.all.pojos.jpa");
-        bean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+        bean.setJpaVendorAdapter(adapter);
         bean.setPersistenceUnitName("test");
         bean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
         bean.afterPropertiesSet();

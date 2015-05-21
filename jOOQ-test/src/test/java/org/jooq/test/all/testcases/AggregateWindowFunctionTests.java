@@ -311,6 +311,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             assertEquals(2, create().fetchValue(select(median(TBook_ID())).from(TBook())).intValue());
             assertEquals(1, create().fetchValue(select(median(TBook_ID()).filterWhere(TBook_ID().ne(4))).from(TBook())).intValue());
         }
+        else if (family() == SYBASE) {
+            assertEquals(2, create().fetchValue(select(median(TBook_ID())).from(TBook())).intValue());
+            assertEquals(2, create().fetchValue(select(median(TBook_ID()).filterWhere(TBook_ID().ne(4))).from(TBook())).intValue());
+        }
         else {
             assertEquals(2.5, create().fetchValue(select(median(TBook_ID())).from(TBook())).doubleValue());
             assertEquals(2, create().fetchValue(select(median(TBook_ID()).filterWhere(TBook_ID().ne(4))).from(TBook())).intValue());

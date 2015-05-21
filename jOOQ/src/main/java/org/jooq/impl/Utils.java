@@ -2647,6 +2647,11 @@ final class Utils {
                 break;
             }
 
+            case SYBASE: {
+                ctx.keyword("begin").formatIndentStart().formatSeparator();
+                break;
+            }
+
             /*
                 Informix support could be implemented as such:
 
@@ -2715,6 +2720,15 @@ final class Utils {
                    .keyword("begin catch").formatIndentStart().formatSeparator()
                    .keyword("if").sql(" error_number() != 3701 ").keyword("throw").sql(';').formatIndentEnd().formatSeparator()
                    .keyword("end catch");
+
+                break;
+            }
+
+            case SYBASE: {
+                ctx.sql(";").formatIndentEnd().formatSeparator()
+                   .keyword("exception").formatIndentStart().formatSeparator()
+                   .keyword("when others then").formatIndentEnd().formatIndentEnd().formatSeparator()
+                   .keyword("end").sql(';');
 
                 break;
             }

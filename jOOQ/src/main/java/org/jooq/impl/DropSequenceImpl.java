@@ -51,6 +51,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.DropStatementType.SEQUENCE;
 
 import org.jooq.Clause;
@@ -92,7 +93,7 @@ class DropSequenceImpl extends AbstractQuery implements
     // ------------------------------------------------------------------------
 
     private final boolean supportsIfExists(Context<?> ctx) {
-        return !asList(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, ORACLE, SQLSERVER).contains(ctx.family());
+        return !asList(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, ORACLE, SQLSERVER, SYBASE).contains(ctx.family());
     }
 
     @Override

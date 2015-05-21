@@ -8,7 +8,6 @@ import java.sql.Date;
 
 import org.jooq.Field;
 import org.jooq.Record6;
-import org.jooq.Row;
 import org.jooq.Row6;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.mysql.generatedclasses.tables.VAuthor;
@@ -20,7 +19,7 @@ import org.jooq.test.mysql.generatedclasses.tables.VAuthor;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthorRecord extends TableRecordImpl<VAuthorRecord> implements Record6<Integer, String, String, Date, Integer, String> {
 
-	private static final long serialVersionUID = -727074051;
+	private static final long serialVersionUID = -1567908162;
 
 	/**
 	 * Setter for <code>test.v_author.ID</code>. The author ID

@@ -7,7 +7,6 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.mysql.generatedclasses.tables.TIdentityPk;
@@ -19,7 +18,7 @@ import org.jooq.test.mysql.generatedclasses.tables.TIdentityPk;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentityPkRecord extends UpdatableRecordImpl<TIdentityPkRecord> implements Record2<Integer, Integer> {
 
-	private static final long serialVersionUID = 1664483790;
+	private static final long serialVersionUID = 969246833;
 
 	/**
 	 * Setter for <code>test.t_identity_pk.id</code>.

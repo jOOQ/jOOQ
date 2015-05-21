@@ -6,7 +6,6 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 
 import org.jooq.Field;
 import org.jooq.Record4;
-import org.jooq.Row;
 import org.jooq.Row4;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.mysql.generatedclasses.tables.TUnsigned;
@@ -22,7 +21,7 @@ import org.jooq.types.UShort;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TUnsignedRecord extends TableRecordImpl<TUnsignedRecord> implements Record4<UByte, UShort, UInteger, ULong> {
 
-	private static final long serialVersionUID = -27118122;
+	private static final long serialVersionUID = -2078346585;
 
 	/**
 	 * Setter for <code>test.t_unsigned.u_byte</code>.

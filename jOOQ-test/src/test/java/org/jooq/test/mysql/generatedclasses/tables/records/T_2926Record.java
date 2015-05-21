@@ -6,7 +6,6 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 
 import org.jooq.Field;
 import org.jooq.Record4;
-import org.jooq.Row;
 import org.jooq.Row4;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.mysql.generatedclasses.tables.T_2926;
@@ -18,7 +17,7 @@ import org.jooq.test.mysql.generatedclasses.tables.T_2926;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2926Record extends TableRecordImpl<T_2926Record> implements Record4<String, String, String, String> {
 
-	private static final long serialVersionUID = -674380215;
+	private static final long serialVersionUID = -1331364646;
 
 	/**
 	 * Setter for <code>test.t_2926.t1</code>.

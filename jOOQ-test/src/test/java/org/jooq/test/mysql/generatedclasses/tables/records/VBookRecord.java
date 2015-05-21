@@ -6,7 +6,6 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 
 import org.jooq.Field;
 import org.jooq.Record10;
-import org.jooq.Row;
 import org.jooq.Row10;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.mysql.generatedclasses.enums.VBookStatus;
@@ -19,7 +18,7 @@ import org.jooq.test.mysql.generatedclasses.tables.VBook;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBookRecord extends TableRecordImpl<VBookRecord> implements Record10<Integer, Integer, Integer, Integer, String, Integer, Integer, String, byte[], VBookStatus> {
 
-	private static final long serialVersionUID = 294505053;
+	private static final long serialVersionUID = 2147035802;
 
 	/**
 	 * Setter for <code>test.v_book.ID</code>. The book ID

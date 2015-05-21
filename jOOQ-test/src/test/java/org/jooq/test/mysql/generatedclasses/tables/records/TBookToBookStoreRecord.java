@@ -7,7 +7,6 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 import org.jooq.Field;
 import org.jooq.Record2;
 import org.jooq.Record3;
-import org.jooq.Row;
 import org.jooq.Row3;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore;
@@ -19,7 +18,7 @@ import org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStoreRecord extends UpdatableRecordImpl<TBookToBookStoreRecord> implements Record3<String, Integer, Integer> {
 
-	private static final long serialVersionUID = -231680405;
+	private static final long serialVersionUID = -189104754;
 
 	/**
 	 * Setter for <code>test.t_book_to_book_store.book_store_name</code>. The book store name

@@ -7,7 +7,6 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record11;
-import org.jooq.Row;
 import org.jooq.Row11;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.all.converters.Boolean_10;
@@ -26,7 +25,7 @@ import org.jooq.test.mysql.generatedclasses.tables.TBooleans;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleansRecord extends UpdatableRecordImpl<TBooleansRecord> implements Record11<Integer, Boolean_10, Boolean_TF_LC, Boolean_TF_UC, Boolean_YES_NO_LC, Boolean_YES_NO_UC, Boolean_YN_LC, Boolean_YN_UC, Boolean, Boolean, Boolean> {
 
-	private static final long serialVersionUID = -1012463825;
+	private static final long serialVersionUID = 1496651998;
 
 	/**
 	 * Setter for <code>test.t_booleans.id</code>.

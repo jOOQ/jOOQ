@@ -18,7 +18,7 @@ import org.jooq.test.mysql.generatedclasses.tables.records.VLibraryRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibrary extends TableImpl<VLibraryRecord> {
 
-	private static final long serialVersionUID = 929188307;
+	private static final long serialVersionUID = -34724397;
 
 	/**
 	 * The reference instance of <code>test.v_library</code>
@@ -34,14 +34,14 @@ public class VLibrary extends TableImpl<VLibraryRecord> {
 	}
 
 	/**
-	 * The column <code>test.v_library.AUTHOR</code>.
+	 * The column <code>test.v_library.author</code>.
 	 */
-	public static final TableField<VLibraryRecord, String> AUTHOR = createField("AUTHOR", org.jooq.impl.SQLDataType.VARCHAR.length(101), V_LIBRARY, "");
+	public static final TableField<VLibraryRecord, String> AUTHOR = createField("author", org.jooq.impl.SQLDataType.VARCHAR.length(101), V_LIBRARY, "");
 
 	/**
-	 * The column <code>test.v_library.TITLE</code>. The book's title
+	 * The column <code>test.v_library.title</code>. The book's title
 	 */
-	public static final TableField<VLibraryRecord, String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.CLOB.nullable(false), V_LIBRARY, "The book's title");
+	public static final TableField<VLibraryRecord, String> TITLE = createField("title", org.jooq.impl.SQLDataType.CLOB.nullable(false), V_LIBRARY, "The book's title");
 
 	/**
 	 * No further instances allowed

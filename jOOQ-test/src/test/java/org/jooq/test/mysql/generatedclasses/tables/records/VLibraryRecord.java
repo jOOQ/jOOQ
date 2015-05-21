@@ -6,7 +6,6 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 
 import org.jooq.Field;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.mysql.generatedclasses.tables.VLibrary;
@@ -18,31 +17,31 @@ import org.jooq.test.mysql.generatedclasses.tables.VLibrary;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibraryRecord extends TableRecordImpl<VLibraryRecord> implements Record2<String, String> {
 
-	private static final long serialVersionUID = 1718272325;
+	private static final long serialVersionUID = -1474374120;
 
 	/**
-	 * Setter for <code>test.v_library.AUTHOR</code>.
+	 * Setter for <code>test.v_library.author</code>.
 	 */
 	public void setAuthor(String value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>test.v_library.AUTHOR</code>.
+	 * Getter for <code>test.v_library.author</code>.
 	 */
 	public String getAuthor() {
 		return (String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>test.v_library.TITLE</code>. The book's title
+	 * Setter for <code>test.v_library.title</code>. The book's title
 	 */
 	public void setTitle(String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>test.v_library.TITLE</code>. The book's title
+	 * Getter for <code>test.v_library.title</code>. The book's title
 	 */
 	public String getTitle() {
 		return (String) getValue(1);

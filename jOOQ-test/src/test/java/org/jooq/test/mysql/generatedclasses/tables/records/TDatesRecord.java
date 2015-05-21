@@ -11,7 +11,6 @@ import java.sql.Timestamp;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record8;
-import org.jooq.Row;
 import org.jooq.Row8;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.mysql.generatedclasses.tables.TDates;
@@ -23,7 +22,7 @@ import org.jooq.test.mysql.generatedclasses.tables.TDates;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements Record8<Integer, Date, Time, Timestamp, Integer, Long, Date, Date> {
 
-	private static final long serialVersionUID = 440987106;
+	private static final long serialVersionUID = 1566587535;
 
 	/**
 	 * Setter for <code>test.t_dates.id</code>.

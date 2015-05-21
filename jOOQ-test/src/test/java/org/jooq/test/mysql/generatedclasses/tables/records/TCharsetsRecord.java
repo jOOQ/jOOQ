@@ -7,7 +7,6 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.mysql.generatedclasses.tables.TCharsets;
@@ -19,7 +18,7 @@ import org.jooq.test.mysql.generatedclasses.tables.TCharsets;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TCharsetsRecord extends UpdatableRecordImpl<TCharsetsRecord> implements Record2<Integer, String> {
 
-	private static final long serialVersionUID = 1531946713;
+	private static final long serialVersionUID = 1225924476;
 
 	/**
 	 * Setter for <code>test.t_charsets.id</code>.

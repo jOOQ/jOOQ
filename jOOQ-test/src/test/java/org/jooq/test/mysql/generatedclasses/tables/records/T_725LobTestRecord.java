@@ -7,7 +7,6 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.mysql.generatedclasses.tables.T_725LobTest;
@@ -19,7 +18,7 @@ import org.jooq.test.mysql.generatedclasses.tables.T_725LobTest;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTestRecord extends UpdatableRecordImpl<T_725LobTestRecord> implements Record2<Integer, byte[]> {
 
-	private static final long serialVersionUID = 1246011622;
+	private static final long serialVersionUID = 1619976611;
 
 	/**
 	 * Setter for <code>test.t_725_lob_test.ID</code>.

@@ -6,7 +6,6 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 
 import org.jooq.Field;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.mysql.generatedclasses.enums.T_959JavaKeywords;
@@ -20,7 +19,7 @@ import org.jooq.test.mysql.generatedclasses.tables.T_959;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_959Record extends TableRecordImpl<T_959Record> implements Record2<T_959JavaKeywords, T_959SpecialCharacters> {
 
-	private static final long serialVersionUID = 626817597;
+	private static final long serialVersionUID = 328000016;
 
 	/**
 	 * Setter for <code>test.t_959.java_keywords</code>.

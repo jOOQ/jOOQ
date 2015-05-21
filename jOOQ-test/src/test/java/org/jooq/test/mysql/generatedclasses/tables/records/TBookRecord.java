@@ -7,7 +7,6 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record10;
-import org.jooq.Row;
 import org.jooq.Row10;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.mysql.generatedclasses.enums.TBookStatus;
@@ -20,7 +19,7 @@ import org.jooq.test.mysql.generatedclasses.tables.TBook;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookRecord extends UpdatableRecordImpl<TBookRecord> implements Record10<Integer, Integer, Integer, Integer, String, Integer, Integer, String, byte[], TBookStatus> {
 
-	private static final long serialVersionUID = -1898757133;
+	private static final long serialVersionUID = 598939078;
 
 	/**
 	 * Setter for <code>test.t_book.ID</code>. The book ID

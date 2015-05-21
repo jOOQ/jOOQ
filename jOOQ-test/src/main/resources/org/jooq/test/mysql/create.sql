@@ -213,11 +213,11 @@ CREATE TABLE t_book (
   INDEX (AUTHOR_ID),
   INDEX (LANGUAGE_ID),
 
-  CONSTRAINT pk_t_book PRIMARY KEY (ID),
-  CONSTRAINT fk_t_book_author_id FOREIGN KEY (AUTHOR_ID) REFERENCES T_AUTHOR(ID),
-  CONSTRAINT fk_t_book_co_author_id FOREIGN KEY (CO_AUTHOR_ID) REFERENCES T_AUTHOR(ID),
-  CONSTRAINT fk_t_book_details_id FOREIGN KEY (DETAILS_ID) REFERENCES T_BOOK_DETAILS(ID),
-  CONSTRAINT fk_t_book_language_id FOREIGN KEY (LANGUAGE_ID) REFERENCES T_LANGUAGE(ID)
+  CONSTRAINT pk_t_book PRIMARY KEY (id),
+  CONSTRAINT fk_t_book_author_id FOREIGN KEY (author_id) REFERENCES t_author(id),
+  CONSTRAINT fk_t_book_co_author_id FOREIGN KEY (co_author_id) REFERENCES t_author(id),
+  CONSTRAINT fk_t_book_details_id FOREIGN KEY (details_id) REFERENCES t_book_details(id),
+  CONSTRAINT fk_t_book_language_id FOREIGN KEY (language_id) REFERENCES t_language(id)
 ) ENGINE = InnoDB
   COMMENT = 'An entity holding books';
 /
@@ -269,9 +269,9 @@ CREATE TABLE x_unused (
   PRIMARYKEY INT,
   `FIELD 737` DECIMAL(25, 2),
 
-  CONSTRAINT pk_x_unused PRIMARY KEY(ID, NAME),
-  CONSTRAINT uk_x_unused_id UNIQUE(ID),
-  CONSTRAINT fk_x_unused_self FOREIGN KEY(ID_REF, NAME_REF) REFERENCES X_UNUSED(ID, NAME)
+  CONSTRAINT pk_x_unused PRIMARY KEY(id, name),
+  CONSTRAINT uk_x_unused_id UNIQUE(id),
+  CONSTRAINT fk_x_unused_self FOREIGN KEY(ID_REF, NAME_REF) REFERENCES x_unused(id, name)
 ) ENGINE = InnoDB
   COMMENT = 'An unused table in the same schema.';
 /
@@ -306,9 +306,9 @@ CREATE TABLE x_test_case_64_69 (
   ID INT NOT NULL,
   UNUSED_ID INT,
 
-  CONSTRAINT pk_x_test_case_64_69 PRIMARY KEY(ID),
-  CONSTRAINT fk_x_test_case_64_69a FOREIGN KEY(UNUSED_ID) REFERENCES X_UNUSED(ID),
-  CONSTRAINT fk_x_test_case_64_69b FOREIGN KEY(UNUSED_ID) REFERENCES X_UNUSED(ID)
+  CONSTRAINT pk_x_test_case_64_69 PRIMARY KEY(id),
+  CONSTRAINT fk_x_test_case_64_69a FOREIGN KEY(UNUSED_ID) REFERENCES x_unused(id),
+  CONSTRAINT fk_x_test_case_64_69b FOREIGN KEY(UNUSED_ID) REFERENCES x_unused(id)
 ) ENGINE = InnoDB
   COMMENT = 'An unused table in the same schema.';
 /
@@ -317,8 +317,8 @@ CREATE TABLE x_test_case_71 (
   ID INT NOT NULL,
   TEST_CASE_64_69_ID INT,
 
-  CONSTRAINT pk_x_test_case_71 PRIMARY KEY(ID),
-  CONSTRAINT fk_x_test_case_71 FOREIGN KEY(TEST_CASE_64_69_ID) REFERENCES X_TEST_CASE_64_69(ID)
+  CONSTRAINT pk_x_test_case_71 PRIMARY KEY(id),
+  CONSTRAINT fk_x_test_case_71 FOREIGN KEY(TEST_CASE_64_69_ID) REFERENCES x_test_case_64_69(id)
 ) ENGINE = InnoDB
   COMMENT = 'An unused table in the same schema.';
 /
@@ -329,7 +329,7 @@ CREATE TABLE x_test_case_85 (
   x_unused_name VARCHAR(10),
 
   CONSTRAINT pk_x_test_case_85 PRIMARY KEY(ID),
-  CONSTRAINT fk_x_test_case_85 FOREIGN KEY(x_unused_id, x_unused_name) REFERENCES X_UNUSED(id, name)
+  CONSTRAINT fk_x_test_case_85 FOREIGN KEY(x_unused_id, x_unused_name) REFERENCES x_unused(id, name)
 ) ENGINE = InnoDB
   COMMENT = 'An unused table in the same schema.';
 /
@@ -340,14 +340,14 @@ CREATE TABLE x_test_case_2025 (
   
   CONSTRAINT fk_x_test_case_2025_1 FOREIGN KEY(ref_id) REFERENCES x_test_case_85(ID),
   CONSTRAINT fk_x_test_case_2025_2 FOREIGN KEY(ref_id) REFERENCES x_test_case_71(ID),
-  CONSTRAINT fk_x_test_case_2025_3 FOREIGN KEY(ref_id, ref_name) REFERENCES X_UNUSED(id, name)
+  CONSTRAINT fk_x_test_case_2025_3 FOREIGN KEY(ref_id, ref_name) REFERENCES x_unused(id, name)
 ) ENGINE = InnoDB
   COMMENT = 'An unused table in the same schema.';
 /
 
-CREATE OR REPLACE VIEW V_LIBRARY (AUTHOR, TITLE) AS
-SELECT CONCAT(A.FIRST_NAME, ' ', A.LAST_NAME), B.TITLE
-FROM T_AUTHOR A JOIN T_BOOK B ON B.AUTHOR_ID = A.ID;
+CREATE OR REPLACE VIEW v_library (author, title) AS
+SELECT CONCAT(a.first_name, ' ', a.last_name), b.title
+FROM t_author a JOIN t_book b ON b.author_id = a.id;
 /
 
 CREATE VIEW v_author AS

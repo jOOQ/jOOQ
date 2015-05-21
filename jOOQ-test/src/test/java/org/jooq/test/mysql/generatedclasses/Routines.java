@@ -73,6 +73,17 @@ public class Routines {
 	/**
 	 * Call <code>test.fp1908</code>
 	 */
+	public static Integer fp1908_PROCEDURE(Configuration configuration, Integer p1) {
+		Fp1908_PROCEDURE p = new Fp1908_PROCEDURE();
+		p.setP1(p1);
+
+		p.execute(configuration);
+		return p.getP2();
+	}
+
+	/**
+	 * Call <code>test.fp1908</code>
+	 */
 	public static Integer fp1908_FUNCTION(Configuration configuration, Integer p1) {
 		Fp1908_FUNCTION f = new Fp1908_FUNCTION();
 		f.setP1(p1);
@@ -99,17 +110,6 @@ public class Routines {
 		f.setP1(p1);
 
 		return f.asField();
-	}
-
-	/**
-	 * Call <code>test.fp1908</code>
-	 */
-	public static Integer fp1908_PROCEDURE(Configuration configuration, Integer p1) {
-		Fp1908_PROCEDURE p = new Fp1908_PROCEDURE();
-		p.setP1(p1);
-
-		p.execute(configuration);
-		return p.getP2();
 	}
 
 	/**

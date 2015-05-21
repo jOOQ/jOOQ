@@ -7,7 +7,6 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.mysql.generatedclasses.tables.XTestCase_71;
@@ -19,7 +18,7 @@ import org.jooq.test.mysql.generatedclasses.tables.XTestCase_71;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_71Record extends UpdatableRecordImpl<XTestCase_71Record> implements Record2<Integer, Integer> {
 
-	private static final long serialVersionUID = -1607526258;
+	private static final long serialVersionUID = 1053043825;
 
 	/**
 	 * Setter for <code>test.x_test_case_71.ID</code>.

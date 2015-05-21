@@ -10,7 +10,6 @@ import java.math.BigInteger;
 import org.jooq.Field;
 import org.jooq.Record14;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row14;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.mysql.generatedclasses.tables.XUnused;
@@ -22,7 +21,7 @@ import org.jooq.test.mysql.generatedclasses.tables.XUnused;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnusedRecord extends UpdatableRecordImpl<XUnusedRecord> implements Record14<Integer, String, BigInteger, Integer, String, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, BigDecimal> {
 
-	private static final long serialVersionUID = 1308043289;
+	private static final long serialVersionUID = -1544825720;
 
 	/**
 	 * Setter for <code>test.x_unused.ID</code>.

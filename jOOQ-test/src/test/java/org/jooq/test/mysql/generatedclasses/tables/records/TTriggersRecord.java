@@ -7,7 +7,6 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record3;
-import org.jooq.Row;
 import org.jooq.Row3;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.mysql.generatedclasses.tables.TTriggers;
@@ -19,7 +18,7 @@ import org.jooq.test.mysql.generatedclasses.tables.TTriggers;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggersRecord extends UpdatableRecordImpl<TTriggersRecord> implements Record3<Integer, Integer, Integer> {
 
-	private static final long serialVersionUID = -2122362689;
+	private static final long serialVersionUID = -602559932;
 
 	/**
 	 * Setter for <code>test.t_triggers.id_generated</code>.

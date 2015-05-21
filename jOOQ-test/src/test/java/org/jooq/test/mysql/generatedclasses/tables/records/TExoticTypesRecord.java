@@ -9,7 +9,6 @@ import java.util.UUID;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.mysql.generatedclasses.tables.TExoticTypes;
@@ -21,7 +20,7 @@ import org.jooq.test.mysql.generatedclasses.tables.TExoticTypes;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> implements Record2<Integer, UUID> {
 
-	private static final long serialVersionUID = -296406487;
+	private static final long serialVersionUID = -1191088926;
 
 	/**
 	 * Setter for <code>test.t_exotic_types.ID</code>.

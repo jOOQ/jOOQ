@@ -458,7 +458,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     public void testAlterTableAddConstraint_PRIMARY_KEY() throws Exception {
         try {
             create().createTable("t")
-                    .column("v", INTEGER)
+                    .column("v", INTEGER.nullable(false))
                     .execute();
 
             create().alterTable("t").add(constraint("pk").unique("v")).execute();

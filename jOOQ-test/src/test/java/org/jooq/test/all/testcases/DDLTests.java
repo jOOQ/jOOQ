@@ -395,9 +395,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     public void testAlterTableAddConstraint_UNIQUE() throws Exception {
         try {
             create().createTable("t")
-                    .column("v1", INTEGER)
-                    .column("v2", INTEGER)
-                    .column("v3", INTEGER)
+                    .column("v1", INTEGER.nullable(false))
+                    .column("v2", INTEGER.nullable(false))
+                    .column("v3", INTEGER.nullable(false))
                     .execute();
 
             create().alterTable("t").add(constraint("u1").unique("v1")).execute();
@@ -645,7 +645,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
     public void testAlterTableDropConstraint() throws Exception {
         try {
-            create().createTable("t").column("v", INTEGER).execute();
+            create().createTable("t").column("v", INTEGER.nullable(false)).execute();
             create().alterTable("t").add(constraint("x").unique("v")).execute();
 
             assertThrows(DataAccessException.class, () -> {

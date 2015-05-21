@@ -109,17 +109,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         Result<Record3<Integer, String, Date>> r1 =
         create().selectFrom(values(
             row(1, "a", Date.valueOf("2013-01-01")),
-            row(2, "b", Date.valueOf("2013-01-02"))).as("my_table", "int_col", "string_col", "date_col")).fetch();
+            row(2, "b", Date.valueOf("2013-01-02"))).as("my_table", "int_col", "string_col", "date_col")).orderBy(1).fetch();
 
         Result<Record> r2 =
         create().selectFrom(values(new RowN[] {
             row(new Object[] { 1, "a", Date.valueOf("2013-01-01")}),
-            row(new Object[] { 2, "b", Date.valueOf("2013-01-02")})}).as("my_table", "int_col", "string_col", "date_col")).fetch();
+            row(new Object[] { 2, "b", Date.valueOf("2013-01-02")})}).as("my_table", "int_col", "string_col", "date_col")).orderBy(1).fetch();
 
         assertEquals(r1, r2);
 
         // [#3822] There was a regression with Row1 types
-        Result<Record1<Integer>> result = create().selectFrom(values(row(1), row(2), row(3))).fetch();
+        Result<Record1<Integer>> result = create().selectFrom(values(row(1), row(2), row(3))).orderBy(1).fetch();
         assertEquals(asList(1, 2, 3), result.getValues(0, int.class));
     }
 

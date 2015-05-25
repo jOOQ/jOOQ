@@ -2630,6 +2630,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testIntersectAllAndExceptAll() throws Exception {
+        new UnionTests(this).testIntersectAllAndExceptAll();
+    }
+
+    @Test
     public void testValuesConstructor() throws Exception {
         new ValuesConstructorTests(this).testValuesConstructor();
     }

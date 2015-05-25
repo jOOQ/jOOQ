@@ -458,7 +458,38 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
         assertEquals(1, r2.size());
         assertEquals(3, (int) r2.get(0).getValue(TBook_ID()));
+    }
 
+    public void testIntersectAllAndExceptAll() throws Exception {
+        assumeFamilyNotIn();
 
+        Result<Record1<Integer>> r1 =
+        create().select(TBook_AUTHOR_ID())
+                .from(TBook())
+                .where(TBook_ID().ne(1))
+                .intersectAll(
+                    select(TBook_AUTHOR_ID())
+                    .from(TBook())
+                    .where(TBook_ID().ne(2))
+                )
+                .orderBy(1)
+                .fetch();
+
+        assertEquals(3, r1.size());
+        assertEquals(asList(1, 2, 2), r1.getValues(TBook_AUTHOR_ID()));
+
+        Result<Record1<Integer>> r2 =
+        create().select(TBook_AUTHOR_ID())
+                .from(TBook())
+                .exceptAll(
+                    select(TBook_AUTHOR_ID())
+                    .from(TBook())
+                    .where(TBook_ID().eq(1))
+                )
+                .orderBy(1)
+                .fetch();
+
+        assertEquals(3, r2.size());
+        assertEquals(asList(1, 2, 2), r2.getValues(TBook_AUTHOR_ID()));
     }
 }

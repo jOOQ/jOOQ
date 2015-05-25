@@ -70,28 +70,40 @@ import org.jooq.exception.DataAccessException;
 public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, FieldLike {
 
     /**
-     * Combine with other selects
+     * Apply the <code>UNION</code> set operation.
      */
     @Support
     Select<R> union(Select<? extends R> select);
 
     /**
-     * Combine with other selects
+     * Apply the <code>UNION ALL</code> set operation.
      */
     @Support
     Select<R> unionAll(Select<? extends R> select);
 
     /**
-     * Combine with other selects
+     * Apply the <code>EXCEPT</code> (or <code>MINUS</code>) set operation.
      */
     @Support({ ASE, CUBRID, DB2, DERBY, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     Select<R> except(Select<? extends R> select);
 
     /**
-     * Combine with other selects
+     * Apply the <code>EXCEPT ALL</code> set operation.
+     */
+    @Support({ POSTGRES })
+    Select<R> exceptAll(Select<? extends R> select);
+
+    /**
+     * Apply the <code>INTERSECT</code> set operation.
      */
     @Support({ ASE, CUBRID, DB2, DERBY, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     Select<R> intersect(Select<? extends R> select);
+
+    /**
+     * Apply the <code>INTERSECT ALL</code> set operation.
+     */
+    @Support({ POSTGRES })
+    Select<R> intersectAll(Select<? extends R> select);
 
     /**
      * All fields selected in this query

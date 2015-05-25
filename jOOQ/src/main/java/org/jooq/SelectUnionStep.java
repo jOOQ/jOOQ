@@ -101,30 +101,44 @@ import static org.jooq.SQLDialect.SYBASE;
 public interface SelectUnionStep<R extends Record> extends SelectFinalStep<R> {
 
     /**
-     * Combine with other selects
+     * Apply the <code>UNION</code> set operation.
      */
     @Override
     @Support
     SelectOrderByStep<R> union(Select<? extends R> select);
 
     /**
-     * Combine with other selects
+     * Apply the <code>UNION ALL</code> set operation.
      */
     @Override
     @Support
     SelectOrderByStep<R> unionAll(Select<? extends R> select);
 
     /**
-     * Combine with other selects
+     * Apply the <code>EXCEPT</code> (or <code>MINUS</code>) set operation.
      */
     @Override
     @Support({ ASE, CUBRID, DB2, DERBY, H2, HANA, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     SelectOrderByStep<R> except(Select<? extends R> select);
 
     /**
-     * Combine with other selects
+     * Apply the <code>EXCEPT ALL</code> set operation.
+     */
+    @Override
+    @Support({ POSTGRES })
+    SelectOrderByStep<R> exceptAll(Select<? extends R> select);
+
+    /**
+     * Apply the <code>INTERSECT</code> set operation.
      */
     @Override
     @Support({ ASE, CUBRID, DB2, DERBY, H2, HANA, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     SelectOrderByStep<R> intersect(Select<? extends R> select);
+
+    /**
+     * Apply the <code>INTERSECT ALL</code> set operation.
+     */
+    @Override
+    @Support({ POSTGRES })
+    SelectOrderByStep<R> intersectAll(Select<? extends R> select);
 }

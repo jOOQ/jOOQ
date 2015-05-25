@@ -45,10 +45,12 @@ import static java.util.Arrays.asList;
 import static org.jooq.Clause.SELECT;
 import static org.jooq.Clause.SELECT_CONNECT_BY;
 import static org.jooq.Clause.SELECT_EXCEPT;
+import static org.jooq.Clause.SELECT_EXCEPT_ALL;
 import static org.jooq.Clause.SELECT_FROM;
 import static org.jooq.Clause.SELECT_GROUP_BY;
 import static org.jooq.Clause.SELECT_HAVING;
 import static org.jooq.Clause.SELECT_INTERSECT;
+import static org.jooq.Clause.SELECT_INTERSECT_ALL;
 import static org.jooq.Clause.SELECT_INTO;
 import static org.jooq.Clause.SELECT_ORDER_BY;
 import static org.jooq.Clause.SELECT_SELECT;
@@ -84,7 +86,9 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.SortOrder.ASC;
 import static org.jooq.impl.CombineOperator.EXCEPT;
+import static org.jooq.impl.CombineOperator.EXCEPT_ALL;
 import static org.jooq.impl.CombineOperator.INTERSECT;
+import static org.jooq.impl.CombineOperator.INTERSECT_ALL;
 import static org.jooq.impl.CombineOperator.UNION;
 import static org.jooq.impl.CombineOperator.UNION_ALL;
 import static org.jooq.impl.DSL.inline;
@@ -887,10 +891,12 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         if (unionOpSize > 0) {
             for (int i = unionOpSize - 1; i >= 0; i--) {
                 switch (unionOp.get(i)) {
-                    case EXCEPT:    context.start(SELECT_EXCEPT);    break;
-                    case INTERSECT: context.start(SELECT_INTERSECT); break;
-                    case UNION:     context.start(SELECT_UNION);     break;
-                    case UNION_ALL: context.start(SELECT_UNION_ALL); break;
+                    case EXCEPT:        context.start(SELECT_EXCEPT);        break;
+                    case EXCEPT_ALL:    context.start(SELECT_EXCEPT_ALL);    break;
+                    case INTERSECT:     context.start(SELECT_INTERSECT);     break;
+                    case INTERSECT_ALL: context.start(SELECT_INTERSECT_ALL); break;
+                    case UNION:         context.start(SELECT_UNION);         break;
+                    case UNION_ALL:     context.start(SELECT_UNION_ALL);     break;
                 }
 
                 unionParenthesis(context, "(");
@@ -1168,10 +1174,12 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                     unionParenthesis(context, ")");
 
                 switch (unionOp.get(i)) {
-                    case EXCEPT:    context.end(SELECT_EXCEPT);    break;
-                    case INTERSECT: context.end(SELECT_INTERSECT); break;
-                    case UNION:     context.end(SELECT_UNION);     break;
-                    case UNION_ALL: context.end(SELECT_UNION_ALL); break;
+                    case EXCEPT:        context.end(SELECT_EXCEPT);        break;
+                    case EXCEPT_ALL:    context.end(SELECT_EXCEPT_ALL);    break;
+                    case INTERSECT:     context.end(SELECT_INTERSECT);     break;
+                    case INTERSECT_ALL: context.end(SELECT_INTERSECT_ALL); break;
+                    case UNION:         context.end(SELECT_UNION);         break;
+                    case UNION_ALL:     context.end(SELECT_UNION_ALL);     break;
                 }
             }
         }
@@ -1909,7 +1917,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
     private final Select<R> combine(CombineOperator op, Select<? extends R> other) {
         int index = unionOp.size() - 1;
 
-        if (index == -1 || unionOp.get(index) != op || op == EXCEPT) {
+        if (index == -1 || unionOp.get(index) != op || op == EXCEPT || op == EXCEPT_ALL) {
             unionOp.add(op);
             union.add(new QueryPartList<Select<?>>());
 
@@ -1936,8 +1944,18 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
     }
 
     @Override
+    public final Select<R> exceptAll(Select<? extends R> other) {
+        return combine(EXCEPT_ALL, other);
+    }
+
+    @Override
     public final Select<R> intersect(Select<? extends R> other) {
         return combine(INTERSECT, other);
+    }
+
+    @Override
+    public final Select<R> intersectAll(Select<? extends R> other) {
+        return combine(INTERSECT_ALL, other);
     }
 
     @Override

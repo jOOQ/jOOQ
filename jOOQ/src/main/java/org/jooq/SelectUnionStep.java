@@ -101,30 +101,44 @@ import static org.jooq.SQLDialect.SQLITE;
 public interface SelectUnionStep<R extends Record> extends SelectFinalStep<R> {
 
     /**
-     * Combine with other selects
+     * Apply the <code>UNION</code> set operation.
      */
     @Override
     @Support
     SelectOrderByStep<R> union(Select<? extends R> select);
 
     /**
-     * Combine with other selects
+     * Apply the <code>UNION ALL</code> set operation.
      */
     @Override
     @Support
     SelectOrderByStep<R> unionAll(Select<? extends R> select);
 
     /**
-     * Combine with other selects
+     * Apply the <code>EXCEPT</code> (or <code>MINUS</code>) set operation.
      */
     @Override
     @Support({ CUBRID, DERBY, H2, HSQLDB, POSTGRES, SQLITE })
     SelectOrderByStep<R> except(Select<? extends R> select);
 
     /**
-     * Combine with other selects
+     * Apply the <code>EXCEPT ALL</code> set operation.
+     */
+    @Override
+    @Support({ POSTGRES })
+    SelectOrderByStep<R> exceptAll(Select<? extends R> select);
+
+    /**
+     * Apply the <code>INTERSECT</code> set operation.
      */
     @Override
     @Support({ CUBRID, DERBY, H2, HSQLDB, POSTGRES, SQLITE })
     SelectOrderByStep<R> intersect(Select<? extends R> select);
+
+    /**
+     * Apply the <code>INTERSECT ALL</code> set operation.
+     */
+    @Override
+    @Support({ POSTGRES })
+    SelectOrderByStep<R> intersectAll(Select<? extends R> select);
 }

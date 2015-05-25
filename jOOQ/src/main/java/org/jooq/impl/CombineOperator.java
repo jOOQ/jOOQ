@@ -53,25 +53,42 @@ import org.jooq.Select;
 enum CombineOperator {
 
     /**
-     * Unite the two {@link Select}'s disallowing duplicate records
+     * Unite the sets of rows produced by the two {@link Select}'s (disallowing
+     * duplicate records).
      */
     UNION("union"),
 
     /**
-     * Unite the two {@link Select}'s allowing duplicate records
+     * Unite the bags of rows produced by the two {@link Select}'s (allowing
+     * duplicate records).
      */
     UNION_ALL("union all"),
 
     /**
-     * Remove all records encountered in the second {@link Select} from the
-     * first {@link Select}
+     * Remove all rows in the set of rows produced by the second {@link Select}
+     * from the set of rows produced by the first {@link Select} (disallowing
+     * duplicate records).
      */
     EXCEPT("except"),
 
     /**
-     * Retain all records encountered in both {@link Select}'s
+     * Remove all rows in the bag of rows produced by the second {@link Select}
+     * from the bag of rows produced by the first {@link Select} (allowing
+     * duplicate records).
      */
-    INTERSECT("intersect");
+    EXCEPT_ALL("except all"),
+
+    /**
+     * Retain all rows in the sets of rows produced by both {@link Select}'s
+     * (disallowing duplicate records).
+     */
+    INTERSECT("intersect"),
+
+    /**
+     * Retain all rows in the bags of rows produced by both {@link Select}'s
+     * (allowing duplicate records).
+     */
+    INTERSECT_ALL("intersect all");
 
     private final String sql;
 

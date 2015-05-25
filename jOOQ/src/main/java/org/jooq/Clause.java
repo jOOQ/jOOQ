@@ -339,12 +339,28 @@ public enum Clause {
     SELECT_INTERSECT,
 
     /**
+     * A <code>INTERSECT ALL</code> set operation.
+     * <p>
+     * This clause surrounds two or more subselects (see {@link #SELECT})
+     * concatenating them using a <code>INTERSECT ALL</code> set operation.
+     */
+    SELECT_INTERSECT_ALL,
+
+    /**
      * A <code>EXCEPT</code> set operation.
      * <p>
      * This clause surrounds two or more subselects (see {@link #SELECT})
      * concatenating them using a <code>EXCEPT</code> set operation.
      */
     SELECT_EXCEPT,
+
+    /**
+     * A <code>EXCEPT ALL</code> set operation.
+     * <p>
+     * This clause surrounds two or more subselects (see {@link #SELECT})
+     * concatenating them using a <code>EXCEPT ALL</code> set operation.
+     */
+    SELECT_EXCEPT_ALL,
 
     /**
      * A <code>SELECT</code> clause within a {@link #SELECT} statement or

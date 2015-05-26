@@ -36,6 +36,11 @@
             <artifactId>h2</artifactId>
             <version>${org.h2.version}</version>
         </dependency>
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.4</version>
+        </dependency>
 
         <!-- Spark framework -->
         <dependency>

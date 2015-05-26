@@ -52,9 +52,12 @@ import java.util.stream.Collectors;
 
 import org.jooq.DSLContext;
 import org.jooq.Record2;
+import org.jooq.SQLDialect;
 import org.jooq.example.db.h2.tables.records.AuthorRecord;
 import org.jooq.example.db.h2.tables.records.BookRecord;
 import org.jooq.impl.DSL;
+
+import org.apache.commons.dbcp.BasicDataSource;
 
 import spark.Request;
 
@@ -64,14 +67,16 @@ import spark.Request;
 public class SparkCRUD {
 
     public static void main(String[] args) throws Exception {
+        final BasicDataSource ds = new BasicDataSource();
         final Properties properties = new Properties();
         properties.load(SparkCRUD.class.getResourceAsStream("/config.properties"));
-        Class.forName(properties.getProperty("db.driver"));
-        final DSLContext ctx = DSL.using(
-            properties.getProperty("db.url"),
-            properties.getProperty("db.username"),
-            properties.getProperty("db.password")
-        );
+
+        ds.setDriverClassName(properties.getProperty("db.driver"));
+        ds.setUrl(properties.getProperty("db.url"));
+        ds.setUsername(properties.getProperty("db.username"));
+        ds.setPassword(properties.getProperty("db.password"));
+
+        final DSLContext ctx = DSL.using(ds, SQLDialect.H2);
 
         // Creates a new book resource, will return the ID to the created resource
         // author and title are sent as query parameters e.g. /books?author=Foo&title=Bar

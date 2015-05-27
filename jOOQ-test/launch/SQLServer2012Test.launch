@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.junit.launchconfig">
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/jOOQ-test/src/test/java/org/jooq/test/SQLServer2008Test.java"/>
+<listEntry value="/jOOQ-test/src/test/java/org/jooq/test/SQLServer2012Test.java"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="1"/>
@@ -21,7 +21,7 @@
 </listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.eclipse.m2e.launchconfig.classpathProvider"/>
 <booleanAttribute key="org.eclipse.jdt.launching.DEFAULT_CLASSPATH" value="false"/>
-<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.jooq.test.SQLServer2008Test"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.jooq.test.SQLServer2012Test"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="jOOQ-test"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dorg.jooq.test-dialects=sqlserver -DXX:+UnlockCommercialFeatures -DXX:+FlightRecorder -javaagent:../jOOQ-test-agent/target/jooq-test-agent-3.7.0-SNAPSHOT-jar-with-dependencies.jar&#13;&#10;-Djava.library.path=C:\sqljdbc_4.0\enu\auth\x64"/>

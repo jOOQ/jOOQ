@@ -5255,6 +5255,22 @@ public class DSL {
         return new Lateral<R>(table.asTable());
     }
 
+    /**
+     * Create a <code>ROWS FROM (tables...)</code> expression.
+     * <p>
+     * Example: <code><pre>
+     * SELECT *
+     * FROM ROWS FROM (function1('a', 'b'), function2('c', 'd'));
+     * </pre></code>
+     * <p>
+     * This allows for full outer joining several table-valued functions on the
+     * row number of each function's produced rows.
+     */
+    @Support(POSTGRES)
+    public static Table<Record> rowsFrom(Table<?>... tables) {
+        return new RowsFrom(tables);
+    }
+
     // -------------------------------------------------------------------------
     // XXX SQL keywords
     // -------------------------------------------------------------------------

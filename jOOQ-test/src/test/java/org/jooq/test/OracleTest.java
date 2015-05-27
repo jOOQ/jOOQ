@@ -134,6 +134,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.jooq.AggregateFunction;
 import org.jooq.ArrayRecord;
 import org.jooq.Configuration;
+import org.jooq.ConnectionProvider;
 import org.jooq.Context;
 import org.jooq.DAO;
 import org.jooq.DSLContext;
@@ -155,6 +156,7 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.CustomField;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultConfiguration;
@@ -172,6 +174,7 @@ import org.jooq.test.oracle.generatedclasses.multi_schema.packages.MsSynonymPack
 import org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord;
 import org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord;
 import org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord;
+import org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.U_4311Record;
 import org.jooq.test.oracle.generatedclasses.sys.udt.Xmltype;
 import org.jooq.test.oracle.generatedclasses.sys.udt.records.XmltypeRecord;
 import org.jooq.test.oracle.generatedclasses.test.Keys;
@@ -2379,6 +2382,30 @@ public class OracleTest extends jOOQAbstractTest<
     public void testOracleUDTCodeGenSchemaMapping() {
         U_2522Record record = org.jooq.test.oracle.generatedclasses.usr_2522_a.Routines.f_2522(create().configuration());
         assertEquals(2, (int) record.getV());
+    }
+
+    @Test
+    public void testOracleConnectionProviderInitStoredProcedureCall() {
+        Configuration old = create().configuration();
+
+        // [#4311] TODO: Make this test fail when #4311 is not fixed?
+        DSLContext create = create(old.derive(new ConnectionProvider() {
+            @Override
+            public Connection acquire() throws DataAccessException {
+                Connection c = old.connectionProvider().acquire();
+                DSL.using(c).selectOne().fetch();
+                return c;
+            }
+
+            @Override
+            public void release(Connection c) throws DataAccessException {
+                DSL.using(c).selectOne().fetch();
+                old.connectionProvider().release(c);
+            }
+        }));
+
+        U_4311Record record = org.jooq.test.oracle.generatedclasses.multi_schema.Routines.p4311(create.configuration());
+        assertEquals(1, (int) record.getId());
     }
 }
 

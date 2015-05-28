@@ -55,6 +55,7 @@ import static org.jooq.impl.DSL.lateral;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.percentRank;
 import static org.jooq.impl.DSL.rank;
+import static org.jooq.impl.DSL.rowsFrom;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.val;
@@ -67,6 +68,7 @@ import static org.jooq.test.postgres.generatedclasses.Tables.F_TABLES1;
 import static org.jooq.test.postgres.generatedclasses.Tables.F_TABLES2;
 import static org.jooq.test.postgres.generatedclasses.Tables.F_TABLES3;
 import static org.jooq.test.postgres.generatedclasses.Tables.F_TABLES4;
+import static org.jooq.test.postgres.generatedclasses.Tables.F_TABLES5;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_3111;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_639_NUMBERS_TABLE;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_725_LOB_TEST;
@@ -1831,6 +1833,29 @@ public class PostgresTest extends jOOQAbstractTest<
 
     private static <T extends Comparable<T>> Condition rangeOverlaps(Field<Range<T>> f1, Range<T> f2) {
         return DSL.condition("range_overlaps({0}, {1})", f1, val(f2, f1.getDataType()));
+    }
+
+    @Test
+    public void testPostgresRowsFrom() {
+        Result<Record> r1 =
+        create().select()
+                .from(rowsFrom(F_TABLES1(), F_TABLES5(1, 2, 3)))
+                .orderBy(field(name("s")))
+                .fetch();
+
+        assertEquals(asList(1, 2, 3), r1.getValues(F_TABLES5.V));
+        assertEquals(asList(1, 3, 6), r1.getValues(F_TABLES5.S));
+        assertEquals(asList(1, null, null), r1.getValues(F_TABLES1.COLUMN_VALUE));
+
+        Result<Record> r2 =
+        create().select()
+                .from(rowsFrom(F_TABLES1(), F_TABLES5(1, 2, 3)).as("a"))
+                .orderBy(field(name("a", "s")))
+                .fetch();
+
+        assertEquals(asList(1, 2, 3), r2.getValues(F_TABLES5.V));
+        assertEquals(asList(1, 3, 6), r2.getValues(F_TABLES5.S));
+        assertEquals(asList(1, null, null), r2.getValues(F_TABLES1.COLUMN_VALUE));
     }
 
 //    @Test

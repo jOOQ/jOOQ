@@ -82,6 +82,7 @@ DROP PROCEDURE p_enhance_address1/
 DROP PROCEDURE p_enhance_address2/
 DROP PROCEDURE p_enhance_address3/
 DROP PROCEDURE p3005/
+DROP PROCEDURE multi_schema.p4311/
 DROP PROCEDURE p_unused/
 DROP PROCEDURE p_create_author/
 DROP PROCEDURE p_create_author_by_name/
@@ -128,6 +129,7 @@ DROP TYPE u_book_array/
 DROP TYPE u_book_type/
 DROP TYPE u_second_max/
 DROP TYPE u_3005/
+DROP TYPE multi_schema.u_4311/
 DROP TYPE u_2155_object/
 DROP TYPE u_2155_array/
 DROP TYPE u_3709/
@@ -151,6 +153,11 @@ CREATE TYPE u_2155_object AS OBJECT (
 /
 
 CREATE TYPE u_3005 AS OBJECT (
+  ID NUMBER(7)
+)
+/
+
+CREATE TYPE multi_schema.u_4311 AS OBJECT (
   ID NUMBER(7)
 )
 /
@@ -887,6 +894,13 @@ IS
 BEGIN
   p1 := NULL;
 END p3005;
+/
+
+CREATE OR REPLACE PROCEDURE multi_schema.p4311 (p1 OUT multi_schema.u_4311)
+IS
+BEGIN
+  p1 := multi_schema.u_4311(1);
+END p4311;
 /
 
 CREATE OR REPLACE PROCEDURE p_create_author_by_name (first_name VARCHAR2, last_name VARCHAR2)

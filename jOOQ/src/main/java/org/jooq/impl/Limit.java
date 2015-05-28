@@ -157,6 +157,7 @@ class Limit extends AbstractQueryPart {
             /* [pro] xx
             xxxx xxxxxxxxxx
             xxxx xxxxxxxxxxxxxx
+            xxxx xxxxxxxxxxxxxx
             xx [/pro] */
             case DERBY: {
 

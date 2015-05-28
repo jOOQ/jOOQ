@@ -1252,9 +1252,9 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         }
 
         /* [pro] xx
-        xx xxxxxxx xxx xxxxxx xxxx xxxxxxxx xx xxxxx xx xxxxxxx xxxxx xxxx
+        xx xxxxxxx xxx xxxxxx xxxxx xxxxxxxx xx xxxxx xx xxxxxxx xxxxx xxxx
         xx xxxxxx xx xxxxx
-        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
             xxxxxxxxxxxxxxxxxxxxxxxxx
                    xxxxxxxxxxxxxxx xxxx
                    xxxxxx xxx

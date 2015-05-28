@@ -2340,6 +2340,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testUpdateFromWithAlias() throws Exception {
+        new InsertUpdateTests(this).testUpdateFromWithAlias();
+    }
+
+    @Test
     public void testInsertOnDuplicateKeyUpdate() throws Exception {
         new InsertUpdateTests(this).testInsertOnDuplicateKeyUpdate();
     }

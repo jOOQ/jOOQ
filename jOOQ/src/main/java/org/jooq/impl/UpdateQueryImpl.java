@@ -51,6 +51,7 @@ import static org.jooq.Clause.UPDATE_UPDATE;
 import static org.jooq.Clause.UPDATE_WHERE;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.impl.DSL.select;
 
 import java.util.Arrays;
@@ -470,17 +471,21 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
     @Override
     final void accept0(Context<?> ctx) {
+        boolean declareTables = ctx.declareTables();
         ctx.start(UPDATE_UPDATE)
            .keyword("update")
            .sql(' ')
-           .declareTables(true)
+
+           // [#4314] Not all SQL dialects support declaring aliased tables in
+           // UPDATE statements
+           .declareTables(!asList(SQLSERVER).contains(ctx.family()))
            .visit(table)
-           .declareTables(false)
+           .declareTables(declareTables)
            .end(UPDATE_UPDATE);
 
         /* [pro] */
         // [#1018] Ingres has a special understanding of the UPDATE .. FROM clause
-        if (ctx.configuration().dialect().family() == INGRES) {
+        if (ctx.family() == INGRES) {
             ctx.start(UPDATE_FROM);
 
             if (!from.isEmpty()) {
@@ -512,7 +517,7 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
             // Some dialects don't really support row value expressions on the
             // right hand side of a SET clause
-            if (multiValue != null && !asList(INGRES, ORACLE).contains(ctx.configuration().dialect().family())) {
+            if (multiValue != null && !asList(INGRES, ORACLE).contains(ctx.family())) {
                 ctx.visit(multiValue);
             }
 
@@ -547,7 +552,7 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
         ctx.end(UPDATE_SET);
 
-        switch (ctx.configuration().dialect().family()) {
+        switch (ctx.family()) {
 
             /* [pro] */
             // [#1018] Ingres has a special understanding of the UPDATE .. FROM clause

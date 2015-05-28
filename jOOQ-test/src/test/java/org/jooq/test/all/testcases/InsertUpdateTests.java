@@ -1545,66 +1545,77 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testUpdateFrom() throws Exception {
-        switch (family()) {
-            /* [pro] */
-            case ACCESS:
-            case DB2:
-            case ORACLE:
-            /* [/pro] */
-
-            case CUBRID:
-            case DERBY:
-            case FIREBIRD:
-            case H2:
-            case HSQLDB:
-            case MARIADB:
-            case MYSQL:
-            case SQLITE:
-                log.info("SKIPPING", "UPDATE .. FROM integration test. This syntax is not supported by " + dialect());
-                return;
-        }
-
+        assumeFamilyNotIn(ACCESS, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, SQLITE);
         jOOQAbstractTest.reset = false;
 
+        assertEquals(2,
+        create().update(TBook())
+                .set(TBook_TITLE(), concat(TAuthor_FIRST_NAME(), inline(" "), TAuthor_LAST_NAME(), inline(": "), TBook_TITLE()))
+                .from(TAuthor())
+                .where(TBook_AUTHOR_ID().eq(TAuthor_ID()))
+                .and(TBook_ID().lt(3))
+                .execute());
+
+        Result<B> result =
+        create().selectFrom(TBook())
+                .orderBy(TBook_ID())
+                .fetch();
+
+        assertEquals(BOOK_AUTHOR_IDS, result.getValues(TBook_AUTHOR_ID()));
+        assertEquals(AUTHOR_FIRST_NAMES.get(0) + " " + AUTHOR_LAST_NAMES.get(0) + ": " + BOOK_TITLES.get(0), result.get(0).getValue(TBook_TITLE()));
+        assertEquals(AUTHOR_FIRST_NAMES.get(0) + " " + AUTHOR_LAST_NAMES.get(0) + ": " + BOOK_TITLES.get(1), result.get(1).getValue(TBook_TITLE()));
+        assertEquals(BOOK_TITLES.get(2), result.get(2).getValue(TBook_TITLE()));
+        assertEquals(BOOK_TITLES.get(3), result.get(3).getValue(TBook_TITLE()));
+    }
+
+    public void testUpdateFromWithAlias() throws Exception {
+        assumeFamilyNotIn(ACCESS, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, SQLITE);
+        jOOQAbstractTest.reset = false;
+
+        Table<B> b1 = TBook().as("b1");
+        Table<B> b2 = TBook().as("b2");
+
+
+        // [#3455] Ensure also that this works for derived (aliased) tables
+        Table<A> a1 = selectFrom(TAuthor()).asTable("a1");
+
         switch (family()) {
-            // Ingres has yet another understanding of this FROM clause.
-            case INGRES:
             case POSTGRES:
-                Table<B> b1 = TBook().as("b1");
-
-                // [#3455] Ensure also that this works for derived (aliased) tables
-                Table<A> a1 = selectFrom(TAuthor()).asTable("a1");
-
-                assertEquals(4,
+            case INGRES:
+            case SYBASE:
+                assertEquals(2,
                 create().update(b1)
                         .set(b1.field(TBook_TITLE()), concat(
                             a1.field(TAuthor_FIRST_NAME()),
                             inline(" "),
                             a1.field(TAuthor_LAST_NAME()),
                             inline(": "),
-                            TBook_TITLE()
+                            b1.field(TBook_TITLE())
                         ))
-                        .from(TBook().join(a1)
-                                     .on(TBook_AUTHOR_ID().eq(a1.field(TAuthor_ID()))
-                                     .and(TBook_ID().lt(5))))
-                        .where(TBook_ID().eq(b1.field(TBook_ID())))
+                        .from(b2.join(a1)
+                                .on(b2.field(TBook_AUTHOR_ID()).eq(a1.field(TAuthor_ID()))
+                                .and(b2.field(TBook_ID()).lt(3))))
+                        .where(b1.field(TBook_ID()).eq(b2.field(TBook_ID())))
                         .execute());
                 break;
 
-            /* [pro] */
+            // [#4314] SQL Server works a bit differently from PostgreSQL and
+            // the others. In fact, it's not allowed to declare aliases in the
+            // UPDATE clause.
             case SQLSERVER:
-            case SYBASE:
-            /* [/pro] */
-
-            default:
-                assertEquals(4,
-                create().update(TBook())
-                        .set(TBook_TITLE(), concat(TAuthor_FIRST_NAME(), inline(" "), TAuthor_LAST_NAME(), inline(": "), TBook_TITLE()))
-                        .from(TBook().join(
-                            TAuthor()).on(TBook_AUTHOR_ID().eq(TAuthor_ID())
-                                      .and(TBook_ID().lt(5))))
+                assertEquals(2,
+                create().update(b1)
+                        .set(b1.field(TBook_TITLE()), concat(
+                            a1.field(TAuthor_FIRST_NAME()),
+                            inline(" "),
+                            a1.field(TAuthor_LAST_NAME()),
+                            inline(": "),
+                            b1.field(TBook_TITLE())
+                        ))
+                        .from(b1.join(a1)
+                                .on(b1.field(TBook_AUTHOR_ID()).eq(a1.field(TAuthor_ID()))
+                                .and(b1.field(TBook_ID()).lt(3))))
                         .execute());
-
                 break;
         }
 
@@ -1616,7 +1627,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         assertEquals(BOOK_AUTHOR_IDS, result.getValues(TBook_AUTHOR_ID()));
         assertEquals(AUTHOR_FIRST_NAMES.get(0) + " " + AUTHOR_LAST_NAMES.get(0) + ": " + BOOK_TITLES.get(0), result.get(0).getValue(TBook_TITLE()));
         assertEquals(AUTHOR_FIRST_NAMES.get(0) + " " + AUTHOR_LAST_NAMES.get(0) + ": " + BOOK_TITLES.get(1), result.get(1).getValue(TBook_TITLE()));
-        assertEquals(AUTHOR_FIRST_NAMES.get(1) + " " + AUTHOR_LAST_NAMES.get(1) + ": " + BOOK_TITLES.get(2), result.get(2).getValue(TBook_TITLE()));
-        assertEquals(AUTHOR_FIRST_NAMES.get(1) + " " + AUTHOR_LAST_NAMES.get(1) + ": " + BOOK_TITLES.get(3), result.get(3).getValue(TBook_TITLE()));
+        assertEquals(BOOK_TITLES.get(2), result.get(2).getValue(TBook_TITLE()));
+        assertEquals(BOOK_TITLES.get(3), result.get(3).getValue(TBook_TITLE()));
     }
 }

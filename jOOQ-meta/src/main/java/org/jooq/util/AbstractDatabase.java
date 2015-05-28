@@ -159,7 +159,7 @@ public abstract class AbstractDatabase implements Database {
     protected AbstractDatabase() {
         exists = new HashMap<Table<?>, Boolean>();
         patterns = new HashMap<String, Pattern>();
-        filters = new ArrayList<Database.Filter>();
+        filters = new ArrayList<Filter>();
     }
 
     @Override
@@ -375,6 +375,10 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final List<Filter> getFilters() {
+        if (filters == null) {
+            filters = new ArrayList<Filter>();
+        }
+
         return Collections.unmodifiableList(filters);
     }
 
@@ -390,6 +394,10 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final String[] getExcludes() {
+        if (excludes == null) {
+            excludes = new String[0];
+        }
+
         return excludes;
     }
 
@@ -400,6 +408,10 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final String[] getIncludes() {
+        if (includes == null) {
+            includes = new String[0];
+        }
+
         return includes;
     }
 
@@ -420,6 +432,10 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final List<RegexFlag> getRegexFlags() {
+        if (regexFlags == null) {
+            regexFlags = new ArrayList<RegexFlag>();
+        }
+
         return regexFlags;
     }
 
@@ -430,6 +446,10 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public String[] getRecordVersionFields() {
+        if (recordVersionFields == null) {
+            recordVersionFields = new String[0];
+        }
+
         return recordVersionFields;
     }
 
@@ -440,6 +460,10 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public String[] getRecordTimestampFields() {
+        if (recordTimestampFields == null) {
+            recordTimestampFields = new String[0];
+        }
+
         return recordTimestampFields;
     }
 
@@ -450,6 +474,10 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public String[] getSyntheticPrimaryKeys() {
+        if (syntheticPrimaryKeys == null) {
+            syntheticPrimaryKeys = new String[0];
+        }
+
         return syntheticPrimaryKeys;
     }
 
@@ -460,6 +488,10 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public String[] getOverridePrimaryKeys() {
+        if (overridePrimaryKeys == null) {
+            overridePrimaryKeys = new String[0];
+        }
+
         return overridePrimaryKeys;
     }
 
@@ -480,6 +512,10 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final List<CustomType> getConfiguredCustomTypes() {
+        if (configuredCustomTypes == null) {
+            configuredCustomTypes = new ArrayList<CustomType>();
+        }
+
         return configuredCustomTypes;
     }
 
@@ -519,6 +555,10 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final List<ForcedType> getConfiguredForcedTypes() {
+        if (configuredForcedTypes == null) {
+            configuredForcedTypes = new ArrayList<ForcedType>();
+        }
+
         return configuredForcedTypes;
     }
 

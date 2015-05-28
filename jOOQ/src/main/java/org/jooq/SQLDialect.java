@@ -243,12 +243,16 @@ public enum SQLDialect {
     /**
      * The SQL Server dialect family.
      * <p>
+     * Use this family (or its dialects) for SQL Server or SQL Azure.
+     * <p>
      * This dialect is available in commercial jOOQ distributions, only.
      */
     SQLSERVER("SQLServer", true),
 
     /**
      * The SQL Server 2008 dialect.
+     * <p>
+     * Use this family (or its dialects) for SQL Server or SQL Azure.
      * <p>
      * This dialect is available in commercial jOOQ distributions, only.
      */
@@ -257,12 +261,16 @@ public enum SQLDialect {
     /**
      * The SQL Server 2012 dialect.
      * <p>
+     * Use this family (or its dialects) for SQL Server or SQL Azure.
+     * <p>
      * This dialect is available in commercial jOOQ distributions, only.
      */
     SQLSERVER2012("SQLServer", true, SQLSERVER, SQLSERVER2008),
 
     /**
      * The SQL Server 2014 dialect.
+     * <p>
+     * Use this family (or its dialects) for SQL Server or SQL Azure.
      * <p>
      * This dialect is available in commercial jOOQ distributions, only.
      */

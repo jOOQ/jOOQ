@@ -53,6 +53,8 @@ import static org.jooq.test.all.listeners.JDBCLifecycleListener.STMT_CLOSE_COUNT
 import static org.jooq.test.all.listeners.JDBCLifecycleListener.STMT_START_COUNT;
 import static org.jooq.test.all.listeners.LifecycleWatcherListener.LISTENER_END_COUNT;
 import static org.jooq.test.all.listeners.LifecycleWatcherListener.LISTENER_START_COUNT;
+import static org.jooq.tools.StringUtils.defaultIfNull;
+import static org.jooq.tools.StringUtils.isBlank;
 import static org.jooq.tools.reflect.Reflect.on;
 
 import java.io.File;
@@ -825,7 +827,7 @@ public abstract class jOOQAbstractTest<
     public final Connection getConnectionMultiSchema() {
         if (!connectionMultiSchemaInitialised) {
             connectionMultiSchemaInitialised = true;
-            connectionMultiSchema = getConnection0("MULTI_SCHEMA", "MULTI_SCHEMA");
+            connectionMultiSchema = getConnection0("MULTI_SCHEMA", getPassword("MULTI_SCHEMA"));
         }
 
         return connectionMultiSchema;
@@ -834,7 +836,7 @@ public abstract class jOOQAbstractTest<
     public final Connection getConnectionMultiSchemaUnused() {
         if (!connectionMultiSchemaUnusedInitialised) {
             connectionMultiSchemaUnusedInitialised = true;
-            connectionMultiSchemaUnused = getConnection0("MULTI_SCHEMA_UNUSED", "MULTI_SCHEMA_UNUSED");
+            connectionMultiSchemaUnused = getConnection0("MULTI_SCHEMA_UNUSED", getPassword("MULTI_SCHEMA_UNUSED"));
         }
 
         return connectionMultiSchemaUnused;
@@ -912,9 +914,18 @@ public abstract class jOOQAbstractTest<
     }
 
     public static final String getPassword(SQLDialect dialect) {
-        return StringUtils.defaultIfNull(
-            getProperties().getProperty("db." + dialect.name().toLowerCase() + ".password"),
-            getProperties().getProperty("db." + dialect.family().name().toLowerCase() + ".password"));
+        return getPassword(dialect, null);
+    }
+
+    public static final String getPassword(SQLDialect dialect, String username) {
+        String result = defaultIfNull(
+            getProperties().getProperty("db." + dialect         .name().toLowerCase() + ".password" + (username == null ? "" : ("." + username))),
+            getProperties().getProperty("db." + dialect.family().name().toLowerCase() + ".password" + (username == null ? "" : ("." + username))));
+
+        if (isBlank(result) && !isBlank(username))
+            result = getPassword(dialect);
+
+        return result;
     }
 
     public final String getDriver() {
@@ -935,6 +946,10 @@ public abstract class jOOQAbstractTest<
 
     public final String getPassword() {
         return getPassword(dialect());
+    }
+
+    public final String getPassword(String username) {
+        return getPassword(dialect(), username);
     }
 
     final Connection getConnection0(String jdbcUser, String jdbcPassword) {

@@ -195,8 +195,8 @@
                     <maxmem>512m</maxmem>
                     <meminitial>256m</meminitial>
                     <encoding>UTF-8</encoding>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                     <debug>true</debug>
                     <debuglevel>lines,vars,source</debuglevel>
                     <!-- [#2413] Make compiler warnings a bit more visible
@@ -282,10 +282,11 @@
         <profile>
             <id>release-oss</id>
             <properties>
-                <classifier></classifier>
+                <java.version>1.8</java.version>
             </properties>
             <build>
                 <plugins>
+                    <!-- This is required by Maven Central -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
@@ -349,22 +350,10 @@
         </profile>
         
         <!-- [pro] xxx
-        xxxx 
-        xxxxxxxxx
-            xxxxxxxxxxxxxxxx
-            xxxxxxxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxx
-            xxxxxxxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxx
-        xxxxxxxxxx
-         xxx
-         
         xxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxx
             xxxxxxxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxxxxxxxxxxx
             xxxxxxx
                 xxxxxxxxx
@@ -397,9 +386,10 @@
         xxxxxxxxxx
         
         xxxxxxxxx
+            xxxx xxxx xxxx xxxxxxx xx xxxx xxxx xxx xxxxx xxxxxxxxxxxxxxxxxx xxxxxxx xxx
             xxxxxxxxxxxxxxxxxxxx
             xxxxxxxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxxxxxxxxxxx
             xxxxxxx
                 xxxxxxxxx
@@ -459,6 +449,58 @@
                             
                             xxxx xxxxx xxxxxxx xxxx xxxx xxx xxxx xxxxxxxxxxx xxxxxxx xxxxxx xxx
                             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxx
+                    xxxxxxxxx
+                xxxxxxxxxx
+            xxxxxxxx
+        xxxxxxxxxx
+        
+        xxxxxxxxx
+            xxxx xxxx xxxx xxxxxxx xx xxxx xxxx xxx xxxxx xxxxxxxxxxx xxxxxxx xxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxx
+            xxxxxxx
+                xxxxxxxxx
+                    xxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxx
+                            xxxxxxxxxxx
+                                xxxxxxxxxxxxxxxxxxxxxxx
+                                xxxxxxx
+                                    xxxxxxxxxxxxxxxx
+                                xxxxxxxx
+                            xxxxxxxxxxxx
+                        xxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxx
+                    xxxxxxxxx
+                    
+                    xxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxx
+                            xxxxxxxxxxx
+                                xxxxxxxxxxxxxxxxxxxxxxx
+                                xxxxxxxxxxxxxxxxxxxxxx
+                                xxxxxxx
+                                    xxxxxxxxxxxxxxxx
+                                xxxxxxxx
+                            xxxxxxxxxxxx
+                        xxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxxxxxxx
                         xxxxxxxxxxxxxxxx
                     xxxxxxxxx
                 xxxxxxxxxx

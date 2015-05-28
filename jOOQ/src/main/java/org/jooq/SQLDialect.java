@@ -118,16 +118,28 @@ public enum SQLDialect {
 
     /**
      * The PostgreSQL dialect family.
+     * <p>
+     * While this family (and its dialects) have been observed to work to some
+     * extent on Amazon RedShift as well, we strongly suggest you use the
+     * official {@link #REDSHIFT} support, instead.
      */
     POSTGRES("Postgres", false),
 
     /**
      * The PostgreSQL dialect family.
+     * <p>
+     * While this family (and its dialects) have been observed to work to some
+     * extent on Amazon RedShift as well, we strongly suggest you use the
+     * official {@link #REDSHIFT} support, instead.
      */
     POSTGRES_9_3("Postgres", false, POSTGRES, null),
 
     /**
      * The PostgreSQL dialect family.
+     * <p>
+     * While this family (and its dialects) have been observed to work to some
+     * extent on Amazon RedShift as well, we strongly suggest you use the
+     * official {@link #REDSHIFT} support, instead.
      */
     POSTGRES_9_4("Postgres", false, POSTGRES, POSTGRES_9_3),
 

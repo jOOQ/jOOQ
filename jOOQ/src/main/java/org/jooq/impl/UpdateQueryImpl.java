@@ -51,6 +51,7 @@ import static org.jooq.Clause.UPDATE_UPDATE;
 import static org.jooq.Clause.UPDATE_WHERE;
 // ...
 // ...
+// ...
 import static org.jooq.impl.DSL.select;
 
 import java.util.Arrays;
@@ -470,17 +471,21 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
     @Override
     final void accept0(Context<?> ctx) {
+        boolean declareTables = ctx.declareTables();
         ctx.start(UPDATE_UPDATE)
            .keyword("update")
            .sql(' ')
-           .declareTables(true)
+
+           // [#4314] Not all SQL dialects support declaring aliased tables in
+           // UPDATE statements
+           .declareTables(!asList().contains(ctx.family()))
            .visit(table)
-           .declareTables(false)
+           .declareTables(declareTables)
            .end(UPDATE_UPDATE);
 
         /* [pro] xx
         xx xxxxxxx xxxxxx xxx x xxxxxxx xxxxxxxxxxxxx xx xxx xxxxxx xx xxxx xxxxxx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx x
+        xx xxxxxxxxxxxxx xx xxxxxxx x
             xxxxxxxxxxxxxxxxxxxxxxx
 
             xx xxxxxxxxxxxxxxxxx x
@@ -512,7 +517,7 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
             // Some dialects don't really support row value expressions on the
             // right hand side of a SET clause
-            if (multiValue != null && !asList().contains(ctx.configuration().dialect().family())) {
+            if (multiValue != null && !asList().contains(ctx.family())) {
                 ctx.visit(multiValue);
             }
 
@@ -547,7 +552,7 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
         ctx.end(UPDATE_SET);
 
-        switch (ctx.configuration().dialect().family()) {
+        switch (ctx.family()) {
 
             /* [pro] xx
             xx xxxxxxx xxxxxx xxx x xxxxxxx xxxxxxxxxxxxx xx xxx xxxxxx xx xxxx xxxxxx

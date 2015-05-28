@@ -157,6 +157,7 @@ class Limit extends AbstractQueryPart {
             /* [pro] */
             case SQLSERVER:
             case SQLSERVER2012:
+            case SQLSERVER2014:
             /* [/pro] */
             case DERBY: {
 

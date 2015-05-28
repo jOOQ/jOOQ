@@ -172,7 +172,7 @@ public class SQLServerTest extends jOOQAbstractTest<
 
     @Override
     protected SQLDialect dialect() {
-        return SQLDialect.SQLSERVER2012;
+        return SQLDialect.SQLSERVER2014;
     }
 
     @Override

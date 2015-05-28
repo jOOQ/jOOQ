@@ -321,6 +321,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             case SQLSERVER:
             case SQLSERVER2008:
             case SQLSERVER2012:
+            case SQLSERVER2014:
             case SYBASE:
                 break;
 

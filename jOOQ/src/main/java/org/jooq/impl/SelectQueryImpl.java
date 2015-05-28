@@ -1252,9 +1252,9 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         }
 
         /* [pro] */
-        // [#2423] SQL Server 2012 requires an ORDER BY clause, along with
+        // [#2423] SQL Server 2012+ requires an ORDER BY clause, along with
         // OFFSET .. FETCH
-        else if (actualLimit.isApplicable() && asList(SQLSERVER, SQLSERVER2012).contains(context.dialect())) {
+        else if (actualLimit.isApplicable() && SQLSERVER2012.precedes(context.dialect())) {
             context.formatSeparator()
                    .keyword("order by")
                    .sql(" (")

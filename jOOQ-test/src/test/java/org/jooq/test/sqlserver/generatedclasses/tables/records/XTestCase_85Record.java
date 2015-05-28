@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record3;
-import org.jooq.Row;
 import org.jooq.Row3;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_85;
@@ -26,7 +25,7 @@ import org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_85;
 @Table(name = "x_test_case_85", schema = "dbo")
 public class XTestCase_85Record extends UpdatableRecordImpl<XTestCase_85Record> implements Record3<Integer, Integer, String> {
 
-	private static final long serialVersionUID = -42208734;
+	private static final long serialVersionUID = -1423571623;
 
 	/**
 	 * Setter for <code>dbo.x_test_case_85.id</code>.
@@ -186,6 +185,9 @@ public class XTestCase_85Record extends UpdatableRecordImpl<XTestCase_85Record> 
 	 */
 	@Override
 	public XTestCase_85Record values(Integer value1, Integer value2, String value3) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
 		return this;
 	}
 

@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record11;
-import org.jooq.Row;
 import org.jooq.Row11;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.all.converters.Boolean_10;
@@ -33,7 +32,7 @@ import org.jooq.test.sqlserver.generatedclasses.tables.TBooleans;
 @Table(name = "t_booleans", schema = "dbo")
 public class TBooleansRecord extends UpdatableRecordImpl<TBooleansRecord> implements Record11<Integer, Boolean_10, Boolean_TF_LC, Boolean_TF_UC, Boolean_YES_NO_LC, Boolean_YES_NO_UC, Boolean_YN_LC, Boolean_YN_UC, Boolean, Boolean, Boolean> {
 
-	private static final long serialVersionUID = -826490619;
+	private static final long serialVersionUID = -1112075894;
 
 	/**
 	 * Setter for <code>dbo.t_booleans.id</code>.
@@ -513,6 +512,17 @@ public class TBooleansRecord extends UpdatableRecordImpl<TBooleansRecord> implem
 	 */
 	@Override
 	public TBooleansRecord values(Integer value1, Boolean_10 value2, Boolean_TF_LC value3, Boolean_TF_UC value4, Boolean_YES_NO_LC value5, Boolean_YES_NO_UC value6, Boolean_YN_LC value7, Boolean_YN_UC value8, Boolean value9, Boolean value10, Boolean value11) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
+		value7(value7);
+		value8(value8);
+		value9(value9);
+		value10(value10);
+		value11(value11);
 		return this;
 	}
 

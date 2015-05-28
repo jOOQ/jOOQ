@@ -12,7 +12,6 @@ import javax.persistence.Table;
 
 import org.jooq.Field;
 import org.jooq.Record6;
-import org.jooq.Row;
 import org.jooq.Row6;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.sqlserver.generatedclasses.tables.VAuthor;
@@ -26,7 +25,7 @@ import org.jooq.test.sqlserver.generatedclasses.tables.VAuthor;
 @Table(name = "v_author", schema = "dbo")
 public class VAuthorRecord extends TableRecordImpl<VAuthorRecord> implements Record6<Integer, String, String, Date, Integer, String> {
 
-	private static final long serialVersionUID = 448364796;
+	private static final long serialVersionUID = 1168731197;
 
 	/**
 	 * Setter for <code>dbo.v_author.ID</code>.
@@ -293,6 +292,12 @@ public class VAuthorRecord extends TableRecordImpl<VAuthorRecord> implements Rec
 	 */
 	@Override
 	public VAuthorRecord values(Integer value1, String value2, String value3, Date value4, Integer value5, String value6) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
 		return this;
 	}
 

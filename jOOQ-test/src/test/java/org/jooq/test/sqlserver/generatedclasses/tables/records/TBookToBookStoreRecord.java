@@ -12,7 +12,6 @@ import javax.persistence.UniqueConstraint;
 import org.jooq.Field;
 import org.jooq.Record2;
 import org.jooq.Record3;
-import org.jooq.Row;
 import org.jooq.Row3;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.sqlserver.generatedclasses.tables.TBookToBookStore;
@@ -28,7 +27,7 @@ import org.jooq.test.sqlserver.generatedclasses.tables.TBookToBookStore;
 })
 public class TBookToBookStoreRecord extends UpdatableRecordImpl<TBookToBookStoreRecord> implements Record3<String, Integer, Integer> {
 
-	private static final long serialVersionUID = 2131728312;
+	private static final long serialVersionUID = 934053129;
 
 	/**
 	 * Setter for <code>dbo.t_book_to_book_store.BOOK_STORE_NAME</code>.
@@ -187,6 +186,9 @@ public class TBookToBookStoreRecord extends UpdatableRecordImpl<TBookToBookStore
 	 */
 	@Override
 	public TBookToBookStoreRecord values(String value1, Integer value2, Integer value3) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
 		return this;
 	}
 

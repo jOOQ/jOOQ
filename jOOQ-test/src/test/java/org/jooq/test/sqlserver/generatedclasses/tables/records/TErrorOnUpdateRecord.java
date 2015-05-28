@@ -10,7 +10,6 @@ import javax.persistence.Table;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.sqlserver.generatedclasses.tables.TErrorOnUpdate;
@@ -24,7 +23,7 @@ import org.jooq.test.sqlserver.generatedclasses.tables.TErrorOnUpdate;
 @Table(name = "t_error_on_update", schema = "dbo")
 public class TErrorOnUpdateRecord extends TableRecordImpl<TErrorOnUpdateRecord> implements Record1<Integer> {
 
-	private static final long serialVersionUID = 2019068985;
+	private static final long serialVersionUID = -1822158364;
 
 	/**
 	 * Setter for <code>dbo.t_error_on_update.id</code>.
@@ -91,6 +90,7 @@ public class TErrorOnUpdateRecord extends TableRecordImpl<TErrorOnUpdateRecord> 
 	 */
 	@Override
 	public TErrorOnUpdateRecord values(Integer value1) {
+		value1(value1);
 		return this;
 	}
 

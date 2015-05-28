@@ -14,7 +14,6 @@ import javax.persistence.Table;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record6;
-import org.jooq.Row;
 import org.jooq.Row6;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.sqlserver.generatedclasses.tables.TAuthor;
@@ -28,7 +27,7 @@ import org.jooq.test.sqlserver.generatedclasses.tables.TAuthor;
 @Table(name = "t_author", schema = "dbo")
 public class TAuthorRecord extends UpdatableRecordImpl<TAuthorRecord> implements Record6<Integer, String, String, Date, Integer, String> {
 
-	private static final long serialVersionUID = -1788389112;
+	private static final long serialVersionUID = 1016637413;
 
 	/**
 	 * Setter for <code>dbo.t_author.ID</code>.
@@ -308,6 +307,12 @@ public class TAuthorRecord extends UpdatableRecordImpl<TAuthorRecord> implements
 	 */
 	@Override
 	public TAuthorRecord values(Integer value1, String value2, String value3, Date value4, Integer value5, String value6) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
 		return this;
 	}
 

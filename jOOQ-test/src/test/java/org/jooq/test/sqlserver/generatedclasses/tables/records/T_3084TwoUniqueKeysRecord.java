@@ -12,7 +12,6 @@ import javax.persistence.UniqueConstraint;
 import org.jooq.Field;
 import org.jooq.Record4;
 import org.jooq.Record5;
-import org.jooq.Row;
 import org.jooq.Row5;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.sqlserver.generatedclasses.tables.T_3084TwoUniqueKeys;
@@ -29,7 +28,7 @@ import org.jooq.test.sqlserver.generatedclasses.tables.T_3084TwoUniqueKeys;
 })
 public class T_3084TwoUniqueKeysRecord extends UpdatableRecordImpl<T_3084TwoUniqueKeysRecord> implements Record5<Integer, Integer, Integer, Integer, Integer> {
 
-	private static final long serialVersionUID = -1050990583;
+	private static final long serialVersionUID = 1640693242;
 
 	/**
 	 * Setter for <code>dbo.t_3084_two_unique_keys.ID1</code>.
@@ -268,6 +267,11 @@ public class T_3084TwoUniqueKeysRecord extends UpdatableRecordImpl<T_3084TwoUniq
 	 */
 	@Override
 	public T_3084TwoUniqueKeysRecord values(Integer value1, Integer value2, Integer value3, Integer value4, Integer value5) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
 		return this;
 	}
 

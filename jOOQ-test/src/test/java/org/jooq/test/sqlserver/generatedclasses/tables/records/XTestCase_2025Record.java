@@ -10,7 +10,6 @@ import javax.persistence.Table;
 
 import org.jooq.Field;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_2025;
@@ -24,7 +23,7 @@ import org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_2025;
 @Table(name = "x_test_case_2025", schema = "dbo")
 public class XTestCase_2025Record extends TableRecordImpl<XTestCase_2025Record> implements Record2<Integer, String> {
 
-	private static final long serialVersionUID = -981266484;
+	private static final long serialVersionUID = -1776844077;
 
 	/**
 	 * Setter for <code>dbo.x_test_case_2025.ref_id</code>.
@@ -131,6 +130,8 @@ public class XTestCase_2025Record extends TableRecordImpl<XTestCase_2025Record> 
 	 */
 	@Override
 	public XTestCase_2025Record values(Integer value1, String value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

@@ -12,7 +12,6 @@ import javax.persistence.Table;
 
 import org.jooq.Field;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.sqlserver.generatedclasses.tables.T_3085;
@@ -26,7 +25,7 @@ import org.jooq.test.sqlserver.generatedclasses.tables.T_3085;
 @Table(name = "t_3085", schema = "dbo")
 public class T_3085Record extends TableRecordImpl<T_3085Record> implements Record2<Integer, Timestamp> {
 
-	private static final long serialVersionUID = 1920092662;
+	private static final long serialVersionUID = -1411406703;
 
 	/**
 	 * Setter for <code>dbo.t_3085.c1</code>.
@@ -133,6 +132,8 @@ public class T_3085Record extends TableRecordImpl<T_3085Record> implements Recor
 	 */
 	@Override
 	public T_3085Record values(Integer value1, Timestamp value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.sqlserver.generatedclasses.tables.T_725LobTest;
@@ -26,7 +25,7 @@ import org.jooq.test.sqlserver.generatedclasses.tables.T_725LobTest;
 @Table(name = "t_725_lob_test", schema = "dbo")
 public class T_725LobTestRecord extends UpdatableRecordImpl<T_725LobTestRecord> implements Record2<Integer, byte[]> {
 
-	private static final long serialVersionUID = 800673872;
+	private static final long serialVersionUID = -40804587;
 
 	/**
 	 * Setter for <code>dbo.t_725_lob_test.ID</code>.
@@ -146,6 +145,8 @@ public class T_725LobTestRecord extends UpdatableRecordImpl<T_725LobTestRecord> 
 	 */
 	@Override
 	public T_725LobTestRecord values(Integer value1, byte[] value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

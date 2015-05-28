@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record4;
-import org.jooq.Row;
 import org.jooq.Row4;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.sqlserver.generatedclasses.tables.TLanguage;
@@ -26,7 +25,7 @@ import org.jooq.test.sqlserver.generatedclasses.tables.TLanguage;
 @Table(name = "t_language", schema = "dbo")
 public class TLanguageRecord extends UpdatableRecordImpl<TLanguageRecord> implements Record4<String, String, String, Integer> {
 
-	private static final long serialVersionUID = -949275381;
+	private static final long serialVersionUID = 1282097556;
 
 	/**
 	 * Setter for <code>dbo.t_language.cd</code>.
@@ -226,6 +225,10 @@ public class TLanguageRecord extends UpdatableRecordImpl<TLanguageRecord> implem
 	 */
 	@Override
 	public TLanguageRecord values(String value1, String value2, String value3, Integer value4) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
 		return this;
 	}
 

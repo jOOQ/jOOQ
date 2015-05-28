@@ -10,7 +10,6 @@ import javax.persistence.Table;
 
 import org.jooq.Field;
 import org.jooq.Record4;
-import org.jooq.Row;
 import org.jooq.Row4;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.sqlserver.generatedclasses.tables.TUnsigned;
@@ -28,7 +27,7 @@ import org.jooq.types.UShort;
 @Table(name = "t_unsigned", schema = "dbo")
 public class TUnsignedRecord extends TableRecordImpl<TUnsignedRecord> implements Record4<UByte, UShort, UInteger, ULong> {
 
-	private static final long serialVersionUID = 177237832;
+	private static final long serialVersionUID = -372398509;
 
 	/**
 	 * Setter for <code>dbo.t_unsigned.u_byte</code>.
@@ -215,6 +214,10 @@ public class TUnsignedRecord extends TableRecordImpl<TUnsignedRecord> implements
 	 */
 	@Override
 	public TUnsignedRecord values(UByte value1, UShort value2, UInteger value3, ULong value4) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
 		return this;
 	}
 

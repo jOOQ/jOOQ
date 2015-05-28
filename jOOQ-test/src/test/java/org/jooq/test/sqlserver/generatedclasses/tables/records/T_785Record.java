@@ -10,7 +10,6 @@ import javax.persistence.Table;
 
 import org.jooq.Field;
 import org.jooq.Record3;
-import org.jooq.Row;
 import org.jooq.Row3;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.sqlserver.generatedclasses.tables.T_785;
@@ -24,7 +23,7 @@ import org.jooq.test.sqlserver.generatedclasses.tables.T_785;
 @Table(name = "t_785", schema = "dbo")
 public class T_785Record extends TableRecordImpl<T_785Record> implements Record3<Integer, String, String> {
 
-	private static final long serialVersionUID = -1936270110;
+	private static final long serialVersionUID = -1624852727;
 
 	/**
 	 * Setter for <code>dbo.t_785.ID</code>.
@@ -171,6 +170,9 @@ public class T_785Record extends TableRecordImpl<T_785Record> implements Record3
 	 */
 	@Override
 	public T_785Record values(Integer value1, String value2, String value3) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
 		return this;
 	}
 

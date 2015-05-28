@@ -10,7 +10,6 @@ import javax.persistence.Table;
 
 import org.jooq.Field;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.sqlserver.generatedclasses.tables.VLibrary;
@@ -24,7 +23,7 @@ import org.jooq.test.sqlserver.generatedclasses.tables.VLibrary;
 @Table(name = "v_library", schema = "dbo")
 public class VLibraryRecord extends TableRecordImpl<VLibraryRecord> implements Record2<String, String> {
 
-	private static final long serialVersionUID = 1556607430;
+	private static final long serialVersionUID = -546705761;
 
 	/**
 	 * Setter for <code>dbo.v_library.author</code>.
@@ -131,6 +130,8 @@ public class VLibraryRecord extends TableRecordImpl<VLibraryRecord> implements R
 	 */
 	@Override
 	public VLibraryRecord values(String value1, String value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

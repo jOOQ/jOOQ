@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.sqlserver.generatedclasses.tables.TIdentityPk;
@@ -26,7 +25,7 @@ import org.jooq.test.sqlserver.generatedclasses.tables.TIdentityPk;
 @Table(name = "t_identity_pk", schema = "dbo")
 public class TIdentityPkRecord extends UpdatableRecordImpl<TIdentityPkRecord> implements Record2<Integer, Integer> {
 
-	private static final long serialVersionUID = -1295143651;
+	private static final long serialVersionUID = 1779917154;
 
 	/**
 	 * Setter for <code>dbo.t_identity_pk.id</code>.
@@ -146,6 +145,8 @@ public class TIdentityPkRecord extends UpdatableRecordImpl<TIdentityPkRecord> im
 	 */
 	@Override
 	public TIdentityPkRecord values(Integer value1, Integer value2) {
+		value1(value1);
+		value2(value2);
 		return this;
 	}
 

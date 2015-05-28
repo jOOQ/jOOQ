@@ -12,7 +12,6 @@ import javax.persistence.UniqueConstraint;
 import org.jooq.Field;
 import org.jooq.Record2;
 import org.jooq.Record3;
-import org.jooq.Row;
 import org.jooq.Row3;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.sqlserver.generatedclasses.tables.T_3090A;
@@ -28,7 +27,7 @@ import org.jooq.test.sqlserver.generatedclasses.tables.T_3090A;
 })
 public class T_3090ARecord extends UpdatableRecordImpl<T_3090ARecord> implements Record3<Integer, Integer, Integer> {
 
-	private static final long serialVersionUID = 249090335;
+	private static final long serialVersionUID = 65853136;
 
 	/**
 	 * Setter for <code>dbo.t_3090_a.id1</code>.
@@ -187,6 +186,9 @@ public class T_3090ARecord extends UpdatableRecordImpl<T_3090ARecord> implements
 	 */
 	@Override
 	public T_3090ARecord values(Integer value1, Integer value2, Integer value3) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
 		return this;
 	}
 

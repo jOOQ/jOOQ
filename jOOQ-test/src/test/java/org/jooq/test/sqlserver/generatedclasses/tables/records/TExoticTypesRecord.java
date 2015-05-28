@@ -14,7 +14,6 @@ import javax.persistence.Table;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record4;
-import org.jooq.Row;
 import org.jooq.Row4;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.all.pojos.jaxb.Book;
@@ -30,7 +29,7 @@ import org.w3c.dom.Node;
 @Table(name = "t_exotic_types", schema = "dbo")
 public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> implements Record4<Integer, UUID, Node, Book> {
 
-	private static final long serialVersionUID = 1014965337;
+	private static final long serialVersionUID = 2077236250;
 
 	/**
 	 * Setter for <code>dbo.t_exotic_types.ID</code>.
@@ -230,6 +229,10 @@ public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> 
 	 */
 	@Override
 	public TExoticTypesRecord values(Integer value1, UUID value2, Node value3, Book value4) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
 		return this;
 	}
 

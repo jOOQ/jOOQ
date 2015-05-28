@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record9;
-import org.jooq.Row;
 import org.jooq.Row9;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.sqlserver.generatedclasses.tables.TBook;
@@ -26,7 +25,7 @@ import org.jooq.test.sqlserver.generatedclasses.tables.TBook;
 @Table(name = "t_book", schema = "dbo")
 public class TBookRecord extends UpdatableRecordImpl<TBookRecord> implements Record9<Integer, Integer, Integer, Integer, String, Integer, Integer, String, byte[]> {
 
-	private static final long serialVersionUID = -2063138292;
+	private static final long serialVersionUID = -1276187441;
 
 	/**
 	 * Setter for <code>dbo.t_book.ID</code>.
@@ -426,6 +425,15 @@ public class TBookRecord extends UpdatableRecordImpl<TBookRecord> implements Rec
 	 */
 	@Override
 	public TBookRecord values(Integer value1, Integer value2, Integer value3, Integer value4, String value5, Integer value6, Integer value7, String value8, byte[] value9) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
+		value7(value7);
+		value8(value8);
+		value9(value9);
 		return this;
 	}
 

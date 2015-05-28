@@ -16,7 +16,6 @@ import javax.persistence.Table;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record9;
-import org.jooq.Row;
 import org.jooq.Row9;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.sqlserver.generatedclasses.tables.TDates;
@@ -30,7 +29,7 @@ import org.jooq.test.sqlserver.generatedclasses.tables.TDates;
 @Table(name = "t_dates", schema = "dbo")
 public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements Record9<Integer, Date, Time, Timestamp, Integer, Long, String, Timestamp, Date> {
 
-	private static final long serialVersionUID = 2016821518;
+	private static final long serialVersionUID = -1439114163;
 
 	/**
 	 * Setter for <code>dbo.t_dates.id</code>.
@@ -430,6 +429,15 @@ public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements R
 	 */
 	@Override
 	public TDatesRecord values(Integer value1, Date value2, Time value3, Timestamp value4, Integer value5, Long value6, String value7, Timestamp value8, Date value9) {
+		value1(value1);
+		value2(value2);
+		value3(value3);
+		value4(value4);
+		value5(value5);
+		value6(value6);
+		value7(value7);
+		value8(value8);
+		value9(value9);
 		return this;
 	}
 

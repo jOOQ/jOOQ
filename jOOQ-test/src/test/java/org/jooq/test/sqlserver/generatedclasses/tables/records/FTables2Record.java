@@ -10,7 +10,6 @@ import javax.persistence.Table;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.sqlserver.generatedclasses.tables.FTables2;
@@ -24,7 +23,7 @@ import org.jooq.test.sqlserver.generatedclasses.tables.FTables2;
 @Table(name = "f_tables2", schema = "dbo")
 public class FTables2Record extends TableRecordImpl<FTables2Record> implements Record1<Long> {
 
-	private static final long serialVersionUID = -1103112052;
+	private static final long serialVersionUID = -1452283391;
 
 	/**
 	 * Setter for <code>dbo.f_tables2.column_value</code>.
@@ -91,6 +90,7 @@ public class FTables2Record extends TableRecordImpl<FTables2Record> implements R
 	 */
 	@Override
 	public FTables2Record values(Long value1) {
+		value1(value1);
 		return this;
 	}
 

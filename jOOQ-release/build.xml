@@ -89,6 +89,7 @@
         <delete dir="${dir.release}/${version}"/>
 	</target>
 
+    <!-- [java-8] -->
 	<!-- [trial] -->
 	<target name="release-oss" description="Release a new version">
 		<property name="version" value="${version-prefix}"/>
@@ -107,11 +108,20 @@
         <antcall target="rest"/>
     </target>
     <!-- [/trial] -->
-	
+
     <target name="release-pro" description="Release a new version">
-    	<property name="version" value="${version-prefix}"/>
-    	
-    	<antcall target="copy-lib-javadoc"/>
+        <property name="version" value="${version-prefix}"/>
+        
+        <antcall target="copy-lib-javadoc"/>
+        <antcall target="copy-src"/>
+        <antcall target="rest"/>
+    </target>
+    <!-- [/java-8] -->
+	
+    <target name="release-pro-java-6" description="Release a new version">
+        <property name="version" value="${version-prefix}"/>
+        
+        <antcall target="copy-lib-javadoc"/>
         <antcall target="copy-src"/>
         <antcall target="rest"/>
     </target>

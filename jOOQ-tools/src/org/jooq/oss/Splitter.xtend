@@ -41,7 +41,10 @@
 package org.jooq.oss
 
 import java.io.File
+import java.util.AbstractMap.SimpleImmutableEntry
 import java.util.ArrayList
+import java.util.Arrays
+import java.util.List
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicInteger
@@ -50,19 +53,25 @@ import org.jooq.SQLDialect
 import org.jooq.xtend.Generators
 
 import static java.util.regex.Pattern.*
-import java.util.AbstractMap.SimpleImmutableEntry
 
 // Use this to generate the jOOQ Open Source Edition code
 class RemoveProCode {
     def static void main(String[] args) {
-        Splitter.split("pro", "/../workspace-jooq-oss");
+        Splitter.split("/../workspace-jooq-oss", "pro");
     }
 }
 
 // Use this to generate the jOOQ Professional and Enterprise Edition code
 class RemoveTrialCode {
     def static void main(String[] args) {
-        Splitter.split("trial", "/../workspace-jooq-pro");
+        Splitter.split("/../workspace-jooq-pro", "trial");
+    }
+}
+
+// Use this to generate the jOOQ Professional and Enterprise Edition code for Java 6
+class RemoveTrialAndJava8Code {
+    def static void main(String[] args) {
+        Splitter.split("/../workspace-jooq-pro-java-6", "trial", "java-8");
     }
 }
 
@@ -71,12 +80,12 @@ class Splitter extends Generators {
     static ExecutorService ex;
     static AtomicInteger charsTotal = new AtomicInteger(0);
     static AtomicInteger charsMasked = new AtomicInteger(0);
-    String token;
+    List<String> tokens;
 
-    def static void split(String token, String workspace) {
+    def static void split(String workspace, String... tokens) {
         ex = Executors.newFixedThreadPool(4);
         
-        val splitter = new Splitter(token);
+        val splitter = new Splitter(tokens);
         
         val workspaceIn = new File("../..").canonicalFile;
         val workspaceOut = new File(workspaceIn.canonicalPath + workspace).canonicalFile;
@@ -126,7 +135,7 @@ class Splitter extends Generators {
                 // Activate this when we change anything to the Sakila db
                 && !canonicalPath.contains("\\Sakila\\")
                 
-                && (token.equals("trial") || (
+                && (tokens.contains("trial") || (
                        !canonicalPath.contains("\\access\\")
                     && !canonicalPath.contains("\\ase\\")
                     && !canonicalPath.contains("\\db2\\")
@@ -148,7 +157,7 @@ class Splitter extends Generators {
                 transform(inRoot, outRoot, file);
             }
         }
-        else if (token == "pro" && in.name.equals("LICENSE.txt")) {
+        else if (tokens.contains("pro") && in.name.equals("LICENSE.txt")) {
             ex.submit[
                 write(out, '''
 Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
@@ -218,17 +227,20 @@ For more information, please visit: http://www.jooq.org/licenses''');
     val replaceAll = new ArrayList<SimpleImmutableEntry<Pattern, String>>();
     val replaceFirst = new ArrayList<SimpleImmutableEntry<Pattern, String>>();
     
-    new(String token) {
-        this.token = token;
+    new(String... tokens) {
+        this.tokens = Arrays.asList(tokens);
         
-        if (token.equals("pro")) {
+        if (tokens.contains("pro")) {
             replaceFirst.add(new SimpleImmutableEntry(compile('''-trial\.jar'''), '''.jar'''));
+        }
+        else if (tokens.contains("java-8")) {
+            replaceFirst.add(new SimpleImmutableEntry(compile('''-trial\.jar'''), '''-pro-java-6.jar'''));
         }
         else {
             replaceFirst.add(new SimpleImmutableEntry(compile('''-trial\.jar'''), '''-pro.jar'''));
         }
         
-        if (token.equals("pro")) {
+        if (tokens.contains("pro")) {
             
             // Replace a couple of imports
             replaceFirst.add(new SimpleImmutableEntry(compile('''import (org\.jooq\.(ArrayConstant|ArrayRecord|VersionsBetweenAndStep|impl\.ArrayRecordImpl|impl\.FlashbackTable.*?)|(com.microsoft.*?));'''), "// ..."));
@@ -302,8 +314,10 @@ For more information, please visit: http://www.jooq.org/licenses''');
         }
                 
         // Remove sections of delimited code
-        translateAll.add(compile('''(?s:(/\* \[«token»\])( \*.*?/\* )(\[/«token»\] \*/))'''));
-        translateAll.add(compile('''(?s:(<!-- \[«token»\])( -->.*?<!-- )(\[/«token»\] -->))'''));
-        translateAll.add(compile('''(?s:(# \[«token»\])()(?:.*?)(# \[/«token»\]))'''));
+        for (token : tokens) {
+            translateAll.add(compile('''(?s:(/\* \[«token»\])( \*.*?/\* )(\[/«token»\] \*/))'''));
+            translateAll.add(compile('''(?s:(<!-- \[«token»\])( -->.*?<!-- )(\[/«token»\] -->))'''));
+            translateAll.add(compile('''(?s:(# \[«token»\])()(?:.*?)(# \[/«token»\]))'''));
+        }
     }
 }

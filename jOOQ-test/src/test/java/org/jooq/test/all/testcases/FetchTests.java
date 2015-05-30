@@ -137,6 +137,7 @@ import org.jooq.test.all.StaticWithAnnotations;
 import org.jooq.test.all.StaticWithoutAnnotations;
 import org.jooq.tools.jdbc.DefaultConnection;
 import org.jooq.tools.jdbc.DefaultPreparedStatement;
+import org.jooq.tools.jdbc.DefaultResultSet;
 import org.jooq.tools.jdbc.JDBCUtils;
 
 import org.junit.Assert;
@@ -1707,6 +1708,30 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             assertTrue(cursor.isClosed());
             assertEquals(1, fetch1.size());
             assertEquals(Integer.valueOf(4), fetch1.get(0).getValue(TBook_ID()));
+        }
+    }
+
+    public void testFetchLazyWithAutoCloseable() throws Exception {
+        ResultSetCloseListener l = new ResultSetCloseListener();
+        try (Cursor<B> c = create(l).fetchLazy(TBook())) {
+            // Don't do anything
+        }
+        assertTrue(l.rsclosed);
+    }
+
+    @SuppressWarnings("serial")
+    class ResultSetCloseListener extends DefaultExecuteListener {
+        boolean rsclosed;
+
+        @Override
+        public void executeEnd(ExecuteContext ctx) {
+            ctx.resultSet(new DefaultResultSet(ctx.resultSet()) {
+                @Override
+                public void close() throws SQLException {
+                    rsclosed = true;
+                    super.close();
+                }
+            });
         }
     }
 

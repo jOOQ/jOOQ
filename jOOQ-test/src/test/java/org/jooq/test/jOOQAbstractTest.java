@@ -1445,6 +1445,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFetchLazyWithAutoCloseable() throws Exception {
+        new FetchTests(this).testFetchLazyWithAutoCloseable();
+    }
+
+    @Test
     public void testFetchViaIterable() throws Exception {
         new FetchTests(this).testFetchViaIterable();
     }

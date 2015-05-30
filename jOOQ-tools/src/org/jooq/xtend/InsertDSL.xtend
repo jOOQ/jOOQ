@@ -44,6 +44,7 @@ package org.jooq.xtend
 /**
  * @author Lukas Eder
  */
+
 import org.jooq.Constants
 
 class InsertDSL extends Generators {
@@ -151,6 +152,7 @@ class InsertDSL extends Generators {
         import java.util.Collection;
         import java.util.List;
         import java.util.Map;
+        import java.util.Optional;
         
         import javax.annotation.Generated;
         
@@ -406,6 +408,11 @@ class InsertDSL extends Generators {
             public final R fetchOne() {
                 getDelegate().execute();
                 return getDelegate().getReturnedRecord();
+            }
+            
+            @Override
+            public final Optional<R> fetchOptional() {
+                return Optional.ofNullable(fetchOne());
             }
         }
         ''');

@@ -2055,6 +2055,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFetchOptional() throws Exception {
+        new FetchTests(this).testFetchOptional();
+    }
+
+    @Test
     public void testFetchValue() throws Exception {
         new FetchTests(this).testFetchValue();
     }

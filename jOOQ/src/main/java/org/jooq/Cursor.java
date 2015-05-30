@@ -45,6 +45,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
@@ -156,6 +157,65 @@ public interface Cursor<R extends Record> extends Iterable<R> {
     Result<R> fetch(int number) throws DataAccessException;
 
     /**
+     * Fetch results into a custom handler callback.
+     * <p>
+     * The resulting records are attached to the original {@link Configuration}
+     * by default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     *
+     * @param handler The handler callback
+     * @return Convenience result, returning the parameter handler itself
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    <H extends RecordHandler<? super R>> H fetchInto(H handler) throws DataAccessException;
+
+    /**
+     * Fetch results into a custom mapper callback.
+     *
+     * @param mapper The mapper callback
+     * @return The custom mapped records
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    <E> List<E> fetch(RecordMapper<? super R, E> mapper) throws DataAccessException;
+
+    /**
+     * Map resulting records onto a custom type.
+     * <p>
+     * This is the same as calling <code>fetch().into(type)</code>. See
+     * {@link Record#into(Class)} for more details
+     *
+     * @param <E> The generic entity type.
+     * @param type The entity type.
+     * @see Record#into(Class)
+     * @see Result#into(Class)
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see DefaultRecordMapper
+     */
+    <E> List<E> fetchInto(Class<? extends E> type) throws DataAccessException, MappingException;
+
+    /**
+     * Map resulting records onto a custom record.
+     * <p>
+     * This is the same as calling <code>fetch().into(table)</code>. See
+     * {@link Record#into(Class)} for more details
+     * <p>
+     * The result and its contained records are attached to the original
+     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
+     * to override this behaviour.
+     *
+     * @param <Z> The generic table record type.
+     * @param table The table type.
+     * @see Record#into(Class)
+     * @see Result#into(Class)
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     */
+    <Z extends Record> Result<Z> fetchInto(Table<Z> table) throws DataAccessException, MappingException;
+
+    /**
      * Fetch the next record from the cursor.
      * <p>
      * This will conveniently close the <code>Cursor</code>, after the last
@@ -188,40 +248,6 @@ public interface Cursor<R extends Record> extends Iterable<R> {
     <H extends RecordHandler<? super R>> H fetchOneInto(H handler) throws DataAccessException;
 
     /**
-     * Fetch results into a custom handler callback.
-     * <p>
-     * The resulting records are attached to the original {@link Configuration}
-     * by default. Use {@link Settings#isAttachRecords()} to override this
-     * behaviour.
-     *
-     * @param handler The handler callback
-     * @return Convenience result, returning the parameter handler itself
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    <H extends RecordHandler<? super R>> H fetchInto(H handler) throws DataAccessException;
-
-    /**
-     * Fetch the next record into a custom mapper callback.
-     * <p>
-     * This will conveniently close the <code>Cursor</code>, after the last
-     * <code>Record</code> was fetched.
-     *
-     * @param mapper The mapper callback
-     * @return The custom mapped record
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    <E> E fetchOne(RecordMapper<? super R, E> mapper) throws DataAccessException;
-
-    /**
-     * Fetch results into a custom mapper callback.
-     *
-     * @param mapper The mapper callback
-     * @return The custom mapped records
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    <E> List<E> fetch(RecordMapper<? super R, E> mapper) throws DataAccessException;
-
-    /**
      * Map the next resulting record onto a custom type.
      * <p>
      * This is the same as calling <code>fetchOne().into(type)</code>. See
@@ -239,21 +265,16 @@ public interface Cursor<R extends Record> extends Iterable<R> {
     <E> E fetchOneInto(Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
-     * Map resulting records onto a custom type.
+     * Fetch the next record into a custom mapper callback.
      * <p>
-     * This is the same as calling <code>fetch().into(type)</code>. See
-     * {@link Record#into(Class)} for more details
+     * This will conveniently close the <code>Cursor</code>, after the last
+     * <code>Record</code> was fetched.
      *
-     * @param <E> The generic entity type.
-     * @param type The entity type.
-     * @see Record#into(Class)
-     * @see Result#into(Class)
+     * @param mapper The mapper callback
+     * @return The custom mapped record
      * @throws DataAccessException if something went wrong executing the query
-     * @throws MappingException wrapping any reflection or data type conversion
-     *             exception that might have occurred while mapping records
-     * @see DefaultRecordMapper
      */
-    <E> List<E> fetchInto(Class<? extends E> type) throws DataAccessException, MappingException;
+    <E> E fetchOne(RecordMapper<? super R, E> mapper) throws DataAccessException;
 
     /**
      * Map the next resulting record onto a custom record.
@@ -275,15 +296,60 @@ public interface Cursor<R extends Record> extends Iterable<R> {
      */
     <Z extends Record> Z fetchOneInto(Table<Z> table) throws DataAccessException, MappingException;
 
+    /* [java-8] */
     /**
-     * Map resulting records onto a custom record.
+     * Fetch the next record from the cursor.
      * <p>
-     * This is the same as calling <code>fetch().into(table)</code>. See
+     * This will conveniently close the <code>Cursor</code>, after the last
+     * <code>Record</code> was fetched.
+     * <p>
+     * The resulting record is attached to the original {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     *
+     * @return The next record from the cursor
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    Optional<R> fetchOptional() throws DataAccessException;
+
+    /**
+     * Map the next resulting record onto a custom type.
+     * <p>
+     * This is the same as calling <code>fetchOne().into(type)</code>. See
+     * {@link Record#into(Class)} for more details
+     *
+     * @param <E> The generic entity type.
+     * @param type The entity type.
+     * @see Record#into(Class)
+     * @see Result#into(Class)
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see DefaultRecordMapper
+     */
+    <E> Optional<E> fetchOptionalInto(Class<? extends E> type) throws DataAccessException, MappingException;
+
+    /**
+     * Fetch the next record into a custom mapper callback.
+     * <p>
+     * This will conveniently close the <code>Cursor</code>, after the last
+     * <code>Record</code> was fetched.
+     *
+     * @param mapper The mapper callback
+     * @return The custom mapped record
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    <E> Optional<E> fetchOptional(RecordMapper<? super R, E> mapper) throws DataAccessException;
+
+    /**
+     * Map the next resulting record onto a custom record.
+     * <p>
+     * This is the same as calling <code>fetchOne().into(table)</code>. See
      * {@link Record#into(Class)} for more details
      * <p>
-     * The result and its contained records are attached to the original
-     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
-     * to override this behaviour.
+     * The resulting record is attached to the original {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
      *
      * @param <Z> The generic table record type.
      * @param table The table type.
@@ -293,7 +359,8 @@ public interface Cursor<R extends Record> extends Iterable<R> {
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      */
-    <Z extends Record> Result<Z> fetchInto(Table<Z> table) throws DataAccessException, MappingException;
+    <Z extends Record> Optional<Z> fetchOptionalInto(Table<Z> table) throws DataAccessException, MappingException;
+    /* [/java-8] */
 
     /**
      * Explicitly close the underlying {@link PreparedStatement} and

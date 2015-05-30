@@ -47,6 +47,7 @@ import static org.jooq.impl.DSL.table;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.annotation.Generated;
 
@@ -671,5 +672,10 @@ final class UpdateImpl<R extends Record>
     public final R fetchOne() {
         getDelegate().execute();
         return getDelegate().getReturnedRecord();
+    }
+
+    @Override
+    public final Optional<R> fetchOptional() {
+        return Optional.ofNullable(fetchOne());
     }
 }

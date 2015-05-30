@@ -68,6 +68,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.jooq.BindingGetResultSetContext;
 import org.jooq.Cursor;
@@ -83,6 +84,7 @@ import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.Table;
 import org.jooq.exception.ControlFlowSignal;
+import org.jooq.exception.DataAccessException;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.JDBC41ResultSet;
 import org.jooq.tools.jdbc.JDBCUtils;
@@ -201,6 +203,28 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
         return null;
     }
+
+    /* [java-8] */
+    @Override
+    public final Optional<R> fetchOptional() throws DataAccessException {
+        return Optional.ofNullable(fetchOne());
+    }
+
+    @Override
+    public final <E> Optional<E> fetchOptionalInto(Class<? extends E> type) {
+        return Optional.ofNullable(fetchOneInto(type));
+    }
+
+    @Override
+    public final <E> Optional<E> fetchOptional(RecordMapper<? super R, E> mapper) {
+        return Optional.ofNullable(fetchOne(mapper));
+    }
+
+    @Override
+    public final <Z extends Record> Optional<Z> fetchOptionalInto(Table<Z> table) {
+        return Optional.ofNullable(fetchOneInto(table));
+    }
+    /* [/java-8] */
 
     @Override
     public final Result<R> fetch(int number) {

@@ -45,6 +45,7 @@ import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -242,5 +243,10 @@ class DeleteImpl<R extends Record>
     public final R fetchOne() {
         getDelegate().execute();
         return getDelegate().getReturnedRecord();
+    }
+
+    @Override
+    public final Optional<R> fetchOptional() {
+        return Optional.ofNullable(fetchOne());
     }
 }

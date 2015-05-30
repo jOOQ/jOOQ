@@ -44,6 +44,8 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.POSTGRES;
 
+import java.util.Optional;
+
 import org.jooq.exception.DataAccessException;
 
 /**
@@ -71,7 +73,7 @@ public interface DeleteResultStep<R extends Record> extends Delete<R> {
 
     /**
      * The result holding returned values as specified by the
-     * {@link UpdateReturningStep}
+     * {@link UpdateReturningStep}.
      *
      * @return The returned values as specified by the
      *         {@link UpdateReturningStep}. Note:
@@ -89,7 +91,7 @@ public interface DeleteResultStep<R extends Record> extends Delete<R> {
 
     /**
      * The record holding returned values as specified by the
-     * {@link UpdateReturningStep}
+     * {@link UpdateReturningStep}.
      *
      * @return The returned value as specified by the
      *         {@link UpdateReturningStep}. This may return <code>null</code> in
@@ -100,4 +102,18 @@ public interface DeleteResultStep<R extends Record> extends Delete<R> {
      */
     @Support({ DB2, FIREBIRD, POSTGRES })
     R fetchOne() throws DataAccessException;
+
+    /* [java-8] */
+    /**
+     * The record holding returned values as specified by the
+     * {@link UpdateReturningStep}.
+     *
+     * @return The returned value as specified by the
+     *         {@link UpdateReturningStep}
+     * @throws DataAccessException if something went wrong executing the query
+     * @see UpdateQuery#getReturnedRecord()
+     */
+    @Support({ DB2, FIREBIRD, POSTGRES })
+    Optional<R> fetchOptional() throws DataAccessException;
+    /* [/java-8] */
 }

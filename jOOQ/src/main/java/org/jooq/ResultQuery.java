@@ -48,6 +48,7 @@ import java.sql.Statement;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
@@ -624,6 +625,249 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws TooManyRowsException if the query returned more than one record
      */
     <Z extends Record> Z fetchOneInto(Table<Z> table) throws DataAccessException, TooManyRowsException;
+
+    /* [java-8] */
+    /**
+     * Execute the query and return at most one resulting value for a
+     * field from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOptional()} and then
+     * {@link Record#getValue(Field)}
+     *
+     * @return The resulting value
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    <T> Optional<T> fetchOptional(Field<T> field) throws DataAccessException, TooManyRowsException;
+
+    /**
+     * Execute the query and return at most one resulting value for a
+     * field from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOptional()} and then
+     * {@link Record#getValue(Field, Class)}
+     *
+     * @return The resulting value
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    <T> Optional<T> fetchOptional(Field<?> field, Class<? extends T> type) throws DataAccessException, TooManyRowsException;
+
+    /**
+     * Execute the query and return at most one resulting value for a
+     * field from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOptional()} and then
+     * {@link Record#getValue(Field, Converter)}
+     *
+     * @return The resulting value
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    <T, U> Optional<U> fetchOptional(Field<T> field, Converter<? super T, U> converter) throws DataAccessException, TooManyRowsException;
+
+    /**
+     * Execute the query and return at most one resulting value for a
+     * field index from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOptional()} and then
+     * {@link Record#getValue(int)}
+     *
+     * @return The resulting value
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    Optional<?> fetchOptional(int fieldIndex) throws DataAccessException, TooManyRowsException;
+
+    /**
+     * Execute the query and return at most one resulting value for a
+     * field index from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOptional()} and then
+     * {@link Record#getValue(int, Class)}
+     *
+     * @return The resulting value
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    <T> Optional<T> fetchOptional(int fieldIndex, Class<? extends T> type) throws DataAccessException, TooManyRowsException;
+
+    /**
+     * Execute the query and return at most one resulting value for a
+     * field index from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOptional()} and then
+     * {@link Record#getValue(int, Converter)}
+     *
+     * @return The resulting value
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    <U> Optional<U> fetchOptional(int fieldIndex, Converter<?, U> converter) throws DataAccessException, TooManyRowsException;
+
+    /**
+     * Execute the query and return at most one resulting value for a
+     * field name from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOptional()} and then
+     * {@link Record#getValue(String)}
+     *
+     * @return The resulting value
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    Optional<?> fetchOptional(String fieldName) throws DataAccessException, TooManyRowsException;
+
+    /**
+     * Execute the query and return at most one resulting value for a
+     * field name from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOptional()} and then
+     * {@link Record#getValue(String, Class)}
+     *
+     * @return The resulting value
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    <T> Optional<T> fetchOptional(String fieldName, Class<? extends T> type) throws DataAccessException, TooManyRowsException;
+
+    /**
+     * Execute the query and return at most one resulting value for a
+     * field name from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOptional()} and then
+     * {@link Record#getValue(String, Converter)}
+     *
+     * @return The resulting value
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    <U> Optional<U> fetchOptional(String fieldName, Converter<?, U> converter) throws DataAccessException, TooManyRowsException;
+
+    /**
+     * Execute the query and return at most one resulting value for a
+     * field name from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOptional()} and then
+     * {@link Record#getValue(Name)}
+     *
+     * @return The resulting value
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    Optional<?> fetchOptional(Name fieldName) throws DataAccessException, TooManyRowsException;
+
+    /**
+     * Execute the query and return at most one resulting value for a
+     * field name from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOptional()} and then
+     * {@link Record#getValue(Name, Class)}
+     *
+     * @return The resulting value
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    <T> Optional<T> fetchOptional(Name fieldName, Class<? extends T> type) throws DataAccessException, TooManyRowsException;
+
+    /**
+     * Execute the query and return at most one resulting value for a
+     * field name from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOptional()} and then
+     * {@link Record#getValue(Name, Converter)}
+     *
+     * @return The resulting value
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    <U> Optional<U> fetchOptional(Name fieldName, Converter<?, U> converter) throws DataAccessException, TooManyRowsException;
+
+    /**
+     * Execute the query and return at most one resulting record.
+     * <p>
+     * The resulting record is attached to the original {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     *
+     * @return The resulting record
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    Optional<R> fetchOptional() throws DataAccessException, TooManyRowsException;
+
+    /**
+     * Execute the query and return at most one resulting value into a
+     * custom mapper callback.
+     *
+     * @return The custom mapped record
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    <E> Optional<E> fetchOptional(RecordMapper<? super R, E> mapper) throws DataAccessException, TooManyRowsException;
+
+    /**
+     * Execute the query and return at most one resulting record as a name/value
+     * map.
+     *
+     * @return The resulting record
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     * @see Result#intoMaps()
+     * @see Record#intoMap()
+     */
+    Optional<Map<String, Object>> fetchOptionalMap() throws DataAccessException, TooManyRowsException;
+
+    /**
+     * Execute the query and return at most one resulting record as an array.
+     *
+     * @return The resulting record
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    Optional<Object[]> fetchOptionalArray() throws DataAccessException, TooManyRowsException;
+
+    /**
+     * Map resulting records onto a custom type.
+     * <p>
+     * This is the same as calling <code><pre>
+     * Optional&lt;E> result = q.fetchOptional().map(r -> r.into(type));
+     * </pre></code>. See {@link Record#into(Class)} for more details
+     *
+     * @param <E> The generic entity type.
+     * @param type The entity type.
+     * @return The resulting record
+     * @see Record#into(Class)
+     * @see Result#into(Class)
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @throws TooManyRowsException if the query returned more than one record
+     * @see DefaultRecordMapper
+     */
+    <E> Optional<E> fetchOptionalInto(Class<? extends E> type) throws DataAccessException, MappingException, TooManyRowsException;
+
+    /**
+     * Map resulting records onto a custom record.
+     * <p>
+     * This is the same as calling <code><pre>
+     * Optional&lt;Z> result = q.fetchOptional().map(r -> r.into(table));
+     * </pre></code>. See {@link Record#into(Table)} for more details
+     * <p>
+     * The resulting record is attached to the original {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     *
+     * @param <Z> The generic table record type.
+     * @param table The table type.
+     * @return The resulting record
+     * @see Record#into(Table)
+     * @see Result#into(Table)
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    <Z extends Record> Optional<Z> fetchOptionalInto(Table<Z> table) throws DataAccessException, TooManyRowsException;
+    /* [/java-8] */
 
     /**
      * Execute the query and return at most one resulting value for a

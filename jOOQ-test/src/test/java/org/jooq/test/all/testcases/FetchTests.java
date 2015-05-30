@@ -84,6 +84,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.jooq.AttachableInternal;
 import org.jooq.Cursor;
@@ -96,6 +97,7 @@ import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record6;
 import org.jooq.Result;
+import org.jooq.ResultQuery;
 import org.jooq.Row;
 import org.jooq.Select;
 import org.jooq.SelectQuery;
@@ -485,6 +487,23 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
         Record record = q.fetchAny();
         assertEquals("Coelho", record.getValue(TAuthor_LAST_NAME()));
+    }
+
+    public void testFetchOptional() throws Exception {
+        ResultQuery<B> q1 =
+        create().selectFrom(TBook())
+                .where(TBook_ID().eq(1));
+
+        Optional<B> b1 = q1.fetchOptional();
+        assertTrue(b1.isPresent());
+        assertEquals(BOOK_TITLES.get(0), b1.map(b -> b.getValue(TBook_TITLE())).get());
+
+        ResultQuery<B> q2 =
+        create().selectFrom(TBook())
+                .where(TBook_ID().eq(5));
+
+        Optional<B> b2 = q2.fetchOptional();
+        assertFalse(b2.isPresent());
     }
 
     public void testFetchValue() throws Exception {

@@ -51,6 +51,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
@@ -2522,6 +2523,96 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     @Override
     public final <Z extends Record> Z fetchOneInto(Table<Z> table) {
         return getDelegate().fetchOneInto(table);
+    }
+
+    @Override
+    public final <T> Optional<T> fetchOptional(Field<T> field) {
+        return getDelegate().fetchOptional(field);
+    }
+
+    @Override
+    public final <T> Optional<T> fetchOptional(Field<?> field, Class<? extends T> type) {
+        return getDelegate().fetchOptional(field, type);
+    }
+
+    @Override
+    public final <T, U> Optional<U> fetchOptional(Field<T> field, Converter<? super T, U> converter) {
+        return getDelegate().fetchOptional(field, converter);
+    }
+
+    @Override
+    public final Optional<?> fetchOptional(int fieldIndex) {
+        return getDelegate().fetchOptional(fieldIndex);
+    }
+
+    @Override
+    public final <T> Optional<T> fetchOptional(int fieldIndex, Class<? extends T> type) {
+        return getDelegate().fetchOptional(fieldIndex, type);
+    }
+
+    @Override
+    public final <U> Optional<U> fetchOptional(int fieldIndex, Converter<?, U> converter) {
+        return getDelegate().fetchOptional(fieldIndex, converter);
+    }
+
+    @Override
+    public final Optional<?> fetchOptional(String fieldName) {
+        return getDelegate().fetchOptional(fieldName);
+    }
+
+    @Override
+    public final <T> Optional<T> fetchOptional(String fieldName, Class<? extends T> type) {
+        return getDelegate().fetchOptional(fieldName, type);
+    }
+
+    @Override
+    public final <U> Optional<U> fetchOptional(String fieldName, Converter<?, U> converter) {
+        return getDelegate().fetchOptional(fieldName, converter);
+    }
+
+    @Override
+    public final Optional<?> fetchOptional(Name fieldName) {
+        return getDelegate().fetchOptional(fieldName);
+    }
+
+    @Override
+    public final <T> Optional<T> fetchOptional(Name fieldName, Class<? extends T> type) {
+        return getDelegate().fetchOptional(fieldName, type);
+    }
+
+    @Override
+    public final <U> Optional<U> fetchOptional(Name fieldName, Converter<?, U> converter) {
+        return getDelegate().fetchOptional(fieldName, converter);
+    }
+
+    @Override
+    public final Optional<R> fetchOptional() {
+        return getDelegate().fetchOptional();
+    }
+
+    @Override
+    public final <E> Optional<E> fetchOptional(RecordMapper<? super R, E> mapper) {
+        return getDelegate().fetchOptional(mapper);
+    }
+
+    @Override
+    public final Optional<Map<String, Object>> fetchOptionalMap() {
+        return getDelegate().fetchOptionalMap();
+    }
+
+    @Override
+    public final Optional<Object[]> fetchOptionalArray() {
+        return getDelegate().fetchOptionalArray();
+    }
+
+    @Override
+    public final <E> Optional<E> fetchOptionalInto(Class<? extends E> type) {
+        return getDelegate().fetchOptionalInto(type);
+    }
+
+    @Override
+    public final <Z extends Record> Optional<Z> fetchOptionalInto(Table<Z> table) {
+        return getDelegate().fetchOptionalInto(table);
     }
 
     @Override

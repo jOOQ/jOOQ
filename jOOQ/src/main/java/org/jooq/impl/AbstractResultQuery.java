@@ -58,6 +58,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -507,6 +508,98 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         R record = fetchOne();
         return record == null ? null : record.into(table);
     }
+
+    /* [java-8] */
+    @Override
+    public final <T> Optional<T> fetchOptional(Field<T> field) {
+        return Optional.ofNullable(fetchOne(field));
+    }
+
+    @Override
+    public final <T> Optional<T> fetchOptional(Field<?> field, Class<? extends T> type) {
+        return Optional.ofNullable(fetchOne(field, type));
+    }
+
+    @Override
+    public final <T, U> Optional<U> fetchOptional(Field<T> field, Converter<? super T, U> converter) {
+        return Optional.ofNullable(fetchOne(field, converter));
+    }
+
+    @Override
+    public final Optional<?> fetchOptional(int fieldIndex) {
+        return Optional.ofNullable(fetchOne(fieldIndex));
+    }
+
+    @Override
+    public final <T> Optional<T> fetchOptional(int fieldIndex, Class<? extends T> type) {
+        return Optional.ofNullable(fetchOne(fieldIndex, type));
+    }
+
+    @Override
+    public final <U> Optional<U> fetchOptional(int fieldIndex, Converter<?, U> converter) {
+        return Optional.ofNullable(fetchOne(fieldIndex, converter));
+    }
+
+    @Override
+    public final Optional<?> fetchOptional(String fieldName) {
+        return Optional.ofNullable(fetchOne(fieldName));
+    }
+
+    @Override
+    public final <T> Optional<T> fetchOptional(String fieldName, Class<? extends T> type) {
+        return Optional.ofNullable(fetchOne(fieldName, type));
+    }
+
+    @Override
+    public final <U> Optional<U> fetchOptional(String fieldName, Converter<?, U> converter) {
+        return Optional.ofNullable(fetchOne(fieldName, converter));
+    }
+
+    @Override
+    public final Optional<?> fetchOptional(Name fieldName) {
+        return Optional.ofNullable(fetchOne(fieldName));
+    }
+
+    @Override
+    public final <T> Optional<T> fetchOptional(Name fieldName, Class<? extends T> type) {
+        return Optional.ofNullable(fetchOne(fieldName, type));
+    }
+
+    @Override
+    public final <U> Optional<U> fetchOptional(Name fieldName, Converter<?, U> converter) {
+        return Optional.ofNullable(fetchOne(fieldName, converter));
+    }
+
+    @Override
+    public final Optional<R> fetchOptional() {
+        return Optional.ofNullable(fetchOne());
+    }
+
+    @Override
+    public final <E> Optional<E> fetchOptional(RecordMapper<? super R, E> mapper) {
+        return Optional.ofNullable(fetchOne(mapper));
+    }
+
+    @Override
+    public final Optional<Map<String, Object>> fetchOptionalMap() {
+        return Optional.ofNullable(fetchOneMap());
+    }
+
+    @Override
+    public final Optional<Object[]> fetchOptionalArray() {
+        return Optional.ofNullable(fetchOneArray());
+    }
+
+    @Override
+    public final <E> Optional<E> fetchOptionalInto(Class<? extends E> type) {
+        return Optional.ofNullable(fetchOneInto(type));
+    }
+
+    @Override
+    public final <Z extends Record> Optional<Z> fetchOptionalInto(Table<Z> table) {
+        return Optional.ofNullable(fetchOneInto(table));
+    }
+    /* [/java-8] */
 
     @Override
     public final <T> T fetchAny(Field<T> field) {

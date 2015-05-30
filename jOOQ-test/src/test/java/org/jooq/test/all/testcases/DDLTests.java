@@ -562,7 +562,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                 assertEquals(1, create().fetchCount(table(name("t1"))));
                 assertEquals(2, create().fetchOne(table(name("t2"))).getValue(0));
             });
-        }, ORACLE);
+
+        // Currently not supported by Derby (https://issues.apache.org/jira/browse/DERBY-6813)
+        }, DERBY, ORACLE);
 
         foreignKeys(() -> {
             create().alterTable("t2").add(
@@ -584,7 +586,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                 assertEquals(2, create().fetchCount(table(name("t1"))));
                 assertEquals(0, create().fetchOne(table(name("t2"))).getValue(0, int.class));
             });
-        }, ORACLE);
+        }, DERBY, ORACLE);
 
 
         skipForFamilies(() -> {
@@ -623,7 +625,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                 assertEquals(2, create().fetchCount(table(name("t1"))));
                 assertEquals(2, create().fetchOne(table(name("t2"))).getValue(0, int.class));
             });
-        }, ORACLE);
+        }, DERBY, ORACLE);
 
         skipForFamilies(() -> {
             foreignKeys(() -> {
@@ -635,7 +637,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                 assertEquals(2, create().fetchCount(table(name("t1"))));
                 assertNull(create().fetchOne(table(name("t2"))).getValue(0));
             });
-        }, ORACLE);
+        }, DERBY, ORACLE);
     }
 
     public void testAlterTableDropConstraint() throws Exception {

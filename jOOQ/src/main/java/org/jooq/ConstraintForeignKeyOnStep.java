@@ -99,7 +99,7 @@ public interface ConstraintForeignKeyOnStep extends ConstraintFinalStep {
      * Add an <code>ON DELETE SET DEFAULT</code> clause to the
      * <code>FOREIGN KEY</code> constraint.
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     ConstraintFinalStep onDeleteSetDefault();
 
     /**
@@ -120,21 +120,21 @@ public interface ConstraintForeignKeyOnStep extends ConstraintFinalStep {
      * Add an <code>ON UPDATE CASCADE</code> clause to the
      * <code>FOREIGN KEY</code> constraint.
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     ConstraintFinalStep onUpdateCascade();
 
     /**
      * Add an <code>ON UPDATE SET NULL</code> clause to the
      * <code>FOREIGN KEY</code> constraint.
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     ConstraintFinalStep onUpdateSetNull();
 
     /**
      * Add an <code>ON UPDATE SET DEFAULT</code> clause to the
      * <code>FOREIGN KEY</code> constraint.
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     ConstraintFinalStep onUpdateSetDefault();
 
 }

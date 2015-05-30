@@ -494,7 +494,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
                     // [#4151] Some databases don't allow for qualifying column
                     // names here. Copy also to TableList
-                    boolean unqualified = asList(DERBY, H2, HANA, HSQLDB).contains(context.family());
+                    boolean unqualified = asList(DERBY, FIREBIRD, H2, HANA, HSQLDB).contains(context.family());
                     boolean qualify = context.qualify();
 
                     if (unqualified)

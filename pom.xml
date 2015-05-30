@@ -280,6 +280,16 @@
 
     <profiles>
         <profile>
+            <id>default</id>
+            <properties>
+                <java.version>1.8</java.version>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        
+        <profile>
             <id>release-oss</id>
             <properties>
                 <java.version>1.8</java.version>

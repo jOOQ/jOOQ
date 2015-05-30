@@ -5183,7 +5183,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropSequence(String)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     DropSequenceFinalStep dropSequence(String sequence);
 
     /**
@@ -5191,7 +5191,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropSequence(Name)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     DropSequenceFinalStep dropSequence(Name sequence);
 
     /**
@@ -5199,7 +5199,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropSequence(Sequence)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     DropSequenceFinalStep dropSequence(Sequence<?> sequence);
 
     /**

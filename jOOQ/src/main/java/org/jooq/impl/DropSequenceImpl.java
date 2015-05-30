@@ -115,8 +115,12 @@ class DropSequenceImpl extends AbstractQuery implements
         if (ifExists && supportsIfExists(ctx))
             ctx.keyword("if exists").sql(' ');
 
-        ctx.visit(sequence)
-           .end(DROP_SEQUENCE_SEQUENCE);
+        ctx.visit(sequence);
+
+        if (ctx.family() == DERBY)
+            ctx.sql(' ').keyword("restrict");
+
+        ctx.end(DROP_SEQUENCE_SEQUENCE);
     }
 
     @Override

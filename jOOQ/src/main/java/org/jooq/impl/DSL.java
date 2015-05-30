@@ -4665,7 +4665,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequence(String)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     public static <T extends Number> DropSequenceFinalStep dropSequence(String sequence) {
         return using(new DefaultConfiguration()).dropSequence(sequence);
     }
@@ -4675,7 +4675,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequence(Name)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     public static <T extends Number> DropSequenceFinalStep dropSequence(Name sequence) {
         return using(new DefaultConfiguration()).dropSequence(sequence);
     }
@@ -4685,7 +4685,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequence(Sequence)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     public static <T extends Number> DropSequenceFinalStep dropSequence(Sequence<?> sequence) {
         return using(new DefaultConfiguration()).dropSequence(sequence);
     }

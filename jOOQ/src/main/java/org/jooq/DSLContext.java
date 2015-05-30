@@ -4847,7 +4847,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createTable(String)
      */
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateTableAsStep<Record> createTable(String table);
 
     /**
@@ -4855,7 +4855,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createTable(Name)
      */
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateTableAsStep<Record> createTable(Name table);
 
     /**
@@ -4863,7 +4863,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createTable(Table)
      */
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateTableAsStep<Record> createTable(Table<?> table);
 
     /**

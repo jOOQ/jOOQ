@@ -4251,7 +4251,7 @@ public class DSL {
      *
      * @see DSLContext#createTable(String)
      */
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateTableAsStep<Record> createTable(String table) {
         return using(new DefaultConfiguration()).createTable(table);
     }
@@ -4261,7 +4261,7 @@ public class DSL {
      *
      * @see DSLContext#createTable(Name)
      */
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateTableAsStep<Record> createTable(Name table) {
         return using(new DefaultConfiguration()).createTable(table);
     }
@@ -4271,7 +4271,7 @@ public class DSL {
      *
      * @see DSLContext#createTable(Table)
      */
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateTableAsStep<Record> createTable(Table<?> table) {
         return using(new DefaultConfiguration()).createTable(table);
     }

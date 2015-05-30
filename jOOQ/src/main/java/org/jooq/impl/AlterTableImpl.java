@@ -325,9 +325,11 @@ class AlterTableImpl extends AbstractQuery implements
                     /* [pro] xx
                     xxxx xxxx
                     xxxx xxxxxxxx
-                        xxxxxxxxx xxxxxxxxxxxxxxx xxxx xxxxxxx
-                        xxxxxx
                     xx [/pro] */
+
+                    case DERBY:
+                        ctx.sql(' ').keyword("set data type");
+                        break;
 
                     case POSTGRES:
                         ctx.sql(' ').keyword("type");

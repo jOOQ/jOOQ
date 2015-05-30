@@ -288,28 +288,27 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
     public void testAlterTableAdd() throws Exception {
         try {
-            // TODO: Re-use jOOQ API for this
-            create().execute("create table {0} ({1} " + varchar() + ")", name("t"), name("a"));
-            create().insertInto(table(name("t")), field(name("a"))).values(1).execute();
-            assertEquals(asList("1"), asList(create().fetchOne(table(name("t"))).intoArray()));
+            create().createTable("t").column("a", SQLDataType.VARCHAR.length(10)).execute();
+            create().insertInto(table(name("t")), field(name("a"))).values("A").execute();
+            assertEquals(asList("A"), asList(create().fetchOne(table(name("t"))).intoArray()));
 
             create().alterTable("t").add("b", SQLDataType.INTEGER).execute();
-            assertEquals(asList("1", null), asList(create().fetchOne(table(name("t"))).intoArray()));
+            assertEquals(asList("A", null), asList(create().fetchOne(table(name("t"))).intoArray()));
 
             create().alterTable("t").add("c", SQLDataType.NUMERIC).execute();
-            assertEquals(asList("1", null, null), asList(create().fetchOne(table(name("t"))).intoArray()));
+            assertEquals(asList("A", null, null), asList(create().fetchOne(table(name("t"))).intoArray()));
 
             create().alterTable("t").add("d", SQLDataType.NUMERIC.precision(5)).execute();
-            assertEquals(asList("1", null, null, null), asList(create().fetchOne(table(name("t"))).intoArray()));
+            assertEquals(asList("A", null, null, null), asList(create().fetchOne(table(name("t"))).intoArray()));
 
             create().alterTable("t").add("e", SQLDataType.NUMERIC.precision(5, 2)).execute();
-            assertEquals(asList("1", null, null, null, null), asList(create().fetchOne(table(name("t"))).intoArray()));
+            assertEquals(asList("A", null, null, null, null), asList(create().fetchOne(table(name("t"))).intoArray()));
 
             create().alterTable("t").add("f", SQLDataType.VARCHAR).execute();
-            assertEquals(asList("1", null, null, null, null, null), asList(create().fetchOne(table(name("t"))).intoArray()));
+            assertEquals(asList("A", null, null, null, null, null), asList(create().fetchOne(table(name("t"))).intoArray()));
 
             create().alterTable("t").add("g", SQLDataType.VARCHAR.length(5)).execute();
-            assertEquals(asList("1", null, null, null, null, null, null), asList(create().fetchOne(table(name("t"))).intoArray()));
+            assertEquals(asList("A", null, null, null, null, null, null), asList(create().fetchOne(table(name("t"))).intoArray()));
         }
         finally {
             ignoreThrows(() -> create().dropTable("t").execute());

@@ -432,7 +432,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testIntersectAndExcept() throws Exception {
-        assumeFamilyNotIn(MARIADB, MYSQL, FIREBIRD);
+        assumeFamilyNotIn(FIREBIRD, MARIADB, MYSQL);
 
         // [#3507] Not all dialects support INTERSECT and EXCEPT
         Result<Record1<Integer>> r1 =
@@ -463,7 +463,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testIntersectAllAndExceptAll() throws Exception {
-        assumeFamilyNotIn(H2, SQLSERVER);
+        assumeFamilyNotIn(FIREBIRD, MARIADB, MYSQL, H2, SQLSERVER);
 
         Result<Record1<Integer>> r1 =
         create().select(TBook_AUTHOR_ID())

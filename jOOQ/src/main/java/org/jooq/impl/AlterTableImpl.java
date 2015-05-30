@@ -40,12 +40,14 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 import static org.jooq.Clause.ALTER_TABLE;
 import static org.jooq.Clause.ALTER_TABLE_ADD;
 import static org.jooq.Clause.ALTER_TABLE_ALTER;
 import static org.jooq.Clause.ALTER_TABLE_ALTER_DEFAULT;
 import static org.jooq.Clause.ALTER_TABLE_DROP;
 import static org.jooq.Clause.ALTER_TABLE_TABLE;
+import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
@@ -265,8 +267,8 @@ class AlterTableImpl extends AbstractQuery implements
             }
 
             // Some databases default to NOT NULL, so explicitly setting columns to NULL is mostly required here
-            // [#3400] ... but not in Firebird
-            else if (family != FIREBIRD) {
+            // [#3400] [#4321] ... but not in Derby, Firebird
+            else if (!asList(DERBY, FIREBIRD).contains(family)) {
                 ctx.sql(' ').keyword("null");
             }
 

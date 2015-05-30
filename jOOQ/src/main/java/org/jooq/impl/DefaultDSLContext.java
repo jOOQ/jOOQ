@@ -69,6 +69,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 
 import javax.annotation.Generated;
 import javax.sql.DataSource;
@@ -551,6 +552,23 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return resultQuery(sql, parts).fetchOne();
     }
 
+    /* [java-8] */
+    @Override
+    public Optional<Record> fetchOptional(String sql) {
+        return Optional.ofNullable(fetchOne(sql));
+    }
+
+    @Override
+    public Optional<Record> fetchOptional(String sql, Object... bindings) {
+        return Optional.ofNullable(fetchOne(sql, bindings));
+    }
+
+    @Override
+    public Optional<Record> fetchOptional(String sql, QueryPart... parts) {
+        return Optional.ofNullable(fetchOne(sql, parts));
+    }
+    /* [/java-8] */
+
     @Override
     public Object fetchValue(String sql) {
         return fetchValue((ResultQuery) resultQuery(sql));
@@ -565,6 +583,23 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public Object fetchValue(String sql, QueryPart... parts) {
         return fetchValue((ResultQuery) resultQuery(sql, parts));
     }
+
+    /* [java-8] */
+    @Override
+    public Optional<?> fetchOptionalValue(String sql) {
+        return Optional.ofNullable(fetchValue(sql));
+    }
+
+    @Override
+    public Optional<?> fetchOptionalValue(String sql, Object... bindings) {
+        return Optional.ofNullable(fetchValue(sql, bindings));
+    }
+
+    @Override
+    public Optional<?> fetchOptionalValue(String sql, QueryPart... parts) {
+        return Optional.ofNullable(fetchValue(sql, parts));
+    }
+    /* [/java-8] */
 
     @Override
     public List<?> fetchValues(String sql) {
@@ -655,6 +690,28 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return Utils.fetchOne(fetchLazy(rs, types));
     }
 
+    /* [java-8] */
+    @Override
+    public Optional<Record> fetchOptional(ResultSet rs) {
+        return Optional.ofNullable(fetchOne(rs));
+    }
+
+    @Override
+    public Optional<Record> fetchOptional(ResultSet rs, Field<?>... fields) {
+        return Optional.ofNullable(fetchOne(rs, fields));
+    }
+
+    @Override
+    public Optional<Record> fetchOptional(ResultSet rs, DataType<?>... types) {
+        return Optional.ofNullable(fetchOne(rs, types));
+    }
+
+    @Override
+    public Optional<Record> fetchOptional(ResultSet rs, Class<?>... types) {
+        return Optional.ofNullable(fetchOne(rs, types));
+    }
+    /* [/java-8] */
+
     @Override
     public Object fetchValue(ResultSet rs) {
         return value1((Record1) fetchOne(rs));
@@ -674,6 +731,28 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public <T> T fetchValue(ResultSet rs, Class<T> type) {
         return (T) value1((Record1) fetchOne(rs, type));
     }
+
+    /* [java-8] */
+    @Override
+    public Optional<?> fetchOptionalValue(ResultSet rs) {
+        return Optional.ofNullable(fetchValue(rs));
+    }
+
+    @Override
+    public <T> Optional<T> fetchOptionalValue(ResultSet rs, Field<T> field) {
+        return Optional.ofNullable(fetchValue(rs, field));
+    }
+
+    @Override
+    public <T> Optional<T> fetchOptionalValue(ResultSet rs, DataType<T> type) {
+        return Optional.ofNullable(fetchValue(rs, type));
+    }
+
+    @Override
+    public <T> Optional<T> fetchOptionalValue(ResultSet rs, Class<T> type) {
+        return Optional.ofNullable(fetchValue(rs, type));
+    }
+    /* [/java-8] */
 
     @Override
     public List<?> fetchValues(ResultSet rs) {
@@ -2323,6 +2402,13 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         }
     }
 
+    /* [java-8] */
+    @Override
+    public <R extends Record> Optional<R> fetchOptional(ResultQuery<R> query) {
+        return Optional.ofNullable(fetchOne(query));
+    }
+    /* [/java-8] */
+
     @Override
     public <T, R extends Record1<T>> T fetchValue(ResultQuery<R> query) {
         final Configuration previous = Utils.getConfiguration(query);
@@ -2335,6 +2421,13 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
             query.attach(previous);
         }
     }
+
+    /* [java-8] */
+    @Override
+    public <T, R extends Record1<T>> Optional<T> fetchOptionalValue(ResultQuery<R> query) {
+        return Optional.ofNullable(fetchValue(query));
+    }
+    /* [/java-8] */
 
     @Override
     public <T, R extends Record1<T>> List<T> fetchValues(ResultQuery<R> query) {
@@ -2422,6 +2515,18 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public <R extends Record> R fetchOne(Table<R> table, Condition condition) {
         return Utils.fetchOne(fetchLazy(table, condition));
     }
+
+    /* [java-8] */
+    @Override
+    public <R extends Record> Optional<R> fetchOptional(Table<R> table) {
+        return Optional.ofNullable(fetchOne(table));
+    }
+
+    @Override
+    public <R extends Record> Optional<R> fetchOptional(Table<R> table, Condition condition) {
+        return Optional.ofNullable(fetchOne(table, condition));
+    }
+    /* [/java-8] */
 
     @Override
     public <R extends Record> R fetchAny(Table<R> table) {

@@ -69,6 +69,7 @@ import java.sql.Statement;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.annotation.Generated;
 
@@ -799,6 +800,96 @@ public interface DSLContext extends Scope {
     @PlainSQL
     Record fetchOne(String sql, QueryPart... parts) throws DataAccessException, TooManyRowsException;
 
+    /* [java-8] */
+    /**
+     * Execute a new query holding plain SQL.
+     * <p>
+     * Example (Postgres):
+     * <p>
+     * <code><pre>
+     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * (SQLite):
+     * <p>
+     * <code><pre>
+     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return The results from the executed query
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @Support
+    @PlainSQL
+    Optional<Record> fetchOptional(String sql) throws DataAccessException, TooManyRowsException;
+
+    /**
+     * Execute a new query holding plain SQL.
+     * <p>
+     * There must be as many bind variables contained in the SQL, as passed in
+     * the bindings parameter
+     * <p>
+     * Example (Postgres):
+     * <p>
+     * <code><pre>
+     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * (SQLite):
+     * <p>
+     * <code><pre>
+     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @param bindings The bindings
+     * @return The results from the executed query
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @Support
+    @PlainSQL
+    Optional<Record> fetchOptional(String sql, Object... bindings) throws DataAccessException, TooManyRowsException;
+
+    /**
+     * Execute a new query holding plain SQL.
+     * <p>
+     * Unlike {@link #fetchOne(String, Object...)}, the SQL passed to this
+     * method should not contain any bind variables. Instead, you can pass
+     * {@link QueryPart} objects to the method which will be rendered at indexed
+     * locations of your SQL string as such: <code><pre>
+     * // The following query
+     * fetchOne("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
+     *
+     * // Will execute this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * select ?, 'test' from "DUAL"
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses! One way to escape
+     * literals is to use {@link DSL#name(String...)} and similar methods
+     *
+     * @param sql The SQL clause, containing {numbered placeholders} where query
+     *            parts can be injected
+     * @param parts The {@link QueryPart} objects that are rendered at the
+     *            {numbered placeholder} locations
+     * @return The results from the executed query
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @Support
+    @PlainSQL
+    Optional<Record> fetchOptional(String sql, QueryPart... parts) throws DataAccessException, TooManyRowsException;
+    /* [/java-8] */
+
     /**
      * Execute a new query holding plain SQL.
      * <p>
@@ -895,6 +986,102 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     Object fetchValue(String sql, QueryPart... parts) throws DataAccessException, TooManyRowsException, InvalidResultException;
+
+    /* [java-8] */
+    /**
+     * Execute a new query holding plain SQL.
+     * <p>
+     * Example (Postgres):
+     * <p>
+     * <code><pre>
+     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * (SQLite):
+     * <p>
+     * <code><pre>
+     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return The result value from the executed query
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     * @throws InvalidResultException if the query returned a record with more
+     *             than one value
+     */
+    @Support
+    @PlainSQL
+    Optional<?> fetchOptionalValue(String sql) throws DataAccessException, TooManyRowsException, InvalidResultException;
+
+    /**
+     * Execute a new query holding plain SQL.
+     * <p>
+     * There must be as many bind variables contained in the SQL, as passed in
+     * the bindings parameter
+     * <p>
+     * Example (Postgres):
+     * <p>
+     * <code><pre>
+     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * (SQLite):
+     * <p>
+     * <code><pre>
+     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @param bindings The bindings
+     * @return The results from the executed query
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     * @throws InvalidResultException if the query returned a record with more
+     *             than one value
+     */
+    @Support
+    @PlainSQL
+    Optional<?> fetchOptionalValue(String sql, Object... bindings) throws DataAccessException, TooManyRowsException, InvalidResultException;
+
+    /**
+     * Execute a new query holding plain SQL.
+     * <p>
+     * Unlike {@link #fetchValue(String, Object...)}, the SQL passed to this
+     * method should not contain any bind variables. Instead, you can pass
+     * {@link QueryPart} objects to the method which will be rendered at indexed
+     * locations of your SQL string as such: <code><pre>
+     * // The following query
+     * fetchOne("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
+     *
+     * // Will execute this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * select ?, 'test' from "DUAL"
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses! One way to escape
+     * literals is to use {@link DSL#name(String...)} and similar methods
+     *
+     * @param sql The SQL clause, containing {numbered placeholders} where query
+     *            parts can be injected
+     * @param parts The {@link QueryPart} objects that are rendered at the
+     *            {numbered placeholder} locations
+     * @return The results from the executed query
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     * @throws InvalidResultException if the query returned a record with more
+     *             than one value
+     */
+    @Support
+    @PlainSQL
+    Optional<?> fetchOptionalValue(String sql, QueryPart... parts) throws DataAccessException, TooManyRowsException, InvalidResultException;
+    /* [/java-8] */
 
     /**
      * Execute a new query holding plain SQL.
@@ -1329,6 +1516,80 @@ public interface DSLContext extends Scope {
     @Support
     Record fetchOne(ResultSet rs, Class<?>... types) throws DataAccessException, TooManyRowsException;
 
+    /* [java-8] */
+    /**
+     * Fetch a record from a JDBC {@link ResultSet} and transform it to a jOOQ
+     * {@link Record}.
+     * <p>
+     * This will internally fetch all records and throw an exception if there
+     * was more than one resulting record.
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @return The resulting jOOQ record
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @Support
+    Optional<Record> fetchOptional(ResultSet rs) throws DataAccessException, TooManyRowsException;
+
+    /**
+     * Fetch a record from a JDBC {@link ResultSet} and transform it to a jOOQ
+     * {@link Record}.
+     * <p>
+     * This will internally fetch all records and throw an exception if there
+     * was more than one resulting record.
+     * <p>
+     * The additional <code>fields</code> argument is used by jOOQ to coerce
+     * field names and data types to the desired output
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @param fields The fields to use in the desired output
+     * @return The resulting jOOQ record
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @Support
+    Optional<Record> fetchOptional(ResultSet rs, Field<?>... fields) throws DataAccessException, TooManyRowsException;
+
+    /**
+     * Fetch a record from a JDBC {@link ResultSet} and transform it to a jOOQ
+     * {@link Record}.
+     * <p>
+     * This will internally fetch all records and throw an exception if there
+     * was more than one resulting record.
+     * <p>
+     * The additional <code>types</code> argument is used by jOOQ to coerce data
+     * types to the desired output
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @param types The data types to use in the desired output
+     * @return The resulting jOOQ record
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @Support
+    Optional<Record> fetchOptional(ResultSet rs, DataType<?>... types) throws DataAccessException, TooManyRowsException;
+
+    /**
+     * Fetch a record from a JDBC {@link ResultSet} and transform it to a jOOQ
+     * {@link Record}.
+     * <p>
+     * This will internally fetch all records and throw an exception if there
+     * was more than one resulting record.
+     * <p>
+     * The additional <code>types</code> argument is used by jOOQ to coerce data
+     * types to the desired output
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @param types The data types to use in the desired output
+     * @return The resulting jOOQ record
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @Support
+    Optional<Record> fetchOptional(ResultSet rs, Class<?>... types) throws DataAccessException, TooManyRowsException;
+    /* [/java-8] */
+
     /**
      * Fetch a record from a JDBC {@link ResultSet} and return the only
      * contained value.
@@ -1408,6 +1669,88 @@ public interface DSLContext extends Scope {
      */
     @Support
     <T> T fetchValue(ResultSet rs, Class<T> type) throws DataAccessException, TooManyRowsException, InvalidResultException;
+
+    /* [java-8] */
+    /**
+     * Fetch a record from a JDBC {@link ResultSet} and return the only
+     * contained value.
+     * <p>
+     * This will internally fetch all records and throw an exception if there
+     * was more than one resulting record.
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @return The resulting value
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     * @throws InvalidResultException if the query returned a record with more
+     *             than one value
+     */
+    @Support
+    Optional<?> fetchOptionalValue(ResultSet rs) throws DataAccessException, TooManyRowsException, InvalidResultException;
+
+    /**
+     * Fetch a record from a JDBC {@link ResultSet} and return the only
+     * contained value.
+     * <p>
+     * This will internally fetch all records and throw an exception if there
+     * was more than one resulting record.
+     * <p>
+     * The additional <code>field</code> argument is used by jOOQ to coerce
+     * field names and data types to the desired output
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @param field The field to use in the desired output
+     * @return The resulting value
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     * @throws InvalidResultException if the query returned a record with more
+     *             than one value
+     */
+    @Support
+    <T> Optional<T> fetchOptionalValue(ResultSet rs, Field<T> field) throws DataAccessException, TooManyRowsException, InvalidResultException;
+
+    /**
+     * Fetch a record from a JDBC {@link ResultSet} and return the only
+     * contained value.
+     * <p>
+     * This will internally fetch all records and throw an exception if there
+     * was more than one resulting record.
+     * <p>
+     * The additional <code>type</code> argument is used by jOOQ to coerce data
+     * types to the desired output
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @param type The data type to use in the desired output
+     * @return The resulting value
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     * @throws InvalidResultException if the query returned a record with more
+     *             than one value
+     */
+    @Support
+    <T> Optional<T> fetchOptionalValue(ResultSet rs, DataType<T> type) throws DataAccessException, TooManyRowsException, InvalidResultException;
+
+    /**
+     * Fetch a record from a JDBC {@link ResultSet} and return the only
+     * contained value.
+     * <p>
+     * This will internally fetch all records and throw an exception if there
+     * was more than one resulting record.
+     * <p>
+     * The additional <code>type</code> argument is used by jOOQ to coerce data
+     * types to the desired output
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @param type The data types to use in the desired output
+     * @return The resulting value
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     * @throws InvalidResultException if the query returned a record with more
+     *             than one value
+     */
+    @Support
+    <T> Optional<T> fetchOptionalValue(ResultSet rs, Class<T> type) throws DataAccessException, TooManyRowsException, InvalidResultException;
+    /* [/java-8] */
 
     /**
      * Fetch a result from a JDBC {@link ResultSet} and return the only
@@ -6105,6 +6448,20 @@ public interface DSLContext extends Scope {
      */
     <R extends Record> R fetchOne(ResultQuery<R> query) throws DataAccessException, TooManyRowsException;
 
+    /* [java-8] */
+    /**
+     * Execute a {@link ResultQuery} in the context of this <code>DSLContext</code> and return
+     * a record.
+     *
+     * @param query The query to execute
+     * @return The record
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     * @see ResultQuery#fetchOptional()
+     */
+    <R extends Record> Optional<R> fetchOptional(ResultQuery<R> query) throws DataAccessException, TooManyRowsException;
+    /* [/java-8] */
+
     /**
      * Execute a {@link ResultQuery} in the context of this
      * <code>DSLContext</code> and return a single value.
@@ -6116,7 +6473,23 @@ public interface DSLContext extends Scope {
      * @throws InvalidResultException if the query returned a record with more
      *             than one value
      */
-    <T, R extends Record1<T>> T fetchValue(ResultQuery<R> query) throws DataAccessException, TooManyRowsException, InvalidResultException;
+    <T, R extends Record1<T>> T fetchValue(ResultQuery<R> query)
+        throws DataAccessException, TooManyRowsException, InvalidResultException;
+
+    /* [java-8] */
+    /**
+     * Execute a {@link ResultQuery} in the context of this
+     * <code>DSLContext</code> and return a single value.
+     *
+     * @param query The query to execute
+     * @return The value.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     * @throws InvalidResultException if the query returned a record with more
+     *             than one value
+     */
+    <T, R extends Record1<T>> Optional<T> fetchOptionalValue(ResultQuery<R> query) throws DataAccessException, TooManyRowsException, InvalidResultException;
+    /* [/java-8] */
 
     /**
      * Execute a {@link ResultQuery} in the context of this
@@ -6295,6 +6668,38 @@ public interface DSLContext extends Scope {
      */
     @Support
     <R extends Record> R fetchOne(Table<R> table, Condition condition) throws DataAccessException, TooManyRowsException;
+
+    /* [java-8] */
+    /**
+     * Execute and return zero or one record for
+     * <code><pre>SELECT * FROM [table]</pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     *
+     * @return The record
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @Support
+    <R extends Record> Optional<R> fetchOptional(Table<R> table) throws DataAccessException, TooManyRowsException;
+
+    /**
+     * Execute and return zero or one record for
+     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     *
+     * @return The record
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     */
+    @Support
+    <R extends Record> Optional<R> fetchOptional(Table<R> table, Condition condition) throws DataAccessException, TooManyRowsException;
+    /* [/java-8] */
 
     /**
      * Execute and return zero or one record for

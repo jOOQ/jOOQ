@@ -47,6 +47,7 @@ import static org.jooq.Clause.CREATE_TABLE_COLUMNS;
 import static org.jooq.Clause.CREATE_TABLE_NAME;
 // ...
 // ...
+import static org.jooq.SQLDialect.DERBY;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
@@ -179,10 +180,15 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
                    .sql(' ');
                 Utils.toSQLDDLTypeDeclaration(ctx, type);
 
-                if (type.nullable())
-                    ctx.sql(' ').keyword("null");
-                else
+                if (type.nullable()) {
+
+                    // [#4321] Not all dialects support explicit NULL type declarations
+                    if (!asList(DERBY).contains(ctx.family()))
+                        ctx.sql(' ').keyword("null");
+                }
+                else {
                     ctx.sql(' ').keyword("not null");
+                }
 
                 if (i < columnFields.size() - 1)
                     ctx.sql(',').formatSeparator();

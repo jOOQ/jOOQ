@@ -99,7 +99,7 @@ public interface ConstraintForeignKeyOnStep extends ConstraintFinalStep {
      * Add an <code>ON DELETE SET DEFAULT</code> clause to the
      * <code>FOREIGN KEY</code> constraint.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     ConstraintFinalStep onDeleteSetDefault();
 
     /**
@@ -120,21 +120,21 @@ public interface ConstraintForeignKeyOnStep extends ConstraintFinalStep {
      * Add an <code>ON UPDATE CASCADE</code> clause to the
      * <code>FOREIGN KEY</code> constraint.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     ConstraintFinalStep onUpdateCascade();
 
     /**
      * Add an <code>ON UPDATE SET NULL</code> clause to the
      * <code>FOREIGN KEY</code> constraint.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     ConstraintFinalStep onUpdateSetNull();
 
     /**
      * Add an <code>ON UPDATE SET DEFAULT</code> clause to the
      * <code>FOREIGN KEY</code> constraint.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     ConstraintFinalStep onUpdateSetDefault();
 
 }

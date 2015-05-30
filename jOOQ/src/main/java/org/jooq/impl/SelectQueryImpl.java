@@ -1091,15 +1091,20 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
             if (getGroupBy().isEmpty()) {
 
                 // [#1681] Use the constant field from the dummy table Sybase ASE, Ingres
-                if (asList().contains(dialect)) {
+                if (asList().contains(family)) {
                     context.sql("empty_grouping_dummy_table.dual");
                 }
 
-                // Some dialects don't support empty GROUP BY () clauses
-                else if (asList(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE).contains(dialect)) {
-                    context.sql('(')
-                           .visit(DSL.select(one()))
-                           .sql(')');
+                // [#4292] Some dialects accept constant expressions in GROUP BY
+                // Note that dialects may consider constants as indexed field
+                // references, as in the ORDER BY clause!
+                else if (asList(DERBY).contains(family)) {
+                    context.sql('0');
+                }
+
+                // [#4292] Some dialects don't support empty GROUP BY () clauses
+                else if (asList(CUBRID, FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE).contains(family)) {
+                    context.sql('(').visit(DSL.select(one())).sql(')');
                 }
 
                 // Few dialects support the SQL standard "grand total" (i.e. empty grouping set)

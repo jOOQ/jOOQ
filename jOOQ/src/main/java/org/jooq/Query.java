@@ -58,7 +58,7 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-public interface Query extends QueryPart, Attachable {
+public interface Query extends QueryPart, Attachable /* [java-8] */, AutoCloseable /* [java-8] */ {
 
     /**
      * Execute the query, if it has been created with a proper configuration.
@@ -282,6 +282,9 @@ public interface Query extends QueryPart, Attachable {
      * @throws DataAccessException If something went wrong closing the statement
      * @see Statement#close()
      */
+    /* [java-8] */
+    @Override
+    /* [/java-8] */
     void close() throws DataAccessException;
 
     /**

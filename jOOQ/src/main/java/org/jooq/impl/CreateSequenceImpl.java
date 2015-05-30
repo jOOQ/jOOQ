@@ -40,8 +40,10 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 import static org.jooq.Clause.CREATE_SEQUENCE;
 import static org.jooq.Clause.CREATE_SEQUENCE_SEQUENCE;
+import static org.jooq.SQLDialect.DERBY;
 // ...
 
 import org.jooq.Clause;
@@ -83,11 +85,9 @@ class CreateSequenceImpl extends AbstractQuery implements
            .sql(' ')
            .visit(sequence);
 
-        /* [pro] xx
-        xx xxx xxxxxx xxxxxxxx xx xxxxxxxxx xxxxxxxx xxxx xxxxxxxxxxxxxxxxxxxx
-        xx xxxxxxxxxxxxx xx xxxxxxxxxx
-            xxxxxxxxxxxxxxxxxx xxxxxxxxxxxx xxxx
-        xx [/pro] */
+        // Some databases default to sequences starting with MIN_VALUE
+        if (asList(DERBY).contains(ctx.family()))
+            ctx.keyword("start with").sql(" 1");
 
         ctx.end(CREATE_SEQUENCE_SEQUENCE);
     }

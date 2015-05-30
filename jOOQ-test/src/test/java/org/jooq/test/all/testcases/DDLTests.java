@@ -191,7 +191,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testDropIndexIfExists() throws Exception {
-        assumeFamilyNotIn(HANA, REDSHIFT, VERTICA);
+        assumeFamilyNotIn(DERBY, HANA, REDSHIFT, VERTICA);
 
         try {
             // TODO: Re-use jOOQ API for this
@@ -230,16 +230,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
     public void testDropSequenceIfExists() throws Exception {
         assumeNotNull(SAuthorID());
-        assumeFamilyNotIn(HANA);
+        assumeFamilyNotIn(DERBY, HANA);
 
         create().dropSequenceIfExists(SAuthorID()).execute();
         create().dropSequenceIfExists(SAuthorID()).execute();
 
-        try {
-            create().nextval(SAuthorID());
-            fail();
-        }
-        catch (DataAccessException expected) {}
+        assertThrows(DataAccessException.class, () -> create().nextval(SAuthorID()));
     }
 
     @SuppressWarnings("unchecked")
@@ -666,7 +662,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testDropTableIfExists() throws Exception {
-        assumeFamilyNotIn(HANA, INFORMIX);
+        assumeFamilyNotIn(DERBY, HANA, INFORMIX);
 
         try {
             // TODO: Re-use jOOQ API for this

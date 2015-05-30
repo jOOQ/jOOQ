@@ -312,6 +312,17 @@ For more information, please visit: http://www.jooq.org/licenses''');
                 replaceAll.add(new SimpleImmutableEntry(compile('''import (static )?org\.jooq\..*?(\b|(?<=_))«d.name().toUpperCase»(\b|(?=_)).*?;'''), "// ..."));
             }
         }
+        
+        if (tokens.contains("java-8")) {
+            
+            // Remove all Java 7 imports
+            replaceAll.add(new SimpleImmutableEntry(compile('''import (static )?java\.lang\.AutoCloseable;'''), "// ..."));
+            
+            // Remove all Java 8 imports
+            replaceAll.add(new SimpleImmutableEntry(compile('''import (static )?java\.util\.Optional;'''), "// ..."));
+            replaceAll.add(new SimpleImmutableEntry(compile('''import (static )?java\.util\.stream\..*?;'''), "// ..."));
+            replaceAll.add(new SimpleImmutableEntry(compile('''import (static )?java\.util\.function\..*?;'''), "// ..."));
+        }
                 
         // Remove sections of delimited code
         for (token : tokens) {

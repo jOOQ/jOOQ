@@ -773,7 +773,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testCreateTableAsSelect() throws Exception {
-        assumeFamilyNotIn(DERBY, SYBASE);
+        assumeFamilyNotIn(DERBY, FIREBIRD, SYBASE);
 
         try {
             create().createTable("t").as(
@@ -825,7 +825,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testSelectInto() throws Exception {
-        assumeFamilyNotIn(DERBY, SYBASE);
+        assumeFamilyNotIn(DERBY, FIREBIRD, SYBASE);
 
         try {
             create().select(inline("value").as("value")).into(table(name("t"))).execute();

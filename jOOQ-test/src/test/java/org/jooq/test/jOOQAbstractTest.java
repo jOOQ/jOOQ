@@ -1525,6 +1525,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testDropViewIfExists() throws Exception {
+        new DDLTests(this).testDropViewIfExists();
+    }
+
+    @Test
     public void testCreateIndex() throws Exception {
         new DDLTests(this).testCreateIndex();
     }

@@ -134,17 +134,24 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         }
         finally {
             create().dropView(table(name("v1"))).execute();
-            create().dropViewIfExists(table(name("v2"))).execute();
-            create().dropViewIfExists(table(name("v2"))).execute();
+            create().dropView(table(name("v2"))).execute();
 
-            assertThrows(DataAccessException.class, () -> {
-                create().fetch("select * from {0}", name("v1"));
-            });
-
-            assertThrows(DataAccessException.class, () -> {
-                create().fetch("select * from {0}", name("v2"));
-            });
+            assertThrows(DataAccessException.class, () -> create().fetch(table(name("v1"))));
+            assertThrows(DataAccessException.class, () -> create().fetch(table(name("v2"))));
         }
+    }
+
+    public void testDropViewIfExists() throws Exception {
+        assumeFamilyNotIn(DERBY);
+
+        create().createView("v1").as(select(one().as("one"))).execute();
+        assertEquals(1, (int) create().fetchValue(select(field(name("one"), Integer.class)).from(table(name("v1")))));
+
+        create().dropViewIfExists(table(name("v1"))).execute();
+        assertThrows(DataAccessException.class, () -> create().fetch(table(name("v1"))));
+
+        create().dropViewIfExists(table(name("v1"))).execute();
+        assertThrows(DataAccessException.class, () -> create().fetch(table(name("v1"))));
     }
 
     public void testCreateIndex() throws Exception {

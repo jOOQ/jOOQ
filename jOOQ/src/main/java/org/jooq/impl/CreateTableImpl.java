@@ -48,6 +48,7 @@ import static org.jooq.Clause.CREATE_TABLE_NAME;
 // ...
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
@@ -183,7 +184,7 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
                 if (type.nullable()) {
 
                     // [#4321] Not all dialects support explicit NULL type declarations
-                    if (!asList(DERBY).contains(ctx.family()))
+                    if (!asList(DERBY, FIREBIRD).contains(ctx.family()))
                         ctx.sql(' ').keyword("null");
                 }
                 else {

@@ -1081,7 +1081,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testWindowFunctionsWithRowValueExpressions_LEAD_LAG() {
-        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, FIREBIRD, MARIADB, MYSQL, ORACLE, REDSHIFT, SQLITE, SQLSERVER, SYBASE, VERTICA);
+        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, FIREBIRD, MARIADB, MYSQL, ORACLE, REDSHIFT, SQLITE, SQLSERVER, SYBASE, VERTICA);
 
         Field<Record2<Integer, String>> x = field(row(TBook_ID(), TBook_TITLE()));
         System.out.println(x);

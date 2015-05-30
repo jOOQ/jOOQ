@@ -4665,7 +4665,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequence(String)
      */
-    @Support({ DB2, FIREBIRD, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     public static <T extends Number> DropSequenceFinalStep dropSequence(String sequence) {
         return using(new DefaultConfiguration()).dropSequence(sequence);
     }
@@ -4675,7 +4675,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequence(Name)
      */
-    @Support({ DB2, FIREBIRD, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     public static <T extends Number> DropSequenceFinalStep dropSequence(Name sequence) {
         return using(new DefaultConfiguration()).dropSequence(sequence);
     }
@@ -4685,7 +4685,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequence(Sequence)
      */
-    @Support({ DB2, FIREBIRD, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     public static <T extends Number> DropSequenceFinalStep dropSequence(Sequence<?> sequence) {
         return using(new DefaultConfiguration()).dropSequence(sequence);
     }

@@ -223,14 +223,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
     public void testDropSequence() throws Exception {
         assumeNotNull(SAuthorID());
+        create().dropSequence(SAuthorID()).execute();
 
-        try {
-            create().dropSequence(SAuthorID()).execute();
-            create().nextval(SAuthorID());
-
-            fail();
-        }
-        catch (DataAccessException expected) {}
+        assertThrows(DataAccessException.class, () -> create().nextval(SAuthorID()));
     }
 
     public void testDropSequenceIfExists() throws Exception {

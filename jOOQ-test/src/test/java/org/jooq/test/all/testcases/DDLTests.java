@@ -321,18 +321,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
         try {
             // TODO: Re-use jOOQ API for this
-            // Vertica doesn't support changing data types if a conversion would be needed
+            // Derby / Vertica doesn't support changing data types if a conversion would be needed
             create().execute("create table {0} ({1} {2})",
                 name("t"),
                 name("a"),
-                sql(family() == VERTICA
-                    ? SQLDataType.VARCHAR.length(3).getCastTypeName(create().configuration())
-                    : SQLDataType.INTEGER.getTypeName())
+                sql(SQLDataType.VARCHAR.length(3).getCastTypeName(create().configuration()))
             );
 
-            create().alterTable("t").alter("a").set(SQLDataType.VARCHAR).execute();
-            create().insertInto(table(name("t")), field(name("a"))).values("1").execute();
-            assertEquals("1", create().fetchOne("select * from {0}", name("t")).getValue(0));
+            create().alterTable("t").alter("a").set(SQLDataType.VARCHAR.length(10)).execute();
+            create().insertInto(table(name("t")), field(name("a"))).values("1234567890").execute();
+            assertEquals("1234567890", create().fetchOne("select * from {0}", name("t")).getValue(0));
         }
         finally {
             ignoreThrows(() -> create().dropTable("t").execute());
@@ -774,7 +772,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testCreateTableAsSelect() throws Exception {
-        assumeFamilyNotIn(SYBASE);
+        assumeFamilyNotIn(DERBY, SYBASE);
 
         try {
             create().createTable("t").as(
@@ -826,7 +824,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testSelectInto() throws Exception {
-        assumeFamilyNotIn(SYBASE);
+        assumeFamilyNotIn(DERBY, SYBASE);
 
         try {
             create().select(inline("value").as("value")).into(table(name("t"))).execute();

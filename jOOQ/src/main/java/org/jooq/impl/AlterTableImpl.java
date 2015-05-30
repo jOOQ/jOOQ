@@ -325,9 +325,11 @@ class AlterTableImpl extends AbstractQuery implements
                     /* [pro] */
                     case DB2:
                     case VERTICA:
+                    /* [/pro] */
+
+                    case DERBY:
                         ctx.sql(' ').keyword("set data type");
                         break;
-                    /* [/pro] */
 
                     case POSTGRES:
                         ctx.sql(' ').keyword("type");

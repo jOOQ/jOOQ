@@ -58,7 +58,7 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-public interface Query extends QueryPart, Attachable /* [java-8] */, AutoCloseable /* [java-8] */ {
+public interface Query extends QueryPart, Attachable /* [java-8] */, AutoCloseable /* [/java-8] */ {
 
     /**
      * Execute the query, if it has been created with a proper configuration.

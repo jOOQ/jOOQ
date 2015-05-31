@@ -67,7 +67,7 @@ import org.jooq.impl.DefaultRecordMapper;
  * @param <R> The cursor's record type
  * @author Lukas Eder
  */
-public interface Cursor<R extends Record> extends Iterable<R> /* [java-8] */, AutoCloseable /* [java-8] */ {
+public interface Cursor<R extends Record> extends Iterable<R> /* [java-8] */, AutoCloseable /* [/java-8] */ {
 
     /**
      * Get this cursor's row type.

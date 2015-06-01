@@ -229,7 +229,7 @@ public class MockStatement extends JDBC41Statement implements CallableStatement 
     @Override
     public int getUpdateCount() throws SQLException {
         checkNotClosed();
-        return (result != null && result.length > 0) ? result[resultIndex].rows : 0;
+        return (result != null && resultIndex < result.length) && result[resultIndex].data == null ? result[resultIndex].rows : -1;
     }
 
     @Override

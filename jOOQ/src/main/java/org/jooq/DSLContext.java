@@ -70,6 +70,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -619,12 +620,125 @@ public interface DSLContext extends Scope {
      *            parts can be injected
      * @param parts The {@link QueryPart} objects that are rendered at the
      *            {numbered placeholder} locations
-     * @return The results from the executed query
+     * @return The results from the executed query. This is never
+     *         <code>null</code>, even if the database returns no
+     *         {@link ResultSet}
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
     @PlainSQL
     Cursor<Record> fetchLazy(String sql, QueryPart... parts) throws DataAccessException;
+
+    /* [java-8] */
+    /**
+     * Execute a new query holding plain SQL and "lazily" return the generated
+     * result.
+     * <p>
+     * The returned {@link Stream} holds a reference to the executed
+     * {@link PreparedStatement} and the associated {@link ResultSet}. Data can
+     * be fetched (or iterated over) lazily, fetching records from the
+     * {@link ResultSet} one by one.
+     * <p>
+     * Example (Postgres):
+     * <p>
+     * <code><pre>
+     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * (SQLite):
+     * <p>
+     * <code><pre>
+     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return The results from the executed query. This is never
+     *         <code>null</code>, even if the database returns no
+     *         {@link ResultSet}
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    @PlainSQL
+    Stream<Record> fetchStream(String sql) throws DataAccessException;
+
+    /**
+     * Execute a new query holding plain SQL and "lazily" return the generated
+     * result.
+     * <p>
+     * There must be as many bind variables contained in the SQL, as passed in
+     * the bindings parameter
+     * <p>
+     * The returned {@link Stream} holds a reference to the executed
+     * {@link PreparedStatement} and the associated {@link ResultSet}. Data can
+     * be fetched (or iterated over) lazily, fetching records from the
+     * {@link ResultSet} one by one.
+     * <p>
+     * Example (Postgres):
+     * <p>
+     * <code><pre>
+     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * (SQLite):
+     * <p>
+     * <code><pre>
+     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @param bindings The bindings
+     * @return The results from the executed query. This is never
+     *         <code>null</code>, even if the database returns no
+     *         {@link ResultSet}
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    @PlainSQL
+    Stream<Record> fetchStream(String sql, Object... bindings) throws DataAccessException;
+
+    /**
+     * Execute a new query holding plain SQL and "lazily" return the generated
+     * result.
+     * <p>
+     * The returned {@link Stream} holds a reference to the executed
+     * {@link PreparedStatement} and the associated {@link ResultSet}. Data can
+     * be fetched (or iterated over) lazily, fetching records from the
+     * {@link ResultSet} one by one.
+     * <p>
+     * Unlike {@link #stream(String, Object...)}, the SQL passed to this
+     * method should not contain any bind variables. Instead, you can pass
+     * {@link QueryPart} objects to the method which will be rendered at indexed
+     * locations of your SQL string as such: <code><pre>
+     * // The following query
+     * fetchLazy("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
+     *
+     * // Will execute this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * select ?, 'test' from "DUAL"
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses! One way to escape
+     * literals is to use {@link DSL#name(String...)} and similar methods
+     *
+     * @param sql The SQL clause, containing {numbered placeholders} where query
+     *            parts can be injected
+     * @param parts The {@link QueryPart} objects that are rendered at the
+     *            {numbered placeholder} locations
+     * @return The results from the executed query. This is never
+     *         <code>null</code>, even if the database returns no
+     *         {@link ResultSet}
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    @PlainSQL
+    Stream<Record> fetchStream(String sql, QueryPart... parts) throws DataAccessException;
+    /* [/java-8] */
 
     /**
      * Execute a new query holding plain SQL, possibly returning several result
@@ -1871,6 +1985,72 @@ public interface DSLContext extends Scope {
      */
     @Support
     Cursor<Record> fetchLazy(ResultSet rs, Class<?>... types) throws DataAccessException;
+
+    /* [java-8] */
+    /**
+     * Wrap a JDBC {@link ResultSet} into a jOOQ {@link Stream}.
+     * <p>
+     * Use {@link #fetch(ResultSet)}, to load the entire <code>ResultSet</code>
+     * into a jOOQ <code>Result</code> at once.
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @return The resulting stream
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    Stream<Record> fetchStream(ResultSet rs) throws DataAccessException;
+
+    /**
+     * Wrap a JDBC {@link ResultSet} into a jOOQ {@link Stream}.
+     * <p>
+     * Use {@link #fetch(ResultSet)}, to load the entire <code>ResultSet</code>
+     * into a jOOQ <code>Result</code> at once.
+     * <p>
+     * The additional <code>fields</code> argument is used by jOOQ to coerce
+     * field names and data types to the desired output
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @param fields The fields to use in the desired output
+     * @return The resulting stream
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    Stream<Record> fetchStream(ResultSet rs, Field<?>... fields) throws DataAccessException;
+
+    /**
+     * Wrap a JDBC {@link ResultSet} into a jOOQ {@link Stream}.
+     * <p>
+     * Use {@link #fetch(ResultSet)}, to load the entire <code>ResultSet</code>
+     * into a jOOQ <code>Result</code> at once.
+     * <p>
+     * The additional <code>types</code> argument is used by jOOQ to coerce data
+     * types to the desired output
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @param types The data types to use in the desired output
+     * @return The resulting stream
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    Stream<Record> fetchStream(ResultSet rs, DataType<?>... types) throws DataAccessException;
+
+    /**
+     * Wrap a JDBC {@link ResultSet} into a jOOQ {@link Stream}.
+     * <p>
+     * Use {@link #fetch(ResultSet)}, to load the entire <code>ResultSet</code>
+     * into a jOOQ <code>Result</code> at once.
+     * <p>
+     * The additional <code>types</code> argument is used by jOOQ to coerce data
+     * types to the desired output
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @param types The data types to use in the desired output
+     * @return The resulting stream
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    Stream<Record> fetchStream(ResultSet rs, Class<?>... types) throws DataAccessException;
+    /* [/java-8] */
 
     /**
      * Fetch all data from a formatted string.
@@ -6425,6 +6605,19 @@ public interface DSLContext extends Scope {
      */
     <R extends Record> Cursor<R> fetchLazy(ResultQuery<R> query) throws DataAccessException;
 
+    /* [java-8] */
+    /**
+     * Execute a {@link ResultQuery} in the context of this <code>DSLContext</code> and return
+     * a stream.
+     *
+     * @param query The query to execute
+     * @return The stream
+     * @throws DataAccessException if something went wrong executing the query
+     * @see ResultQuery#stream()
+     */
+    <R extends Record> Stream<R> fetchStream(ResultQuery<R> query) throws DataAccessException;
+    /* [/java-8] */
+
     /**
      * Execute a {@link ResultQuery} in the context of this <code>DSLContext</code> and return
      * a cursor.
@@ -6754,6 +6947,34 @@ public interface DSLContext extends Scope {
      */
     @Support
     <R extends Record> Cursor<R> fetchLazy(Table<R> table, Condition condition) throws DataAccessException;
+
+    /* [java-8] */
+    /**
+     * Execute and return all records lazily for
+     * <code><pre>SELECT * FROM [table]</pre></code>.
+     * <p>
+     * The result and its contained records are attached to this
+     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
+     * to override this behaviour.
+     *
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <R extends Record> Stream<R> fetchStream(Table<R> table) throws DataAccessException;
+
+    /**
+     * Execute and return all records lazily for
+     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <p>
+     * The result and its contained records are attached to this
+     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
+     * to override this behaviour.
+     *
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <R extends Record> Stream<R> fetchStream(Table<R> table, Condition condition) throws DataAccessException;
+    /* [/java-8] */
 
     /**
      * Insert one record.

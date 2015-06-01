@@ -2075,6 +2075,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFetchStream() throws Exception {
+        new FetchTests(this).testFetchStream();
+    }
+
+    @Test
     public void testFetchValue() throws Exception {
         new FetchTests(this).testFetchValue();
     }

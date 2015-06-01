@@ -509,6 +509,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         assertFalse(b2.isPresent());
     }
 
+    public void testFetchStream() throws Exception {
+        assertSame(BOOK_IDS,
+            create().fetchStream(TBook())
+                    .map(b -> b.getValue(TBook_ID()))
+                    .collect(Collectors.toList()));
+    }
+
     public void testFetchValue() throws Exception {
         assertEquals(1, (int) create().fetchValue(selectOne()));
         assertSame(asList(1, 2, 3, 4), create().fetchValues(TBook_ID()));

@@ -1682,7 +1682,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         x
         xxxx x
             xx xxxxx xxxxxx xxx xxxxx xxxxxx xxxx xxxx xxxxxxx
-            xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
+            xx xxx xxxxxxx xxxx xxxxxxxxx xx xxxx x xxx xxxxxxxx xxxxxxxxx xx
+            xx xxx xxxx xxx xxx
+            xxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
         x
     x
 

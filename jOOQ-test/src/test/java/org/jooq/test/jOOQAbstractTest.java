@@ -1440,6 +1440,16 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testResultQueryStream() throws Exception {
+        new FetchTests(this).testResultQueryStream();
+    }
+
+    @Test
+    public void testResultQueryStreamWithAutoCloseable() throws Exception {
+        new FetchTests(this).testResultQueryStreamWithAutoCloseable();
+    }
+
+    @Test
     public void testFetchLazy() throws Exception {
         new FetchTests(this).testFetchLazy();
     }

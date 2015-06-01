@@ -85,6 +85,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.jooq.AttachableInternal;
 import org.jooq.Cursor;
@@ -1601,6 +1603,49 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             JDBCUtils.safeClose(rs2);
             JDBCUtils.safeClose(rs3);
         }
+    }
+
+    public void testResultQueryStream() throws Exception {
+        List<Tuple2<A, B>> list =
+        create().selectFrom(TAuthor())
+                .orderBy(TAuthor_ID())
+                .stream()
+                .flatMap(a -> create()
+                    .selectFrom(TBook())
+                    .where(TBook_AUTHOR_ID().eq(a.getValue(TAuthor_ID())))
+                    .stream()
+                    .map(b -> tuple(a, b))
+                )
+                .collect(Collectors.toList());
+
+        assertEquals(4, list.size());
+        assertEquals(BOOK_AUTHOR_IDS, seq(list).map(t -> t.v1.getValue(TAuthor_ID())).toList());
+        assertEquals(BOOK_FIRST_NAMES, seq(list).map(t -> t.v1.getValue(TAuthor_FIRST_NAME())).toList());
+        assertEquals(BOOK_LAST_NAMES, seq(list).map(t -> t.v1.getValue(TAuthor_LAST_NAME())).toList());
+        assertEquals(BOOK_IDS, seq(list).map(t -> t.v2.getValue(TBook_ID())).toList());
+        assertEquals(BOOK_TITLES, seq(list).map(t -> t.v2.getValue(TBook_TITLE())).toList());
+    }
+
+    public void testResultQueryStreamWithAutoCloseable() throws Exception {
+        ResultSetCloseListener l = new ResultSetCloseListener();
+
+        // Even if a stream's consumption produces an exception, the close()
+        // method must be called via AutoCloseable
+        assertThrows(
+            RuntimeException.class,
+            () -> {
+                try (Stream<A> stream = create(l)
+                    .selectFrom(TAuthor())
+                    .orderBy(TAuthor_ID())
+                    .stream()
+                    .peek(a -> { throw new RuntimeException("abort"); })) {
+
+                    stream.findAny();
+                }
+            },
+            e -> assertEquals("abort", e.getMessage())
+        );
+        assertTrue(l.rsclosed);
     }
 
     public void testFetchLazy() throws Exception {

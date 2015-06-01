@@ -51,6 +51,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
+import java.util.stream.Stream;
+
+import javax.sql.DataSource;
 
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
@@ -141,6 +144,31 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      */
     @Override
     Iterator<R> iterator() throws DataAccessException;
+
+    /* [java-8] */
+    /**
+     * Stream this query.
+     * <p>
+     * This is essentially the same as {@link #fetchLazy()} but instead of
+     * returning a {@link Cursor}, a Java 8 {@link Stream} is returned. Clients
+     * should ensure the {@link Stream} is properly closed, e.g. in a
+     * try-with-resources statement:
+     * <p>
+     * <code><pre>
+     * try (Stream&lt;R> stream = query.stream()) {
+     *     // Do things with stream
+     * }
+     * </pre></code>
+     * <p>
+     * If users prefer more fluent style streaming of queries, {@link ResultSet}
+     * can be registered and closed via {@link ExecuteListener}, or via "smart"
+     * third-party {@link DataSource}s.
+     *
+     * @return The result.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    Stream<R> stream() throws DataAccessException;
+    /* [/java-8] */
 
     /**
      * Execute the query and "lazily" return the generated result.

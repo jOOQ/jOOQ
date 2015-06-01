@@ -320,6 +320,8 @@ For more information, please visit: http://www.jooq.org/licenses''');
             
             // Remove all Java 8 imports
             replaceAll.add(new SimpleImmutableEntry(compile('''import (static )?java\.util\.Optional;'''), "// ..."));
+            replaceAll.add(new SimpleImmutableEntry(compile('''import (static )?java\.util\.Spliterator;'''), "// ..."));
+            replaceAll.add(new SimpleImmutableEntry(compile('''import (static )?java\.util\.Spliterators;'''), "// ..."));
             replaceAll.add(new SimpleImmutableEntry(compile('''import (static )?java\.util\.stream\..*?;'''), "// ..."));
             replaceAll.add(new SimpleImmutableEntry(compile('''import (static )?java\.util\.function\..*?;'''), "// ..."));
         }

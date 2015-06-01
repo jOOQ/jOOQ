@@ -46,6 +46,7 @@ import java.sql.Statement;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
@@ -360,6 +361,13 @@ public interface Cursor<R extends Record> extends Iterable<R> /* [java-8] */, Au
      *             exception that might have occurred while mapping records
      */
     <Z extends Record> Optional<Z> fetchOptionalInto(Table<Z> table) throws DataAccessException, MappingException;
+
+    /**
+     * Turn this <code>Cursor</code> into a {@link Stream}.
+     *
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    Stream<R> stream() throws DataAccessException;
     /* [/java-8] */
 
     /**

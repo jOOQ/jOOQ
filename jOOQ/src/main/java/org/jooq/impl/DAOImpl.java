@@ -48,6 +48,7 @@ import static org.jooq.impl.DSL.using;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -60,7 +61,8 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
-import org.jooq.conf.Settings;
+
+import com.sun.scenario.Settings;
 
 /**
  * A common base implementation for generated DAO's.
@@ -282,6 +284,13 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
 
         return record == null ? null : mapper().map(record);
     }
+
+    /* [java-8] */
+    @Override
+    public final <Z> Optional<P> fetchOptional(Field<Z> field, Z value) {
+        return Optional.ofNullable(fetchOne(field, value));
+    }
+    /* [/java-8] */
 
     @Override
     public final Table<R> getTable() {

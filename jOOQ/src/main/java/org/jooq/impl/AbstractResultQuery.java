@@ -60,9 +60,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.Spliterator;
+import java.util.Spliterators;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import org.jooq.Configuration;
 import org.jooq.Converter;
@@ -77,6 +81,7 @@ import org.jooq.RecordMapper;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.Table;
+import org.jooq.exception.DataAccessException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 
@@ -308,6 +313,22 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     public final Iterator<R> iterator() {
         return fetch().iterator();
     }
+
+    /* [java-8] */
+    @Override
+    public final Stream<R> stream() throws DataAccessException {
+        Cursor<R> c = fetchLazy();
+
+        return StreamSupport.stream(
+            Spliterators.spliterator(
+                c.iterator(),
+                0,
+                Spliterator.ORDERED | Spliterator.NONNULL
+            ),
+            false
+        ).onClose(() -> c.close());
+    }
+    /* [/java-8] */
 
     @Override
     public final Cursor<R> fetchLazy() {

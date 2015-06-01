@@ -105,6 +105,8 @@ DROP FUNCTION f691cursor_in/
 DROP PACKAGE library/
 DROP PACKAGE pls_objects/
 
+DROP TYPE multi_schema.u_4347/
+
 DROP TYPE u_nested_3/
 DROP TYPE u_nested_2/
 DROP TYPE u_nested_1/
@@ -134,9 +136,11 @@ DROP TYPE u_2155_object/
 DROP TYPE u_2155_array/
 DROP TYPE u_3709/
 
+
+
 CREATE TYPE u_3709 AS OBJECT (
   v VARCHAR2(4000),
-  
+
   --Reactivate this when we fix this
   --MEMBER FUNCTION value RETURN VARCHAR2,
   MEMBER FUNCTION value (value VARCHAR2) RETURN VARCHAR2
@@ -534,7 +538,7 @@ COMMENT ON COLUMN t_language.description IS 'The language description'/
 CREATE TABLE t_725_lob_test (
   ID NUMBER(7) NOT NULL,
   LOB BLOB NULL,
-  
+
   USER_JAVA_SQL_CLOB CLOB NULL,
   USER_JAVA_SQL_BLOB BLOB NULL,
   JOOQ_JAVA_SQL_CLOB CLOB NULL,
@@ -553,12 +557,12 @@ CREATE TABLE t_785 (
 
 CREATE TABLE "T_2845_CASE_sensitivity" (
   id int,
-  
+
   insensitive int,
   "UPPER" int,
   "lower" int,
   "Mixed" int,
-  
+
   CONSTRAINT pk_t_2845_case_sensitivity PRIMARY KEY (id)
 )
 /
@@ -761,16 +765,16 @@ COMMENT ON COLUMN x_unused.id IS 'An unused column of an unused table in the sam
 CREATE TABLE t_exotic_types (
   ID NUMBER(7) NOT NULL,
   UU CHAR(36),
-  
+
   JAVA_IO_SERIALIZABLE BLOB,
-  
+
   PLAIN_SQL_CONVERTER_XML CLOB,
   PLAIN_SQL_BINDING_XML CLOB,
-  
+
   ORACLE_XML_AS_IS XMLTYPE,
   ORACLE_XML_AS_DOCUMENT XMLTYPE,
   ORACLE_XML_AS_SQLXML XMLTYPE,
-  
+
   CONSTRAINT pk_t_exotic_types PRIMARY KEY(ID)
 )
 /
@@ -787,7 +791,7 @@ CREATE TABLE t_639_numbers_table (
   LONG_DECIMAL DECIMAL(18, 0),
   BIG_INTEGER DECIMAL(22, 0),
   BIG_DECIMAL DECIMAL(22, 5),
-  
+
   "FLOAT" FLOAT,
   "REAL" REAL,
 
@@ -827,7 +831,7 @@ CREATE TABLE x_test_case_85 (
 CREATE TABLE x_test_case_2025 (
   ref_id NUMBER(7) NOT NULL,
   ref_name VARCHAR2(10) NOT NULL,
-  
+
   CONSTRAINT fk_x_test_case_2025_1 FOREIGN KEY(ref_id) REFERENCES x_test_case_85(ID),
   CONSTRAINT fk_x_test_case_2025_2 FOREIGN KEY(ref_id) REFERENCES x_test_case_71(ID),
   CONSTRAINT fk_x_test_case_2025_3 FOREIGN KEY(ref_id, ref_name) REFERENCES X_UNUSED(id, name)
@@ -1336,7 +1340,7 @@ CREATE OR REPLACE FUNCTION f2155 (p1 NUMBER, p2 DATE, p3 NUMBER, p4 DATE) RETURN
 BEGIN
   IF p1 IS NULL THEN
     RETURN p2;
-  ELSE 
+  ELSE
     RETURN p4;
   END IF;
 END;
@@ -1987,7 +1991,7 @@ CREATE PACKAGE multi_schema.ms_synonym_package AS
   FUNCTION actual_object RETURN multi_schema.number_object;
   FUNCTION public_object RETURN number_object_public;
   FUNCTION test_object RETURN test.number_object_test;
-  
+
   FUNCTION test_transitive RETURN transitive_synonym_2;
 END ms_synonym_package;
 /
@@ -1996,12 +2000,12 @@ CREATE PACKAGE BODY multi_schema.ms_synonym_package AS
   BEGIN
     RETURN number_table(1, 2, 3);
   END;
-  
+
   FUNCTION public_table RETURN number_table_public IS
   BEGIN
     RETURN number_table(4, 5, 6);
   END;
-  
+
   FUNCTION test_table RETURN test.number_table_test IS
   BEGIN
     RETURN number_table(7, 8, 9);
@@ -2012,17 +2016,17 @@ CREATE PACKAGE BODY multi_schema.ms_synonym_package AS
   BEGIN
     RETURN number_object(1, 2, 3);
   END;
-  
+
   FUNCTION public_object RETURN number_object_public IS
   BEGIN
     RETURN number_object(4, 5, 6);
   END;
-  
+
   FUNCTION test_object RETURN test.number_object_test IS
   BEGIN
     RETURN number_object(7, 8, 9);
   END;
-  
+
   FUNCTION test_transitive RETURN transitive_synonym_2 IS
   BEGIN
     RETURN number_object(7, 8, 9);
@@ -2038,7 +2042,7 @@ CREATE PACKAGE test.test_synonym_package AS
   FUNCTION actual_object RETURN multi_schema.number_object;
   FUNCTION public_object RETURN number_object_public;
   FUNCTION test_object RETURN test.number_object_test;
-  
+
   FUNCTION test_transitive RETURN transitive_synonym_2;
 END test_synonym_package;
 /
@@ -2047,12 +2051,12 @@ CREATE PACKAGE BODY test.test_synonym_package AS
   BEGIN
     RETURN multi_schema.number_table(1, 2, 3);
   END;
-  
+
   FUNCTION public_table RETURN number_table_public IS
   BEGIN
     RETURN multi_schema.number_table(4, 5, 6);
   END;
-  
+
   FUNCTION test_table RETURN test.number_table_test IS
   BEGIN
     RETURN multi_schema.number_table(7, 8, 9);
@@ -2063,17 +2067,17 @@ CREATE PACKAGE BODY test.test_synonym_package AS
   BEGIN
     RETURN multi_schema.number_object(1, 2, 3);
   END;
-  
+
   FUNCTION public_object RETURN number_object_public IS
   BEGIN
     RETURN multi_schema.number_object(4, 5, 6);
   END;
-  
+
   FUNCTION test_object RETURN test.number_object_test IS
   BEGIN
     RETURN multi_schema.number_object(7, 8, 9);
   END;
-  
+
   FUNCTION test_transitive RETURN transitive_synonym_2 IS
   BEGIN
     RETURN multi_schema.number_object(7, 8, 9);
@@ -2129,40 +2133,40 @@ END;
 
 
 CREATE PACKAGE pls_objects AS
-  
+
   pls_i_c CONSTANT NUMBER(7) := 1;
   pls_v_c CONSTANT VARCHAR2(50) := 'A';
-  
+
   pls_i NUMBER(7) := 1;
   pls_v VARCHAR2(50) := 1;
-  
+
   TYPE pls_r_t IS RECORD (a NUMBER);
   TYPE pls_r_tt IS TABLE OF pls_r_t;
-  
+
   PROCEDURE pls_p (i IN NUMBER, v IN VARCHAR2, io OUT NUMBER, vo OUT VARCHAR2);
   FUNCTION pls_f (i NUMBER, v VARCHAR2) RETURN NUMBER;
   PROCEDURE p_bool (i IN BOOLEAN, io IN OUT BOOLEAN, o OUT BOOLEAN);
   FUNCTION f_bool (i BOOLEAN) RETURN BOOLEAN;
 END pls_objects;
 /
-CREATE PACKAGE BODY pls_objects AS  
+CREATE PACKAGE BODY pls_objects AS
   PROCEDURE pls_p (i IN NUMBER, v IN VARCHAR2, io OUT NUMBER, vo OUT VARCHAR2) IS
   BEGIN
     io := i;
     vo := v;
   END pls_p;
-  
+
   FUNCTION pls_f (i NUMBER, v VARCHAR2) RETURN NUMBER IS
   BEGIN
     RETURN i;
   END pls_f;
-  
+
   PROCEDURE p_bool (i IN BOOLEAN, io IN OUT BOOLEAN, o OUT BOOLEAN) IS
   BEGIN
     o := io;
     io := i;
   END p_bool;
-  
+
   FUNCTION f_bool (i BOOLEAN) RETURN BOOLEAN IS
   BEGIN
     RETURN i;
@@ -2211,5 +2215,12 @@ CREATE TABLE t_reserved(
   "while" INT,
   "with" INT,
   "yield" INT
+)
+/
+
+CREATE TYPE multi_schema.u_4347 AS OBJECT (
+  ID NUMBER(7),
+  t test.u_address_table,
+  o test.u_address_type
 )
 /

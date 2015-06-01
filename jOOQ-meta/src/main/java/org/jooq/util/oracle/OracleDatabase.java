@@ -638,4 +638,39 @@ public class OracleDatabase extends AbstractDatabase {
 
         return synonyms.get(object);
     }
+
+    /**
+     * Information associated with a type.
+     */
+    class TypeInfo {
+        SchemaDefinition schema;
+        String name;
+    }
+
+    /**
+     * Resolve a type synonym.
+     */
+    TypeInfo getTypeInfo(SchemaDefinition typeSchema, String typeOwner, String typeName) {
+        TypeInfo result = new TypeInfo();
+
+        // [#3711] Check if the reported type is really a synonym for another type
+        if (typeOwner != null) {
+            Name synonym = getSynonym(name(typeOwner, typeName));
+
+            if (synonym != null) {
+                log.info("Applying synonym", DSL.name(typeOwner, typeName) + " is synonym for " + synonym);
+
+                typeOwner = synonym.getName()[0];
+                typeName = synonym.getName()[1];
+            }
+        }
+
+        if (typeOwner != null)
+            typeSchema = getSchema(typeOwner);
+
+        result.name = typeName;
+        result.schema = typeSchema;
+
+        return result;
+    }
 }

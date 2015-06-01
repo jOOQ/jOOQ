@@ -48,6 +48,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Record;
+import org.jooq.tools.JooqLogger;
 import org.jooq.util.AbstractUDTDefinition;
 import org.jooq.util.AttributeDefinition;
 import org.jooq.util.DataTypeDefinition;
@@ -55,8 +56,11 @@ import org.jooq.util.DefaultAttributeDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.RoutineDefinition;
 import org.jooq.util.SchemaDefinition;
+import org.jooq.util.oracle.OracleDatabase.TypeInfo;
 
 public class OracleUDTDefinition extends AbstractUDTDefinition {
+
+    private static final JooqLogger log = JooqLogger.getLogger(OracleUDTDefinition.class);
 
     public OracleUDTDefinition(SchemaDefinition schema, String name, String comment) {
         super(schema, name, comment);
@@ -69,6 +73,7 @@ public class OracleUDTDefinition extends AbstractUDTDefinition {
         for (Record record : create().select(
                 ALL_TYPE_ATTRS.ATTR_NAME,
                 ALL_TYPE_ATTRS.ATTR_NO,
+                ALL_TYPE_ATTRS.ATTR_TYPE_OWNER,
                 ALL_TYPE_ATTRS.ATTR_TYPE_NAME,
                 ALL_TYPE_ATTRS.LENGTH,
                 ALL_TYPE_ATTRS.PRECISION,
@@ -78,15 +83,22 @@ public class OracleUDTDefinition extends AbstractUDTDefinition {
             .and(ALL_TYPE_ATTRS.TYPE_NAME.equal(getName()))
             .orderBy(ALL_TYPE_ATTRS.ATTR_NO).fetch()) {
 
+            // [#3711] Check if the reported type is really a synonym for another type
+            TypeInfo info = ((OracleDatabase) getDatabase()).getTypeInfo(
+                getSchema(),
+                record.getValue(ALL_TYPE_ATTRS.ATTR_TYPE_OWNER),
+                record.getValue(ALL_TYPE_ATTRS.ATTR_TYPE_NAME));
+
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
-                getSchema(),
+                info.schema,
                 record.getValue(ALL_TYPE_ATTRS.ATTR_TYPE_NAME),
                 record.getValue(ALL_TYPE_ATTRS.LENGTH, int.class),
                 record.getValue(ALL_TYPE_ATTRS.PRECISION, int.class),
                 record.getValue(ALL_TYPE_ATTRS.SCALE, int.class),
                 null,
-                null
+                null,
+                info.name
             );
 
             AttributeDefinition attribute = new DefaultAttributeDefinition(

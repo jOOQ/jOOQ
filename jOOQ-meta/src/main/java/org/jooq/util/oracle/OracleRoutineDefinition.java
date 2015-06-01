@@ -42,18 +42,15 @@
 package org.jooq.util.oracle;
 
 import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.name;
 import static org.jooq.util.oracle.sys.Tables.ALL_ARGUMENTS;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
 
 import org.jooq.Field;
-import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.exception.DataAccessException;
-import org.jooq.impl.DSL;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.util.AbstractRoutineDefinition;
@@ -64,6 +61,7 @@ import org.jooq.util.InOutDefinition;
 import org.jooq.util.PackageDefinition;
 import org.jooq.util.ParameterDefinition;
 import org.jooq.util.SchemaDefinition;
+import org.jooq.util.oracle.OracleDatabase.TypeInfo;
 
 /**
  * @author Lukas Eder
@@ -121,35 +119,22 @@ public class OracleRoutineDefinition extends AbstractRoutineDefinition {
 	        InOutDefinition inOut =
                 InOutDefinition.getFromString(record.getValue(ALL_ARGUMENTS.IN_OUT));
 
-	        String typeOwner = record.getValue(ALL_ARGUMENTS.TYPE_OWNER);
-	        String typeName = record.getValue(ALL_ARGUMENTS.TYPE_NAME);
-
 	        // [#3552] Check if the reported type is really a synonym for another type
-	        if (typeOwner != null) {
-	            Name synonym = ((OracleDatabase) getDatabase()).getSynonym(name(typeOwner, typeName));
-
-	            if (synonym != null) {
-	                log.info("Applying synonym", DSL.name(typeOwner, typeName) + " is synonym for " + synonym);
-
-	                typeOwner = synonym.getName()[0];
-	                typeName = synonym.getName()[1];
-	            }
-	        }
-
-	        SchemaDefinition typeSchema = (typeOwner == null)
-	            ? getSchema()
-                : getDatabase().getSchema(typeOwner);
+	        TypeInfo info = ((OracleDatabase) getDatabase()).getTypeInfo(
+                getSchema(),
+                record.getValue(ALL_ARGUMENTS.TYPE_OWNER),
+                record.getValue(ALL_ARGUMENTS.TYPE_NAME));
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
-                typeSchema,
+                info.schema,
                 record.getValue(ALL_ARGUMENTS.DATA_TYPE),
                 record.getValue(ALL_ARGUMENTS.CHAR_LENGTH),
                 record.getValue(ALL_ARGUMENTS.DATA_PRECISION),
                 record.getValue(ALL_ARGUMENTS.DATA_SCALE),
                 true,
                 record.getValue(defaulted, boolean.class),
-                typeName
+                info.name
             );
 
             String name = record.getValue(ALL_ARGUMENTS.ARGUMENT_NAME);

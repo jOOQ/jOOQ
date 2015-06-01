@@ -175,6 +175,7 @@ import org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSa
 import org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord;
 import org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord;
 import org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.U_4311Record;
+import org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.U_4347Record;
 import org.jooq.test.oracle.generatedclasses.sys.udt.Xmltype;
 import org.jooq.test.oracle.generatedclasses.sys.udt.records.XmltypeRecord;
 import org.jooq.test.oracle.generatedclasses.test.Keys;
@@ -214,6 +215,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.UInvalidTable;
 import org.jooq.test.oracle.generatedclasses.test.udt.UInvalidType;
 import org.jooq.test.oracle.generatedclasses.test.udt.UStreetType;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.OInvalidTypeRecord;
+import org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTableRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UBookArrayRecord;
@@ -2406,6 +2408,18 @@ public class OracleTest extends jOOQAbstractTest<
 
         U_4311Record record = org.jooq.test.oracle.generatedclasses.multi_schema.Routines.p4311(create.configuration());
         assertEquals(1, (int) record.getId());
+    }
+
+    @Test
+    public void testOracleMultiSchemaObjectTypes() {
+        U_4347Record v1 = new U_4347Record(1, null, null);
+        U_4347Record v2 = new U_4347Record(2, new UAddressTableRecord(new UAddressTypeRecord(), new UAddressTypeRecord()), new UAddressTypeRecord());
+
+        Record2<U_4347Record, U_4347Record> result =
+        create().select(val(v1), val(v2))
+                .fetchOne();
+
+        assertEquals(asList(v1, v2), result.intoList());
     }
 }
 

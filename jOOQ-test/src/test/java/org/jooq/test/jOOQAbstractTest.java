@@ -923,7 +923,7 @@ public abstract class jOOQAbstractTest<
             getProperties().getProperty("db." + dialect.family().name().toLowerCase() + ".password" + (username == null ? "" : ("." + username))));
 
         if (isBlank(result) && !isBlank(username))
-            result = getPassword(dialect);
+            result = username;
 
         return result;
     }

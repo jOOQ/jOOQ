@@ -14,7 +14,6 @@ import javax.validation.constraints.Size;
 import org.jooq.Field;
 import org.jooq.Record2;
 import org.jooq.Record3;
-import org.jooq.Row;
 import org.jooq.Row3;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore;
@@ -30,7 +29,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore;
 })
 public class TBookToBookStoreRecord extends UpdatableRecordImpl<TBookToBookStoreRecord> implements Record3<String, Integer, Integer> {
 
-	private static final long serialVersionUID = 1784180499;
+	private static final long serialVersionUID = -954013312;
 
 	/**
 	 * Setter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name

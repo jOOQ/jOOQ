@@ -8,7 +8,6 @@ import javax.validation.constraints.Size;
 
 import org.jooq.Field;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.UDTRecordImpl;
 import org.jooq.test.oracle.generatedclasses.test.udt.UBookType;
@@ -20,7 +19,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.UBookType;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UBookTypeRecord extends UDTRecordImpl<UBookTypeRecord> implements Record2<Integer, String> {
 
-	private static final long serialVersionUID = -1286334584;
+	private static final long serialVersionUID = 1699648231;
 
 	/**
 	 * Setter for <code>TEST.U_BOOK_TYPE.ID</code>.

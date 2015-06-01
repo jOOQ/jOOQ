@@ -10,7 +10,6 @@ import javax.persistence.Table;
 
 import org.jooq.Field;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.usr_2522_a.tables.T_2522;
@@ -25,7 +24,7 @@ import org.jooq.test.oracle.generatedclasses.usr_2522_a.udt.records.U_2522Record
 @Table(name = "T_2522", schema = "USR_2522_A")
 public class T_2522Record extends TableRecordImpl<T_2522Record> implements Record2<Integer, U_2522Record> {
 
-	private static final long serialVersionUID = -984255205;
+	private static final long serialVersionUID = -758450802;
 
 	/**
 	 * Setter for <code>USR_2522_A.T_2522.ID</code>.

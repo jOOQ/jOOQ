@@ -16,7 +16,6 @@ import javax.validation.constraints.NotNull;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record6;
-import org.jooq.Row;
 import org.jooq.Row6;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.test.tables.T_725LobTest;
@@ -30,7 +29,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.T_725LobTest;
 @Table(name = "T_725_LOB_TEST", schema = "TEST")
 public class T_725LobTestRecord extends UpdatableRecordImpl<T_725LobTestRecord> implements Record6<Integer, byte[], Clob, Blob, String, byte[]> {
 
-	private static final long serialVersionUID = 1081629730;
+	private static final long serialVersionUID = 548259953;
 
 	/**
 	 * Setter for <code>TEST.T_725_LOB_TEST.ID</code>.

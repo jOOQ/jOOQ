@@ -15,7 +15,6 @@ import javax.validation.constraints.NotNull;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record4;
-import org.jooq.Row;
 import org.jooq.Row4;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.test.tables.T_2155;
@@ -31,7 +30,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ObjectRecord
 @Table(name = "T_2155", schema = "TEST")
 public class T_2155Record extends UpdatableRecordImpl<T_2155Record> implements Record4<Integer, LocalDate, U_2155ObjectRecord, U_2155ArrayRecord> {
 
-	private static final long serialVersionUID = -1649068915;
+	private static final long serialVersionUID = 476001024;
 
 	/**
 	 * Setter for <code>TEST.T_2155.ID</code>.

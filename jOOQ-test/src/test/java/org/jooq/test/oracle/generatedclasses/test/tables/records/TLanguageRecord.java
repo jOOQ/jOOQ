@@ -14,7 +14,6 @@ import javax.validation.constraints.Size;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record4;
-import org.jooq.Row;
 import org.jooq.Row4;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.test.tables.TLanguage;
@@ -34,7 +33,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.TLanguage;
 @Table(name = "T_LANGUAGE", schema = "TEST")
 public class TLanguageRecord extends UpdatableRecordImpl<TLanguageRecord> implements Record4<String, String, String, Integer> {
 
-	private static final long serialVersionUID = 1976273756;
+	private static final long serialVersionUID = 1722349163;
 
 	/**
 	 * Setter for <code>TEST.T_LANGUAGE.CD</code>. The language ISO code

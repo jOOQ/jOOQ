@@ -10,7 +10,6 @@ import javax.persistence.Table;
 
 import org.jooq.Field;
 import org.jooq.Record11;
-import org.jooq.Row;
 import org.jooq.Row11;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete;
@@ -24,7 +23,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete;
 @Table(name = "V_INCOMPLETE", schema = "TEST")
 public class VIncompleteRecord extends TableRecordImpl<VIncompleteRecord> implements Record11<Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object> {
 
-	private static final long serialVersionUID = -232507699;
+	private static final long serialVersionUID = -1576681972;
 
 	/**
 	 * Setter for <code>TEST.V_INCOMPLETE.ID</code>.

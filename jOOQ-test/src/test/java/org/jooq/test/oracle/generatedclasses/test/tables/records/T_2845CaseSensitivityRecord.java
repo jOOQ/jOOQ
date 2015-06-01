@@ -15,7 +15,6 @@ import javax.validation.constraints.NotNull;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record5;
-import org.jooq.Row;
 import org.jooq.Row5;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.test.tables.T_2845CaseSensitivity;
@@ -29,7 +28,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.T_2845CaseSensitivity;
 @Table(name = "T_2845_CASE_sensitivity", schema = "TEST")
 public class T_2845CaseSensitivityRecord extends UpdatableRecordImpl<T_2845CaseSensitivityRecord> implements Record5<BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal> {
 
-	private static final long serialVersionUID = 207308822;
+	private static final long serialVersionUID = 731897485;
 
 	/**
 	 * Setter for <code>TEST.T_2845_CASE_sensitivity.ID</code>.

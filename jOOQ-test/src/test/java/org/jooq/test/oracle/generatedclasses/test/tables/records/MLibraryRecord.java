@@ -12,7 +12,6 @@ import javax.validation.constraints.Size;
 
 import org.jooq.Field;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.test.tables.MLibrary;
@@ -26,7 +25,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.MLibrary;
 @Table(name = "M_LIBRARY", schema = "TEST")
 public class MLibraryRecord extends TableRecordImpl<MLibraryRecord> implements Record2<String, String> {
 
-	private static final long serialVersionUID = -433787819;
+	private static final long serialVersionUID = 1549831432;
 
 	/**
 	 * Setter for <code>TEST.M_LIBRARY.AUTHOR</code>.

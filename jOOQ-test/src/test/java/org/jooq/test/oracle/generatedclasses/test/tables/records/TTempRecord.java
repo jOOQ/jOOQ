@@ -12,7 +12,6 @@ import javax.validation.constraints.NotNull;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.test.tables.TTemp;
@@ -26,7 +25,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.TTemp;
 @Table(name = "T_TEMP", schema = "TEST")
 public class TTempRecord extends UpdatableRecordImpl<TTempRecord> implements Record1<Integer> {
 
-	private static final long serialVersionUID = -1781453152;
+	private static final long serialVersionUID = -393786315;
 
 	/**
 	 * Setter for <code>TEST.T_TEMP.ID</code>.

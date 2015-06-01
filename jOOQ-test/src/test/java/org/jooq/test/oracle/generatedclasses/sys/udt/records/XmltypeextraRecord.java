@@ -6,7 +6,6 @@ package org.jooq.test.oracle.generatedclasses.sys.udt.records;
 
 import org.jooq.Field;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.UDTRecordImpl;
 import org.jooq.test.oracle.generatedclasses.sys.udt.Xmltypeextra;
@@ -19,7 +18,7 @@ import org.jooq.test.oracle.generatedclasses.sys.udt.records.XmltypepiRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XmltypeextraRecord extends UDTRecordImpl<XmltypeextraRecord> implements Record2<XmltypepiRecord, XmltypepiRecord> {
 
-	private static final long serialVersionUID = -1241152059;
+	private static final long serialVersionUID = 1940590430;
 
 	/**
 	 * Setter for <code>SYS.XMLTYPEEXTRA.NAMESPACES</code>.

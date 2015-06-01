@@ -12,7 +12,6 @@ import javax.validation.constraints.Size;
 
 import org.jooq.Field;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_2025;
@@ -26,7 +25,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_2025;
 @Table(name = "X_TEST_CASE_2025", schema = "TEST")
 public class XTestCase_2025Record extends TableRecordImpl<XTestCase_2025Record> implements Record2<Integer, String> {
 
-	private static final long serialVersionUID = -430127963;
+	private static final long serialVersionUID = -578780270;
 
 	/**
 	 * Setter for <code>TEST.X_TEST_CASE_2025.REF_ID</code>.

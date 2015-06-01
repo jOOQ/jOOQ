@@ -13,7 +13,6 @@ import javax.validation.constraints.NotNull;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record5;
-import org.jooq.Row;
 import org.jooq.Row5;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.test.tables.TArrays;
@@ -31,7 +30,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord
 @Table(name = "T_ARRAYS", schema = "TEST")
 public class TArraysRecord extends UpdatableRecordImpl<TArraysRecord> implements Record5<Integer, UStringArrayRecord, UNumberArrayRecord, UNumberLongArrayRecord, UDateArrayRecord> {
 
-	private static final long serialVersionUID = 1977967721;
+	private static final long serialVersionUID = -1933675384;
 
 	/**
 	 * Setter for <code>TEST.T_ARRAYS.ID</code>.

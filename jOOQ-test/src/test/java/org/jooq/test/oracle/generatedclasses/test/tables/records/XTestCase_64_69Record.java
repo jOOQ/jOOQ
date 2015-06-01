@@ -13,7 +13,6 @@ import javax.validation.constraints.NotNull;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_64_69;
@@ -27,7 +26,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_64_69;
 @Table(name = "X_TEST_CASE_64_69", schema = "TEST")
 public class XTestCase_64_69Record extends UpdatableRecordImpl<XTestCase_64_69Record> implements Record2<Integer, Integer> {
 
-	private static final long serialVersionUID = 1236863054;
+	private static final long serialVersionUID = 352549877;
 
 	/**
 	 * Setter for <code>TEST.X_TEST_CASE_64_69.ID</code>.

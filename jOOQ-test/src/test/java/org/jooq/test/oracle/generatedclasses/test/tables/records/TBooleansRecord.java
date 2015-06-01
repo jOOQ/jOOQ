@@ -13,7 +13,6 @@ import javax.validation.constraints.NotNull;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record11;
-import org.jooq.Row;
 import org.jooq.Row11;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.all.converters.Boolean_10;
@@ -34,7 +33,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.TBooleans;
 @Table(name = "T_BOOLEANS", schema = "TEST")
 public class TBooleansRecord extends UpdatableRecordImpl<TBooleansRecord> implements Record11<Integer, Boolean_10, Boolean_TF_LC, Boolean_TF_UC, Boolean_YES_NO_LC, Boolean_YES_NO_UC, Boolean_YN_LC, Boolean_YN_UC, Boolean, Boolean, Boolean> {
 
-	private static final long serialVersionUID = -2124578450;
+	private static final long serialVersionUID = -1468692537;
 
 	/**
 	 * Setter for <code>TEST.T_BOOLEANS.ID</code>.

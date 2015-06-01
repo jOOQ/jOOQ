@@ -6,7 +6,6 @@ package org.jooq.test.oracle.generatedclasses.test.udt.records;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.impl.UDTRecordImpl;
 import org.jooq.test.oracle.generatedclasses.test.udt.U_3005;
@@ -18,7 +17,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.U_3005;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_3005Record extends UDTRecordImpl<U_3005Record> implements Record1<Integer> {
 
-	private static final long serialVersionUID = 1457368877;
+	private static final long serialVersionUID = -992603678;
 
 	/**
 	 * Setter for <code>TEST.U_3005.ID</code>.

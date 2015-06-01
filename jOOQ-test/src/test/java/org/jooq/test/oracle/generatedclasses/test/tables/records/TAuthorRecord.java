@@ -16,7 +16,6 @@ import javax.validation.constraints.Size;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record6;
-import org.jooq.Row;
 import org.jooq.Row6;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.test.tables.TAuthor;
@@ -31,7 +30,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord
 @Table(name = "T_AUTHOR", schema = "TEST")
 public class TAuthorRecord extends UpdatableRecordImpl<TAuthorRecord> implements Record6<Integer, String, String, Date, Integer, UAddressTypeRecord> {
 
-	private static final long serialVersionUID = 747501931;
+	private static final long serialVersionUID = 1921917956;
 
 	/**
 	 * Setter for <code>TEST.T_AUTHOR.ID</code>. The author ID

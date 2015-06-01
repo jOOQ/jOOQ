@@ -6,7 +6,6 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.udt.records;
 
 import org.jooq.Field;
 import org.jooq.Record3;
-import org.jooq.Row;
 import org.jooq.Row3;
 import org.jooq.impl.UDTRecordImpl;
 import org.jooq.test.oracle.generatedclasses.multi_schema.udt.NumberObject;
@@ -18,7 +17,7 @@ import org.jooq.test.oracle.generatedclasses.multi_schema.udt.NumberObject;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class NumberObjectRecord extends UDTRecordImpl<NumberObjectRecord> implements Record3<Integer, Integer, Integer> {
 
-	private static final long serialVersionUID = 972877341;
+	private static final long serialVersionUID = 112711894;
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.NUMBER_OBJECT.A</code>.

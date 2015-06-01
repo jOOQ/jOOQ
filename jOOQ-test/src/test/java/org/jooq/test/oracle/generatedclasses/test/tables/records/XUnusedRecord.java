@@ -17,7 +17,6 @@ import javax.validation.constraints.Size;
 import org.jooq.Field;
 import org.jooq.Record16;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row16;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.test.tables.XUnused;
@@ -35,7 +34,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.XUnused;
 })
 public class XUnusedRecord extends UpdatableRecordImpl<XUnusedRecord> implements Record16<Integer, String, BigInteger, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, String, BigDecimal, Integer, String> {
 
-	private static final long serialVersionUID = 283644513;
+	private static final long serialVersionUID = -437715944;
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.ID</code>. An unused column of an unused table in the same schema.

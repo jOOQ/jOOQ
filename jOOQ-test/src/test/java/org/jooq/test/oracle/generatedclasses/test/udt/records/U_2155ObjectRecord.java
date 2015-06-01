@@ -8,7 +8,6 @@ import java.time.LocalDate;
 
 import org.jooq.Field;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.UDTRecordImpl;
 import org.jooq.test.oracle.generatedclasses.test.udt.U_2155Object;
@@ -21,7 +20,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ArrayRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_2155ObjectRecord extends UDTRecordImpl<U_2155ObjectRecord> implements Record2<LocalDate, U_2155ArrayRecord> {
 
-	private static final long serialVersionUID = 113580377;
+	private static final long serialVersionUID = -33854722;
 
 	/**
 	 * Setter for <code>TEST.U_2155_OBJECT.D</code>.

@@ -11,7 +11,6 @@ import javax.validation.constraints.Size;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Record3;
-import org.jooq.Row;
 import org.jooq.Row3;
 import org.jooq.impl.UDTRecordImpl;
 import org.jooq.test.oracle.generatedclasses.test.udt.UAuthorType;
@@ -28,7 +27,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.NewAuthor;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UAuthorTypeRecord extends UDTRecordImpl<UAuthorTypeRecord> implements Record3<Integer, String, String> {
 
-	private static final long serialVersionUID = -2093472254;
+	private static final long serialVersionUID = -1423368445;
 
 	/**
 	 * Setter for <code>TEST.U_AUTHOR_TYPE.ID</code>.

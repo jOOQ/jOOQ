@@ -5,10 +5,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema;
 
 
 import org.jooq.Configuration;
-import org.jooq.Field;
 import org.jooq.test.oracle.generatedclasses.multi_schema.routines.P4311;
-import org.jooq.test.oracle.generatedclasses.multi_schema.routines.Pkg_2522;
-import org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.U_2522Record;
 import org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.U_4311Record;
 
 
@@ -17,25 +14,6 @@ import org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.U_4311Reco
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Routines {
-
-	/**
-	 * Call <code>MULTI_SCHEMA.PKG_2522</code>
-	 */
-	public static U_2522Record pkg_2522(Configuration configuration) {
-		Pkg_2522 f = new Pkg_2522();
-
-		f.execute(configuration);
-		return f.getReturnValue();
-	}
-
-	/**
-	 * Get <code>MULTI_SCHEMA.PKG_2522</code> as a field
-	 */
-	public static Field<U_2522Record> pkg_2522() {
-		Pkg_2522 f = new Pkg_2522();
-
-		return f.asField();
-	}
 
 	/**
 	 * Call <code>MULTI_SCHEMA.P4311</code>

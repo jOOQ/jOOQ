@@ -16,7 +16,6 @@ import javax.validation.constraints.NotNull;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record8;
-import org.jooq.Row;
 import org.jooq.Row8;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.test.tables.TDates;
@@ -32,7 +31,7 @@ import org.jooq.types.YearToMonth;
 @Table(name = "T_DATES", schema = "TEST")
 public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements Record8<Integer, Date, Timestamp, Timestamp, Integer, Long, YearToMonth, DayToSecond> {
 
-	private static final long serialVersionUID = -263420909;
+	private static final long serialVersionUID = -1148917152;
 
 	/**
 	 * Setter for <code>TEST.T_DATES.ID</code>.

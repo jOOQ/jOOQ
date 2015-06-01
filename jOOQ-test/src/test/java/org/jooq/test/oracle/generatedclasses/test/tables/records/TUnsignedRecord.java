@@ -10,7 +10,6 @@ import javax.persistence.Table;
 
 import org.jooq.Field;
 import org.jooq.Record4;
-import org.jooq.Row;
 import org.jooq.Row4;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.test.tables.TUnsigned;
@@ -28,7 +27,7 @@ import org.jooq.types.UShort;
 @Table(name = "T_UNSIGNED", schema = "TEST")
 public class TUnsignedRecord extends TableRecordImpl<TUnsignedRecord> implements Record4<UByte, UShort, UInteger, ULong> {
 
-	private static final long serialVersionUID = -159436609;
+	private static final long serialVersionUID = 2067740842;
 
 	/**
 	 * Setter for <code>TEST.T_UNSIGNED.U_BYTE</code>.

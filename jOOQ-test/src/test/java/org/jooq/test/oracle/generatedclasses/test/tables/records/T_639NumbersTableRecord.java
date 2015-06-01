@@ -16,7 +16,6 @@ import javax.validation.constraints.NotNull;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record13;
-import org.jooq.Row;
 import org.jooq.Row13;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.test.tables.T_639NumbersTable;
@@ -30,7 +29,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.T_639NumbersTable;
 @Table(name = "T_639_NUMBERS_TABLE", schema = "TEST")
 public class T_639NumbersTableRecord extends UpdatableRecordImpl<T_639NumbersTableRecord> implements Record13<Integer, Byte, Short, Integer, Long, Byte, Short, Integer, Long, BigInteger, BigDecimal, Double, Double> {
 
-	private static final long serialVersionUID = 1895698008;
+	private static final long serialVersionUID = 1495157455;
 
 	/**
 	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.ID</code>.

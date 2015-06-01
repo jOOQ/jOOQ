@@ -14,7 +14,6 @@ import javax.validation.constraints.Size;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record4;
-import org.jooq.Row;
 import org.jooq.Row4;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.test.tables.TDirectory;
@@ -28,7 +27,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.TDirectory;
 @Table(name = "T_DIRECTORY", schema = "TEST")
 public class TDirectoryRecord extends UpdatableRecordImpl<TDirectoryRecord> implements Record4<Integer, Integer, Integer, String> {
 
-	private static final long serialVersionUID = -817802550;
+	private static final long serialVersionUID = 485102297;
 
 	/**
 	 * Setter for <code>TEST.T_DIRECTORY.ID</code>.

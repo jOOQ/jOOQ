@@ -13,7 +13,6 @@ import javax.validation.constraints.NotNull;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record3;
-import org.jooq.Row;
 import org.jooq.Row3;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.test.tables.TTriggers;
@@ -27,7 +26,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.TTriggers;
 @Table(name = "T_TRIGGERS", schema = "TEST")
 public class TTriggersRecord extends UpdatableRecordImpl<TTriggersRecord> implements Record3<Integer, Integer, Integer> {
 
-	private static final long serialVersionUID = -1762783972;
+	private static final long serialVersionUID = -550231433;
 
 	/**
 	 * Setter for <code>TEST.T_TRIGGERS.ID_GENERATED</code>.

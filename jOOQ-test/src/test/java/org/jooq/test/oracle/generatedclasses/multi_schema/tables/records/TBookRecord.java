@@ -14,7 +14,6 @@ import javax.validation.constraints.Size;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record9;
-import org.jooq.Row;
 import org.jooq.Row9;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook;
@@ -28,7 +27,7 @@ import org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook;
 @Table(name = "T_BOOK", schema = "MULTI_SCHEMA")
 public class TBookRecord extends UpdatableRecordImpl<TBookRecord> implements Record9<Integer, Integer, Integer, Integer, String, Integer, Integer, String, byte[]> {
 
-	private static final long serialVersionUID = -2119955601;
+	private static final long serialVersionUID = 1150659808;
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_BOOK.ID</code>.

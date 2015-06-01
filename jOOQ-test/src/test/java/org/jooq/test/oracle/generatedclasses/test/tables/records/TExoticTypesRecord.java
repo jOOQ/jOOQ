@@ -17,7 +17,6 @@ import javax.validation.constraints.NotNull;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record8;
-import org.jooq.Row;
 import org.jooq.Row8;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.sys.udt.records.XmltypeRecord;
@@ -32,7 +31,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.TExoticTypes;
 @Table(name = "T_EXOTIC_TYPES", schema = "TEST")
 public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> implements Record8<Integer, UUID, Serializable, String, String, XmltypeRecord, XmltypeRecord, SQLXML> {
 
-	private static final long serialVersionUID = -1179408363;
+	private static final long serialVersionUID = -228487892;
 
 	/**
 	 * Setter for <code>TEST.T_EXOTIC_TYPES.ID</code>.

@@ -12,6 +12,7 @@ import org.jooq.AggregateFunction;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Result;
+import org.jooq.test.oracle.generatedclasses.test.routines.Bitor;
 import org.jooq.test.oracle.generatedclasses.test.routines.F2155;
 import org.jooq.test.oracle.generatedclasses.test.routines.F317;
 import org.jooq.test.oracle.generatedclasses.test.routines.F377;
@@ -58,7 +59,6 @@ import org.jooq.test.oracle.generatedclasses.test.routines.PTables2;
 import org.jooq.test.oracle.generatedclasses.test.routines.PTables3;
 import org.jooq.test.oracle.generatedclasses.test.routines.PTables4;
 import org.jooq.test.oracle.generatedclasses.test.routines.PUnused;
-import org.jooq.test.oracle.generatedclasses.test.routines.Pkg_2522;
 import org.jooq.test.oracle.generatedclasses.test.routines.SecondMax;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UBookArrayRecord;
@@ -70,7 +70,6 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongTableRe
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberTableRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UStringTableRecord;
-import org.jooq.test.oracle.generatedclasses.test.udt.records.U_2522Record;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.U_3005Record;
 
 
@@ -79,6 +78,40 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.U_3005Record;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Routines {
+
+	/**
+	 * Call <code>TEST.BITOR</code>
+	 */
+	public static BigDecimal bitor(Configuration configuration, Number x, Number y) {
+		Bitor f = new Bitor();
+		f.setX(x);
+		f.setY(y);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get <code>TEST.BITOR</code> as a field
+	 */
+	public static Field<BigDecimal> bitor(Number x, Number y) {
+		Bitor f = new Bitor();
+		f.setX(x);
+		f.setY(y);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get <code>TEST.BITOR</code> as a field
+	 */
+	public static Field<BigDecimal> bitor(Field<? extends Number> x, Field<? extends Number> y) {
+		Bitor f = new Bitor();
+		f.setX(x);
+		f.setY(y);
+
+		return f.asField();
+	}
 
 	/**
 	 * Call <code>TEST.F_ARRAYS1</code>
@@ -806,25 +839,6 @@ public class Routines {
 
 		p.execute(configuration);
 		return p;
-	}
-
-	/**
-	 * Call <code>TEST.PKG_2522</code>
-	 */
-	public static U_2522Record pkg_2522(Configuration configuration) {
-		Pkg_2522 f = new Pkg_2522();
-
-		f.execute(configuration);
-		return f.getReturnValue();
-	}
-
-	/**
-	 * Get <code>TEST.PKG_2522</code> as a field
-	 */
-	public static Field<U_2522Record> pkg_2522() {
-		Pkg_2522 f = new Pkg_2522();
-
-		return f.asField();
 	}
 
 	/**

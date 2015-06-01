@@ -6,7 +6,6 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.udt.records;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.impl.UDTRecordImpl;
 import org.jooq.test.oracle.generatedclasses.multi_schema.udt.U_4311;
@@ -18,7 +17,7 @@ import org.jooq.test.oracle.generatedclasses.multi_schema.udt.U_4311;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_4311Record extends UDTRecordImpl<U_4311Record> implements Record1<Integer> {
 
-	private static final long serialVersionUID = -1168422329;
+	private static final long serialVersionUID = 2065800754;
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.U_4311.ID</code>.

@@ -60,6 +60,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Record;
+import org.jooq.impl.DSL;
 import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataTypeDefinition;
@@ -132,7 +133,9 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
             // from INFORMATION_SCHEMA.TABLES
              select(
                 nvl(c.COLUMN_NAME               , getName()                   ).as(c.COLUMN_NAME),
-                nvl(c.ORDINAL_POSITION          , inline(1)                   ).as(c.ORDINAL_POSITION),
+
+                // Type inference doesn't seem to be possible here with Java 8... ?
+                nvl(c.ORDINAL_POSITION          , DSL.<Integer>inline(1)      ).as(c.ORDINAL_POSITION),
                 nvl(c.DATA_TYPE                 , r.DATA_TYPE                 ).as(c.DATA_TYPE),
                 nvl(c.CHARACTER_MAXIMUM_LENGTH  , r.CHARACTER_MAXIMUM_LENGTH  ).as(c.CHARACTER_MAXIMUM_LENGTH),
                 nvl(c.NUMERIC_PRECISION         , r.NUMERIC_PRECISION         ).as(c.NUMERIC_PRECISION),

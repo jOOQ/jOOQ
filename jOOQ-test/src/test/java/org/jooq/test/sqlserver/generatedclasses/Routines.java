@@ -23,6 +23,7 @@ import org.jooq.test.sqlserver.generatedclasses.routines.PRaise;
 import org.jooq.test.sqlserver.generatedclasses.routines.PRaise_3696;
 import org.jooq.test.sqlserver.generatedclasses.routines.PResults;
 import org.jooq.test.sqlserver.generatedclasses.routines.PResultsAndOutParameters;
+import org.jooq.test.sqlserver.generatedclasses.routines.PResultsAndRowCounts;
 import org.jooq.test.sqlserver.generatedclasses.routines.PUnused;
 import org.jooq.test.sqlserver.generatedclasses.tables.FTables1;
 import org.jooq.test.sqlserver.generatedclasses.tables.FTables2;
@@ -251,6 +252,17 @@ public class Routines {
 
 		p.execute(configuration);
 		return p;
+	}
+
+	/**
+	 * Call <code>dbo.p_results_and_row_counts</code>
+	 */
+	public static Integer pResultsAndRowCounts(Configuration configuration, Integer pResultSets) {
+		PResultsAndRowCounts p = new PResultsAndRowCounts();
+		p.setPResultSets(pResultSets);
+
+		p.execute(configuration);
+		return p.getReturnValue();
 	}
 
 	/**

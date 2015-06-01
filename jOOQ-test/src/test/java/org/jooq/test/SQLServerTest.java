@@ -111,6 +111,8 @@ import org.jooq.test.sqlserver.generatedclasses.Keys;
 import org.jooq.test.sqlserver.generatedclasses.Routines;
 import org.jooq.test.sqlserver.generatedclasses.Sequences;
 import org.jooq.test.sqlserver.generatedclasses.routines.P4106;
+import org.jooq.test.sqlserver.generatedclasses.routines.PResults;
+import org.jooq.test.sqlserver.generatedclasses.routines.PResultsAndRowCounts;
 import org.jooq.test.sqlserver.generatedclasses.tables.FTables4;
 import org.jooq.test.sqlserver.generatedclasses.tables.FTables5;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.FTables1Record;
@@ -1376,6 +1378,65 @@ public class SQLServerTest extends jOOQAbstractTest<
         P4106 r3 = Routines.p4106(create().configuration(), 5, 0);
         assertEquals(42, (int) r3.getReturnValue());
         assertEquals(5, (int) r3.getParam2());
+    }
+
+    @Test
+    public void testSQLServerProceduresWithResults() {
+        PResults r1 = new PResults();
+        r1.setPResultSets(0);
+        r1.execute(create().configuration());
+        assertEquals(0, r1.getResults().size());
+
+        PResults r2 = new PResults();
+        r2.setPResultSets(1);
+        r2.execute(create().configuration());
+        assertEquals(1, r2.getResults().size());
+        assertEquals(asList(1), r2.getResults().get(0).getValues(0, int.class));
+
+        PResults r3 = new PResults();
+        r3.setPResultSets(2);
+        r3.execute(create().configuration());
+        assertEquals(2, r3.getResults().size());
+        assertEquals(asList(1), r3.getResults().get(0).getValues(0, int.class));
+        assertEquals(asList(1, 2), r3.getResults().get(1).getValues(0, int.class));
+
+        PResults r4 = new PResults();
+        r4.setPResultSets(3);
+        r4.execute(create().configuration());
+        assertEquals(3, r4.getResults().size());
+        assertEquals(asList(1), r4.getResults().get(0).getValues(0, int.class));
+        assertEquals(asList(1, 2), r4.getResults().get(1).getValues(0, int.class));
+        assertEquals(asList(1, 2, 3), r4.getResults().get(2).getValues(0, int.class));
+    }
+
+    @Test
+    public void testSQLServerProceduresWithResultsAndRowCounts() {
+        PResultsAndRowCounts r1 = new PResultsAndRowCounts();
+        r1.setPResultSets(0);
+        r1.execute(create().configuration());
+        assertEquals(0, r1.getResults().size());
+
+        PResultsAndRowCounts r2 = new PResultsAndRowCounts();
+        r2.setPResultSets(1);
+        r2.execute(create().configuration());
+        assertEquals(1, r2.getResults().size());
+        assertEquals(asList(1), r2.getResults().get(0).getValues(0, int.class));
+
+        PResultsAndRowCounts r3 = new PResultsAndRowCounts();
+        r3.setPResultSets(2);
+        r3.execute(create().configuration());
+        assertEquals(2, r3.getResults().size());
+        assertEquals(asList(1), r3.getResults().get(0).getValues(0, int.class));
+        assertEquals(asList(1, 2), r3.getResults().get(1).getValues(0, int.class));
+
+        PResultsAndRowCounts r4 = new PResultsAndRowCounts();
+        r4.setPResultSets(3);
+        r4.execute(create().configuration());
+        assertEquals(3, r4.getResults().size());
+        assertEquals(asList(1), r4.getResults().get(0).getValues(0, int.class));
+        assertEquals(asList(1, 2), r4.getResults().get(1).getValues(0, int.class));
+        assertEquals(asList(1, 2, 3), r4.getResults().get(2).getValues(0, int.class));
+
     }
 }
 

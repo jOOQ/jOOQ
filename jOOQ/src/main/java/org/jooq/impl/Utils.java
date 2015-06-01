@@ -340,6 +340,7 @@ final class Utils {
      * helps prevent infinite loops and {@link OutOfMemoryError}.
      */
     private static int           maxConsumedExceptions                        = 256;
+    private static int           maxConsumedResults                           = 65536;
 
     /**
      * A pattern for the dash line syntax
@@ -2469,10 +2470,12 @@ final class Utils {
      */
     static final void consumeExceptions(Configuration configuration, PreparedStatement stmt, SQLException previous) {
         /* [pro] */
+        int i = 0;
+
         // So far, this issue has been observed only with SQL Server
         switch (configuration.dialect().family()) {
             case SQLSERVER:
-                consumeLoop: for (int i = 0; i < maxConsumedExceptions; i++)
+                consumeLoop: for (i = 0; i < maxConsumedExceptions; i++)
                     try {
                         if (!stmt.getMoreResults() && stmt.getUpdateCount() == -1)
                             break consumeLoop;
@@ -2482,6 +2485,10 @@ final class Utils {
                         previous = e;
                     }
         }
+
+        if (i == maxConsumedExceptions)
+            log.warn("Maximum consumed results reached: " + maxConsumedExceptions + ". This is probably a bug. Please report to https://github.com/jOOQ/jOOQ/issues/new");
+
         /* [/pro] */
     }
 
@@ -2513,27 +2520,32 @@ final class Utils {
      */
     static void consumeResultSets(ExecuteContext ctx, ExecuteListener listener, List<Result<Record>> results, Intern intern) throws SQLException {
         boolean anyResults = false;
+        int i = 0;
 
-        while (ctx.resultSet() != null) {
-            anyResults = true;
+        for (i = 0; i < maxConsumedResults; i++) {
+            if (ctx.resultSet() != null) {
+                anyResults = true;
 
-            Field<?>[] fields = new MetaDataFieldProvider(ctx.configuration(), ctx.resultSet().getMetaData()).getFields();
-            Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, intern != null ? intern.internIndexes(fields) : null, true, false);
-            results.add(c.fetch());
+                Field<?>[] fields = new MetaDataFieldProvider(ctx.configuration(), ctx.resultSet().getMetaData()).getFields();
+                Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, intern != null ? intern.internIndexes(fields) : null, true, false);
+                results.add(c.fetch());
+            }
 
-            if (ctx.statement().getMoreResults()) {
+            if (ctx.statement().getMoreResults())
                 ctx.resultSet(ctx.statement().getResultSet());
-            }
-            else {
+            else if (ctx.statement().getUpdateCount() != -1)
                 ctx.resultSet(null);
-            }
+            else
+                break;
         }
+
+        if (i == maxConsumedResults)
+            log.warn("Maximum consumed results reached: " + maxConsumedResults + ". This is probably a bug. Please report to https://github.com/jOOQ/jOOQ/issues/new");
 
         // Call this only when there was at least one ResultSet.
         // Otherwise, this call is not supported by ojdbc...
-        if (anyResults) {
+        if (anyResults)
             ctx.statement().getMoreResults(Statement.CLOSE_ALL_RESULTS);
-        }
     }
 
     static List<String[]> parseTXT(String string, String nullLiteral) {

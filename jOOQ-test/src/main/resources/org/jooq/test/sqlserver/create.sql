@@ -14,6 +14,7 @@ DROP PROCEDURE p_raise/
 DROP PROCEDURE p_raise_3696/
 DROP PROCEDURE p_results/
 DROP PROCEDURE p_results_and_out_parameters/
+DROP PROCEDURE p_results_and_row_counts/
 DROP PROCEDURE p4106/
 DROP FUNCTION f_tables1/
 DROP FUNCTION f_tables2/
@@ -808,6 +809,34 @@ BEGIN
   END;
 
   SET @p_count = @p_result_sets;
+END;
+/
+
+CREATE PROCEDURE p_results_and_row_counts(
+  @p_result_sets INT
+)
+AS
+BEGIN
+  CREATE TABLE #t (v INT);
+  
+  IF @p_result_sets = 1 BEGIN
+    SELECT 1 a;
+    
+    INSERT INTO #t VALUES (1);  
+  END
+  ELSE IF @p_result_sets = 2 BEGIN
+    SELECT 1 a;
+    SELECT 1 b UNION SELECT 2 b;
+    
+    INSERT INTO #t VALUES (1), (2);  
+  END
+  ELSE IF @p_result_sets = 3 BEGIN
+    SELECT 1 a;
+    SELECT 1 b UNION SELECT 2 b;
+    SELECT 1 c UNION SELECT 2 c UNION SELECT 3 c;
+    
+    INSERT INTO #t VALUES (1), (2), (3);  
+  END;
 END;
 /
 

@@ -70,6 +70,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 import javax.sql.DataSource;
@@ -522,6 +523,23 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return resultQuery(sql, parts).fetchLazy();
     }
 
+    /* [java-8] */
+    @Override
+    public Stream<Record> fetchStream(String sql) {
+        return resultQuery(sql).stream();
+    }
+
+    @Override
+    public Stream<Record> fetchStream(String sql, Object... bindings) {
+        return resultQuery(sql, bindings).stream();
+    }
+
+    @Override
+    public Stream<Record> fetchStream(String sql, QueryPart... parts) {
+        return resultQuery(sql, parts).stream();
+    }
+    /* [/java-8] */
+
     @Override
     public List<Result<Record>> fetchMany(String sql) {
         return resultQuery(sql).fetchMany();
@@ -815,6 +833,28 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public Cursor<Record> fetchLazy(ResultSet rs, Class<?>... types) {
         return fetchLazy(rs, Utils.dataTypes(types));
     }
+
+    /* [java-8] */
+    @Override
+    public Stream<Record> fetchStream(ResultSet rs) {
+        return fetchLazy(rs).stream();
+    }
+
+    @Override
+    public Stream<Record> fetchStream(ResultSet rs, Field<?>... fields) {
+        return fetchLazy(rs, fields).stream();
+    }
+
+    @Override
+    public Stream<Record> fetchStream(ResultSet rs, DataType<?>... types) {
+        return fetchLazy(rs, types).stream();
+    }
+
+    @Override
+    public Stream<Record> fetchStream(ResultSet rs, Class<?>... types) {
+        return fetchLazy(rs, types).stream();
+    }
+    /* [/java-8] */
 
     @Override
     public Result<Record> fetchFromTXT(String string) {
@@ -2376,6 +2416,21 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         }
     }
 
+    /* [java-8] */
+    @Override
+    public <R extends Record> Stream<R> fetchStream(ResultQuery<R> query) {
+        final Configuration previous = Utils.getConfiguration(query);
+
+        try {
+            query.attach(configuration());
+            return query.stream();
+        }
+        finally {
+            query.attach(previous);
+        }
+    }
+    /* [/java-8] */
+
     @Override
     public <R extends Record> List<Result<Record>> fetchMany(ResultQuery<R> query) {
         final Configuration previous = Utils.getConfiguration(query);
@@ -2547,6 +2602,18 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public <R extends Record> Cursor<R> fetchLazy(Table<R> table, Condition condition) {
         return selectFrom(table).where(condition).fetchLazy();
     }
+
+    /* [java-8] */
+    @Override
+    public <R extends Record> Stream<R> fetchStream(Table<R> table) {
+        return fetchStream(table, trueCondition());
+    }
+
+    @Override
+    public <R extends Record> Stream<R> fetchStream(Table<R> table, Condition condition) {
+        return selectFrom(table).where(condition).stream();
+    }
+    /* [/java-8] */
 
     @Override
     public <R extends TableRecord<R>> int executeInsert(R record) {

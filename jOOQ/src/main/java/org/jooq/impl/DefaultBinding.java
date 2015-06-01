@@ -1682,7 +1682,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
         else {
             // TODO: [#523] Use array record meta data instead
-            return set(Utils.newArrayRecord(type), array);
+            // ... Generic type inference in Java 8 has changed, resorting to
+            // raw type for now
+            return set((ArrayRecord) Utils.newArrayRecord(type), array);
         }
     }
 

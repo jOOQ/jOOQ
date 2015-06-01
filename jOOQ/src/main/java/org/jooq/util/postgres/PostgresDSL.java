@@ -90,7 +90,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static <T> Field<T[]> arrayAppend(T[] array, T value) {
-        return arrayAppend(val(array), val(value));
+        return arrayAppend0(val(array), val(value));
     }
 
     /**
@@ -102,7 +102,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static <T> Field<T[]> arrayAppend(T[] array, Field<T> value) {
-        return arrayAppend(val(array), value);
+        return arrayAppend0(val(array), value);
     }
 
     /**
@@ -114,7 +114,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static <T> Field<T[]> arrayAppend(Field<T[]> array, T value) {
-        return arrayAppend(array, val(value));
+        return arrayAppend0(array, val(value));
     }
 
     /**
@@ -126,6 +126,12 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static <T> Field<T[]> arrayAppend(Field<T[]> array, Field<T> value) {
+        return arrayAppend0(array, value);
+    }
+
+    // Java 8 is stricter than Java 7 with respect to generics and overload
+    // resolution (http://stackoverflow.com/q/5361513/521799)
+    static <T> Field<T[]> arrayAppend0(Field<T[]> array, Field<T> value) {
         return field("{array_append}({0}, {1})", nullSafe(array).getDataType(), nullSafe(array), nullSafe(value));
     }
 
@@ -138,7 +144,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static <T> Field<T[]> arrayPrepend(T value, T[] array) {
-        return arrayPrepend(val(value), val(array));
+        return arrayPrepend0(val(value), val(array));
     }
 
     /**
@@ -150,7 +156,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static <T> Field<T[]> arrayPrepend(Field<T> value, T[] array) {
-        return arrayPrepend(value, val(array));
+        return arrayPrepend0(value, val(array));
     }
 
     /**
@@ -162,7 +168,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static <T> Field<T[]> arrayPrepend(T value, Field<T[]> array) {
-        return arrayPrepend(val(value), array);
+        return arrayPrepend0(val(value), array);
     }
 
     /**
@@ -174,6 +180,12 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static <T> Field<T[]> arrayPrepend(Field<T> value, Field<T[]> array) {
+        return arrayPrepend0(value, array);
+    }
+
+    // Java 8 is stricter than Java 7 with respect to generics and overload
+    // resolution (http://stackoverflow.com/q/5361513/521799)
+    static <T> Field<T[]> arrayPrepend0(Field<T> value, Field<T[]> array) {
         return field("{array_prepend}({0}, {1})", nullSafe(array).getDataType(), nullSafe(value), nullSafe(array));
     }
 
@@ -234,7 +246,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static <T> Field<T[]> arrayRemove(T[] array, T element) {
-        return arrayRemove(val(array), val(element));
+        return arrayRemove0(val(array), val(element));
     }
 
     /**
@@ -246,7 +258,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static <T> Field<T[]> arrayRemove(Field<T[]> array, T element) {
-        return arrayRemove(nullSafe(array), val(element));
+        return arrayRemove0(nullSafe(array), val(element));
     }
 
     /**
@@ -258,7 +270,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static <T> Field<T[]> arrayRemove(T[] array, Field<T> element) {
-        return arrayRemove(val(array), nullSafe(element));
+        return arrayRemove0(val(array), nullSafe(element));
     }
 
     /**
@@ -270,6 +282,12 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static <T> Field<T[]> arrayRemove(Field<T[]> array, Field<T> element) {
+        return arrayRemove0(array, element);
+    }
+
+    // Java 8 is stricter than Java 7 with respect to generics and overload
+    // resolution (http://stackoverflow.com/q/5361513/521799)
+    static <T> Field<T[]> arrayRemove0(Field<T[]> array, Field<T> element) {
         return field("{array_remove}({0}, {1})", array.getDataType(), array, element);
     }
 
@@ -283,7 +301,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static <T> Field<T[]> arrayReplace(T[] array, T search, T replace) {
-        return arrayReplace(val(array), val(search), val(replace));
+        return arrayReplace0(val(array), val(search), val(replace));
     }
 
     /**
@@ -296,7 +314,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static <T> Field<T[]> arrayReplace(T[] array, Field<T> search, Field<T> replace) {
-        return arrayReplace(val(array), nullSafe(search), nullSafe(replace));
+        return arrayReplace0(val(array), nullSafe(search), nullSafe(replace));
     }
 
     /**
@@ -309,7 +327,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static <T> Field<T[]> arrayReplace(Field<T[]> array, T search, T replace) {
-        return arrayReplace(nullSafe(array), val(search), val(replace));
+        return arrayReplace0(nullSafe(array), val(search), val(replace));
     }
 
     /**
@@ -322,6 +340,12 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static <T> Field<T[]> arrayReplace(Field<T[]> array, Field<T> search, Field<T> replace) {
+        return arrayReplace0(array, search, replace);
+    }
+
+    // Java 8 is stricter than Java 7 with respect to generics and overload
+    // resolution (http://stackoverflow.com/q/5361513/521799)
+    static <T> Field<T[]> arrayReplace0(Field<T[]> array, Field<T> search, Field<T> replace) {
         return field("{array_replace}({0}, {1}, {2})", array.getDataType(), nullSafe(array), nullSafe(search), nullSafe(replace));
     }
 

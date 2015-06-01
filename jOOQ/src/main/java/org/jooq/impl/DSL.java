@@ -7712,7 +7712,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> coalesce(T value, T... values) {
-        return coalesce(Utils.field(value), Utils.fields(values).toArray(new Field[0]));
+        return coalesce0(Utils.field(value), Utils.fields(values).toArray(new Field[0]));
     }
 
     /**
@@ -7722,7 +7722,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> coalesce(Field<T> field, T value) {
-        return coalesce(field, Utils.field(value, field));
+        return coalesce0(field, Utils.field(value, field));
     }
 
     /**
@@ -7730,6 +7730,12 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> coalesce(Field<T> field, Field<?>... fields) {
+        return coalesce0(field, fields);
+    }
+
+    // Java 8 is stricter than Java 7 with respect to generics and overload
+    // resolution (http://stackoverflow.com/q/5361513/521799)
+    static <T> Field<T> coalesce0(Field<T> field, Field<?>... fields) {
         return new Coalesce<T>(nullSafeDataType(field), nullSafe(combine(field, fields)));
     }
 
@@ -7780,7 +7786,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> nvl(T value, T defaultValue) {
-        return nvl(Utils.field(value), Utils.field(defaultValue));
+        return nvl0(Utils.field(value), Utils.field(defaultValue));
     }
 
     /**
@@ -7790,7 +7796,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> nvl(T value, Field<T> defaultValue) {
-        return nvl(Utils.field(value), nullSafe(defaultValue));
+        return nvl0(Utils.field(value), nullSafe(defaultValue));
     }
 
     /**
@@ -7800,7 +7806,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> nvl(Field<T> value, T defaultValue) {
-        return nvl(nullSafe(value), Utils.field(defaultValue));
+        return nvl0(nullSafe(value), Utils.field(defaultValue));
     }
 
     /**
@@ -7833,6 +7839,12 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> nvl(Field<T> value, Field<T> defaultValue) {
+        return nvl0(value, defaultValue);
+    }
+
+    // Java 8 is stricter than Java 7 with respect to generics and overload
+    // resolution (http://stackoverflow.com/q/5361513/521799)
+    static <T> Field<T> nvl0(Field<T> value, Field<T> defaultValue) {
         return new Nvl<T>(nullSafe(value), nullSafe(defaultValue));
     }
 
@@ -7843,7 +7855,7 @@ public class DSL {
      */
     @Support
     public static <Z> Field<Z> nvl2(Field<?> value, Z valueIfNotNull, Z valueIfNull) {
-        return nvl2(nullSafe(value), Utils.field(valueIfNotNull), Utils.field(valueIfNull));
+        return nvl20(nullSafe(value), Utils.field(valueIfNotNull), Utils.field(valueIfNull));
     }
 
     /**
@@ -7853,7 +7865,7 @@ public class DSL {
      */
     @Support
     public static <Z> Field<Z> nvl2(Field<?> value, Z valueIfNotNull, Field<Z> valueIfNull) {
-        return nvl2(nullSafe(value), Utils.field(valueIfNotNull), nullSafe(valueIfNull));
+        return nvl20(nullSafe(value), Utils.field(valueIfNotNull), nullSafe(valueIfNull));
     }
 
     /**
@@ -7863,7 +7875,7 @@ public class DSL {
      */
     @Support
     public static <Z> Field<Z> nvl2(Field<?> value, Field<Z> valueIfNotNull, Z valueIfNull) {
-        return nvl2(nullSafe(value), nullSafe(valueIfNotNull), Utils.field(valueIfNull));
+        return nvl20(nullSafe(value), nullSafe(valueIfNotNull), Utils.field(valueIfNull));
     }
 
     /**
@@ -7880,6 +7892,12 @@ public class DSL {
      */
     @Support
     public static <Z> Field<Z> nvl2(Field<?> value, Field<Z> valueIfNotNull, Field<Z> valueIfNull) {
+        return nvl20(value, valueIfNotNull, valueIfNull);
+    }
+
+    // Java 8 is stricter than Java 7 with respect to generics and overload
+    // resolution (http://stackoverflow.com/q/5361513/521799)
+    static <Z> Field<Z> nvl20(Field<?> value, Field<Z> valueIfNotNull, Field<Z> valueIfNull) {
         return new Nvl2<Z>(nullSafe(value), nullSafe(valueIfNotNull), nullSafe(valueIfNull));
     }
 
@@ -7890,7 +7908,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> nullif(T value, T other) {
-        return nullif(Utils.field(value), Utils.field(other));
+        return nullif0(Utils.field(value), Utils.field(other));
     }
 
     /**
@@ -7900,7 +7918,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> nullif(T value, Field<T> other) {
-        return nullif(Utils.field(value), nullSafe(other));
+        return nullif0(Utils.field(value), nullSafe(other));
     }
 
     /**
@@ -7910,7 +7928,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> nullif(Field<T> value, T other) {
-        return nullif(nullSafe(value), Utils.field(other));
+        return nullif0(nullSafe(value), Utils.field(other));
     }
 
     /**
@@ -7925,6 +7943,12 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> nullif(Field<T> value, Field<T> other) {
+        return nullif0(value, other);
+    }
+
+    // Java 8 is stricter than Java 7 with respect to generics and overload
+    // resolution (http://stackoverflow.com/q/5361513/521799)
+    static <T> Field<T> nullif0(Field<T> value, Field<T> other) {
         return new NullIf<T>(nullSafe(value), nullSafe(other));
     }
 

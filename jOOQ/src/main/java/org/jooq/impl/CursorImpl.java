@@ -69,6 +69,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import org.jooq.BindingGetResultSetContext;
 import org.jooq.Cursor;
@@ -182,6 +186,20 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
         return iterator;
     }
+
+    /* [java-8] */
+    @Override
+    public final Stream<R> stream() throws DataAccessException {
+        return StreamSupport.stream(
+            Spliterators.spliterator(
+                iterator(),
+                0,
+                Spliterator.ORDERED | Spliterator.NONNULL
+            ),
+            false
+        ).onClose(() -> close());
+    }
+    /* [/java-8] */
 
     @Override
     public final boolean hasNext() {

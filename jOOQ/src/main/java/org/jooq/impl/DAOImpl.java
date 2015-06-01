@@ -61,8 +61,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
-
-import com.sun.scenario.Settings;
+import org.jooq.conf.Settings;
 
 /**
  * A common base implementation for generated DAO's.

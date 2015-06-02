@@ -106,6 +106,7 @@ DROP PACKAGE library/
 DROP PACKAGE pls_objects/
 
 DROP TYPE multi_schema.u_4347/
+DROP TYPE multi_schema.u_4347_table/
 
 DROP TYPE u_nested_3/
 DROP TYPE u_nested_2/
@@ -2223,4 +2224,7 @@ CREATE TYPE multi_schema.u_4347 AS OBJECT (
   t test.u_address_table,
   o test.u_address_type
 )
+/
+
+CREATE TYPE multi_schema.u_4347_table AS TABLE OF test.u_address_type
 /

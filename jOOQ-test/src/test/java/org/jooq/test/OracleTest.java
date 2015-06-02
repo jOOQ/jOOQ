@@ -176,6 +176,7 @@ import org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObje
 import org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord;
 import org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.U_4311Record;
 import org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.U_4347Record;
+import org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.U_4347TableRecord;
 import org.jooq.test.oracle.generatedclasses.sys.udt.Xmltype;
 import org.jooq.test.oracle.generatedclasses.sys.udt.records.XmltypeRecord;
 import org.jooq.test.oracle.generatedclasses.test.Keys;
@@ -2414,12 +2415,13 @@ public class OracleTest extends jOOQAbstractTest<
     public void testOracleMultiSchemaObjectTypes() {
         U_4347Record v1 = new U_4347Record(1, null, null);
         U_4347Record v2 = new U_4347Record(2, new UAddressTableRecord(new UAddressTypeRecord(), new UAddressTypeRecord()), new UAddressTypeRecord());
+        U_4347TableRecord v3 = new U_4347TableRecord(new UAddressTypeRecord());
 
-        Record2<U_4347Record, U_4347Record> result =
-        create().select(val(v1), val(v2))
+        Record3<U_4347Record, U_4347Record, U_4347TableRecord> result =
+        create().select(val(v1), val(v2), val(v3))
                 .fetchOne();
 
-        assertEquals(asList(v1, v2), result.intoList());
+        assertEquals(asList((Object) v1, v2, v3), result.intoList());
     }
 }
 

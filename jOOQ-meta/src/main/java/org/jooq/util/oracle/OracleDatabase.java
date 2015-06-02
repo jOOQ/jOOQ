@@ -383,6 +383,7 @@ public class OracleDatabase extends AbstractDatabase {
         for (Record record : create().select(
                 ALL_COLL_TYPES.OWNER,
                 ALL_COLL_TYPES.TYPE_NAME,
+                ALL_COLL_TYPES.ELEM_TYPE_OWNER,
                 ALL_COLL_TYPES.ELEM_TYPE_NAME,
                 ALL_COLL_TYPES.LENGTH.nvl(BigDecimal.ZERO),
                 ALL_COLL_TYPES.PRECISION.nvl(BigDecimal.ZERO),
@@ -395,6 +396,12 @@ public class OracleDatabase extends AbstractDatabase {
                 ALL_COLL_TYPES.TYPE_NAME)
             .fetch()) {
 
+            // [#3552] Check if the reported type is really a synonym for another type
+            TypeInfo info = getTypeInfo(
+                getSchema(record.getValue(ALL_COLL_TYPES.OWNER)),
+                record.getValue(ALL_COLL_TYPES.ELEM_TYPE_OWNER),
+                record.getValue(ALL_COLL_TYPES.ELEM_TYPE_NAME));
+
             SchemaDefinition schema = getSchema(record.getValue(ALL_COLL_TYPES.OWNER));
 
             String name = record.getValue(ALL_COLL_TYPES.TYPE_NAME);
@@ -404,7 +411,7 @@ public class OracleDatabase extends AbstractDatabase {
             int precision = record.getValue(ALL_COLL_TYPES.PRECISION.nvl(BigDecimal.ZERO)).intValue();
             int scale = record.getValue(ALL_COLL_TYPES.SCALE.nvl(BigDecimal.ZERO)).intValue();
 
-            DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(this, schema, dataType, length, precision, scale, null, null);
+            DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(this, info.schema, dataType, length, precision, scale, null, null, info.name);
             DefaultArrayDefinition array = new DefaultArrayDefinition(schema, name, type);
 
             arrays.add(array);

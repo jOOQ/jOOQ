@@ -12,7 +12,6 @@ import org.jooq.AggregateFunction;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Result;
-import org.jooq.test.oracle.generatedclasses.test.routines.Bitor;
 import org.jooq.test.oracle.generatedclasses.test.routines.F2155;
 import org.jooq.test.oracle.generatedclasses.test.routines.F317;
 import org.jooq.test.oracle.generatedclasses.test.routines.F377;
@@ -78,40 +77,6 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.U_3005Record;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Routines {
-
-	/**
-	 * Call <code>TEST.BITOR</code>
-	 */
-	public static BigDecimal bitor(Configuration configuration, Number x, Number y) {
-		Bitor f = new Bitor();
-		f.setX(x);
-		f.setY(y);
-
-		f.execute(configuration);
-		return f.getReturnValue();
-	}
-
-	/**
-	 * Get <code>TEST.BITOR</code> as a field
-	 */
-	public static Field<BigDecimal> bitor(Number x, Number y) {
-		Bitor f = new Bitor();
-		f.setX(x);
-		f.setY(y);
-
-		return f.asField();
-	}
-
-	/**
-	 * Get <code>TEST.BITOR</code> as a field
-	 */
-	public static Field<BigDecimal> bitor(Field<? extends Number> x, Field<? extends Number> y) {
-		Bitor f = new Bitor();
-		f.setX(x);
-		f.setY(y);
-
-		return f.asField();
-	}
 
 	/**
 	 * Call <code>TEST.F_ARRAYS1</code>

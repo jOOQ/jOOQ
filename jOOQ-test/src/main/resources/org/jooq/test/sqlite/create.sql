@@ -1,3 +1,5 @@
+PRAGMA foreign_keys = ON/
+
 DROP VIEW IF EXISTS v_library/
 DROP VIEW IF EXISTS v_author/
 DROP VIEW IF EXISTS v_book/
@@ -217,7 +219,7 @@ CREATE TABLE t_986_2 (
 CREATE TABLE t_exotic_types (
   ID INT NOT NULL,
   UU CHAR(36),
-  
+
   CONSTRAINT pk_t_exotic_types PRIMARY KEY(ID)
 );
 /
@@ -273,7 +275,7 @@ CREATE TABLE x_test_case_85 (
 CREATE TABLE x_test_case_2025 (
   ref_id int NOT NULL,
   ref_name VARCHAR(10) NOT NULL,
-  
+
   CONSTRAINT fk_x_test_case_2025_1 FOREIGN KEY(ref_id) REFERENCES x_test_case_85(ID),
   CONSTRAINT fk_x_test_case_2025_2 FOREIGN KEY(ref_id) REFERENCES x_test_case_71(ID),
   CONSTRAINT fk_x_test_case_2025_3 FOREIGN KEY(ref_id, ref_name) REFERENCES X_UNUSED(id, name)

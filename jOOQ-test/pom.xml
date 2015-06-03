@@ -41,7 +41,7 @@
         <db.firebird.version>2.2.8</db.firebird.version>
         <db.h2.version>1.4.186</db.h2.version>
         <db.hsqldb.version>2.3.2</db.hsqldb.version>
-        <db.mariadb.version>1.1.7</db.mariadb.version>
+        <db.mariadb.version>1.1.8</db.mariadb.version>
         <db.mysql.version>5.1.35</db.mysql.version>
         <db.postgres.version>9.3-1101-jdbc41</db.postgres.version>
         <db.sqlite.version>3.8.7</db.sqlite.version>
@@ -87,8 +87,8 @@
             <artifactId>jooq-test-utils</artifactId>
             <version>${project.version}</version>
         </dependency>
-        
-        
+
+
         <!-- XML stuff, in case it's needed for tests -->
         <dependency>
             <groupId>org.jooq</groupId>
@@ -121,8 +121,8 @@
             <version>${scala.version}</version>
             <scope>test</scope>
         </dependency>
-        
-        
+
+
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
@@ -154,8 +154,8 @@
             <version>6.0.18</version>
             <scope>test</scope>
         </dependency>
-        
-        
+
+
 
         <!-- Spring (transitive dependencies are not listed explicitly) -->
         <dependency>
@@ -206,9 +206,9 @@
             <artifactId>jackson-mapper-asl</artifactId>
             <version>1.9.13</version>
         </dependency>
-        
-        
-        
+
+
+
         <!-- Test dependencies -->
         <dependency>
             <groupId>org.hamcrest</groupId>
@@ -442,7 +442,7 @@
                     <argLine>-Djava.library.path=C:\sqljdbc_4.0\enu\auth\x64</argLine>
                 </configuration>
             </plugin>
-            
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -564,7 +564,7 @@
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>sql-maven-plugin</artifactId>
                         <version>1.5</version>
-        
+
                         <executions>
                             <execution>
                                 <id>create-database-cubrid</id>
@@ -599,7 +599,7 @@
                 </plugins>
             </build>
         </profile>
-        
+
         <profile>
             <id>codegen-cubrid</id>
             <build>
@@ -1352,7 +1352,7 @@
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>sql-maven-plugin</artifactId>
                         <version>1.5</version>
-        
+
                         <executions>
                             <execution>
                                 <id>create-database-h2</id>
@@ -1392,7 +1392,7 @@
                 </plugins>
             </build>
         </profile>
-        
+
         <profile>
             <id>codegen-h2</id>
             <build>
@@ -1486,7 +1486,7 @@
                                                     <name>org.jooq.test.all.converters.Boolean_YES_NO_UC</name>
                                                     <converter>org.jooq.test.all.converters.Boolean_YES_NO_UC_Converter</converter>
                                                 </customType>
-                                                
+
                                                 <customType>
                                                     <name>3485</name>
                                                     <type>java.lang.String</type>
@@ -3317,8 +3317,8 @@
                                                     <type>java.util.List&lt;java.sql.Date></type>
                                                     <converter>org.jooq.test.all.converters.StringArrayToDateListConverter</converter>
                                                 </customType>
-                                                
-                                                
+
+
                                                 <!-- [#2788] The PostgreSQL "json" data type -->
                                                 <customType>
                                                     <name>org.jooq.test.all.bindings.PostgresJSONGsonBinding</name>
@@ -3335,16 +3335,16 @@
                                                     <type>org.codehaus.jackson.JsonNode</type>
                                                     <binding>org.jooq.test.all.bindings.PostgresJSONJacksonJsonNodeBinding</binding>
                                                 </customType>
-                                                
-                                                
-                                                
+
+
+
                                                 <!-- [#994] The PostgreSQL "hstore" data type -->
                                                 <customType>
                                                     <name>org.jooq.test.all.bindings.PostgresHstoreMapBinding</name>
                                                     <type>java.util.Map&lt;String, String></type>
                                                     <binding>org.jooq.test.all.bindings.PostgresHstoreMapBinding</binding>
                                                 </customType>
-                                                
+
                                                 <!-- [#2968] The PostgreSQL "range" data types -->
                                                 <customType>
                                                     <name>org.jooq.test.all.bindings.PostgresInt4RangeBinding</name>
@@ -3359,8 +3359,8 @@
                                                     <name>org.jooq.test.all.bindings.PostgresInt4RangeBinding</name>
                                                     <expression>(?i:(.*?\.)T_EXOTIC_TYPES\.RANGE_INT4)</expression>
                                                 </forcedType>
-                                                
-                                            
+
+
                                                 <!-- [#2788] The PostgreSQL "json" data type -->
                                                 <forcedType>
                                                     <name>org.jooq.test.all.bindings.PostgresJSONGsonBinding</name>
@@ -3374,14 +3374,14 @@
                                                     <name>org.jooq.test.all.bindings.PostgresJSONJacksonJsonNodeBinding</name>
                                                     <expression>(?i:(.*?\.)T_EXOTIC_TYPES\.JS_JACKSON_JSON_NODE)</expression>
                                                 </forcedType>
-                                                    
-                                                
+
+
                                                 <!-- [#994] The PostgreSQL "hstore" data type -->
                                                 <forcedType>
                                                     <name>org.jooq.test.all.bindings.PostgresHstoreMapBinding</name>
                                                     <expression>(?i:(.*?\.)T_EXOTIC_TYPES\.HSTORE_MAP)</expression>
                                                 </forcedType>
-                                                
+
 
 
                                                 <!-- [#3111] Several forced types should be able to map to the same U type -->
@@ -5478,13 +5478,13 @@
                                                     <type>java.time.LocalDate</type>
                                                     <converter>org.jooq.test.all.converters.LocalDateConverter</converter>
                                                 </customType>
-                                                
+
                                                 <customType>
                                                     <name>Serializable</name>
                                                     <type>java.io.Serializable</type>
                                                     <binding>org.jooq.test.all.bindings.SerializedBinding</binding>
                                                 </customType>
-                                                
+
                                                 <customType>
                                                     <name>UserClob</name>
                                                     <type>java.sql.Clob</type>
@@ -5505,7 +5505,7 @@
                                                     <type>byte[]</type>
                                                     <binding>org.jooq.impl.BlobBinding</binding>
                                                 </customType>
-                                                
+
                                                 <customType>
                                                     <name>OracleXmlAsSQLXML</name>
                                                     <type>java.sql.SQLXML</type>
@@ -5518,7 +5518,7 @@
                                                     <name>OracleXmlAsSQLXML</name>
                                                     <expression>ORACLE_XML_AS_SQLXML</expression>
                                                 </forcedType>
-                                                
+
                                                 <forcedType>
                                                     <name>UserClob</name>
                                                     <expression>USER_JAVA_SQL_CLOB</expression>
@@ -5535,13 +5535,13 @@
                                                     <name>JooqBlob</name>
                                                     <expression>JOOQ_JAVA_SQL_BLOB</expression>
                                                 </forcedType>
-                                                
+
                                                 <forcedType>
                                                     <name>Serializable</name>
                                                     <expression>JAVA_IO_SERIALIZABLE</expression>
                                                     <types>BLOB</types>
                                                 </forcedType>
-                                            
+
                                                 <forcedType>
                                                     <name>LocalDate</name>
                                                     <expression>.*2155.*</expression>
@@ -5716,7 +5716,7 @@
                                                     <type>java.time.LocalDate</type>
                                                     <converter>org.jooq.test.all.converters.LocalDateConverter</converter>
                                                 </customType>
-                                                
+
                                                 <customType>
                                                     <name>Serializable</name>
                                                     <type>java.io.Serializable</type>
@@ -5730,7 +5730,7 @@
                                                     <expression>JAVA_IO_SERIALIZABLE</expression>
                                                     <types>BLOB</types>
                                                 </forcedType>
-                                            
+
                                                 <forcedType>
                                                     <name>LocalDate</name>
                                                     <expression>.*2155.*</expression>
@@ -5981,7 +5981,7 @@
                                 </configuration>
                             </execution>
                         </executions>
-                        
+
                         <dependencies>
                         	<dependency>
 							    <groupId>xerces</groupId>
@@ -6566,7 +6566,7 @@
                                                     <name>org.jooq.test.all.converters.Boolean_YES_NO_UC</name>
                                                     <converter>org.jooq.test.all.converters.Boolean_YES_NO_UC_Converter</converter>
                                                 </customType>
-                                                
+
                                                 <customType>
                                                     <name>org.jooq.impl.XMLasDOMBinding</name>
                                                     <type>org.w3c.dom.Node</type>
@@ -6588,7 +6588,7 @@
                                                     <name>org.jooq.test.all.bindings.BookBinding</name>
                                                     <expression>.*\.UNTYPED_XML_AS_JAXB</expression>
                                                 </forcedType>
-                                            
+
                                                 <forcedType>
                                                     <name>BIT</name>
                                                     <expression>(?i:(.*?.)?T_BOOLEANS.(VC|C|N)_BOOLEAN)</expression>
@@ -7176,8 +7176,8 @@
                 </plugins>
             </build>
         </profile>
-        
-        
+
+
         <profile>
             <id>codegen-vertica-v-catalog</id>
             <build>

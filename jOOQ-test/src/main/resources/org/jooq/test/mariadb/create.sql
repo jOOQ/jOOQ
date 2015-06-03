@@ -8,6 +8,8 @@ DROP PROCEDURE IF EXISTS p_create_author/
 DROP PROCEDURE IF EXISTS p_create_author_by_name/
 DROP PROCEDURE IF EXISTS p391/
 DROP PROCEDURE IF EXISTS p2412/
+DROP PROCEDURE IF EXISTS p_results/
+DROP PROCEDURE IF EXISTS p_results_and_out_parameters/
 DROP FUNCTION IF EXISTS f_author_exists/
 DROP FUNCTION IF EXISTS f_one/
 DROP FUNCTION IF EXISTS f_number/
@@ -47,6 +49,15 @@ DROP TABLE IF EXISTS t_959/
 DROP TABLE IF EXISTS t_booleans/
 DROP TABLE IF EXISTS t_identity_pk/
 DROP TABLE IF EXISTS t_2926/
+DROP TABLE IF EXISTS t_charsets/
+
+CREATE TABLE t_charsets (
+  id INT NOT NULL AUTO_INCREMENT,
+  utf8 text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+
+  CONSTRAINT pk_t_charsets PRIMARY KEY (id)
+)
+/
 
 CREATE TABLE t_2926 (
   t1 TINYTEXT,
@@ -97,13 +108,13 @@ CREATE TABLE t_booleans (
 
 CREATE TABLE t_959 (
   java_keywords enum('abstract', 'assert', 'boolean', 'break', 'byte', 'case', 'catch',
-	                 'char', 'class', 'const', 'continue', 'default', 'double', 'do',
-	                 'else', 'enum', 'extends', 'false', 'final', 'finally', 'float',
-	                 'for', 'goto', 'if', 'implements', 'import', 'instanceof',
-	                 'interface', 'int', 'long', 'native', 'new', 'package', 'private',
-	                 'protected', 'public', 'return', 'short', 'static', 'strictfp',
-	                 'super', 'switch', 'synchronized', 'this', 'throw', 'throws',
-	                 'transient', 'true', 'try', 'void', 'volatile', 'while'),
+                     'char', 'class', 'const', 'continue', 'default', 'double', 'do',
+                     'else', 'enum', 'extends', 'false', 'final', 'finally', 'float',
+                     'for', 'goto', 'if', 'implements', 'import', 'instanceof',
+                     'interface', 'int', 'long', 'native', 'new', 'package', 'private',
+                     'protected', 'public', 'return', 'short', 'static', 'strictfp',
+                     'super', 'switch', 'synchronized', 'this', 'throw', 'throws',
+                     'transient', 'true', 'try', 'void', 'volatile', 'while'),
   special_characters enum('enum(', '(', ')', ',', '''', ')enum')
 ) ENGINE = InnoDB
 /
@@ -130,12 +141,12 @@ BEFORE INSERT
 ON t_triggers
 FOR EACH ROW
 BEGIN
-	DECLARE new_id INT;
+    DECLARE new_id INT;
 
-	SELECT IFNULL(MAX(id_generated), 0) + 1 INTO new_id FROM t_triggers;
+    SELECT IFNULL(MAX(id_generated), 0) + 1 INTO new_id FROM t_triggers;
 
-	SET NEW.id = new_id;
-	SET NEW.counter = new_id * 2;
+    SET NEW.id = new_id;
+    SET NEW.counter = new_id * 2;
 END;
 /
 
@@ -202,13 +213,19 @@ CREATE TABLE t_book (
   INDEX (AUTHOR_ID),
   INDEX (LANGUAGE_ID),
 
-  CONSTRAINT pk_t_book PRIMARY KEY (ID),
-  CONSTRAINT fk_t_book_author_id FOREIGN KEY (AUTHOR_ID) REFERENCES T_AUTHOR(ID),
-  CONSTRAINT fk_t_book_co_author_id FOREIGN KEY (CO_AUTHOR_ID) REFERENCES T_AUTHOR(ID),
-  CONSTRAINT fk_t_book_details_id FOREIGN KEY (DETAILS_ID) REFERENCES T_BOOK_DETAILS(ID),
-  CONSTRAINT fk_t_book_language_id FOREIGN KEY (LANGUAGE_ID) REFERENCES T_LANGUAGE(ID)
+  CONSTRAINT pk_t_book PRIMARY KEY (id),
+  CONSTRAINT fk_t_book_author_id FOREIGN KEY (author_id) REFERENCES t_author(id),
+  CONSTRAINT fk_t_book_co_author_id FOREIGN KEY (co_author_id) REFERENCES t_author(id),
+  CONSTRAINT fk_t_book_details_id FOREIGN KEY (details_id) REFERENCES t_book_details(id),
+  CONSTRAINT fk_t_book_language_id FOREIGN KEY (language_id) REFERENCES t_language(id)
 ) ENGINE = InnoDB
   COMMENT = 'An entity holding books';
+/
+
+CREATE INDEX i_book_a ON t_book(author_id)
+/
+
+CREATE INDEX i_book_b ON t_book(language_id)
 /
 
 CREATE TABLE t_book_store (
@@ -252,9 +269,9 @@ CREATE TABLE x_unused (
   PRIMARYKEY INT,
   `FIELD 737` DECIMAL(25, 2),
 
-  CONSTRAINT pk_x_unused PRIMARY KEY(ID, NAME),
-  CONSTRAINT uk_x_unused_id UNIQUE(ID),
-  CONSTRAINT fk_x_unused_self FOREIGN KEY(ID_REF, NAME_REF) REFERENCES X_UNUSED(ID, NAME)
+  CONSTRAINT pk_x_unused PRIMARY KEY(id, name),
+  CONSTRAINT uk_x_unused_id UNIQUE(id),
+  CONSTRAINT fk_x_unused_self FOREIGN KEY(ID_REF, NAME_REF) REFERENCES x_unused(id, name)
 ) ENGINE = InnoDB
   COMMENT = 'An unused table in the same schema.';
 /
@@ -262,7 +279,7 @@ CREATE TABLE x_unused (
 CREATE TABLE t_exotic_types (
   ID INT NOT NULL,
   UU BINARY(16),
-  
+
   CONSTRAINT pk_t_exotic_types PRIMARY KEY(ID)
 )
 /
@@ -289,9 +306,9 @@ CREATE TABLE x_test_case_64_69 (
   ID INT NOT NULL,
   UNUSED_ID INT,
 
-  CONSTRAINT pk_x_test_case_64_69 PRIMARY KEY(ID),
-  CONSTRAINT fk_x_test_case_64_69a FOREIGN KEY(UNUSED_ID) REFERENCES X_UNUSED(ID),
-  CONSTRAINT fk_x_test_case_64_69b FOREIGN KEY(UNUSED_ID) REFERENCES X_UNUSED(ID)
+  CONSTRAINT pk_x_test_case_64_69 PRIMARY KEY(id),
+  CONSTRAINT fk_x_test_case_64_69a FOREIGN KEY(UNUSED_ID) REFERENCES x_unused(id),
+  CONSTRAINT fk_x_test_case_64_69b FOREIGN KEY(UNUSED_ID) REFERENCES x_unused(id)
 ) ENGINE = InnoDB
   COMMENT = 'An unused table in the same schema.';
 /
@@ -300,8 +317,8 @@ CREATE TABLE x_test_case_71 (
   ID INT NOT NULL,
   TEST_CASE_64_69_ID INT,
 
-  CONSTRAINT pk_x_test_case_71 PRIMARY KEY(ID),
-  CONSTRAINT fk_x_test_case_71 FOREIGN KEY(TEST_CASE_64_69_ID) REFERENCES X_TEST_CASE_64_69(ID)
+  CONSTRAINT pk_x_test_case_71 PRIMARY KEY(id),
+  CONSTRAINT fk_x_test_case_71 FOREIGN KEY(TEST_CASE_64_69_ID) REFERENCES x_test_case_64_69(id)
 ) ENGINE = InnoDB
   COMMENT = 'An unused table in the same schema.';
 /
@@ -312,7 +329,7 @@ CREATE TABLE x_test_case_85 (
   x_unused_name VARCHAR(10),
 
   CONSTRAINT pk_x_test_case_85 PRIMARY KEY(ID),
-  CONSTRAINT fk_x_test_case_85 FOREIGN KEY(x_unused_id, x_unused_name) REFERENCES X_UNUSED(id, name)
+  CONSTRAINT fk_x_test_case_85 FOREIGN KEY(x_unused_id, x_unused_name) REFERENCES x_unused(id, name)
 ) ENGINE = InnoDB
   COMMENT = 'An unused table in the same schema.';
 /
@@ -320,17 +337,17 @@ CREATE TABLE x_test_case_85 (
 CREATE TABLE x_test_case_2025 (
   ref_id int NOT NULL,
   ref_name VARCHAR(10) NOT NULL,
-  
+
   CONSTRAINT fk_x_test_case_2025_1 FOREIGN KEY(ref_id) REFERENCES x_test_case_85(ID),
   CONSTRAINT fk_x_test_case_2025_2 FOREIGN KEY(ref_id) REFERENCES x_test_case_71(ID),
-  CONSTRAINT fk_x_test_case_2025_3 FOREIGN KEY(ref_id, ref_name) REFERENCES X_UNUSED(id, name)
+  CONSTRAINT fk_x_test_case_2025_3 FOREIGN KEY(ref_id, ref_name) REFERENCES x_unused(id, name)
 ) ENGINE = InnoDB
   COMMENT = 'An unused table in the same schema.';
 /
 
-CREATE OR REPLACE VIEW V_LIBRARY (AUTHOR, TITLE) AS
-SELECT CONCAT(A.FIRST_NAME, ' ', A.LAST_NAME), B.TITLE
-FROM T_AUTHOR A JOIN T_BOOK B ON B.AUTHOR_ID = A.ID;
+CREATE OR REPLACE VIEW v_library (author, title) AS
+SELECT CONCAT(a.first_name, ' ', a.last_name), b.title
+FROM t_author a JOIN t_book b ON b.author_id = a.id;
 /
 
 CREATE VIEW v_author AS
@@ -350,19 +367,19 @@ END
 CREATE PROCEDURE p_create_author_by_name (IN first_name VARCHAR(50), IN last_name VARCHAR(50))
   COMMENT 'Create a new author'
 BEGIN
-	SET @id = 0;
+    SET @id = 0;
 
-	SELECT max(id) + 1 INTO @id FROM t_author;
+    SELECT max(id) + 1 INTO @id FROM t_author;
 
-	INSERT INTO T_AUTHOR (ID, FIRST_NAME, LAST_NAME)
-	VALUES (@id, first_name, last_name);
+    INSERT INTO T_AUTHOR (ID, FIRST_NAME, LAST_NAME)
+    VALUES (@id, first_name, last_name);
 END
 /
 
 CREATE PROCEDURE p_create_author()
   COMMENT 'Create a new author'
 BEGIN
-	call {jdbc.Schema}.p_create_author_by_name('William', 'Shakespeare');
+    call {jdbc.Schema}.p_create_author_by_name('William', 'Shakespeare');
 END
 /
 
@@ -377,8 +394,8 @@ END
 /
 
 CREATE PROCEDURE p391 (
-	i1 INTEGER, INOUT io1 INTEGER, OUT o1 INTEGER,
-	OUT o2 INTEGER, INOUT io2 INTEGER, i2 INTEGER)
+    i1 INTEGER, INOUT io1 INTEGER, OUT o1 INTEGER,
+    OUT o2 INTEGER, INOUT io2 INTEGER, i2 INTEGER)
   COMMENT 'Integration tests for #391'
 BEGIN
   SET o1 = io1;
@@ -390,10 +407,10 @@ END
 /
 
 CREATE PROCEDURE p2412(
-        In p_in_1 integer, 
+        In p_in_1 integer,
         p_in_2 integer,
-        Out p_out_1 decimal(12,2), 
-        out p_out_2 decimal(12,2), 
+        Out p_out_1 decimal(12,2),
+        out p_out_2 decimal(12,2),
         InOut p_in_out decimal(12,2))
 BEGIN
   SET p_out_1 = 0;
@@ -401,6 +418,44 @@ BEGIN
   SET p_in_out = 0;
 END
 /
+
+CREATE PROCEDURE p_results(
+  IN p_result_sets INTEGER
+)
+BEGIN
+  IF p_result_sets = 1 THEN
+    SELECT 1 a FROM DUAL;
+  ELSEIF p_result_sets = 2 THEN
+    SELECT 1 a FROM DUAL;
+    SELECT 1 b FROM DUAL UNION SELECT 2 b FROM DUAL;
+  ELSEIF p_result_sets = 3 THEN
+    SELECT 1 a FROM DUAL;
+    SELECT 1 b FROM DUAL UNION SELECT 2 b FROM DUAL;
+    SELECT 1 c FROM DUAL UNION SELECT 2 c FROM DUAL UNION SELECT 3 c FROM DUAL;
+  END IF;
+END
+/
+
+CREATE PROCEDURE p_results_and_out_parameters(
+  IN  p_result_sets INTEGER,
+  OUT p_count INTEGER
+)
+BEGIN
+  IF p_result_sets = 1 THEN
+    SELECT 1 a FROM DUAL;
+  ELSEIF p_result_sets = 2 THEN
+    SELECT 1 a FROM DUAL;
+    SELECT 1 b FROM DUAL UNION SELECT 2 b FROM DUAL;
+  ELSEIF p_result_sets = 3 THEN
+    SELECT 1 a FROM DUAL;
+    SELECT 1 b FROM DUAL UNION SELECT 2 b FROM DUAL;
+    SELECT 1 c FROM DUAL UNION SELECT 2 c FROM DUAL UNION SELECT 3 c FROM DUAL;
+  END IF;
+
+  SET p_count = p_result_sets;
+END
+/
+
 
 CREATE FUNCTION f_author_exists (author_name VARCHAR(50))
   RETURNS INT

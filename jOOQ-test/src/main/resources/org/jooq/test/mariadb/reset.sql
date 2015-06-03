@@ -26,14 +26,14 @@ INSERT INTO t_book VALUES (3, 2, null, null, 'O Alquimista', 1988, 4, null, null
 INSERT INTO t_book VALUES (4, 2, null, null, 'Brida', 1990, 2, null, null, 'SOLD OUT')/
 
 INSERT INTO t_book_store (name) VALUES
-	('Orell Füssli'),
-	('Ex Libris'),
-	('Buchhandlung im Volkshaus')/
+    ('Orell Füssli'),
+    ('Ex Libris'),
+    ('Buchhandlung im Volkshaus')/
 
 INSERT INTO t_book_to_book_store VALUES
-	('Orell Füssli', 1, 10),
-	('Orell Füssli', 2, 10),
-	('Orell Füssli', 3, 10),
-	('Ex Libris', 1, 1),
-	('Ex Libris', 3, 2),
-	('Buchhandlung im Volkshaus', 3, 1)/
+    ('Orell Füssli', 1, 10),
+    ('Orell Füssli', 2, 10),
+    ('Orell Füssli', 3, 10),
+    ('Ex Libris', 1, 1),
+    ('Ex Libris', 3, 2),
+    ('Buchhandlung im Volkshaus', 3, 1)/

@@ -76,7 +76,7 @@ class RemoveTrialAndJava8Code {
 }
 
 class Splitter extends Generators {
-    
+
     static ExecutorService ex;
     static AtomicInteger charsTotal = new AtomicInteger(0);
     static AtomicInteger charsMasked = new AtomicInteger(0);
@@ -84,18 +84,18 @@ class Splitter extends Generators {
 
     def static void split(String workspace, String... tokens) {
         ex = Executors.newFixedThreadPool(4);
-        
+
         val splitter = new Splitter(tokens);
-        
+
         val workspaceIn = new File("../..").canonicalFile;
         val workspaceOut = new File(workspaceIn.canonicalPath + workspace).canonicalFile;
-        
+
         for (project : workspaceIn.listFiles[name.startsWith("jOOQ")]) {
             val in = new File(workspaceIn, project.name);
             val out = new File(workspaceOut, project.name);
             splitter.transform(in, out, in);
         }
-        
+
         ex.shutdown();
 //        ex.awaitTermination(1, TimeUnit.MINUTES);
 //
@@ -107,7 +107,7 @@ class Splitter extends Generators {
 
     def void transform(File inRoot, File outRoot, File in) {
         val out = new File(outRoot.canonicalPath + "/" + in.canonicalPath.replace(inRoot.canonicalPath, ""));
-        
+
         if (in.directory) {
             val files = in.listFiles[
                    !canonicalPath.endsWith(".class")
@@ -131,10 +131,10 @@ class Splitter extends Generators {
                 && !canonicalPath.contains("\\.settings")
                 && !canonicalPath.contains("\\.project")
                 && !canonicalPath.endsWith("\\.classpath")
-                
+
                 // Activate this when we change anything to the Sakila db
                 && !canonicalPath.contains("\\Sakila\\")
-                
+
                 && (tokens.contains("trial") || (
                        !canonicalPath.contains("\\access\\")
                     && !canonicalPath.contains("\\ase\\")
@@ -157,7 +157,10 @@ class Splitter extends Generators {
                 transform(inRoot, outRoot, file);
             }
         }
-        else if (tokens.contains("pro") && in.name.equals("LICENSE.txt")) {
+        else if (tokens.contains("pro") && (
+                    in.name.equals("LICENSE.txt") ||
+                    in.name.equals("LICENSE"))
+        ) {
             ex.submit[
                 write(out, '''
 Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
@@ -188,10 +191,10 @@ For more information, please visit: http://www.jooq.org/licenses''');
             ex.submit[
                 var original = read(in);
                 var content = original;
-    
+
                 for (pattern : translateAll) {
                     val m = pattern.matcher(content);
-                    
+
                     while (m.find) {
                         content = content.substring(0, m.start)
                                 + m.group(1)
@@ -206,30 +209,30 @@ For more information, please visit: http://www.jooq.org/licenses''');
                 for (pair : replaceAll) {
                     content = pair.key.matcher(content).replaceAll(pair.value);
                 }
-                
+
                 write(out, content);
                 compare(content, original);
             ];
         }
     }
-    
+
     def compare(String content, String original) {
         charsTotal.addAndGet(original.length);
-        
+
         for (i : 0 .. Math.min(content.length, original.length)) {
             if (("" + content.charAt(i) == "x") && ("" + original.charAt(i) != "x")) {
                 charsMasked.incrementAndGet;
             }
         }
     }
-    
+
     val translateAll = new ArrayList<Pattern>();
     val replaceAll = new ArrayList<SimpleImmutableEntry<Pattern, String>>();
     val replaceFirst = new ArrayList<SimpleImmutableEntry<Pattern, String>>();
-    
+
     new(String... tokens) {
         this.tokens = Arrays.asList(tokens);
-        
+
         if (tokens.contains("pro")) {
             replaceFirst.add(new SimpleImmutableEntry(compile('''-trial\.jar'''), '''.jar'''));
         }
@@ -239,15 +242,15 @@ For more information, please visit: http://www.jooq.org/licenses''');
         else {
             replaceFirst.add(new SimpleImmutableEntry(compile('''-trial\.jar'''), '''-pro.jar'''));
         }
-        
+
         if (tokens.contains("pro")) {
-            
+
             // Replace a couple of imports
             replaceFirst.add(new SimpleImmutableEntry(compile('''import (org\.jooq\.(ArrayConstant|ArrayRecord|VersionsBetweenAndStep|impl\.ArrayRecordImpl|impl\.FlashbackTable.*?)|(com.microsoft.*?));'''), "// ..."));
             replaceFirst.add(new SimpleImmutableEntry(compile('''import static org\.jooq\.impl\.DSL\.(cube|grouping|groupingId|groupingSets);'''), "// ..."));
-            
+
             // Replace the Java / Scala / Xtend license header
-            replaceFirst.add(new SimpleImmutableEntry(compile('''(?s:/\*\*[\r\n] \* Copyright.*?eula[\r\n] \*/)'''), '''
+            replaceFirst.add(new SimpleImmutableEntry(compile('''(?s:/\*\*\R \* Copyright.*?Data Geekery GmbH.*?\R \*/)'''), '''
 /**
  * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
@@ -288,36 +291,36 @@ For more information, please visit: http://www.jooq.org/licenses''');
  *
  *
  */'''));
-        
+
             for (d : SQLDialect.values.filter[commercial]) {
-                
+
                 // Remove commercial dialects from @Support annotations
                 replaceAll.add(new SimpleImmutableEntry(compile('''(?s:(\@Support\([^\)]*?),\s*\b«d.name()»\b([^\)]*?\)))'''), "$1$2"));
                 replaceAll.add(new SimpleImmutableEntry(compile('''(?s:(\@Support\([^\)]*?)\b«d.name()»\b,\s*([^\)]*?\)))'''), "$1$2"));
                 replaceAll.add(new SimpleImmutableEntry(compile('''(?s:(\@Support\([^\)]*?)\s*\b«d.name()»\b\s*([^\)]*?\)))'''), "$1$2"));
-                
+
                 // Remove commercial dialects from assume*(...) listings
                 replaceAll.add(new SimpleImmutableEntry(compile('''(?:(assume(?:Family|Dialect)NotIn.*\([^\)]*?),\s*\b«d.name()»\b([^\)]*\)))'''), "$1$2"));
                 replaceAll.add(new SimpleImmutableEntry(compile('''(?:(assume(?:Family|Dialect)NotIn.*\([^\)]*?)\b«d.name()»\b,\s*([^\)]*\)))'''), "$1$2"));
                 replaceAll.add(new SimpleImmutableEntry(compile('''(?:(assume(?:Family|Dialect)NotIn.*\([^\)]*?)\s*\b«d.name()»\b\s*([^\)]*\)))'''), "$1$2"));
-                
+
                 // Remove commercial dialects from Arrays.asList() expressions
                 replaceAll.add(new SimpleImmutableEntry(compile('''(asList\([^\)]*?),\s*\b«d.name()»\b([^\)]*?\))'''), "$1$2"));
                 replaceAll.add(new SimpleImmutableEntry(compile('''(asList\([^\)]*?)\b«d.name()»\b,\s*([^\)]*?\))'''), "$1$2"));
                 replaceAll.add(new SimpleImmutableEntry(compile('''(asList\([^\)]*?)\s*\b«d.name()»\b\s*([^\)]*?\))'''), "$1$2"));
-                
+
                 // Remove commercial dialects from imports
                 replaceAll.add(new SimpleImmutableEntry(compile('''import (static )?org\.jooq\.SQLDialect\.«d.name()»;'''), "// ..."));
                 replaceAll.add(new SimpleImmutableEntry(compile('''import (static )?org\.jooq\.util\.«d.name().toLowerCase»\..*?;'''), "// ..."));
                 replaceAll.add(new SimpleImmutableEntry(compile('''import (static )?org\.jooq\..*?(\b|(?<=_))«d.name().toUpperCase»(\b|(?=_)).*?;'''), "// ..."));
             }
         }
-        
+
         if (tokens.contains("java-8")) {
-            
+
             // Remove all Java 7 imports
             replaceAll.add(new SimpleImmutableEntry(compile('''import (static )?java\.lang\.AutoCloseable;'''), "// ..."));
-            
+
             // Remove all Java 8 imports
             replaceAll.add(new SimpleImmutableEntry(compile('''import (static )?java\.util\.Optional;'''), "// ..."));
             replaceAll.add(new SimpleImmutableEntry(compile('''import (static )?java\.util\.Spliterator;'''), "// ..."));
@@ -325,7 +328,7 @@ For more information, please visit: http://www.jooq.org/licenses''');
             replaceAll.add(new SimpleImmutableEntry(compile('''import (static )?java\.util\.stream\..*?;'''), "// ..."));
             replaceAll.add(new SimpleImmutableEntry(compile('''import (static )?java\.util\.function\..*?;'''), "// ..."));
         }
-                
+
         // Remove sections of delimited code
         for (token : tokens) {
             translateAll.add(compile('''(?s:(/\* \[«token»\])( \*.*?/\* )(\[/«token»\] \*/))'''));

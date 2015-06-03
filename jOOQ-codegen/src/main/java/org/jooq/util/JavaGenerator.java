@@ -4132,7 +4132,7 @@ public class JavaGenerator extends AbstractGenerator {
                 f.readFully(bytes);
                 String string = new String(bytes);
 
-                Matcher matcher = Pattern.compile("@(javax\\.annotation\\.)?Generated\\(value\\s+= \\{.*?\"schema version:(.*?)\" \\},").matcher(string);
+                Matcher matcher = Pattern.compile("@(?:javax\\.annotation\\.)?Generated\\(\\s*?value\\s*?=\\s*?\\{[^}]*?\"schema version:([^\"]*?)\"").matcher(string);
                 if (matcher.find()) {
                     result = matcher.group(1);
                 }

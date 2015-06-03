@@ -647,6 +647,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testAlterTableDropConstraint() throws Exception {
+        assumeFamilyNotIn(SQLITE);
+
         try {
             create().createTable("t").column("v", INTEGER.nullable(false)).execute();
             create().alterTable("t").add(constraint("x").unique("v")).execute();

@@ -55,8 +55,10 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.SQLDialect.VERTICA;
 
 import org.jooq.impl.DSL;
 
@@ -126,18 +128,18 @@ public interface AlterTableStep {
     <T> AlterTableFinalStep addColumn(Field<T> field, DataType<T> type);
 
     /**
-     * Add an <code>ADD CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
-     * statement.
-     */
-    @Support
-    AlterTableFinalStep add(Constraint constraint);
-
-    /**
      * Add an <code>ADD COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
     @Support
     AlterTableFinalStep addColumn(String field, DataType<?> type);
+
+    /**
+     * Add an <code>ADD CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE, VERTICA })
+    AlterTableFinalStep add(Constraint constraint);
 
     /**
      * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
@@ -175,7 +177,7 @@ public interface AlterTableStep {
      * Add a <code>DROP CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
-    @Support
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE, VERTICA })
     AlterTableFinalStep drop(Constraint constraint);
 
     /**
@@ -184,6 +186,6 @@ public interface AlterTableStep {
      *
      * @see DSL#constraint(String)
      */
-    @Support
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE, VERTICA })
     AlterTableFinalStep dropConstraint(String constraint);
 }

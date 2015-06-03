@@ -425,7 +425,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testAlterTableAddConstraint_CHECK() throws Exception {
-        assumeFamilyNotIn(MARIADB, MYSQL, REDSHIFT, VERTICA);
+        assumeFamilyNotIn(MARIADB, MYSQL, REDSHIFT, SQLITE, VERTICA);
 
         try {
             create().createTable("t").column("v", INTEGER).execute();
@@ -451,6 +451,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testAlterTableAddConstraint_PRIMARY_KEY() throws Exception {
+        assumeFamilyNotIn(SQLITE);
+
         try {
             create().createTable("t")
                     .column("v", INTEGER.nullable(false))
@@ -503,6 +505,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testAlterTableAddConstraint_FOREIGN_KEY() throws Exception {
+        assumeFamilyNotIn(SQLITE);
+
         foreignKeys(() -> {
             create().alterTable("t2").add(
                 constraint("t2_fk").foreignKey("w").references("t1", "v")
@@ -517,6 +521,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testAlterTableAddConstraint_FOREIGN_KEY_ON_CLAUSES() throws Exception {
+        assumeFamilyNotIn(SQLITE);
+
         foreignKeys(() -> {
             create().alterTable("t2").add(
                 constraint("t2_fk").foreignKey("w").references("t1", "v").onDeleteCascade()

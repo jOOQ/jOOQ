@@ -3,7 +3,7 @@
 	<property name="dir.workspace" value="${basedir}/.." />
 	<property name="dir.target" value="${basedir}/target" />
 	<property name="dir.release" value="${basedir}/release" />
-	<property name="version-prefix" value="3.6.1"/>
+	<property name="version-prefix" value="3.6.2"/>
 
 	<!-- Run a full mvn clean package install deploy first before this -->
 	<target name="copy-lib-javadoc">
@@ -16,21 +16,21 @@
 		<mkdir dir="${dir.release}/${version}/jOOQ-pom/jooq-codegen"/>
 		<mkdir dir="${dir.release}/${version}/jOOQ-pom/jooq-codegen-maven"/>
 		<mkdir dir="${dir.release}/${version}/jOOQ-pom/jooq-scala"/>
-		
+
         <copy todir="${dir.release}/${version}/jOOQ-lib" file="${dir.workspace}/jOOQ/target/jooq-${version}.jar"/>
 		<copy todir="${dir.release}/${version}/jOOQ-lib" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version}.jar"/>
 		<copy todir="${dir.release}/${version}/jOOQ-lib" file="${dir.workspace}/jOOQ-meta-extensions/target/jooq-meta-extensions-${version}.jar"/>
         <copy todir="${dir.release}/${version}/jOOQ-lib" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version}.jar"/>
         <copy todir="${dir.release}/${version}/jOOQ-lib" file="${dir.workspace}/jOOQ-codegen-maven/target/jooq-codegen-maven-${version}.jar"/>
         <copy todir="${dir.release}/${version}/jOOQ-lib" file="${dir.workspace}/jOOQ-scala/target/jooq-scala-${version}.jar"/>
-        
+
         <copy todir="${dir.release}/${version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ/target/jooq-${version-prefix}-javadoc.jar"/>
         <copy todir="${dir.release}/${version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version-prefix}-javadoc.jar"/>
         <copy todir="${dir.release}/${version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-meta-extensions/target/jooq-meta-extensions-${version-prefix}-javadoc.jar"/>
         <copy todir="${dir.release}/${version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version-prefix}-javadoc.jar"/>
         <copy todir="${dir.release}/${version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-codegen-maven/target/jooq-codegen-maven-${version-prefix}-javadoc.jar"/>
         <copy todir="${dir.release}/${version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-scala/target/jooq-scala-${version-prefix}-javadoc.jar"/>
-		
+
         <copy todir="${dir.release}/${version}/jOOQ-pom"                      file="${dir.workspace}/pom.xml"/>
         <copy todir="${dir.release}/${version}/jOOQ-pom/jooq"                 file="${dir.workspace}/jOOQ/pom.xml"/>
         <copy todir="${dir.release}/${version}/jOOQ-pom/jooq-meta"            file="${dir.workspace}/jOOQ-meta/pom.xml"/>
@@ -39,11 +39,11 @@
         <copy todir="${dir.release}/${version}/jOOQ-pom/jooq-codegen-maven"   file="${dir.workspace}/jOOQ-codegen-maven/pom.xml"/>
         <copy todir="${dir.release}/${version}/jOOQ-pom/jooq-scala"           file="${dir.workspace}/jOOQ-scala/pom.xml"/>
 	</target>
-    
+
     <target name="copy-src">
         <mkdir dir="${dir.release}/versions" />
         <mkdir dir="${dir.release}/${version}/jOOQ-src" />
-        
+
         <copy todir="${dir.release}/${version}/jOOQ-src" file="${dir.workspace}/jOOQ/target/jooq-${version-prefix}-sources.jar"/>
         <copy todir="${dir.release}/${version}/jOOQ-src" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version-prefix}-sources.jar"/>
         <copy todir="${dir.release}/${version}/jOOQ-src" file="${dir.workspace}/jOOQ-meta-extensions/target/jooq-meta-extensions-${version-prefix}-sources.jar"/>
@@ -51,7 +51,7 @@
         <copy todir="${dir.release}/${version}/jOOQ-src" file="${dir.workspace}/jOOQ-codegen-maven/target/jooq-codegen-maven-${version-prefix}-sources.jar"/>
         <copy todir="${dir.release}/${version}/jOOQ-src" file="${dir.workspace}/jOOQ-scala/target/jooq-scala-${version-prefix}-sources.jar"/>
     </target>
-        
+
     <target name="copy-trial">
         <copy todir="${dir.release}/${version}">
             <fileset dir="${dir.release}/template-trial">
@@ -59,7 +59,7 @@
             </fileset>
         </copy>
     </target>
-	
+
 	<target name="rest">
         <copy todir="${dir.release}/${version}">
             <fileset dir="${dir.release}/template">
@@ -69,7 +69,7 @@
 
         <mkdir dir="${dir.release}/${version}/third-party/lib" />
         <mkdir dir="${dir.release}/${version}/third-party/src" />
-		
+
         <copy todir="${dir.release}/${version}/third-party/lib" file="C:\Users\lukas\.m2\repository\org\slf4j\slf4j-api\1.6.1\slf4j-api-1.6.1.jar"/>
         <copy todir="${dir.release}/${version}/third-party/src" file="C:\Users\lukas\.m2\repository\org\slf4j\slf4j-api\1.6.1\slf4j-api-1.6.1-sources.jar"/>
 
@@ -92,25 +92,25 @@
 	<!-- [trial] -->
 	<target name="release-oss" description="Release a new version">
 		<property name="version" value="${version-prefix}"/>
-		
+
 		<antcall target="copy-lib-javadoc"/>
         <antcall target="copy-src"/>
 		<antcall target="rest"/>
 	</target>
-    
+
 	<!-- [pro] xxx
     xxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx x xxx xxxxxxxxx
     	xxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
-    	
+
         xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
     	xxxxxxxx xxxxxxxxxxxxxxxxxxxxx
         xxxxxxxx xxxxxxxxxxxxxxx
     xxxxxxxxx
     xxxx xxxxxxxx xxx
-	
+
     xxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx x xxx xxxxxxxxx
     	xxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
-    	
+
     	xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
         xxxxxxxx xxxxxxxxxxxxxxxxxxx
         xxxxxxxx xxxxxxxxxxxxxxx

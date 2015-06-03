@@ -11,6 +11,32 @@ For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
 
+Version 3.6.2 - June 03, 2015
+================================================================================
+
+This is a patch release with some useful fixes for the 3.6 branch
+
+Bug fixes
+---------
+#4162 - Malformed record literal when using PostgreSQL array of user-defined types
+#4248 - daoImplements option in MatcherStrategy not generating an implements statement in DAO class
+#4258 - Bad SQL generated for quantified row value expression predicates in Oracle
+#4269 - No columns generated for PostgreSQL SETOF [ scalar type ]
+#4287 - Remove unused import org.jooq.Row in generated records
+#4292 - Wrong emulation of "grand total" GROUP BY () clause in dialects that do not natively support them
+#4300 - DROP SEQUENCE IF EXISTS implemented incorrectly in Sybase SQL Anywhere
+#4308 - SQLSERVER2014 dialect doesn't generate correct LIMIT .. OFFSET clause
+#4313 - NullPointerException in code generator when bypassing GenerationTool without initialising all Lists and String[] to empty objects in Database
+#4314 - SQL Server UPDATE .. FROM illegally declares aliased tables in UPDATE clause
+#4321 - Invalid SQL generated when using nullable data types for Derby
+#4324 - DROP SEQUENCE statement has a mandatory RESTRICT keyword in Derby
+#4328 - Bad implementation of ALTER TABLE .. ALTER COLUMN .. SET DATA TYPE in Derby
+#4331 - REFERENCES .. ON { DELETE | UPDATE } SET DEFAULT is currently not supported by Derby
+#4333 - Firebird CREATE TABLE regression when columns are nullable
+#4341 - No Results are fetched from SQL Server procedures that contain update counts
+#4344 - MockStatement returns wrong update counts
+#4349 - The trial / pro license is accidentally delivered with the Open Source Edition
+
 Version 3.6.1 - April 29, 2015
 ================================================================================
 
@@ -408,7 +434,7 @@ that allows to read meta information from XML formats, e.g. from a standard
 INFORMATION_SCHEMA.xml, or from Vertabelo's XML export format:
 http://blog.jooq.org/2014/09/05/importing-your-erd-export-into-jooq/
 
-Future versions of jOOQ will include built-in support for a variety of XML 
+Future versions of jOOQ will include built-in support for a variety of XML
 formats.
 
 We've had an awesome contribution by Etienne Studer from Gradleware to help our

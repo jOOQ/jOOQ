@@ -2,21 +2,6 @@
  * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
- * This work is dual-licensed
- * - under the Apache Software License 2.0 (the "ASL")
- * - under the jOOQ License and Maintenance Agreement (the "jOOQ License")
- * =============================================================================
- * You may choose which license applies to you:
- *
- * - If you're using this work with Open Source databases, you may choose
- *   either ASL or jOOQ License.
- * - If you're using this work with at least one commercial database, you must
- *   choose jOOQ License
- *
- * For more information, please visit http://www.jooq.org/licenses
- *
- * Apache Software License 2.0:
- * -----------------------------------------------------------------------------
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -29,19 +14,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * jOOQ License and Maintenance Agreement:
+ * Other licenses:
  * -----------------------------------------------------------------------------
- * Data Geekery grants the Customer the non-exclusive, timely limited and
- * non-transferable license to install and use the Software under the terms of
- * the jOOQ License and Maintenance Agreement.
+ * Commercial licenses for this work are available. These replace the above
+ * ASL 2.0 and offer limited warranties, support, maintenance, and commercial
+ * database integrations.
  *
- * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
- * and Maintenance Agreement for more details: http://www.jooq.org/licensing
+ * For more information, please visit: http://www.jooq.org/licenses
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
  */
 
 package org.jooq.util.postgres;
 
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
@@ -130,23 +131,33 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
             // table reference is reported via a TYPE_UDT that matches a table
             // from INFORMATION_SCHEMA.TABLES
              select(
-                c.COLUMN_NAME,
-                c.ORDINAL_POSITION,
-                c.DATA_TYPE,
-                c.CHARACTER_MAXIMUM_LENGTH,
-                c.NUMERIC_PRECISION,
-                c.NUMERIC_SCALE,
-                c.IS_NULLABLE,
-                c.COLUMN_DEFAULT,
-                c.UDT_NAME
+                nvl(c.COLUMN_NAME               , getName()                   ).as(c.COLUMN_NAME),
+                nvl(c.ORDINAL_POSITION          , 1                           ).as(c.ORDINAL_POSITION),
+                nvl(c.DATA_TYPE                 , r.DATA_TYPE                 ).as(c.DATA_TYPE),
+                nvl(c.CHARACTER_MAXIMUM_LENGTH  , r.CHARACTER_MAXIMUM_LENGTH  ).as(c.CHARACTER_MAXIMUM_LENGTH),
+                nvl(c.NUMERIC_PRECISION         , r.NUMERIC_PRECISION         ).as(c.NUMERIC_PRECISION),
+                nvl(c.NUMERIC_SCALE             , r.NUMERIC_SCALE             ).as(c.NUMERIC_SCALE),
+                nvl(c.IS_NULLABLE               , "true"                      ).as(c.IS_NULLABLE),
+                nvl(c.COLUMN_DEFAULT            , (String) null               ).as(c.COLUMN_DEFAULT),
+                nvl(c.UDT_NAME                  , r.UDT_NAME                  ).as(c.UDT_NAME)
             )
             .from(r)
-            .join(c).on(row(r.TYPE_UDT_CATALOG, r.TYPE_UDT_SCHEMA, r.TYPE_UDT_NAME)
-                        .eq(c.TABLE_CATALOG,    c.TABLE_SCHEMA,    c.TABLE_NAME))
+
+            // [#4269] SETOF [ scalar type ] routines don't have any corresponding
+            // entries in INFORMATION_SCHEMA.COLUMNS. Their single result table
+            // column type is contained in ROUTINES
+            .leftOuterJoin(c)
+                .on(row(r.TYPE_UDT_CATALOG, r.TYPE_UDT_SCHEMA, r.TYPE_UDT_NAME)
+                    .eq(c.TABLE_CATALOG,    c.TABLE_SCHEMA,    c.TABLE_NAME))
             .join(pg_n).on(r.SPECIFIC_SCHEMA.eq(pg_n.NSPNAME))
             .join(pg_p).on(pg_p.PRONAMESPACE.eq(oid(pg_n)))
                        .and(pg_p.PRONAME.concat("_").concat(oid(pg_p)).eq(r.SPECIFIC_NAME))
             .where(r.SPECIFIC_NAME.eq(specificName))
+
+            // [#4269] Exclude TABLE [ some type ] routines from the first UNION ALL subselect
+            // Can this be done more elegantly?
+            .and(         row(r.SPECIFIC_CATALOG, r.SPECIFIC_SCHEMA, r.SPECIFIC_NAME)
+                .notIn(select(p.SPECIFIC_CATALOG, p.SPECIFIC_SCHEMA, p.SPECIFIC_NAME).from(p).where(p.PARAMETER_MODE.eq("OUT"))))
             .and(pg_p.PRORETSET))
 
             // Either subselect can be ordered by their ORDINAL_POSITION

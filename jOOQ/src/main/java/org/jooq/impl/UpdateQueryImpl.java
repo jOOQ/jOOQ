@@ -2,21 +2,6 @@
  * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
- * This work is dual-licensed
- * - under the Apache Software License 2.0 (the "ASL")
- * - under the jOOQ License and Maintenance Agreement (the "jOOQ License")
- * =============================================================================
- * You may choose which license applies to you:
- *
- * - If you're using this work with Open Source databases, you may choose
- *   either ASL or jOOQ License.
- * - If you're using this work with at least one commercial database, you must
- *   choose jOOQ License
- *
- * For more information, please visit http://www.jooq.org/licenses
- *
- * Apache Software License 2.0:
- * -----------------------------------------------------------------------------
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -29,14 +14,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * jOOQ License and Maintenance Agreement:
+ * Other licenses:
  * -----------------------------------------------------------------------------
- * Data Geekery grants the Customer the non-exclusive, timely limited and
- * non-transferable license to install and use the Software under the terms of
- * the jOOQ License and Maintenance Agreement.
+ * Commercial licenses for this work are available. These replace the above
+ * ASL 2.0 and offer limited warranties, support, maintenance, and commercial
+ * database integrations.
  *
- * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
- * and Maintenance Agreement for more details: http://www.jooq.org/licensing
+ * For more information, please visit: http://www.jooq.org/licenses
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
  */
 
 package org.jooq.impl;
@@ -49,6 +49,7 @@ import static org.jooq.Clause.UPDATE_SET;
 import static org.jooq.Clause.UPDATE_SET_ASSIGNMENT;
 import static org.jooq.Clause.UPDATE_UPDATE;
 import static org.jooq.Clause.UPDATE_WHERE;
+// ...
 // ...
 // ...
 import static org.jooq.impl.DSL.select;
@@ -470,17 +471,21 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
     @Override
     final void accept0(Context<?> ctx) {
+        boolean declareTables = ctx.declareTables();
         ctx.start(UPDATE_UPDATE)
            .keyword("update")
            .sql(' ')
-           .declareTables(true)
+
+           // [#4314] Not all SQL dialects support declaring aliased tables in
+           // UPDATE statements
+           .declareTables(!asList().contains(ctx.family()))
            .visit(table)
-           .declareTables(false)
+           .declareTables(declareTables)
            .end(UPDATE_UPDATE);
 
         /* [pro] xx
         xx xxxxxxx xxxxxx xxx x xxxxxxx xxxxxxxxxxxxx xx xxx xxxxxx xx xxxx xxxxxx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx x
+        xx xxxxxxxxxxxxx xx xxxxxxx x
             xxxxxxxxxxxxxxxxxxxxxxx
 
             xx xxxxxxxxxxxxxxxxx x
@@ -512,7 +517,7 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
             // Some dialects don't really support row value expressions on the
             // right hand side of a SET clause
-            if (multiValue != null && !asList().contains(ctx.configuration().dialect().family())) {
+            if (multiValue != null && !asList().contains(ctx.family())) {
                 ctx.visit(multiValue);
             }
 
@@ -547,7 +552,7 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
         ctx.end(UPDATE_SET);
 
-        switch (ctx.configuration().dialect().family()) {
+        switch (ctx.family()) {
 
             /* [pro] xx
             xx xxxxxxx xxxxxx xxx x xxxxxxx xxxxxxxxxxxxx xx xxx xxxxxx xx xxxx xxxxxx

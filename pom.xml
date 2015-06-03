@@ -12,7 +12,7 @@
 
     <groupId>org.jooq</groupId>
     <artifactId>jooq-parent</artifactId>
-    <version>3.6.1</version>
+    <version>3.6.2</version>
     <packaging>pom</packaging>
 
     <name>jOOQ Parent</name>
@@ -144,7 +144,7 @@
             <email>truesaint@gmail.com</email>
             <roles>
                 <role>firebird-support</role>
-            </roles>    
+            </roles>
         </contributor>
     </contributors>
 
@@ -237,7 +237,7 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
-            
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -319,7 +319,7 @@
                             <useDefaultExcludes>true</useDefaultExcludes>
                         </configuration>
                     </plugin>
-                    
+
                     <plugin>
                         <inherited>true</inherited>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -339,7 +339,7 @@
                             <encoding>UTF-8</encoding>
                             <show>protected</show>
                             <notree>true</notree>
-                            
+
                             <!-- Avoid running into Java 8's very restrictive doclint issues -->
                             <additionalparam>-Xdoclint:none</additionalparam>
                         </configuration>
@@ -347,9 +347,9 @@
                 </plugins>
             </build>
         </profile>
-        
+
         <!-- [pro] xxx
-        xxxx 
+        xxxx
         xxxxxxxxx
             xxxxxxxxxxxxxxxx
             xxxxxxxxxxxx
@@ -360,7 +360,7 @@
             xxxxxxxxxxxxx
         xxxxxxxxxx
          xxx
-         
+
         xxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxx
             xxxxxxxxxxxx
@@ -387,7 +387,7 @@
                             xxxxxxxxxxxxxxxxxxxxxxxxxx
                             xxxxxxxxxxxxxxxxxxxxxx
                             xxxxxxxxxxxxxxxxxxxxx
-                            
+
                             xxxx xxxxx xxxxxxx xxxx xxxx xxx xxxx xxxxxxxxxxx xxxxxxx xxxxxx xxx
                             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                         xxxxxxxxxxxxxxxx
@@ -395,7 +395,7 @@
                 xxxxxxxxxx
             xxxxxxxx
         xxxxxxxxxx
-        
+
         xxxxxxxxx
             xxxxxxxxxxxxxxxxxxxx
             xxxxxxxxxxxx
@@ -421,7 +421,7 @@
                             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                         xxxxxxxxxxxxxxxx
                     xxxxxxxxx
-                    
+
                     xxxxxxxx
                         xxxxxxxxxxxxxxxxxxxxxxxxxxx
                         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -447,7 +447,7 @@
                                   xxx xxxx x xxxx xx xxx
                                   xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
                                   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        
+
                                   xxxxxxxxxxx x
                                     xxx xx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x xxxxxxxxxxxxxxxxxx xxxxxxxx x xxxxx
                                     xxxxxx x xxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxx x xxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -456,7 +456,7 @@
                                 xxxxxxxxx
                             xxx
                             xxxxxxxxx
-                            
+
                             xxxx xxxxx xxxxxxx xxxx xxxx xxx xxxx xxxxxxxxxxx xxxxxxx xxxxxx xxx
                             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                         xxxxxxxxxxxxxxxx

@@ -2,21 +2,6 @@
  * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
- * This work is dual-licensed
- * - under the Apache Software License 2.0 (the "ASL")
- * - under the jOOQ License and Maintenance Agreement (the "jOOQ License")
- * =============================================================================
- * You may choose which license applies to you:
- *
- * - If you're using this work with Open Source databases, you may choose
- *   either ASL or jOOQ License.
- * - If you're using this work with at least one commercial database, you must
- *   choose jOOQ License
- *
- * For more information, please visit http://www.jooq.org/licenses
- *
- * Apache Software License 2.0:
- * -----------------------------------------------------------------------------
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -29,14 +14,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * jOOQ License and Maintenance Agreement:
+ * Other licenses:
  * -----------------------------------------------------------------------------
- * Data Geekery grants the Customer the non-exclusive, timely limited and
- * non-transferable license to install and use the Software under the terms of
- * the jOOQ License and Maintenance Agreement.
+ * Commercial licenses for this work are available. These replace the above
+ * ASL 2.0 and offer limited warranties, support, maintenance, and commercial
+ * database integrations.
  *
- * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
- * and Maintenance Agreement for more details: http://www.jooq.org/licensing
+ * For more information, please visit: http://www.jooq.org/licenses
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
  */
 
 package org.jooq.util;
@@ -159,7 +159,7 @@ public abstract class AbstractDatabase implements Database {
     protected AbstractDatabase() {
         exists = new HashMap<Table<?>, Boolean>();
         patterns = new HashMap<String, Pattern>();
-        filters = new ArrayList<Database.Filter>();
+        filters = new ArrayList<Filter>();
     }
 
     @Override
@@ -375,6 +375,10 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final List<Filter> getFilters() {
+        if (filters == null) {
+            filters = new ArrayList<Filter>();
+        }
+
         return Collections.unmodifiableList(filters);
     }
 
@@ -390,6 +394,10 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final String[] getExcludes() {
+        if (excludes == null) {
+            excludes = new String[0];
+        }
+
         return excludes;
     }
 
@@ -400,6 +408,10 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final String[] getIncludes() {
+        if (includes == null) {
+            includes = new String[0];
+        }
+
         return includes;
     }
 
@@ -420,6 +432,10 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final List<RegexFlag> getRegexFlags() {
+        if (regexFlags == null) {
+            regexFlags = new ArrayList<RegexFlag>();
+        }
+
         return regexFlags;
     }
 
@@ -430,6 +446,10 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public String[] getRecordVersionFields() {
+        if (recordVersionFields == null) {
+            recordVersionFields = new String[0];
+        }
+
         return recordVersionFields;
     }
 
@@ -440,6 +460,10 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public String[] getRecordTimestampFields() {
+        if (recordTimestampFields == null) {
+            recordTimestampFields = new String[0];
+        }
+
         return recordTimestampFields;
     }
 
@@ -450,6 +474,10 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public String[] getSyntheticPrimaryKeys() {
+        if (syntheticPrimaryKeys == null) {
+            syntheticPrimaryKeys = new String[0];
+        }
+
         return syntheticPrimaryKeys;
     }
 
@@ -460,6 +488,10 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public String[] getOverridePrimaryKeys() {
+        if (overridePrimaryKeys == null) {
+            overridePrimaryKeys = new String[0];
+        }
+
         return overridePrimaryKeys;
     }
 
@@ -480,6 +512,10 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final List<CustomType> getConfiguredCustomTypes() {
+        if (configuredCustomTypes == null) {
+            configuredCustomTypes = new ArrayList<CustomType>();
+        }
+
         return configuredCustomTypes;
     }
 
@@ -519,6 +555,10 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final List<ForcedType> getConfiguredForcedTypes() {
+        if (configuredForcedTypes == null) {
+            configuredForcedTypes = new ArrayList<ForcedType>();
+        }
+
         return configuredForcedTypes;
     }
 

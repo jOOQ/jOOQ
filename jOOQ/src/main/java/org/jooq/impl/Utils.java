@@ -2,21 +2,6 @@
  * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
- * This work is dual-licensed
- * - under the Apache Software License 2.0 (the "ASL")
- * - under the jOOQ License and Maintenance Agreement (the "jOOQ License")
- * =============================================================================
- * You may choose which license applies to you:
- *
- * - If you're using this work with Open Source databases, you may choose
- *   either ASL or jOOQ License.
- * - If you're using this work with at least one commercial database, you must
- *   choose jOOQ License
- *
- * For more information, please visit http://www.jooq.org/licenses
- *
- * Apache Software License 2.0:
- * -----------------------------------------------------------------------------
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -29,14 +14,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * jOOQ License and Maintenance Agreement:
+ * Other licenses:
  * -----------------------------------------------------------------------------
- * Data Geekery grants the Customer the non-exclusive, timely limited and
- * non-transferable license to install and use the Software under the terms of
- * the jOOQ License and Maintenance Agreement.
+ * Commercial licenses for this work are available. These replace the above
+ * ASL 2.0 and offer limited warranties, support, maintenance, and commercial
+ * database integrations.
  *
- * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
- * and Maintenance Agreement for more details: http://www.jooq.org/licensing
+ * For more information, please visit: http://www.jooq.org/licenses
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
  */
 package org.jooq.impl;
 
@@ -339,6 +339,7 @@ final class Utils {
      * helps prevent infinite loops and {@link OutOfMemoryError}.
      */
     private static int           maxConsumedExceptions                        = 256;
+    private static int           maxConsumedResults                           = 65536;
 
     /**
      * A pattern for the dash line syntax
@@ -2434,10 +2435,12 @@ final class Utils {
      */
     static final void consumeExceptions(Configuration configuration, PreparedStatement stmt, SQLException previous) {
         /* [pro] xx
+        xxx x x xx
+
         xx xx xxxx xxxx xxxxx xxx xxxx xxxxxxxx xxxx xxxx xxx xxxxxx
         xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
             xxxx xxxxxxxxxx
-                xxxxxxxxxxxx xxx xxxx x x xx x x xxxxxxxxxxxxxxxxxxxxxx xxxx
+                xxxxxxxxxxxx xxx xx x xx x x xxxxxxxxxxxxxxxxxxxxxx xxxx
                     xxx x
                         xx xxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxx xx xxx
                             xxxxx xxxxxxxxxxxx
@@ -2447,6 +2450,10 @@ final class Utils {
                         xxxxxxxx x xx
                     x
         x
+
+        xx xx xx xxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxx xxxxxxxx x x xxxxxxxxxxxxxxxxxxxxx x xx xxxx xx xxxxxxxx x xxxx xxxxxx xxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
         xx [/pro] */
     }
 
@@ -2478,27 +2485,32 @@ final class Utils {
      */
     static void consumeResultSets(ExecuteContext ctx, ExecuteListener listener, List<Result<Record>> results, Intern intern) throws SQLException {
         boolean anyResults = false;
+        int i = 0;
 
-        while (ctx.resultSet() != null) {
-            anyResults = true;
+        for (i = 0; i < maxConsumedResults; i++) {
+            if (ctx.resultSet() != null) {
+                anyResults = true;
 
-            Field<?>[] fields = new MetaDataFieldProvider(ctx.configuration(), ctx.resultSet().getMetaData()).getFields();
-            Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, intern != null ? intern.internIndexes(fields) : null, true, false);
-            results.add(c.fetch());
+                Field<?>[] fields = new MetaDataFieldProvider(ctx.configuration(), ctx.resultSet().getMetaData()).getFields();
+                Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, intern != null ? intern.internIndexes(fields) : null, true, false);
+                results.add(c.fetch());
+            }
 
-            if (ctx.statement().getMoreResults()) {
+            if (ctx.statement().getMoreResults())
                 ctx.resultSet(ctx.statement().getResultSet());
-            }
-            else {
+            else if (ctx.statement().getUpdateCount() != -1)
                 ctx.resultSet(null);
-            }
+            else
+                break;
         }
+
+        if (i == maxConsumedResults)
+            log.warn("Maximum consumed results reached: " + maxConsumedResults + ". This is probably a bug. Please report to https://github.com/jOOQ/jOOQ/issues/new");
 
         // Call this only when there was at least one ResultSet.
         // Otherwise, this call is not supported by ojdbc...
-        if (anyResults) {
+        if (anyResults)
             ctx.statement().getMoreResults(Statement.CLOSE_ALL_RESULTS);
-        }
     }
 
     static List<String[]> parseTXT(String string, String nullLiteral) {
@@ -2612,6 +2624,11 @@ final class Utils {
                 xxxxxx
             x
 
+            xxxx xxxxxxx x
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxx
+            x
+
             xx
                 xxxxxxxx xxxxxxx xxxxx xx xxxxxxxxxxx xx xxxxx
 
@@ -2680,6 +2697,15 @@ final class Utils {
                    xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                    xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                    xxxxxxxxxxxxx xxxxxxxx
+
+                xxxxxx
+            x
+
+            xxxx xxxxxxx x
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxxxxxxxxx
 
                 xxxxxx
             x

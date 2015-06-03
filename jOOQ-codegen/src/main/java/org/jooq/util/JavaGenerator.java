@@ -2,21 +2,6 @@
  * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
- * This work is dual-licensed
- * - under the Apache Software License 2.0 (the "ASL")
- * - under the jOOQ License and Maintenance Agreement (the "jOOQ License")
- * =============================================================================
- * You may choose which license applies to you:
- *
- * - If you're using this work with Open Source databases, you may choose
- *   either ASL or jOOQ License.
- * - If you're using this work with at least one commercial database, you must
- *   choose jOOQ License
- *
- * For more information, please visit http://www.jooq.org/licenses
- *
- * Apache Software License 2.0:
- * -----------------------------------------------------------------------------
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -29,14 +14,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * jOOQ License and Maintenance Agreement:
+ * Other licenses:
  * -----------------------------------------------------------------------------
- * Data Geekery grants the Customer the non-exclusive, timely limited and
- * non-transferable license to install and use the Software under the terms of
- * the jOOQ License and Maintenance Agreement.
+ * Commercial licenses for this work are available. These replace the above
+ * ASL 2.0 and offer limited warranties, support, maintenance, and commercial
+ * database integrations.
  *
- * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
- * and Maintenance Agreement for more details: http://www.jooq.org/licensing
+ * For more information, please visit: http://www.jooq.org/licenses
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
  */
 package org.jooq.util;
 
@@ -970,8 +970,8 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else {
                 out.tab(1).overrideInherit();
-                out.tab(1).println("public %s%s<%s> valuesRow() {", Row.class, degree, rowType);
-                out.tab(2).println("return (%s%s) super.valuesRow();", Row.class, degree);
+                out.tab(1).println("public %s<%s> valuesRow() {", out.ref(Row.class.getName() + degree), rowType);
+                out.tab(2).println("return (%s) super.valuesRow();", out.ref(Row.class.getName() + degree));
                 out.tab(1).println("}");
             }
 
@@ -2066,19 +2066,20 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generateDao(TableDefinition table, JavaWriter out) {
+        UniqueKeyDefinition key = table.getPrimaryKey();
+        if (key == null) {
+            log.info("Skipping DAO generation", out.file().getName());
+            return;
+        }
+
         final String className = getStrategy().getJavaClassName(table, Mode.DAO);
+        final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(table, Mode.DAO));
         final String tableRecord = out.ref(getStrategy().getFullJavaClassName(table, Mode.RECORD));
         final String daoImpl = out.ref(DAOImpl.class);
         final String tableIdentifier = out.ref(getStrategy().getFullJavaIdentifier(table), 2);
 
         String tType = (scala ? "Unit" : "Void");
         String pType = out.ref(getStrategy().getFullJavaClassName(table, Mode.POJO));
-
-        UniqueKeyDefinition key = table.getPrimaryKey();
-        if (key == null) {
-            log.info("Skipping DAO generation", out.file().getName());
-            return;
-        }
 
         List<ColumnDefinition> keyColumns = key.getKeyColumns();
 
@@ -2110,10 +2111,10 @@ public class JavaGenerator extends AbstractGenerator {
         printClassAnnotations(out, table.getSchema());
 
         if (scala)
-            out.println("class %s(configuration : %s) extends %s[%s, %s, %s](%s, classOf[%s], configuration) {",
-                    className, Configuration.class, daoImpl, tableRecord, pType, tType, tableIdentifier, pType);
+            out.println("class %s(configuration : %s) extends %s[%s, %s, %s](%s, classOf[%s], configuration)[[before= with ][%s]] {",
+                    className, Configuration.class, daoImpl, tableRecord, pType, tType, tableIdentifier, pType, interfaces);
         else
-            out.println("public class %s extends %s<%s, %s, %s> {", className, daoImpl, tableRecord, pType, tType);
+            out.println("public class %s extends %s<%s, %s, %s>[[before= implements ][%s]] {", className, daoImpl, tableRecord, pType, tType, interfaces);
 
         // Default constructor
         // -------------------

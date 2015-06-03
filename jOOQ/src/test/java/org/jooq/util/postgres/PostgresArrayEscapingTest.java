@@ -17,7 +17,7 @@ public class PostgresArrayEscapingTest {
     @Test
     public void simpleStrings() {
         assertEquals("{\"foo\"}", PostgresUtils.toPGArrayString(new String[] { "foo" }));
-        assertEquals("{\"foo\", \"bar\"}", PostgresUtils.toPGArrayString(new String[] { "foo", "bar" }));
+        assertEquals("{\"foo\",\"bar\"}", PostgresUtils.toPGArrayString(new String[] { "foo", "bar" }));
     }
 
     @Test
@@ -27,7 +27,7 @@ public class PostgresArrayEscapingTest {
 
     @Test
     public void numbers() {
-        assertEquals("{\"1\", \"2\"}", PostgresUtils.toPGArrayString(new Object[] { 1, 2 }));
+        assertEquals("{\"1\",\"2\"}", PostgresUtils.toPGArrayString(new Object[] { 1, 2 }));
     }
 
     @Test

@@ -41,6 +41,7 @@
 package org.jooq.test.all.testcases;
 
 import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.VERTICA;
 import static org.jooq.lambda.Seq.seq;
 import static org.jooq.test.jOOQAbstractTest.datasource;
@@ -104,7 +105,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
     public void testJPANativeQuery() {
         // https://hibernate.atlassian.net/browse/HHH-9560
-        assumeDialectNotIn(VERTICA);
+        assumeDialectNotIn(SQLITE, VERTICA);
 
         emTx(em -> {
             List<Object[]> books =
@@ -160,7 +161,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
     public void testJPANativeQueryAndEntites() {
         // https://hibernate.atlassian.net/browse/HHH-9560
-        assumeDialectNotIn(VERTICA);
+        assumeDialectNotIn(SQLITE, VERTICA);
 
         emTx(em -> {
             List<JPAAuthor> authors =
@@ -181,7 +182,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
     public void testJPANativeQueryAndSqlResultSetMapping() {
         // https://hibernate.atlassian.net/browse/HHH-9560
-        assumeDialectNotIn(VERTICA);
+        assumeDialectNotIn(SQLITE, VERTICA);
 
         jOOQAbstractTest.reset = false;
 

@@ -2391,7 +2391,7 @@ public class OracleTest extends jOOQAbstractTest<
     public void testOracleConnectionProviderInitStoredProcedureCall() {
         Configuration old = create().configuration();
 
-        // [#4311] TODO: Make this test fail when #4311 is not fixed?
+        // [#4311] All usage of ThreadLocal must be recursion-safe
         DSLContext create = create(old.derive(new ConnectionProvider() {
             @Override
             public Connection acquire() throws DataAccessException {
@@ -2407,8 +2407,8 @@ public class OracleTest extends jOOQAbstractTest<
             }
         }));
 
-        U_4311Record record = org.jooq.test.oracle.generatedclasses.multi_schema.Routines.p4311(create.configuration());
-        assertEquals(1, (int) record.getId());
+        U_4311Record record = org.jooq.test.oracle.generatedclasses.multi_schema.Routines.p4311(create.configuration(), new U_4311Record(42));
+        assertEquals(42, (int) record.getId());
     }
 
     @Test

@@ -18,8 +18,9 @@ public class Routines {
 	/**
 	 * Call <code>MULTI_SCHEMA.P4311</code>
 	 */
-	public static U_4311Record p4311(Configuration configuration) {
+	public static U_4311Record p4311(Configuration configuration, U_4311Record p2) {
 		P4311 p = new P4311();
+		p.setP2(p2);
 
 		p.execute(configuration);
 		return p.getP1();

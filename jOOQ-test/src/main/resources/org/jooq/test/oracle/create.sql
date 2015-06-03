@@ -901,10 +901,10 @@ BEGIN
 END p3005;
 /
 
-CREATE OR REPLACE PROCEDURE multi_schema.p4311 (p1 OUT multi_schema.u_4311)
+CREATE OR REPLACE PROCEDURE multi_schema.p4311 (p1 OUT multi_schema.u_4311, p2 IN multi_schema.u_4311)
 IS
 BEGIN
-  p1 := multi_schema.u_4311(1);
+  p1 := p2;
 END p4311;
 /
 

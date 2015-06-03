@@ -16,12 +16,17 @@ import org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.U_4311Reco
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class P4311 extends AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -424817801;
+	private static final long serialVersionUID = 871833960;
 
 	/**
 	 * The parameter <code>MULTI_SCHEMA.P4311.P1</code>.
 	 */
 	public static final Parameter<U_4311Record> P1 = createParameter("P1", org.jooq.test.oracle.generatedclasses.multi_schema.udt.U_4311.U_4311.getDataType(), false);
+
+	/**
+	 * The parameter <code>MULTI_SCHEMA.P4311.P2</code>.
+	 */
+	public static final Parameter<U_4311Record> P2 = createParameter("P2", org.jooq.test.oracle.generatedclasses.multi_schema.udt.U_4311.U_4311.getDataType(), false);
 
 	/**
 	 * Create a new routine call instance
@@ -30,6 +35,14 @@ public class P4311 extends AbstractRoutine<java.lang.Void> {
 		super("P4311", MultiSchema.MULTI_SCHEMA);
 
 		addOutParameter(P1);
+		addInParameter(P2);
+	}
+
+	/**
+	 * Set the <code>P2</code> parameter IN value to the routine
+	 */
+	public void setP2(U_4311Record value) {
+		setValue(P2, value);
 	}
 
 	/**

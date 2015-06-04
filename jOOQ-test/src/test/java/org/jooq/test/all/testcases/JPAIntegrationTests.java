@@ -216,7 +216,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             seq(books).map(b -> (JPABook) b[0]).zipWithIndex().forEach(t -> t.v1.title = "title " + (t.v2 + 1));
         });
 
-        assertEquals(asList("title 1", "title 2", "title 3", "title 4"), create().fetchValues(TBook_TITLE()));
+        assertSame(asList("title 1", "title 2", "title 3", "title 4"), create().fetchValues(TBook_TITLE()));
     }
 
     void emTx(Consumer<EntityManager> consumer) {

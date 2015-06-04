@@ -4251,7 +4251,7 @@ public class DSL {
      *
      * @see DSLContext#createTable(String)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE, SQLITE })
     public static CreateTableAsStep<Record> createTable(String table) {
         return using(new DefaultConfiguration()).createTable(table);
     }
@@ -4261,7 +4261,7 @@ public class DSL {
      *
      * @see DSLContext#createTable(Name)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE, SQLITE })
     public static CreateTableAsStep<Record> createTable(Name table) {
         return using(new DefaultConfiguration()).createTable(table);
     }
@@ -4271,7 +4271,7 @@ public class DSL {
      *
      * @see DSLContext#createTable(Table)
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE, SQLITE })
     public static CreateTableAsStep<Record> createTable(Table<?> table) {
         return using(new DefaultConfiguration()).createTable(table);
     }

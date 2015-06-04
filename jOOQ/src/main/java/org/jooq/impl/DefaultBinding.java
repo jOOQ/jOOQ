@@ -57,6 +57,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
@@ -367,7 +368,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         // above case where the type is OTHER
         // [#1125] Also with temporal data types, casting is needed some times
         // [#1130] TODO type can be null for ARRAY types, etc.
-        else if (family == POSTGRES && (sqlDataType == null || !sqlDataType.isTemporal())) {
+        else if (asList(POSTGRES, REDSHIFT).contains(family) && (sqlDataType == null || !sqlDataType.isTemporal())) {
             toSQL(ctx, converted);
         }
 

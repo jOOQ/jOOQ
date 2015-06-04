@@ -52,7 +52,7 @@
         <db.hana.version>1.00.48.372847</db.hana.version>
         <db.informix.version>12.10</db.informix.version>
         <db.ingres.version>10.0-4.0.6</db.ingres.version>
-        <db.redshift.version>1</db.redshift.version>
+        <db.redshift.version>1.1.2</db.redshift.version>
         <db.oracle.version>10.2.0.3.0</db.oracle.version>
         <db.sqlserver.version>3.0</db.sqlserver.version>
         <db.sybase.version>6.0</db.sybase.version>
@@ -399,7 +399,7 @@
             <artifactId>redshift-jdbc</artifactId>
             <version>${db.redshift.version}</version>
             <scope>system</scope>
-            <systemPath>${basedir}/lib/RedshiftJDBC41.jar</systemPath>
+            <systemPath>${basedir}/lib/RedshiftJDBC41-1.1.2.0002.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.oracle</groupId>

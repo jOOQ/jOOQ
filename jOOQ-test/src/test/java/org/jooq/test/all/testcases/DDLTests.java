@@ -89,7 +89,9 @@ import org.jooq.Record3;
 import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.Sequence;
+import org.jooq.Table;
 import org.jooq.TableRecord;
+import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.SQLDataType;
@@ -122,6 +124,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
     public DDLTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK, T725, T639, T785, CASE> delegate) {
         super(delegate);
+    }
+
+    boolean enforcesConstraints() {
+        return !asList(REDSHIFT).contains(family());
     }
 
     public void testCreateView() throws Exception {
@@ -458,7 +464,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                     .column("v", INTEGER.nullable(false))
                     .execute();
 
-            create().alterTable("t").add(constraint("pk").unique("v")).execute();
+            create().alterTable("t").add(constraint("pk").primaryKey("v")).execute();
 
             assertEquals(2,
             create().insertInto(table(name("t")), field(name("v")))
@@ -466,11 +472,24 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                     .values(2)
                     .execute());
 
-            assertThrows(DataAccessException.class, () -> {
-                create().insertInto(table(name("t")), field(name("v")))
-                        .values(1)
-                        .execute();
-            });
+            UniqueKey<?> key =
+            create().meta()
+                .getTables()
+                .stream()
+                .filter(t -> "t".equals(t.getName()))
+                .map(Table::getPrimaryKey)
+                .findFirst()
+                .get();
+
+            assertEquals(1, key.getFields().size());
+            assertEquals("v", key.getFields().get(0).getName());
+
+            if (enforcesConstraints())
+                assertThrows(DataAccessException.class, () -> {
+                    create().insertInto(table(name("t")), field(name("v")))
+                            .values(1)
+                            .execute();
+                });
         }
 
         finally {

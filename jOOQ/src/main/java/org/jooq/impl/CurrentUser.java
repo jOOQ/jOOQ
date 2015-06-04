@@ -75,6 +75,7 @@ class CurrentUser extends AbstractFunction<String> {
             case DB2:
             case HANA:
             case INGRES:
+            case REDSHIFT:
             case SQLSERVER:
             case SYBASE:
             /* [/pro] */

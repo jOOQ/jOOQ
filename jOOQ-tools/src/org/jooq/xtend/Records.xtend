@@ -281,12 +281,11 @@ class Records extends Generators {
 
         outAPI.append('''
         «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
-
-        /**//**
+        
+            /**
              * Copy all records from this result into a new result with new records
              * holding only a subset of the previous fields.
              *
-             * @param fields The fields of the new records
              * @return The new result
              */
             «generatedAnnotation»
@@ -296,8 +295,8 @@ class Records extends Generators {
 
         outImpl.append('''
         «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
-
-        /**/@Override
+        
+            @Override
             public final <«TN(degree)»> Result<Record«degree»<«TN(degree)»>> into(«Field_TN_fieldn(degree)») {
                 return (Result) into(new Field[] { «fieldn(degree)» });
             }

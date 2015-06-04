@@ -15,6 +15,7 @@ DROP PROCEDURE p_raise_3696/
 DROP PROCEDURE p_results/
 DROP PROCEDURE p_results_and_out_parameters/
 DROP PROCEDURE p_results_and_row_counts/
+DROP PROCEDURE p_books_and_authors/
 DROP PROCEDURE p4106/
 DROP FUNCTION f_tables1/
 DROP FUNCTION f_tables2/
@@ -354,7 +355,7 @@ CREATE TABLE x_unused (
 CREATE TABLE t_exotic_types (
   ID INT NOT NULL,
   UU UNIQUEIDENTIFIER,
-  
+
   UNTYPED_XML_AS_DOM XML,
   UNTYPED_XML_AS_JAXB XML,
 
@@ -818,25 +819,49 @@ CREATE PROCEDURE p_results_and_row_counts(
 AS
 BEGIN
   CREATE TABLE #t (v INT);
-  
+
   IF @p_result_sets = 1 BEGIN
     SELECT 1 a;
-    
-    INSERT INTO #t VALUES (1);  
+
+    INSERT INTO #t VALUES (1);
   END
   ELSE IF @p_result_sets = 2 BEGIN
     SELECT 1 a;
     SELECT 1 b UNION SELECT 2 b;
-    
-    INSERT INTO #t VALUES (1), (2);  
+
+    INSERT INTO #t VALUES (1), (2);
   END
   ELSE IF @p_result_sets = 3 BEGIN
     SELECT 1 a;
     SELECT 1 b UNION SELECT 2 b;
     SELECT 1 c UNION SELECT 2 c UNION SELECT 3 c;
-    
-    INSERT INTO #t VALUES (1), (2), (3);  
+
+    INSERT INTO #t VALUES (1), (2), (3);
   END;
+END;
+/
+
+CREATE PROCEDURE p_books_and_authors(
+  @p_author_search VARCHAR(50)
+)
+AS
+BEGIN
+  DECLARE @author_ids TABLE (id INT);
+
+  INSERT INTO @author_ids
+  SELECT id
+  FROM t_author
+  WHERE @p_author_search IS NULL
+  OR first_name LIKE @p_author_search
+  OR last_name LIKE @p_author_search
+
+  SELECT *
+  FROM t_author
+  WHERE id IN (SELECT id FROM @author_ids);
+
+  SELECT *
+  FROM t_book
+  WHERE author_id IN (SELECT id FROM @author_ids);
 END;
 /
 
@@ -845,7 +870,7 @@ CREATE PROCEDURE p4106 (
     @param2 INT OUTPUT
 ) AS BEGIN
    SET @param2 = @param1
-   
+
    IF @param1 = 5
        RETURN 42
 END;

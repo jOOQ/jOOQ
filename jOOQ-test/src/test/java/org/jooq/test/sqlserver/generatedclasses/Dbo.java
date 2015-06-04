@@ -8,10 +8,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
-import org.jooq.test.sqlserver.generatedclasses.Sequences;
 import org.jooq.test.sqlserver.generatedclasses.tables.FTables1;
 import org.jooq.test.sqlserver.generatedclasses.tables.FTables2;
 import org.jooq.test.sqlserver.generatedclasses.tables.FTables3;
@@ -55,7 +53,7 @@ import org.jooq.test.sqlserver.generatedclasses.tables.XUnused;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Dbo extends SchemaImpl {
 
-	private static final long serialVersionUID = -776871812;
+	private static final long serialVersionUID = -1339603695;
 
 	/**
 	 * The reference instance of <code>dbo</code>
@@ -67,18 +65,6 @@ public class Dbo extends SchemaImpl {
 	 */
 	private Dbo() {
 		super("dbo");
-	}
-
-	@Override
-	public final List<Sequence<?>> getSequences() {
-		List result = new ArrayList();
-		result.addAll(getSequences0());
-		return result;
-	}
-
-	private final List<Sequence<?>> getSequences0() {
-		return Arrays.<Sequence<?>>asList(
-			Sequences.S_AUTHOR_ID);
 	}
 
 	@Override

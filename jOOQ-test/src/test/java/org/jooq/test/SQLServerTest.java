@@ -83,9 +83,13 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.jooq.ArrayRecord;
+import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.ExecuteContext;
@@ -106,11 +110,11 @@ import org.jooq.test.all.converters.Boolean_YES_NO_LC;
 import org.jooq.test.all.converters.Boolean_YES_NO_UC;
 import org.jooq.test.all.converters.Boolean_YN_LC;
 import org.jooq.test.all.converters.Boolean_YN_UC;
-import org.jooq.test.all.pojos.jaxb.Book;
 import org.jooq.test.sqlserver.generatedclasses.Keys;
 import org.jooq.test.sqlserver.generatedclasses.Routines;
 import org.jooq.test.sqlserver.generatedclasses.Sequences;
 import org.jooq.test.sqlserver.generatedclasses.routines.P4106;
+import org.jooq.test.sqlserver.generatedclasses.routines.PBooksAndAuthors;
 import org.jooq.test.sqlserver.generatedclasses.routines.PResults;
 import org.jooq.test.sqlserver.generatedclasses.routines.PResultsAndRowCounts;
 import org.jooq.test.sqlserver.generatedclasses.tables.FTables4;
@@ -1436,7 +1440,46 @@ public class SQLServerTest extends jOOQAbstractTest<
         assertEquals(asList(1), r4.getResults().get(0).getValues(0, int.class));
         assertEquals(asList(1, 2), r4.getResults().get(1).getValues(0, int.class));
         assertEquals(asList(1, 2, 3), r4.getResults().get(2).getValues(0, int.class));
+    }
 
+    @Test
+    public void testSQLServerProcedureBooksAndAuthors() {
+        Configuration configuration = create().configuration();
+
+        // This is an ordinary stored procedure call
+        PBooksAndAuthors p = new PBooksAndAuthors();
+        p.execute(configuration);
+        List<Result<Record>> results = p.getResults();
+
+        // We know there are two results. The first one contains authors
+        // and the second one contains books
+        List<Author> authors = results.get(0).into(Author.class);
+        List<Book> books = results.get(1).into(Book.class);
+
+        // The following tests show how author and book POJOs can be accessed type safely
+        assertEquals(2, results.size());
+        assertEquals(Arrays.asList(1, 2),
+            authors.stream().map(a -> a.id).collect(Collectors.toList()));
+        assertEquals(Arrays.asList("George", "Paulo"),
+            authors.stream().map(a -> a.firstName).collect(Collectors.toList()));
+        assertEquals(Arrays.asList("Orwell", "Coelho"),
+            authors.stream().map(a -> a.lastName).collect(Collectors.toList()));
+
+        assertEquals(Arrays.asList(1, 2, 3, 4),
+            books.stream().map(b -> b.id).collect(Collectors.toList()));
+        assertEquals(Arrays.asList("1984", "Animal Farm", "O Alquimista", "Brida"),
+            books.stream().map(b -> b.title).collect(Collectors.toList()));
+    }
+
+    static class Author {
+        int id;
+        String firstName;
+        String lastName;
+    }
+
+    static class Book {
+        int id;
+        String title;
     }
 }
 

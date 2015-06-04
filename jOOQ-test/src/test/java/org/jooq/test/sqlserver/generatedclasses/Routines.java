@@ -16,6 +16,7 @@ import org.jooq.test.sqlserver.generatedclasses.routines.P1490;
 import org.jooq.test.sqlserver.generatedclasses.routines.P391;
 import org.jooq.test.sqlserver.generatedclasses.routines.P4106;
 import org.jooq.test.sqlserver.generatedclasses.routines.PAuthorExists;
+import org.jooq.test.sqlserver.generatedclasses.routines.PBooksAndAuthors;
 import org.jooq.test.sqlserver.generatedclasses.routines.PCreateAuthor;
 import org.jooq.test.sqlserver.generatedclasses.routines.PCreateAuthorByName;
 import org.jooq.test.sqlserver.generatedclasses.routines.PDefault;
@@ -169,6 +170,17 @@ public class Routines {
 
 		p.execute(configuration);
 		return p;
+	}
+
+	/**
+	 * Call <code>dbo.p_books_and_authors</code>
+	 */
+	public static Integer pBooksAndAuthors(Configuration configuration, String pAuthorSearch) {
+		PBooksAndAuthors p = new PBooksAndAuthors();
+		p.setPAuthorSearch(pAuthorSearch);
+
+		p.execute(configuration);
+		return p.getReturnValue();
 	}
 
 	/**

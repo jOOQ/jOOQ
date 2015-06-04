@@ -128,12 +128,22 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * {@link SQLDialect#SQLSERVER}<br/>
      * {@link SQLDialect#SYBASE}</td>
      * <td><code><pre>MERGE INTO [dst]
-     * USING ([values]) src
-     * ON [dst.key] = [src.key]
+     * USING ([values])
+     * ON [dst.key] = [values.key]
      * WHEN NOT MATCHED THEN INSERT ..</pre></code></td>
+     * </tr>
+     * <tr>
+     * <td>All the others</td>
+     * <td><code><pre>INSERT INTO [dst] ( ... )
+     * SELECT [values]
+     * WHERE NOT EXISTS (
+     *   SELECT 1
+     *   FROM [dst]
+     *   WHERE [dst.key] = [values.key]
+     * )</pre></code></td>
      * </tr>
      * </table>
      */
-    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL })
+    @Support
     InsertFinalStep<R> onDuplicateKeyIgnore();
 }

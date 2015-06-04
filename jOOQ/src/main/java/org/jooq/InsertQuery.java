@@ -139,9 +139,19 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      * {@link SQLDialect#SQLSERVER}<br/>
      * {@link SQLDialect#SYBASE}</td>
      * <td><code><pre>MERGE INTO [dst]
-     * USING ([values]) src
-     * ON [dst.key] = [src.key]
+     * USING ([values])
+     * ON [dst.key] = [values.key]
      * WHEN NOT MATCHED THEN INSERT ..</pre></code></td>
+     * </tr>
+     * <tr>
+     * <td>All the others</td>
+     * <td><code><pre>INSERT INTO [dst] ( ... )
+     * SELECT [values]
+     * WHERE NOT EXISTS (
+     *   SELECT 1
+     *   FROM [dst]
+     *   WHERE [dst.key] = [values.key]
+     * )</pre></code></td>
      * </tr>
      * </table>
      * <p>
@@ -149,7 +159,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      * the <code>ON DUPLICATE KEY IGNORE</code> flag (see
      * {@link #onDuplicateKeyIgnore(boolean)}. Setting one will unset the other
      */
-    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL })
+    @Support
     void onDuplicateKeyIgnore(boolean flag);
 
     /**

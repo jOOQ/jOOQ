@@ -50,10 +50,10 @@ import static org.jooq.Clause.INSERT_RETURNING;
 import static org.jooq.Clause.INSERT_SELECT;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.selectOne;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 import org.jooq.Clause;
@@ -65,6 +65,7 @@ import org.jooq.InsertQuery;
 import org.jooq.Merge;
 import org.jooq.MergeNotMatchedStep;
 import org.jooq.MergeOnConditionStep;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.Table;
@@ -157,7 +158,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         // ON DUPLICATE KEY UPDATE clause
         // ------------------------------
         if (onDuplicateKeyUpdate) {
-            switch (ctx.configuration().dialect().family()) {
+            switch (ctx.family()) {
 
                 // MySQL has a nice syntax for this
                 case CUBRID:
@@ -176,7 +177,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
                 // Some dialects can't really handle this clause. Emulation should be done in two steps
                 case H2: {
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be emulated for " + ctx.configuration().dialect());
+                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be emulated for " + ctx.dialect());
                 }
 
                 // Some databases allow for emulating this clause using a MERGE statement
@@ -193,14 +194,14 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 }
 
                 default:
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be emulated for " + ctx.configuration().dialect());
+                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be emulated for " + ctx.dialect());
             }
         }
 
         // ON DUPLICATE KEY IGNORE clause
         // ------------------------------
         else if (onDuplicateKeyIgnore) {
-            switch (ctx.configuration().dialect().family()) {
+            switch (ctx.family()) {
 
                 // MySQL has a nice, native syntax for this
                 case MARIADB:
@@ -228,11 +229,6 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                     break;
                 }
 
-                // Some dialects can't really handle this clause. Emulation should be done in two steps
-                case H2: {
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY IGNORE clause cannot be emulated for " + ctx.configuration().dialect());
-                }
-
                 // Some databases allow for emulating this clause using a MERGE statement
                 /* [pro] */
                 case DB2:
@@ -246,8 +242,10 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                     break;
                 }
 
-                default:
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY IGNORE clause cannot be emulated for " + ctx.configuration().dialect());
+                default: {
+                    ctx.visit(toInsertSelect(ctx.configuration()));
+                    break;
+                }
             }
         }
 
@@ -335,31 +333,31 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         }
     }
 
-    @SuppressWarnings("unchecked")
+    private final QueryPart toInsertSelect(Configuration configuration) {
+        if (table.getPrimaryKey() != null) {
+            return create(configuration)
+                .insertInto(table)
+                .columns(insertMaps.getMap().keySet())
+                .select(
+                    select(insertMaps.getMap().values())
+                    .whereNotExists(
+                        selectOne()
+                        .from(table)
+                        .where(matchByPrimaryKey())
+                    )
+                );
+        }
+        else {
+            throw new IllegalStateException("The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be simulated when inserting into non-updatable tables : " + table);
+        }
+    }
+
     private final Merge<R> toMerge(Configuration configuration) {
         if (table.getPrimaryKey() != null) {
-            Condition condition = null;
-            List<Field<?>> key = new ArrayList<Field<?>>();
-
-            for (Field<?> f : table.getPrimaryKey().getFields()) {
-                Field<Object> field = (Field<Object>) f;
-                Field<Object> value = (Field<Object>) insertMaps.getMap().get(field);
-
-                key.add(value);
-                Condition other = field.equal(value);
-
-                if (condition == null) {
-                    condition = other;
-                }
-                else {
-                    condition = condition.and(other);
-                }
-            }
-
             MergeOnConditionStep<R> on =
             create(configuration).mergeInto(table)
                                  .usingDual()
-                                 .on(condition);
+                                 .on(matchByPrimaryKey());
 
             // [#1295] Use UPDATE clause only when with ON DUPLICATE KEY UPDATE,
             // not with ON DUPLICATE KEY IGNORE
@@ -375,6 +373,31 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         else {
             throw new IllegalStateException("The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be simulated when inserting into non-updatable tables : " + table);
         }
+    }
+
+    /**
+     * Produce a {@link Condition} that matches existing rows by the inserted or
+     * updated primary key values.
+     */
+    @SuppressWarnings("unchecked")
+    private final Condition matchByPrimaryKey() {
+        Condition condition = null;
+
+        for (Field<?> f : table.getPrimaryKey().getFields()) {
+            Field<Object> field = (Field<Object>) f;
+            Field<Object> value = (Field<Object>) insertMaps.getMap().get(field);
+
+            Condition other = field.equal(value);
+
+            if (condition == null) {
+                condition = other;
+            }
+            else {
+                condition = condition.and(other);
+            }
+        }
+
+        return condition;
     }
 
     @Override

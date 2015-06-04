@@ -51,6 +51,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
@@ -245,7 +246,7 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
            .sql(' ');
 
         if (temporary)
-            if (ctx.family() == POSTGRES)
+            if (asList(POSTGRES, REDSHIFT).contains(ctx.family()))
                 ctx.keyword("temporary").sql(' ');
             else
                 ctx.keyword("global temporary").sql(' ');

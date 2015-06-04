@@ -104,6 +104,7 @@ class Identifiers {
                 case INFORMIX:
                 case INGRES:
                 case ORACLE:
+                case REDSHIFT:
                 /* [/pro] */
                 case CUBRID:
                 case DERBY:

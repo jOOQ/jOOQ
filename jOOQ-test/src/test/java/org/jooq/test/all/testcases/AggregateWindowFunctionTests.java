@@ -451,12 +451,25 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, H2, HANA, HSQLDB, INGRES, MARIADB, MYSQL, SQLITE, SYBASE);
         assumeDialectNotIn(POSTGRES_9_3);
 
-        Record2<BigDecimal, BigDecimal> result =
-        create().select(
-                    percentileCont(0.5).withinGroupOrderBy(TBook_ID()),
-                    percentileDisc(0.5).withinGroupOrderBy(TBook_ID()))
-                .from(TBook())
-                .fetchOne();
+        Record2<BigDecimal, BigDecimal> result;
+
+        // Dialects that know these functions as window functions only
+        if (asList(REDSHIFT, SQLSERVER).contains(family())) {
+            result =
+            create().select(
+                        percentileCont(inline(0.5)).withinGroupOrderBy(TBook_ID()).over(partitionBy(one())),
+                        percentileDisc(inline(0.5)).withinGroupOrderBy(TBook_ID()).over(partitionBy(one())))
+                    .from(TBook())
+                    .fetchAny();
+        }
+        else {
+            result =
+            create().select(
+                        percentileCont(inline(0.5)).withinGroupOrderBy(TBook_ID()),
+                        percentileDisc(inline(0.5)).withinGroupOrderBy(TBook_ID()))
+                    .from(TBook())
+                    .fetchOne();
+        }
 
         assertEquals(2.5, result.value1().doubleValue());
         assertEquals(2.0, result.value2().doubleValue());

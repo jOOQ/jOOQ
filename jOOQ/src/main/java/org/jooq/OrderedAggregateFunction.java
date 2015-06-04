@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE11G;
 import static org.jooq.SQLDialect.ORACLE12C;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SYBASE;
 
 import java.util.Collection;
@@ -82,20 +83,20 @@ public interface OrderedAggregateFunction<T> {
      * Add an <code>WITHIN GROUP (ORDER BY ..)</code> clause to the ordered
      * aggregate function
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MARIADB, MYSQL, ORACLE11G, ORACLE12C, POSTGRES, SYBASE })
+    @Support({ CUBRID, DB2, H2, HSQLDB, MARIADB, MYSQL, ORACLE11G, ORACLE12C, POSTGRES, REDSHIFT, SYBASE })
     AggregateFilterStep<T> withinGroupOrderBy(Field<?>... fields);
 
     /**
      * Add an <code>WITHIN GROUP (ORDER BY ..)</code> clause to the ordered
      * aggregate function
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MARIADB, MYSQL, ORACLE11G, ORACLE12C, POSTGRES, SYBASE })
+    @Support({ CUBRID, DB2, H2, HSQLDB, MARIADB, MYSQL, ORACLE11G, ORACLE12C, POSTGRES, REDSHIFT, SYBASE })
     AggregateFilterStep<T> withinGroupOrderBy(SortField<?>... fields);
 
     /**
      * Add an <code>WITHIN GROUP (ORDER BY ..)</code> clause to the ordered
      * aggregate function
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MARIADB, MYSQL, ORACLE11G, ORACLE12C, POSTGRES, SYBASE })
+    @Support({ CUBRID, DB2, H2, HSQLDB, MARIADB, MYSQL, ORACLE11G, ORACLE12C, POSTGRES, REDSHIFT, SYBASE })
     AggregateFilterStep<T> withinGroupOrderBy(Collection<? extends SortField<?>> fields);
 }

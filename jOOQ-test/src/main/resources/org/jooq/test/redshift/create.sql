@@ -123,20 +123,6 @@ CREATE TABLE t_author (
   CONSTRAINT pk_t_author PRIMARY KEY (ID)
 )
 /
-COMMENT ON TABLE t_author IS 'An entity holding authors of books'
-/
-COMMENT ON COLUMN t_author.id IS 'The author ID'
-/
-COMMENT ON COLUMN t_author.first_name IS 'The author''s first name'
-/
-COMMENT ON COLUMN t_author.last_name IS 'The author''s last name'
-/
-COMMENT ON COLUMN t_author.date_of_birth IS 'The author''s date of birth'
-/
-COMMENT ON COLUMN t_author.year_of_birth IS 'The author''s year of birth'
-/
-COMMENT ON COLUMN t_author.address IS 'The author''s address'
-/
 
 CREATE TABLE t_book_details (
   ID INT,
@@ -162,20 +148,6 @@ CREATE TABLE t_book (
   CONSTRAINT fk_t_book_details_id FOREIGN KEY (DETAILS_ID) REFERENCES T_BOOK_DETAILS(ID),
   CONSTRAINT fk_t_book_language_id FOREIGN KEY (LANGUAGE_ID) REFERENCES T_LANGUAGE(ID)
 )
-/
-COMMENT ON TABLE t_book IS 'An entity holding books'
-/
-COMMENT ON COLUMN t_book.id IS 'The book ID'
-/
-COMMENT ON COLUMN t_book.author_id IS 'The author ID in entity ''author'''
-/
-COMMENT ON COLUMN t_book.title IS 'The book''s title'
-/
-COMMENT ON COLUMN t_book.published_in IS  'The year the book was published in'
-/
-COMMENT ON COLUMN t_book.language_id IS  'The language of the book'
-/
-COMMENT ON COLUMN t_book.content_text IS 'Some textual content of the book'
 /
 
 

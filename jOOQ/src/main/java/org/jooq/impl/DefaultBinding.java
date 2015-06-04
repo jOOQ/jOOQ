@@ -329,7 +329,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         SQLDialect family = ctx.family();
 
         // [#822] Some RDBMS need precision / scale information on BigDecimals
-        if (converted != null && type == BigDecimal.class && asList(CUBRID, DB2, DERBY, FIREBIRD, HSQLDB).contains(family)) {
+        if (converted != null && type == BigDecimal.class && asList(CUBRID, DB2, DERBY, FIREBIRD, HSQLDB, REDSHIFT).contains(family)) {
 
             // Add precision / scale on BigDecimals
             int scale = ((BigDecimal) converted).scale();
@@ -368,7 +368,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         // above case where the type is OTHER
         // [#1125] Also with temporal data types, casting is needed some times
         // [#1130] TODO type can be null for ARRAY types, etc.
-        else if (asList(POSTGRES, REDSHIFT).contains(family) && (sqlDataType == null || !sqlDataType.isTemporal())) {
+        else if (asList(POSTGRES).contains(family) && (sqlDataType == null || !sqlDataType.isTemporal())) {
             toSQL(ctx, converted);
         }
 

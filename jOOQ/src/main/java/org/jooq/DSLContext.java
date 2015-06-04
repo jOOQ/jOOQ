@@ -5395,7 +5395,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createTemporaryTable(String)
      */
-    @Support({ ORACLE, POSTGRES })
+    @Support({ ORACLE, POSTGRES, REDSHIFT })
     CreateTableAsStep<Record> createTemporaryTable(String table);
 
     /**
@@ -5403,7 +5403,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createTemporaryTable(Name)
      */
-    @Support({ ORACLE, POSTGRES })
+    @Support({ ORACLE, POSTGRES, REDSHIFT })
     CreateTableAsStep<Record> createTemporaryTable(Name table);
 
     /**
@@ -5411,7 +5411,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createTemporaryTable(Table)
      */
-    @Support({ ORACLE, POSTGRES })
+    @Support({ ORACLE, POSTGRES, REDSHIFT })
     CreateTableAsStep<Record> createTemporaryTable(Table<?> table);
 
     /**
@@ -5419,7 +5419,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createGlobalTemporaryTable(String)
      */
-    @Support({ ORACLE, POSTGRES })
+    @Support({ ORACLE, POSTGRES, REDSHIFT })
     CreateTableAsStep<Record> createGlobalTemporaryTable(String table);
 
     /**
@@ -5427,7 +5427,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createGlobalTemporaryTable(Name)
      */
-    @Support({ ORACLE, POSTGRES })
+    @Support({ ORACLE, POSTGRES, REDSHIFT })
     CreateTableAsStep<Record> createGlobalTemporaryTable(Name table);
 
     /**
@@ -5435,7 +5435,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#createGlobalTemporaryTable(Table)
      */
-    @Support({ ORACLE, POSTGRES })
+    @Support({ ORACLE, POSTGRES, REDSHIFT })
     CreateTableAsStep<Record> createGlobalTemporaryTable(Table<?> table);
 
     /**

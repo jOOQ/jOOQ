@@ -1620,6 +1620,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                 .flatMap(a -> create()
                     .selectFrom(TBook())
                     .where(TBook_AUTHOR_ID().eq(a.getValue(TAuthor_ID())))
+                    .orderBy(TBook_ID())
                     .stream()
                     .map(b -> tuple(a, b))
                 )

@@ -55,6 +55,7 @@ import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
@@ -410,19 +411,24 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                     .values(2, 1, 2)
                     .execute());
 
-            // Violating u1
-            assertThrows(DataAccessException.class, () -> {
-                create().insertInto(table(name("t")), field(name("v1")), field(name("v2")), field(name("v3")))
-                        .values(1, 2, 3)
-                        .execute();
-            });
+            // TODO: Query meta data to find UNIQUE keys, when this is available
+            // from org.jooq.Meta
 
-            // Violating u2
-            assertThrows(DataAccessException.class, () -> {
-                create().insertInto(table(name("t")), field(name("v1")), field(name("v2")), field(name("v3")))
-                        .values(3, 1, 2)
-                        .execute();
-            });
+            // Violating u1
+            if (enforcesConstraints()) {
+                assertThrows(DataAccessException.class, () -> {
+                    create().insertInto(table(name("t")), field(name("v1")), field(name("v2")), field(name("v3")))
+                            .values(1, 2, 3)
+                            .execute();
+                });
+
+                // Violating u2
+                assertThrows(DataAccessException.class, () -> {
+                    create().insertInto(table(name("t")), field(name("v1")), field(name("v2")), field(name("v3")))
+                            .values(3, 1, 2)
+                            .execute();
+                });
+            }
         }
 
         finally {
@@ -823,31 +829,38 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
         try {
             create().createGlobalTemporaryTable("t1").column("f1", SQLDataType.INTEGER).execute();
-            create().createGlobalTemporaryTable("t2").column("f2", SQLDataType.INTEGER).onCommitDeleteRows().execute();
-            create().createGlobalTemporaryTable("t3").column("f3", SQLDataType.INTEGER).onCommitPreserveRows().execute();
-
             create().createGlobalTemporaryTable("s1").as(select(one().as("x1"))).execute();
-            create().createGlobalTemporaryTable("s2").as(select(one().as("x2"))).onCommitDeleteRows().execute();
-            create().createGlobalTemporaryTable("s3").as(select(one().as("x3"))).onCommitPreserveRows().execute();
-
             assertEquals("f1", create().fetch(table(name("t1"))).field(0).getName());
-            assertEquals("f2", create().fetch(table(name("t2"))).field(0).getName());
-            assertEquals("f3", create().fetch(table(name("t3"))).field(0).getName());
             assertEquals("x1", create().fetch(table(name("s1"))).field(0).getName());
-            assertEquals("x2", create().fetch(table(name("s2"))).field(0).getName());
-            assertEquals("x3", create().fetch(table(name("s3"))).field(0).getName());
+
+            if (asList(ORACLE, POSTGRES).contains(family())) {
+                create().createGlobalTemporaryTable("t2").column("f2", SQLDataType.INTEGER).onCommitDeleteRows().execute();
+                create().createGlobalTemporaryTable("t3").column("f3", SQLDataType.INTEGER).onCommitPreserveRows().execute();
+
+                create().createGlobalTemporaryTable("s2").as(select(one().as("x2"))).onCommitDeleteRows().execute();
+                create().createGlobalTemporaryTable("s3").as(select(one().as("x3"))).onCommitPreserveRows().execute();
+
+                assertEquals("f2", create().fetch(table(name("t2"))).field(0).getName());
+                assertEquals("f3", create().fetch(table(name("t3"))).field(0).getName());
+                assertEquals("x2", create().fetch(table(name("s2"))).field(0).getName());
+                assertEquals("x3", create().fetch(table(name("s3"))).field(0).getName());
+            }
+
         }
         finally {
             ignoreThrows(() -> create().dropTable("t1").execute());
-            ignoreThrows(() -> create().dropTable("t2").execute());
-            ignoreThrows(() -> create().dropTable("t3").execute());
-
             ignoreThrows(() -> create().dropTable("s1").execute());
-            ignoreThrows(() -> create().dropTable("s2").execute());
 
-            // Oracle's ON COMMIT PRESERVE ROWS GTTs need truncation before dropping
-            ignoreThrows(() -> create().truncate("s3").execute());
-            ignoreThrows(() -> create().dropTable("s3").execute());
+            if (asList(ORACLE, POSTGRES).contains(family())) {
+                ignoreThrows(() -> create().dropTable("t2").execute());
+                ignoreThrows(() -> create().dropTable("t3").execute());
+
+                ignoreThrows(() -> create().dropTable("s2").execute());
+
+                // Oracle's ON COMMIT PRESERVE ROWS GTTs need truncation before dropping
+                ignoreThrows(() -> create().truncate("s3").execute());
+                ignoreThrows(() -> create().dropTable("s3").execute());
+            }
         }
     }
 

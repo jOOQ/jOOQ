@@ -53,6 +53,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 
@@ -66,7 +67,7 @@ public interface CreateTableAsStep<R extends Record> {
     /**
      * Add an <code>AS</code> clause to the <code>CREATE TABLE</code> statement.
      */
-    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, H2, HANA, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SQLITE })
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, H2, HANA, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SQLITE })
     CreateTableOnCommitStep as(Select<? extends R> select);
 
     /**

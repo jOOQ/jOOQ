@@ -464,7 +464,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testIntersectAllAndExceptAll() throws Exception {
-        assumeFamilyNotIn(FIREBIRD, MARIADB, MYSQL, H2, SQLITE, SQLSERVER);
+        assumeFamilyNotIn(FIREBIRD, MARIADB, MYSQL, H2, REDSHIFT, SQLITE, SQLSERVER);
 
         Result<Record1<Integer>> r1 =
         create().select(TBook_AUTHOR_ID())

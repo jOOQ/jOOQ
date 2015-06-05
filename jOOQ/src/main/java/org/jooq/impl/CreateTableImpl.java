@@ -52,6 +52,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+// ...
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Utils.DATA_SELECT_INTO_TABLE;
@@ -245,7 +246,7 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
            .sql(' ');
 
         if (temporary)
-            if (ctx.family() == POSTGRES)
+            if (asList(POSTGRES).contains(ctx.family()))
                 ctx.keyword("temporary").sql(' ');
             else
                 ctx.keyword("global temporary").sql(' ');

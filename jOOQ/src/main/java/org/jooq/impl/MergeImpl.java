@@ -586,6 +586,11 @@ implements
     }
 
     @Override
+    public final MergeOnConditionStep<R> on(Boolean condition) {
+        return on(condition(condition));
+    }
+
+    @Override
     public final MergeImpl on(String sql) {
         return on(condition(sql));
     }
@@ -608,6 +613,11 @@ implements
 
     @Override
     public final MergeImpl and(Field<Boolean> condition) {
+        return and(condition(condition));
+    }
+
+    @Override
+    public final MergeImpl and(Boolean condition) {
         return and(condition(condition));
     }
 
@@ -637,6 +647,11 @@ implements
     }
 
     @Override
+    public final MergeImpl andNot(Boolean condition) {
+        return andNot(condition(condition));
+    }
+
+    @Override
     public final MergeImpl andExists(Select<?> select) {
         return and(exists(select));
     }
@@ -654,6 +669,11 @@ implements
 
     @Override
     public final MergeImpl or(Field<Boolean> condition) {
+        return and(condition(condition));
+    }
+
+    @Override
+    public final MergeImpl or(Boolean condition) {
         return and(condition(condition));
     }
 
@@ -680,6 +700,11 @@ implements
     @Override
     public final MergeImpl orNot(Field<Boolean> condition) {
         return and(condition(condition));
+    }
+
+    @Override
+    public final MergeImpl orNot(Boolean condition) {
+        return orNot(condition(condition));
     }
 
     @Override
@@ -924,6 +949,11 @@ implements
     }
 
     @Override
+    public final MergeMatchedDeleteStep<R> where(Boolean condition) {
+        return where(condition(condition));
+    }
+
+    @Override
     public final MergeImpl deleteWhere(Condition condition) {
         matchedDeleteWhere = condition;
         return this;
@@ -931,6 +961,11 @@ implements
 
     @Override
     public final MergeImpl deleteWhere(Field<Boolean> condition) {
+        return deleteWhere(condition(condition));
+    }
+
+    @Override
+    public final MergeImpl deleteWhere(Boolean condition) {
         return deleteWhere(condition(condition));
     }
 

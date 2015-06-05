@@ -110,6 +110,12 @@ public interface SelectHavingStep<R extends Record> extends SelectWindowStep<R> 
 
     /**
      * Add a <code>HAVING</code> clause to the query.
+     */
+    @Support
+    SelectHavingConditionStep<R> having(Boolean condition);
+
+    /**
+     * Add a <code>HAVING</code> clause to the query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of

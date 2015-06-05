@@ -104,6 +104,13 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator and proceed to the next step.
+     */
+    @Support
+    SelectConditionStep<R> and(Boolean condition);
+
+    /**
+     * Combine the currently assembled conditions with another one using the
+     * {@link Operator#AND} operator and proceed to the next step.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -161,6 +168,13 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
     SelectConditionStep<R> andNot(Field<Boolean> condition);
 
     /**
+     * Combine the currently assembled conditions with a negated other one using
+     * the {@link Operator#AND} operator and proceed to the next step.
+     */
+    @Support
+    SelectConditionStep<R> andNot(Boolean condition);
+
+    /**
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
@@ -187,6 +201,13 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      */
     @Support
     SelectConditionStep<R> or(Field<Boolean> condition);
+
+    /**
+     * Combine the currently assembled conditions with another one using the
+     * {@link Operator#OR} operator and proceed to the next step.
+     */
+    @Support
+    SelectConditionStep<R> or(Boolean condition);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -246,6 +267,13 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      */
     @Support
     SelectConditionStep<R> orNot(Field<Boolean> condition);
+
+    /**
+     * Combine the currently assembled conditions with a negated other one using
+     * the {@link Operator#OR} operator and proceed to the next step.
+     */
+    @Support
+    SelectConditionStep<R> orNot(Boolean condition);
 
     /**
      * Combine the currently assembled conditions with an EXISTS clause using

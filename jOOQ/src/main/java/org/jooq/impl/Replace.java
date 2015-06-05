@@ -81,6 +81,7 @@ class Replace extends AbstractFunction<String> {
             xxxx xxxx
             xxxx xxxxx
             xxxx xxxxxxx
+            xxxx xxxxxxxxx
             xxxx xxxxxxxxxx
             xxxx xxxxxxx
             xxxx xxxxxxxx

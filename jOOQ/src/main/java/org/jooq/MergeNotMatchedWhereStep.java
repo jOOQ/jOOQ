@@ -93,4 +93,19 @@ public interface MergeNotMatchedWhereStep<R extends Record> extends MergeFinalSt
      */
     @Support({ CUBRID })
     MergeFinalStep<R> where(Field<Boolean> condition);
+
+    /**
+     * Add an additional <code>WHERE</code> clause to the preceding
+     * <code>WHEN NOT MATCHED THEN INSERT</code> clause.
+     * <p>
+     * <b>Note:</b> This syntax is only available for the
+     * {@link SQLDialect#CUBRID} and {@link SQLDialect#ORACLE} databases!
+     * <p>
+     * See <a href=
+     * "http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.htm"
+     * >http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.
+     * htm</a> for a full definition of the Oracle <code>MERGE</code> statement
+     */
+    @Support({ CUBRID })
+    MergeFinalStep<R> where(Boolean condition);
 }

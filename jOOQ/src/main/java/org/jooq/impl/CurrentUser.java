@@ -75,6 +75,7 @@ class CurrentUser extends AbstractFunction<String> {
             xxxx xxxx
             xxxx xxxxx
             xxxx xxxxxxx
+            xxxx xxxxxxxxx
             xxxx xxxxxxxxxx
             xxxx xxxxxxx
             xx [/pro] */

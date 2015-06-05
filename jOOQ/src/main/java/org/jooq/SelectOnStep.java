@@ -104,6 +104,12 @@ public interface SelectOnStep<R extends Record> {
 
     /**
      * Add an <code>ON</code> clause to the previous <code>JOIN</code>.
+     */
+    @Support
+    SelectOnConditionStep<R> on(Boolean condition);
+
+    /**
+     * Add an <code>ON</code> clause to the previous <code>JOIN</code>.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of

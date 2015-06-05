@@ -110,6 +110,12 @@ public interface SelectWhereStep<R extends Record> extends SelectConnectByStep<R
 
     /**
      * Add a <code>WHERE</code> clause to the query.
+     */
+    @Support
+    SelectConditionStep<R> where(Boolean field);
+
+    /**
+     * Add a <code>WHERE</code> clause to the query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of

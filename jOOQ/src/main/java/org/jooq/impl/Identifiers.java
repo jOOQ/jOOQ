@@ -104,6 +104,7 @@ class Identifiers {
                 xxxx xxxxxxxxx
                 xxxx xxxxxxx
                 xxxx xxxxxxx
+                xxxx xxxxxxxxx
                 xx [/pro] */
                 case CUBRID:
                 case DERBY:

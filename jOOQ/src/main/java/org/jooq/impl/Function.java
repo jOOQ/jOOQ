@@ -603,6 +603,11 @@ class Function<T> extends AbstractField<T> implements
     }
 
     @Override
+    public final WindowBeforeOverStep<T> filterWhere(Boolean field) {
+        return filterWhere(condition(field));
+    }
+
+    @Override
     public final WindowBeforeOverStep<T> filterWhere(String sql) {
         return filterWhere(condition(sql));
     }

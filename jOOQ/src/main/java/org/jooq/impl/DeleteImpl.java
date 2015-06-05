@@ -99,6 +99,11 @@ class DeleteImpl<R extends Record>
     }
 
     @Override
+    public final DeleteImpl<R> where(Boolean condition) {
+        return where(condition(condition));
+    }
+
+    @Override
     public final DeleteImpl<R> where(String sql) {
         return where(condition(sql));
     }
@@ -135,6 +140,11 @@ class DeleteImpl<R extends Record>
     }
 
     @Override
+    public final DeleteImpl<R> and(Boolean condition) {
+        return and(condition(condition));
+    }
+
+    @Override
     public final DeleteImpl<R> and(String sql) {
         return and(condition(sql));
     }
@@ -160,6 +170,11 @@ class DeleteImpl<R extends Record>
     }
 
     @Override
+    public final DeleteImpl<R> andNot(Boolean condition) {
+        return andNot(condition(condition));
+    }
+
+    @Override
     public final DeleteImpl<R> andExists(Select<?> select) {
         return and(exists(select));
     }
@@ -177,6 +192,11 @@ class DeleteImpl<R extends Record>
 
     @Override
     public final DeleteImpl<R> or(Field<Boolean> condition) {
+        return or(condition(condition));
+    }
+
+    @Override
+    public final DeleteImpl<R> or(Boolean condition) {
         return or(condition(condition));
     }
 
@@ -202,6 +222,11 @@ class DeleteImpl<R extends Record>
 
     @Override
     public final DeleteImpl<R> orNot(Field<Boolean> condition) {
+        return orNot(condition(condition));
+    }
+
+    @Override
+    public final DeleteImpl<R> orNot(Boolean condition) {
         return orNot(condition(condition));
     }
 

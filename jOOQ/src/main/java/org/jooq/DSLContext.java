@@ -4499,7 +4499,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulat the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4523,7 +4523,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulat the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4547,7 +4547,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulat the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4571,7 +4571,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulat the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4595,7 +4595,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulat the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4619,7 +4619,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulat the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4643,7 +4643,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulat the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4667,7 +4667,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulat the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4691,7 +4691,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulat the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4715,7 +4715,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulat the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4739,7 +4739,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulat the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4763,7 +4763,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulat the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4787,7 +4787,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulat the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4811,7 +4811,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulat the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4835,7 +4835,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulat the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4859,7 +4859,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulat the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4883,7 +4883,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulat the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4907,7 +4907,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulat the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4931,7 +4931,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulat the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4955,7 +4955,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulat the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4979,7 +4979,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulat the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -5003,7 +5003,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulat the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -5029,7 +5029,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulat the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>

@@ -1158,7 +1158,7 @@ public class DSLContext extends Generators {
         _builder.append("* <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>");
         _builder.newLine();
         _builder.append("     ");
-        _builder.append("* <td>These databases can simulate the H2-specific MERGE statement using a");
+        _builder.append("* <td>These databases can emulate the H2-specific MERGE statement using a");
         _builder.newLine();
         _builder.append("     ");
         _builder.append("* standard SQL MERGE statement, without restrictions</td>");
@@ -1254,7 +1254,7 @@ public class DSLContext extends Generators {
         _builder_1.append("* <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>");
         _builder_1.newLine();
         _builder_1.append("     ");
-        _builder_1.append("* <td>These databases can simulate the H2-specific MERGE statement using a");
+        _builder_1.append("* <td>These databases can emulate the H2-specific MERGE statement using a");
         _builder_1.newLine();
         _builder_1.append("     ");
         _builder_1.append("* standard SQL MERGE statement, without restrictions</td>");

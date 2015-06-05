@@ -305,7 +305,7 @@ public class UpdateDSL extends Generators {
         _builder.append("* <p>");
         _builder.newLine();
         _builder.append("     ");
-        _builder.append("* This is simulated using a subquery for the <code>value</code>, where row");
+        _builder.append("* This is emulated using a subquery for the <code>value</code>, where row");
         _builder.newLine();
         _builder.append("     ");
         _builder.append("* value expressions aren\'t supported.");

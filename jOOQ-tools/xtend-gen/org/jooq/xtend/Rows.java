@@ -4057,7 +4057,7 @@ public class Rows extends Generators {
             _builder.newLine();
             _builder.append("    ");
             _builder.append(" ");
-            _builder.append("* by simulating them as such <code><pre>");
+            _builder.append("* by emulating them as such <code><pre>");
             _builder.newLine();
             _builder.append("    ");
             _builder.append(" ");
@@ -4139,7 +4139,7 @@ public class Rows extends Generators {
             _builder.newLine();
             _builder.append("    ");
             _builder.append(" ");
-            _builder.append("* by simulating them as such <code><pre>");
+            _builder.append("* by emulating them as such <code><pre>");
             _builder.newLine();
             _builder.append("    ");
             _builder.append(" ");
@@ -4221,7 +4221,7 @@ public class Rows extends Generators {
             _builder.newLine();
             _builder.append("    ");
             _builder.append(" ");
-            _builder.append("* by simulating them as such <code><pre>");
+            _builder.append("* by emulating them as such <code><pre>");
             _builder.newLine();
             _builder.append("    ");
             _builder.append(" ");

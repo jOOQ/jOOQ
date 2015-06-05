@@ -146,7 +146,12 @@ class GroupConcat extends AbstractFunction<String> implements GroupConcatOrderBy
     }
 
     @Override
-    public final AggregateFilterStep<String> filterWhere(Field<Boolean> field) {
+    public final AggregateFilterStep<String> filterWhere(Field<Boolean> c) {
+        throw new UnsupportedOperationException("FILTER() not supported on GROUP_CONCAT aggregate function");
+    }
+
+    @Override
+    public final AggregateFilterStep<String> filterWhere(Boolean c) {
         throw new UnsupportedOperationException("FILTER() not supported on GROUP_CONCAT aggregate function");
     }
 

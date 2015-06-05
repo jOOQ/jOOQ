@@ -70,6 +70,13 @@ public interface TableOnConditionStep extends Table<Record> {
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator.
+     */
+    @Support
+    TableOnConditionStep and(Boolean condition);
+
+    /**
+     * Combine the currently assembled conditions with another one using the
+     * {@link Operator#AND} operator.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -127,6 +134,13 @@ public interface TableOnConditionStep extends Table<Record> {
     TableOnConditionStep andNot(Field<Boolean> condition);
 
     /**
+     * Combine the currently assembled conditions with a negated other one using
+     * the {@link Operator#AND} operator.
+     */
+    @Support
+    TableOnConditionStep andNot(Boolean condition);
+
+    /**
      * Combine the currently assembled conditions with an <code>EXISTS</code>
      * clause using the {@link Operator#AND} operator.
      */
@@ -153,6 +167,13 @@ public interface TableOnConditionStep extends Table<Record> {
      */
     @Support
     TableOnConditionStep or(Field<Boolean> condition);
+
+    /**
+     * Combine the currently assembled conditions with another one using the
+     * {@link Operator#OR} operator.
+     */
+    @Support
+    TableOnConditionStep or(Boolean condition);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -212,6 +233,13 @@ public interface TableOnConditionStep extends Table<Record> {
      */
     @Support
     TableOnConditionStep orNot(Field<Boolean> condition);
+
+    /**
+     * Combine the currently assembled conditions with a negated other one using
+     * the {@link Operator#OR} operator.
+     */
+    @Support
+    TableOnConditionStep orNot(Boolean condition);
 
     /**
      * Combine the currently assembled conditions with an <code>EXISTS</code>

@@ -74,6 +74,16 @@ public interface Condition extends QueryPart {
     /**
      * Combine this condition with another one using the {@link Operator#AND}
      * operator.
+     *
+     * @param other The other condition
+     * @return The combined condition
+     */
+    @Support
+    Condition and(Boolean other);
+
+    /**
+     * Combine this condition with another one using the {@link Operator#AND}
+     * operator.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -147,6 +157,16 @@ public interface Condition extends QueryPart {
     Condition andNot(Field<Boolean> other);
 
     /**
+     * Combine this condition with a negated other one using the
+     * {@link Operator#AND} operator.
+     *
+     * @param other The other condition
+     * @return The combined condition
+     */
+    @Support
+    Condition andNot(Boolean other);
+
+    /**
      * Combine this condition with an EXISTS clause using the
      * {@link Operator#AND} operator.
      *
@@ -185,6 +205,16 @@ public interface Condition extends QueryPart {
      */
     @Support
     Condition or(Field<Boolean> other);
+
+    /**
+     * Combine this condition with another one using the {@link Operator#OR}
+     * operator.
+     *
+     * @param other The other condition
+     * @return The combined condition
+     */
+    @Support
+    Condition or(Boolean other);
 
     /**
      * Combine this condition with another one using the {@link Operator#OR}
@@ -260,6 +290,16 @@ public interface Condition extends QueryPart {
      */
     @Support
     Condition orNot(Field<Boolean> other);
+
+    /**
+     * Combine this condition with a negated other one using the
+     * {@link Operator#OR} operator.
+     *
+     * @param other The other condition
+     * @return The combined condition
+     */
+    @Support
+    Condition orNot(Boolean other);
 
     /**
      * Combine this condition with an EXISTS clause using the

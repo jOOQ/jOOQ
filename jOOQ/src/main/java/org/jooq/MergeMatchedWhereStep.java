@@ -93,4 +93,19 @@ public interface MergeMatchedWhereStep<R extends Record> extends MergeNotMatched
      */
     @Support({ CUBRID, ORACLE })
     MergeMatchedDeleteStep<R> where(Field<Boolean> condition);
+
+    /**
+     * Add an additional <code>WHERE</code> clause to the preceding
+     * <code>WHEN MATCHED THEN UPDATE</code> clause.
+     * <p>
+     * <b>Note:</b> This syntax is only available for the
+     * {@link SQLDialect#CUBRID} and {@link SQLDialect#ORACLE} databases!
+     * <p>
+     * See <a href=
+     * "http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.htm"
+     * >http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.
+     * htm</a> for a full definition of the Oracle <code>MERGE</code> statement
+     */
+    @Support({ CUBRID, ORACLE })
+    MergeMatchedDeleteStep<R> where(Boolean condition);
 }

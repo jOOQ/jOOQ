@@ -106,6 +106,13 @@ public interface SelectConnectByConditionStep<R extends Record> extends SelectSt
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator and proceed to the next step.
+     */
+    @Support({ CUBRID, ORACLE })
+    SelectConnectByConditionStep<R> and(Boolean condition);
+
+    /**
+     * Combine the currently assembled conditions with another one using the
+     * {@link Operator#AND} operator and proceed to the next step.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of

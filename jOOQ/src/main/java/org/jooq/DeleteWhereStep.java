@@ -81,6 +81,12 @@ public interface DeleteWhereStep<R extends Record> extends DeleteFinalStep<R> {
 
     /**
      * Add conditions to the query.
+     */
+    @Support
+    DeleteConditionStep<R> where(Boolean condition);
+
+    /**
+     * Add conditions to the query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of

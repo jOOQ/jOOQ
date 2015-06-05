@@ -165,6 +165,11 @@ implements
     }
 
     @Override
+    public final DivideByOnConditionStep on(Boolean c) {
+        return on(condition(c));
+    }
+
+    @Override
     public final DivideByOnConditionStep on(String sql) {
         and(sql);
         return this;
@@ -205,6 +210,11 @@ implements
     }
 
     @Override
+    public final DivideByOnConditionStep and(Boolean c) {
+        return and(condition(c));
+    }
+
+    @Override
     public final DivideByOnConditionStep and(String sql) {
         return and(condition(sql));
     }
@@ -230,6 +240,11 @@ implements
     }
 
     @Override
+    public final DivideByOnConditionStep andNot(Boolean c) {
+        return andNot(condition(c));
+    }
+
+    @Override
     public final DivideByOnConditionStep andExists(Select<?> select) {
         return and(exists(select));
     }
@@ -247,6 +262,11 @@ implements
 
     @Override
     public final DivideByOnConditionStep or(Field<Boolean> c) {
+        return or(condition(c));
+    }
+
+    @Override
+    public final DivideByOnConditionStep or(Boolean c) {
         return or(condition(c));
     }
 
@@ -272,6 +292,11 @@ implements
 
     @Override
     public final DivideByOnConditionStep orNot(Field<Boolean> c) {
+        return orNot(condition(c));
+    }
+
+    @Override
+    public final DivideByOnConditionStep orNot(Boolean c) {
         return orNot(condition(c));
     }
 

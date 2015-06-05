@@ -1023,6 +1023,9 @@ public class InsertDSL extends Generators {
     _builder.append("    ");
     _builder.newLine();
     _builder.append("    ");
+    _builder.append("/* [java-8] */");
+    _builder.newLine();
+    _builder.append("    ");
     _builder.append("@Override");
     _builder.newLine();
     _builder.append("    ");
@@ -1033,6 +1036,9 @@ public class InsertDSL extends Generators {
     _builder.newLine();
     _builder.append("    ");
     _builder.append("}");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("/* [/java-8] */");
     _builder.newLine();
     _builder.append("}");
     _builder.newLine();

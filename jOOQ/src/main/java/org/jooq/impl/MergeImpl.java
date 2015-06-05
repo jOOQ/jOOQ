@@ -643,7 +643,7 @@ implements
 
     @Override
     public final MergeImpl andNot(Field<Boolean> condition) {
-        return and(condition(condition));
+        return andNot(condition(condition));
     }
 
     @Override
@@ -699,7 +699,7 @@ implements
 
     @Override
     public final MergeImpl orNot(Field<Boolean> condition) {
-        return and(condition(condition));
+        return orNot(condition(condition));
     }
 
     @Override

@@ -144,7 +144,7 @@
             <email>truesaint@gmail.com</email>
             <roles>
                 <role>firebird-support</role>
-            </roles>    
+            </roles>
         </contributor>
     </contributors>
 
@@ -237,7 +237,7 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
-            
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -288,7 +288,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
         </profile>
-        
+
         <profile>
             <id>release-oss</id>
             <properties>
@@ -330,7 +330,7 @@
                             <useDefaultExcludes>true</useDefaultExcludes>
                         </configuration>
                     </plugin>
-                    
+
                     <plugin>
                         <inherited>true</inherited>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -350,7 +350,7 @@
                             <encoding>UTF-8</encoding>
                             <show>protected</show>
                             <notree>true</notree>
-                            
+
                             <!-- Avoid running into Java 8's very restrictive doclint issues -->
                             <additionalparam>-Xdoclint:none</additionalparam>
                         </configuration>
@@ -358,7 +358,7 @@
                 </plugins>
             </build>
         </profile>
-        
+
         <!-- [pro] -->
         <profile>
             <id>release-trial</id>
@@ -386,7 +386,7 @@
                             <encoding>UTF-8</encoding>
                             <show>protected</show>
                             <notree>true</notree>
-                            
+
                             <!-- Avoid running into Java 8's very restrictive doclint issues -->
                             <additionalparam>-Xdoclint:none</additionalparam>
                         </configuration>
@@ -394,7 +394,7 @@
                 </plugins>
             </build>
         </profile>
-        
+
         <profile>
             <!-- Keep this profile in sync with the above release-pro-java-6 profile -->
             <id>release-pro</id>
@@ -421,7 +421,7 @@
                             <useDefaultExcludes>true</useDefaultExcludes>
                         </configuration>
                     </plugin>
-                    
+
                     <plugin>
                         <inherited>true</inherited>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -447,7 +447,7 @@
                                   var _gaq = _gaq || [];
                                   _gaq.push(['_setAccount', 'UA-30716479-1']);
                                   _gaq.push(['_trackPageview']);
-                        
+
                                   (function() {
                                     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
                                     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
@@ -456,7 +456,7 @@
                                 </script>
                             ]]>
                             </header>
-                            
+
                             <!-- Avoid running into Java 8's very restrictive doclint issues -->
                             <additionalparam>-Xdoclint:none</additionalparam>
                         </configuration>
@@ -464,7 +464,7 @@
                 </plugins>
             </build>
         </profile>
-        
+
         <profile>
             <!-- Keep this profile in sync with the above release-pro profile -->
             <id>release-pro-java-6</id>
@@ -491,7 +491,7 @@
                             <useDefaultExcludes>true</useDefaultExcludes>
                         </configuration>
                     </plugin>
-                    
+
                     <plugin>
                         <inherited>true</inherited>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -511,6 +511,9 @@
                             <encoding>UTF-8</encoding>
                             <show>protected</show>
                             <notree>true</notree>
+
+                            <!-- Avoid running into Java 8's very restrictive doclint issues -->
+                            <additionalparam>-Xdoclint:none</additionalparam>
                         </configuration>
                     </plugin>
                 </plugins>

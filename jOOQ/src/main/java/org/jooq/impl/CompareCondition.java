@@ -105,7 +105,7 @@ class CompareCondition extends AbstractCondition {
         }
 
         // [#1423] Only Postgres knows a true ILIKE operator. Other dialects
-        // need to simulate this as LOWER(lhs) LIKE LOWER(rhs)
+        // need to emulate this as LOWER(lhs) LIKE LOWER(rhs)
         else if ((op == LIKE_IGNORE_CASE || op == NOT_LIKE_IGNORE_CASE)
                 && POSTGRES != family) {
 

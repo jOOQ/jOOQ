@@ -3465,7 +3465,7 @@ public class DSL {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -3497,7 +3497,7 @@ public class DSL {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -3529,7 +3529,7 @@ public class DSL {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -3561,7 +3561,7 @@ public class DSL {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -3593,7 +3593,7 @@ public class DSL {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -3625,7 +3625,7 @@ public class DSL {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -3657,7 +3657,7 @@ public class DSL {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -3689,7 +3689,7 @@ public class DSL {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -3721,7 +3721,7 @@ public class DSL {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -3753,7 +3753,7 @@ public class DSL {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -3785,7 +3785,7 @@ public class DSL {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -3817,7 +3817,7 @@ public class DSL {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -3849,7 +3849,7 @@ public class DSL {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -3881,7 +3881,7 @@ public class DSL {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -3913,7 +3913,7 @@ public class DSL {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -3945,7 +3945,7 @@ public class DSL {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -3977,7 +3977,7 @@ public class DSL {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4009,7 +4009,7 @@ public class DSL {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4041,7 +4041,7 @@ public class DSL {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4073,7 +4073,7 @@ public class DSL {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4105,7 +4105,7 @@ public class DSL {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4137,7 +4137,7 @@ public class DSL {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4171,7 +4171,7 @@ public class DSL {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4748,7 +4748,7 @@ public class DSL {
      * <h3>Simulation of <code>TRUNCATE</code></h3>
      * <p>
      * Most dialects implement the <code>TRUNCATE</code> statement. If it is not
-     * supported, it is simulated using an equivalent <code>DELETE</code>
+     * supported, it is emulated using an equivalent <code>DELETE</code>
      * statement. This is particularly true for these dialects:
      * <ul>
      * <li> {@link SQLDialect#FIREBIRD}</li>
@@ -4766,7 +4766,7 @@ public class DSL {
      *   .cascade()
      * </pre></code>
      * <p>
-     * These vendor-specific extensions are currently not simulated for those
+     * These vendor-specific extensions are currently not emulated for those
      * dialects that do not support them natively.
      *
      * @see DSLContext#truncate(Name)
@@ -4795,7 +4795,7 @@ public class DSL {
      * <h3>Simulation of <code>TRUNCATE</code></h3>
      * <p>
      * Most dialects implement the <code>TRUNCATE</code> statement. If it is not
-     * supported, it is simulated using an equivalent <code>DELETE</code>
+     * supported, it is emulated using an equivalent <code>DELETE</code>
      * statement. This is particularly true for these dialects:
      * <ul>
      * <li> {@link SQLDialect#FIREBIRD}</li>
@@ -4813,7 +4813,7 @@ public class DSL {
      *   .cascade()
      * </pre></code>
      * <p>
-     * These vendor-specific extensions are currently not simulated for those
+     * These vendor-specific extensions are currently not emulated for those
      * dialects that do not support them natively.
      *
      * @see DSLContext#truncate(Table)
@@ -5046,7 +5046,7 @@ public class DSL {
      * For Oracle, use {@link #table(ArrayRecord)} instead, as Oracle knows only
      * typed arrays
      * <p>
-     * In all other dialects, unnesting of arrays is simulated using several
+     * In all other dialects, unnesting of arrays is emulated using several
      * <code>UNION ALL</code> connected subqueries.
      */
     @Support
@@ -5063,7 +5063,7 @@ public class DSL {
      * For Oracle, use {@link #table(ArrayRecord)} instead, as Oracle knows only
      * typed arrays
      * <p>
-     * In all other dialects, unnesting of arrays is simulated using several
+     * In all other dialects, unnesting of arrays is emulated using several
      * <code>UNION ALL</code> connected subqueries.
      */
     @Support
@@ -5103,7 +5103,7 @@ public class DSL {
      * Such arrays are converted into <code>VARCHAR</code> arrays by jOOQ.
      * <p>
      * In all dialects where arrays are not supported, unnesting of arrays is
-     * simulated using several <code>UNION ALL</code> connected subqueries.
+     * emulated using several <code>UNION ALL</code> connected subqueries.
      */
     @Support({ H2, HSQLDB, POSTGRES, ORACLE })
     public static Table<?> unnest(Field<?> cursor) {
@@ -8012,7 +8012,7 @@ public class DSL {
      * Get the trim(field) function.
      * <p>
      * This renders the trim function where available:
-     * <code><pre>trim([field])</pre></code> ... or simulates it elsewhere using
+     * <code><pre>trim([field])</pre></code> ... or emulates it elsewhere using
      * rtrim and ltrim: <code><pre>ltrim(rtrim([field]))</pre></code>
      */
     @Support
@@ -8076,8 +8076,8 @@ public class DSL {
      * Get the rpad(field, length) function.
      * <p>
      * This renders the rpad function where available:
-     * <code><pre>rpad([field], [length])</pre></code> ... or simulates it
-     * elsewhere using concat, repeat, and length, which may be simulated as
+     * <code><pre>rpad([field], [length])</pre></code> ... or emulates it
+     * elsewhere using concat, repeat, and length, which may be emulated as
      * well, depending on the RDBMS:
      * <code><pre>concat([field], repeat(' ', [length] - length([field])))</pre></code>
      */
@@ -8110,12 +8110,12 @@ public class DSL {
      * Get the rpad(field, length, character) function.
      * <p>
      * This renders the rpad function where available:
-     * <code><pre>rpad([field], [length])</pre></code> ... or simulates it
-     * elsewhere using concat, repeat, and length, which may be simulated as
+     * <code><pre>rpad([field], [length])</pre></code> ... or emulates it
+     * elsewhere using concat, repeat, and length, which may be emulated as
      * well, depending on the RDBMS:
      * <code><pre>concat([field], repeat([character], [length] - length([field])))</pre></code>
      * <p>
-     * In {@link SQLDialect#SQLITE}, this is simulated as such:
+     * In {@link SQLDialect#SQLITE}, this is emulated as such:
      * <code><pre>[field] || replace(replace(substr(quote(zeroblob(([length] + 1) / 2)), 3, ([length] - length([field]))), '\''', ''), '0', [character])</pre></code>
      */
     @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
@@ -8137,8 +8137,8 @@ public class DSL {
      * Get the lpad(field, length) function.
      * <p>
      * This renders the lpad function where available:
-     * <code><pre>lpad([field], [length])</pre></code> ... or simulates it
-     * elsewhere using concat, repeat, and length, which may be simulated as
+     * <code><pre>lpad([field], [length])</pre></code> ... or emulates it
+     * elsewhere using concat, repeat, and length, which may be emulated as
      * well, depending on the RDBMS:
      * <code><pre>concat(repeat(' ', [length] - length([field])), [field])</pre></code>
      */
@@ -8171,12 +8171,12 @@ public class DSL {
      * Get the lpad(field, length, character) function.
      * <p>
      * This renders the lpad function where available:
-     * <code><pre>lpad([field], [length])</pre></code> ... or simulates it
-     * elsewhere using concat, repeat, and length, which may be simulated as
+     * <code><pre>lpad([field], [length])</pre></code> ... or emulates it
+     * elsewhere using concat, repeat, and length, which may be emulated as
      * well, depending on the RDBMS:
      * <code><pre>concat(repeat([character], [length] - length([field])), [field])</pre></code>
      * <p>
-     * In {@link SQLDialect#SQLITE}, this is simulated as such:
+     * In {@link SQLDialect#SQLITE}, this is emulated as such:
      * <code><pre>replace(replace(substr(quote(zeroblob(([length] + 1) / 2)), 3, ([length] - length([field]))), '\''', ''), '0', [character]) || [field]</pre></code>
      */
     @Support({ ACCESS, ASE, CUBRID, DB2, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
@@ -8219,12 +8219,12 @@ public class DSL {
      * <p>
      * This renders the repeat or replicate function where available:
      * <code><pre>repeat([field], [count]) or
-     * replicate([field], [count])</pre></code> ... or simulates it elsewhere
-     * using rpad and length, which may be simulated as well, depending on the
+     * replicate([field], [count])</pre></code> ... or emulates it elsewhere
+     * using rpad and length, which may be emulated as well, depending on the
      * RDBMS:
      * <code><pre>rpad([field], length([field]) * [count], [field])</pre></code>
      * <p>
-     * In {@link SQLDialect#SQLITE}, this is simulated as such:
+     * In {@link SQLDialect#SQLITE}, this is emulated as such:
      * <code><pre>replace(substr(quote(zeroblob(([count] + 1) / 2)), 3, [count]), '0', [field])</pre></code>
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HANA, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
@@ -8327,7 +8327,7 @@ public class DSL {
      * <p>
      * This renders the replace or str_replace function where available:
      * <code><pre>replace([field], [search]) or
-     * str_replace([field], [search])</pre></code> ... or simulates it elsewhere
+     * str_replace([field], [search])</pre></code> ... or emulates it elsewhere
      * using the three-argument replace function:
      * <code><pre>replace([field], [search], '')</pre></code>
      */
@@ -9388,9 +9388,9 @@ public class DSL {
      * <p>
      * This has been observed to work with the following databases:
      * <ul>
-     * <li>CUBRID (simulated using the GROUP BY .. WITH ROLLUP clause)</li>
+     * <li>CUBRID (emulated using the GROUP BY .. WITH ROLLUP clause)</li>
      * <li>DB2</li>
-     * <li>MySQL (simulated using the GROUP BY .. WITH ROLLUP clause)</li>
+     * <li>MySQL (emulated using the GROUP BY .. WITH ROLLUP clause)</li>
      * <li>Oracle</li>
      * <li>SQL Server</li>
      * <li>Sybase SQL Anywhere</li>
@@ -9601,7 +9601,7 @@ public class DSL {
      * The MySQL <code>BIT_COUNT(field)</code> function, counting the number of
      * bits that are set in this number.
      * <p>
-     * This function is simulated in most other databases like this (for a
+     * This function is emulated in most other databases like this (for a
      * TINYINT field): <code><pre>
      * ([field] &   1) +
      * ([field] &   2) >> 1 +
@@ -9633,7 +9633,7 @@ public class DSL {
      * The bitwise not operator.
      * <p>
      * Most dialects natively support this using <code>~[field]</code>. jOOQ
-     * simulates this operator in some dialects using <code>-[field] - 1</code>
+     * emulates this operator in some dialects using <code>-[field] - 1</code>
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNot(Field<T> field) {
@@ -9958,8 +9958,8 @@ public class DSL {
      * The bitwise left shift operator.
      * <p>
      * Some dialects natively support this using <code>[field1] &lt;&lt; [field2]</code>.
-     * jOOQ simulates this operator in some dialects using
-     * <code>[field1] * power(2, [field2])</code>, where power might also be simulated.
+     * jOOQ emulates this operator in some dialects using
+     * <code>[field1] * power(2, [field2])</code>, where power might also be emulated.
      *
      * @see #power(Field, Field)
      */
@@ -10005,8 +10005,8 @@ public class DSL {
      * The bitwise right shift operator.
      * <p>
      * Some dialects natively support this using <code>[field1] >> [field2]</code>.
-     * jOOQ simulates this operator in some dialects using
-     * <code>[field1] / power(2, [field2])</code>, where power might also be simulated.
+     * jOOQ emulates this operator in some dialects using
+     * <code>[field1] / power(2, [field2])</code>, where power might also be emulated.
      *
      * @see #power(Field, Field)
      */
@@ -10102,7 +10102,7 @@ public class DSL {
      * <p>
      * This renders the sign function where available:
      * <code><pre>sign([field])</pre></code>
-     * ... or simulates it elsewhere (without bind variables on values -1, 0, 1):
+     * ... or emulates it elsewhere (without bind variables on values -1, 0, 1):
      * <code><pre>
      * CASE WHEN [this] > 0 THEN 1
      *      WHEN [this] &lt; 0 THEN -1
@@ -10151,7 +10151,7 @@ public class DSL {
      * This renders the round function where available:
      * <code><pre>round([field]) or
      * round([field], 0)</pre></code>
-     * ... or simulates it elsewhere using floor and ceil
+     * ... or emulates it elsewhere using floor and ceil
      */
     @Support
     public static <T extends Number> Field<T> round(Field<T> field) {
@@ -10173,7 +10173,7 @@ public class DSL {
      * <p>
      * This renders the round function where available:
      * <code><pre>round([field], [decimals])</pre></code>
-     * ... or simulates it elsewhere using floor and ceil
+     * ... or emulates it elsewhere using floor and ceil
      */
     @Support
     public static <T extends Number> Field<T> round(Field<T> field, int decimals) {
@@ -10195,7 +10195,7 @@ public class DSL {
      * <p>
      * This renders the floor function where available:
      * <code><pre>floor([this])</pre></code>
-     * ... or simulates it elsewhere using round:
+     * ... or emulates it elsewhere using round:
      * <code><pre>round([this] - 0.499999999999999)</pre></code>
      */
     @Support
@@ -10219,7 +10219,7 @@ public class DSL {
      * This renders the ceil or ceiling function where available:
      * <code><pre>ceil([field]) or
      * ceiling([field])</pre></code>
-     * ... or simulates it elsewhere using round:
+     * ... or emulates it elsewhere using round:
      * <code><pre>round([field] + 0.499999999999999)</pre></code>
      */
     @Support
@@ -10329,8 +10329,8 @@ public class DSL {
      * Get the sqrt(field) function.
      * <p>
      * This renders the sqrt function where available:
-     * <code><pre>sqrt([field])</pre></code> ... or simulates it elsewhere using
-     * power (which in turn may also be simulated using ln and exp functions):
+     * <code><pre>sqrt([field])</pre></code> ... or emulates it elsewhere using
+     * power (which in turn may also be emulated using ln and exp functions):
      * <code><pre>power([field], 0.5)</pre></code>
      */
     @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE })
@@ -10395,7 +10395,7 @@ public class DSL {
      * Get the log(field, base) function.
      * <p>
      * This renders the log function where available:
-     * <code><pre>log([field])</pre></code> ... or simulates it elsewhere (in
+     * <code><pre>log([field])</pre></code> ... or emulates it elsewhere (in
      * most RDBMS) using the natural logarithm:
      * <code><pre>ln([field]) / ln([base])</pre></code>
      */
@@ -10438,7 +10438,7 @@ public class DSL {
      * Get the power(field, exponent) function.
      * <p>
      * This renders the power function where available:
-     * <code><pre>power([field], [exponent])</pre></code> ... or simulates it
+     * <code><pre>power([field], [exponent])</pre></code> ... or emulates it
      * elsewhere using ln and exp:
      * <code><pre>exp(ln([field]) * [exponent])</pre></code>
      */
@@ -10629,7 +10629,7 @@ public class DSL {
      * Get the cotangent(field) function.
      * <p>
      * This renders the cot function where available:
-     * <code><pre>cot([field])</pre></code> ... or simulates it elsewhere using
+     * <code><pre>cot([field])</pre></code> ... or emulates it elsewhere using
      * sin and cos: <code><pre>cos([field]) / sin([field])</pre></code>
      */
     @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE })
@@ -10651,7 +10651,7 @@ public class DSL {
      * Get the hyperbolic sine function: sinh(field).
      * <p>
      * This renders the sinh function where available:
-     * <code><pre>sinh([field])</pre></code> ... or simulates it elsewhere using
+     * <code><pre>sinh([field])</pre></code> ... or emulates it elsewhere using
      * exp: <code><pre>(exp([field] * 2) - 1) / (exp([field] * 2))</pre></code>
      */
     @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE })
@@ -10673,7 +10673,7 @@ public class DSL {
      * Get the hyperbolic cosine function: cosh(field).
      * <p>
      * This renders the cosh function where available:
-     * <code><pre>cosh([field])</pre></code> ... or simulates it elsewhere using
+     * <code><pre>cosh([field])</pre></code> ... or emulates it elsewhere using
      * exp: <code><pre>(exp([field] * 2) + 1) / (exp([field] * 2))</pre></code>
      */
     @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE })
@@ -10695,7 +10695,7 @@ public class DSL {
      * Get the hyperbolic tangent function: tanh(field).
      * <p>
      * This renders the tanh function where available:
-     * <code><pre>tanh([field])</pre></code> ... or simulates it elsewhere using
+     * <code><pre>tanh([field])</pre></code> ... or emulates it elsewhere using
      * exp:
      * <code><pre>(exp([field] * 2) - 1) / (exp([field] * 2) + 1)</pre></code>
      */
@@ -10717,7 +10717,7 @@ public class DSL {
     /**
      * Get the hyperbolic cotangent function: coth(field).
      * <p>
-     * This is not supported by any RDBMS, but simulated using exp exp:
+     * This is not supported by any RDBMS, but emulated using exp exp:
      * <code><pre>(exp([field] * 2) + 1) / (exp([field] * 2) - 1)</pre></code>
      */
     @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE })
@@ -10740,7 +10740,7 @@ public class DSL {
      * Calculate degrees from radians from this field.
      * <p>
      * This renders the degrees function where available:
-     * <code><pre>degrees([field])</pre></code> ... or simulates it elsewhere:
+     * <code><pre>degrees([field])</pre></code> ... or emulates it elsewhere:
      * <code><pre>[field] * 180 / PI</pre></code>
      */
     @Support
@@ -10762,7 +10762,7 @@ public class DSL {
      * Calculate radians from degrees from this field.
      * <p>
      * This renders the degrees function where available:
-     * <code><pre>degrees([field])</pre></code> ... or simulates it elsewhere:
+     * <code><pre>degrees([field])</pre></code> ... or emulates it elsewhere:
      * <code><pre>[field] * PI / 180</pre></code>
      */
     @Support
@@ -11166,7 +11166,7 @@ public class DSL {
      * Get the aggregated concatenation for a field.
      * <p>
      * This is natively supported by {@link SQLDialect#ORACLE11G} upwards. It is
-     * simulated by the following dialects:
+     * emulated by the following dialects:
      * <ul>
      * <li> {@link SQLDialect#CUBRID}: Using <code>GROUP_CONCAT()</code></li>
      * <li> {@link SQLDialect#DB2}: Using <code>XMLAGG()</code></li>
@@ -11188,7 +11188,7 @@ public class DSL {
      * Get the aggregated concatenation for a field.
      * <p>
      * This is natively supported by {@link SQLDialect#ORACLE11G} upwards. It is
-     * simulated by the following dialects:
+     * emulated by the following dialects:
      * <ul>
      * <li> {@link SQLDialect#CUBRID}: Using <code>GROUP_CONCAT</code></li>
      * <li> {@link SQLDialect#DB2}: Using <code>XMLAGG()</code></li>
@@ -11218,7 +11218,7 @@ public class DSL {
      * <li> {@link SQLDialect#SQLITE} (but without <code>ORDER BY</code>)</li>
      * </ul>
      * <p>
-     * It is simulated by the following dialects:
+     * It is emulated by the following dialects:
      * <ul>
      * <li> {@link SQLDialect#DB2}: Using <code>XMLAGG()</code></li>
      * <li> {@link SQLDialect#ORACLE}: Using <code>LISTAGG()</code></li>
@@ -11245,7 +11245,7 @@ public class DSL {
      * <li> {@link SQLDialect#SQLITE}</li>
      * </ul>
      * <p>
-     * It is simulated by the following dialects:
+     * It is emulated by the following dialects:
      * <ul>
      * <li> {@link SQLDialect#DB2}: Using <code>XMLAGG()</code></li>
      * <li> {@link SQLDialect#ORACLE}: Using <code>LISTAGG()</code></li>
@@ -11271,7 +11271,7 @@ public class DSL {
      * <li> {@link SQLDialect#MYSQL}</li>
      * </ul>
      * <p>
-     * It is simulated by the following dialects:
+     * It is emulated by the following dialects:
      * <ul>
      * <li> {@link SQLDialect#SYBASE}: Using <code>LIST()</code></li>
      * <li> {@link SQLDialect#POSTGRES}: Using <code>STRING_AGG()</code></li>
@@ -11418,7 +11418,7 @@ public class DSL {
      * Newer versions of {@link SQLDialect#DERBY} and {@link SQLDialect#H2} also
      * support the <code>ROW_NUMBER() OVER()</code> window function without any
      * window clause. See the respective docs for details.
-     * {@link SQLDialect#HSQLDB} can simulate this function using
+     * {@link SQLDialect#HSQLDB} can emulate this function using
      * <code>ROWNUM()</code>
      */
     @Support({ CUBRID, DB2, DERBY, H2, HANA, HSQLDB, INFORMIX, ORACLE, POSTGRES, REDSHIFT, SQLSERVER, SYBASE })
@@ -12377,7 +12377,7 @@ public class DSL {
      * Create a row value expression of degree <code>N > 22</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Support
@@ -12679,7 +12679,7 @@ public class DSL {
      * Create a row value expression of degree <code>N > 22</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Support
@@ -12691,7 +12691,7 @@ public class DSL {
      * Create a row value expression of degree <code>N > 22</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
-     * expression operations can be simulated on all databases. See relevant row
+     * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
     @Support
@@ -12715,7 +12715,7 @@ public class DSL {
      * databases to allow for constructing tables from constant values.
      * <p>
      * If a database doesn't support the <code>VALUES()</code> constructor, it
-     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * can be emulated using <code>SELECT .. UNION ALL ..</code>. The following
      * expressions are equivalent:
      * <p>
      * <pre><code>

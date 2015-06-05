@@ -70,7 +70,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
-     * This is simulated using a subquery for the <code>value</code>, where row
+     * This is emulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES })
@@ -79,7 +79,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
-     * This is simulated using a subquery for the <code>value</code>, where row
+     * This is emulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES })
@@ -88,7 +88,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
-     * This is simulated using a subquery for the <code>value</code>, where row
+     * This is emulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES })
@@ -97,7 +97,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
-     * This is simulated using a subquery for the <code>value</code>, where row
+     * This is emulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES })
@@ -106,7 +106,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
-     * This is simulated using a subquery for the <code>value</code>, where row
+     * This is emulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES })
@@ -115,7 +115,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
-     * This is simulated using a subquery for the <code>value</code>, where row
+     * This is emulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES })
@@ -124,7 +124,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
-     * This is simulated using a subquery for the <code>value</code>, where row
+     * This is emulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES })
@@ -133,7 +133,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
-     * This is simulated using a subquery for the <code>value</code>, where row
+     * This is emulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES })
@@ -142,7 +142,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
-     * This is simulated using a subquery for the <code>value</code>, where row
+     * This is emulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES })
@@ -151,7 +151,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
-     * This is simulated using a subquery for the <code>value</code>, where row
+     * This is emulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES })
@@ -160,7 +160,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
-     * This is simulated using a subquery for the <code>value</code>, where row
+     * This is emulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES })
@@ -169,7 +169,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
-     * This is simulated using a subquery for the <code>value</code>, where row
+     * This is emulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES })
@@ -178,7 +178,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
-     * This is simulated using a subquery for the <code>value</code>, where row
+     * This is emulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES })
@@ -187,7 +187,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
-     * This is simulated using a subquery for the <code>value</code>, where row
+     * This is emulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES })
@@ -196,7 +196,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
-     * This is simulated using a subquery for the <code>value</code>, where row
+     * This is emulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES })
@@ -205,7 +205,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
-     * This is simulated using a subquery for the <code>value</code>, where row
+     * This is emulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES })
@@ -214,7 +214,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
-     * This is simulated using a subquery for the <code>value</code>, where row
+     * This is emulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES })
@@ -223,7 +223,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
-     * This is simulated using a subquery for the <code>value</code>, where row
+     * This is emulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES })
@@ -232,7 +232,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
-     * This is simulated using a subquery for the <code>value</code>, where row
+     * This is emulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES })
@@ -241,7 +241,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
-     * This is simulated using a subquery for the <code>value</code>, where row
+     * This is emulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES })
@@ -250,7 +250,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
-     * This is simulated using a subquery for the <code>value</code>, where row
+     * This is emulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES })
@@ -259,7 +259,7 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      * <p>
-     * This is simulated using a subquery for the <code>value</code>, where row
+     * This is emulated using a subquery for the <code>value</code>, where row
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES })

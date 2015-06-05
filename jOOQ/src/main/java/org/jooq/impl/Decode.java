@@ -86,7 +86,7 @@ class Decode<T, Z> extends AbstractFunction<Z> {
             }
 
             /* [/pro] */
-            // Other dialects simulate it with a CASE ... WHEN expression
+            // Other dialects emulate it with a CASE ... WHEN expression
             default: {
                 CaseConditionStep<Z> when = DSL
                     .decode()

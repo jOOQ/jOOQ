@@ -182,7 +182,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * added to the <code>FROM</code> clause using
      * {@link Table#crossJoin(TableLike)}
      * <p>
-     * If this syntax is unavailable, it is simulated with a regular
+     * If this syntax is unavailable, it is emulated with a regular
      * <code>INNER JOIN</code>. The following two constructs are equivalent:
      * <code><pre>
      * A cross join B
@@ -199,7 +199,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * added to the <code>FROM</code> clause using
      * {@link Table#crossJoin(String)}
      * <p>
-     * If this syntax is unavailable, it is simulated with a regular
+     * If this syntax is unavailable, it is emulated with a regular
      * <code>INNER JOIN</code>. The following two constructs are equivalent:
      * <code><pre>
      * A cross join B
@@ -223,7 +223,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * added to the <code>FROM</code> clause using
      * {@link Table#crossJoin(String, Object...)}
      * <p>
-     * If this syntax is unavailable, it is simulated with a regular
+     * If this syntax is unavailable, it is emulated with a regular
      * <code>INNER JOIN</code>. The following two constructs are equivalent:
      * <code><pre>
      * A cross join B
@@ -247,7 +247,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * added to the <code>FROM</code> clause using
      * {@link Table#crossJoin(String, QueryPart...)}
      * <p>
-     * If this syntax is unavailable, it is simulated with a regular
+     * If this syntax is unavailable, it is emulated with a regular
      * <code>INNER JOIN</code>. The following two constructs are equivalent:
      * <code><pre>
      * A cross join B
@@ -471,7 +471,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * {@link Table#naturalJoin(TableLike)}
      * <p>
      * Natural joins are supported by most RDBMS. If they aren't supported, they
-     * are simulated if jOOQ has enough information.
+     * are emulated if jOOQ has enough information.
      *
      * @see Table#naturalJoin(TableLike)
      */
@@ -484,7 +484,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * {@link Table#naturalJoin(String)}
      * <p>
      * Natural joins are supported by most RDBMS. If they aren't supported, they
-     * are simulated if jOOQ has enough information.
+     * are emulated if jOOQ has enough information.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -504,7 +504,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * {@link Table#naturalJoin(String, Object...)}
      * <p>
      * Natural joins are supported by most RDBMS. If they aren't supported, they
-     * are simulated if jOOQ has enough information.
+     * are emulated if jOOQ has enough information.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -524,7 +524,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * {@link Table#naturalJoin(String, QueryPart...)}
      * <p>
      * Natural joins are supported by most RDBMS. If they aren't supported, they
-     * are simulated if jOOQ has enough information.
+     * are emulated if jOOQ has enough information.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -544,7 +544,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * {@link Table#naturalLeftOuterJoin(TableLike)}
      * <p>
      * Natural joins are supported by most RDBMS. If they aren't supported, they
-     * are simulated if jOOQ has enough information.
+     * are emulated if jOOQ has enough information.
      *
      * @see Table#naturalLeftOuterJoin(TableLike)
      */
@@ -557,7 +557,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * {@link Table#naturalLeftOuterJoin(String)}
      * <p>
      * Natural joins are supported by most RDBMS. If they aren't supported, they
-     * are simulated if jOOQ has enough information.
+     * are emulated if jOOQ has enough information.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -577,7 +577,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * {@link Table#naturalLeftOuterJoin(String, Object...)}
      * <p>
      * Natural joins are supported by most RDBMS. If they aren't supported, they
-     * are simulated if jOOQ has enough information.
+     * are emulated if jOOQ has enough information.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -597,7 +597,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * {@link Table#naturalLeftOuterJoin(String, QueryPart...)}
      * <p>
      * Natural joins are supported by most RDBMS. If they aren't supported, they
-     * are simulated if jOOQ has enough information.
+     * are emulated if jOOQ has enough information.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -617,7 +617,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * {@link Table#naturalRightOuterJoin(TableLike)}
      * <p>
      * Natural joins are supported by most RDBMS. If they aren't supported, they
-     * are simulated if jOOQ has enough information.
+     * are emulated if jOOQ has enough information.
      *
      * @see Table#naturalRightOuterJoin(TableLike)
      */
@@ -630,7 +630,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * {@link Table#naturalRightOuterJoin(String)}
      * <p>
      * Natural joins are supported by most RDBMS. If they aren't supported, they
-     * are simulated if jOOQ has enough information.
+     * are emulated if jOOQ has enough information.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -650,7 +650,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * {@link Table#naturalRightOuterJoin(String, Object...)}
      * <p>
      * Natural joins are supported by most RDBMS. If they aren't supported, they
-     * are simulated if jOOQ has enough information.
+     * are emulated if jOOQ has enough information.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -670,7 +670,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * {@link Table#naturalRightOuterJoin(String, QueryPart...)}
      * <p>
      * Natural joins are supported by most RDBMS. If they aren't supported, they
-     * are simulated if jOOQ has enough information.
+     * are emulated if jOOQ has enough information.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of

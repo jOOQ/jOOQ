@@ -1360,7 +1360,7 @@ class Rows extends Generators {
                  * </ul>
                  * <p>
                  * jOOQ also supports arbitrary 2-degree row value expression comparisons,
-                 * by simulating them as such <code><pre>
+                 * by emulating them as such <code><pre>
                  * -- This predicate
                  * (A, B) OVERLAPS (C, D)
                  *
@@ -1382,7 +1382,7 @@ class Rows extends Generators {
                  * </ul>
                  * <p>
                  * jOOQ also supports arbitrary 2-degree row value expression comparisons,
-                 * by simulating them as such <code><pre>
+                 * by emulating them as such <code><pre>
                  * -- This predicate
                  * (A, B) OVERLAPS (C, D)
                  *
@@ -1404,7 +1404,7 @@ class Rows extends Generators {
                  * </ul>
                  * <p>
                  * jOOQ also supports arbitrary 2-degree row value expression comparisons,
-                 * by simulating them as such <code><pre>
+                 * by emulating them as such <code><pre>
                  * -- This predicate
                  * (A, B) OVERLAPS (C, D)
                  *

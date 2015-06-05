@@ -58,7 +58,7 @@ import org.jooq.Table;
  *
  * @author Lukas Eder
  */
-class ArrayTableSimulation extends AbstractTable<Record> {
+class ArrayTableEmulation extends AbstractTable<Record> {
 
     /**
      * Generated UID
@@ -72,15 +72,15 @@ class ArrayTableSimulation extends AbstractTable<Record> {
 
     private transient Table<Record> table;
 
-    ArrayTableSimulation(Object[] array) {
+    ArrayTableEmulation(Object[] array) {
         this(array, "array_table", null);
     }
 
-    ArrayTableSimulation(Object[] array, String alias) {
+    ArrayTableEmulation(Object[] array, String alias) {
         this(array, alias, null);
     }
 
-    ArrayTableSimulation(Object[] array, String alias, String fieldAlias) {
+    ArrayTableEmulation(Object[] array, String alias, String fieldAlias) {
         super(alias);
 
         this.array = array;
@@ -96,16 +96,16 @@ class ArrayTableSimulation extends AbstractTable<Record> {
 
     @Override
     public final Table<Record> as(String as) {
-        return new ArrayTableSimulation(array, as);
+        return new ArrayTableEmulation(array, as);
     }
 
     @Override
     public final Table<Record> as(String as, String... fieldAliases) {
         if (fieldAliases == null) {
-            return new ArrayTableSimulation(array, as);
+            return new ArrayTableEmulation(array, as);
         }
         else if (fieldAliases.length == 1) {
-            return new ArrayTableSimulation(array, as, fieldAliases[0]);
+            return new ArrayTableEmulation(array, as, fieldAliases[0]);
         }
 
         throw new IllegalArgumentException("Array table simulations can only have a single field alias");

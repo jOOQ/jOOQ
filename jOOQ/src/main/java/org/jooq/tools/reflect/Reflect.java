@@ -548,7 +548,7 @@ public class Reflect {
                     return on(object).call(name, args).get();
                 }
 
-                // [#14] Simulate POJO behaviour on wrapped map objects
+                // [#14] Emulate POJO behaviour on wrapped map objects
                 catch (ReflectException e) {
                     if (isMap) {
                         Map<String, Object> map = (Map<String, Object>) object;

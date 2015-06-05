@@ -157,7 +157,7 @@ class Expression<T> extends AbstractFunction<T> {
         }
 
         /* [pro] */
-        // Oracle has to simulate or/xor
+        // Oracle has to emulate or/xor
         else if (BIT_OR == operator && ORACLE == family) {
             return lhs.sub(DSL.bitAnd(lhsAsNumber(), rhsAsNumber())).add(rhsAsNumber());
         }

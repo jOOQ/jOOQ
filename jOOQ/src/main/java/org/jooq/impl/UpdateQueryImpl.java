@@ -521,7 +521,7 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 ctx.visit(multiValue);
             }
 
-            // Subselects or subselect simulations of row value expressions
+            // Subselects or subselect emulations of row value expressions
             else {
                 Select<?> select = multiSelect;
 

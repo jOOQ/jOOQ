@@ -225,7 +225,7 @@ class Limit extends AbstractQueryPart {
             }
 
             // Only "TOP" support provided by the following dialects.
-            // "OFFSET" support is simulated with nested selects
+            // "OFFSET" support is emulated with nested selects
             // -----------------------------------------------------------------
             case DB2:
             case DB2_9:

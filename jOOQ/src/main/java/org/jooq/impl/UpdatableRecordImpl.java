@@ -389,7 +389,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         Utils.addConditions(select, this, keys);
 
         // [#1547] MS Access and SQLite doesn't support FOR UPDATE. CUBRID and SQL Server
-        // can simulate it, though!
+        // can emulate it, though!
         if (!asList(ACCESS, SQLITE).contains(create().configuration().dialect().family())) {
             select.setForUpdate(true);
         }

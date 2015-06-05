@@ -229,7 +229,7 @@ class Function<T> extends AbstractField<T> implements
 
     /* [pro] */
     /**
-     * [#1276] <code>LIST_AGG</code> simulation for DB2
+     * [#1276] <code>LIST_AGG</code> emulation for DB2
      */
     final void toSQLXMLAGG(Context<?> ctx) {
 
@@ -277,7 +277,7 @@ class Function<T> extends AbstractField<T> implements
 
     /* [/pro] */
     /**
-     * [#1275] <code>LIST_AGG</code> simulation for Postgres, Sybase
+     * [#1275] <code>LIST_AGG</code> emulation for Postgres, Sybase
      */
     final void toSQLStringAgg(Context<?> ctx) {
         toSQLFunctionName(ctx);
@@ -307,7 +307,7 @@ class Function<T> extends AbstractField<T> implements
     }
 
     /**
-     * [#1273] <code>LIST_AGG</code> simulation for MySQL and CUBRID
+     * [#1273] <code>LIST_AGG</code> emulation for MySQL and CUBRID
      */
     final void toSQLGroupConcat(Context<?> ctx) {
         toSQLFunctionName(ctx);

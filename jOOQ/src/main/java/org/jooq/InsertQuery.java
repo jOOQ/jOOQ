@@ -116,11 +116,11 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      * this <code>INSERT</code> statement.
      * <p>
      * This clause is not actually supported in this form by any database, but
-     * can be simulated as such:
+     * can be emulated as such:
      * <table border="1">
      * <tr>
      * <th>Dialect</th>
-     * <th>Simulation</th>
+     * <th>Emulation</th>
      * </tr>
      * <tr>
      * <td> {@link SQLDialect#MYSQL}</td>

@@ -102,7 +102,7 @@ public interface SelectSeekLimitStep<R extends Record> extends SelectForUpdateSt
      * Add a <code>LIMIT</code> clause to the query.
      * <p>
      * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
-     * RDBMS, this may be simulated with a <code>ROW_NUMBER()</code> window
+     * RDBMS, this may be emulated with a <code>ROW_NUMBER()</code> window
      * function and nested <code>SELECT</code> statements.
      */
     @Support
@@ -116,7 +116,7 @@ public interface SelectSeekLimitStep<R extends Record> extends SelectForUpdateSt
      * <p>
      * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
      * RDBMS, or the <code>LIMIT</code> or <code>TOP</code> clause does not
-     * support bind values, this may be simulated with a
+     * support bind values, this may be emulated with a
      * <code>ROW_NUMBER()</code> window function and nested <code>SELECT</code>
      * statements.
      */

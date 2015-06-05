@@ -3295,8 +3295,8 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testArrayTableSimulation() throws Exception {
-        new RoutineAndUDTTests(this).testArrayTableSimulation();
+    public void testArrayTableEmulation() throws Exception {
+        new RoutineAndUDTTests(this).testArrayTableEmulation();
     }
 
     @Test

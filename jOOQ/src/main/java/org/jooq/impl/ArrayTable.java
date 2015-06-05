@@ -177,7 +177,7 @@ class ArrayTable extends AbstractTable<Record> {
             /* [pro] */
             case ORACLE: {
                 if (array.getDataType().getType().isArray()) {
-                    return simulate().as(alias);
+                    return emulate().as(alias);
                 }
                 else {
                     return new OracleArrayTable().as(alias);
@@ -199,7 +199,7 @@ class ArrayTable extends AbstractTable<Record> {
             // Other dialects can simulate unnested arrays using UNION ALL
             default: {
                 if (array.getDataType().getType().isArray() && array instanceof Param) {
-                    return simulate();
+                    return emulate();
                 }
 
                 /* [pro] */
@@ -211,7 +211,7 @@ class ArrayTable extends AbstractTable<Record> {
                 /* [/pro] */
 
                 else {
-                    return simulate();
+                    return emulate();
                 }
             }
         }
@@ -306,8 +306,8 @@ class ArrayTable extends AbstractTable<Record> {
     }
 
     @SuppressWarnings("unchecked")
-    private final ArrayTableSimulation simulate() {
-        return new ArrayTableSimulation(((Param<Object[]>) array).getValue(), alias);
+    private final ArrayTableEmulation emulate() {
+        return new ArrayTableEmulation(((Param<Object[]>) array).getValue(), alias);
     }
 
     @Override

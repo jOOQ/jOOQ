@@ -425,7 +425,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                     if (getLimit().offsetZero() && !getLimit().rendersParams())
                         toSQLReferenceLimitDefault(context);
 
-                    // "OFFSET" has to be simulated
+                    // "OFFSET" has to be emulated
                     else if (getLimit().isApplicable())
                         toSQLReferenceLimitDB2SQLServer2008Sybase(context);
 
@@ -436,7 +436,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                 }
 
                 // Sybase ASE and SQL Server support a TOP clause without OFFSET
-                // OFFSET can be simulated in SQL Server, not in ASE
+                // OFFSET can be emulated in SQL Server, not in ASE
                 case ACCESS:
                 case ACCESS2013:
                 case ASE:
@@ -446,7 +446,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                     if (getLimit().offsetZero() && !getLimit().rendersParams())
                         toSQLReference0(context);
 
-                    // OFFSET simulation
+                    // OFFSET emulation
                     else if (getLimit().isApplicable())
                         toSQLReferenceLimitDB2SQLServer2008Sybase(context);
 
@@ -466,7 +466,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                     if (!getLimit().rendersParams() || dialect == INFORMIX)
                         toSQLReference0(context);
 
-                    // OFFSET simulation
+                    // OFFSET emulation
                     else if (getLimit().isApplicable())
                         toSQLReferenceLimitDB2SQLServer2008Sybase(context);
 
@@ -485,7 +485,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                 }
             }
 
-            // [#1296] FOR UPDATE is simulated in some dialects using ResultSet.CONCUR_UPDATABLE
+            // [#1296] FOR UPDATE is emulated in some dialects using ResultSet.CONCUR_UPDATABLE
             if (forUpdate && !asList(CUBRID, SQLSERVER).contains(family)) {
                 context.formatSeparator()
                        .keyword("for update");
@@ -650,7 +650,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
     /* [pro] */
     /**
-     * Simulate the LIMIT / OFFSET clause in the {@link SQLDialect#DB2},
+     * Emulate the LIMIT / OFFSET clause in the {@link SQLDialect#DB2},
      * {@link SQLDialect#SQLSERVER2008} and {@link SQLDialect#SYBASE} dialects
      */
     @SuppressWarnings("serial")
@@ -743,7 +743,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
     }
 
     /**
-     * Simulate the LIMIT / OFFSET clause in the {@link SQLDialect#ORACLE}
+     * Emulate the LIMIT / OFFSET clause in the {@link SQLDialect#ORACLE}
      * dialect
      */
     private final void toSQLReferenceLimitOracle(Context<?> ctx) {

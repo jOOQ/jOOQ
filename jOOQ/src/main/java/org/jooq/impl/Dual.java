@@ -134,7 +134,7 @@ class Dual extends AbstractTable<Record> {
                     ctx.literal("db_root");
                     break;
 
-                // These dialects don't have a DUAL table. But simulation is needed
+                // These dialects don't have a DUAL table. But emulation is needed
                 // for queries like SELECT 1 WHERE 1 = 1
                 /* [pro] */
                 case ACCESS:

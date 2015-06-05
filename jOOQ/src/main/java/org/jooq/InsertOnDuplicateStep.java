@@ -78,8 +78,8 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * executed instead.
      * <p>
      * MySQL and CUBRID natively implements this type of clause. jOOQ can
-     * simulate this clause using a <code>MERGE</code> statement on some other
-     * databases. The conditions for a RDBMS to simulate this clause are:
+     * emulate this clause using a <code>MERGE</code> statement on some other
+     * databases. The conditions for a RDBMS to emulate this clause are:
      * <ul>
      * <li>The <code>INSERT</code> statement's table is a
      * {@link Table} with a {@link Table#getPrimaryKey()}</li>
@@ -101,11 +101,11 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * is ignored.
      * <p>
      * This clause is not actually supported in this form by any database, but
-     * can be simulated as such:
+     * can be emulated as such:
      * <table border="1">
      * <tr>
      * <th>Dialect</th>
-     * <th>Simulation</th>
+     * <th>Emulation</th>
      * </tr>
      * <tr>
      * <td> {@link SQLDialect#MARIADB}</td>

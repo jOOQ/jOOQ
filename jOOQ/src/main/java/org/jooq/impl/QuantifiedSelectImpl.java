@@ -131,13 +131,13 @@ class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart implement
                     return (QueryPartInternal) array;
                 }
 
-                // [#869] H2 and HSQLDB can simulate this syntax by unnesting
+                // [#869] H2 and HSQLDB can emulate this syntax by unnesting
                 // the array in a subselect
                 case H2:
                 case HSQLDB:
                     return (QueryPartInternal) create(ctx).select().from(table(array));
 
-                // [#1048] All other dialects simulate unnesting of arrays using
+                // [#1048] All other dialects emulate unnesting of arrays using
                 // UNION ALL-connected subselects
                 default: {
 

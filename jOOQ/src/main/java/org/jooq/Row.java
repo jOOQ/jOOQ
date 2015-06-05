@@ -45,7 +45,7 @@ package org.jooq;
  * A model type for a row value expression.
  * <p>
  * Note: Not all databases support row value expressions, but many row value
- * expression operations can be simulated on all databases. See relevant row
+ * expression operations can be emulated on all databases. See relevant row
  * value expression method Javadocs for details.
  *
  * @author Lukas Eder
@@ -285,7 +285,7 @@ public interface Row extends QueryPart {
      * Check if this row value expression contains only <code>NULL</code>
      * values.
      * <p>
-     * Row NULL predicates can be simulated in those databases that do not
+     * Row NULL predicates can be emulated in those databases that do not
      * support such predicates natively: <code>(A, B) IS NULL</code> is
      * equivalent to <code>A IS NULL AND B IS NULL</code>
      */
@@ -295,7 +295,7 @@ public interface Row extends QueryPart {
     /**
      * Check if this row value expression contains no <code>NULL</code> values.
      * <p>
-     * Row NOT NULL predicates can be simulated in those databases that do not
+     * Row NOT NULL predicates can be emulated in those databases that do not
      * support such predicates natively: <code>(A, B) IS NOT NULL</code> is
      * equivalent to <code>A IS NOT NULL AND B IS NOT NULL</code>
      * <p>

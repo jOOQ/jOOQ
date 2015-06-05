@@ -106,7 +106,7 @@ public interface SelectOffsetStep<R extends Record> extends SelectForUpdateStep<
      * <p>
      * If there is no <code>LIMIT .. OFFSET</code> or <code>TOP</code> clause in
      * your RDBMS, or if your RDBMS does not natively support offsets, this is
-     * simulated with a <code>ROW_NUMBER()</code> window function and nested
+     * emulated with a <code>ROW_NUMBER()</code> window function and nested
      * <code>SELECT</code> statements.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -117,7 +117,7 @@ public interface SelectOffsetStep<R extends Record> extends SelectForUpdateStep<
      * <p>
      * If there is no <code>LIMIT .. OFFSET</code> or <code>TOP</code> clause in
      * your RDBMS, or if your RDBMS does not natively support offsets, this is
-     * simulated with a <code>ROW_NUMBER()</code> window function and nested
+     * emulated with a <code>ROW_NUMBER()</code> window function and nested
      * <code>SELECT</code> statements.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })

@@ -128,7 +128,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * one <code>IDENTITY</code> column.
      * <p>
      * Note: Unfortunately, this is not supported in the Oracle dialect, where
-     * identities simulated by triggers cannot be formally detected.
+     * identities emulated by triggers cannot be formally detected.
      *
      * @return The table's <code>IDENTITY</code> information, or
      *         <code>null</code>, if no such information is available.
@@ -530,7 +530,7 @@ public interface Table<R extends Record> extends TableLike<R> {
     /**
      * <code>CROSS JOIN</code> a table to this table.
      * <p>
-     * If this syntax is unavailable, it is simulated with a regular
+     * If this syntax is unavailable, it is emulated with a regular
      * <code>INNER JOIN</code>. The following two constructs are equivalent:
      * <code><pre>
      * A cross join B
@@ -543,7 +543,7 @@ public interface Table<R extends Record> extends TableLike<R> {
     /**
      * <code>CROSS JOIN</code> a table to this table.
      * <p>
-     * If this syntax is unavailable, it is simulated with a regular
+     * If this syntax is unavailable, it is emulated with a regular
      * <code>INNER JOIN</code>. The following two constructs are equivalent:
      * <code><pre>
      * A cross join B
@@ -564,7 +564,7 @@ public interface Table<R extends Record> extends TableLike<R> {
     /**
      * <code>CROSS JOIN</code> a table to this table.
      * <p>
-     * If this syntax is unavailable, it is simulated with a regular
+     * If this syntax is unavailable, it is emulated with a regular
      * <code>INNER JOIN</code>. The following two constructs are equivalent:
      * <code><pre>
      * A cross join B
@@ -585,7 +585,7 @@ public interface Table<R extends Record> extends TableLike<R> {
     /**
      * <code>CROSS JOIN</code> a table to this table.
      * <p>
-     * If this syntax is unavailable, it is simulated with a regular
+     * If this syntax is unavailable, it is emulated with a regular
      * <code>INNER JOIN</code>. The following two constructs are equivalent:
      * <code><pre>
      * A cross join B
@@ -606,7 +606,7 @@ public interface Table<R extends Record> extends TableLike<R> {
     /**
      * <code>NATURAL JOIN</code> a table to this table.
      * <p>
-     * If this is not supported by your RDBMS, then jOOQ will try to simulate
+     * If this is not supported by your RDBMS, then jOOQ will try to emulate
      * this behaviour using the information provided in this query.
      */
     @Support
@@ -615,7 +615,7 @@ public interface Table<R extends Record> extends TableLike<R> {
     /**
      * <code>NATURAL JOIN</code> a table to this table.
      * <p>
-     * If this is not supported by your RDBMS, then jOOQ will try to simulate
+     * If this is not supported by your RDBMS, then jOOQ will try to emulate
      * this behaviour using the information provided in this query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
@@ -632,7 +632,7 @@ public interface Table<R extends Record> extends TableLike<R> {
     /**
      * <code>NATURAL JOIN</code> a table to this table.
      * <p>
-     * If this is not supported by your RDBMS, then jOOQ will try to simulate
+     * If this is not supported by your RDBMS, then jOOQ will try to emulate
      * this behaviour using the information provided in this query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
@@ -649,7 +649,7 @@ public interface Table<R extends Record> extends TableLike<R> {
     /**
      * <code>NATURAL JOIN</code> a table to this table.
      * <p>
-     * If this is not supported by your RDBMS, then jOOQ will try to simulate
+     * If this is not supported by your RDBMS, then jOOQ will try to emulate
      * this behaviour using the information provided in this query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
@@ -666,7 +666,7 @@ public interface Table<R extends Record> extends TableLike<R> {
     /**
      * <code>NATURAL LEFT OUTER JOIN</code> a table to this table.
      * <p>
-     * If this is not supported by your RDBMS, then jOOQ will try to simulate
+     * If this is not supported by your RDBMS, then jOOQ will try to emulate
      * this behaviour using the information provided in this query.
      */
     @Support
@@ -675,7 +675,7 @@ public interface Table<R extends Record> extends TableLike<R> {
     /**
      * <code>NATURAL LEFT OUTER JOIN</code> a table to this table.
      * <p>
-     * If this is not supported by your RDBMS, then jOOQ will try to simulate
+     * If this is not supported by your RDBMS, then jOOQ will try to emulate
      * this behaviour using the information provided in this query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
@@ -692,7 +692,7 @@ public interface Table<R extends Record> extends TableLike<R> {
     /**
      * <code>NATURAL LEFT OUTER JOIN</code> a table to this table.
      * <p>
-     * If this is not supported by your RDBMS, then jOOQ will try to simulate
+     * If this is not supported by your RDBMS, then jOOQ will try to emulate
      * this behaviour using the information provided in this query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
@@ -709,7 +709,7 @@ public interface Table<R extends Record> extends TableLike<R> {
     /**
      * <code>NATURAL LEFT OUTER JOIN</code> a table to this table.
      * <p>
-     * If this is not supported by your RDBMS, then jOOQ will try to simulate
+     * If this is not supported by your RDBMS, then jOOQ will try to emulate
      * this behaviour using the information provided in this query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
@@ -726,7 +726,7 @@ public interface Table<R extends Record> extends TableLike<R> {
     /**
      * <code>NATURAL RIGHT OUTER JOIN</code> a table to this table.
      * <p>
-     * If this is not supported by your RDBMS, then jOOQ will try to simulate
+     * If this is not supported by your RDBMS, then jOOQ will try to emulate
      * this behaviour using the information provided in this query.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
@@ -735,7 +735,7 @@ public interface Table<R extends Record> extends TableLike<R> {
     /**
      * <code>NATURAL RIGHT OUTER JOIN</code> a table to this table.
      * <p>
-     * If this is not supported by your RDBMS, then jOOQ will try to simulate
+     * If this is not supported by your RDBMS, then jOOQ will try to emulate
      * this behaviour using the information provided in this query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
@@ -752,7 +752,7 @@ public interface Table<R extends Record> extends TableLike<R> {
     /**
      * <code>NATURAL RIGHT OUTER JOIN</code> a table to this table.
      * <p>
-     * If this is not supported by your RDBMS, then jOOQ will try to simulate
+     * If this is not supported by your RDBMS, then jOOQ will try to emulate
      * this behaviour using the information provided in this query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
@@ -769,7 +769,7 @@ public interface Table<R extends Record> extends TableLike<R> {
     /**
      * <code>NATURAL RIGHT OUTER JOIN</code> a table to this table.
      * <p>
-     * If this is not supported by your RDBMS, then jOOQ will try to simulate
+     * If this is not supported by your RDBMS, then jOOQ will try to emulate
      * this behaviour using the information provided in this query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
@@ -1161,7 +1161,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      x xxxx
      x xxxx xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
      x xxxx xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxx xxx xxxxxxxxxx xxxxxxxxxxxxxxx
-     x xxxxxxxxx xxxxxxxx xx xxxxx xxxx xxxxx xx xxxxxxxxxx xxxx xxx xxxxxxxxxx
+     x xxxxxxxxx xxxxxxxx xx xxxxx xxxx xxxxx xx xxxxxxxxx xxxx xxx xxxxxxxxxx
      x xxxxxxxxxxxxxxx
      x xxxxx
      x

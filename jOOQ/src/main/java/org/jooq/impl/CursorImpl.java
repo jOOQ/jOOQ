@@ -1459,7 +1459,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
                 if (!isClosed && rs.next()) {
 
                     // [#1296] Force a row-lock by updating the row if the
-                    // FOR UPDATE clause is simulated
+                    // FOR UPDATE clause is emulated
                     if (TRUE.equals(ctx.data(DATA_LOCK_ROWS_FOR_UPDATE))) {
                         rs.updateObject(1, rs.getObject(1));
                         rs.updateRow();

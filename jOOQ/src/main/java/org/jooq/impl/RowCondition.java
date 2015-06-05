@@ -112,7 +112,7 @@ class RowCondition extends AbstractCondition {
     private final QueryPartInternal delegate(Configuration configuration) {
         SQLDialect dialect = configuration.dialect();
 
-        // Regular comparison predicate simulation
+        // Regular comparison predicate emulation
         if (asList(EQUALS, NOT_EQUALS).contains(comparator) &&
             asList(DERBY, FIREBIRD, SQLITE).contains(dialect.family())) {
             List<Condition> conditions = new ArrayList<Condition>();
@@ -133,7 +133,7 @@ class RowCondition extends AbstractCondition {
             return (QueryPartInternal) result;
         }
 
-        // Ordering comparison predicate simulation
+        // Ordering comparison predicate emulation
         else if (asList(GREATER, GREATER_OR_EQUAL, LESS, LESS_OR_EQUAL).contains(comparator) &&
                  asList(DERBY, CUBRID, FIREBIRD, SQLITE).contains(dialect.family())) {
 
@@ -158,7 +158,7 @@ class RowCondition extends AbstractCondition {
                 = (comparator == GREATER_OR_EQUAL)
                 ||(comparator == LESS_OR_EQUAL);
 
-            // The following algorithm simulates the equivalency of these expressions:
+            // The following algorithm emulates the equivalency of these expressions:
             // (A, B, C) > (X, Y, Z)
             // (A > X) OR (A = X AND B > Y) OR (A = X AND B = Y AND C > Z)
             List<Condition> outer = new ArrayList<Condition>();

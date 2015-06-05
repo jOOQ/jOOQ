@@ -123,7 +123,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
     public final void accept(Context<?> context) {
         if (context.declareFields() || context.declareTables()) {
             SQLDialect family = context.family();
-            boolean simulateDerivedColumnList = false;
+            boolean emulatedDerivedColumnList = false;
 
             // [#454] [#1801] Some databases don't allow "derived column names" in
             // "simple class specifications", or "common table expression references".
@@ -142,10 +142,10 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
             }
 
             // [#1801] Some databases do not support "derived column names".
-            // They can be simulated by concatenating a dummy SELECT with no
+            // They can be emulated by concatenating a dummy SELECT with no
             // results using UNION ALL
             else if (fieldAliases != null && asList(H2, MARIADB, MYSQL, SQLITE).contains(family)) {
-                simulateDerivedColumnList = true;
+                emulatedDerivedColumnList = true;
 
                 SelectFieldList fields = new SelectFieldList();
                 for (String fieldAlias : fieldAliases) {
@@ -198,7 +198,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
             context.literal(alias);
 
             // [#1801] Add field aliases to the table alias, if applicable
-            if (fieldAliases != null && !simulateDerivedColumnList) {
+            if (fieldAliases != null && !emulatedDerivedColumnList) {
                 toSQLDerivedColumnList(context);
             }
 

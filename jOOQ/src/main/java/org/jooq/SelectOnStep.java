@@ -191,7 +191,7 @@ public interface SelectOnStep<R extends Record> {
      * Join the previous table with the <code>USING(column [, column...])</code>
      * syntax.
      * <p>
-     * If this is not supported by your RDBMS, then jOOQ will try to simulate
+     * If this is not supported by your RDBMS, then jOOQ will try to emulate
      * this behaviour using the information provided in this query.
      */
     @Support
@@ -201,7 +201,7 @@ public interface SelectOnStep<R extends Record> {
      * Join the previous table with the <code>USING(column [, column...])</code>
      * syntax.
      * <p>
-     * If this is not supported by your RDBMS, then jOOQ will try to simulate
+     * If this is not supported by your RDBMS, then jOOQ will try to emulate
      * this behaviour using the information provided in this query.
      */
     @Support

@@ -105,7 +105,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * Add a <code>LIMIT</code> clause to the query
      * <p>
      * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
-     * RDBMS, this may be simulated with a <code>ROW_NUMBER()</code> window
+     * RDBMS, this may be emulated with a <code>ROW_NUMBER()</code> window
      * function and nested <code>SELECT</code> statements.
      * <p>
      * This is the same as calling {@link #limit(int, int)} with offset = 0, or
@@ -122,7 +122,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * <p>
      * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
      * RDBMS, or the <code>LIMIT</code> or <code>TOP</code> clause does not
-     * support bind values, this may be simulated with a
+     * support bind values, this may be emulated with a
      * <code>ROW_NUMBER()</code> window function and nested <code>SELECT</code>
      * statements.
      * <p>
@@ -140,7 +140,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * <p>
      * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
      * RDBMS, or if your RDBMS does not natively support offsets, this is
-     * simulated with a <code>ROW_NUMBER()</code> window function and nested
+     * emulated with a <code>ROW_NUMBER()</code> window function and nested
      * <code>SELECT</code> statements.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -155,7 +155,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
      * RDBMS, or the <code>LIMIT</code> or <code>TOP</code> clause does not
      * support bind values, or if your RDBMS does not natively support offsets,
-     * this may be simulated with a <code>ROW_NUMBER()</code> window function
+     * this may be emulated with a <code>ROW_NUMBER()</code> window function
      * and nested <code>SELECT</code> statements.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -170,7 +170,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
      * RDBMS, or the <code>LIMIT</code> or <code>TOP</code> clause does not
      * support bind values, or if your RDBMS does not natively support offsets,
-     * this may be simulated with a <code>ROW_NUMBER()</code> window function
+     * this may be emulated with a <code>ROW_NUMBER()</code> window function
      * and nested <code>SELECT</code> statements.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -185,7 +185,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
      * RDBMS, or the <code>LIMIT</code> or <code>TOP</code> clause does not
      * support bind values, or if your RDBMS does not natively support offsets,
-     * this may be simulated with a <code>ROW_NUMBER()</code> window function
+     * this may be emulated with a <code>ROW_NUMBER()</code> window function
      * and nested <code>SELECT</code> statements.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })

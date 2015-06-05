@@ -119,7 +119,7 @@ implements
 
         // Apply relational division using double-nested NOT EXISTS clauses
         // There are more efficient ways to express division in SQL, but those
-        // are hard to simulate with jOOQ
+        // are hard to emulate with jOOQ
         return selectDistinct(select)
               .from(outer)
               .whereNotExists(

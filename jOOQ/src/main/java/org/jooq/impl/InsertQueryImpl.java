@@ -212,7 +212,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                     break;
                 }
 
-                // CUBRID can simulate this using ON DUPLICATE KEY UPDATE
+                // CUBRID can emulate this using ON DUPLICATE KEY UPDATE
                 case CUBRID: {
                     FieldMapForUpdate update = new FieldMapForUpdate(INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT);
                     Field<?> field = table.field(0);
@@ -348,7 +348,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 );
         }
         else {
-            throw new IllegalStateException("The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be simulated when inserting into non-updatable tables : " + table);
+            throw new IllegalStateException("The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be emulated when inserting into non-updatable tables : " + table);
         }
     }
 
@@ -371,7 +371,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                              .values(insertMaps.getMap().values());
         }
         else {
-            throw new IllegalStateException("The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be simulated when inserting into non-updatable tables : " + table);
+            throw new IllegalStateException("The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be emulated when inserting into non-updatable tables : " + table);
         }
     }
 

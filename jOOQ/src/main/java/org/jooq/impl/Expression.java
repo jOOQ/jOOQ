@@ -157,7 +157,7 @@ class Expression<T> extends AbstractFunction<T> {
         }
 
         /* [pro] xx
-        xx xxxxxx xxx xx xxxxxxxx xxxxxx
+        xx xxxxxx xxx xx xxxxxxx xxxxxx
         xxxx xx xxxxxxx xx xxxxxxxx xx xxxxxx xx xxxxxxx x
             xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         x

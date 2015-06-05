@@ -308,7 +308,7 @@ public final class SQLDataType {
     /**
      * The {@link ResultSet} type.
      * <p>
-     * This is not a SQL or JDBC standard. This type simulates REF CURSOR types
+     * This is not a SQL or JDBC standard. This type emulates REF CURSOR types
      * and similar constructs
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })

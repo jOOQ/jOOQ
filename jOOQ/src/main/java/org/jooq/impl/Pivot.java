@@ -63,7 +63,7 @@ import org.jooq.conf.ParamType;
 /**
  * A pivot table implementation
  * <p>
- * Future versions of jOOQ could simulate Oracle's <code>PIVOT</code> clause by
+ * Future versions of jOOQ could emulate Oracle's <code>PIVOT</code> clause by
  * rendering a subquery instead.
  *
  * @author Lukas Eder
@@ -117,7 +117,7 @@ implements
             x
 
             xx [/pro] */
-            // Some other dialects can simulate it. This implementation is
+            // Some other dialects can emulate it. This implementation is
             // EXPERIMENTAL and not officially supported
             default: {
                 return new DefaultPivotTable();
@@ -126,7 +126,7 @@ implements
     }
 
     /**
-     * A simulation of Oracle's <code>PIVOT</code> table
+     * A emulation of Oracle's <code>PIVOT</code> table
      */
     private class DefaultPivotTable extends DialectPivotTable {
 

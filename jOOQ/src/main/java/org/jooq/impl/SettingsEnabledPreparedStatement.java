@@ -66,7 +66,7 @@ import java.util.Calendar;
 import org.jooq.tools.jdbc.DefaultStatement;
 
 /**
- * A proxy for a JDBC {@link PreparedStatement} that simulates the API of a
+ * A proxy for a JDBC {@link PreparedStatement} that emulates the API of a
  * prepared statement, when in fact executing an ad-hoc {@link Statement}
  *
  * @author Lukas Eder

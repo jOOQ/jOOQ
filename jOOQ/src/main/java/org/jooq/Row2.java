@@ -56,12 +56,11 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 
-import org.jooq.Comparator;
-import org.jooq.impl.DSL;
-
 import java.util.Collection;
 
 import javax.annotation.Generated;
+
+import org.jooq.impl.DSL;
 
 /**
  * A model type for a row value expression with degree <code>2</code>.
@@ -92,7 +91,7 @@ public interface Row2<T1, T2> extends Row {
     // ------------------------------------------------------------------------
     // Generic comparison predicates
     // ------------------------------------------------------------------------
-    
+
     /**
      * Compare this row value expression with another row value expression
      * using a dynamic comparator.
@@ -1269,7 +1268,7 @@ public interface Row2<T1, T2> extends Row {
      * </ul>
      * <p>
      * jOOQ also supports arbitrary 2-degree row value expression comparisons,
-     * by simulating them as such <code><pre>
+     * by emulating them as such <code><pre>
      * -- This predicate
      * (A, B) OVERLAPS (C, D)
      *
@@ -1291,7 +1290,7 @@ public interface Row2<T1, T2> extends Row {
      * </ul>
      * <p>
      * jOOQ also supports arbitrary 2-degree row value expression comparisons,
-     * by simulating them as such <code><pre>
+     * by emulating them as such <code><pre>
      * -- This predicate
      * (A, B) OVERLAPS (C, D)
      *
@@ -1313,7 +1312,7 @@ public interface Row2<T1, T2> extends Row {
      * </ul>
      * <p>
      * jOOQ also supports arbitrary 2-degree row value expression comparisons,
-     * by simulating them as such <code><pre>
+     * by emulating them as such <code><pre>
      * -- This predicate
      * (A, B) OVERLAPS (C, D)
      *

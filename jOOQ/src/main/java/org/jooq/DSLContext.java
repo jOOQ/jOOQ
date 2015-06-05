@@ -4499,7 +4499,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulat the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4523,7 +4523,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulat the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4547,7 +4547,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulat the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4571,7 +4571,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulat the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4595,7 +4595,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulat the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4619,7 +4619,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulat the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4643,7 +4643,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulat the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4667,7 +4667,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulat the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4691,7 +4691,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulat the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4715,7 +4715,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulat the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4739,7 +4739,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulat the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4763,7 +4763,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulat the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4787,7 +4787,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulat the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4811,7 +4811,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulat the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4835,7 +4835,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulat the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4859,7 +4859,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulat the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4883,7 +4883,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulat the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4907,7 +4907,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulat the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4931,7 +4931,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulat the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4955,7 +4955,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulat the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -4979,7 +4979,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulat the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -5003,7 +5003,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulat the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -5029,7 +5029,7 @@ public interface DSLContext extends Scope {
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * <td>These databases can emulat the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
@@ -5770,10 +5770,10 @@ public interface DSLContext extends Scope {
      * create.truncate(table)
      *       .execute();
      * </pre></code>
-     * <h3>Simulation of <code>TRUNCATE</code></h3>
+     * <h3>Emulation of <code>TRUNCATE</code></h3>
      * <p>
      * Most dialects implement the <code>TRUNCATE</code> statement. If it is not
-     * supported, it is simulated using an equivalent <code>DELETE</code>
+     * supported, it is emulated using an equivalent <code>DELETE</code>
      * statement. This is particularly true for these dialects:
      * <ul>
      * <li> {@link SQLDialect#FIREBIRD}</li>
@@ -5792,7 +5792,7 @@ public interface DSLContext extends Scope {
      *       .execute();
      * </pre></code>
      * <p>
-     * These vendor-specific extensions are currently not simulated for those
+     * These vendor-specific extensions are currently not emulated for those
      * dialects that do not support them natively.
      *
      * @see #truncate(Table)
@@ -5811,10 +5811,10 @@ public interface DSLContext extends Scope {
      * create.truncate(table)
      *       .execute();
      * </pre></code>
-     * <h3>Simulation of <code>TRUNCATE</code></h3>
+     * <h3>Emulation of <code>TRUNCATE</code></h3>
      * <p>
      * Most dialects implement the <code>TRUNCATE</code> statement. If it is not
-     * supported, it is simulated using an equivalent <code>DELETE</code>
+     * supported, it is emulated using an equivalent <code>DELETE</code>
      * statement. This is particularly true for these dialects:
      * <ul>
      * <li> {@link SQLDialect#FIREBIRD}</li>
@@ -5833,7 +5833,7 @@ public interface DSLContext extends Scope {
      *       .execute();
      * </pre></code>
      * <p>
-     * These vendor-specific extensions are currently not simulated for those
+     * These vendor-specific extensions are currently not emulated for those
      * dialects that do not support them natively.
      *
      * @see #truncate(Name)
@@ -5852,10 +5852,10 @@ public interface DSLContext extends Scope {
      * create.truncate(table)
      *       .execute();
      * </pre></code>
-     * <h3>Simulation of <code>TRUNCATE</code></h3>
+     * <h3>Emulation of <code>TRUNCATE</code></h3>
      * <p>
      * Most dialects implement the <code>TRUNCATE</code> statement. If it is not
-     * supported, it is simulated using an equivalent <code>DELETE</code>
+     * supported, it is emulated using an equivalent <code>DELETE</code>
      * statement. This is particularly true for these dialects:
      * <ul>
      * <li> {@link SQLDialect#FIREBIRD}</li>
@@ -5874,7 +5874,7 @@ public interface DSLContext extends Scope {
      *       .execute();
      * </pre></code>
      * <p>
-     * These vendor-specific extensions are currently not simulated for those
+     * These vendor-specific extensions are currently not emulated for those
      * dialects that do not support them natively.
      */
     @Support

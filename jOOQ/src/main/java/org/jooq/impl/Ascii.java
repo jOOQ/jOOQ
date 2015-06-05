@@ -74,7 +74,7 @@ class Ascii extends AbstractFunction<Integer> {
             case FIREBIRD:
                 return field("{ascii_val}({0})", SQLDataType.INTEGER, string);
 
-            // TODO [#862] [#864] simulate this for some dialects
+            // TODO [#862] [#864] emulate this for some dialects
             /* [pro] xx
             xxxx xxxxxxx
             xx [/pro] */

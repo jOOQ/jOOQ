@@ -168,7 +168,7 @@ final class Utils {
 
     /**
      * [#1296] This constant is used internally by jOOQ to indicate that
-     * {@link ResultSet} rows must be locked to simulate a
+     * {@link ResultSet} rows must be locked to emulate a
      * <code>FOR UPDATE</code> clause.
      */
     static final String           DATA_LOCK_ROWS_FOR_UPDATE                    = "org.jooq.configuration.lock-rows-for-update";

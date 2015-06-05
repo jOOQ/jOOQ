@@ -282,7 +282,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
         if (!using.isEmpty()) {
 
             // [#582] Some dialects don't explicitly support a JOIN .. USING
-            // syntax. This can be simulated with JOIN .. ON
+            // syntax. This can be emulated with JOIN .. ON
             if (asList(CUBRID, H2).contains(context.family())) {
                 boolean first = true;
                 for (Field<?> field : using) {
@@ -319,7 +319,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
             }
         }
 
-        // [#577] If any NATURAL JOIN syntax needs to be simulated, find out
+        // [#577] If any NATURAL JOIN syntax needs to be emulated, find out
         // common fields in lhs and rhs of the JOIN clause
         else if (emulateNaturalJoin(context) ||
                  emulateNaturalLeftOuterJoin(context) ||

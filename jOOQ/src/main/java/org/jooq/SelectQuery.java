@@ -185,7 +185,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * Joins the existing table product to a new table with a <code>USING</code>
      * clause.
      * <p>
-     * If this is not supported by your RDBMS, then jOOQ will try to simulate
+     * If this is not supported by your RDBMS, then jOOQ will try to emulate
      * this behaviour using the information provided in this query.
      *
      * @param table The joined table
@@ -198,7 +198,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * Joins the existing table product to a new table with a <code>USING</code>
      * clause.
      * <p>
-     * If this is not supported by your RDBMS, then jOOQ will try to simulate
+     * If this is not supported by your RDBMS, then jOOQ will try to emulate
      * this behaviour using the information provided in this query.
      *
      * @param table The joined table
@@ -539,7 +539,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <p>
      * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
      * RDBMS, or the <code>LIMIT</code> or <code>TOP</code> clause does not
-     * support bind values, this may be simulated with a
+     * support bind values, this may be emulated with a
      * <code>ROW_NUMBER()</code> window function and nested <code>SELECT</code>
      * statements.
      * <p>
@@ -558,7 +558,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <p>
      * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
      * RDBMS, or if your RDBMS does not natively support offsets, this is
-     * simulated with a <code>ROW_NUMBER()</code> window function and nested
+     * emulated with a <code>ROW_NUMBER()</code> window function and nested
      * <code>SELECT</code> statements.
      *
      * @param offset The lowest offset starting at 0
@@ -576,7 +576,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
      * RDBMS, or the <code>LIMIT</code> or <code>TOP</code> clause does not
      * support bind values, or if your RDBMS does not natively support offsets,
-     * this may be simulated with a <code>ROW_NUMBER()</code> window function
+     * this may be emulated with a <code>ROW_NUMBER()</code> window function
      * and nested <code>SELECT</code> statements.
      *
      * @param offset The lowest offset starting at 0
@@ -594,7 +594,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
      * RDBMS, or the <code>LIMIT</code> or <code>TOP</code> clause does not
      * support bind values, or if your RDBMS does not natively support offsets,
-     * this may be simulated with a <code>ROW_NUMBER()</code> window function
+     * this may be emulated with a <code>ROW_NUMBER()</code> window function
      * and nested <code>SELECT</code> statements.
      *
      * @param offset The lowest offset starting at 0
@@ -612,7 +612,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
      * RDBMS, or the <code>LIMIT</code> or <code>TOP</code> clause does not
      * support bind values, or if your RDBMS does not natively support offsets,
-     * this may be simulated with a <code>ROW_NUMBER()</code> window function
+     * this may be emulated with a <code>ROW_NUMBER()</code> window function
      * and nested <code>SELECT</code> statements.
      *
      * @param offset The lowest offset starting at 0
@@ -650,13 +650,13 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * >Postgres FOR UPDATE / FOR SHARE</a></li>
      * </ul>
      * <p>
-     * <h5>Simulation</h5>
+     * <h5>emulation</h5>
      * <p>
-     * These dialects can simulate the <code>FOR UPDATE</code> clause using a
+     * These dialects can emulate the <code>FOR UPDATE</code> clause using a
      * cursor. The cursor is handled by the JDBC driver, at
      * {@link PreparedStatement} construction time, when calling
      * {@link Connection#prepareStatement(String, int, int)} with
-     * {@link ResultSet#CONCUR_UPDATABLE}. jOOQ handles simulation of a
+     * {@link ResultSet#CONCUR_UPDATABLE}. jOOQ handles emulation of a
      * <code>FOR UPDATE</code> clause using <code>CONCUR_UPDATABLE</code> for
      * these dialects:
      * <ul>
@@ -664,7 +664,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <li> {@link SQLDialect#SQLSERVER}</li>
      * </ul>
      * <p>
-     * Note: This simulation may not be efficient for large result sets!
+     * Note: This emulation may not be efficient for large result sets!
      * <p>
      * <h5>Not supported</h5>
      * <p>
@@ -737,7 +737,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <li>Sybase</li>
      * </ul>
      * <p>
-     * jOOQ simulates this by locking all known fields of [<code>tables</code>]
+     * jOOQ emulates this by locking all known fields of [<code>tables</code>]
      * for any of these dialects:
      * <ul>
      * <li>DB2</li>

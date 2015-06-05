@@ -425,7 +425,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                     xx xxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
                         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                    xx xxxxxxxx xxx xx xx xxxxxxxxx
+                    xx xxxxxxxx xxx xx xx xxxxxxxx
                     xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxx
                         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
@@ -436,7 +436,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                 x
 
                 xx xxxxxx xxx xxx xxx xxxxxx xxxxxxx x xxx xxxxxx xxxxxxx xxxxxx
-                xx xxxxxx xxx xx xxxxxxxxx xx xxx xxxxxxx xxx xx xxx
+                xx xxxxxx xxx xx xxxxxxxx xx xxx xxxxxxx xxx xx xxx
                 xxxx xxxxxxx
                 xxxx xxxxxxxxxxx
                 xxxx xxxx
@@ -446,7 +446,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                     xx xxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
                         xxxxxxxxxxxxxxxxxxxxxxxxx
 
-                    xx xxxxxx xxxxxxxxxx
+                    xx xxxxxx xxxxxxxxx
                     xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxx
                         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
@@ -466,7 +466,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                     xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx xx xxxxxxxxx
                         xxxxxxxxxxxxxxxxxxxxxxxxx
 
-                    xx xxxxxx xxxxxxxxxx
+                    xx xxxxxx xxxxxxxxx
                     xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxx
                         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
@@ -485,7 +485,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                 }
             }
 
-            // [#1296] FOR UPDATE is simulated in some dialects using ResultSet.CONCUR_UPDATABLE
+            // [#1296] FOR UPDATE is emulated in some dialects using ResultSet.CONCUR_UPDATABLE
             if (forUpdate && !asList(CUBRID).contains(family)) {
                 context.formatSeparator()
                        .keyword("for update");
@@ -650,7 +650,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
     /* [pro] xx
     xxx
-     x xxxxxxxx xxx xxxxx x xxxxxx xxxxxx xx xxx xxxxxx xxxxxxxxxxxxxxxx
+     x xxxxxxx xxx xxxxx x xxxxxx xxxxxx xx xxx xxxxxx xxxxxxxxxxxxxxxx
      x xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxx
      xx
     xxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -743,7 +743,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
     x
 
     xxx
-     x xxxxxxxx xxx xxxxx x xxxxxx xxxxxx xx xxx xxxxxx xxxxxxxxxxxxxxxxxx
+     x xxxxxxx xxx xxxxx x xxxxxx xxxxxx xx xxx xxxxxx xxxxxxxxxxxxxxxxxx
      x xxxxxxx
      xx
     xxxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxx x

@@ -1042,7 +1042,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                     xx [/pro] */
                     // Most databases don't have such a type. In this case, jOOQ
-                    // simulates the type
+                    // emulates the type
                     default: {
                         ctx.statement().setString(ctx.index(), value.toString());
                         break;
@@ -1350,7 +1350,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 xx [/pro] */
                 // Most databases don't have such a type. In this case, jOOQ
-                // simulates the type
+                // emulates the type
                 default: {
                     result = (T) Convert.convert(ctx.resultSet().getString(ctx.index()), UUID.class);
                     break;
@@ -1512,7 +1512,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 xx [/pro] */
                 // Most databases don't have such a type. In this case, jOOQ
-                // simulates the type
+                // emulates the type
                 default: {
                     result = (T) Convert.convert(ctx.statement().getString(ctx.index()), UUID.class);
                     break;

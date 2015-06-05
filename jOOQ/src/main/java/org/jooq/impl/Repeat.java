@@ -77,7 +77,7 @@ class Repeat extends AbstractFunction<String> {
             case FIREBIRD:
                 return DSL.rpad(string, DSL.length(string).mul(count), string);
 
-            // Simulation of REPEAT() for SQLite currently cannot be achieved
+            // Emulation of REPEAT() for SQLite currently cannot be achieved
             // using RPAD() above, as RPAD() expects characters, not strings
             // Another option is documented here, though:
             // http://stackoverflow.com/questions/11568496/how-to-simulate-repeat-in-sqlite

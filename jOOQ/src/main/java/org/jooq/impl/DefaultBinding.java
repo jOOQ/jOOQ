@@ -67,6 +67,7 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
+import static org.jooq.impl.Utils.attachRecords;
 import static org.jooq.impl.Utils.needsBackslashEscaping;
 import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
 import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
@@ -95,6 +96,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.jooq.ArrayRecord;
+import org.jooq.Attachable;
 import org.jooq.Binding;
 import org.jooq.BindingGetResultSetContext;
 import org.jooq.BindingGetSQLInputContext;
@@ -1375,7 +1377,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
         /* [pro] */
         else if (ArrayRecord.class.isAssignableFrom(type)) {
-            result = (T) getArrayRecord(ctx.resultSet().getArray(ctx.index()), (Class<? extends ArrayRecord<?>>) type);
+            result = (T) getArrayRecord(ctx.configuration(), ctx.resultSet().getArray(ctx.index()), (Class<? extends ArrayRecord<?>>) type);
         }
         /* [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
@@ -1399,6 +1401,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else {
             result = (T) unlob(ctx.resultSet().getObject(ctx.index()));
         }
+
+        // [#4372] Attach records if possible / required
+        if (result instanceof Attachable && attachRecords(ctx.configuration()))
+            ((Attachable) result).attach(ctx.configuration());
 
         ctx.value(converter.from(result));
     }
@@ -1526,7 +1532,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
         /* [pro] */
         else if (ArrayRecord.class.isAssignableFrom(type)) {
-            result = (T) getArrayRecord(ctx.statement().getArray(ctx.index()), (Class<? extends ArrayRecord<?>>) type);
+            result = (T) getArrayRecord(ctx.configuration(), ctx.statement().getArray(ctx.index()), (Class<? extends ArrayRecord<?>>) type);
         }
         /* [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
@@ -1550,6 +1556,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else {
             result = (T) ctx.statement().getObject(ctx.index());
         }
+
+        // [#4372] Attach records if possible / required
+        if (result instanceof Attachable && attachRecords(ctx.configuration()))
+            ((Attachable) result).attach(ctx.configuration());
 
         ctx.value(converter.from(result));
     }
@@ -1657,7 +1667,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
         /* [pro] */
         else if (ArrayRecord.class.isAssignableFrom(type)) {
-            result = (T) getArrayRecord(ctx.input().readArray(), (Class<? extends ArrayRecord<?>>) type);
+            result = (T) getArrayRecord(ctx.configuration(), ctx.input().readArray(), (Class<? extends ArrayRecord<?>>) type);
         }
         /* [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
@@ -1677,7 +1687,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
     /* [pro] */
-    private static final ArrayRecord<?> getArrayRecord(Array array, Class<? extends ArrayRecord<?>> type) throws SQLException {
+    private static final ArrayRecord<?> getArrayRecord(Configuration configuration, Array array, Class<? extends ArrayRecord<?>> type) throws SQLException {
         if (array == null) {
             return null;
         }
@@ -1685,11 +1695,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // TODO: [#523] Use array record meta data instead
             // ... Generic type inference in Java 8 has changed, resorting to
             // raw type for now
-            return set((ArrayRecord) Utils.newArrayRecord(type), array);
+            return set(configuration, (ArrayRecord) Utils.newArrayRecord(type), array);
         }
     }
 
-    static final <T> ArrayRecord<T> set(ArrayRecord<T> target, Array source) throws SQLException {
+    static final <T> ArrayRecord<T> set(Configuration configuration, ArrayRecord<T> target, Array source) throws SQLException {
         if (source == null) {
             target.set((T[]) null);
         }
@@ -1706,6 +1716,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             target.set(converted);
             // target.set(Convert.convert(o, target.getDataType().getArrayType()));
         }
+
+        // [#4372] Attach records if possible / required
+        if (attachRecords(configuration))
+            target.attach(configuration);
 
         return target;
     }

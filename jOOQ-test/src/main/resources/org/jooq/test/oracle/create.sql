@@ -285,25 +285,33 @@ CREATE OR REPLACE TYPE BODY u_author_type AS
     self.load;
 
     if x is not null then
-      select b.id, b.title
-      into b1.id, b1.title
-      from (
-        select b.id, b.title, rownum r
-        from t_book b
-        where b.author_id = x
-        order by b.id
-      ) b
-      where b.r = 1;
+      begin
+        select b.id, b.title
+        into b1.id, b1.title
+        from (
+          select b.id, b.title, rownum r
+          from t_book b
+          where b.author_id = x
+          order by b.id
+        ) b
+        where b.r = 1;
+      exception 
+        when others then null;
+      end;
 
-      select b.id, b.title
-      into b2.id, b2.title
-      from (
-        select b.id, b.title, rownum r
-        from t_book b
-        where b.author_id = x
-        order by b.id
-      ) b
-      where b.r = 2;
+      begin
+        select b.id, b.title
+        into b2.id, b2.title
+        from (
+          select b.id, b.title, rownum r
+          from t_book b
+          where b.author_id = x
+          order by b.id
+        ) b
+        where b.r = 2;
+      exception 
+        when others then null;
+      end;
     end if;
 
 	select u_book_type(b.id, b.title)

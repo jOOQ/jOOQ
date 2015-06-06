@@ -1242,11 +1242,27 @@ public class OracleTest extends jOOQAbstractTest<
         assertEquals("first", author4.getFirstName());
         assertEquals("last", author4.getLastName());
 
+        // [#4372] Record must be attached for the following to work
+        GetBooks getBooks4 = author4.getBooks();
+        assertNull(getBooks4.getBook1().getId());
+        assertNull(getBooks4.getBook1().getTitle());
+        assertNull(getBooks4.getBook2().getId());
+        assertNull(getBooks4.getBook2().getTitle());
+        assertEquals(0, getBooks4.getBooks().size());
+
         UAuthorTypeRecord author5 = create().select(UAuthorType.getAuthor(3)).fetchOne(UAuthorType.getAuthor(3));
         assertEquals(author3, author5);
         assertEquals(3, (int) author5.getId());
         assertEquals("first", author5.getFirstName());
         assertEquals("last", author5.getLastName());
+
+        // [#4372] Record must be attached for the following to work
+        GetBooks getBooks5 = author5.getBooks();
+        assertNull(getBooks5.getBook1().getId());
+        assertNull(getBooks5.getBook1().getTitle());
+        assertNull(getBooks5.getBook2().getId());
+        assertNull(getBooks5.getBook2().getTitle());
+        assertEquals(0, getBooks5.getBooks().size());
     }
 
     @Test

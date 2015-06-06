@@ -67,6 +67,7 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
+import static org.jooq.impl.Utils.attachRecords;
 import static org.jooq.impl.Utils.needsBackslashEscaping;
 import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
 import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
@@ -95,6 +96,7 @@ import java.util.List;
 import java.util.UUID;
 
 // ...
+import org.jooq.Attachable;
 import org.jooq.Binding;
 import org.jooq.BindingGetResultSetContext;
 import org.jooq.BindingGetSQLInputContext;
@@ -1375,7 +1377,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
         /* [pro] xx
         xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxx xxxxxxxxxxxxxxxx xxxxxx
+            xxxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxx xxxxxxxxxxxxxxxx xxxxxx
         x
         xx [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
@@ -1399,6 +1401,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else {
             result = (T) unlob(ctx.resultSet().getObject(ctx.index()));
         }
+
+        // [#4372] Attach records if possible / required
+        if (result instanceof Attachable && attachRecords(ctx.configuration()))
+            ((Attachable) result).attach(ctx.configuration());
 
         ctx.value(converter.from(result));
     }
@@ -1526,7 +1532,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
         /* [pro] xx
         xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxx xxxxxxxxxxxxxxxx xxxxxx
+            xxxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxx xxxxxxxxxxxxxxxx xxxxxx
         x
         xx [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
@@ -1550,6 +1556,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else {
             result = (T) ctx.statement().getObject(ctx.index());
         }
+
+        // [#4372] Attach records if possible / required
+        if (result instanceof Attachable && attachRecords(ctx.configuration()))
+            ((Attachable) result).attach(ctx.configuration());
 
         ctx.value(converter.from(result));
     }
@@ -1657,7 +1667,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
         /* [pro] xx
         xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxx xxxxxxxxxxxxxxxx xxxxxx
+            xxxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxx xxxxxxxxxxxxxxxx xxxxxx
         x
         xx [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {
@@ -1677,7 +1687,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
     /* [pro] xx
-    xxxxxxx xxxxxx xxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxx xxxxxxx xxxxxxxxxxxxxxx xxxxx xxxxxx xxxxxxxxxxxx x
+    xxxxxxx xxxxxx xxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxx xxxxxx xxxxxxx xxxxxxx xxxxxxxxxxxxxxx xxxxx xxxxxx xxxxxxxxxxxx x
         xx xxxxxx xx xxxxx x
             xxxxxx xxxxx
         x
@@ -1685,11 +1695,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             xx xxxxx xxxxxx xxx xxxxx xxxxxx xxxx xxxx xxxxxxx
             xx xxx xxxxxxx xxxx xxxxxxxxx xx xxxx x xxx xxxxxxxx xxxxxxxxx xx
             xx xxx xxxx xxx xxx
-            xxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
+            xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
         x
     x
 
-    xxxxxx xxxxx xxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxx xxxxx xxxxxxx xxxxxx xxxxxxxxxxxx x
+    xxxxxx xxxxx xxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxx xxxxx xxxxxxx xxxxxx xxxxxxxxxxxx x
         xx xxxxxxx xx xxxxx x
             xxxxxxxxxxxxxxxx xxxxxx
         x
@@ -1706,6 +1716,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             xxxxxxxxxxxxxxxxxxxxxx
             xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         x
+
+        xx xxxxxxx xxxxxx xxxxxxx xx xxxxxxxx x xxxxxxxx
+        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
         xxxxxx xxxxxxx
     x

@@ -41,6 +41,8 @@
 package org.jooq.test.all.testcases;
 
 import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.ORACLE11G;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.VERTICA;
 import static org.jooq.lambda.Seq.seq;
@@ -222,7 +224,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     void emTx(Consumer<EntityManager> consumer) {
         LocalContainerEntityManagerFactoryBean bean = new LocalContainerEntityManagerFactoryBean();
         HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
-        adapter.setDatabasePlatform(dialect().thirdParty().hibernateDialect());
+        adapter.setDatabasePlatform(
+
+            // Oracle12c Hibernate dialect is available only in Hibernate 5+
+            family() == ORACLE
+
+            ? ORACLE11G.thirdParty().hibernateDialect()
+            : dialect().thirdParty().hibernateDialect()
+        );
 
         bean.setDataSource(datasource);
         bean.setPackagesToScan("org.jooq.test.all.pojos.jpa");

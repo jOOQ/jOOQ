@@ -41,29 +41,6 @@
 package org.jooq.xtend
 
 import org.jooq.Constants
-import org.jooq.Configuration
-import org.jooq.RowN
-import org.jooq.QueryPartInternal
-import org.jooq.impl.RowBetweenCondition.Native
-import org.jooq.Condition
-import static org.jooq.SQLDialect.DERBY
-import static org.jooq.SQLDialect.HANA
-import static org.jooq.SQLDialect.INGRES
-import static java.util.Arrays.asList
-import static org.jooq.SQLDialect.FIREBIRD
-import static org.jooq.SQLDialect.ASE
-import static org.jooq.SQLDialect.CUBRID
-import static org.jooq.SQLDialect.DB2
-import static org.jooq.SQLDialect.ACCESS
-import static org.jooq.SQLDialect.SYBASE
-import static org.jooq.SQLDialect.INFORMIX
-import static org.jooq.SQLDialect.SQLITE
-import static org.jooq.SQLDialect.H2
-import static org.jooq.SQLDialect.REDSHIFT
-import static org.jooq.SQLDialect.MARIADB
-import static org.jooq.SQLDialect.SQLSERVER
-import static org.jooq.SQLDialect.ORACLE
-import static org.jooq.SQLDialect.MYSQL
 
 /**
  * @author Lukas Eder

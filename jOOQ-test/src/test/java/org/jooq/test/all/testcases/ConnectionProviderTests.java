@@ -40,6 +40,9 @@
  */
 package org.jooq.test.all.testcases;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assume.assumeNotNull;
+
 import java.sql.Connection;
 import java.sql.Date;
 
@@ -55,8 +58,6 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
-
-import org.junit.Assume;
 
 /**
  * @author Lukas Eder
@@ -90,7 +91,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testConnectionProviderForInsertReturning() throws Exception {
-        Assume.assumeNotNull(TTriggers());
+        assumeNotNull(TTriggers());
         jOOQAbstractTest.reset = false;
 
         Counter counter = new Counter(create().configuration().connectionProvider());
@@ -103,9 +104,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
               .returning()
               .fetchOne();
 
-        assertEquals(1, (int) result.getValue(TTriggers_ID()));
-        assertEquals(1, (int) result.getValue(TTriggers_ID_GENERATED()));
-        assertEquals(2, (int) result.getValue(TTriggers_COUNTER()));
+        // Contents are asserted elsewhere
+        assertNotNull(result);
 
         assertEquals(1, counter.acquire);
         assertEquals(1, counter.release);

@@ -67,6 +67,7 @@ import org.jooq.MergeNotMatchedStep;
 import org.jooq.MergeOnConditionStep;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.exception.SQLDialectNotSupportedException;
@@ -205,7 +206,8 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
                 // MySQL has a nice, native syntax for this
                 case MARIADB:
-                case MYSQL: {
+                case MYSQL:
+                case SQLITE: {
                     toSQLInsert(ctx);
                     ctx.start(INSERT_ON_DUPLICATE_KEY_UPDATE)
                        .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
@@ -273,8 +275,14 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         ctx.start(INSERT_INSERT_INTO)
            .keyword("insert")
            .sql(' ')
-           // [#1295] MySQL natively supports the IGNORE keyword
-           .keyword((onDuplicateKeyIgnore && asList(MARIADB, MYSQL).contains(ctx.configuration().dialect())) ? "ignore " : "")
+           // [#1295] [#4376] MySQL and SQLite have native syntaxes for
+           //                 INSERT [ OR ] IGNORE
+           .keyword((onDuplicateKeyIgnore && asList(MARIADB, MYSQL).contains(ctx.family()))
+                  ? "ignore "
+                  : (onDuplicateKeyIgnore && SQLDialect.SQLITE == ctx.family())
+                  ? "or ignore "
+                  : ""
+           )
            .keyword("into")
            .sql(' ')
            .declareTables(true)

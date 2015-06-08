@@ -216,8 +216,6 @@ import org.jooq.tools.jdbc.MockCallable;
 import org.jooq.tools.jdbc.MockConfiguration;
 import org.jooq.tools.jdbc.MockDataProvider;
 import org.jooq.tools.jdbc.MockRunnable;
-import org.jooq.tools.reflect.Reflect;
-import org.jooq.tools.reflect.ReflectException;
 
 /**
  * A default implementation for {@link DSLContext}.
@@ -327,12 +325,9 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
             // [#3718] Use reflection to support also JDBC 4.0
             catch (Exception suppress) {
-                try {
-                    Reflect.on(cause).call("addSuppressed", suppress);
-                }
-                catch (ReflectException ignore) {
-                    log.error("Error when rolling back", suppress);
-                }
+                /* [java-8] */
+                cause.addSuppressed(suppress);
+                /* [/java-8] */
             }
 
             if (cause instanceof RuntimeException) {

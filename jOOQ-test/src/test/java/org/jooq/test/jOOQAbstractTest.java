@@ -140,6 +140,7 @@ import org.jooq.test.all.testcases.BenchmarkTests;
 import org.jooq.test.all.testcases.CRUDTests;
 import org.jooq.test.all.testcases.CTETests;
 import org.jooq.test.all.testcases.CollationTests;
+import org.jooq.test.all.testcases.ConnectionProviderTests;
 import org.jooq.test.all.testcases.CsvLoaderTests;
 import org.jooq.test.all.testcases.DDLTests;
 import org.jooq.test.all.testcases.DaoTests;
@@ -3742,5 +3743,10 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testCollations() throws Exception {
         new CollationTests(this).testCollations();
+    }
+
+    @Test
+    public void testConnectionProviderForInsertReturning() throws Exception {
+        new ConnectionProviderTests(this).testConnectionProviderForInsertReturning();
     }
 }

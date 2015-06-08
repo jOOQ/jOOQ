@@ -75,7 +75,6 @@ public class DefaultTransactionProvider implements TransactionProvider {
     private static final Savepoint   DUMMY_SAVEPOINT = new DefaultSavepoint();
 
     private final ConnectionProvider provider;
-    private Connection               connection;
 
     public DefaultTransactionProvider(ConnectionProvider provider) {
         this.provider = provider;
@@ -108,7 +107,7 @@ public class DefaultTransactionProvider implements TransactionProvider {
         DefaultConnectionProvider connectionWrapper = (DefaultConnectionProvider) configuration.data(DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION);
 
         if (connectionWrapper == null) {
-            connectionWrapper = new DefaultConnectionProvider(connection);
+            connectionWrapper = new DefaultConnectionProvider(provider.acquire());
             configuration.data(DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION, connectionWrapper);
         }
 
@@ -196,27 +195,22 @@ public class DefaultTransactionProvider implements TransactionProvider {
      * to <code>true</code>, originally.
      */
     private void brace(Configuration configuration, boolean start) {
-        if (start) {
-            connection = provider.acquire();
-        }
+        DefaultConnectionProvider connection = connection(configuration);
 
         try {
             boolean autoCommit = autoCommit(configuration);
 
             // Transactions cannot run with autoCommit = true. Change the value for
             // the duration of a transaction
-            if (autoCommit == true) {
-                connection(configuration).setAutoCommit(!start);
-            }
+            if (autoCommit == true)
+                connection.setAutoCommit(!start);
         }
 
         // [#3718] Chances are that the above JDBC interactions throw additional exceptions
         //         try-finally will ensure that the ConnectionProvider.release() call is made
         finally {
             if (!start) {
-                provider.release(connection);
-
-                connection = null;
+                provider.release(connection.connection);
                 configuration.data().remove(DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION);
             }
         }

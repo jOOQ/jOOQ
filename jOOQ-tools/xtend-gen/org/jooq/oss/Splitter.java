@@ -59,10 +59,33 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IntegerRange;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.jooq.SQLDialect;
+import org.jooq.oss.RemoveProCode;
+import org.jooq.oss.RemoveTrialAndJava8Code;
+import org.jooq.oss.RemoveTrialCode;
 import org.jooq.xtend.Generators;
 
 @SuppressWarnings("all")
 public class Splitter extends Generators {
+  public static void main(final String[] args) {
+    final String split = System.getProperty("split");
+    boolean _equals = Objects.equal(split, "oss");
+    if (_equals) {
+      RemoveProCode.main(args);
+    } else {
+      boolean _equals_1 = Objects.equal(split, "pro");
+      if (_equals_1) {
+        RemoveTrialCode.main(args);
+      } else {
+        boolean _equals_2 = Objects.equal(split, "pro-java-6");
+        if (_equals_2) {
+          RemoveTrialAndJava8Code.main(args);
+        } else {
+          System.err.println("Usage: Splitter -Dsplit={oss, pro, pro-java-6}");
+        }
+      }
+    }
+  }
+  
   private static ExecutorService ex;
   
   private static AtomicInteger charsTotal = new AtomicInteger(0);

@@ -80,14 +80,18 @@ class Splitter extends Generators {
     def static void main(String[] args) {
         val split = System.getProperty("split");
         
-        if (split == "oss")
+        if (split == "oss") {
             RemoveProCode.main(args);
-        else if (split == "pro")
+        }
+        else if (split == "pro") {
             RemoveTrialCode.main(args);
-        else if (split == "pro-java-6")
+        }
+        else if (split == "pro-java-6") {
             RemoveTrialAndJava8Code.main(args);
-        else
+        }
+        else {
             System.err.println("Usage: Splitter -Dsplit={oss, pro, pro-java-6}");
+        }
     }
 
     static ExecutorService ex;

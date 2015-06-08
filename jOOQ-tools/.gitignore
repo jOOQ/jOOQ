@@ -1,3 +1,4 @@
 /**/*._trace
 /**/*.xtendbin
-/bin
+/**/*.class
+/target

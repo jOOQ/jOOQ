@@ -242,6 +242,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         DSLContext create = create();
         TransactionalConnectionProvider provider = new TransactionalConnectionProvider(create.configuration().connectionProvider());
         create.configuration().set(provider);
+        create.configuration().set(new DefaultTransactionProvider(provider, false));
 
         try {
             create.transactionResult(c1 -> {

@@ -55,7 +55,7 @@ public class MySQLDSL extends DSL {
     /**
      * No instances
      */
-    private MySQLDSL() {
+    protected MySQLDSL() {
     }
 
     // -------------------------------------------------------------------------

@@ -57,7 +57,7 @@ public class SQLServerDSL extends DSL {
     /**
      * No instances
      */
-    private SQLServerDSL() {
+    protected SQLServerDSL() {
     }
 
     /**

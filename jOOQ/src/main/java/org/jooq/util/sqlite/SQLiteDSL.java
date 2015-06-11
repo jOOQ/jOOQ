@@ -54,7 +54,7 @@ public class SQLiteDSL extends DSL {
     /**
      * No instances
      */
-    private SQLiteDSL() {
+    protected SQLiteDSL() {
     }
 
     // -------------------------------------------------------------------------

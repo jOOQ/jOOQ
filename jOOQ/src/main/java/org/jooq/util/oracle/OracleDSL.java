@@ -74,7 +74,7 @@ public class OracleDSL extends DSL {
     /**
      * No instances
      */
-    private OracleDSL() {
+    protected OracleDSL() {
     }
 
     // -------------------------------------------------------------------------

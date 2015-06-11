@@ -53,6 +53,6 @@ public class HSQLDBDSL extends DSL {
     /**
      * No instances
      */
-    private HSQLDBDSL() {
+    protected HSQLDBDSL() {
     }
 }

@@ -63,7 +63,7 @@ public class PostgresDSL extends DSL {
     /**
      * No instances
      */
-    private PostgresDSL() {}
+    protected PostgresDSL() {}
 
     // -------------------------------------------------------------------------
     // PostgreSQL-specific array functions

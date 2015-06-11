@@ -53,6 +53,6 @@ public class FirebirdDSL extends DSL {
     /**
      * No instances
      */
-    private FirebirdDSL() {
+    protected FirebirdDSL() {
     }
 }

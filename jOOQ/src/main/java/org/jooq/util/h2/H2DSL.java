@@ -53,6 +53,6 @@ public class H2DSL extends DSL {
     /**
      * No instances
      */
-    private H2DSL() {
+    protected H2DSL() {
     }
 }

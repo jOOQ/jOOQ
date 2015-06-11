@@ -14,6 +14,8 @@ DELETE FROM t_identity_pk/
 DELETE FROM t_triggers/
 DELETE FROM t_2698/
 DELETE FROM t_dates/
+DELETE FROM accounts/
+DELETE FROM transactions/
 
 DROP SEQUENCE IF EXISTS s_author_id;/
 CREATE SEQUENCE s_author_id START WITH 1;/
@@ -60,4 +62,23 @@ INSERT INTO t_arrays VALUES (2, (), (), ())
 INSERT INTO t_arrays VALUES (3, ('a'), (1), ('1981-07-10'))
 /
 INSERT INTO t_arrays VALUES (4, ('a', 'b'), (1, 2), ('1981-07-10', '2000-01-01'))
+/
+
+INSERT INTO accounts (
+  id, account_owner, account_name, amount
+)
+VALUES (1, 'John', 'savings', 500.0),
+       (2, 'Jane', 'savings', 1300.0),
+       (3, 'John', 'secret poker stash', 85193065.00)
+/
+
+INSERT INTO transactions (
+  id, account_id, amount
+)
+VALUES (1, 1, 200.0),
+       (2, 1, 300.0),
+       (3, 2, 300.0),
+       (4, 2, 800.0),
+       (5, 2, 200.0),
+       (6, 3, 85193065.00)
 /

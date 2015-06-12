@@ -289,9 +289,9 @@ public class MySQLDatabase extends AbstractDatabase {
 
                 if (columnDefinition != null) {
 
-                	// [#1137] Avoid generating enum classes for enum types that
-                	// are explicitly forced to another type
-                    if (getConfiguredForcedType(columnDefinition) == null) {
+                    // [#1137] Avoid generating enum classes for enum types that
+                    // are explicitly forced to another type
+                    if (getConfiguredForcedType(columnDefinition, columnDefinition.getType()) == null) {
                         DefaultEnumDefinition definition = new DefaultEnumDefinition(schema, name, comment);
 
                         CSVReader reader = new CSVReader(

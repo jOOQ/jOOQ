@@ -6,7 +6,6 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.postgres.generatedclasses.tables.TBookStore;
@@ -19,7 +18,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITBookStore;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStoreRecord extends UpdatableRecordImpl<TBookStoreRecord> implements Record1<String>, ITBookStore {
 
-	private static final long serialVersionUID = -439585275;
+	private static final long serialVersionUID = -1455436994;
 
 	/**
 	 * Setter for <code>public.t_book_store.name</code>. The books store name

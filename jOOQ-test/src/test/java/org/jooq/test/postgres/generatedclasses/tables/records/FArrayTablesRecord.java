@@ -6,7 +6,6 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 
 import org.jooq.Field;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.postgres.generatedclasses.tables.FArrayTables;
@@ -19,7 +18,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IFArrayTables;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FArrayTablesRecord extends TableRecordImpl<FArrayTablesRecord> implements Record2<String[], Integer[]>, IFArrayTables {
 
-	private static final long serialVersionUID = 1176763422;
+	private static final long serialVersionUID = 1180795001;
 
 	/**
 	 * Setter for <code>public.f_array_tables.out_text</code>.

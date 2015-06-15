@@ -479,6 +479,7 @@ CREATE TABLE t_986_2 (
 CREATE TABLE t_exotic_types (
   ID                     INT  NOT NULL,
   UU                     UUID,
+  UU_ARRAY               UUID[],
   
   JS                     JSON,
   JS_GSON                JSON,

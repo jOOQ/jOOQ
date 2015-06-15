@@ -8,7 +8,6 @@ import java.sql.Date;
 
 import org.jooq.Field;
 import org.jooq.Record11;
-import org.jooq.Row;
 import org.jooq.Row11;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.postgres.generatedclasses.enums.UCountry;
@@ -24,7 +23,7 @@ import org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FGetArraysRecord extends TableRecordImpl<FGetArraysRecord> implements Record11<Integer, String[], Integer[], Date[], UStreetTypeRecord[], UAddressTypeRecord[], UCountry[], Integer[], String[], String[], String[]>, IFGetArrays {
 
-	private static final long serialVersionUID = 738021371;
+	private static final long serialVersionUID = -1767959838;
 
 	/**
 	 * Setter for <code>public.f_get_arrays.id</code>.

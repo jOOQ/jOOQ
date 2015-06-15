@@ -7,7 +7,6 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record3;
-import org.jooq.Row;
 import org.jooq.Row3;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.postgres.generatedclasses.tables.TTriggers;
@@ -20,7 +19,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITTriggers;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggersRecord extends UpdatableRecordImpl<TTriggersRecord> implements Record3<Integer, Integer, Integer>, ITTriggers {
 
-	private static final long serialVersionUID = 529268857;
+	private static final long serialVersionUID = -105051856;
 
 	/**
 	 * Setter for <code>public.t_triggers.id_generated</code>.

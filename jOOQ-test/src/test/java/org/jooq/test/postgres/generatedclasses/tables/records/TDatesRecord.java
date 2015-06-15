@@ -11,7 +11,6 @@ import java.sql.Timestamp;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record6;
-import org.jooq.Row;
 import org.jooq.Row6;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.postgres.generatedclasses.tables.TDates;
@@ -24,7 +23,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITDates;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements Record6<Integer, Date, Time, Timestamp, Integer, Long>, ITDates {
 
-	private static final long serialVersionUID = -1598584807;
+	private static final long serialVersionUID = -1375425356;
 
 	/**
 	 * Setter for <code>public.t_dates.id</code>.

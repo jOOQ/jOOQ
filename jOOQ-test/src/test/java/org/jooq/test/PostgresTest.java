@@ -1282,6 +1282,54 @@ public class PostgresTest extends jOOQAbstractTest<
     }
 
     @Test
+    public void testPostgresUUIDArrays() {
+        clean(T_EXOTIC_TYPES);
+
+        UUID uuid1 = UUID.randomUUID();
+        UUID uuid2 = UUID.randomUUID();
+
+
+        // INSERT statement
+        assertEquals(1,
+        create().insertInto(T_EXOTIC_TYPES)
+                .set(T_EXOTIC_TYPES.ID, 10)
+                .set(T_EXOTIC_TYPES.UU, uuid1)
+                .set(T_EXOTIC_TYPES.UU_ARRAY, new UUID[] { uuid1, uuid2 } )
+                .execute());
+
+        TExoticTypesRecord r1 = create().fetchOne(T_EXOTIC_TYPES, T_EXOTIC_TYPES.ID.eq(10));
+
+        assertEquals(uuid1, r1.getUu());
+        assertEquals(asList(uuid1, uuid2), asList(r1.getUuArray()));
+
+
+        // executeInsert() call
+        TExoticTypesRecord r2a = new TExoticTypesRecord();
+        r2a.setId(11);
+        r2a.setUu(uuid1);
+        r2a.setUuArray(new UUID[] { uuid1, uuid2 });
+        assertEquals(1, create().executeInsert(r2a));
+
+        TExoticTypesRecord r2b = create().fetchOne(T_EXOTIC_TYPES, T_EXOTIC_TYPES.ID.eq(11));
+
+        assertEquals(uuid1, r2b.getUu());
+        assertEquals(asList(uuid1, uuid2), asList(r2b.getUuArray()));
+
+
+        // Store call
+        TExoticTypesRecord r3a = create().newRecord(T_EXOTIC_TYPES);
+        r3a.setId(12);
+        r3a.setUu(uuid1);
+        r3a.setUuArray(new UUID[] { uuid1, uuid2 });
+        assertEquals(1, r3a.store());
+
+        TExoticTypesRecord r3b = create().fetchOne(T_EXOTIC_TYPES, T_EXOTIC_TYPES.ID.eq(12));
+
+        assertEquals(uuid1, r3b.getUu());
+        assertEquals(asList(uuid1, uuid2), asList(r3b.getUuArray()));
+    }
+
+    @Test
     public void testPostgresEnumType() throws Exception {
         // [#2549] TODO: Re-enable this
         // Param<UCountry> val = val(UCountry.England);

@@ -8,7 +8,6 @@ import java.util.UUID;
 
 import org.jooq.Field;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.UDTRecordImpl;
 import org.jooq.test.postgres.generatedclasses.udt.UUuids;
@@ -21,7 +20,7 @@ import org.jooq.test.postgres.generatedclasses.udt.interfaces.IUUuids;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UUuidsRecord extends UDTRecordImpl<UUuidsRecord> implements Record2<UUID, UUID[]>, IUUuids {
 
-	private static final long serialVersionUID = -509471882;
+	private static final long serialVersionUID = 442528371;
 
 	/**
 	 * Setter for <code>public.u_uuids.u1</code>.

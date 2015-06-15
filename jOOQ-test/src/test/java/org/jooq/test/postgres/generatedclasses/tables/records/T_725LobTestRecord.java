@@ -7,7 +7,6 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.postgres.generatedclasses.tables.T_725LobTest;
@@ -20,7 +19,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IT_725LobTest;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTestRecord extends UpdatableRecordImpl<T_725LobTestRecord> implements Record2<Integer, byte[]>, IT_725LobTest {
 
-	private static final long serialVersionUID = 1361289928;
+	private static final long serialVersionUID = 1873383315;
 
 	/**
 	 * Setter for <code>public.t_725_lob_test.id</code>.

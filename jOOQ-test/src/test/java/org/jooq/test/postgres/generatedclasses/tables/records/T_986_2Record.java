@@ -6,7 +6,6 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.postgres.generatedclasses.tables.T_986_2;
@@ -19,7 +18,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IT_986_2;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_986_2Record extends TableRecordImpl<T_986_2Record> implements Record1<Integer>, IT_986_2 {
 
-	private static final long serialVersionUID = 700112496;
+	private static final long serialVersionUID = -987069847;
 
 	/**
 	 * Setter for <code>public.t_986_2.ref</code>.

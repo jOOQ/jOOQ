@@ -7,7 +7,6 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record4;
-import org.jooq.Row;
 import org.jooq.Row4;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.postgres.generatedclasses.tables.T_3111;
@@ -20,7 +19,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IT_3111;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_3111Record extends UpdatableRecordImpl<T_3111Record> implements Record4<Integer, Integer, Integer, Integer>, IT_3111 {
 
-	private static final long serialVersionUID = -344195469;
+	private static final long serialVersionUID = 183092620;
 
 	/**
 	 * Setter for <code>public.t_3111.id</code>.

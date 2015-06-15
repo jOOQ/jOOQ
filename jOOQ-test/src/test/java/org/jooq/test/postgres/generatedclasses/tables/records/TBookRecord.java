@@ -7,7 +7,6 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record10;
-import org.jooq.Row;
 import org.jooq.Row10;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.postgres.generatedclasses.enums.UBookStatus;
@@ -21,7 +20,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITBook;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookRecord extends UpdatableRecordImpl<TBookRecord> implements Record10<Integer, Integer, Integer, Integer, String, Integer, Integer, String, byte[], UBookStatus>, ITBook {
 
-	private static final long serialVersionUID = -1169090694;
+	private static final long serialVersionUID = 303046357;
 
 	/**
 	 * Setter for <code>public.t_book.id</code>. The book ID

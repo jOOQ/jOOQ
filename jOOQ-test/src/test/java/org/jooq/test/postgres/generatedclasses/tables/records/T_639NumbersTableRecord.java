@@ -10,7 +10,6 @@ import java.math.BigInteger;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record12;
-import org.jooq.Row;
 import org.jooq.Row12;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable;
@@ -23,7 +22,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IT_639NumbersTa
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTableRecord extends UpdatableRecordImpl<T_639NumbersTableRecord> implements Record12<Integer, Short, Integer, Long, Byte, Short, Integer, Long, BigInteger, BigDecimal, Float, Double>, IT_639NumbersTable {
 
-	private static final long serialVersionUID = 2051964499;
+	private static final long serialVersionUID = -630779166;
 
 	/**
 	 * Setter for <code>public.t_639_numbers_table.id</code>.

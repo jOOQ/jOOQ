@@ -6,7 +6,6 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 
 import org.jooq.Field;
 import org.jooq.Record10;
-import org.jooq.Row;
 import org.jooq.Row10;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.postgres.generatedclasses.enums.UBookStatus;
@@ -20,7 +19,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IFSearchBooks;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FSearchBooksRecord extends TableRecordImpl<FSearchBooksRecord> implements Record10<Integer, Integer, Integer, Integer, String, Integer, Integer, String, byte[], UBookStatus>, IFSearchBooks {
 
-	private static final long serialVersionUID = 1460318748;
+	private static final long serialVersionUID = 441993585;
 
 	/**
 	 * Setter for <code>public.f_search_books.id</code>.

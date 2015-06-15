@@ -50,6 +50,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.lambda.Seq.seq;
 import static org.jooq.test.BaseTest.ignoreThrows;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_785;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_959;
@@ -1127,5 +1128,45 @@ public class MySQLTest extends jOOQAbstractTest<
             .from(TBook()).straightJoin(TAuthor()).on(TBook_AUTHOR_ID().eq(TAuthor_ID()))
             .orderBy(TBook_ID())
             .fetch(TBook_ID()));
+    }
+
+    @Test
+    public void testMySQLInsertOnDuplicateKeyUpdateWithValues() {
+        jOOQAbstractTest.reset = false;
+
+        assertEquals(2,
+        create().insertInto(TAuthor())
+                .columns(TAuthor_ID(), TAuthor_LAST_NAME())
+                .values(3, "A")
+                .values(4, "B")
+                .onDuplicateKeyUpdate()
+                .set(TAuthor_ID(), MySQLDSL.values(TAuthor_ID()))
+                .set(TAuthor_LAST_NAME(), MySQLDSL.values(TAuthor_LAST_NAME()).concat("-"))
+                .execute());
+
+        assertEquals(
+            asList(1, 2, 3, 4),
+            create().fetchValues(select(TAuthor_ID()).from(TAuthor()).orderBy(TAuthor_ID())));
+        assertEquals(
+            seq(AUTHOR_LAST_NAMES).concat("A", "B").toList(),
+            create().fetchValues(select(TAuthor_LAST_NAME()).from(TAuthor()).orderBy(TAuthor_ID())));
+
+
+        assertEquals(4,
+        create().insertInto(TAuthor())
+                .columns(TAuthor_ID(), TAuthor_LAST_NAME())
+                .values(3, "A")
+                .values(4, "B")
+                .onDuplicateKeyUpdate()
+                .set(TAuthor_ID(), MySQLDSL.values(TAuthor_ID()))
+                .set(TAuthor_LAST_NAME(), MySQLDSL.values(TAuthor_LAST_NAME()).concat("-"))
+                .execute());
+
+        assertEquals(
+            asList(1, 2, 3, 4),
+            create().fetchValues(select(TAuthor_ID()).from(TAuthor()).orderBy(TAuthor_ID())));
+        assertEquals(
+            seq(AUTHOR_LAST_NAMES).concat("A-", "B-").toList(),
+            create().fetchValues(select(TAuthor_LAST_NAME()).from(TAuthor()).orderBy(TAuthor_ID())));
     }
 }

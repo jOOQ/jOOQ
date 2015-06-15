@@ -11,8 +11,6 @@ import java.sql.Date
 
 import javax.validation.constraints.Size
 
-import org.jooq.test.oraclescala.generatedclasses.test.udt.pojos.UStreetType
-
 import scala.Array
 
 

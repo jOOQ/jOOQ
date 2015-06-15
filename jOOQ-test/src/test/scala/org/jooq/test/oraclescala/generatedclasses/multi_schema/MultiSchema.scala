@@ -15,6 +15,8 @@ import org.jooq.test.oraclescala.generatedclasses.multi_schema.tables.TAuthor
 import org.jooq.test.oraclescala.generatedclasses.multi_schema.tables.TBook
 import org.jooq.test.oraclescala.generatedclasses.multi_schema.tables.TBookSale
 import org.jooq.test.oraclescala.generatedclasses.multi_schema.udt.NumberObject
+import org.jooq.test.oraclescala.generatedclasses.multi_schema.udt.U_4311
+import org.jooq.test.oraclescala.generatedclasses.multi_schema.udt.U_4347
 
 
 object MultiSchema {
@@ -51,6 +53,8 @@ class MultiSchema extends SchemaImpl("MULTI_SCHEMA") {
 
 	private def getUDTs0() : List[UDT[_]] = {
 		return Arrays.asList[UDT[_]](
-			NumberObject.NUMBER_OBJECT)
+			NumberObject.NUMBER_OBJECT,
+			U_4311.U_4311,
+			U_4347.U_4347)
 	}
 }

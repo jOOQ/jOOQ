@@ -12,7 +12,6 @@ import org.jooq.Sequence
 import org.jooq.Table
 import org.jooq.UDT
 import org.jooq.impl.SchemaImpl
-import org.jooq.test.oraclescala.generatedclasses.test.Sequences
 import org.jooq.test.oraclescala.generatedclasses.test.tables.MLibrary
 import org.jooq.test.oraclescala.generatedclasses.test.tables.TArrays
 import org.jooq.test.oraclescala.generatedclasses.test.tables.TAuthor
@@ -78,6 +77,7 @@ class Test extends SchemaImpl("TEST") {
 
 	private def getSequences0() : List[Sequence[_]] = {
 		return Arrays.asList[Sequence[_]](
+			Sequences.S_AUTHOR_ID,
 			Sequences.S_3899$,
 			Sequences.S_961_BIG_INTEGER,
 			Sequences.S_961_BYTE,

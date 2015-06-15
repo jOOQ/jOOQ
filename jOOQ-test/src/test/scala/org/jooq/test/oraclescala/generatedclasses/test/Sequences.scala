@@ -12,13 +12,17 @@ import java.math.BigInteger
 
 import org.jooq.Sequence
 import org.jooq.impl.SequenceImpl
-import org.jooq.test.oraclescala.generatedclasses.test.Test
 
 
 /**
  * Convenience access to all sequences in TEST
  */
 object Sequences {
+
+	/**
+	 * The sequence <code>TEST.S_AUTHOR_ID</code>
+	 */
+	val S_AUTHOR_ID : Sequence[Integer] = new SequenceImpl[Integer]("S_AUTHOR_ID", Test.TEST, org.jooq.impl.SQLDataType.INTEGER.nullable(false))
 
 	/**
 	 * The sequence <code>TEST.S_3899$</code>

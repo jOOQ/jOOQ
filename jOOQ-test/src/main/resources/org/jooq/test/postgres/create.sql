@@ -481,6 +481,9 @@ CREATE TABLE t_exotic_types (
   UU                     UUID,
   UU_ARRAY               UUID[],
   
+  UU_WRAPPER             UUID,
+  UU_WRAPPER_ARRAY       UUID[],
+  
   JS                     JSON,
   JS_GSON                JSON,
   JS_JAVAX               JSON,

@@ -3367,9 +3367,32 @@
                                                     <type>org.jooq.lambda.tuple.Range&lt;Integer></type>
                                                     <binding>org.jooq.test.all.bindings.PostgresInt4RangeBinding</binding>
                                                 </customType>
+                                                
+                                                <!-- [#4388] TODO: Improve array handling 
+                                                <customType>
+                                                    <name>org.jooq.test.all.bindings.UUIDWrapperBinding</name>
+                                                    <type>org.jooq.test.all.types.UUIDWrapper</type>
+                                                    <binding>org.jooq.test.all.bindings.UUIDWrapperBinding</binding>
+                                                </customType>
+                                                <customType>
+                                                    <name>org.jooq.test.all.bindings.UUIDWrapperArrayBinding</name>
+                                                    <type>org.jooq.test.all.types.UUIDWrapper[]</type>
+                                                    <binding>org.jooq.test.all.bindings.UUIDWrapperArrayBinding</binding>
+                                                </customType>-->
                                             </customTypes>
 
                                             <forcedTypes>
+                                            
+                                                <!-- [#4388] TODO: Improve array handling 
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.bindings.UUIDWrapperBinding</name>
+                                                    <expression>(?i:(.*?\.)T_EXOTIC_TYPES\.UU_WRAPPER)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.bindings.UUIDWrapperArrayBinding</name>
+                                                    <expression>(?i:(.*?\.)T_EXOTIC_TYPES\.UU_WRAPPER_ARRAY)</expression>
+                                                </forcedType>-->
+                                                
                                                 <!-- [#2968] The PostgreSQL "range" data types -->
                                                 <forcedType>
                                                     <name>org.jooq.test.all.bindings.PostgresInt4RangeBinding</name>

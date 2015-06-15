@@ -37,6 +37,16 @@ public interface ITExoticTypes extends Serializable {
 	public UUID[] getUuArray();
 
 	/**
+	 * Getter for <code>public.t_exotic_types.uu_wrapper</code>.
+	 */
+	public UUID getUuWrapper();
+
+	/**
+	 * Getter for <code>public.t_exotic_types.uu_wrapper_array</code>.
+	 */
+	public UUID[] getUuWrapperArray();
+
+	/**
 	 * Getter for <code>public.t_exotic_types.js</code>.
 	 */
 	public Object getJs();

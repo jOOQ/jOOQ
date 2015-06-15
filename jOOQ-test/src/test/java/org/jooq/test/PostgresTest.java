@@ -152,6 +152,7 @@ import org.jooq.test.all.converters.Boolean_YES_NO_UC;
 import org.jooq.test.all.converters.Boolean_YN_LC;
 import org.jooq.test.all.converters.Boolean_YN_UC;
 import org.jooq.test.all.types.JSONJacksonHelloWorld;
+import org.jooq.test.all.types.UUIDWrapper;
 import org.jooq.test.postgres.generatedclasses.Keys;
 import org.jooq.test.postgres.generatedclasses.Routines;
 import org.jooq.test.postgres.generatedclasses.Sequences;
@@ -1328,6 +1329,55 @@ public class PostgresTest extends jOOQAbstractTest<
         assertEquals(uuid1, r3b.getUu());
         assertEquals(asList(uuid1, uuid2), asList(r3b.getUuArray()));
     }
+
+    @Test
+    public void testPostgresUUIDArraysWithBindings() {
+        clean(T_EXOTIC_TYPES);
+
+        UUIDWrapper uuid1 = new UUIDWrapper(UUID.randomUUID());
+        UUIDWrapper uuid2 = new UUIDWrapper(UUID.randomUUID());
+
+
+        // INSERT statement
+        assertEquals(1,
+        create().insertInto(T_EXOTIC_TYPES)
+                .set(T_EXOTIC_TYPES.ID, 10)
+                .set(T_EXOTIC_TYPES.UU_WRAPPER, uuid1)
+                .set(T_EXOTIC_TYPES.UU_WRAPPER_ARRAY, new UUIDWrapper[] { uuid1, uuid2 } )
+                .execute());
+
+        TExoticTypesRecord r1 = create().fetchOne(T_EXOTIC_TYPES, T_EXOTIC_TYPES.ID.eq(10));
+
+        assertEquals(uuid1, r1.getUu());
+        assertEquals(asList(uuid1, uuid2), asList(r1.getUuArray()));
+
+
+        // executeInsert() call
+        TExoticTypesRecord r2a = new TExoticTypesRecord();
+        r2a.setId(11);
+        r2a.setUuWrapper(uuid1);
+        r2a.setUuWrapperArray(new UUIDWrapper[] { uuid1, uuid2 });
+        assertEquals(1, create().executeInsert(r2a));
+
+        TExoticTypesRecord r2b = create().fetchOne(T_EXOTIC_TYPES, T_EXOTIC_TYPES.ID.eq(11));
+
+        assertEquals(uuid1, r2b.getUuWrapper());
+        assertEquals(asList(uuid1, uuid2), asList(r2b.getUuWrapperArray()));
+
+
+        // Store call
+        TExoticTypesRecord r3a = create().newRecord(T_EXOTIC_TYPES);
+        r3a.setId(12);
+        r3a.setUuWrapper(uuid1);
+        r3a.setUuWrapperArray(new UUIDWrapper[] { uuid1, uuid2 });
+        assertEquals(1, r3a.store());
+
+        TExoticTypesRecord r3b = create().fetchOne(T_EXOTIC_TYPES, T_EXOTIC_TYPES.ID.eq(12));
+
+        assertEquals(uuid1, r3b.getUuWrapper());
+        assertEquals(asList(uuid1, uuid2), asList(r3b.getUuWrapperArray()));
+    }
+
 
     @Test
     public void testPostgresEnumType() throws Exception {

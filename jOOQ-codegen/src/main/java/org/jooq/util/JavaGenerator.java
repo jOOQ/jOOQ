@@ -4253,6 +4253,8 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected String getJavaTypeReference(Database db, DataTypeDefinition type) {
+
+        // [#4388] TODO: Improve array handling
         if (database.isArrayType(type.getType())) {
             String baseType = GenerationUtil.getArrayBaseType(db.getDialect(), type.getType(), type.getUserType());
             return getTypeReference(
@@ -4307,6 +4309,8 @@ public class JavaGenerator extends AbstractGenerator {
 
         // Array types
         if (db.isArrayType(t)) {
+
+            // [#4388] TODO: Improve array handling
             String baseType = GenerationUtil.getArrayBaseType(db.getDialect(), t, u);
 
             if (scala)

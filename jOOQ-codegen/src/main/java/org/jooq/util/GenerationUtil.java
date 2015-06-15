@@ -228,6 +228,8 @@ class GenerationUtil {
      * Gets the base type for an array type, depending on the RDBMS dialect
      */
     static String getArrayBaseType(SQLDialect dialect, String t, String u) {
+
+        // [#4388] TODO: Improve array handling
         switch (dialect.family()) {
             /* [pro] xx
             xxxx xxxxxxxxx

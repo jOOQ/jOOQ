@@ -176,6 +176,7 @@ import org.jooq.test.all.testcases.RowLoaderTests;
 import org.jooq.test.all.testcases.RowValueExpressionTests;
 import org.jooq.test.all.testcases.SchemaAndMappingTests;
 import org.jooq.test.all.testcases.SelectTests;
+import org.jooq.test.all.testcases.SerializationTests;
 import org.jooq.test.all.testcases.StatementTests;
 import org.jooq.test.all.testcases.StreamsTest;
 import org.jooq.test.all.testcases.TableFunctionTests;
@@ -3202,7 +3203,7 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testSerialisation() throws Exception {
-        new GeneralTests(this).testSerialisation();
+        new SerializationTests(this).testSerialisation();
     }
 
     @Test

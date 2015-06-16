@@ -58,16 +58,10 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeNotNull;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.sql.Connection;
 import java.sql.Date;
 import java.util.Arrays;
 
 import org.jooq.DSLContext;
-import org.jooq.ExecuteContext;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -75,7 +69,6 @@ import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record6;
 import org.jooq.Result;
-import org.jooq.Select;
 import org.jooq.SelectQuery;
 import org.jooq.Sequence;
 import org.jooq.TableRecord;
@@ -84,8 +77,6 @@ import org.jooq.UpdateQuery;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DetachedException;
 import org.jooq.impl.DSL;
-import org.jooq.impl.DefaultConnectionProvider;
-import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
@@ -200,110 +191,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
         assertEquals(3, result.size());
         assertEquals(Arrays.asList(1, 2, 3), result.getValues(TBook_ID()));
-    }
-
-    public void testSerialisation() throws Exception {
-        jOOQAbstractTest.reset = false;
-
-        Select<A> q = create().selectFrom(TAuthor()).orderBy(TAuthor_LAST_NAME());
-
-        // Serialising the unexecuted query
-        // ---------------------------------------------------------------------
-        q = runSerialisation(q);
-
-        try {
-            q.execute();
-            fail();
-        } catch (DetachedException expected) {}
-
-        // Serialising the executed query
-        // ---------------------------------------------------------------------
-        create().attach(q);
-        assertEquals(2, q.execute());
-        assertEquals("Coelho", q.getResult().getValue(0, TAuthor_LAST_NAME()));
-        assertEquals("Orwell", q.getResult().getValue(1, TAuthor_LAST_NAME()));
-
-        q = runSerialisation(q);
-        assertEquals("Coelho", q.getResult().getValue(0, TAuthor_LAST_NAME()));
-        assertEquals("Orwell", q.getResult().getValue(1, TAuthor_LAST_NAME()));
-
-        Result<A> result = q.getResult();
-        result = runSerialisation(result);
-        assertEquals("Coelho", result.getValue(0, TAuthor_LAST_NAME()));
-        assertEquals("Orwell", result.getValue(1, TAuthor_LAST_NAME()));
-
-        try {
-            result.get(1).setValue(TAuthor_FIRST_NAME(), "Georgie");
-            result.get(1).store();
-            fail();
-        } catch (DetachedException expected) {}
-
-        create().attach(result);
-        assertEquals(1, result.get(1).store());
-        assertEquals("Georgie", create()
-                .fetchOne(TAuthor(), TAuthor_LAST_NAME().equal("Orwell"))
-                .getValue(TAuthor_FIRST_NAME()));
-
-        // [#1191] Check execution capabilities with new features in ExecuteListener
-        ConnectionProviderListener.c = create().configuration().connectionProvider().acquire();
-        try {
-            DSLContext create = create(new ConnectionProviderListener());
-            q = create
-                    .selectFrom(TAuthor())
-                    .orderBy(TAuthor_LAST_NAME());
-            q = runSerialisation(q);
-            q.execute();
-
-            result = q.getResult();
-            result = runSerialisation(result);
-            assertEquals("Coelho", result.getValue(0, TAuthor_LAST_NAME()));
-            assertEquals("Orwell", result.getValue(1, TAuthor_LAST_NAME()));
-
-            result.get(1).setValue(TAuthor_FIRST_NAME(), "Gee-Gee");
-            result.get(1).store();
-        }
-        finally {
-            create().configuration().connectionProvider().release(ConnectionProviderListener.c);
-            ConnectionProviderListener.c = null;
-        }
-
-        // [#1071] Check sequences
-        if (cSequences() == null) {
-            log.info("SKIPPING", "sequences test");
-        }
-        else {
-            Select<?> s;
-
-            s = create().select(SAuthorID().nextval(), SAuthorID().currval());
-            s = runSerialisation(s);
-        }
-    }
-
-    public static class ConnectionProviderListener extends DefaultExecuteListener {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 7399239846062763212L;
-
-        static Connection c;
-
-        @Override
-        public void start(ExecuteContext ctx) {
-            ctx.connectionProvider(new DefaultConnectionProvider(c));
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    private <Z> Z runSerialisation(Z value) throws Exception {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ObjectOutputStream o = new ObjectOutputStream(out);
-        o.writeObject(value);
-        o.flush();
-
-        ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
-        ObjectInputStream i = new ObjectInputStream(in);
-        return (Z) i.readObject();
     }
 
     public void testAttachable() throws Exception {

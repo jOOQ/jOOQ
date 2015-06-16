@@ -54,7 +54,7 @@ public class CUBRIDDSL extends DSL {
     /**
      * No instances
      */
-    private CUBRIDDSL() {
+    protected CUBRIDDSL() {
     }
 
     // -------------------------------------------------------------------------

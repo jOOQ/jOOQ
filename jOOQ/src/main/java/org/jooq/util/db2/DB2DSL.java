@@ -53,6 +53,6 @@ public class DB2DSL extends DSL {
     /**
      * No instances
      */
-    private DB2DSL() {
+    protected DB2DSL() {
     }
 }

@@ -53,6 +53,6 @@ public class SybaseDSL extends DSL {
     /**
      * No instances
      */
-    private SybaseDSL() {
+    protected SybaseDSL() {
     }
 }

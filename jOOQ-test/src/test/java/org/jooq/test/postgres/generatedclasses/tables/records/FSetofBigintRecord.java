@@ -6,7 +6,6 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.postgres.generatedclasses.tables.FSetofBigint;
@@ -19,7 +18,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IFSetofBigint;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FSetofBigintRecord extends TableRecordImpl<FSetofBigintRecord> implements Record1<Long>, IFSetofBigint {
 
-	private static final long serialVersionUID = -2035481620;
+	private static final long serialVersionUID = -317708397;
 
 	/**
 	 * Setter for <code>public.f_setof_bigint.f_setof_bigint</code>.

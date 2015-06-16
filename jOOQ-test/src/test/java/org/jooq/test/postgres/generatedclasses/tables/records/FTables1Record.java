@@ -6,7 +6,6 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.postgres.generatedclasses.tables.FTables1;
@@ -19,7 +18,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IFTables1;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FTables1Record extends TableRecordImpl<FTables1Record> implements Record1<Integer>, IFTables1 {
 
-	private static final long serialVersionUID = -2064598866;
+	private static final long serialVersionUID = 703548455;
 
 	/**
 	 * Setter for <code>public.f_tables1.column_value</code>.

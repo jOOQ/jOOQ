@@ -13,7 +13,6 @@ import org.jooq.Record5
 import org.jooq.Row5
 import org.jooq.impl.UDTRecordImpl
 import org.jooq.test.oraclescala.generatedclasses.test.udt.UStreetType
-import org.jooq.test.oraclescala.generatedclasses.test.udt.records.UNumberArrayRecord
 
 import scala.Array
 

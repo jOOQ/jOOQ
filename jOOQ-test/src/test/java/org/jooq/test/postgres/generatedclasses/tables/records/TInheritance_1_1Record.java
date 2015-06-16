@@ -6,7 +6,6 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 
 import org.jooq.Field;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_1;
@@ -19,7 +18,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITInheritance_1
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TInheritance_1_1Record extends TableRecordImpl<TInheritance_1_1Record> implements Record2<String, String>, ITInheritance_1_1 {
 
-	private static final long serialVersionUID = 405288830;
+	private static final long serialVersionUID = -1997197095;
 
 	/**
 	 * Setter for <code>public.t_inheritance_1_1.text_1</code>.

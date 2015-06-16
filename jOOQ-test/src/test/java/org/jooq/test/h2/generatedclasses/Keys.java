@@ -8,6 +8,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.UniqueKey;
 import org.jooq.impl.AbstractKeys;
+import org.jooq.test.h2.generatedclasses.tables.Accounts;
 import org.jooq.test.h2.generatedclasses.tables.TArrays;
 import org.jooq.test.h2.generatedclasses.tables.TAuthor;
 import org.jooq.test.h2.generatedclasses.tables.TBook;
@@ -28,6 +29,7 @@ import org.jooq.test.h2.generatedclasses.tables.T_3488AbcXyzEee;
 import org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable;
 import org.jooq.test.h2.generatedclasses.tables.T_725LobTest;
 import org.jooq.test.h2.generatedclasses.tables.T_877;
+import org.jooq.test.h2.generatedclasses.tables.Transactions;
 import org.jooq.test.h2.generatedclasses.tables.VAuthor;
 import org.jooq.test.h2.generatedclasses.tables.VBook;
 import org.jooq.test.h2.generatedclasses.tables.XTestCase_2025;
@@ -35,6 +37,7 @@ import org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69;
 import org.jooq.test.h2.generatedclasses.tables.XTestCase_71;
 import org.jooq.test.h2.generatedclasses.tables.XTestCase_85;
 import org.jooq.test.h2.generatedclasses.tables.XUnused;
+import org.jooq.test.h2.generatedclasses.tables.records.AccountsRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TBookRecord;
@@ -55,6 +58,7 @@ import org.jooq.test.h2.generatedclasses.tables.records.T_3488AbcXyzEeeRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.T_877Record;
+import org.jooq.test.h2.generatedclasses.tables.records.TransactionsRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.VAuthorRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.VBookRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.XTestCase_2025Record;
@@ -109,6 +113,8 @@ public class Keys {
 	public static final UniqueKey<XTestCase_85Record> PK_X_TEST_CASE_85 = UniqueKeys0.PK_X_TEST_CASE_85;
 	public static final UniqueKey<VAuthorRecord> SYNTHETIC_PK_V_AUTHOR = UniqueKeys0.SYNTHETIC_PK_V_AUTHOR;
 	public static final UniqueKey<VBookRecord> SYNTHETIC_PK_V_BOOK = UniqueKeys0.SYNTHETIC_PK_V_BOOK;
+	public static final UniqueKey<AccountsRecord> CONSTRAINT_A = UniqueKeys0.CONSTRAINT_A;
+	public static final UniqueKey<TransactionsRecord> CONSTRAINT_F = UniqueKeys0.CONSTRAINT_F;
 
 	// -------------------------------------------------------------------------
 	// FOREIGN KEY definitions
@@ -165,6 +171,8 @@ public class Keys {
 		public static final UniqueKey<XTestCase_85Record> PK_X_TEST_CASE_85 = createUniqueKey(XTestCase_85.X_TEST_CASE_85, XTestCase_85.X_TEST_CASE_85.ID);
 		public static final UniqueKey<VAuthorRecord> SYNTHETIC_PK_V_AUTHOR = createUniqueKey(VAuthor.V_AUTHOR, VAuthor.V_AUTHOR.ID);
 		public static final UniqueKey<VBookRecord> SYNTHETIC_PK_V_BOOK = createUniqueKey(VBook.V_BOOK, VBook.V_BOOK.ID);
+		public static final UniqueKey<AccountsRecord> CONSTRAINT_A = createUniqueKey(Accounts.ACCOUNTS, Accounts.ACCOUNTS.ID);
+		public static final UniqueKey<TransactionsRecord> CONSTRAINT_F = createUniqueKey(Transactions.TRANSACTIONS, Transactions.TRANSACTIONS.ID);
 	}
 
 	private static class ForeignKeys0 extends AbstractKeys {

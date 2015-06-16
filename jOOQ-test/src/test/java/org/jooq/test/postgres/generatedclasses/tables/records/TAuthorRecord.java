@@ -9,7 +9,6 @@ import java.sql.Date;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record6;
-import org.jooq.Row;
 import org.jooq.Row6;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITAuthor;
@@ -22,7 +21,7 @@ import org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthorRecord extends UpdatableRecordImpl<TAuthorRecord> implements Record6<Integer, String, String, Date, Integer, UAddressTypeRecord>, ITAuthor {
 
-	private static final long serialVersionUID = -1445314804;
+	private static final long serialVersionUID = -118992417;
 
 	/**
 	 * Setter for <code>public.t_author.id</code>. The author ID

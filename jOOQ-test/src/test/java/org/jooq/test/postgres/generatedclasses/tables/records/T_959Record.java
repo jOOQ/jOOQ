@@ -6,7 +6,6 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.postgres.generatedclasses.enums.U_959;
@@ -20,7 +19,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IT_959;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_959Record extends TableRecordImpl<T_959Record> implements Record1<U_959>, IT_959 {
 
-	private static final long serialVersionUID = -874852901;
+	private static final long serialVersionUID = -727286380;
 
 	/**
 	 * Setter for <code>public.t_959.java_keywords</code>.

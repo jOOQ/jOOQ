@@ -5,6 +5,8 @@ package org.jooq.test.oraclescala.generatedclasses.multi_schema
 
 
 import org.jooq.test.oraclescala.generatedclasses.multi_schema.udt.NumberObject
+import org.jooq.test.oraclescala.generatedclasses.multi_schema.udt.U_4311
+import org.jooq.test.oraclescala.generatedclasses.multi_schema.udt.U_4347
 
 
 /**
@@ -16,4 +18,14 @@ object UDTs {
 	 * The type <code>MULTI_SCHEMA.NUMBER_OBJECT</code>
 	 */
 	val NUMBER_OBJECT = org.jooq.test.oraclescala.generatedclasses.multi_schema.udt.NumberObject.NUMBER_OBJECT
+
+	/**
+	 * The type <code>MULTI_SCHEMA.U_4311</code>
+	 */
+	val U_4311 = org.jooq.test.oraclescala.generatedclasses.multi_schema.udt.U_4311.U_4311
+
+	/**
+	 * The type <code>MULTI_SCHEMA.U_4347</code>
+	 */
+	val U_4347 = org.jooq.test.oraclescala.generatedclasses.multi_schema.udt.U_4347.U_4347
 }

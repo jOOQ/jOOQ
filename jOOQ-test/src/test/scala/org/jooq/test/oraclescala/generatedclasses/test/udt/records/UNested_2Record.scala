@@ -8,7 +8,6 @@ import java.util.Collection
 
 import org.jooq.impl.ArrayRecordImpl
 import org.jooq.test.oraclescala.generatedclasses.test.Test
-import org.jooq.test.oraclescala.generatedclasses.test.udt.records.UNested_1Record
 
 
 /**

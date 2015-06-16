@@ -8,7 +8,6 @@ import java.sql.Date;
 
 import org.jooq.Field;
 import org.jooq.Record6;
-import org.jooq.Row;
 import org.jooq.Row6;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.postgres.generatedclasses.tables.interfaces.IVAuthor;
@@ -21,7 +20,7 @@ import org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthorRecord extends TableRecordImpl<VAuthorRecord> implements Record6<Integer, String, String, Date, Integer, UAddressTypeRecord>, IVAuthor {
 
-	private static final long serialVersionUID = 2004725247;
+	private static final long serialVersionUID = -1621667214;
 
 	/**
 	 * Setter for <code>public.v_author.id</code>.

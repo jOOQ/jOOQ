@@ -35,7 +35,7 @@ import org.jooq.test.postgres.generatedclasses.tables.records.TExoticTypesRecord
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes extends TableImpl<TExoticTypesRecord> {
 
-	private static final long serialVersionUID = -286861723;
+	private static final long serialVersionUID = -1521904938;
 
 	/**
 	 * The reference instance of <code>public.t_exotic_types</code>
@@ -59,6 +59,21 @@ public class TExoticTypes extends TableImpl<TExoticTypesRecord> {
 	 * The column <code>public.t_exotic_types.uu</code>.
 	 */
 	public final TableField<TExoticTypesRecord, UUID> UU = createField("uu", org.jooq.impl.SQLDataType.UUID, this, "");
+
+	/**
+	 * The column <code>public.t_exotic_types.uu_array</code>.
+	 */
+	public final TableField<TExoticTypesRecord, UUID[]> UU_ARRAY = createField("uu_array", org.jooq.impl.SQLDataType.UUID.getArrayDataType(), this, "");
+
+	/**
+	 * The column <code>public.t_exotic_types.uu_wrapper</code>.
+	 */
+	public final TableField<TExoticTypesRecord, UUID> UU_WRAPPER = createField("uu_wrapper", org.jooq.impl.SQLDataType.UUID, this, "");
+
+	/**
+	 * The column <code>public.t_exotic_types.uu_wrapper_array</code>.
+	 */
+	public final TableField<TExoticTypesRecord, UUID[]> UU_WRAPPER_ARRAY = createField("uu_wrapper_array", org.jooq.impl.SQLDataType.UUID.getArrayDataType(), this, "");
 
 	/**
 	 * The column <code>public.t_exotic_types.js</code>.

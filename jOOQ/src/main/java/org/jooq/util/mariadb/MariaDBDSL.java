@@ -55,7 +55,7 @@ public class MariaDBDSL extends DSL {
     /**
      * No instances
      */
-    private MariaDBDSL() {
+    protected MariaDBDSL() {
     }
 
     // -------------------------------------------------------------------------

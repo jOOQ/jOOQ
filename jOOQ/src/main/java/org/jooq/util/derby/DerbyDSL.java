@@ -53,6 +53,6 @@ public class DerbyDSL extends DSL {
     /**
      * No instances
      */
-    private DerbyDSL() {
+    protected DerbyDSL() {
     }
 }

@@ -60,24 +60,48 @@ import org.jooq.exception.DataAccessException;
  * <p>
  * This implementation is entirely based on JDBC transactions and is intended to
  * work with {@link DefaultConnectionProvider} (which is implicitly created when
- * using {@link DSL#using(Connection)}). It supports nested transactions by
- * modeling them implicitly with JDBC {@link Savepoint}s, if supported by the
- * underlying JDBC driver.
+ * using {@link DSL#using(Connection)}).
+ * <p>
+ * <h3>Nesting of transactions</h3> By default, nested transactions are
+ * supported by modeling them implicitly with JDBC {@link Savepoint}s, if
+ * supported by the underlying JDBC driver, and if {@link #nested()} is
+ * <code>true</code>. To deactivate nested transactions, use
+ * {@link #DefaultTransactionProvider(ConnectionProvider, boolean)}.
  *
  * @author Lukas Eder
  */
 public class DefaultTransactionProvider implements TransactionProvider {
 
     /**
-     * This dummy {@link Savepoint} serves as a marker for top level
+     * This {@link Savepoint} serves as a marker for top level
      * transactions in dialects that do not support Savepoints.
      */
-    private static final Savepoint   DUMMY_SAVEPOINT = new DefaultSavepoint();
+    private static final Savepoint UNSUPPORTED_SAVEPOINT = new DefaultSavepoint();
+
+    /**
+     * This {@link Savepoint} serves as a marker for top level
+     * transactions if {@link #nested()} transactions are deactivated.
+     */
+    private static final Savepoint IGNORED_SAVEPOINT     = new DefaultSavepoint();
 
     private final ConnectionProvider provider;
+    private final boolean            nested;
 
     public DefaultTransactionProvider(ConnectionProvider provider) {
+        this(provider, true);
+    }
+
+    /**
+     * @param nested Whether nested transactions via {@link Savepoint}s are
+     *            supported.
+     */
+    public DefaultTransactionProvider(ConnectionProvider provider, boolean nested) {
         this.provider = provider;
+        this.nested = nested;
+    }
+
+    public final boolean nested() {
+        return nested;
     }
 
     @SuppressWarnings("unchecked")
@@ -119,23 +143,25 @@ public class DefaultTransactionProvider implements TransactionProvider {
         Stack<Savepoint> savepoints = savepoints(ctx.configuration());
 
         // This is the top-level transaction
-        if (savepoints.isEmpty()) {
+        if (savepoints.isEmpty())
             brace(ctx.configuration(), true);
-        }
 
         Savepoint savepoint = setSavepoint(ctx.configuration());
 
-        if (savepoint == DUMMY_SAVEPOINT && savepoints.size() > 0)
+        if (savepoint == UNSUPPORTED_SAVEPOINT && savepoints.size() > 0)
             throw new DataAccessException("Cannot nest transactions because Savepoints are not supported");
 
         savepoints.push(savepoint);
     }
 
     private Savepoint setSavepoint(Configuration configuration) {
+        if (!nested())
+            return IGNORED_SAVEPOINT;
+
         switch (configuration.family()) {
             /* [pro] */
             case HANA:
-                return DUMMY_SAVEPOINT;
+                return UNSUPPORTED_SAVEPOINT;
             /* [/pro] */
             default:
                 return connection(configuration).setSavepoint();
@@ -148,7 +174,7 @@ public class DefaultTransactionProvider implements TransactionProvider {
         Savepoint savepoint = savepoints.pop();
 
         // [#3489] Explicitly release savepoints prior to commit
-        if (savepoint != null && savepoint != DUMMY_SAVEPOINT)
+        if (savepoint != null && savepoint != UNSUPPORTED_SAVEPOINT && savepoint != IGNORED_SAVEPOINT)
             try {
                 connection(ctx.configuration()).releaseSavepoint(savepoint);
             }
@@ -178,10 +204,19 @@ public class DefaultTransactionProvider implements TransactionProvider {
             savepoint = savepoints.pop();
 
         try {
-            if (savepoint == null || savepoint == DUMMY_SAVEPOINT)
+            if (savepoint == null || savepoint == UNSUPPORTED_SAVEPOINT) {
                 connection(ctx.configuration()).rollback();
-            else
+            }
+
+            // [#3955] ROLLBACK is only effective if an exception reaches the
+            //         top-level transaction.
+            else if (savepoint == IGNORED_SAVEPOINT) {
+                if (savepoints.isEmpty())
+                    connection(ctx.configuration()).rollback();
+            }
+            else {
                 connection(ctx.configuration()).rollback(savepoint);
+            }
         }
 
         finally {

@@ -53,6 +53,6 @@ public class VerticaDSL extends DSL {
     /**
      * No instances
      */
-    private VerticaDSL() {
+    protected VerticaDSL() {
     }
 }

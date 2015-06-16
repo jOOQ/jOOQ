@@ -6,7 +6,6 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.postgres.generatedclasses.tables.FSetofVoid;
@@ -19,7 +18,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IFSetofVoid;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FSetofVoidRecord extends TableRecordImpl<FSetofVoidRecord> implements Record1<Object>, IFSetofVoid {
 
-	private static final long serialVersionUID = -1872973072;
+	private static final long serialVersionUID = 742923799;
 
 	/**
 	 * Setter for <code>public.f_setof_void.f_setof_void</code>.

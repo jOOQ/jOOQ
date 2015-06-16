@@ -11,7 +11,6 @@ import org.jooq.Record2
 import org.jooq.Row2
 import org.jooq.impl.UDTRecordImpl
 import org.jooq.test.oraclescala.generatedclasses.test.udt.U_2155Object
-import org.jooq.test.oraclescala.generatedclasses.test.udt.records.U_2155ArrayRecord
 
 
 /**

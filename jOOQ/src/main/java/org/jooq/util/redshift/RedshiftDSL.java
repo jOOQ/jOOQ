@@ -53,6 +53,6 @@ public class RedshiftDSL extends DSL {
     /**
      * No instances
      */
-    private RedshiftDSL() {
+    protected RedshiftDSL() {
     }
 }

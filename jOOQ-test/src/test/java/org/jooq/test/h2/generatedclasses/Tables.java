@@ -4,6 +4,7 @@
 package org.jooq.test.h2.generatedclasses;
 
 
+import org.jooq.test.h2.generatedclasses.tables.Accounts;
 import org.jooq.test.h2.generatedclasses.tables.TArrays;
 import org.jooq.test.h2.generatedclasses.tables.TAuthor;
 import org.jooq.test.h2.generatedclasses.tables.TBook;
@@ -29,6 +30,7 @@ import org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable;
 import org.jooq.test.h2.generatedclasses.tables.T_725LobTest;
 import org.jooq.test.h2.generatedclasses.tables.T_785;
 import org.jooq.test.h2.generatedclasses.tables.T_877;
+import org.jooq.test.h2.generatedclasses.tables.Transactions;
 import org.jooq.test.h2.generatedclasses.tables.VAuthor;
 import org.jooq.test.h2.generatedclasses.tables.VBook;
 import org.jooq.test.h2.generatedclasses.tables.VLibrary;
@@ -227,4 +229,14 @@ public class Tables {
 	 * The table PUBLIC.V_3176
 	 */
 	public static final V_3176 V_3176 = org.jooq.test.h2.generatedclasses.tables.V_3176.V_3176;
+
+	/**
+	 * The table PUBLIC.ACCOUNTS
+	 */
+	public static final Accounts ACCOUNTS = org.jooq.test.h2.generatedclasses.tables.Accounts.ACCOUNTS;
+
+	/**
+	 * The table PUBLIC.TRANSACTIONS
+	 */
+	public static final Transactions TRANSACTIONS = org.jooq.test.h2.generatedclasses.tables.Transactions.TRANSACTIONS;
 }

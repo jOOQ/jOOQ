@@ -21,10 +21,13 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITExoticTypes;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes implements ITExoticTypes {
 
-	private static final long serialVersionUID = -30516485;
+	private static final long serialVersionUID = 504039224;
 
 	private final Integer               id;
 	private final UUID                  uu;
+	private final UUID[]                uuArray;
+	private final UUID                  uuWrapper;
+	private final UUID[]                uuWrapperArray;
 	private final Object                js;
 	private final JsonElement           jsGson;
 	private final Object                jsJavax;
@@ -40,6 +43,9 @@ public class TExoticTypes implements ITExoticTypes {
 	public TExoticTypes(TExoticTypes value) {
 		this.id = value.id;
 		this.uu = value.uu;
+		this.uuArray = value.uuArray;
+		this.uuWrapper = value.uuWrapper;
+		this.uuWrapperArray = value.uuWrapperArray;
 		this.js = value.js;
 		this.jsGson = value.jsGson;
 		this.jsJavax = value.jsJavax;
@@ -56,6 +62,9 @@ public class TExoticTypes implements ITExoticTypes {
 	public TExoticTypes(
 		Integer               id,
 		UUID                  uu,
+		UUID[]                uuArray,
+		UUID                  uuWrapper,
+		UUID[]                uuWrapperArray,
 		Object                js,
 		JsonElement           jsGson,
 		Object                jsJavax,
@@ -70,6 +79,9 @@ public class TExoticTypes implements ITExoticTypes {
 	) {
 		this.id = id;
 		this.uu = uu;
+		this.uuArray = uuArray;
+		this.uuWrapper = uuWrapper;
+		this.uuWrapperArray = uuWrapperArray;
 		this.js = js;
 		this.jsGson = jsGson;
 		this.jsJavax = jsJavax;
@@ -91,6 +103,21 @@ public class TExoticTypes implements ITExoticTypes {
 	@Override
 	public UUID getUu() {
 		return this.uu;
+	}
+
+	@Override
+	public UUID[] getUuArray() {
+		return this.uuArray;
+	}
+
+	@Override
+	public UUID getUuWrapper() {
+		return this.uuWrapper;
+	}
+
+	@Override
+	public UUID[] getUuWrapperArray() {
+		return this.uuWrapperArray;
 	}
 
 	@Override

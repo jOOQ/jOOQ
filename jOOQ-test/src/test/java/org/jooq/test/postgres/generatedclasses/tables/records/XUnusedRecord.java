@@ -10,7 +10,6 @@ import java.math.BigInteger;
 import org.jooq.Field;
 import org.jooq.Record15;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row15;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.postgres.generatedclasses.tables.XUnused;
@@ -23,7 +22,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IXUnused;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnusedRecord extends UpdatableRecordImpl<XUnusedRecord> implements Record15<Integer, String, BigInteger, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, String, BigDecimal>, IXUnused {
 
-	private static final long serialVersionUID = 1701058003;
+	private static final long serialVersionUID = 535593364;
 
 	/**
 	 * Setter for <code>public.x_unused.id</code>.

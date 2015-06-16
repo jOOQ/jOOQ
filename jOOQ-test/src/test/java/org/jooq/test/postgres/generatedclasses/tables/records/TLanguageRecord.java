@@ -7,7 +7,6 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record4;
-import org.jooq.Row;
 import org.jooq.Row4;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.postgres.generatedclasses.tables.TLanguage;
@@ -20,7 +19,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITLanguage;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguageRecord extends UpdatableRecordImpl<TLanguageRecord> implements Record4<String, String, String, Integer>, ITLanguage {
 
-	private static final long serialVersionUID = 1806926389;
+	private static final long serialVersionUID = 1021774030;
 
 	/**
 	 * Setter for <code>public.t_language.cd</code>. The language ISO code

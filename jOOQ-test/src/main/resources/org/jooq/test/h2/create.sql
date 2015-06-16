@@ -507,3 +507,20 @@ CREATE ALIAS f_author_exists FOR "org.jooq.test.utils.h2.F.fAuthorExists";/
 CREATE ALIAS f_get_one_cursor FOR "org.jooq.test.utils.h2.F.fGetOneCursor";/
 CREATE ALIAS p_create_author_by_name FOR "org.jooq.test.utils.h2.F.pCreateAuthorByName";/
 CREATE ALIAS p_create_author FOR "org.jooq.test.utils.h2.F.pCreateAuthor";/
+
+
+DROP TABLE IF EXISTS accounts/
+DROP TABLE IF EXISTS transactions/
+
+CREATE TABLE accounts (
+  id INT NOT NULL PRIMARY KEY,
+  account_owner VARCHAR(20) NOT NULL,
+  account_name VARCHAR(20) NOT NULL,
+  amount DECIMAL(18, 2) NOT NULL
+);
+
+CREATE TABLE transactions (
+  id INT NOT NULL PRIMARY KEY,
+  account_id INT NOT NULL,
+  amount DECIMAL(18, 2) NOT NULL
+);

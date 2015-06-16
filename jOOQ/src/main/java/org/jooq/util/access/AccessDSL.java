@@ -53,6 +53,6 @@ public class AccessDSL extends DSL {
     /**
      * No instances
      */
-    private AccessDSL() {
+    protected AccessDSL() {
     }
 }

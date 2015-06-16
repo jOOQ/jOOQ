@@ -9,7 +9,6 @@ import java.sql.Date;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record11;
-import org.jooq.Row;
 import org.jooq.Row11;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.postgres.generatedclasses.enums.UCountry;
@@ -25,7 +24,7 @@ import org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TArraysRecord extends UpdatableRecordImpl<TArraysRecord> implements Record11<Integer, String[], Integer[], Date[], UStreetTypeRecord[], UAddressTypeRecord[], UCountry[], Integer[], String[], String[], String[]>, ITArrays {
 
-	private static final long serialVersionUID = -514554038;
+	private static final long serialVersionUID = 1140706583;
 
 	/**
 	 * Setter for <code>public.t_arrays.id</code>.

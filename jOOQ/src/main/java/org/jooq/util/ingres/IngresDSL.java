@@ -53,6 +53,6 @@ public class IngresDSL extends DSL {
     /**
      * No instances
      */
-    private IngresDSL() {
+    protected IngresDSL() {
     }
 }

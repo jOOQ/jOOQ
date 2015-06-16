@@ -53,6 +53,6 @@ public class HanaDSL extends DSL {
     /**
      * No instances
      */
-    private HanaDSL() {
+    protected HanaDSL() {
     }
 }

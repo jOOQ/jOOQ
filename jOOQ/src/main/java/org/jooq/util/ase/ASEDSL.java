@@ -53,6 +53,6 @@ public class ASEDSL extends DSL {
     /**
      * No instances
      */
-    private ASEDSL() {
+    protected ASEDSL() {
     }
 }

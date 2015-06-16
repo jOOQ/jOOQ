@@ -53,6 +53,6 @@ public class InformixDSL extends DSL {
     /**
      * No instances
      */
-    private InformixDSL() {
+    protected InformixDSL() {
     }
 }

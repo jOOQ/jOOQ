@@ -12,6 +12,7 @@ import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
 import org.jooq.test.h2.generatedclasses.Sequences;
+import org.jooq.test.h2.generatedclasses.tables.Accounts;
 import org.jooq.test.h2.generatedclasses.tables.TArrays;
 import org.jooq.test.h2.generatedclasses.tables.TAuthor;
 import org.jooq.test.h2.generatedclasses.tables.TBook;
@@ -37,6 +38,7 @@ import org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable;
 import org.jooq.test.h2.generatedclasses.tables.T_725LobTest;
 import org.jooq.test.h2.generatedclasses.tables.T_785;
 import org.jooq.test.h2.generatedclasses.tables.T_877;
+import org.jooq.test.h2.generatedclasses.tables.Transactions;
 import org.jooq.test.h2.generatedclasses.tables.VAuthor;
 import org.jooq.test.h2.generatedclasses.tables.VBook;
 import org.jooq.test.h2.generatedclasses.tables.VLibrary;
@@ -56,7 +58,7 @@ import org.jooq.test.h2.generatedclasses.tables.Ää;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-	private static final long serialVersionUID = -1965222505;
+	private static final long serialVersionUID = 1932697100;
 
 	/**
 	 * The reference instance of <code>PUBLIC</code>
@@ -127,6 +129,8 @@ public class Public extends SchemaImpl {
 			VBook.V_BOOK,
 			Ää.ÄÄ,
 			V_2603.V_2603,
-			V_3176.V_3176);
+			V_3176.V_3176,
+			Accounts.ACCOUNTS,
+			Transactions.TRANSACTIONS);
 	}
 }

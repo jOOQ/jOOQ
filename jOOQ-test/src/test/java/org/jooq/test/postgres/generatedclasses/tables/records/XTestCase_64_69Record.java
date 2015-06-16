@@ -7,7 +7,6 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.postgres.generatedclasses.tables.XTestCase_64_69;
@@ -20,7 +19,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IXTestCase_64_6
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_64_69Record extends UpdatableRecordImpl<XTestCase_64_69Record> implements Record2<Integer, Integer>, IXTestCase_64_69 {
 
-	private static final long serialVersionUID = -989498411;
+	private static final long serialVersionUID = 425159530;
 
 	/**
 	 * Setter for <code>public.x_test_case_64_69.id</code>.

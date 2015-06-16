@@ -15,7 +15,6 @@ import org.jooq.Record8
 import org.jooq.Row8
 import org.jooq.impl.UDTRecordImpl
 import org.jooq.test.oraclescala.generatedclasses.test.udt.UAddressType
-import org.jooq.test.oraclescala.generatedclasses.test.udt.records.UStreetTypeRecord
 
 import scala.Array
 

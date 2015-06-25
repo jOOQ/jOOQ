@@ -138,7 +138,7 @@ public final class Convert {
         falseValues.add("OFF");
         falseValues.add("disabled");
         falseValues.add("DISABLED");
-        trueValues.add("f"); //added for Vertica DB, Vertica return t or f
+        falseValues.add("f"); //added for Vertica DB, Vertica return t or f
 
         TRUE_VALUES = Collections.unmodifiableSet(trueValues);
         FALSE_VALUES = Collections.unmodifiableSet(falseValues);

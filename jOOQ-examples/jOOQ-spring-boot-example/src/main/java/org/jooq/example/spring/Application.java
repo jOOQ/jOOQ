@@ -27,44 +27,4 @@ public class Application {
 		SpringApplication.run(Application.class, args);
 	}
 
-	@Bean
-	public DataSourceTransactionManager transactionManager(DataSource dataSource) {
-		return new DataSourceTransactionManager(dataSource);
-	}
-
-	@Bean
-	public DSLContext dsl(org.jooq.Configuration config) {
-		return new DefaultDSLContext(config);
-	}
-
-	@Bean
-	public ConnectionProvider connectionProvider(DataSource dataSource) {
-		return new DataSourceConnectionProvider(new TransactionAwareDataSourceProxy(dataSource));
-	}
-
-	@Bean
-	public TransactionProvider transactionProvider() {
-		return new SpringTransactionProvider();
-	}
-
-	@Bean
-	public ExceptionTranslator exceptionTranslator() {
-		return new ExceptionTranslator();
-	}
-
-	@Bean
-	public ExecuteListenerProvider executeListenerProvider(ExceptionTranslator exceptionTranslator) {
-		return new DefaultExecuteListenerProvider(exceptionTranslator);
-	}
-
-	@Bean
-	public org.jooq.Configuration jooqConfig(ConnectionProvider connectionProvider,
-			TransactionProvider transactionProvider, ExecuteListenerProvider executeListenerProvider) {
-
-		return new DefaultConfiguration() //
-				.derive(connectionProvider) //
-				.derive(transactionProvider) //
-				.derive(executeListenerProvider) //
-				.derive(SQLDialect.H2);
-	}
 }

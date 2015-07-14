@@ -38,7 +38,7 @@
  *
  *
  */
-package org.jooq.example.spring;
+package org.jooq.example.spring.config;
 
 import static org.springframework.transaction.TransactionDefinition.PROPAGATION_NESTED;
 

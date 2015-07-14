@@ -137,6 +137,13 @@ public class PlainSQLTest extends AbstractTest {
         assertEquals(3, i);
 
         context.assertIsSatisfied();
+    }
 
+    @Test
+    public void testEscapedCurlyBraces() {
+        QueryPart q = sql("{abc}, {{xyz}}");
+
+        assertEquals("abc, {xyz}", create.render(q));
+        assertEquals("abc, {xyz}", create.renderInlined(q));
     }
 }

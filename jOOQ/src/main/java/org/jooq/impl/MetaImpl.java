@@ -101,11 +101,13 @@ class MetaImpl implements Meta, Serializable {
 
     private final DSLContext                    create;
     private final Configuration                 configuration;
+    private final boolean                       inverseSchemaCatalog;
     private transient volatile DatabaseMetaData meta;
 
     MetaImpl(Configuration configuration) {
         this.create = DSL.using(configuration);
         this.configuration = configuration;
+        this.inverseSchemaCatalog = asList(MYSQL, MARIADB).contains(configuration.family());
     }
 
     private final DatabaseMetaData meta() {
@@ -136,7 +138,7 @@ class MetaImpl implements Meta, Serializable {
             List<Catalog> result = new ArrayList<Catalog>();
 
             // [#2760] MySQL JDBC confuses "catalog" and "schema"
-            if (!asList(MYSQL, MARIADB).contains(configuration.dialect().family())) {
+            if (!inverseSchemaCatalog) {
                 Result<Record> catalogs = create.fetch(
                     meta().getCatalogs(),
                     SQLDataType.VARCHAR // TABLE_CATALOG
@@ -221,7 +223,7 @@ class MetaImpl implements Meta, Serializable {
                 xxxx
                 xx [/pro] */
 
-                if (!asList(MYSQL, MARIADB).contains(configuration.dialect().family())) {
+                if (!inverseSchemaCatalog) {
                     Result<Record> schemas = create.fetch(
                         meta().getSchemas(),
 
@@ -311,7 +313,7 @@ class MetaImpl implements Meta, Serializable {
 
                 xx [/pro] */
 
-                if (!asList(MYSQL, MARIADB).contains(configuration.dialect().family())) {
+                if (!inverseSchemaCatalog) {
                     rs = meta().getTables(null, getName(), "%", types);
                 }
 
@@ -332,11 +334,15 @@ class MetaImpl implements Meta, Serializable {
                 );
 
                 for (Record table : tables) {
-//                  String catalog = table.getValue(0, String.class);
+                    String catalog = table.getValue(0, String.class);
                     String schema = table.getValue(1, String.class);
                     String name = table.getValue(2, String.class);
 
-                    result.add(new MetaTable(name, this, getColumns(schema, name)));
+                    // [#2760] MySQL JDBC confuses "catalog" and "schema"
+                    result.add(new MetaTable(name, this, getColumns(
+                        inverseSchemaCatalog ? catalog : schema,
+                        name
+                    )));
 
 //                  TODO: Find a more efficient way to do this
 //                  Result<Record> pkColumns = executor.fetch(meta().getPrimaryKeys(catalog, schema, name))
@@ -360,12 +366,13 @@ class MetaImpl implements Meta, Serializable {
             if (columnCache == null && configuration.dialect() != SQLITE) {
                 Result<Record> columns = getColumns0(schema, "%");
 
+                Field<String> tableCat   = (Field<String>) columns.field(0); // TABLE_CAT
                 Field<String> tableSchem = (Field<String>) columns.field(1); // TABLE_SCHEM
-                Field<String> tableName = (Field<String>) columns.field(2);  // TABLE_NAME
+                Field<String> tableName  = (Field<String>) columns.field(2); // TABLE_NAME
 
                 Map<Record, Result<Record>> groups =
                 columns.intoGroups(new Field[] {
-                    tableSchem,
+                    inverseSchemaCatalog ? tableCat : tableSchem,
                     tableName
                 });
 
@@ -374,7 +381,7 @@ class MetaImpl implements Meta, Serializable {
                 for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
                     Record key = entry.getKey();
                     Result<Record> value = entry.getValue();
-                    columnCache.put(name(key.getValue(tableSchem), key.getValue(tableName)), value);
+                    columnCache.put(name(key.getValue(inverseSchemaCatalog ? tableCat : tableSchem), key.getValue(tableName)), value);
                 }
             }
 
@@ -388,7 +395,7 @@ class MetaImpl implements Meta, Serializable {
 
         private final Result<Record> getColumns0(String schema, String table) throws SQLException {
             ResultSet rs;
-            if (!asList(MYSQL, MARIADB).contains(configuration.dialect().family())) {
+            if (!inverseSchemaCatalog) {
                 rs = meta().getColumns(null, schema, table, "%");
             }
 
@@ -434,7 +441,6 @@ class MetaImpl implements Meta, Serializable {
             }
         }
 
-        @SuppressWarnings("unchecked")
         @Override
         public final List<UniqueKey<Record>> getKeys() {
             return unmodifiableList(asList(getPrimaryKey()));
@@ -454,7 +460,7 @@ class MetaImpl implements Meta, Serializable {
             try {
                 ResultSet rs;
 
-                if (!asList(MYSQL, MARIADB).contains(family)) {
+                if (!inverseSchemaCatalog) {
                     rs = meta().getPrimaryKeys(null, schema, getName());
                 }
 

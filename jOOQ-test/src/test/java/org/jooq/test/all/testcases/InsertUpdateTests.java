@@ -654,11 +654,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testInsertReturning() throws Exception {
-        if (TTriggers() == null) {
-            log.info("SKIPPING", "INSERT RETURNING tests");
-            return;
-        }
-
+        assumeNotNull(TTriggers());
         jOOQAbstractTest.reset = false;
 
         // Non-DSL querying
@@ -790,11 +786,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testInsertSelectReturning() throws Exception {
-        if (TTriggers() == null) {
-            log.info("SKIPPING", "INSERT RETURNING tests");
-            return;
-        }
-
+        assumeNotNull(TTriggers());
         jOOQAbstractTest.reset = false;
 
         // Create a dummy record, generating the original ID
@@ -888,11 +880,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testInsertReturningWithModelAPI() throws Exception {
-        if (TTriggers() == null) {
-            log.info("SKIPPING", "INSERT RETURNING tests");
-            return;
-        }
-
+        assumeNotNull(TTriggers());
         jOOQAbstractTest.reset = false;
 
         InsertQuery<T> i1 = create().insertQuery(TTriggers());
@@ -919,11 +907,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testInsertReturningWithSetClause() throws Exception {
-        if (TTriggers() == null) {
-            log.info("SKIPPING", "INSERT RETURNING tests");
-            return;
-        }
-
+        assumeNotNull(TTriggers());
         jOOQAbstractTest.reset = false;
 
         {
@@ -957,11 +941,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testInsertReturningWithCaseSensitiveColumns() throws Exception {
-        if (CASE() == null) {
-            log.info("SKIPPING", "INSERT RETURNING tests with case sensitive columns");
-            return;
-        }
-
+        assumeNotNull(CASE());
         jOOQAbstractTest.reset = false;
 
         CASE c =
@@ -1002,11 +982,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testInsertReturningWithPlainSQL() throws Exception {
-        if (TTriggers() == null) {
-            log.info("SKIPPING", "INSERT RETURNING tests");
-            return;
-        }
-
+        assumeNotNull(TTriggers());
         jOOQAbstractTest.reset = false;
 
         // Create a dummy record, generating the original ID

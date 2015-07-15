@@ -552,6 +552,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     private void metaTableChecks(Collection<? extends Table<?>> metaTables) {
         for (Table<?> metaTable : metaTables) {
 
+            // [#4399] All tables should have at least one column
+            assertTrue("Table must have at least one column: " + metaTable, metaTable.fields().length > 0);
+
             // Check only the "TEST" schema, not "MULTI_SCHEMA" and others
             if (schema().equals(metaTable.getSchema())) {
                 Table<?> generatedTable = schema().getTable(metaTable.getName());

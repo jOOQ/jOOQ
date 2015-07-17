@@ -81,6 +81,18 @@ import java.util.EventListener;
  * </pre>
  * <p>
  * Whatever is not a {@link Clause} in the above example is a {@link QueryPart}.
+ * <p>
+ * <h3>A remark about performance</h3>
+ * <p>
+ * Implementors of this SPI should be wary of performance implications of their
+ * implementations. The below methods are called for every AST element of every
+ * query, which produces a lot of calls throughout an application. What would
+ * otherwise be premature optimisations may have great effect inside the
+ * <code>VisitListener</code>. For more details, please refer to this article:
+ * <a href=
+ * "http://blog.jooq.org/2015/02/05/top-10-easy-performance-optimisations-in-java/">
+ * http://blog.jooq.org/2015/02/05/top-10-easy-performance-optimisations-in-
+ * java/</a>.
  *
  * @author Lukas Eder
  */

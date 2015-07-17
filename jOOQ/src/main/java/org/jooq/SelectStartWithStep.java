@@ -121,6 +121,7 @@ public interface SelectStartWithStep<R extends Record> extends SelectGroupByStep
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#condition(String)
+     * @see SQL
      */
     @Support({ CUBRID, INFORMIX, ORACLE })
     @PlainSQL
@@ -136,6 +137,7 @@ public interface SelectStartWithStep<R extends Record> extends SelectGroupByStep
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#condition(String, Object...)
+     * @see SQL
      */
     @Support({ CUBRID, INFORMIX, ORACLE })
     @PlainSQL
@@ -151,6 +153,7 @@ public interface SelectStartWithStep<R extends Record> extends SelectGroupByStep
      * escape literals when concatenated into SQL clauses! *
      *
      * @see DSL#condition(String, QueryPart...)
+     * @see SQL
      */
     @Support({ CUBRID, INFORMIX, ORACLE })
     @PlainSQL

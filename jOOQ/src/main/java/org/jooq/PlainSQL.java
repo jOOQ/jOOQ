@@ -58,6 +58,7 @@ import java.lang.annotation.Target;
  * concatenated into SQL clauses!
  *
  * @author Lukas Eder
+ * @see SQL
  */
 @Target({ ElementType.TYPE, ElementType.METHOD, ElementType.CONSTRUCTOR })
 @Retention(RUNTIME)

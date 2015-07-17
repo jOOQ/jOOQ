@@ -375,6 +375,7 @@ public interface DSLContext extends Scope {
      *
      * @param sql The SQL
      * @return A query wrapping the plain SQL
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -397,6 +398,7 @@ public interface DSLContext extends Scope {
      * @param sql The SQL
      * @param bindings The bindings
      * @return A query wrapping the plain SQL
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -427,6 +429,7 @@ public interface DSLContext extends Scope {
      * @param parts The {@link QueryPart} objects that are rendered at the
      *            {numbered placeholder} locations
      * @return A query wrapping the plain SQL
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -454,6 +457,7 @@ public interface DSLContext extends Scope {
      *         <code>null</code>, even if the database returns no
      *         {@link ResultSet}
      * @throws DataAccessException if something went wrong executing the query
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -485,6 +489,7 @@ public interface DSLContext extends Scope {
      *         <code>null</code>, even if the database returns no
      *         {@link ResultSet}
      * @throws DataAccessException if something went wrong executing the query
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -516,6 +521,7 @@ public interface DSLContext extends Scope {
      *            {numbered placeholder} locations
      * @return The results from the executed query
      * @throws DataAccessException if something went wrong executing the query
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -549,6 +555,7 @@ public interface DSLContext extends Scope {
      *         <code>null</code>, even if the database returns no
      *         {@link ResultSet}
      * @throws DataAccessException if something went wrong executing the query
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -586,6 +593,7 @@ public interface DSLContext extends Scope {
      *         <code>null</code>, even if the database returns no
      *         {@link ResultSet}
      * @throws DataAccessException if something went wrong executing the query
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -625,6 +633,7 @@ public interface DSLContext extends Scope {
      *         <code>null</code>, even if the database returns no
      *         {@link ResultSet}
      * @throws DataAccessException if something went wrong executing the query
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -659,6 +668,7 @@ public interface DSLContext extends Scope {
      *         <code>null</code>, even if the database returns no
      *         {@link ResultSet}
      * @throws DataAccessException if something went wrong executing the query
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -696,6 +706,7 @@ public interface DSLContext extends Scope {
      *         <code>null</code>, even if the database returns no
      *         {@link ResultSet}
      * @throws DataAccessException if something went wrong executing the query
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -735,6 +746,7 @@ public interface DSLContext extends Scope {
      *         <code>null</code>, even if the database returns no
      *         {@link ResultSet}
      * @throws DataAccessException if something went wrong executing the query
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -760,6 +772,7 @@ public interface DSLContext extends Scope {
      *         <code>null</code>, even if the database returns no
      *         {@link ResultSet}
      * @throws DataAccessException if something went wrong executing the query
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -788,6 +801,7 @@ public interface DSLContext extends Scope {
      *         <code>null</code>, even if the database returns no
      *         {@link ResultSet}
      * @throws DataAccessException if something went wrong executing the query
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -820,6 +834,7 @@ public interface DSLContext extends Scope {
      *            {numbered placeholder} locations
      * @return The results from the executed query
      * @throws DataAccessException if something went wrong executing the query
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -846,6 +861,7 @@ public interface DSLContext extends Scope {
      * @return The results from the executed query.
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -877,6 +893,7 @@ public interface DSLContext extends Scope {
      *         <code>null</code> if the database returned no records
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -910,6 +927,7 @@ public interface DSLContext extends Scope {
      *         <code>null</code> if the database returned no records
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -937,6 +955,7 @@ public interface DSLContext extends Scope {
      * @return The results from the executed query
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -967,6 +986,7 @@ public interface DSLContext extends Scope {
      * @return The results from the executed query
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -999,6 +1019,7 @@ public interface DSLContext extends Scope {
      * @return The results from the executed query
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -1029,6 +1050,7 @@ public interface DSLContext extends Scope {
      * @throws TooManyRowsException if the query returned more than one record
      * @throws InvalidResultException if the query returned a record with more
      *             than one value
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -1062,6 +1084,7 @@ public interface DSLContext extends Scope {
      * @throws TooManyRowsException if the query returned more than one record
      * @throws InvalidResultException if the query returned a record with more
      *             than one value
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -1097,6 +1120,7 @@ public interface DSLContext extends Scope {
      * @throws TooManyRowsException if the query returned more than one record
      * @throws InvalidResultException if the query returned a record with more
      *             than one value
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -1126,6 +1150,7 @@ public interface DSLContext extends Scope {
      * @throws TooManyRowsException if the query returned more than one record
      * @throws InvalidResultException if the query returned a record with more
      *             than one value
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -1158,6 +1183,7 @@ public interface DSLContext extends Scope {
      * @throws TooManyRowsException if the query returned more than one record
      * @throws InvalidResultException if the query returned a record with more
      *             than one value
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -1192,6 +1218,7 @@ public interface DSLContext extends Scope {
      * @throws TooManyRowsException if the query returned more than one record
      * @throws InvalidResultException if the query returned a record with more
      *             than one value
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -1219,6 +1246,7 @@ public interface DSLContext extends Scope {
      * @return The result values from the executed query. This is never
      *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -1249,6 +1277,7 @@ public interface DSLContext extends Scope {
      * @return The results from the executed query. This is never
      *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -1281,6 +1310,7 @@ public interface DSLContext extends Scope {
      * @return The results from the executed query. This is never
      *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -1297,6 +1327,7 @@ public interface DSLContext extends Scope {
      * @param sql The SQL
      * @return The results from the executed query
      * @throws DataAccessException if something went wrong executing the query
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -1317,6 +1348,7 @@ public interface DSLContext extends Scope {
      * @param bindings The bindings
      * @return The results from the executed query
      * @throws DataAccessException if something went wrong executing the query
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -1348,6 +1380,7 @@ public interface DSLContext extends Scope {
      *            {numbered placeholder} locations
      * @return The results from the executed query
      * @throws DataAccessException if something went wrong executing the query
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -1393,6 +1426,7 @@ public interface DSLContext extends Scope {
      *
      * @param sql The SQL
      * @return An executable query
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -1440,6 +1474,7 @@ public interface DSLContext extends Scope {
      * @param sql The SQL
      * @param bindings The bindings
      * @return A query wrapping the plain SQL
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -1470,6 +1505,7 @@ public interface DSLContext extends Scope {
      * @param parts The {@link QueryPart} objects that are rendered at the
      *            {numbered placeholder} locations
      * @return A query wrapping the plain SQL
+     * @see SQL
      */
     @Support
     @PlainSQL

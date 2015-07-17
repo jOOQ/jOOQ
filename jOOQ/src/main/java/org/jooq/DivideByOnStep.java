@@ -78,6 +78,7 @@ public interface DivideByOnStep {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#condition(String)
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -92,6 +93,7 @@ public interface DivideByOnStep {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#condition(String, Object...)
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -106,6 +108,7 @@ public interface DivideByOnStep {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#condition(String, QueryPart...)
+     * @see SQL
      */
     @Support
     @PlainSQL

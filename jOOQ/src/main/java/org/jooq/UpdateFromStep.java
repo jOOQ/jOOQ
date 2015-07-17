@@ -94,6 +94,7 @@ public interface UpdateFromStep<R extends Record> extends UpdateWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String)
+     * @see SQL
      */
     @Support({ HANA, INGRES, POSTGRES, SQLSERVER, SYBASE })
     @PlainSQL
@@ -108,6 +109,7 @@ public interface UpdateFromStep<R extends Record> extends UpdateWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, Object...)
+     * @see SQL
      */
     @Support({ HANA, INGRES, POSTGRES, SQLSERVER, SYBASE })
     @PlainSQL
@@ -122,6 +124,7 @@ public interface UpdateFromStep<R extends Record> extends UpdateWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, QueryPart...)
+     * @see SQL
      */
     @Support({ HANA, INGRES, POSTGRES, SQLSERVER, SYBASE })
     @PlainSQL

@@ -115,6 +115,7 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String)
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -129,6 +130,7 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, Object...)
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -143,6 +145,7 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, QueryPart...)
+     * @see SQL
      */
     @Support
     @PlainSQL

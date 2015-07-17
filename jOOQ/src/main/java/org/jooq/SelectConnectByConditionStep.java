@@ -120,6 +120,7 @@ public interface SelectConnectByConditionStep<R extends Record> extends SelectSt
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#condition(String)
+     * @see SQL
      */
     @Support({ CUBRID })
     @PlainSQL
@@ -135,6 +136,7 @@ public interface SelectConnectByConditionStep<R extends Record> extends SelectSt
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#condition(String, Object...)
+     * @see SQL
      */
     @Support({ CUBRID })
     @PlainSQL
@@ -150,6 +152,7 @@ public interface SelectConnectByConditionStep<R extends Record> extends SelectSt
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#condition(String, QueryPart...)
+     * @see SQL
      */
     @Support({ CUBRID })
     @PlainSQL

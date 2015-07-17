@@ -5880,6 +5880,7 @@ public class DSL {
      *
      * @param sql The SQL
      * @return A query part wrapping the plain SQL
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -5904,6 +5905,7 @@ public class DSL {
      * @param parts The {@link QueryPart} objects that are rendered at the
      *            {numbered placeholder} locations
      * @return A query part wrapping the plain SQL
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -5926,6 +5928,7 @@ public class DSL {
      *
      * @param sql The SQL
      * @return A query part wrapping the plain SQL
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -5948,6 +5951,7 @@ public class DSL {
      * @param sql The SQL
      * @return A query part wrapping the plain SQL
      * @deprecated - 3.6.0 - [#3854] - Use {@link #sql(String)} instead
+     * @see SQL
      */
     @Deprecated
     @Support
@@ -5974,6 +5978,7 @@ public class DSL {
      *            {numbered placeholder} locations
      * @return A query part wrapping the plain SQL
      * @deprecated - 3.6.0 - [#3854] - Use {@link #sql(String, QueryPart...)} instead
+     * @see SQL
      */
     @Deprecated
     @Support
@@ -5998,6 +6003,7 @@ public class DSL {
      * @param sql The SQL
      * @return A query part wrapping the plain SQL
      * @deprecated - 3.6.0 - [#3854] - Use {@link #sql(String, Object...)} instead
+     * @see SQL
      */
     @Deprecated
     @Support
@@ -6026,6 +6032,7 @@ public class DSL {
      *
      * @param sql The SQL
      * @return A query wrapping the plain SQL
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -6050,6 +6057,7 @@ public class DSL {
      * @param sql The SQL
      * @param bindings The bindings
      * @return A query wrapping the plain SQL
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -6082,6 +6090,7 @@ public class DSL {
      * @param parts The {@link QueryPart} objects that are rendered at the
      *            {numbered placeholder} locations
      * @return A query wrapping the plain SQL
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -6129,6 +6138,7 @@ public class DSL {
      *
      * @param sql The SQL
      * @return An executable query
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -6178,6 +6188,7 @@ public class DSL {
      * @param sql The SQL
      * @param bindings The bindings
      * @return A query wrapping the plain SQL
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -6210,6 +6221,7 @@ public class DSL {
      * @param parts The {@link QueryPart} objects that are rendered at the
      *            {numbered placeholder} locations
      * @return A query wrapping the plain SQL
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -6242,6 +6254,7 @@ public class DSL {
      *
      * @param sql The SQL
      * @return A table wrapping the plain SQL
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -6277,6 +6290,7 @@ public class DSL {
      *
      * @param sql The SQL
      * @return A table wrapping the plain SQL
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -6313,6 +6327,7 @@ public class DSL {
      * @param parts The {@link QueryPart} objects that are rendered at the
      *            {numbered placeholder} locations
      * @return A table wrapping the plain SQL
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -6330,6 +6345,7 @@ public class DSL {
      *
      * @param sql The SQL
      * @return A field wrapping the plain SQL
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -6348,6 +6364,7 @@ public class DSL {
      * @param sql The SQL
      * @param type The field type
      * @return A field wrapping the plain SQL
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -6366,6 +6383,7 @@ public class DSL {
      * @param sql The SQL
      * @param type The field type
      * @return A field wrapping the plain SQL
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -6394,6 +6412,7 @@ public class DSL {
      *
      * @param sql The SQL
      * @return A field wrapping the plain SQL
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -6423,6 +6442,7 @@ public class DSL {
      * @param sql The SQL
      * @param bindings The bindings for the field
      * @return A field wrapping the plain SQL
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -6452,6 +6472,7 @@ public class DSL {
      * @param sql The SQL
      * @param type The field type
      * @return A field wrapping the plain SQL
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -6482,6 +6503,7 @@ public class DSL {
      * @param type The field type
      * @param bindings The bindings for the field
      * @return A field wrapping the plain SQL
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -6511,6 +6533,7 @@ public class DSL {
      * @param sql The SQL
      * @param type The field type
      * @return A field wrapping the plain SQL
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -6541,6 +6564,7 @@ public class DSL {
      * @param type The field type
      * @param bindings The bindings for the field
      * @return A field wrapping the plain SQL
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -6576,6 +6600,7 @@ public class DSL {
      * @param parts The {@link QueryPart} objects that are rendered at the
      *            {numbered placeholder} locations
      * @return A field wrapping the plain SQL
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -6612,6 +6637,7 @@ public class DSL {
      * @param parts The {@link QueryPart} objects that are rendered at the
      *            {numbered placeholder} locations
      * @return A field wrapping the plain SQL
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -6631,6 +6657,7 @@ public class DSL {
      * @param name The function name (without parentheses)
      * @param type The function return type
      * @param arguments The function arguments
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -6650,6 +6677,7 @@ public class DSL {
      * @param name The function name (without parentheses)
      * @param type The function return type
      * @param arguments The function arguments
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -6700,6 +6728,7 @@ public class DSL {
      *
      * @param sql The SQL
      * @return A condition wrapping the plain SQL
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -6727,6 +6756,7 @@ public class DSL {
      * @param sql The SQL
      * @param bindings The bindings
      * @return A condition wrapping the plain SQL
+     * @see SQL
      */
     @Support
     @PlainSQL
@@ -6757,6 +6787,7 @@ public class DSL {
      * @param parts The {@link QueryPart} objects that are rendered at the
      *            {numbered placeholder} locations
      * @return A condition wrapping the plain SQL
+     * @see SQL
      */
     @Support
     @PlainSQL

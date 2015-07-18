@@ -5240,6 +5240,54 @@ public class DSL {
     }
 
     /**
+     * A table function generating a series of values from <code>from</code> to
+     * <code>to</code> (inclusive) by steps of <code>step</code>.
+     * <p>
+     * This function is inspired by PostgreSQL's
+     * <code>GENERATE_SERIES(from, to, step)</code> function.
+     * <code><pre>
+     * -- PostgreSQL
+     * SELECT * FROM GENERATE_SERIES(a, b, c)
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static Table<Record1<Integer>> generateSeries(int from, int to, int step) {
+        return generateSeries(val(from), val(to), step);
+    }
+
+    /**
+     * A table function generating a series of values from <code>from</code> to
+     * <code>to</code> (inclusive) by steps of <code>step</code>.
+     * <p>
+     * This function is inspired by PostgreSQL's
+     * <code>GENERATE_SERIES(from, to, step)</code> function.
+     * <code><pre>
+     * -- PostgreSQL
+     * SELECT * FROM GENERATE_SERIES(a, b, c)
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static Table<Record1<Integer>> generateSeries(Field<Integer> from, Field<Integer> to, int step) {
+        return generateSeries(from, to, val(step));
+    }
+
+    /**
+     * A table function generating a series of values from <code>from</code> to
+     * <code>to</code> (inclusive) by steps of <code>step</code>.
+     * <p>
+     * This function is inspired by PostgreSQL's
+     * <code>GENERATE_SERIES(from, to, step)</code> function.
+     * <code><pre>
+     * -- PostgreSQL
+     * SELECT * FROM GENERATE_SERIES(a, b, c)
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static Table<Record1<Integer>> generateSeries(Field<Integer> from, Field<Integer> to, Field<Integer> step) {
+        return new GenerateSeries(nullSafe(from), nullSafe(to), nullSafe(step));
+    }
+
+    /**
      * Create a <code>LATERAL</code> joined table.
      * <p>
      * Example:

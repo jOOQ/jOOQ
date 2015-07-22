@@ -47,7 +47,8 @@ import static org.jooq.impl.Utils.DATA_DEFAULT_TRANSACTION_PROVIDER_SAVEPOINTS;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Savepoint;
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
@@ -105,11 +106,11 @@ public class DefaultTransactionProvider implements TransactionProvider {
     }
 
     @SuppressWarnings("unchecked")
-    private final Stack<Savepoint> savepoints(Configuration configuration) {
-        Stack<Savepoint> savepoints = (Stack<Savepoint>) configuration.data(DATA_DEFAULT_TRANSACTION_PROVIDER_SAVEPOINTS);
+    private final Deque<Savepoint> savepoints(Configuration configuration) {
+        Deque<Savepoint> savepoints = (Deque<Savepoint>) configuration.data(DATA_DEFAULT_TRANSACTION_PROVIDER_SAVEPOINTS);
 
         if (savepoints == null) {
-            savepoints = new Stack<Savepoint>();
+            savepoints = new ArrayDeque<Savepoint>();
             configuration.data(DATA_DEFAULT_TRANSACTION_PROVIDER_SAVEPOINTS, savepoints);
         }
 
@@ -140,7 +141,7 @@ public class DefaultTransactionProvider implements TransactionProvider {
 
     @Override
     public final void begin(TransactionContext ctx) {
-        Stack<Savepoint> savepoints = savepoints(ctx.configuration());
+        Deque<Savepoint> savepoints = savepoints(ctx.configuration());
 
         // This is the top-level transaction
         if (savepoints.isEmpty())
@@ -148,7 +149,7 @@ public class DefaultTransactionProvider implements TransactionProvider {
 
         Savepoint savepoint = setSavepoint(ctx.configuration());
 
-        if (savepoint == UNSUPPORTED_SAVEPOINT && savepoints.size() > 0)
+        if (savepoint == UNSUPPORTED_SAVEPOINT && !savepoints.isEmpty())
             throw new DataAccessException("Cannot nest transactions because Savepoints are not supported");
 
         savepoints.push(savepoint);
@@ -170,7 +171,7 @@ public class DefaultTransactionProvider implements TransactionProvider {
 
     @Override
     public final void commit(TransactionContext ctx) {
-        Stack<Savepoint> savepoints = savepoints(ctx.configuration());
+        Deque<Savepoint> savepoints = savepoints(ctx.configuration());
         Savepoint savepoint = savepoints.pop();
 
         // [#3489] Explicitly release savepoints prior to commit
@@ -196,7 +197,7 @@ public class DefaultTransactionProvider implements TransactionProvider {
 
     @Override
     public final void rollback(TransactionContext ctx) {
-        Stack<Savepoint> savepoints = savepoints(ctx.configuration());
+        Deque<Savepoint> savepoints = savepoints(ctx.configuration());
         Savepoint savepoint = null;
 
         // [#3537] If something went wrong with the savepoints per se

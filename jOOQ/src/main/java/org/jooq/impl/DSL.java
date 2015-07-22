@@ -9959,7 +9959,7 @@ public class DSL {
      * @see #power(Field, Number)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
-    public static <T extends Number> Field<T> shl(T value1, T value2) {
+    public static <T extends Number> Field<T> shl(T value1, Number value2) {
         return shl(Utils.field(value1), Utils.field(value2));
     }
 
@@ -9970,7 +9970,7 @@ public class DSL {
      * @see #power(Field, Number)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
-    public static <T extends Number> Field<T> shl(T value1, Field<T> value2) {
+    public static <T extends Number> Field<T> shl(T value1, Field<? extends Number> value2) {
         return shl(Utils.field(value1), nullSafe(value2));
     }
 
@@ -9981,7 +9981,7 @@ public class DSL {
      * @see #power(Field, Number)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
-    public static <T extends Number> Field<T> shl(Field<T>value1, T value2) {
+    public static <T extends Number> Field<T> shl(Field<T>value1, Number value2) {
         return shl(nullSafe(value1), Utils.field(value2));
     }
 
@@ -9995,7 +9995,7 @@ public class DSL {
      * @see #power(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
-    public static <T extends Number> Field<T> shl(Field<T> field1, Field<T> field2) {
+    public static <T extends Number> Field<T> shl(Field<T> field1, Field<? extends Number> field2) {
         return new Expression<T>(ExpressionOperator.SHL, nullSafe(field1), nullSafe(field2));
     }
 
@@ -10006,7 +10006,7 @@ public class DSL {
      * @see #power(Field, Number)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
-    public static <T extends Number> Field<T> shr(T value1, T value2) {
+    public static <T extends Number> Field<T> shr(T value1, Number value2) {
         return shr(Utils.field(value1), Utils.field(value2));
     }
 
@@ -10017,7 +10017,7 @@ public class DSL {
      * @see #power(Field, Number)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
-    public static <T extends Number> Field<T> shr(T value1, Field<T> value2) {
+    public static <T extends Number> Field<T> shr(T value1, Field<? extends Number> value2) {
         return shr(Utils.field(value1), nullSafe(value2));
     }
 
@@ -10028,7 +10028,7 @@ public class DSL {
      * @see #power(Field, Number)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
-    public static <T extends Number> Field<T> shr(Field<T> value1, T value2) {
+    public static <T extends Number> Field<T> shr(Field<T> value1, Number value2) {
         return shr(nullSafe(value1), Utils.field(value2));
     }
 
@@ -10042,7 +10042,7 @@ public class DSL {
      * @see #power(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, H2, FIREBIRD, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
-    public static <T extends Number> Field<T> shr(Field<T> field1, Field<T> field2) {
+    public static <T extends Number> Field<T> shr(Field<T> field1, Field<? extends Number> field2) {
         return new Expression<T>(ExpressionOperator.SHR, nullSafe(field1), nullSafe(field2));
     }
 

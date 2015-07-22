@@ -856,7 +856,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
      * @see DSL#power(Field, Number)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
-    Field<T> shl(T value);
+    Field<T> shl(Number value);
 
     /**
      * The bitwise left shift operator.
@@ -865,7 +865,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
      * @see DSL#power(Field, Number)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
-    Field<T> shl(Field<T> value);
+    Field<T> shl(Field<? extends Number> value);
 
     /**
      * The bitwise right shift operator.
@@ -874,7 +874,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
      * @see DSL#power(Field, Number)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
-    Field<T> shr(T value);
+    Field<T> shr(Number value);
 
     /**
      * The bitwise right shift operator.
@@ -883,7 +883,7 @@ public interface Field<T> extends SelectField<T>, GroupField {
      * @see DSL#power(Field, Number)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
-    Field<T> shr(Field<T> value);
+    Field<T> shr(Field<? extends Number> value);
 
     // ------------------------------------------------------------------------
     // NULL predicates

@@ -53,10 +53,11 @@ import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
 import static org.jooq.impl.Identifiers.QUOTE_START_DELIMITER;
 import static org.jooq.impl.Utils.DATA_COUNT_BIND_VALUES;
 
+import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.Deque;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Stack;
 import java.util.regex.Pattern;
 
 import org.jooq.BindContext;
@@ -91,7 +92,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     private int                      params;
     private int                      alias;
     private int                      indent;
-    private Stack<Integer>           indentLock;
+    private Deque<Integer>           indentLock;
     private int                      printMargin = 80;
 
     // [#1632] Cached values from Settings
@@ -273,9 +274,9 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         return this;
     }
 
-    private Stack<Integer> indentLock() {
+    private Deque<Integer> indentLock() {
         if (indentLock == null) {
-            indentLock = new Stack<Integer>();
+            indentLock = new ArrayDeque<Integer>();
         }
 
         return indentLock;

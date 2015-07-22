@@ -111,6 +111,8 @@ public class ConvertAllTest extends AbstractTest {
         testConversion(true, "1", Boolean.class);
         testConversion(true, "yes", Boolean.class);
         testConversion(false, "false", Boolean.class);
+        testConversion(true, "t", Boolean.class);
+        testConversion(false, "f", Boolean.class);
         testConversion(false, "0", Boolean.class);
         testConversion(false, "no", Boolean.class);
         testConversion(null, "xmf", Boolean.class);

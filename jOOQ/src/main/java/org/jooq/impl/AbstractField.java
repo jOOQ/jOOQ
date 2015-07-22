@@ -542,26 +542,26 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public final Field<T> shl(T value) {
-        return DSL.shl((Field) this, (Field) val(value, this));
+    public final Field<T> shl(Number value) {
+        return DSL.shl((Field) this, (Field) Utils.field(value));
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public final Field<T> shl(Field<T> value) {
-        return DSL.shl((Field) this, (Field) value);
+    public final Field<T> shl(Field<? extends Number> value) {
+        return DSL.shl((Field) this, value);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public final Field<T> shr(T value) {
-        return DSL.shr((Field) this, (Field) val(value, this));
+    public final Field<T> shr(Number value) {
+        return DSL.shr((Field) this, (Field) Utils.field(value));
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public final Field<T> shr(Field<T> value) {
-        return DSL.shr((Field) this, (Field) value);
+    public final Field<T> shr(Field<? extends Number> value) {
+        return DSL.shr((Field) this, value);
     }
 
     // ------------------------------------------------------------------------

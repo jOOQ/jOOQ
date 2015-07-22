@@ -159,6 +159,12 @@ public class BasicTest extends AbstractTest {
         assertEquals(
             FIELD_ID1.sub((Integer) null),
             FIELD_ID1.sub((Field<Integer>) null));
+        assertEquals(
+            FIELD_ID1.shl((Long) null),
+            FIELD_ID1.shl((Field<Long>) null));
+        assertEquals(
+            FIELD_ID1.shr((Long) null),
+            FIELD_ID1.shr((Field<Long>) null));
 
         // Standalone functions created from the factory
         // ---------------------------------------------

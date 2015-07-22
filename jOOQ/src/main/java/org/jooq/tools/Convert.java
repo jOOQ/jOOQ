@@ -120,6 +120,8 @@ public final class Convert {
         trueValues.add("YES");
         trueValues.add("true");
         trueValues.add("TRUE");
+        trueValues.add("t");
+        trueValues.add("T");
         trueValues.add("on");
         trueValues.add("ON");
         trueValues.add("enabled");
@@ -133,6 +135,8 @@ public final class Convert {
         falseValues.add("NO");
         falseValues.add("false");
         falseValues.add("FALSE");
+        falseValues.add("f");
+        falseValues.add("F");
         falseValues.add("off");
         falseValues.add("OFF");
         falseValues.add("disabled");

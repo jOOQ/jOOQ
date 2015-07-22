@@ -430,23 +430,23 @@ public class BasicTest extends AbstractTest {
             DSL.second((java.util.Date) null),
             DSL.second((Field<java.util.Date>) null));
         assertEquals(
-            DSL.shl((Integer) null, (Integer) null),
-            DSL.shl((Integer) null, (Field<Integer>) null));
+            DSL.shl((Long) null, (Integer) null),
+            DSL.shl((Long) null, (Field<Integer>) null));
         assertEquals(
-            DSL.shl((Integer) null, (Integer) null),
-            DSL.shl((Field<Integer>) null, (Integer) null));
+            DSL.shl((Long) null, (Integer) null),
+            DSL.shl((Field<Long>) null, (Integer) null));
         assertEquals(
-            DSL.shl((Integer) null, (Integer) null),
-            DSL.shl((Field<Integer>) null, (Field<Integer>) null));
+            DSL.shl((Long) null, (Integer) null),
+            DSL.shl((Field<Long>) null, (Field<Integer>) null));
         assertEquals(
-            DSL.shr((Integer) null, (Integer) null),
-            DSL.shr((Integer) null, (Field<Integer>) null));
+            DSL.shr((Long) null, (Integer) null),
+            DSL.shr((Long) null, (Field<Integer>) null));
         assertEquals(
-            DSL.shr((Integer) null, (Integer) null),
-            DSL.shr((Field<Integer>) null, (Integer) null));
+            DSL.shr((Long) null, (Integer) null),
+            DSL.shr((Field<Long>) null, (Integer) null));
         assertEquals(
-            DSL.shr((Integer) null, (Integer) null),
-            DSL.shr((Field<Integer>) null, (Field<Integer>) null));
+            DSL.shr((Long) null, (Integer) null),
+            DSL.shr((Field<Long>) null, (Field<Integer>) null));
         assertEquals(
             DSL.sign((Integer) null),
             DSL.sign((Field<Integer>) null));

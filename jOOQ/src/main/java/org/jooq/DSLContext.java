@@ -6706,6 +6706,19 @@ public interface DSLContext extends Scope {
     <T, R extends Record1<T>> T fetchValue(ResultQuery<R> query)
         throws DataAccessException, TooManyRowsException, InvalidResultException;
 
+    /**
+     * xecute a {@link ResultQuery} in the context of this
+     * <code>DSLContext</code> and return a single value.
+     *
+     * @param field The field for which to fetch a single value.
+     * @return The value.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     * @throws InvalidResultException if the query returned a record with more
+     *             than one value
+     */
+    <T> T fetchValue(TableField<?, T> field) throws DataAccessException, TooManyRowsException, InvalidResultException;
+
     /* [java-8] */
     /**
      * Execute a {@link ResultQuery} in the context of this
@@ -6719,6 +6732,19 @@ public interface DSLContext extends Scope {
      *             than one value
      */
     <T, R extends Record1<T>> Optional<T> fetchOptionalValue(ResultQuery<R> query) throws DataAccessException, TooManyRowsException, InvalidResultException;
+
+    /**
+     * Execute a {@link ResultQuery} in the context of this
+     * <code>DSLContext</code> and return a single value.
+     *
+     * @param field The field for which to fetch a single value.
+     * @return The value.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     * @throws InvalidResultException if the query returned a record with more
+     *             than one value
+     */
+    <T> Optional<T> fetchOptionalValue(TableField<?, T> field) throws DataAccessException, TooManyRowsException, InvalidResultException;
     /* [/java-8] */
 
     /**

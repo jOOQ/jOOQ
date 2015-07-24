@@ -30,6 +30,38 @@
     </licenses>
 
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <org.hibernate.version>4.3.9.Final</org.hibernate.version>
+        <org.springframework.version>4.1.6.RELEASE</org.springframework.version>
+        <scala.version>2.10.4</scala.version>
+        <org.jooq.version>3.7.0-SNAPSHOT</org.jooq.version>
+
+        <db.cubrid.version>9.2.0.0155</db.cubrid.version>
+        <db.derby.version>10.11.1.1</db.derby.version>
+        <db.firebird.version>2.2.8</db.firebird.version>
+        <db.h2.version>1.4.186</db.h2.version>
+        <db.hsqldb.version>2.3.2</db.hsqldb.version>
+        <db.mariadb.version>1.1.8</db.mariadb.version>
+        <db.mysql.version>5.1.35</db.mysql.version>
+        <db.postgres.version>9.4-1201-jdbc41</db.postgres.version>
+        <db.sqlite.version>3.8.10.1</db.sqlite.version>
+
+        <!-- [pro] -->
+        <db.ase.version>1.3.1</db.ase.version>
+        <db.db2.version>3.1.57</db.db2.version>
+        <db.hana.version>1.00.48.372847</db.hana.version>
+        <db.informix.version>12.10</db.informix.version>
+        <db.ingres.version>10.0-4.0.6</db.ingres.version>
+        <db.redshift.version>1.1.2</db.redshift.version>
+        <db.oracle.version>10.2.0.3.0</db.oracle.version>
+        <db.sqlserver.version>3.0</db.sqlserver.version>
+        <db.sybase.version>6.0</db.sybase.version>
+        <db.vertica.version>7.1.1</db.vertica.version>
+        <!-- [/pro] -->
+    </properties>
+
+
     <dependencies>
         <dependency>
             <groupId>org.jooq</groupId>
@@ -84,6 +116,19 @@
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
             <version>1.9.13</version>
+        </dependency>
+        
+        
+        <!-- JDBC drivers -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${db.postgres.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.postgis</groupId>
+            <artifactId>postgis-jdbc</artifactId>
+            <version>1.3.3</version>
         </dependency>
     </dependencies>
     

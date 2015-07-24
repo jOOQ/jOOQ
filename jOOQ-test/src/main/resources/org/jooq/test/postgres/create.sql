@@ -188,7 +188,8 @@ CREATE TABLE t_pg_extensions (
   pg_box box,
   pg_hstore hstore,
   pg_geometry geometry(Point, 4326, 2),
-
+  pg_position geography(Point, 4326), 
+  
   CONSTRAINT pk_t_pg_extensions PRIMARY KEY (id)
 )/
 

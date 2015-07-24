@@ -87,6 +87,7 @@ import static org.jooq.test.postgres.generatedclasses.Tables.T_EXOTIC_TYPES;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_IDENTITY;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_IDENTITY_PK;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_INHERITANCE_1;
+import static org.jooq.test.postgres.generatedclasses.Tables.T_PG_EXTENSIONS;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_TRIGGERS;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_UNSIGNED;
 import static org.jooq.test.postgres.generatedclasses.Tables.V_AUTHOR;
@@ -152,6 +153,7 @@ import org.jooq.test.all.converters.Boolean_YES_NO_UC;
 import org.jooq.test.all.converters.Boolean_YN_LC;
 import org.jooq.test.all.converters.Boolean_YN_UC;
 import org.jooq.test.all.types.JSONJacksonHelloWorld;
+import org.jooq.test.all.types.Position;
 import org.jooq.test.all.types.UUIDWrapper;
 import org.jooq.test.postgres.generatedclasses.Keys;
 import org.jooq.test.postgres.generatedclasses.Routines;
@@ -1980,4 +1982,19 @@ public class PostgresTest extends jOOQAbstractTest<
 //        rs.next();
 //        System.out.println(rs.getSQLXML(1).getString());
 //    }
+
+    @Test
+    public void testPostgreSQLGISGeographyTypeBinding() {
+        clean(T_PG_EXTENSIONS);
+
+        assertEquals(1,
+        create().insertInto(T_PG_EXTENSIONS)
+                .columns(T_PG_EXTENSIONS.ID, T_PG_EXTENSIONS.PG_POSITION)
+                .values(1, new Position(BigDecimal.ZERO, BigDecimal.ONE))
+                .execute());
+
+        Position position = create().fetchOne(T_PG_EXTENSIONS).getPgPosition();
+        assertEquals(0, BigDecimal.ZERO.compareTo(position.latitude));
+        assertEquals(0, BigDecimal.ONE.compareTo(position.longitude));
+    }
 }

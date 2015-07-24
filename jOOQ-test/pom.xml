@@ -3379,9 +3379,20 @@
                                                     <type>org.jooq.test.all.types.UUIDWrapper[]</type>
                                                     <binding>org.jooq.test.all.bindings.UUIDWrapperArrayBinding</binding>
                                                 </customType>-->
+                                                
+                                                <customType>
+                                                    <name>org.jooq.test.all.bindings.PostgresPositionBinding</name>
+                                                    <type>org.jooq.test.all.types.Position</type>
+                                                    <binding>org.jooq.test.all.bindings.PostgresPositionBinding</binding>
+                                                </customType>
                                             </customTypes>
 
                                             <forcedTypes>
+                                                <forcedType>
+                                                    <name>org.jooq.test.all.bindings.PostgresPositionBinding</name>
+                                                    <expression>(?i:(.*?\.)T_PG_EXTENSIONS\.PG_POSITION)</expression>
+                                                </forcedType>
+
                                             
                                                 <!-- [#4388] TODO: Improve array handling 
                                                 <forcedType>

@@ -39,6 +39,7 @@ import org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_1;
 import org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_2;
 import org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_2_1;
 import org.jooq.test.postgres.generatedclasses.tables.TLanguage;
+import org.jooq.test.postgres.generatedclasses.tables.TPgExtensions;
 import org.jooq.test.postgres.generatedclasses.tables.TTriggers;
 import org.jooq.test.postgres.generatedclasses.tables.TUnsigned;
 import org.jooq.test.postgres.generatedclasses.tables.T_2781;
@@ -67,7 +68,7 @@ import org.jooq.test.postgres.generatedclasses.udt.UUuids;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-	private static final long serialVersionUID = -1979567803;
+	private static final long serialVersionUID = -1302360427;
 
 	/**
 	 * The reference instance of <code>public</code>
@@ -138,6 +139,7 @@ public class Public extends SchemaImpl {
 			TInheritance_1_2_1.T_INHERITANCE_1_2_1,
 			TInheritanceAll.T_INHERITANCE_ALL,
 			TLanguage.T_LANGUAGE,
+			TPgExtensions.T_PG_EXTENSIONS,
 			TTriggers.T_TRIGGERS,
 			TUnsigned.T_UNSIGNED,
 			org.jooq.test.postgres.generatedclasses.tables.VAuthor.V_AUTHOR,

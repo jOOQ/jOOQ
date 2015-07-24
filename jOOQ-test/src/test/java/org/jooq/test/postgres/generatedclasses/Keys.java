@@ -18,6 +18,7 @@ import org.jooq.test.postgres.generatedclasses.tables.TExoticTypes;
 import org.jooq.test.postgres.generatedclasses.tables.TIdentity;
 import org.jooq.test.postgres.generatedclasses.tables.TIdentityPk;
 import org.jooq.test.postgres.generatedclasses.tables.TLanguage;
+import org.jooq.test.postgres.generatedclasses.tables.TPgExtensions;
 import org.jooq.test.postgres.generatedclasses.tables.TTriggers;
 import org.jooq.test.postgres.generatedclasses.tables.T_3111;
 import org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable;
@@ -40,6 +41,7 @@ import org.jooq.test.postgres.generatedclasses.tables.records.TExoticTypesRecord
 import org.jooq.test.postgres.generatedclasses.tables.records.TIdentityPkRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TIdentityRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord;
+import org.jooq.test.postgres.generatedclasses.tables.records.TPgExtensionsRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.T_3111Record;
 import org.jooq.test.postgres.generatedclasses.tables.records.T_639NumbersTableRecord;
@@ -66,6 +68,7 @@ public class Keys {
 
 	public static final Identity<TIdentityRecord, Integer> IDENTITY_T_IDENTITY = Identities0.IDENTITY_T_IDENTITY;
 	public static final Identity<TIdentityPkRecord, Integer> IDENTITY_T_IDENTITY_PK = Identities0.IDENTITY_T_IDENTITY_PK;
+	public static final Identity<TPgExtensionsRecord, Integer> IDENTITY_T_PG_EXTENSIONS = Identities0.IDENTITY_T_PG_EXTENSIONS;
 	public static final Identity<TTriggersRecord, Integer> IDENTITY_T_TRIGGERS = Identities0.IDENTITY_T_TRIGGERS;
 
 	// -------------------------------------------------------------------------
@@ -85,6 +88,7 @@ public class Keys {
 	public static final UniqueKey<TExoticTypesRecord> PK_T_EXOTIC_TYPES = UniqueKeys0.PK_T_EXOTIC_TYPES;
 	public static final UniqueKey<TIdentityPkRecord> PK_T_IDENTITY_PK = UniqueKeys0.PK_T_IDENTITY_PK;
 	public static final UniqueKey<TLanguageRecord> PK_T_LANGUAGE = UniqueKeys0.PK_T_LANGUAGE;
+	public static final UniqueKey<TPgExtensionsRecord> PK_T_PG_EXTENSIONS = UniqueKeys0.PK_T_PG_EXTENSIONS;
 	public static final UniqueKey<TTriggersRecord> PK_T_TRIGGERS = UniqueKeys0.PK_T_TRIGGERS;
 	public static final UniqueKey<XTestCase_64_69Record> PK_X_TEST_CASE_64_69 = UniqueKeys0.PK_X_TEST_CASE_64_69;
 	public static final UniqueKey<XTestCase_71Record> PK_X_TEST_CASE_71 = UniqueKeys0.PK_X_TEST_CASE_71;
@@ -119,6 +123,7 @@ public class Keys {
 	private static class Identities0 extends AbstractKeys {
 		public static Identity<TIdentityRecord, Integer> IDENTITY_T_IDENTITY = createIdentity(TIdentity.T_IDENTITY, TIdentity.T_IDENTITY.ID);
 		public static Identity<TIdentityPkRecord, Integer> IDENTITY_T_IDENTITY_PK = createIdentity(TIdentityPk.T_IDENTITY_PK, TIdentityPk.T_IDENTITY_PK.ID);
+		public static Identity<TPgExtensionsRecord, Integer> IDENTITY_T_PG_EXTENSIONS = createIdentity(TPgExtensions.T_PG_EXTENSIONS, TPgExtensions.T_PG_EXTENSIONS.ID);
 		public static Identity<TTriggersRecord, Integer> IDENTITY_T_TRIGGERS = createIdentity(TTriggers.T_TRIGGERS, TTriggers.T_TRIGGERS.ID_GENERATED);
 	}
 
@@ -136,6 +141,7 @@ public class Keys {
 		public static final UniqueKey<TExoticTypesRecord> PK_T_EXOTIC_TYPES = createUniqueKey(TExoticTypes.T_EXOTIC_TYPES, TExoticTypes.T_EXOTIC_TYPES.ID);
 		public static final UniqueKey<TIdentityPkRecord> PK_T_IDENTITY_PK = createUniqueKey(TIdentityPk.T_IDENTITY_PK, TIdentityPk.T_IDENTITY_PK.ID);
 		public static final UniqueKey<TLanguageRecord> PK_T_LANGUAGE = createUniqueKey(TLanguage.T_LANGUAGE, TLanguage.T_LANGUAGE.ID);
+		public static final UniqueKey<TPgExtensionsRecord> PK_T_PG_EXTENSIONS = createUniqueKey(TPgExtensions.T_PG_EXTENSIONS, TPgExtensions.T_PG_EXTENSIONS.ID);
 		public static final UniqueKey<TTriggersRecord> PK_T_TRIGGERS = createUniqueKey(TTriggers.T_TRIGGERS, TTriggers.T_TRIGGERS.ID_GENERATED);
 		public static final UniqueKey<XTestCase_64_69Record> PK_X_TEST_CASE_64_69 = createUniqueKey(XTestCase_64_69.X_TEST_CASE_64_69, XTestCase_64_69.X_TEST_CASE_64_69.ID);
 		public static final UniqueKey<XTestCase_71Record> PK_X_TEST_CASE_71 = createUniqueKey(XTestCase_71.X_TEST_CASE_71, XTestCase_71.X_TEST_CASE_71.ID);

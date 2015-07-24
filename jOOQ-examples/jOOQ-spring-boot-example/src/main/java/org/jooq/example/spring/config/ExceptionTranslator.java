@@ -1,4 +1,4 @@
-package org.jooq.example.spring;
+package org.jooq.example.spring.config;
 
 import org.jooq.ExecuteContext;
 import org.jooq.SQLDialect;

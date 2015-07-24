@@ -1984,7 +1984,7 @@ public class PostgresTest extends jOOQAbstractTest<
 //    }
 
     @Test
-    public void testPostgreSQLGISGeographyTypeBinding() {
+    public void testPostgresGISGeographyTypeBinding() {
         clean(T_PG_EXTENSIONS);
 
         assertEquals(1,

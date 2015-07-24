@@ -1,23 +1,26 @@
-language: java
-jdk:
-  - oraclejdk8
-install: 
-  - sh -c 'mvn install -DskipTests=true'
-  - sh -c 'cd jOOQ-examples/jOOQ-spring-example && mvn install -DskipTests=true'
-  - sh -c 'cd jOOQ-examples/jOOQ-spring-boot-example && mvn install -DskipTests=true'
-  - sh -c 'cd jOOQ-examples/jOOQ-flyway-example && mvn install -DskipTests=true'
-  - sh -c 'cd jOOQ-examples/jOOQ-nashorn-example && mvn install -DskipTests=true'
-  - sh -c 'cd jOOQ-examples/jOOQ-vertabelo-example && mvn install -DskipTests=true'
-  - sh -c 'cd jOOQ-examples/jOOQ-spring-guice-example && mvn install -DskipTests=true'
-  - sh -c 'cd jOOQ-test-utils && mvn install -DskipTest=true'
-  - sh -c 'cd jOOQ-test && mvn install -DskipTests=true'
-  - sh -c 'cd jOOQ-examples/jOOQ-codegen-gradle && gradle build'
-script: 
-  - sh -c 'mvn test'
-  - sh -c 'cd jOOQ-examples/jOOQ-spring-example && mvn test'
-  - sh -c 'cd jOOQ-examples/jOOQ-spring-boot-example && mvn test'
-  - sh -c 'cd jOOQ-examples/jOOQ-flyway-example && mvn test'
-  - sh -c 'cd jOOQ-examples/jOOQ-nashorn-example && mvn test'
-  - sh -c 'cd jOOQ-examples/jOOQ-vertabelo-example && mvn test'
-  - sh -c 'cd jOOQ-examples/jOOQ-spring-guice-example && mvn test'
-  - sh -c 'cd jOOQ-test && mvn test -Dorg.jooq.test-dialects=h2 -Dorg.jooq.test.pretty-printer=false -Dlog4j.configuration=log4j-quiet.xml'
+# GitHub's Travis installation uses Java 1.8.0_31 which doesn't compile jOOQ
+# for the time being, we turned off Travis (on GitHub)
+# --------------------------------------------------------------------------
+# language: java
+# jdk:
+#   - oraclejdk8
+# install:
+#   - sh -c 'mvn install -DskipTests=true'
+#   - sh -c 'cd jOOQ-examples/jOOQ-spring-example && mvn install -DskipTests=true'
+#   - sh -c 'cd jOOQ-examples/jOOQ-spring-boot-example && mvn install -DskipTests=true'
+#   - sh -c 'cd jOOQ-examples/jOOQ-flyway-example && mvn install -DskipTests=true'
+#   - sh -c 'cd jOOQ-examples/jOOQ-nashorn-example && mvn install -DskipTests=true'
+#   - sh -c 'cd jOOQ-examples/jOOQ-vertabelo-example && mvn install -DskipTests=true'
+#   - sh -c 'cd jOOQ-examples/jOOQ-spring-guice-example && mvn install -DskipTests=true'
+#   - sh -c 'cd jOOQ-test-utils && mvn install -DskipTest=true'
+#   - sh -c 'cd jOOQ-test && mvn install -DskipTests=true'
+#   - sh -c 'cd jOOQ-examples/jOOQ-codegen-gradle && gradle build'
+# script:
+#   - sh -c 'mvn test'
+#   - sh -c 'cd jOOQ-examples/jOOQ-spring-example && mvn test'
+#   - sh -c 'cd jOOQ-examples/jOOQ-spring-boot-example && mvn test'
+#   - sh -c 'cd jOOQ-examples/jOOQ-flyway-example && mvn test'
+#   - sh -c 'cd jOOQ-examples/jOOQ-nashorn-example && mvn test'
+#   - sh -c 'cd jOOQ-examples/jOOQ-vertabelo-example && mvn test'
+#   - sh -c 'cd jOOQ-examples/jOOQ-spring-guice-example && mvn test'
+#   - sh -c 'cd jOOQ-test && mvn test -Dorg.jooq.test-dialects=h2 -Dorg.jooq.test.pretty-printer=false -Dlog4j.configuration=log4j-quiet.xml'

@@ -6707,7 +6707,7 @@ public interface DSLContext extends Scope {
         throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
-     * xecute a {@link ResultQuery} in the context of this
+     * Execute a {@link ResultQuery} in the context of this
      * <code>DSLContext</code> and return a single value.
      *
      * @param field The field for which to fetch a single value.

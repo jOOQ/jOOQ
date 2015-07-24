@@ -1,4 +1,4 @@
-package org.jooq.example.spring;
+package org.jooq.example.spring.service;
 
 import static org.jooq.example.db.h2.Tables.BOOK;
 

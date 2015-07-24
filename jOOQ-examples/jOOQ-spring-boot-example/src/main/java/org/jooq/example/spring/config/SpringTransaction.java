@@ -38,23 +38,15 @@
  *
  *
  */
-package org.jooq.example.spring;
+package org.jooq.example.spring.config;
 
-import org.springframework.transaction.annotation.Transactional;
+import org.jooq.Transaction;
+import org.springframework.transaction.TransactionStatus;
 
-/**
- * This Book Service (or DAO or Repository) is used by this example to interact with the library's T_BOOK table.
- *
- * @author Lukas Eder
- */
-public interface BookService {
+class SpringTransaction implements Transaction {
+	final TransactionStatus tx;
 
-	/**
-	 * Create a new book.
-	 * <p>
-	 * The implementation of this method has a bug, which causes this method to fail and roll back the transaction.
-	 */
-	@Transactional
-	void create(int id, int authorId, String title);
-
+	SpringTransaction(TransactionStatus tx) {
+		this.tx = tx;
+	}
 }

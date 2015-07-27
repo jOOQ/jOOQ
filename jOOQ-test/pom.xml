@@ -3570,6 +3570,69 @@
 
 
         <profile>
+            <id>codegen-postgres-java-time</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-codegen-maven</artifactId>
+                        <version>${org.jooq.version}</version>
+
+                        <executions>
+                            <execution>
+                                <id>generate-postgres-java-time</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+
+                                <configuration>
+                                    <jdbc>
+                                        <driver>${db.postgres.driver}</driver>
+                                        <url>${db.postgres.url}</url>
+                                        <schema>${db.postgres.schema}</schema>
+                                        <user>${db.postgres.username}</user>
+                                        <password>${db.postgres.password}</password>
+                                    </jdbc>
+                                    <generator>
+                                        <name>org.jooq.util.DefaultGenerator</name>
+                                        <database>
+                                            <name>org.jooq.util.postgres.PostgresDatabase</name>
+                                            <includes>t_dates</includes>
+                                            <excludes></excludes>
+                                        </database>
+                                        <generate>
+                                            <relations>true</relations>
+                                            <deprecated>false</deprecated>
+                                            <instanceFields>true</instanceFields>
+                                            <records>true</records>
+                                            <immutablePojos>true</immutablePojos>
+                                            <interfaces>true</interfaces>
+                                            <jpaAnnotations>false</jpaAnnotations>
+                                            <fluentSetters>true</fluentSetters>
+                                        </generate>
+                                        <target>
+                                            <packageName>org.jooq.test.postgresjavatime.generatedclasses</packageName>
+                                            <directory>./src/test/java</directory>
+                                        </target>
+                                    </generator>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.postgresql</groupId>
+                                <artifactId>postgresql</artifactId>
+                                <version>${db.postgres.version}</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+
+        <profile>
             <id>codegen-postgres-information-schema</id>
             <build>
                 <plugins>

@@ -490,11 +490,41 @@ public interface Result<R extends Record> extends List<R>, Attachable {
     /**
      * Get a simple formatted representation of this result as CSV.
      * <p>
-     * This is the same as calling <code>formatCSV(',', "")</code>
+     * This is the same as calling <code>formatCSV(true, ',', "")</code>
      *
      * @return The formatted result
      */
     String formatCSV();
+
+    /**
+     * Get a simple formatted representation of this result as CSV.
+     * <p>
+     * This is the same as calling <code>formatCSV(true, delimiter, "")</code>
+     *
+     * @param delimiter The delimiter to use between records
+     * @return The formatted result
+     */
+    String formatCSV(char delimiter);
+
+    /**
+     * Get a simple formatted representation of this result as CSV.
+     * <p>
+     * This is the same as calling <code>formatCSV(true, delimiter, nullString)</code>
+     *
+     * @param delimiter The delimiter to use between records
+     * @param nullString A special string for encoding <code>NULL</code> values.
+     * @return The formatted result
+     */
+    String formatCSV(char delimiter, String nullString);
+
+    /**
+     * Get a simple formatted representation of this result as CSV.
+     * <p>
+     * This is the same as calling <code>formatCSV(',', "")</code>
+     *
+     * @return The formatted result
+     */
+    String formatCSV(boolean header);
 
     /**
      * Get a simple formatted representation of this result as CSV.
@@ -504,7 +534,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @param delimiter The delimiter to use between records
      * @return The formatted result
      */
-    String formatCSV(char delimiter);
+    String formatCSV(boolean header, char delimiter);
 
     /**
      * Get a simple formatted representation of this result as CSV.
@@ -513,7 +543,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @param nullString A special string for encoding <code>NULL</code> values.
      * @return The formatted result
      */
-    String formatCSV(char delimiter, String nullString);
+    String formatCSV(boolean header, char delimiter, String nullString);
 
     /**
      * Get a simple formatted representation of this result as a JSON array of
@@ -602,6 +632,27 @@ public interface Result<R extends Record> extends List<R>, Attachable {
     void formatCSV(OutputStream stream, char delimiter, String nullString) throws IOException;
 
     /**
+     * Like {@link #formatCSV(boolean)}, but the data is output onto an {@link OutputStream}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatCSV(OutputStream stream, boolean header) throws IOException;
+
+    /**
+     * Like {@link #formatCSV(boolean, char)}, but the data is output onto an {@link OutputStream}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatCSV(OutputStream stream, boolean header, char delimiter) throws IOException;
+
+    /**
+     * Like {@link #formatCSV(boolean, char, String)}, but the data is output onto an {@link OutputStream}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatCSV(OutputStream stream, boolean header, char delimiter, String nullString) throws IOException;
+
+    /**
      * Like {@link #formatJSON()}, but the data is output onto an {@link OutputStream}.
      *
      * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
@@ -670,6 +721,27 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
      */
     void formatCSV(Writer writer, char delimiter, String nullString) throws IOException;
+
+    /**
+     * Like {@link #formatCSV(boolean)}, but the data is output onto a {@link Writer}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatCSV(Writer writer, boolean header) throws IOException;
+
+    /**
+     * Like {@link #formatCSV(boolean, char)}, but the data is output onto a {@link Writer}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatCSV(Writer writer, boolean header, char delimiter) throws IOException;
+
+    /**
+     * Like {@link #formatCSV(boolean, char, String)}, but the data is output onto a {@link Writer}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatCSV(Writer writer, boolean header, char delimiter, String nullString) throws IOException;
 
     /**
      * Like {@link #formatJSON()}, but the data is output onto a {@link Writer}.

@@ -72,6 +72,7 @@ import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.lambda.Seq;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 import org.jooq.test.all.tools.DOMBuilder;
@@ -288,6 +289,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         Row row = TBook().fieldsRow();
         Result<B> books = create().selectFrom(TBook()).fetch();
         String csv = books.formatCSV();
+        String csvNoHeader = books.formatCSV(false);
+
+        assertTrue(csv.endsWith(csvNoHeader));
+        assertEquals(Seq.of(csv.split("\n")).skip(1).join("\n").trim(), csvNoHeader.trim());
 
         String[] lines = csv.split("\n");
         String[] fieldNames = lines[0].split(",");

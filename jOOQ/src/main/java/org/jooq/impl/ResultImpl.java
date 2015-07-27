@@ -660,23 +660,43 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final String formatCSV() {
+        return formatCSV(true);
+    }
+
+    @Override
+    public final String formatCSV(boolean header) {
         StringWriter writer = new StringWriter();
-        formatCSV(writer);
+        formatCSV(writer, header);
         return writer.toString();
     }
 
     @Override
     public final void formatCSV(OutputStream stream) {
-        formatCSV(new OutputStreamWriter(stream));
+        formatCSV(stream, true);
+    }
+
+    @Override
+    public final void formatCSV(OutputStream stream, boolean header) {
+        formatCSV(new OutputStreamWriter(stream), header);
     }
 
     @Override
     public final void formatCSV(Writer writer) {
-        formatCSV(writer, ',', "");
+        formatCSV(writer, true);
+    }
+
+    @Override
+    public final void formatCSV(Writer writer, boolean header) {
+        formatCSV(writer, header, ',', "");
     }
 
     @Override
     public final String formatCSV(char delimiter) {
+        return formatCSV(true, delimiter);
+    }
+
+    @Override
+    public final String formatCSV(boolean header, char delimiter) {
         StringWriter writer = new StringWriter();
         formatCSV(writer, delimiter);
         return writer.toString();
@@ -684,38 +704,65 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final void formatCSV(OutputStream stream, char delimiter) {
+        formatCSV(stream, true, delimiter);
+    }
+
+    @Override
+    public final void formatCSV(OutputStream stream, boolean header, char delimiter) {
         formatCSV(new OutputStreamWriter(stream), delimiter);
     }
 
     @Override
     public final void formatCSV(Writer writer, char delimiter) {
-        formatCSV(writer, delimiter, "");
+        formatCSV(writer, true, delimiter);
+    }
+
+    @Override
+    public final void formatCSV(Writer writer, boolean header, char delimiter) {
+        formatCSV(writer, header, delimiter, "");
     }
 
     @Override
     public final String formatCSV(char delimiter, String nullString) {
+        return formatCSV(true, delimiter, nullString);
+    }
+
+    @Override
+    public final String formatCSV(boolean header, char delimiter, String nullString) {
         StringWriter writer = new StringWriter();
-        formatCSV(writer, delimiter, nullString);
+        formatCSV(writer, header, delimiter, nullString);
         return writer.toString();
     }
 
     @Override
     public final void formatCSV(OutputStream stream, char delimiter, String nullString) {
-        formatCSV(new OutputStreamWriter(stream), delimiter, nullString);
+        formatCSV(stream, true, delimiter, nullString);
+    }
+
+    @Override
+    public final void formatCSV(OutputStream stream, boolean header, char delimiter, String nullString) {
+        formatCSV(new OutputStreamWriter(stream), header, delimiter, nullString);
     }
 
     @Override
     public final void formatCSV(Writer writer, char delimiter, String nullString) {
+        formatCSV(writer, true, delimiter, nullString);
+    }
+
+    @Override
+    public final void formatCSV(Writer writer, boolean header, char delimiter, String nullString) {
         try {
-            String sep1 = "";
-            for (Field<?> field : fields.fields) {
-                writer.append(sep1);
-                writer.append(formatCSV0(field.getName(), ""));
+            if (header) {
+                String sep1 = "";
+                for (Field<?> field : fields.fields) {
+                    writer.append(sep1);
+                    writer.append(formatCSV0(field.getName(), ""));
 
-                sep1 = Character.toString(delimiter);
+                    sep1 = Character.toString(delimiter);
+                }
+
+                writer.append("\n");
             }
-
-            writer.append("\n");
 
             for (Record record : this) {
                 String sep2 = "";

@@ -727,6 +727,7 @@
                                             </forcedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <deprecated>true</deprecated>
                                             <instanceFields>false</instanceFields>
                                             <generatedAnnotation>false</generatedAnnotation>
@@ -791,6 +792,7 @@
                                             <excludes></excludes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <deprecated>false</deprecated>
                                             <instanceFields>true</instanceFields>
                                             <generatedAnnotation>true</generatedAnnotation>
@@ -953,6 +955,7 @@
                                             </forcedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <deprecated>true</deprecated>
                                             <instanceFields>false</instanceFields>
                                             <generatedAnnotation>false</generatedAnnotation>
@@ -1017,6 +1020,7 @@
                                             <unsignedTypes>true</unsignedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>false</relations>
                                             <deprecated>false</deprecated>
                                             <instanceFields>false</instanceFields>
@@ -1232,6 +1236,7 @@
                                             </forcedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>true</relations>
                                             <deprecated>true</deprecated>
                                             <instanceFields>true</instanceFields>
@@ -1310,6 +1315,7 @@
                                             <unsignedTypes>true</unsignedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>false</relations>
                                             <deprecated>false</deprecated>
                                             <instanceFields>true</instanceFields>
@@ -1616,6 +1622,7 @@
                                             </forcedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <!-- [#2294] daos=true should enforce relations=true -->
                                             <relations>false</relations>
                                             <daos>true</daos>
@@ -1820,6 +1827,7 @@
                                             </forcedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>true</relations>
                                             <deprecated>true</deprecated>
                                             <instanceFields>false</instanceFields>
@@ -1982,6 +1990,7 @@
                                             </forcedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>true</relations>
                                             <records>false</records>
                                             <jpaAnnotations>true</jpaAnnotations>
@@ -2246,6 +2255,7 @@
                                             </forcedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <!-- [#2294] daos=true should enforce relations=true -->
                                             <relations>false</relations>
                                             <daos>true</daos>
@@ -2332,6 +2342,7 @@
                                             <unsignedTypes>true</unsignedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>false</relations>
                                             <deprecated>false</deprecated>
                                             <instanceFields>false</instanceFields>
@@ -2554,6 +2565,7 @@
                                             </forcedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>true</relations>
                                             <deprecated>true</deprecated>
                                             <instanceFields>true</instanceFields>
@@ -2627,6 +2639,7 @@
                                             <unsignedTypes>true</unsignedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>false</relations>
                                             <deprecated>false</deprecated>
                                             <instanceFields>true</instanceFields>
@@ -2780,6 +2793,7 @@
                                             </forcedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>true</relations>
                                             <deprecated>true</deprecated>
                                             <instanceFields>false</instanceFields>
@@ -2921,6 +2935,7 @@
                                             </forcedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>true</relations>
                                             <deprecated>true</deprecated>
                                             <instanceFields>true</instanceFields>
@@ -2985,6 +3000,7 @@
                                             <unsignedTypes>true</unsignedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>false</relations>
                                             <deprecated>false</deprecated>
                                             <instanceFields>false</instanceFields>
@@ -3053,6 +3069,7 @@
                                             <unsignedTypes>true</unsignedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>false</relations>
                                             <deprecated>false</deprecated>
                                             <instanceFields>false</instanceFields>
@@ -3194,6 +3211,7 @@
                                             </forcedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>true</relations>
                                             <deprecated>true</deprecated>
                                             <instanceFields>false</instanceFields>
@@ -3518,6 +3536,7 @@
                                             </forcedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>true</relations>
                                             <deprecated>false</deprecated>
                                             <instanceFields>true</instanceFields>
@@ -3586,6 +3605,7 @@
                                             <unsignedTypes>true</unsignedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>false</relations>
                                             <deprecated>false</deprecated>
                                             <instanceFields>true</instanceFields>
@@ -3655,6 +3675,7 @@
                                             <unsignedTypes>true</unsignedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>false</relations>
                                             <deprecated>false</deprecated>
                                             <instanceFields>true</instanceFields>
@@ -3838,6 +3859,7 @@
                                             </forcedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>true</relations>
                                             <deprecated>false</deprecated>
                                             <instanceFields>true</instanceFields>
@@ -3905,6 +3927,7 @@
                                             <excludes></excludes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>false</relations>
                                             <deprecated>false</deprecated>
                                             <instanceFields>true</instanceFields>
@@ -3973,6 +3996,7 @@
                                             <excludes></excludes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>false</relations>
                                             <deprecated>false</deprecated>
                                             <instanceFields>true</instanceFields>
@@ -4131,6 +4155,7 @@
                                             </forcedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>true</relations>
                                             <deprecated>true</deprecated>
                                             <instanceFields>false</instanceFields>
@@ -4332,6 +4357,7 @@
                                             </forcedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <deprecated>true</deprecated>
                                             <generatedAnnotation>false</generatedAnnotation>
                                             <records>true</records>
@@ -4471,6 +4497,7 @@
                                             </forcedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <deprecated>true</deprecated>
                                             <instanceFields>false</instanceFields>
                                             <generatedAnnotation>false</generatedAnnotation>
@@ -4535,6 +4562,7 @@
                                             <unsignedTypes>true</unsignedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>false</relations>
                                             <deprecated>false</deprecated>
                                             <instanceFields>false</instanceFields>
@@ -4691,6 +4719,7 @@
                                             </forcedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <deprecated>true</deprecated>
                                             <instanceFields>false</instanceFields>
                                             <generatedAnnotation>false</generatedAnnotation>
@@ -4757,6 +4786,7 @@
                                             <unsignedTypes>true</unsignedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>false</relations>
                                             <deprecated>false</deprecated>
                                             <instanceFields>false</instanceFields>
@@ -4915,6 +4945,7 @@
                                             </forcedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>true</relations>
                                             <deprecated>true</deprecated>
                                             <generatedAnnotation>false</generatedAnnotation>
@@ -5070,6 +5101,7 @@
                                             </forcedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>true</relations>
                                             <deprecated>true</deprecated>
                                             <generatedAnnotation>false</generatedAnnotation>
@@ -5131,6 +5163,7 @@
                                             <includes>CONSTRAINTS|ELEMENT_TYPES|FUNCTIONS|FUNCTION_PARAMETERS|PROCEDURES|PROCEDURE_PARAMETERS|REFERENTIAL_CONSTRAINTS|SCHEMAS|SEQUENCES|TABLES|TABLE_COLUMNS|VIEWS|VIEW_COLUMNS</includes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <records>false</records>
                                         </generate>
                                         <target>
@@ -5190,6 +5223,7 @@
                                             <includes>sys(columns|constraints|defaults|indexes|references|sequences|tables|xtdtypes)</includes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>false</relations>
                                             <deprecated>false</deprecated>
                                             <generatedAnnotation>true</generatedAnnotation>
@@ -5341,6 +5375,7 @@
                                             </forcedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>true</relations>
                                             <deprecated>true</deprecated>
                                             <instanceFields>false</instanceFields>
@@ -5406,6 +5441,7 @@
                                             <unsignedTypes>true</unsignedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>false</relations>
                                             <deprecated>false</deprecated>
                                             <instanceFields>false</instanceFields>
@@ -5656,6 +5692,7 @@
                                             </forcedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>true</relations>
                                             <deprecated>true</deprecated>
                                             <instanceFields>true</instanceFields>
@@ -5845,6 +5882,7 @@
                                             </forcedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>true</relations>
                                             <deprecated>true</deprecated>
                                             <instanceFields>true</instanceFields>
@@ -6014,6 +6052,7 @@
                                             </forcedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>true</relations>
                                             <deprecated>true</deprecated>
                                             <instanceFields>true</instanceFields>
@@ -6156,6 +6195,7 @@
                                             </forcedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>true</relations>
                                             <deprecated>true</deprecated>
                                             <instanceFields>false</instanceFields>
@@ -6236,6 +6276,7 @@
                                             </schemata>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>true</relations>
                                             <deprecated>true</deprecated>
                                             <instanceFields>true</instanceFields>
@@ -6338,6 +6379,7 @@
                                             </forcedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>true</relations>
                                             <deprecated>true</deprecated>
                                             <instanceFields>true</instanceFields>
@@ -6430,6 +6472,7 @@
                                             </forcedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <pojos>true</pojos>
                                         </generate>
                                         <target>
@@ -6519,6 +6562,7 @@
                                             <unsignedTypes>true</unsignedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>false</relations>
                                             <deprecated>false</deprecated>
                                             <instanceFields>true</instanceFields>
@@ -6720,6 +6764,7 @@
                                             </forcedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>true</relations>
                                             <deprecated>true</deprecated>
                                             <instanceFields>true</instanceFields>
@@ -6785,6 +6830,7 @@
                                             <unsignedTypes>true</unsignedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>false</relations>
                                             <deprecated>false</deprecated>
                                             <instanceFields>true</instanceFields>
@@ -6929,6 +6975,7 @@
                                             </forcedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>true</relations>
                                             <deprecated>true</deprecated>
                                             <instanceFields>true</instanceFields>
@@ -6993,6 +7040,7 @@
                                             <unsignedTypes>true</unsignedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>false</relations>
                                             <deprecated>false</deprecated>
                                             <instanceFields>true</instanceFields>
@@ -7199,6 +7247,7 @@
                                             </forcedTypes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <generatedAnnotation>false</generatedAnnotation>
                                             <relations>true</relations>
                                             <instanceFields>true</instanceFields>
@@ -7258,6 +7307,7 @@
                                             <excludes></excludes>
                                         </database>
                                         <generate>
+                                            <javaTimeTypes>false</javaTimeTypes>
                                             <relations>false</relations>
                                             <deprecated>false</deprecated>
                                             <instanceFields>true</instanceFields>

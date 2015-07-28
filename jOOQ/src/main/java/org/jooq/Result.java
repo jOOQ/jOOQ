@@ -522,6 +522,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * <p>
      * This is the same as calling <code>formatCSV(',', "")</code>
      *
+     * @param header Whether to emit a CSV header line
      * @return The formatted result
      */
     String formatCSV(boolean header);
@@ -531,6 +532,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * <p>
      * This is the same as calling <code>formatCSV(delimiter, "")</code>
      *
+     * @param header Whether to emit a CSV header line
      * @param delimiter The delimiter to use between records
      * @return The formatted result
      */
@@ -539,6 +541,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
     /**
      * Get a simple formatted representation of this result as CSV.
      *
+     * @param header Whether to emit a CSV header line
      * @param delimiter The delimiter to use between records
      * @param nullString A special string for encoding <code>NULL</code> values.
      * @return The formatted result

@@ -212,8 +212,6 @@ CREATE TABLE t_dates (
   d date,
   t time,
   ts timestamp,
-  t_tz time with time zone,
-  ts_tz timestamp with time zone,
   d_int int,
   ts_bigint bigint,
 

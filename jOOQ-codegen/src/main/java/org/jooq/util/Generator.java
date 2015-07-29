@@ -106,7 +106,6 @@ public interface Generator {
     void setGenerateGeneratedAnnotation(boolean generateGeneratedAnnotation);
 
     boolean useSchemaVersionProvider();
-
     void setUseSchemaVersionProvider(boolean useSchemaVersionProvider);
 
     /**
@@ -264,22 +263,6 @@ public interface Generator {
      * be fully qualified.
      */
     void setFullyQualifiedTypes(String fullyQualifiedTypes);
-
-    /**
-     * A flag indicating whether Java 8's java.time types should be used by the
-     * source code generator, rather than JDBC's java.sql types.
-     * <p>
-     * This flag is ignored in the commercial Java 6 distribution of jOOQ 3.7+
-     */
-    boolean generateJavaTimeTypes();
-
-    /**
-     * A flag indicating whether Java 8's java.time types should be used by the
-     * source code generator, rather than JDBC's java.sql types.
-     * <p>
-     * This flag is ignored in the commercial Java 6 distribution of jOOQ 3.7+
-     */
-    void setGenerateJavaTimeTypes(boolean generateJavaTimeTypes);
 
     /**
      * The target directory

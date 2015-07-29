@@ -412,18 +412,6 @@ public class GenerationTool {
                 generator.setGeneratePojosEqualsAndHashCode(g.getGenerate().isPojosEqualsAndHashCode());
             if (g.getGenerate().getFullyQualifiedTypes() != null)
                 generator.setFullyQualifiedTypes(g.getGenerate().getFullyQualifiedTypes());
-            if (g.getGenerate().isJavaTimeTypes() != null)
-                generator.setGenerateJavaTimeTypes(g.getGenerate().isJavaTimeTypes());
-
-            /* [java-8] */
-            if (true)
-                ;
-            else
-            /* [/java-8] */
-                if (!Boolean.FALSE.equals(g.getGenerate().isJavaTimeTypes())) {
-                    log.warn("INVALID CONFIG", "The java.time API cannot be used in the Java 6 distribution of jOOQ 3.7+");
-                    generator.setGenerateJavaTimeTypes(false);
-                }
 
             if (Boolean.TRUE.equals(g.getGenerate().isJpaAnnotations()))
                 log.warn("DEPRECATED", "The <jpaAnnotations/> flag is deprecated and used for backwards-compatibility only. It will be removed in the future.");

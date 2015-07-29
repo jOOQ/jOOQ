@@ -12,6 +12,7 @@ import org.jooq.Field;
 import org.jooq.Result;
 import org.jooq.test.postgres.generatedclasses.routines.F;
 import org.jooq.test.postgres.generatedclasses.routines.F317;
+import org.jooq.test.postgres.generatedclasses.routines.F4430;
 import org.jooq.test.postgres.generatedclasses.routines.FArrays1;
 import org.jooq.test.postgres.generatedclasses.routines.FArrays2;
 import org.jooq.test.postgres.generatedclasses.routines.FArrays3;
@@ -364,6 +365,40 @@ public class Routines {
 		f.setP2(p2);
 		f.setP3(p3);
 		f.setP4(p4);
+
+		return f.asField();
+	}
+
+	/**
+	 * Call <code>public.f4430</code>
+	 */
+	public static Long f4430(Configuration configuration, Short p1, Integer p2) {
+		F4430 f = new F4430();
+		f.setP1(p1);
+		f.setP2(p2);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get <code>public.f4430</code> as a field
+	 */
+	public static Field<Long> f4430(Short p1, Integer p2) {
+		F4430 f = new F4430();
+		f.setP1(p1);
+		f.setP2(p2);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get <code>public.f4430</code> as a field
+	 */
+	public static Field<Long> f4430(Field<Short> p1, Field<Integer> p2) {
+		F4430 f = new F4430();
+		f.setP1(p1);
+		f.setP2(p2);
 
 		return f.asField();
 	}

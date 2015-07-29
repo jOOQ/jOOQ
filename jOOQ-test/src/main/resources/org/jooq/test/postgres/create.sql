@@ -51,6 +51,7 @@ DROP FUNCTION f_search_book_titles(p_title character varying, p_limit bigint, p_
 DROP FUNCTION f_search_books(p_title character varying, p_limit bigint, p_offset bigint)/
 DROP FUNCTION f_search_book(p_title character varying)/
 DROP FUNCTION f_get_arrays(p_id integer)/
+DROP FUNCTION f4430(p1 int, p2 bigint)/
 
 DROP TRIGGER IF EXISTS t_triggers_trigger ON t_triggers/
 DROP FUNCTION p_triggers()/
@@ -1040,6 +1041,13 @@ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION f_setof_bigint (arg BIGINT) RETURNS SETOF BIGINT AS $$
 BEGIN
   RETURN QUERY SELECT COUNT(*) FROM information_schema.tables;
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION f4430(p1 SMALLINT, p2 INT) RETURNS BIGINT AS $$
+BEGIN
+  RETURN p1 + p2;
 END;
 $$
 LANGUAGE plpgsql;

@@ -156,7 +156,6 @@ import org.jooq.test.all.testcases.GroupByTests;
 import org.jooq.test.all.testcases.InsertUpdateTests;
 import org.jooq.test.all.testcases.JDBCTests;
 import org.jooq.test.all.testcases.JPAIntegrationTests;
-import org.jooq.test.all.testcases.Java8TimeTests;
 import org.jooq.test.all.testcases.JoinTests;
 import org.jooq.test.all.testcases.JsonLoaderTests;
 import org.jooq.test.all.testcases.MetaDataTests;
@@ -3750,10 +3749,5 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testConnectionProviderForInsertReturning() throws Exception {
         new ConnectionProviderTests(this).testConnectionProviderForInsertReturning();
-    }
-
-    @Test
-    public void testJava8TimeAPI() throws Exception {
-        new Java8TimeTests(this).testJava8TimeAPI();
     }
 }

@@ -93,7 +93,7 @@ class DropSequenceImpl extends AbstractQuery implements
     // ------------------------------------------------------------------------
 
     private final boolean supportsIfExists(Context<?> ctx) {
-        return !asList(CUBRID, DERBY, FIREBIRD).contains(ctx.family());
+        return !asList(DERBY, FIREBIRD).contains(ctx.family());
     }
 
     @Override

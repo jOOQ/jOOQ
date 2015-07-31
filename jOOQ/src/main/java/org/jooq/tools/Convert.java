@@ -61,6 +61,8 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
@@ -888,6 +890,22 @@ public final class Convert {
                     }
                 }
 
+                else if ((fromClass == String.class) && toClass == OffsetTime.class) {
+
+                    // Try "local" ISO date formats first
+                    try {
+                        return (U) java.sql.Time.valueOf((String) from).toLocalTime().atOffset(OffsetTime.now().getOffset());
+                    }
+                    catch (IllegalArgumentException e1) {
+                        try {
+                            return (U) OffsetTime.parse((String) from);
+                        }
+                        catch (DateTimeParseException e2) {
+                            return null;
+                        }
+                    }
+                }
+
                 else if ((fromClass == String.class) && toClass == LocalDateTime.class) {
 
                     // Try "lenient" ISO date formats first
@@ -897,6 +915,22 @@ public final class Convert {
                     catch (IllegalArgumentException e1) {
                         try {
                             return (U) LocalDateTime.parse((String) from);
+                        }
+                        catch (DateTimeParseException e2) {
+                            return null;
+                        }
+                    }
+                }
+
+                else if ((fromClass == String.class) && toClass == OffsetDateTime.class) {
+
+                    // Try "local" ISO date formats first
+                    try {
+                        return (U) java.sql.Timestamp.valueOf((String) from).toLocalDateTime().atOffset(OffsetDateTime.now().getOffset());
+                    }
+                    catch (IllegalArgumentException e1) {
+                        try {
+                            return (U) OffsetDateTime.parse((String) from);
                         }
                         catch (DateTimeParseException e2) {
                             return null;
@@ -1024,8 +1058,14 @@ public final class Convert {
             else if (toClass == LocalTime.class) {
                 return (X) new Time(time).toLocalTime();
             }
+            else if (toClass == OffsetTime.class) {
+                return (X) new Time(time).toLocalTime().atOffset(OffsetTime.now().getOffset());
+            }
             else if (toClass == LocalDateTime.class) {
                 return (X) new Timestamp(time).toLocalDateTime();
+            }
+            else if (toClass == OffsetDateTime.class) {
+                return (X) new Timestamp(time).toLocalDateTime().atOffset(OffsetDateTime.now().getOffset());
             }
             /* [/java-8] */
 

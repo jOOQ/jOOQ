@@ -40,6 +40,9 @@
  */
 package org.jooq.test;
 
+import static java.time.temporal.ChronoField.INSTANT_SECONDS;
+import static java.time.temporal.ChronoField.MILLI_OF_DAY;
+import static java.time.temporal.ChronoField.MILLI_OF_SECOND;
 import static org.jooq.tools.reflect.Reflect.wrapper;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertNull;
@@ -55,6 +58,10 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
+import java.time.ZoneOffset;
+import java.time.temporal.Temporal;
 
 import org.jooq.Record;
 import org.jooq.Result;
@@ -223,17 +230,30 @@ public class ConvertAllTest extends AbstractTest {
         testConversion(1L, BigInteger.ONE, Long.class);
         testConversion(1L, BigDecimal.ONE, Long.class);
 
+
         Date date = Date.valueOf("2001-02-03");
         testConversion(date.getTime(), date, Long.class);
         testConversion(date.getTime(), date.toLocalDate(), Long.class);
+
 
         Time time = Time.valueOf("04:05:06");
         testConversion(time.getTime(), time, Long.class);
         testConversion(time.getTime(), time.toLocalTime(), Long.class);
 
+        OffsetTime t1 = OffsetTime.parse("04:05:06.789Z");
+        OffsetTime t2 = OffsetTime.parse("04:05:06.789+02:00");
+        testConversion(millis(t1), t1, Long.class);
+        testConversion(millis(t2), t2, Long.class);
+
+
         Timestamp timestamp = Timestamp.valueOf("2001-02-03 04:05:06.789");
         testConversion(timestamp.getTime(), timestamp, Long.class);
         testConversion(timestamp.getTime(), timestamp.toLocalDateTime(), Long.class);
+
+        OffsetDateTime dt1 = OffsetDateTime.parse("2001-02-03T04:05:06.789Z");
+        OffsetDateTime dt2 = OffsetDateTime.parse("2001-02-03T04:05:06.789+02:00");
+        testConversion(millis(dt1), dt1, Long.class);
+        testConversion(millis(dt2), dt2, Long.class);
     }
 
     @Test
@@ -391,6 +411,11 @@ public class ConvertAllTest extends AbstractTest {
         testConversion(time, "04:05:06", Time.class);
         testConversion(time, time.getTime(), Time.class);
         testConversion(time, time.toLocalTime(), Time.class);
+
+        OffsetTime o1 = OffsetTime.parse("04:05:06.789Z");
+        OffsetTime o2 = OffsetTime.parse("04:05:06.789+02:00");
+        testConversion(new Time(millis(o1)), o1, Time.class);
+        testConversion(new Time(millis(o2)), o2, Time.class);
     }
 
     @Test
@@ -400,6 +425,21 @@ public class ConvertAllTest extends AbstractTest {
         testConversion(time.toLocalTime(), "04:05:06", LocalTime.class);
         testConversion(time.toLocalTime(), time.getTime(), LocalTime.class);
         testConversion(time.toLocalTime(), time, LocalTime.class);
+
+        OffsetTime o1 = OffsetTime.parse("04:05:06.789Z");
+        OffsetTime o2 = OffsetTime.parse("04:05:06.789+02:00");
+        testConversion(new Time(millis(o1)).toLocalTime(), o1, LocalTime.class);
+        testConversion(new Time(millis(o2)).toLocalTime(), o2, LocalTime.class);
+    }
+
+    @Test
+    public void testToOffsetTime() {
+        Time time = Time.valueOf("04:05:06");
+        ZoneOffset offset = OffsetDateTime.now().getOffset();
+
+        testConversion(time.toLocalTime().atOffset(offset), "04:05:06", OffsetTime.class);
+        testConversion(time.toLocalTime().atOffset(offset), time.getTime(), OffsetTime.class);
+        testConversion(time.toLocalTime().atOffset(offset), time, OffsetTime.class);
     }
 
     @Test
@@ -419,6 +459,11 @@ public class ConvertAllTest extends AbstractTest {
         testConversion(t1, t1.toLocalDateTime(), Timestamp.class);
         testConversion(t2, t2.toLocalDateTime(), Timestamp.class);
         testConversion(t3, t3.toLocalDateTime(), Timestamp.class);
+
+        OffsetDateTime o1 = OffsetDateTime.parse("2001-02-03T04:05:06.789Z");
+        OffsetDateTime o2 = OffsetDateTime.parse("2001-02-03T04:05:06.789+02:00");
+        testConversion(new Timestamp(millis(o1)), o1, Timestamp.class);
+        testConversion(new Timestamp(millis(o2)), o2, Timestamp.class);
     }
 
     @Test
@@ -438,5 +483,37 @@ public class ConvertAllTest extends AbstractTest {
         testConversion(t1.toLocalDateTime(), t1, LocalDateTime.class);
         testConversion(t2.toLocalDateTime(), t2, LocalDateTime.class);
         testConversion(t3.toLocalDateTime(), t3, LocalDateTime.class);
+
+        OffsetDateTime o1 = OffsetDateTime.parse("2001-02-03T04:05:06.789Z");
+        OffsetDateTime o2 = OffsetDateTime.parse("2001-02-03T04:05:06.789+02:00");
+        testConversion(new Timestamp(millis(o1)).toLocalDateTime(), o1, LocalDateTime.class);
+        testConversion(new Timestamp(millis(o2)).toLocalDateTime(), o2, LocalDateTime.class);
+    }
+
+    @Test
+    public void testToOffsetDateTime() {
+        Timestamp t1 = Timestamp.valueOf("2001-02-03 04:05:06");
+        Timestamp t2 = Timestamp.valueOf("2001-02-03 04:05:06.7");
+        Timestamp t3 = Timestamp.valueOf("2001-02-03 04:05:06.789");
+        ZoneOffset offset = OffsetDateTime.now().getOffset();
+
+        testConversion(t1.toLocalDateTime().atOffset(offset), "2001-02-03 04:05:06", OffsetDateTime.class);
+        testConversion(t2.toLocalDateTime().atOffset(offset), "2001-02-03 04:05:06.7", OffsetDateTime.class);
+        testConversion(t3.toLocalDateTime().atOffset(offset), "2001-02-03 04:05:06.789", OffsetDateTime.class);
+
+        testConversion(t1.toLocalDateTime().atOffset(offset), t1.getTime(), OffsetDateTime.class);
+        testConversion(t2.toLocalDateTime().atOffset(offset), t2.getTime(), OffsetDateTime.class);
+        testConversion(t3.toLocalDateTime().atOffset(offset), t3.getTime(), OffsetDateTime.class);
+
+        testConversion(t1.toLocalDateTime().atOffset(offset), t1, OffsetDateTime.class);
+        testConversion(t2.toLocalDateTime().atOffset(offset), t2, OffsetDateTime.class);
+        testConversion(t3.toLocalDateTime().atOffset(offset), t3, OffsetDateTime.class);
+    }
+
+    private Long millis(Temporal t) {
+        if (t.isSupported(INSTANT_SECONDS))
+            return 1000 * t.getLong(INSTANT_SECONDS) + t.getLong(MILLI_OF_SECOND);
+        else
+            return t.getLong(MILLI_OF_DAY);
     }
 }

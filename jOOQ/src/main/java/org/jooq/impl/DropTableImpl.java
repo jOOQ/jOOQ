@@ -45,7 +45,6 @@ import static org.jooq.Clause.DROP_TABLE;
 import static org.jooq.Clause.DROP_TABLE_TABLE;
 import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ASE;
-import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -110,7 +109,7 @@ class DropTableImpl extends AbstractQuery implements
     // ------------------------------------------------------------------------
 
     private final boolean supportsIfExists(Context<?> ctx) {
-        return !asList(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, ORACLE, SQLSERVER).contains(ctx.family());
+        return !asList(ACCESS, ASE, DB2, DERBY, FIREBIRD, ORACLE, SQLSERVER).contains(ctx.family());
     }
 
     @Override

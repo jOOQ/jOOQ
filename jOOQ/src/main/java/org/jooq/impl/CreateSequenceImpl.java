@@ -43,6 +43,7 @@ package org.jooq.impl;
 import static java.util.Arrays.asList;
 import static org.jooq.Clause.CREATE_SEQUENCE;
 import static org.jooq.Clause.CREATE_SEQUENCE_SEQUENCE;
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.SQLSERVER;
 
@@ -81,7 +82,9 @@ class CreateSequenceImpl extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         ctx.start(CREATE_SEQUENCE_SEQUENCE)
-           .keyword("create sequence")
+           .keyword("create")
+           .sql(' ')
+           .keyword(ctx.family() == CUBRID ? "serial" : "sequence")
            .sql(' ')
            .visit(sequence);
 

@@ -5543,7 +5543,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterSequence(String)
      */
-    @Support({ DB2, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, DB2, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
     AlterSequenceRestartStep<BigInteger> alterSequence(String sequence);
 
     /**
@@ -5551,7 +5551,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterSequence(Name)
      */
-    @Support({ DB2, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, DB2, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
     AlterSequenceRestartStep<BigInteger> alterSequence(Name sequence);
 
     /**
@@ -5559,7 +5559,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterSequence(Sequence)
      */
-    @Support({ DB2, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, DB2, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
     <T extends Number> AlterSequenceRestartStep<T> alterSequence(Sequence<T> sequence);
 
     /**
@@ -5743,7 +5743,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropSequence(String)
      */
-    @Support({ DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     DropSequenceFinalStep dropSequence(String sequence);
 
     /**
@@ -5751,7 +5751,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropSequence(Name)
      */
-    @Support({ DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     DropSequenceFinalStep dropSequence(Name sequence);
 
     /**
@@ -5759,7 +5759,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropSequence(Sequence)
      */
-    @Support({ DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     DropSequenceFinalStep dropSequence(Sequence<?> sequence);
 
     /**
@@ -5770,7 +5770,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropSequenceIfExists(String)
      */
-    @Support({ DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     DropSequenceFinalStep dropSequenceIfExists(String sequence);
 
     /**
@@ -5781,7 +5781,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropSequenceIfExists(Name)
      */
-    @Support({ DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     DropSequenceFinalStep dropSequenceIfExists(Name sequence);
 
     /**
@@ -5792,7 +5792,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropSequenceIfExists(Sequence)
      */
-    @Support({ DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, DB2, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     DropSequenceFinalStep dropSequenceIfExists(Sequence<?> sequence);
 
     /**

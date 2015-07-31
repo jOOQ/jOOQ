@@ -5543,7 +5543,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterSequence(String)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     AlterSequenceRestartStep<BigInteger> alterSequence(String sequence);
 
     /**
@@ -5551,7 +5551,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterSequence(Name)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     AlterSequenceRestartStep<BigInteger> alterSequence(Name sequence);
 
     /**
@@ -5559,7 +5559,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#alterSequence(Sequence)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     <T extends Number> AlterSequenceRestartStep<T> alterSequence(Sequence<T> sequence);
 
     /**
@@ -5743,7 +5743,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropSequence(String)
      */
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     DropSequenceFinalStep dropSequence(String sequence);
 
     /**
@@ -5751,7 +5751,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropSequence(Name)
      */
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     DropSequenceFinalStep dropSequence(Name sequence);
 
     /**
@@ -5759,7 +5759,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropSequence(Sequence)
      */
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     DropSequenceFinalStep dropSequence(Sequence<?> sequence);
 
     /**
@@ -5770,7 +5770,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropSequenceIfExists(String)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     DropSequenceFinalStep dropSequenceIfExists(String sequence);
 
     /**
@@ -5781,7 +5781,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropSequenceIfExists(Name)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     DropSequenceFinalStep dropSequenceIfExists(Name sequence);
 
     /**
@@ -5792,7 +5792,7 @@ public interface DSLContext extends Scope {
      *
      * @see DSL#dropSequenceIfExists(Sequence)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     DropSequenceFinalStep dropSequenceIfExists(Sequence<?> sequence);
 
     /**

@@ -44,6 +44,7 @@ import static java.util.Arrays.asList;
 import static org.jooq.Clause.ALTER_SEQUENCE;
 import static org.jooq.Clause.ALTER_SEQUENCE_RESTART;
 import static org.jooq.Clause.ALTER_SEQUENCE_SEQUENCE;
+import static org.jooq.SQLDialect.CUBRID;
 // ...
 // ...
 
@@ -100,7 +101,9 @@ class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         ctx.start(ALTER_SEQUENCE_SEQUENCE)
-           .keyword("alter sequence")
+           .keyword("alter")
+           .sql(' ')
+           .keyword(ctx.family() == CUBRID ? "serial" : "sequence")
            .sql(' ').visit(sequence)
            .end(ALTER_SEQUENCE_SEQUENCE)
            .start(ALTER_SEQUENCE_RESTART);

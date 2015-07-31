@@ -110,7 +110,10 @@ class DropSequenceImpl extends AbstractQuery implements
 
     private void accept0(Context<?> ctx) {
         ctx.start(DROP_SEQUENCE_SEQUENCE)
-           .keyword("drop sequence").sql(' ');
+           .keyword("drop")
+           .sql(' ')
+           .keyword(ctx.family() == CUBRID ? "serial" : "sequence")
+           .sql(' ');
 
         if (ifExists && supportsIfExists(ctx))
             ctx.keyword("if exists").sql(' ');

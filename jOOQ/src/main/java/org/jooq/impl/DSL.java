@@ -4421,7 +4421,7 @@ public class DSL {
      *
      * @see DSLContext#alterSequence(String)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     public static AlterSequenceRestartStep<BigInteger> alterSequence(String sequence) {
         return using(new DefaultConfiguration()).alterSequence(sequence);
     }
@@ -4431,7 +4431,7 @@ public class DSL {
      *
      * @see DSLContext#alterSequence(Name)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     public static AlterSequenceRestartStep<BigInteger> alterSequence(Name sequence) {
         return using(new DefaultConfiguration()).alterSequence(sequence);
     }
@@ -4441,7 +4441,7 @@ public class DSL {
      *
      * @see DSLContext#alterSequence(Sequence)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     public static <T extends Number> AlterSequenceRestartStep<T> alterSequence(Sequence<T> sequence) {
         return using(new DefaultConfiguration()).alterSequence(sequence);
     }
@@ -4665,7 +4665,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequence(String)
      */
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     public static <T extends Number> DropSequenceFinalStep dropSequence(String sequence) {
         return using(new DefaultConfiguration()).dropSequence(sequence);
     }
@@ -4675,7 +4675,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequence(Name)
      */
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     public static <T extends Number> DropSequenceFinalStep dropSequence(Name sequence) {
         return using(new DefaultConfiguration()).dropSequence(sequence);
     }
@@ -4685,7 +4685,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequence(Sequence)
      */
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     public static <T extends Number> DropSequenceFinalStep dropSequence(Sequence<?> sequence) {
         return using(new DefaultConfiguration()).dropSequence(sequence);
     }
@@ -4698,7 +4698,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequenceIfExists(String)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     public static <T extends Number> DropSequenceFinalStep dropSequenceIfExists(String sequence) {
         return using(new DefaultConfiguration()).dropSequenceIfExists(sequence);
     }
@@ -4711,7 +4711,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequenceIfExists(Name)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     public static <T extends Number> DropSequenceFinalStep dropSequenceIfExists(Name sequence) {
         return using(new DefaultConfiguration()).dropSequenceIfExists(sequence);
     }
@@ -4724,7 +4724,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequenceIfExists(Sequence)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     public static <T extends Number> DropSequenceFinalStep dropSequenceIfExists(Sequence<?> sequence) {
         return using(new DefaultConfiguration()).dropSequenceIfExists(sequence);
     }

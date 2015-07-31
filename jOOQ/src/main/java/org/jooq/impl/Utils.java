@@ -44,6 +44,7 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.ACCESS;
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.conf.BackslashEscaping.DEFAULT;
@@ -2544,7 +2545,7 @@ final class Utils {
 
         // Call this only when there was at least one ResultSet.
         // Otherwise, this call is not supported by ojdbc...
-        if (anyResults)
+        if (anyResults && ctx.family() != CUBRID)
             ctx.statement().getMoreResults(Statement.CLOSE_ALL_RESULTS);
     }
 

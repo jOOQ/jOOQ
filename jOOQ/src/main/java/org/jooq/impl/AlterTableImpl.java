@@ -305,6 +305,7 @@ class AlterTableImpl extends AbstractQuery implements
                     xxxxxx
                 xx [/pro] */
 
+                case CUBRID:
                 case MARIADB:
                 case MYSQL: {
 

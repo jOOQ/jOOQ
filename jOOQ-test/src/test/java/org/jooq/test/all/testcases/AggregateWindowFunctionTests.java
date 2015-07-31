@@ -448,7 +448,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
     @Test
     public void testInverseDistributionFunctions() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, H2, HANA, HSQLDB, INGRES, MARIADB, MYSQL, SQLITE, SYBASE);
+        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DERBY, FIREBIRD, H2, HANA, HSQLDB, INGRES, MARIADB, MYSQL, SQLITE, SYBASE);
         assumeDialectNotIn(POSTGRES_9_3);
 
         Record2<BigDecimal, BigDecimal> result;

@@ -162,8 +162,9 @@ public class DefaultTransactionProvider implements TransactionProvider {
         switch (configuration.family()) {
             /* [pro] xx
             xxxx xxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxx
             xx [/pro] */
+            case CUBRID:
+                return UNSUPPORTED_SAVEPOINT;
             default:
                 return connection(configuration).setSavepoint();
         }

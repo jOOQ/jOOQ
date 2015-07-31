@@ -52,6 +52,9 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import org.jooq.Record;
 import org.jooq.Result;
@@ -219,12 +222,18 @@ public class ConvertAllTest extends AbstractTest {
         testConversion(1L, 1.0f, Long.class);
         testConversion(1L, BigInteger.ONE, Long.class);
         testConversion(1L, BigDecimal.ONE, Long.class);
-        testConversion(0L, new Date(0), Long.class);
-        testConversion(10L, new Date(10), Long.class);
-        testConversion(0L, new Time(0), Long.class);
-        testConversion(10L, new Time(10), Long.class);
-        testConversion(0L, new Timestamp(0), Long.class);
-        testConversion(10L, new Timestamp(10), Long.class);
+
+        Date date = Date.valueOf("2001-02-03");
+        testConversion(date.getTime(), date, Long.class);
+        testConversion(date.getTime(), date.toLocalDate(), Long.class);
+
+        Time time = Time.valueOf("04:05:06");
+        testConversion(time.getTime(), time, Long.class);
+        testConversion(time.getTime(), time.toLocalTime(), Long.class);
+
+        Timestamp timestamp = Timestamp.valueOf("2001-02-03 04:05:06.789");
+        testConversion(timestamp.getTime(), timestamp, Long.class);
+        testConversion(timestamp.getTime(), timestamp.toLocalDateTime(), Long.class);
     }
 
     @Test
@@ -355,5 +364,79 @@ public class ConvertAllTest extends AbstractTest {
         assertEquals(Long.class, r4.field(0).getType());
         assertEquals("VALUE", r4.field(1).getName());
         assertEquals(String.class, r4.field(1).getType());
+    }
+
+    @Test
+    public void testToDate() {
+        Date date = Date.valueOf("2001-02-03");
+
+        testConversion(date, "2001-02-03", Date.class);
+        testConversion(date, date.getTime(), Date.class);
+        testConversion(date, date.toLocalDate(), Date.class);
+    }
+
+    @Test
+    public void testToLocalDate() {
+        Date date = Date.valueOf("2001-02-03");
+
+        testConversion(date.toLocalDate(), "2001-02-03", LocalDate.class);
+        testConversion(date.toLocalDate(), date.getTime(), LocalDate.class);
+        testConversion(date.toLocalDate(), date, LocalDate.class);
+    }
+
+    @Test
+    public void testToTime() {
+        Time time = Time.valueOf("04:05:06");
+
+        testConversion(time, "04:05:06", Time.class);
+        testConversion(time, time.getTime(), Time.class);
+        testConversion(time, time.toLocalTime(), Time.class);
+    }
+
+    @Test
+    public void testToLocalTime() {
+        Time time = Time.valueOf("04:05:06");
+
+        testConversion(time.toLocalTime(), "04:05:06", LocalTime.class);
+        testConversion(time.toLocalTime(), time.getTime(), LocalTime.class);
+        testConversion(time.toLocalTime(), time, LocalTime.class);
+    }
+
+    @Test
+    public void testToTimestamp() {
+        Timestamp t1 = Timestamp.valueOf("2001-02-03 04:05:06");
+        Timestamp t2 = Timestamp.valueOf("2001-02-03 04:05:06.7");
+        Timestamp t3 = Timestamp.valueOf("2001-02-03 04:05:06.789");
+
+        testConversion(t1, "2001-02-03 04:05:06", Timestamp.class);
+        testConversion(t2, "2001-02-03 04:05:06.7", Timestamp.class);
+        testConversion(t3, "2001-02-03 04:05:06.789", Timestamp.class);
+
+        testConversion(t1, t1.getTime(), Timestamp.class);
+        testConversion(t2, t2.getTime(), Timestamp.class);
+        testConversion(t3, t3.getTime(), Timestamp.class);
+
+        testConversion(t1, t1.toLocalDateTime(), Timestamp.class);
+        testConversion(t2, t2.toLocalDateTime(), Timestamp.class);
+        testConversion(t3, t3.toLocalDateTime(), Timestamp.class);
+    }
+
+    @Test
+    public void testToLocalDateTime() {
+        Timestamp t1 = Timestamp.valueOf("2001-02-03 04:05:06");
+        Timestamp t2 = Timestamp.valueOf("2001-02-03 04:05:06.7");
+        Timestamp t3 = Timestamp.valueOf("2001-02-03 04:05:06.789");
+
+        testConversion(t1.toLocalDateTime(), "2001-02-03 04:05:06", LocalDateTime.class);
+        testConversion(t2.toLocalDateTime(), "2001-02-03 04:05:06.7", LocalDateTime.class);
+        testConversion(t3.toLocalDateTime(), "2001-02-03 04:05:06.789", LocalDateTime.class);
+
+        testConversion(t1.toLocalDateTime(), t1.getTime(), LocalDateTime.class);
+        testConversion(t2.toLocalDateTime(), t2.getTime(), LocalDateTime.class);
+        testConversion(t3.toLocalDateTime(), t3.getTime(), LocalDateTime.class);
+
+        testConversion(t1.toLocalDateTime(), t1, LocalDateTime.class);
+        testConversion(t2.toLocalDateTime(), t2, LocalDateTime.class);
+        testConversion(t3.toLocalDateTime(), t3, LocalDateTime.class);
     }
 }

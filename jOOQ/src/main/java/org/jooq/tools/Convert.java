@@ -40,6 +40,9 @@
  */
 package org.jooq.tools;
 
+import static java.time.temporal.ChronoField.INSTANT_SECONDS;
+import static java.time.temporal.ChronoField.MILLI_OF_DAY;
+import static java.time.temporal.ChronoField.MILLI_OF_SECOND;
 import static org.jooq.types.Unsigned.ubyte;
 import static org.jooq.types.Unsigned.uint;
 import static org.jooq.types.Unsigned.ulong;
@@ -55,6 +58,11 @@ import java.net.URL;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -340,7 +348,10 @@ public final class Convert {
      * </ul>
      * <p>
      * All other values evaluate to <code>null</code></li>
-     * <li>All <code>Date</code> types can be converted into each other</li>
+     * <li>All {@link java.util.Date} subtypes ({@link Date}, {@link Time},
+     * {@link Timestamp}), as well as most {@link Temporal} subtypes (
+     * {@link LocalDate}, {@link LocalTime}, {@link LocalDateTime}) can be
+     * converted into each other.</li>
      * <li>All <code>String</code> types can be converted into {@link URI},
      * {@link URL} and {@link File}</li>
      * <li>Primitive target types behave like their wrapper types, except that
@@ -552,6 +563,33 @@ public final class Convert {
                         return (U) Long.valueOf(((java.util.Date) from).getTime());
                     }
 
+                    /* [java-8] */
+                    if (Temporal.class.isAssignableFrom(fromClass)) {
+                        Temporal temporal = (Temporal) from;
+
+                        // java.sql.* temporal types:
+                        if (temporal instanceof LocalDate) {
+                            return (U) Long.valueOf(Date.valueOf((LocalDate) temporal).getTime());
+                        }
+                        else if (temporal instanceof LocalTime) {
+                            return (U) Long.valueOf(Time.valueOf((LocalTime) temporal).getTime());
+                        }
+                        else if (temporal instanceof LocalDateTime) {
+                            return (U) Long.valueOf(Timestamp.valueOf((LocalDateTime) temporal).getTime());
+                        }
+
+                        // OffsetDateTime
+                        else if (temporal.isSupported(INSTANT_SECONDS)) {
+                            return (U) Long.valueOf(1000 * temporal.getLong(INSTANT_SECONDS) + temporal.getLong(MILLI_OF_SECOND));
+                        }
+
+                        // OffsetTime
+                        else if (temporal.isSupported(MILLI_OF_DAY)) {
+                            return (U) Long.valueOf(temporal.getLong(MILLI_OF_DAY));
+                        }
+                    }
+                    /* [/java-8] */
+
                     try {
                         return (U) Long.valueOf(new BigDecimal(from.toString().trim()).longValue());
                     }
@@ -617,6 +655,33 @@ public final class Convert {
                     if (java.util.Date.class.isAssignableFrom(fromClass)) {
                         return (U) ulong(((java.util.Date) from).getTime());
                     }
+
+                    /* [java-8] */
+                    if (Temporal.class.isAssignableFrom(fromClass)) {
+                        Temporal temporal = (Temporal) from;
+
+                        // java.sql.* temporal types:
+                        if (temporal instanceof LocalDate) {
+                            return (U) ulong(Date.valueOf((LocalDate) temporal).getTime());
+                        }
+                        else if (temporal instanceof LocalTime) {
+                            return (U) ulong(Time.valueOf((LocalTime) temporal).getTime());
+                        }
+                        else if (temporal instanceof LocalDateTime) {
+                            return (U) ulong(Timestamp.valueOf((LocalDateTime) temporal).getTime());
+                        }
+
+                        // OffsetDateTime
+                        else if (temporal.isSupported(INSTANT_SECONDS)) {
+                            return (U) ulong(1000 * temporal.getLong(INSTANT_SECONDS) + temporal.getLong(MILLI_OF_SECOND));
+                        }
+
+                        // OffsetTime
+                        else if (temporal.isSupported(MILLI_OF_DAY)) {
+                            return (U) ulong(temporal.getLong(MILLI_OF_DAY));
+                        }
+                    }
+                    /* [/java-8] */
 
                     try {
                         return (U) ulong(new BigDecimal(from.toString().trim()).toBigInteger().toString());
@@ -743,10 +808,22 @@ public final class Convert {
                     return toDate(((java.util.Date) from).getTime(), toClass);
                 }
 
+                /* [java-8] */
+                else if (Temporal.class.isAssignableFrom(fromClass)) {
+                    return toDate(convert(from, Long.class), toClass);
+                }
+                /* [/java-8] */
+
                 // Long may also be converted into a date type
                 else if ((fromClass == Long.class || fromClass == long.class) && java.util.Date.class.isAssignableFrom(toClass)) {
                     return toDate((Long) from, toClass);
                 }
+
+                /* [java-8] */
+                else if ((fromClass == Long.class || fromClass == long.class) && Temporal.class.isAssignableFrom(toClass)) {
+                    return toDate((Long) from, toClass);
+                }
+                /* [/java-8] */
 
                 // [#1501] Strings can be converted to java.sql.Date
                 else if ((fromClass == String.class) && toClass == java.sql.Date.class) {
@@ -777,6 +854,56 @@ public final class Convert {
                         return null;
                     }
                 }
+
+                /* [java-8] */
+                else if ((fromClass == String.class) && toClass == LocalDate.class) {
+
+                    // Try "lenient" ISO date formats first
+                    try {
+                        return (U) java.sql.Date.valueOf((String) from).toLocalDate();
+                    }
+                    catch (IllegalArgumentException e1) {
+                        try {
+                            return (U) LocalDate.parse((String) from);
+                        }
+                        catch (DateTimeParseException e2) {
+                            return null;
+                        }
+                    }
+                }
+
+                else if ((fromClass == String.class) && toClass == LocalTime.class) {
+
+                    // Try "lenient" ISO date formats first
+                    try {
+                        return (U) java.sql.Time.valueOf((String) from).toLocalTime();
+                    }
+                    catch (IllegalArgumentException e1) {
+                        try {
+                            return (U) LocalTime.parse((String) from);
+                        }
+                        catch (DateTimeParseException e2) {
+                            return null;
+                        }
+                    }
+                }
+
+                else if ((fromClass == String.class) && toClass == LocalDateTime.class) {
+
+                    // Try "lenient" ISO date formats first
+                    try {
+                        return (U) java.sql.Timestamp.valueOf((String) from).toLocalDateTime();
+                    }
+                    catch (IllegalArgumentException e1) {
+                        try {
+                            return (U) LocalDateTime.parse((String) from);
+                        }
+                        catch (DateTimeParseException e2) {
+                            return null;
+                        }
+                    }
+                }
+                /* [/java-8] */
 
                 // [#1448] Some users may find it useful to convert string
                 // literals to Enum values without a Converter
@@ -889,6 +1016,18 @@ public final class Convert {
                 calendar.setTimeInMillis(time);
                 return (X) calendar;
             }
+
+            /* [java-8] */
+            else if (toClass == LocalDate.class) {
+                return (X) new Date(time).toLocalDate();
+            }
+            else if (toClass == LocalTime.class) {
+                return (X) new Time(time).toLocalTime();
+            }
+            else if (toClass == LocalDateTime.class) {
+                return (X) new Timestamp(time).toLocalDateTime();
+            }
+            /* [/java-8] */
 
             throw fail(time, toClass);
         }

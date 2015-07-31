@@ -40,6 +40,7 @@
  */
 package org.jooq.test.all.testcases;
 
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.HANA;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
@@ -175,7 +176,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testTransactionsWithJDBCNestedWithSavepoints() throws Exception {
-        assumeFamilyNotIn(HANA);
+        assumeFamilyNotIn(CUBRID, HANA);
 
         jOOQAbstractTest.reset = false;
 

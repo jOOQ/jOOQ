@@ -162,8 +162,9 @@ public class DefaultTransactionProvider implements TransactionProvider {
         switch (configuration.family()) {
             /* [pro] */
             case HANA:
-                return UNSUPPORTED_SAVEPOINT;
             /* [/pro] */
+            case CUBRID:
+                return UNSUPPORTED_SAVEPOINT;
             default:
                 return connection(configuration).setSavepoint();
         }

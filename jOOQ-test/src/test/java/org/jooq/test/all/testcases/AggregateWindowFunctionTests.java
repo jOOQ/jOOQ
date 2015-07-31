@@ -1262,7 +1262,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         assertEquals(asList(2, 2, 2, 2), result1.getValues(8));
         assertEquals(asList(2, 2, 2, 2), result1.getValues(9));
 
-        if (HANA != dialect()) {
+        if (!asList(CUBRID, HANA).contains(family())) {
 
             // [#3727] When the window specification contains a frame clause, then
             // the OVER clause must not generate parentheses. Weird...

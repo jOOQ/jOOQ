@@ -119,8 +119,12 @@ class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
                 ctx.sql(' ').keyword("restart");
         }
         else {
-            ctx.sql(' ').keyword("restart with")
-               .sql(' ').sql(with.toString());
+            if (ctx.family() == CUBRID)
+                ctx.sql(' ').keyword("start with")
+                   .sql(' ').sql(with.toString());
+            else
+                ctx.sql(' ').keyword("restart with")
+                   .sql(' ').sql(with.toString());
         }
 
         ctx.end(ALTER_SEQUENCE_RESTART);

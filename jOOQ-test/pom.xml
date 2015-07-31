@@ -303,7 +303,7 @@
             <artifactId>cubrid-jdbc</artifactId>
             <version>${db.cubrid.version}</version>
             <scope>system</scope>
-            <systemPath>${basedir}/lib/JDBC-9.2.0.0155-cubrid.jar</systemPath>
+            <systemPath>${basedir}/lib/JDBC-9.3.0.0206-cubrid.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.firebirdsql.jdbc</groupId>
@@ -596,7 +596,7 @@
                                 <artifactId>cubrid-jdbc</artifactId>
                                 <version>${db.cubrid.version}</version>
                                 <scope>system</scope>
-                                <systemPath>${basedir}/lib/JDBC-9.2.0.0155-cubrid.jar</systemPath>
+                                <systemPath>${basedir}/lib/JDBC-9.3.0.0206-cubrid.jar</systemPath>
                             </dependency>
                         </dependencies>
                     </plugin>
@@ -748,7 +748,7 @@
                                 <artifactId>cubrid-jdbc</artifactId>
                                 <version>${db.cubrid.version}</version>
                                 <scope>system</scope>
-                                <systemPath>${basedir}/lib/JDBC-9.2.0.0155-cubrid.jar</systemPath>
+                                <systemPath>${basedir}/lib/JDBC-9.3.0.0206-cubrid.jar</systemPath>
                             </dependency>
                         </dependencies>
                     </plugin>
@@ -810,7 +810,7 @@
                                 <artifactId>cubrid-jdbc</artifactId>
                                 <version>${db.cubrid.version}</version>
                                 <scope>system</scope>
-                                <systemPath>${basedir}/lib/JDBC-9.2.0.0155-cubrid.jar</systemPath>
+                                <systemPath>${basedir}/lib/JDBC-9.3.0.0206-cubrid.jar</systemPath>
                             </dependency>
                         </dependencies>
                     </plugin>

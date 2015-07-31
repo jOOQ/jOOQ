@@ -91,7 +91,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
@@ -1806,22 +1805,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return null;
         }
 
-        // Cubrid SQL dates are incorrectly fetched. Reset milliseconds...
-        // See http://jira.cubrid.org/browse/APIS-159
-        // See https://sourceforge.net/apps/trac/cubridinterface/ticket/140
-        else if (dialect == CUBRID) {
-            Date date = rs.getDate(index);
-
-            if (date != null) {
-                Calendar cal = Calendar.getInstance();
-                cal.setTimeInMillis(date.getTime());
-                cal.set(Calendar.MILLISECOND, 0);
-                date = new Date(cal.getTimeInMillis());
-            }
-
-            return date;
-        }
-
         else {
             return rs.getDate(index);
         }
@@ -1838,22 +1821,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
 
             return null;
-        }
-
-        // Cubrid SQL dates are incorrectly fetched. Reset milliseconds...
-        // See http://jira.cubrid.org/browse/APIS-159
-        // See https://sourceforge.net/apps/trac/cubridinterface/ticket/140
-        else if (dialect == CUBRID) {
-            Time time = rs.getTime(index);
-
-            if (time != null) {
-                Calendar cal = Calendar.getInstance();
-                cal.setTimeInMillis(time.getTime());
-                cal.set(Calendar.MILLISECOND, 0);
-                time = new Time(cal.getTimeInMillis());
-            }
-
-            return time;
         }
 
         else {

@@ -40,6 +40,7 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -67,6 +68,6 @@ public interface AlterSequenceRestartStep<T extends Number> {
     /**
      * Restart the sequence at a given value.
      */
-    @Support({ DB2, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
+    @Support({ CUBRID, DB2, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, POSTGRES, SQLSERVER2012, SYBASE })
     AlterSequenceFinalStep restartWith(T value);
 }

@@ -263,14 +263,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         switch (family()) {
 
             // These dialects have a mandatory WITH clause
-            /* [pro] */
+            case CUBRID:
+            case FIREBIRD:
+            case H2:
             case INGRES:
             case SYBASE:
             case VERTICA:
-            /* [/pro] */
-
-            case FIREBIRD:
-            case H2:
                 break;
 
             default:

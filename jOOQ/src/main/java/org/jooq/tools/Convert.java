@@ -58,6 +58,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -353,8 +354,8 @@ public final class Convert {
      * <li>All {@link java.util.Date} subtypes ({@link Date}, {@link Time},
      * {@link Timestamp}), as well as most {@link Temporal} subtypes (
      * {@link LocalDate}, {@link LocalTime}, {@link LocalDateTime},
-     * {@link OffsetTime}, {@link OffsetDateTime}) can be converted into each
-     * other.</li>
+     * {@link OffsetTime}, {@link OffsetDateTime}, as well as {@link Instant})
+     * can be converted into each other.</li>
      * <li>All <code>String</code> types can be converted into {@link URI},
      * {@link URL} and {@link File}</li>
      * <li>Primitive target types behave like their wrapper types, except that
@@ -568,28 +569,7 @@ public final class Convert {
 
                     /* [java-8] */
                     if (Temporal.class.isAssignableFrom(fromClass)) {
-                        Temporal temporal = (Temporal) from;
-
-                        // java.sql.* temporal types:
-                        if (temporal instanceof LocalDate) {
-                            return (U) Long.valueOf(Date.valueOf((LocalDate) temporal).getTime());
-                        }
-                        else if (temporal instanceof LocalTime) {
-                            return (U) Long.valueOf(Time.valueOf((LocalTime) temporal).getTime());
-                        }
-                        else if (temporal instanceof LocalDateTime) {
-                            return (U) Long.valueOf(Timestamp.valueOf((LocalDateTime) temporal).getTime());
-                        }
-
-                        // OffsetDateTime
-                        else if (temporal.isSupported(INSTANT_SECONDS)) {
-                            return (U) Long.valueOf(1000 * temporal.getLong(INSTANT_SECONDS) + temporal.getLong(MILLI_OF_SECOND));
-                        }
-
-                        // OffsetTime
-                        else if (temporal.isSupported(MILLI_OF_DAY)) {
-                            return (U) Long.valueOf(temporal.getLong(MILLI_OF_DAY));
-                        }
+                        return (U) Long.valueOf(millis((Temporal) from));
                     }
                     /* [/java-8] */
 
@@ -661,28 +641,7 @@ public final class Convert {
 
                     /* [java-8] */
                     if (Temporal.class.isAssignableFrom(fromClass)) {
-                        Temporal temporal = (Temporal) from;
-
-                        // java.sql.* temporal types:
-                        if (temporal instanceof LocalDate) {
-                            return (U) ulong(Date.valueOf((LocalDate) temporal).getTime());
-                        }
-                        else if (temporal instanceof LocalTime) {
-                            return (U) ulong(Time.valueOf((LocalTime) temporal).getTime());
-                        }
-                        else if (temporal instanceof LocalDateTime) {
-                            return (U) ulong(Timestamp.valueOf((LocalDateTime) temporal).getTime());
-                        }
-
-                        // OffsetDateTime
-                        else if (temporal.isSupported(INSTANT_SECONDS)) {
-                            return (U) ulong(1000 * temporal.getLong(INSTANT_SECONDS) + temporal.getLong(MILLI_OF_SECOND));
-                        }
-
-                        // OffsetTime
-                        else if (temporal.isSupported(MILLI_OF_DAY)) {
-                            return (U) ulong(temporal.getLong(MILLI_OF_DAY));
-                        }
+                        return (U) ulong(millis((Temporal) from));
                     }
                     /* [/java-8] */
 
@@ -938,6 +897,22 @@ public final class Convert {
                         }
                     }
                 }
+
+                else if ((fromClass == String.class) && toClass == Instant.class) {
+
+                    // Try "local" ISO date formats first
+                    try {
+                        return (U) java.sql.Timestamp.valueOf((String) from).toLocalDateTime().atOffset(OffsetDateTime.now().getOffset()).toInstant();
+                    }
+                    catch (IllegalArgumentException e1) {
+                        try {
+                            return (U) Instant.parse((String) from);
+                        }
+                        catch (DateTimeParseException e2) {
+                            return null;
+                        }
+                    }
+                }
                 /* [/java-8] */
 
                 // [#1448] Some users may find it useful to convert string
@@ -1068,10 +1043,41 @@ public final class Convert {
             else if (toClass == OffsetDateTime.class) {
                 return (X) new Timestamp(time).toLocalDateTime().atOffset(OffsetDateTime.now().getOffset());
             }
+            else if (toClass == Instant.class) {
+                return (X) new Timestamp(time).toLocalDateTime().atOffset(OffsetDateTime.now().getOffset()).toInstant();
+            }
             /* [/java-8] */
 
             throw fail(time, toClass);
         }
+
+        /* [java-8] */
+        private static final long millis(Temporal temporal) {
+
+            // java.sql.* temporal types:
+            if (temporal instanceof LocalDate) {
+                return Date.valueOf((LocalDate) temporal).getTime();
+            }
+            else if (temporal instanceof LocalTime) {
+                return Time.valueOf((LocalTime) temporal).getTime();
+            }
+            else if (temporal instanceof LocalDateTime) {
+                return Timestamp.valueOf((LocalDateTime) temporal).getTime();
+            }
+
+            // OffsetDateTime
+            else if (temporal.isSupported(INSTANT_SECONDS)) {
+                return 1000 * temporal.getLong(INSTANT_SECONDS) + temporal.getLong(MILLI_OF_SECOND);
+            }
+
+            // OffsetTime
+            else if (temporal.isSupported(MILLI_OF_DAY)) {
+                return temporal.getLong(MILLI_OF_DAY);
+            }
+
+            throw fail(temporal, Long.class);
+        }
+        /* [/java-8] */
 
         /**
          * Some databases do not implement the standard very well. Specifically,

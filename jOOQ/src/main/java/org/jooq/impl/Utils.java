@@ -2544,7 +2544,7 @@ final class Utils {
             log.warn("Maximum consumed results reached: " + maxConsumedResults + ". This is probably a bug. Please report to https://github.com/jOOQ/jOOQ/issues/new");
 
         // Call this only when there was at least one ResultSet.
-        // Otherwise, this call is not supported by ojdbc...
+        // Otherwise, this call is not supported by ojdbc or CUBRID [#4440]
         if (anyResults && ctx.family() != CUBRID)
             ctx.statement().getMoreResults(Statement.CLOSE_ALL_RESULTS);
     }

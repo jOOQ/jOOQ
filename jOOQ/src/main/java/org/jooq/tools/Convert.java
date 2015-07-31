@@ -352,8 +352,9 @@ public final class Convert {
      * All other values evaluate to <code>null</code></li>
      * <li>All {@link java.util.Date} subtypes ({@link Date}, {@link Time},
      * {@link Timestamp}), as well as most {@link Temporal} subtypes (
-     * {@link LocalDate}, {@link LocalTime}, {@link LocalDateTime}) can be
-     * converted into each other.</li>
+     * {@link LocalDate}, {@link LocalTime}, {@link LocalDateTime},
+     * {@link OffsetTime}, {@link OffsetDateTime}) can be converted into each
+     * other.</li>
      * <li>All <code>String</code> types can be converted into {@link URI},
      * {@link URL} and {@link File}</li>
      * <li>Primitive target types behave like their wrapper types, except that

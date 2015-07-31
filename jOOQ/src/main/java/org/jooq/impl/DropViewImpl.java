@@ -45,7 +45,6 @@ import static org.jooq.Clause.DROP_VIEW;
 import static org.jooq.Clause.DROP_VIEW_TABLE;
 import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ASE;
-import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -94,7 +93,7 @@ class DropViewImpl extends AbstractQuery implements
     // ------------------------------------------------------------------------
 
     private final boolean supportsIfExists(Context<?> ctx) {
-        return !asList(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, HANA, ORACLE, SQLSERVER).contains(ctx.family());
+        return !asList(ACCESS, ASE, DB2, DERBY, FIREBIRD, HANA, ORACLE, SQLSERVER).contains(ctx.family());
     }
 
     @Override

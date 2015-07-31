@@ -55,6 +55,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -254,6 +255,10 @@ public class ConvertAllTest extends AbstractTest {
         OffsetDateTime dt2 = OffsetDateTime.parse("2001-02-03T04:05:06.789+02:00");
         testConversion(millis(dt1), dt1, Long.class);
         testConversion(millis(dt2), dt2, Long.class);
+
+        Instant now = Instant.now();
+        testConversion(0L, Instant.ofEpochMilli(0), Long.class);
+        testConversion(millis(now), now, Long.class);
     }
 
     @Test
@@ -508,6 +513,26 @@ public class ConvertAllTest extends AbstractTest {
         testConversion(t1.toLocalDateTime().atOffset(offset), t1, OffsetDateTime.class);
         testConversion(t2.toLocalDateTime().atOffset(offset), t2, OffsetDateTime.class);
         testConversion(t3.toLocalDateTime().atOffset(offset), t3, OffsetDateTime.class);
+    }
+
+    @Test
+    public void testToInstant() {
+        Timestamp t1 = Timestamp.valueOf("2001-02-03 04:05:06");
+        Timestamp t2 = Timestamp.valueOf("2001-02-03 04:05:06.7");
+        Timestamp t3 = Timestamp.valueOf("2001-02-03 04:05:06.789");
+        ZoneOffset offset = OffsetDateTime.now().getOffset();
+
+        testConversion(t1.toLocalDateTime().atOffset(offset).toInstant(), "2001-02-03 04:05:06", Instant.class);
+        testConversion(t2.toLocalDateTime().atOffset(offset).toInstant(), "2001-02-03 04:05:06.7", Instant.class);
+        testConversion(t3.toLocalDateTime().atOffset(offset).toInstant(), "2001-02-03 04:05:06.789", Instant.class);
+
+        testConversion(t1.toLocalDateTime().atOffset(offset).toInstant(), t1.getTime(), Instant.class);
+        testConversion(t2.toLocalDateTime().atOffset(offset).toInstant(), t2.getTime(), Instant.class);
+        testConversion(t3.toLocalDateTime().atOffset(offset).toInstant(), t3.getTime(), Instant.class);
+
+        testConversion(t1.toLocalDateTime().atOffset(offset).toInstant(), t1, Instant.class);
+        testConversion(t2.toLocalDateTime().atOffset(offset).toInstant(), t2, Instant.class);
+        testConversion(t3.toLocalDateTime().atOffset(offset).toInstant(), t3, Instant.class);
     }
 
     private Long millis(Temporal t) {

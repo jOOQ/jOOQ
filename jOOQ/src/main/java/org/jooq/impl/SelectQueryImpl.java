@@ -1104,7 +1104,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
                 // [#4447] CUBRID can't handle subqueries in GROUP BY
                 else if (family == CUBRID) {
-                    context.sql("1 = 0");
+                    context.sql("1 + 0");
                 }
 
                 // [#4292] Some dialects don't support empty GROUP BY () clauses

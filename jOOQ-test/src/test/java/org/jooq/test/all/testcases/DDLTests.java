@@ -205,7 +205,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testDropIndexIfExists() throws Exception {
-        assumeFamilyNotIn(DERBY, HANA, REDSHIFT, VERTICA);
+        assumeFamilyNotIn(CUBRID, DERBY, HANA, REDSHIFT, VERTICA);
 
         try {
             // TODO: Re-use jOOQ API for this

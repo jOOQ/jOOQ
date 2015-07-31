@@ -59,6 +59,7 @@ import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DSL.zero;
 
 import java.sql.Date;
+import java.util.Collections;
 
 import org.jooq.Field;
 import org.jooq.Record;
@@ -476,6 +477,26 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                     select(TBook_ID(), TBook_ID()).from(TBook()))))
                 .orderBy(TBook_ID())
                 .fetch(0, Integer.class));
+    }
+
+    public void testRowValueExpressionInConditionsWithEmptyList() throws Exception {
+        assertEquals(
+            Collections.emptyList(),
+            create().select(TBook_ID())
+                    .from(TBook())
+                    .where(row(TBook_ID(), TBook_AUTHOR_ID()).in(Collections.emptyList()))
+                    .orderBy(TBook_ID())
+                    .fetch(0, Integer.class)
+        );
+
+        assertEquals(
+            BOOK_IDS,
+            create().select(TBook_ID())
+                    .from(TBook())
+                    .where(row(TBook_ID(), TBook_AUTHOR_ID()).notIn(Collections.emptyList()))
+                    .orderBy(TBook_ID())
+                    .fetch(0, Integer.class)
+        );
     }
 
     public void testRowValueExpressionNULLPredicate() throws Exception {

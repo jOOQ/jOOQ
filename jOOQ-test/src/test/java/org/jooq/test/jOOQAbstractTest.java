@@ -1957,6 +1957,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testRowValueExpressionInConditionsWithEmptyList() throws Exception {
+        new RowValueExpressionTests(this).testRowValueExpressionInConditionsWithEmptyList();
+    }
+
+    @Test
     public void testRowValueExpressionOrderingConditions() throws Exception {
         new RowValueExpressionTests(this).testRowValueExpressionOrderingConditions();
     }

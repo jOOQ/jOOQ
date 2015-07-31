@@ -57,6 +57,8 @@ import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.impl.DSL.falseCondition;
+import static org.jooq.impl.DSL.trueCondition;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -131,12 +133,20 @@ class RowInCondition extends AbstractCondition {
 
         @Override
         public final void accept(Context<?> ctx) {
-            ctx.visit(left)
-               .sql(' ')
-               .keyword(comparator.toSQL())
-               .sql(" (")
-               .visit(right)
-               .sql(')');
+            if (right.size() == 0) {
+                if (comparator == IN)
+                    ctx.visit(falseCondition());
+                else
+                    ctx.visit(trueCondition());
+            }
+            else {
+                ctx.visit(left)
+                   .sql(' ')
+                   .keyword(comparator.toSQL())
+                   .sql(" (")
+                   .visit(right)
+                   .sql(')');
+            }
         }
 
         @Override

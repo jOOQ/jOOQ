@@ -45,10 +45,12 @@ import static org.jooq.Clause.FIELD_VALUE;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
 
+import org.jooq.ArrayRecord;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Param;
+import org.jooq.UDTRecord;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -88,7 +90,16 @@ abstract class AbstractParam<T> extends AbstractField<T> implements Param<T> {
      * </ul>
      */
     private static String name(Object value, String paramName) {
-        return paramName == null ? String.valueOf(value) : paramName;
+        return paramName != null
+             ? paramName
+
+             // [#3707] Protect value.toString call for certain jOOQ types.
+             : value instanceof UDTRecord
+             ? ((UDTRecord<?>) value).getUDT().getName()
+             : value instanceof ArrayRecord
+             ? ((ArrayRecord<?>) value).getName()
+
+             : String.valueOf(value);
     }
 
     // ------------------------------------------------------------------------

@@ -150,26 +150,6 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
 
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder();
-        String separator = "";
-
-        result.append(create().render(getUDT()));
-        result.append("(");
-
-        Object[] array = intoArray();
-
-        // [#3046] array can be null if custom RecordMapperProviders (illegally) return null
-        if (array != null) {
-            for (Object o : array) {
-                result.append(separator);
-                result.append(o);
-
-                separator = ", ";
-            }
-        }
-
-        result.append(")");
-
-        return result.toString();
+        return DSL.using(configuration()).renderInlined(DSL.inline(this));
     }
 }

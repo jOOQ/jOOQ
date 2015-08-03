@@ -284,7 +284,7 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
         if (array != null) {
             for (T t : array) {
                 result.append(separator);
-                result.append(t);
+                result.append(create().render(DSL.inline(t)));
 
                 separator = ", ";
             }

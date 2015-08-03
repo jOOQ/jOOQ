@@ -894,7 +894,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
             catch (IOException ignore) {}
         }
 
-        return fetchFromStringData(header, list);
+        return fetchFromStringData(list, header);
     }
 
     @Override

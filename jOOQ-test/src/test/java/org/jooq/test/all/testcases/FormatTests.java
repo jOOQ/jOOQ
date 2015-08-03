@@ -219,19 +219,34 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testFetchFromCSV() throws Exception {
-        Result<Record> result1 = create().fetchFromCSV(
+        testFetchFromCSV0(
             "A,B,\"C\",\"\"\"D\"\n" +
             "1,,a,b\n" +
             "1,2,a\n" +
-            "1,2,a,b,c");
+            "1,2,a,b,c",
+            true,
+            "A", "B", "C", "\"D"
+        );
+
+        testFetchFromCSV0(
+            "1,,a,b\n" +
+            "1,2,a\n" +
+            "1,2,a,b,c",
+            false,
+            "COL1", "COL2", "COL3", "COL4"
+        );
+    }
+
+    private void testFetchFromCSV0(String input, boolean header, String... colNames) throws Exception {
+        Result<Record> result1 = create().fetchFromCSV(input, header);
 
         // Check meta data
         assertEquals(4, result1.fieldsRow().size());
         assertEquals(3, result1.size());
-        assertEquals("A", result1.field(0).getName());
-        assertEquals("B", result1.field(1).getName());
-        assertEquals("C", result1.field(2).getName());
-        assertEquals("\"D", result1.field(3).getName());
+        assertEquals(colNames[0], result1.field(0).getName());
+        assertEquals(colNames[1], result1.field(1).getName());
+        assertEquals(colNames[2], result1.field(2).getName());
+        assertEquals(colNames[3], result1.field(3).getName());
 
         // Check column correctness
         assertEquals(asList("1", "1", "1"), result1.getValues(0));

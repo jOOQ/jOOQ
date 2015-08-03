@@ -863,11 +863,21 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Result<Record> fetchFromCSV(String string) {
-        return fetchFromCSV(string, ',');
+        return fetchFromCSV(string, true, ',');
     }
 
     @Override
     public Result<Record> fetchFromCSV(String string, char delimiter) {
+        return fetchFromCSV(string, true, delimiter);
+    }
+
+    @Override
+    public Result<Record> fetchFromCSV(String string, boolean header) {
+        return fetchFromCSV(string, header, ',');
+    }
+
+    @Override
+    public Result<Record> fetchFromCSV(String string, boolean header, char delimiter) {
         CSVReader reader = new CSVReader(new StringReader(string), delimiter);
         List<String[]> list = null;
 
@@ -884,7 +894,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
             catch (IOException ignore) {}
         }
 
-        return fetchFromStringData(list);
+        return fetchFromStringData(header, list);
     }
 
     @Override
@@ -915,25 +925,42 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Result<Record> fetchFromStringData(String[]... strings) {
-        return fetchFromStringData(list(strings));
+        return fetchFromStringData(list(strings), true);
     }
 
     @Override
     public Result<Record> fetchFromStringData(List<String[]> strings) {
+        return fetchFromStringData(strings, true);
+    }
+
+    @Override
+    public Result<Record> fetchFromStringData(List<String[]> strings, boolean header) {
         if (strings.size() == 0) {
             return new ResultImpl<Record>(configuration());
         }
         else {
             List<Field<?>> fields = new ArrayList<Field<?>>();
+            int firstRow;
 
-            for (String name : strings.get(0)) {
-                fields.add(field(name(name), String.class));
+            if (header) {
+                firstRow = 1;
+
+                for (String name : strings.get(0)) {
+                    fields.add(field(name(name), String.class));
+                }
+            }
+            else {
+                firstRow = 0;
+
+                for (int i = 0; i < strings.get(0).length; i++) {
+                    fields.add(field(name("COL" + (i + 1)), String.class));
+                }
             }
 
             Result<Record> result = new ResultImpl<Record>(configuration(), fields);
 
-            if (strings.size() > 1) {
-                for (String[] values : strings.subList(1, strings.size())) {
+            if (strings.size() > firstRow) {
+                for (String[] values : strings.subList(firstRow, strings.size())) {
                     RecordImpl record = new RecordImpl(fields);
 
                     for (int i = 0; i < Math.min(values.length, fields.size()); i++) {

@@ -2176,12 +2176,12 @@ public interface DSLContext extends Scope {
      * conversion methods to retrieve other data types from the
      * <code>Result</code>:
      * <ul>
-     * <li> {@link Result#getValues(Field, Class)}</li>
-     * <li> {@link Result#getValues(int, Class)}</li>
-     * <li> {@link Result#getValues(String, Class)}</li>
-     * <li> {@link Result#getValues(Field, Converter)}</li>
-     * <li> {@link Result#getValues(int, Converter)}</li>
-     * <li> {@link Result#getValues(String, Converter)}</li>
+     * <li>{@link Result#getValues(Field, Class)}</li>
+     * <li>{@link Result#getValues(int, Class)}</li>
+     * <li>{@link Result#getValues(String, Class)}</li>
+     * <li>{@link Result#getValues(Field, Converter)}</li>
+     * <li>{@link Result#getValues(int, Converter)}</li>
+     * <li>{@link Result#getValues(String, Converter)}</li>
      * </ul>
      * <p>
      * Missing values result in <code>null</code>. Empty values result in empty
@@ -2204,12 +2204,12 @@ public interface DSLContext extends Scope {
      * various conversion methods to retrieve other data types from the
      * <code>Result</code>:
      * <ul>
-     * <li> {@link Result#getValues(Field, Class)}</li>
-     * <li> {@link Result#getValues(int, Class)}</li>
-     * <li> {@link Result#getValues(String, Class)}</li>
-     * <li> {@link Result#getValues(Field, Converter)}</li>
-     * <li> {@link Result#getValues(int, Converter)}</li>
-     * <li> {@link Result#getValues(String, Converter)}</li>
+     * <li>{@link Result#getValues(Field, Class)}</li>
+     * <li>{@link Result#getValues(int, Class)}</li>
+     * <li>{@link Result#getValues(String, Class)}</li>
+     * <li>{@link Result#getValues(Field, Converter)}</li>
+     * <li>{@link Result#getValues(int, Converter)}</li>
+     * <li>{@link Result#getValues(String, Converter)}</li>
      * </ul>
      * <p>
      * Missing values result in <code>null</code>. Empty values result in empty
@@ -2224,6 +2224,65 @@ public interface DSLContext extends Scope {
      */
     @Support
     Result<Record> fetchFromCSV(String string, char delimiter) throws DataAccessException;
+
+    /**
+     * Fetch all data from a CSV string.
+     * <p>
+     * This is the same as calling <code>fetchFromCSV(string, ',')</code> and
+     * the inverse of calling {@link Result#formatCSV(boolean)}. Rows may
+     * contain data, which is interpreted as {@link String}. Use the various
+     * conversion methods to retrieve other data types from the
+     * <code>Result</code>:
+     * <ul>
+     * <li>{@link Result#getValues(Field, Class)}</li>
+     * <li>{@link Result#getValues(int, Class)}</li>
+     * <li>{@link Result#getValues(String, Class)}</li>
+     * <li>{@link Result#getValues(Field, Converter)}</li>
+     * <li>{@link Result#getValues(int, Converter)}</li>
+     * <li>{@link Result#getValues(String, Converter)}</li>
+     * </ul>
+     * <p>
+     * Missing values result in <code>null</code>. Empty values result in empty
+     * <code>Strings</code>
+     *
+     * @param string The CSV string
+     * @param header Whether to parse the first line as a CSV header line
+     * @return The transformed result
+     * @throws DataAccessException If anything went wrong parsing the CSV file
+     * @see #fetchFromCSV(String, char)
+     */
+    @Support
+    Result<Record> fetchFromCSV(String string, boolean header) throws DataAccessException;
+
+    /**
+     * Fetch all data from a CSV string.
+     * <p>
+     * This is inverse of calling {@link Result#formatCSV(boolean, char)}. Rows
+     * may contain data, which are interpreted as {@link String}. Use the
+     * various conversion methods to retrieve other data types from the
+     * <code>Result</code>:
+     * <ul>
+     * <li>{@link Result#getValues(Field, Class)}</li>
+     * <li>{@link Result#getValues(int, Class)}</li>
+     * <li>{@link Result#getValues(String, Class)}</li>
+     * <li>{@link Result#getValues(Field, Converter)}</li>
+     * <li>{@link Result#getValues(int, Converter)}</li>
+     * <li>{@link Result#getValues(String, Converter)}</li>
+     * </ul>
+     * <p>
+     * Missing values result in <code>null</code>. Empty values result in empty
+     * <code>Strings</code>
+     *
+     * @param string The CSV string
+     * @param header Whether to parse the first line as a CSV header line
+     * @param delimiter The delimiter to expect between records
+     * @return The transformed result
+     * @throws DataAccessException If anything went wrong parsing the CSV file
+     * @see #fetchFromCSV(String)
+     * @see #fetchFromStringData(List)
+     */
+    @Support
+    Result<Record> fetchFromCSV(String string, boolean header, char delimiter) throws DataAccessException;
 
     /**
      * Fetch all data from a JSON string.
@@ -2288,6 +2347,25 @@ public interface DSLContext extends Scope {
      * @return The transformed result
      */
     Result<Record> fetchFromStringData(List<String[]> data);
+
+    /**
+     * Fetch all data from a list of strings.
+     * <p>
+     * This is used by methods such as
+     * <ul>
+     * <li>{@link #fetchFromCSV(String)}</li>
+     * <li>{@link #fetchFromTXT(String)}</li>
+     * </ul>
+     * The degree of all arrays contained in the argument should be the same,
+     * although this is not a requirement. jOOQ will ignore excess data, and
+     * fill missing data with <code>null</code>.
+     *
+     * @param data The data to be transformed into a <code>Result</code>
+     * @param header Whether to interpret the first line as a set of column
+     *            names.
+     * @return The transformed result
+     */
+    Result<Record> fetchFromStringData(List<String[]> data, boolean header);
 
     // -------------------------------------------------------------------------
     // XXX Global Query factory

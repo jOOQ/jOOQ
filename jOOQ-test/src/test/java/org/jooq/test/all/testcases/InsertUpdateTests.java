@@ -384,8 +384,49 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         assertEquals("Kästner 2", authors.getValue(2, TAuthor_LAST_NAME()));
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public void testInsertMultipleWithDifferentChangedFlags() throws Exception {
+        jOOQAbstractTest.reset = false;
 
+        A a1 = create().newRecord(TAuthor());
+        A a2 = create().newRecord(TAuthor());
+        A a3 = create().newRecord(TAuthor());
+
+        // [#4402] Bulk insertion must work regardless of the "changed" flag
+        //         configuration of individual records
+        a1.setValue(TAuthor_ID(), 3);
+        a1.setValue(TAuthor_LAST_NAME(), "a1");
+
+        a2.setValue(TAuthor_ID(), 4);
+        a2.setValue(TAuthor_LAST_NAME(), "a2");
+        a2.setValue(TAuthor_FIRST_NAME(), "a2");
+
+        a3.setValue(TAuthor_ID(), 5);
+        a3.setValue(TAuthor_LAST_NAME(), "a3");
+        a3.setValue(TAuthor_YEAR_OF_BIRTH(), 3);
+
+        assertEquals(2,
+        create().insertInto(TAuthor())
+                .set(a1)
+                .newRecord()
+                .set(a2)
+                .newRecord()
+                .set(a3)
+                .execute());
+
+        Result<A> authors = create()
+            .selectFrom(TAuthor())
+            .where(TAuthor_ID().in(3, 4, 5))
+            .orderBy(TAuthor_ID())
+            .fetch();
+
+        assertEquals(asList(3, 4, 5), authors.getValues(TAuthor_ID()));
+        assertEquals(asList("a1", "a2", "a3"), authors.getValues(TAuthor_LAST_NAME()));
+        assertEquals(asList(null, "a2", null), authors.getValues(TAuthor_FIRST_NAME()));
+        assertEquals(asList(null, null, null), authors.getValues(TAuthor_DATE_OF_BIRTH()));
+        assertEquals(asList(null, null, 3), authors.getValues(TAuthor_YEAR_OF_BIRTH()));
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public void testInsertConvert() throws Exception {
         jOOQAbstractTest.reset = false;
 

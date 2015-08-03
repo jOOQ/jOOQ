@@ -2352,6 +2352,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testInsertMultipleWithDifferentChangedFlags() throws Exception {
+        new InsertUpdateTests(this).testInsertMultipleWithDifferentChangedFlags();
+    }
+
+    @Test
     public void testInsertConvert() throws Exception {
         new InsertUpdateTests(this).testInsertConvert();
     }

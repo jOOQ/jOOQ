@@ -2068,7 +2068,7 @@ public class OracleTest extends jOOQAbstractTest<
         assertEquals(r1, create().fetchOne("select " + r1 + " from dual").getValue(0));
 
         UAddressTypeRecord r2 = new UAddressTypeRecord(
-            new UStreetTypeRecord("street", "no", new UNumberArrayRecord(1, 2, 3), null, null),
+            new UStreetTypeRecord("street", "no", new UNumberArrayRecord(1, 2, 3), "abc".getBytes(), null),
             "zip", "city", "country", Date.valueOf("2000-01-01"), null, null, null
         );
         r2.attach(create().configuration());

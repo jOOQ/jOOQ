@@ -109,11 +109,26 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testMetaFieldTypes() throws Exception {
+        Table<?> author = create()
+            .meta()
+            .getTables()
+            .stream()
+            .filter(t -> t.getName().equalsIgnoreCase(TAuthor().getName()))
+            .findFirst()
+            .get();
 
         // [#3133] Check if DEFAULT information is correctly generated
         assertFalse(TBook_ID().getDataType().defaulted());
 
-        if (!asList(ACCESS).contains(dialect().family())) {
+        assertFalse(TAuthor_ID().getDataType().nullable());
+        assertFalse(TAuthor_LAST_NAME().getDataType().nullable());
+        assertTrue(TAuthor_FIRST_NAME().getDataType().nullable());
+
+        assertFalse(author.field(TAuthor_ID()).getDataType().nullable());
+        assertFalse(author.field(TAuthor_LAST_NAME()).getDataType().nullable());
+        assertTrue(author.field(TAuthor_FIRST_NAME()).getDataType().nullable());
+
+        if (!asList(ACCESS).contains(family())) {
             assertTrue(TBook_LANGUAGE_ID().getDataType().defaulted());
         }
     }
@@ -129,9 +144,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                 sequences++;
 
                 // DB2 has an additional sequence for the T_TRIGGERS table
-                if (/* [pro] */dialect().family() == DB2 ||
-                    /* [/pro] */dialect().family() == H2) {
-
+                if (family() == DB2 || family() == H2) {
                     sequences++;
                 }
 

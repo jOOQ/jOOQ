@@ -6504,6 +6504,7 @@
                                               | ALL_COLL_TYPES
                                               | ALL_CONS_COLUMNS
                                               | ALL_CONSTRAINTS
+                                              | ALL_DB_LINKS
                                               | ALL_IDENTIFIERS
                                               | ALL_MVIEW_COMMENTS
                                               | ALL_OBJECTS

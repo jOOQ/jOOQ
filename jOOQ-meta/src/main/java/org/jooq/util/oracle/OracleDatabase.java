@@ -55,6 +55,7 @@ import static org.jooq.impl.DSL.val;
 import static org.jooq.util.oracle.sys.Tables.ALL_COLL_TYPES;
 import static org.jooq.util.oracle.sys.Tables.ALL_CONSTRAINTS;
 import static org.jooq.util.oracle.sys.Tables.ALL_CONS_COLUMNS;
+import static org.jooq.util.oracle.sys.Tables.ALL_DB_LINKS;
 import static org.jooq.util.oracle.sys.Tables.ALL_MVIEW_COMMENTS;
 import static org.jooq.util.oracle.sys.Tables.ALL_OBJECTS;
 import static org.jooq.util.oracle.sys.Tables.ALL_PROCEDURES;
@@ -115,6 +116,7 @@ public class OracleDatabase extends AbstractDatabase {
     private List<OracleQueueDefinition>                                  queues;
     private transient Map<SchemaDefinition, List<OracleQueueDefinition>> queuesBySchema;
     private Map<Name, Name>                                              synonyms;
+    private List<String>                                                 dbLinks;
 
     private static Boolean                                               is10g;
 
@@ -584,6 +586,41 @@ public class OracleDatabase extends AbstractDatabase {
 
     public final OracleQueueDefinition getQueue(SchemaDefinition schema, String name, boolean ignoreCase) {
         return getDefinition(getQueues(schema), name, ignoreCase);
+    }
+
+    final List<String> getDBLinks() {
+        if (dbLinks == null) {
+            dbLinks = new ArrayList<String>();
+
+            for (String dbLink : create()
+                .select(ALL_DB_LINKS.DB_LINK)
+                .from(ALL_DB_LINKS)
+                .orderBy(ALL_DB_LINKS.DB_LINK)
+                .fetch(ALL_DB_LINKS.DB_LINK)) {
+
+                // Check if the db link is really available to this connection
+                // It might not be, for a variety of reasons
+                try {
+                    create().fetch("select 1 from all_db_links@" + dbLink + " where 1 = 0");
+                    dbLinks.add(dbLink);
+                }
+                catch (DataAccessException e) {
+                    log.info("Error while accessing dblink", e.getMessage());
+                }
+            }
+        }
+
+        return dbLinks;
+    }
+
+    final List<String> getDBLinkSuffixes() {
+        List<String> result = new ArrayList<String>();
+
+        result.add("");
+        for (String dbLink : getDBLinks())
+            result.add("@" + dbLink);
+
+        return result;
     }
 
     final Name getSynonym(Name object) {

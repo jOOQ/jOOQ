@@ -2562,6 +2562,12 @@
                                             <pojos>false</pojos>
                                             <interfaces>true</interfaces>
                                             <jpaAnnotations>false</jpaAnnotations>
+                                            
+                                            <!-- There's a primary key whose name is the same as that of the table.
+                                                 This causes issues in Keys.java
+                                                 
+                                                 Also, workaround for [#4457] -->
+                                            <fullyQualifiedTypes>java\.lang\..*|.*T_937.*</fullyQualifiedTypes>
                                         </generate>
                                         <target>
                                             <packageName>org.jooq.test.hsqldb.generatedclasses</packageName>

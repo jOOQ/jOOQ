@@ -419,7 +419,9 @@ class MetaImpl implements Meta, Serializable {
                 String.class, // TYPE_NAME
                 int.class,    // COLUMN_SIZE
                 String.class, // BUFFER_LENGTH
-                int.class     // DECIMAL_DIGITS
+                int.class,    // DECIMAL_DIGITS
+                int.class,    // NUM_PREC_RADIX
+                int.class     // NULLABLE
             );
         }
     }
@@ -618,6 +620,7 @@ class MetaImpl implements Meta, Serializable {
                 String typeName = column.getValue(5, String.class);   // TYPE_NAME
                 int precision = column.getValue(6, int.class);        // COLUMN_SIZE
                 int scale = column.getValue(8, int.class);            // DECIMAL_DIGITS
+                int nullable = column.getValue(10, int.class);        // NULLABLE
 
                 // TODO: Exception handling should be moved inside SQLDataType
                 DataType<?> type = null;
@@ -627,6 +630,9 @@ class MetaImpl implements Meta, Serializable {
                     // JDBC doesn't distinguish between precision and length
                     type = type.precision(precision, scale);
                     type = type.length(precision);
+
+                    if (nullable == DatabaseMetaData.columnNoNulls)
+                        type = type.nullable(false);
                 }
                 catch (SQLDialectNotSupportedException e) {
                     type = SQLDataType.OTHER;

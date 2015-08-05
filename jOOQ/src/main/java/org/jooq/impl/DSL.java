@@ -145,6 +145,7 @@ import org.jooq.InsertValuesStep8;
 import org.jooq.InsertValuesStep9;
 import org.jooq.InsertValuesStepN;
 import org.jooq.Keyword;
+import org.jooq.Link;
 import org.jooq.Merge;
 import org.jooq.MergeKeyStep1;
 import org.jooq.MergeKeyStep10;
@@ -5861,6 +5862,36 @@ public class DSL {
     public static <T> Field<T> field(Name name, DataType<T> type) {
         return new QualifiedField<T>(name, type);
     }
+
+    /* [pro] */
+    // -------------------------------------------------------------------------
+    // XXX: Database links
+    // -------------------------------------------------------------------------
+
+    /**
+     * Create a database link reference.
+     */
+    @Support(ORACLE)
+    public static Link link(String name) {
+        return link(name, null);
+    }
+
+    /**
+     * Create a database link reference.
+     */
+    @Support(ORACLE)
+    public static Link link(String name, Schema schema) {
+        return new LinkImpl(name, schema);
+    }
+
+    /**
+     * Create a database link reference.
+     */
+    @Support(ORACLE)
+    public static Link link(Name name) {
+        return new LinkImpl(name);
+    }
+    /* [/pro] */
 
     // -------------------------------------------------------------------------
     // XXX Plain SQL object factory

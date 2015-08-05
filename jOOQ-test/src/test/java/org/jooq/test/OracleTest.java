@@ -41,8 +41,6 @@
 
 package org.jooq.test;
 
-/* [pro] */
-
 import static java.lang.System.currentTimeMillis;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
@@ -52,6 +50,7 @@ import static org.apache.commons.collections4.ListUtils.union;
 import static org.jooq.impl.DSL.currentUser;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.max;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.sum;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
@@ -2446,6 +2445,23 @@ public class OracleTest extends jOOQAbstractTest<
 
         assertEquals(asList((Object) v1, v2, v3), result.intoList());
     }
-}
 
-/* [/pro] */
+    @Test
+    public void testOracleDatabaseLinks() {
+        clean(T_BOOK_SALE);
+
+        Table<Record> linked = table(name(T_BOOK_SALE.getName())).at("PUBLIC_LINK");
+        assertEquals(1,
+            create().insertInto(linked)
+                    .set(T_BOOK_SALE.ID, 1)
+                    .set(T_BOOK_SALE.BOOK_ID, 1)
+                    .set(T_BOOK_SALE.BOOK_STORE_NAME, "Orell Füssli")
+                    .set(T_BOOK_SALE.SOLD_AT, new Date(0))
+                    .set(T_BOOK_SALE.SOLD_FOR, BigDecimal.ONE)
+                    .execute()
+        );
+
+        assertEquals(1, create().fetchCount(linked));
+        assertEquals(1, create().fetchCount(T_BOOK_SALE));
+    }
+}

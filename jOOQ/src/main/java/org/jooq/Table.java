@@ -232,6 +232,35 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     <O extends Record> List<ForeignKey<R, O>> getReferencesTo(Table<O> other);
 
+    /* [pro] */
+    // -------------------------------------------------------------------------
+    // XXX: Database links
+    // -------------------------------------------------------------------------
+
+    /**
+     * A table reference of this table at a given {@link Link}.
+     *
+     * @see DSL#link(String)
+     */
+    @Support(ORACLE)
+    Table<R> at(String link);
+
+    /**
+     * A table reference of this table at a given {@link Link}.
+     *
+     * @see DSL#link(Name)
+     */
+    @Support(ORACLE)
+    Table<R> at(Name link);
+
+    /**
+     * A table reference of this table at a given {@link Link}.
+     */
+    @Support(ORACLE)
+    Table<R> at(Link link);
+
+    /* [/pro] */
+
     // -------------------------------------------------------------------------
     // XXX: Aliasing clauses
     // -------------------------------------------------------------------------

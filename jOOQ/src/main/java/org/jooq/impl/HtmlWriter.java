@@ -1,5 +1,6 @@
 package org.jooq.impl;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.exception.IOException;
@@ -7,14 +8,14 @@ import org.jooq.exception.IOException;
 import java.io.Writer;
 import java.util.List;
 
-class HtmlWriter<R extends Record>  {
+class HtmlWriter<R extends Record> {
 
     HtmlWriter(Fields<R> fields, List<R> records) {
         this.fields = fields;
         this.records = records;
     }
 
-    private final Fields<R>   fields;
+    private final Fields<R> fields;
     private final List<R> records;
 
     final void formatHTML(Writer writer) {
@@ -25,7 +26,7 @@ class HtmlWriter<R extends Record>  {
 
             for (Field<?> field : fields.fields) {
                 writer.append("<th>");
-                writer.append(field.getName());
+                writer.append(StringEscapeUtils.escapeHtml4(field.getName()));
                 writer.append("</th>");
             }
 
@@ -38,7 +39,7 @@ class HtmlWriter<R extends Record>  {
 
                 for (int index = 0; index < fields.fields.length; index++) {
                     writer.append("<td>");
-                    writer.append(ResultImpl.format0(record.getValue(index), false, true));
+                    writer.append(StringEscapeUtils.escapeHtml4(ResultImpl.format0(record.getValue(index), false, true)));
                     writer.append("</td>");
                 }
 
@@ -47,8 +48,7 @@ class HtmlWriter<R extends Record>  {
 
             writer.append("</tbody>");
             writer.append("</table>");
-        }
-        catch (java.io.IOException e) {
+        } catch (java.io.IOException e) {
             throw new IOException("Exception while writing HTML", e);
         }
     }

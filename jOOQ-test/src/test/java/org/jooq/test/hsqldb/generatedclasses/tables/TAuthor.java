@@ -24,7 +24,7 @@ import org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor extends TableImpl<TAuthorRecord> {
 
-	private static final long serialVersionUID = -1957632428;
+	private static final long serialVersionUID = -599148715;
 
 	/**
 	 * The reference instance of <code>PUBLIC.T_AUTHOR</code>
@@ -42,7 +42,7 @@ public class TAuthor extends TableImpl<TAuthorRecord> {
 	/**
 	 * The column <code>PUBLIC.T_AUTHOR.ID</code>.
 	 */
-	public final TableField<TAuthorRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final TableField<TAuthorRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>PUBLIC.T_AUTHOR.FIRST_NAME</code>.

@@ -264,7 +264,7 @@ For more information, please visit: http://www.jooq.org/licenses''');
 
             // Replace a couple of imports
             replaceFirst.add(new SimpleImmutableEntry(compile('''import (org\.jooq\.(ArrayConstant|ArrayRecord|VersionsBetweenAndStep|impl\.ArrayRecordImpl|impl\.FlashbackTable.*?)|(com.microsoft.*?));'''), "// ..."));
-            replaceFirst.add(new SimpleImmutableEntry(compile('''import static org\.jooq\.impl\.DSL\.(cube|grouping|groupingId|groupingSets);'''), "// ..."));
+            replaceFirst.add(new SimpleImmutableEntry(compile('''import static org\.jooq\.impl\.DSL\.(cube|grouping|groupingId|groupingSets|link);'''), "// ..."));
 
             // Replace the Java / Scala / Xtend license header
             replaceFirst.add(new SimpleImmutableEntry(compile('''(?s:/\*\*\R \* Copyright.*?Data Geekery GmbH.*?\R \*/)'''), '''

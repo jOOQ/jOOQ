@@ -232,6 +232,35 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     <O extends Record> List<ForeignKey<R, O>> getReferencesTo(Table<O> other);
 
+    /* [pro] xx
+    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    xx xxxx xxxxxxxx xxxxx
+    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+    xxx
+     x x xxxxx xxxxxxxxx xx xxxx xxxxx xx x xxxxx xxxxxx xxxxxx
+     x
+     x xxxx xxxxxxxxxxxxxxxx
+     xx
+    xxxxxxxxxxxxxxxx
+    xxxxxxxx xxxxxxxxx xxxxxx
+
+    xxx
+     x x xxxxx xxxxxxxxx xx xxxx xxxxx xx x xxxxx xxxxxx xxxxxx
+     x
+     x xxxx xxxxxxxxxxxxxx
+     xx
+    xxxxxxxxxxxxxxxx
+    xxxxxxxx xxxxxxx xxxxxx
+
+    xxx
+     x x xxxxx xxxxxxxxx xx xxxx xxxxx xx x xxxxx xxxxxx xxxxxx
+     xx
+    xxxxxxxxxxxxxxxx
+    xxxxxxxx xxxxxxx xxxxxx
+
+    xx [/pro] */
+
     // -------------------------------------------------------------------------
     // XXX: Aliasing clauses
     // -------------------------------------------------------------------------

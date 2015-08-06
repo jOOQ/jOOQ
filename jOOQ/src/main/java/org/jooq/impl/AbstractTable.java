@@ -52,6 +52,7 @@ import static org.jooq.JoinType.NATURAL_RIGHT_OUTER_JOIN;
 import static org.jooq.JoinType.OUTER_APPLY;
 import static org.jooq.JoinType.RIGHT_OUTER_JOIN;
 import static org.jooq.JoinType.STRAIGHT_JOIN;
+// ...
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
 
@@ -71,6 +72,7 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.JoinType;
+// ...
 import org.jooq.Name;
 import org.jooq.PivotForStep;
 import org.jooq.QueryPart;
@@ -542,6 +544,21 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     xxxxxxxxx
     xxxxxx xxxxx xxxxxxxx xxxxxxxxxxx xxxxx x
         xxxxxx xxx xxxxxxxxxxxxxxxxxx xxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxx xxxxxxxxx xxxxx x
+        xxxxxx xxxxxxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxx xxxxxxx xxxxx x
+        xxxxxx xxxxxxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxx xxxxxxx xxxxx x
+        xxxxxx xxx xxxxxxxxxxxxxxxxxxxx xxxxxx
     x
 
     xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

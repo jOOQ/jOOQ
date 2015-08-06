@@ -145,6 +145,7 @@ import org.jooq.InsertValuesStep8;
 import org.jooq.InsertValuesStep9;
 import org.jooq.InsertValuesStepN;
 import org.jooq.Keyword;
+// ...
 import org.jooq.Merge;
 import org.jooq.MergeKeyStep1;
 import org.jooq.MergeKeyStep10;
@@ -5861,6 +5862,36 @@ public class DSL {
     public static <T> Field<T> field(Name name, DataType<T> type) {
         return new QualifiedField<T>(name, type);
     }
+
+    /* [pro] xx
+    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    xx xxxx xxxxxxxx xxxxx
+    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+    xxx
+     x xxxxxx x xxxxxxxx xxxx xxxxxxxxxx
+     xx
+    xxxxxxxxxxxxxxxx
+    xxxxxx xxxxxx xxxx xxxxxxxxxxx xxxxx x
+        xxxxxx xxxxxxxxxx xxxxxx
+    x
+
+    xxx
+     x xxxxxx x xxxxxxxx xxxx xxxxxxxxxx
+     xx
+    xxxxxxxxxxxxxxxx
+    xxxxxx xxxxxx xxxx xxxxxxxxxxx xxxxx xxxxxx xxxxxxx x
+        xxxxxx xxx xxxxxxxxxxxxxx xxxxxxxx
+    x
+
+    xxx
+     x xxxxxx x xxxxxxxx xxxx xxxxxxxxxx
+     xx
+    xxxxxxxxxxxxxxxx
+    xxxxxx xxxxxx xxxx xxxxxxxxx xxxxx x
+        xxxxxx xxx xxxxxxxxxxxxxxx
+    x
+    xx [/pro] */
 
     // -------------------------------------------------------------------------
     // XXX Plain SQL object factory

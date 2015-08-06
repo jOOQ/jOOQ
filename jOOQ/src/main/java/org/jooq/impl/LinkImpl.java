@@ -40,6 +40,7 @@
  */
 package org.jooq.impl;
 
+/* [pro] */
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Link;
@@ -95,3 +96,4 @@ class LinkImpl extends AbstractQueryPart implements Link {
         return name;
     }
 }
+/* [/pro] */

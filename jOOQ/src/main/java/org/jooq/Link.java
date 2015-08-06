@@ -40,6 +40,8 @@
  */
 package org.jooq;
 
+/* [pro] */
+
 /**
  * A database link reference.
  *
@@ -57,3 +59,4 @@ public interface Link extends QueryPart {
      */
     String name();
 }
+/* [/pro] */

@@ -582,7 +582,39 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final void formatHTML(Writer writer) {
-        new HtmlWriter<R>(this.fields, this.records).formatHTML(writer);
+        try {
+            writer.append("<table>");
+            writer.append("<thead>");
+            writer.append("<tr>");
+
+            for (Field<?> field : fields.fields) {
+                writer.append("<th>");
+                writer.append(field.getName());
+                writer.append("</th>");
+            }
+
+            writer.append("</tr>");
+            writer.append("</thead>");
+            writer.append("<tbody>");
+
+            for (Record record : this) {
+                writer.append("<tr>");
+
+                for (int index = 0; index < fields.fields.length; index++) {
+                    writer.append("<td>");
+                    writer.append(format0(record.getValue(index), false, true));
+                    writer.append("</td>");
+                }
+
+                writer.append("</tr>");
+            }
+
+            writer.append("</tbody>");
+            writer.append("</table>");
+        }
+        catch (java.io.IOException e) {
+            throw new IOException("Exception while writing HTML", e);
+        }
     }
 
     @Override
@@ -696,7 +728,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
      * @param visual Whether the formatted output is to be consumed visually
      *            (HTML, TEXT) or by a machine (CSV, JSON, XML)
      */
-    static final String format0(Object value, boolean changed, boolean visual) {
+    private static final String format0(Object value, boolean changed, boolean visual) {
         String formatted = changed && visual ? "*" : "";
 
         if (value == null) {

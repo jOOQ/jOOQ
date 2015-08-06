@@ -55,6 +55,7 @@ import static org.jooq.impl.DSL.sum;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.test.oracle.generatedclasses.multi_schema.Tables.T_BOOK_SALE;
+import static org.jooq.test.oracle.generatedclasses.test.Links.LOCAL_LINK;
 import static org.jooq.test.oracle.generatedclasses.test.Routines.f691cursorIn;
 import static org.jooq.test.oracle.generatedclasses.test.Routines.f691cursorOut;
 import static org.jooq.test.oracle.generatedclasses.test.Routines.fArrays1;
@@ -2465,6 +2466,8 @@ public class OracleTest extends jOOQAbstractTest<
 
         assertEquals(1, create().fetchCount(linked1));
         assertEquals(1, create().fetchCount(linked2));
+        assertEquals(1, create().fetchCount(T_BOOK_SALE.at(LOCAL_LINK)));
+        assertEquals(1, create().fetchCount(T_BOOK_SALE.at(LOCAL_LINK).as("linked")));
         assertEquals(1, create().fetchCount(T_BOOK_SALE));
     }
 }

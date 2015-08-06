@@ -2450,9 +2450,11 @@ public class OracleTest extends jOOQAbstractTest<
     public void testOracleDatabaseLinks() {
         clean(T_BOOK_SALE);
 
-        Table<Record> linked = table(name(T_BOOK_SALE.getName())).at("PUBLIC_LINK");
+        Table<Record> linked1 = table(name(T_BOOK_SALE.getName())).at("PUBLIC_LINK");
+        Table<Record> linked2 = table(name(T_BOOK_SALE.getName())).at("PUBLIC_LINK").as("linked");
+
         assertEquals(1,
-            create().insertInto(linked)
+            create().insertInto(linked1)
                     .set(T_BOOK_SALE.ID, 1)
                     .set(T_BOOK_SALE.BOOK_ID, 1)
                     .set(T_BOOK_SALE.BOOK_STORE_NAME, "Orell Füssli")
@@ -2461,7 +2463,8 @@ public class OracleTest extends jOOQAbstractTest<
                     .execute()
         );
 
-        assertEquals(1, create().fetchCount(linked));
+        assertEquals(1, create().fetchCount(linked1));
+        assertEquals(1, create().fetchCount(linked2));
         assertEquals(1, create().fetchCount(T_BOOK_SALE));
     }
 }

@@ -85,12 +85,12 @@ class LinkedTable<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final Table<R> as(String alias) {
-        return new LinkedTable<R>(new TableAlias<R>(delegate, alias), link);
+        return new TableAlias<R>(this, alias);
     }
 
     @Override
     public final Table<R> as(String alias, String... fieldAliases) {
-        return new LinkedTable<R>(new TableAlias<R>(delegate, alias, fieldAliases), link);
+        return new TableAlias<R>(this, alias, fieldAliases);
     }
 
     @Override

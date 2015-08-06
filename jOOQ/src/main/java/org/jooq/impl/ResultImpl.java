@@ -630,7 +630,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
             for (Field<?> field : fields.fields) {
                 writer.append("<th>");
-                writer.append(field.getName());
+                writer.append(escapeXML(field.getName()));
                 writer.append("</th>");
             }
 
@@ -643,7 +643,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
                 for (int index = 0; index < fields.fields.length; index++) {
                     writer.append("<td>");
-                    writer.append(format0(record.getValue(index), false, true));
+                    writer.append(escapeXML(format0(record.getValue(index), false, true)));
                     writer.append("</td>");
                 }
 

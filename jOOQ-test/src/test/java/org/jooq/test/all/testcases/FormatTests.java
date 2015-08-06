@@ -41,6 +41,7 @@
 package org.jooq.test.all.testcases;
 
 import static java.util.Arrays.asList;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.tools.StringUtils.defaultString;
@@ -216,6 +217,26 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                           xp.evaluate("/table/tbody/tr[" + (j + 1) + "]/td[" + (i + 1) + "]/text()", doc));
             }
         }
+    }
+
+    public void testFormatHTMLXSS() throws Exception {
+        Field<String> text = field("text", String.class);
+
+        Record1<String> rec = create().newRecord(text);
+        rec.setValue(text, "<script>alert('xss');</script>");
+
+        Result<Record1<String>> r = create().newResult(text);
+        r.add(rec);
+
+        assertEquals(
+            "<table>"
+            + "<thead>"
+            + "<tr><th>text</th></tr>"
+            + "</thead>"
+            + "<tbody>"
+            + "<tr><td>&lt;script&gt;alert(&apos;xss&apos;);&lt;/script&gt;</td></tr>"
+            + "</tbody>"
+            + "</table>", r.formatHTML());
     }
 
     public void testFetchFromCSV() throws Exception {

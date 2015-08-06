@@ -2607,6 +2607,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFormatHTMLXSS() throws Exception {
+        new FormatTests(this).testFormatHTMLXSS();
+    }
+
+    @Test
     public void testFetchFromCSV() throws Exception {
         new FormatTests(this).testFetchFromCSV();
     }

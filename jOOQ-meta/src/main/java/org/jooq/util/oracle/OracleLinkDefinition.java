@@ -38,55 +38,26 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq.impl;
+package org.jooq.util.oracle;
 
-/* [pro] */
-import org.jooq.Clause;
-import org.jooq.Context;
-import org.jooq.Link;
-import org.jooq.Name;
-import org.jooq.Schema;
+import java.util.Arrays;
+import java.util.List;
+
+import org.jooq.util.AbstractDefinition;
+import org.jooq.util.Definition;
+import org.jooq.util.SchemaDefinition;
 
 /**
  * @author Lukas Eder
  */
-class LinkImpl extends AbstractQueryPart implements Link {
+public class OracleLinkDefinition extends AbstractDefinition {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 9053077332162914298L;
-
-    private final Schema schema;
-    private final String name;
-
-    LinkImpl(String name, Schema schema) {
-        this.name = name;
-        this.schema = schema;
-    }
-
-    LinkImpl(Name name) {
-        throw new RuntimeException();
+    public OracleLinkDefinition(SchemaDefinition schema, String name) {
+        super(schema.getDatabase(), schema, name);
     }
 
     @Override
-    public final void accept(Context<?> ctx) {
-        ctx.visit(DSL.name(name()));
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
-    }
-
-    @Override
-    public final Schema schema() {
-        return schema;
-    }
-
-    @Override
-    public final String name() {
-        return name;
+    public final List<Definition> getDefinitionPath() {
+        return Arrays.<Definition>asList(getSchema(), this);
     }
 }
-/* [/pro] */

@@ -78,6 +78,7 @@ import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
+import org.jooq.Link;
 import org.jooq.Package;
 import org.jooq.Parameter;
 import org.jooq.Record;
@@ -112,6 +113,7 @@ import org.jooq.tools.reflect.Reflect;
 import org.jooq.tools.reflect.ReflectException;
 import org.jooq.util.GeneratorStrategy.Mode;
 import org.jooq.util.oracle.OracleDatabase;
+import org.jooq.util.oracle.OracleLinkDefinition;
 import org.jooq.util.oracle.OracleQueueDefinition;
 import org.jooq.util.oracle.Queue;
 import org.jooq.util.oracle.QueueImpl;
@@ -418,6 +420,10 @@ public class JavaGenerator extends AbstractGenerator {
         if (oracleDatabase.getQueues(schema).size() > 0) {
             generateOracleQueueReferences(schema);
         }
+
+        if (oracleDatabase.getLinks(schema).size() > 0) {
+            generateOracleLinkReferences(schema);
+        }
     }
 
     protected void generateOracleQueueReferences(SchemaDefinition schema) {
@@ -455,6 +461,39 @@ public class JavaGenerator extends AbstractGenerator {
         out.close();
 
         watch.splitInfo("Queues generated");
+    }
+
+    protected void generateOracleLinkReferences(SchemaDefinition schema) {
+        log.info("Generating Links");
+        OracleDatabase oracleDatabase = (OracleDatabase) database;
+
+        JavaWriter out = newJavaWriter(new File(getStrategy().getFile(schema).getParentFile(), "Links.java"));
+        printPackage(out, schema);
+        printClassJavadoc(out, "Convenience access to all database links in " + schema.getOutputName());
+        printClassAnnotations(out, schema);
+
+        if (scala)
+            out.println("object Links {");
+        else
+            out.println("public class Links {");
+
+        for (OracleLinkDefinition queue : oracleDatabase.getLinks(schema)) {
+            final String linkId = getStrategy().getJavaIdentifier(queue);
+            final String linkName = queue.getOutputName();
+            final String schemaId = getStrategy().getFullJavaIdentifier(schema);
+
+            out.tab(1).javadoc("The database link <code>%s</code>", queue.getQualifiedOutputName());
+
+            if (scala)
+                out.tab(1).println("val %s : %s = %s.link(\"%s\", %s)", linkId, Link.class, DSL.class, linkName, schemaId);
+            else
+                out.tab(1).println("public static final %s %s = %s.link(\"%s\", %s);", Link.class, linkId, DSL.class, linkName, schemaId);
+        }
+
+        out.println("}");
+        out.close();
+
+        watch.splitInfo("Links generated");
     }
     /* [/pro] */
 

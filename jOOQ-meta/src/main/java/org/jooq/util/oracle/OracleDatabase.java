@@ -79,6 +79,7 @@ import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.Record2;
 import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Result;
@@ -115,8 +116,8 @@ public class OracleDatabase extends AbstractDatabase {
 
     private List<OracleQueueDefinition>                                  queues;
     private transient Map<SchemaDefinition, List<OracleQueueDefinition>> queuesBySchema;
+    private List<OracleLinkDefinition>                                   links;
     private Map<Name, Name>                                              synonyms;
-    private List<String>                                                 dbLinks;
 
     private static Boolean                                               is10g;
 
@@ -559,6 +560,43 @@ public class OracleDatabase extends AbstractDatabase {
     // Oracle-specific API
     // --------------------------------------------------------------------------------------------
 
+    public final List<OracleLinkDefinition> getLinks(SchemaDefinition schema) {
+        if (links == null) {
+            links = new ArrayList<OracleLinkDefinition>();
+
+            for (Record2<String, String> link : create()
+                .select(
+                    ALL_DB_LINKS.OWNER,
+                    ALL_DB_LINKS.DB_LINK
+                )
+                .from(ALL_DB_LINKS)
+                .orderBy(
+                    ALL_DB_LINKS.OWNER,
+                    ALL_DB_LINKS.DB_LINK
+                )) {
+
+                // Check if the db link is really available to this connection
+                // It might not be, for a variety of reasons
+                try {
+                    create().selectOne()
+                            .from(ALL_DB_LINKS.at(link.value2()))
+                            .where(falseCondition())
+                            .fetch();
+
+                    SchemaDefinition linkSchema = getSchema(link.value1());
+                    if (linkSchema != null) {
+                        links.add(new OracleLinkDefinition(schema, link.value2()));
+                    }
+                }
+                catch (DataAccessException e) {
+                    log.info("Error while accessing dblink", e.getMessage());
+                }
+            }
+        }
+
+        return filterSchema(links, schema);
+    }
+
     public final List<OracleQueueDefinition> getQueues(SchemaDefinition schema) {
         if (queues == null) {
             queues = new ArrayList<OracleQueueDefinition>();
@@ -586,41 +624,6 @@ public class OracleDatabase extends AbstractDatabase {
 
     public final OracleQueueDefinition getQueue(SchemaDefinition schema, String name, boolean ignoreCase) {
         return getDefinition(getQueues(schema), name, ignoreCase);
-    }
-
-    final List<String> getDBLinks() {
-        if (dbLinks == null) {
-            dbLinks = new ArrayList<String>();
-
-            for (String dbLink : create()
-                .select(ALL_DB_LINKS.DB_LINK)
-                .from(ALL_DB_LINKS)
-                .orderBy(ALL_DB_LINKS.DB_LINK)
-                .fetch(ALL_DB_LINKS.DB_LINK)) {
-
-                // Check if the db link is really available to this connection
-                // It might not be, for a variety of reasons
-                try {
-                    create().fetch("select 1 from all_db_links@" + dbLink + " where 1 = 0");
-                    dbLinks.add(dbLink);
-                }
-                catch (DataAccessException e) {
-                    log.info("Error while accessing dblink", e.getMessage());
-                }
-            }
-        }
-
-        return dbLinks;
-    }
-
-    final List<String> getDBLinkSuffixes() {
-        List<String> result = new ArrayList<String>();
-
-        result.add("");
-        for (String dbLink : getDBLinks())
-            result.add("@" + dbLink);
-
-        return result;
     }
 
     final Name getSynonym(Name object) {

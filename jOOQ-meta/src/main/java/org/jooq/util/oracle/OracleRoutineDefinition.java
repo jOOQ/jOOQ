@@ -51,7 +51,6 @@ import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.exception.DataAccessException;
-import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.util.AbstractRoutineDefinition;
 import org.jooq.util.DataTypeDefinition;
@@ -68,10 +67,8 @@ import org.jooq.util.oracle.OracleDatabase.TypeInfo;
  */
 public class OracleRoutineDefinition extends AbstractRoutineDefinition {
 
-    private static final JooqLogger log = JooqLogger.getLogger(OracleRoutineDefinition.class);
-    private static Boolean          is11g;
-
-    private final BigDecimal        objectId;
+    private static Boolean   is11g;
+    private final BigDecimal objectId;
 
     public OracleRoutineDefinition(SchemaDefinition schema, PackageDefinition pkg, String name, String comment, BigDecimal objectId, String overload) {
         this(schema, pkg, name, comment, objectId, overload, false);

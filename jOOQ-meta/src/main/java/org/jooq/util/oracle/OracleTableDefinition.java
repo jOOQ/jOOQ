@@ -51,7 +51,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Record;
-import org.jooq.tools.JooqLogger;
 import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataTypeDefinition;
@@ -64,8 +63,6 @@ import org.jooq.util.oracle.OracleDatabase.TypeInfo;
  * @author Lukas Eder
  */
 public class OracleTableDefinition extends AbstractTableDefinition {
-
-    private static final JooqLogger log = JooqLogger.getLogger(OracleTableDefinition.class);
 
 	public OracleTableDefinition(SchemaDefinition schema, String name, String comment) {
 		super(schema, name, comment);

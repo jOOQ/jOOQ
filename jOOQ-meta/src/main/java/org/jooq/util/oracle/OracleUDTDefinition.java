@@ -48,7 +48,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Record;
-import org.jooq.tools.JooqLogger;
 import org.jooq.util.AbstractUDTDefinition;
 import org.jooq.util.AttributeDefinition;
 import org.jooq.util.DataTypeDefinition;
@@ -59,8 +58,6 @@ import org.jooq.util.SchemaDefinition;
 import org.jooq.util.oracle.OracleDatabase.TypeInfo;
 
 public class OracleUDTDefinition extends AbstractUDTDefinition {
-
-    private static final JooqLogger log = JooqLogger.getLogger(OracleUDTDefinition.class);
 
     public OracleUDTDefinition(SchemaDefinition schema, String name, String comment) {
         super(schema, name, comment);

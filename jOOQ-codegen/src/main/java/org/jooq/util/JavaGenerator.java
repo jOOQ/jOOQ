@@ -78,6 +78,7 @@ import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
+// ...
 import org.jooq.Package;
 import org.jooq.Parameter;
 import org.jooq.Record;
@@ -111,6 +112,7 @@ import org.jooq.tools.StringUtils;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.tools.reflect.ReflectException;
 import org.jooq.util.GeneratorStrategy.Mode;
+// ...
 // ...
 // ...
 // ...
@@ -418,6 +420,10 @@ public class JavaGenerator extends AbstractGenerator {
         xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xx x
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         x
+
+        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xx x
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        x
     x
 
     xxxxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
@@ -455,6 +461,39 @@ public class JavaGenerator extends AbstractGenerator {
         xxxxxxxxxxxx
 
         xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
+    x
+
+    xxxxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
+        xxxxxxxxxxxxxxxxxxxx xxxxxxxx
+        xxxxxxxxxxxxxx xxxxxxxxxxxxxx x xxxxxxxxxxxxxxxx xxxxxxxxx
+
+        xxxxxxxxxx xxx x xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxx xxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx xxxxxx xx xxx xxxxxxxx xxxxx xx x x xxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
+
+        xx xxxxxxx
+            xxxxxxxxxxxxxxxxxxx xxxxx xxxx
+        xxxx
+            xxxxxxxxxxxxxxxxxxx xxxxx xxxxx xxxx
+
+        xxx xxxxxxxxxxxxxxxxxxxxx xxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+            xxxxx xxxxxx xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxx xxxxxx xxxxxxxx x xxxxxxxxxxxxxxxxxxxxxx
+            xxxxx xxxxxx xxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+            xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+            xx xxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxx xx x xx x xxxxxxxxxxxxxxx xxxxx xxxxxxx xxxxxxxxxxx xxxxxxxxxx xxxxxxxxx xxxxxxxxxx
+            xxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxx xx xx x xxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxx xxxxxxx xxxxxxxxxx xxxxxxxxx xxxxxxxxxx
+        x
+
+        xxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxx
+
+        xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
     x
     xx [/pro] */
 

@@ -71,13 +71,6 @@ xxxxx xxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxx xxxx x
 
     xxxxxxxxx
     xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxx xxxx x
-        xxxxxx xxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx
-
-        xx xxxxxxxxxxxxx xx xxxxx x
-            xxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxx
-        x
-
         xxxxxxxxxxxxxxxxxxxxxxxxxxxx
     x
 

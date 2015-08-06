@@ -40,6 +40,7 @@
  */
 package org.jooq.impl;
 
+/* [pro] */
 import org.jooq.Context;
 import org.jooq.Link;
 import org.jooq.Record;
@@ -97,3 +98,4 @@ class LinkedTable<R extends Record> extends AbstractTable<R> {
         return delegate.fields0();
     }
 }
+/* [/pro] */

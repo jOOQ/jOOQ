@@ -263,7 +263,7 @@ For more information, please visit: http://www.jooq.org/licenses''');
         if (tokens.contains("pro")) {
 
             // Replace a couple of imports
-            replaceFirst.add(new SimpleImmutableEntry(compile('''import (org\.jooq\.(ArrayConstant|ArrayRecord|VersionsBetweenAndStep|impl\.ArrayRecordImpl|impl\.FlashbackTable.*?)|(com.microsoft.*?));'''), "// ..."));
+            replaceFirst.add(new SimpleImmutableEntry(compile('''import (org\.jooq\.(ArrayConstant|ArrayRecord|Link|VersionsBetweenAndStep|impl\.ArrayRecordImpl|impl\.FlashbackTable.*?)|(com.microsoft.*?));'''), "// ..."));
             replaceFirst.add(new SimpleImmutableEntry(compile('''import static org\.jooq\.impl\.DSL\.(cube|grouping|groupingId|groupingSets|link);'''), "// ..."));
 
             // Replace the Java / Scala / Xtend license header

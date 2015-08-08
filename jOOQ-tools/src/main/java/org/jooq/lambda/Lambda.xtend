@@ -157,6 +157,8 @@ class Lambda extends Generators {
                  * </pre></code>
                  */
                 static <«TN(degree)»> Seq<Tuple«degree»<«TN(degree)»>> crossJoin(«(1 .. degree).map([d | '''Stream<T«d»> s«d»''']).join(", ")») {
+
+                    // This implementation isn't lazy and has substantial complexity for large argument streams!
                     «IF degree > 2»
                     List<Tuple«degree - 1»<«TN(2, degree)»>> list = crossJoin(«XXXn(2, degree, "s")»).toList();
                     return seq(s1).flatMap(v1 -> seq(list).map(t -> tuple(v1, «XXXn(1, degree - 1, "t.v")»)));

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-3.5.0.xsd">
+    <jdbc>
+        <driver>org.h2.Driver</driver>
+        <url>jdbc:h2:mem:TEST;INIT=create schema if not exists TEST\;runscript from 'src/test/resources/init.sql'</url>
+    </jdbc>
+
+    <generator>
+        <name>org.jooq.util.JavaGenerator</name>
+
+        <database>
+            <name>org.jooq.util.h2.H2Database</name>
+            <inputSchema>TEST</inputSchema>
+            <includes>PERSON</includes>
+        </database>
+
+        <generate>
+            <daos>true</daos>
+            <globalObjectReferences>false</globalObjectReferences>
+            <immutablePojos>false</immutablePojos>
+        </generate>
+
+        <target>
+            <packageName>test_java</packageName>
+            <directory>target/generated-sources/jooq</directory>
+        </target>
+    </generator>
+</configuration>

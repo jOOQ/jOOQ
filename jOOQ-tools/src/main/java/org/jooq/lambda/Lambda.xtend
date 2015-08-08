@@ -46,6 +46,9 @@ package org.jooq.lambda
  */
 
 import org.jooq.xtend.Generators
+import java.util.List
+import org.jooq.lambda.tuple.Tuple2
+import static org.jooq.lambda.tuple.Tuple.tuple
 
 class Lambda extends Generators {
     
@@ -56,6 +59,7 @@ class Lambda extends Generators {
         lambda.generateTuples();
         lambda.generateFunctions();
         lambda.generateZipStatic();
+        lambda.generateCrossJoinStatic();
     }
     
     def max() {
@@ -136,6 +140,35 @@ class Lambda extends Generators {
         }
         
         insert("org.jooq.lambda.Seq", out, "zip-static")
+    }
+    
+    def generateCrossJoinStatic() {
+        val out = new StringBuilder();
+        
+        for (degree : 2 .. max) {
+            out.append('''
+            
+                /**
+                 * Cross join «degree» streams into one.
+                 * <p>
+                 * <code><pre>
+                 * // (tuple(1, "a"), tuple(1, "b"), tuple(2, "a"), tuple(2, "b"))
+                 * Seq.of(1, 2).crossJoin(Seq.of("a", "b"))
+                 * </pre></code>
+                 */
+                static <«TN(degree)»> Seq<Tuple«degree»<«TN(degree)»>> crossJoin(«(1 .. degree).map([d | '''Stream<T«d»> s«d»''']).join(", ")») {
+                    «IF degree > 2»
+                    List<Tuple«degree - 1»<«TN(2, degree)»>> list = crossJoin(«XXXn(2, degree, "s")»).toList();
+                    return seq(s1).flatMap(v1 -> seq(list).map(t -> tuple(v1, «XXXn(1, degree - 1, "t.v")»)));
+                    «ELSE»
+                    List<T2> list = seq(s2).toList();
+                    return seq(s1).flatMap(v1 -> seq(list).map(v2 -> tuple(v1, v2)));
+                    «ENDIF»
+                }
+            ''')
+        }
+        
+        insert("org.jooq.lambda.Seq", out, "crossjoin-static")
     }
     
     def generateTuple() {

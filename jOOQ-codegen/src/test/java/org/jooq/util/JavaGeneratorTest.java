@@ -1,18 +1,16 @@
 package org.jooq.util;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.regex.Pattern;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static java.util.regex.Pattern.compile;
+import static org.junit.Assert.*;
 
 /**
  * @author <A href="mailto:alexey at abashev dot ru">Alexey Abashev</A>
@@ -20,6 +18,15 @@ import static org.junit.Assert.fail;
 public class JavaGeneratorTest {
     private final Logger log = LoggerFactory.getLogger(JavaGeneratorTest.class);
 
+    private final static Pattern[] GENERIC_LINES = new Pattern[] {
+            compile("\t\t\"jOOQ version:\\d\\.\\d\\.\\d\"")
+    };
+
+    /**
+     * Compare generated files with original.
+     *
+     * @throws Exception
+     */
     @Test
     public void checkGeneratedDAO() throws Exception {
         GenerationTool.main(new String[] {"/jooq-config-java.xml"});
@@ -35,6 +42,12 @@ public class JavaGeneratorTest {
         );
     }
 
+    /**
+     * Check two files have been equal, special lines (with timestamp or versions) will compared by regexp.
+     *
+     * @param actualFile path to actual file
+     * @param expectedFile path to file with expected content
+     */
     protected void assertFilesEqual(String actualFile, String expectedFile) {
         BufferedReader actual = null, expected = null;
 
@@ -47,7 +60,23 @@ public class JavaGeneratorTest {
             while ((l1 = actual.readLine()) != null) {
                 l2 = expected.readLine();
 
-                assertEquals(l1, l2);
+                boolean isGeneric = false;
+
+                for (Pattern p : GENERIC_LINES) {
+                    if (p.matcher(l1).matches()) {
+                        log.debug("Found generic line: [{}]", l1);
+
+                        isGeneric = true;
+
+                        assertTrue(p.matcher(l2).matches());
+
+                        break;
+                    }
+                }
+
+                if (!isGeneric) {
+                    assertEquals(l1, l2);
+                }
             }
 
             assertNull(expected.readLine());

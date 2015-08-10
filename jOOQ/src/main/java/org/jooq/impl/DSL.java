@@ -68,6 +68,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.impl.Term.ROW_NUMBER;
 import static org.jooq.impl.Utils.combine;
 import static org.jooq.impl.Utils.configuration;
@@ -13660,13 +13661,19 @@ public class DSL {
     // -------------------------------------------------------------------------
 
     /**
-     * Get the current_user() function.
-     * <p>
-     * This translates into any dialect
+     * Get the <code>current_user()</code> function.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<String> currentUser() {
         return new CurrentUser();
+    }
+
+    /**
+     * Get the <code>current_schema()</code> function.
+     */
+    @Support({ DERBY, H2, MARIADB, MYSQL, POSTGRES })
+    public static Field<String> currentSchema() {
+        return new CurrentSchema();
     }
 
     /**

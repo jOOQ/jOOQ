@@ -57,6 +57,8 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.POSTGRES_9_3;
+import static org.jooq.SQLDialect.POSTGRES_9_4;
 import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
@@ -1137,7 +1139,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testInsertOnDuplicateKeyUpdate() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, H2, HANA, INGRES, POSTGRES, REDSHIFT, SQLITE);
+        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, H2, HANA, INGRES, REDSHIFT, SQLITE);
+        assumeDialectNotIn(POSTGRES_9_3, POSTGRES_9_4);
 
         jOOQAbstractTest.reset = false;
 
@@ -1165,8 +1168,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testInsertOnDuplicateKeyIgnore() throws Exception {
-        // assumeFamilyNotIn(ASE, DERBY, FIREBIRD, H2, HANA, INGRES, REDSHIFT, POSTGRES, SQLITE);
-
         jOOQAbstractTest.reset = false;
 
         create().insertInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())

@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES_9_5;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
@@ -86,7 +87,7 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
      * the default. This cannot be combined with {@link #onDuplicateKeyError()}
      * or {@link #onDuplicateKeyIgnore()}
      */
-    @Support({ CUBRID, DB2, HSQLDB, MARIADB, MYSQL, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES_9_5, SQLSERVER, SYBASE })
     LoaderOptionsStep<R> onDuplicateKeyUpdate();
 
     /**

@@ -54,6 +54,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.POSTGRES_9_5;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
@@ -108,7 +109,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
-    @Support({ CUBRID, DB2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES_9_5, SQLSERVER, SYBASE })
     void onDuplicateKeyUpdate(boolean flag);
 
     /**
@@ -123,17 +124,21 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      * <th>Emulation</th>
      * </tr>
      * <tr>
-     * <td> {@link SQLDialect#MYSQL}</td>
-     * <td> <code><pre>INSERT IGNORE INTO ..</pre></code></td>
+     * <td>{@link SQLDialect#MYSQL} and {@link SQLDialect#MARIADB}</td>
+     * <td><code><pre>INSERT IGNORE INTO ..</pre></code></td>
      * </tr>
      * <tr>
-     * <td> {@link SQLDialect#CUBRID}</td>
+     * <td>{@link SQLDialect#POSTGRES_9_5}</td>
+     * <td><code><pre>INSERT INTO .. ON CONFLICT DO NOTHING</pre></code></td>
+     * </tr>
+     * <tr>
+     * <td>{@link SQLDialect#CUBRID}</td>
      * <td>
      * <code><pre>INSERT INTO .. ON DUPLICATE KEY UPDATE [any-field] = [any-field]</pre></code>
      * </td>
      * </tr>
      * <tr>
-     * <td> {@link SQLDialect#DB2}<br/>
+     * <td>{@link SQLDialect#DB2}<br/>
      * {@link SQLDialect#HSQLDB}<br/>
      * {@link SQLDialect#ORACLE}<br/>
      * {@link SQLDialect#SQLSERVER}<br/>
@@ -168,7 +173,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
-    @Support({ CUBRID, DB2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES_9_5, SQLSERVER, SYBASE })
     <T> void addValueForUpdate(Field<T> field, T value);
 
     /**
@@ -177,7 +182,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
-    @Support({ CUBRID, DB2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES_9_5, SQLSERVER, SYBASE })
     <T> void addValueForUpdate(Field<T> field, Field<T> value);
 
     /**
@@ -190,7 +195,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
-    @Support({ CUBRID, DB2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES_9_5, SQLSERVER, SYBASE })
     void addValuesForUpdate(Map<? extends Field<?>, ?> map);
 
     /**

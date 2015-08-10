@@ -176,6 +176,33 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                     break;
                 }
 
+                case POSTGRES: {
+                    toSQLInsert(ctx);
+                    ctx.formatSeparator()
+                       .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
+                       .keyword("on conflict")
+                       .sql(" (");
+
+                    if (table.getPrimaryKey() == null) {
+                        ctx.sql("[unknown primary key]");
+                    }
+                    else {
+                        boolean qualify = ctx.qualify();
+
+                        ctx.qualify(false)
+                           .visit(new Fields<Record>(table.getPrimaryKey().getFields()))
+                           .qualify(qualify);
+                    }
+
+                    ctx.sql(") ")
+                       .keyword("do update set")
+                       .sql(' ')
+                       .visit(updateMap)
+                       .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
+
+                    break;
+                }
+
                 // Some dialects can't really handle this clause. Emulation should be done in two steps
                 case H2: {
                     throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be emulated for " + ctx.dialect());
@@ -202,7 +229,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         // ON DUPLICATE KEY IGNORE clause
         // ------------------------------
         else if (onDuplicateKeyIgnore) {
-            switch (ctx.family()) {
+            switch (ctx.dialect()) {
 
                 // MySQL has a nice, native syntax for this
                 case MARIADB:
@@ -210,6 +237,15 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 case SQLITE: {
                     toSQLInsert(ctx);
                     ctx.start(INSERT_ON_DUPLICATE_KEY_UPDATE)
+                       .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
+                    break;
+                }
+
+                case POSTGRES_9_5: {
+                    toSQLInsert(ctx);
+                    ctx.formatSeparator()
+                       .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
+                       .keyword("on conflict do nothing")
                        .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
                     break;
                 }
@@ -234,9 +270,21 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 // Some databases allow for emulating this clause using a MERGE statement
                 /* [pro] */
                 case DB2:
+                case DB2_9:
+                case DB2_10:
+
                 case INFORMIX:
+
                 case ORACLE:
+                case ORACLE10G:
+                case ORACLE11G:
+                case ORACLE12C:
+
                 case SQLSERVER:
+                case SQLSERVER2008:
+                case SQLSERVER2012:
+                case SQLSERVER2014:
+
                 case SYBASE:
                 /* [/pro] */
                 case HSQLDB: {

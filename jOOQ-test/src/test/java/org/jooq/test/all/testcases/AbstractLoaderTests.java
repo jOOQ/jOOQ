@@ -230,7 +230,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             case FIREBIRD:
             case HANA:
             case H2:
-            case POSTGRES:
             case SQLITE:
                 // TODO [#558] Simulate this
                 log.info("SKIPPING", "Duplicate record insertion");

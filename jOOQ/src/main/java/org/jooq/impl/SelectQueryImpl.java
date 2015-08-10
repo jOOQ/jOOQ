@@ -1512,14 +1512,12 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         forUpdateWait = 0;
     }
 
-    /* [pro] */
     @Override
     public final void setForUpdateSkipLocked() {
         setForUpdate(true);
         forUpdateMode = ForUpdateMode.SKIP_LOCKED;
         forUpdateWait = 0;
     }
-    /* [/pro] */
 
     @Override
     public final void setForShare(boolean forShare) {

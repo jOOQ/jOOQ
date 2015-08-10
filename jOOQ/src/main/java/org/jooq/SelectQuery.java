@@ -55,6 +55,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.POSTGRES_9_5;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
@@ -788,7 +789,6 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     @Support({ ORACLE, POSTGRES })
     void setForUpdateNoWait();
 
-    /* [pro] */
     /**
      * Some RDBMS allow for specifying the locking mode for the applied
      * <code>FOR UPDATE</code> clause. In this case, the session will skip all
@@ -802,10 +802,9 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <li>Oracle</li>
      * </ul>
      */
-    @Support(ORACLE)
+    @Support({ORACLE, POSTGRES_9_5})
     void setForUpdateSkipLocked();
 
-    /* [/pro] */
     /**
      * Sets the "FOR SHARE" flag onto the query.
      * <p>

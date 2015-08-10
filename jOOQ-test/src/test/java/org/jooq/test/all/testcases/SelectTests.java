@@ -43,6 +43,7 @@ package org.jooq.test.all.testcases;
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES_9_5;
 import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.VERTICA;
@@ -449,15 +450,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                     .fetch();
                 assertEquals(2, r1a.size());
 
-                /* [pro] */
-                if (dialect().family() == ORACLE) {
-                    Result<Record1<Integer>> r2a = create()
-                        .select(TAuthor_ID())
-                        .from(TAuthor())
-                        .forUpdate()
-                        .wait(2)
-                        .fetch();
-                    assertEquals(2, r2a.size());
+                if (family() == ORACLE || POSTGRES_9_5.precedes(dialect())) {
                     Result<Record1<Integer>> r3a = create()
                         .select(TAuthor_ID())
                         .from(TAuthor())
@@ -466,26 +459,37 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                         .fetch();
                     assertEquals(2, r3a.size());
 
-                    Result<A> r2b = create().selectFrom(TAuthor())
-                            .forUpdate()
-                            .of(TAuthor_LAST_NAME(), TAuthor_FIRST_NAME())
-                            .wait(2)
-                            .fetch();
-                    assertEquals(2, r2b.size());
-                    Result<A> r1b = create().selectFrom(TAuthor())
+                    if (family() == ORACLE) {
+                        Result<A> r1b = create().selectFrom(TAuthor())
                             .forUpdate()
                             .of(TAuthor_LAST_NAME(), TAuthor_FIRST_NAME())
                             .noWait()
                             .fetch();
-                    assertEquals(2, r1b.size());
-                    Result<A> r3b = create().selectFrom(TAuthor())
+                        assertEquals(2, r1b.size());
+
+                        Result<Record1<Integer>> r2a = create()
+                            .select(TAuthor_ID())
+                            .from(TAuthor())
+                            .forUpdate()
+                            .wait(2)
+                            .fetch();
+                        assertEquals(2, r2a.size());
+
+                        Result<A> r2b = create().selectFrom(TAuthor())
+                            .forUpdate()
+                            .of(TAuthor_LAST_NAME(), TAuthor_FIRST_NAME())
+                            .wait(2)
+                            .fetch();
+                        assertEquals(2, r2b.size());
+
+                        Result<A> r3b = create().selectFrom(TAuthor())
                             .forUpdate()
                             .of(TAuthor_LAST_NAME(), TAuthor_FIRST_NAME())
                             .skipLocked()
                             .fetch();
-                    assertEquals(2, r3b.size());
+                        assertEquals(2, r3b.size());
+                    }
                 }
-                /* [/pro] */
 
                 break;
             }

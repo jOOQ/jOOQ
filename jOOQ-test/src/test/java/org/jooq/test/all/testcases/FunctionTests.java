@@ -74,6 +74,7 @@ import static org.jooq.impl.DSL.cosh;
 import static org.jooq.impl.DSL.cot;
 import static org.jooq.impl.DSL.coth;
 import static org.jooq.impl.DSL.currentDate;
+import static org.jooq.impl.DSL.currentSchema;
 import static org.jooq.impl.DSL.currentTime;
 import static org.jooq.impl.DSL.currentTimestamp;
 import static org.jooq.impl.DSL.currentUser;
@@ -163,6 +164,8 @@ import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
+
+import org.junit.Assert;
 
 public class FunctionTests<
     A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
@@ -1138,13 +1141,45 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testSystemFunctions() throws Exception {
-        if (dialect() == SQLDialect.SQLITE) {
-            log.info("SKIPPING", "System functions test");
-            return;
-        }
+        Field<String> user = trim(lower(currentUser()));
+        Field<String> schema = trim(lower(currentSchema()));
+        Record2<String, String> record = create().select(user, schema).fetchOne();
 
-        Field<?> user = trim(lower(currentUser()));
-        create().select(user).fetchOne();
+        switch (family()) {
+            case DERBY:
+                assertEquals("test", record.value1());
+                assertEquals("test", record.value2());
+                break;
+
+            case H2:
+                assertEquals("sa", record.value1());
+                assertEquals("public", record.value2());
+                break;
+
+            case MARIADB:
+            case MYSQL:
+                assertEquals("root@localhost", record.value1());
+                assertEquals("test", record.value2());
+                break;
+
+            case ORACLE:
+                assertEquals("test", record.value1());
+                assertEquals("test", record.value2());
+                break;
+
+            case POSTGRES:
+                assertEquals("postgres", record.value1());
+                assertEquals("public", record.value2());
+                break;
+
+            case SQLSERVER:
+                assertEquals("dbo", record.value1());
+                assertEquals("dbo", record.value2());
+                break;
+
+            default:
+                Assert.fail();
+        }
     }
 
     public void testArithmeticOperations() throws Exception {

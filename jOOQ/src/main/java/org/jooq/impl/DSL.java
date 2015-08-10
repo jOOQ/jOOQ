@@ -68,6 +68,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SQLSERVER2012;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.SQLDialect.VERTICA;
 import static org.jooq.impl.Term.ROW_NUMBER;
 import static org.jooq.impl.Utils.combine;
 import static org.jooq.impl.Utils.configuration;
@@ -13660,13 +13661,19 @@ public class DSL {
     // -------------------------------------------------------------------------
 
     /**
-     * Get the current_user() function.
-     * <p>
-     * This translates into any dialect
+     * Get the <code>current_user()</code> function.
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<String> currentUser() {
         return new CurrentUser();
+    }
+
+    /**
+     * Get the <code>current_schema()</code> function.
+     */
+    @Support({ DB2, DERBY, H2, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, VERTICA })
+    public static Field<String> currentSchema() {
+        return new CurrentSchema();
     }
 
     /**

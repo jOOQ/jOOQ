@@ -112,6 +112,7 @@ class Limit extends AbstractQueryPart {
             case POSTGRES:
             case POSTGRES_9_3:
             case POSTGRES_9_4:
+            case POSTGRES_9_5:
             case SQLITE: {
                 context.castMode(NEVER)
                        .formatSeparator()

@@ -110,6 +110,7 @@ public class Databases {
             case MYSQL:         result = MySQLDatabase.class;     break;
             case POSTGRES_9_3:
             case POSTGRES_9_4:
+            case POSTGRES_9_5:
             case POSTGRES:      result = PostgresDatabase.class;  break;
             case SQLITE:        result = SQLiteDatabase.class;    break;
 

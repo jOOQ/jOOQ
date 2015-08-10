@@ -62,6 +62,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.POSTGRES_9_3;
 import static org.jooq.SQLDialect.POSTGRES_9_4;
+import static org.jooq.SQLDialect.POSTGRES_9_5;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
@@ -9442,7 +9443,7 @@ public class DSL {
     }
 
     // ------------------------------------------------------------------------
-    // XXX Construction of special grouping functions
+    // XXX Construction of GROUPING SET functions
     // ------------------------------------------------------------------------
 
     /**
@@ -9454,6 +9455,7 @@ public class DSL {
      * <li>DB2</li>
      * <li>MySQL (emulated using the GROUP BY .. WITH ROLLUP clause)</li>
      * <li>Oracle</li>
+     * <li>PostgreSQL 9.5</li>
      * <li>SQL Server</li>
      * <li>Sybase SQL Anywhere</li>
      * </ul>
@@ -9468,182 +9470,185 @@ public class DSL {
      *            function
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
-    @Support({ CUBRID, MARIADB, MYSQL })
+    @Support({ CUBRID, MARIADB, MYSQL, POSTGRES_9_5 })
     public static GroupField rollup(Field<?>... fields) {
         return new Rollup(nullSafe(fields));
     }
 
-    /* [pro] xx
-    xxx
-     x xxxxxx x xxxxxxxxxxxx xxxxxxx xxx xxxxxxx xxxxxxxx xxxxxx
-     x xxx
-     x xxxx xxx xxxx xxxxxxxx xx xxxx xxxx xxx xxxxxxxxx xxxxxxxxxx
-     x xxxx
-     x xxxxxxxxxxxx
-     x xxxxxxxxxxxxxxx
-     x xxxxxxx xxxxxxxxxxx
-     x xxxxxxxxxx xxx xxxxxxxxxxxxx
-     x xxxxx
-     x xxx
-     x xxxxxx xxxxx xxx xxx xxxxxx xxxxxxxxxxxxx xxx x xxxx xxxx xxxxxxxxxxx xx
-     x xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxxxxxx xxxxxxxxxxx
-     x xxxxxxx xx xxxxxxxx xxxxxxxxx xx
-     x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-     x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-     x
-     x xxxxxx xxxxxx xxx xxxxxx xxxx xxx xxxx xx xxx xxxxxxxxxxxxxxxxx
-     x            xxxxxxxx
-     x xxxxxxx x xxxxx xx xx xxxx xx x xxxxxxxxxxx xxxxxxxxx xxxxxx
-     xx
-    xxxxxxxxxx xxxx xxxxx xxxxxxx xxxxxxxxxx xxxxxx xx
-    xxxxxx xxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxx xxxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
-    x
+    /**
+     * Create a CUBE(field1, field2, .., fieldn) grouping field.
+     * <p>
+     * This has been observed to work with the following databases:
+     * <ul>
+     * <li>DB2</li>
+     * <li>Oracle</li>
+     * <li>PostgreSQL 9.5</li>
+     * <li>SQL Server</li>
+     * <li>Sybase SQL Anywhere</li>
+     * </ul>
+     * <p>
+     * Please check the SQL Server documentation for a very nice explanation of
+     * <code>CUBE</code>, <code>ROLLUP</code>, and <code>GROUPING SETS</code>
+     * clauses in grouping contexts: <a
+     * href="http://msdn.microsoft.com/en-US/library/bb522495.aspx"
+     * >http://msdn.microsoft.com/en-US/library/bb522495.aspx</a>
+     *
+     * @param fields The fields that are part of the <code>CUBE</code>
+     *            function
+     * @return A field to be used in a <code>GROUP BY</code> clause
+     */
+    @Support({ POSTGRES_9_5 })
+    public static GroupField cube(Field<?>... fields) {
+        return function("cube", Object.class, nullSafe(fields));
+    }
 
-    xxx
-     x xxxxxx x xxxxxxxx xxxxxxxxxxxx xxxxxxx xxx xxxxxxx xxxxxxxx xxxxx xxxxx
-     x xxxx xxxxxxxx xxx xxxx xxxxxxxx xx x xxxxxx xxxxxx
-     x xxx
-     x xxxx xxx xxxx xxxxxxxx xx xxxx xxxx xxx xxxxxxxxx xxxxxxxxxx
-     x xxxx
-     x xxxxxxxxxxxx
-     x xxxxxxxxxxxxxxx
-     x xxxxxxx xxxxxxxxxxx
-     x xxxxxxxxxx xxx xxxxxxxxxxxxx
-     x xxxxx
-     x xxx
-     x xxxxxx xxxxx xxx xxx xxxxxx xxxxxxxxxxxxx xxx x xxxx xxxx xxxxxxxxxxx xx
-     x xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxxxxxx xxxxxxxxxxx
-     x xxxxxxx xx xxxxxxxx xxxxxxxxx xx
-     x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-     x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-     x
-     x xxxxxx xxxxxx xxx xxxxxx xxxx xxx xxxx xx xxx xxxxxxxxxxxxxx xxxxxxxxxxx
-     x            xxxxxxxx
-     x xxxxxxx x xxxxx xx xx xxxx xx x xxxxxxxxxxx xxxxxxxxx xxxxxx
-     xx
-    xxxxxxxxxx xxxx xxxxx xxxxxxx xxxxxxxxxx xxxxxx xx
-    xxxxxx xxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
-        xxxxxxxxxxxxxxxx xxxxx x xxx xxxxxxxxxxxxxxxxxxxx
+    /**
+     * Create a GROUPING SETS(field1, field2, .., fieldn) grouping field where
+     * each grouping set only consists of a single field.
+     * <p>
+     * This has been observed to work with the following databases:
+     * <ul>
+     * <li>DB2</li>
+     * <li>Oracle</li>
+     * <li>PostgreSQL 9.5</li>
+     * <li>SQL Server</li>
+     * <li>Sybase SQL Anywhere</li>
+     * </ul>
+     * <p>
+     * Please check the SQL Server documentation for a very nice explanation of
+     * <code>CUBE</code>, <code>ROLLUP</code>, and <code>GROUPING SETS</code>
+     * clauses in grouping contexts: <a
+     * href="http://msdn.microsoft.com/en-US/library/bb522495.aspx"
+     * >http://msdn.microsoft.com/en-US/library/bb522495.aspx</a>
+     *
+     * @param fields The fields that are part of the <code>GROUPING SETS</code>
+     *            function
+     * @return A field to be used in a <code>GROUP BY</code> clause
+     */
+    @Support({ POSTGRES_9_5 })
+    public static GroupField groupingSets(Field<?>... fields) {
+        List<Field<?>>[] array = new List[fields.length];
 
-        xxx xxxx x x xx x x xxxxxxxxxxxxxx xxxx x
-            xxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        x
+        for (int i = 0; i < fields.length; i++) {
+            array[i] = Arrays.<Field<?>>asList(fields[i]);
+        }
 
-        xxxxxx xxxxxxxxxxxxxxxxxxxx
-    x
+        return groupingSets(array);
+    }
 
-    xxx
-     x xxxxxx x xxxxxxxx xxxxxxxxxxxxxx xxxxxxxxx xxxxxxxxxx xxx xxxxxxxxx
-     x xxxxxxxxx xxxxxxxx xxxxxx
-     x xxx
-     x xxxx xxx xxxx xxxxxxxx xx xxxx xxxx xxx xxxxxxxxx xxxxxxxxxx
-     x xxxx
-     x xxxxxxxxxxxx
-     x xxxxxxxxxxxxxxx
-     x xxxxxxx xxxxxxxxxxx
-     x xxxxxxxxxx xxx xxxxxxxxxxxxx
-     x xxxxx
-     x xxx
-     x xxxxxx xxxxx xxx xxx xxxxxx xxxxxxxxxxxxx xxx x xxxx xxxx xxxxxxxxxxx xx
-     x xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxxxxxx xxxxxxxxxxx
-     x xxxxxxx xx xxxxxxxx xxxxxxxxx xx
-     x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-     x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-     x
-     x xxxxxx xxxxxxxxx xxx xxxxxx xxxx xxx xxxx xx xxx xxxxxxxxxxxxxx xxxxxxxxxxx
-     x            xxxxxxxx
-     x xxxxxxx x xxxxx xx xx xxxx xx x xxxxxxxxxxx xxxxxxxxx xxxxxx
-     xx
-    xxxxxxxxxx xxxx xxxxx xxxxxxx xxxxxxxxxx xxxxxx xx
-    xxxxxx xxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx x
-        xxxxxxxxxxxxxxxx xxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxx
+    /**
+     * Create a GROUPING SETS((field1a, field1b), (field2a), .., (fieldna,
+     * fieldnb)) grouping field.
+     * <p>
+     * This has been observed to work with the following databases:
+     * <ul>
+     * <li>DB2</li>
+     * <li>Oracle</li>
+     * <li>PostgreSQL 9.5</li>
+     * <li>SQL Server</li>
+     * <li>Sybase SQL Anywhere</li>
+     * </ul>
+     * <p>
+     * Please check the SQL Server documentation for a very nice explanation of
+     * <code>CUBE</code>, <code>ROLLUP</code>, and <code>GROUPING SETS</code>
+     * clauses in grouping contexts: <a
+     * href="http://msdn.microsoft.com/en-US/library/bb522495.aspx"
+     * >http://msdn.microsoft.com/en-US/library/bb522495.aspx</a>
+     *
+     * @param fieldSets The fields that are part of the <code>GROUPING SETS</code>
+     *            function
+     * @return A field to be used in a <code>GROUP BY</code> clause
+     */
+    @Support({ POSTGRES_9_5 })
+    public static GroupField groupingSets(Field<?>[]... fieldSets) {
+        List<Field<?>>[] array = new List[fieldSets.length];
 
-        xxx xxxx x x xx x x xxxxxxxxxxxxxxxxx xxxx x
-            xxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        x
+        for (int i = 0; i < fieldSets.length; i++) {
+            array[i] = Arrays.asList(fieldSets[i]);
+        }
 
-        xxxxxx xxxxxxxxxxxxxxxxxxxx
-    x
+        return groupingSets(array);
+    }
 
-    xxx
-     x xxxxxx x xxxxxxxx xxxxxxxxxxxxxx xxxxxxxxx xxxxxxxxxx xxx xxxxxxxxx
-     x xxxxxxxxx xxxxxxxx xxxxxx
-     x xxx
-     x xxxx xxx xxxx xxxxxxxx xx xxxx xxxx xxx xxxxxxxxx xxxxxxxxxx
-     x xxxx
-     x xxxxxxxxxxxx
-     x xxxxxxxxxxxxxxx
-     x xxxxxxx xxxxxxxxxxx
-     x xxxxxxxxxx xxx xxxxxxxxxxxxx
-     x xxxxx
-     x xxx
-     x xxxxxx xxxxx xxx xxx xxxxxx xxxxxxxxxxxxx xxx x xxxx xxxx xxxxxxxxxxx xx
-     x xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxxxxxx xxxxxxxxxxx
-     x xxxxxxx xx xxxxxxxx xxxxxxxxx xx
-     x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-     x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-     x
-     x xxxxxx xxxxxxxxx xxx xxxxxx xxxx xxx xxxx xx xxx xxxxxxxxxxxxxx xxxxxxxxxxx
-     x            xxxxxxxx
-     x xxxxxxx x xxxxx xx xx xxxx xx x xxxxxxxxxxx xxxxxxxxx xxxxxx
-     xx
-    xxxxxxxxxx xxxx xxxxx xxxxxxx xxxxxxxxxx xxxxxx xx
-    xxxxxx xxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxx xxxxxxxxxx x
-        xxxxxxxxxxxxx xxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    /**
+     * Create a GROUPING SETS((field1a, field1b), (field2a), .., (fieldna,
+     * fieldnb)) grouping field.
+     * <p>
+     * This has been observed to work with the following databases:
+     * <ul>
+     * <li>DB2</li>
+     * <li>Oracle</li>
+     * <li>PostgreSQL 9.5</li>
+     * <li>SQL Server</li>
+     * <li>Sybase SQL Anywhere</li>
+     * </ul>
+     * <p>
+     * Please check the SQL Server documentation for a very nice explanation of
+     * <code>CUBE</code>, <code>ROLLUP</code>, and <code>GROUPING SETS</code>
+     * clauses in grouping contexts: <a
+     * href="http://msdn.microsoft.com/en-US/library/bb522495.aspx"
+     * >http://msdn.microsoft.com/en-US/library/bb522495.aspx</a>
+     *
+     * @param fieldSets The fields that are part of the <code>GROUPING SETS</code>
+     *            function
+     * @return A field to be used in a <code>GROUP BY</code> clause
+     */
+    @Support({ POSTGRES_9_5 })
+    public static GroupField groupingSets(Collection<? extends Field<?>>... fieldSets) {
+        WrappedList[] array = new WrappedList[fieldSets.length];
 
-        xxx xxxx x x xx x x xxxxxxxxxxxxxxxxx xxxx x
-            xxxxxxxx x xxx xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        x
+        for (int i = 0; i < fieldSets.length; i++) {
+            array[i] = new WrappedList(new QueryPartList<Field<?>>(fieldSets[i]));
+        }
 
-        xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxx
-    x
+        return new Function<Object>("grouping sets", SQLDataType.OTHER, array);
+    }
 
-    xxx
-     x xxxxxx x xxxxxxxxxxxxxxx xxxxxxxxxxx xxxxx xx xx xxxx xxxxx xxxx
-     x xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxxxxxx xxxxxxxxxxx
-     x xxxxxxxxxx
-     x xxx
-     x xxxx xxx xxxx xxxxxxxx xx xxxx xxxx xxx xxxxxxxxx xxxxxxxxxx
-     x xxxx
-     x xxxxxxxxxxxx
-     x xxxxxxxxxxxxxxx
-     x xxxxxxx xxxxxxxxxxx
-     x xxxxxxxxxx xxx xxxxxxxxxxxxx
-     x xxxxx
-     x
-     x xxxxxx xxxxx xxx xxxxxxxx xxxxxxxx
-     x xxxxxxx xxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxx
-     x xxxx xxxxxxxxxxxxxxx
-     x xxxx xxxxxxxxxxxxxxxxx
-     xx
-    xxxxxxxxxx xxxx xxxxx xxxxxxx xxxxxxxxxx xxxxxx xx
-    xxxxxx xxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx
-    x
+    /**
+     * Create a GROUPING(field) aggregation field to be used along with
+     * <code>CUBE</code>, <code>ROLLUP</code>, and <code>GROUPING SETS</code>
+     * groupings.
+     * <p>
+     * This has been observed to work with the following databases:
+     * <ul>
+     * <li>DB2</li>
+     * <li>Oracle</li>
+     * <li>PostgreSQL 9.5</li>
+     * <li>SQL Server</li>
+     * <li>Sybase SQL Anywhere</li>
+     * </ul>
+     *
+     * @param field The function argument
+     * @return The <code>GROUPING</code> aggregation field
+     * @see #cube(Field...)
+     * @see #rollup(Field...)
+     */
+    @Support({ POSTGRES_9_5 })
+    public static Field<Integer> grouping(Field<?> field) {
+        return function("grouping", Integer.class, nullSafe(field));
+    }
 
-    xxx
-     x xxxxxx x xxxxxxxxxxxxxxxxxxx xxxxxxx xxx xxxxxxx xxxxxxxxxxx xxxxx xx xx
-     x xxxx xxxxx xxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxx
-     x xxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxx
-     x xxx
-     x xxxx xxx xxxx xxxxxxxx xx xxxx xxxx xxx xxxxxxxxx xxxxxxxxxx
-     x xxxx
-     x xxxxxxxxxxxxxxx
-     x xxxxxxx xxxxxxxxxxx
-     x xxxxx
-     x
-     x xxxxxx xxxxxx xxx xxxxxxxx xxxxxxxxx
-     x xxxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxx
-     x xxxx xxxxxxxxxxxxxxx
-     x xxxx xxxxxxxxxxxxxxxxx
-     xx
-    xxxxxxxxxx xxxxx xxxxxxx xxxxxxxxxxx
-    xxxxxx xxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
-    x
+    /**
+     * Create a GROUPING_ID(field1, field2, .., fieldn) aggregation field to be
+     * used along with <code>CUBE</code>, <code>ROLLUP</code>, and
+     * <code>GROUPING SETS</code> groupings.
+     * <p>
+     * This has been observed to work with the following databases:
+     * <ul>
+     * <li>Oracle</li>
+     * <li>SQL Server</li>
+     * </ul>
+     *
+     * @param fields The function arguments
+     * @return The <code>GROUPING_ID</code> aggregation field
+     * @see #cube(Field...)
+     * @see #rollup(Field...)
+     */
+    @Support({})
+    public static Field<Integer> groupingId(Field<?>... fields) {
+        return function("grouping_id", Integer.class, nullSafe(fields));
+    }
 
-    xx [/pro] */
     // ------------------------------------------------------------------------
     // XXX Bitwise operations
     // ------------------------------------------------------------------------

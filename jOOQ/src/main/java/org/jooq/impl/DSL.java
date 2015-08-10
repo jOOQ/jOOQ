@@ -118,6 +118,7 @@ import org.jooq.DropSequenceFinalStep;
 import org.jooq.DropTableStep;
 import org.jooq.DropViewFinalStep;
 import org.jooq.Field;
+import org.jooq.FieldOrRow;
 import org.jooq.GroupConcatOrderByStep;
 import org.jooq.GroupField;
 import org.jooq.Insert;
@@ -9448,6 +9449,16 @@ public class DSL {
 
     /**
      * Create a ROLLUP(field1, field2, .., fieldn) grouping field.
+     *
+     * @see #rollup(FieldOrRow...)
+     */
+    @Support({ CUBRID, MARIADB, MYSQL, POSTGRES_9_5 })
+    public static GroupField rollup(Field<?>... fields) {
+        return rollup((FieldOrRow[]) nullSafe(fields));
+    }
+
+    /**
+     * Create a ROLLUP(field1, field2, .., fieldn) grouping field.
      * <p>
      * This has been observed to work with the following databases:
      * <ul>
@@ -9471,8 +9482,18 @@ public class DSL {
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
     @Support({ CUBRID, MARIADB, MYSQL, POSTGRES_9_5 })
-    public static GroupField rollup(Field<?>... fields) {
-        return new Rollup(nullSafe(fields));
+    public static GroupField rollup(FieldOrRow... fields) {
+        return new Rollup(fields);
+    }
+
+    /**
+     * Create a CUBE(field1, field2, .., fieldn) grouping field.
+     *
+     * @see #cube(Field...)
+     */
+    @Support({ POSTGRES_9_5 })
+    public static GroupField cube(Field<?>... fields) {
+        return cube((FieldOrRow[]) nullSafe(fields));
     }
 
     /**
@@ -9498,8 +9519,8 @@ public class DSL {
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
     @Support({ POSTGRES_9_5 })
-    public static GroupField cube(Field<?>... fields) {
-        return function("cube", Object.class, nullSafe(fields));
+    public static GroupField cube(FieldOrRow... fields) {
+        return field("{cube}({0})", Object.class, new QueryPartList<FieldOrRow>(fields));
     }
 
     /**

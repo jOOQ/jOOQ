@@ -41,35 +41,43 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.function;
 
 import org.jooq.Configuration;
-import org.jooq.Field;
+import org.jooq.Context;
+import org.jooq.FieldOrRow;
+import org.jooq.QueryPart;
 
 /**
  * @author Lukas Eder
  */
-class Rollup extends AbstractFunction<Object> {
+class Rollup extends AbstractField<Object> {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -5820608758939548704L;
+    private static final long         serialVersionUID = -5820608758939548704L;
+    private QueryPartList<FieldOrRow> arguments;
 
-    Rollup(Field<?>... fields) {
-        super("rollup", SQLDataType.OTHER, fields);
+    Rollup(FieldOrRow... arguments) {
+        super("rollup", SQLDataType.OTHER);
+
+        this.arguments = new QueryPartList<FieldOrRow>(arguments);
     }
 
     @Override
-    final Field<Object> getFunction0(Configuration configuration) {
+    public final void accept(Context<?> ctx) {
+        ctx.visit(delegate(ctx.configuration()));
+    }
+
+    private final QueryPart delegate(Configuration configuration) {
         switch (configuration.dialect()) {
             case CUBRID:
             case MARIADB:
             case MYSQL:
-                return field("{0} {with rollup}", new QueryPartList<Field<?>>(getArguments()));
+                return field("{0} {with rollup}", arguments);
 
             default:
-                return function("rollup", Object.class, getArguments());
+                return field("{rollup}({0})", Object.class, arguments);
         }
     }
 }

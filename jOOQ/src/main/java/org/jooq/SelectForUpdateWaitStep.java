@@ -42,6 +42,7 @@ package org.jooq;
 
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.POSTGRES_9_5;
 
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
@@ -109,15 +110,13 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectOptionS
     @Support({ POSTGRES })
     SelectOptionStep<R> noWait();
 
-    /* [pro] xx
-    xxx
-     x xxx x xxxxxxxxxxxxxxxxx xxxxxx xx xxx xxxxxxxxx xxxxxxxxxxxxx xxxxxx xx
-     x xxx xxx xx xxx xxxxxx
-     x
-     x xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxxxx xxx xxxx
-     x      xxxxxxx
-     xx
-    xxxxxxxxxxxxxxxx
-    xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
-    xx [/pro] */
+    /**
+     * Add a <code>WAIT</code> clause to the <code>FOR UPDATE</code> clause at
+     * the end of the query.
+     *
+     * @see SelectQuery#setForUpdateSkipLocked() see LockProvider for more
+     *      details
+     */
+    @Support({ POSTGRES_9_5 })
+    SelectOptionStep<R> skipLocked();
 }

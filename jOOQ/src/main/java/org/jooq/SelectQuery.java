@@ -55,6 +55,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.POSTGRES_9_5;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -788,24 +789,22 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     @Support({ POSTGRES })
     void setForUpdateNoWait();
 
-    /* [pro] xx
-    xxx
-     x xxxx xxxxx xxxxx xxx xxxxxxxxxx xxx xxxxxxx xxxx xxx xxx xxxxxxx
-     x xxxxxxxxx xxxxxxxxxxxxx xxxxxxx xx xxxx xxxxx xxx xxxxxxx xxxx xxxx xxx
-     x xxxxxx xxxx xxxx xxx xxxxxx xxxxxxxxxx xxxxx xxxx xx xxx xxxxxxxxxx
-     x xxx
-     x xxxx xxxxxxxxxxxxx xxxx xxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxx xxx
-     x xxxxxx xxx xxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxx xx xx xxx xxxxxxxxxx xxxx
-     x xxx
-     x xxxx xxx xxxx xxxxxxxx xx xx xxxxxxxxx xx xxx xx xxxxx xxxxxxxxx
-     x xxxx
-     x xxxxxxxxxxxxxxx
-     x xxxxx
-     xx
-    xxxxxxxxxxxxxxxx
-    xxxx xxxxxxxxxxxxxxxxxxxxxxxxx
+    /**
+     * Some RDBMS allow for specifying the locking mode for the applied
+     * <code>FOR UPDATE</code> clause. In this case, the session will skip all
+     * locked rows from the select statement, whose lock is not available.
+     * <p>
+     * This automatically sets the {@link #setForUpdate(boolean)} flag, and
+     * unsets the {@link #setForShare(boolean)} flag, if it was previously set.
+     * <p>
+     * This has been observed to be supported by any of these dialects:
+     * <ul>
+     * <li>Oracle</li>
+     * </ul>
+     */
+    @Support({POSTGRES_9_5})
+    void setForUpdateSkipLocked();
 
-    xx [/pro] */
     /**
      * Sets the "FOR SHARE" flag onto the query.
      * <p>

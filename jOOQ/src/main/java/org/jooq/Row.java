@@ -50,7 +50,7 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface Row extends QueryPart {
+public interface Row extends FieldOrRow {
 
     /**
      * Get the degree of this row value expression.

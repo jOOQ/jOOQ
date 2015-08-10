@@ -62,6 +62,7 @@ import static org.jooq.SQLDialect.ORACLE12C;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.POSTGRES_9_3;
 import static org.jooq.SQLDialect.POSTGRES_9_4;
+import static org.jooq.SQLDialect.POSTGRES_9_5;
 import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
@@ -9442,7 +9443,7 @@ public class DSL {
     }
 
     // ------------------------------------------------------------------------
-    // XXX Construction of special grouping functions
+    // XXX Construction of GROUPING SET functions
     // ------------------------------------------------------------------------
 
     /**
@@ -9454,6 +9455,7 @@ public class DSL {
      * <li>DB2</li>
      * <li>MySQL (emulated using the GROUP BY .. WITH ROLLUP clause)</li>
      * <li>Oracle</li>
+     * <li>PostgreSQL 9.5</li>
      * <li>SQL Server</li>
      * <li>Sybase SQL Anywhere</li>
      * </ul>
@@ -9468,12 +9470,11 @@ public class DSL {
      *            function
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
-    @Support({ CUBRID, DB2, HANA, MARIADB, MYSQL, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HANA, MARIADB, MYSQL, ORACLE, POSTGRES_9_5, SQLSERVER, SYBASE })
     public static GroupField rollup(Field<?>... fields) {
         return new Rollup(nullSafe(fields));
     }
 
-    /* [pro] */
     /**
      * Create a CUBE(field1, field2, .., fieldn) grouping field.
      * <p>
@@ -9481,6 +9482,7 @@ public class DSL {
      * <ul>
      * <li>DB2</li>
      * <li>Oracle</li>
+     * <li>PostgreSQL 9.5</li>
      * <li>SQL Server</li>
      * <li>Sybase SQL Anywhere</li>
      * </ul>
@@ -9495,7 +9497,7 @@ public class DSL {
      *            function
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
-    @Support({ DB2, HANA, ORACLE, SQLSERVER, SYBASE })
+    @Support({ DB2, HANA, ORACLE, POSTGRES_9_5, SQLSERVER, SYBASE })
     public static GroupField cube(Field<?>... fields) {
         return function("cube", Object.class, nullSafe(fields));
     }
@@ -9508,6 +9510,7 @@ public class DSL {
      * <ul>
      * <li>DB2</li>
      * <li>Oracle</li>
+     * <li>PostgreSQL 9.5</li>
      * <li>SQL Server</li>
      * <li>Sybase SQL Anywhere</li>
      * </ul>
@@ -9522,7 +9525,7 @@ public class DSL {
      *            function
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
-    @Support({ DB2, HANA, ORACLE, SQLSERVER, SYBASE })
+    @Support({ DB2, HANA, ORACLE, POSTGRES_9_5, SQLSERVER, SYBASE })
     public static GroupField groupingSets(Field<?>... fields) {
         List<Field<?>>[] array = new List[fields.length];
 
@@ -9541,6 +9544,7 @@ public class DSL {
      * <ul>
      * <li>DB2</li>
      * <li>Oracle</li>
+     * <li>PostgreSQL 9.5</li>
      * <li>SQL Server</li>
      * <li>Sybase SQL Anywhere</li>
      * </ul>
@@ -9555,7 +9559,7 @@ public class DSL {
      *            function
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
-    @Support({ DB2, HANA, ORACLE, SQLSERVER, SYBASE })
+    @Support({ DB2, HANA, ORACLE, POSTGRES_9_5, SQLSERVER, SYBASE })
     public static GroupField groupingSets(Field<?>[]... fieldSets) {
         List<Field<?>>[] array = new List[fieldSets.length];
 
@@ -9574,6 +9578,7 @@ public class DSL {
      * <ul>
      * <li>DB2</li>
      * <li>Oracle</li>
+     * <li>PostgreSQL 9.5</li>
      * <li>SQL Server</li>
      * <li>Sybase SQL Anywhere</li>
      * </ul>
@@ -9588,7 +9593,7 @@ public class DSL {
      *            function
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
-    @Support({ DB2, HANA, ORACLE, SQLSERVER, SYBASE })
+    @Support({ DB2, HANA, ORACLE, POSTGRES_9_5, SQLSERVER, SYBASE })
     public static GroupField groupingSets(Collection<? extends Field<?>>... fieldSets) {
         WrappedList[] array = new WrappedList[fieldSets.length];
 
@@ -9608,6 +9613,7 @@ public class DSL {
      * <ul>
      * <li>DB2</li>
      * <li>Oracle</li>
+     * <li>PostgreSQL 9.5</li>
      * <li>SQL Server</li>
      * <li>Sybase SQL Anywhere</li>
      * </ul>
@@ -9617,7 +9623,7 @@ public class DSL {
      * @see #cube(Field...)
      * @see #rollup(Field...)
      */
-    @Support({ DB2, HANA, ORACLE, SQLSERVER, SYBASE })
+    @Support({ DB2, HANA, ORACLE, POSTGRES_9_5, SQLSERVER, SYBASE })
     public static Field<Integer> grouping(Field<?> field) {
         return function("grouping", Integer.class, nullSafe(field));
     }
@@ -9643,7 +9649,6 @@ public class DSL {
         return function("grouping_id", Integer.class, nullSafe(fields));
     }
 
-    /* [/pro] */
     // ------------------------------------------------------------------------
     // XXX Bitwise operations
     // ------------------------------------------------------------------------

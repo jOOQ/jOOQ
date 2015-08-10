@@ -41,56 +41,16 @@
 
 package org.jooq.test;
 
-import static org.jooq.SQLDialect.DEFAULT;
-import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.POSTGRES_9_3;
-import static org.jooq.SQLDialect.POSTGRES_9_4;
-import static org.jooq.SQLDialect.POSTGRES_9_5;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import org.jooq.SQLDialect;
-
-import org.junit.Test;
 
 
 /**
- * Tests related to {@link SQLDialect}
- *
  * @author Lukas Eder
  */
-public class DialectTest extends AbstractTest {
+public class Postgres94Test extends PostgresTest {
 
-    @Test
-    public void testPredecessor() throws Exception {
-        assertEquals(DEFAULT, DEFAULT.predecessor());
-        assertEquals(H2, H2.predecessor());
-
-        assertEquals(POSTGRES_9_3, POSTGRES_9_3.predecessor());
-        assertEquals(POSTGRES_9_3, POSTGRES_9_4.predecessor());
-        assertEquals(POSTGRES_9_4, POSTGRES_9_5.predecessor());
-        assertEquals(POSTGRES_9_5, POSTGRES.predecessor());
-    }
-
-    @Test
-    public void testPrecedes() throws Exception {
-        assertTrue(DEFAULT.precedes(DEFAULT));
-        assertFalse(DEFAULT.precedes(H2));
-
-        assertTrue(POSTGRES_9_3.precedes(POSTGRES_9_3));
-        assertTrue(POSTGRES_9_3.precedes(POSTGRES_9_4));
-        assertTrue(POSTGRES_9_3.precedes(POSTGRES_9_5));
-        assertTrue(POSTGRES_9_3.precedes(POSTGRES));
-
-        assertFalse(POSTGRES_9_4.precedes(POSTGRES_9_3));
-        assertTrue(POSTGRES_9_4.precedes(POSTGRES_9_4));
-        assertTrue(POSTGRES_9_4.precedes(POSTGRES_9_5));
-        assertTrue(POSTGRES_9_4.precedes(POSTGRES));
-
-        assertFalse(POSTGRES.precedes(POSTGRES_9_3));
-        assertFalse(POSTGRES.precedes(POSTGRES_9_4));
-        assertFalse(POSTGRES.precedes(POSTGRES_9_5));
-        assertTrue(POSTGRES.precedes(POSTGRES));
+    @Override
+    protected SQLDialect dialect() {
+        return SQLDialect.POSTGRES_9_4;
     }
 }

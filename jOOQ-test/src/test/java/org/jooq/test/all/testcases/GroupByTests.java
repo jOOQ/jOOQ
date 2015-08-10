@@ -41,10 +41,23 @@
 package org.jooq.test.all.testcases;
 
 import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.ACCESS;
+import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INFORMIX;
+import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.POSTGRES_9_3;
+import static org.jooq.SQLDialect.POSTGRES_9_4;
+import static org.jooq.SQLDialect.REDSHIFT;
+import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.SQLDialect.VERTICA;
 import static org.jooq.impl.DSL.count;
@@ -193,23 +206,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testGroupByCubeRollup() throws Exception {
-        switch (family()) {
-            /* [pro] */
-            case ACCESS:
-            case ASE:
-            case INFORMIX:
-            case INGRES:
-            /* [/pro] */
-            case DERBY:
-            case FIREBIRD:
-            case H2:
-            case HSQLDB:
-            case POSTGRES:
-            case REDSHIFT:
-            case SQLITE:
-                log.info("SKIPPING", "Group by CUBE / ROLLUP tests");
-                return;
-        }
+        assumeFamilyNotIn(ACCESS, ASE, INFORMIX, INGRES, DERBY, FIREBIRD, H2, HSQLDB, REDSHIFT, SQLITE);
+        assumeDialectNotIn(POSTGRES_9_3, POSTGRES_9_4);
 
         // Simple ROLLUP clause
         // --------------------
@@ -239,12 +237,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             return;
         }
 
-        /* [pro] */
         // ROLLUP clause
         // -------------
-        Field<Integer> groupingId = groupingId(TBook_ID(), TBook_AUTHOR_ID());
-        if (asList(DB2, SYBASE).contains(dialect()))
+        Field<Integer> groupingId;
+        if (asList(DB2, POSTGRES, SYBASE).contains(family()))
             groupingId = one();
+        else
+            groupingId = groupingId(TBook_ID(), TBook_AUTHOR_ID());
 
         Result<Record4<Integer, Integer, Integer, Integer>> result2 = create()
                 .select(
@@ -265,7 +264,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         assertEquals(Arrays.asList(null, null, 1, null, 1, null, 2, null, 2), result2.getValues(1));
         assertEquals(Arrays.asList(1, 0, 0, 0, 0, 0, 0, 0, 0), result2.getValues(2));
 
-        if (!asList(DB2, SYBASE).contains(dialect()))
+        if (!asList(DB2, POSTGRES, SYBASE).contains(dialect()))
             assertEquals(Arrays.asList(3, 1, 0, 1, 0, 1, 0, 1, 0), result2.getValues(3));
 
         // CUBE clause
@@ -288,7 +287,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         assertEquals(Arrays.asList(null, 1, 2, null, 1, null, 1, null, 2, null, 2), result3.getValues(1));
         assertEquals(Arrays.asList(1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0), result3.getValues(2));
 
-        if (!asList(DB2, SYBASE).contains(dialect()))
+        if (!asList(DB2, POSTGRES, SYBASE).contains(dialect()))
             assertEquals(Arrays.asList(3, 2, 2, 1, 0, 1, 0, 1, 0, 1, 0), result3.getValues(3));
 
         // GROUPING SETS clause
@@ -313,9 +312,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         assertEquals(Arrays.asList(null, null, 1, 2, 2, 1, 1, 2, 2), result4.getValues(1));
         assertEquals(Arrays.asList(1, 1, 1, 1, 1, 0, 0, 0, 0), result4.getValues(2));
 
-        if (!asList(DB2, SYBASE).contains(dialect()))
+        if (!asList(DB2, POSTGRES, SYBASE).contains(dialect()))
             assertEquals(Arrays.asList(3, 3, 2, 2, 2, 0, 0, 0, 0), result4.getValues(3));
-        /* [/pro] */
     }
 
     public void testHavingWithoutGrouping() throws Exception {

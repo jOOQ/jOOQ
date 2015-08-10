@@ -416,6 +416,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             case POSTGRES:
             case POSTGRES_9_3:
             case POSTGRES_9_4:
+            case POSTGRES_9_5:
                 break;
 
             default:

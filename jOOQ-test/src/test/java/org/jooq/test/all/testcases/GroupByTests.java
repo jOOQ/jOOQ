@@ -67,6 +67,7 @@ import static org.jooq.impl.DSL.groupingId;
 import static org.jooq.impl.DSL.groupingSets;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.rollup;
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.selectOne;
 import static org.junit.Assert.assertNull;
 
@@ -78,6 +79,7 @@ import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record4;
+import org.jooq.Record5;
 import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.SelectOrderByStep;
@@ -239,18 +241,23 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
         // ROLLUP clause
         // -------------
-        Field<Integer> groupingId;
-        if (asList(DB2, POSTGRES, SYBASE).contains(family()))
-            groupingId = one();
-        else
-            groupingId = groupingId(TBook_ID(), TBook_AUTHOR_ID());
+        Field<Integer> groupingIdA;
+        Field<Integer> groupingIdB;
+        if (asList(DB2, POSTGRES, SYBASE).contains(family())) {
+            groupingIdA = one();
+            groupingIdB = one();
+        }
+        else {
+            groupingIdA = groupingId(TBook_ID(), TBook_AUTHOR_ID());
+            groupingIdB = groupingId(TBook_ID(), TBook_AUTHOR_ID(), TBook_LANGUAGE_ID());
+        }
 
-        Result<Record4<Integer, Integer, Integer, Integer>> result2 = create()
+        Result<Record4<Integer, Integer, Integer, Integer>> result2a = create()
                 .select(
                     TBook_ID(),
                     TBook_AUTHOR_ID(),
                     grouping(TBook_ID()),
-                    groupingId)
+                    groupingIdA)
                 .from(TBook())
                 .groupBy(rollup(
                     TBook_ID(),
@@ -259,21 +266,49 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                     TBook_ID().asc().nullsFirst(),
                     TBook_AUTHOR_ID().asc().nullsFirst()).fetch();
 
-        assertEquals(9, result2.size());
-        assertEquals(Arrays.asList(null, 1, 1, 2, 2, 3, 3, 4, 4), result2.getValues(0));
-        assertEquals(Arrays.asList(null, null, 1, null, 1, null, 2, null, 2), result2.getValues(1));
-        assertEquals(Arrays.asList(1, 0, 0, 0, 0, 0, 0, 0, 0), result2.getValues(2));
+        assertEquals(9, result2a.size());
+        assertEquals(Arrays.asList(null, 1, 1, 2, 2, 3, 3, 4, 4), result2a.getValues(0));
+        assertEquals(Arrays.asList(null, null, 1, null, 1, null, 2, null, 2), result2a.getValues(1));
+        assertEquals(Arrays.asList(1, 0, 0, 0, 0, 0, 0, 0, 0), result2a.getValues(2));
 
         if (!asList(DB2, POSTGRES, SYBASE).contains(dialect()))
-            assertEquals(Arrays.asList(3, 1, 0, 1, 0, 1, 0, 1, 0), result2.getValues(3));
+            assertEquals(Arrays.asList(3, 1, 0, 1, 0, 1, 0, 1, 0), result2a.getValues(3));
+
+
+        Result<Record5<Integer, Integer, Integer, Integer, Integer>> result2b = create()
+                .select(
+                    TBook_ID(),
+                    TBook_AUTHOR_ID(),
+                    TBook_LANGUAGE_ID(),
+                    grouping(TBook_ID()),
+                    groupingIdB)
+                .from(TBook())
+                .groupBy(rollup(
+                    TBook_ID(),
+                    TBook_AUTHOR_ID(),
+                    row(TBook_AUTHOR_ID(), TBook_LANGUAGE_ID())))
+                .orderBy(
+                    TBook_ID().asc().nullsFirst(),
+                    TBook_AUTHOR_ID().asc().nullsFirst(),
+                    TBook_LANGUAGE_ID().asc().nullsFirst()).fetch();
+
+        assertEquals(13, result2b.size());
+        assertEquals(Arrays.asList(null,    1,    1, 1,    2,    2, 2,    3,    3, 3,    4,    4, 4), result2b.getValues(0));
+        assertEquals(Arrays.asList(null, null,    1, 1, null,    1, 1, null,    2, 2, null,    2, 2), result2b.getValues(1));
+        assertEquals(Arrays.asList(null, null, null, 1, null, null, 1, null, null, 4, null, null, 2), result2b.getValues(2));
+        assertEquals(Arrays.asList(   1,    0,    0, 0,    0,    0, 0,    0,    0, 0,    0,    0, 0), result2b.getValues(3));
+
+        if (!asList(DB2, POSTGRES, SYBASE).contains(dialect()))
+            assertEquals(Arrays.asList(   7,    3,    1, 0,    3,    1, 0,    3,    1, 0,    3,    1, 0), result2b.getValues(4));
+
 
         // CUBE clause
         // -----------
-        Result<Record4<Integer, Integer, Integer, Integer>> result3 = create().select(
+        Result<Record4<Integer, Integer, Integer, Integer>> result3a = create().select(
                     TBook_ID(),
                     TBook_AUTHOR_ID(),
                     grouping(TBook_ID()),
-                    groupingId)
+                    groupingIdA)
                 .from(TBook())
                 .groupBy(cube(
                     TBook_ID(),
@@ -282,13 +317,39 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                     TBook_ID().asc().nullsFirst(),
                     TBook_AUTHOR_ID().asc().nullsFirst()).fetch();
 
-        assertEquals(11, result3.size());
-        assertEquals(Arrays.asList(null, null, null, 1, 1, 2, 2, 3, 3, 4, 4), result3.getValues(0));
-        assertEquals(Arrays.asList(null, 1, 2, null, 1, null, 1, null, 2, null, 2), result3.getValues(1));
-        assertEquals(Arrays.asList(1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0), result3.getValues(2));
+        assertEquals(11, result3a.size());
+        assertEquals(Arrays.asList(null, null, null, 1, 1, 2, 2, 3, 3, 4, 4), result3a.getValues(0));
+        assertEquals(Arrays.asList(null, 1, 2, null, 1, null, 1, null, 2, null, 2), result3a.getValues(1));
+        assertEquals(Arrays.asList(1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0), result3a.getValues(2));
 
         if (!asList(DB2, POSTGRES, SYBASE).contains(dialect()))
-            assertEquals(Arrays.asList(3, 2, 2, 1, 0, 1, 0, 1, 0, 1, 0), result3.getValues(3));
+            assertEquals(Arrays.asList(3, 2, 2, 1, 0, 1, 0, 1, 0, 1, 0), result3a.getValues(3));
+
+
+        Result<Record5<Integer, Integer, Integer, Integer, Integer>> result3b = create().select(
+                    TBook_ID(),
+                    TBook_AUTHOR_ID(),
+                    TBook_LANGUAGE_ID(),
+                    grouping(TBook_ID()),
+                    groupingIdB)
+                .from(TBook())
+                .groupBy(cube(
+                    TBook_ID(),
+                    row(TBook_AUTHOR_ID(), TBook_LANGUAGE_ID())))
+                .orderBy(
+                    TBook_ID().asc().nullsFirst(),
+                    TBook_AUTHOR_ID().asc().nullsFirst(),
+                    TBook_LANGUAGE_ID().asc().nullsFirst()).fetch();
+
+        assertEquals(12, result3b.size());
+        assertEquals(Arrays.asList(null, null, null, null,    1, 1,    2, 2,    3, 3,    4, 4), result3b.getValues(0));
+        assertEquals(Arrays.asList(null,    1,    2,    2, null, 1, null, 1, null, 2, null, 2), result3b.getValues(1));
+        assertEquals(Arrays.asList(null,    1,    2,    4, null, 1, null, 1, null, 4, null, 2), result3b.getValues(2));
+        assertEquals(Arrays.asList(   1,    1,    1,    1,    0, 0,    0, 0,    0, 0,    0, 0), result3b.getValues(3));
+
+        if (!asList(DB2, POSTGRES, SYBASE).contains(dialect()))
+            assertEquals(Arrays.asList(7, 4, 4, 4, 3, 0, 3, 0, 3, 0, 3, 0), result3b.getValues(4));
+
 
         // GROUPING SETS clause
         // --------------------
@@ -296,7 +357,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                     TBook_ID(),
                     TBook_AUTHOR_ID(),
                     grouping(TBook_ID()),
-                    groupingId)
+                    groupingIdA)
                 .from(TBook())
                 .groupBy(groupingSets(
                     new Field<?>[] { TBook_AUTHOR_ID(), TBook_ID() },

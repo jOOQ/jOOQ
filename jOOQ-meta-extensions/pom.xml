@@ -100,7 +100,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>5.0.0.CR4</version>
+            <version>4.3.7.Final</version>
         </dependency> 
         <dependency>
             <groupId>org.springframework</groupId>

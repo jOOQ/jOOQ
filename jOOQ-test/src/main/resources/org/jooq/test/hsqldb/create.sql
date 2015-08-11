@@ -22,6 +22,11 @@ DROP FUNCTION IF EXISTS f317/
 DROP PROCEDURE IF EXISTS p_get_two_cursors/
 DROP PROCEDURE IF EXISTS p_get_one_cursor/
 DROP FUNCTION IF EXISTS f_get_one_cursor/
+DROP FUNCTION IF EXISTS f_tables1/
+DROP FUNCTION IF EXISTS f_tables2/
+DROP FUNCTION IF EXISTS f_tables3/
+DROP FUNCTION IF EXISTS f_tables4/
+DROP FUNCTION IF EXISTS f_tables5/
 DROP FUNCTION IF EXISTS f2502/
 DROP FUNCTION IF EXISTS f2502_1/
 DROP FUNCTION IF EXISTS f2502_2/
@@ -153,8 +158,8 @@ REFERENCING NEW AS new
 FOR EACH ROW
 BEGIN ATOMIC
     set new.id_generated = next value for s_triggers_sequence;
-	set new.id = new.id_generated;
-	set new.counter = new.id_generated * 2;
+    set new.id = new.id_generated;
+    set new.counter = new.id_generated * 2;
 END
 /
 
@@ -399,8 +404,8 @@ CREATE FUNCTION f_author_exists (author_name varchar(50))
      RETURN (
         SELECT COUNT(*)
           FROM t_author
-   	  WHERE first_name = author_name
-      	  OR last_name = author_name
+         WHERE first_name = author_name
+            OR last_name = author_name
      )
 /
 
@@ -433,13 +438,75 @@ RETURNS TABLE (
 )
 READS SQL DATA
 BEGIN ATOMIC
-	IF (book_ids IS NULL) THEN
-	    RETURN TABLE(SELECT * FROM t_book WHERE 1 = 0);
-	ELSE
-		RETURN TABLE(SELECT * FROM t_book WHERE id IN (UNNEST(book_ids)) ORDER BY id ASC);
-	END IF;
+    IF (book_ids IS NULL) THEN
+        RETURN TABLE(SELECT id, author_id, co_author_id, details_id, title, published_in, language_id, content_text, content_pdf FROM t_book WHERE 1 = 0);
+    ELSE
+        RETURN TABLE(SELECT id, author_id, co_author_id, details_id, title, published_in, language_id, content_text, content_pdf FROM t_book WHERE id IN (UNNEST(book_ids)) ORDER BY id ASC);
+    END IF;
 END
 /
+
+CREATE FUNCTION f_tables1 ()
+RETURNS TABLE (
+    column_value INTEGER
+)
+READS SQL DATA
+BEGIN ATOMIC
+    RETURN TABLE(SELECT 1 FROM information_schema.system_users LIMIT 1);
+END
+/
+
+CREATE FUNCTION f_tables2 ()
+RETURNS TABLE (
+    column_value BIGINT
+)
+READS SQL DATA
+BEGIN ATOMIC
+    RETURN TABLE(SELECT 1 FROM information_schema.system_users LIMIT 1);
+END
+/
+
+CREATE FUNCTION f_tables3 ()
+RETURNS TABLE (
+    column_value VARCHAR(50)
+)
+READS SQL DATA
+BEGIN ATOMIC
+    RETURN TABLE(SELECT '1' column_value FROM information_schema.system_users LIMIT 1);
+END
+/
+
+CREATE FUNCTION f_tables4 (p_id INTEGER)
+RETURNS TABLE (
+    id INTEGER,
+    title VARCHAR(400)
+)
+READS SQL DATA
+BEGIN ATOMIC
+    RETURN TABLE(SELECT id, title FROM t_book WHERE p_id IS NULL OR id = p_id ORDER BY id);
+END
+/
+
+CREATE FUNCTION f_tables5 (v1 INTEGER, v2 INTEGER, v3 INTEGER)
+RETURNS TABLE (
+    v INTEGER,
+    s INTEGER
+)
+READS SQL DATA
+BEGIN ATOMIC
+    RETURN TABLE(
+        SELECT v1, v2 FROM 
+            (SELECT v1, v2           FROM information_schema.system_users LIMIT 1)
+        UNION ALL
+        SELECT v1, v2 FROM 
+            (SELECT v2, v1 + v2      FROM information_schema.system_users LIMIT 1)
+        UNION ALL
+        SELECT v1, v2 FROM 
+            (SELECT v3, v1 + v2 + v3 FROM information_schema.system_users LIMIT 1)
+    );
+END
+/
+
 
 CREATE FUNCTION f2502 (IN configuration int)
 RETURNS INTEGER
@@ -474,19 +541,19 @@ RETURN 1
 
 CREATE PROCEDURE p_arrays1(IN in_array int array, OUT out_array int array)
 BEGIN ATOMIC
-	SET out_array = in_array;
+    SET out_array = in_array;
 END
 /
 
 CREATE PROCEDURE p_arrays2(IN in_array bigint array, OUT out_array bigint array)
 BEGIN ATOMIC
-	SET out_array = in_array;
+    SET out_array = in_array;
 END
 /
 
 CREATE PROCEDURE p_arrays3(IN in_array varchar(1000) array, OUT out_array varchar(1000) array)
 BEGIN ATOMIC
-	SET out_array = in_array;
+    SET out_array = in_array;
 END
 /
 
@@ -518,29 +585,29 @@ END
 CREATE PROCEDURE p_create_author_by_name (IN first_name VARCHAR(50), IN last_name VARCHAR(50))
 MODIFIES SQL DATA
 BEGIN ATOMIC
-	INSERT INTO T_AUTHOR (ID, FIRST_NAME, LAST_NAME)
-	VALUES ((SELECT MAX(ID)+1 FROM T_AUTHOR), first_name, last_name);
+    INSERT INTO T_AUTHOR (ID, FIRST_NAME, LAST_NAME)
+    VALUES ((SELECT MAX(ID)+1 FROM T_AUTHOR), first_name, last_name);
 END
 /
 
 CREATE PROCEDURE p_create_author()
 MODIFIES SQL DATA
 BEGIN ATOMIC
-	call {jdbc.Schema}.p_create_author_by_name('William', 'Shakespeare');
+    call {jdbc.Schema}.p_create_author_by_name('William', 'Shakespeare');
 END
 /
 
 CREATE PROCEDURE p_unused (IN in1 VARCHAR(50), OUT out1 INT, INOUT out2 INT)
 BEGIN ATOMIC
-	SET out1 = 0;
-	SET out2 = 0;
+    SET out1 = 0;
+    SET out2 = 0;
 END
 /
 
 
 CREATE PROCEDURE p391 (
-	i1 INTEGER, INOUT io1 INTEGER, OUT o1 INTEGER,
-	OUT o2 INTEGER, INOUT io2 INTEGER, i2 INTEGER)
+    i1 INTEGER, INOUT io1 INTEGER, OUT o1 INTEGER,
+    OUT o2 INTEGER, INOUT io2 INTEGER, i2 INTEGER)
 BEGIN ATOMIC
   SET o1 = io1;
   SET io1 = i1;

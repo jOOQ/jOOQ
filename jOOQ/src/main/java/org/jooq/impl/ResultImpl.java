@@ -253,44 +253,24 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return fields.fields().clone();
     }
 
-    // @Override [#4113] TODO: Make this public
-    final Field<?>[] fields(Field<?>... f) {
-        Field<?>[] result = new Field[f.length];
-
-        for (int i = 0; i < f.length; i++)
-            result[i] = field(f[i]);
-
-        return result;
+    @Override
+    public final Field<?>[] fields(Field<?>... f) {
+        return fields.fields(f);
     }
 
-    // @Override [#4113] TODO: Make this public
-    final Field<?>[] fields(int... indexes) {
-        Field<?>[] result = new Field[indexes.length];
-
-        for (int i = 0; i < indexes.length; i++)
-            result[i] = field(indexes[i]);
-
-        return result;
+    @Override
+    public final Field<?>[] fields(int... indexes) {
+        return fields.fields(indexes);
     }
 
-    // @Override [#4113] TODO: Make this public
-    final Field<?>[] fields(String... names) {
-        Field<?>[] result = new Field[names.length];
-
-        for (int i = 0; i < names.length; i++)
-            result[i] = field(names[i]);
-
-        return result;
+    @Override
+    public final Field<?>[] fields(String... names) {
+        return fields.fields(names);
     }
 
-    // @Override [#4113] TODO: Make this public
-    final Field<?>[] fields(Name... names) {
-        Field<?>[] result = new Field[names.length];
-
-        for (int i = 0; i < names.length; i++)
-            result[i] = field(names[i]);
-
-        return result;
+    @Override
+    public final Field<?>[] fields(Name... names) {
+        return fields.fields(names);
     }
 
     @Override

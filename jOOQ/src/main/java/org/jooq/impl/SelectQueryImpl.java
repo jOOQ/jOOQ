@@ -324,6 +324,26 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
     }
 
     @Override
+    public final Field<?>[] fields(Field<?>... fields) {
+        return asTable().fields(fields);
+    }
+
+    @Override
+    public final Field<?>[] fields(String... fieldNames) {
+        return asTable().fields(fieldNames);
+    }
+
+    @Override
+    public final Field<?>[] fields(Name... fieldNames) {
+        return asTable().fields(fieldNames);
+    }
+
+    @Override
+    public final Field<?>[] fields(int... fieldIndexes) {
+        return asTable().fields(fieldIndexes);
+    }
+
+    @Override
     public final Table<R> asTable() {
         // Its usually better to alias nested selects that are used in
         // the FROM clause of a query

@@ -117,6 +117,26 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
         return fieldsRow().fields();
     }
 
+    @Override
+    public final Field<?>[] fields(Field<?>... f) {
+        return fieldsRow().fields(f);
+    }
+
+    @Override
+    public final Field<?>[] fields(String... fieldNames) {
+        return fieldsRow().fields(fieldNames);
+    }
+
+    @Override
+    public final Field<?>[] fields(Name... fieldNames) {
+        return fieldsRow().fields(fieldNames);
+    }
+
+    @Override
+    public final Field<?>[] fields(int... fieldIndexes) {
+        return fieldsRow().fields(fieldIndexes);
+    }
+
     final Fields<R> fields0() {
         return fields;
     }

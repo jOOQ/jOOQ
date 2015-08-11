@@ -1146,9 +1146,19 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         Record2<String, String> record = create().select(user, schema).fetchOne();
 
         switch (family()) {
+            case CUBRID:
+                assertEquals("dba@ubuntu", record.value1());
+                assertEquals("", record.value2());
+                break;
+
             case DERBY:
                 assertEquals("test", record.value1());
                 assertEquals("test", record.value2());
+                break;
+
+            case FIREBIRD:
+                assertEquals("test", record.value1());
+                assertEquals("", record.value2());
                 break;
 
             case H2:
@@ -1170,6 +1180,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             case POSTGRES:
                 assertEquals("postgres", record.value1());
                 assertEquals("public", record.value2());
+                break;
+
+            case SQLITE:
+                assertEquals("", record.value1());
+                assertEquals("", record.value2());
                 break;
 
             case SQLSERVER:

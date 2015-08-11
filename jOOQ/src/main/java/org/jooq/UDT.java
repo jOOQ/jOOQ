@@ -91,6 +91,38 @@ public interface UDT<R extends UDTRecord<R>> extends QueryPart {
     Field<?>[] fields();
 
     /**
+     * Get all fields from this UDT, providing some fields.
+     *
+     * @return All available fields
+     * @see Row#fields(Field...)
+     */
+    Field<?>[] fields(Field<?>... fields);
+
+    /**
+     * Get all fields from this UDT, providing some field names.
+     *
+     * @return All available fields
+     * @see Row#fields(String...)
+     */
+    Field<?>[] fields(String... fieldNames);
+
+    /**
+     * Get all fields from this UDT, providing some field names.
+     *
+     * @return All available fields
+     * @see Row#fields(Name...)
+     */
+    Field<?>[] fields(Name... fieldNames);
+
+    /**
+     * Get all fields from this UDT, providing some field indexes.
+     *
+     * @return All available fields
+     * @see Row#fields(int...)
+     */
+    Field<?>[] fields(int... fieldIndexes);
+
+    /**
      * Get the UDT schema
      */
     Schema getSchema();

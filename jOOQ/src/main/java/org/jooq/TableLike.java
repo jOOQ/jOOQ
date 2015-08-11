@@ -134,6 +134,38 @@ public interface TableLike<R extends Record> extends QueryPart {
     Field<?>[] fields();
 
     /**
+     * Get all fields from this table, providing some fields.
+     *
+     * @return All available fields
+     * @see Row#fields(Field...)
+     */
+    Field<?>[] fields(Field<?>... fields);
+
+    /**
+     * Get all fields from this table, providing some field names.
+     *
+     * @return All available fields
+     * @see Row#fields(String...)
+     */
+    Field<?>[] fields(String... fieldNames);
+
+    /**
+     * Get all fields from this table, providing some field names.
+     *
+     * @return All available fields
+     * @see Row#fields(Name...)
+     */
+    Field<?>[] fields(Name... fieldNames);
+
+    /**
+     * Get all fields from this table, providing some field indexes.
+     *
+     * @return All available fields
+     * @see Row#fields(int...)
+     */
+    Field<?>[] fields(int... fieldIndexes);
+
+    /**
      * The underlying table representation of this object
      * <p>
      * This method is useful for things like

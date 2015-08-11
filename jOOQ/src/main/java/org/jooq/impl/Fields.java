@@ -179,9 +179,8 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
     public final Field<?>[] fields(Field<?>... f) {
         Field<?>[] result = new Field[f.length];
 
-        for (int i = 0; i < result.length; i++) {
+        for (int i = 0; i < result.length; i++)
             result[i] = field(f[i]);
-        }
 
         return result;
     }
@@ -190,9 +189,8 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
     public final Field<?>[] fields(String... f) {
         Field<?>[] result = new Field[f.length];
 
-        for (int i = 0; i < result.length; i++) {
+        for (int i = 0; i < result.length; i++)
             result[i] = field(f[i]);
-        }
 
         return result;
     }
@@ -201,9 +199,8 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
     public final Field<?>[] fields(Name... f) {
         Field<?>[] result = new Field[f.length];
 
-        for (int i = 0; i < result.length; i++) {
+        for (int i = 0; i < result.length; i++)
             result[i] = field(f[i]);
-        }
 
         return result;
     }
@@ -212,9 +209,8 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
     public final Field<?>[] fields(int... f) {
         Field<?>[] result = new Field[f.length];
 
-        for (int i = 0; i < result.length; i++) {
+        for (int i = 0; i < result.length; i++)
             result[i] = field(f[i]);
-        }
 
         return result;
     }

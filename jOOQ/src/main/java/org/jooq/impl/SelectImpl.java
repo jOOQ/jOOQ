@@ -3325,6 +3325,26 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
         return getDelegate().fields();
     }
 
+    @Override
+    public final Field<?>[] fields(Field<?>... fields) {
+        return getDelegate().fields(fields);
+    }
+
+    @Override
+    public final Field<?>[] fields(String... fieldNames) {
+        return getDelegate().fields(fieldNames);
+    }
+
+    @Override
+    public final Field<?>[] fields(Name... fieldNames) {
+        return getDelegate().fields(fieldNames);
+    }
+
+    @Override
+    public final Field<?>[] fields(int... fieldIndexes) {
+        return getDelegate().fields(fieldIndexes);
+    }
+
     /**
      * The {@link SelectImpl} current condition step
      * <p>

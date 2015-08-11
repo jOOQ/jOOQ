@@ -174,7 +174,27 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
     @Override
     public final Field<?>[] fields() {
-        return cursorFields.clone();
+        return fieldsRow().fields();
+    }
+
+    @Override
+    public final Field<?>[] fields(Field<?>... fields) {
+        return fieldsRow().fields(fields);
+    }
+
+    @Override
+    public final Field<?>[] fields(String... fieldNames) {
+        return fieldsRow().fields(fieldNames);
+    }
+
+    @Override
+    public final Field<?>[] fields(Name... fieldNames) {
+        return fieldsRow().fields(fieldNames);
+    }
+
+    @Override
+    public final Field<?>[] fields(int... fieldIndexes) {
+        return fieldsRow().fields(fieldIndexes);
     }
 
     @Override

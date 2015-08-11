@@ -13663,7 +13663,7 @@ public class DSL {
     /**
      * Get the <code>current_user()</code> function.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> currentUser() {
         return new CurrentUser();
     }
@@ -13671,7 +13671,7 @@ public class DSL {
     /**
      * Get the <code>current_schema()</code> function.
      */
-    @Support({ DERBY, H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> currentSchema() {
         return new CurrentSchema();
     }

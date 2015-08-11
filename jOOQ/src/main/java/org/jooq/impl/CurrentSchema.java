@@ -42,6 +42,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.inline;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -77,6 +78,11 @@ class CurrentSchema extends AbstractFunction<String> {
                 xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx
 
             xx [/pro] */
+            case CUBRID:
+            case FIREBIRD:
+            case SQLITE:
+                return inline("");
+
             case DERBY:
                 return field("{current schema}", String.class);
 

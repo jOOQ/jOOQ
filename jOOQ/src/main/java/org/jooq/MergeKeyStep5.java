@@ -43,6 +43,7 @@ package org.jooq;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLSERVER;
@@ -75,7 +76,7 @@ public interface MergeKeyStep5<R extends Record, T1, T2, T3, T4, T5> extends Mer
      * Use this optional clause in order to override using the underlying
      * <code>PRIMARY KEY</code>.
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, H2, HANA, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     MergeValuesStep5<R, T1, T2, T3, T4, T5> key(Field<?>... keys);
 
     /**
@@ -84,6 +85,6 @@ public interface MergeKeyStep5<R extends Record, T1, T2, T3, T4, T5> extends Mer
      * Use this optional clause in order to override using the underlying
      * <code>PRIMARY KEY</code>.
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, H2, HANA, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     MergeValuesStep5<R, T1, T2, T3, T4, T5> key(Collection<? extends Field<?>> keys);
 }

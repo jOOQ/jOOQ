@@ -214,6 +214,7 @@ class MergeDSL extends Generators {
             import static org.jooq.SQLDialect.CUBRID;
             import static org.jooq.SQLDialect.DB2;
             import static org.jooq.SQLDialect.H2;
+            import static org.jooq.SQLDialect.HANA;
             import static org.jooq.SQLDialect.HSQLDB;
             import static org.jooq.SQLDialect.ORACLE;
             import static org.jooq.SQLDialect.SQLSERVER;
@@ -246,7 +247,7 @@ class MergeDSL extends Generators {
                  * Use this optional clause in order to override using the underlying
                  * <code>PRIMARY KEY</code>.
                  */
-                @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+                @Support({ CUBRID, DB2, H2, HANA, HSQLDB, ORACLE, SQLSERVER, SYBASE })
                 MergeValuesStep«degree»<R, «TN(degree)»> key(Field<?>... keys);
             
                 /**
@@ -255,7 +256,7 @@ class MergeDSL extends Generators {
                  * Use this optional clause in order to override using the underlying
                  * <code>PRIMARY KEY</code>.
                  */
-                @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+                @Support({ CUBRID, DB2, H2, HANA, HSQLDB, ORACLE, SQLSERVER, SYBASE })
                 MergeValuesStep«degree»<R, «TN(degree)»> key(Collection<? extends Field<?>> keys);
             }
             ''');
@@ -275,6 +276,7 @@ class MergeDSL extends Generators {
             import static org.jooq.SQLDialect.CUBRID;
             import static org.jooq.SQLDialect.DB2;
             import static org.jooq.SQLDialect.H2;
+            import static org.jooq.SQLDialect.HANA;
             import static org.jooq.SQLDialect.HSQLDB;
             import static org.jooq.SQLDialect.ORACLE;
             import static org.jooq.SQLDialect.SQLSERVER;
@@ -303,19 +305,19 @@ class MergeDSL extends Generators {
                 /**
                  * Specify a <code>VALUES</code> clause
                  */
-                @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+                @Support({ CUBRID, DB2, H2, HANA, HSQLDB, ORACLE, SQLSERVER, SYBASE })
                 Merge<R> values(«TN_XXXn(degree, "value")»);
             
                 /**
                  * Specify a <code>VALUES</code> clause
                  */
-                @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+                @Support({ CUBRID, DB2, H2, HANA, HSQLDB, ORACLE, SQLSERVER, SYBASE })
                 Merge<R> values(«Field_TN_XXXn(degree, "value")»);
             
                 /**
                  * Specify a <code>VALUES</code> clause
                  */
-                @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+                @Support({ CUBRID, DB2, H2, HANA, HSQLDB, ORACLE, SQLSERVER, SYBASE })
                 Merge<R> values(Collection<?> values);
             
                 /**
@@ -327,7 +329,7 @@ class MergeDSL extends Generators {
                  * <code>INTO</code> clause:
                  * {@link DSLContext#mergeInto(Table, «(1..degree).join(', ', [e | 'Field'])»)}
                  */
-                @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+                @Support({ CUBRID, DB2, H2, HANA, HSQLDB, ORACLE, SQLSERVER, SYBASE })
                 Merge<R> select(Select<? extends Record«degree»<«TN(degree)»>> select);
             }
             ''');

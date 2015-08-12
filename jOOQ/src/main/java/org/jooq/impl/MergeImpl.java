@@ -52,6 +52,7 @@ import static org.jooq.Clause.MERGE_WHEN_MATCHED_THEN_UPDATE;
 import static org.jooq.Clause.MERGE_WHEN_NOT_MATCHED_THEN_INSERT;
 import static org.jooq.Clause.MERGE_WHERE;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
@@ -232,12 +233,12 @@ implements
     private boolean                     notMatchedClause;
     private FieldMapForInsert           notMatchedInsert;
 
-    // Objects for the H2-specific syntax
-    private boolean                     h2Style;
-    private QueryPartList<Field<?>>     h2Fields;
-    private QueryPartList<Field<?>>     h2Keys;
-    private QueryPartList<Field<?>>     h2Values;
-    private Select<?>                   h2Select;
+    // Objects for the UPSERT syntax (including H2 MERGE, HANA UPSERT, etc.)
+    private boolean                     upsertStyle;
+    private QueryPartList<Field<?>>     upsertFields;
+    private QueryPartList<Field<?>>     upsertKeys;
+    private QueryPartList<Field<?>>     upsertValues;
+    private Select<?>                   upsertSelect;
 
     MergeImpl(Configuration configuration, Table<R> table) {
         this(configuration, table, null);
@@ -250,43 +251,43 @@ implements
         this.on = new ConditionProviderImpl();
 
         if (fields != null) {
-            h2Style = true;
-            h2Fields = new QueryPartList<Field<?>>(fields);
+            upsertStyle = true;
+            upsertFields = new QueryPartList<Field<?>>(fields);
         }
     }
 
     // -------------------------------------------------------------------------
-    // H2-specific MERGE API
+    // UPSERT API
     // -------------------------------------------------------------------------
 
-    QueryPartList<Field<?>> getH2Fields() {
-        if (h2Fields == null) {
-            h2Fields = new QueryPartList<Field<?>>(table.fields());
+    QueryPartList<Field<?>> getUpsertFields() {
+        if (upsertFields == null) {
+            upsertFields = new QueryPartList<Field<?>>(table.fields());
         }
 
-        return h2Fields;
+        return upsertFields;
     }
 
-    QueryPartList<Field<?>> getH2Keys() {
-        if (h2Keys == null) {
-            h2Keys = new QueryPartList<Field<?>>();
+    QueryPartList<Field<?>> getUpsertKeys() {
+        if (upsertKeys == null) {
+            upsertKeys = new QueryPartList<Field<?>>();
         }
 
-        return h2Keys;
+        return upsertKeys;
     }
 
-    QueryPartList<Field<?>> getH2Values() {
-        if (h2Values == null) {
-            h2Values = new QueryPartList<Field<?>>();
+    QueryPartList<Field<?>> getUpsertValues() {
+        if (upsertValues == null) {
+            upsertValues = new QueryPartList<Field<?>>();
         }
 
-        return h2Values;
+        return upsertValues;
     }
 
     @Override
     public final MergeImpl select(Select select) {
-        h2Style = true;
-        h2Select = select;
+        upsertStyle = true;
+        upsertSelect = select;
         return this;
     }
 
@@ -297,8 +298,8 @@ implements
 
     @Override
     public final MergeImpl key(Collection<? extends Field<?>> keys) {
-        h2Style = true;
-        getH2Keys().addAll(keys);
+        upsertStyle = true;
+        getUpsertKeys().addAll(keys);
         return this;
     }
 
@@ -537,8 +538,8 @@ implements
         // [#1541] The VALUES() clause is also supported in the H2-specific
         // syntax, in case of which, the USING() was not added
         if (using == null) {
-            h2Style = true;
-            getH2Values().addAll(Utils.fields(values, getH2Fields().toArray(new Field[0])));
+            upsertStyle = true;
+            getUpsertValues().addAll(Utils.fields(values, getUpsertFields().toArray(new Field[0])));
         }
         else {
             Field<?>[] fields = notMatchedInsert.keySet().toArray(new Field[0]);
@@ -992,9 +993,9 @@ implements
                 // The SRC for the USING() clause:
                 // ------------------------------
                 Table<?> src;
-                if (h2Select != null) {
+                if (upsertSelect != null) {
                     List<Field<?>> v = new ArrayList<Field<?>>();
-                    Row row = h2Select.fieldsRow();
+                    Row row = upsertSelect.fieldsRow();
 
                     for (int i = 0; i < row.size(); i++) {
                         v.add(row.field(i).as("s" + (i + 1)));
@@ -1002,13 +1003,13 @@ implements
 
                     // [#579] TODO: Currently, this syntax may require aliasing
                     // on the call-site
-                    src = create(config).select(v).from(h2Select).asTable("src");
+                    src = create(config).select(v).from(upsertSelect).asTable("src");
                 }
                 else {
                     List<Field<?>> v = new ArrayList<Field<?>>();
 
-                    for (int i = 0; i < getH2Values().size(); i++) {
-                        v.add(getH2Values().get(i).as("s" + (i + 1)));
+                    for (int i = 0; i < getUpsertValues().size(); i++) {
+                        v.add(getUpsertValues().get(i).as("s" + (i + 1)));
                     }
 
                     src = create(config).select(v).asTable("src");
@@ -1018,7 +1019,7 @@ implements
                 // --------------------------------
                 Set<Field<?>> onFields = new HashSet<Field<?>>();
                 Condition condition = null;
-                if (getH2Keys().isEmpty()) {
+                if (getUpsertKeys().isEmpty()) {
                     UniqueKey<?> key = table.getPrimaryKey();
 
                     if (key != null) {
@@ -1042,14 +1043,14 @@ implements
                     }
                 }
                 else {
-                    for (int i = 0; i < getH2Keys().size(); i++) {
-                        int matchIndex = getH2Fields().indexOf(getH2Keys().get(i));
+                    for (int i = 0; i < getUpsertKeys().size(); i++) {
+                        int matchIndex = getUpsertFields().indexOf(getUpsertKeys().get(i));
                         if (matchIndex == -1) {
                             throw new IllegalStateException("Fields in KEY() clause must be part of the fields specified in MERGE INTO table (...)");
                         }
 
-                        onFields.addAll(getH2Keys());
-                        Condition rhs = getH2Keys().get(i).equal((Field) src.field(matchIndex));
+                        onFields.addAll(getUpsertKeys());
+                        Condition rhs = getUpsertKeys().get(i).equal((Field) src.field(matchIndex));
 
                         if (condition == null) {
                             condition = rhs;
@@ -1068,11 +1069,11 @@ implements
                 for (int i = 0; i < src.fieldsRow().size(); i++) {
 
                     // Oracle does not allow to update fields from the ON clause
-                    if (!onFields.contains(getH2Fields().get(i))) {
-                        update.put(getH2Fields().get(i), src.field(i));
+                    if (!onFields.contains(getUpsertFields().get(i))) {
+                        update.put(getUpsertFields().get(i), src.field(i));
                     }
 
-                    insert.put(getH2Fields().get(i), src.field(i));
+                    insert.put(getUpsertFields().get(i), src.field(i));
                 }
 
                 return create(config).mergeInto(table)
@@ -1090,10 +1091,15 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (h2Style) {
-            if (ctx.configuration().dialect() == H2) {
-                toSQLH2(ctx);
+        if (upsertStyle) {
+            if (ctx.family() == H2) {
+                toSQLH2Merge(ctx);
             }
+            /* [pro] */
+            else if (ctx.family() == HANA) {
+                toSQLHanaUpsert(ctx);
+            }
+            /* [/pro] */
             else {
                 ctx.visit(getStandardMerge(ctx.configuration()));
             }
@@ -1103,7 +1109,7 @@ implements
         }
     }
 
-    private final void toSQLH2(Context<?> ctx) {
+    private final void toSQLH2Merge(Context<?> ctx) {
         ctx.keyword("merge into")
            .sql(' ')
            .declareTables(true)
@@ -1111,25 +1117,67 @@ implements
            .formatSeparator();
 
         ctx.sql('(');
-        Utils.fieldNames(ctx, getH2Fields());
+        Utils.fieldNames(ctx, getUpsertFields());
         ctx.sql(')');
 
-        if (!getH2Keys().isEmpty()) {
+        if (!getUpsertKeys().isEmpty()) {
             ctx.sql(' ').keyword("key").sql(" (");
-            Utils.fieldNames(ctx, getH2Keys());
+            Utils.fieldNames(ctx, getUpsertKeys());
             ctx.sql(')');
         }
 
-        if (h2Select != null) {
+        if (upsertSelect != null) {
             ctx.sql(' ')
-               .visit(h2Select);
+               .visit(upsertSelect);
         }
         else {
             ctx.sql(' ').keyword("values").sql(" (")
-               .visit(getH2Values())
+               .visit(getUpsertValues())
                .sql(')');
         }
     }
+
+    /* [pro] */
+    private final void toSQLHanaUpsert(Context<?> ctx) {
+        ctx.keyword("upsert")
+           .sql(' ')
+           .declareTables(true)
+           .visit(table)
+           .formatSeparator();
+
+        Fields<?> fields = new Fields<Record>(getUpsertFields());
+
+        ctx.sql('(');
+        Utils.fieldNames(ctx, fields);
+        ctx.sql(')');
+
+        if (upsertSelect != null) {
+            ctx.sql(' ')
+               .visit(upsertSelect);
+        }
+        else {
+            ctx.formatSeparator()
+               .keyword("values").sql(" (")
+               .visit(getUpsertValues())
+               .sql(')');
+
+            if (getUpsertKeys().isEmpty()) {
+                ctx.formatSeparator()
+                   .keyword("with primary key");
+            }
+            else {
+                ctx.formatSeparator()
+                   .keyword("where").sql(' ');
+
+                ConditionProviderImpl c = new ConditionProviderImpl();
+                for (Field<?> field : getUpsertKeys())
+                    c.addConditions(field.eq((Field) getUpsertValues().get(fields.indexOf(field))));
+
+                ctx.visit(c);
+            }
+        }
+    }
+    /* [/pro] */
 
     private final void toSQLStandard(Context<?> ctx) {
         ctx.start(MERGE_MERGE_INTO)

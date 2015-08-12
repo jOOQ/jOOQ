@@ -1384,7 +1384,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testMergeWithH2SyntaxExtension() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, HANA, INGRES, MARIADB, MYSQL, POSTGRES, REDSHIFT, SQLITE);
+        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, INGRES, MARIADB, MYSQL, POSTGRES, REDSHIFT, SQLITE);
 
         jOOQAbstractTest.reset = false;
 
@@ -1428,19 +1428,35 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         assertEquals("Hesse", authors3.get(2).getValue(TAuthor_LAST_NAME()));
         assertEquals("Lukas", authors3.get(2).getValue(TAuthor_FIRST_NAME()));
 
+        // Hana doesn't support combining KEY and SELECT in UPSERT
+        if (family() == HANA) {
+            assertEquals(1,
+            create().mergeInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
+                    .key(TAuthor_ID())
+                    .values(3, "Eder")
+                    .execute());
+            assertEquals(1,
+            create().mergeInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
+                    .key(TAuthor_ID())
+                    .values(4, "Eder")
+                    .execute());
+        }
+
         // H2 MERGE test specifying a subselect
         // -------------------------------------------------------------
-        assertEquals(2,
-        create().mergeInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
-                .key(TAuthor_ID())
+        else {
+            assertEquals(2,
+            create().mergeInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
+                    .key(TAuthor_ID())
 
-                // inline() strings here. It seems that DB2 will lack page size
-                // in the system temporary table space, otherwise
+                    // inline() strings here. It seems that DB2 will lack page size
+                    // in the system temporary table space, otherwise
 
-                // [#579] TODO: Aliasing shouldn't be necessary
-                .select(select(val(3).as("a"), inline("Eder").as("b")).unionAll(
-                        select(val(4).as("a"), inline("Eder").as("b"))))
-                .execute());
+                    // [#579] TODO: Aliasing shouldn't be necessary
+                    .select(select(val(3).as("a"), inline("Eder").as("b")).unionAll(
+                            select(val(4).as("a"), inline("Eder").as("b"))))
+                    .execute());
+        }
 
         Result<A> authors4 = create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch();
         assertEquals(4, authors4.size());

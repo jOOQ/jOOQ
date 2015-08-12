@@ -177,7 +177,6 @@ class Cast<T> extends AbstractFunction<T> {
                       .otherwise(inline(true));
         }
 
-        @SuppressWarnings("unchecked")
         @Override
         public final void accept(Context<?> ctx) {
 

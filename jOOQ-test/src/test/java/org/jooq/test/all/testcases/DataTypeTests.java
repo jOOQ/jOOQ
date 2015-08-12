@@ -1767,6 +1767,43 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         return cal;
     }
 
+    public void testFunctionsOnDates_DATE_ADD_WithCast() throws Exception {
+
+        // Adding
+        Record6<Date, Date, Date, Timestamp, Timestamp, Timestamp> r1 = create().select(
+                 DSL.dateAdd(Date.valueOf("2000-01-01"), 2, DatePart.YEAR)                    .as("d-yy"),
+                 DSL.dateAdd(Date.valueOf("2000-01-01"), 2, DatePart.MONTH)                   .as("d-mm"),
+                 DSL.dateAdd(Date.valueOf("2000-01-01"), 2, DatePart.DAY)                     .as("d-dd"),
+            cast(DSL.dateAdd(Date.valueOf("2000-01-01"), 2, DatePart.YEAR)  , Timestamp.class).as("ts-yy"),
+            cast(DSL.dateAdd(Date.valueOf("2000-01-01"), 2, DatePart.MONTH) , Timestamp.class).as("ts-mm"),
+            cast(DSL.dateAdd(Date.valueOf("2000-01-01"), 2, DatePart.DAY)   , Timestamp.class).as("ts-dd")
+        ).fetchOne();
+
+        assertEquals(Date.valueOf("2002-01-01"), r1.value1());
+        assertEquals(Date.valueOf("2000-03-01"), r1.value2());
+        assertEquals(Date.valueOf("2000-01-03"), r1.value3());
+        assertEquals(Timestamp.valueOf("2002-01-01 00:00:00"), r1.value4());
+        assertEquals(Timestamp.valueOf("2000-03-01 00:00:00"), r1.value5());
+        assertEquals(Timestamp.valueOf("2000-01-03 00:00:00"), r1.value6());
+
+        // Subtracting
+        Record6<Date, Date, Date, Timestamp, Timestamp, Timestamp> r2 = create().select(
+                 DSL.dateAdd(Date.valueOf("2000-01-01"), -2, DatePart.YEAR)                    .as("d-yy"),
+                 DSL.dateAdd(Date.valueOf("2000-01-01"), -2, DatePart.MONTH)                   .as("d-mm"),
+                 DSL.dateAdd(Date.valueOf("2000-01-01"), -2, DatePart.DAY)                     .as("d-dd"),
+            cast(DSL.dateAdd(Date.valueOf("2000-01-01"), -2, DatePart.YEAR)  , Timestamp.class).as("ts-yy"),
+            cast(DSL.dateAdd(Date.valueOf("2000-01-01"), -2, DatePart.MONTH) , Timestamp.class).as("ts-mm"),
+            cast(DSL.dateAdd(Date.valueOf("2000-01-01"), -2, DatePart.DAY)   , Timestamp.class).as("ts-dd")
+        ).fetchOne();
+
+        assertEquals(Date.valueOf("1998-01-01"), r2.value1());
+        assertEquals(Date.valueOf("1999-11-01"), r2.value2());
+        assertEquals(Date.valueOf("1999-12-30"), r2.value3());
+        assertEquals(Timestamp.valueOf("1998-01-01 00:00:00"), r2.value4());
+        assertEquals(Timestamp.valueOf("1999-11-01 00:00:00"), r2.value5());
+        assertEquals(Timestamp.valueOf("1999-12-30 00:00:00"), r2.value6());
+    }
+
     public void testFunctionsOnDates_TRUNC() throws Exception {
         switch (dialect().family()) {
             /* [pro] */

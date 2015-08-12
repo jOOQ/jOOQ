@@ -135,8 +135,8 @@ public interface QueryPartInternal extends QueryPart {
     boolean declaresWindows();
 
     /**
-     * Check whether this {@link QueryPart} is able to declare common table expressions in a
-     * <code>WITH</code> clause.
+     * Check whether this {@link QueryPart} is able to declare common table
+     * expressions in a <code>WITH</code> clause.
      * <p>
      * This method can be used by any {@link Context} to check how a certain SQL
      * clause should be rendered.
@@ -144,4 +144,15 @@ public interface QueryPartInternal extends QueryPart {
      * This method is for JOOQ INTERNAL USE only. Do not reference directly
      */
     boolean declaresCTE();
+
+    /**
+     * Check whether this {@link QueryPart} is able to generate
+     * <code>CAST</code> expressions around bind variables.
+     * <p>
+     * This method can be used by any {@link Context} to check how a certain SQL
+     * clause should be rendered.
+     * <p>
+     * This method is for JOOQ INTERNAL USE only. Do not reference directly
+     */
+    boolean generatesCast();
 }

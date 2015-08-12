@@ -2497,6 +2497,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFunctionsOnDates_DATE_ADD_WithCast() throws Exception {
+        new DataTypeTests(this).testFunctionsOnDates_DATE_ADD_WithCast();
+    }
+
+    @Test
     public void testFunctionsOnDates_DATE_DIFF_AND_DATE_ADD() throws Exception {
         new DataTypeTests(this).testFunctionsOnDates_DATE_DIFF_AND_DATE_ADD();
     }

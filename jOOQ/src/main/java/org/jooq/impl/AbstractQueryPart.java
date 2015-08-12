@@ -125,6 +125,14 @@ abstract class AbstractQueryPart implements QueryPartInternal {
         return false;
     }
 
+    /**
+     * Subclasses may override this
+     */
+    @Override
+    public boolean generatesCast() {
+        return false;
+    }
+
     // -------------------------------------------------------------------------
     // The Object API
     // -------------------------------------------------------------------------

@@ -422,7 +422,8 @@ class DSLContext extends Generators {
             outAPI.append('''
             
                 /**
-                 * Create a new DSL merge statement (H2-specific syntax).
+                 * Create a new DSL UPSERT statement ({@link SQLDialect#H2}
+                 * <code>MERGE</code>) or {@link SQLDialect#HANA} <code>UPSERT</code>).
                  * <p>
                  * This statement is available from DSL syntax only. It is known to be
                  * supported in some way by any of these dialects:
@@ -430,8 +431,13 @@ class DSLContext extends Generators {
                  * <tr>
                  * <td>H2</td>
                  * <td>H2 natively supports this special syntax</td>
-                 * <td><a href= "www.h2database.com/html/grammar.html#merge"
-                 * >www.h2database.com/html/grammar.html#merge</a></td>
+                 * <td><a href="http://www.h2database.com/html/grammar.html#merge"
+                 * >http://www.h2database.com/html/grammar.html#merge</a></td>
+                 * </tr>
+                 * <tr>
+                 * <td>HANA</td>
+                 * <td>HANA natively supports this syntax</td>
+                 * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
                  * </tr>
                  * <tr>
                  * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>

@@ -348,6 +348,14 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
                 declareCTE(true);
             }
 
+            else if (castMode() != CastMode.DEFAULT && !internal.generatesCast()) {
+                CastMode previous = castMode();
+
+                castMode(CastMode.DEFAULT);
+                visit0(internal);
+                castMode(previous);
+            }
+
             // We're not declaring, or "part" can declare
             else {
                 visit0(internal);

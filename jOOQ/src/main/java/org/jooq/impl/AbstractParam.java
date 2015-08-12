@@ -113,6 +113,11 @@ abstract class AbstractParam<T> extends AbstractField<T> implements Param<T> {
         return CLAUSES;
     }
 
+    @Override
+    public final boolean generatesCast() {
+        return true;
+    }
+
     // ------------------------------------------------------------------------
     // XXX: Param API
     // ------------------------------------------------------------------------

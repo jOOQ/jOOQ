@@ -17,12 +17,14 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITDates;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates implements ITDates {
 
-	private static final long serialVersionUID = -1753375932;
+	private static final long serialVersionUID = 6026993;
 
 	private final Integer   id;
 	private final Date      d;
 	private final Time      t;
 	private final Timestamp ts;
+	private final Time      tTz;
+	private final Timestamp tsTz;
 	private final Integer   dInt;
 	private final Long      tsBigint;
 
@@ -31,6 +33,8 @@ public class TDates implements ITDates {
 		this.d = value.d;
 		this.t = value.t;
 		this.ts = value.ts;
+		this.tTz = value.tTz;
+		this.tsTz = value.tsTz;
 		this.dInt = value.dInt;
 		this.tsBigint = value.tsBigint;
 	}
@@ -40,6 +44,8 @@ public class TDates implements ITDates {
 		Date      d,
 		Time      t,
 		Timestamp ts,
+		Time      tTz,
+		Timestamp tsTz,
 		Integer   dInt,
 		Long      tsBigint
 	) {
@@ -47,6 +53,8 @@ public class TDates implements ITDates {
 		this.d = d;
 		this.t = t;
 		this.ts = ts;
+		this.tTz = tTz;
+		this.tsTz = tsTz;
 		this.dInt = dInt;
 		this.tsBigint = tsBigint;
 	}
@@ -69,6 +77,16 @@ public class TDates implements ITDates {
 	@Override
 	public Timestamp getTs() {
 		return this.ts;
+	}
+
+	@Override
+	public Time getTTz() {
+		return this.tTz;
+	}
+
+	@Override
+	public Timestamp getTsTz() {
+		return this.tsTz;
 	}
 
 	@Override

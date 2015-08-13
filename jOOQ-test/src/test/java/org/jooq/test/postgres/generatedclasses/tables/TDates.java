@@ -26,7 +26,7 @@ import org.jooq.test.postgres.generatedclasses.tables.records.TDatesRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates extends TableImpl<TDatesRecord> {
 
-	private static final long serialVersionUID = 1114241101;
+	private static final long serialVersionUID = -349637108;
 
 	/**
 	 * The reference instance of <code>public.t_dates</code>
@@ -60,6 +60,16 @@ public class TDates extends TableImpl<TDatesRecord> {
 	 * The column <code>public.t_dates.ts</code>.
 	 */
 	public final TableField<TDatesRecord, Timestamp> TS = createField("ts", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
+
+	/**
+	 * The column <code>public.t_dates.t_tz</code>.
+	 */
+	public final TableField<TDatesRecord, Time> T_TZ = createField("t_tz", org.jooq.impl.SQLDataType.TIME, this, "");
+
+	/**
+	 * The column <code>public.t_dates.ts_tz</code>.
+	 */
+	public final TableField<TDatesRecord, Timestamp> TS_TZ = createField("ts_tz", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
 	/**
 	 * The column <code>public.t_dates.d_int</code>.

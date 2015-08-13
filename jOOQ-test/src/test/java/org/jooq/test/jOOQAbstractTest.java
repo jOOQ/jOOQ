@@ -2487,6 +2487,16 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testJava8TimeAPIQueries() throws Exception {
+        new DataTypeTests(this).testJava8TimeAPIQueries();
+    }
+
+    @Test
+    public void testJava8TimeAPIProcedures() throws Exception {
+        new DataTypeTests(this).testJava8TimeAPIProcedures();
+    }
+
+    @Test
     public void testDateTimeFractionalSeconds() throws Exception {
         new DataTypeTests(this).testDateTimeFractionalSeconds();
     }

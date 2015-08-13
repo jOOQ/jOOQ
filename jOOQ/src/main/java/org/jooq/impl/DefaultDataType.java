@@ -774,7 +774,11 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final boolean isDateTime() {
-        return java.util.Date.class.isAssignableFrom(type);
+        return java.util.Date.class.isAssignableFrom(type)
+        /* [java-8] */
+            || java.time.temporal.Temporal.class.isAssignableFrom(type)
+        /* [/java-8] */
+        ;
     }
 
     @Override

@@ -5,6 +5,8 @@ package org.jooq.test.postgres.generatedclasses;
 
 
 import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 import org.jooq.AggregateFunction;
 import org.jooq.Configuration;
@@ -17,6 +19,7 @@ import org.jooq.test.postgres.generatedclasses.routines.FArrays1;
 import org.jooq.test.postgres.generatedclasses.routines.FArrays2;
 import org.jooq.test.postgres.generatedclasses.routines.FArrays3;
 import org.jooq.test.postgres.generatedclasses.routines.FAuthorExists;
+import org.jooq.test.postgres.generatedclasses.routines.FDates;
 import org.jooq.test.postgres.generatedclasses.routines.FGetOneCursor;
 import org.jooq.test.postgres.generatedclasses.routines.FNumber;
 import org.jooq.test.postgres.generatedclasses.routines.FOne;
@@ -215,6 +218,21 @@ public class Routines {
 		f.setAuthorName(authorName);
 
 		return f.asField();
+	}
+
+	/**
+	 * Call <code>public.f_dates</code>
+	 */
+	public static FDates fDates(Configuration configuration, Date d, Time t, Timestamp ts, Time tTz, Timestamp tsTz) {
+		FDates p = new FDates();
+		p.setD(d);
+		p.setT(t);
+		p.setTs(ts);
+		p.setTTz(tTz);
+		p.setTsTz(tsTz);
+
+		p.execute(configuration);
+		return p;
 	}
 
 	/**

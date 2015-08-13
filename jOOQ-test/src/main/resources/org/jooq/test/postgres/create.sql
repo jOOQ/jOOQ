@@ -52,6 +52,12 @@ DROP FUNCTION f_search_books(p_title character varying, p_limit bigint, p_offset
 DROP FUNCTION f_search_book(p_title character varying)/
 DROP FUNCTION f_get_arrays(p_id integer)/
 DROP FUNCTION f4430(p1 int, p2 bigint)/
+DROP FUNCTION f_dates(
+  d IN OUT date,
+  t IN OUT time,
+  ts IN OUT timestamp,
+  t_tz IN OUT time with time zone,
+  ts_tz IN OUT timestamp with time zone)/
 
 DROP TRIGGER IF EXISTS t_triggers_trigger ON t_triggers/
 DROP FUNCTION p_triggers()/
@@ -213,6 +219,8 @@ CREATE TABLE t_dates (
   d date,
   t time,
   ts timestamp,
+  t_tz time with time zone,
+  ts_tz timestamp with time zone,
   d_int int,
   ts_bigint bigint,
 
@@ -1051,3 +1059,20 @@ BEGIN
 END;
 $$
 LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION f_dates(
+  d IN OUT date,
+  t IN OUT time,
+  ts IN OUT timestamp,
+  t_tz IN OUT time with time zone,
+  ts_tz IN OUT timestamp with time zone)
+AS $$
+BEGIN
+  d := d;
+  t := t;
+  ts := ts;
+  t_tz := t_tz;
+  ts_tz := ts_tz;
+END;
+$$ LANGUAGE plpgsql;
+  

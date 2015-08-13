@@ -47,6 +47,11 @@ import java.sql.ResultSet;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
 import java.util.UUID;
 
 import org.jooq.DataType;
@@ -266,6 +271,37 @@ public final class SQLDataType {
      * The SQL standard <code>INTERVAL DAY TO SECOND</code> data type.
      */
     public static final DataType<DayToSecond> INTERVALDAYTOSECOND = new DefaultDataType<DayToSecond>(null, DayToSecond.class, "interval day to second");
+
+    /* [java-8] */
+    // -------------------------------------------------------------------------
+    // JSR310 types
+    // -------------------------------------------------------------------------
+
+    /**
+     * The {@link Types#DATE} type.
+     */
+    public static final DataType<LocalDate> LOCALDATE = new DefaultDataType<LocalDate>(null, LocalDate.class, "date");
+
+    /**
+     * The {@link Types#TIME} type.
+     */
+    public static final DataType<LocalTime> LOCALTIME = new DefaultDataType<LocalTime>(null, LocalTime.class, "time");
+
+    /**
+     * The {@link Types#TIMESTAMP} type.
+     */
+    public static final DataType<LocalDateTime> LOCALDATETIME = new DefaultDataType<LocalDateTime>(null, LocalDateTime.class, "timestamp");
+
+    /**
+     * The {@link Types#TIME_WITH_TIMEZONE} type.
+     */
+    public static final DataType<OffsetTime> OFFSETTIME = new DefaultDataType<OffsetTime>(null, OffsetTime.class, "time with time zone");
+
+    /**
+     * The {@link Types#TIMESTAMP_WITH_TIMEZONE} type.
+     */
+    public static final DataType<OffsetDateTime> OFFSETDATETIME = new DefaultDataType<OffsetDateTime>(null, OffsetDateTime.class, "timestamp with time zone");
+    /* [/java-8] */
 
     // -------------------------------------------------------------------------
     // Binary types

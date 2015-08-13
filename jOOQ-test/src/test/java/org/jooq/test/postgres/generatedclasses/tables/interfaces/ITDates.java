@@ -37,6 +37,16 @@ public interface ITDates extends Serializable {
 	public Timestamp getTs();
 
 	/**
+	 * Getter for <code>public.t_dates.t_tz</code>.
+	 */
+	public Time getTTz();
+
+	/**
+	 * Getter for <code>public.t_dates.ts_tz</code>.
+	 */
+	public Timestamp getTsTz();
+
+	/**
 	 * Getter for <code>public.t_dates.d_int</code>.
 	 */
 	public Integer getDInt();

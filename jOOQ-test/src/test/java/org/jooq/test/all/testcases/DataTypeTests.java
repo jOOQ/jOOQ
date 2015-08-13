@@ -71,6 +71,7 @@ import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.timestampAdd;
 import static org.jooq.impl.DSL.timestampDiff;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.test.all.testcases.DataTypeTests.TDatesTable.T_DATES;
 import static org.jooq.types.Unsigned.ubyte;
 import static org.jooq.types.Unsigned.uint;
 import static org.jooq.types.Unsigned.ulong;
@@ -89,6 +90,10 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -96,12 +101,14 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.IntStream;
 
+import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.InsertSetMoreStep;
+import org.jooq.Parameter;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
@@ -113,9 +120,14 @@ import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.conf.RenderNameStyle;
 import org.jooq.conf.Settings;
+import org.jooq.impl.AbstractRoutine;
+import org.jooq.impl.CustomRecord;
+import org.jooq.impl.CustomTable;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.XMLasDOMBinding;
@@ -1506,6 +1518,192 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             assertEquals(new DayToSecond(2), record.getValue("d2"));
             assertEquals(new DayToSecond(1), record.getValue("d3"));
         }
+    }
+
+    @SuppressWarnings("serial")
+    static class TDatesTable extends CustomTable<TDatesRecord> {
+        public static final TDatesTable                       T_DATES = new TDatesTable();
+        public final TableField<TDatesRecord, Integer>        ID      = createField("ID", SQLDataType.INTEGER, this);
+        public final TableField<TDatesRecord, LocalDate>      D       = createField("D", SQLDataType.LOCALDATE, this);
+        public final TableField<TDatesRecord, LocalTime>      T       = createField("T", SQLDataType.LOCALTIME, this);
+        public final TableField<TDatesRecord, LocalDateTime>  TS      = createField("TS", SQLDataType.LOCALDATETIME, this);
+        public final TableField<TDatesRecord, OffsetTime>     T_TZ    = createField("T_TZ", SQLDataType.OFFSETTIME, this);
+        public final TableField<TDatesRecord, OffsetDateTime> TS_TZ   = createField("TS_TZ", SQLDataType.OFFSETDATETIME, this);
+
+        protected TDatesTable() {
+            super("T_DATES");
+        }
+
+        @Override
+        public Class<? extends TDatesRecord> getRecordType() {
+            return TDatesRecord.class;
+        }
+    }
+
+    @SuppressWarnings("serial")
+    static class TDatesRecord extends CustomRecord<TDatesRecord> {
+        protected TDatesRecord() {
+            super(T_DATES);
+        }
+    }
+
+    public void testJava8TimeAPIQueries() throws Exception {
+        clean(T_DATES);
+
+        ZoneOffset offset = OffsetTime.now().getOffset();
+
+        LocalDate d = LocalDate.parse("2000-01-02");
+        LocalTime t = LocalTime.parse("13:37");
+        LocalDateTime ts = LocalDateTime.of(d, t);
+        OffsetTime tTz1 = OffsetTime.of(t, ZoneOffset.UTC);
+        OffsetTime tTz2 = OffsetTime.of(t, offset);
+        OffsetDateTime tsTz1 = OffsetDateTime.of(d, t, ZoneOffset.UTC);
+        OffsetDateTime tsTz2 = OffsetDateTime.of(d, t, offset);
+
+        DSLContext create = create();
+        create.configuration().settings().setRenderNameStyle(RenderNameStyle.AS_IS);
+
+        assertEquals(1,
+        create.insertInto(T_DATES)
+              .columns(T_DATES.ID, T_DATES.D, T_DATES.T, T_DATES.TS, T_DATES.T_TZ, T_DATES.TS_TZ)
+              .values(1, null, null, null, null, null)
+              .execute());
+
+        assertEquals(1,
+        create.insertInto(T_DATES)
+              .columns(T_DATES.ID, T_DATES.D, T_DATES.T, T_DATES.TS, T_DATES.T_TZ, T_DATES.TS_TZ)
+              .values(2, d, t, ts, tTz1, tsTz1)
+              .execute());
+
+        assertEquals(1,
+        create.insertInto(T_DATES)
+              .columns(T_DATES.ID, T_DATES.D, T_DATES.T, T_DATES.TS, T_DATES.T_TZ, T_DATES.TS_TZ)
+              .values(3, d, t, ts, tTz2, tsTz2)
+              .execute());
+
+        Result<TDatesRecord> result =
+        create.selectFrom(T_DATES)
+              .orderBy(T_DATES.ID)
+              .fetch();
+        assertEquals(3, result.size());
+        assertEquals(asList(1, 2, 3), result.getValues(T_DATES.ID));
+        assertEquals(asList(null, d, d), result.getValues(T_DATES.D));
+        assertEquals(asList(null, t, t), result.getValues(T_DATES.T));
+        assertEquals(asList(null, ts, ts), result.getValues(T_DATES.TS));
+
+        assertNull(result.get(0).getValue(T_DATES.T_TZ));
+        assertNull(result.get(0).getValue(T_DATES.TS_TZ));
+        assertEquals(tTz1, result.get(1).getValue(T_DATES.T_TZ));
+        assertEquals(tTz2, result.get(2).getValue(T_DATES.T_TZ));
+        assertEquals(tsTz1.toEpochSecond(), result.get(1).getValue(T_DATES.TS_TZ).toEpochSecond());
+        assertEquals(tsTz2.toEpochSecond(), result.get(2).getValue(T_DATES.TS_TZ).toEpochSecond());
+        assertEquals(tsTz1.toEpochSecond(), result.get(1).getValue(T_DATES.TS_TZ, Long.class) / 1000);
+        assertEquals(tsTz2.toEpochSecond(), result.get(2).getValue(T_DATES.TS_TZ, Long.class) / 1000);
+    }
+
+    @SuppressWarnings("serial")
+    static class FDates extends AbstractRoutine<java.lang.Void> {
+        static final Parameter<LocalDate> D = createParameter("d", SQLDataType.LOCALDATE, false);
+        static final Parameter<LocalTime> T = createParameter("t", SQLDataType.LOCALTIME, false);
+        static final Parameter<LocalDateTime> TS = createParameter("ts", SQLDataType.LOCALDATETIME, false);
+        static final Parameter<OffsetTime> T_TZ = createParameter("t_tz", SQLDataType.OFFSETTIME, false);
+        static final Parameter<OffsetDateTime> TS_TZ = createParameter("ts_tz", SQLDataType.OFFSETDATETIME, false);
+
+        /**
+         * Create a new routine call instance
+         */
+        public FDates() {
+            super("f_dates", null);
+
+            addInOutParameter(D);
+            addInOutParameter(T);
+            addInOutParameter(TS);
+            addInOutParameter(T_TZ);
+            addInOutParameter(TS_TZ);
+        }
+
+        public void setD(LocalDate value) {
+            setValue(D, value);
+        }
+
+        public void setT(LocalTime value) {
+            setValue(T, value);
+        }
+
+        public void setTs(LocalDateTime value) {
+            setValue(TS, value);
+        }
+
+        public void setTTz(OffsetTime value) {
+            setValue(T_TZ, value);
+        }
+
+        public void setTsTz(OffsetDateTime value) {
+            setValue(TS_TZ, value);
+        }
+
+        public LocalDate getD() {
+            return getValue(D);
+        }
+
+        public LocalTime getT() {
+            return getValue(T);
+        }
+
+        public LocalDateTime getTs() {
+            return getValue(TS);
+        }
+
+        public OffsetTime getTTz() {
+            return getValue(T_TZ);
+        }
+
+        public OffsetDateTime getTsTz() {
+            return getValue(TS_TZ);
+        }
+    }
+
+    public void testJava8TimeAPIProcedures() throws Exception {
+        ZoneOffset offset = OffsetTime.now().getOffset();
+
+        LocalDate d = LocalDate.parse("2000-01-02");
+        LocalTime t = LocalTime.parse("13:37");
+        LocalDateTime ts = LocalDateTime.of(d, t);
+        OffsetTime tTz1 = OffsetTime.of(t, ZoneOffset.UTC);
+        OffsetTime tTz2 = OffsetTime.of(t, offset);
+        OffsetDateTime tsTz1 = OffsetDateTime.of(d, t, ZoneOffset.UTC);
+        OffsetDateTime tsTz2 = OffsetDateTime.of(d, t, offset);
+
+        Configuration config = create().configuration();
+        config.settings().setRenderNameStyle(RenderNameStyle.AS_IS);
+
+        FDates call1 = new FDates();
+        call1.setD(d);
+        call1.setT(t);
+        call1.setTs(ts);
+        call1.setTTz(tTz1);
+        call1.setTsTz(tsTz1);
+        call1.execute(config);
+
+        assertEquals(d, call1.getD());
+        assertEquals(t, call1.getT());
+        assertEquals(ts, call1.getTs());
+        assertEquals(tTz1, call1.getTTz());
+        assertEquals(tsTz1, call1.getTsTz());
+
+        FDates call2 = new FDates();
+        call2.setD(d);
+        call2.setT(t);
+        call2.setTs(ts);
+        call2.setTTz(tTz2);
+        call2.setTsTz(tsTz2);
+        call2.execute(config);
+
+        assertEquals(d, call2.getD());
+        assertEquals(t, call2.getT());
+        assertEquals(ts, call2.getTs());
+        assertEquals(tTz2, call2.getTTz());
+        assertEquals(tsTz2, call2.getTsTz());
     }
 
     public void testDateTimeFractionalSeconds() throws Exception {

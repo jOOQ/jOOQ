@@ -2052,6 +2052,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testSelfJoin() throws Exception {
+        new SelectTests(this).testSelfJoin();
+    }
+
+    @Test
     public void testSelectWithSubselectProjection() throws Exception {
         new SelectTests(this).testSelectWithSubselectProjection();
     }

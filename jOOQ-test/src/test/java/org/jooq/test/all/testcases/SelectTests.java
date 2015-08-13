@@ -240,6 +240,22 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         assertEquals(Integer.valueOf(2), records.getValue(1, nested.field("books")));
     }
 
+    public void testSelfJoin() throws Exception {
+        Table<A> a1 = TAuthor().as("a1");
+        Table<A> a2 = TAuthor().as("a2");
+
+        Result<Record> result =
+        create().select()
+                .from(a1)
+                .join(a2)
+                .on(a1.field(TAuthor_ID()).eq(a2.field(TAuthor_ID()).sub(1)))
+                .fetch();
+
+        assertEquals(1, result.size());
+        assertEquals(1, result.get(0).getValue(a1.field(TAuthor_ID())));
+        assertEquals(2, result.get(0).getValue(a2.field(TAuthor_ID())));
+    }
+
     public void testSelectWithSubselectProjection() throws Exception {
         // Workaround for:
         // ERROR 2792:  Correlated subquery with aggregate function COUNT is not supported

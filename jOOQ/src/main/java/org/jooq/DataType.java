@@ -345,6 +345,11 @@ public interface DataType<T> extends Serializable {
      * <li> {@link SQLDataType#DATE}</li>
      * <li> {@link SQLDataType#TIME}</li>
      * <li> {@link SQLDataType#TIMESTAMP}</li>
+     * <li> {@link SQLDataType#LOCALDATE}</li>
+     * <li> {@link SQLDataType#LOCALTIME}</li>
+     * <li> {@link SQLDataType#LOCALDATETIME}</li>
+     * <li> {@link SQLDataType#OFFSETTIME}</li>
+     * <li> {@link SQLDataType#OFFSETDATETIME}</li>
      * </ul>
      */
     boolean isDateTime();
@@ -357,6 +362,11 @@ public interface DataType<T> extends Serializable {
      * <li> {@link SQLDataType#DATE}</li>
      * <li> {@link SQLDataType#TIME}</li>
      * <li> {@link SQLDataType#TIMESTAMP}</li>
+     * <li> {@link SQLDataType#LOCALDATE}</li>
+     * <li> {@link SQLDataType#LOCALTIME}</li>
+     * <li> {@link SQLDataType#LOCALDATETIME}</li>
+     * <li> {@link SQLDataType#OFFSETTIME}</li>
+     * <li> {@link SQLDataType#OFFSETDATETIME}</li>
      * <li> {@link YearToMonth}</li>
      * <li> {@link DayToSecond}</li>
      * </ul>

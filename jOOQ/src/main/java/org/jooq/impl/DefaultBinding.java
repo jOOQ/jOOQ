@@ -89,9 +89,17 @@ import java.sql.Timestamp;
 import java.sql.Types;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.UUID;
 
 // ...
@@ -318,6 +326,15 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
         }
 
+        /* [java-8] */
+        if (type == OffsetTime.class || type == OffsetDateTime.class) {
+            switch (ctx.family()) {
+                case POSTGRES:
+                    return true;
+            }
+        }
+        /* [/java-8] */
+
         return false;
     }
 
@@ -368,6 +385,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         // [#1029] Postgres generally doesn't need the casting. Only in the
         // above case where the type is OTHER
         // [#1125] Also with temporal data types, casting is needed some times
+        // [#4338] ... specifically when using JSR-310 types
         // [#1130] TODO type can be null for ARRAY types, etc.
         else if (asList(POSTGRES).contains(family) && (sqlDataType == null || !sqlDataType.isTemporal())) {
             toSQL(ctx, converted);
@@ -985,6 +1003,24 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 }
             }
 
+            /* [java-8] */
+            else if (actualType == LocalDate.class) {
+                ctx.statement().setDate(ctx.index(), Date.valueOf((LocalDate) value));
+            }
+            else if (actualType == LocalTime.class) {
+                ctx.statement().setTime(ctx.index(), Time.valueOf((LocalTime) value));
+            }
+            else if (actualType == LocalDateTime.class) {
+                ctx.statement().setTimestamp(ctx.index(), Timestamp.valueOf((LocalDateTime) value));
+            }
+            else if (actualType == OffsetTime.class) {
+                ctx.statement().setString(ctx.index(), value.toString());
+            }
+            else if (actualType == OffsetDateTime.class) {
+                ctx.statement().setString(ctx.index(), value.toString());
+            }
+            /* [/java-8] */
+
             // [#566] Interval data types are best bound as Strings
             else if (actualType == YearToMonth.class) {
                 if (dialect.family() == POSTGRES) {
@@ -1093,6 +1129,19 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 ctx.statement().setObject(ctx.index(), value);
             }
         }
+    }
+
+    private final ZoneOffset offset() {
+        return OffsetTime.now().getOffset();
+    }
+
+    private final Calendar calendar(Object value) {
+        if (value instanceof OffsetTime)
+            return Calendar.getInstance(TimeZone.getTimeZone(((OffsetTime) value).getOffset()));
+        if (value instanceof OffsetDateTime)
+            return Calendar.getInstance(TimeZone.getTimeZone(((OffsetDateTime) value).getOffset()));
+
+        throw new IllegalArgumentException("Cannot extract calendar from " + value);
     }
 
     @Override
@@ -1285,9 +1334,28 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else if (type == Integer.class) {
             result = (T) wasNull(ctx.resultSet(), Integer.valueOf(ctx.resultSet().getInt(ctx.index())));
         }
+        /* [java-8] */
+        else if (type == LocalDate.class) {
+            result = (T) localDate(getDate(ctx.configuration().dialect(), ctx.resultSet(), ctx.index()));
+        }
+        else if (type == LocalTime.class) {
+            result = (T) localTime(getTime(ctx.configuration().dialect(), ctx.resultSet(), ctx.index()));
+        }
+        else if (type == LocalDateTime.class) {
+            result = (T) localDateTime(getTimestamp(ctx.configuration().dialect(), ctx.resultSet(), ctx.index()));
+        }
+        /* [/java-8] */
         else if (type == Long.class) {
             result = (T) wasNull(ctx.resultSet(), Long.valueOf(ctx.resultSet().getLong(ctx.index())));
         }
+        /* [java-8] */
+        else if (type == OffsetTime.class) {
+            result = (T) offsetTime(ctx.resultSet().getString(ctx.index()));
+        }
+        else if (type == OffsetDateTime.class) {
+            result = (T) offsetDateTime(ctx.resultSet().getString(ctx.index()));
+        }
+        /* [/java-8] */
         else if (type == Short.class) {
             result = (T) wasNull(ctx.resultSet(), Short.valueOf(ctx.resultSet().getShort(ctx.index())));
         }
@@ -1406,6 +1474,45 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             ((Attachable) result).attach(ctx.configuration());
 
         ctx.value(converter.from(result));
+    }
+
+    private final LocalDate localDate(Date date) {
+        return date == null ? null : date.toLocalDate();
+    }
+
+    private final LocalTime localTime(Time time) {
+        return time == null ? null : time.toLocalTime();
+    }
+
+    private final LocalDateTime localDateTime(Timestamp timestamp) {
+        return timestamp == null ? null : timestamp.toLocalDateTime();
+    }
+
+    private final OffsetTime offsetTime(String string) {
+        if (string == null)
+            return null;
+
+        // [#4338] PostgreSQL is more lenient regarding the offset format
+        if (string.lastIndexOf('+') == string.length() - 3)
+            string = string + ":00";
+
+        return OffsetTime.parse(string);
+    }
+
+    private final OffsetDateTime offsetDateTime(String string) {
+        if (string == null)
+            return null;
+
+        // [#4338] PostgreSQL is more lenient regarding the offset format
+        if (string.lastIndexOf('+') == string.length() - 3)
+            string = string + ":00";
+
+        // [#4338] SQL supports the alternative ISO 8601 date format, where a
+        // whitespace character separates date and time. java.time does not
+        if (string.charAt(10) == ' ')
+            string = string.substring(0, 10) + "T" + string.substring(11);
+
+        return OffsetDateTime.parse(string);
     }
 
     @SuppressWarnings("unchecked")

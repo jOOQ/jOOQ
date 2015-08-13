@@ -183,6 +183,18 @@ public interface Generator {
     void setGenerateValidationAnnotations(boolean generateValidationAnnotations);
 
     /**
+     * Whether DAOs should be annotated with useful spring annotations such as
+     * <code>@Repository</code> or <code>@Autowired</code>
+     */
+    boolean generateSpringAnnotations();
+
+    /**
+     * Whether DAOs should be annotated with useful spring annotations such as
+     * <code>@Repository</code> or <code>@Autowired</code>
+     */
+    void setGenerateSpringAnnotations(boolean generateSpringAnnotations);
+
+    /**
      * Whether global object references should be generated
      */
     boolean generateGlobalObjectReferences();

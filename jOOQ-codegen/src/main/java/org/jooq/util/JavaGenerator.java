@@ -2149,6 +2149,9 @@ public class JavaGenerator extends AbstractGenerator {
         generateDaoClassJavadoc(table, out);
         printClassAnnotations(out, table.getSchema());
 
+        if (generateSpringAnnotations())
+            out.println("@%s", out.ref("org.springframework.stereotype.Repository"));
+
         if (scala)
             out.println("class %s(configuration : %s) extends %s[%s, %s, %s](%s, classOf[%s], configuration)[[before= with ][%s]] {",
                     className, Configuration.class, daoImpl, tableRecord, pType, tType, tableIdentifier, pType, interfaces);
@@ -2177,6 +2180,10 @@ public class JavaGenerator extends AbstractGenerator {
         }
         else {
             out.tab(1).javadoc("Create a new %s with an attached configuration", className);
+
+            if (generateSpringAnnotations())
+                out.tab(1).println("@%s", out.ref("org.springframework.beans.factory.annotation.Autowired"));
+
             out.tab(1).println("public %s(%s configuration) {", className, Configuration.class);
             out.tab(2).println("super(%s, %s.class, configuration);", tableIdentifier, pType);
             out.tab(1).println("}");

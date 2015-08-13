@@ -65,6 +65,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateDaos                     = false;
     boolean                            generateJPAAnnotations           = false;
     boolean                            generateValidationAnnotations    = false;
+    boolean                            generateSpringAnnotations        = false;
     boolean                            generateGlobalObjectReferences   = true;
     boolean                            generateGlobalRoutineReferences  = true;
     boolean                            generateGlobalSequenceReferences = true;
@@ -221,6 +222,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateValidationAnnotations(boolean generateValidationAnnotations) {
         this.generateValidationAnnotations = generateValidationAnnotations;
+    }
+
+    @Override
+    public boolean generateSpringAnnotations() {
+        return generateSpringAnnotations;
+    }
+
+    @Override
+    public void setGenerateSpringAnnotations(boolean generateSpringAnnotations) {
+        this.generateSpringAnnotations = generateSpringAnnotations;
     }
 
     @Override

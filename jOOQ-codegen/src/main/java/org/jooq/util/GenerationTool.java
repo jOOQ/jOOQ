@@ -396,6 +396,8 @@ public class GenerationTool {
                 generator.setGenerateJPAAnnotations(g.getGenerate().isJpaAnnotations());
             if (g.getGenerate().isValidationAnnotations() != null)
                 generator.setGenerateValidationAnnotations(g.getGenerate().isValidationAnnotations());
+            if (g.getGenerate().isSpringAnnotations() != null)
+                generator.setGenerateSpringAnnotations(g.getGenerate().isSpringAnnotations());
             if (g.getGenerate().isGlobalObjectReferences() != null)
                 generator.setGenerateGlobalObjectReferences(g.getGenerate().isGlobalObjectReferences());
             if (g.getGenerate().isGlobalRoutineReferences() != null)

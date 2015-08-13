@@ -688,6 +688,11 @@
       <element name="validationAnnotations" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
 
       <!--
+        Annotate DAOs with useful spring annotations such as @Repository or @Autowired 
+        -->
+      <element name="springAnnotations" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
+
+      <!--
         Allow to turn off the generation of ALL global object references, which include
 
         - Tables.java
@@ -750,14 +755,6 @@
         by specifying <fullyQualifiedTypes>java\.lang\..*</fullyQualifiedTypes>
         -->
       <element name="fullyQualifiedTypes" type="string" default="" minOccurs="0" maxOccurs="1" />
-      
-      <!--
-        A flag indicating whether Java 8's java.time types should be used by the
-        source code generator, rather than JDBC's java.sql types.
-        
-        This flag is ignored in the commercial Java 6 distribution of jOOQ 3.7+ 
-        -->
-      <element name="javaTimeTypes" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
     </all>
   </complexType>
 

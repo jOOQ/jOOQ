@@ -1678,32 +1678,41 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         config.settings().setRenderNameStyle(RenderNameStyle.AS_IS);
 
         FDates call1 = new FDates();
-        call1.setD(d);
-        call1.setT(t);
-        call1.setTs(ts);
-        call1.setTTz(tTz1);
-        call1.setTsTz(tsTz1);
         call1.execute(config);
 
-        assertEquals(d, call1.getD());
-        assertEquals(t, call1.getT());
-        assertEquals(ts, call1.getTs());
-        assertEquals(tTz1, call1.getTTz());
-        assertEquals(tsTz1, call1.getTsTz());
+        assertNull(call1.getD());
+        assertNull(call1.getT());
+        assertNull(call1.getTs());
+        assertNull(call1.getTTz());
+        assertNull(call1.getTsTz());
 
         FDates call2 = new FDates();
         call2.setD(d);
         call2.setT(t);
         call2.setTs(ts);
-        call2.setTTz(tTz2);
-        call2.setTsTz(tsTz2);
+        call2.setTTz(tTz1);
+        call2.setTsTz(tsTz1);
         call2.execute(config);
 
         assertEquals(d, call2.getD());
         assertEquals(t, call2.getT());
         assertEquals(ts, call2.getTs());
-        assertEquals(tTz2, call2.getTTz());
-        assertEquals(tsTz2, call2.getTsTz());
+        assertEquals(tTz1, call2.getTTz());
+        assertEquals(tsTz1.toEpochSecond(), call2.getTsTz().toEpochSecond());
+
+        FDates call3 = new FDates();
+        call3.setD(d);
+        call3.setT(t);
+        call3.setTs(ts);
+        call3.setTTz(tTz2);
+        call3.setTsTz(tsTz2);
+        call3.execute(config);
+
+        assertEquals(d, call3.getD());
+        assertEquals(t, call3.getT());
+        assertEquals(ts, call3.getTs());
+        assertEquals(tTz2, call3.getTTz());
+        assertEquals(tsTz2.toEpochSecond(), call3.getTsTz().toEpochSecond());
     }
 
     public void testDateTimeFractionalSeconds() throws Exception {

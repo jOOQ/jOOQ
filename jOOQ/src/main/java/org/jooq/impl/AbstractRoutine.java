@@ -327,7 +327,12 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
     private final int executeSelectFromPOSTGRES() {
         DSLContext create = create(configuration);
-        Result<?> result = create.select().from("{0}", asField()).fetch();
+
+        List<Field<?>> fields = new ArrayList<Field<?>>();
+        for (Parameter<?> p : outParameters)
+            fields.add(DSL.field(DSL.name(p.getName()), p.getDataType()));
+
+        Result<?> result = create.select(fields).from("{0}", asField()).fetch();
 
         int i = 0;
 

@@ -44,7 +44,6 @@ import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.StatementType.STATIC_STATEMENT;
@@ -305,14 +304,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         assertEquals(BOOK_IDS, result.getValues(0, int.class));
         assertEquals(BOOK_AUTHOR_IDS, result.getValues(1, int.class));
 
-        // SQL Anywhere's JDBC driver has a bug, here...
-        if (family() != SYBASE) {
-            assertEquals(BOOK_IDS, result.getValues(field(name(schema, book, bookID), int.class)));
-            assertEquals(BOOK_AUTHOR_IDS, result.getValues(field(name(schema, author, authorID), int.class)));
+        assertEquals(BOOK_IDS, result.getValues(field(name(book, bookID), int.class)));
+        assertEquals(BOOK_IDS, result.getValues(field(name(schema, book, bookID), int.class)));
+        assertEquals(BOOK_AUTHOR_IDS, result.getValues(field(name(author, authorID), int.class)));
+        assertEquals(BOOK_AUTHOR_IDS, result.getValues(field(name(schema, author, authorID), int.class)));
 
-            assertEquals(BOOK_IDS, result.getValues(result.field(name(schema, book, bookID), int.class)));
-            assertEquals(BOOK_AUTHOR_IDS, result.getValues(result.field(name(schema, author, authorID), int.class)));
-        }
+        assertEquals(BOOK_IDS, result.getValues(result.field(name(book, bookID), int.class)));
+        assertEquals(BOOK_IDS, result.getValues(result.field(name(schema, book, bookID), int.class)));
+        assertEquals(BOOK_AUTHOR_IDS, result.getValues(result.field(name(author, authorID), int.class)));
+        assertEquals(BOOK_AUTHOR_IDS, result.getValues(result.field(name(schema, author, authorID), int.class)));
     }
 
     public void testPlainSQLWithSelfJoins()  throws Exception {

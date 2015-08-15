@@ -52,6 +52,8 @@ import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.RecordType;
+import org.jooq.Table;
+import org.jooq.TableField;
 
 /**
  * A simple wrapper for <code>Field[]</code>, providing some useful lookup
@@ -91,11 +93,34 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
             }
         }
 
-        // In case no exact match was found, return the first field with matching name
-        String name = field.getName();
-        for (Field<?> f1 : fields) {
-            if (f1.getName().equals(name)) {
-                return (Field<T>) f1;
+        // [#4283] table / column matches are better than only column matches
+        Field<?> columnMatch = null;
+
+        String tableName = tableName(field);
+        String fieldName = field.getName();
+
+        for (Field<?> f : fields) {
+            if (tableName != null) {
+                String tName = tableName(f);
+
+                if (tName != null && tableName.equals(tName) && f.getName().equals(fieldName))
+                    return (Field<T>) f;
+            }
+
+            // In case no exact match was found, return the first field with matching name
+            if (columnMatch == null && f.getName().equals(fieldName))
+                columnMatch = f;
+        }
+
+        return (Field<T>) columnMatch;
+    }
+
+    private final String tableName(Field<?> field) {
+        if (field instanceof TableField) {
+            Table<?> table = ((TableField<?, ?>) field).getTable();
+
+            if (table != null) {
+                return table.getName();
             }
         }
 

@@ -40,11 +40,16 @@
  */
 package org.jooq.impl;
 
+import java.util.Arrays;
+
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
+import org.jooq.Record;
 import org.jooq.RenderContext;
+import org.jooq.Table;
+import org.jooq.TableField;
 
 /**
  * A <code>QualifiedField</code> is a {@link Field} that always renders a field name
@@ -52,19 +57,23 @@ import org.jooq.RenderContext;
  *
  * @author Lukas Eder
  */
-class QualifiedField<T> extends AbstractField<T> {
+class QualifiedField<T> extends AbstractField<T> implements TableField<Record, T> {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 6937002867156868761L;
+    private static final long   serialVersionUID = 6937002867156868761L;
 
-    private final Name        name;
+    private final Name          name;
+    private final Table<Record> table;
 
     QualifiedField(Name name, DataType<T> type) {
         super(name.getName()[name.getName().length - 1], type);
 
         this.name = name;
+        this.table = name.getName().length > 1
+            ? DSL.table(DSL.name(Arrays.copyOf(name.getName(), name.getName().length - 1)))
+            : null;
     }
 
     // ------------------------------------------------------------------------
@@ -74,5 +83,10 @@ class QualifiedField<T> extends AbstractField<T> {
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(name);
+    }
+
+    @Override
+    public final Table<Record> getTable() {
+        return table;
     }
 }

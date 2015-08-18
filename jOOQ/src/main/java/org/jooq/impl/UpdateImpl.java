@@ -102,6 +102,7 @@ import org.jooq.Row6;
 import org.jooq.Row7;
 import org.jooq.Row8;
 import org.jooq.Row9;
+import org.jooq.RowN;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableLike;
@@ -323,6 +324,13 @@ final class UpdateImpl<R extends Record>
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
+    public final UpdateFromStep<R> set(RowN row, RowN value) {
+        getDelegate().addValues(row, value);
+        return this;
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
     public final <T1> UpdateFromStep<R> set(Row1<T1> row, Select<? extends Record1<T1>> select) {
         getDelegate().addValues(row, select);
         return this;
@@ -471,6 +479,13 @@ final class UpdateImpl<R extends Record>
     @Generated("This method was generated using jOOQ-tools")
     @Override
     public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> UpdateFromStep<R> set(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row, Select<? extends Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> select) {
+        getDelegate().addValues(row, select);
+        return this;
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final UpdateFromStep<R> set(RowN row, Select<?> select) {
         getDelegate().addValues(row, select);
         return this;
     }

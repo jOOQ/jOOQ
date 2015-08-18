@@ -56,7 +56,6 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.percentRank;
 import static org.jooq.impl.DSL.rank;
 import static org.jooq.impl.DSL.rowsFrom;
-import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.lambda.tuple.Tuple.range;

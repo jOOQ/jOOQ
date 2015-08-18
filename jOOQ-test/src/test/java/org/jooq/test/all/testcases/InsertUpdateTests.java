@@ -627,8 +627,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         author = getAuthor(1);
         assertEquals("row1", author.getValue(TAuthor_FIRST_NAME()));
 
-        // Postgres doesn't support subselects here
-        if (!asList(POSTGRES).contains(family())) {
+        // Postgres supports subselects in 9.5+
+        if (!dialect().precedes(POSTGRES_9_4)) {
             assertEquals(1,
             create().update(TAuthor())
                     .set(row(TAuthor_FIRST_NAME()), select(val("select1")))
@@ -652,8 +652,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         assertEquals("row2a", author.getValue(TAuthor_FIRST_NAME()));
         assertEquals("row2b", author.getValue(TAuthor_LAST_NAME()));
 
-        // Postgres doesn't support subselects here
-        if (!asList(POSTGRES).contains(dialect())) {
+        // Postgres supports subselects in 9.5+
+        if (!dialect().precedes(POSTGRES_9_4)) {
             assertEquals(1,
             create().update(TAuthor())
                     .set(row(TAuthor_FIRST_NAME(), TAuthor_LAST_NAME()),
@@ -680,8 +680,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         assertEquals("row3b", author.getValue(TAuthor_LAST_NAME()));
         assertEquals(3, (int) author.getValue(TAuthor_YEAR_OF_BIRTH()));
 
-        // Postgres doesn't support subselects here
-        if (!asList(POSTGRES).contains(dialect())) {
+        // Postgres supports subselects in 9.5+
+        if (!dialect().precedes(POSTGRES_9_4)) {
             assertEquals(1,
             create().update(TAuthor())
                     .set(row(TAuthor_FIRST_NAME(), TAuthor_LAST_NAME(), TAuthor_YEAR_OF_BIRTH()),

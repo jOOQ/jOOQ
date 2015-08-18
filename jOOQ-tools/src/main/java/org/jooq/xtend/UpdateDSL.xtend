@@ -121,6 +121,7 @@ class UpdateDSL extends Generators {
         import static org.jooq.SQLDialect.INGRES;
         import static org.jooq.SQLDialect.ORACLE;
         import static org.jooq.SQLDialect.POSTGRES;
+        import static org.jooq.SQLDialect.POSTGRES_9_5;
         
         import javax.annotation.Generated;
         
@@ -156,7 +157,7 @@ class UpdateDSL extends Generators {
             /**
              * Specify a multi-column set clause for the <code>UPDATE</code> statement.
              */
-            @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE })
+            @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES_9_5 })
             <«TN(degree)»> UpdateFromStep<R> set(Row«degree»<«TN(degree)»> row, Select<? extends Record«degree»<«TN(degree)»>> select);
         «ENDFOR»
         

@@ -68,6 +68,13 @@ class UpdateDSL extends Generators {
             @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES })
             <«TN(degree)»> void addValues(Row«degree»<«TN(degree)»> row, Row«degree»<«TN(degree)»> value);
         «ENDFOR»
+        
+            /**
+             * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+             */
+            «generatedMethod»
+            @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES })
+            void addValues(RowN row, RowN value);
         «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
         
             /**
@@ -77,6 +84,13 @@ class UpdateDSL extends Generators {
             @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE })
             <«TN(degree)»> void addValues(Row«degree»<«TN(degree)»> row, Select<? extends Record«degree»<«TN(degree)»>> select);
         «ENDFOR»
+        
+            /**
+             * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+             */
+            «generatedMethod»
+            @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE })
+            void addValues(RowN row, Select<?> select);
         ''');
          
         insert("org.jooq.UpdateQuery", out, "addValues");
@@ -94,6 +108,12 @@ class UpdateDSL extends Generators {
                 addValues0(row, value);
             }
         «ENDFOR»
+        
+            «generatedMethod»
+            @Override
+            public final void addValues(RowN row, RowN value) {
+                addValues0(row, value);
+            }
         «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
         
             «generatedMethod»
@@ -102,6 +122,12 @@ class UpdateDSL extends Generators {
                 addValues0(row, select);
             }
         «ENDFOR»
+        
+            «generatedMethod»
+            @Override
+            public final void addValues(RowN row, Select<?> select) {
+                addValues0(row, select);
+            }
         ''');
          
         insert("org.jooq.impl.UpdateQueryImpl", out, "addValues");
@@ -141,7 +167,7 @@ class UpdateDSL extends Generators {
          */
         «generatedAnnotation»
         public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
-        «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+        «FOR degree : (1 .. Constants::MAX_ROW_DEGREE)»
         
             /**
              * Specify a multi-column set clause for the <code>UPDATE</code> statement.
@@ -152,7 +178,16 @@ class UpdateDSL extends Generators {
             @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES })
             <«TN(degree)»> UpdateFromStep<R> set(Row«degree»<«TN(degree)»> row, Row«degree»<«TN(degree)»> value);
         «ENDFOR»
-        «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+        
+            /**
+             * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+             * <p>
+             * This is emulated using a subquery for the <code>value</code>, where row
+             * value expressions aren't supported.
+             */
+            @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES })
+            UpdateFromStep<R> set(RowN row, RowN value);
+        «FOR degree : (1 .. Constants::MAX_ROW_DEGREE)»
         
             /**
              * Specify a multi-column set clause for the <code>UPDATE</code> statement.
@@ -160,6 +195,12 @@ class UpdateDSL extends Generators {
             @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES_9_5 })
             <«TN(degree)»> UpdateFromStep<R> set(Row«degree»<«TN(degree)»> row, Select<? extends Record«degree»<«TN(degree)»>> select);
         «ENDFOR»
+        
+            /**
+             * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+             */
+            @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES_9_5 })
+            UpdateFromStep<R> set(RowN row, Select<?> select);
         
         }
         ''');
@@ -180,6 +221,13 @@ class UpdateDSL extends Generators {
                 return this;
             }
         «ENDFOR»
+        
+            «generatedMethod»
+            @Override
+            public final UpdateFromStep<R> set(RowN row, RowN value) {
+                getDelegate().addValues(row, value);
+                return this;
+            }
         «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
         
             «generatedMethod»
@@ -189,6 +237,13 @@ class UpdateDSL extends Generators {
                 return this;
             }
         «ENDFOR»
+        
+            «generatedMethod»
+            @Override
+            public final UpdateFromStep<R> set(RowN row, Select<?> select) {
+                getDelegate().addValues(row, select);
+                return this;
+            }
         ''');
          
         insert("org.jooq.impl.UpdateImpl", out, "set");

@@ -693,6 +693,19 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             assertEquals("select3a", author.getValue(TAuthor_FIRST_NAME()));
             assertEquals("select3b", author.getValue(TAuthor_LAST_NAME()));
             assertEquals(33, (int) author.getValue(TAuthor_YEAR_OF_BIRTH()));
+
+            // [#4475] Check again with RowN, i.e. without type safety
+            assertEquals(1,
+            create().update(TAuthor())
+                    .set(row(new Field[] { TAuthor_FIRST_NAME(), TAuthor_LAST_NAME(), TAuthor_YEAR_OF_BIRTH() }),
+                         select(new Field[] { val("select3c"), val("select3d"), val(33) }))
+                    .where(TAuthor_ID().equal(1))
+                    .execute());
+
+            author = getAuthor(1);
+            assertEquals("select3c", author.getValue(TAuthor_FIRST_NAME()));
+            assertEquals("select3d", author.getValue(TAuthor_LAST_NAME()));
+            assertEquals(33, (int) author.getValue(TAuthor_YEAR_OF_BIRTH()));
         }
     }
 

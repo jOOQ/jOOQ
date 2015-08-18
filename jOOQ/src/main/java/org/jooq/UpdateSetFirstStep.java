@@ -268,6 +268,15 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     * <p>
+     * This is emulated using a subquery for the <code>value</code>, where row
+     * value expressions aren't supported.
+     */
+    @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES })
+    UpdateFromStep<R> set(RowN row, RowN value);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES_9_5 })
     <T1> UpdateFromStep<R> set(Row1<T1> row, Select<? extends Record1<T1>> select);
@@ -397,5 +406,11 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      */
     @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES_9_5 })
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> UpdateFromStep<R> set(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row, Select<? extends Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> select);
+
+    /**
+     * Specify a multi-column set clause for the <code>UPDATE</code> statement.
+     */
+    @Support({ DB2, H2, HANA, HSQLDB, INGRES, ORACLE, POSTGRES_9_5 })
+    UpdateFromStep<R> set(RowN row, Select<?> select);
 
 }

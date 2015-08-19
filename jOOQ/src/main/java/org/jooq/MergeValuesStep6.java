@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES_9_5;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
@@ -72,19 +73,19 @@ public interface MergeValuesStep6<R extends Record, T1, T2, T3, T4, T5, T6> {
     /**
      * Specify a <code>VALUES</code> clause
      */
-    @Support({ CUBRID, DB2, H2, HANA, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, H2, HANA, HSQLDB, ORACLE, POSTGRES_9_5, SQLSERVER, SYBASE })
     Merge<R> values(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6);
 
     /**
      * Specify a <code>VALUES</code> clause
      */
-    @Support({ CUBRID, DB2, H2, HANA, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, H2, HANA, HSQLDB, ORACLE, POSTGRES_9_5, SQLSERVER, SYBASE })
     Merge<R> values(Field<T1> value1, Field<T2> value2, Field<T3> value3, Field<T4> value4, Field<T5> value5, Field<T6> value6);
 
     /**
      * Specify a <code>VALUES</code> clause
      */
-    @Support({ CUBRID, DB2, H2, HANA, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, H2, HANA, HSQLDB, ORACLE, POSTGRES_9_5, SQLSERVER, SYBASE })
     Merge<R> values(Collection<?> values);
 
     /**

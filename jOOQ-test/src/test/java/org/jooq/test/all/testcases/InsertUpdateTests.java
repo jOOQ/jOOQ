@@ -1397,7 +1397,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testMergeWithH2SyntaxExtension() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, INGRES, MARIADB, MYSQL, POSTGRES, REDSHIFT, SQLITE);
+        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, INGRES, MARIADB, MYSQL, REDSHIFT, SQLITE);
+        assumeDialectNotIn(POSTGRES_9_3, POSTGRES_9_4);
 
         jOOQAbstractTest.reset = false;
 

@@ -440,6 +440,12 @@ class DSLContext extends Generators {
                  * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
                  * </tr>
                  * <tr>
+                 * <td>PostgreSQL</td>
+                 * <td>This database can emulate the H2-specific MERGE statement via
+                 * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
+                 * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
+                 * </tr>
+                 * <tr>
                  * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
                  * <td>These databases can emulate the H2-specific MERGE statement using a
                  * standard SQL MERGE statement, without restrictions</td>
@@ -448,7 +454,7 @@ class DSLContext extends Generators {
                  * </table>
                  */
                 «generatedMethod»
-                @Support({ CUBRID, DB2, H2, HANA, HSQLDB, INFORMIX, ORACLE, SQLSERVER, SYBASE })
+                @Support({ CUBRID, DB2, H2, HANA, HSQLDB, INFORMIX, ORACLE, POSTGRES_9_5, SQLSERVER, SYBASE })
                 <R extends Record, «TN(degree)»> MergeKeyStep«degree»<R, «TN(degree)»> mergeInto(Table<R> table, «Field_TN_fieldn(degree)»);
             ''');
             
@@ -471,6 +477,17 @@ class DSLContext extends Generators {
                  * >www.h2database.com/html/grammar.html#merge</a></td>
                  * </tr>
                  * <tr>
+                 * <td>HANA</td>
+                 * <td>HANA natively supports this syntax</td>
+                 * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
+                 * </tr>
+                 * <tr>
+                 * <td>PostgreSQL</td>
+                 * <td>This database can emulate the H2-specific MERGE statement via
+                 * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
+                 * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
+                 * </tr>
+                 * <tr>
                  * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
                  * <td>These databases can emulate the H2-specific MERGE statement using a
                  * standard SQL MERGE statement, without restrictions</td>
@@ -481,9 +498,9 @@ class DSLContext extends Generators {
                  * @see DSLContext#mergeInto(Table, «(1..degree).map[e | "Field"].join(", ")»)
                  */
                 «generatedMethod»
-                @Support({ CUBRID, DB2, H2, HANA, HSQLDB, INFORMIX, ORACLE, SQLSERVER, SYBASE })
+                @Support({ CUBRID, DB2, H2, HANA, HSQLDB, INFORMIX, ORACLE, POSTGRES_9_5, SQLSERVER, SYBASE })
                 public static <R extends Record, «TN(degree)»> MergeKeyStep«degree»<R, «TN(degree)»> mergeInto(Table<R> table, «Field_TN_fieldn(degree)») {
-                	return using(new DefaultConfiguration()).mergeInto(table, «fieldn(degree)»);
+                    return using(new DefaultConfiguration()).mergeInto(table, «fieldn(degree)»);
                 }
             ''');
             

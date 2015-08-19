@@ -1131,6 +1131,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
+    /* [java-8] */
     private final ZoneOffset offset() {
         return OffsetTime.now().getOffset();
     }
@@ -1143,6 +1144,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         throw new IllegalArgumentException("Cannot extract calendar from " + value);
     }
+    /* [/java-8] */
 
     @Override
     public void set(BindingSetSQLOutputContext<U> ctx) throws SQLException {
@@ -1476,6 +1478,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         ctx.value(converter.from(result));
     }
 
+    /* [java-8] */
     private final LocalDate localDate(Date date) {
         return date == null ? null : date.toLocalDate();
     }
@@ -1514,6 +1517,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         return OffsetDateTime.parse(string);
     }
+    /* [/java-8] */
 
     @SuppressWarnings("unchecked")
     @Override

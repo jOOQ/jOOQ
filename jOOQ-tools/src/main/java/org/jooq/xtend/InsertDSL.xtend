@@ -104,13 +104,13 @@ class InsertDSL extends Generators {
              */
             «generatedAnnotation»
             public interface InsertValuesStep«degree»<R extends Record, «TN(degree)»> extends InsertOnDuplicateStep<R> {
-            
+
                 /**
                  * Add values to the insert statement.
                  */
                 @Support
                 InsertValuesStep«degree»<R, «TN(degree)»> values(«TN_XXXn(degree, "value")»);
-            
+
                 /**
                  * Add values to the insert statement.
                  */
@@ -133,7 +133,7 @@ class InsertDSL extends Generators {
                  * {@link DSLContext#insertInto(Table, «(1..degree).join(", ", [e | 'Field'])»)}
                  */
                 @Support
-                InsertReturningStep<R> select(Select<? extends Record«degree»<«TN(degree)»>> select);
+                InsertOnDuplicateStep<R> select(Select<? extends Record«degree»<«TN(degree)»>> select);
             }
             ''');
              
@@ -156,11 +156,9 @@ class InsertDSL extends Generators {
         
         import javax.annotation.Generated;
         
-        import org.jooq.AttachableInternal;
         import org.jooq.Configuration;
         import org.jooq.Field;
         import org.jooq.FieldLike;
-        import org.jooq.Insert;
         import org.jooq.InsertOnDuplicateSetMoreStep;
         import org.jooq.InsertQuery;
         import org.jooq.InsertResultStep;
@@ -209,9 +207,6 @@ class InsertDSL extends Generators {
         
                 this.into = into;
                 columns(fields);
-                this.fields = (fields == null || fields.size() == 0)
-                    ? into.fields()
-                    : fields.toArray(new Field[fields.size()]);
             }
         
             // -------------------------------------------------------------------------
@@ -220,11 +215,11 @@ class InsertDSL extends Generators {
         
             @Override
             public final InsertImpl select(Select select) {
-                getDelegate().setSelect(select);
+                getDelegate().setSelect(fields, select);
                 return this;
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
-            
+
             @Override
             public final InsertImpl values(«TN_XXXn(degree, "value")») {
                 return values(new Object[] { «XXXn(degree, "value")» });
@@ -264,7 +259,7 @@ class InsertDSL extends Generators {
                 }
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
-            
+
             @Override
             public final InsertImpl values(«Field_TN_XXXn(degree, "value")») {
                 return values(new Field[] { «XXXn(degree, "value")» });
@@ -287,7 +282,7 @@ class InsertDSL extends Generators {
                 return this;
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
-            
+
             @Override
             @SuppressWarnings("hiding")
             public final <«TN(degree)»> InsertImpl columns(«Field_TN_fieldn(degree)») {
@@ -409,7 +404,7 @@ class InsertDSL extends Generators {
                 getDelegate().execute();
                 return getDelegate().getReturnedRecord();
             }
-            
+
             /* [java-8] */
             @Override
             public final Optional<R> fetchOptional() {

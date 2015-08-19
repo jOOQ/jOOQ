@@ -1151,7 +1151,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         }
     }
 
-    public void testInsertOnDuplicateKeyUpdate() throws Exception {
+    public void testInsertValuesOnDuplicateKeyUpdate() throws Exception {
         assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, H2, HANA, INGRES, REDSHIFT, SQLITE);
         assumeDialectNotIn(POSTGRES_9_3, POSTGRES_9_4);
 
@@ -1170,6 +1170,35 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
         create().insertInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
                 .values(3, "Rose")
+                .onDuplicateKeyUpdate()
+                .set(TAuthor_LAST_NAME(), "Christie")
+                .execute();
+        author =
+        create().fetchOne(TAuthor(), TAuthor_ID().equal(3));
+        assertEquals(Integer.valueOf(3), author.getValue(TAuthor_ID()));
+        assertEquals("Christie", author.getValue(TAuthor_LAST_NAME()));
+        assertEquals(Integer.valueOf(3), create().select(count()).from(TAuthor()).fetchOne(0));
+    }
+
+    public void testInsertSelectOnDuplicateKeyUpdate() throws Exception {
+        assumeFamilyNotIn(ACCESS, ASE, DERBY, FIREBIRD, H2, HANA, INGRES, REDSHIFT, SQLITE);
+        assumeDialectNotIn(POSTGRES_9_3, POSTGRES_9_4);
+
+        jOOQAbstractTest.reset = false;
+
+        create().insertInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
+                .select(select(val(3), val("Koontz")))
+                .onDuplicateKeyUpdate()
+                .set(TAuthor_LAST_NAME(), "Koontz")
+                .execute();
+        A author =
+        create().fetchOne(TAuthor(), TAuthor_ID().equal(3));
+        assertEquals(Integer.valueOf(3), author.getValue(TAuthor_ID()));
+        assertEquals("Koontz", author.getValue(TAuthor_LAST_NAME()));
+        assertEquals(Integer.valueOf(3), create().select(count()).from(TAuthor()).fetchOne(0));
+
+        create().insertInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
+                .select(select(val(3), val("Rose")))
                 .onDuplicateKeyUpdate()
                 .set(TAuthor_LAST_NAME(), "Christie")
                 .execute();

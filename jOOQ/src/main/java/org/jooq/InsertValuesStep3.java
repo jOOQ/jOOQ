@@ -91,5 +91,5 @@ public interface InsertValuesStep3<R extends Record, T1, T2, T3> extends InsertO
      * {@link DSLContext#insertInto(Table, Field, Field, Field)}
      */
     @Support
-    InsertReturningStep<R> select(Select<? extends Record3<T1, T2, T3>> select);
+    InsertOnDuplicateStep<R> select(Select<? extends Record3<T1, T2, T3>> select);
 }

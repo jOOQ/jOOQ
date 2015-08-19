@@ -91,5 +91,5 @@ public interface InsertValuesStep4<R extends Record, T1, T2, T3, T4> extends Ins
      * {@link DSLContext#insertInto(Table, Field, Field, Field, Field)}
      */
     @Support
-    InsertReturningStep<R> select(Select<? extends Record4<T1, T2, T3, T4>> select);
+    InsertOnDuplicateStep<R> select(Select<? extends Record4<T1, T2, T3, T4>> select);
 }

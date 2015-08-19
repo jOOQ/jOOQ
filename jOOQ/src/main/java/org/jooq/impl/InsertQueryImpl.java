@@ -195,9 +195,13 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                     }
 
                     ctx.sql(") ")
-                       .keyword("do update set")
+                       .keyword("do update")
+                       .formatSeparator()
+                       .keyword("set")
                        .sql(' ')
+                       .formatIndentLockStart()
                        .visit(updateMap)
+                       .formatIndentLockEnd()
                        .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
 
                     break;

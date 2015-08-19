@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
+import static org.jooq.SQLDialect.POSTGRES_9_5;
 // ...
 // ...
 
@@ -72,19 +73,19 @@ public interface MergeValuesStep14<R extends Record, T1, T2, T3, T4, T5, T6, T7,
     /**
      * Specify a <code>VALUES</code> clause
      */
-    @Support({ CUBRID, H2, HSQLDB })
+    @Support({ CUBRID, H2, HSQLDB, POSTGRES_9_5 })
     Merge<R> values(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6, T7 value7, T8 value8, T9 value9, T10 value10, T11 value11, T12 value12, T13 value13, T14 value14);
 
     /**
      * Specify a <code>VALUES</code> clause
      */
-    @Support({ CUBRID, H2, HSQLDB })
+    @Support({ CUBRID, H2, HSQLDB, POSTGRES_9_5 })
     Merge<R> values(Field<T1> value1, Field<T2> value2, Field<T3> value3, Field<T4> value4, Field<T5> value5, Field<T6> value6, Field<T7> value7, Field<T8> value8, Field<T9> value9, Field<T10> value10, Field<T11> value11, Field<T12> value12, Field<T13> value13, Field<T14> value14);
 
     /**
      * Specify a <code>VALUES</code> clause
      */
-    @Support({ CUBRID, H2, HSQLDB })
+    @Support({ CUBRID, H2, HSQLDB, POSTGRES_9_5 })
     Merge<R> values(Collection<?> values);
 
     /**

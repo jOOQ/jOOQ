@@ -51,11 +51,10 @@ import static org.jooq.Clause.MERGE_VALUES;
 import static org.jooq.Clause.MERGE_WHEN_MATCHED_THEN_UPDATE;
 import static org.jooq.Clause.MERGE_WHEN_NOT_MATCHED_THEN_INSERT;
 import static org.jooq.Clause.MERGE_WHERE;
-import static org.jooq.SQLDialect.H2;
-// ...
 // ...
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
+import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.nullSafe;
 import static org.jooq.impl.Utils.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
@@ -977,8 +976,10 @@ implements
     /**
      * Return a standard MERGE statement emulating the H2-specific syntax
      */
-    private final QueryPart getStandardMerge(Configuration config) {
-        switch (config.dialect().family()) {
+    private final QueryPart getStandardMerge(Context<?> ctx) {
+        Configuration config = ctx.configuration();
+
+        switch (ctx.family()) {
             /* [pro] xx
             xxxx xxxx
             xxxx xxxxxxxxx
@@ -1092,20 +1093,49 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         if (upsertStyle) {
-            if (ctx.family() == H2) {
-                toSQLH2Merge(ctx);
-            }
-            /* [pro] xx
-            xxxx xx xxxxxxxxxxxxx xx xxxxx x
-                xxxxxxxxxxxxxxxxxxxxx
-            x
-            xx [/pro] */
-            else {
-                ctx.visit(getStandardMerge(ctx.configuration()));
+            switch (ctx.family()) {
+                case H2:
+                    toSQLH2Merge(ctx);
+                    break;
+
+                case POSTGRES:
+                    toPostgresInsertOnConflict(ctx);
+                    break;
+
+                /* [pro] xx
+                xxxx xxxxx
+                    xxxxxxxxxxxxxxxxxxxxx
+                    xxxxxx
+                xx [/pro] */
+
+                default:
+                    ctx.visit(getStandardMerge(ctx));
+                    break;
             }
         }
         else {
             toSQLStandard(ctx);
+        }
+    }
+
+    private final void toPostgresInsertOnConflict(Context<?> ctx) {
+        Fields<?> fields = new Fields<Record>(getUpsertFields());
+        Map<Field<?>, Field<?>> map = new LinkedHashMap<Field<?>, Field<?>>();
+        for (Field<?> field : fields.fields)
+            map.put(field, getUpsertValues().get(fields.indexOf(field)));
+
+        if (upsertSelect != null) {
+            // TODO [#2529] This cannot be implemented yet
+//            ctx.visit(insertInto(table, getUpsertFields())
+//               .select(upsertSelect)
+//               .onDuplicateKeyUpdate()
+//               .set(map));
+        }
+        else {
+            ctx.visit(insertInto(table, getUpsertFields())
+               .values(getUpsertValues())
+               .onDuplicateKeyUpdate()
+               .set(map));
         }
     }
 

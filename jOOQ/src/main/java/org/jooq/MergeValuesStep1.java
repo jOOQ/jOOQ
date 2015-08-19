@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
+import static org.jooq.SQLDialect.POSTGRES_9_5;
 // ...
 // ...
 
@@ -72,19 +73,19 @@ public interface MergeValuesStep1<R extends Record, T1> {
     /**
      * Specify a <code>VALUES</code> clause
      */
-    @Support({ CUBRID, H2, HSQLDB })
+    @Support({ CUBRID, H2, HSQLDB, POSTGRES_9_5 })
     Merge<R> values(T1 value1);
 
     /**
      * Specify a <code>VALUES</code> clause
      */
-    @Support({ CUBRID, H2, HSQLDB })
+    @Support({ CUBRID, H2, HSQLDB, POSTGRES_9_5 })
     Merge<R> values(Field<T1> value1);
 
     /**
      * Specify a <code>VALUES</code> clause
      */
-    @Support({ CUBRID, H2, HSQLDB })
+    @Support({ CUBRID, H2, HSQLDB, POSTGRES_9_5 })
     Merge<R> values(Collection<?> values);
 
     /**

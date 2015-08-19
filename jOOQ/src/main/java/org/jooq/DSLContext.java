@@ -71,6 +71,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
@@ -121,7 +122,30 @@ import org.jooq.tools.jdbc.MockRunnable;
  * @see Configuration
  * @author Lukas Eder
  */
-public interface DSLContext extends Scope {
+public interface DSLContext extends Scope /* [java-8] */, AutoCloseable /* [/java-8] */ {
+
+    // -------------------------------------------------------------------------
+    // XXX AutoCloseable API
+    // -------------------------------------------------------------------------
+
+    /**
+     * Close the underlying resources, if any resources have been allocated when
+     * constructing this <code>DSLContext</code>.
+     * <p>
+     * Some {@link DSLContext} constructors, such as {@link DSL#using(String)},
+     * {@link DSL#using(String, Properties)}, or
+     * {@link DSL#using(String, String, String)} allocate a {@link Connection}
+     * resource, which is inaccessible to the outside of the {@link DSLContext}
+     * implementation. Proper resource management must thus be done via this
+     * {@link #close()} method.
+     *
+     * @throws DataAccessException When something went wrong closing the
+     *             underlying resources.
+     */
+    /* [java-8] */
+    @Override
+    /* [/java-8] */
+    void close() throws DataAccessException;
 
     // -------------------------------------------------------------------------
     // XXX Configuration API

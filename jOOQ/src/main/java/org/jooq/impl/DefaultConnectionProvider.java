@@ -65,7 +65,7 @@ public class DefaultConnectionProvider implements ConnectionProvider {
 
     private static final JooqLogger log = JooqLogger.getLogger(DefaultConnectionProvider.class);
     Connection                      connection;
-    private boolean                 finalize;
+    final boolean                   finalize;
 
     public DefaultConnectionProvider(Connection connection) {
         this(connection, false);

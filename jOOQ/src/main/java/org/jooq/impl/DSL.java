@@ -3468,6 +3468,17 @@ public class DSL {
      * >www.h2database.com/html/grammar.html#merge</a></td>
      * </tr>
      * <tr>
+     * <td>HANA</td>
+     * <td>HANA natively supports this syntax</td>
+     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
+     * </tr>
+     * <tr>
+     * <td>PostgreSQL</td>
+     * <td>This database can emulate the H2-specific MERGE statement via
+     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
+     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
+     * </tr>
+     * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
      * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
@@ -3498,6 +3509,17 @@ public class DSL {
      * <td>H2 natively supports this special syntax</td>
      * <td><a href= "www.h2database.com/html/grammar.html#merge"
      * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>HANA</td>
+     * <td>HANA natively supports this syntax</td>
+     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
+     * </tr>
+     * <tr>
+     * <td>PostgreSQL</td>
+     * <td>This database can emulate the H2-specific MERGE statement via
+     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
+     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
@@ -3532,6 +3554,17 @@ public class DSL {
      * >www.h2database.com/html/grammar.html#merge</a></td>
      * </tr>
      * <tr>
+     * <td>HANA</td>
+     * <td>HANA natively supports this syntax</td>
+     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
+     * </tr>
+     * <tr>
+     * <td>PostgreSQL</td>
+     * <td>This database can emulate the H2-specific MERGE statement via
+     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
+     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
+     * </tr>
+     * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
      * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
@@ -3562,6 +3595,17 @@ public class DSL {
      * <td>H2 natively supports this special syntax</td>
      * <td><a href= "www.h2database.com/html/grammar.html#merge"
      * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>HANA</td>
+     * <td>HANA natively supports this syntax</td>
+     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
+     * </tr>
+     * <tr>
+     * <td>PostgreSQL</td>
+     * <td>This database can emulate the H2-specific MERGE statement via
+     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
+     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
@@ -3596,6 +3640,17 @@ public class DSL {
      * >www.h2database.com/html/grammar.html#merge</a></td>
      * </tr>
      * <tr>
+     * <td>HANA</td>
+     * <td>HANA natively supports this syntax</td>
+     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
+     * </tr>
+     * <tr>
+     * <td>PostgreSQL</td>
+     * <td>This database can emulate the H2-specific MERGE statement via
+     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
+     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
+     * </tr>
+     * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
      * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
@@ -3626,6 +3681,17 @@ public class DSL {
      * <td>H2 natively supports this special syntax</td>
      * <td><a href= "www.h2database.com/html/grammar.html#merge"
      * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>HANA</td>
+     * <td>HANA natively supports this syntax</td>
+     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
+     * </tr>
+     * <tr>
+     * <td>PostgreSQL</td>
+     * <td>This database can emulate the H2-specific MERGE statement via
+     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
+     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
@@ -3660,6 +3726,17 @@ public class DSL {
      * >www.h2database.com/html/grammar.html#merge</a></td>
      * </tr>
      * <tr>
+     * <td>HANA</td>
+     * <td>HANA natively supports this syntax</td>
+     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
+     * </tr>
+     * <tr>
+     * <td>PostgreSQL</td>
+     * <td>This database can emulate the H2-specific MERGE statement via
+     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
+     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
+     * </tr>
+     * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
      * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
@@ -3690,6 +3767,17 @@ public class DSL {
      * <td>H2 natively supports this special syntax</td>
      * <td><a href= "www.h2database.com/html/grammar.html#merge"
      * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>HANA</td>
+     * <td>HANA natively supports this syntax</td>
+     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
+     * </tr>
+     * <tr>
+     * <td>PostgreSQL</td>
+     * <td>This database can emulate the H2-specific MERGE statement via
+     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
+     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
@@ -3724,6 +3812,17 @@ public class DSL {
      * >www.h2database.com/html/grammar.html#merge</a></td>
      * </tr>
      * <tr>
+     * <td>HANA</td>
+     * <td>HANA natively supports this syntax</td>
+     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
+     * </tr>
+     * <tr>
+     * <td>PostgreSQL</td>
+     * <td>This database can emulate the H2-specific MERGE statement via
+     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
+     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
+     * </tr>
+     * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
      * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
@@ -3754,6 +3853,17 @@ public class DSL {
      * <td>H2 natively supports this special syntax</td>
      * <td><a href= "www.h2database.com/html/grammar.html#merge"
      * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>HANA</td>
+     * <td>HANA natively supports this syntax</td>
+     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
+     * </tr>
+     * <tr>
+     * <td>PostgreSQL</td>
+     * <td>This database can emulate the H2-specific MERGE statement via
+     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
+     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
@@ -3788,6 +3898,17 @@ public class DSL {
      * >www.h2database.com/html/grammar.html#merge</a></td>
      * </tr>
      * <tr>
+     * <td>HANA</td>
+     * <td>HANA natively supports this syntax</td>
+     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
+     * </tr>
+     * <tr>
+     * <td>PostgreSQL</td>
+     * <td>This database can emulate the H2-specific MERGE statement via
+     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
+     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
+     * </tr>
+     * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
      * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
@@ -3818,6 +3939,17 @@ public class DSL {
      * <td>H2 natively supports this special syntax</td>
      * <td><a href= "www.h2database.com/html/grammar.html#merge"
      * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>HANA</td>
+     * <td>HANA natively supports this syntax</td>
+     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
+     * </tr>
+     * <tr>
+     * <td>PostgreSQL</td>
+     * <td>This database can emulate the H2-specific MERGE statement via
+     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
+     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
@@ -3852,6 +3984,17 @@ public class DSL {
      * >www.h2database.com/html/grammar.html#merge</a></td>
      * </tr>
      * <tr>
+     * <td>HANA</td>
+     * <td>HANA natively supports this syntax</td>
+     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
+     * </tr>
+     * <tr>
+     * <td>PostgreSQL</td>
+     * <td>This database can emulate the H2-specific MERGE statement via
+     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
+     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
+     * </tr>
+     * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
      * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
@@ -3882,6 +4025,17 @@ public class DSL {
      * <td>H2 natively supports this special syntax</td>
      * <td><a href= "www.h2database.com/html/grammar.html#merge"
      * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>HANA</td>
+     * <td>HANA natively supports this syntax</td>
+     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
+     * </tr>
+     * <tr>
+     * <td>PostgreSQL</td>
+     * <td>This database can emulate the H2-specific MERGE statement via
+     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
+     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
@@ -3916,6 +4070,17 @@ public class DSL {
      * >www.h2database.com/html/grammar.html#merge</a></td>
      * </tr>
      * <tr>
+     * <td>HANA</td>
+     * <td>HANA natively supports this syntax</td>
+     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
+     * </tr>
+     * <tr>
+     * <td>PostgreSQL</td>
+     * <td>This database can emulate the H2-specific MERGE statement via
+     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
+     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
+     * </tr>
+     * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
      * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
@@ -3946,6 +4111,17 @@ public class DSL {
      * <td>H2 natively supports this special syntax</td>
      * <td><a href= "www.h2database.com/html/grammar.html#merge"
      * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>HANA</td>
+     * <td>HANA natively supports this syntax</td>
+     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
+     * </tr>
+     * <tr>
+     * <td>PostgreSQL</td>
+     * <td>This database can emulate the H2-specific MERGE statement via
+     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
+     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
@@ -3980,6 +4156,17 @@ public class DSL {
      * >www.h2database.com/html/grammar.html#merge</a></td>
      * </tr>
      * <tr>
+     * <td>HANA</td>
+     * <td>HANA natively supports this syntax</td>
+     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
+     * </tr>
+     * <tr>
+     * <td>PostgreSQL</td>
+     * <td>This database can emulate the H2-specific MERGE statement via
+     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
+     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
+     * </tr>
+     * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
      * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
@@ -4010,6 +4197,17 @@ public class DSL {
      * <td>H2 natively supports this special syntax</td>
      * <td><a href= "www.h2database.com/html/grammar.html#merge"
      * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>HANA</td>
+     * <td>HANA natively supports this syntax</td>
+     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
+     * </tr>
+     * <tr>
+     * <td>PostgreSQL</td>
+     * <td>This database can emulate the H2-specific MERGE statement via
+     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
+     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
@@ -4044,6 +4242,17 @@ public class DSL {
      * >www.h2database.com/html/grammar.html#merge</a></td>
      * </tr>
      * <tr>
+     * <td>HANA</td>
+     * <td>HANA natively supports this syntax</td>
+     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
+     * </tr>
+     * <tr>
+     * <td>PostgreSQL</td>
+     * <td>This database can emulate the H2-specific MERGE statement via
+     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
+     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
+     * </tr>
+     * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
      * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
@@ -4074,6 +4283,17 @@ public class DSL {
      * <td>H2 natively supports this special syntax</td>
      * <td><a href= "www.h2database.com/html/grammar.html#merge"
      * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>HANA</td>
+     * <td>HANA natively supports this syntax</td>
+     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
+     * </tr>
+     * <tr>
+     * <td>PostgreSQL</td>
+     * <td>This database can emulate the H2-specific MERGE statement via
+     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
+     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
@@ -4108,6 +4328,17 @@ public class DSL {
      * >www.h2database.com/html/grammar.html#merge</a></td>
      * </tr>
      * <tr>
+     * <td>HANA</td>
+     * <td>HANA natively supports this syntax</td>
+     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
+     * </tr>
+     * <tr>
+     * <td>PostgreSQL</td>
+     * <td>This database can emulate the H2-specific MERGE statement via
+     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
+     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
+     * </tr>
+     * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
      * <td>These databases can emulate the H2-specific MERGE statement using a
      * standard SQL MERGE statement, without restrictions</td>
@@ -4138,6 +4369,17 @@ public class DSL {
      * <td>H2 natively supports this special syntax</td>
      * <td><a href= "www.h2database.com/html/grammar.html#merge"
      * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>HANA</td>
+     * <td>HANA natively supports this syntax</td>
+     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
+     * </tr>
+     * <tr>
+     * <td>PostgreSQL</td>
+     * <td>This database can emulate the H2-specific MERGE statement via
+     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
+     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
      * </tr>
      * <tr>
      * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>

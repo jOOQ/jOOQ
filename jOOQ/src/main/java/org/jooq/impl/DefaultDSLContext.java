@@ -212,6 +212,7 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.BatchCRUD.Action;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.csv.CSVReader;
+import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.tools.jdbc.MockCallable;
 import org.jooq.tools.jdbc.MockConfiguration;
 import org.jooq.tools.jdbc.MockDataProvider;
@@ -277,6 +278,24 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     public DefaultDSLContext(Configuration configuration) {
         super(configuration);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX AutoCloseable
+    // -------------------------------------------------------------------------
+
+    @Override
+    public void close() {
+        ConnectionProvider cp = configuration().connectionProvider();
+
+        if (cp instanceof DefaultConnectionProvider) {
+            DefaultConnectionProvider dcp = (DefaultConnectionProvider) cp;
+
+            if (dcp.finalize) {
+                JDBCUtils.safeClose(dcp.connection);
+                dcp.connection = null;
+            }
+        }
     }
 
     // -------------------------------------------------------------------------

@@ -38,35 +38,28 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-import java.sql.Connection;
 import java.util.Properties;
 
-import org.jooq.Configuration;
+import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
 
-public class HANA {
+public class H2 {
     public static void main(String[] args) {
         try {
-            Class.forName("com.sap.db.jdbc.Driver");
+            Class.forName("org.h2.Driver");
 
-            String url = "jdbc:sap://localhost:30015";
-            String user = "DEV_2ZUU8JBREPCG8SWGL0XWK7NTF";
-            String password = "TEST18test";
+            String url = "jdbc:h2:~/test";
+            String user = "sa";
+            String password = "";
 
 
             Properties properties = new Properties();
             properties.setProperty("user", user);
             properties.setProperty("password", password);
 
-            System.out.println("Connect");
-            Connection cn = new com.sap.db.jdbc.Driver().connect(url, properties);
-
-            System.out.println("Select");
-            Configuration conf = DSL.using(cn).configuration();
-/*
-            System.out.println(Routines.fOne(conf));
-            System.out.println(DSL.using(conf).select(Routines.fOne()).fetchOne());
-            */
+            try (DSLContext ctx = DSL.using(url, user, password)) {
+                ctx.fetch("select * from information_schema.tables");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

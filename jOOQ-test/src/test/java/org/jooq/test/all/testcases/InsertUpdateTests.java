@@ -1472,7 +1472,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         assertEquals("Lukas", authors3.get(2).getValue(TAuthor_FIRST_NAME()));
 
         // Hana doesn't support combining KEY and SELECT in UPSERT
-        if (family() == HANA) {
+        if (asList(HANA, POSTGRES).contains(family())) {
             assertEquals(1,
             create().mergeInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
                     .key(TAuthor_ID())
@@ -1512,25 +1512,27 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
         // H2 MERGE test specifying a subselect
         // -------------------------------------------------------------
-        assertEquals(2,
-        create().mergeInto(TAuthor(), TAuthor_ID(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
+        if (!asList(POSTGRES).contains(family())) {
+            assertEquals(2,
+            create().mergeInto(TAuthor(), TAuthor_ID(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
 
-                // inline() strings here. It seems that DB2 will lack page size
-                // in the system temporary table space, otherwise
+                    // inline() strings here. It seems that DB2 will lack page size
+                    // in the system temporary table space, otherwise
 
-                // [#579] TODO: Aliasing shouldn't be necessary
-                .select(select(val(3).as("a"), inline("John").as("b"), inline("Eder").as("c")).unionAll(
-                        select(val(4).as("a"), inline("John").as("b"), inline("Eder").as("c"))))
-                .execute());
+                    // [#579] TODO: Aliasing shouldn't be necessary
+                    .select(select(val(3).as("a"), inline("John").as("b"), inline("Eder").as("c")).unionAll(
+                            select(val(4).as("a"), inline("John").as("b"), inline("Eder").as("c"))))
+                    .execute());
 
-        Result<A> authors5 = create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch();
-        assertEquals(4, authors5.size());
-        assertEquals(3, (int) authors5.get(2).getValue(TAuthor_ID()));
-        assertEquals("Eder", authors5.get(2).getValue(TAuthor_LAST_NAME()));
-        assertEquals("John", authors5.get(2).getValue(TAuthor_FIRST_NAME()));
-        assertEquals(4, (int) authors5.get(3).getValue(TAuthor_ID()));
-        assertEquals("Eder", authors5.get(3).getValue(TAuthor_LAST_NAME()));
-        assertEquals("John", authors5.get(3).getValue(TAuthor_FIRST_NAME()));
+            Result<A> authors5 = create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch();
+            assertEquals(4, authors5.size());
+            assertEquals(3, (int) authors5.get(2).getValue(TAuthor_ID()));
+            assertEquals("Eder", authors5.get(2).getValue(TAuthor_LAST_NAME()));
+            assertEquals("John", authors5.get(2).getValue(TAuthor_FIRST_NAME()));
+            assertEquals(4, (int) authors5.get(3).getValue(TAuthor_ID()));
+            assertEquals("Eder", authors5.get(3).getValue(TAuthor_LAST_NAME()));
+            assertEquals("John", authors5.get(3).getValue(TAuthor_FIRST_NAME()));
+        }
     }
 
     public void testUpdateSelect() throws Exception {

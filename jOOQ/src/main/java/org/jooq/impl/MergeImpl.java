@@ -1125,11 +1125,7 @@ implements
             map.put(field, getUpsertValues().get(fields.indexOf(field)));
 
         if (upsertSelect != null) {
-            // TODO [#2529] This cannot be implemented yet
-//            ctx.visit(insertInto(table, getUpsertFields())
-//               .select(upsertSelect)
-//               .onDuplicateKeyUpdate()
-//               .set(map));
+            ctx.sql("[ merge with select is not supported in PostgreSQL ]");
         }
         else {
             ctx.visit(insertInto(table, getUpsertFields())

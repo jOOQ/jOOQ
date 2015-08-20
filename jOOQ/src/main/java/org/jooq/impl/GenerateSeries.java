@@ -50,7 +50,9 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.QueryPart;
 import org.jooq.Record1;
+import org.jooq.SQLDialect;
 import org.jooq.Table;
+import org.jooq.exception.SQLDialectNotSupportedException;
 
 /**
  * @author Lukas Eder
@@ -64,12 +66,18 @@ class GenerateSeries extends AbstractTable<Record1<Integer>> {
 
     private final Field<Integer> from;
     private final Field<Integer> to;
+    private final Field<Integer> step;
 
     GenerateSeries(Field<Integer> from, Field<Integer> to) {
+        this(from, to, null);
+    }
+
+    GenerateSeries(Field<Integer> from, Field<Integer> to, Field<Integer> step) {
         super("generate_series");
 
         this.from = from;
         this.to = to;
+        this.step = step;
     }
 
     @Override
@@ -78,7 +86,8 @@ class GenerateSeries extends AbstractTable<Record1<Integer>> {
     }
 
     private final QueryPart delegate(Configuration configuration) {
-        switch (configuration.family()) {
+        final SQLDialect dialect = configuration.family();
+        switch (dialect) {
             case CUBRID:
             /* [pro] xx
             xxxx xxxxxxx
@@ -95,6 +104,14 @@ class GenerateSeries extends AbstractTable<Record1<Integer>> {
 
             case POSTGRES:
             default:
+
+                if (step != null) {
+                    if (dialect != SQLDialect.POSTGRES) {
+                        throw new SQLDialectNotSupportedException("The " + getName() + " function with step is not supported in this dialect");
+                    }
+                    return table("{generate_series}({0}, {1}, {2})", from, to, step);
+                }
+
                 return table("{generate_series}({0}, {1})", from, to);
         }
     }

@@ -262,6 +262,7 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.types.DayToSecond;
+import org.jooq.types.Interval;
 
 /**
  * A DSL "entry point" providing implementations to the <code>org.jooq</code>
@@ -5483,6 +5484,86 @@ public class DSL {
     @Support({ CUBRID, POSTGRES })
     public static Table<Record1<Integer>> generateSeries(Field<Integer> from, Field<Integer> to) {
         return new GenerateSeries(nullSafe(from), nullSafe(to));
+    }
+
+    /**
+     * A table function generating a series of values from <code>from</code> to
+     * <code>to</code> (inclusive) by steps of <code>step</code>.
+     * <p>
+     * This function is inspired by PostgreSQL's
+     * <code>GENERATE_SERIES(from, to, step)</code> function.
+     * <code><pre>
+     * -- PostgreSQL
+     * SELECT * FROM GENERATE_SERIES(a, b, c)
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static Table<Record1<Integer>> generateSeries(int from, int to, int step) {
+        return generateSeries(val(from), val(to), step);
+    }
+
+    /**
+     * A table function generating a series of values from <code>from</code> to
+     * <code>to</code> (inclusive) by steps of <code>step</code>.
+     * <p>
+     * This function is inspired by PostgreSQL's
+     * <code>GENERATE_SERIES(from, to, step)</code> function.
+     * <code><pre>
+     * -- PostgreSQL
+     * SELECT * FROM GENERATE_SERIES(a, b, c)
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static Table<Record1<Integer>> generateSeries(Field<Integer> from, Field<Integer> to, int step) {
+        return generateSeries(from, to, val(step));
+    }
+
+    /**
+     * A table function generating a series of values from <code>from</code> to
+     * <code>to</code> (inclusive) by steps of <code>step</code>.
+     * <p>
+     * This function is inspired by PostgreSQL's
+     * <code>GENERATE_SERIES(from, to, step)</code> function.
+     * <code><pre>
+     * -- PostgreSQL
+     * SELECT * FROM GENERATE_SERIES(a, b, c)
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static Table<Record1<Integer>> generateSeries(Field<Integer> from, Field<Integer> to, Field<Integer> step) {
+        return new GenerateSeries(nullSafe(from), nullSafe(to), nullSafe(step));
+    }
+
+    /**
+     * A table function generating a series of timestamps from <code>from</code> to
+     * <code>to</code> (inclusive) by intervals of <code>interval</code>.
+     * <p>
+     * This function is inspired by PostgreSQL's
+     * <code>GENERATE_SERIES(from, to, interval)</code> function.
+     * <code><pre>
+     * -- PostgreSQL
+     * SELECT * FROM GENERATE_SERIES(a, b, c)
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static Table<Record1<Timestamp>> generateTimestampSeries(Field<Timestamp> from, Field<Timestamp> to, Interval interval) {
+        return generateTimestampSeries(from, to, val(interval));
+    }
+
+    /**
+     * A table function generating a series of timestamps from <code>from</code> to
+     * <code>to</code> (inclusive) by intervals of <code>interval</code>.
+     * <p>
+     * This function is inspired by PostgreSQL's
+     * <code>GENERATE_SERIES(from, to, interval)</code> function.
+     * <code><pre>
+     * -- PostgreSQL
+     * SELECT * FROM GENERATE_SERIES(a, b, c)
+     * </pre></code>
+     */
+    @Support({ POSTGRES })
+    public static Table<Record1<Timestamp>> generateTimestampSeries(Field<Timestamp> from, Field<Timestamp> to, Field<? extends Interval> interval) {
+        return new GenerateTimestampSeries(nullSafe(from), nullSafe(to), nullSafe(interval));
     }
 
     /**

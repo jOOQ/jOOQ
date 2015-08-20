@@ -115,6 +115,7 @@ import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record4;
 import org.jooq.Record6;
+import org.jooq.Record7;
 import org.jooq.Record8;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
@@ -1869,6 +1870,31 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         //assertEquals(new DayToSecond(0, 1), record.getValue("t2"));
         assertEquals(new DayToSecond(1, 6).neg(), record.getValue("ts1"));
         assertEquals(new DayToSecond(1, 6), record.getValue("ts2"));
+    }
+
+    public void testDateTimeArithmeticAndOperatorPrecedence() throws Exception {
+        Date d1 = Date.valueOf("2000-01-01");
+        Date d2 = Date.valueOf("2000-01-03");
+
+        Record7<Integer, Integer, Integer, Integer, Integer, Integer, Integer> diffs = create()
+        .select(
+            dateDiff(d2, d1).as("diff1"),
+            val(3).mul(dateDiff(d2, d1)).as("diff2"),
+            dateDiff(d2, d1).mul(3).as("diff3"),
+            dateDiff(d2, d1).div(2).as("diff4"),
+            val(1).add(dateDiff(d2, d1)).add(1).as("diff5"),
+            val(1).sub(dateDiff(d2, d1)).sub(1).as("diff6"),
+            val(1).add(val(3).mul(dateDiff(d2, d1))).as("diff7")
+        )
+        .fetchOne();
+
+        assertEquals(2, diffs.value1());
+        assertEquals(6, diffs.value2());
+        assertEquals(6, diffs.value3());
+        assertEquals(1, diffs.value4());
+        assertEquals(4, diffs.value5());
+        assertEquals(-2, diffs.value6());
+        assertEquals(7, diffs.value7());
     }
 
     public void testFunctionsOnDates_DATE_DIFF_AND_DATE_ADD() throws Exception {

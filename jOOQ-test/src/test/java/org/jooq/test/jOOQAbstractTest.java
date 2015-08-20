@@ -2512,6 +2512,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testDateTimeArithmeticAndOperatorPrecedence() throws Exception {
+        new DataTypeTests(this).testDateTimeArithmeticAndOperatorPrecedence();
+    }
+
+    @Test
     public void testFunctionsOnDates_DATE_ADD() throws Exception {
         new DataTypeTests(this).testFunctionsOnDates_DATE_ADD();
     }

@@ -584,10 +584,10 @@ class Expression<T> extends AbstractFunction<T> {
                 /* [pro] */
                 case INFORMIX: {
                     if (operator == ADD) {
-                        return field("{0} + {1} {units day}", getDataType(), lhs, rhsAsNumber());
+                        return field("({0} + {1} {units day})", getDataType(), lhs, rhsAsNumber());
                     }
                     else {
-                        return field("{0} - {1} {units day}", getDataType(), lhs, rhsAsNumber());
+                        return field("({0} - {1} {units day})", getDataType(), lhs, rhsAsNumber());
                     }
                 }
 

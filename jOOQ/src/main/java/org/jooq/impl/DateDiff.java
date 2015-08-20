@@ -96,7 +96,7 @@ class DateDiff extends AbstractFunction<Integer> {
             /* [/pro] */
             case CUBRID:
             case POSTGRES:
-                return field("{0} - {1}", getDataType(), date1, date2);
+                return field("({0} - {1})", getDataType(), date1, date2);
 
             /* [pro] */
             case ACCESS:

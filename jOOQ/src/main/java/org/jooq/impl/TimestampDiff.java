@@ -106,6 +106,9 @@ class TimestampDiff extends AbstractFunction<DayToSecond> {
             case ORACLE:
             /* [/pro] */
             case POSTGRES:
+
+                // [#4481] Parentheses are important in case this expression is
+                //         placed in the context of other arithmetic
                 return field("({0} - {1})", getDataType(), timestamp1, timestamp2);
 
             // CUBRID's datetime operations operate on a millisecond level

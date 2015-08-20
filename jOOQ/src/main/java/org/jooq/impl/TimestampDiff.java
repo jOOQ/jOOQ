@@ -106,7 +106,7 @@ class TimestampDiff extends AbstractFunction<DayToSecond> {
             xxxx xxxxxxx
             xx [/pro] */
             case POSTGRES:
-                return field("{0} - {1}", getDataType(), timestamp1, timestamp2);
+                return field("({0} - {1})", getDataType(), timestamp1, timestamp2);
 
             // CUBRID's datetime operations operate on a millisecond level
             case CUBRID:

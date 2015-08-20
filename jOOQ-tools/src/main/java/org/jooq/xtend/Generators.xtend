@@ -44,6 +44,7 @@ import java.io.File
 import java.io.FileWriter
 import java.io.IOException
 import java.io.RandomAccessFile
+import java.util.concurrent.atomic.AtomicInteger
 
 /**
  * @author Lukas Eder
@@ -115,7 +116,8 @@ abstract class Generators {
         file.getParentFile().mkdirs();
     
         try {
-            System::out.println("Writing " + file + (if (section != null) (" (section: " + section + ")") else ""));
+            val i = totalWrites.incrementAndGet;
+            System::out.println(i + ": Writing " + file + (if (section != null) (" (section: " + section + ")") else ""));
             val fw = new FileWriter(file);
             // It's hard to enforce unix line separators in Xtend
             fw.append(contents.toString().replace("\r\n", "\n"));
@@ -126,6 +128,8 @@ abstract class Generators {
             e.printStackTrace();
         }
     }
+    
+    static AtomicInteger totalWrites = new AtomicInteger(0);
 
     def first(int degree) {
         switch degree {

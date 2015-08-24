@@ -227,7 +227,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      */
     @Override
     @Support
-    void setReturning(Identity<R, ? extends Number> identity);
+    void setReturning(Identity<R, ?> identity);
 
     /**
      * {@inheritDoc}

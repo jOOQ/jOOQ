@@ -133,7 +133,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @return The table's <code>IDENTITY</code> information, or
      *         <code>null</code>, if no such information is available.
      */
-    Identity<R, ? extends Number> getIdentity();
+    Identity<R, ?> getIdentity();
     /**
      * Retrieve the table's primary key
      *

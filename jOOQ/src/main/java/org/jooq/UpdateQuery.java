@@ -469,7 +469,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      */
     @Override
     @Support({ DB2, FIREBIRD, POSTGRES })
-    void setReturning(Identity<R, ? extends Number> identity);
+    void setReturning(Identity<R, ?> identity);
 
     /**
      * {@inheritDoc}

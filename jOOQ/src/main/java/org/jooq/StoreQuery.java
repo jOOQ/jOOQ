@@ -106,7 +106,7 @@ public interface StoreQuery<R extends Record> extends Query {
      * @see #getReturnedRecords()
      */
     @Support
-    void setReturning(Identity<R, ? extends Number> identity);
+    void setReturning(Identity<R, ?> identity);
 
     /**
      * Configure the <code>INSERT</code> or <code>UPDATE</code> statement to return a list of fields in

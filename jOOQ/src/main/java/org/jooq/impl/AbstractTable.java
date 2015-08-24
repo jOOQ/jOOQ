@@ -274,7 +274,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
      * Subclasses should override this method
      */
     @Override
-    public Identity<R, ? extends Number> getIdentity() {
+    public Identity<R, ?> getIdentity() {
         return null;
     }
 

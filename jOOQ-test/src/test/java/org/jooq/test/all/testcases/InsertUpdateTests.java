@@ -70,7 +70,6 @@ import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.defaultValue;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.name;
@@ -80,7 +79,6 @@ import static org.jooq.impl.DSL.selectCount;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.table;
-import static org.jooq.impl.DSL.tableByName;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.lambda.Seq.seq;
@@ -951,10 +949,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             1 * i1.getReturnedRecord().getValue(TTriggers_COUNTER()));
 
 
-        InsertQuery<?> i2 = create().insertQuery(tableByName(TTriggers().getName()));
-        i2.addValue(fieldByName(TTriggers_ID().getName()), 1);
-        i2.addValue(fieldByName(TTriggers_COUNTER().getName()), 1);
-        i2.setReturning(fieldByName(TTriggers_ID_GENERATED().getName()), fieldByName(TTriggers_COUNTER().getName()));
+        InsertQuery<?> i2 = create().insertQuery(table(name(TTriggers().getName())));
+        i2.addValue(field(name(TTriggers_ID().getName())), 1);
+        i2.addValue(field(name(TTriggers_COUNTER().getName())), 1);
+        i2.setReturning(field(name(TTriggers_ID_GENERATED().getName())), field(name(TTriggers_COUNTER().getName())));
         assertEquals(1, i2.execute());
         assertEquals(1, i2.getReturnedRecords().size());
         assertEquals(

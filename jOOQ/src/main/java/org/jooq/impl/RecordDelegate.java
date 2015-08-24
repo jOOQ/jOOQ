@@ -118,6 +118,11 @@ class RecordDelegate<R extends Record> {
             }
         }
 
+        // [#1684] Do not attach configuration if settings say no
+        if (attachRecords(configuration)) {
+            record.attach(configuration);
+        }
+
         if (operation != null) {
             try {
                 operation.operate(record);
@@ -137,11 +142,6 @@ class RecordDelegate<R extends Record> {
                             listener.exception(ctx);
                 }
             }
-        }
-
-        // [#1684] Do not attach configuration if settings say no
-        if (attachRecords(configuration)) {
-            record.attach(configuration);
         }
 
         if (listeners != null) {

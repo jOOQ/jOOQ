@@ -55,7 +55,6 @@ import org.jooq.tools.JooqLogger;
 import org.jooq.util.h2.H2Database;
 
 import org.hibernate.cfg.Configuration;
-import org.hibernate.dialect.Dialect;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
@@ -86,8 +85,7 @@ public class JPADatabase extends H2Database {
                 connection = DriverManager.getConnection("jdbc:h2:mem:jooq-meta-extensions", "sa", "");
 
                 final Configuration configuration = new Configuration()
-                    .setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect")
-                ;
+                    .setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
 
                 ClassPathScanningCandidateComponentProvider scanner =
                     new ClassPathScanningCandidateComponentProvider(true);
@@ -98,8 +96,10 @@ public class JPADatabase extends H2Database {
                         configuration.addAnnotatedClass(Class.forName(def.getBeanClassName()));
                     }
                 }
-                configuration.generateSchemaCreationScript( Dialect.getDialect( configuration.getProperties() ) )
-                ;
+
+                // This still seems to work, although there is probably a better
+                // way to do this in idiomatic Hibernate 5.0 API
+                // See also: http://stackoverflow.com/q/32178041/521799
                 SchemaExport export = new SchemaExport(configuration, connection);
                 export.create(true, true);
             }

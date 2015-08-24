@@ -32,7 +32,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.hibernate.version>5.0.0.CR4</org.hibernate.version>
+        <org.hibernate.version>5.0.0.Final</org.hibernate.version>
         <org.springframework.version>4.1.6.RELEASE</org.springframework.version>
         <scala.version>2.10.4</scala.version>
         <org.jooq.version>3.7.0-SNAPSHOT</org.jooq.version>

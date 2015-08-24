@@ -108,7 +108,7 @@ public abstract class CustomTable<R extends TableRecord<R>> extends TableImpl<R>
     // -------------------------------------------------------------------------
 
     @Override
-    public Identity<R, ? extends Number> getIdentity() {
+    public Identity<R, ?> getIdentity() {
         return super.getIdentity();
     }
 

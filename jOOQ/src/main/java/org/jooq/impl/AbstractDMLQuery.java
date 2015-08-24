@@ -103,7 +103,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
     }
 
     // @Override
-    public final void setReturning(Identity<R, ? extends Number> identity) {
+    public final void setReturning(Identity<R, ?> identity) {
         if (identity != null) {
             setReturning(identity.getField());
         }
@@ -424,8 +424,8 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
             // This shouldn't be null, as relevant dialects should
             // return empty generated keys ResultSet
             if (table.getIdentity() != null) {
-                final Field<Number> field = (Field<Number>) table.getIdentity().getField();
-                Number[] ids = new Number[values.length];
+                final Field<Object> field = (Field<Object>) table.getIdentity().getField();
+                Object[] ids = new Object[values.length];
                 for (int i = 0; i < values.length; i++) {
                     ids[i] = field.getDataType().convert(values[i]);
                 }
@@ -433,7 +433,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                 // Only the IDENTITY value was requested. No need for an
                 // additional query
                 if (returning.size() == 1 && new Fields<Record>(returning).field(field) != null) {
-                    for (final Number id : ids) {
+                    for (final Object id : ids) {
                         getReturnedRecords().add(
                         Utils.newRecord(true, table, configuration)
                              .operate(new RecordOperation<R, RuntimeException>() {

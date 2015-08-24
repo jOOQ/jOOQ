@@ -2291,7 +2291,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             $(result.get(2).getValue(xml)).toString());
     }
 
-    public void testCoercion() throws Exception {
+    public void testCoerce() throws Exception {
         Field<Long> id1 = TBook_ID().coerce(Long.class);
         Field<String> id2 = TBook_ID().coerce(String.class);
 
@@ -2317,4 +2317,34 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         assertEquals("2", result.getValue(0, 3));
         assertEquals("2", result.getValue(1, 3));
     }
- }
+
+    public void testCoerceAfterFetch() throws Exception {
+        Field<Long> id1 = TAuthor_ID().coerce(Long.class);
+        Field<String> id2 = TAuthor_ID().coerce(String.class);
+
+        Result<Record1<Integer>> result =
+        create().select(TAuthor_ID())
+                .from(TAuthor())
+                .orderBy(1)
+                .fetch();
+
+        assertEquals(2, result.size());
+        assertEquals(asList(1L, 2L), result.getValues(id1));
+        assertEquals(asList("1", "2"), result.getValues(id2));
+
+        assertEquals(1L, result.getValue(0, id1));
+        assertEquals(2L, result.getValue(1, id1));
+        assertEquals("1", result.getValue(0, id2));
+        assertEquals("2", result.getValue(1, id2));
+
+        assertSame(asList(1L, 2L), result.intoMap(id1).keySet());
+        assertSame(asList("1", "2"), result.intoMap(id2).keySet());
+        assertSame(asList(1L, 2L), result.intoMap(id1, id2).keySet());
+        assertSame(asList("1", "2"), result.intoMap(id2, id1).keySet());
+        assertSame(asList("1", "2"), result.intoMap(id1, id2).values());
+        assertSame(asList(1L, 2L), result.intoMap(id2, id1).values());
+
+        assertSame(asList(1L, 2L), result.intoGroups(id1).keySet());
+        assertSame(asList("1", "2"), result.intoGroups(id2).keySet());
+    }
+}

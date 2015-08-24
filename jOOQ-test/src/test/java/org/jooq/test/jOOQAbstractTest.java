@@ -1822,8 +1822,13 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testCoercion() throws Exception {
-        new DataTypeTests(this).testCoercion();
+    public void testCoerce() throws Exception {
+        new DataTypeTests(this).testCoerce();
+    }
+
+    @Test
+    public void testCoerceAfterFetch() throws Exception {
+        new DataTypeTests(this).testCoerceAfterFetch();
     }
 
     @Test

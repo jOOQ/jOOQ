@@ -33,7 +33,7 @@ import org.jooq.test.jpa.generatedclasses.Public;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends TableImpl<Record> {
 
-	private static final long serialVersionUID = 1842381576;
+	private static final long serialVersionUID = -1514678040;
 
 	/**
 	 * The reference instance of <code>PUBLIC.T_BOOK</code>
@@ -106,7 +106,7 @@ public class TBook extends TableImpl<Record> {
 	 */
 	@Override
 	public List<ForeignKey<Record, ?>> getReferences() {
-		return Arrays.<ForeignKey<Record, ?>>asList(Keys.FK_E4DBWRYARV0HAFIGICSSOOIE);
+		return Arrays.<ForeignKey<Record, ?>>asList(Keys.FKJCHBPLV6O6EQFU9KDWP302A8V);
 	}
 
 	/**

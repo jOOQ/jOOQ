@@ -44,7 +44,7 @@ public class Keys {
 	// FOREIGN KEY definitions
 	// -------------------------------------------------------------------------
 
-	public static final ForeignKey<Record, Record> FK_E4DBWRYARV0HAFIGICSSOOIE = ForeignKeys0.FK_E4DBWRYARV0HAFIGICSSOOIE;
+	public static final ForeignKey<Record, Record> FKJCHBPLV6O6EQFU9KDWP302A8V = ForeignKeys0.FKJCHBPLV6O6EQFU9KDWP302A8V;
 
 	// -------------------------------------------------------------------------
 	// [#1459] distribute members to avoid static initialisers > 64kb
@@ -56,6 +56,6 @@ public class Keys {
 	}
 
 	private static class ForeignKeys0 extends AbstractKeys {
-		public static final ForeignKey<Record, Record> FK_E4DBWRYARV0HAFIGICSSOOIE = createForeignKey(org.jooq.test.jpa.generatedclasses.Keys.CONSTRAINT_2, TBook.T_BOOK, TBook.T_BOOK.AUTHOR_ID);
+		public static final ForeignKey<Record, Record> FKJCHBPLV6O6EQFU9KDWP302A8V = createForeignKey(org.jooq.test.jpa.generatedclasses.Keys.CONSTRAINT_2, TBook.T_BOOK, TBook.T_BOOK.AUTHOR_ID);
 	}
 }

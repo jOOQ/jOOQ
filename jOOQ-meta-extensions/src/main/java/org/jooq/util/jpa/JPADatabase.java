@@ -54,7 +54,9 @@ import org.jooq.impl.DSL;
 import org.jooq.tools.JooqLogger;
 import org.jooq.util.h2.H2Database;
 
-import org.hibernate.cfg.Configuration;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.boot.spi.MetadataImplementor;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
@@ -84,8 +86,11 @@ public class JPADatabase extends H2Database {
             try {
                 connection = DriverManager.getConnection("jdbc:h2:mem:jooq-meta-extensions", "sa", "");
 
-                final Configuration configuration = new Configuration()
-                    .setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+                MetadataSources metadata = new MetadataSources(
+                    new StandardServiceRegistryBuilder()
+                        .applySetting("hibernate.dialect", "org.hibernate.dialect.H2Dialect")
+                        .build()
+                );
 
                 ClassPathScanningCandidateComponentProvider scanner =
                     new ClassPathScanningCandidateComponentProvider(true);
@@ -93,14 +98,13 @@ public class JPADatabase extends H2Database {
                 scanner.addIncludeFilter(new AnnotationTypeFilter(Entity.class));
                 for (String pkg : packages.split(",")) {
                     for (BeanDefinition def : scanner.findCandidateComponents(defaultIfBlank(pkg, "").trim())) {
-                        configuration.addAnnotatedClass(Class.forName(def.getBeanClassName()));
+                        metadata.addAnnotatedClass(Class.forName(def.getBeanClassName()));
                     }
                 }
 
-                // This still seems to work, although there is probably a better
-                // way to do this in idiomatic Hibernate 5.0 API
+                // This seems to be the way to do this in idiomatic Hibernate 5.0 API
                 // See also: http://stackoverflow.com/q/32178041/521799
-                SchemaExport export = new SchemaExport(configuration, connection);
+                SchemaExport export = new SchemaExport((MetadataImplementor) metadata.buildMetadata(), connection);
                 export.create(true, true);
             }
             catch (Exception e) {

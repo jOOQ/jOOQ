@@ -167,11 +167,9 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     public final void attach(Configuration c) {
         this.configuration = c;
 
-        for (R record : records) {
-            if (record != null) {
+        for (R record : records)
+            if (record != null)
                 record.attach(c);
-            }
-        }
     }
 
     @Override

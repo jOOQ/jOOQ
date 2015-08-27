@@ -65,7 +65,6 @@ import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.List;
 
 import org.jooq.Constants;
 import org.jooq.DSLContext;
@@ -76,6 +75,7 @@ import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Result;
+import org.jooq.Results;
 import org.jooq.SQLDialect;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
@@ -166,7 +166,7 @@ public class MockTest extends AbstractTest {
     @Test
     public void testTripleResult() {
         DSLContext e = DSL.using(new MockConnection(new TripleResult()), SQLDialect.H2);
-        List<Result<Record>> result = e.fetchMany("select ?, ? from dual", 1, 2);
+        Results result = e.fetchMany("select ?, ? from dual", 1, 2);
 
         assertEquals(3, result.size());
         assertEquals(1, result.get(0).size());
@@ -398,7 +398,7 @@ public class MockTest extends AbstractTest {
 
     @Test
     public void testFileDatabase_SELECT_COMPLEX_DATA() throws Exception {
-        List<Result<Record>> results = MOCK.fetchMany("select complex_data");
+        Results results = MOCK.fetchMany("select complex_data");
         assertEquals(2, results.size());
 
         Result<Record> r1 = results.get(0);

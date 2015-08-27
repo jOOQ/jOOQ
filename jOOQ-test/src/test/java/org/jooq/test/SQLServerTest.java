@@ -97,6 +97,7 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.Results;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -1450,7 +1451,7 @@ public class SQLServerTest extends jOOQAbstractTest<
         // This is an ordinary stored procedure call
         PBooksAndAuthors p = new PBooksAndAuthors();
         p.execute(configuration);
-        List<Result<Record>> results = p.getResults();
+        Results results = p.getResults();
 
         // We know there are two results. The first one contains authors
         // and the second one contains books
@@ -1481,6 +1482,23 @@ public class SQLServerTest extends jOOQAbstractTest<
     static class Book {
         int id;
         String title;
+    }
+
+    @Test
+    public void testSQLServerMixResultsWithUpdateCounts() {
+        Results many =
+        create().fetchMany(
+            "declare @t table(i int);"
+          + "insert into @t values (1);"
+          + "insert into @t values (1), (2);"
+          + "select * from @t;"
+          + "insert into @t values (3);"
+          + "insert into @t values (3), (3);"
+          + "select * from @t;"
+          + "select * from @t;"
+        );
+
+
     }
 }
 

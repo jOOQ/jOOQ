@@ -82,9 +82,9 @@ import org.jooq.ExecuteListener;
 import org.jooq.Field;
 import org.jooq.Package;
 import org.jooq.Parameter;
-import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Result;
+import org.jooq.Results;
 import org.jooq.Routine;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
@@ -119,7 +119,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     private final List<Parameter<?>>          outParameters;
     private final DataType<T>                 type;
     private Parameter<T>                      returnParameter;
-    private List<Result<Record>>              results;
+    private Results                           results;
     private boolean                           overloaded;
     private boolean                           hasDefaultedParameters;
 
@@ -187,7 +187,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         this.allParameters = new ArrayList<Parameter<?>>();
         this.inParameters = new ArrayList<Parameter<?>>();
         this.outParameters = new ArrayList<Parameter<?>>();
-        this.results = new ArrayList<Result<Record>>();
+        this.results = new ResultsImpl(null);
         this.inValues = new HashMap<Parameter<?>, Field<?>>();
         this.inValuesDefaulted = new HashSet<Parameter<?>>();
         this.inValuesNonDefaulted = new HashSet<Parameter<?>>();
@@ -669,7 +669,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     @Override
-    public final List<Result<Record>> getResults() {
+    public final Results getResults() {
         return results;
     }
 

@@ -100,6 +100,7 @@ import org.jooq.Record3;
 import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
+import org.jooq.Results;
 import org.jooq.Row;
 import org.jooq.Select;
 import org.jooq.SelectQuery;
@@ -541,7 +542,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
     public void testFetchMany() throws Exception {
         assumeFamilyNotIn(ACCESS, INFORMIX, ORACLE, SYBASE, SQLITE);
-        List<Result<Record>> results = create().fetchMany(
+        Results results = create().fetchMany(
             "select * from t_book order by " + TBook_ID().getName());
 
         assertEquals(1, results.size());
@@ -569,7 +570,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         assertNotNull(result);
         assertEquals(0, result.size());
 
-        List<Result<Record>> results =
+        Results results =
         create().fetchMany(
             create().update(TAuthor())
                     .set(TAuthor_FIRST_NAME(), "Hugo")

@@ -801,7 +801,7 @@ public interface DSLContext extends Scope /* [java-8] */, AutoCloseable /* [/jav
      */
     @Support
     @PlainSQL
-    List<Result<Record>> fetchMany(String sql) throws DataAccessException;
+    Results fetchMany(String sql) throws DataAccessException;
 
     /**
      * Execute a new query holding plain SQL, possibly returning several result
@@ -830,7 +830,7 @@ public interface DSLContext extends Scope /* [java-8] */, AutoCloseable /* [/jav
      */
     @Support
     @PlainSQL
-    List<Result<Record>> fetchMany(String sql, Object... bindings) throws DataAccessException;
+    Results fetchMany(String sql, Object... bindings) throws DataAccessException;
 
     /**
      * Execute a new query holding plain SQL, possibly returning several result
@@ -863,7 +863,7 @@ public interface DSLContext extends Scope /* [java-8] */, AutoCloseable /* [/jav
      */
     @Support
     @PlainSQL
-    List<Result<Record>> fetchMany(String sql, QueryPart... parts) throws DataAccessException;
+    Results fetchMany(String sql, QueryPart... parts) throws DataAccessException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -7031,7 +7031,7 @@ public interface DSLContext extends Scope /* [java-8] */, AutoCloseable /* [/jav
      * @throws DataAccessException if something went wrong executing the query
      * @see ResultQuery#fetchMany()
      */
-    <R extends Record> List<Result<Record>> fetchMany(ResultQuery<R> query) throws DataAccessException;
+    <R extends Record> Results fetchMany(ResultQuery<R> query) throws DataAccessException;
 
     /**
      * Execute a {@link ResultQuery} in the context of this <code>DSLContext</code> and return

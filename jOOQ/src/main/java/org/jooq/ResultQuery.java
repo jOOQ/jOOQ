@@ -230,7 +230,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @return The resulting records
      * @throws DataAccessException if something went wrong executing the query
      */
-    List<Result<Record>> fetchMany() throws DataAccessException;
+    Results fetchMany() throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field from the generated

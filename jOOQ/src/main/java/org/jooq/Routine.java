@@ -187,5 +187,5 @@ public interface Routine<T> extends QueryPart {
     /**
      * @return The routine's results (if available)
      */
-    List<Result<Record>> getResults();
+    Results getResults();
 }

@@ -105,6 +105,7 @@ import org.jooq.Record1;
 import org.jooq.Record3;
 import org.jooq.Record6;
 import org.jooq.Result;
+import org.jooq.Results;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Support;
@@ -799,7 +800,7 @@ public abstract class jOOQAbstractTest<
                         return r;
                     }
                     else if (context.sql().toLowerCase().matches("(?s:\\W*(select|with).*)")) {
-                        List<Result<Record>> result = executor.fetchMany(context.sql(), context.bindings());
+                        Results result = executor.fetchMany(context.sql(), context.bindings());
                         MockResult[] r = new MockResult[result.size()];
 
                         for (int i = 0; i < result.size(); i++) {

@@ -54,7 +54,6 @@ import java.lang.reflect.Array;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -77,6 +76,7 @@ import org.jooq.RecordHandler;
 import org.jooq.RecordMapper;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
+import org.jooq.Results;
 import org.jooq.Table;
 import org.jooq.exception.DataAccessException;
 import org.jooq.tools.Convert;
@@ -104,7 +104,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     private transient boolean       many;
     private transient Cursor<R>     cursor;
     private Result<R>               result;
-    private List<Result<Record>>    results;
+    private Results                 results;
 
     // Some temp variables for String interning
     private final Intern            intern = new Intern();
@@ -278,7 +278,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
         // Fetch several result sets
         else {
-            results = new ArrayList<Result<Record>>();
+            results = new ResultsImpl(ctx.configuration());
             consumeResultSets(ctx, listener, results, intern);
         }
 
@@ -344,7 +344,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final List<Result<Record>> fetchMany() {
+    public final Results fetchMany() {
 
         // [#3515] TODO: Avoid modifying a Query's per-execution state
         many = true;

@@ -182,6 +182,7 @@ import org.jooq.Record9;
 import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
+import org.jooq.Results;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Select;
@@ -555,17 +556,17 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     /* [/java-8] */
 
     @Override
-    public List<Result<Record>> fetchMany(String sql) {
+    public Results fetchMany(String sql) {
         return resultQuery(sql).fetchMany();
     }
 
     @Override
-    public List<Result<Record>> fetchMany(String sql, Object... bindings) {
+    public Results fetchMany(String sql, Object... bindings) {
         return resultQuery(sql, bindings).fetchMany();
     }
 
     @Override
-    public List<Result<Record>> fetchMany(String sql, QueryPart... parts) {
+    public Results fetchMany(String sql, QueryPart... parts) {
         return resultQuery(sql, parts).fetchMany();
     }
 
@@ -2473,7 +2474,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     /* [/java-8] */
 
     @Override
-    public <R extends Record> List<Result<Record>> fetchMany(ResultQuery<R> query) {
+    public <R extends Record> Results fetchMany(ResultQuery<R> query) {
         final Configuration previous = Utils.getConfiguration(query);
 
         try {

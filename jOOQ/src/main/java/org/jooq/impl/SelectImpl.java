@@ -76,6 +76,7 @@ import org.jooq.RecordHandler;
 import org.jooq.RecordMapper;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
+import org.jooq.Results;
 import org.jooq.Row;
 import org.jooq.Select;
 import org.jooq.SelectConditionStep;
@@ -2427,7 +2428,7 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     }
 
     @Override
-    public final List<Result<Record>> fetchMany() {
+    public final Results fetchMany() {
         return getDelegate().fetchMany();
     }
 

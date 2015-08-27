@@ -119,6 +119,7 @@ import org.jooq.Record;
 import org.jooq.RecordType;
 import org.jooq.RenderContext;
 import org.jooq.Result;
+import org.jooq.Results;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
@@ -2519,7 +2520,7 @@ final class Utils {
     /**
      * [#3681] Consume all {@link ResultSet}s from a JDBC {@link Statement}.
      */
-    static void consumeResultSets(ExecuteContext ctx, ExecuteListener listener, List<Result<Record>> results, Intern intern) throws SQLException {
+    static void consumeResultSets(ExecuteContext ctx, ExecuteListener listener, Results results, Intern intern) throws SQLException {
         boolean anyResults = false;
         int i = 0;
 

@@ -131,7 +131,7 @@ import org.jooq.test.all.listeners.Lifecycle;
 import org.jooq.test.all.listeners.LifecycleWatcherListener;
 import org.jooq.test.all.listeners.PrettyPrinter;
 import org.jooq.test.all.listeners.TestStatisticsListener;
-import org.jooq.test.all.pojos.jaxb.Book;
+import org.jooq.test.all.pojos.jaxb.JAXBBook;
 import org.jooq.test.all.testcases.AggregateWindowFunctionTests;
 import org.jooq.test.all.testcases.AliasTests;
 import org.jooq.test.all.testcases.AsyncTest;
@@ -1101,7 +1101,7 @@ public abstract class jOOQAbstractTest<
         return null;
     }
 
-    protected TableField<UU, Book> TExoticTypes_UNTYPED_XML_AS_JAXB() {
+    protected TableField<UU, JAXBBook> TExoticTypes_UNTYPED_XML_AS_JAXB() {
         return null;
     }
 

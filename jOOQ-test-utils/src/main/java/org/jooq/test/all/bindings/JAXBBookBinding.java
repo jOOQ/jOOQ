@@ -38,60 +38,23 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq.test.all.pojos.jaxb;
+package org.jooq.test.all.bindings;
 
-import javax.xml.bind.annotation.XmlElement;
+import org.jooq.impl.AbstractXMLasObjectBinding;
+import org.jooq.test.all.pojos.jaxb.JAXBBook;
 
-public class Book {
+/**
+ * @author Lukas Eder
+ */
+public class JAXBBookBinding extends AbstractXMLasObjectBinding<JAXBBook> {
 
-    @XmlElement
-    public String title;
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = 6189120550983457313L;
 
-    @XmlElement
-    public Author author;
-
-    public Book() {}
-    public Book(String title, Author author) {
-        this.title = title;
-        this.author = author;
+    public JAXBBookBinding() {
+        super(JAXBBook.class);
     }
 
-    // Generated methods
-    // ------------------------------------------------------------------------
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((author == null) ? 0 : author.hashCode());
-        result = prime * result + ((title == null) ? 0 : title.hashCode());
-        return result;
-    }
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Book other = (Book) obj;
-        if (author == null) {
-            if (other.author != null)
-                return false;
-        }
-        else if (!author.equals(other.author))
-            return false;
-        if (title == null) {
-            if (other.title != null)
-                return false;
-        }
-        else if (!title.equals(other.title))
-            return false;
-        return true;
-    }
-    @Override
-    public String toString() {
-        return "Book [title=" + title + ", author=" + author + "]";
-    }
 }

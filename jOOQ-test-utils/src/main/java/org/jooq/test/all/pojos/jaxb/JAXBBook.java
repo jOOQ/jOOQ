@@ -38,23 +38,60 @@
  * This library is distributed with a LIMITED WARRANTY. See the jOOQ License
  * and Maintenance Agreement for more details: http://www.jooq.org/licensing
  */
-package org.jooq.test.all.bindings;
+package org.jooq.test.all.pojos.jaxb;
 
-import org.jooq.impl.AbstractXMLasObjectBinding;
-import org.jooq.test.all.pojos.jaxb.Book;
+import javax.xml.bind.annotation.XmlElement;
 
-/**
- * @author Lukas Eder
- */
-public class BookBinding extends AbstractXMLasObjectBinding<Book> {
+public class JAXBBook {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 6189120550983457313L;
+    @XmlElement
+    public String title;
 
-    public BookBinding() {
-        super(Book.class);
+    @XmlElement
+    public JAXBAuthor author;
+
+    public JAXBBook() {}
+    public JAXBBook(String title, JAXBAuthor author) {
+        this.title = title;
+        this.author = author;
     }
 
+    // Generated methods
+    // ------------------------------------------------------------------------
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((author == null) ? 0 : author.hashCode());
+        result = prime * result + ((title == null) ? 0 : title.hashCode());
+        return result;
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        JAXBBook other = (JAXBBook) obj;
+        if (author == null) {
+            if (other.author != null)
+                return false;
+        }
+        else if (!author.equals(other.author))
+            return false;
+        if (title == null) {
+            if (other.title != null)
+                return false;
+        }
+        else if (!title.equals(other.title))
+            return false;
+        return true;
+    }
+    @Override
+    public String toString() {
+        return "Book [title=" + title + ", author=" + author + "]";
+    }
 }

@@ -97,7 +97,7 @@ import org.jooq.test.all.converters.Boolean_YES_NO_LC;
 import org.jooq.test.all.converters.Boolean_YES_NO_UC;
 import org.jooq.test.all.converters.Boolean_YN_LC;
 import org.jooq.test.all.converters.Boolean_YN_UC;
-import org.jooq.test.all.pojos.jaxb.Book;
+import org.jooq.test.all.pojos.jaxb.JAXBBook;
 import org.jooq.tools.JooqLogger;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
@@ -333,7 +333,7 @@ public abstract class BaseTest<
         return delegate.TExoticTypes_UNTYPED_XML_AS_DOM();
     }
 
-    protected TableField<UU, Book> TExoticTypes_UNTYPED_XML_AS_JAXB() {
+    protected TableField<UU, JAXBBook> TExoticTypes_UNTYPED_XML_AS_JAXB() {
         return delegate.TExoticTypes_UNTYPED_XML_AS_JAXB();
     }
 

@@ -14,8 +14,8 @@ import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.impl.TableImpl;
 import org.jooq.impl.XMLasDOMBinding;
-import org.jooq.test.all.bindings.BookBinding;
-import org.jooq.test.all.pojos.jaxb.Book;
+import org.jooq.test.all.bindings.JAXBBookBinding;
+import org.jooq.test.all.pojos.jaxb.JAXBBook;
 import org.jooq.test.sqlserver.generatedclasses.Dbo;
 import org.jooq.test.sqlserver.generatedclasses.Keys;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.TExoticTypesRecord;
@@ -61,7 +61,7 @@ public class TExoticTypes extends TableImpl<TExoticTypesRecord> {
 	/**
 	 * The column <code>dbo.t_exotic_types.UNTYPED_XML_AS_JAXB</code>.
 	 */
-	public final TableField<TExoticTypesRecord, Book> UNTYPED_XML_AS_JAXB = createField("UNTYPED_XML_AS_JAXB", org.jooq.impl.DefaultDataType.getDefaultDataType("xml"), this, "", new BookBinding());
+	public final TableField<TExoticTypesRecord, JAXBBook> UNTYPED_XML_AS_JAXB = createField("UNTYPED_XML_AS_JAXB", org.jooq.impl.DefaultDataType.getDefaultDataType("xml"), this, "", new JAXBBookBinding());
 
 	/**
 	 * Create a <code>dbo.t_exotic_types</code> table reference

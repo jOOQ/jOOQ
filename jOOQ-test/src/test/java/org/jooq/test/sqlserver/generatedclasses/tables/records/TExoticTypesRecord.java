@@ -16,7 +16,7 @@ import org.jooq.Record1;
 import org.jooq.Record4;
 import org.jooq.Row4;
 import org.jooq.impl.UpdatableRecordImpl;
-import org.jooq.test.all.pojos.jaxb.Book;
+import org.jooq.test.all.pojos.jaxb.JAXBBook;
 import org.jooq.test.sqlserver.generatedclasses.tables.TExoticTypes;
 import org.w3c.dom.Node;
 
@@ -27,7 +27,7 @@ import org.w3c.dom.Node;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @Entity
 @Table(name = "t_exotic_types", schema = "dbo")
-public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> implements Record4<Integer, UUID, Node, Book> {
+public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> implements Record4<Integer, UUID, Node, JAXBBook> {
 
 	private static final long serialVersionUID = 2077236250;
 
@@ -80,7 +80,7 @@ public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> 
 	/**
 	 * Setter for <code>dbo.t_exotic_types.UNTYPED_XML_AS_JAXB</code>.
 	 */
-	public void setUntypedXmlAsJaxb(Book value) {
+	public void setUntypedXmlAsJaxb(JAXBBook value) {
 		setValue(3, value);
 	}
 
@@ -88,8 +88,8 @@ public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> 
 	 * Getter for <code>dbo.t_exotic_types.UNTYPED_XML_AS_JAXB</code>.
 	 */
 	@Column(name = "UNTYPED_XML_AS_JAXB")
-	public Book getUntypedXmlAsJaxb() {
-		return (Book) getValue(3);
+	public JAXBBook getUntypedXmlAsJaxb() {
+		return (JAXBBook) getValue(3);
 	}
 
 	// -------------------------------------------------------------------------
@@ -112,7 +112,7 @@ public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> 
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Row4<Integer, UUID, Node, Book> fieldsRow() {
+	public Row4<Integer, UUID, Node, JAXBBook> fieldsRow() {
 		return (Row4) super.fieldsRow();
 	}
 
@@ -120,7 +120,7 @@ public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> 
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Row4<Integer, UUID, Node, Book> valuesRow() {
+	public Row4<Integer, UUID, Node, JAXBBook> valuesRow() {
 		return (Row4) super.valuesRow();
 	}
 
@@ -152,7 +152,7 @@ public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> 
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Field<Book> field4() {
+	public Field<JAXBBook> field4() {
 		return TExoticTypes.T_EXOTIC_TYPES.UNTYPED_XML_AS_JAXB;
 	}
 
@@ -184,7 +184,7 @@ public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> 
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Book value4() {
+	public JAXBBook value4() {
 		return getUntypedXmlAsJaxb();
 	}
 
@@ -219,7 +219,7 @@ public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> 
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TExoticTypesRecord value4(Book value) {
+	public TExoticTypesRecord value4(JAXBBook value) {
 		setUntypedXmlAsJaxb(value);
 		return this;
 	}
@@ -228,7 +228,7 @@ public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> 
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TExoticTypesRecord values(Integer value1, UUID value2, Node value3, Book value4) {
+	public TExoticTypesRecord values(Integer value1, UUID value2, Node value3, JAXBBook value4) {
 		value1(value1);
 		value2(value2);
 		value3(value3);
@@ -250,7 +250,7 @@ public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> 
 	/**
 	 * Create a detached, initialised TExoticTypesRecord
 	 */
-	public TExoticTypesRecord(Integer id, UUID uu, Node untypedXmlAsDom, Book untypedXmlAsJaxb) {
+	public TExoticTypesRecord(Integer id, UUID uu, Node untypedXmlAsDom, JAXBBook untypedXmlAsJaxb) {
 		super(TExoticTypes.T_EXOTIC_TYPES);
 
 		setValue(0, id);

@@ -42,7 +42,7 @@ package org.jooq.test.all.pojos.jaxb;
 
 import javax.xml.bind.annotation.XmlElement;
 
-public class Author {
+public class JAXBAuthor {
 
     @XmlElement
     public String firstName;
@@ -50,8 +50,8 @@ public class Author {
     @XmlElement
     public String lastName;
 
-    public Author() {}
-    public Author(String firstName, String lastName) {
+    public JAXBAuthor() {}
+    public JAXBAuthor(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
@@ -75,7 +75,7 @@ public class Author {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Author other = (Author) obj;
+        JAXBAuthor other = (JAXBAuthor) obj;
         if (firstName == null) {
             if (other.firstName != null)
                 return false;

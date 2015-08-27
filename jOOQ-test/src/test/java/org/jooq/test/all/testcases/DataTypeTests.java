@@ -138,8 +138,8 @@ import org.jooq.test.all.converters.Boolean_YES_NO_LC;
 import org.jooq.test.all.converters.Boolean_YES_NO_UC;
 import org.jooq.test.all.converters.LocalDateConverter;
 import org.jooq.test.all.converters.LocalDateTimeConverter;
-import org.jooq.test.all.pojos.jaxb.Author;
-import org.jooq.test.all.pojos.jaxb.Book;
+import org.jooq.test.all.pojos.jaxb.JAXBAuthor;
+import org.jooq.test.all.pojos.jaxb.JAXBBook;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
@@ -2194,12 +2194,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
         assertEquals(1,
         create().insertInto(TExoticTypes(), TExoticTypes_ID(), TExoticTypes_UNTYPED_XML_AS_JAXB())
-                .values(2, new Book())
+                .values(2, new JAXBBook())
                 .execute());
 
         assertEquals(1,
         create().insertInto(TExoticTypes(), TExoticTypes_ID(), TExoticTypes_UNTYPED_XML_AS_JAXB())
-                .values(3, new Book("1984", new Author("George", "Orwell")))
+                .values(3, new JAXBBook("1984", new JAXBAuthor("George", "Orwell")))
                 .execute());
 
         Result<UU> result =
@@ -2209,10 +2209,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
         assertNull(result.get(0).getValue(TExoticTypes_UNTYPED_XML_AS_JAXB()));
         assertEquals(
-            new Book(),
+            new JAXBBook(),
             result.get(1).getValue(TExoticTypes_UNTYPED_XML_AS_JAXB()));
         assertEquals(
-            new Book("1984", new Author("George", "Orwell")),
+            new JAXBBook("1984", new JAXBAuthor("George", "Orwell")),
             result.get(2).getValue(TExoticTypes_UNTYPED_XML_AS_JAXB()));
     }
 

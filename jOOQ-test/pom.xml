@@ -6635,9 +6635,9 @@
                                                     <binding>org.jooq.impl.XMLasDOMBinding</binding>
                                                 </customType>
                                                 <customType>
-                                                    <name>org.jooq.test.all.bindings.BookBinding</name>
-                                                    <type>org.jooq.test.all.pojos.jaxb.Book</type>
-                                                    <binding>org.jooq.test.all.bindings.BookBinding</binding>
+                                                    <name>org.jooq.test.all.bindings.JAXBBookBinding</name>
+                                                    <type>org.jooq.test.all.pojos.jaxb.JAXBBook</type>
+                                                    <binding>org.jooq.test.all.bindings.JAXBBookBinding</binding>
                                                 </customType>
                                             </customTypes>
 
@@ -6647,7 +6647,7 @@
                                                     <expression>.*\.UNTYPED_XML_AS_DOM</expression>
                                                 </forcedType>
                                                 <forcedType>
-                                                    <name>org.jooq.test.all.bindings.BookBinding</name>
+                                                    <name>org.jooq.test.all.bindings.JAXBBookBinding</name>
                                                     <expression>.*\.UNTYPED_XML_AS_JAXB</expression>
                                                 </forcedType>
 

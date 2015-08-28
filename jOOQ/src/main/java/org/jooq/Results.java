@@ -46,13 +46,41 @@ import java.util.List;
  * A list of {@link Result} and update counts that can be returned by
  * {@link ResultQuery#fetchMany()} calls and other calls that produce multiple
  * cursors and update counts.
+ * <p>
+ * For backwards-compatibility (e.g. with {@link ResultQuery#fetchMany()}), this
+ * type extends {@link List} containing only the {@link Result}, not the rows /
+ * update counts of interleaved updates. In order to get both, call
+ * {@link #resultsOrRows()}.
  *
  * @author Lukas Eder
  */
 public interface Results extends List<Result<Record>>, Attachable {
 
     // ------------------------------------------------------------------------
-    // Specialisations of Attachable methods
+    // XXX: Additional, Results-specific methods
+    // ------------------------------------------------------------------------
+
+    /**
+     * All the results or update counts in their order as fetched via JDBC.
+     * <p>
+     * While {@link #iterator()} and all the other methods inherited from the
+     * {@link List} API return the {@link Result} objects only, this method also
+     * includes update counts that may have occurred between two results.
+     * <p>
+     * It can be safely assumed that:
+     * <code><pre>
+     * result.resultsOrRows()
+     *       .stream()
+     *       .filter(r -> r.result() != null)
+     *       .map(r -> r.result())
+     *       .collect(Collectors.toList())
+     *       .equals(result);
+     * </pre></code>
+     */
+    List<ResultOrRows> resultsOrRows();
+
+    // ------------------------------------------------------------------------
+    // XXX: Specialisations of Attachable methods
     // ------------------------------------------------------------------------
 
     /**

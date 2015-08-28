@@ -2523,6 +2523,7 @@ final class Utils {
     static void consumeResultSets(ExecuteContext ctx, ExecuteListener listener, Results results, Intern intern) throws SQLException {
         boolean anyResults = false;
         int i = 0;
+        int rows = (ctx.resultSet() == null) ? ctx.statement().getUpdateCount() : 0;
 
         for (i = 0; i < maxConsumedResults; i++) {
             if (ctx.resultSet() != null) {
@@ -2530,12 +2531,18 @@ final class Utils {
 
                 Field<?>[] fields = new MetaDataFieldProvider(ctx.configuration(), ctx.resultSet().getMetaData()).getFields();
                 Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, intern != null ? intern.internIndexes(fields) : null, true, false);
-                results.add(c.fetch());
+                results.resultsOrRows().add(new ResultsImpl.ResultOrRowsImpl(c.fetch()));
+            }
+            else {
+                if (rows != -1)
+                    results.resultsOrRows().add(new ResultsImpl.ResultOrRowsImpl(rows));
+                else
+                    break;
             }
 
             if (ctx.statement().getMoreResults())
                 ctx.resultSet(ctx.statement().getResultSet());
-            else if (ctx.statement().getUpdateCount() != -1)
+            else if ((rows = ctx.statement().getUpdateCount()) != -1)
                 ctx.resultSet(null);
             else
                 break;

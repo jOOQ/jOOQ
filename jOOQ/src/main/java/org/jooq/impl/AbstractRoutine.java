@@ -119,7 +119,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     private final List<Parameter<?>>          outParameters;
     private final DataType<T>                 type;
     private Parameter<T>                      returnParameter;
-    private Results                           results;
+    private ResultsImpl                       results;
     private boolean                           overloaded;
     private boolean                           hasDefaultedParameters;
 

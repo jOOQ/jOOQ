@@ -41,8 +41,6 @@
 
 package org.jooq.test;
 
-/* [pro] */
-
 import static java.util.Arrays.asList;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.test.sqlserver.generatedclasses.Routines.fTables1;
@@ -1498,8 +1496,29 @@ public class SQLServerTest extends jOOQAbstractTest<
           + "select * from @t;"
         );
 
+        System.out.println(many);
 
+        assertEquals(3, many.size());
+        assertEquals(3, many.get(0).size());
+        assertEquals(6, many.get(1).size());
+        assertEquals(6, many.get(2).size());
+
+
+        assertEquals(7, many.resultsOrRows().size());
+        assertEquals(1, many.resultsOrRows().get(0).rows());
+        assertEquals(2, many.resultsOrRows().get(1).rows());
+        assertEquals(3, many.resultsOrRows().get(2).rows());
+        assertEquals(1, many.resultsOrRows().get(3).rows());
+        assertEquals(2, many.resultsOrRows().get(4).rows());
+        assertEquals(6, many.resultsOrRows().get(5).rows());
+        assertEquals(6, many.resultsOrRows().get(6).rows());
+
+        assertNull(many.resultsOrRows().get(0).result());
+        assertNull(many.resultsOrRows().get(1).result());
+        assertEquals(3, many.resultsOrRows().get(2).result().size());
+        assertNull(many.resultsOrRows().get(3).result());
+        assertNull(many.resultsOrRows().get(4).result());
+        assertEquals(6, many.resultsOrRows().get(5).result().size());
+        assertEquals(6, many.resultsOrRows().get(6).result().size());
     }
 }
-
-/* [/pro] */

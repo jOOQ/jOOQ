@@ -40,34 +40,42 @@
  */
 package org.jooq.impl;
 
+import java.util.AbstractList;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.ResultOrRows;
 import org.jooq.Results;
 
 /**
  * @author Lukas Eder
  */
-class ResultsImpl implements Results, AttachableInternal {
+class ResultsImpl extends AbstractList<Result<Record>> implements Results, AttachableInternal {
 
     /**
      * Generated UID
      */
-    private static final long          serialVersionUID = 1744826140354980500L;
+    private static final long        serialVersionUID = 1744826140354980500L;
 
-    private Configuration              configuration;
-    private final List<Result<Record>> results;
+    private Configuration            configuration;
+    private final List<ResultOrRows> results;
 
     ResultsImpl(Configuration configuration) {
         this.configuration = configuration;
-        this.results = new ArrayList<Result<Record>>();
+        this.results = new ArrayList<ResultOrRows>();
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: Additional, Results-specific methods
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final List<ResultOrRows> resultsOrRows() {
+        return results;
     }
 
     // -------------------------------------------------------------------------
@@ -78,7 +86,7 @@ class ResultsImpl implements Results, AttachableInternal {
     public final void attach(Configuration c) {
         this.configuration = c;
 
-        for (Result<?> result : results)
+        for (Result<?> result : this)
             if (result != null)
                 result.attach(c);
     }
@@ -100,11 +108,13 @@ class ResultsImpl implements Results, AttachableInternal {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-
         String separator = "";
-        for (Result<?> result : this) {
-            sb.append(separator)
-              .append(result);
+
+        for (ResultOrRows result : results) {
+            if (result.result() == null)
+                sb.append(separator).append("Update count: ").append(result.rows());
+            else
+                sb.append(separator).append("Result set:\n").append(result.result());
 
             separator = "\n";
         }
@@ -137,116 +147,103 @@ class ResultsImpl implements Results, AttachableInternal {
 
     @Override
     public final int size() {
-        return results.size();
-    }
-
-    @Override
-    public final boolean isEmpty() {
-        return results.isEmpty();
-    }
-
-    @Override
-    public final boolean contains(Object o) {
-        return results.contains(o);
-    }
-
-    @Override
-    public final Iterator<Result<Record>> iterator() {
-        return results.iterator();
-    }
-
-    @Override
-    public final Object[] toArray() {
-        return results.toArray();
-    }
-
-    @Override
-    public final <T> T[] toArray(T[] a) {
-        return results.toArray(a);
-    }
-
-    @Override
-    public final boolean add(Result<Record> e) {
-        return results.add(e);
-    }
-
-    @Override
-    public final boolean remove(Object o) {
-        return results.remove(o);
-    }
-
-    @Override
-    public final boolean containsAll(Collection<?> c) {
-        return results.containsAll(c);
-    }
-
-    @Override
-    public final boolean addAll(Collection<? extends Result<Record>> c) {
-        return results.addAll(c);
-    }
-
-    @Override
-    public final boolean addAll(int index, Collection<? extends Result<Record>> c) {
-        return results.addAll(index, c);
-    }
-
-    @Override
-    public final boolean removeAll(Collection<?> c) {
-        return results.removeAll(c);
-    }
-
-    @Override
-    public final boolean retainAll(Collection<?> c) {
-        return results.retainAll(c);
-    }
-
-    @Override
-    public final void clear() {
-        results.clear();
+        return list().size();
     }
 
     @Override
     public final Result<Record> get(int index) {
-        return results.get(index);
+        return list().get(index);
     }
 
     @Override
-    public final Result<Record> set(int index, Result<Record> element) {
-        return results.set(index, element);
+    public Result<Record> set(int index, Result<Record> element) {
+        return results.set(translatedIndex(index), new ResultOrRowsImpl(element)).result();
     }
 
     @Override
-    public final void add(int index, Result<Record> element) {
-        results.add(index, element);
+    public void add(int index, Result<Record> element) {
+        results.add(translatedIndex(index), new ResultOrRowsImpl(element));
     }
 
     @Override
-    public final Result<Record> remove(int index) {
-        return results.remove(index);
+    public Result<Record> remove(int index) {
+        return results.remove(translatedIndex(index)).result();
     }
 
-    @Override
-    public final int indexOf(Object o) {
-        return results.indexOf(o);
+    private final List<Result<Record>> list() {
+        List<Result<Record>> list = new ArrayList<Result<Record>>();
+
+        for (ResultOrRows result : results)
+            if (result.result() != null)
+                list.add(result.result());
+
+        return list;
     }
 
-    @Override
-    public final int lastIndexOf(Object o) {
-        return results.lastIndexOf(o);
+    private final int translatedIndex(int index) {
+        int translated = 0;
+
+        for (int i = 0; i < index; i++)
+            while (results.get(translated++).result() == null);
+
+        return translated;
     }
 
-    @Override
-    public final ListIterator<Result<Record>> listIterator() {
-        return results.listIterator();
-    }
+    static final class ResultOrRowsImpl implements ResultOrRows {
 
-    @Override
-    public final ListIterator<Result<Record>> listIterator(int index) {
-        return results.listIterator(index);
-    }
+        private final Result<Record> result;
+        private final int            rows;
 
-    @Override
-    public final List<Result<Record>> subList(int fromIndex, int toIndex) {
-        return results.subList(fromIndex, toIndex);
+        ResultOrRowsImpl(Result<Record> result) {
+            this(result, result != null ? result.size() : 0);
+        }
+
+        ResultOrRowsImpl(int rows) {
+            this(null, rows);
+        }
+
+        private ResultOrRowsImpl(Result<Record> result, int rows) {
+            this.result = result;
+            this.rows = rows;
+        }
+
+        @Override
+        public final Result<Record> result() {
+            return result;
+        }
+
+        @Override
+        public final int rows() {
+            return rows;
+        }
+
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int r = 1;
+            r = prime * r + ((this.result == null) ? 0 : this.result.hashCode());
+            r = prime * r + rows;
+            return r;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            ResultOrRowsImpl other = (ResultOrRowsImpl) obj;
+            if (result == null) {
+                if (other.result != null)
+                    return false;
+            }
+            else if (!result.equals(other.result))
+                return false;
+            if (rows != other.rows)
+                return false;
+            return true;
+        }
     }
 }

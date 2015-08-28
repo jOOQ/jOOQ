@@ -104,7 +104,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     private transient boolean       many;
     private transient Cursor<R>     cursor;
     private Result<R>               result;
-    private Results                 results;
+    private ResultsImpl             results;
 
     // Some temp variables for String interning
     private final Intern            intern = new Intern();

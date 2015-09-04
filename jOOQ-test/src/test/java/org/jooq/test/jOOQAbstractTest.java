@@ -1508,6 +1508,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFetchGroupsPOJOandPOJO() throws Exception {
+        new FetchTests(this).testFetchGroupsPOJOandPOJO();
+    }
+
+    @Test
     public void testFetchGroupsMapper() throws Exception {
         new RecordMapperTests(this).testFetchGroupsMapper();
     }

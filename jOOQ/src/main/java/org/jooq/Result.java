@@ -1441,6 +1441,148 @@ public interface Result<R extends Record> extends List<R>, Attachable {
         InvalidResultException, MappingException;
 
     /**
+     * Return a {@link Map} with results grouped by the given key entity.
+     * <p>
+     * The grouping semantics is governed by the key type's
+     * {@link Object#equals(Object)} and {@link Object#hashCode()}
+     * implementation, not necessarily the values as fetched from the database.
+     * <p>
+     * An {@link InvalidResultException} is thrown, if the keys are non-unique
+     * in the result set. Use {@link #intoGroups(Class)} instead, if your keys
+     * are non-unique.
+     *
+     * @param keyType The key type. If this is <code>null</code>, the resulting
+     *            map will contain at most one entry.
+     * @return A Map containing grouped results
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @throws InvalidResultException if the keys are non-unique in the result
+     *             set.
+     * @see DefaultRecordMapper
+     */
+    <K> Map<K, R> intoMap(Class<? extends K> keyType) throws MappingException, InvalidResultException;
+
+    /**
+     * Return a {@link Map} with results grouped by the given key entity and
+     * mapped into the given entity type.
+     * <p>
+     * The grouping semantics is governed by the key type's
+     * {@link Object#equals(Object)} and {@link Object#hashCode()}
+     * implementation, not necessarily the values as fetched from the database.
+     * <p>
+     * An {@link InvalidResultException} is thrown, if the keys are non-unique
+     * in the result set. Use {@link #intoGroups(Class, Class)} instead, if your
+     * keys are non-unique.
+     *
+     * @param keyType The key type. If this is <code>null</code>, the resulting
+     *            map will contain at most one entry.
+     * @param valueType The value type.
+     * @return A Map containing grouped results
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @throws InvalidResultException if the keys are non-unique in the result
+     *             set.
+     * @see DefaultRecordMapper
+     */
+    <K, V> Map<K, V> intoMap(Class<? extends K> keyType, Class<? extends V> valueType)
+        throws MappingException, InvalidResultException;
+
+    /**
+     * Return a {@link Map} with results grouped by the given key entity and
+     * mapped into the given entity type.
+     * <p>
+     * The grouping semantics is governed by the key type's
+     * {@link Object#equals(Object)} and {@link Object#hashCode()}
+     * implementation, not necessarily the values as fetched from the database.
+     * <p>
+     * An {@link InvalidResultException} is thrown, if the keys are non-unique
+     * in the result set. Use {@link #intoGroups(Class, RecordMapper)} instead,
+     * if your keys are non-unique.
+     *
+     * @param keyType The key type. If this is <code>null</code>, the resulting
+     *            map will contain at most one entry.
+     * @param valueMapper The value mapper.
+     * @return A Map containing grouped results
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @throws InvalidResultException if the keys are non-unique in the result
+     *             set.
+     * @see DefaultRecordMapper
+     */
+    <K, V> Map<K, V> intoMap(Class<? extends K> keyType, RecordMapper<? super R, V> valueMapper)
+        throws InvalidResultException, MappingException;
+
+    /**
+     * Return a {@link Map} with results grouped by the given key entity and
+     * mapped into the given entity type.
+     * <p>
+     * The grouping semantics is governed by the key type's
+     * {@link Object#equals(Object)} and {@link Object#hashCode()}
+     * implementation, not necessarily the values as fetched from the database.
+     * <p>
+     * An {@link InvalidResultException} is thrown, if the keys are non-unique
+     * in the result set. Use {@link #intoGroups(RecordMapper)} instead, if your
+     * keys are non-unique.
+     *
+     * @param keyMapper The key mapper.
+     * @return A Map containing grouped results
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @throws InvalidResultException if the keys are non-unique in the result
+     *             set.
+     * @see DefaultRecordMapper
+     */
+    <K> Map<K, R> intoMap(RecordMapper<? super R, K> keyMapper) throws InvalidResultException, MappingException;
+
+    /**
+     * Return a {@link Map} with results grouped by the given key entity and
+     * mapped into the given entity type.
+     * <p>
+     * The grouping semantics is governed by the key type's
+     * {@link Object#equals(Object)} and {@link Object#hashCode()}
+     * implementation, not necessarily the values as fetched from the database.
+     * <p>
+     * An {@link InvalidResultException} is thrown, if the keys are non-unique
+     * in the result set. Use {@link #intoGroups(RecordMapper, Class)} instead,
+     * if your keys are non-unique.
+     *
+     * @param keyMapper The key mapper.
+     * @param valueType The value type.
+     * @return A Map containing grouped results
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @throws InvalidResultException if the keys are non-unique in the result
+     *             set.
+     * @see DefaultRecordMapper
+     */
+    <K, V> Map<K, V> intoMap(RecordMapper<? super R, K> keyMapper, Class<V> valueType)
+        throws InvalidResultException, MappingException;
+
+    /**
+     * Return a {@link Map} with results grouped by the given key entity and
+     * mapped into the given entity type.
+     * <p>
+     * The grouping semantics is governed by the key type's
+     * {@link Object#equals(Object)} and {@link Object#hashCode()}
+     * implementation, not necessarily the values as fetched from the database.
+     * <p>
+     * An {@link InvalidResultException} is thrown, if the keys are non-unique
+     * in the result set. Use {@link #intoGroups(RecordMapper, RecordMapper)}
+     * instead, if your keys are non-unique.
+     *
+     * @param keyMapper The key mapper.
+     * @param valueMapper The value mapper.
+     * @return A Map containing grouped results
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @throws InvalidResultException if the keys are non-unique in the result
+     *             set.
+     * @see DefaultRecordMapper
+     */
+    <K, V> Map<K, V> intoMap(RecordMapper<? super R, K> keyMapper, RecordMapper<? super R, V> valueMapper)
+        throws InvalidResultException, MappingException;
+
+    /**
      * Return a {@link Map} with the given key table as a map key and the
      * corresponding record as value.
      * <p>
@@ -1962,6 +2104,128 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      */
     <E> Map<Record, List<E>> intoGroups(Name[] keyFieldNames, RecordMapper<? super R, E> mapper)
         throws IllegalArgumentException, MappingException;
+
+    /**
+     * Return a {@link Map} with results grouped by the given key entity.
+     * <p>
+     * The grouping semantics is governed by the key type's
+     * {@link Object#equals(Object)} and {@link Object#hashCode()}
+     * implementation, not necessarily the values as fetched from the database.
+     * <p>
+     * Unlike {@link #intoMap(Class)}, this method allows for non-unique keys in
+     * the result set.
+     *
+     * @param keyType The key type. If this is <code>null</code>, the resulting
+     *            map will contain at most one entry.
+     * @return A Map containing grouped results
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see DefaultRecordMapper
+     */
+    <K> Map<K, Result<R>> intoGroups(Class<? extends K> keyType) throws MappingException;
+
+    /**
+     * Return a {@link Map} with results grouped by the given key entity and
+     * mapped into the given entity type.
+     * <p>
+     * The grouping semantics is governed by the key type's
+     * {@link Object#equals(Object)} and {@link Object#hashCode()}
+     * implementation, not necessarily the values as fetched from the database.
+     * <p>
+     * Unlike {@link #intoMap(Class, Class)}, this method allows for non-unique
+     * keys in the result set.
+     *
+     * @param keyType The key type. If this is <code>null</code>, the resulting
+     *            map will contain at most one entry.
+     * @param valueType The value type.
+     * @return A Map containing grouped results
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see DefaultRecordMapper
+     */
+    <K, V> Map<K, List<V>> intoGroups(Class<? extends K> keyType, Class<? extends V> valueType) throws MappingException;
+
+    /**
+     * Return a {@link Map} with results grouped by the given key entity and
+     * mapped into the given entity type.
+     * <p>
+     * The grouping semantics is governed by the key type's
+     * {@link Object#equals(Object)} and {@link Object#hashCode()}
+     * implementation, not necessarily the values as fetched from the database.
+     * <p>
+     * Unlike {@link #intoMap(Class, RecordMapper)}, this method allows for
+     * non-unique keys in the result set.
+     *
+     * @param keyType The key type. If this is <code>null</code>, the resulting
+     *            map will contain at most one entry.
+     * @param valueMapper The value mapper.
+     * @return A Map containing grouped results
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see DefaultRecordMapper
+     */
+    <K, V> Map<K, List<V>> intoGroups(Class<? extends K> keyType, RecordMapper<? super R, V> valueMapper)
+        throws MappingException;
+
+    /**
+     * Return a {@link Map} with results grouped by the given key entity and
+     * mapped into the given entity type.
+     * <p>
+     * The grouping semantics is governed by the key type's
+     * {@link Object#equals(Object)} and {@link Object#hashCode()}
+     * implementation, not necessarily the values as fetched from the database.
+     * <p>
+     * Unlike {@link #intoMap(RecordMapper, RecordMapper)}, this method allows
+     * for non-unique keys in the result set.
+     *
+     * @param keyMapper The key mapper.
+     * @return A Map containing grouped results
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see DefaultRecordMapper
+     */
+    <K> Map<K, Result<R>> intoGroups(RecordMapper<? super R, K> keyMapper) throws MappingException;
+
+    /**
+     * Return a {@link Map} with results grouped by the given key entity and
+     * mapped into the given entity type.
+     * <p>
+     * The grouping semantics is governed by the key type's
+     * {@link Object#equals(Object)} and {@link Object#hashCode()}
+     * implementation, not necessarily the values as fetched from the database.
+     * <p>
+     * Unlike {@link #intoMap(RecordMapper, Class)}, this method allows for
+     * non-unique keys in the result set.
+     *
+     * @param keyMapper The key mapper.
+     * @param valueType The value type.
+     * @return A Map containing grouped results
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see DefaultRecordMapper
+     */
+    <K, V> Map<K, List<V>> intoGroups(RecordMapper<? super R, K> keyMapper, Class<V> valueType) throws MappingException;
+
+    /**
+     * Return a {@link Map} with results grouped by the given key entity and
+     * mapped into the given entity type.
+     * <p>
+     * The grouping semantics is governed by the key type's
+     * {@link Object#equals(Object)} and {@link Object#hashCode()}
+     * implementation, not necessarily the values as fetched from the database.
+     * <p>
+     * Unlike {@link #intoMap(RecordMapper, RecordMapper)}, this method allows
+     * for non-unique keys in the result set.
+     *
+     * @param keyMapper The key mapper.
+     * @param valueMapper The value mapper.
+     * @return A Map containing grouped results
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
+     * @see DefaultRecordMapper
+     */
+    <K, V> Map<K, List<V>> intoGroups(RecordMapper<? super R, K> keyMapper, RecordMapper<? super R, V> valueMapper)
+        throws MappingException;
 
     /**
      * Return a {@link Map} with the result grouped by the given key table.

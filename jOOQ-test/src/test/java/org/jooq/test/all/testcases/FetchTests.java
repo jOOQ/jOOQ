@@ -41,6 +41,8 @@
 package org.jooq.test.all.testcases;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.nCopies;
+import static java.util.stream.Collectors.toList;
 import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
@@ -2254,6 +2256,107 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             assertEquals(keyList.getValue(0), on(result.get(0)).call("getId").get());
             assertEquals(keyList.getValue(1), on(result.get(0)).call("getLanguageId").get());
             assertEquals(keyList.getValue(2), on(result.get(0)).call("getTitle").get());
+        }
+    }
+
+    public void testFetchGroupsPOJOandPOJO() throws Exception {
+        Result<Record3<String, String, String>> result =
+        create().select(TBook_TITLE(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
+                .from(TBook())
+                .join(TAuthor()).on(TBook_AUTHOR_ID().eq(TAuthor_ID()))
+                .fetch();
+
+        assertEquals(4, result.size());
+
+        Map<BookTitle, List<AuthorFirstLastName>> g1 = result.intoGroups(BookTitle.class, AuthorFirstLastName.class);
+        assertEquals(4, g1.size());
+        assertEquals(BOOK_TITLES, g1.keySet().stream().map(b -> b.title).collect(toList()));
+        assertEquals(nCopies(4, 1), g1.values().stream().map(v -> v.size()).collect(toList()));
+        assertEquals(BOOK_FIRST_NAMES, g1.values().stream().map(v -> v.get(0).firstName).collect(toList()));
+        assertEquals(BOOK_LAST_NAMES, g1.values().stream().map(v -> v.get(0).lastName).collect(toList()));
+
+        Map<AuthorFirstLastName, List<BookTitle>> g2 = result.intoGroups(AuthorFirstLastName.class, BookTitle.class);
+        assertEquals(2, g2.size());
+        assertEquals(AUTHOR_FIRST_NAMES, g2.keySet().stream().map(v -> v.firstName).collect(toList()));
+        assertEquals(AUTHOR_LAST_NAMES, g2.keySet().stream().map(v -> v.lastName).collect(toList()));
+        assertEquals(nCopies(2, 2), g2.values().stream().map(v -> v.size()).collect(toList()));
+        Iterator<List<BookTitle>> it = g2.values().iterator();
+        assertEquals(BOOK_TITLES.subList(0, 2), it.next().stream().map(t -> t.title).collect(toList()));
+        assertEquals(BOOK_TITLES.subList(2, 4), it.next().stream().map(t -> t.title).collect(toList()));
+
+        Map<BookTitle, AuthorFirstLastName> m1 = result.intoMap(BookTitle.class, AuthorFirstLastName.class);
+        assertEquals(4, m1.size());
+        assertEquals(BOOK_TITLES, m1.keySet().stream().map(b -> b.title).collect(toList()));
+        assertEquals(BOOK_FIRST_NAMES, m1.values().stream().map(v -> v.firstName).collect(toList()));
+        assertEquals(BOOK_LAST_NAMES, m1.values().stream().map(v -> v.lastName).collect(toList()));
+
+        assertThrows(InvalidResultException.class, () -> result.intoMap(AuthorFirstLastName.class, BookTitle.class));
+    }
+
+    static class BookTitle {
+        String title;
+
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + ((title == null) ? 0 : title.hashCode());
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            BookTitle other = (BookTitle) obj;
+            if (title == null) {
+                if (other.title != null)
+                    return false;
+            }
+            else if (!title.equals(other.title))
+                return false;
+            return true;
+        }
+    }
+
+    static class AuthorFirstLastName {
+        String firstName;
+        String lastName;
+
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+            result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+            return result;
+        }
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            AuthorFirstLastName other = (AuthorFirstLastName) obj;
+            if (firstName == null) {
+                if (other.firstName != null)
+                    return false;
+            }
+            else if (!firstName.equals(other.firstName))
+                return false;
+            if (lastName == null) {
+                if (other.lastName != null)
+                    return false;
+            }
+            else if (!lastName.equals(other.lastName))
+                return false;
+            return true;
         }
     }
 

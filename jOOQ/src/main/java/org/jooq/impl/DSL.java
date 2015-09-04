@@ -86,6 +86,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.annotation.Generated;
@@ -7107,6 +7108,23 @@ public class DSL {
     @Support
     public static Condition condition(Field<Boolean> field) {
         return new FieldCondition(field);
+    }
+
+    /**
+     * Create a condition from a map.
+     * <p>
+     * The result is a condition generated from keys and values of the argument <code>map</code>, such that:
+     *
+     * <code><pre>
+     * key1 = value1 AND key2 = value2 AND ... AND keyN = valueN
+     * </pre></code>
+     *
+     * @param map A map containing keys and values to form predicates.
+     * @return A condition comparing keys with values.
+     */
+    @Support
+    public static Condition condition(Map<Field<?>, ?> map) {
+        return new MapCondition(map);
     }
 
     // -------------------------------------------------------------------------

@@ -1519,17 +1519,17 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
-    public <E> Map<Record, List<E>> intoGroups(int[] keyFieldIndexes, Class<? extends E> type) {
+    public final <E> Map<Record, List<E>> intoGroups(int[] keyFieldIndexes, Class<? extends E> type) {
         return intoGroups(keyFieldIndexes, Utils.configuration(this).recordMapperProvider().provide(fields, type));
     }
 
     @Override
-    public <E> Map<Record, List<E>> intoGroups(String[] keyFieldNames, Class<? extends E> type) {
+    public final <E> Map<Record, List<E>> intoGroups(String[] keyFieldNames, Class<? extends E> type) {
         return intoGroups(keyFieldNames, Utils.configuration(this).recordMapperProvider().provide(fields, type));
     }
 
     @Override
-    public <E> Map<Record, List<E>> intoGroups(Name[] keyFieldNames, Class<? extends E> type) {
+    public final <E> Map<Record, List<E>> intoGroups(Name[] keyFieldNames, Class<? extends E> type) {
         return intoGroups(keyFieldNames, Utils.configuration(this).recordMapperProvider().provide(fields, type));
     }
 

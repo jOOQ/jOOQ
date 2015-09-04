@@ -234,21 +234,26 @@ public class ConvertAllTest extends AbstractTest {
 
         Date date = Date.valueOf("2001-02-03");
         testConversion(date.getTime(), date, Long.class);
+        /* [java-8] */
         testConversion(date.getTime(), date.toLocalDate(), Long.class);
+        /* [/java-8] */
 
 
         Time time = Time.valueOf("04:05:06");
         testConversion(time.getTime(), time, Long.class);
+        /* [java-8] */
         testConversion(time.getTime(), time.toLocalTime(), Long.class);
 
         OffsetTime t1 = OffsetTime.parse("04:05:06.789Z");
         OffsetTime t2 = OffsetTime.parse("04:05:06.789+02:00");
         testConversion(millis(t1), t1, Long.class);
         testConversion(millis(t2), t2, Long.class);
+        /* [/java-8] */
 
 
         Timestamp timestamp = Timestamp.valueOf("2001-02-03 04:05:06.789");
         testConversion(timestamp.getTime(), timestamp, Long.class);
+        /* [java-8] */
         testConversion(timestamp.getTime(), timestamp.toLocalDateTime(), Long.class);
 
         OffsetDateTime dt1 = OffsetDateTime.parse("2001-02-03T04:05:06.789Z");
@@ -259,6 +264,7 @@ public class ConvertAllTest extends AbstractTest {
         Instant now = Instant.now();
         testConversion(0L, Instant.ofEpochMilli(0), Long.class);
         testConversion(millis(now), now, Long.class);
+        /* [/java-8] */
     }
 
     @Test
@@ -397,9 +403,12 @@ public class ConvertAllTest extends AbstractTest {
 
         testConversion(date, "2001-02-03", Date.class);
         testConversion(date, date.getTime(), Date.class);
+        /* [java-8] */
         testConversion(date, date.toLocalDate(), Date.class);
+        /* [/java-8] */
     }
 
+    /* [java-8] */
     @Test
     public void testToLocalDate() {
         Date date = Date.valueOf("2001-02-03");
@@ -408,6 +417,7 @@ public class ConvertAllTest extends AbstractTest {
         testConversion(date.toLocalDate(), date.getTime(), LocalDate.class);
         testConversion(date.toLocalDate(), date, LocalDate.class);
     }
+    /* [/java-8] */
 
     @Test
     public void testToTime() {
@@ -415,14 +425,17 @@ public class ConvertAllTest extends AbstractTest {
 
         testConversion(time, "04:05:06", Time.class);
         testConversion(time, time.getTime(), Time.class);
+        /* [java-8] */
         testConversion(time, time.toLocalTime(), Time.class);
 
         OffsetTime o1 = OffsetTime.parse("04:05:06.789Z");
         OffsetTime o2 = OffsetTime.parse("04:05:06.789+02:00");
         testConversion(new Time(millis(o1)), o1, Time.class);
         testConversion(new Time(millis(o2)), o2, Time.class);
+        /* [/java-8] */
     }
 
+    /* [java-8] */
     @Test
     public void testToLocalTime() {
         Time time = Time.valueOf("04:05:06");
@@ -446,6 +459,7 @@ public class ConvertAllTest extends AbstractTest {
         testConversion(time.toLocalTime().atOffset(offset), time.getTime(), OffsetTime.class);
         testConversion(time.toLocalTime().atOffset(offset), time, OffsetTime.class);
     }
+    /* [/java-8] */
 
     @Test
     public void testToTimestamp() {
@@ -461,6 +475,7 @@ public class ConvertAllTest extends AbstractTest {
         testConversion(t2, t2.getTime(), Timestamp.class);
         testConversion(t3, t3.getTime(), Timestamp.class);
 
+        /* [java-8] */
         testConversion(t1, t1.toLocalDateTime(), Timestamp.class);
         testConversion(t2, t2.toLocalDateTime(), Timestamp.class);
         testConversion(t3, t3.toLocalDateTime(), Timestamp.class);
@@ -469,8 +484,10 @@ public class ConvertAllTest extends AbstractTest {
         OffsetDateTime o2 = OffsetDateTime.parse("2001-02-03T04:05:06.789+02:00");
         testConversion(new Timestamp(millis(o1)), o1, Timestamp.class);
         testConversion(new Timestamp(millis(o2)), o2, Timestamp.class);
+        /* [/java-8] */
     }
 
+    /* [java-8] */
     @Test
     public void testToLocalDateTime() {
         Timestamp t1 = Timestamp.valueOf("2001-02-03 04:05:06");
@@ -541,4 +558,5 @@ public class ConvertAllTest extends AbstractTest {
         else
             return t.getLong(MILLI_OF_DAY);
     }
+    /* [/java-8] */
 }

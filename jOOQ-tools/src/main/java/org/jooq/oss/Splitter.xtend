@@ -135,6 +135,7 @@ class Splitter extends Generators {
                 && !canonicalPath.endsWith(".zip")
                 && !canonicalPath.endsWith("._trace")
                 && !canonicalPath.contains("jOOQ-explorer")
+                && !canonicalPath.contains("jOOQ-playground")
                 && !canonicalPath.contains("jOOQ-test")
                 && !canonicalPath.contains("jOOQ-tools")
                 && !canonicalPath.contains("jOOQ-vaadin-example")

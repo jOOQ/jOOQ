@@ -862,6 +862,36 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
+    public final <K> Map<K, R> fetchMap(Class<? extends K> keyType) {
+        return fetch().intoMap(keyType);
+    }
+
+    @Override
+    public final <K, V> Map<K, V> fetchMap(Class<? extends K> keyType, Class<? extends V> valueType) {
+        return fetch().intoMap(keyType, valueType);
+    }
+
+    @Override
+    public final <K, V> Map<K, V> fetchMap(Class<? extends K> keyType, RecordMapper<? super R, V> valueMapper) {
+        return fetch().intoMap(keyType, valueMapper);
+    }
+
+    @Override
+    public final <K> Map<K, R> fetchMap(RecordMapper<? super R, K> keyMapper) {
+        return fetch().intoMap(keyMapper);
+    }
+
+    @Override
+    public final <K, V> Map<K, V> fetchMap(RecordMapper<? super R, K> keyMapper, Class<V> valueType) {
+        return fetch().intoMap(keyMapper, valueType);
+    }
+
+    @Override
+    public final <K, V> Map<K, V> fetchMap(RecordMapper<? super R, K> keyMapper, RecordMapper<? super R, V> valueMapper) {
+        return fetch().intoMap(keyMapper, valueMapper);
+    }
+
+    @Override
     public final <S extends Record> Map<S, R> fetchMap(Table<S> table) {
         return fetch().intoMap(table);
     }
@@ -1019,6 +1049,36 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final <E> Map<Record, List<E>> fetchGroups(Field<?>[] keys, RecordMapper<? super R, E> mapper) {
         return fetch().intoGroups(keys, mapper);
+    }
+
+    @Override
+    public final <K> Map<K, Result<R>> fetchGroups(Class<? extends K> keyType) {
+        return fetch().intoGroups(keyType);
+    }
+
+    @Override
+    public final <K, V> Map<K, List<V>> fetchGroups(Class<? extends K> keyType, Class<? extends V> valueType) {
+        return fetch().intoGroups(keyType, valueType);
+    }
+
+    @Override
+    public final <K, V> Map<K, List<V>> fetchGroups(Class<? extends K> keyType, RecordMapper<? super R, V> valueMapper) {
+        return fetch().intoGroups(keyType, valueMapper);
+    }
+
+    @Override
+    public final <K> Map<K, Result<R>> fetchGroups(RecordMapper<? super R, K> keyMapper) {
+        return fetch().intoGroups(keyMapper);
+    }
+
+    @Override
+    public final <K, V> Map<K, List<V>> fetchGroups(RecordMapper<? super R, K> keyMapper, Class<V> valueType) {
+        return fetch().intoGroups(keyMapper, valueType);
+    }
+
+    @Override
+    public final <K, V> Map<K, List<V>> fetchGroups(RecordMapper<? super R, K> keyMapper, RecordMapper<? super R, V> valueMapper) {
+        return fetch().intoGroups(keyMapper, valueMapper);
     }
 
     @Override

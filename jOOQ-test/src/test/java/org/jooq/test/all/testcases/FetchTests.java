@@ -1661,7 +1661,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         FetchSizeListener listener = new FetchSizeListener();
         DSLContext create = create(listener);
 
-        List<Integer> sizes = dialect().family() == MYSQL
+        List<Integer> sizes = family() == MYSQL
             ? Arrays.asList(Integer.MIN_VALUE, 0, 1)
             : Arrays.asList(                   0, 1);
 

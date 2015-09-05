@@ -122,6 +122,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.WindowDefinition;
+import org.jooq.exception.MappingException;
 
 /**
  * A wrapper for a {@link SelectQuery}
@@ -2905,6 +2906,36 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     }
 
     @Override
+    public final <K> Map<K, R> fetchMap(Class<? extends K> keyType) {
+        return getDelegate().fetchMap(keyType);
+    }
+
+    @Override
+    public final <K, V> Map<K, V> fetchMap(Class<? extends K> keyType, Class<? extends V> valueType) {
+        return getDelegate().fetchMap(keyType, valueType);
+    }
+
+    @Override
+    public final <K, V> Map<K, V> fetchMap(Class<? extends K> keyType, RecordMapper<? super R, V> valueMapper) {
+        return getDelegate().fetchMap(keyType, valueMapper);
+    }
+
+    @Override
+    public final <K> Map<K, R> fetchMap(RecordMapper<? super R, K> keyMapper) {
+        return getDelegate().fetchMap(keyMapper);
+    }
+
+    @Override
+    public final <K, V> Map<K, V> fetchMap(RecordMapper<? super R, K> keyMapper, Class<V> valueType) {
+        return getDelegate().fetchMap(keyMapper, valueType);
+    }
+
+    @Override
+    public final <K, V> Map<K, V> fetchMap(RecordMapper<? super R, K> keyMapper, RecordMapper<? super R, V> valueMapper) {
+        return getDelegate().fetchMap(keyMapper, valueMapper);
+    }
+
+    @Override
     public final <S extends Record> Map<S, R> fetchMap(Table<S> table) {
         return getDelegate().fetchMap(table);
     }
@@ -3062,6 +3093,36 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     @Override
     public final <E> Map<Record, List<E>> fetchGroups(Name[] keyFieldNames, RecordMapper<? super R, E> mapper) {
         return getDelegate().fetchGroups(keyFieldNames, mapper);
+    }
+
+    @Override
+    public final <K> Map<K, Result<R>> fetchGroups(Class<? extends K> keyType) {
+        return getDelegate().fetchGroups(keyType);
+    }
+
+    @Override
+    public final <K, V> Map<K, List<V>> fetchGroups(Class<? extends K> keyType, Class<? extends V> valueType) {
+        return getDelegate().fetchGroups(keyType, valueType);
+    }
+
+    @Override
+    public final <K, V> Map<K, List<V>> fetchGroups(Class<? extends K> keyType, RecordMapper<? super R, V> valueMapper) {
+        return getDelegate().fetchGroups(keyType, valueMapper);
+    }
+
+    @Override
+    public final <K> Map<K, Result<R>> fetchGroups(RecordMapper<? super R, K> keyMapper) throws MappingException {
+        return getDelegate().fetchGroups(keyMapper);
+    }
+
+    @Override
+    public final <K, V> Map<K, List<V>> fetchGroups(RecordMapper<? super R, K> keyMapper, Class<V> valueType) {
+        return getDelegate().fetchGroups(keyMapper, valueType);
+    }
+
+    @Override
+    public final <K, V> Map<K, List<V>> fetchGroups(RecordMapper<? super R, K> keyMapper, RecordMapper<? super R, V> valueMapper) {
+        return getDelegate().fetchGroups(keyMapper, valueMapper);
     }
 
     @Override

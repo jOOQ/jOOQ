@@ -84,6 +84,12 @@ public class Plugin extends AbstractMojo {
     private MavenProject                 project;
 
     /**
+     * Whether to skip the execution of the Maven Plugin for this module.
+     */
+    @Parameter
+    private boolean                      skip;
+
+    /**
      * The jdbc settings.
      */
     @Parameter
@@ -97,6 +103,11 @@ public class Plugin extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
+        if (skip) {
+            getLog().info("Skipping jOOQ code generation");
+            return;
+        }
+
         ClassLoader oldCL = Thread.currentThread().getContextClassLoader();
 
         try {

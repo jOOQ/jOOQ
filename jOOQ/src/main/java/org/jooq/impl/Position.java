@@ -73,6 +73,10 @@ class Position extends AbstractFunction<Integer> {
                 return field("{locate}({0}, {1})", SQLDataType.INTEGER, search, in);
 
             /* [pro] xx
+            xxxx xxxx
+            xxxx xxxxxxxxxx
+                xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx xxxx
+
             xxxx xxxxx
             xxxx xxxxxxx
             xxxx xxxxxxx
@@ -80,13 +84,10 @@ class Position extends AbstractFunction<Integer> {
 
             xxxx xxxxxxx
             xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxx xxxxxxxx
-
-            xxxx xxxx
-            xxxx xxxxxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx xxxx
-
             xx [/pro] */
+            case SQLITE:
+                return field("{instr}({0}, {1})", SQLDataType.INTEGER, in, search);
+
             default:
                 return field("{position}({0} {in} {1})", SQLDataType.INTEGER, search, in);
         }

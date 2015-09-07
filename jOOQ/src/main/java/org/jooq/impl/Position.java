@@ -73,6 +73,10 @@ class Position extends AbstractFunction<Integer> {
                 return field("{locate}({0}, {1})", SQLDataType.INTEGER, search, in);
 
             /* [pro] */
+            case ASE:
+            case SQLSERVER:
+                return field("{charindex}({0}, {1})", SQLDataType.INTEGER, search, in);
+
             case HANA:
             case INGRES:
             case SYBASE:
@@ -80,13 +84,10 @@ class Position extends AbstractFunction<Integer> {
 
             case ACCESS:
             case ORACLE:
+            /* [/pro] */
+            case SQLITE:
                 return field("{instr}({0}, {1})", SQLDataType.INTEGER, in, search);
 
-            case ASE:
-            case SQLSERVER:
-                return field("{charindex}({0}, {1})", SQLDataType.INTEGER, search, in);
-
-            /* [/pro] */
             default:
                 return field("{position}({0} {in} {1})", SQLDataType.INTEGER, search, in);
         }

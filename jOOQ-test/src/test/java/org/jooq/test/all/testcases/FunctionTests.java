@@ -196,7 +196,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testFunctionPosition() throws Exception {
-        assumeFamilyNotIn(INFORMIX, SQLITE);
+        assumeFamilyNotIn(INFORMIX);
 
         SelectQuery<?> q = create().selectQuery();
         q.addFrom(VLibrary());

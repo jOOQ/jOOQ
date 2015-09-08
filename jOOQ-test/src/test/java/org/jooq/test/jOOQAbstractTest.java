@@ -135,6 +135,7 @@ import org.jooq.test.all.listeners.TestStatisticsListener;
 import org.jooq.test.all.pojos.jaxb.JAXBBook;
 import org.jooq.test.all.testcases.AggregateWindowFunctionTests;
 import org.jooq.test.all.testcases.AliasTests;
+import org.jooq.test.all.testcases.ArrayTests;
 import org.jooq.test.all.testcases.AsyncTest;
 import org.jooq.test.all.testcases.BatchTests;
 import org.jooq.test.all.testcases.BenchmarkTests;
@@ -3805,5 +3806,10 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testConnectionProviderForInsertReturning() throws Exception {
         new ConnectionProviderTests(this).testConnectionProviderForInsertReturning();
+    }
+
+    @Test
+    public void testArrayLiterals() throws Exception {
+        new ArrayTests(this).testArrayLiterals();
     }
 }

@@ -11273,6 +11273,90 @@ public class DSL {
     }
 
     /**
+     * Create an array literal.
+     * <p>
+     * This translates to the following databases and syntaxes:
+     * <table>
+     * <tr>
+     * <th><code>SQLDialect</code></th>
+     * <th>Java</th>
+     * <th>SQL</th>
+     * </tr>
+     * <tr>
+     * <td>{@link SQLDialect#H2}</td>
+     * <td>array(1, 2)</td>
+     * <td>(1, 2)</td>
+     * </tr>
+     * <tr>
+     * <td>{@link SQLDialect#HSQLDB}, {@link SQLDialect#POSTGRES}</td>
+     * <td>array(1, 2)</td>
+     * <td>array[1, 2]</td>
+     * </tr>
+     * </table>
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static <T> Field<T[]> array(T... values) {
+        return array(Utils.fields(values));
+    }
+
+    /**
+     * Create an array literal.
+     * <p>
+     * This translates to the following databases and syntaxes:
+     * <table>
+     * <tr>
+     * <th><code>SQLDialect</code></th>
+     * <th>Java</th>
+     * <th>SQL</th>
+     * </tr>
+     * <tr>
+     * <td>{@link SQLDialect#H2}</td>
+     * <td>array(1, 2)</td>
+     * <td>(1, 2)</td>
+     * </tr>
+     * <tr>
+     * <td>{@link SQLDialect#HSQLDB}, {@link SQLDialect#POSTGRES}</td>
+     * <td>array(1, 2)</td>
+     * <td>array[1, 2]</td>
+     * </tr>
+     * </table>
+     */
+    /* [java-8] */
+    @SafeVarargs
+    /* [/java-8] */
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static <T> Field<T[]> array(Field<T>... fields) {
+        return array(Arrays.asList(fields));
+    }
+
+    /**
+     * Create an array literal.
+     * <p>
+     * This translates to the following databases and syntaxes:
+     * <table>
+     * <tr>
+     * <th><code>SQLDialect</code></th>
+     * <th>Java</th>
+     * <th>SQL</th>
+     * </tr>
+     * <tr>
+     * <td>{@link SQLDialect#H2}</td>
+     * <td>array(1, 2)</td>
+     * <td>(1, 2)</td>
+     * </tr>
+     * <tr>
+     * <td>{@link SQLDialect#HSQLDB}, {@link SQLDialect#POSTGRES}</td>
+     * <td>array(1, 2)</td>
+     * <td>array[1, 2]</td>
+     * </tr>
+     * </table>
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static <T> Field<T[]> array(Collection<? extends Field<T>> fields) {
+        return new Array<T>(fields);
+    }
+
+    /**
      * Get the max value over a field: max(field).
      */
     @Support

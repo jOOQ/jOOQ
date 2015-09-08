@@ -866,14 +866,12 @@ final class Utils {
      * @return The argument objects themselves, if they are {@link Field}s, or a bind
      *         values created from the argument objects.
      */
-    static final List<Field<?>> fields(Object[] values) {
-        List<Field<?>> result = new ArrayList<Field<?>>();
+    static final <T> List<Field<T>> fields(T[] values) {
+        List<Field<T>> result = new ArrayList<Field<T>>();
 
-        if (values != null) {
-            for (Object value : values) {
+        if (values != null)
+            for (T value : values)
                 result.add(field(value));
-            }
-        }
 
         return result;
     }

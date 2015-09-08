@@ -1033,6 +1033,9 @@ public final class StringUtils {
      * @since 2.0
      * @since 3.0 Changed signature to use varargs
      */
+    /* [java-8] */
+    @SafeVarargs
+    /* [/java-8] */
     public static <T> String join(T... elements) {
         return join(elements, null);
     }

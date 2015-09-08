@@ -73,6 +73,9 @@ class ReferenceImpl<R extends Record, O extends Record> extends AbstractKey<R> i
 
     private final UniqueKey<O> key;
 
+    /* [java-8] */
+    @SafeVarargs
+    /* [/java-8] */
     ReferenceImpl(UniqueKey<O> key, Table<R> table, TableField<R, ?>... fields) {
         super(table, fields);
 
@@ -84,24 +87,28 @@ class ReferenceImpl<R extends Record, O extends Record> extends AbstractKey<R> i
         return key;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final O fetchParent(R record) {
         return filterOne(fetchParents(record));
     }
 
     @Override
+    /* [java-8] */
+    @SafeVarargs
+    /* [/java-8] */
     public final Result<O> fetchParents(R... records) {
         return fetchParents(list(records));
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final Result<R> fetchChildren(O record) {
         return fetchChildren(list(record));
     }
 
     @Override
+    /* [java-8] */
+    @SafeVarargs
+    /* [/java-8] */
     public final Result<R> fetchChildren(O... records) {
         return fetchChildren(list(records));
     }

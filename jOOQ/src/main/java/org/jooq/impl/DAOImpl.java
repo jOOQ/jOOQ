@@ -141,6 +141,9 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     }
 
     @Override
+    /* [java-8] */
+    @SafeVarargs
+    /* [/java-8] */
     public final void insert(P... objects) {
         insert(asList(objects));
     }
@@ -165,6 +168,9 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     }
 
     @Override
+    /* [java-8] */
+    @SafeVarargs
+    /* [/java-8] */
     public final void update(P... objects) {
         update(asList(objects));
     }
@@ -184,6 +190,9 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     }
 
     @Override
+    /* [java-8] */
+    @SafeVarargs
+    /* [/java-8] */
     public final void delete(P... objects) {
         delete(asList(objects));
     }
@@ -200,6 +209,9 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     }
 
     @Override
+    /* [java-8] */
+    @SafeVarargs
+    /* [/java-8] */
     public final void deleteById(T... ids) {
         deleteById(asList(ids));
     }

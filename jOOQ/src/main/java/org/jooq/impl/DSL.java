@@ -6850,6 +6850,42 @@ public class DSL {
     }
 
     /**
+     * Create a "plain SQL" field.
+     * <p>
+     * This is useful for constructing more complex SQL syntax elements wherever
+     * <code>Field</code> types are expected. An example for this is MySQL's
+     * <code>GROUP_CONCAT</code> aggregate function, which has MySQL-specific
+     * keywords that are hard to reflect in jOOQ's DSL: <code><pre>
+     * GROUP_CONCAT([DISTINCT] expr [,expr ...]
+     *       [ORDER BY {unsigned_integer | col_name | expr}
+     *           [ASC | DESC] [,col_name ...]]
+     *       [SEPARATOR str_val])
+     *       </pre></code>
+     * <p>
+     * The above MySQL function can be expressed as such: <code><pre>
+     * field("GROUP_CONCAT(DISTINCT {0} ORDER BY {1} ASC SEPARATOR '-')", expr1, expr2);
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses! One way to escape
+     * literals is to use {@link #name(String...)} and similar methods
+     *
+     * @param sql The SQL
+     * @param type The field type
+     * @param parts The {@link QueryPart} objects that are rendered at the
+     *            {numbered placeholder} locations
+     * @return A field wrapping the plain SQL
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    public static <T> Field<T> field(String sql, DataType<T> type, QueryPart... parts) {
+        return new SQLField(type, sql(sql, parts));
+    }
+
+    /**
      * A custom SQL clause that can render arbitrary SQL elements.
      * <p>
      * This is useful for constructing more complex SQL syntax elements wherever

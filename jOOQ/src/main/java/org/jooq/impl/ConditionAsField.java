@@ -96,13 +96,12 @@ class ConditionAsField extends AbstractFunction<Boolean> {
             case SQLITE:
 
             /* [pro] */
-            // Unknown (to be evaluated):
             case ASE:
             /* [/pro] */
-                return condition;
-        }
 
-        // The default, for new dialects
-        return condition;
+            // The default, for new dialects
+            default:
+                return DSL.sql("({0})", condition);
+        }
     }
 }

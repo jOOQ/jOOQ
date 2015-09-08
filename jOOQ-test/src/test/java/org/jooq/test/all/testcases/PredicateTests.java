@@ -630,10 +630,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testConditionsAsFields() throws Exception {
-        Record record = create().select(field(one().eq(zero())), field(one().eq(1))).fetchOne();
+        Record3<Boolean, Boolean, Boolean> record = create().select(
+            field(one().eq(zero())),
+            field(one().eq(1)),
+            field(field(one().eq(1)).eq(true))
+        ).fetchOne();
 
-        assertEquals(false, record.getValue(0));
-        assertEquals(true, record.getValue(1));
+        assertEquals(false, record.value1());
+        assertEquals(true, record.value2());
+        assertEquals(true, record.value2());
     }
 
     public void testFieldsAsConditions() throws Exception {

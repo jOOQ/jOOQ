@@ -77,6 +77,7 @@ public interface ArrayRecord<E> extends Attachable, Iterable<E> {
     /**
      * Set the contained array.
      */
+    @SuppressWarnings("unchecked")
     void set(E... array);
 
     /**

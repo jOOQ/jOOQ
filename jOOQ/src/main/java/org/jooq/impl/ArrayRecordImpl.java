@@ -216,6 +216,7 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final void set(T... array) {
         this.array = array;

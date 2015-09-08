@@ -282,6 +282,9 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
+    /* [java-8] */
+    @SafeVarargs
+    /* [/java-8] */
     public final SortField<Integer> sortAsc(T... sortList) {
         return sortAsc(Arrays.asList(sortList));
     }
@@ -299,6 +302,9 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
+    /* [java-8] */
+    @SafeVarargs
+    /* [/java-8] */
     public final SortField<Integer> sortDesc(T... sortList) {
         return sortDesc(Arrays.asList(sortList));
     }
@@ -1850,6 +1856,9 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     @Deprecated
+    /* [java-8] */
+    @SafeVarargs
+    /* [/java-8] */
     public final Field<T> greatest(T... others) {
         return DSL.greatest(this, Utils.fields(others).toArray(new Field[0]));
     }
@@ -1862,6 +1871,9 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     @Deprecated
+    /* [java-8] */
+    @SafeVarargs
+    /* [/java-8] */
     public final Field<T> least(T... others) {
         return DSL.least(this, Utils.fields(others).toArray(new Field[0]));
     }
@@ -1934,6 +1946,9 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     @Deprecated
+    /* [java-8] */
+    @SafeVarargs
+    /* [/java-8] */
     public final Field<T> coalesce(T option, T... options) {
         return DSL.coalesce(this, Utils.combine(Utils.field(option), Utils.fields(options).toArray(new Field[0])));
     }

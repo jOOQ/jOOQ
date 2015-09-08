@@ -94,12 +94,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
-import java.util.TimeZone;
 import java.util.UUID;
 
 import org.jooq.ArrayRecord;
@@ -1130,21 +1127,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
         }
     }
-
-    /* [java-8] */
-    private final ZoneOffset offset() {
-        return OffsetTime.now().getOffset();
-    }
-
-    private final Calendar calendar(Object value) {
-        if (value instanceof OffsetTime)
-            return Calendar.getInstance(TimeZone.getTimeZone(((OffsetTime) value).getOffset()));
-        if (value instanceof OffsetDateTime)
-            return Calendar.getInstance(TimeZone.getTimeZone(((OffsetDateTime) value).getOffset()));
-
-        throw new IllegalArgumentException("Cannot extract calendar from " + value);
-    }
-    /* [/java-8] */
 
     @Override
     public void set(BindingSetSQLOutputContext<U> ctx) throws SQLException {

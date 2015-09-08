@@ -154,7 +154,7 @@ public class ConverterTest extends AbstractTest {
         assertEquals(1, (int) c5.from(c5.to(1)));
     }
 
-    @SuppressWarnings("serial")
+    @SuppressWarnings({ "serial", "deprecation" })
     @Test
     public void testConverterGraph() {
         Converter<A, B> ab = new AbstractConverter<A, B>(A.class, B.class) {

@@ -57,10 +57,10 @@ import org.jooq.Table;
  */
 class TableAlias<R extends Record> extends AbstractTable<R> {
 
-    private static final long     serialVersionUID = -8417114874567698325L;
+    private static final long serialVersionUID = -8417114874567698325L;
 
-    private final Alias<Table<R>> alias;
-    private final Fields<R>       aliasedFields;
+    final Alias<Table<R>>     alias;
+    final Fields<R>           aliasedFields;
 
     TableAlias(Table<R> table, String alias) {
         this(table, alias, null, false);

@@ -661,7 +661,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         // ---------------------------
         Table<B> b = TBook().as("b");
         Table<S> bs = TBookStore().as("bs");
-        Result<Record2<Integer, String>> result4 =
+        Result<Record2<Integer, String>> r1 =
         create().select(b.field(TBook_ID()), bs.field(TBookStore_NAME()))
                 .from(b)
                 .join(TBookToBookStore()).onKey()
@@ -669,11 +669,27 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                 .orderBy(b.field(TBook_ID()), bs.field(TBookStore_NAME()))
                 .fetch();
 
-        assertEquals(6, result4.size());
-        assertEquals(asList(1, 1, 2, 3, 3, 3), result4.getValues(0));
+        assertEquals(6, r1.size());
+        assertEquals(asList(1, 1, 2, 3, 3, 3), r1.getValues(0));
         assertEquals(asList(
             "Ex Libris", "Orell Füssli", "Orell Füssli",
-            "Buchhandlung im Volkshaus", "Ex Libris", "Orell Füssli"), result4.getValues(1));
+            "Buchhandlung im Volkshaus", "Ex Libris", "Orell Füssli"), r1.getValues(1));
+
+        // Other join direction
+        // --------------------
+        Result<Record2<Integer, String>> r2 =
+        create().select(b.field(TBook_ID()), bs.field(TBookStore_NAME()))
+                .from(bs)
+                .join(TBookToBookStore()).onKey()
+                .join(b).onKey()
+                .orderBy(b.field(TBook_ID()), bs.field(TBookStore_NAME()))
+                .fetch();
+
+        assertEquals(6, r2.size());
+        assertEquals(asList(1, 1, 2, 3, 3, 3), r2.getValues(0));
+        assertEquals(asList(
+            "Ex Libris", "Orell Füssli", "Orell Füssli",
+            "Buchhandlung im Volkshaus", "Ex Libris", "Orell Füssli"), r2.getValues(1));
     }
 
     public void testInverseAndNestedJoin() throws Exception {

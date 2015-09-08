@@ -66,10 +66,10 @@ import static org.jooq.impl.DSL.connectByIsLeaf;
 import static org.jooq.impl.DSL.connectByRoot;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.level;
 import static org.jooq.impl.DSL.lower;
 import static org.jooq.impl.DSL.max;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.prior;
 import static org.jooq.impl.DSL.select;
@@ -317,8 +317,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         Result<?> r2 =
         create().select()
                 .from(table(select(level().as("lvl")).connectBy(level().le(5)))
-                    .pivot(max(fieldByName("lvl")))
-                    .on(fieldByName("lvl"))
+                    .pivot(max(field(name("lvl"))))
+                    .on(field(name("lvl")))
                     .in(1, 2, 3, 4, 5)
                     .as("t", "a", "b", "c", "d", "e"))
                 .fetch();

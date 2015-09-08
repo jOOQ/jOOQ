@@ -40,7 +40,8 @@
  */
 package org.jooq.test.all.testcases;
 
-import static org.jooq.impl.DSL.fieldByName;
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
@@ -121,7 +122,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                         .from(TBook())
                         .join(TAuthor()).on(TBook_AUTHOR_ID().eq(TAuthor_ID()))
                     ).as("t", "a", "b"))
-                .orderBy(fieldByName("a"))
+                .orderBy(field(name("a")))
                 .fetch();
 
         assertEquals(4, result.size());

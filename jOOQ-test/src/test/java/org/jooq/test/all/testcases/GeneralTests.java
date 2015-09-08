@@ -45,9 +45,11 @@ import static org.jooq.impl.DSL.castNull;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.deg;
 import static org.jooq.impl.DSL.e;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.pi;
 import static org.jooq.impl.DSL.rad;
+import static org.jooq.impl.DSL.sequence;
 import static org.jooq.impl.DSL.trim;
 import static org.jooq.impl.DSL.two;
 import static org.jooq.impl.DSL.val;
@@ -76,7 +78,6 @@ import org.jooq.UpdatableRecord;
 import org.jooq.UpdateQuery;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DetachedException;
-import org.jooq.impl.DSL;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
@@ -128,7 +129,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     public void testSequenceByName() throws Exception {
         assumeNotNull(SAuthorID());
 
-        testSequences0(DSL.sequenceByName(SAuthorID().getSchema().getName(), SAuthorID().getName()));
+        testSequences0(sequence(name(SAuthorID().getSchema().getName(), SAuthorID().getName())));
     }
 
     private void testSequences0(Sequence<? extends Number> sequence) {

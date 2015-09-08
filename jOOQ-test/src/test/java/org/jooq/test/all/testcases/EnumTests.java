@@ -41,8 +41,9 @@
 package org.jooq.test.all.testcases;
 
 import static java.util.Arrays.asList;
-import static org.jooq.impl.DSL.fieldByName;
-import static org.jooq.impl.DSL.tableByName;
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.table;
 import static org.jooq.tools.reflect.Reflect.on;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -349,9 +350,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         clean(TBooleans());
 
         assertEquals(1,
-        create().insertInto(tableByName(TBooleans().getName()),
-                    fieldByName(TBooleans_ID().getName()),
-                    fieldByName(TBooleans_BOOLEAN_10().getName()))
+        create().insertInto(table(name(TBooleans().getName())),
+                    field(name(TBooleans_ID().getName())),
+                    field(name(TBooleans_BOOLEAN_10().getName())))
                 .values(1, -1)
                 .execute());
 

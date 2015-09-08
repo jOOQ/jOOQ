@@ -48,14 +48,12 @@ import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.StatementType.STATIC_STATEMENT;
 import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.param;
 import static org.jooq.impl.DSL.table;
-import static org.jooq.impl.DSL.tableByName;
 import static org.jooq.impl.DSL.val;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -125,10 +123,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     public void testQualifiedSQL() throws Exception {
         Result<Record2<Integer, String>> result =
         create().select(
-                    fieldByName(Integer.class, TBook_ID().getName()),
-                    fieldByName(String.class, TBook_TITLE().getName()))
-                .from(tableByName(TBook().getName()))
-                .orderBy(fieldByName(TBook().getName(), TBook_ID().getName()))
+                    field(name(TBook_ID().getName()), Integer.class),
+                    field(name(TBook_TITLE().getName()), String.class))
+                .from(table(TBook().getName()))
+                .orderBy(field(name(TBook().getName(), TBook_ID().getName())))
                 .fetch();
 
         assertEquals(4, result.size());

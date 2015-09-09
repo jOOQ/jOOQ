@@ -850,7 +850,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (scala)
-            out.println("class %s extends %s[%s](%s)[[before= with ][%s]] {", className, baseClass, className, tableIdentifier, interfaces);
+            out.println("class %s extends %s[%s](%s)[[before= with ][separator= with ][%s]] {", className, baseClass, className, tableIdentifier, interfaces);
         else
             out.println("public class %s extends %s<%s>[[before= implements ][%s]] {", className, baseClass, className, interfaces);
 
@@ -1400,7 +1400,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (scala) {
-            out.println("class %s extends %s[%s](\"%s\", %s)[[before= with ][%s]] {", className, UDTImpl.class, recordType, udt.getOutputName(), schemaId, interfaces);
+            out.println("class %s extends %s[%s](\"%s\", %s)[[before= with ][separator= with ][%s]] {", className, UDTImpl.class, recordType, udt.getOutputName(), schemaId, interfaces);
         }
         else {
             out.println("public class %s extends %s<%s>[[before= implements ][%s]] {", className, UDTImpl.class, recordType, interfaces);
@@ -1676,7 +1676,7 @@ public class JavaGenerator extends AbstractGenerator {
         printClassAnnotations(out, schema);
 
         if (scala)
-            out.println("class %s extends %s[%s](%s, \"%s\", %s[[before=, ][new %s()]])[[before= with ][%s]] {",
+            out.println("class %s extends %s[%s](%s, \"%s\", %s[[before=, ][new %s()]])[[before= with ][separator= with ][%s]] {",
                     className, ArrayRecordImpl.class, elementType, schemaId, arrayName, elementTypeRef, converters, interfaces);
         else
             out.println("public class %s extends %s<%s>[[before= implements ][%s]] {",
@@ -1985,7 +1985,7 @@ public class JavaGenerator extends AbstractGenerator {
         printClassAnnotations(out, schema);
 
         if (scala) {
-            out.println("object %s extends %s(\"%s\", %s)[[before= with ][%s]] {", className, PackageImpl.class, pkg.getOutputName(), schemaIdentifier, interfaces);
+            out.println("object %s extends %s(\"%s\", %s)[[before= with ][separator= with ][%s]] {", className, PackageImpl.class, pkg.getOutputName(), schemaIdentifier, interfaces);
 
             out.tab(1).javadoc("The reference instance of <code>%s</code>", pkg.getQualifiedOutputName());
             out.tab(1).println("val %s = %s", identifier, className);
@@ -2153,7 +2153,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("@%s", out.ref("org.springframework.stereotype.Repository"));
 
         if (scala)
-            out.println("class %s(configuration : %s) extends %s[%s, %s, %s](%s, classOf[%s], configuration)[[before= with ][%s]] {",
+            out.println("class %s(configuration : %s) extends %s[%s, %s, %s](%s, classOf[%s], configuration)[[before= with ][separator= with ][%s]] {",
                     className, Configuration.class, daoImpl, tableRecord, pType, tType, tableIdentifier, pType, interfaces);
         else
             out.println("public class %s extends %s<%s, %s, %s>[[before= implements ][%s]] {", className, daoImpl, tableRecord, pType, tType, interfaces);
@@ -2370,7 +2370,7 @@ public class JavaGenerator extends AbstractGenerator {
                 separator = ", ";
             }
 
-            out.println(")[[before= extends ][%s]][[before= with ][%s]] {", first(superTypes), remaining(superTypes));
+            out.println(")[[before= extends ][%s]][[before= with ][separator= with ][%s]] {", first(superTypes), remaining(superTypes));
         }
         else {
             out.println("public class %s[[before= extends ][%s]][[before= implements ][%s]] {", className, list(superName), interfaces);
@@ -2777,7 +2777,7 @@ public class JavaGenerator extends AbstractGenerator {
         printClassAnnotations(out, schema);
 
         if (scala) {
-            out.println("class %s(alias : String, aliased : %s[%s], parameters : Array[ %s[_] ]) extends %s[%s](alias, %s, aliased, parameters, \"%s\")[[before= with ][%s]] {",
+            out.println("class %s(alias : String, aliased : %s[%s], parameters : Array[ %s[_] ]) extends %s[%s](alias, %s, aliased, parameters, \"%s\")[[before= with ][separator= with ][%s]] {",
                     className, Table.class, recordType, Field.class, TableImpl.class, recordType, schemaId, escapeString(comment), interfaces);
         }
         else {
@@ -3197,7 +3197,7 @@ public class JavaGenerator extends AbstractGenerator {
         printClassAnnotations(out, schema);
 
         if (scala) {
-            out.println("class %s extends %s(\"%s\")[[before= with ][%s]] {", className, SchemaImpl.class, schema.getOutputName(), interfaces);
+            out.println("class %s extends %s(\"%s\")[[before= with ][separator= with ][%s]] {", className, SchemaImpl.class, schema.getOutputName(), interfaces);
         }
         else {
             out.println("public class %s extends %s[[before= implements ][%s]] {", className, SchemaImpl.class, interfaces);
@@ -3508,7 +3508,7 @@ public class JavaGenerator extends AbstractGenerator {
         printClassAnnotations(out, schema);
 
         if (scala) {
-            out.println("class %s extends %s[%s](\"%s\", %s[[before=, ][%s]][[before=, ][%s]][[before=, ][new %s()]])[[before= with ][%s]] {",
+            out.println("class %s extends %s[%s](\"%s\", %s[[before=, ][%s]][[before=, ][%s]][[before=, ][new %s()]])[[before= with ][separator= with ][%s]] {",
                     className, AbstractRoutine.class, returnType, routine.getName(), schemaId, packageId, returnTypeRef, returnConverterType, interfaces);
         }
         else {

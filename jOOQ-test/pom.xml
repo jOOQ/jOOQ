@@ -5726,6 +5726,21 @@
                                     </jdbc>
                                     <generator>
                                         <name>org.jooq.util.ScalaGenerator</name>
+                                        <strategy>
+                                            <matchers>
+                                                <tables>
+                                                    <table>
+                                                        <expression>.*BOOK.*</expression>
+                                                        
+                                                        <tableImplements>org.jooq.test.all.scala.Test</tableImplements>
+                                                        <recordImplements>org.jooq.test.all.scala.Test</recordImplements>
+                                                        <interfaceImplements>org.jooq.test.all.scala.Test</interfaceImplements>
+                                                        <daoImplements>org.jooq.test.all.scala.Test</daoImplements>
+                                                        <pojoImplements>org.jooq.test.all.scala.Test</pojoImplements>
+                                                    </table>
+                                                </tables>
+                                            </matchers>
+                                        </strategy>
                                         <database>
                                             <name>org.jooq.util.oracle.OracleDatabase</name>
                                             <includes>.*</includes>

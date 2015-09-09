@@ -17,6 +17,7 @@ import org.jooq.Field
 import org.jooq.Record1
 import org.jooq.Row1
 import org.jooq.impl.UpdatableRecordImpl
+import org.jooq.test.all.scala.Test
 import org.jooq.test.oraclescala.generatedclasses.test.tables.TBookStore
 
 
@@ -25,7 +26,7 @@ import org.jooq.test.oraclescala.generatedclasses.test.tables.TBookStore
  */
 @Entity
 @Table(name = "T_BOOK_STORE", schema = "TEST")
-class TBookStoreRecord extends UpdatableRecordImpl[TBookStoreRecord](TBookStore.T_BOOK_STORE) with Record1[String] {
+class TBookStoreRecord extends UpdatableRecordImpl[TBookStoreRecord](TBookStore.T_BOOK_STORE) with Test with Record1[String] {
 
 	/**
 	 * Setter for <code>TEST.T_BOOK_STORE.NAME</code>. The books store name

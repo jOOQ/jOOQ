@@ -6,6 +6,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables.records
 
 import java.lang.Integer
 import java.lang.Long
+import java.lang.Object
 import java.sql.Date
 import java.sql.Timestamp
 
@@ -17,8 +18,8 @@ import javax.validation.constraints.NotNull
 
 import org.jooq.Field
 import org.jooq.Record1
-import org.jooq.Record8
-import org.jooq.Row8
+import org.jooq.Record10
+import org.jooq.Row10
 import org.jooq.impl.UpdatableRecordImpl
 import org.jooq.test.oraclescala.generatedclasses.test.tables.TDates
 import org.jooq.types.DayToSecond
@@ -30,7 +31,7 @@ import org.jooq.types.YearToMonth
  */
 @Entity
 @Table(name = "T_DATES", schema = "TEST")
-class TDatesRecord extends UpdatableRecordImpl[TDatesRecord](TDates.T_DATES) with Record8[Integer, Date, Timestamp, Timestamp, Integer, Long, YearToMonth, DayToSecond] {
+class TDatesRecord extends UpdatableRecordImpl[TDatesRecord](TDates.T_DATES) with Record10[Integer, Date, Timestamp, Timestamp, Object, Object, Integer, Long, YearToMonth, DayToSecond] {
 
 	/**
 	 * Setter for <code>TEST.T_DATES.ID</code>.
@@ -99,10 +100,42 @@ class TDatesRecord extends UpdatableRecordImpl[TDatesRecord](TDates.T_DATES) wit
 	}
 
 	/**
+	 * Setter for <code>TEST.T_DATES.T_TZ</code>.
+	 */
+	def setTTz(value : Object) : Unit = {
+		setValue(4, value)
+	}
+
+	/**
+	 * Getter for <code>TEST.T_DATES.T_TZ</code>.
+	 */
+	@Column(name = "T_TZ")
+	def getTTz : Object = {
+		val r = getValue(4)
+		if (r == null) null else r.asInstanceOf[Object]
+	}
+
+	/**
+	 * Setter for <code>TEST.T_DATES.TS_TZ</code>.
+	 */
+	def setTsTz(value : Object) : Unit = {
+		setValue(5, value)
+	}
+
+	/**
+	 * Getter for <code>TEST.T_DATES.TS_TZ</code>.
+	 */
+	@Column(name = "TS_TZ")
+	def getTsTz : Object = {
+		val r = getValue(5)
+		if (r == null) null else r.asInstanceOf[Object]
+	}
+
+	/**
 	 * Setter for <code>TEST.T_DATES.D_INT</code>.
 	 */
 	def setDInt(value : Integer) : Unit = {
-		setValue(4, value)
+		setValue(6, value)
 	}
 
 	/**
@@ -110,7 +143,7 @@ class TDatesRecord extends UpdatableRecordImpl[TDatesRecord](TDates.T_DATES) wit
 	 */
 	@Column(name = "D_INT", precision = 7)
 	def getDInt : Integer = {
-		val r = getValue(4)
+		val r = getValue(6)
 		if (r == null) null else r.asInstanceOf[Integer]
 	}
 
@@ -118,7 +151,7 @@ class TDatesRecord extends UpdatableRecordImpl[TDatesRecord](TDates.T_DATES) wit
 	 * Setter for <code>TEST.T_DATES.TS_BIGINT</code>.
 	 */
 	def setTsBigint(value : Long) : Unit = {
-		setValue(5, value)
+		setValue(7, value)
 	}
 
 	/**
@@ -126,7 +159,7 @@ class TDatesRecord extends UpdatableRecordImpl[TDatesRecord](TDates.T_DATES) wit
 	 */
 	@Column(name = "TS_BIGINT", precision = 18)
 	def getTsBigint : Long = {
-		val r = getValue(5)
+		val r = getValue(7)
 		if (r == null) null else r.asInstanceOf[Long]
 	}
 
@@ -134,7 +167,7 @@ class TDatesRecord extends UpdatableRecordImpl[TDatesRecord](TDates.T_DATES) wit
 	 * Setter for <code>TEST.T_DATES.I_Y</code>.
 	 */
 	def setIY(value : YearToMonth) : Unit = {
-		setValue(6, value)
+		setValue(8, value)
 	}
 
 	/**
@@ -142,7 +175,7 @@ class TDatesRecord extends UpdatableRecordImpl[TDatesRecord](TDates.T_DATES) wit
 	 */
 	@Column(name = "I_Y", precision = 2)
 	def getIY : YearToMonth = {
-		val r = getValue(6)
+		val r = getValue(8)
 		if (r == null) null else r.asInstanceOf[YearToMonth]
 	}
 
@@ -150,7 +183,7 @@ class TDatesRecord extends UpdatableRecordImpl[TDatesRecord](TDates.T_DATES) wit
 	 * Setter for <code>TEST.T_DATES.I_D</code>.
 	 */
 	def setID(value : DayToSecond) : Unit = {
-		setValue(7, value)
+		setValue(9, value)
 	}
 
 	/**
@@ -158,7 +191,7 @@ class TDatesRecord extends UpdatableRecordImpl[TDatesRecord](TDates.T_DATES) wit
 	 */
 	@Column(name = "I_D", precision = 2, scale = 6)
 	def getID : DayToSecond = {
-		val r = getValue(7)
+		val r = getValue(9)
 		if (r == null) null else r.asInstanceOf[DayToSecond]
 	}
 
@@ -170,32 +203,36 @@ class TDatesRecord extends UpdatableRecordImpl[TDatesRecord](TDates.T_DATES) wit
 	}
 
 	// -------------------------------------------------------------------------
-	// Record8 type implementation
+	// Record10 type implementation
 	// -------------------------------------------------------------------------
 
-	override def fieldsRow : Row8[Integer, Date, Timestamp, Timestamp, Integer, Long, YearToMonth, DayToSecond] = {
-		super.fieldsRow.asInstanceOf[ Row8[Integer, Date, Timestamp, Timestamp, Integer, Long, YearToMonth, DayToSecond] ]
+	override def fieldsRow : Row10[Integer, Date, Timestamp, Timestamp, Object, Object, Integer, Long, YearToMonth, DayToSecond] = {
+		super.fieldsRow.asInstanceOf[ Row10[Integer, Date, Timestamp, Timestamp, Object, Object, Integer, Long, YearToMonth, DayToSecond] ]
 	}
 
-	override def valuesRow : Row8[Integer, Date, Timestamp, Timestamp, Integer, Long, YearToMonth, DayToSecond] = {
-		super.valuesRow.asInstanceOf[ Row8[Integer, Date, Timestamp, Timestamp, Integer, Long, YearToMonth, DayToSecond] ]
+	override def valuesRow : Row10[Integer, Date, Timestamp, Timestamp, Object, Object, Integer, Long, YearToMonth, DayToSecond] = {
+		super.valuesRow.asInstanceOf[ Row10[Integer, Date, Timestamp, Timestamp, Object, Object, Integer, Long, YearToMonth, DayToSecond] ]
 	}
 	override def field1 : Field[Integer] = TDates.T_DATES.ID
 	override def field2 : Field[Date] = TDates.T_DATES.D
 	override def field3 : Field[Timestamp] = TDates.T_DATES.T
 	override def field4 : Field[Timestamp] = TDates.T_DATES.TS
-	override def field5 : Field[Integer] = TDates.T_DATES.D_INT
-	override def field6 : Field[Long] = TDates.T_DATES.TS_BIGINT
-	override def field7 : Field[YearToMonth] = TDates.T_DATES.I_Y
-	override def field8 : Field[DayToSecond] = TDates.T_DATES.I_D
+	override def field5 : Field[Object] = TDates.T_DATES.T_TZ
+	override def field6 : Field[Object] = TDates.T_DATES.TS_TZ
+	override def field7 : Field[Integer] = TDates.T_DATES.D_INT
+	override def field8 : Field[Long] = TDates.T_DATES.TS_BIGINT
+	override def field9 : Field[YearToMonth] = TDates.T_DATES.I_Y
+	override def field10 : Field[DayToSecond] = TDates.T_DATES.I_D
 	override def value1 : Integer = getId
 	override def value2 : Date = getD
 	override def value3 : Timestamp = getT
 	override def value4 : Timestamp = getTs
-	override def value5 : Integer = getDInt
-	override def value6 : Long = getTsBigint
-	override def value7 : YearToMonth = getIY
-	override def value8 : DayToSecond = getID
+	override def value5 : Object = getTTz
+	override def value6 : Object = getTsTz
+	override def value7 : Integer = getDInt
+	override def value8 : Long = getTsBigint
+	override def value9 : YearToMonth = getIY
+	override def value10 : DayToSecond = getID
 
 	override def value1(value : Integer) : TDatesRecord = {
 		setId(value)
@@ -217,27 +254,37 @@ class TDatesRecord extends UpdatableRecordImpl[TDatesRecord](TDates.T_DATES) wit
 		this
 	}
 
-	override def value5(value : Integer) : TDatesRecord = {
+	override def value5(value : Object) : TDatesRecord = {
+		setTTz(value)
+		this
+	}
+
+	override def value6(value : Object) : TDatesRecord = {
+		setTsTz(value)
+		this
+	}
+
+	override def value7(value : Integer) : TDatesRecord = {
 		setDInt(value)
 		this
 	}
 
-	override def value6(value : Long) : TDatesRecord = {
+	override def value8(value : Long) : TDatesRecord = {
 		setTsBigint(value)
 		this
 	}
 
-	override def value7(value : YearToMonth) : TDatesRecord = {
+	override def value9(value : YearToMonth) : TDatesRecord = {
 		setIY(value)
 		this
 	}
 
-	override def value8(value : DayToSecond) : TDatesRecord = {
+	override def value10(value : DayToSecond) : TDatesRecord = {
 		setID(value)
 		this
 	}
 
-	override def values(value1 : Integer, value2 : Date, value3 : Timestamp, value4 : Timestamp, value5 : Integer, value6 : Long, value7 : YearToMonth, value8 : DayToSecond) : TDatesRecord = {
+	override def values(value1 : Integer, value2 : Date, value3 : Timestamp, value4 : Timestamp, value5 : Object, value6 : Object, value7 : Integer, value8 : Long, value9 : YearToMonth, value10 : DayToSecond) : TDatesRecord = {
 		this.value1(value1)
 		this.value2(value2)
 		this.value3(value3)
@@ -246,22 +293,26 @@ class TDatesRecord extends UpdatableRecordImpl[TDatesRecord](TDates.T_DATES) wit
 		this.value6(value6)
 		this.value7(value7)
 		this.value8(value8)
+		this.value9(value9)
+		this.value10(value10)
 		this
 	}
 
 	/**
 	 * Create a detached, initialised TDatesRecord
 	 */
-	def this(id : Integer, d : Date, t : Timestamp, ts : Timestamp, dInt : Integer, tsBigint : Long, iY : YearToMonth, iD : DayToSecond) = {
+	def this(id : Integer, d : Date, t : Timestamp, ts : Timestamp, tTz : Object, tsTz : Object, dInt : Integer, tsBigint : Long, iY : YearToMonth, iD : DayToSecond) = {
 		this()
 
 		setValue(0, id)
 		setValue(1, d)
 		setValue(2, t)
 		setValue(3, ts)
-		setValue(4, dInt)
-		setValue(5, tsBigint)
-		setValue(6, iY)
-		setValue(7, iD)
+		setValue(4, tTz)
+		setValue(5, tsTz)
+		setValue(6, dInt)
+		setValue(7, tsBigint)
+		setValue(8, iY)
+		setValue(9, iD)
 	}
 }

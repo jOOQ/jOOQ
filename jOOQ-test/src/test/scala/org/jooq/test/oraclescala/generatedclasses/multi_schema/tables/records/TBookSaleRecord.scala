@@ -21,6 +21,7 @@ import org.jooq.Record1
 import org.jooq.Record5
 import org.jooq.Row5
 import org.jooq.impl.UpdatableRecordImpl
+import org.jooq.test.all.scala.Test
 import org.jooq.test.oraclescala.generatedclasses.multi_schema.tables.TBookSale
 
 
@@ -29,7 +30,7 @@ import org.jooq.test.oraclescala.generatedclasses.multi_schema.tables.TBookSale
  */
 @Entity
 @Table(name = "T_BOOK_SALE", schema = "MULTI_SCHEMA")
-class TBookSaleRecord extends UpdatableRecordImpl[TBookSaleRecord](TBookSale.T_BOOK_SALE) with Record5[Integer, Integer, String, Date, BigDecimal] {
+class TBookSaleRecord extends UpdatableRecordImpl[TBookSaleRecord](TBookSale.T_BOOK_SALE) with Test with Record5[Integer, Integer, String, Date, BigDecimal] {
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_BOOK_SALE.ID</code>.

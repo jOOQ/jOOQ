@@ -19,6 +19,7 @@ import org.jooq.Record2
 import org.jooq.Record3
 import org.jooq.Row3
 import org.jooq.impl.UpdatableRecordImpl
+import org.jooq.test.all.scala.Test
 import org.jooq.test.oraclescala.generatedclasses.test.tables.TBookToBookStore
 
 
@@ -29,7 +30,7 @@ import org.jooq.test.oraclescala.generatedclasses.test.tables.TBookToBookStore
 @Table(name = "T_BOOK_TO_BOOK_STORE", schema = "TEST", uniqueConstraints = Array(
 	new UniqueConstraint(columnNames = Array("BOOK_STORE_NAME", "BOOK_ID"))
 ))
-class TBookToBookStoreRecord extends UpdatableRecordImpl[TBookToBookStoreRecord](TBookToBookStore.T_BOOK_TO_BOOK_STORE) with Record3[String, Integer, Integer] {
+class TBookToBookStoreRecord extends UpdatableRecordImpl[TBookToBookStoreRecord](TBookToBookStore.T_BOOK_TO_BOOK_STORE) with Test with Record3[String, Integer, Integer] {
 
 	/**
 	 * Setter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name

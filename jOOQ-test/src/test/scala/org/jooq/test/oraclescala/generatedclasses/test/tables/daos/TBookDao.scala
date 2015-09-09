@@ -12,6 +12,7 @@ import java.util.List
 
 import org.jooq.Configuration
 import org.jooq.impl.DAOImpl
+import org.jooq.test.all.scala.Test
 import org.jooq.test.oraclescala.generatedclasses.test.tables.TBook
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.TBookRecord
 
@@ -21,7 +22,7 @@ import scala.Array
 /**
  * An entity holding books
  */
-class TBookDao(configuration : Configuration) extends DAOImpl[TBookRecord, org.jooq.test.oraclescala.generatedclasses.test.tables.pojos.TBook, Integer](TBook.T_BOOK, classOf[org.jooq.test.oraclescala.generatedclasses.test.tables.pojos.TBook], configuration) {
+class TBookDao(configuration : Configuration) extends DAOImpl[TBookRecord, org.jooq.test.oraclescala.generatedclasses.test.tables.pojos.TBook, Integer](TBook.T_BOOK, classOf[org.jooq.test.oraclescala.generatedclasses.test.tables.pojos.TBook], configuration) with Test {
 
 	/**
 	 * Create a new TBookDao without any configuration

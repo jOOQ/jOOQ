@@ -11,6 +11,7 @@ import java.util.List
 import org.jooq.Configuration
 import org.jooq.Record2
 import org.jooq.impl.DAOImpl
+import org.jooq.test.all.scala.Test
 import org.jooq.test.oraclescala.generatedclasses.test.tables.TBookToBookStore
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.TBookToBookStoreRecord
 
@@ -18,7 +19,7 @@ import org.jooq.test.oraclescala.generatedclasses.test.tables.records.TBookToBoo
 /**
  * An m:n relation between books and book stores
  */
-class TBookToBookStoreDao(configuration : Configuration) extends DAOImpl[TBookToBookStoreRecord, org.jooq.test.oraclescala.generatedclasses.test.tables.pojos.TBookToBookStore, Record2[String, Integer]](TBookToBookStore.T_BOOK_TO_BOOK_STORE, classOf[org.jooq.test.oraclescala.generatedclasses.test.tables.pojos.TBookToBookStore], configuration) {
+class TBookToBookStoreDao(configuration : Configuration) extends DAOImpl[TBookToBookStoreRecord, org.jooq.test.oraclescala.generatedclasses.test.tables.pojos.TBookToBookStore, Record2[String, Integer]](TBookToBookStore.T_BOOK_TO_BOOK_STORE, classOf[org.jooq.test.oraclescala.generatedclasses.test.tables.pojos.TBookToBookStore], configuration) with Test {
 
 	/**
 	 * Create a new TBookToBookStoreDao without any configuration

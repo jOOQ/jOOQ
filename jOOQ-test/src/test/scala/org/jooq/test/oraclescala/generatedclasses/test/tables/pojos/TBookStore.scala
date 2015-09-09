@@ -14,6 +14,8 @@ import javax.persistence.Table
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
+import org.jooq.test.all.scala.Test
+
 
 /**
  * A book store
@@ -22,7 +24,7 @@ import javax.validation.constraints.Size
 @Table(name = "T_BOOK_STORE", schema = "TEST")
 class TBookStore(
 	  private var name : String
-) extends Serializable {
+) extends Test with Serializable {
 
 	def this() = {
 		this(null : String)

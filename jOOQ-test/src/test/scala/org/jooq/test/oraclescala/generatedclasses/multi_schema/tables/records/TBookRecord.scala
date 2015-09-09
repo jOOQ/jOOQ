@@ -19,6 +19,7 @@ import org.jooq.Record1
 import org.jooq.Record9
 import org.jooq.Row9
 import org.jooq.impl.UpdatableRecordImpl
+import org.jooq.test.all.scala.Test
 import org.jooq.test.oraclescala.generatedclasses.multi_schema.tables.TBook
 
 import scala.Array
@@ -29,7 +30,7 @@ import scala.Array
  */
 @Entity
 @Table(name = "T_BOOK", schema = "MULTI_SCHEMA")
-class TBookRecord extends UpdatableRecordImpl[TBookRecord](TBook.T_BOOK) with Record9[Integer, Integer, Integer, Integer, String, Integer, Integer, String, Array[scala.Byte]] {
+class TBookRecord extends UpdatableRecordImpl[TBookRecord](TBook.T_BOOK) with Test with Record9[Integer, Integer, Integer, Integer, String, Integer, Integer, String, Array[scala.Byte]] {
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_BOOK.ID</code>.

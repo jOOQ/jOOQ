@@ -18,8 +18,8 @@ import org.jooq.Table
 import org.jooq.TableField
 import org.jooq.UniqueKey
 import org.jooq.impl.TableImpl
+import org.jooq.test.all.scala.Test
 import org.jooq.test.oraclescala.generatedclasses.test.Keys
-import org.jooq.test.oraclescala.generatedclasses.test.Test
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.TBookRecord
 
 import scala.Array
@@ -36,7 +36,7 @@ object TBook {
 /**
  * An entity holding books
  */
-class TBook(alias : String, aliased : Table[TBookRecord], parameters : Array[ Field[_] ]) extends TableImpl[TBookRecord](alias, Test.TEST, aliased, parameters, "An entity holding books") {
+class TBook(alias : String, aliased : Table[TBookRecord], parameters : Array[ Field[_] ]) extends TableImpl[TBookRecord](alias, org.jooq.test.oraclescala.generatedclasses.test.Test.TEST, aliased, parameters, "An entity holding books") with Test {
 
 	/**
 	 * The class holding records for this type

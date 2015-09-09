@@ -15,6 +15,8 @@ import javax.persistence.Table
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
+import org.jooq.test.all.scala.Test
+
 import scala.Array
 
 
@@ -33,7 +35,7 @@ class TBook(
 	, private var languageId : Integer          
 	, private var contentText : String           
 	, private var contentPdf : Array[scala.Byte]
-) extends Serializable {
+) extends Test with Serializable {
 
 	def this() = {
 		this(null, null, null, null, null, null, null, null, null)

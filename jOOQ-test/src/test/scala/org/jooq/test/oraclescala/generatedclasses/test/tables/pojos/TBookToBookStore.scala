@@ -15,6 +15,8 @@ import javax.persistence.UniqueConstraint
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
+import org.jooq.test.all.scala.Test
+
 
 /**
  * An m:n relation between books and book stores
@@ -27,7 +29,7 @@ class TBookToBookStore(
 	  private var bookStoreName : String 
 	, private var bookId : Integer
 	, private var stock : Integer
-) extends Serializable {
+) extends Test with Serializable {
 
 	def this() = {
 		this(null, null, null)

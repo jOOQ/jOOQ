@@ -19,6 +19,7 @@ import org.jooq.Field
 import org.jooq.Record11
 import org.jooq.Row11
 import org.jooq.impl.TableRecordImpl
+import org.jooq.test.all.scala.Test
 import org.jooq.test.oraclescala.generatedclasses.test.tables.VBook
 
 import scala.Array
@@ -29,7 +30,7 @@ import scala.Array
  */
 @Entity
 @Table(name = "V_BOOK", schema = "TEST")
-class VBookRecord extends TableRecordImpl[VBookRecord](VBook.V_BOOK) with Record11[Integer, Integer, Integer, Integer, String, Integer, Integer, String, Array[scala.Byte], BigDecimal, Timestamp] {
+class VBookRecord extends TableRecordImpl[VBookRecord](VBook.V_BOOK) with Test with Record11[Integer, Integer, Integer, Integer, String, Integer, Integer, String, Array[scala.Byte], BigDecimal, Timestamp] {
 
 	/**
 	 * Setter for <code>TEST.V_BOOK.ID</code>.

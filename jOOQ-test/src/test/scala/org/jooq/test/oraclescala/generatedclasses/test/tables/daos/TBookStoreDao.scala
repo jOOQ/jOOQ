@@ -9,6 +9,7 @@ import java.util.List
 
 import org.jooq.Configuration
 import org.jooq.impl.DAOImpl
+import org.jooq.test.all.scala.Test
 import org.jooq.test.oraclescala.generatedclasses.test.tables.TBookStore
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.TBookStoreRecord
 
@@ -16,7 +17,7 @@ import org.jooq.test.oraclescala.generatedclasses.test.tables.records.TBookStore
 /**
  * A book store
  */
-class TBookStoreDao(configuration : Configuration) extends DAOImpl[TBookStoreRecord, org.jooq.test.oraclescala.generatedclasses.test.tables.pojos.TBookStore, String](TBookStore.T_BOOK_STORE, classOf[org.jooq.test.oraclescala.generatedclasses.test.tables.pojos.TBookStore], configuration) {
+class TBookStoreDao(configuration : Configuration) extends DAOImpl[TBookStoreRecord, org.jooq.test.oraclescala.generatedclasses.test.tables.pojos.TBookStore, String](TBookStore.T_BOOK_STORE, classOf[org.jooq.test.oraclescala.generatedclasses.test.tables.pojos.TBookStore], configuration) with Test {
 
 	/**
 	 * Create a new TBookStoreDao without any configuration

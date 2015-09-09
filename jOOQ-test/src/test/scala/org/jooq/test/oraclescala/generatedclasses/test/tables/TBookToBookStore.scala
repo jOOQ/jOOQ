@@ -16,8 +16,8 @@ import org.jooq.Table
 import org.jooq.TableField
 import org.jooq.UniqueKey
 import org.jooq.impl.TableImpl
+import org.jooq.test.all.scala.Test
 import org.jooq.test.oraclescala.generatedclasses.test.Keys
-import org.jooq.test.oraclescala.generatedclasses.test.Test
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.TBookToBookStoreRecord
 
 
@@ -32,7 +32,7 @@ object TBookToBookStore {
 /**
  * An m:n relation between books and book stores
  */
-class TBookToBookStore(alias : String, aliased : Table[TBookToBookStoreRecord], parameters : Array[ Field[_] ]) extends TableImpl[TBookToBookStoreRecord](alias, Test.TEST, aliased, parameters, "An m:n relation between books and book stores") {
+class TBookToBookStore(alias : String, aliased : Table[TBookToBookStoreRecord], parameters : Array[ Field[_] ]) extends TableImpl[TBookToBookStoreRecord](alias, org.jooq.test.oraclescala.generatedclasses.test.Test.TEST, aliased, parameters, "An m:n relation between books and book stores") with Test {
 
 	/**
 	 * The class holding records for this type

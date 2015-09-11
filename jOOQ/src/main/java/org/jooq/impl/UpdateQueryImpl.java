@@ -133,8 +133,8 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     private Row                         multiValue;
     private Select<?>                   multiSelect;
 
-    UpdateQueryImpl(Configuration configuration, Table<R> table) {
-        super(configuration, table);
+    UpdateQueryImpl(Configuration configuration, WithImpl with, Table<R> table) {
+        super(configuration, with, table);
 
         this.updateMap = new FieldMapForUpdate(UPDATE_SET_ASSIGNMENT);
         this.from = new TableList();

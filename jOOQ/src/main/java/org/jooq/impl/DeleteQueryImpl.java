@@ -70,8 +70,8 @@ class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implements D
 
     private final ConditionProviderImpl condition;
 
-    DeleteQueryImpl(Configuration configuration, Table<R> table) {
-        super(configuration, table);
+    DeleteQueryImpl(Configuration configuration, WithImpl with, Table<R> table) {
+        super(configuration, with, table);
 
         this.condition = new ConditionProviderImpl();
     }

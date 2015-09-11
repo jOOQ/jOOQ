@@ -87,11 +87,11 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     private boolean                  onDuplicateKeyUpdate;
     private boolean                  onDuplicateKeyIgnore;
 
-    InsertQueryImpl(Configuration configuration, Table<R> into) {
-        super(configuration, into);
+    InsertQueryImpl(Configuration configuration, WithImpl with, Table<R> into) {
+        super(configuration, with, into);
 
-        updateMap = new FieldMapForUpdate(INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT);
-        insertMaps = new FieldMapsForInsert();
+        this.updateMap = new FieldMapForUpdate(INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT);
+        this.insertMaps = new FieldMapsForInsert();
     }
 
     @Override

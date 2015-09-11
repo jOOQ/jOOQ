@@ -134,8 +134,8 @@ final class UpdateImpl<R extends Record>
      */
     private static final long    serialVersionUID = -2444876472650065331L;
 
-    UpdateImpl(Configuration configuration, Table<R> table) {
-        super(new UpdateQueryImpl<R>(configuration, table));
+    UpdateImpl(Configuration configuration, WithImpl with, Table<R> table) {
+        super(new UpdateQueryImpl<R>(configuration, with, table));
     }
 
     @Override

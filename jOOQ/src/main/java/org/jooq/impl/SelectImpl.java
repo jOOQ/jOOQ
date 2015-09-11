@@ -205,12 +205,12 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     private transient Integer               limit;
     private transient Param<Integer>        limitParam;
 
-    SelectImpl(WithImpl with, Configuration configuration) {
-        this(with, configuration, false);
+    SelectImpl(Configuration configuration, WithImpl with) {
+        this(configuration, with, false);
     }
 
-    SelectImpl(WithImpl with, Configuration configuration, boolean distinct) {
-        this(new SelectQueryImpl<R>(with, configuration, distinct));
+    SelectImpl(Configuration configuration, WithImpl with, boolean distinct) {
+        this(new SelectQueryImpl<R>(configuration, with, distinct));
     }
 
     SelectImpl(Select<R> query) {
@@ -2276,37 +2276,37 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
         return naturalRightOuterJoin(table(sql, parts));
     }
 
+    @Override
+    public final SelectImpl crossApply(String sql) {
+        return crossApply(table(sql));
+    }
+
+    @Override
+    public final SelectImpl crossApply(String sql, Object... bindings) {
+        return crossApply(table(sql, bindings));
+    }
+
+    @Override
+    public final SelectImpl crossApply(String sql, QueryPart... parts) {
+        return crossApply(table(sql, parts));
+    }
+
+    @Override
+    public final SelectImpl outerApply(String sql) {
+        return outerApply(table(sql));
+    }
+
+    @Override
+    public final SelectImpl outerApply(String sql, Object... bindings) {
+        return outerApply(table(sql, bindings));
+    }
+
+    @Override
+    public final SelectImpl outerApply(String sql, QueryPart... parts) {
+        return outerApply(table(sql, parts));
+    }
+
     /* [pro] xx
-
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
-    x
-
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxx xxxxxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx
-    x
-
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxx xxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxx
-    x
-
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
-    x
-
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxx xxxxxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx
-    x
-
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxx xxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxx
-    x
 
     xxxxxxxxx
     xxxxxx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x

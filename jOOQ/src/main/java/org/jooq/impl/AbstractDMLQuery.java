@@ -84,15 +84,17 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -7438014075226919192L;
+    private static final long     serialVersionUID = -7438014075226919192L;
 
+    final WithImpl                with;
     final Table<R>                table;
     final QueryPartList<Field<?>> returning;
     Result<R>                     returned;
 
-    AbstractDMLQuery(Configuration configuration, Table<R> table) {
+    AbstractDMLQuery(Configuration configuration, WithImpl with, Table<R> table) {
         super(configuration);
 
+        this.with = with;
         this.table = table;
         this.returning = new QueryPartList<Field<?>>();
     }
@@ -140,6 +142,8 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
 
     @Override
     public final void accept(Context<?> ctx) {
+        if (with != null)
+            ctx.visit(with).formatSeparator();
 
         /* [pro] xx
         xx xxxxxxxxxxxxx xx xxx

@@ -77,8 +77,8 @@ class DeleteImpl<R extends Record>
      */
     private static final long        serialVersionUID = 2747566322757517382L;
 
-    DeleteImpl(Configuration configuration, Table<R> table) {
-        super(new DeleteQueryImpl<R>(configuration, table));
+    DeleteImpl(Configuration configuration, WithImpl with, Table<R> table) {
+        super(new DeleteQueryImpl<R>(configuration, with, table));
     }
 
     @Override

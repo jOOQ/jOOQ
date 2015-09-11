@@ -3009,8 +3009,8 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testAggregateFunction_EVERY() throws Exception {
-        new AggregateWindowFunctionTests(this).testAggregateFunction_EVERY();
+    public void testAggregateFunction_BOOLAND_BOOLOR() throws Exception {
+        new AggregateWindowFunctionTests(this).testAggregateFunction_BOOLAND_BOOLOR();
     }
 
     @Test

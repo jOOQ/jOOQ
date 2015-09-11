@@ -65,6 +65,8 @@ import static org.jooq.SQLDialect.VERTICA;
 import static org.jooq.impl.DSL.arrayAgg;
 import static org.jooq.impl.DSL.avg;
 import static org.jooq.impl.DSL.avgDistinct;
+import static org.jooq.impl.DSL.boolAnd;
+import static org.jooq.impl.DSL.boolOr;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.countDistinct;
 import static org.jooq.impl.DSL.cumeDist;
@@ -114,7 +116,6 @@ import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DSL.varPop;
 import static org.jooq.impl.DSL.varSamp;
 import static org.jooq.lambda.Seq.seq;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeNotNull;
 
@@ -321,23 +322,53 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         }
     }
 
-    public void testAggregateFunction_EVERY() throws Exception {
-        assertTrue(create().fetchValue(
-            select(every(TBook_ID().lt(5))).from(TBook())
-        ));
+    public void testAggregateFunction_BOOLAND_BOOLOR() throws Exception {
+        assertEquals(asList(true, true, true),
+        create()
+            .select(
+                every(TBook_ID().lt(5)),
+                boolAnd(TBook_ID().lt(5)),
+                boolOr(TBook_ID().lt(5)))
+            .from(TBook())
+            .fetchOne()
+            .intoList());
 
-        assertFalse(create().fetchValue(
-            select(every(TBook_ID().gt(5))).from(TBook())
-        ));
+        assertEquals(asList(false, false, true),
+        create()
+            .select(
+                every(TBook_ID().lt(4)),
+                boolAnd(TBook_ID().lt(4)),
+                boolOr(TBook_ID().lt(4)))
+            .from(TBook())
+            .fetchOne()
+            .intoList());
 
+        assertEquals(asList(false, false, false),
+        create()
+            .select(
+                every(TBook_ID().lt(1)),
+                boolAnd(TBook_ID().lt(1)),
+                boolOr(TBook_ID().lt(1)))
+            .from(TBook())
+            .fetchOne()
+            .intoList());
 
         if (asList(ACCESS, ASE, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, SQLITE).contains(dialect().family())) {
             log.info("SKIPPING", "EVERY() window function");
         }
         else {
-            assertEquals(asList(true, true, false, false), create().fetchValues(
-                select(every(TBook_ID().lt(3)).over(partitionBy(TBook_AUTHOR_ID()))).from(TBook()).orderBy(TBook_ID())
-            ));
+            Result<Record3<Boolean, Boolean, Boolean>> result = create()
+                .select(
+                    every(TBook_ID().lt(4)).over(partitionBy(TBook_AUTHOR_ID())),
+                    boolAnd(TBook_ID().lt(4)).over(partitionBy(TBook_AUTHOR_ID())),
+                    boolOr(TBook_ID().lt(4)).over(partitionBy(TBook_AUTHOR_ID())))
+                .from(TBook())
+                .orderBy(TBook_ID())
+                .fetch();
+
+            assertEquals(asList(true, true, false, false), result.getValues(0));
+            assertEquals(asList(true, true, false, false), result.getValues(1));
+            assertEquals(asList(true, true, true, true), result.getValues(2));
         }
     }
 

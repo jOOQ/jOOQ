@@ -11286,18 +11286,54 @@ public class DSL {
 
     /**
      * Get the every value over a field: every(field).
+     * <p>
+     * This is a synonym for {@link #boolAnd(Field)}.
      */
     @Support
     public static AggregateFunction<Boolean> every(Field<Boolean> field) {
-        return every(condition(nullSafe(field)));
+        return boolAnd(field);
     }
 
     /**
      * Get the every value over a condition: every(condition).
+     * <p>
+     * This is a synonym for {@link #boolAnd(Condition)}.
      */
     @Support
     public static AggregateFunction<Boolean> every(Condition condition) {
-        return new Every(condition);
+        return boolAnd(condition);
+    }
+
+    /**
+     * Get the every value over a field: bool_and(field).
+     */
+    @Support
+    public static AggregateFunction<Boolean> boolAnd(Field<Boolean> field) {
+        return boolAnd(condition(nullSafe(field)));
+    }
+
+    /**
+     * Get the every value over a condition: bool_and(condition).
+     */
+    @Support
+    public static AggregateFunction<Boolean> boolAnd(Condition condition) {
+        return new BoolAnd(condition);
+    }
+
+    /**
+     * Get the every value over a field: bool_and(field).
+     */
+    @Support
+    public static AggregateFunction<Boolean> boolOr(Field<Boolean> field) {
+        return boolOr(condition(nullSafe(field)));
+    }
+
+    /**
+     * Get the every value over a condition: bool_and(condition).
+     */
+    @Support
+    public static AggregateFunction<Boolean> boolOr(Condition condition) {
+        return new BoolOr(condition);
     }
 
     /**

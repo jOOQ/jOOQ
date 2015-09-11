@@ -51,7 +51,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Every extends Function<Boolean> {
+class BoolOr extends Function<Boolean> {
 
     /**
      * Generated UID
@@ -60,8 +60,8 @@ class Every extends Function<Boolean> {
 
     private final Condition   condition;
 
-    Every(Condition condition) {
-        super("every", SQLDataType.BOOLEAN, DSL.field(condition));
+    BoolOr(Condition condition) {
+        super("bool_or", SQLDataType.BOOLEAN, DSL.field(condition));
 
         this.condition = condition;
     }
@@ -75,15 +75,15 @@ class Every extends Function<Boolean> {
                 break;
 
             default:
-                final Field<Integer> sum = DSL.field("{0}", Integer.class, new CustomQueryPart() {
+                final Field<Integer> count = DSL.field("{0}", Integer.class, new CustomQueryPart() {
                     @Override
                     public void accept(Context<?> c) {
-                        c.visit(DSL.sum(DSL.when(condition, zero()).otherwise(one())));
+                        c.visit(DSL.count(DSL.when(condition, one())));
                         toSQLOverClause(c);
                     }
                 });
 
-                ctx.visit(DSL.when(sum.eq(zero()), inline(true)).otherwise(inline(false)));
+                ctx.visit(DSL.when(count.gt(zero()), inline(true)).otherwise(inline(false)));
                 break;
         }
     }

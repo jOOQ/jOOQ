@@ -412,6 +412,8 @@ public class GenerationTool {
                 generator.setFluentSetters(g.getGenerate().isFluentSetters());
             if (g.getGenerate().isPojosEqualsAndHashCode() != null)
                 generator.setGeneratePojosEqualsAndHashCode(g.getGenerate().isPojosEqualsAndHashCode());
+            if (g.getGenerate().isPojosToString() != null)
+                generator.setGeneratePojosToString(g.getGenerate().isPojosToString());
             if (g.getGenerate().getFullyQualifiedTypes() != null)
                 generator.setFullyQualifiedTypes(g.getGenerate().getFullyQualifiedTypes());
 

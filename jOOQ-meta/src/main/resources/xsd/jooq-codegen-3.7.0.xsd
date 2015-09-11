@@ -659,6 +659,11 @@
       <element name="pojosEqualsAndHashCode" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
 
       <!--
+        Generate basic toString() methods in POJOs
+        -->
+      <element name="pojosToString" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+
+      <!--
         Generate immutable POJOs for usage of the ResultQuery.fetchInto(Class) API
         This overrides any value set in <pojos/>
         -->

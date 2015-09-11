@@ -56,6 +56,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.ORACLE12C;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.POSTGRES_9_3;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
@@ -712,14 +713,12 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     // XXX: APPLY clauses on tables
     // -------------------------------------------------------------------------
 
-    /* [pro] */
-
     /**
      * <code>CROSS APPLY</code> a table to this table.
      *
      * @see Table#crossApply(TableLike)
      */
-    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    @Support({ ORACLE12C, POSTGRES_9_3, SQLSERVER, SYBASE })
     SelectJoinStep<R> crossApply(TableLike<?> table);
 
     /**
@@ -734,7 +733,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#crossApply(String)
      * @see SQL
      */
-    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    @Support({ ORACLE12C, POSTGRES_9_3, SQLSERVER, SYBASE })
     @PlainSQL
     SelectJoinStep<R> crossApply(String sql);
 
@@ -750,7 +749,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#crossApply(String, Object...)
      * @see SQL
      */
-    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    @Support({ ORACLE12C, POSTGRES_9_3, SQLSERVER, SYBASE })
     @PlainSQL
     SelectJoinStep<R> crossApply(String sql, Object... bindings);
 
@@ -766,7 +765,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#crossApply(String, QueryPart...)
      * @see SQL
      */
-    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    @Support({ ORACLE12C, POSTGRES_9_3, SQLSERVER, SYBASE })
     @PlainSQL
     SelectJoinStep<R> crossApply(String sql, QueryPart... parts);
 
@@ -775,7 +774,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      *
      * @see Table#outerApply(TableLike)
      */
-    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    @Support({ ORACLE12C, POSTGRES_9_3, SQLSERVER, SYBASE })
     SelectJoinStep<R> outerApply(TableLike<?> table);
 
     /**
@@ -790,7 +789,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#outerApply(String)
      * @see SQL
      */
-    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    @Support({ ORACLE12C, POSTGRES_9_3, SQLSERVER, SYBASE })
     @PlainSQL
     SelectJoinStep<R> outerApply(String sql);
 
@@ -806,7 +805,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#outerApply(String, Object...)
      * @see SQL
      */
-    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    @Support({ ORACLE12C, POSTGRES_9_3, SQLSERVER, SYBASE })
     @PlainSQL
     SelectJoinStep<R> outerApply(String sql, Object... bindings);
 
@@ -822,11 +821,9 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#outerApply(String, QueryPart...)
      * @see SQL
      */
-    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    @Support({ ORACLE12C, POSTGRES_9_3, SQLSERVER, SYBASE })
     @PlainSQL
     SelectJoinStep<R> outerApply(String sql, QueryPart... parts);
-
-    /* [/pro] */
 
     /**
      * <code>STRAIGHT_JOIN</code> a table to this table.

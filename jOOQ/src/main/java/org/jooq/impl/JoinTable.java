@@ -73,6 +73,7 @@ import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.DSL.condition;
@@ -156,9 +157,16 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
 
         String keyword = translatedType.toSQL();
 
+        if (translatedType == CROSS_APPLY && ctx.family() == POSTGRES) {
+            keyword = "cross join lateral";
+        }
+        else if (translatedType == OUTER_APPLY && ctx.family() == POSTGRES) {
+            keyword = "left outer join lateral";
+        }
+
         /* [pro] */
         // In MS Access, the INNER keyword is not optional
-        if (translatedType == JOIN && ctx.configuration().dialect().family() == ACCESS) {
+        else if (translatedType == JOIN && ctx.family() == ACCESS) {
             keyword = "inner join";
         }
         /* [/pro] */
@@ -194,9 +202,16 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
                     OUTER_APPLY).contains(translatedType)) {
             toSQLJoinCondition(ctx);
         }
+        else if (OUTER_APPLY == translatedType && ctx.family() == POSTGRES) {
+            ctx.formatSeparator()
+               .start(TABLE_JOIN_ON)
+               .keyword("on")
+               .sql(" true")
+               .end(TABLE_JOIN_ON);
+        }
 
         ctx.end(translatedClause)
-               .formatIndentEnd();
+           .formatIndentEnd();
     }
 
     private void toSQLTable(Context<?> ctx, Table<?> table) {

@@ -42,11 +42,22 @@ package org.jooq.test.all.testcases;
 
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.ACCESS;
+import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HANA;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.ORACLE10G;
+import static org.jooq.SQLDialect.ORACLE11G;
+import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.VERTICA;
 import static org.jooq.impl.DSL.count;
@@ -315,23 +326,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testCrossApply() throws Exception {
-        switch (dialect()) {
-            /* [pro] */
-            case ORACLE12C:
-            case SQLSERVER:
-            case SQLSERVER2008:
-            case SQLSERVER2012:
-            case SQLSERVER2014:
-            case SYBASE:
-                break;
+        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, REDSHIFT, SQLITE, VERTICA);
+        assumeDialectNotIn(ORACLE10G, ORACLE11G);
 
-            /* [/pro] */
-            default:
-                log.info("SKIPPING", "CROSS APPLY tests");
-                return;
-        }
-
-        /* [pro] */
         assertEquals(
             asList(2, 2),
             create().select()
@@ -404,15 +401,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                     )
                     .fetch("c", int.class)
         );
-        /* [/pro] */
     }
 
     public void testLateralJoin() throws Exception {
         switch (dialect()) {
-            /* [pro] */
             case ORACLE12C:
-            /* [/pro] */
-
             case POSTGRES:
             case POSTGRES_9_3:
             case POSTGRES_9_4:

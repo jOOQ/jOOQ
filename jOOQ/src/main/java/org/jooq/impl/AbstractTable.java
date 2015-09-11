@@ -828,8 +828,6 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
         return naturalRightOuterJoin(table(sql, parts));
     }
 
-    /* [pro] */
-
     @Override
     public final Table<Record> crossApply(TableLike<?> table) {
         return join(table, CROSS_APPLY);
@@ -869,8 +867,6 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     public final Table<Record> outerApply(String sql, QueryPart... parts) {
         return outerApply(table(sql, parts));
     }
-
-    /* [/pro] */
 
     @Override
     public final TableOptionalOnStep straightJoin(TableLike<?> table) {

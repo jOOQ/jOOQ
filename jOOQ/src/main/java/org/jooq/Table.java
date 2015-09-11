@@ -58,6 +58,7 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.ORACLE11G;
 import static org.jooq.SQLDialect.ORACLE12C;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.POSTGRES_9_3;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
@@ -840,12 +841,10 @@ public interface Table<R extends Record> extends TableLike<R> {
     // XXX: APPLY clauses on tables
     // -------------------------------------------------------------------------
 
-    /* [pro] */
-
     /**
      * <code>CROSS APPLY</code> a table to this table.
      */
-    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    @Support({ ORACLE12C, POSTGRES_9_3, SQLSERVER, SYBASE })
     Table<Record> crossApply(TableLike<?> table);
 
     /**
@@ -859,7 +858,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String)
      * @see SQL
      */
-    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    @Support({ ORACLE12C, POSTGRES_9_3, SQLSERVER, SYBASE })
     @PlainSQL
     Table<Record> crossApply(String sql);
 
@@ -874,7 +873,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, Object...)
      * @see SQL
      */
-    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    @Support({ ORACLE12C, POSTGRES_9_3, SQLSERVER, SYBASE })
     @PlainSQL
     Table<Record> crossApply(String sql, Object... bindings);
 
@@ -889,14 +888,14 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, QueryPart...)
      * @see SQL
      */
-    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    @Support({ ORACLE12C, POSTGRES_9_3, SQLSERVER, SYBASE })
     @PlainSQL
     Table<Record> crossApply(String sql, QueryPart... parts);
 
     /**
      * <code>OUTER APPLY</code> a table to this table.
      */
-    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    @Support({ ORACLE12C, POSTGRES_9_3, SQLSERVER, SYBASE })
     Table<Record> outerApply(TableLike<?> table);
 
     /**
@@ -910,7 +909,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String)
      * @see SQL
      */
-    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    @Support({ ORACLE12C, POSTGRES_9_3, SQLSERVER, SYBASE })
     @PlainSQL
     Table<Record> outerApply(String sql);
 
@@ -925,7 +924,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, Object...)
      * @see SQL
      */
-    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    @Support({ ORACLE12C, POSTGRES_9_3, SQLSERVER, SYBASE })
     @PlainSQL
     Table<Record> outerApply(String sql, Object... bindings);
 
@@ -940,11 +939,9 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, QueryPart...)
      * @see SQL
      */
-    @Support({ ORACLE12C, SQLSERVER, SYBASE })
+    @Support({ ORACLE12C, POSTGRES_9_3, SQLSERVER, SYBASE })
     @PlainSQL
     Table<Record> outerApply(String sql, QueryPart... parts);
-
-    /* [/pro] */
 
     /**
      * <code>STRAIGHT_JOIN</code> a table to this table.

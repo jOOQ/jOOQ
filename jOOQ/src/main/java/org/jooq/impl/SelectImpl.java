@@ -2141,8 +2141,6 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
         return join(table, JoinType.NATURAL_RIGHT_OUTER_JOIN);
     }
 
-    /* [pro] */
-
     @Override
     public final SelectImpl crossApply(TableLike<?> table) {
         return join(table, JoinType.CROSS_APPLY);
@@ -2152,8 +2150,6 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     public final SelectImpl outerApply(TableLike<?> table) {
         return join(table, JoinType.OUTER_APPLY);
     }
-
-    /* [/pro] */
 
     @Override
     public final SelectImpl straightJoin(TableLike<?> table) {

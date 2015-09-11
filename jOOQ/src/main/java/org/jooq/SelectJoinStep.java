@@ -56,6 +56,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.POSTGRES_9_3;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -712,121 +713,117 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     // XXX: APPLY clauses on tables
     // -------------------------------------------------------------------------
 
-    /* [pro] xx
+    /**
+     * <code>CROSS APPLY</code> a table to this table.
+     *
+     * @see Table#crossApply(TableLike)
+     */
+    @Support({ POSTGRES_9_3 })
+    SelectJoinStep<R> crossApply(TableLike<?> table);
 
-    xxx
-     x xxxxxxxxxxx xxxxxxxxxxxx x xxxxx xx xxxx xxxxxx
-     x
-     x xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
-     xx
-    xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
+    /**
+     * <code>CROSS APPLY</code> a table to this table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String)
+     * @see Table#crossApply(String)
+     * @see SQL
+     */
+    @Support({ POSTGRES_9_3 })
+    @PlainSQL
+    SelectJoinStep<R> crossApply(String sql);
 
-    xxx
-     x xxxxxxxxxxx xxxxxxxxxxxx x xxxxx xx xxxx xxxxxx
-     x xxx
-     x xxxxxxxxxxxx xxxx xxxxxxxxx xxxxx xxx xxxx xxxx xxxxxxxx xxx xxxx
-     x xxxxxxxxx xxxxxx xxxxxxxxxx xxx xxx xxxx xxxxxx xxx xxxxxxxxxxx xx
-     x xxxxxxxxx xxx xxxxxxxxxx xx xxxx xx xxxxxxxx xxx xxxx xxxxxxxxx xxxxxx
-     x xxxxxx xxxxxxxx xxxx xxxxxxxxxxxx xxxx xxx xxxxxxxx
-     x
-     x xxxx xxxxxxxxxxxxxxxxx
-     x xxxx xxxxxxxxxxxxxxxxxxxxxxxx
-     x xxxx xxx
-     xx
-    xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
-    xxxxxxxxx
-    xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxx
+    /**
+     * <code>CROSS APPLY</code> a table to this table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, Object...)
+     * @see Table#crossApply(String, Object...)
+     * @see SQL
+     */
+    @Support({ POSTGRES_9_3 })
+    @PlainSQL
+    SelectJoinStep<R> crossApply(String sql, Object... bindings);
 
-    xxx
-     x xxxxxxxxxxx xxxxxxxxxxxx x xxxxx xx xxxx xxxxxx
-     x xxx
-     x xxxxxxxxxxxx xxxx xxxxxxxxx xxxxx xxx xxxx xxxx xxxxxxxx xxx xxxx
-     x xxxxxxxxx xxxxxx xxxxxxxxxx xxx xxx xxxx xxxxxx xxx xxxxxxxxxxx xx
-     x xxxxxxxxx xxx xxxxxxxxxx xx xxxx xx xxxxxxxx xxx xxxx xxxxxxxxx xxxxxx
-     x xxxxxx xxxxxxxx xxxx xxxxxxxxxxxx xxxx xxx xxxxxxxx
-     x
-     x xxxx xxxxxxxxxxxxxxxxx xxxxxxxxxx
-     x xxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx
-     x xxxx xxx
-     xx
-    xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
-    xxxxxxxxx
-    xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxx xxxxxxxxxx
+    /**
+     * <code>CROSS APPLY</code> a table to this table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, QueryPart...)
+     * @see Table#crossApply(String, QueryPart...)
+     * @see SQL
+     */
+    @Support({ POSTGRES_9_3 })
+    @PlainSQL
+    SelectJoinStep<R> crossApply(String sql, QueryPart... parts);
 
-    xxx
-     x xxxxxxxxxxx xxxxxxxxxxxx x xxxxx xx xxxx xxxxxx
-     x xxx
-     x xxxxxxxxxxxx xxxx xxxxxxxxx xxxxx xxx xxxx xxxx xxxxxxxx xxx xxxx
-     x xxxxxxxxx xxxxxx xxxxxxxxxx xxx xxx xxxx xxxxxx xxx xxxxxxxxxxx xx
-     x xxxxxxxxx xxx xxxxxxxxxx xx xxxx xx xxxxxxxx xxx xxxx xxxxxxxxx xxxxxx
-     x xxxxxx xxxxxxxx xxxx xxxxxxxxxxxx xxxx xxx xxxxxxxx
-     x
-     x xxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
-     x xxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
-     x xxxx xxx
-     xx
-    xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
-    xxxxxxxxx
-    xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxx xxxxxxx
+    /**
+     * <code>OUTER APPLY</code> a table to this table.
+     *
+     * @see Table#outerApply(TableLike)
+     */
+    @Support({ POSTGRES_9_3 })
+    SelectJoinStep<R> outerApply(TableLike<?> table);
 
-    xxx
-     x xxxxxxxxxxx xxxxxxxxxxxx x xxxxx xx xxxx xxxxxx
-     x
-     x xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
-     xx
-    xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
+    /**
+     * <code>OUTER APPLY</code> a table to this table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String)
+     * @see Table#outerApply(String)
+     * @see SQL
+     */
+    @Support({ POSTGRES_9_3 })
+    @PlainSQL
+    SelectJoinStep<R> outerApply(String sql);
 
-    xxx
-     x xxxxxxxxxxx xxxxxxxxxxxx x xxxxx xx xxxx xxxxxx
-     x xxx
-     x xxxxxxxxxxxx xxxx xxxxxxxxx xxxxx xxx xxxx xxxx xxxxxxxx xxx xxxx
-     x xxxxxxxxx xxxxxx xxxxxxxxxx xxx xxx xxxx xxxxxx xxx xxxxxxxxxxx xx
-     x xxxxxxxxx xxx xxxxxxxxxx xx xxxx xx xxxxxxxx xxx xxxx xxxxxxxxx xxxxxx
-     x xxxxxx xxxxxxxx xxxx xxxxxxxxxxxx xxxx xxx xxxxxxxx
-     x
-     x xxxx xxxxxxxxxxxxxxxxx
-     x xxxx xxxxxxxxxxxxxxxxxxxxxxxx
-     x xxxx xxx
-     xx
-    xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
-    xxxxxxxxx
-    xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxx
+    /**
+     * <code>OUTER APPLY</code> a table to this table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, Object...)
+     * @see Table#outerApply(String, Object...)
+     * @see SQL
+     */
+    @Support({ POSTGRES_9_3 })
+    @PlainSQL
+    SelectJoinStep<R> outerApply(String sql, Object... bindings);
 
-    xxx
-     x xxxxxxxxxxx xxxxxxxxxxxx x xxxxx xx xxxx xxxxxx
-     x xxx
-     x xxxxxxxxxxxx xxxx xxxxxxxxx xxxxx xxx xxxx xxxx xxxxxxxx xxx xxxx
-     x xxxxxxxxx xxxxxx xxxxxxxxxx xxx xxx xxxx xxxxxx xxx xxxxxxxxxxx xx
-     x xxxxxxxxx xxx xxxxxxxxxx xx xxxx xx xxxxxxxx xxx xxxx xxxxxxxxx xxxxxx
-     x xxxxxx xxxxxxxx xxxx xxxxxxxxxxxx xxxx xxx xxxxxxxx
-     x
-     x xxxx xxxxxxxxxxxxxxxxx xxxxxxxxxx
-     x xxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx
-     x xxxx xxx
-     xx
-    xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
-    xxxxxxxxx
-    xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxx xxxxxxxxxx
-
-    xxx
-     x xxxxxxxxxxx xxxxxxxxxxxx x xxxxx xx xxxx xxxxxx
-     x xxx
-     x xxxxxxxxxxxx xxxx xxxxxxxxx xxxxx xxx xxxx xxxx xxxxxxxx xxx xxxx
-     x xxxxxxxxx xxxxxx xxxxxxxxxx xxx xxx xxxx xxxxxx xxx xxxxxxxxxxx xx
-     x xxxxxxxxx xxx xxxxxxxxxx xx xxxx xx xxxxxxxx xxx xxxx xxxxxxxxx xxxxxx
-     x xxxxxx xxxxxxxx xxxx xxxxxxxxxxxx xxxx xxx xxxxxxxx
-     x
-     x xxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
-     x xxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
-     x xxxx xxx
-     xx
-    xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxx xx
-    xxxxxxxxx
-    xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxx xxxxxxx
-
-    xx [/pro] */
+    /**
+     * <code>OUTER APPLY</code> a table to this table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, QueryPart...)
+     * @see Table#outerApply(String, QueryPart...)
+     * @see SQL
+     */
+    @Support({ POSTGRES_9_3 })
+    @PlainSQL
+    SelectJoinStep<R> outerApply(String sql, QueryPart... parts);
 
     /**
      * <code>STRAIGHT_JOIN</code> a table to this table.

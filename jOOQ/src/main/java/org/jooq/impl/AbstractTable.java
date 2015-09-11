@@ -828,49 +828,45 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
         return naturalRightOuterJoin(table(sql, parts));
     }
 
-    /* [pro] xx
+    @Override
+    public final Table<Record> crossApply(TableLike<?> table) {
+        return join(table, CROSS_APPLY);
+    }
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxx x
-        xxxxxx xxxxxxxxxxx xxxxxxxxxxxxx
-    x
+    @Override
+    public final Table<Record> crossApply(String sql) {
+        return crossApply(table(sql));
+    }
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
-    x
+    @Override
+    public final Table<Record> crossApply(String sql, Object... bindings) {
+        return crossApply(table(sql, bindings));
+    }
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxx xxxxxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx
-    x
+    @Override
+    public final Table<Record> crossApply(String sql, QueryPart... parts) {
+        return crossApply(table(sql, parts));
+    }
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxx xxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxx
-    x
+    @Override
+    public final Table<Record> outerApply(TableLike<?> table) {
+        return join(table, OUTER_APPLY);
+    }
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxx x
-        xxxxxx xxxxxxxxxxx xxxxxxxxxxxxx
-    x
+    @Override
+    public final Table<Record> outerApply(String sql) {
+        return outerApply(table(sql));
+    }
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
-    x
+    @Override
+    public final Table<Record> outerApply(String sql, Object... bindings) {
+        return outerApply(table(sql, bindings));
+    }
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxx xxxxxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx
-    x
-
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxx xxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxx
-    x
-
-    xx [/pro] */
+    @Override
+    public final Table<Record> outerApply(String sql, QueryPart... parts) {
+        return outerApply(table(sql, parts));
+    }
 
     @Override
     public final TableOptionalOnStep straightJoin(TableLike<?> table) {

@@ -136,8 +136,8 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
             if (imp.endsWith("." + className))
                 continue;
 
-            // [#4229] Avoid Scala-emitted warning of same-package imports
-            if (isScala && pkg.length() > 0 && samePackagePattern.matcher(imp).matches())
+            // [#4229] [#4531] Avoid warnings due to unnecessary same-package imports
+            if (pkg.length() > 0 && samePackagePattern.matcher(imp).matches())
                 continue;
 
             String topLevelPackage = imp.split("\\.")[0];

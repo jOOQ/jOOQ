@@ -12,7 +12,6 @@ import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.UDT;
 import org.jooq.impl.SchemaImpl;
-import org.jooq.test.oracle.generatedclasses.test.Sequences;
 import org.jooq.test.oracle.generatedclasses.test.tables.MLibrary;
 import org.jooq.test.oracle.generatedclasses.test.tables.TArrays;
 import org.jooq.test.oracle.generatedclasses.test.tables.TAuthor;
@@ -63,7 +62,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.U_3709;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Test extends SchemaImpl {
 
-	private static final long serialVersionUID = 882896176;
+	private static final long serialVersionUID = 1168552170;
 
 	/**
 	 * The reference instance of <code>TEST</code>

@@ -10,7 +10,6 @@ import java.util.List;
 import org.jooq.Configuration;
 import org.jooq.impl.ArrayRecordImpl;
 import org.jooq.test.oracle.generatedclasses.test.Test;
-import org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord;
 
 
 /**
@@ -19,7 +18,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UAddressTableRecord extends ArrayRecordImpl<UAddressTypeRecord> {
 
-	private static final long serialVersionUID = -88883546;
+	private static final long serialVersionUID = -1767659139;
 
 	/**
 	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #UAddressTableRecord()} constructor instead

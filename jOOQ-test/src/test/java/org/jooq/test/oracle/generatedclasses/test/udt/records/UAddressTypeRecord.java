@@ -13,7 +13,6 @@ import org.jooq.Record8;
 import org.jooq.Row8;
 import org.jooq.impl.UDTRecordImpl;
 import org.jooq.test.oracle.generatedclasses.test.udt.UAddressType;
-import org.jooq.test.oracle.generatedclasses.test.udt.records.UStreetTypeRecord;
 
 
 /**
@@ -22,7 +21,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.UStreetTypeRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UAddressTypeRecord extends UDTRecordImpl<UAddressTypeRecord> implements Record8<UStreetTypeRecord, String, String, String, Date, Integer, byte[], String> {
 
-	private static final long serialVersionUID = 1642171737;
+	private static final long serialVersionUID = 70319979;
 
 	/**
 	 * Setter for <code>TEST.U_ADDRESS_TYPE.STREET</code>.

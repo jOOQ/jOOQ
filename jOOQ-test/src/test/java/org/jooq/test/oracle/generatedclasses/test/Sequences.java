@@ -8,7 +8,6 @@ import java.math.BigInteger;
 
 import org.jooq.Sequence;
 import org.jooq.impl.SequenceImpl;
-import org.jooq.test.oracle.generatedclasses.test.Test;
 
 
 /**

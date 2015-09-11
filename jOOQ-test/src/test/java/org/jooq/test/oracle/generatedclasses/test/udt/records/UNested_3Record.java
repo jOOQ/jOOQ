@@ -9,7 +9,6 @@ import org.jooq.Record2;
 import org.jooq.Row2;
 import org.jooq.impl.UDTRecordImpl;
 import org.jooq.test.oracle.generatedclasses.test.udt.UNested_3;
-import org.jooq.test.oracle.generatedclasses.test.udt.records.UNested_2Record;
 
 
 /**
@@ -18,7 +17,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.UNested_2Record;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UNested_3Record extends UDTRecordImpl<UNested_3Record> implements Record2<Integer, UNested_2Record> {
 
-	private static final long serialVersionUID = 785070998;
+	private static final long serialVersionUID = 2099309765;
 
 	/**
 	 * Setter for <code>TEST.U_NESTED_3.ID</code>.

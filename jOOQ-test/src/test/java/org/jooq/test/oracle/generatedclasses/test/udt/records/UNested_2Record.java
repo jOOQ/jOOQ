@@ -10,7 +10,6 @@ import java.util.List;
 import org.jooq.Configuration;
 import org.jooq.impl.ArrayRecordImpl;
 import org.jooq.test.oracle.generatedclasses.test.Test;
-import org.jooq.test.oracle.generatedclasses.test.udt.records.UNested_1Record;
 
 
 /**
@@ -19,7 +18,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.UNested_1Record;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UNested_2Record extends ArrayRecordImpl<UNested_1Record> {
 
-	private static final long serialVersionUID = 883109093;
+	private static final long serialVersionUID = 863958497;
 
 	/**
 	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #UNested_2Record()} constructor instead

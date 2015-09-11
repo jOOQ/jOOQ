@@ -10,7 +10,6 @@ import java.util.List;
 import org.jooq.Configuration;
 import org.jooq.impl.ArrayRecordImpl;
 import org.jooq.test.oracle.generatedclasses.test.Test;
-import org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTypeRecord;
 
 
 /**
@@ -19,7 +18,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.UBookTypeRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UBookArrayRecord extends ArrayRecordImpl<UBookTypeRecord> {
 
-	private static final long serialVersionUID = 815270504;
+	private static final long serialVersionUID = -809146614;
 
 	/**
 	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #UBookArrayRecord()} constructor instead

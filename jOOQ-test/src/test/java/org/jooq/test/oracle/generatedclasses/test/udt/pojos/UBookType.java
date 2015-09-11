@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UBookType implements Serializable {
 
-	private static final long serialVersionUID = 435673057;
+	private static final long serialVersionUID = 725101294;
 
 	private Integer id;
 	private String  title;
@@ -83,5 +83,16 @@ public class UBookType implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("UBookType (");
+
+		sb.append(id);
+		sb.append(", ").append(title);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

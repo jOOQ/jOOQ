@@ -13,7 +13,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_3485;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_3485 implements IT_3485 {
 
-	private static final long serialVersionUID = 312785834;
+	private static final long serialVersionUID = 1590028401;
 
 	private Integer id;
 	private String  pw;
@@ -53,6 +53,17 @@ public class T_3485 implements IT_3485 {
 	public T_3485 setPw(String pw) {
 		this.pw = pw;
 		return this;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_3485 (");
+
+		sb.append(id);
+		sb.append(", ").append(pw);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

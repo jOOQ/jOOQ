@@ -15,7 +15,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_3666;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_3666 implements IT_3666 {
 
-	private static final long serialVersionUID = 396644157;
+	private static final long serialVersionUID = 914541852;
 
 	private Long       e1;
 	private BigDecimal e2;
@@ -115,6 +115,21 @@ public class T_3666 implements IT_3666 {
 	public T_3666 setE6(BigDecimal e6) {
 		this.e6 = e6;
 		return this;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_3666 (");
+
+		sb.append(e1);
+		sb.append(", ").append(e2);
+		sb.append(", ").append(e3);
+		sb.append(", ").append(e4);
+		sb.append(", ").append(e5);
+		sb.append(", ").append(e6);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

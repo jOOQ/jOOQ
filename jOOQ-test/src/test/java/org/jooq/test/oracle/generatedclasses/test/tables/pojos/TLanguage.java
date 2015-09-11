@@ -28,7 +28,7 @@ import javax.validation.constraints.Size;
 @Table(name = "T_LANGUAGE", schema = "TEST")
 public class TLanguage implements Serializable {
 
-	private static final long serialVersionUID = -373459946;
+	private static final long serialVersionUID = 701844918;
 
 	private String  cd;
 	private String  description;
@@ -143,5 +143,18 @@ public class TLanguage implements Serializable {
 		result = prime * result + ((descriptionEnglish == null) ? 0 : descriptionEnglish.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("TLanguage (");
+
+		sb.append(cd);
+		sb.append(", ").append(description);
+		sb.append(", ").append(descriptionEnglish);
+		sb.append(", ").append(id);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

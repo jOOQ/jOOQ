@@ -17,7 +17,7 @@ import org.jooq.types.UShort;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TUnsigned implements ITUnsigned {
 
-	private static final long serialVersionUID = 494101121;
+	private static final long serialVersionUID = 711034139;
 
 	private UByte    uByte;
 	private UShort   uShort;
@@ -87,6 +87,19 @@ public class TUnsigned implements ITUnsigned {
 	public TUnsigned setULong(ULong uLong) {
 		this.uLong = uLong;
 		return this;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("TUnsigned (");
+
+		sb.append(uByte);
+		sb.append(", ").append(uShort);
+		sb.append(", ").append(uInt);
+		sb.append(", ").append(uLong);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

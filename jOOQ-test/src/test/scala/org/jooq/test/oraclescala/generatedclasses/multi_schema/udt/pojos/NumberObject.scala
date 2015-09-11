@@ -6,6 +6,7 @@ package org.jooq.test.oraclescala.generatedclasses.multi_schema.udt.pojos
 
 import java.io.Serializable
 import java.lang.Integer
+import java.lang.StringBuilder
 
 
 /**
@@ -89,5 +90,16 @@ class NumberObject(
 		result = prime * result + (if (b == null) 0 else b.hashCode())
 		result = prime * result + (if (c == null) 0 else c.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("NumberObject (")
+
+		sb.append(a)
+		sb.append(", ").append(b)
+		sb.append(", ").append(c)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

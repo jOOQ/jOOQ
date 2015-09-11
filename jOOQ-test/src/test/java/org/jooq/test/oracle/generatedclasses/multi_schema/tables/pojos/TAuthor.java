@@ -25,7 +25,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.pojos.UAddressType;
 @Table(name = "T_AUTHOR", schema = "MULTI_SCHEMA")
 public class TAuthor implements Serializable {
 
-	private static final long serialVersionUID = 368945358;
+	private static final long serialVersionUID = -1907765363;
 
 	private Integer      id;
 	private String       firstName;
@@ -179,5 +179,20 @@ public class TAuthor implements Serializable {
 		result = prime * result + ((yearOfBirth == null) ? 0 : yearOfBirth.hashCode());
 		result = prime * result + ((address == null) ? 0 : address.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("TAuthor (");
+
+		sb.append(id);
+		sb.append(", ").append(firstName);
+		sb.append(", ").append(lastName);
+		sb.append(", ").append(dateOfBirth);
+		sb.append(", ").append(yearOfBirth);
+		sb.append(", ").append(address);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

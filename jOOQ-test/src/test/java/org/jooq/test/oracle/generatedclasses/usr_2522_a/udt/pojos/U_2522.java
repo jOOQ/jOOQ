@@ -13,7 +13,7 @@ import java.io.Serializable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_2522 implements Serializable {
 
-	private static final long serialVersionUID = -1803927735;
+	private static final long serialVersionUID = 119010834;
 
 	private Integer v;
 
@@ -61,5 +61,15 @@ public class U_2522 implements Serializable {
 		int result = 1;
 		result = prime * result + ((v == null) ? 0 : v.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("U_2522 (");
+
+		sb.append(v);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

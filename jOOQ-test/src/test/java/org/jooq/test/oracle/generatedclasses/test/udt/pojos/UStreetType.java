@@ -18,7 +18,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UStreetType implements Serializable {
 
-	private static final long serialVersionUID = -1342349095;
+	private static final long serialVersionUID = -1801116622;
 
 	private String             street;
 	private String             no;
@@ -144,5 +144,19 @@ public class UStreetType implements Serializable {
 		result = prime * result + ((f_1323 == null) ? 0 : Arrays.hashCode(f_1323));
 		result = prime * result + ((f_1326 == null) ? 0 : f_1326.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("UStreetType (");
+
+		sb.append(street);
+		sb.append(", ").append(no);
+		sb.append(", ").append(floors);
+		sb.append(", ").append("[binary...]");
+		sb.append(", ").append(f_1326);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

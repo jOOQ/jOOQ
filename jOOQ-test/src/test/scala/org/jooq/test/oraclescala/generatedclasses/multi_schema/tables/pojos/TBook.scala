@@ -7,6 +7,7 @@ package org.jooq.test.oraclescala.generatedclasses.multi_schema.tables.pojos
 import java.io.Serializable
 import java.lang.Integer
 import java.lang.String
+import java.lang.StringBuilder
 
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -221,5 +222,22 @@ class TBook(
 		result = prime * result + (if (contentText == null) 0 else contentText.hashCode())
 		result = prime * result + (if (contentPdf == null) 0 else contentPdf.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("TBook (")
+
+		sb.append(id)
+		sb.append(", ").append(authorId)
+		sb.append(", ").append(coAuthorId)
+		sb.append(", ").append(detailsId)
+		sb.append(", ").append(title)
+		sb.append(", ").append(publishedIn)
+		sb.append(", ").append(languageId)
+		sb.append(", ").append(contentText)
+		sb.append(", ").append(contentPdf)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

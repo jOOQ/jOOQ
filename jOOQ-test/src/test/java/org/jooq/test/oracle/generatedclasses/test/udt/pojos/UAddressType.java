@@ -17,7 +17,7 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UAddressType implements Serializable {
 
-	private static final long serialVersionUID = 664828635;
+	private static final long serialVersionUID = -827685630;
 
 	private UStreetType street;
 	private String      zip;
@@ -201,5 +201,22 @@ public class UAddressType implements Serializable {
 		result = prime * result + ((f_1323 == null) ? 0 : Arrays.hashCode(f_1323));
 		result = prime * result + ((f_1326 == null) ? 0 : f_1326.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("UAddressType (");
+
+		sb.append(street);
+		sb.append(", ").append(zip);
+		sb.append(", ").append(city);
+		sb.append(", ").append(country);
+		sb.append(", ").append(since);
+		sb.append(", ").append(code);
+		sb.append(", ").append("[binary...]");
+		sb.append(", ").append(f_1326);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

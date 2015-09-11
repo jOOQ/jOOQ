@@ -13,7 +13,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2327UkOnly;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2327UkOnly implements IT_2327UkOnly {
 
-	private static final long serialVersionUID = -1268622554;
+	private static final long serialVersionUID = -728832744;
 
 	private Integer id;
 
@@ -38,6 +38,16 @@ public class T_2327UkOnly implements IT_2327UkOnly {
 	public T_2327UkOnly setId(Integer id) {
 		this.id = id;
 		return this;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_2327UkOnly (");
+
+		sb.append(id);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

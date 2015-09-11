@@ -20,7 +20,7 @@ import javax.validation.constraints.Size;
 @Table(name = "T_785", schema = "TEST")
 public class T_785 implements Serializable {
 
-	private static final long serialVersionUID = 1013867751;
+	private static final long serialVersionUID = -239009205;
 
 	private Integer id;
 	private String  name;
@@ -111,5 +111,17 @@ public class T_785 implements Serializable {
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((value == null) ? 0 : value.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_785 (");
+
+		sb.append(id);
+		sb.append(", ").append(name);
+		sb.append(", ").append(value);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

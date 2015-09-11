@@ -22,7 +22,7 @@ import org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTabl
 @Table(name = "T_3711", schema = "TEST")
 public class T_3711 implements Serializable {
 
-	private static final long serialVersionUID = -1188120027;
+	private static final long serialVersionUID = 1372631495;
 
 	private NumberTableRecord v1;
 	private NumberObject      v2;
@@ -171,5 +171,20 @@ public class T_3711 implements Serializable {
 		result = prime * result + ((v7 == null) ? 0 : v7.hashCode());
 		result = prime * result + ((v8 == null) ? 0 : v8.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_3711 (");
+
+		sb.append(v1);
+		sb.append(", ").append(v2);
+		sb.append(", ").append(v3);
+		sb.append(", ").append(v4);
+		sb.append(", ").append(v7);
+		sb.append(", ").append(v8);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

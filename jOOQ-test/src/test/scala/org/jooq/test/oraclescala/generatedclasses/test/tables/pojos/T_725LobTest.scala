@@ -7,6 +7,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables.pojos
 import java.io.Serializable
 import java.lang.Integer
 import java.lang.String
+import java.lang.StringBuilder
 
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -159,5 +160,19 @@ class T_725LobTest(
 		result = prime * result + (if (jooqJavaSqlClob == null) 0 else jooqJavaSqlClob.hashCode())
 		result = prime * result + (if (jooqJavaSqlBlob == null) 0 else jooqJavaSqlBlob.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("T_725LobTest (")
+
+		sb.append(id)
+		sb.append(", ").append(lob)
+		sb.append(", ").append(userJavaSqlClob)
+		sb.append(", ").append(userJavaSqlBlob)
+		sb.append(", ").append(jooqJavaSqlClob)
+		sb.append(", ").append(jooqJavaSqlBlob)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

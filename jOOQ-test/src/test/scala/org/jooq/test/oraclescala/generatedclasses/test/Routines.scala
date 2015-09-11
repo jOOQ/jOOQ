@@ -25,7 +25,6 @@ import org.jooq.test.oraclescala.generatedclasses.test.routines.FArrays2
 import org.jooq.test.oraclescala.generatedclasses.test.routines.FArrays3
 import org.jooq.test.oraclescala.generatedclasses.test.routines.FArrays4
 import org.jooq.test.oraclescala.generatedclasses.test.routines.FAuthorExists
-import org.jooq.test.oraclescala.generatedclasses.test.routines.FDates
 import org.jooq.test.oraclescala.generatedclasses.test.routines.FGetOneCursor
 import org.jooq.test.oraclescala.generatedclasses.test.routines.FNumber
 import org.jooq.test.oraclescala.generatedclasses.test.routines.FOne
@@ -233,15 +232,6 @@ object Routines {
 		f.setAuthorName(authorName)
 
 		return f.asField
-	}
-
-	/**
-	 * Call <code>TEST.F_DATES</code>
-	 */
-	def fDates(configuration : Configuration) : Unit = {
-		val p = new FDates
-
-		p.execute(configuration)
 	}
 
 	/**

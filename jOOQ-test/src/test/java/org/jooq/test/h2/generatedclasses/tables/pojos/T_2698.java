@@ -13,7 +13,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2698;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2698 implements IT_2698 {
 
-	private static final long serialVersionUID = -1297108677;
+	private static final long serialVersionUID = -1369730882;
 
 	private Integer id;
 	private Integer xx;
@@ -68,6 +68,18 @@ public class T_2698 implements IT_2698 {
 	public T_2698 setYy(Integer yy) {
 		this.yy = yy;
 		return this;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_2698 (");
+
+		sb.append(id);
+		sb.append(", ").append(xx);
+		sb.append(", ").append(yy);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

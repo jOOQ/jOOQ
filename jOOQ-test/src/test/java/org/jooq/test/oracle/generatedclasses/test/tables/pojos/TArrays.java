@@ -26,7 +26,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord
 @Table(name = "T_ARRAYS", schema = "TEST")
 public class TArrays implements Serializable {
 
-	private static final long serialVersionUID = -420885778;
+	private static final long serialVersionUID = 24047726;
 
 	private Integer                id;
 	private UStringArrayRecord     stringArray;
@@ -157,5 +157,19 @@ public class TArrays implements Serializable {
 		result = prime * result + ((numberLongArray == null) ? 0 : numberLongArray.hashCode());
 		result = prime * result + ((dateArray == null) ? 0 : dateArray.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("TArrays (");
+
+		sb.append(id);
+		sb.append(", ").append(stringArray);
+		sb.append(", ").append(numberArray);
+		sb.append(", ").append(numberLongArray);
+		sb.append(", ").append(dateArray);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

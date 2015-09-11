@@ -13,7 +13,7 @@ import java.io.Serializable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Xmltype implements Serializable {
 
-	private static final long serialVersionUID = -683175837;
+	private static final long serialVersionUID = -269456585;
 
 
 	public Xmltype() {}
@@ -38,5 +38,14 @@ public class Xmltype implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("Xmltype (");
+
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

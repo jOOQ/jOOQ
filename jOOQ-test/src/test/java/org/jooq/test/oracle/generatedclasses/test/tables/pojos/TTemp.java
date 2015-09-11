@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "T_TEMP", schema = "TEST")
 public class TTemp implements Serializable {
 
-	private static final long serialVersionUID = -395401931;
+	private static final long serialVersionUID = -1374707488;
 
 	private Integer id;
 
@@ -72,5 +72,15 @@ public class TTemp implements Serializable {
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("TTemp (");
+
+		sb.append(id);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

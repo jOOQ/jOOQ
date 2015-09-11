@@ -7,6 +7,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.udt.pojos
 import java.io.Serializable
 import java.lang.Integer
 import java.lang.String
+import java.lang.StringBuilder
 import java.sql.Date
 
 import javax.validation.constraints.Size
@@ -183,5 +184,21 @@ class UAddressType(
 		result = prime * result + (if (f_1323 == null) 0 else f_1323.hashCode())
 		result = prime * result + (if (f_1326 == null) 0 else f_1326.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("UAddressType (")
+
+		sb.append(street)
+		sb.append(", ").append(zip)
+		sb.append(", ").append(city)
+		sb.append(", ").append(country)
+		sb.append(", ").append(since)
+		sb.append(", ").append(code)
+		sb.append(", ").append(f_1323)
+		sb.append(", ").append(f_1326)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

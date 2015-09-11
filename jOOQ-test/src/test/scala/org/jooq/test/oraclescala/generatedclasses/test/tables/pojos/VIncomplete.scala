@@ -6,6 +6,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables.pojos
 
 import java.io.Serializable
 import java.lang.Object
+import java.lang.StringBuilder
 
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -242,5 +243,24 @@ class VIncomplete(
 		result = prime * result + (if (recVersion == null) 0 else recVersion.hashCode())
 		result = prime * result + (if (recTimestamp == null) 0 else recTimestamp.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("VIncomplete (")
+
+		sb.append(id)
+		sb.append(", ").append(authorId)
+		sb.append(", ").append(coAuthorId)
+		sb.append(", ").append(detailsId)
+		sb.append(", ").append(title)
+		sb.append(", ").append(publishedIn)
+		sb.append(", ").append(languageId)
+		sb.append(", ").append(contentText)
+		sb.append(", ").append(contentPdf)
+		sb.append(", ").append(recVersion)
+		sb.append(", ").append(recTimestamp)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

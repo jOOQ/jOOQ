@@ -6,6 +6,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables.pojos
 
 import java.io.Serializable
 import java.lang.Integer
+import java.lang.StringBuilder
 
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -143,5 +144,18 @@ class TArrays(
 		result = prime * result + (if (numberLongArray == null) 0 else numberLongArray.hashCode())
 		result = prime * result + (if (dateArray == null) 0 else dateArray.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("TArrays (")
+
+		sb.append(id)
+		sb.append(", ").append(stringArray)
+		sb.append(", ").append(numberArray)
+		sb.append(", ").append(numberLongArray)
+		sb.append(", ").append(dateArray)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

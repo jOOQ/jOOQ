@@ -25,7 +25,7 @@ import org.jooq.test.oracle.generatedclasses.sys.udt.pojos.Xmltype;
 @Table(name = "T_EXOTIC_TYPES", schema = "TEST")
 public class TExoticTypes implements Serializable {
 
-	private static final long serialVersionUID = 196233047;
+	private static final long serialVersionUID = 122644562;
 
 	private Integer      id;
 	private UUID         uu;
@@ -216,5 +216,22 @@ public class TExoticTypes implements Serializable {
 		result = prime * result + ((oracleXmlAsDocument == null) ? 0 : oracleXmlAsDocument.hashCode());
 		result = prime * result + ((oracleXmlAsSqlxml == null) ? 0 : oracleXmlAsSqlxml.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("TExoticTypes (");
+
+		sb.append(id);
+		sb.append(", ").append(uu);
+		sb.append(", ").append(javaIoSerializable);
+		sb.append(", ").append(plainSqlConverterXml);
+		sb.append(", ").append(plainSqlBindingXml);
+		sb.append(", ").append(oracleXmlAsIs);
+		sb.append(", ").append(oracleXmlAsDocument);
+		sb.append(", ").append(oracleXmlAsSqlxml);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

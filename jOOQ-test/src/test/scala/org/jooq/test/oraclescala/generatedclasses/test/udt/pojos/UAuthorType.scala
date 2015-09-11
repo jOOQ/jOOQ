@@ -7,6 +7,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.udt.pojos
 import java.io.Serializable
 import java.lang.Integer
 import java.lang.String
+import java.lang.StringBuilder
 
 import javax.validation.constraints.Size
 
@@ -94,5 +95,16 @@ class UAuthorType(
 		result = prime * result + (if (firstName == null) 0 else firstName.hashCode())
 		result = prime * result + (if (lastName == null) 0 else lastName.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("UAuthorType (")
+
+		sb.append(id)
+		sb.append(", ").append(firstName)
+		sb.append(", ").append(lastName)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

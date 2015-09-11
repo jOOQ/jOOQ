@@ -15,7 +15,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.ITransactions;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Transactions implements ITransactions {
 
-	private static final long serialVersionUID = 662620817;
+	private static final long serialVersionUID = 1182855413;
 
 	private Integer    id;
 	private Integer    accountId;
@@ -70,6 +70,18 @@ public class Transactions implements ITransactions {
 	public Transactions setAmount(BigDecimal amount) {
 		this.amount = amount;
 		return this;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("Transactions (");
+
+		sb.append(id);
+		sb.append(", ").append(accountId);
+		sb.append(", ").append(amount);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

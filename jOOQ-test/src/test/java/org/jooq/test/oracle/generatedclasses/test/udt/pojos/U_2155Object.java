@@ -16,7 +16,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ArrayRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_2155Object implements Serializable {
 
-	private static final long serialVersionUID = -588988303;
+	private static final long serialVersionUID = 1024828968;
 
 	private LocalDate         d;
 	private U_2155ArrayRecord a;
@@ -83,5 +83,16 @@ public class U_2155Object implements Serializable {
 		result = prime * result + ((d == null) ? 0 : d.hashCode());
 		result = prime * result + ((a == null) ? 0 : a.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("U_2155Object (");
+
+		sb.append(d);
+		sb.append(", ").append(a);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

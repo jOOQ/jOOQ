@@ -7,6 +7,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables.pojos
 import java.io.Serializable
 import java.lang.Integer
 import java.lang.String
+import java.lang.StringBuilder
 
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -123,5 +124,17 @@ class TDirectory(
 		result = prime * result + (if (isDirectory == null) 0 else isDirectory.hashCode())
 		result = prime * result + (if (name == null) 0 else name.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("TDirectory (")
+
+		sb.append(id)
+		sb.append(", ").append(parentId)
+		sb.append(", ").append(isDirectory)
+		sb.append(", ").append(name)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

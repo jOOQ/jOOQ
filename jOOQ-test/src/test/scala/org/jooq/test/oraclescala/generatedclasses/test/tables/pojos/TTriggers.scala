@@ -6,6 +6,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables.pojos
 
 import java.io.Serializable
 import java.lang.Integer
+import java.lang.StringBuilder
 
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -104,5 +105,16 @@ class TTriggers(
 		result = prime * result + (if (id == null) 0 else id.hashCode())
 		result = prime * result + (if (counter == null) 0 else counter.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("TTriggers (")
+
+		sb.append(idGenerated)
+		sb.append(", ").append(id)
+		sb.append(", ").append(counter)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

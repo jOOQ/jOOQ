@@ -13,7 +13,7 @@ import java.io.Serializable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_3005 implements Serializable {
 
-	private static final long serialVersionUID = 1891446182;
+	private static final long serialVersionUID = 952411053;
 
 	private Integer id;
 
@@ -61,5 +61,15 @@ public class U_3005 implements Serializable {
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("U_3005 (");
+
+		sb.append(id);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

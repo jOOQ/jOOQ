@@ -7,6 +7,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables.pojos
 import java.io.Serializable
 import java.lang.Integer
 import java.lang.Short
+import java.lang.StringBuilder
 
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -85,5 +86,15 @@ class XTestCase_71(
 		result = prime * result + (if (id == null) 0 else id.hashCode())
 		result = prime * result + (if (testCase_64_69Id == null) 0 else testCase_64_69Id.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("XTestCase_71 (")
+
+		sb.append(id)
+		sb.append(", ").append(testCase_64_69Id)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

@@ -13,7 +13,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_85;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_85 implements IXTestCase_85 {
 
-	private static final long serialVersionUID = -2099477505;
+	private static final long serialVersionUID = 292075442;
 
 	private Integer id;
 	private Integer xUnusedId;
@@ -68,6 +68,18 @@ public class XTestCase_85 implements IXTestCase_85 {
 	public XTestCase_85 setXUnusedName(String xUnusedName) {
 		this.xUnusedName = xUnusedName;
 		return this;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("XTestCase_85 (");
+
+		sb.append(id);
+		sb.append(", ").append(xUnusedId);
+		sb.append(", ").append(xUnusedName);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

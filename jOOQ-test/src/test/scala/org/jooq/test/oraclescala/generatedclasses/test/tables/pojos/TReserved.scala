@@ -5,6 +5,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables.pojos
 
 
 import java.io.Serializable
+import java.lang.StringBuilder
 import java.math.BigDecimal
 
 import javax.persistence.Column
@@ -746,5 +747,52 @@ class TReserved(
 		result = prime * result + (if (`with` == null) 0 else `with`.hashCode())
 		result = prime * result + (if (`yield` == null) 0 else `yield`.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("TReserved (")
+
+		sb.append(`abstract`)
+		sb.append(", ").append(`case`)
+		sb.append(", ").append(`catch`)
+		sb.append(", ").append(`class`)
+		sb.append(", ").append(`def`)
+		sb.append(", ").append(`do`)
+		sb.append(", ").append(`else`)
+		sb.append(", ").append(`extends`)
+		sb.append(", ").append(`false`)
+		sb.append(", ").append(`final`)
+		sb.append(", ").append(`finally`)
+		sb.append(", ").append(`for`)
+		sb.append(", ").append(forsome)
+		sb.append(", ").append(`if`)
+		sb.append(", ").append(`implicit`)
+		sb.append(", ").append(`import`)
+		sb.append(", ").append(`lazy`)
+		sb.append(", ").append(`match`)
+		sb.append(", ").append(`new`)
+		sb.append(", ").append(`null`)
+		sb.append(", ").append(`object`)
+		sb.append(", ").append(`override`)
+		sb.append(", ").append(`package`)
+		sb.append(", ").append(`private`)
+		sb.append(", ").append(`protected`)
+		sb.append(", ").append(`return`)
+		sb.append(", ").append(`sealed`)
+		sb.append(", ").append(`super`)
+		sb.append(", ").append(`this`)
+		sb.append(", ").append(`throw`)
+		sb.append(", ").append(`trait`)
+		sb.append(", ").append(`try`)
+		sb.append(", ").append(`true`)
+		sb.append(", ").append(`type`)
+		sb.append(", ").append(`val`)
+		sb.append(", ").append(`var`)
+		sb.append(", ").append(`while`)
+		sb.append(", ").append(`with`)
+		sb.append(", ").append(`yield`)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

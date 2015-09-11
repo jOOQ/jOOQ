@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
 @Table(name = "T_BOOK_SALE", schema = "MULTI_SCHEMA")
 public class TBookSale implements Serializable {
 
-	private static final long serialVersionUID = 1161590735;
+	private static final long serialVersionUID = -1288907341;
 
 	private Integer    id;
 	private Integer    bookId;
@@ -160,5 +160,19 @@ public class TBookSale implements Serializable {
 		result = prime * result + ((soldAt == null) ? 0 : soldAt.hashCode());
 		result = prime * result + ((soldFor == null) ? 0 : soldFor.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("TBookSale (");
+
+		sb.append(id);
+		sb.append(", ").append(bookId);
+		sb.append(", ").append(bookStoreName);
+		sb.append(", ").append(soldAt);
+		sb.append(", ").append(soldFor);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

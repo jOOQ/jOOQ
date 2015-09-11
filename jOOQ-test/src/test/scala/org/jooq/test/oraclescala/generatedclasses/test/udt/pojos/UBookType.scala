@@ -7,6 +7,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.udt.pojos
 import java.io.Serializable
 import java.lang.Integer
 import java.lang.String
+import java.lang.StringBuilder
 
 import javax.validation.constraints.Size
 
@@ -76,5 +77,15 @@ class UBookType(
 		result = prime * result + (if (id == null) 0 else id.hashCode())
 		result = prime * result + (if (title == null) 0 else title.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("UBookType (")
+
+		sb.append(id)
+		sb.append(", ").append(title)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

@@ -6,6 +6,7 @@ package org.jooq.test.oraclescala.generatedclasses.multi_schema.udt.pojos
 
 import java.io.Serializable
 import java.lang.Integer
+import java.lang.StringBuilder
 
 import org.jooq.test.oraclescala.generatedclasses.test.udt.pojos.UAddressType
 import org.jooq.test.oraclescala.generatedclasses.test.udt.records.UAddressTableRecord
@@ -92,5 +93,16 @@ class U_4347(
 		result = prime * result + (if (t == null) 0 else t.hashCode())
 		result = prime * result + (if (o == null) 0 else o.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("U_4347 (")
+
+		sb.append(id)
+		sb.append(", ").append(t)
+		sb.append(", ").append(o)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

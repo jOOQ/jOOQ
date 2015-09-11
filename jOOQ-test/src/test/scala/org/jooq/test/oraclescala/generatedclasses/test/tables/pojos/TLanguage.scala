@@ -7,6 +7,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables.pojos
 import java.io.Serializable
 import java.lang.Integer
 import java.lang.String
+import java.lang.StringBuilder
 
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -132,5 +133,17 @@ class TLanguage(
 		result = prime * result + (if (descriptionEnglish == null) 0 else descriptionEnglish.hashCode())
 		result = prime * result + (if (id == null) 0 else id.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("TLanguage (")
+
+		sb.append(cd)
+		sb.append(", ").append(description)
+		sb.append(", ").append(descriptionEnglish)
+		sb.append(", ").append(id)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

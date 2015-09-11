@@ -7,6 +7,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables.pojos
 import java.io.Serializable
 import java.lang.Boolean
 import java.lang.Integer
+import java.lang.StringBuilder
 
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -255,5 +256,24 @@ class TBooleans(
 		result = prime * result + (if (cBoolean == null) 0 else cBoolean.hashCode())
 		result = prime * result + (if (nBoolean == null) 0 else nBoolean.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("TBooleans (")
+
+		sb.append(id)
+		sb.append(", ").append(oneZero)
+		sb.append(", ").append(trueFalseLc)
+		sb.append(", ").append(trueFalseUc)
+		sb.append(", ").append(yesNoLc)
+		sb.append(", ").append(yesNoUc)
+		sb.append(", ").append(yNLc)
+		sb.append(", ").append(yNUc)
+		sb.append(", ").append(vcBoolean)
+		sb.append(", ").append(cBoolean)
+		sb.append(", ").append(nBoolean)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

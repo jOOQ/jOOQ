@@ -15,7 +15,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.UNested_2Record;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UNested_3 implements Serializable {
 
-	private static final long serialVersionUID = -1244595988;
+	private static final long serialVersionUID = 623030356;
 
 	private Integer         id;
 	private UNested_2Record nested;
@@ -82,5 +82,16 @@ public class UNested_3 implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((nested == null) ? 0 : nested.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("UNested_3 (");
+
+		sb.append(id);
+		sb.append(", ").append(nested);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

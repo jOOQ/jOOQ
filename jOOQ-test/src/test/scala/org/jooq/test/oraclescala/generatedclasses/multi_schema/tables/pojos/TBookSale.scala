@@ -7,6 +7,7 @@ package org.jooq.test.oraclescala.generatedclasses.multi_schema.tables.pojos
 import java.io.Serializable
 import java.lang.Integer
 import java.lang.String
+import java.lang.StringBuilder
 import java.math.BigDecimal
 import java.sql.Date
 
@@ -149,5 +150,18 @@ class TBookSale(
 		result = prime * result + (if (soldAt == null) 0 else soldAt.hashCode())
 		result = prime * result + (if (soldFor == null) 0 else soldFor.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("TBookSale (")
+
+		sb.append(id)
+		sb.append(", ").append(bookId)
+		sb.append(", ").append(bookStoreName)
+		sb.append(", ").append(soldAt)
+		sb.append(", ").append(soldFor)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

@@ -7,6 +7,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables.pojos
 import java.io.Serializable
 import java.lang.Integer
 import java.lang.String
+import java.lang.StringBuilder
 import java.sql.Date
 
 import javax.persistence.Column
@@ -162,5 +163,19 @@ class VAuthor(
 		result = prime * result + (if (yearOfBirth == null) 0 else yearOfBirth.hashCode())
 		result = prime * result + (if (address == null) 0 else address.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("VAuthor (")
+
+		sb.append(id)
+		sb.append(", ").append(firstName)
+		sb.append(", ").append(lastName)
+		sb.append(", ").append(dateOfBirth)
+		sb.append(", ").append(yearOfBirth)
+		sb.append(", ").append(address)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

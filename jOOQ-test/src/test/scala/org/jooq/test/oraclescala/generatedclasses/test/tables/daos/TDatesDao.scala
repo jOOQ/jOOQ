@@ -6,7 +6,6 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables.daos
 
 import java.lang.Integer
 import java.lang.Long
-import java.lang.Object
 import java.sql.Date
 import java.sql.Timestamp
 import java.util.List
@@ -68,20 +67,6 @@ class TDatesDao(configuration : Configuration) extends DAOImpl[TDatesRecord, org
 	 */
 	def fetchByTs(values : Timestamp*) : List[org.jooq.test.oraclescala.generatedclasses.test.tables.pojos.TDates] = {
 		fetch(TDates.T_DATES.TS, values:_*)
-	}
-
-	/**
-	 * Fetch records that have <code>T_TZ IN (values)</code>
-	 */
-	def fetchByTTz(values : Object*) : List[org.jooq.test.oraclescala.generatedclasses.test.tables.pojos.TDates] = {
-		fetch(TDates.T_DATES.T_TZ, values:_*)
-	}
-
-	/**
-	 * Fetch records that have <code>TS_TZ IN (values)</code>
-	 */
-	def fetchByTsTz(values : Object*) : List[org.jooq.test.oraclescala.generatedclasses.test.tables.pojos.TDates] = {
-		fetch(TDates.T_DATES.TS_TZ, values:_*)
 	}
 
 	/**

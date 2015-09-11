@@ -6,6 +6,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.udt.pojos
 
 import java.io.Serializable
 import java.lang.Integer
+import java.lang.StringBuilder
 
 import org.jooq.test.oraclescala.generatedclasses.test.udt.records.UNumberTableRecord
 
@@ -74,5 +75,15 @@ class UNested_1(
 		result = prime * result + (if (id == null) 0 else id.hashCode())
 		result = prime * result + (if (nested == null) 0 else nested.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("UNested_1 (")
+
+		sb.append(id)
+		sb.append(", ").append(nested)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

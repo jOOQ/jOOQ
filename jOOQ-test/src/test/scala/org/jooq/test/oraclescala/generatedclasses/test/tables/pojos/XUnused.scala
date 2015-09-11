@@ -7,6 +7,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables.pojos
 import java.io.Serializable
 import java.lang.Integer
 import java.lang.String
+import java.lang.StringBuilder
 import java.math.BigDecimal
 import java.math.BigInteger
 
@@ -347,5 +348,29 @@ class XUnused(
 		result = prime * result + (if (msUnusedIdRef == null) 0 else msUnusedIdRef.hashCode())
 		result = prime * result + (if (msUnusedNameRef == null) 0 else msUnusedNameRef.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("XUnused (")
+
+		sb.append(id)
+		sb.append(", ").append(name)
+		sb.append(", ").append(bigInteger)
+		sb.append(", ").append(idRef)
+		sb.append(", ").append(`class`)
+		sb.append(", ").append(fields)
+		sb.append(", ").append(configuration)
+		sb.append(", ").append(uDT)
+		sb.append(", ").append(metaData)
+		sb.append(", ").append(type0)
+		sb.append(", ").append(primaryKey)
+		sb.append(", ").append(primarykey)
+		sb.append(", ").append(nameRef)
+		sb.append(", ").append(field_737)
+		sb.append(", ").append(msUnusedIdRef)
+		sb.append(", ").append(msUnusedNameRef)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

@@ -15,7 +15,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IAccounts;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Accounts implements IAccounts {
 
-	private static final long serialVersionUID = 693960339;
+	private static final long serialVersionUID = 300162096;
 
 	private Integer    id;
 	private String     accountOwner;
@@ -85,6 +85,19 @@ public class Accounts implements IAccounts {
 	public Accounts setAmount(BigDecimal amount) {
 		this.amount = amount;
 		return this;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("Accounts (");
+
+		sb.append(id);
+		sb.append(", ").append(accountOwner);
+		sb.append(", ").append(accountName);
+		sb.append(", ").append(amount);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

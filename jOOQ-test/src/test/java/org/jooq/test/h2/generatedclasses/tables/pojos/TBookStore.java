@@ -15,7 +15,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookStore;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStore implements ITBookStore {
 
-	private static final long serialVersionUID = 1919794828;
+	private static final long serialVersionUID = 974881181;
 
 	private String name;
 
@@ -40,6 +40,16 @@ public class TBookStore implements ITBookStore {
 	public TBookStore setName(String name) {
 		this.name = name;
 		return this;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("TBookStore (");
+
+		sb.append(name);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

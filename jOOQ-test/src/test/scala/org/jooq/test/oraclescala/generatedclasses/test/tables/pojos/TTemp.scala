@@ -6,6 +6,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables.pojos
 
 import java.io.Serializable
 import java.lang.Integer
+import java.lang.StringBuilder
 
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -66,5 +67,14 @@ class TTemp(
 		var result = 1
 		result = prime * result + (if (id == null) 0 else id.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("TTemp (")
+
+		sb.append(id)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

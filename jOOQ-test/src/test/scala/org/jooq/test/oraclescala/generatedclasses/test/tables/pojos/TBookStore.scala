@@ -6,6 +6,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables.pojos
 
 import java.io.Serializable
 import java.lang.String
+import java.lang.StringBuilder
 
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -70,5 +71,14 @@ class TBookStore(
 		var result = 1
 		result = prime * result + (if (name == null) 0 else name.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("TBookStore (")
+
+		sb.append(name)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

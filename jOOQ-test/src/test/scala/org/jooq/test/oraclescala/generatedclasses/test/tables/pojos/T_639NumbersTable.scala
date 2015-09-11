@@ -10,6 +10,7 @@ import java.lang.Double
 import java.lang.Integer
 import java.lang.Long
 import java.lang.Short
+import java.lang.StringBuilder
 import java.math.BigDecimal
 import java.math.BigInteger
 
@@ -288,5 +289,26 @@ class T_639NumbersTable(
 		result = prime * result + (if (float == null) 0 else float.hashCode())
 		result = prime * result + (if (real == null) 0 else real.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("T_639NumbersTable (")
+
+		sb.append(id)
+		sb.append(", ").append(byte)
+		sb.append(", ").append(short)
+		sb.append(", ").append(integer)
+		sb.append(", ").append(long)
+		sb.append(", ").append(byteDecimal)
+		sb.append(", ").append(shortDecimal)
+		sb.append(", ").append(integerDecimal)
+		sb.append(", ").append(longDecimal)
+		sb.append(", ").append(bigInteger)
+		sb.append(", ").append(bigDecimal)
+		sb.append(", ").append(float)
+		sb.append(", ").append(real)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

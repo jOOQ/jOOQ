@@ -15,7 +15,7 @@ import org.jooq.test.oracle.generatedclasses.sys.udt.records.XmltypepiRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Xmltypeextra implements Serializable {
 
-	private static final long serialVersionUID = 206838350;
+	private static final long serialVersionUID = -126245371;
 
 	private XmltypepiRecord namespaces;
 	private XmltypepiRecord extradata;
@@ -82,5 +82,16 @@ public class Xmltypeextra implements Serializable {
 		result = prime * result + ((namespaces == null) ? 0 : namespaces.hashCode());
 		result = prime * result + ((extradata == null) ? 0 : extradata.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("Xmltypeextra (");
+
+		sb.append(namespaces);
+		sb.append(", ").append(extradata);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

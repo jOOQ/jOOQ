@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
 })
 public class TBookToBookStore implements Serializable {
 
-	private static final long serialVersionUID = -1588362197;
+	private static final long serialVersionUID = -1433615202;
 
 	private String  bookStoreName;
 	private Integer bookId;
@@ -116,5 +116,17 @@ public class TBookToBookStore implements Serializable {
 		result = prime * result + ((bookId == null) ? 0 : bookId.hashCode());
 		result = prime * result + ((stock == null) ? 0 : stock.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("TBookToBookStore (");
+
+		sb.append(bookStoreName);
+		sb.append(", ").append(bookId);
+		sb.append(", ").append(stock);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

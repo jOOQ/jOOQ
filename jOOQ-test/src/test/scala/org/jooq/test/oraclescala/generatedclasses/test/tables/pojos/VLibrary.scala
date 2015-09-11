@@ -6,6 +6,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables.pojos
 
 import java.io.Serializable
 import java.lang.String
+import java.lang.StringBuilder
 
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -85,5 +86,15 @@ class VLibrary(
 		result = prime * result + (if (author == null) 0 else author.hashCode())
 		result = prime * result + (if (title == null) 0 else title.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("VLibrary (")
+
+		sb.append(author)
+		sb.append(", ").append(title)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

@@ -7,7 +7,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables.pojos
 import java.io.Serializable
 import java.lang.Integer
 import java.lang.Long
-import java.lang.Object
+import java.lang.StringBuilder
 import java.sql.Date
 import java.sql.Timestamp
 
@@ -31,8 +31,6 @@ class TDates(
 	, private var d : Date       
 	, private var t : Timestamp  
 	, private var ts : Timestamp  
-	, private var tTz : Object     
-	, private var tsTz : Object     
 	, private var dInt : Integer    
 	, private var tsBigint : Long       
 	, private var iY : YearToMonth
@@ -40,7 +38,7 @@ class TDates(
 ) extends Serializable {
 
 	def this() = {
-		this(null, null, null, null, null, null, null, null, null, null)
+		this(null, null, null, null, null, null, null, null)
 	}
 
 	def this (value : TDates) = {
@@ -49,8 +47,6 @@ class TDates(
 			, value.d
 			, value.t
 			, value.ts
-			, value.tTz
-			, value.tsTz
 			, value.dInt
 			, value.tsBigint
 			, value.iY
@@ -94,24 +90,6 @@ class TDates(
 
 	def setTs(ts : Timestamp) : Unit = {
 		this.ts = ts
-	}
-
-	@Column(name = "T_TZ")
-	def getTTz : Object = {
-		this.tTz
-	}
-
-	def setTTz(tTz : Object) : Unit = {
-		this.tTz = tTz
-	}
-
-	@Column(name = "TS_TZ")
-	def getTsTz : Object = {
-		this.tsTz
-	}
-
-	def setTsTz(tsTz : Object) : Unit = {
-		this.tsTz = tsTz
 	}
 
 	@Column(name = "D_INT", precision = 7)
@@ -182,18 +160,6 @@ class TDates(
 		}
 		else if (!ts.equals(other.ts))
 			return false
-		if (tTz == null) {
-			if (other.tTz != null)
-				return false
-		}
-		else if (!tTz.equals(other.tTz))
-			return false
-		if (tsTz == null) {
-			if (other.tsTz != null)
-				return false
-		}
-		else if (!tsTz.equals(other.tsTz))
-			return false
 		if (dInt == null) {
 			if (other.dInt != null)
 				return false
@@ -228,12 +194,26 @@ class TDates(
 		result = prime * result + (if (d == null) 0 else d.hashCode())
 		result = prime * result + (if (t == null) 0 else t.hashCode())
 		result = prime * result + (if (ts == null) 0 else ts.hashCode())
-		result = prime * result + (if (tTz == null) 0 else tTz.hashCode())
-		result = prime * result + (if (tsTz == null) 0 else tsTz.hashCode())
 		result = prime * result + (if (dInt == null) 0 else dInt.hashCode())
 		result = prime * result + (if (tsBigint == null) 0 else tsBigint.hashCode())
 		result = prime * result + (if (iY == null) 0 else iY.hashCode())
 		result = prime * result + (if (iD == null) 0 else iD.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("TDates (")
+
+		sb.append(id)
+		sb.append(", ").append(d)
+		sb.append(", ").append(t)
+		sb.append(", ").append(ts)
+		sb.append(", ").append(dInt)
+		sb.append(", ").append(tsBigint)
+		sb.append(", ").append(iY)
+		sb.append(", ").append(iD)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

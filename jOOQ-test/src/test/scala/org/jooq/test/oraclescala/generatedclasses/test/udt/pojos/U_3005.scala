@@ -6,6 +6,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.udt.pojos
 
 import java.io.Serializable
 import java.lang.Integer
+import java.lang.StringBuilder
 
 
 /**
@@ -55,5 +56,14 @@ class U_3005(
 		var result = 1
 		result = prime * result + (if (id == null) 0 else id.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("U_3005 (")
+
+		sb.append(id)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

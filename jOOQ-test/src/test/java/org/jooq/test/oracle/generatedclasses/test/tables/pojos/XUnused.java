@@ -28,7 +28,7 @@ import javax.validation.constraints.Size;
 })
 public class XUnused implements Serializable {
 
-	private static final long serialVersionUID = 1955731857;
+	private static final long serialVersionUID = -331158189;
 
 	private Integer    id;
 	private String     name;
@@ -382,5 +382,30 @@ public class XUnused implements Serializable {
 		result = prime * result + ((msUnusedIdRef == null) ? 0 : msUnusedIdRef.hashCode());
 		result = prime * result + ((msUnusedNameRef == null) ? 0 : msUnusedNameRef.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("XUnused (");
+
+		sb.append(id);
+		sb.append(", ").append(name);
+		sb.append(", ").append(bigInteger);
+		sb.append(", ").append(idRef);
+		sb.append(", ").append(class_);
+		sb.append(", ").append(fields);
+		sb.append(", ").append(configuration);
+		sb.append(", ").append(uDT);
+		sb.append(", ").append(metaData);
+		sb.append(", ").append(type0);
+		sb.append(", ").append(primaryKey);
+		sb.append(", ").append(primarykey);
+		sb.append(", ").append(nameRef);
+		sb.append(", ").append(field_737);
+		sb.append(", ").append(msUnusedIdRef);
+		sb.append(", ").append(msUnusedNameRef);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

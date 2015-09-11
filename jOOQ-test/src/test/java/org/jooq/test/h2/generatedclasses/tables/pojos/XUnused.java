@@ -16,7 +16,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IXUnused;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnused implements IXUnused {
 
-	private static final long serialVersionUID = 754737916;
+	private static final long serialVersionUID = 82935976;
 
 	private Integer    id;
 	private String     name;
@@ -266,6 +266,31 @@ public class XUnused implements IXUnused {
 	public XUnused setField_737(BigDecimal field_737) {
 		this.field_737 = field_737;
 		return this;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("XUnused (");
+
+		sb.append(id);
+		sb.append(", ").append(name);
+		sb.append(", ").append(bigInteger);
+		sb.append(", ").append(idRef);
+		sb.append(", ").append(nameRef);
+		sb.append(", ").append(class_);
+		sb.append(", ").append(fields);
+		sb.append(", ").append(table);
+		sb.append(", ").append(configuration);
+		sb.append(", ").append(uDT);
+		sb.append(", ").append(metaData);
+		sb.append(", ").append(values);
+		sb.append(", ").append(type0);
+		sb.append(", ").append(primaryKey);
+		sb.append(", ").append(primarykey);
+		sb.append(", ").append(field_737);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

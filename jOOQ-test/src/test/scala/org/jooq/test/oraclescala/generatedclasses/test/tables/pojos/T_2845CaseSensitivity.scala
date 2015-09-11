@@ -5,6 +5,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables.pojos
 
 
 import java.io.Serializable
+import java.lang.StringBuilder
 import java.math.BigDecimal
 
 import javax.persistence.Column
@@ -138,5 +139,18 @@ class T_2845CaseSensitivity(
 		result = prime * result + (if (lower == null) 0 else lower.hashCode())
 		result = prime * result + (if (mixed == null) 0 else mixed.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("T_2845CaseSensitivity (")
+
+		sb.append(id)
+		sb.append(", ").append(insensitive)
+		sb.append(", ").append(upper)
+		sb.append(", ").append(lower)
+		sb.append(", ").append(mixed)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

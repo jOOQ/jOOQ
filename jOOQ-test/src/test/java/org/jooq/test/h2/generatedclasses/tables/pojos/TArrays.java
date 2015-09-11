@@ -4,6 +4,8 @@
 package org.jooq.test.h2.generatedclasses.tables.pojos;
 
 
+import java.util.Arrays;
+
 import org.jooq.test.h2.generatedclasses.tables.interfaces.ITArrays;
 
 
@@ -13,7 +15,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.ITArrays;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TArrays implements ITArrays {
 
-	private static final long serialVersionUID = 834688227;
+	private static final long serialVersionUID = 1615511176;
 
 	private Integer  id;
 	private Object[] stringArray;
@@ -83,6 +85,19 @@ public class TArrays implements ITArrays {
 	public TArrays setDateArray(Object[] dateArray) {
 		this.dateArray = dateArray;
 		return this;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("TArrays (");
+
+		sb.append(id);
+		sb.append(", ").append(Arrays.toString(stringArray));
+		sb.append(", ").append(Arrays.toString(numberArray));
+		sb.append(", ").append(Arrays.toString(dateArray));
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

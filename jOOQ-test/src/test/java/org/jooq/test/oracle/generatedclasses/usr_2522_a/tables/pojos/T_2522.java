@@ -21,7 +21,7 @@ import org.jooq.test.oracle.generatedclasses.usr_2522_a.udt.pojos.U_2522;
 @Table(name = "T_2522", schema = "USR_2522_A")
 public class T_2522 implements Serializable {
 
-	private static final long serialVersionUID = 1803227935;
+	private static final long serialVersionUID = 903462028;
 
 	private Integer id;
 	private U_2522  v;
@@ -90,5 +90,16 @@ public class T_2522 implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((v == null) ? 0 : v.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_2522 (");
+
+		sb.append(id);
+		sb.append(", ").append(v);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

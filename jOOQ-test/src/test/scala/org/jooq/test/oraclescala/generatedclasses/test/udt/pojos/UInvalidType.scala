@@ -5,6 +5,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.udt.pojos
 
 
 import java.io.Serializable
+import java.lang.StringBuilder
 
 
 /**
@@ -34,5 +35,13 @@ class UInvalidType(
 		val prime = 31
 		var result = 1
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("UInvalidType (")
+
+
+		sb.append(")");
+		return sb.toString
 	}
 }

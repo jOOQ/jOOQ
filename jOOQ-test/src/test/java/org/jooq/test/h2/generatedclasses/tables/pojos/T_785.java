@@ -13,7 +13,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_785;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_785 implements IT_785 {
 
-	private static final long serialVersionUID = -175877090;
+	private static final long serialVersionUID = 852509754;
 
 	private Integer id;
 	private String  name;
@@ -68,6 +68,18 @@ public class T_785 implements IT_785 {
 	public T_785 setValue(String value) {
 		this.value = value;
 		return this;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_785 (");
+
+		sb.append(id);
+		sb.append(", ").append(name);
+		sb.append(", ").append(value);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

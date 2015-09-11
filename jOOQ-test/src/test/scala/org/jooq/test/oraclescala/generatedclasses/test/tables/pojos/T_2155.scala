@@ -6,6 +6,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables.pojos
 
 import java.io.Serializable
 import java.lang.Integer
+import java.lang.StringBuilder
 import java.time.LocalDate
 
 import javax.persistence.Column
@@ -124,5 +125,17 @@ class T_2155(
 		result = prime * result + (if (d2 == null) 0 else d2.hashCode())
 		result = prime * result + (if (d3 == null) 0 else d3.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("T_2155 (")
+
+		sb.append(id)
+		sb.append(", ").append(d1)
+		sb.append(", ").append(d2)
+		sb.append(", ").append(d3)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

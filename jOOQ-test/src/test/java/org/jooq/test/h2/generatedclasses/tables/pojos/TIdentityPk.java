@@ -13,7 +13,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.ITIdentityPk;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentityPk implements ITIdentityPk {
 
-	private static final long serialVersionUID = 500356146;
+	private static final long serialVersionUID = 1016622561;
 
 	private Integer id;
 	private Integer val;
@@ -53,6 +53,17 @@ public class TIdentityPk implements ITIdentityPk {
 	public TIdentityPk setVal(Integer val) {
 		this.val = val;
 		return this;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("TIdentityPk (");
+
+		sb.append(id);
+		sb.append(", ").append(val);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

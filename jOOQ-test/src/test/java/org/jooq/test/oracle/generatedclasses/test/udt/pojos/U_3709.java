@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_3709 implements Serializable {
 
-	private static final long serialVersionUID = -545343879;
+	private static final long serialVersionUID = 238600696;
 
 	private String v;
 
@@ -64,5 +64,15 @@ public class U_3709 implements Serializable {
 		int result = 1;
 		result = prime * result + ((v == null) ? 0 : v.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("U_3709 (");
+
+		sb.append(v);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

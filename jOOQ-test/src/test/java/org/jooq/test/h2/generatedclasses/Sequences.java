@@ -6,7 +6,6 @@ package org.jooq.test.h2.generatedclasses;
 
 import org.jooq.Sequence;
 import org.jooq.impl.SequenceImpl;
-import org.jooq.test.h2.generatedclasses.Public;
 
 
 /**

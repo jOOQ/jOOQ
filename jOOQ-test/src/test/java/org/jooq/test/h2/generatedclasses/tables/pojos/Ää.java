@@ -13,7 +13,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IÄä;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Ää implements IÄä {
 
-	private static final long serialVersionUID = 1268778279;
+	private static final long serialVersionUID = -583090223;
 
 	private Integer öö;
 
@@ -38,6 +38,16 @@ public class Ää implements IÄä {
 	public Ää setÖö(Integer öö) {
 		this.öö = öö;
 		return this;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("Ää (");
+
+		sb.append(öö);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

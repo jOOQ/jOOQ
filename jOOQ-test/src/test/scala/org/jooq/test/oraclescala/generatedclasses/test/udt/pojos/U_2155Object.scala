@@ -5,6 +5,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.udt.pojos
 
 
 import java.io.Serializable
+import java.lang.StringBuilder
 import java.time.LocalDate
 
 import org.jooq.test.oraclescala.generatedclasses.test.udt.records.U_2155ArrayRecord
@@ -74,5 +75,15 @@ class U_2155Object(
 		result = prime * result + (if (d == null) 0 else d.hashCode())
 		result = prime * result + (if (a == null) 0 else a.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("U_2155Object (")
+
+		sb.append(d)
+		sb.append(", ").append(a)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

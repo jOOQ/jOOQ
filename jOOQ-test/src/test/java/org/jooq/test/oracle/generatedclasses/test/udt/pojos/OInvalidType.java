@@ -13,7 +13,7 @@ import java.io.Serializable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class OInvalidType implements Serializable {
 
-	private static final long serialVersionUID = 1276441886;
+	private static final long serialVersionUID = 1962245751;
 
 
 	public OInvalidType() {}
@@ -38,5 +38,14 @@ public class OInvalidType implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("OInvalidType (");
+
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

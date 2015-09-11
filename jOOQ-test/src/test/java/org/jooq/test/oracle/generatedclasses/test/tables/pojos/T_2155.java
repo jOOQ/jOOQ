@@ -25,7 +25,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ArrayRecord;
 @Table(name = "T_2155", schema = "TEST")
 public class T_2155 implements Serializable {
 
-	private static final long serialVersionUID = 1955768737;
+	private static final long serialVersionUID = -362326278;
 
 	private Integer           id;
 	private LocalDate         d1;
@@ -136,5 +136,18 @@ public class T_2155 implements Serializable {
 		result = prime * result + ((d2 == null) ? 0 : d2.hashCode());
 		result = prime * result + ((d3 == null) ? 0 : d3.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_2155 (");
+
+		sb.append(id);
+		sb.append(", ").append(d1);
+		sb.append(", ").append(d2);
+		sb.append(", ").append(d3);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

@@ -6,6 +6,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.udt.pojos
 
 import java.io.Serializable
 import java.lang.String
+import java.lang.StringBuilder
 
 import javax.validation.constraints.Size
 
@@ -58,5 +59,14 @@ class U_3709(
 		var result = 1
 		result = prime * result + (if (v == null) 0 else v.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("U_3709 (")
+
+		sb.append(v)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

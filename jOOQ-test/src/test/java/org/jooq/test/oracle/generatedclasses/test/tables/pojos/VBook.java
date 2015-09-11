@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
 @Table(name = "V_BOOK", schema = "TEST")
 public class VBook implements Serializable {
 
-	private static final long serialVersionUID = 423423353;
+	private static final long serialVersionUID = 414297517;
 
 	private Integer    id;
 	private Integer    authorId;
@@ -279,5 +279,25 @@ public class VBook implements Serializable {
 		result = prime * result + ((recVersion == null) ? 0 : recVersion.hashCode());
 		result = prime * result + ((recTimestamp == null) ? 0 : recTimestamp.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("VBook (");
+
+		sb.append(id);
+		sb.append(", ").append(authorId);
+		sb.append(", ").append(coAuthorId);
+		sb.append(", ").append(detailsId);
+		sb.append(", ").append(title);
+		sb.append(", ").append(publishedIn);
+		sb.append(", ").append(languageId);
+		sb.append(", ").append(contentText);
+		sb.append(", ").append("[binary...]");
+		sb.append(", ").append(recVersion);
+		sb.append(", ").append(recTimestamp);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

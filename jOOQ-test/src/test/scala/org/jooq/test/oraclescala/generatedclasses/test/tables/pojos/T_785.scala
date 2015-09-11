@@ -7,6 +7,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables.pojos
 import java.io.Serializable
 import java.lang.Integer
 import java.lang.String
+import java.lang.StringBuilder
 
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -102,5 +103,16 @@ class T_785(
 		result = prime * result + (if (name == null) 0 else name.hashCode())
 		result = prime * result + (if (value == null) 0 else value.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("T_785 (")
+
+		sb.append(id)
+		sb.append(", ").append(name)
+		sb.append(", ").append(value)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

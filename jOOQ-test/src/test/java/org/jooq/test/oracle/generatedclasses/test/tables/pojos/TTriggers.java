@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "T_TRIGGERS", schema = "TEST")
 public class TTriggers implements Serializable {
 
-	private static final long serialVersionUID = -1764597830;
+	private static final long serialVersionUID = 2046584284;
 
 	private Integer idGenerated;
 	private Integer id;
@@ -114,5 +114,17 @@ public class TTriggers implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((counter == null) ? 0 : counter.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("TTriggers (");
+
+		sb.append(idGenerated);
+		sb.append(", ").append(id);
+		sb.append(", ").append(counter);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

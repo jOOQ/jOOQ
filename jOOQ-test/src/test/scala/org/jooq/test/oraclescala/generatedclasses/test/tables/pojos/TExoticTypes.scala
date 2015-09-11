@@ -8,6 +8,7 @@ import java.io.Serializable
 import java.lang.Integer
 import java.lang.Object
 import java.lang.String
+import java.lang.StringBuilder
 import java.util.UUID
 
 import javax.persistence.Column
@@ -195,5 +196,21 @@ class TExoticTypes(
 		result = prime * result + (if (oracleXmlAsDocument == null) 0 else oracleXmlAsDocument.hashCode())
 		result = prime * result + (if (oracleXmlAsSqlxml == null) 0 else oracleXmlAsSqlxml.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("TExoticTypes (")
+
+		sb.append(id)
+		sb.append(", ").append(uu)
+		sb.append(", ").append(javaIoSerializable)
+		sb.append(", ").append(plainSqlConverterXml)
+		sb.append(", ").append(plainSqlBindingXml)
+		sb.append(", ").append(oracleXmlAsIs)
+		sb.append(", ").append(oracleXmlAsDocument)
+		sb.append(", ").append(oracleXmlAsSqlxml)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

@@ -15,7 +15,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.ITLanguage;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage implements ITLanguage {
 
-	private static final long serialVersionUID = -1852252408;
+	private static final long serialVersionUID = 2080389288;
 
 	private String  cd;
 	private String  description;
@@ -85,6 +85,19 @@ public class TLanguage implements ITLanguage {
 	public TLanguage setId(Integer id) {
 		this.id = id;
 		return this;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("TLanguage (");
+
+		sb.append(cd);
+		sb.append(", ").append(description);
+		sb.append(", ").append(descriptionEnglish);
+		sb.append(", ").append(id);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

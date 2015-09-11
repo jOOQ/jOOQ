@@ -13,7 +13,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_725LobTest;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTest implements IT_725LobTest {
 
-	private static final long serialVersionUID = 330626494;
+	private static final long serialVersionUID = -1447265482;
 
 	private Integer id;
 	private byte[]  lob;
@@ -53,6 +53,17 @@ public class T_725LobTest implements IT_725LobTest {
 	public T_725LobTest setLob(byte[] lob) {
 		this.lob = lob;
 		return this;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_725LobTest (");
+
+		sb.append(id);
+		sb.append(", ").append("[binary...]");
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

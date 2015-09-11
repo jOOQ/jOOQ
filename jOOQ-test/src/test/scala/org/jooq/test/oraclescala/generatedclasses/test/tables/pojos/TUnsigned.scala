@@ -5,6 +5,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables.pojos
 
 
 import java.io.Serializable
+import java.lang.StringBuilder
 
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -120,5 +121,17 @@ class TUnsigned(
 		result = prime * result + (if (uInt == null) 0 else uInt.hashCode())
 		result = prime * result + (if (uLong == null) 0 else uLong.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("TUnsigned (")
+
+		sb.append(uByte)
+		sb.append(", ").append(uShort)
+		sb.append(", ").append(uInt)
+		sb.append(", ").append(uLong)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

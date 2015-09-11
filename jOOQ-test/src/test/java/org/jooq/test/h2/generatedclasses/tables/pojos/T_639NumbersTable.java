@@ -16,7 +16,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_639NumbersTable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTable implements IT_639NumbersTable {
 
-	private static final long serialVersionUID = 1515393127;
+	private static final long serialVersionUID = -101603810;
 
 	private Integer    id;
 	private Byte       byte_;
@@ -221,6 +221,28 @@ public class T_639NumbersTable implements IT_639NumbersTable {
 	public T_639NumbersTable setDouble(Double double_) {
 		this.double_ = double_;
 		return this;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_639NumbersTable (");
+
+		sb.append(id);
+		sb.append(", ").append(byte_);
+		sb.append(", ").append(short_);
+		sb.append(", ").append(integer);
+		sb.append(", ").append(long_);
+		sb.append(", ").append(byteDecimal);
+		sb.append(", ").append(shortDecimal);
+		sb.append(", ").append(integerDecimal);
+		sb.append(", ").append(longDecimal);
+		sb.append(", ").append(bigInteger);
+		sb.append(", ").append(bigDecimal);
+		sb.append(", ").append(float_);
+		sb.append(", ").append(double_);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

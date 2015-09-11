@@ -16,7 +16,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTableRecor
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_4347 implements Serializable {
 
-	private static final long serialVersionUID = 1128180171;
+	private static final long serialVersionUID = -988775465;
 
 	private Integer             id;
 	private UAddressTableRecord t;
@@ -102,5 +102,17 @@ public class U_4347 implements Serializable {
 		result = prime * result + ((t == null) ? 0 : t.hashCode());
 		result = prime * result + ((o == null) ? 0 : o.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("U_4347 (");
+
+		sb.append(id);
+		sb.append(", ").append(t);
+		sb.append(", ").append(o);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

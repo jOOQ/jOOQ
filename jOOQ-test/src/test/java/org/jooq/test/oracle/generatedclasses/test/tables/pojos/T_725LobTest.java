@@ -24,7 +24,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "T_725_LOB_TEST", schema = "TEST")
 public class T_725LobTest implements Serializable {
 
-	private static final long serialVersionUID = 497556007;
+	private static final long serialVersionUID = 1082378004;
 
 	private Integer id;
 	private byte[]  lob;
@@ -175,5 +175,20 @@ public class T_725LobTest implements Serializable {
 		result = prime * result + ((jooqJavaSqlClob == null) ? 0 : jooqJavaSqlClob.hashCode());
 		result = prime * result + ((jooqJavaSqlBlob == null) ? 0 : Arrays.hashCode(jooqJavaSqlBlob));
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_725LobTest (");
+
+		sb.append(id);
+		sb.append(", ").append("[binary...]");
+		sb.append(", ").append(userJavaSqlClob);
+		sb.append(", ").append(userJavaSqlBlob);
+		sb.append(", ").append(jooqJavaSqlClob);
+		sb.append(", ").append("[binary...]");
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

@@ -16,7 +16,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.IT_2486;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2486 implements IT_2486 {
 
-	private static final long serialVersionUID = 2104600685;
+	private static final long serialVersionUID = 1825086104;
 
 	private BigDecimal val1;
 	private BigDecimal val2;
@@ -146,6 +146,23 @@ public class T_2486 implements IT_2486 {
 	public T_2486 setVal8(BigInteger val8) {
 		this.val8 = val8;
 		return this;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_2486 (");
+
+		sb.append(val1);
+		sb.append(", ").append(val2);
+		sb.append(", ").append(val3);
+		sb.append(", ").append(val4);
+		sb.append(", ").append(val5);
+		sb.append(", ").append(val6);
+		sb.append(", ").append(val7);
+		sb.append(", ").append(val8);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

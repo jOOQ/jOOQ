@@ -13,7 +13,7 @@ import java.io.Serializable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class NumberObject implements Serializable {
 
-	private static final long serialVersionUID = 666095847;
+	private static final long serialVersionUID = -336241331;
 
 	private Integer a;
 	private Integer b;
@@ -99,5 +99,17 @@ public class NumberObject implements Serializable {
 		result = prime * result + ((b == null) ? 0 : b.hashCode());
 		result = prime * result + ((c == null) ? 0 : c.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("NumberObject (");
+
+		sb.append(a);
+		sb.append(", ").append(b);
+		sb.append(", ").append(c);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

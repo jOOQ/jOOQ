@@ -29,7 +29,7 @@ import org.jooq.test.all.converters.Boolean_YN_UC;
 @Table(name = "T_BOOLEANS", schema = "TEST")
 public class TBooleans implements Serializable {
 
-	private static final long serialVersionUID = -131401346;
+	private static final long serialVersionUID = -503082113;
 
 	private Integer           id;
 	private Boolean_10        oneZero;
@@ -280,5 +280,25 @@ public class TBooleans implements Serializable {
 		result = prime * result + ((cBoolean == null) ? 0 : cBoolean.hashCode());
 		result = prime * result + ((nBoolean == null) ? 0 : nBoolean.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("TBooleans (");
+
+		sb.append(id);
+		sb.append(", ").append(oneZero);
+		sb.append(", ").append(trueFalseLc);
+		sb.append(", ").append(trueFalseUc);
+		sb.append(", ").append(yesNoLc);
+		sb.append(", ").append(yesNoUc);
+		sb.append(", ").append(yNLc);
+		sb.append(", ").append(yNUc);
+		sb.append(", ").append(vcBoolean);
+		sb.append(", ").append(cBoolean);
+		sb.append(", ").append(nBoolean);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

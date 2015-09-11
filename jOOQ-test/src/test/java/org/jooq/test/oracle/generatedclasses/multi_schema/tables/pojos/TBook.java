@@ -23,7 +23,7 @@ import javax.validation.constraints.Size;
 @Table(name = "T_BOOK", schema = "MULTI_SCHEMA")
 public class TBook implements Serializable {
 
-	private static final long serialVersionUID = 1949490998;
+	private static final long serialVersionUID = 1725636774;
 
 	private Integer id;
 	private Integer authorId;
@@ -239,5 +239,23 @@ public class TBook implements Serializable {
 		result = prime * result + ((contentText == null) ? 0 : contentText.hashCode());
 		result = prime * result + ((contentPdf == null) ? 0 : Arrays.hashCode(contentPdf));
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("TBook (");
+
+		sb.append(id);
+		sb.append(", ").append(authorId);
+		sb.append(", ").append(coAuthorId);
+		sb.append(", ").append(detailsId);
+		sb.append(", ").append(title);
+		sb.append(", ").append(publishedIn);
+		sb.append(", ").append(languageId);
+		sb.append(", ").append(contentText);
+		sb.append(", ").append("[binary...]");
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

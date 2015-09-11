@@ -6,6 +6,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.udt.pojos
 
 import java.io.Serializable
 import java.lang.String
+import java.lang.StringBuilder
 
 import javax.validation.constraints.Size
 
@@ -131,5 +132,18 @@ class UStreetType(
 		result = prime * result + (if (f_1323 == null) 0 else f_1323.hashCode())
 		result = prime * result + (if (f_1326 == null) 0 else f_1326.hashCode())
 		return result
+	}
+
+	override def toString : String = {
+		val sb = new StringBuilder("UStreetType (")
+
+		sb.append(street)
+		sb.append(", ").append(no)
+		sb.append(", ").append(floors)
+		sb.append(", ").append(f_1323)
+		sb.append(", ").append(f_1326)
+
+		sb.append(")");
+		return sb.toString
 	}
 }

@@ -22,7 +22,7 @@ import javax.validation.constraints.Size;
 @Table(name = "T_BOOK_STORE", schema = "TEST")
 public class TBookStore implements Serializable {
 
-	private static final long serialVersionUID = 686421117;
+	private static final long serialVersionUID = -301705204;
 
 	private String name;
 
@@ -74,5 +74,15 @@ public class TBookStore implements Serializable {
 		int result = 1;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("TBookStore (");
+
+		sb.append(name);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

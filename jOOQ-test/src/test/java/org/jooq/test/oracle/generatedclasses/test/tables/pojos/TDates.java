@@ -26,7 +26,7 @@ import org.jooq.types.YearToMonth;
 @Table(name = "T_DATES", schema = "TEST")
 public class TDates implements Serializable {
 
-	private static final long serialVersionUID = 2054482593;
+	private static final long serialVersionUID = 728891948;
 
 	private Integer     id;
 	private Date        d;
@@ -217,5 +217,22 @@ public class TDates implements Serializable {
 		result = prime * result + ((iY == null) ? 0 : iY.hashCode());
 		result = prime * result + ((iD == null) ? 0 : iD.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("TDates (");
+
+		sb.append(id);
+		sb.append(", ").append(d);
+		sb.append(", ").append(t);
+		sb.append(", ").append(ts);
+		sb.append(", ").append(dInt);
+		sb.append(", ").append(tsBigint);
+		sb.append(", ").append(iY);
+		sb.append(", ").append(iD);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

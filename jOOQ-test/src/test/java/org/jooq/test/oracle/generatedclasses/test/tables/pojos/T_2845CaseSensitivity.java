@@ -22,7 +22,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "T_2845_CASE_sensitivity", schema = "TEST")
 public class T_2845CaseSensitivity implements Serializable {
 
-	private static final long serialVersionUID = 1292026458;
+	private static final long serialVersionUID = -325476859;
 
 	private BigDecimal id;
 	private BigDecimal insensitive;
@@ -153,5 +153,19 @@ public class T_2845CaseSensitivity implements Serializable {
 		result = prime * result + ((lower == null) ? 0 : lower.hashCode());
 		result = prime * result + ((mixed == null) ? 0 : mixed.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_2845CaseSensitivity (");
+
+		sb.append(id);
+		sb.append(", ").append(insensitive);
+		sb.append(", ").append(upper);
+		sb.append(", ").append(lower);
+		sb.append(", ").append(mixed);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

@@ -7,7 +7,6 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables
 import java.lang.Class
 import java.lang.Integer
 import java.lang.Long
-import java.lang.Object
 import java.lang.String
 import java.sql.Date
 import java.sql.Timestamp
@@ -65,16 +64,6 @@ class TDates(alias : String, aliased : Table[TDatesRecord], parameters : Array[ 
 	 * The column <code>TEST.T_DATES.TS</code>.
 	 */
 	val TS : TableField[TDatesRecord, Timestamp] = createField("TS", org.jooq.impl.SQLDataType.TIMESTAMP, "")
-
-	/**
-	 * The column <code>TEST.T_DATES.T_TZ</code>.
-	 */
-	val T_TZ : TableField[TDatesRecord, Object] = createField("T_TZ", org.jooq.impl.DefaultDataType.getDefaultDataType("TIMESTAMP(6) WITH TIME ZONE"), "")
-
-	/**
-	 * The column <code>TEST.T_DATES.TS_TZ</code>.
-	 */
-	val TS_TZ : TableField[TDatesRecord, Object] = createField("TS_TZ", org.jooq.impl.DefaultDataType.getDefaultDataType("TIMESTAMP(6) WITH TIME ZONE"), "")
 
 	/**
 	 * The column <code>TEST.T_DATES.D_INT</code>.

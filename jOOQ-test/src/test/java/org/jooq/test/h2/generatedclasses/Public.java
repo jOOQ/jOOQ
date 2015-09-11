@@ -11,7 +11,6 @@ import java.util.List;
 import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
-import org.jooq.test.h2.generatedclasses.Sequences;
 import org.jooq.test.h2.generatedclasses.tables.Accounts;
 import org.jooq.test.h2.generatedclasses.tables.TArrays;
 import org.jooq.test.h2.generatedclasses.tables.TAuthor;
@@ -58,7 +57,7 @@ import org.jooq.test.h2.generatedclasses.tables.Ää;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-	private static final long serialVersionUID = 1932697100;
+	private static final long serialVersionUID = -929955488;
 
 	/**
 	 * The reference instance of <code>PUBLIC</code>

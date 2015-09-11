@@ -22,7 +22,7 @@ import javax.validation.constraints.Size;
 @Table(name = "X_TEST_CASE_85", schema = "TEST")
 public class XTestCase_85 implements Serializable {
 
-	private static final long serialVersionUID = -701920433;
+	private static final long serialVersionUID = -631247492;
 
 	private Integer id;
 	private Integer xUnusedId;
@@ -114,5 +114,17 @@ public class XTestCase_85 implements Serializable {
 		result = prime * result + ((xUnusedId == null) ? 0 : xUnusedId.hashCode());
 		result = prime * result + ((xUnusedName == null) ? 0 : xUnusedName.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("XTestCase_85 (");
+
+		sb.append(id);
+		sb.append(", ").append(xUnusedId);
+		sb.append(", ").append(xUnusedName);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

@@ -15,7 +15,7 @@ import org.jooq.test.h2.generatedclasses.tables.interfaces.ITExoticTypes;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes implements ITExoticTypes {
 
-	private static final long serialVersionUID = -647608513;
+	private static final long serialVersionUID = -841551273;
 
 	private Integer id;
 	private UUID    uu;
@@ -55,6 +55,17 @@ public class TExoticTypes implements ITExoticTypes {
 	public TExoticTypes setUu(UUID uu) {
 		this.uu = uu;
 		return this;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("TExoticTypes (");
+
+		sb.append(id);
+		sb.append(", ").append(uu);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

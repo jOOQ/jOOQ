@@ -85,6 +85,7 @@ import static org.jooq.impl.DSL.median;
 import static org.jooq.impl.DSL.min;
 import static org.jooq.impl.DSL.minDistinct;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.nthValue;
 import static org.jooq.impl.DSL.ntile;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.orderBy;
@@ -132,6 +133,7 @@ import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
+import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Record6;
 import org.jooq.Record8;
@@ -1122,6 +1124,25 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                 break;
             }
         }
+    }
+
+    public void testWindowFunctions_NTH_VALUE() throws Exception {
+        assumeDialectNotIn(ACCESS, ASE, DERBY, H2, HSQLDB, INGRES, FIREBIRD, MARIADB, MYSQL, SQLITE);
+
+        Result<Record4<Integer, Integer, Integer, Integer>> result =
+        create().select(
+                    TBook_ID(),
+                    nthValue(TBook_ID(), 1).over(orderBy(TBook_ID())),
+                    nthValue(TBook_ID(), 2).over(orderBy(TBook_ID())),
+                    nthValue(TBook_ID(), 2).over(partitionBy(TBook_AUTHOR_ID()).orderBy(TBook_ID())))
+                .from(TBook())
+                .orderBy(TBook_ID())
+                .fetch();
+
+        assertEquals(BOOK_IDS, result.getValues(0, Integer.class));
+        assertEquals(asList(1, 1, 1, 1), result.getValues(1, Integer.class));
+        assertEquals(asList(null, 2, 2, 2), result.getValues(2, Integer.class));
+        assertEquals(asList(null, 2, null, 4), result.getValues(3, Integer.class));
     }
 
     public void testWindowFunctionsWithRowValueExpressions_LEAD_LAG() {

@@ -12080,6 +12080,22 @@ public class DSL {
     }
 
     /**
+     * The <code>nth_value(field) over ([analytic clause])</code> function.
+     */
+    @Support({ POSTGRES, ORACLE })
+    public static <T> WindowIgnoreNullsStep<T> nthValue(Field<T> field, int nth) {
+        return nthValue(field, val(nth));
+    }
+
+    /**
+     * The <code>nth_value(field) over ([analytic clause])</code> function.
+     */
+    @Support({ POSTGRES, ORACLE })
+    public static <T> WindowIgnoreNullsStep<T> nthValue(Field<T> field, Field<Integer> nth) {
+        return new Function<T>("nth_value", nullSafeDataType(field), nullSafe(field), nullSafe(nth));
+    }
+
+    /**
      * The <code>lead(field) over ([analytic clause])</code> function.
      */
     @Support({ CUBRID, DB2, HANA, INFORMIX, POSTGRES, REDSHIFT, SQLSERVER2012, ORACLE })

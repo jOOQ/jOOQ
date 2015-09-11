@@ -3064,6 +3064,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testWindowFunctions_NTH_VALUE() throws Exception {
+        new AggregateWindowFunctionTests(this).testWindowFunctions_NTH_VALUE();
+    }
+
+    @Test
     public void testWindowFunctionsWithRowValueExpressions_LEAD_LAG() throws Exception {
         new AggregateWindowFunctionTests(this).testWindowFunctionsWithRowValueExpressions_LEAD_LAG();
     }

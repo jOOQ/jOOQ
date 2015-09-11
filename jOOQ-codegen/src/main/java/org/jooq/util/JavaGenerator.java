@@ -2566,6 +2566,9 @@ public class JavaGenerator extends AbstractGenerator {
             generatePojoEqualsAndHashCode(tableOrUDT, out);
         }
 
+        if (generatePojosToString()) {
+            generatePojoToString(tableOrUDT, out);
+        }
 
         if (generateInterfaces() && !generateImmutablePojos()) {
             printFromAndInto(out, tableOrUDT);
@@ -2690,6 +2693,70 @@ public class JavaGenerator extends AbstractGenerator {
             }
 
             out.tab(2).println("return result;");
+            out.tab(1).println("}");
+        }
+    }
+
+    protected void generatePojoToString(Definition tableOrUDT, JavaWriter out) {
+        final String className = getStrategy().getJavaClassName(tableOrUDT, Mode.POJO);
+
+        out.println();
+
+        if (scala) {
+            out.tab(1).println("override def toString : String = {");
+
+            out.tab(2).println("val sb = new %s(\"%s (\")", StringBuilder.class, className);
+            out.tab(2).println();
+
+            String separator = "";
+            for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
+                final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
+                final String columnType = getJavaType(column.getType());
+
+                if (columnType.equals("Array[scala.Byte]")) {
+                    out.tab(2).println("sb%s.append(\"[binary...]\")", separator);
+                }
+                else {
+                    out.tab(2).println("sb%s.append(%s)", separator, columnMember);
+                }
+
+                separator = ".append(\", \")";
+            }
+
+            out.tab(2).println();
+            out.tab(2).println("sb.append(\")\");");
+
+            out.tab(2).println("return sb.toString");
+            out.tab(1).println("}");
+        }
+        else {
+            out.tab(1).println("@Override");
+            out.tab(1).println("public String toString() {");
+            out.tab(2).println("%s sb = new %s(\"%s (\");", StringBuilder.class, StringBuilder.class, className);
+            out.tab(2).println();
+
+            String separator = "";
+            for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
+                final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
+                final String columnType = getJavaType(column.getType());
+                final boolean array = columnType.endsWith("[]");
+
+                if (array && columnType.equals("byte[]")) {
+                    out.tab(2).println("sb%s.append(\"[binary...]\");", separator);
+                }
+                else if (array) {
+                    out.tab(2).println("sb%s.append(%s.toString(%s));", separator, Arrays.class, columnMember);
+                }
+                else {
+                    out.tab(2).println("sb%s.append(%s);", separator, columnMember);
+                }
+
+                separator = ".append(\", \")";
+            }
+
+            out.tab(2).println();
+            out.tab(2).println("sb.append(\")\");");
+            out.tab(2).println("return sb.toString();");
             out.tab(1).println("}");
         }
     }

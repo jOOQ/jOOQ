@@ -403,7 +403,7 @@ class DSLContext extends Generators {
                 «generatedMethod»
                 @Override
                 public <R extends Record, «TN(degree)»> InsertValuesStep«degree»<R, «TN(degree)»> insertInto(Table<R> into, «Field_TN_fieldn(degree)») {
-                    return new InsertImpl(configuration(), into, Arrays.asList(new Field[] { «fieldn(degree)» }));
+                    return new InsertImpl(configuration(), null, into, Arrays.asList(new Field[] { «fieldn(degree)» }));
                 }
             ''');
         }
@@ -509,7 +509,7 @@ class DSLContext extends Generators {
                 «generatedMethod»
                 @Override
                 public <R extends Record, «TN(degree)»> MergeKeyStep«degree»<R, «TN(degree)»> mergeInto(Table<R> table, «Field_TN_fieldn(degree)») {
-                    return new MergeImpl(configuration(), table, Arrays.asList(«fieldn(degree)»));
+                    return new MergeImpl(configuration(), null, table, Arrays.asList(«fieldn(degree)»));
                 }
             ''');
         }

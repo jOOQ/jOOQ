@@ -46,6 +46,7 @@ package org.jooq.xtend
  */
 
 import org.jooq.Constants
+import org.jooq.impl.WithImpl
 
 class InsertDSL extends Generators {
     
@@ -202,10 +203,14 @@ class InsertDSL extends Generators {
             private Field<?>[]        fields;
             private boolean           onDuplicateKeyUpdate;
         
-            InsertImpl(Configuration configuration, Table<R> into, Collection<? extends Field<?>> fields) {
-                super(new InsertQueryImpl<R>(configuration, into));
+            InsertImpl(Configuration configuration, WithImpl with, Table<R> into) {
+                super(new InsertQueryImpl<R>(configuration, with, into));
         
                 this.into = into;
+            }
+        
+            InsertImpl(Configuration configuration, WithImpl with, Table<R> into, Collection<? extends Field<?>> fields) {
+                this(configuration, with, into);
                 columns(fields);
             }
         

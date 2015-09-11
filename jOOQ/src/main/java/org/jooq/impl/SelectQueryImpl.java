@@ -200,19 +200,19 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
     private boolean                              unionSeekBefore;      // [#3579] TODO
     private final Limit                          unionLimit;
 
-    SelectQueryImpl(WithImpl with, Configuration configuration) {
-        this(with, configuration, null);
+    SelectQueryImpl(Configuration configuration, WithImpl with) {
+        this(configuration, with, null);
     }
 
-    SelectQueryImpl(WithImpl with, Configuration configuration, boolean distinct) {
-        this(with, configuration, null, distinct);
+    SelectQueryImpl(Configuration configuration, WithImpl with, boolean distinct) {
+        this(configuration, with, null, distinct);
     }
 
-    SelectQueryImpl(WithImpl with, Configuration configuration, TableLike<? extends R> from) {
-        this(with, configuration, from, false);
+    SelectQueryImpl(Configuration configuration, WithImpl with, TableLike<? extends R> from) {
+        this(configuration, with, from, false);
     }
 
-    SelectQueryImpl(WithImpl with, Configuration configuration, TableLike<? extends R> from, boolean distinct) {
+    SelectQueryImpl(Configuration configuration, WithImpl with, TableLike<? extends R> from, boolean distinct) {
         super(configuration);
 
         this.with = with;

@@ -45,6 +45,14 @@ package org.jooq.xtend
  * @author Lukas Eder
  */
 import org.jooq.Constants
+import org.jooq.Support
+import static org.jooq.SQLDialect.HSQLDB
+import static org.jooq.SQLDialect.FIREBIRD
+import static org.jooq.SQLDialect.SQLSERVER
+import static org.jooq.SQLDialect.DB2
+import static org.jooq.SQLDialect.POSTGRES
+import static org.jooq.SQLDialect.ORACLE
+import static org.jooq.SQLDialect.SYBASE
 
 class With extends Generators {
     
@@ -97,7 +105,7 @@ class With extends Generators {
                  * @see #selectDistinct(SelectField...)
                  */
                 «generatedMethod»
-                @Support
+                @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
                 <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> select(«SelectField_TN_fieldn(degree)»);
             ''');
             
@@ -156,7 +164,7 @@ class With extends Generators {
                  * @see #selectDistinct(SelectField...)
                  */
                 «generatedMethod»
-                @Support
+                @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
                 <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> selectDistinct(«SelectField_TN_fieldn(degree)»);
             ''');
             
@@ -197,7 +205,7 @@ class With extends Generators {
                  * </pre></code>
                  */
                 «generatedMethod»
-                @Support
+                @Support({ POSTGRES, SQLSERVER })
                 <R extends Record, «TN(degree)»> InsertValuesStep«degree»<R, «TN(degree)»> insertInto(Table<R> into, «Field_TN_fieldn(degree)»);
             ''');
             
@@ -205,8 +213,8 @@ class With extends Generators {
             
                 «generatedMethod»
                 @Override
-                public <R extends Record, «TN(degree)»> InsertValuesStep«degree»<R, «TN(degree)»> insertInto(Table<R> into, «Field_TN_fieldn(degree)») {
-                    return new InsertImpl(configuration, into, Arrays.asList(new Field[] { «fieldn(degree)» }));
+                public <R extends Record, «TN(degree)»> InsertImpl insertInto(Table<R> into, «Field_TN_fieldn(degree)») {
+                    return insertInto(into, Arrays.asList(«fieldn(degree)»));
                 }
             ''');
         }
@@ -243,7 +251,7 @@ class With extends Generators {
                  * </table>
                  */
                 «generatedMethod»
-                @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+                @Support({ SQLSERVER })
                 <R extends Record, «TN(degree)»> MergeKeyStep«degree»<R, «TN(degree)»> mergeInto(Table<R> table, «Field_TN_fieldn(degree)»);
             ''');
             
@@ -251,8 +259,8 @@ class With extends Generators {
             
                 «generatedMethod»
                 @Override
-                public <R extends Record, «TN(degree)»> MergeKeyStep«degree»<R, «TN(degree)»> mergeInto(Table<R> table, «Field_TN_fieldn(degree)») {
-                    return new MergeImpl(configuration, table, Arrays.asList(«fieldn(degree)»));
+                public <R extends Record, «TN(degree)»> MergeImpl mergeInto(Table<R> table, «Field_TN_fieldn(degree)») {
+                    return mergeInto(table, Arrays.asList(«fieldn(degree)»));
                 }
             ''');
         }

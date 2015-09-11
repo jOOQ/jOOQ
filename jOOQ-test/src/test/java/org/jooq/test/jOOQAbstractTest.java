@@ -2874,6 +2874,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testCTEWithDML() throws Exception {
+        new CTETests(this).testCTEWithDML();
+    }
+
+    @Test
     public void testJoinDuplicateFieldNames() throws Exception {
         new JoinTests(this).testJoinDuplicateFieldNames();
     }

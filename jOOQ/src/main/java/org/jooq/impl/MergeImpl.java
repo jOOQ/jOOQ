@@ -217,6 +217,7 @@ implements
     private static final long           serialVersionUID = -8835479296876774391L;
     private static final Clause[]       CLAUSES          = { MERGE };
 
+    private final WithImpl              with;
     private final Table<R>              table;
     private final ConditionProviderImpl on;
     private TableLike<?>                using;
@@ -239,13 +240,14 @@ implements
     private QueryPartList<Field<?>>     upsertValues;
     private Select<?>                   upsertSelect;
 
-    MergeImpl(Configuration configuration, Table<R> table) {
-        this(configuration, table, null);
+    MergeImpl(Configuration configuration, WithImpl with, Table<R> table) {
+        this(configuration, with, table, null);
     }
 
-    MergeImpl(Configuration configuration, Table<R> table, Collection<? extends Field<?>> fields) {
+    MergeImpl(Configuration configuration, WithImpl with, Table<R> table, Collection<? extends Field<?>> fields) {
         super(configuration);
 
+        this.with = with;
         this.table = table;
         this.on = new ConditionProviderImpl();
 
@@ -1092,6 +1094,9 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
+        if (with != null)
+            ctx.visit(with).formatSeparator();
+
         if (upsertStyle) {
             switch (ctx.family()) {
                 case H2:

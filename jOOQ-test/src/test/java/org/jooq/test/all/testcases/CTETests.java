@@ -41,6 +41,7 @@
 package org.jooq.test.all.testcases;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.nCopies;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Stream.iterate;
 import static org.jooq.SQLDialect.ACCESS;
@@ -60,6 +61,8 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.selectFrom;
+import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.SQLDataType.VARCHAR;
@@ -398,5 +401,41 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         assertEquals(asList("Paulo", "George"), result.getValues(0));
         assertEquals(asList("Coelho", "Orwell"), result.getValues(1));
         assertEquals(asList(3, 2), result.getValues(2, int.class));
+    }
+
+    public void testCTEWithDML() {
+        clean(TDates());
+
+        CommonTableExpression<Record1<Integer>> cte = name("t1").as(
+            select(TBook_ID())
+            .from(TBook())
+            .where(TBook_AUTHOR_ID().eq(1))
+        );
+
+        assertEquals(2,
+        create().with(cte)
+                .insertInto(TDates())
+                .columns(TDates_ID())
+                .select(selectFrom(cte))
+                .execute());
+
+        assertEquals(asList(1, 2), create().fetchValues(select(TDates_ID()).from(TDates()).orderBy(TDates_ID())));
+
+        assertEquals(2,
+        create().with(cte)
+                .update(TDates())
+                .set(TDates_D(), Date.valueOf("2000-01-01"))
+                .whereExists(selectOne().from(cte).where(TDates_ID().eq(cte.field(TBook_ID()))))
+                .execute());
+
+        assertEquals(nCopies(2, Date.valueOf("2000-01-01")), create().fetchValues(select(TDates_D()).from(TDates()).orderBy(TDates_ID())));
+
+        assertEquals(2,
+        create().with(cte)
+                .delete(TDates())
+                .whereExists(selectOne().from(cte).where(TDates_ID().eq(cte.field(TBook_ID()))))
+                .execute());
+
+        assertEquals(0, create().fetchCount(TDates()));
     }
 }

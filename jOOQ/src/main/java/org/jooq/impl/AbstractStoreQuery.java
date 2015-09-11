@@ -60,8 +60,8 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractDMLQuery<R> 
      */
     private static final long     serialVersionUID = 6864591335823160569L;
 
-    AbstractStoreQuery(Configuration configuration, Table<R> table) {
-        super(configuration, table);
+    AbstractStoreQuery(Configuration configuration, WithImpl with, Table<R> table) {
+        super(configuration, with, table);
     }
 
     protected abstract Map<Field<?>, Field<?>> getValues();

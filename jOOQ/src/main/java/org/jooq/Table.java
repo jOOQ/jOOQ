@@ -466,6 +466,70 @@ public interface Table<R extends Record> extends TableLike<R> {
 
     /**
      * <code>LEFT OUTER JOIN</code> a table to this table.
+     * <p>
+     * A synonym for {@link #leftOuterJoin(TableLike)}.
+     *
+     * @see #leftOuterJoin(TableLike)
+     */
+    @Support
+    TablePartitionByStep leftJoin(TableLike<?> table);
+
+    /**
+     * <code>LEFT OUTER JOIN</code> a table to this table.
+     * <p>
+     * A synonym for {@link #leftOuterJoin(String)}.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String)
+     * @see #leftOuterJoin(String)
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    TablePartitionByStep leftJoin(String sql);
+
+    /**
+     * <code>LEFT OUTER JOIN</code> a table to this table.
+     * <p>
+     * A synonym for {@link #leftOuterJoin(String, Object...)}.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, Object...)
+     * @see #leftOuterJoin(String, Object...)
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    TablePartitionByStep leftJoin(String sql, Object... bindings);
+
+    /**
+     * <code>LEFT OUTER JOIN</code> a table to this table.
+     * <p>
+     * A synonym for {@link #leftOuterJoin(String, QueryPart...)}.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, QueryPart...)
+     * @see #leftOuterJoin(String, QueryPart...)
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    TablePartitionByStep leftJoin(String sql, QueryPart... parts);
+
+    /**
+     * <code>LEFT OUTER JOIN</code> a table to this table.
      */
     @Support
     TablePartitionByStep leftOuterJoin(TableLike<?> table);
@@ -514,6 +578,78 @@ public interface Table<R extends Record> extends TableLike<R> {
     @Support
     @PlainSQL
     TablePartitionByStep leftOuterJoin(String sql, QueryPart... parts);
+
+    /**
+     * <code>RIGHT OUTER JOIN</code> a table to this table.
+     * <p>
+     * A synonym for {@link #rightOuterJoin(TableLike)}.
+     * <p>
+     * This is only possible where the underlying RDBMS supports it.
+     *
+     * @see #rightOuterJoin(TableLike)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    TablePartitionByStep rightJoin(TableLike<?> table);
+
+    /**
+     * <code>RIGHT OUTER JOIN</code> a table to this table.
+     * <p>
+     * A synonym for {@link #rightOuterJoin(String)}.
+     * <p>
+     * This is only possible where the underlying RDBMS supports it.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String)
+     * @see #rightOuterJoin(String)
+     * @see SQL
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @PlainSQL
+    TablePartitionByStep rightJoin(String sql);
+
+    /**
+     * <code>RIGHT OUTER JOIN</code> a table to this table.
+     * <p>
+     * A synonym for {@link #rightOuterJoin(String, Object...)}.
+     * <p>
+     * This is only possible where the underlying RDBMS supports it.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, Object...)
+     * @see #rightOuterJoin(String, Object...)
+     * @see SQL
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @PlainSQL
+    TablePartitionByStep rightJoin(String sql, Object... bindings);
+
+    /**
+     * <code>RIGHT OUTER JOIN</code> a table to this table.
+     * <p>
+     * A synonym for {@link #rightOuterJoin(String, QueryPart...)}.
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, QueryPart...)
+     * @see #rightOuterJoin(String, QueryPart...)
+     * @see SQL
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @PlainSQL
+    TablePartitionByStep rightJoin(String sql, QueryPart... parts);
 
     /**
      * <code>RIGHT OUTER JOIN</code> a table to this table.

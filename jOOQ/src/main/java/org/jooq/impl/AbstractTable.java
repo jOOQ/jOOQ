@@ -709,6 +709,26 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     }
 
     @Override
+    public final TablePartitionByStep leftJoin(TableLike<?> table) {
+        return leftOuterJoin(table);
+    }
+
+    @Override
+    public final TablePartitionByStep leftJoin(String sql) {
+        return leftOuterJoin(sql);
+    }
+
+    @Override
+    public final TablePartitionByStep leftJoin(String sql, Object... bindings) {
+        return leftOuterJoin(sql, bindings);
+    }
+
+    @Override
+    public final TablePartitionByStep leftJoin(String sql, QueryPart... parts) {
+        return leftOuterJoin(sql, parts);
+    }
+
+    @Override
     public final TablePartitionByStep leftOuterJoin(TableLike<?> table) {
         return join(table, LEFT_OUTER_JOIN);
     }
@@ -726,6 +746,26 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     @Override
     public final TablePartitionByStep leftOuterJoin(String sql, QueryPart... parts) {
         return leftOuterJoin(table(sql, parts));
+    }
+
+    @Override
+    public final TablePartitionByStep rightJoin(TableLike<?> table) {
+        return rightOuterJoin(table);
+    }
+
+    @Override
+    public final TablePartitionByStep rightJoin(String sql) {
+        return rightOuterJoin(sql);
+    }
+
+    @Override
+    public final TablePartitionByStep rightJoin(String sql, Object... bindings) {
+        return rightOuterJoin(sql, bindings);
+    }
+
+    @Override
+    public final TablePartitionByStep rightJoin(String sql, QueryPart... parts) {
+        return rightOuterJoin(sql, parts);
     }
 
     @Override

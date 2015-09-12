@@ -57,7 +57,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface TablePartitionByStep extends TableOnStep {
+public interface TablePartitionByStep<R extends Record> extends TableOnStep<R> {
 
     /* [pro] xx
     xxx
@@ -65,13 +65,13 @@ public interface TablePartitionByStep extends TableOnStep {
      x xxxxxxxxxxx xxxxxxxxxxx xxxxxxxx
      xx
     xxxxxxxxxxxxxxxx
-    xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
+    xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
 
     xxx
      x xxx x xxxxxxxxxxxxxxx xxxxxxxxx xxxxxx xx xxx xxxxx xxxx xxxx xx xxx
      x xxxxxxxxxxx xxxxxxxxxxx xxxxxxxx
      xx
     xxxxxxxxxxxxxxxx
-    xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxx xxxxxxxx
+    xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxx xxxxxxxx
     xx [/pro] */
 }

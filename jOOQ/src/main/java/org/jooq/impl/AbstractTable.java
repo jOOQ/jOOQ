@@ -41,6 +41,7 @@
 package org.jooq.impl;
 
 import static org.jooq.Clause.TABLE;
+import static org.jooq.JoinType.ANTI_JOIN;
 import static org.jooq.JoinType.CROSS_APPLY;
 import static org.jooq.JoinType.CROSS_JOIN;
 import static org.jooq.JoinType.FULL_OUTER_JOIN;
@@ -51,6 +52,7 @@ import static org.jooq.JoinType.NATURAL_LEFT_OUTER_JOIN;
 import static org.jooq.JoinType.NATURAL_RIGHT_OUTER_JOIN;
 import static org.jooq.JoinType.OUTER_APPLY;
 import static org.jooq.JoinType.RIGHT_OUTER_JOIN;
+import static org.jooq.JoinType.SEMI_JOIN;
 import static org.jooq.JoinType.STRAIGHT_JOIN;
 // ...
 import static org.jooq.impl.DSL.table;
@@ -659,152 +661,164 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
         return new DivideBy(this, divisor);
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final TableOnStep<R> semiJoin(TableLike<?> table) {
+        return (TableOnStep) join(table, SEMI_JOIN);
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final TableOnStep<R> antiJoin(TableLike<?> table) {
+        return (TableOnStep) join(table, ANTI_JOIN);
+    }
+
     // ------------------------------------------------------------------------
     // XXX: JOIN API
     // ------------------------------------------------------------------------
 
     @Override
-    public final TableOptionalOnStep join(TableLike<?> table, JoinType type) {
+    public final TableOptionalOnStep<Record> join(TableLike<?> table, JoinType type) {
         return new JoinTable(this, table, type);
     }
 
     @Override
-    public final TableOnStep join(TableLike<?> table) {
+    public final TableOnStep<Record> join(TableLike<?> table) {
         return innerJoin(table);
     }
 
     @Override
-    public final TableOnStep join(String sql) {
+    public final TableOnStep<Record> join(String sql) {
         return innerJoin(sql);
     }
 
     @Override
-    public final TableOnStep join(String sql, Object... bindings) {
+    public final TableOnStep<Record> join(String sql, Object... bindings) {
         return innerJoin(sql, bindings);
     }
 
     @Override
-    public final TableOnStep join(String sql, QueryPart... parts) {
+    public final TableOnStep<Record> join(String sql, QueryPart... parts) {
         return innerJoin(sql, parts);
     }
 
     @Override
-    public final TableOnStep innerJoin(TableLike<?> table) {
+    public final TableOnStep<Record> innerJoin(TableLike<?> table) {
         return join(table, JOIN);
     }
 
     @Override
-    public final TableOnStep innerJoin(String sql) {
+    public final TableOnStep<Record> innerJoin(String sql) {
         return innerJoin(table(sql));
     }
 
     @Override
-    public final TableOnStep innerJoin(String sql, Object... bindings) {
+    public final TableOnStep<Record> innerJoin(String sql, Object... bindings) {
         return innerJoin(table(sql, bindings));
     }
 
     @Override
-    public final TableOnStep innerJoin(String sql, QueryPart... parts) {
+    public final TableOnStep<Record> innerJoin(String sql, QueryPart... parts) {
         return innerJoin(table(sql, parts));
     }
 
     @Override
-    public final TablePartitionByStep leftJoin(TableLike<?> table) {
+    public final TablePartitionByStep<Record> leftJoin(TableLike<?> table) {
         return leftOuterJoin(table);
     }
 
     @Override
-    public final TablePartitionByStep leftJoin(String sql) {
+    public final TablePartitionByStep<Record> leftJoin(String sql) {
         return leftOuterJoin(sql);
     }
 
     @Override
-    public final TablePartitionByStep leftJoin(String sql, Object... bindings) {
+    public final TablePartitionByStep<Record> leftJoin(String sql, Object... bindings) {
         return leftOuterJoin(sql, bindings);
     }
 
     @Override
-    public final TablePartitionByStep leftJoin(String sql, QueryPart... parts) {
+    public final TablePartitionByStep<Record> leftJoin(String sql, QueryPart... parts) {
         return leftOuterJoin(sql, parts);
     }
 
     @Override
-    public final TablePartitionByStep leftOuterJoin(TableLike<?> table) {
+    public final TablePartitionByStep<Record> leftOuterJoin(TableLike<?> table) {
         return join(table, LEFT_OUTER_JOIN);
     }
 
     @Override
-    public final TablePartitionByStep leftOuterJoin(String sql) {
+    public final TablePartitionByStep<Record> leftOuterJoin(String sql) {
         return leftOuterJoin(table(sql));
     }
 
     @Override
-    public final TablePartitionByStep leftOuterJoin(String sql, Object... bindings) {
+    public final TablePartitionByStep<Record> leftOuterJoin(String sql, Object... bindings) {
         return leftOuterJoin(table(sql, bindings));
     }
 
     @Override
-    public final TablePartitionByStep leftOuterJoin(String sql, QueryPart... parts) {
+    public final TablePartitionByStep<Record> leftOuterJoin(String sql, QueryPart... parts) {
         return leftOuterJoin(table(sql, parts));
     }
 
     @Override
-    public final TablePartitionByStep rightJoin(TableLike<?> table) {
+    public final TablePartitionByStep<Record> rightJoin(TableLike<?> table) {
         return rightOuterJoin(table);
     }
 
     @Override
-    public final TablePartitionByStep rightJoin(String sql) {
+    public final TablePartitionByStep<Record> rightJoin(String sql) {
         return rightOuterJoin(sql);
     }
 
     @Override
-    public final TablePartitionByStep rightJoin(String sql, Object... bindings) {
+    public final TablePartitionByStep<Record> rightJoin(String sql, Object... bindings) {
         return rightOuterJoin(sql, bindings);
     }
 
     @Override
-    public final TablePartitionByStep rightJoin(String sql, QueryPart... parts) {
+    public final TablePartitionByStep<Record> rightJoin(String sql, QueryPart... parts) {
         return rightOuterJoin(sql, parts);
     }
 
     @Override
-    public final TablePartitionByStep rightOuterJoin(TableLike<?> table) {
+    public final TablePartitionByStep<Record> rightOuterJoin(TableLike<?> table) {
         return join(table, RIGHT_OUTER_JOIN);
     }
 
     @Override
-    public final TablePartitionByStep rightOuterJoin(String sql) {
+    public final TablePartitionByStep<Record> rightOuterJoin(String sql) {
         return rightOuterJoin(table(sql));
     }
 
     @Override
-    public final TablePartitionByStep rightOuterJoin(String sql, Object... bindings) {
+    public final TablePartitionByStep<Record> rightOuterJoin(String sql, Object... bindings) {
         return rightOuterJoin(table(sql, bindings));
     }
 
     @Override
-    public final TablePartitionByStep rightOuterJoin(String sql, QueryPart... parts) {
+    public final TablePartitionByStep<Record> rightOuterJoin(String sql, QueryPart... parts) {
         return rightOuterJoin(table(sql, parts));
     }
 
     @Override
-    public final TableOnStep fullOuterJoin(TableLike<?> table) {
+    public final TableOnStep<Record> fullOuterJoin(TableLike<?> table) {
         return join(table, FULL_OUTER_JOIN);
     }
 
     @Override
-    public final TableOnStep fullOuterJoin(String sql) {
+    public final TableOnStep<Record> fullOuterJoin(String sql) {
         return fullOuterJoin(table(sql));
     }
 
     @Override
-    public final TableOnStep fullOuterJoin(String sql, Object... bindings) {
+    public final TableOnStep<Record> fullOuterJoin(String sql, Object... bindings) {
         return fullOuterJoin(table(sql, bindings));
     }
 
     @Override
-    public final TableOnStep fullOuterJoin(String sql, QueryPart... parts) {
+    public final TableOnStep<Record> fullOuterJoin(String sql, QueryPart... parts) {
         return fullOuterJoin(table(sql, parts));
     }
 
@@ -929,17 +943,17 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     }
 
     @Override
-    public final TableOptionalOnStep straightJoin(TableLike<?> table) {
+    public final TableOptionalOnStep<Record> straightJoin(TableLike<?> table) {
         return join(table, STRAIGHT_JOIN);
     }
 
     @Override
-    public final TableOptionalOnStep straightJoin(String sql, Object... bindings) {
+    public final TableOptionalOnStep<Record> straightJoin(String sql, Object... bindings) {
         return straightJoin(table(sql, bindings));
     }
 
     @Override
-    public final TableOptionalOnStep straightJoin(String sql, QueryPart... parts) {
+    public final TableOptionalOnStep<Record> straightJoin(String sql, QueryPart... parts) {
         return straightJoin(table(sql, parts));
     }
 

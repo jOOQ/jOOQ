@@ -98,6 +98,8 @@ import static org.jooq.impl.DSL.orderBy;
 import static org.jooq.impl.DSL.row;
 // ...
 // ...
+import static org.jooq.impl.Utils.DATA_COLLECTED_SEMI_ANTI_JOIN;
+import static org.jooq.impl.Utils.DATA_COLLECT_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Utils.DATA_LOCALLY_SCOPED_DATA_MAP;
 import static org.jooq.impl.Utils.DATA_OMIT_INTO_CLAUSE;
 import static org.jooq.impl.Utils.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
@@ -842,6 +844,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
      * This method renders the main part of a query without the LIMIT clause.
      * This part is common to any type of limited query
      */
+    @SuppressWarnings("unchecked")
     private final void toSQLReference0(Context<?> context, Field<?>[] originalFields, Field<?>[] alternativeFields) {
         SQLDialect dialect = context.dialect();
         SQLDialect family = dialect.family();
@@ -1032,7 +1035,12 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
             hasFrom = !renderedFrom.isEmpty();
         }
 
+        List<Condition> semiAntiJoinPredicates = null;
+
         if (hasFrom) {
+            Object previousCollect = context.data(DATA_COLLECT_SEMI_ANTI_JOIN, true);
+            Object previousCollected = context.data(DATA_COLLECTED_SEMI_ANTI_JOIN, null);
+
             context.formatSeparator()
                    .keyword("from")
                    .sql(' ')
@@ -1049,6 +1057,9 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                 xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                     xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xx [/pro] */
+
+            semiAntiJoinPredicates = (List<Condition>) context.data(DATA_COLLECTED_SEMI_ANTI_JOIN, previousCollected);
+            context.data(DATA_COLLECT_SEMI_ANTI_JOIN, previousCollect);
         }
 
         context.declareTables(false)
@@ -1058,11 +1069,21 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         // ------------
         context.start(SELECT_WHERE);
 
-        if (!(getWhere().getWhere() instanceof TrueCondition)) {
+        if (getWhere().getWhere() instanceof TrueCondition && semiAntiJoinPredicates == null)
+            ;
+        else {
+            ConditionProviderImpl where = new ConditionProviderImpl();
+
+            if (semiAntiJoinPredicates != null)
+                where.addConditions(semiAntiJoinPredicates);
+
+            if (!(getWhere().getWhere() instanceof TrueCondition))
+                where.addConditions(getWhere());
+
             context.formatSeparator()
                    .keyword("where")
                    .sql(' ')
-                   .visit(getWhere());
+                   .visit(where);
         }
 
         context.end(SELECT_WHERE);
@@ -2011,21 +2032,17 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
         switch (type) {
             case JOIN:
-                joined = getFrom().get(index).join(table).on(conditions);
-                break;
-            case LEFT_OUTER_JOIN: {
-                TablePartitionByStep p = getFrom().get(index).leftOuterJoin(table);
-                TableOnStep o = p;
-                /* [pro] xx
-                xx xxxxxxxxxxxx xx xxxx xx xxxxxxxxxxxxxxxxxx x xx
-                    x x xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xx [/pro] */
-                joined = o.on(conditions);
+            case SEMI_JOIN:
+            case ANTI_JOIN:
+            case FULL_OUTER_JOIN: {
+                joined = getFrom().get(index).join(table, type).on(conditions);
                 break;
             }
+
+            case LEFT_OUTER_JOIN:
             case RIGHT_OUTER_JOIN: {
-                TablePartitionByStep p = getFrom().get(index).rightOuterJoin(table);
-                TableOnStep o = p;
+                TablePartitionByStep<?> p = getFrom().get(index).join(table, type);
+                TableOnStep<?> o = p;
                 /* [pro] xx
                 xx xxxxxxxxxxxx xx xxxx xx xxxxxxxxxxxxxxxxxx x xx
                     x x xxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -2033,32 +2050,18 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                 joined = o.on(conditions);
                 break;
             }
-            case FULL_OUTER_JOIN:
-                joined = getFrom().get(index).fullOuterJoin(table).on(conditions);
-                break;
 
             // These join types don't take any ON clause. Ignore conditions.
             case CROSS_JOIN:
-                joined = getFrom().get(index).crossJoin(table);
-                break;
             case NATURAL_JOIN:
-                joined = getFrom().get(index).naturalJoin(table);
-                break;
             case NATURAL_LEFT_OUTER_JOIN:
-                joined = getFrom().get(index).naturalLeftOuterJoin(table);
-                break;
             case NATURAL_RIGHT_OUTER_JOIN:
-                joined = getFrom().get(index).naturalRightOuterJoin(table);
-                break;
-
             /* [pro] xx
             xxxx xxxxxxxxxxxx
-                xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxxxx
             xxxx xxxxxxxxxxxx
-                xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxxxx
             xx [/pro] */
+                joined = getFrom().get(index).join(table, type);
+                break;
         }
 
         getFrom().set(index, joined);
@@ -2073,16 +2076,12 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
         switch (type) {
             case JOIN:
-                joined = getFrom().get(index).join(table).onKey();
-                break;
             case LEFT_OUTER_JOIN:
-                joined = getFrom().get(index).leftOuterJoin(table).onKey();
-                break;
             case RIGHT_OUTER_JOIN:
-                joined = getFrom().get(index).rightOuterJoin(table).onKey();
-                break;
             case FULL_OUTER_JOIN:
-                joined = getFrom().get(index).fullOuterJoin(table).onKey();
+            case SEMI_JOIN:
+            case ANTI_JOIN:
+                joined = getFrom().get(index).join(table, type).onKey();
                 break;
 
             default:
@@ -2101,16 +2100,12 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
         switch (type) {
             case JOIN:
-                joined = getFrom().get(index).join(table).onKey(keyFields);
-                break;
             case LEFT_OUTER_JOIN:
-                joined = getFrom().get(index).leftOuterJoin(table).onKey(keyFields);
-                break;
             case RIGHT_OUTER_JOIN:
-                joined = getFrom().get(index).rightOuterJoin(table).onKey(keyFields);
-                break;
             case FULL_OUTER_JOIN:
-                joined = getFrom().get(index).fullOuterJoin(table).onKey(keyFields);
+            case SEMI_JOIN:
+            case ANTI_JOIN:
+                joined = getFrom().get(index).join(table, type).onKey(keyFields);
                 break;
 
             default:
@@ -2129,16 +2124,12 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
         switch (type) {
             case JOIN:
-                joined = getFrom().get(index).join(table).onKey(key);
-                break;
             case LEFT_OUTER_JOIN:
-                joined = getFrom().get(index).leftOuterJoin(table).onKey(key);
-                break;
             case RIGHT_OUTER_JOIN:
-                joined = getFrom().get(index).rightOuterJoin(table).onKey(key);
-                break;
             case FULL_OUTER_JOIN:
-                joined = getFrom().get(index).fullOuterJoin(table).onKey(key);
+            case SEMI_JOIN:
+            case ANTI_JOIN:
+                joined = getFrom().get(index).join(table, type).onKey(key);
                 break;
 
             default:
@@ -2162,16 +2153,12 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
         switch (type) {
             case JOIN:
-                joined = getFrom().get(index).join(table).using(fields);
-                break;
             case LEFT_OUTER_JOIN:
-                joined = getFrom().get(index).leftOuterJoin(table).using(fields);
-                break;
             case RIGHT_OUTER_JOIN:
-                joined = getFrom().get(index).rightOuterJoin(table).using(fields);
-                break;
             case FULL_OUTER_JOIN:
-                joined = getFrom().get(index).fullOuterJoin(table).using(fields);
+            case SEMI_JOIN:
+            case ANTI_JOIN:
+                joined = getFrom().get(index).join(table, type).using(fields);
                 break;
 
             default:

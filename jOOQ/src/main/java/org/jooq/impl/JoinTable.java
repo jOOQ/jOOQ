@@ -43,6 +43,7 @@ package org.jooq.impl;
 import static java.util.Arrays.asList;
 import static org.jooq.Clause.TABLE;
 import static org.jooq.Clause.TABLE_JOIN;
+import static org.jooq.Clause.TABLE_JOIN_ANTI;
 import static org.jooq.Clause.TABLE_JOIN_CROSS;
 import static org.jooq.Clause.TABLE_JOIN_CROSS_APPLY;
 import static org.jooq.Clause.TABLE_JOIN_INNER;
@@ -55,7 +56,9 @@ import static org.jooq.Clause.TABLE_JOIN_OUTER_FULL;
 import static org.jooq.Clause.TABLE_JOIN_OUTER_LEFT;
 import static org.jooq.Clause.TABLE_JOIN_OUTER_RIGHT;
 import static org.jooq.Clause.TABLE_JOIN_PARTITION_BY;
+import static org.jooq.Clause.TABLE_JOIN_SEMI;
 import static org.jooq.Clause.TABLE_JOIN_USING;
+import static org.jooq.JoinType.ANTI_JOIN;
 import static org.jooq.JoinType.CROSS_APPLY;
 import static org.jooq.JoinType.CROSS_JOIN;
 import static org.jooq.JoinType.JOIN;
@@ -65,6 +68,7 @@ import static org.jooq.JoinType.NATURAL_LEFT_OUTER_JOIN;
 import static org.jooq.JoinType.NATURAL_RIGHT_OUTER_JOIN;
 import static org.jooq.JoinType.OUTER_APPLY;
 import static org.jooq.JoinType.RIGHT_OUTER_JOIN;
+import static org.jooq.JoinType.SEMI_JOIN;
 // ...
 // ...
 import static org.jooq.SQLDialect.CUBRID;
@@ -79,6 +83,9 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
+import static org.jooq.impl.DSL.selectOne;
+import static org.jooq.impl.Utils.DATA_COLLECTED_SEMI_ANTI_JOIN;
+import static org.jooq.impl.Utils.DATA_COLLECT_SEMI_ANTI_JOIN;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -107,7 +114,7 @@ import org.jooq.exception.DataAccessException;
  *
  * @author Lukas Eder
  */
-class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, TableOnConditionStep {
+class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep<Record>, TableOnConditionStep<Record> {
 
     /**
      * Generated UID
@@ -173,11 +180,38 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
 
         toSQLTable(ctx, lhs);
 
+        switch (translatedType) {
+            case SEMI_JOIN:
+            case ANTI_JOIN:
+                if (ctx.data(DATA_COLLECT_SEMI_ANTI_JOIN) != null) {
+
+                    @SuppressWarnings("unchecked")
+                    List<Condition> semiAntiJoinPredicates = (List<Condition>) ctx.data(DATA_COLLECTED_SEMI_ANTI_JOIN);
+
+                    if (semiAntiJoinPredicates == null) {
+                        semiAntiJoinPredicates = new ArrayList<Condition>();
+                        ctx.data(DATA_COLLECTED_SEMI_ANTI_JOIN, semiAntiJoinPredicates);
+                    }
+
+                    switch (translatedType) {
+                        case SEMI_JOIN:
+                            semiAntiJoinPredicates.add(exists(selectOne().from(rhs).where(condition)));
+                            break;
+
+                        case ANTI_JOIN:
+                            semiAntiJoinPredicates.add(notExists(selectOne().from(rhs).where(condition)));
+                            break;
+                    }
+
+                    return;
+                }
+        }
+
         ctx.formatIndentStart()
-               .formatSeparator()
-               .start(translatedClause)
-               .keyword(keyword)
-               .sql(' ');
+           .formatSeparator()
+           .start(translatedClause)
+           .keyword(keyword)
+           .sql(' ');
 
         toSQLTable(ctx, rhs);
 
@@ -252,6 +286,8 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
             case NATURAL_RIGHT_OUTER_JOIN: return TABLE_JOIN_NATURAL_OUTER_RIGHT;
             case CROSS_APPLY:              return TABLE_JOIN_CROSS_APPLY;
             case OUTER_APPLY:              return TABLE_JOIN_OUTER_APPLY;
+            case SEMI_JOIN:                return TABLE_JOIN_SEMI;
+            case ANTI_JOIN:                return TABLE_JOIN_ANTI;
             default: throw new IllegalArgumentException("Bad join type: " + translatedType);
         }
     }
@@ -400,14 +436,19 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
 
     @Override
     final Fields<Record> fields0() {
-        Field<?>[] l = lhs.asTable().fields();
-        Field<?>[] r = rhs.asTable().fields();
-        Field<?>[] all = new Field[l.length + r.length];
+        if (type == SEMI_JOIN || type == ANTI_JOIN) {
+            return new Fields<Record>(lhs.asTable().fields());
+        }
+        else {
+            Field<?>[] l = lhs.asTable().fields();
+            Field<?>[] r = rhs.asTable().fields();
+            Field<?>[] all = new Field[l.length + r.length];
 
-        System.arraycopy(l, 0, all, 0, l.length);
-        System.arraycopy(r, 0, all, l.length, r.length);
+            System.arraycopy(l, 0, all, 0, l.length);
+            System.arraycopy(r, 0, all, l.length, r.length);
 
-        return new Fields<Record>(all);
+            return new Fields<Record>(all);
+        }
     }
 
     @Override
@@ -421,12 +462,12 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
 
     /* [pro] xx
     xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
         xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     x
 
     xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxx xxxxxxx x
+    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxx xxxxxxx x
         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         xxxxxx xxxxx
     x

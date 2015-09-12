@@ -118,7 +118,19 @@ public enum JoinType {
      * <code>STRAIGHT_JOIN</code> two tables.
      */
     @Support({ MYSQL })
-    STRAIGHT_JOIN("straight_join")
+    STRAIGHT_JOIN("straight_join"),
+
+    /**
+     * <code>SEMI JOIN</code> two tables.
+     */
+    @Support
+    SEMI_JOIN("semi join"),
+
+    /**
+     * <code>ANTI JOIN</code> two tables.
+     */
+    @Support
+    ANTI_JOIN("anti join")
 
     ;
 

@@ -53,26 +53,26 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-public interface TableOnStep {
+public interface TableOnStep<R extends Record> {
 
     /**
      * Add an <code>ON</code> clause to the <code>JOIN</code>, connecting them
      * with each other with {@link Operator#AND}.
      */
     @Support
-    TableOnConditionStep on(Condition... conditions);
+    TableOnConditionStep<R> on(Condition... conditions);
 
     /**
      * Add an <code>ON</code> clause to the <code>JOIN</code>.
      */
     @Support
-    TableOnConditionStep on(Field<Boolean> condition);
+    TableOnConditionStep<R> on(Field<Boolean> condition);
 
     /**
      * Add an <code>ON</code> clause to the <code>JOIN</code>.
      */
     @Support
-    TableOnConditionStep on(Boolean condition);
+    TableOnConditionStep<R> on(Boolean condition);
 
     /**
      * Add an <code>ON</code> clause to the <code>JOIN</code>.
@@ -87,7 +87,7 @@ public interface TableOnStep {
      */
     @Support
     @PlainSQL
-    TableOnConditionStep on(String sql);
+    TableOnConditionStep<R> on(String sql);
 
     /**
      * Add an <code>ON</code> clause to the <code>JOIN</code>.
@@ -102,7 +102,7 @@ public interface TableOnStep {
      */
     @Support
     @PlainSQL
-    TableOnConditionStep on(String sql, Object... bindings);
+    TableOnConditionStep<R> on(String sql, Object... bindings);
 
     /**
      * Add an <code>ON</code> clause to the <code>JOIN</code>.
@@ -117,7 +117,7 @@ public interface TableOnStep {
      */
     @Support
     @PlainSQL
-    TableOnConditionStep on(String sql, QueryPart... parts);
+    TableOnConditionStep<R> on(String sql, QueryPart... parts);
 
     /**
      * Join a table with the <code>USING(column [, column...])</code> syntax.
@@ -148,7 +148,7 @@ public interface TableOnStep {
      *             known to jOOQ
      */
     @Support
-    TableOnConditionStep onKey() throws DataAccessException;
+    TableOnConditionStep<R> onKey() throws DataAccessException;
 
     /**
      * Join the table on a non-ambiguous foreign key relationship between the
@@ -161,7 +161,7 @@ public interface TableOnStep {
      *             known to jOOQ
      */
     @Support
-    TableOnConditionStep onKey(TableField<?, ?>... keyFields) throws DataAccessException;
+    TableOnConditionStep<R> onKey(TableField<?, ?>... keyFields) throws DataAccessException;
 
     /**
      * Join the table on a non-ambiguous foreign key relationship between the
@@ -184,5 +184,5 @@ public interface TableOnStep {
      * </pre></code>
      */
     @Support
-    TableOnConditionStep onKey(ForeignKey<?, ?> key);
+    TableOnConditionStep<R> onKey(ForeignKey<?, ?> key);
 }

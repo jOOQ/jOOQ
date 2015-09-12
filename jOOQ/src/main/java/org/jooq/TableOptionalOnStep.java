@@ -48,6 +48,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface TableOptionalOnStep extends TablePartitionByStep, Table<Record> {
+public interface TableOptionalOnStep<R extends Record> extends TablePartitionByStep<R>, Table<R> {
 
 }

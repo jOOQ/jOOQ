@@ -65,6 +65,7 @@ import org.jooq.conf.Settings;
  *
  * @author Lukas Eder
  */
+@SuppressWarnings("deprecation")
 public class MockConfiguration implements Configuration {
 
     /**
@@ -130,7 +131,6 @@ public class MockConfiguration implements Configuration {
         return delegate.converterProvider();
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public org.jooq.SchemaMapping schemaMapping() {
         return delegate.schemaMapping();

@@ -2074,6 +2074,11 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
 
     @Override
     public final SelectImpl join(TableLike<?> table) {
+        return innerJoin(table);
+    }
+
+    @Override
+    public final SelectImpl innerJoin(TableLike<?> table) {
         return join(table, JoinType.JOIN);
     }
 
@@ -2158,17 +2163,32 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
 
     @Override
     public final SelectImpl join(String sql) {
-        return join(table(sql));
+        return innerJoin(sql);
     }
 
     @Override
     public final SelectImpl join(String sql, Object... bindings) {
-        return join(table(sql, bindings));
+        return innerJoin(sql, bindings);
     }
 
     @Override
     public final SelectImpl join(String sql, QueryPart... parts) {
-        return join(table(sql, parts));
+        return innerJoin(sql, parts);
+    }
+
+    @Override
+    public final SelectImpl innerJoin(String sql) {
+        return innerJoin(table(sql));
+    }
+
+    @Override
+    public final SelectImpl innerJoin(String sql, Object... bindings) {
+        return innerJoin(table(sql, bindings));
+    }
+
+    @Override
+    public final SelectImpl innerJoin(String sql, QueryPart... parts) {
+        return innerJoin(table(sql, parts));
     }
 
     @Override

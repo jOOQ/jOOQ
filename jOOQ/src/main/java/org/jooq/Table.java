@@ -351,9 +351,73 @@ public interface Table<R extends Record> extends TableLike<R> {
 
     /**
      * <code>INNER JOIN</code> a table to this table.
+     * <p>
+     * A synonym for {@link #innerJoin(TableLike)}.
+     *
+     * @see #innerJoin(TableLike)
      */
     @Support
     TableOnStep join(TableLike<?> table);
+
+    /**
+     * <code>INNER JOIN</code> a table to this table.
+     * <p>
+     * A synonym for {@link #innerJoin(String)}.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String)
+     * @see #innerJoin(String)
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    TableOnStep join(String sql);
+
+    /**
+     * <code>INNER JOIN</code> a table to this table.
+     * <p>
+     * A synonym for {@link #innerJoin(String, Object...)}.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, Object...)
+     * @see #innerJoin(String, Object...)
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    TableOnStep join(String sql, Object... bindings);
+
+    /**
+     * <code>INNER JOIN</code> a table to this table.
+     * <p>
+     * A synonym for {@link #innerJoin(String, QueryPart...)}.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, QueryPart...)
+     * @see #innerJoin(String, QueryPart...)
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    TableOnStep join(String sql, QueryPart... parts);
+
+    /**
+     * <code>INNER JOIN</code> a table to this table.
+     */
+    @Support
+    TableOnStep innerJoin(TableLike<?> table);
 
     /**
      * <code>INNER JOIN</code> a table to this table.
@@ -368,7 +432,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     @Support
     @PlainSQL
-    TableOnStep join(String sql);
+    TableOnStep innerJoin(String sql);
 
     /**
      * <code>INNER JOIN</code> a table to this table.
@@ -383,7 +447,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     @Support
     @PlainSQL
-    TableOnStep join(String sql, Object... bindings);
+    TableOnStep innerJoin(String sql, Object... bindings);
 
     /**
      * <code>INNER JOIN</code> a table to this table.
@@ -398,7 +462,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     @Support
     @PlainSQL
-    TableOnStep join(String sql, QueryPart... parts);
+    TableOnStep innerJoin(String sql, QueryPart... parts);
 
     /**
      * <code>LEFT OUTER JOIN</code> a table to this table.

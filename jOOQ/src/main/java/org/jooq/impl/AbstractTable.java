@@ -670,22 +670,42 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
 
     @Override
     public final TableOnStep join(TableLike<?> table) {
-        return join(table, JOIN);
+        return innerJoin(table);
     }
 
     @Override
     public final TableOnStep join(String sql) {
-        return join(table(sql));
+        return innerJoin(sql);
     }
 
     @Override
     public final TableOnStep join(String sql, Object... bindings) {
-        return join(table(sql, bindings));
+        return innerJoin(sql, bindings);
     }
 
     @Override
     public final TableOnStep join(String sql, QueryPart... parts) {
-        return join(table(sql, parts));
+        return innerJoin(sql, parts);
+    }
+
+    @Override
+    public final TableOnStep innerJoin(TableLike<?> table) {
+        return join(table, JOIN);
+    }
+
+    @Override
+    public final TableOnStep innerJoin(String sql) {
+        return innerJoin(table(sql));
+    }
+
+    @Override
+    public final TableOnStep innerJoin(String sql, Object... bindings) {
+        return innerJoin(table(sql, bindings));
+    }
+
+    @Override
+    public final TableOnStep innerJoin(String sql, QueryPart... parts) {
+        return innerJoin(table(sql, parts));
     }
 
     @Override

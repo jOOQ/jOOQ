@@ -57,7 +57,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface TablePartitionByStep extends TableOnStep {
+public interface TablePartitionByStep<R extends Record> extends TableOnStep<R> {
 
     /* [pro] */
     /**
@@ -65,13 +65,13 @@ public interface TablePartitionByStep extends TableOnStep {
      * <code>OUTER JOIN</code> keywords
      */
     @Support(ORACLE)
-    TableOnStep partitionBy(Field<?>... fields);
+    TableOnStep<R> partitionBy(Field<?>... fields);
 
     /**
      * Add a <code>PARTITION BY</code> clause to the right hand side of the
      * <code>OUTER JOIN</code> keywords
      */
     @Support(ORACLE)
-    TableOnStep partitionBy(Collection<? extends Field<?>> fields);
+    TableOnStep<R> partitionBy(Collection<? extends Field<?>> fields);
     /* [/pro] */
 }

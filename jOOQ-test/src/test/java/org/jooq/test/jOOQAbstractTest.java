@@ -2889,6 +2889,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testSemiAntiJoin() throws Exception {
+        new JoinTests(this).testSemiAntiJoin();
+    }
+
+    @Test
     public void testCrossJoin() throws Exception {
         new JoinTests(this).testCrossJoin();
     }

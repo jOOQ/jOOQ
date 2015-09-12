@@ -347,7 +347,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * condition will be rendered
      */
     @Support
-    TableOptionalOnStep join(TableLike<?> table, JoinType type);
+    TableOptionalOnStep<Record> join(TableLike<?> table, JoinType type);
 
     /**
      * <code>INNER JOIN</code> a table to this table.
@@ -357,7 +357,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see #innerJoin(TableLike)
      */
     @Support
-    TableOnStep join(TableLike<?> table);
+    TableOnStep<Record> join(TableLike<?> table);
 
     /**
      * <code>INNER JOIN</code> a table to this table.
@@ -375,7 +375,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     @Support
     @PlainSQL
-    TableOnStep join(String sql);
+    TableOnStep<Record> join(String sql);
 
     /**
      * <code>INNER JOIN</code> a table to this table.
@@ -393,7 +393,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     @Support
     @PlainSQL
-    TableOnStep join(String sql, Object... bindings);
+    TableOnStep<Record> join(String sql, Object... bindings);
 
     /**
      * <code>INNER JOIN</code> a table to this table.
@@ -411,13 +411,13 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     @Support
     @PlainSQL
-    TableOnStep join(String sql, QueryPart... parts);
+    TableOnStep<Record> join(String sql, QueryPart... parts);
 
     /**
      * <code>INNER JOIN</code> a table to this table.
      */
     @Support
-    TableOnStep innerJoin(TableLike<?> table);
+    TableOnStep<Record> innerJoin(TableLike<?> table);
 
     /**
      * <code>INNER JOIN</code> a table to this table.
@@ -432,7 +432,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     @Support
     @PlainSQL
-    TableOnStep innerJoin(String sql);
+    TableOnStep<Record> innerJoin(String sql);
 
     /**
      * <code>INNER JOIN</code> a table to this table.
@@ -447,7 +447,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     @Support
     @PlainSQL
-    TableOnStep innerJoin(String sql, Object... bindings);
+    TableOnStep<Record> innerJoin(String sql, Object... bindings);
 
     /**
      * <code>INNER JOIN</code> a table to this table.
@@ -462,7 +462,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     @Support
     @PlainSQL
-    TableOnStep innerJoin(String sql, QueryPart... parts);
+    TableOnStep<Record> innerJoin(String sql, QueryPart... parts);
 
     /**
      * <code>LEFT OUTER JOIN</code> a table to this table.
@@ -472,7 +472,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see #leftOuterJoin(TableLike)
      */
     @Support
-    TablePartitionByStep leftJoin(TableLike<?> table);
+    TablePartitionByStep<Record> leftJoin(TableLike<?> table);
 
     /**
      * <code>LEFT OUTER JOIN</code> a table to this table.
@@ -490,7 +490,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     @Support
     @PlainSQL
-    TablePartitionByStep leftJoin(String sql);
+    TablePartitionByStep<Record> leftJoin(String sql);
 
     /**
      * <code>LEFT OUTER JOIN</code> a table to this table.
@@ -508,7 +508,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     @Support
     @PlainSQL
-    TablePartitionByStep leftJoin(String sql, Object... bindings);
+    TablePartitionByStep<Record> leftJoin(String sql, Object... bindings);
 
     /**
      * <code>LEFT OUTER JOIN</code> a table to this table.
@@ -526,13 +526,13 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     @Support
     @PlainSQL
-    TablePartitionByStep leftJoin(String sql, QueryPart... parts);
+    TablePartitionByStep<Record> leftJoin(String sql, QueryPart... parts);
 
     /**
      * <code>LEFT OUTER JOIN</code> a table to this table.
      */
     @Support
-    TablePartitionByStep leftOuterJoin(TableLike<?> table);
+    TablePartitionByStep<Record> leftOuterJoin(TableLike<?> table);
 
     /**
      * <code>LEFT OUTER JOIN</code> a table to this table.
@@ -547,7 +547,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     @Support
     @PlainSQL
-    TablePartitionByStep leftOuterJoin(String sql);
+    TablePartitionByStep<Record> leftOuterJoin(String sql);
 
     /**
      * <code>LEFT OUTER JOIN</code> a table to this table.
@@ -562,7 +562,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     @Support
     @PlainSQL
-    TablePartitionByStep leftOuterJoin(String sql, Object... bindings);
+    TablePartitionByStep<Record> leftOuterJoin(String sql, Object... bindings);
 
     /**
      * <code>LEFT OUTER JOIN</code> a table to this table.
@@ -577,7 +577,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     @Support
     @PlainSQL
-    TablePartitionByStep leftOuterJoin(String sql, QueryPart... parts);
+    TablePartitionByStep<Record> leftOuterJoin(String sql, QueryPart... parts);
 
     /**
      * <code>RIGHT OUTER JOIN</code> a table to this table.
@@ -589,7 +589,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see #rightOuterJoin(TableLike)
      */
     @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    TablePartitionByStep rightJoin(TableLike<?> table);
+    TablePartitionByStep<Record> rightJoin(TableLike<?> table);
 
     /**
      * <code>RIGHT OUTER JOIN</code> a table to this table.
@@ -609,7 +609,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @PlainSQL
-    TablePartitionByStep rightJoin(String sql);
+    TablePartitionByStep<Record> rightJoin(String sql);
 
     /**
      * <code>RIGHT OUTER JOIN</code> a table to this table.
@@ -629,7 +629,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @PlainSQL
-    TablePartitionByStep rightJoin(String sql, Object... bindings);
+    TablePartitionByStep<Record> rightJoin(String sql, Object... bindings);
 
     /**
      * <code>RIGHT OUTER JOIN</code> a table to this table.
@@ -649,7 +649,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @PlainSQL
-    TablePartitionByStep rightJoin(String sql, QueryPart... parts);
+    TablePartitionByStep<Record> rightJoin(String sql, QueryPart... parts);
 
     /**
      * <code>RIGHT OUTER JOIN</code> a table to this table.
@@ -657,7 +657,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * This is only possible where the underlying RDBMS supports it
      */
     @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    TablePartitionByStep rightOuterJoin(TableLike<?> table);
+    TablePartitionByStep<Record> rightOuterJoin(TableLike<?> table);
 
     /**
      * <code>RIGHT OUTER JOIN</code> a table to this table.
@@ -674,7 +674,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @PlainSQL
-    TablePartitionByStep rightOuterJoin(String sql);
+    TablePartitionByStep<Record> rightOuterJoin(String sql);
 
     /**
      * <code>RIGHT OUTER JOIN</code> a table to this table.
@@ -691,7 +691,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @PlainSQL
-    TablePartitionByStep rightOuterJoin(String sql, Object... bindings);
+    TablePartitionByStep<Record> rightOuterJoin(String sql, Object... bindings);
 
     /**
      * <code>RIGHT OUTER JOIN</code> a table to this table.
@@ -708,7 +708,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @PlainSQL
-    TablePartitionByStep rightOuterJoin(String sql, QueryPart... parts);
+    TablePartitionByStep<Record> rightOuterJoin(String sql, QueryPart... parts);
 
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
@@ -716,7 +716,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * This is only possible where the underlying RDBMS supports it
      */
     @Support({ DB2, FIREBIRD, HANA, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    TableOnStep fullOuterJoin(TableLike<?> table);
+    TableOnStep<Record> fullOuterJoin(TableLike<?> table);
 
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
@@ -733,7 +733,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     @Support({ DB2, FIREBIRD, HANA, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @PlainSQL
-    TableOnStep fullOuterJoin(String sql);
+    TableOnStep<Record> fullOuterJoin(String sql);
 
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
@@ -750,7 +750,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     @Support({ DB2, FIREBIRD, HANA, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @PlainSQL
-    TableOnStep fullOuterJoin(String sql, Object... bindings);
+    TableOnStep<Record> fullOuterJoin(String sql, Object... bindings);
 
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
@@ -767,7 +767,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     @Support({ DB2, FIREBIRD, HANA, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @PlainSQL
-    TableOnStep fullOuterJoin(String sql, QueryPart... parts);
+    TableOnStep<Record> fullOuterJoin(String sql, QueryPart... parts);
 
     /**
      * <code>CROSS JOIN</code> a table to this table.
@@ -1147,7 +1147,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * <code>STRAIGHT_JOIN</code> a table to this table.
      */
     @Support({ MYSQL })
-    TableOnStep straightJoin(TableLike<?> table);
+    TableOnStep<Record> straightJoin(TableLike<?> table);
 
     /**
      * <code>STRAIGHT_JOIN</code> a table to this table.
@@ -1162,7 +1162,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     @Support({ MYSQL })
     @PlainSQL
-    TableOnStep straightJoin(String sql, Object... bindings);
+    TableOnStep<Record> straightJoin(String sql, Object... bindings);
 
     /**
      * <code>STRAIGHT_JOIN</code> a table to this table.
@@ -1177,7 +1177,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     @Support({ MYSQL })
     @PlainSQL
-    TableOnStep straightJoin(String sql, QueryPart... parts);
+    TableOnStep<Record> straightJoin(String sql, QueryPart... parts);
 
     // -------------------------------------------------------------------------
     // XXX: Exotic and vendor-specific clauses on tables
@@ -1499,6 +1499,50 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     @Support
     DivideByOnStep divideBy(Table<?> divisor);
+
+    /**
+     * A synthetic <code>SEMI JOIN</code> clause that translates to an
+     * equivalent <code>EXISTS</code> predicate.
+     * <p>
+     * The following two SQL snippets are semantically equivalent:
+     * <code><pre>
+     * -- Using SEMI JOIN
+     * FROM A
+     *     SEMI JOIN B
+     *         ON A.ID = B.ID
+     *
+     * -- Using WHERE EXISTS
+     * FROM A
+     * WHERE EXISTS (
+     *     SELECT 1 FROM B WHERE A.ID = B.ID
+     * )
+     * </pre></code>
+     */
+    @Support
+    TableOnStep<R> semiJoin(TableLike<?> table);
+
+    /**
+     * A synthetic <code>ANTI JOIN</code> clause that translates to an
+     * equivalent <code>NOT EXISTS</code> predicate.
+     * <p>
+     * The following two SQL snippets are semantically equivalent:
+     * <code><pre>
+     * -- Using ANTI JOIN
+     * FROM A
+     *     ANTI JOIN B
+     *         ON A.ID = B.ID
+     *
+     * -- Using WHERE NOT EXISTS
+     * FROM A
+     * WHERE NOT EXISTS (
+     *     SELECT 1 FROM B WHERE A.ID = B.ID
+     * )
+     * </pre></code>
+     *
+     * @see Table#antiJoin(TableLike)
+     */
+    @Support
+    TableOnStep<R> antiJoin(TableLike<?> table);
 
     /* [pro] */
     /**

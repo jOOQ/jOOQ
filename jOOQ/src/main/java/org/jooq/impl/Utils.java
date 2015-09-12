@@ -306,6 +306,16 @@ final class Utils {
     static final String           DATA_DROP_CONSTRAINT                         = "org.jooq.configuration.drop-constraint";
 
     /**
+     * [#1206] Whether to collect Semi / Anti JOIN.
+     */
+    static final String           DATA_COLLECT_SEMI_ANTI_JOIN                  = "org.jooq.configuration.collect-semi-anti-join";
+
+    /**
+     * [#1206] The collected Semi / Anti JOIN predicates.
+     */
+    static final String           DATA_COLLECTED_SEMI_ANTI_JOIN                = "org.jooq.configuration.collected-semi-anti-join";
+
+    /**
      * [#2965] These are {@link ConcurrentHashMap}s containing caches for
      * reflection information.
      * <p>

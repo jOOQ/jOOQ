@@ -944,6 +944,56 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     SelectJoinStep<R> naturalRightOuterJoin(String sql, QueryPart... parts);
 
     // -------------------------------------------------------------------------
+    // XXX: SEMI and ANTI JOIN
+    // -------------------------------------------------------------------------
+
+    /**
+     * A synthetic <code>SEMI JOIN</code> clause that translates to an
+     * equivalent <code>EXISTS</code> predicate.
+     * <p>
+     * The following two SQL snippets are semantically equivalent:
+     * <code><pre>
+     * -- Using SEMI JOIN
+     * FROM A
+     *     SEMI JOIN B
+     *         ON A.ID = B.ID
+     *
+     * -- Using WHERE EXISTS
+     * FROM A
+     * WHERE EXISTS (
+     *     SELECT 1 FROM B WHERE A.ID = B.ID
+     * )
+     * </pre></code>
+     *
+     * @see Table#semiJoin(TableLike)
+     */
+    @Support
+    SelectOnStep<R> semiJoin(TableLike<?> table);
+
+    /**
+     * A synthetic <code>ANTI JOIN</code> clause that translates to an
+     * equivalent <code>NOT EXISTS</code> predicate.
+     * <p>
+     * The following two SQL snippets are semantically equivalent:
+     * <code><pre>
+     * -- Using ANTI JOIN
+     * FROM A
+     *     ANTI JOIN B
+     *         ON A.ID = B.ID
+     *
+     * -- Using WHERE NOT EXISTS
+     * FROM A
+     * WHERE NOT EXISTS (
+     *     SELECT 1 FROM B WHERE A.ID = B.ID
+     * )
+     * </pre></code>
+     *
+     * @see Table#antiJoin(TableLike)
+     */
+    @Support
+    SelectOnStep<R> antiJoin(TableLike<?> table);
+
+    // -------------------------------------------------------------------------
     // XXX: APPLY clauses on tables
     // -------------------------------------------------------------------------
 

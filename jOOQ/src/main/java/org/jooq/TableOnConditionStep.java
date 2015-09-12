@@ -51,28 +51,28 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-public interface TableOnConditionStep extends Table<Record> {
+public interface TableOnConditionStep<R extends Record> extends Table<R> {
 
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator.
      */
     @Support
-    TableOnConditionStep and(Condition condition);
+    TableOnConditionStep<R> and(Condition condition);
 
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator.
      */
     @Support
-    TableOnConditionStep and(Field<Boolean> condition);
+    TableOnConditionStep<R> and(Field<Boolean> condition);
 
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator.
      */
     @Support
-    TableOnConditionStep and(Boolean condition);
+    TableOnConditionStep<R> and(Boolean condition);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -88,7 +88,7 @@ public interface TableOnConditionStep extends Table<Record> {
      */
     @Support
     @PlainSQL
-    TableOnConditionStep and(String sql);
+    TableOnConditionStep<R> and(String sql);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -104,7 +104,7 @@ public interface TableOnConditionStep extends Table<Record> {
      */
     @Support
     @PlainSQL
-    TableOnConditionStep and(String sql, Object... bindings);
+    TableOnConditionStep<R> and(String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -120,63 +120,63 @@ public interface TableOnConditionStep extends Table<Record> {
      */
     @Support
     @PlainSQL
-    TableOnConditionStep and(String sql, QueryPart... parts);
+    TableOnConditionStep<R> and(String sql, QueryPart... parts);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator.
      */
     @Support
-    TableOnConditionStep andNot(Condition condition);
+    TableOnConditionStep<R> andNot(Condition condition);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator.
      */
     @Support
-    TableOnConditionStep andNot(Field<Boolean> condition);
+    TableOnConditionStep<R> andNot(Field<Boolean> condition);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator.
      */
     @Support
-    TableOnConditionStep andNot(Boolean condition);
+    TableOnConditionStep<R> andNot(Boolean condition);
 
     /**
      * Combine the currently assembled conditions with an <code>EXISTS</code>
      * clause using the {@link Operator#AND} operator.
      */
     @Support
-    TableOnConditionStep andExists(Select<?> select);
+    TableOnConditionStep<R> andExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with a <code>NOT EXISTS</code>
      * clause using the {@link Operator#AND} operator.
      */
     @Support
-    TableOnConditionStep andNotExists(Select<?> select);
+    TableOnConditionStep<R> andNotExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator.
      */
     @Support
-    TableOnConditionStep or(Condition condition);
+    TableOnConditionStep<R> or(Condition condition);
 
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator.
      */
     @Support
-    TableOnConditionStep or(Field<Boolean> condition);
+    TableOnConditionStep<R> or(Field<Boolean> condition);
 
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator.
      */
     @Support
-    TableOnConditionStep or(Boolean condition);
+    TableOnConditionStep<R> or(Boolean condition);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -192,7 +192,7 @@ public interface TableOnConditionStep extends Table<Record> {
      */
     @Support
     @PlainSQL
-    TableOnConditionStep or(String sql);
+    TableOnConditionStep<R> or(String sql);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -208,7 +208,7 @@ public interface TableOnConditionStep extends Table<Record> {
      */
     @Support
     @PlainSQL
-    TableOnConditionStep or(String sql, Object... bindings);
+    TableOnConditionStep<R> or(String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -224,40 +224,40 @@ public interface TableOnConditionStep extends Table<Record> {
      */
     @Support
     @PlainSQL
-    TableOnConditionStep or(String sql, QueryPart... parts);
+    TableOnConditionStep<R> or(String sql, QueryPart... parts);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator.
      */
     @Support
-    TableOnConditionStep orNot(Condition condition);
+    TableOnConditionStep<R> orNot(Condition condition);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator.
      */
     @Support
-    TableOnConditionStep orNot(Field<Boolean> condition);
+    TableOnConditionStep<R> orNot(Field<Boolean> condition);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator.
      */
     @Support
-    TableOnConditionStep orNot(Boolean condition);
+    TableOnConditionStep<R> orNot(Boolean condition);
 
     /**
      * Combine the currently assembled conditions with an <code>EXISTS</code>
      * clause using the {@link Operator#OR} operator.
      */
     @Support
-    TableOnConditionStep orExists(Select<?> select);
+    TableOnConditionStep<R> orExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with a <code>NOT EXISTS</code>
      * clause using the {@link Operator#OR} operator.
      */
     @Support
-    TableOnConditionStep orNotExists(Select<?> select);
+    TableOnConditionStep<R> orNotExists(Select<?> select);
 }

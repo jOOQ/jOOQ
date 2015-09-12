@@ -65,9 +65,11 @@ import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.lateral;
 import static org.jooq.impl.DSL.lower;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectOne;
+import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DSL.zero;
 import static org.junit.Assert.assertNull;
@@ -83,6 +85,7 @@ import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
+import org.jooq.Record4;
 import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.Select;
@@ -246,6 +249,105 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             assertEquals("Brida", result.getValue(2, TBook_TITLE()));
 
         }
+    }
+
+    public void testSemiAntiJoin() throws Exception {
+
+        // a SEMI JOIN b ON a.id = b.author_id
+        Result<A> a11 = create()
+            .selectFrom(
+                TAuthor()
+            .semiJoin(TBook()).on(TAuthor_ID().eq(TBook_AUTHOR_ID())))
+            .orderBy(TAuthor_ID())
+            .fetch();
+
+        assertEquals(2, a11.size());
+        assertEquals(AUTHOR_IDS, a11.getValues(TAuthor_ID()));
+
+        // a ANTI JOIN b ON a.id = b.author_id
+        Result<A> a12 = create()
+            .selectFrom(
+                TAuthor()
+            .antiJoin(TBook()).on(TAuthor_ID().eq(TBook_AUTHOR_ID())))
+            .orderBy(TAuthor_ID())
+            .fetch();
+
+        assertEquals(0, a12.size());
+
+        // a SEMI JOIN b ON KEY
+        Result<Record> a21 = create()
+            .select()
+            .from(TAuthor())
+            .semiJoin(TBook()).onKey(TBook_AUTHOR_ID())
+            .orderBy(TAuthor_ID())
+            .fetch();
+
+        assertEquals(2, a21.size());
+        assertEquals(AUTHOR_IDS, a21.getValues(TAuthor_ID()));
+
+        // a ANTI JOIN b ON KEY
+        Result<Record> a22 = create()
+            .select()
+            .from(TAuthor())
+            .antiJoin(TBook()).onKey(TBook_AUTHOR_ID())
+            .orderBy(TAuthor_ID())
+            .fetch();
+
+        assertEquals(0, a22.size());
+
+        // a SEMI JOIN (SELECT 1) t(a) ON a.id = t.a
+        Result<Record> a31 = create()
+            .select()
+            .from(TAuthor())
+            .semiJoin(table(selectOne()).as("t", "a")).on(TAuthor_ID().eq(field(name("t", "a"), Integer.class)))
+            .orderBy(TAuthor_ID())
+            .fetch();
+
+        assertEquals(1, a31.size());
+        assertEquals(1, a31.get(0).getValue(TAuthor_ID()));
+
+        // a ANTI JOIN (SELECT 1) t(a) ON a.id = t.a
+        Result<Record> a32 = create()
+            .select()
+            .from(TAuthor())
+            .antiJoin(table(selectOne()).as("t", "a")).on(TAuthor_ID().eq(field(name("t", "a"), Integer.class)))
+            .orderBy(TAuthor_ID())
+            .fetch();
+
+        assertEquals(1, a32.size());
+        assertEquals(2, a32.get(0).getValue(TAuthor_ID()));
+
+        // a SEMI JOIN (SELECT 1) t1(a) ON a.id = t1.a ANTI JOIN (SELECT * FROM author WHERE author.id = 2) t2(a) ON a.id = t2.a
+        Result<Record4<Integer, String, String, String>> a41 = create()
+            .select(TAuthor_ID(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME(), TBook_TITLE())
+            .from(TAuthor())
+            .join(TBook()).onKey(TBook_AUTHOR_ID())
+                .semiJoin(table(selectOne()).as("t1", "a"))
+                    .on(TAuthor_ID().eq(field(name("t1", "a"), Integer.class)))
+                .antiJoin(table(select(TAuthor_ID()).from(TAuthor()).where(TAuthor_ID().eq(2))).as("t2", "a"))
+                    .on(TAuthor_ID().eq(field(name("t2", "a"), Integer.class)))
+            .orderBy(TAuthor_ID())
+            .fetch();
+
+        assertEquals(2, a41.size());
+        assertEquals(asList(1, 1), a41.getValues(TAuthor_ID()));
+        assertEquals(asList(BOOK_TITLES.get(0), BOOK_TITLES.get(1)), a41.getValues(TBook_TITLE()));
+
+        // a ANTI JOIN (SELECT 1) t1(a) ON a.id = t1.a SEMI JOIN (SELECT * FROM author WHERE author.id = 2) t2(a) ON a.id = t2.a
+        Result<Record4<Integer, String, String, String>> a42 = create()
+            .select(TAuthor_ID(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME(), TBook_TITLE())
+            .from(TAuthor())
+            .join(TBook()).onKey(TBook_AUTHOR_ID())
+                .antiJoin(table(selectOne()).as("t1", "a"))
+                    .on(TAuthor_ID().eq(field(name("t1", "a"), Integer.class)))
+                .semiJoin(table(select(TAuthor_ID()).from(TAuthor()).where(TAuthor_ID().eq(2))).as("t2", "a"))
+                    .on(TAuthor_ID().eq(field(name("t2", "a"), Integer.class)))
+            .orderBy(TAuthor_ID())
+            .fetch();
+
+        assertEquals(2, a42.size());
+        assertEquals(asList(2, 2), a42.getValues(TAuthor_ID()));
+        assertEquals(asList(BOOK_TITLES.get(2), BOOK_TITLES.get(3)), a42.getValues(TBook_TITLE()));
     }
 
     public void testCrossJoin() throws Exception {

@@ -350,6 +350,82 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     /**
      * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
      * table added to the <code>FROM</code> clause using
+     * {@link Table#leftOuterJoin(TableLike)}.
+     * <p>
+     * A synonym for {@link #leftOuterJoin(TableLike)}.
+     *
+     * @see Table#leftOuterJoin(TableLike)
+     * @see #leftOuterJoin(TableLike)
+     */
+    @Support
+    SelectJoinPartitionByStep<R> leftJoin(TableLike<?> table);
+
+    /**
+     * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#leftOuterJoin(String)}.
+     * <p>
+     * A synonym for {@link #leftOuterJoin(String)}.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String)
+     * @see Table#leftOuterJoin(String)
+     * @see #leftOuterJoin(String)
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    SelectJoinPartitionByStep<R> leftJoin(String sql);
+
+    /**
+     * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#leftOuterJoin(String, Object...)}.
+     * <p>
+     * A synonym for {@link #leftOuterJoin(String, Object...)}.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, Object...)
+     * @see Table#leftOuterJoin(String, Object...)
+     * @see #leftOuterJoin(String, Object...)
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    SelectJoinPartitionByStep<R> leftJoin(String sql, Object... bindings);
+
+    /**
+     * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#leftOuterJoin(String, QueryPart...)}.
+     * <p>
+     * A synonym for {@link #leftOuterJoin(String, QueryPart...)}.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, QueryPart...)
+     * @see Table#leftOuterJoin(String, QueryPart...)
+     * @see #leftOuterJoin(String, QueryPart...)
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    SelectJoinPartitionByStep<R> leftJoin(String sql, QueryPart... parts);
+
+    /**
+     * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
+     * table added to the <code>FROM</code> clause using
      * {@link Table#leftOuterJoin(TableLike)}
      *
      * @see Table#leftOuterJoin(TableLike)
@@ -410,6 +486,90 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @Support
     @PlainSQL
     SelectJoinPartitionByStep<R> leftOuterJoin(String sql, QueryPart... parts);
+
+    /**
+     * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#rightOuterJoin(TableLike)}.
+     * <p>
+     * A synonym for {@link #rightOuterJoin(TableLike)}.
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     *
+     * @see Table#rightOuterJoin(TableLike)
+     * @see #rightOuterJoin(TableLike)
+     */
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    SelectJoinPartitionByStep<R> rightJoin(TableLike<?> table);
+
+    /**
+     * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#rightOuterJoin(String)}.
+     * <p>
+     * A synonym for {@link #rightOuterJoin(String)}.
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String)
+     * @see Table#rightOuterJoin(String)
+     * @see #rightOuterJoin(String)
+     * @see SQL
+     */
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @PlainSQL
+    SelectJoinPartitionByStep<R> rightJoin(String sql);
+
+    /**
+     * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#rightOuterJoin(String, Object...)}.
+     * <p>
+     * A synonym for {@link #rightOuterJoin(String, Object...)}.
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, Object...)
+     * @see Table#rightOuterJoin(String, Object...)
+     * @see #rightOuterJoin(String, Object...)
+     * @see SQL
+     */
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @PlainSQL
+    SelectJoinPartitionByStep<R> rightJoin(String sql, Object... bindings);
+
+    /**
+     * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#rightOuterJoin(String, QueryPart...)}.
+     * <p>
+     * A synonym for {@link #rightOuterJoin(String, QueryPart...)}.
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(String, QueryPart...)
+     * @see Table#rightOuterJoin(String, QueryPart...)
+     * @see #rightOuterJoin(String, QueryPart...)
+     * @see SQL
+     */
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @PlainSQL
+    SelectJoinPartitionByStep<R> rightJoin(String sql, QueryPart... parts);
 
     /**
      * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last

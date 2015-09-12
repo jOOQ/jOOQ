@@ -602,12 +602,12 @@ class MetaImpl implements Meta, Serializable {
         @SuppressWarnings("unchecked")
         private final UniqueKey<Record> createPrimaryKey(Result<Record> result, int columnName) {
             if (result.size() > 0) {
-                TableField<Record, ?>[] fields = new TableField[result.size()];
-                for (int i = 0; i < fields.length; i++) {
-                    fields[i] = (TableField<Record, ?>) field(result.get(i).getValue(columnName, String.class));
+                TableField<Record, ?>[] f = new TableField[result.size()];
+                for (int i = 0; i < f.length; i++) {
+                    f[i] = (TableField<Record, ?>) field(result.get(i).getValue(columnName, String.class));
                 }
 
-                return new MetaUniqueKey(this, fields);
+                return new MetaUniqueKey(this, f);
             }
             else {
                 return null;

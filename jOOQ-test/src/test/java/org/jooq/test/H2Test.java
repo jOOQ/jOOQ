@@ -1028,7 +1028,6 @@ public class H2Test extends jOOQAbstractTest<
         assertEquals(-2, (int) list.get(0).getYy());
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void testH2DaoWithCompositeKey() throws Exception {
         jOOQAbstractTest.reset = false;

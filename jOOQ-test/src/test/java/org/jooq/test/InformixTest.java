@@ -658,7 +658,6 @@ public class InformixTest extends jOOQAbstractTest<
         return null;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     protected Field<? extends Number> FNumberField(Field<? extends Number> n) {
         return null;
@@ -669,7 +668,6 @@ public class InformixTest extends jOOQAbstractTest<
         return null;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     protected Field<? extends Number> F317Field(Field<? extends Number> n1, Field<? extends Number> n2,
         Field<? extends Number> n3, Field<? extends Number> n4) {

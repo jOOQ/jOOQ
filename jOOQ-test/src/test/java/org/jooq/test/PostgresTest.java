@@ -1532,12 +1532,13 @@ public class PostgresTest extends jOOQAbstractTest<
             org.jooq.test.postgres.generatedclasses.tables.TBook x2 = book2.as("x2");
 
             assertEquals(2,
-            create().select()
-                    .from(book1)
-                    .union(
-                     select()
-                    .from(book2))
-                    .fetchCount());
+            create().fetchCount(
+                 select()
+                .from(book1)
+                .union(
+                 select()
+                .from(book2))
+            ));
 
             assertEquals(
                 asList(1, 2),

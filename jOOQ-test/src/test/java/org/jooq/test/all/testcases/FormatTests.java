@@ -451,7 +451,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         // ... apart from the loss of type information
         String json = create().selectFrom(TBook()).orderBy(TBook_ID()).fetch().formatJSON();
         Result<Record> result2 = create().fetchFromJSON(json);
-        int expectedRecords = create().selectFrom(TBook()).fetchCount();
+        int expectedRecords = create().fetchCount(selectFrom(TBook()));
         assertEquals(expectedRecords, result2.size());
         assertEquals(BOOK_IDS, result2.getValues(TBook_ID(), Integer.class));
         assertEquals(BOOK_AUTHOR_IDS, result2.getValues(TBook_AUTHOR_ID(), Integer.class));

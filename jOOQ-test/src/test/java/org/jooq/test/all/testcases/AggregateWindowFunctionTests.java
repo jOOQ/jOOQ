@@ -508,6 +508,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         assertEquals(2.0, result.value2().doubleValue());
     }
 
+    @SuppressWarnings("deprecation")
     public void testFetchCount() throws Exception {
         assertEquals(1, create().fetchCount(select(one().as("x"))));
         assertEquals(1, create().select(one().as("x")).fetchCount());

@@ -112,7 +112,9 @@ import org.jooq.RecordMapper;
 import org.jooq.RecordType;
 import org.jooq.Result;
 import org.jooq.Row;
+import org.jooq.Schema;
 import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.exception.IOException;
@@ -883,14 +885,34 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     @Override
     public final void formatXML(Writer writer) {
         try {
-            writer.append("<result xmlns=\"http://www.jooq.org/xsd/jooq-export-2.6.0.xsd\">");
+            writer.append("<result xmlns=\"http://www.jooq.org/xsd/jooq-export-3.7.0.xsd\">");
             writer.append("<fields>");
 
             for (Field<?> field : fields.fields) {
-                writer.append("<field name=\"");
+                writer.append("<field");
+
+                if (field instanceof TableField) {
+                    Table<?> table = ((TableField<?, ?>) field).getTable();
+
+                    if (table != null) {
+                        Schema schema = table.getSchema();
+
+                        if (schema != null) {
+                            writer.append(" schema=\"");
+                            writer.append(escapeXML(schema.getName()));
+                            writer.append("\"");
+                        }
+
+                        writer.append(" table=\"");
+                        writer.append(escapeXML(table.getName()));
+                        writer.append("\"");
+                    }
+                }
+
+                writer.append(" name=\"");
                 writer.append(escapeXML(field.getName()));
-                writer.append("\" ");
-                writer.append("type=\"");
+                writer.append("\"");
+                writer.append(" type=\"");
                 writer.append(field.getDataType().getTypeName().toUpperCase());
                 writer.append("\"/>");
             }
@@ -989,7 +1011,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
             Document document = builder.newDocument();
 
             Element eResult = document.createElement("result");
-            eResult.setAttribute("xmlns", "http://www.jooq.org/xsd/jooq-export-2.6.0.xsd");
+            eResult.setAttribute("xmlns", "http://www.jooq.org/xsd/jooq-export-3.7.0.xsd");
             document.appendChild(eResult);
 
             Element eFields = document.createElement("fields");
@@ -997,6 +1019,21 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
             for (Field<?> field : fields.fields) {
                 Element eField = document.createElement("field");
+
+                if (field instanceof TableField<?, ?>) {
+                    Table<?> table = ((TableField) field).getTable();
+
+                    if (table != null) {
+                        Schema schema = table.getSchema();
+
+                        if (schema != null) {
+                            eField.setAttribute("schema", schema.getName());
+                        }
+
+                        eField.setAttribute("table", table.getName());
+                    }
+                }
+
                 eField.setAttribute("name", field.getName());
                 eField.setAttribute("type", field.getDataType().getTypeName().toUpperCase());
                 eFields.appendChild(eField);
@@ -1035,12 +1072,27 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         Attributes empty = new AttributesImpl();
 
         handler.startDocument();
-        handler.startPrefixMapping("", "http://www.jooq.org/xsd/jooq-export-2.6.0.xsd");
+        handler.startPrefixMapping("", "http://www.jooq.org/xsd/jooq-export-3.7.0.xsd");
         handler.startElement("", "", "result", empty);
         handler.startElement("", "", "fields", empty);
 
         for (Field<?> field : fields.fields) {
             AttributesImpl attrs = new AttributesImpl();
+
+            if (field instanceof TableField<?, ?>) {
+                Table<?> table = ((TableField) field).getTable();
+
+                if (table != null) {
+                    Schema schema = table.getSchema();
+
+                    if (schema != null) {
+                        attrs.addAttribute("", "", "schema", "CDATA", field.getName());
+                    }
+
+                    attrs.addAttribute("", "", "table", "CDATA", field.getName());
+                }
+            }
+
             attrs.addAttribute("", "", "name", "CDATA", field.getName());
             attrs.addAttribute("", "", "type", "CDATA", field.getDataType().getTypeName().toUpperCase());
 

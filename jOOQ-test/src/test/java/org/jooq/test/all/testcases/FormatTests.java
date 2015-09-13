@@ -71,6 +71,7 @@ import org.jooq.Record3;
 import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.Row;
+import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.lambda.Seq;
@@ -509,8 +510,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                           xp.evaluate("count(/result/fields/field)", doc));
 
         for (int i = 0; i < row.size(); i++) {
+            if (schema() == null)
+                assertEquals(null,
+                    xp.evaluate("/result/fields/field[" + (i + 1) + "]/@schema", doc));
+            else
+                assertEquals(((TableField<?, ?>) row.field(i)).getTable().getSchema().getName(),
+                    xp.evaluate("/result/fields/field[" + (i + 1) + "]/@schema", doc));
+
+            assertEquals(((TableField<?, ?>) row.field(i)).getTable().getName(),
+                xp.evaluate("/result/fields/field[" + (i + 1) + "]/@table", doc));
             assertEquals(row.field(i).getName(),
-                          xp.evaluate("/result/fields/field[" + (i + 1) + "]/@name", doc));
+                xp.evaluate("/result/fields/field[" + (i + 1) + "]/@name", doc));
             assertEquals(row.field(i).getDataType().getTypeName().toUpperCase(),
                 xp.evaluate("/result/fields/field[" + (i + 1) + "]/@type", doc));
         }

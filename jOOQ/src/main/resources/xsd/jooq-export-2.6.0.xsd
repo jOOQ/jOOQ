@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema
     xmlns="http://www.w3.org/2001/XMLSchema"
-    xmlns:jooq-export="http://www.jooq.org/xsd/jooq-export-1.6.2.xsd"
-    targetNamespace="http://www.jooq.org/xsd/jooq-export-1.6.2.xsd"
+    xmlns:jooq-export="http://www.jooq.org/xsd/jooq-export-2.6.0.xsd"
+    targetNamespace="http://www.jooq.org/xsd/jooq-export-2.6.0.xsd"
     elementFormDefault="qualified">
 
     <element name="result" type="jooq-export:Result"/>

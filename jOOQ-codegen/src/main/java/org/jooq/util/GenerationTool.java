@@ -120,42 +120,46 @@ public class GenerationTool {
     }
 
     public static void main(String[] args) throws Exception {
-        if (args.length < 1) {
+        if (args.length < 1)
             error();
-        }
 
-        InputStream in = GenerationTool.class.getResourceAsStream(args[0]);
+        argsLoop: for (String arg : args) {
+            InputStream in = GenerationTool.class.getResourceAsStream(arg);
+            try {
 
-        // [#2932] Retry loading the file, if it wasn't found. This may be helpful
-        // to some users who were unaware that this file is loaded from the classpath
-        if (in == null && !args[0].startsWith("/"))
-            in = GenerationTool.class.getResourceAsStream("/" + args[0]);
+                // [#2932] Retry loading the file, if it wasn't found. This may be helpful
+                // to some users who were unaware that this file is loaded from the classpath
+                if (in == null && !arg.startsWith("/"))
+                    in = GenerationTool.class.getResourceAsStream("/" + arg);
 
-        // [#3668] Also check the local file system for configuration files
-        if (in == null && new File(args[0]).exists())
-            in = new FileInputStream(new File(args[0]));
+                // [#3668] Also check the local file system for configuration files
+                if (in == null && new File(arg).exists())
+                    in = new FileInputStream(new File(arg));
 
-        if (in == null) {
-            log.error("Cannot find " + args[0] + " on classpath, or in directory " + new File(".").getCanonicalPath());
-            log.error("-----------");
-            log.error("Please be sure it is located");
-            log.error("  - on the classpath and qualified as a classpath location.");
-            log.error("  - in the local directory or at a global path in the file system.");
+                if (in == null) {
+                    log.error("Cannot find " + arg + " on classpath, or in directory " + new File(".").getCanonicalPath());
+                    log.error("-----------");
+                    log.error("Please be sure it is located");
+                    log.error("  - on the classpath and qualified as a classpath location.");
+                    log.error("  - in the local directory or at a global path in the file system.");
 
-            error();
-        }
+                    continue argsLoop;
+                }
 
-        log.info("Initialising properties", args[0]);
+                log.info("Initialising properties", arg);
 
-        try {
-            generate(load(in));
-        } catch (Exception e) {
-            log.error("Cannot read " + args[0] + ". Error : " + e.getMessage());
-            e.printStackTrace();
-            error();
-        } finally {
-            if (in != null) {
-                in.close();
+                generate(load(in));
+            }
+            catch (Exception e) {
+                log.error("Cannot read " + arg + ". Error : " + e.getMessage());
+                e.printStackTrace();
+
+                continue argsLoop;
+            }
+            finally {
+                if (in != null) {
+                    in.close();
+                }
             }
         }
     }

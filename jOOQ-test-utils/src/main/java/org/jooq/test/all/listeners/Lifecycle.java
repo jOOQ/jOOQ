@@ -42,7 +42,10 @@ package org.jooq.test.all.listeners;
 
 import java.lang.reflect.Method;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Map;
+
+import org.jooq.lambda.Unchecked;
 
 import org.junit.Test;
 
@@ -54,15 +57,15 @@ import org.junit.Test;
  */
 public class Lifecycle {
 
-    protected static Comparator<Method> METHOD_COMPARATOR = new Comparator<Method>() {
+    protected static Comparator<Method>        METHOD_COMPARATOR = new Comparator<Method>() {
+        @Override
+        public int compare(Method o1, Method o2) {
+            return o1.getName().compareTo(o2.getName());
+        }
+    };
 
-                                                              @Override
-                                                              public int compare(Method o1, Method o2) {
-                                                                  return o1.getName().compareTo(o2.getName());
-                                                              }
-                                                          };
-
-    private static final Object         INCREMENT_MONITOR = new Object();
+    private static final Object                INCREMENT_MONITOR = new Object();
+    private static final Map<String, Method[]> METHODS           = new HashMap<>();
 
     protected static final void increment(Map<Method, Integer> map) {
         synchronized (INCREMENT_MONITOR) {
@@ -84,11 +87,11 @@ public class Lifecycle {
     private static Method testMethod() {
         for (StackTraceElement e : Thread.currentThread().getStackTrace()) {
             try {
-                for (Method m : Class.forName(e.getClassName()).getMethods()) {
-                    if (m.getName().equals(e.getMethodName()) && m.getAnnotation(Test.class) != null) {
-                        return m;
-                    }
-                }
+                if (e.getClassName().startsWith("org.jooq.test"))
+                    for (Method m : METHODS.computeIfAbsent(e.getClassName(), Unchecked.function(x -> Class.forName(e.getClassName()).getMethods())))
+                        if (m.getName().equals(e.getMethodName()) && m.getAnnotation(Test.class) != null)
+                            return m;
+
             }
             catch (Exception ignore) {}
         }

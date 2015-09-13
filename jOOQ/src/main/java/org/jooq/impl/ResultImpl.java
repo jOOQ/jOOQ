@@ -842,6 +842,21 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
             Map<String, String> fieldMap;
             for (Field<?> field : fields.fields) {
                 fieldMap = new LinkedHashMap<String, String>();
+
+                if (field instanceof TableField) {
+                    Table<?> table = ((TableField<?, ?>) field).getTable();
+
+                    if (table != null) {
+                        Schema schema = table.getSchema();
+
+                        if (schema != null) {
+                            fieldMap.put("schema", schema.getName());
+                        }
+
+                        fieldMap.put("table", table.getName());
+                    }
+                }
+
                 fieldMap.put("name", field.getName());
                 fieldMap.put("type", field.getDataType().getTypeName().toUpperCase());
 

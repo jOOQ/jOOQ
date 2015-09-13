@@ -71,6 +71,8 @@ import org.jooq.Record3;
 import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.Row;
+import org.jooq.Schema;
+import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
@@ -397,8 +399,19 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         String token2 = "";
         String separator = "";
         for (Field<?> field : row.fields()) {
-            token2 += separator + "{\"name\":\"" + field.getName() + "\"" + ",\"type\":\""
-                + field.getDataType().getTypeName().toUpperCase() + "\"}";
+            Table<?> table = ((TableField<?, ?>) field).getTable();
+            Schema schema = table.getSchema();
+
+            token2 +=
+                separator
+              + "{"
+              + (schema != null
+              ? "\"schema\":\"" + schema.getName() + "\","
+              : "")
+              + "\"table\":\"" + table.getName() + "\","
+              + "\"name\":\"" + field.getName() + "\","
+              + "\"type\":\"" + field.getDataType().getTypeName().toUpperCase()
+              + "\"}";
             separator = ",";
         }
         assertTrue(json.startsWith(token2));

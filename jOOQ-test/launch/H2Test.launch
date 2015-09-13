@@ -24,5 +24,5 @@
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.jooq.test.H2Test"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="jOOQ-test"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dorg.jooq.test-dialects=h2 -DXX:+UnlockCommercialFeatures -DXX:+FlightRecorder -javaagent:../jOOQ-test-agent/target/jooq-test-agent-3.7.0-SNAPSHOT-jar-with-dependencies.jar -javaagent:../jOOQ-test-agent/target/jooq-test-agent-3.7.0-SNAPSHOT-jar-with-dependencies.jar"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dorg.jooq.test-dialects=h2 -XX:+UnlockCommercialFeatures -XX:+FlightRecorder -javaagent:../jOOQ-test-agent/target/jooq-test-agent-3.7.0-SNAPSHOT-jar-with-dependencies.jar -javaagent:../jOOQ-test-agent/target/jooq-test-agent-3.7.0-SNAPSHOT-jar-with-dependencies.jar"/>
 </launchConfiguration>

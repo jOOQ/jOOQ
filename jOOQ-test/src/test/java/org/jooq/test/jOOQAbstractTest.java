@@ -619,10 +619,19 @@ public abstract class jOOQAbstractTest<
     @BeforeClass
     public static void testStart() throws Exception {
         log.info("STARTING");
+
+//        // Use when profiling with JMC
+//        System.in.read();
+//        System.in.read();
     }
 
     @AfterClass
     public static void quit() throws Exception {
+
+//        // Use when profiling with JMC
+//        System.in.read();
+//        System.in.read();
+
         log.info("QUITTING");
 
         if (connection != null) {

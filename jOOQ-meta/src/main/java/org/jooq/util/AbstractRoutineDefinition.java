@@ -104,7 +104,7 @@ public abstract class AbstractRoutineDefinition extends AbstractDefinition imple
 
             init0();
         }
-        catch (SQLException e) {
+        catch (Exception e) {
             log.error("Error while initialising routine", e);
         }
     }

@@ -278,7 +278,7 @@ public abstract class AbstractDatabase implements Database {
             try {
                 schemata = getSchemata0();
             }
-            catch (SQLException e) {
+            catch (Exception e) {
                 log.error("Could not load schemata", e);
             }
 
@@ -323,7 +323,7 @@ public abstract class AbstractDatabase implements Database {
                         inputSchemata.add(schema.getName());
                     }
                 }
-                catch (SQLException e) {
+                catch (Exception e) {
                     log.error("Could not load schemata", e);
                 }
             }

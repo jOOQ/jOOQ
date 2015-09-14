@@ -56,6 +56,7 @@ import static org.jooq.util.oracle.sys.Tables.ALL_COLL_TYPES;
 import static org.jooq.util.oracle.sys.Tables.ALL_CONSTRAINTS;
 import static org.jooq.util.oracle.sys.Tables.ALL_CONS_COLUMNS;
 import static org.jooq.util.oracle.sys.Tables.ALL_DB_LINKS;
+import static org.jooq.util.oracle.sys.Tables.ALL_IDENTIFIERS;
 import static org.jooq.util.oracle.sys.Tables.ALL_MVIEW_COMMENTS;
 import static org.jooq.util.oracle.sys.Tables.ALL_OBJECTS;
 import static org.jooq.util.oracle.sys.Tables.ALL_PROCEDURES;
@@ -120,6 +121,7 @@ public class OracleDatabase extends AbstractDatabase {
     private Map<Name, Name>                                              synonyms;
 
     private static Boolean                                               is10g;
+    private static Boolean                                               is11g;
 
     /**
      * {@inheritDoc}
@@ -554,6 +556,25 @@ public class OracleDatabase extends AbstractDatabase {
         }
 
         return is10g;
+    }
+
+    boolean is11g() {
+        if (is11g == null) {
+
+            // [#4545] The ALL_IDENTIFIERS view was introduced in Oracle 11g
+            try {
+                create().selectCount()
+                        .from(ALL_IDENTIFIERS)
+                        .fetch();
+
+                is11g = true;
+            }
+            catch (DataAccessException e) {
+                is11g = false;
+            }
+        }
+
+        return is11g;
     }
 
     // --------------------------------------------------------------------------------------------

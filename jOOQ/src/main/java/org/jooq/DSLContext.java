@@ -213,6 +213,27 @@ public interface DSLContext extends Scope /* [java-8] */, AutoCloseable /* [/jav
     void transaction(TransactionalRunnable transactional);
 
     /**
+     * Run a {@link ConnectionCallable} in the context of this
+     * <code>DSLContext</code>'s underlying {@link #configuration()}'s
+     * {@link Configuration#connectionProvider()}.
+     *
+     * @param runnable The code running statements against the
+     *            <code>connection</code>.
+     * @return The outcome of the callable
+     */
+    <T> T connectionResult(ConnectionCallable<T> callable);
+
+    /**
+     * Run a {@link ConnectionRunnable} in the context of this
+     * <code>DSLContext</code>'s underlying {@link #configuration()}'s
+     * {@link Configuration#connectionProvider()}.
+     *
+     * @param runnable The code running statements against the
+     *            <code>connection</code>.
+     */
+    void connection(ConnectionRunnable runnable);
+
+    /**
      * Run a {@link MockRunnable} in the context of this <code>DSLContext</code>
      * 's underlying {@link #configuration()}'s, and of a
      * {@link MockDataProvider} and return the <code>mockable</code>'s outcome.

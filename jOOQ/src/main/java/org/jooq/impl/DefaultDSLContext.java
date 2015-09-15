@@ -84,7 +84,9 @@ import org.jooq.BindContext;
 import org.jooq.CommonTableExpression;
 import org.jooq.Condition;
 import org.jooq.Configuration;
+import org.jooq.ConnectionCallable;
 import org.jooq.ConnectionProvider;
+import org.jooq.ConnectionRunnable;
 import org.jooq.CreateIndexStep;
 import org.jooq.CreateSequenceFinalStep;
 import org.jooq.CreateTableAsStep;
@@ -367,6 +369,32 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
             @Override
             public Void run(Configuration c) throws Exception {
                 transactional.run(c);
+                return null;
+            }
+        });
+    }
+
+    @Override
+    public <T> T connectionResult(ConnectionCallable<T> callable) {
+        final Connection connection = configuration().connectionProvider().acquire();
+
+        try {
+            return callable.run(connection);
+        }
+        catch (Exception e) {
+            throw new DataAccessException("Error while running ConnectionCallable", e);
+        }
+        finally {
+            configuration().connectionProvider().release(connection);
+        }
+    }
+
+    @Override
+    public void connection(ConnectionRunnable runnable) {
+        connectionResult(new ConnectionCallable<Void>() {
+            @Override
+            public Void run(Connection connection) throws Exception {
+                runnable.run(connection);
                 return null;
             }
         });

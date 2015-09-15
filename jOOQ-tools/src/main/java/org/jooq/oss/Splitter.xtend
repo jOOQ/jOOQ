@@ -340,6 +340,7 @@ For more information, please visit: http://www.jooq.org/licenses''');
             replaceAll.add(new SimpleImmutableEntry(compile('''import (static )?java\.lang\.AutoCloseable;'''), "// ..."));
 
             // Remove all Java 8 imports
+            replaceAll.add(new SimpleImmutableEntry(compile('''import (static )?java\.lang\.FunctionalInterface;'''), "// ..."));
             replaceAll.add(new SimpleImmutableEntry(compile('''import (static )?java\.time\..*?;'''), "// ..."));
             replaceAll.add(new SimpleImmutableEntry(compile('''import (static )?java\.util\.Optional;'''), "// ..."));
             replaceAll.add(new SimpleImmutableEntry(compile('''import (static )?java\.util\.Spliterator;'''), "// ..."));

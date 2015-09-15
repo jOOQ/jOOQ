@@ -262,6 +262,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         catch (InvalidResultException expected) {}
     }
 
+    public void testFetchMapWithCoercedFields() throws Exception {
+        Map<Long, String> map =
+        create().select(TBook_ID(), TBook_AUTHOR_ID())
+                .from(TBook())
+                .orderBy(TBook_ID())
+                .fetchMap(TBook_ID().coerce(Long.class), TBook_AUTHOR_ID().coerce(String.class));
+
+        assertEquals(asList(1L, 2L, 3L, 4L), seq(map.keySet()).toList());
+        assertEquals(asList("1", "1", "2", "2"), seq(map.values()).toList());
+    }
+
     public void testFetchMapTable() throws Exception {
         Map<B, Record> result =
         create().select()

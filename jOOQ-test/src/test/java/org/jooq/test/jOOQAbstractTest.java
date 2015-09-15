@@ -1483,6 +1483,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFetchMapWithCoercedFields() throws Exception {
+        new FetchTests(this).testFetchMapWithCoercedFields();
+    }
+
+    @Test
     public void testFetchMapTable() throws Exception {
         new FetchTests(this).testFetchMapTable();
     }

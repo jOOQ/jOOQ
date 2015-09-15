@@ -220,7 +220,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <T> T getValue(Field<T> field) {
-        return (T) getValue(indexOrFail(fieldsRow(), field));
+        return getValue(indexOrFail(fieldsRow(), field), field.getConverter());
     }
 
     @Override

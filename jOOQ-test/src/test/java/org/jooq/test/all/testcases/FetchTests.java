@@ -1477,7 +1477,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         assertEquals(4, result.size());
 
         assertEquals(BOOK_IDS_SHORT, result.getValues(3));
-        assertEquals(BOOK_IDS_SHORT, result.getValues(TBook_ID()));
+        assertEquals(BOOK_IDS_SHORT, result.getValues(TBook_ID().getName()));
         assertEquals(BOOK_IDS_SHORT, result.getValues(BookTable.ID));
         assertEquals(Short.valueOf((short) 1), result.getValue(0, BookTable.ID));
         assertEquals(Short.valueOf((short) 2), result.getValue(1, BookTable.ID));
@@ -2275,6 +2275,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         create().select(TBook_TITLE(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
                 .from(TBook())
                 .join(TAuthor()).on(TBook_AUTHOR_ID().eq(TAuthor_ID()))
+                .orderBy(TBook_ID())
                 .fetch();
 
         assertEquals(4, result.size());

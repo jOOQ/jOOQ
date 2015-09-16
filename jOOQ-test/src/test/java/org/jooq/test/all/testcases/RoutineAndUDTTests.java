@@ -551,11 +551,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
             assertEquals(Arrays.asList("a"), arrays.getValue(2, TArrays_STRING_R()));
             assertEquals(Arrays.asList(1), arrays.getValue(2, TArrays_NUMBER_R()));
-            assertEquals("[1981-07-10]", arrays.getValue(2, TArrays_DATE_R()).toString());
+            assertEquals(Arrays.asList(Date.valueOf("1981-07-10")), arrays.getValue(2, TArrays_DATE_R()));
 
             assertEquals(Arrays.asList("a", "b"), arrays.getValue(3, TArrays_STRING_R()));
             assertEquals(Arrays.asList(1, 2), arrays.getValue(3, TArrays_NUMBER_R()));
-            assertEquals("[1981-07-10, 2000-01-01]", arrays.getValue(3, TArrays_DATE_R()).toString());
+            assertEquals(
+                Arrays.asList(Date.valueOf("1981-07-10"), Date.valueOf("2000-01-01")),
+                arrays.getValue(3, TArrays_DATE_R()));
 
 
 
@@ -579,7 +581,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
             assertEquals(Arrays.asList("a", "b", "c", "d\"\\d"), array.getValue(TArrays_STRING_R()));
             assertEquals(Arrays.asList(1, 2, 3), array.getValue(TArrays_NUMBER_R()));
-            assertEquals("[1970-01-01, 1970-01-02, 1970-01-03]", array.getValue(TArrays_DATE_R()).toString());
+            assertEquals(
+                Arrays.asList(Date.valueOf("1970-01-01"), Date.valueOf("1970-01-02"), Date.valueOf("1970-01-03")),
+                array.getValue(TArrays_DATE_R()));
 
 
 
@@ -603,7 +607,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
             assertEquals(Arrays.asList("d\"\\d", "c", "b", "a"), array.getValue(TArrays_STRING_R()));
             assertEquals(Arrays.asList(3, 2, 1), array.getValue(TArrays_NUMBER_R()));
-            assertEquals("[1970-01-03, 1970-01-02, 1970-01-01]", array.getValue(TArrays_DATE_R()).toString());
+            assertEquals(
+                Arrays.asList(Date.valueOf("1970-01-03"), Date.valueOf("1970-01-02"), Date.valueOf("1970-01-01")),
+                array.getValue(TArrays_DATE_R()));
         }
         /* [/pro] */
 
@@ -1157,8 +1163,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                 .fetch();
 
             assertEquals(2, result.size());
-            assertEquals(Integer.valueOf(2), result.getValue(0, TBook_ID()));
-            assertEquals(Integer.valueOf(3), result.getValue(1, TBook_ID()));
+            assertEquals(2, result.getValue(0, TBook_ID()));
+            assertEquals(3, result.getValue(1, TBook_ID()));
             assertEquals("Animal Farm", result.getValue(0, TBook_TITLE()));
             assertEquals("O Alquimista", result.getValue(1, TBook_TITLE()));
 

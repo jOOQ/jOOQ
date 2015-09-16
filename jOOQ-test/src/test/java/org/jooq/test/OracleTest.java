@@ -1033,46 +1033,46 @@ public class OracleTest extends jOOQAbstractTest<
         // Retrieving arrays from functions
         assertNull(fArrays1(create().configuration(), null));
         assertEquals(emptyList(),
-            fArrays1(create().configuration(), new UNumberArrayRecord((Integer[]) null)).getList());
+            fArrays1(create().configuration(), new UNumberArrayRecord((Integer[]) null)));
         assertEquals(emptyList(),
-            fArrays1(create().configuration(), new UNumberArrayRecord()).getList());
+            fArrays1(create().configuration(), new UNumberArrayRecord()));
         assertEquals(asList(1),
-            fArrays1(create().configuration(), fArrays1(create().configuration(), new UNumberArrayRecord(1))).getList());
+            fArrays1(create().configuration(), fArrays1(create().configuration(), new UNumberArrayRecord(1))));
         assertEquals(asList(1, 2),
-            fArrays1(create().configuration(), fArrays1(create().configuration(), new UNumberArrayRecord(1, 2))).getList());
+            fArrays1(create().configuration(), fArrays1(create().configuration(), new UNumberArrayRecord(1, 2))));
 
         // Retrieving tables from functions
         assertNull(fTables1(create().configuration(), null));
         assertEquals(emptyList(),
-            fTables1(create().configuration(), new UNumberTableRecord((Integer[]) null)).getList());
+            fTables1(create().configuration(), new UNumberTableRecord((Integer[]) null)));
         assertEquals(emptyList(),
-            fTables1(create().configuration(), new UNumberTableRecord()).getList());
+            fTables1(create().configuration(), new UNumberTableRecord()));
         assertEquals(asList(1),
-            fTables1(create().configuration(), fTables1(create().configuration(), new UNumberTableRecord(1))).getList());
+            fTables1(create().configuration(), fTables1(create().configuration(), new UNumberTableRecord(1))));
         assertEquals(asList(1, 2),
-            fTables1(create().configuration(), fTables1(create().configuration(), new UNumberTableRecord(1, 2))).getList());
+            fTables1(create().configuration(), fTables1(create().configuration(), new UNumberTableRecord(1, 2))));
 
         // Retrieving arrays from procedures
         assertNull(pArrays1(create().configuration(), null));
         assertEquals(emptyList(),
-            pArrays1(create().configuration(), new UNumberArrayRecord((Integer[]) null)).getList());
+            pArrays1(create().configuration(), new UNumberArrayRecord((Integer[]) null)));
         assertEquals(emptyList(),
-            pArrays1(create().configuration(), new UNumberArrayRecord()).getList());
+            pArrays1(create().configuration(), new UNumberArrayRecord()));
         assertEquals(asList(1),
-            pArrays1(create().configuration(), pArrays1(create().configuration(), new UNumberArrayRecord(1))).getList());
+            pArrays1(create().configuration(), pArrays1(create().configuration(), new UNumberArrayRecord(1))));
         assertEquals(asList(1, 2),
-            pArrays1(create().configuration(), pArrays1(create().configuration(), new UNumberArrayRecord(1, 2))).getList());
+            pArrays1(create().configuration(), pArrays1(create().configuration(), new UNumberArrayRecord(1, 2))));
 
         // Retrieving tables from procedures
         assertNull(pTables1(create().configuration(), null));
         assertEquals(emptyList(),
-            pTables1(create().configuration(), new UNumberTableRecord((Integer[]) null)).getList());
+            pTables1(create().configuration(), new UNumberTableRecord((Integer[]) null)));
         assertEquals(emptyList(),
-            pTables1(create().configuration(), new UNumberTableRecord()).getList());
+            pTables1(create().configuration(), new UNumberTableRecord()));
         assertEquals(asList(1),
-            pTables1(create().configuration(), pTables1(create().configuration(), new UNumberTableRecord(1))).getList());
+            pTables1(create().configuration(), pTables1(create().configuration(), new UNumberTableRecord(1))));
         assertEquals(asList(1, 2),
-            pTables1(create().configuration(), pTables1(create().configuration(), new UNumberTableRecord(1, 2))).getList());
+            pTables1(create().configuration(), pTables1(create().configuration(), new UNumberTableRecord(1, 2))));
 
         // THEN, check unnesting of VARRAY/TABLE of OBJECT
         // -----------------------------------------------
@@ -1148,24 +1148,24 @@ public class OracleTest extends jOOQAbstractTest<
         // Retrieving arrays from functions
         assertNull(fArrays4(create().configuration(), null));
         assertEquals(emptyList(),
-            fArrays4(create().configuration(), new UBookArrayRecord((UBookTypeRecord[]) null)).getList());
+            fArrays4(create().configuration(), new UBookArrayRecord((UBookTypeRecord[]) null)));
         assertEquals(emptyList(),
-            fArrays4(create().configuration(), new UBookArrayRecord()).getList());
+            fArrays4(create().configuration(), new UBookArrayRecord()));
         assertEquals(asList(r1),
-            fArrays4(create().configuration(), fArrays4(create().configuration(), new UBookArrayRecord(r1))).getList());
+            fArrays4(create().configuration(), fArrays4(create().configuration(), new UBookArrayRecord(r1))));
         assertEquals(asList(r1, r2),
-            fArrays4(create().configuration(), fArrays4(create().configuration(), new UBookArrayRecord(r1, r2))).getList());
+            fArrays4(create().configuration(), fArrays4(create().configuration(), new UBookArrayRecord(r1, r2))));
 
         // Retrieving tables from functions
         assertNull(fTables4(create().configuration(), null));
         assertEquals(emptyList(),
-            fTables4(create().configuration(), new UBookTableRecord((UBookTypeRecord[]) null)).getList());
+            fTables4(create().configuration(), new UBookTableRecord((UBookTypeRecord[]) null)));
         assertEquals(emptyList(),
-            fTables4(create().configuration(), new UBookTableRecord()).getList());
+            fTables4(create().configuration(), new UBookTableRecord()));
         assertEquals(asList(r1),
-            fTables4(create().configuration(), fTables4(create().configuration(), new UBookTableRecord(r1))).getList());
+            fTables4(create().configuration(), fTables4(create().configuration(), new UBookTableRecord(r1))));
         assertEquals(asList(r1, r2),
-            fTables4(create().configuration(), fTables4(create().configuration(), new UBookTableRecord(r1, r2))).getList());
+            fTables4(create().configuration(), fTables4(create().configuration(), new UBookTableRecord(r1, r2))));
 
 
     }
@@ -1606,7 +1606,7 @@ public class OracleTest extends jOOQAbstractTest<
         assertEquals("Hampstead", author.getAddress().getCity());
         assertEquals("England", author.getAddress().getCountry());
         assertEquals("Parliament Hill", author.getAddress().getStreet().getStreet());
-        assertEquals(asList(1, 2, 3), asList(author.getAddress().getStreet().getFloors().get()));
+        assertEquals(asList(1, 2, 3), asList(author.getAddress().getStreet().getFloors()));
         assertEquals("77", author.getAddress().getStreet().getNo());
     }
 
@@ -1697,17 +1697,17 @@ public class OracleTest extends jOOQAbstractTest<
             assertEquals(u3, result.getP3());
             assertEquals(1, (int) result.getP3().getId());
             assertEquals(2, result.getP3().getNested().size());
-            assertEquals(u1, result.getP3().getNested().get()[0]);
-            assertNull(result.getP3().getNested().get()[0].getId());
-            assertNull(result.getP3().getNested().get()[0].getNested());
-            assertEquals(u1, result.getP3().getNested().get()[1]);
+            assertEquals(u1, result.getP3().getNested().get(0));
+            assertNull(result.getP3().getNested().get(0).getId());
+            assertNull(result.getP3().getNested().get(0).getNested());
+            assertEquals(u1, result.getP3().getNested().get(1));
             assertEquals(u3, result.getP4());
             assertEquals(1, (int) result.getP4().getId());
             assertEquals(2, result.getP4().getNested().size());
-            assertEquals(u1, result.getP4().getNested().get()[0]);
-            assertNull(result.getP4().getNested().get()[0].getId());
-            assertNull(result.getP4().getNested().get()[0].getNested());
-            assertEquals(u1, result.getP4().getNested().get()[1]);
+            assertEquals(u1, result.getP4().getNested().get(0));
+            assertNull(result.getP4().getNested().get(0).getId());
+            assertNull(result.getP4().getNested().get(0).getNested());
+            assertEquals(u1, result.getP4().getNested().get(1));
         }
 
 
@@ -1724,17 +1724,17 @@ public class OracleTest extends jOOQAbstractTest<
             assertEquals(u3, result.getP3());
             assertEquals(1, (int) result.getP3().getId());
             assertEquals(2, result.getP3().getNested().size());
-            assertEquals(u1, result.getP3().getNested().get()[0]);
-            assertEquals(2, (int) result.getP3().getNested().get()[0].getId());
-            assertEquals(0, result.getP3().getNested().get()[0].getNested().size());
-            assertEquals(u1, result.getP3().getNested().get()[1]);
+            assertEquals(u1, result.getP3().getNested().get(0));
+            assertEquals(2, (int) result.getP3().getNested().get(0).getId());
+            assertEquals(0, result.getP3().getNested().get(0).getNested().size());
+            assertEquals(u1, result.getP3().getNested().get(1));
             assertEquals(u3, result.getP4());
             assertEquals(1, (int) result.getP4().getId());
             assertEquals(2, result.getP4().getNested().size());
-            assertEquals(u1, result.getP4().getNested().get()[0]);
-            assertEquals(2, (int) result.getP4().getNested().get()[0].getId());
-            assertEquals(0, result.getP4().getNested().get()[0].getNested().size());
-            assertEquals(u1, result.getP4().getNested().get()[1]);
+            assertEquals(u1, result.getP4().getNested().get(0));
+            assertEquals(2, (int) result.getP4().getNested().get(0).getId());
+            assertEquals(0, result.getP4().getNested().get(0).getNested().size());
+            assertEquals(u1, result.getP4().getNested().get(1));
         }
 
 
@@ -1751,17 +1751,17 @@ public class OracleTest extends jOOQAbstractTest<
             assertEquals(u3, result.getP3());
             assertEquals(1, (int) result.getP3().getId());
             assertEquals(2, result.getP3().getNested().size());
-            assertEquals(new UNested_1Record(2, new UNumberTableRecord(3, 4)), result.getP3().getNested().get()[0]);
-            assertEquals(2, (int) result.getP3().getNested().get()[0].getId());
-            assertEquals(asList(3, 4), result.getP3().getNested().get()[0].getNested().getList());
-            assertEquals(new UNested_1Record(2, new UNumberTableRecord(3, 4)), result.getP3().getNested().get()[1]);
+            assertEquals(new UNested_1Record(2, new UNumberTableRecord(3, 4)), result.getP3().getNested().get(0));
+            assertEquals(2, (int) result.getP3().getNested().get(0).getId());
+            assertEquals(asList(3, 4), result.getP3().getNested().get(0).getNested());
+            assertEquals(new UNested_1Record(2, new UNumberTableRecord(3, 4)), result.getP3().getNested().get(1));
             assertEquals(u3, result.getP4());
             assertEquals(1, (int) result.getP4().getId());
             assertEquals(2, result.getP4().getNested().size());
-            assertEquals(new UNested_1Record(2, new UNumberTableRecord(3, 4)), result.getP4().getNested().get()[0]);
-            assertEquals(2, (int) result.getP4().getNested().get()[0].getId());
-            assertEquals(asList(3, 4), result.getP4().getNested().get()[0].getNested().getList());
-            assertEquals(new UNested_1Record(2, new UNumberTableRecord(3, 4)), result.getP4().getNested().get()[1]);
+            assertEquals(new UNested_1Record(2, new UNumberTableRecord(3, 4)), result.getP4().getNested().get(0));
+            assertEquals(2, (int) result.getP4().getNested().get(0).getId());
+            assertEquals(asList(3, 4), result.getP4().getNested().get(0).getNested());
+            assertEquals(new UNested_1Record(2, new UNumberTableRecord(3, 4)), result.getP4().getNested().get(1));
         }
     }
 
@@ -1880,19 +1880,19 @@ public class OracleTest extends jOOQAbstractTest<
         )
         .fetchOne();
 
-        assertEquals(asList(1, 2, 3), t11.getList());
-        assertEquals(asList(4, 5, 6), t12.getList());
-        assertEquals(asList(7, 8, 9), t13.getList());
-        assertEquals(asList(1, 2, 3), t21.getList());
-        assertEquals(asList(4, 5, 6), t22.getList());
-        assertEquals(asList(7, 8, 9), t23.getList());
+        assertEquals(asList(1, 2, 3), t11);
+        assertEquals(asList(4, 5, 6), t12);
+        assertEquals(asList(7, 8, 9), t13);
+        assertEquals(asList(1, 2, 3), t21);
+        assertEquals(asList(4, 5, 6), t22);
+        assertEquals(asList(7, 8, 9), t23);
 
-        assertEquals(asList(1, 2, 3), record.value1().getList());
-        assertEquals(asList(4, 5, 6), record.value2().getList());
-        assertEquals(asList(7, 8, 9), record.value3().getList());
-        assertEquals(asList(1, 2, 3), record.value4().getList());
-        assertEquals(asList(4, 5, 6), record.value5().getList());
-        assertEquals(asList(7, 8, 9), record.value6().getList());
+        assertEquals(asList(1, 2, 3), record.value1());
+        assertEquals(asList(4, 5, 6), record.value2());
+        assertEquals(asList(7, 8, 9), record.value3());
+        assertEquals(asList(1, 2, 3), record.value4());
+        assertEquals(asList(4, 5, 6), record.value5());
+        assertEquals(asList(7, 8, 9), record.value6());
 
         assertEquals(asList(1, 2, 3), asList(o11.into(Integer[].class)));
         assertEquals(asList(4, 5, 6), asList(o12.into(Integer[].class)));

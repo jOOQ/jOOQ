@@ -45,6 +45,7 @@ package org.jooq.impl;
 import java.lang.reflect.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -212,8 +213,7 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
     @Override
     @Deprecated
     public final void set(T... array) {
-        for (int i = 0; i < array.length; i++)
-            set(i, array[i]);
+        set(Arrays.asList(array));
     }
 
     @Override
@@ -225,10 +225,8 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
     @Override
     @Deprecated
     public final void set(Collection<? extends T> collection) {
-        Iterator<? extends T> it = collection.iterator();
-
-        for (int i = 0; i < collection.size(); i++)
-            set(i, it.next());
+        clear();
+        addAll(collection);
     }
 
     @Override

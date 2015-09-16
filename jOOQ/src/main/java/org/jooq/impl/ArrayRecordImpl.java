@@ -213,7 +213,10 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
     @Override
     @Deprecated
     public final void set(T... array) {
-        set(Arrays.asList(array));
+        if (array == null)
+            clear();
+        else
+            set(Arrays.asList(array));
     }
 
     @Override

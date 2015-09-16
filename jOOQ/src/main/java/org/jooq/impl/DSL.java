@@ -11790,6 +11790,102 @@ public class DSL {
     }
 
     // -------------------------------------------------------------------------
+    // XXX Ordered-set aggregate functions and hypothetical set functions
+    // -------------------------------------------------------------------------
+
+    /**
+     * The <code>rank(expr) within group (order by [order clause])</code>
+     * ordered aggregate function.
+     */
+    @Support({ POSTGRES_9_4 })
+    public static OrderedAggregateFunction<Integer> rank(Field<?>... fields) {
+        return new Function<Integer>("rank", SQLDataType.INTEGER, fields);
+    }
+
+    /**
+     * The <code>dense_rank(expr) within group (order by [order clause])</code>
+     * ordered aggregate function.
+     */
+    @Support({ POSTGRES_9_4 })
+    public static OrderedAggregateFunction<Integer> denseRank(Field<?>... fields) {
+        return new Function<Integer>("dense_rank", SQLDataType.INTEGER, fields);
+    }
+
+    /**
+     * The <code>percent_rank(expr) within group (order by [order clause])</code>
+     * ordered aggregate function.
+     */
+    @Support({ POSTGRES_9_4 })
+    public static OrderedAggregateFunction<Integer> percentRank(Field<?>... fields) {
+        return new Function<Integer>("percent_rank", SQLDataType.INTEGER, fields);
+    }
+
+    /**
+     * The <code>cume_dist(expr) within group (order by [order clause])</code>
+     * ordered aggregate function.
+     */
+    @Support({ POSTGRES_9_4 })
+    public static OrderedAggregateFunction<BigDecimal> cumeDist(Field<?>... fields) {
+        return new Function<BigDecimal>("cume_dist", SQLDataType.NUMERIC, fields);
+    }
+
+    /**
+     * The
+     * <code>percentile_cont([number]) within group (order by [column])</code>
+     * function.
+     * <p>
+     * While {@link SQLDialect#ORACLE} and {@link SQLDialect#POSTGRES} support
+     * this as an aggregate function, {@link SQLDialect#SQLSERVER} and
+     * {@link SQLDialect#REDSHIFT} support only its window function variant.
+     */
+    @Support({ POSTGRES_9_4 })
+    public static OrderedAggregateFunction<BigDecimal> percentileCont(Number number) {
+        return percentileCont(val(number));
+    }
+
+    /**
+     * The
+     * <code>percentile_cont([number]) within group (order by [column])</code>
+     * function.
+     * <p>
+     * While {@link SQLDialect#ORACLE} and {@link SQLDialect#POSTGRES} support
+     * this as an aggregate function, {@link SQLDialect#SQLSERVER} and
+     * {@link SQLDialect#REDSHIFT} support only its window function variant.
+     */
+    @Support({ POSTGRES_9_4 })
+    public static OrderedAggregateFunction<BigDecimal> percentileCont(Field<? extends Number> field) {
+        return new Function<BigDecimal>("percentile_cont", SQLDataType.NUMERIC, nullSafe(field));
+    }
+
+    /**
+     * The
+     * <code>percentile_disc([number]) within group (order by [column])</code>
+     * function.
+     * <p>
+     * While {@link SQLDialect#ORACLE} and {@link SQLDialect#POSTGRES} support
+     * this as an aggregate function, {@link SQLDialect#SQLSERVER} and
+     * {@link SQLDialect#REDSHIFT} support only its window function variant.
+     */
+    @Support({ POSTGRES_9_4 })
+    public static OrderedAggregateFunction<BigDecimal> percentileDisc(Number number) {
+        return percentileDisc(val(number));
+    }
+
+    /**
+     * The
+     * <code>percentile_disc([number]) within group (order by [column])</code>
+     * function.
+     * <p>
+     * While {@link SQLDialect#ORACLE} and {@link SQLDialect#POSTGRES} support
+     * this as an aggregate function, {@link SQLDialect#SQLSERVER} and
+     * {@link SQLDialect#REDSHIFT} support only its window function variant.
+     */
+    @Support({ POSTGRES_9_4 })
+    public static OrderedAggregateFunction<BigDecimal> percentileDisc(Field<? extends Number> field) {
+        return new Function<BigDecimal>("percentile_disc", SQLDataType.NUMERIC, nullSafe(field));
+    }
+
+    // -------------------------------------------------------------------------
     // XXX Window clauses
     // -------------------------------------------------------------------------
 
@@ -11940,29 +12036,11 @@ public class DSL {
     }
 
     /**
-     * The <code>rank(expr) within group (order by [order clause])</code>
-     * ordered aggregate function.
-     */
-    @Support({ POSTGRES_9_4 })
-    public static OrderedAggregateFunction<Integer> rank(Field<?>... fields) {
-        return new Function<Integer>("rank", SQLDataType.INTEGER, fields);
-    }
-
-    /**
      * The <code>dense_rank() over ([analytic clause])</code> function.
      */
     @Support({ CUBRID, POSTGRES })
     public static WindowOverStep<Integer> denseRank() {
         return new Function<Integer>("dense_rank", SQLDataType.INTEGER);
-    }
-
-    /**
-     * The <code>dense_rank(expr) within group (order by [order clause])</code>
-     * ordered aggregate function.
-     */
-    @Support({ POSTGRES_9_4 })
-    public static OrderedAggregateFunction<Integer> denseRank(Field<?>... fields) {
-        return new Function<Integer>("dense_rank", SQLDataType.INTEGER, fields);
     }
 
     /**
@@ -11974,15 +12052,6 @@ public class DSL {
     }
 
     /**
-     * The <code>percent_rank(expr) within group (order by [order clause])</code>
-     * ordered aggregate function.
-     */
-    @Support({ POSTGRES_9_4 })
-    public static OrderedAggregateFunction<Integer> percentRank(Field<?>... fields) {
-        return new Function<Integer>("percent_rank", SQLDataType.INTEGER, fields);
-    }
-
-    /**
      * The <code>cume_dist() over ([analytic clause])</code> function.
      */
     @Support({ CUBRID, POSTGRES })
@@ -11991,76 +12060,11 @@ public class DSL {
     }
 
     /**
-     * The <code>cume_dist(expr) within group (order by [order clause])</code>
-     * ordered aggregate function.
-     */
-    @Support({ POSTGRES_9_4 })
-    public static OrderedAggregateFunction<BigDecimal> cumeDist(Field<?>... fields) {
-        return new Function<BigDecimal>("cume_dist", SQLDataType.NUMERIC, fields);
-    }
-
-    /**
      * The <code>ntile([number]) over ([analytic clause])</code> function.
      */
     @Support({ CUBRID, POSTGRES })
     public static WindowOverStep<Integer> ntile(int number) {
         return new Function<Integer>("ntile", SQLDataType.INTEGER, inline(number));
-    }
-
-    /**
-     * The
-     * <code>percentile_cont([number]) within group (order by [column])</code>
-     * function.
-     * <p>
-     * While {@link SQLDialect#ORACLE} and {@link SQLDialect#POSTGRES} support
-     * this as an aggregate function, {@link SQLDialect#SQLSERVER} and
-     * {@link SQLDialect#REDSHIFT} support only its window function variant.
-     */
-    @Support({ POSTGRES_9_4 })
-    public static OrderedAggregateFunction<BigDecimal> percentileCont(Number number) {
-        return percentileCont(val(number));
-    }
-
-    /**
-     * The
-     * <code>percentile_cont([number]) within group (order by [column])</code>
-     * function.
-     * <p>
-     * While {@link SQLDialect#ORACLE} and {@link SQLDialect#POSTGRES} support
-     * this as an aggregate function, {@link SQLDialect#SQLSERVER} and
-     * {@link SQLDialect#REDSHIFT} support only its window function variant.
-     */
-    @Support({ POSTGRES_9_4 })
-    public static OrderedAggregateFunction<BigDecimal> percentileCont(Field<? extends Number> field) {
-        return new Function<BigDecimal>("percentile_cont", SQLDataType.NUMERIC, nullSafe(field));
-    }
-
-    /**
-     * The
-     * <code>percentile_disc([number]) within group (order by [column])</code>
-     * function.
-     * <p>
-     * While {@link SQLDialect#ORACLE} and {@link SQLDialect#POSTGRES} support
-     * this as an aggregate function, {@link SQLDialect#SQLSERVER} and
-     * {@link SQLDialect#REDSHIFT} support only its window function variant.
-     */
-    @Support({ POSTGRES_9_4 })
-    public static OrderedAggregateFunction<BigDecimal> percentileDisc(Number number) {
-        return percentileDisc(val(number));
-    }
-
-    /**
-     * The
-     * <code>percentile_disc([number]) within group (order by [column])</code>
-     * function.
-     * <p>
-     * While {@link SQLDialect#ORACLE} and {@link SQLDialect#POSTGRES} support
-     * this as an aggregate function, {@link SQLDialect#SQLSERVER} and
-     * {@link SQLDialect#REDSHIFT} support only its window function variant.
-     */
-    @Support({ POSTGRES_9_4 })
-    public static OrderedAggregateFunction<BigDecimal> percentileDisc(Field<? extends Number> field) {
-        return new Function<BigDecimal>("percentile_disc", SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**

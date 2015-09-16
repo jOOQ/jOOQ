@@ -8,7 +8,6 @@ import java.math.BigInteger;
 
 import org.jooq.Sequence;
 import org.jooq.impl.SequenceImpl;
-import org.jooq.test.oracle3.generatedclasses.DefaultSchema;
 
 
 /**
@@ -16,6 +15,11 @@ import org.jooq.test.oracle3.generatedclasses.DefaultSchema;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sequences {
+
+	/**
+	 * The sequence <code>S_AUTHOR_ID</code>
+	 */
+	public static final Sequence<Integer> S_AUTHOR_ID = new SequenceImpl<Integer>("S_AUTHOR_ID", DefaultSchema.DEFAULT_SCHEMA, org.jooq.impl.SQLDataType.INTEGER.nullable(false));
 
 	/**
 	 * The sequence <code>S_3899$</code>

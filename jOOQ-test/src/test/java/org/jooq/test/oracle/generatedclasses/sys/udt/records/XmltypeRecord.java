@@ -7,6 +7,7 @@ package org.jooq.test.oracle.generatedclasses.sys.udt.records;
 import java.math.BigDecimal;
 
 import org.jooq.Configuration;
+import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.impl.UDTRecordImpl;
 import org.jooq.test.oracle.generatedclasses.sys.udt.Xmltype;
@@ -63,7 +64,7 @@ import org.jooq.test.oracle.generatedclasses.sys.udt.xmltype.Xmltype7;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XmltypeRecord extends UDTRecordImpl<XmltypeRecord> {
 
-	private static final long serialVersionUID = 411460833;
+	private static final long serialVersionUID = 1105048821;
 
 	/**
 	 * Call <code>SYS.XMLTYPE.APPENDCHILDXML</code>
@@ -199,7 +200,7 @@ public class XmltypeRecord extends UDTRecordImpl<XmltypeRecord> {
 	/**
 	 * Call <code>SYS.XMLTYPE.CREATEXML</code>
 	 */
-	public static org.jooq.test.oracle.generatedclasses.sys.udt.records.XmltypeRecord createxml8(Configuration configuration, Result<org.jooq.Record> xmldata, String schema, String element, Number validated) {
+	public static org.jooq.test.oracle.generatedclasses.sys.udt.records.XmltypeRecord createxml8(Configuration configuration, Result<Record> xmldata, String schema, String element, Number validated) {
 		Createxml8 f = new Createxml8();
 		f.setXmldata(xmldata);
 		f.setSchema_(schema);
@@ -640,7 +641,7 @@ public class XmltypeRecord extends UDTRecordImpl<XmltypeRecord> {
 	/**
 	 * Call <code>SYS.XMLTYPE.XMLTYPE</code>
 	 */
-	public Xmltype7 xmltype7(Result<org.jooq.Record> xmldata, String schema, String element, Number validated) {
+	public Xmltype7 xmltype7(Result<Record> xmldata, String schema, String element, Number validated) {
 		Xmltype7 p = new Xmltype7();
 		p.setSelf(this);
 		p.setXmldata(xmldata);

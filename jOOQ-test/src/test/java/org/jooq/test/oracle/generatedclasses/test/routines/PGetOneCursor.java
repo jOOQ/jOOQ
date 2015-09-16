@@ -7,6 +7,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 import java.math.BigDecimal;
 
 import org.jooq.Parameter;
+import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.impl.AbstractRoutine;
 import org.jooq.test.oracle.generatedclasses.test.Test;
@@ -19,7 +20,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PGetOneCursor extends AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1540040337;
+	private static final long serialVersionUID = -1150021333;
 
 	/**
 	 * The parameter <code>TEST.P_GET_ONE_CURSOR.TOTAL</code>.
@@ -29,7 +30,7 @@ public class PGetOneCursor extends AbstractRoutine<java.lang.Void> {
 	/**
 	 * The parameter <code>TEST.P_GET_ONE_CURSOR.BOOKS</code>.
 	 */
-	public static final Parameter<Result<org.jooq.Record>> BOOKS = createParameter("BOOKS", org.jooq.impl.SQLDataType.RESULT, false);
+	public static final Parameter<Result<Record>> BOOKS = createParameter("BOOKS", org.jooq.impl.SQLDataType.RESULT, false);
 
 	/**
 	 * The parameter <code>TEST.P_GET_ONE_CURSOR.BOOK_IDS</code>.
@@ -64,7 +65,7 @@ public class PGetOneCursor extends AbstractRoutine<java.lang.Void> {
 	/**
 	 * Get the <code>BOOKS</code> parameter OUT value from the routine
 	 */
-	public Result<org.jooq.Record> getBooks() {
+	public Result<Record> getBooks() {
 		return getValue(BOOKS);
 	}
 }

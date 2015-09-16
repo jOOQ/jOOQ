@@ -12,7 +12,6 @@ import javax.persistence.Table;
 
 import org.jooq.Field;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.tables.interfaces.M_LIBRARY_INTERFACE;
@@ -26,7 +25,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.M_LIBRARY_INTERF
 @Table(name = "M_LIBRARY")
 public class M_LIBRARY extends TableRecordImpl<M_LIBRARY> implements Serializable, Cloneable, Record2<String, String>, M_LIBRARY_INTERFACE {
 
-	private static final long serialVersionUID = 1632487359;
+	private static final long serialVersionUID = 1645983828;
 
 	/**
 	 * Setter for <code>M_LIBRARY.AUTHOR</code>.

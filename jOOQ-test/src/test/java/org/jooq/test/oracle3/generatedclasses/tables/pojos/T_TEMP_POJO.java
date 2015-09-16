@@ -20,7 +20,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_TEMP_INTERFACE
 @Table(name = "T_TEMP")
 public class T_TEMP_POJO extends ThreadDeath implements Cloneable, T_TEMP_INTERFACE {
 
-	private static final long serialVersionUID = 809791845;
+	private static final long serialVersionUID = 2103289350;
 
 	private Integer ID;
 
@@ -46,6 +46,16 @@ public class T_TEMP_POJO extends ThreadDeath implements Cloneable, T_TEMP_INTERF
 	@Override
 	public void setID(Integer ID) {
 		this.ID = ID;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_TEMP_POJO (");
+
+		sb.append(ID);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

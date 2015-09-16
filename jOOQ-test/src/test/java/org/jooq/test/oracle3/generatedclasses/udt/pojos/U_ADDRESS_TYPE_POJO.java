@@ -8,7 +8,6 @@ import java.sql.Date;
 
 import org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_ADDRESS_TYPE_INTERFACE;
 import org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_STREET_TYPE_INTERFACE;
-import org.jooq.test.oracle3.generatedclasses.udt.pojos.U_STREET_TYPE_POJO;
 
 
 /**
@@ -17,7 +16,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.pojos.U_STREET_TYPE_POJO;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_ADDRESS_TYPE_POJO extends ThreadDeath implements Cloneable, U_ADDRESS_TYPE_INTERFACE {
 
-	private static final long serialVersionUID = 1910896808;
+	private static final long serialVersionUID = 76593064;
 
 	private U_STREET_TYPE_POJO STREET;
 	private String             ZIP;
@@ -146,6 +145,23 @@ public class U_ADDRESS_TYPE_POJO extends ThreadDeath implements Cloneable, U_ADD
 	@Override
 	public void setF_1326(String F_1326) {
 		this.F_1326 = F_1326;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("U_ADDRESS_TYPE_POJO (");
+
+		sb.append(STREET);
+		sb.append(", ").append(ZIP);
+		sb.append(", ").append(CITY);
+		sb.append(", ").append(COUNTRY);
+		sb.append(", ").append(SINCE);
+		sb.append(", ").append(CODE);
+		sb.append(", ").append("[binary...]");
+		sb.append(", ").append(F_1326);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

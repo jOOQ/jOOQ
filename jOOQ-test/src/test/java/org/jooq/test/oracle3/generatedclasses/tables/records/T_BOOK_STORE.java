@@ -11,7 +11,6 @@ import javax.persistence.Table;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_STORE_INTERFACE;
@@ -25,7 +24,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_STORE_INT
 @Table(name = "T_BOOK_STORE")
 public class T_BOOK_STORE extends UpdatableRecordImpl<T_BOOK_STORE> implements Cloneable, Record1<String>, T_BOOK_STORE_INTERFACE {
 
-	private static final long serialVersionUID = 1493908562;
+	private static final long serialVersionUID = -685042335;
 
 	/**
 	 * Setter for <code>T_BOOK_STORE.NAME</code>. The books store name

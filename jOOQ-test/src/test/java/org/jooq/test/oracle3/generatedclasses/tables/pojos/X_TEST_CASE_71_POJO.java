@@ -20,7 +20,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_71_I
 @Table(name = "X_TEST_CASE_71")
 public class X_TEST_CASE_71_POJO extends ThreadDeath implements Cloneable, X_TEST_CASE_71_INTERFACE {
 
-	private static final long serialVersionUID = -2029939152;
+	private static final long serialVersionUID = 616783881;
 
 	private Integer ID;
 	private Short   TEST_CASE_64_69_ID;
@@ -61,6 +61,17 @@ public class X_TEST_CASE_71_POJO extends ThreadDeath implements Cloneable, X_TES
 	@Override
 	public void setTEST_CASE_64_69_ID(Short TEST_CASE_64_69_ID) {
 		this.TEST_CASE_64_69_ID = TEST_CASE_64_69_ID;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("X_TEST_CASE_71_POJO (");
+
+		sb.append(ID);
+		sb.append(", ").append(TEST_CASE_64_69_ID);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

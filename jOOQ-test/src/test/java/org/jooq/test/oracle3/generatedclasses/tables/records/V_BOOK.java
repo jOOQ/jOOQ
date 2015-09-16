@@ -13,7 +13,6 @@ import javax.persistence.Table;
 
 import org.jooq.Field;
 import org.jooq.Record11;
-import org.jooq.Row;
 import org.jooq.Row11;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_BOOK_INTERFACE;
@@ -27,7 +26,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_BOOK_INTERFACE
 @Table(name = "V_BOOK")
 public class V_BOOK extends TableRecordImpl<V_BOOK> implements Cloneable, Record11<Integer, Integer, Integer, Integer, String, Integer, Integer, String, byte[], BigDecimal, Timestamp>, V_BOOK_INTERFACE {
 
-	private static final long serialVersionUID = -1926522637;
+	private static final long serialVersionUID = -865400540;
 
 	/**
 	 * Setter for <code>V_BOOK.ID</code>.

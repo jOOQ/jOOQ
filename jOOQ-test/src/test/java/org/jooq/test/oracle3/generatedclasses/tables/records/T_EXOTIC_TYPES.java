@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record8;
-import org.jooq.Row;
 import org.jooq.Row8;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_EXOTIC_TYPES_INTERFACE;
@@ -26,7 +25,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_EXOTIC_TYPES_I
 @Table(name = "T_EXOTIC_TYPES")
 public class T_EXOTIC_TYPES extends UpdatableRecordImpl<T_EXOTIC_TYPES> implements Cloneable, Record8<Integer, String, byte[], String, String, Object, Object, Object>, T_EXOTIC_TYPES_INTERFACE {
 
-	private static final long serialVersionUID = 21467215;
+	private static final long serialVersionUID = 1123743320;
 
 	/**
 	 * Setter for <code>T_EXOTIC_TYPES.ID</code>.

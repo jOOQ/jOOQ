@@ -19,7 +19,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_3711_INTERFACE
 @Table(name = "T_3711")
 public class T_3711_POJO extends ThreadDeath implements Cloneable, T_3711_INTERFACE {
 
-	private static final long serialVersionUID = 1141766410;
+	private static final long serialVersionUID = 882598889;
 
 	private Object V1;
 	private Object V2;
@@ -119,6 +119,21 @@ public class T_3711_POJO extends ThreadDeath implements Cloneable, T_3711_INTERF
 	@Override
 	public void setV8(Object V8) {
 		this.V8 = V8;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_3711_POJO (");
+
+		sb.append(V1);
+		sb.append(", ").append(V2);
+		sb.append(", ").append(V3);
+		sb.append(", ").append(V4);
+		sb.append(", ").append(V7);
+		sb.append(", ").append(V8);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record11;
-import org.jooq.Row;
 import org.jooq.Row11;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOLEANS_INTERFACE;
@@ -26,7 +25,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOLEANS_INTER
 @Table(name = "T_BOOLEANS")
 public class T_BOOLEANS extends UpdatableRecordImpl<T_BOOLEANS> implements Cloneable, Record11<Integer, Integer, String, String, String, String, String, String, String, String, Integer>, T_BOOLEANS_INTERFACE {
 
-	private static final long serialVersionUID = 297747784;
+	private static final long serialVersionUID = 943612957;
 
 	/**
 	 * Setter for <code>T_BOOLEANS.ID</code>.

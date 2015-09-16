@@ -6,7 +6,6 @@ package org.jooq.test.oracle3.generatedclasses.udt.records;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.impl.UDTRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_3005_INTERFACE;
@@ -18,7 +17,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_3005_INTERFACE;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_3005 extends UDTRecordImpl<U_3005> implements Cloneable, Record1<Integer>, U_3005_INTERFACE {
 
-	private static final long serialVersionUID = 1347052328;
+	private static final long serialVersionUID = -830535793;
 
 	/**
 	 * Setter for <code>U_3005.ID</code>.

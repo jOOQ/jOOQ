@@ -15,7 +15,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_BOOK_TYPE_INTERFA
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_BOOK_TYPE_POJO extends Object implements Serializable, U_BOOK_TYPE_INTERFACE {
 
-	private static final long serialVersionUID = 2129354243;
+	private static final long serialVersionUID = 48932573;
 
 	private Integer ID;
 	private String  TITLE;
@@ -53,6 +53,17 @@ public class U_BOOK_TYPE_POJO extends Object implements Serializable, U_BOOK_TYP
 	@Override
 	public void setTITLE(String TITLE) {
 		this.TITLE = TITLE;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("U_BOOK_TYPE_POJO (");
+
+		sb.append(ID);
+		sb.append(", ").append(TITLE);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

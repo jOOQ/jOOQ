@@ -4,8 +4,9 @@
 package org.jooq.test.oracle3.generatedclasses.udt.pojos;
 
 
+import java.util.List;
+
 import org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_STREET_TYPE_INTERFACE;
-import org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY;
 
 
 /**
@@ -14,13 +15,13 @@ import org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_STREET_TYPE_POJO extends ThreadDeath implements Cloneable, U_STREET_TYPE_INTERFACE {
 
-	private static final long serialVersionUID = 119051824;
+	private static final long serialVersionUID = -1297162371;
 
-	private String         STREET;
-	private String         NO;
-	private U_NUMBER_ARRAY FLOORS;
-	private byte[]         F_1323;
-	private String         F_1326;
+	private String        STREET;
+	private String        NO;
+	private List<Integer> FLOORS;
+	private byte[]        F_1323;
+	private String        F_1326;
 
 	public U_STREET_TYPE_POJO() {}
 
@@ -33,11 +34,11 @@ public class U_STREET_TYPE_POJO extends ThreadDeath implements Cloneable, U_STRE
 	}
 
 	public U_STREET_TYPE_POJO(
-		String         STREET,
-		String         NO,
-		U_NUMBER_ARRAY FLOORS,
-		byte[]         F_1323,
-		String         F_1326
+		String        STREET,
+		String        NO,
+		List<Integer> FLOORS,
+		byte[]        F_1323,
+		String        F_1326
 	) {
 		this.STREET = STREET;
 		this.NO = NO;
@@ -67,12 +68,12 @@ public class U_STREET_TYPE_POJO extends ThreadDeath implements Cloneable, U_STRE
 	}
 
 	@Override
-	public U_NUMBER_ARRAY getFLOORS() {
+	public List<Integer> getFLOORS() {
 		return this.FLOORS;
 	}
 
 	@Override
-	public void setFLOORS(U_NUMBER_ARRAY FLOORS) {
+	public void setFLOORS(List<Integer> FLOORS) {
 		this.FLOORS = FLOORS;
 	}
 
@@ -94,6 +95,20 @@ public class U_STREET_TYPE_POJO extends ThreadDeath implements Cloneable, U_STRE
 	@Override
 	public void setF_1326(String F_1326) {
 		this.F_1326 = F_1326;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("U_STREET_TYPE_POJO (");
+
+		sb.append(STREET);
+		sb.append(", ").append(NO);
+		sb.append(", ").append(FLOORS);
+		sb.append(", ").append("[binary...]");
+		sb.append(", ").append(F_1326);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

@@ -12,7 +12,6 @@ import javax.persistence.Table;
 
 import org.jooq.Field;
 import org.jooq.Record6;
-import org.jooq.Row;
 import org.jooq.Row6;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_AUTHOR_INTERFACE;
@@ -28,7 +27,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE;
 @Table(name = "V_AUTHOR")
 public class V_AUTHOR extends TableRecordImpl<V_AUTHOR> implements Cloneable, Record6<Integer, String, String, Date, Integer, U_ADDRESS_TYPE>, V_AUTHOR_INTERFACE {
 
-	private static final long serialVersionUID = 1031932340;
+	private static final long serialVersionUID = 777282541;
 
 	/**
 	 * Setter for <code>V_AUTHOR.ID</code>.

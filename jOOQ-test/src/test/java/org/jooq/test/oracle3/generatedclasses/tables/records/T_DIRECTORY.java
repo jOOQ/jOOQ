@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record4;
-import org.jooq.Row;
 import org.jooq.Row4;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_DIRECTORY_INTERFACE;
@@ -26,7 +25,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_DIRECTORY_INTE
 @Table(name = "T_DIRECTORY")
 public class T_DIRECTORY extends UpdatableRecordImpl<T_DIRECTORY> implements Cloneable, Record4<Integer, Integer, Integer, String>, T_DIRECTORY_INTERFACE {
 
-	private static final long serialVersionUID = -1056793296;
+	private static final long serialVersionUID = -1414541391;
 
 	/**
 	 * Setter for <code>T_DIRECTORY.ID</code>.

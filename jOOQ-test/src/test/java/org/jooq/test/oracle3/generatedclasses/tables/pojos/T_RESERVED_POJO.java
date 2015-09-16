@@ -21,7 +21,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_RESERVED_INTER
 @Table(name = "T_RESERVED")
 public class T_RESERVED_POJO extends ThreadDeath implements Cloneable, T_RESERVED_INTERFACE {
 
-	private static final long serialVersionUID = -918305750;
+	private static final long serialVersionUID = 1637536767;
 
 	private BigDecimal abstract_;
 	private BigDecimal case_;
@@ -616,6 +616,54 @@ public class T_RESERVED_POJO extends ThreadDeath implements Cloneable, T_RESERVE
 	@Override
 	public void setyield(BigDecimal yield) {
 		this.yield = yield;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_RESERVED_POJO (");
+
+		sb.append(abstract_);
+		sb.append(", ").append(case_);
+		sb.append(", ").append(catch_);
+		sb.append(", ").append(class_);
+		sb.append(", ").append(def);
+		sb.append(", ").append(do_);
+		sb.append(", ").append(else_);
+		sb.append(", ").append(extends_);
+		sb.append(", ").append(false_);
+		sb.append(", ").append(final_);
+		sb.append(", ").append(finally_);
+		sb.append(", ").append(for_);
+		sb.append(", ").append(forSome);
+		sb.append(", ").append(if_);
+		sb.append(", ").append(implicit);
+		sb.append(", ").append(import_);
+		sb.append(", ").append(lazy);
+		sb.append(", ").append(match);
+		sb.append(", ").append(new_);
+		sb.append(", ").append(null_);
+		sb.append(", ").append(object);
+		sb.append(", ").append(override);
+		sb.append(", ").append(package_);
+		sb.append(", ").append(private_);
+		sb.append(", ").append(protected_);
+		sb.append(", ").append(return_);
+		sb.append(", ").append(sealed);
+		sb.append(", ").append(super_);
+		sb.append(", ").append(this_);
+		sb.append(", ").append(throw_);
+		sb.append(", ").append(trait);
+		sb.append(", ").append(try_);
+		sb.append(", ").append(true_);
+		sb.append(", ").append(type);
+		sb.append(", ").append(val);
+		sb.append(", ").append(var);
+		sb.append(", ").append(while_);
+		sb.append(", ").append(with);
+		sb.append(", ").append(yield);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

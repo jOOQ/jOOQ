@@ -5,6 +5,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 
 
 import org.jooq.Parameter;
+import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.impl.AbstractRoutine;
 import org.jooq.test.oracle.generatedclasses.test.Test;
@@ -16,17 +17,17 @@ import org.jooq.test.oracle.generatedclasses.test.Test;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PGetTwoCursors extends AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 2015986722;
+	private static final long serialVersionUID = -470026226;
 
 	/**
 	 * The parameter <code>TEST.P_GET_TWO_CURSORS.BOOKS</code>.
 	 */
-	public static final Parameter<Result<org.jooq.Record>> BOOKS = createParameter("BOOKS", org.jooq.impl.SQLDataType.RESULT, false);
+	public static final Parameter<Result<Record>> BOOKS = createParameter("BOOKS", org.jooq.impl.SQLDataType.RESULT, false);
 
 	/**
 	 * The parameter <code>TEST.P_GET_TWO_CURSORS.AUTHORS</code>.
 	 */
-	public static final Parameter<Result<org.jooq.Record>> AUTHORS = createParameter("AUTHORS", org.jooq.impl.SQLDataType.RESULT, false);
+	public static final Parameter<Result<Record>> AUTHORS = createParameter("AUTHORS", org.jooq.impl.SQLDataType.RESULT, false);
 
 	/**
 	 * Create a new routine call instance
@@ -41,14 +42,14 @@ public class PGetTwoCursors extends AbstractRoutine<java.lang.Void> {
 	/**
 	 * Get the <code>BOOKS</code> parameter OUT value from the routine
 	 */
-	public Result<org.jooq.Record> getBooks() {
+	public Result<Record> getBooks() {
 		return getValue(BOOKS);
 	}
 
 	/**
 	 * Get the <code>AUTHORS</code> parameter OUT value from the routine
 	 */
-	public Result<org.jooq.Record> getAuthors() {
+	public Result<Record> getAuthors() {
 		return getValue(AUTHORS);
 	}
 }

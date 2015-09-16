@@ -15,7 +15,6 @@ import javax.persistence.UniqueConstraint;
 import org.jooq.Field;
 import org.jooq.Record16;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row16;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_UNUSED_INTERFACE;
@@ -33,7 +32,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_UNUSED_INTERFA
 })
 public class X_UNUSED extends UpdatableRecordImpl<X_UNUSED> implements Cloneable, Record16<Integer, String, BigInteger, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, Integer, String, BigDecimal, Integer, String>, X_UNUSED_INTERFACE {
 
-	private static final long serialVersionUID = -252225729;
+	private static final long serialVersionUID = 1427034482;
 
 	/**
 	 * Setter for <code>X_UNUSED.ID</code>. An unused column of an unused table in the same schema.

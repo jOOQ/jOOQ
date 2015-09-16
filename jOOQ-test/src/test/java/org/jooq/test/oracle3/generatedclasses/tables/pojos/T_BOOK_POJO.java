@@ -24,7 +24,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_INTERFACE
 @Table(name = "T_BOOK")
 public class T_BOOK_POJO extends Object implements Serializable, T_BOOK_INTERFACE {
 
-	private static final long serialVersionUID = 1320129893;
+	private static final long serialVersionUID = 1981231628;
 
 	private Integer    ID;
 	private Integer    AUTHOR_ID;
@@ -200,6 +200,26 @@ public class T_BOOK_POJO extends Object implements Serializable, T_BOOK_INTERFAC
 	@Override
 	public void setREC_TIMESTAMP(Timestamp REC_TIMESTAMP) {
 		this.REC_TIMESTAMP = REC_TIMESTAMP;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_BOOK_POJO (");
+
+		sb.append(ID);
+		sb.append(", ").append(AUTHOR_ID);
+		sb.append(", ").append(CO_AUTHOR_ID);
+		sb.append(", ").append(DETAILS_ID);
+		sb.append(", ").append(TITLE);
+		sb.append(", ").append(PUBLISHED_IN);
+		sb.append(", ").append(LANGUAGE_ID);
+		sb.append(", ").append(CONTENT_TEXT);
+		sb.append(", ").append("[binary...]");
+		sb.append(", ").append(REC_VERSION);
+		sb.append(", ").append(REC_TIMESTAMP);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

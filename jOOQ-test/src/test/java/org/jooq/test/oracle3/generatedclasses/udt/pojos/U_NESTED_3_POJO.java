@@ -4,8 +4,11 @@
 package org.jooq.test.oracle3.generatedclasses.udt.pojos;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_NESTED_1_INTERFACE;
 import org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_NESTED_3_INTERFACE;
-import org.jooq.test.oracle3.generatedclasses.udt.records.U_NESTED_2;
 
 
 /**
@@ -14,10 +17,10 @@ import org.jooq.test.oracle3.generatedclasses.udt.records.U_NESTED_2;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_NESTED_3_POJO extends ThreadDeath implements Cloneable, U_NESTED_3_INTERFACE {
 
-	private static final long serialVersionUID = 381360640;
+	private static final long serialVersionUID = -1619092800;
 
-	private Integer    ID;
-	private U_NESTED_2 NESTED;
+	private Integer               ID;
+	private List<U_NESTED_1_POJO> NESTED;
 
 	public U_NESTED_3_POJO() {}
 
@@ -27,8 +30,8 @@ public class U_NESTED_3_POJO extends ThreadDeath implements Cloneable, U_NESTED_
 	}
 
 	public U_NESTED_3_POJO(
-		Integer    ID,
-		U_NESTED_2 NESTED
+		Integer               ID,
+		List<U_NESTED_1_POJO> NESTED
 	) {
 		this.ID = ID;
 		this.NESTED = NESTED;
@@ -45,13 +48,31 @@ public class U_NESTED_3_POJO extends ThreadDeath implements Cloneable, U_NESTED_
 	}
 
 	@Override
-	public U_NESTED_2 getNESTED() {
+	public List<U_NESTED_1_POJO> getNESTED() {
 		return this.NESTED;
 	}
 
 	@Override
-	public void setNESTED(U_NESTED_2 NESTED) {
-		this.NESTED = NESTED;
+	public void setNESTED(List<? extends org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_NESTED_1_INTERFACE> NESTED) {
+		if (NESTED == null)
+			this.NESTED = null;
+		else {
+			this.NESTED = new ArrayList();
+
+			for (U_NESTED_1_INTERFACE i : NESTED)
+				this.NESTED.add(i.into(new U_NESTED_1_POJO()));
+		}
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("U_NESTED_3_POJO (");
+
+		sb.append(ID);
+		sb.append(", ").append(NESTED);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

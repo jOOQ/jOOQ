@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record6;
-import org.jooq.Row;
 import org.jooq.Row6;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_725_LOB_TEST_INTERFACE;
@@ -26,7 +25,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_725_LOB_TEST_I
 @Table(name = "T_725_LOB_TEST")
 public class T_725_LOB_TEST extends UpdatableRecordImpl<T_725_LOB_TEST> implements Cloneable, Record6<Integer, byte[], String, byte[], String, byte[]>, T_725_LOB_TEST_INTERFACE {
 
-	private static final long serialVersionUID = -1394630530;
+	private static final long serialVersionUID = -2057369255;
 
 	/**
 	 * Setter for <code>T_725_LOB_TEST.ID</code>.

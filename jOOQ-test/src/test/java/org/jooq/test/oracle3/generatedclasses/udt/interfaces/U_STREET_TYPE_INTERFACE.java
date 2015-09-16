@@ -5,8 +5,7 @@ package org.jooq.test.oracle3.generatedclasses.udt.interfaces;
 
 
 import java.io.Serializable;
-
-import org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY;
+import java.util.List;
 
 
 /**
@@ -38,12 +37,12 @@ public interface U_STREET_TYPE_INTERFACE extends Cloneable, Serializable {
 	/**
 	 * Setter for <code>U_STREET_TYPE.FLOORS</code>.
 	 */
-	public void setFLOORS(U_NUMBER_ARRAY value);
+	public void setFLOORS(List<Integer> value);
 
 	/**
 	 * Getter for <code>U_STREET_TYPE.FLOORS</code>.
 	 */
-	public U_NUMBER_ARRAY getFLOORS();
+	public List<Integer> getFLOORS();
 
 	/**
 	 * Setter for <code>U_STREET_TYPE.F_1323</code>.

@@ -20,7 +20,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_725_LOB_TEST_I
 @Table(name = "T_725_LOB_TEST")
 public class T_725_LOB_TEST_POJO extends ThreadDeath implements Cloneable, T_725_LOB_TEST_INTERFACE {
 
-	private static final long serialVersionUID = -1995152444;
+	private static final long serialVersionUID = -239181565;
 
 	private Integer ID;
 	private byte[]  LOB;
@@ -121,6 +121,21 @@ public class T_725_LOB_TEST_POJO extends ThreadDeath implements Cloneable, T_725
 	@Override
 	public void setJOOQ_JAVA_SQL_BLOB(byte[] JOOQ_JAVA_SQL_BLOB) {
 		this.JOOQ_JAVA_SQL_BLOB = JOOQ_JAVA_SQL_BLOB;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_725_LOB_TEST_POJO (");
+
+		sb.append(ID);
+		sb.append(", ").append("[binary...]");
+		sb.append(", ").append(USER_JAVA_SQL_CLOB);
+		sb.append(", ").append("[binary...]");
+		sb.append(", ").append(JOOQ_JAVA_SQL_CLOB);
+		sb.append(", ").append("[binary...]");
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

@@ -15,7 +15,6 @@ import javax.persistence.Table;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record13;
-import org.jooq.Row;
 import org.jooq.Row13;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_639_NUMBERS_TABLE_INTERFACE;
@@ -29,7 +28,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_639_NUMBERS_TA
 @Table(name = "T_639_NUMBERS_TABLE")
 public class T_639_NUMBERS_TABLE extends UpdatableRecordImpl<T_639_NUMBERS_TABLE> implements Cloneable, Record13<Integer, Byte, Short, Integer, Long, Byte, Short, Integer, Long, BigInteger, BigDecimal, Double, Double>, T_639_NUMBERS_TABLE_INTERFACE {
 
-	private static final long serialVersionUID = -1144635182;
+	private static final long serialVersionUID = -1464902505;
 
 	/**
 	 * Setter for <code>T_639_NUMBERS_TABLE.ID</code>.

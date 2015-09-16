@@ -10,7 +10,6 @@ import javax.persistence.Table;
 
 import org.jooq.Field;
 import org.jooq.Record11;
-import org.jooq.Row;
 import org.jooq.Row11;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_INCOMPLETE_INTERFACE;
@@ -24,7 +23,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_INCOMPLETE_INT
 @Table(name = "V_INCOMPLETE")
 public class V_INCOMPLETE extends TableRecordImpl<V_INCOMPLETE> implements Cloneable, Record11<Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object>, V_INCOMPLETE_INTERFACE {
 
-	private static final long serialVersionUID = 940923373;
+	private static final long serialVersionUID = 1474504506;
 
 	/**
 	 * Setter for <code>V_INCOMPLETE.ID</code>.

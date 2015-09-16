@@ -20,7 +20,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_DIRECTORY_INTE
 @Table(name = "T_DIRECTORY")
 public class T_DIRECTORY_POJO extends ThreadDeath implements Cloneable, T_DIRECTORY_INTERFACE {
 
-	private static final long serialVersionUID = 2097766496;
+	private static final long serialVersionUID = 981990533;
 
 	private Integer ID;
 	private Integer PARENT_ID;
@@ -91,6 +91,19 @@ public class T_DIRECTORY_POJO extends ThreadDeath implements Cloneable, T_DIRECT
 	@Override
 	public void setname(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_DIRECTORY_POJO (");
+
+		sb.append(ID);
+		sb.append(", ").append(PARENT_ID);
+		sb.append(", ").append(IS_DIRECTORY);
+		sb.append(", ").append(name);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

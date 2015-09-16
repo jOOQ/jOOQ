@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import org.jooq.AggregateFunction;
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.test.oracle.generatedclasses.test.routines.F2155;
 import org.jooq.test.oracle.generatedclasses.test.routines.F317;
@@ -236,7 +237,7 @@ public class Routines {
 	/**
 	 * Call <code>TEST.F_GET_ONE_CURSOR</code>
 	 */
-	public static Result<org.jooq.Record> fGetOneCursor(Configuration configuration, UNumberArrayRecord bookIds) {
+	public static Result<Record> fGetOneCursor(Configuration configuration, UNumberArrayRecord bookIds) {
 		FGetOneCursor f = new FGetOneCursor();
 		f.setBookIds(bookIds);
 
@@ -247,7 +248,7 @@ public class Routines {
 	/**
 	 * Get <code>TEST.F_GET_ONE_CURSOR</code> as a field
 	 */
-	public static Field<Result<org.jooq.Record>> fGetOneCursor(UNumberArrayRecord bookIds) {
+	public static Field<Result<Record>> fGetOneCursor(UNumberArrayRecord bookIds) {
 		FGetOneCursor f = new FGetOneCursor();
 		f.setBookIds(bookIds);
 
@@ -257,7 +258,7 @@ public class Routines {
 	/**
 	 * Get <code>TEST.F_GET_ONE_CURSOR</code> as a field
 	 */
-	public static Field<Result<org.jooq.Record>> fGetOneCursor(Field<UNumberArrayRecord> bookIds) {
+	public static Field<Result<Record>> fGetOneCursor(Field<UNumberArrayRecord> bookIds) {
 		FGetOneCursor f = new FGetOneCursor();
 		f.setBookIds(bookIds);
 
@@ -618,7 +619,7 @@ public class Routines {
 	/**
 	 * Call <code>TEST.F691CURSOR_IN</code>
 	 */
-	public static BigDecimal f691cursorIn(Configuration configuration, Result<org.jooq.Record> c) {
+	public static BigDecimal f691cursorIn(Configuration configuration, Result<Record> c) {
 		F691cursorIn f = new F691cursorIn();
 		f.setC(c);
 
@@ -629,7 +630,7 @@ public class Routines {
 	/**
 	 * Get <code>TEST.F691CURSOR_IN</code> as a field
 	 */
-	public static Field<BigDecimal> f691cursorIn(Result<org.jooq.Record> c) {
+	public static Field<BigDecimal> f691cursorIn(Result<Record> c) {
 		F691cursorIn f = new F691cursorIn();
 		f.setC(c);
 
@@ -639,7 +640,7 @@ public class Routines {
 	/**
 	 * Get <code>TEST.F691CURSOR_IN</code> as a field
 	 */
-	public static Field<BigDecimal> f691cursorIn(Field<Result<org.jooq.Record>> c) {
+	public static Field<BigDecimal> f691cursorIn(Field<Result<Record>> c) {
 		F691cursorIn f = new F691cursorIn();
 		f.setC(c);
 
@@ -649,7 +650,7 @@ public class Routines {
 	/**
 	 * Call <code>TEST.F691CURSOR_OUT</code>
 	 */
-	public static Result<org.jooq.Record> f691cursorOut(Configuration configuration) {
+	public static Result<Record> f691cursorOut(Configuration configuration) {
 		F691cursorOut f = new F691cursorOut();
 
 		f.execute(configuration);
@@ -659,7 +660,7 @@ public class Routines {
 	/**
 	 * Get <code>TEST.F691CURSOR_OUT</code> as a field
 	 */
-	public static Field<Result<org.jooq.Record>> f691cursorOut() {
+	public static Field<Result<Record>> f691cursorOut() {
 		F691cursorOut f = new F691cursorOut();
 
 		return f.asField();

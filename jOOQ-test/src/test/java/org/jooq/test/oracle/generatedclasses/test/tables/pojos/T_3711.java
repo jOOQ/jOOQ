@@ -5,13 +5,13 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import org.jooq.test.oracle.generatedclasses.multi_schema.udt.pojos.NumberObject;
-import org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTableRecord;
 
 
 /**
@@ -22,14 +22,14 @@ import org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberTabl
 @Table(name = "T_3711", schema = "TEST")
 public class T_3711 implements Serializable {
 
-	private static final long serialVersionUID = 1372631495;
+	private static final long serialVersionUID = 228341903;
 
-	private NumberTableRecord v1;
-	private NumberObject      v2;
-	private NumberTableRecord v3;
-	private NumberObject      v4;
-	private NumberTableRecord v7;
-	private NumberObject      v8;
+	private List<Integer> v1;
+	private NumberObject  v2;
+	private List<Integer> v3;
+	private NumberObject  v4;
+	private List<Integer> v7;
+	private NumberObject  v8;
 
 	public T_3711() {}
 
@@ -43,12 +43,12 @@ public class T_3711 implements Serializable {
 	}
 
 	public T_3711(
-		NumberTableRecord v1,
-		NumberObject      v2,
-		NumberTableRecord v3,
-		NumberObject      v4,
-		NumberTableRecord v7,
-		NumberObject      v8
+		List<Integer> v1,
+		NumberObject  v2,
+		List<Integer> v3,
+		NumberObject  v4,
+		List<Integer> v7,
+		NumberObject  v8
 	) {
 		this.v1 = v1;
 		this.v2 = v2;
@@ -59,11 +59,11 @@ public class T_3711 implements Serializable {
 	}
 
 	@Column(name = "V1")
-	public NumberTableRecord getV1() {
+	public List<Integer> getV1() {
 		return this.v1;
 	}
 
-	public void setV1(NumberTableRecord v1) {
+	public void setV1(List<Integer> v1) {
 		this.v1 = v1;
 	}
 
@@ -77,11 +77,11 @@ public class T_3711 implements Serializable {
 	}
 
 	@Column(name = "V3")
-	public NumberTableRecord getV3() {
+	public List<Integer> getV3() {
 		return this.v3;
 	}
 
-	public void setV3(NumberTableRecord v3) {
+	public void setV3(List<Integer> v3) {
 		this.v3 = v3;
 	}
 
@@ -95,11 +95,11 @@ public class T_3711 implements Serializable {
 	}
 
 	@Column(name = "V7")
-	public NumberTableRecord getV7() {
+	public List<Integer> getV7() {
 		return this.v7;
 	}
 
-	public void setV7(NumberTableRecord v7) {
+	public void setV7(List<Integer> v7) {
 		this.v7 = v7;
 	}
 

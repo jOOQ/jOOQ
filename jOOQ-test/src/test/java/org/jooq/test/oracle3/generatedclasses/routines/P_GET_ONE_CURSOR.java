@@ -7,6 +7,7 @@ package org.jooq.test.oracle3.generatedclasses.routines;
 import java.math.BigDecimal;
 
 import org.jooq.Parameter;
+import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.impl.AbstractRoutine;
 import org.jooq.test.oracle3.generatedclasses.DefaultSchema;
@@ -19,7 +20,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class P_GET_ONE_CURSOR extends AbstractRoutine<java.lang.Void> implements Cloneable {
 
-	private static final long serialVersionUID = 175549532;
+	private static final long serialVersionUID = -1220748482;
 
 	/**
 	 * The parameter <code>P_GET_ONE_CURSOR.TOTAL</code>.
@@ -29,7 +30,7 @@ public class P_GET_ONE_CURSOR extends AbstractRoutine<java.lang.Void> implements
 	/**
 	 * The parameter <code>P_GET_ONE_CURSOR.BOOKS</code>.
 	 */
-	public static final Parameter<Result<org.jooq.Record>> BOOKS = createParameter("BOOKS", org.jooq.impl.SQLDataType.RESULT, false);
+	public static final Parameter<Result<Record>> BOOKS = createParameter("BOOKS", org.jooq.impl.SQLDataType.RESULT, false);
 
 	/**
 	 * The parameter <code>P_GET_ONE_CURSOR.BOOK_IDS</code>.
@@ -64,7 +65,7 @@ public class P_GET_ONE_CURSOR extends AbstractRoutine<java.lang.Void> implements
 	/**
 	 * Get the <code>BOOKS</code> parameter OUT value from the routine
 	 */
-	public Result<org.jooq.Record> getBOOKS() {
+	public Result<Record> getBOOKS() {
 		return getValue(BOOKS);
 	}
 }

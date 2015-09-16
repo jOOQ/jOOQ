@@ -4,13 +4,13 @@
 package org.jooq.test.oracle3.generatedclasses.udt.records;
 
 
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.Record5;
-import org.jooq.Row;
 import org.jooq.Row5;
 import org.jooq.impl.UDTRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_STREET_TYPE_INTERFACE;
-import org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY;
 
 
 /**
@@ -19,7 +19,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_STREET_TYPE extends UDTRecordImpl<U_STREET_TYPE> implements Cloneable, Record5<String, String, U_NUMBER_ARRAY, byte[], String>, U_STREET_TYPE_INTERFACE {
 
-	private static final long serialVersionUID = -37708744;
+	private static final long serialVersionUID = 1220872622;
 
 	/**
 	 * Setter for <code>U_STREET_TYPE.STREET</code>.
@@ -57,8 +57,17 @@ public class U_STREET_TYPE extends UDTRecordImpl<U_STREET_TYPE> implements Clone
 	 * Setter for <code>U_STREET_TYPE.FLOORS</code>.
 	 */
 	@Override
-	public void setFLOORS(U_NUMBER_ARRAY value) {
-		setValue(2, value);
+	public void setFLOORS(List<Integer> value) {
+		if (value == null)
+			setValue(2, null);
+		else {
+			U_NUMBER_ARRAY a = new U_NUMBER_ARRAY();
+
+			for (Integer i : value)
+				a.add(i);
+
+			setValue(1, a);
+		}
 	}
 
 	/**

@@ -10,7 +10,6 @@ import java.util.List;
 import org.jooq.Configuration;
 import org.jooq.impl.ArrayRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.DefaultSchema;
-import org.jooq.test.oracle3.generatedclasses.udt.records.U_NESTED_1;
 
 
 /**
@@ -19,7 +18,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.records.U_NESTED_1;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_NESTED_2 extends ArrayRecordImpl<U_NESTED_1> implements Cloneable {
 
-	private static final long serialVersionUID = 1870057679;
+	private static final long serialVersionUID = -1713627446;
 
 	/**
 	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #U_NESTED_2()} constructor instead

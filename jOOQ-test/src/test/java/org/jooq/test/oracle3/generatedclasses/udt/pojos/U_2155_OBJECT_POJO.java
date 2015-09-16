@@ -5,9 +5,9 @@ package org.jooq.test.oracle3.generatedclasses.udt.pojos;
 
 
 import java.sql.Date;
+import java.util.List;
 
 import org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_2155_OBJECT_INTERFACE;
-import org.jooq.test.oracle3.generatedclasses.udt.records.U_2155_ARRAY;
 
 
 /**
@@ -16,10 +16,10 @@ import org.jooq.test.oracle3.generatedclasses.udt.records.U_2155_ARRAY;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_2155_OBJECT_POJO extends ThreadDeath implements Cloneable, U_2155_OBJECT_INTERFACE {
 
-	private static final long serialVersionUID = 1080770831;
+	private static final long serialVersionUID = 1453363269;
 
-	private Date         D;
-	private U_2155_ARRAY A;
+	private Date       D;
+	private List<Date> A;
 
 	public U_2155_OBJECT_POJO() {}
 
@@ -29,8 +29,8 @@ public class U_2155_OBJECT_POJO extends ThreadDeath implements Cloneable, U_2155
 	}
 
 	public U_2155_OBJECT_POJO(
-		Date         D,
-		U_2155_ARRAY A
+		Date       D,
+		List<Date> A
 	) {
 		this.D = D;
 		this.A = A;
@@ -47,13 +47,24 @@ public class U_2155_OBJECT_POJO extends ThreadDeath implements Cloneable, U_2155
 	}
 
 	@Override
-	public U_2155_ARRAY getA() {
+	public List<Date> getA() {
 		return this.A;
 	}
 
 	@Override
-	public void setA(U_2155_ARRAY A) {
+	public void setA(List<Date> A) {
 		this.A = A;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("U_2155_OBJECT_POJO (");
+
+		sb.append(D);
+		sb.append(", ").append(A);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

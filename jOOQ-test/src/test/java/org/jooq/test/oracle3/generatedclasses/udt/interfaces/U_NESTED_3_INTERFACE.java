@@ -5,8 +5,7 @@ package org.jooq.test.oracle3.generatedclasses.udt.interfaces;
 
 
 import java.io.Serializable;
-
-import org.jooq.test.oracle3.generatedclasses.udt.records.U_NESTED_2;
+import java.util.List;
 
 
 /**
@@ -28,12 +27,12 @@ public interface U_NESTED_3_INTERFACE extends Cloneable, Serializable {
 	/**
 	 * Setter for <code>U_NESTED_3.NESTED</code>.
 	 */
-	public void setNESTED(U_NESTED_2 value);
+	public void setNESTED(List<? extends org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_NESTED_1_INTERFACE> value);
 
 	/**
 	 * Getter for <code>U_NESTED_3.NESTED</code>.
 	 */
-	public U_NESTED_2 getNESTED();
+	public List<? extends org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_NESTED_1_INTERFACE> getNESTED();
 
 	// -------------------------------------------------------------------------
 	// FROM and INTO

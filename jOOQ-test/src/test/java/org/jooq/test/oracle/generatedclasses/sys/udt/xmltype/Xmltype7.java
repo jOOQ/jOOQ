@@ -7,6 +7,7 @@ package org.jooq.test.oracle.generatedclasses.sys.udt.xmltype;
 import java.math.BigDecimal;
 
 import org.jooq.Parameter;
+import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.impl.AbstractRoutine;
 import org.jooq.test.oracle.generatedclasses.sys.Sys;
@@ -20,7 +21,7 @@ import org.jooq.test.oracle.generatedclasses.sys.udt.records.XmltypeRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Xmltype7 extends AbstractRoutine<XmltypeRecord> {
 
-	private static final long serialVersionUID = 388592076;
+	private static final long serialVersionUID = -631152624;
 
 	/**
 	 * The parameter <code>SYS.XMLTYPE.XMLTYPE.RETURN_VALUE</code>.
@@ -35,7 +36,7 @@ public class Xmltype7 extends AbstractRoutine<XmltypeRecord> {
 	/**
 	 * The parameter <code>SYS.XMLTYPE.XMLTYPE.XMLDATA</code>.
 	 */
-	public static final Parameter<Result<org.jooq.Record>> XMLDATA = createParameter("XMLDATA", org.jooq.impl.SQLDataType.RESULT, false);
+	public static final Parameter<Result<Record>> XMLDATA = createParameter("XMLDATA", org.jooq.impl.SQLDataType.RESULT, false);
 
 	/**
 	 * The parameter <code>SYS.XMLTYPE.XMLTYPE.SCHEMA</code>.
@@ -77,7 +78,7 @@ public class Xmltype7 extends AbstractRoutine<XmltypeRecord> {
 	/**
 	 * Set the <code>XMLDATA</code> parameter IN value to the routine
 	 */
-	public void setXmldata(Result<org.jooq.Record> value) {
+	public void setXmldata(Result<Record> value) {
 		setValue(XMLDATA, value);
 	}
 

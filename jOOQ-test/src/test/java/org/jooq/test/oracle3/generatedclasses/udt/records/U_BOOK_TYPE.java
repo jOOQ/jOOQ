@@ -6,7 +6,6 @@ package org.jooq.test.oracle3.generatedclasses.udt.records;
 
 import org.jooq.Field;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.UDTRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_BOOK_TYPE_INTERFACE;
@@ -18,7 +17,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_BOOK_TYPE_INTERFA
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_BOOK_TYPE extends UDTRecordImpl<U_BOOK_TYPE> implements Cloneable, Record2<Integer, String>, U_BOOK_TYPE_INTERFACE {
 
-	private static final long serialVersionUID = -439496145;
+	private static final long serialVersionUID = -1391049846;
 
 	/**
 	 * Setter for <code>U_BOOK_TYPE.ID</code>.

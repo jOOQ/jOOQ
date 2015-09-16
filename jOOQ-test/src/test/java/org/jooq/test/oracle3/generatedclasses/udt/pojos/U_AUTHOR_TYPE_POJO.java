@@ -13,7 +13,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_AUTHOR_TYPE_INTER
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_AUTHOR_TYPE_POJO extends ThreadDeath implements Cloneable, U_AUTHOR_TYPE_INTERFACE {
 
-	private static final long serialVersionUID = 264145269;
+	private static final long serialVersionUID = 1077021047;
 
 	private Integer ID;
 	private String  FIRST_NAME;
@@ -65,6 +65,18 @@ public class U_AUTHOR_TYPE_POJO extends ThreadDeath implements Cloneable, U_AUTH
 	@Override
 	public void setLAST_NAME(String LAST_NAME) {
 		this.LAST_NAME = LAST_NAME;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("U_AUTHOR_TYPE_POJO (");
+
+		sb.append(ID);
+		sb.append(", ").append(FIRST_NAME);
+		sb.append(", ").append(LAST_NAME);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

@@ -11,7 +11,6 @@ import javax.persistence.Table;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_TEMP_INTERFACE;
@@ -25,7 +24,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_TEMP_INTERFACE
 @Table(name = "T_TEMP")
 public class T_TEMP extends UpdatableRecordImpl<T_TEMP> implements Cloneable, Record1<Integer>, T_TEMP_INTERFACE {
 
-	private static final long serialVersionUID = -178030424;
+	private static final long serialVersionUID = 925652345;
 
 	/**
 	 * Setter for <code>T_TEMP.ID</code>.

@@ -14,7 +14,6 @@ import javax.persistence.Table;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record6;
-import org.jooq.Row;
 import org.jooq.Row6;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_AUTHOR_INTERFACE;
@@ -30,7 +29,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE;
 @Table(name = "T_AUTHOR")
 public class T_AUTHOR extends UpdatableRecordImpl<T_AUTHOR> implements Cloneable, Record6<Integer, String, String, Date, Integer, U_ADDRESS_TYPE>, T_AUTHOR_INTERFACE {
 
-	private static final long serialVersionUID = 160536119;
+	private static final long serialVersionUID = -414904014;
 
 	/**
 	 * Setter for <code>T_AUTHOR.ID</code>. The author ID

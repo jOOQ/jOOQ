@@ -5,8 +5,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt.pojos;
 
 
 import java.io.Serializable;
-
-import org.jooq.test.oracle.generatedclasses.test.udt.records.UNested_2Record;
+import java.util.List;
 
 
 /**
@@ -15,10 +14,10 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.UNested_2Record;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UNested_3 implements Serializable {
 
-	private static final long serialVersionUID = 623030356;
+	private static final long serialVersionUID = 623311547;
 
 	private Integer         id;
-	private UNested_2Record nested;
+	private List<UNested_1> nested;
 
 	public UNested_3() {}
 
@@ -29,7 +28,7 @@ public class UNested_3 implements Serializable {
 
 	public UNested_3(
 		Integer         id,
-		UNested_2Record nested
+		List<UNested_1> nested
 	) {
 		this.id = id;
 		this.nested = nested;
@@ -43,11 +42,11 @@ public class UNested_3 implements Serializable {
 		this.id = id;
 	}
 
-	public UNested_2Record getNested() {
+	public List<UNested_1> getNested() {
 		return this.nested;
 	}
 
-	public void setNested(UNested_2Record nested) {
+	public void setNested(List<UNested_1> nested) {
 		this.nested = nested;
 	}
 

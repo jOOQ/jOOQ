@@ -10,7 +10,6 @@ import java.util.List;
 import org.jooq.Configuration;
 import org.jooq.impl.ArrayRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.DefaultSchema;
-import org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TYPE;
 
 
 /**
@@ -19,7 +18,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TYPE;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_BOOK_ARRAY extends ArrayRecordImpl<U_BOOK_TYPE> implements Cloneable {
 
-	private static final long serialVersionUID = 886750928;
+	private static final long serialVersionUID = -1074570962;
 
 	/**
 	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #U_BOOK_ARRAY()} constructor instead

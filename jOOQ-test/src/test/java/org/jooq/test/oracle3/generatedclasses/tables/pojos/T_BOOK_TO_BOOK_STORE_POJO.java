@@ -24,7 +24,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_TO_BOOK_S
 })
 public class T_BOOK_TO_BOOK_STORE_POJO extends Object implements Serializable, T_BOOK_TO_BOOK_STORE_INTERFACE {
 
-	private static final long serialVersionUID = -998692669;
+	private static final long serialVersionUID = -343074630;
 
 	private String  BOOK_STORE_NAME;
 	private Integer BOOK_ID;
@@ -79,6 +79,18 @@ public class T_BOOK_TO_BOOK_STORE_POJO extends Object implements Serializable, T
 	@Override
 	public void setSTOCK(Integer STOCK) {
 		this.STOCK = STOCK;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_BOOK_TO_BOOK_STORE_POJO (");
+
+		sb.append(BOOK_STORE_NAME);
+		sb.append(", ").append(BOOK_ID);
+		sb.append(", ").append(STOCK);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

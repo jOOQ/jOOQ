@@ -13,7 +13,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_3709_INTERFACE;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_3709_POJO extends ThreadDeath implements Cloneable, U_3709_INTERFACE {
 
-	private static final long serialVersionUID = -1470489618;
+	private static final long serialVersionUID = 890774116;
 
 	private String V;
 
@@ -37,6 +37,16 @@ public class U_3709_POJO extends ThreadDeath implements Cloneable, U_3709_INTERF
 	@Override
 	public void setV(String V) {
 		this.V = V;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("U_3709_POJO (");
+
+		sb.append(V);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

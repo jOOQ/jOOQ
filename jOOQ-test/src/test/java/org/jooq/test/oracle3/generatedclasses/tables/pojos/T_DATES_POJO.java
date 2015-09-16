@@ -25,7 +25,7 @@ import org.jooq.types.YearToMonth;
 @Table(name = "T_DATES")
 public class T_DATES_POJO extends ThreadDeath implements Cloneable, T_DATES_INTERFACE {
 
-	private static final long serialVersionUID = -459621118;
+	private static final long serialVersionUID = -699385637;
 
 	private Integer     ID;
 	private Date        D;
@@ -156,6 +156,23 @@ public class T_DATES_POJO extends ThreadDeath implements Cloneable, T_DATES_INTE
 	@Override
 	public void setI_D(DayToSecond I_D) {
 		this.I_D = I_D;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_DATES_POJO (");
+
+		sb.append(ID);
+		sb.append(", ").append(D);
+		sb.append(", ").append(T);
+		sb.append(", ").append(TS);
+		sb.append(", ").append(D_INT);
+		sb.append(", ").append(TS_BIGINT);
+		sb.append(", ").append(I_Y);
+		sb.append(", ").append(I_D);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

@@ -5,6 +5,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,7 +15,6 @@ import javax.persistence.Table;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record4;
-import org.jooq.Row;
 import org.jooq.Row4;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_2155_INTERFACE;
@@ -31,7 +31,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.records.U_2155_OBJECT;
 @Table(name = "T_2155")
 public class T_2155 extends UpdatableRecordImpl<T_2155> implements Cloneable, Record4<Integer, Date, U_2155_OBJECT, U_2155_ARRAY>, T_2155_INTERFACE {
 
-	private static final long serialVersionUID = 1533640062;
+	private static final long serialVersionUID = 1085140639;
 
 	/**
 	 * Setter for <code>T_2155.ID</code>.
@@ -99,8 +99,17 @@ public class T_2155 extends UpdatableRecordImpl<T_2155> implements Cloneable, Re
 	 * Setter for <code>T_2155.D3</code>.
 	 */
 	@Override
-	public void setD3(U_2155_ARRAY value) {
-		setValue(3, value);
+	public void setD3(List<Date> value) {
+		if (value == null)
+			setValue(3, null);
+		else {
+			U_2155_ARRAY a = new U_2155_ARRAY();
+
+			for (Date i : value)
+				a.add(i);
+
+			setValue(1, a);
+		}
 	}
 
 	/**

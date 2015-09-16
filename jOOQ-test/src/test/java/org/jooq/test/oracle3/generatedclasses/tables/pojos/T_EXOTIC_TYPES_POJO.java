@@ -20,7 +20,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_EXOTIC_TYPES_I
 @Table(name = "T_EXOTIC_TYPES")
 public class T_EXOTIC_TYPES_POJO extends ThreadDeath implements Cloneable, T_EXOTIC_TYPES_INTERFACE {
 
-	private static final long serialVersionUID = -1632325775;
+	private static final long serialVersionUID = 1856106526;
 
 	private Integer ID;
 	private String  UU;
@@ -151,6 +151,23 @@ public class T_EXOTIC_TYPES_POJO extends ThreadDeath implements Cloneable, T_EXO
 	@Override
 	public void setORACLE_XML_AS_SQLXML(Object ORACLE_XML_AS_SQLXML) {
 		this.ORACLE_XML_AS_SQLXML = ORACLE_XML_AS_SQLXML;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_EXOTIC_TYPES_POJO (");
+
+		sb.append(ID);
+		sb.append(", ").append(UU);
+		sb.append(", ").append("[binary...]");
+		sb.append(", ").append(PLAIN_SQL_CONVERTER_XML);
+		sb.append(", ").append(PLAIN_SQL_BINDING_XML);
+		sb.append(", ").append(ORACLE_XML_AS_IS);
+		sb.append(", ").append(ORACLE_XML_AS_DOCUMENT);
+		sb.append(", ").append(ORACLE_XML_AS_SQLXML);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

@@ -6,6 +6,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_2155_OBJECT_INTERFACE;
-import org.jooq.test.oracle3.generatedclasses.udt.records.U_2155_ARRAY;
 
 
 /**
@@ -61,13 +61,13 @@ public interface T_2155_INTERFACE extends Cloneable, Serializable {
 	/**
 	 * Setter for <code>T_2155.D3</code>.
 	 */
-	public void setD3(U_2155_ARRAY value);
+	public void setD3(List<Date> value);
 
 	/**
 	 * Getter for <code>T_2155.D3</code>.
 	 */
 	@Column(name = "D3")
-	public U_2155_ARRAY getD3();
+	public List<Date> getD3();
 
 	// -------------------------------------------------------------------------
 	// FROM and INTO

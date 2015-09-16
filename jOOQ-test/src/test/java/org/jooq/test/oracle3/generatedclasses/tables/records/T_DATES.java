@@ -15,7 +15,6 @@ import javax.persistence.Table;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record8;
-import org.jooq.Row;
 import org.jooq.Row8;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_DATES_INTERFACE;
@@ -31,7 +30,7 @@ import org.jooq.types.YearToMonth;
 @Table(name = "T_DATES")
 public class T_DATES extends UpdatableRecordImpl<T_DATES> implements Cloneable, Record8<Integer, Date, Timestamp, Timestamp, Integer, Long, YearToMonth, DayToSecond>, T_DATES_INTERFACE {
 
-	private static final long serialVersionUID = 2045995238;
+	private static final long serialVersionUID = -1239341273;
 
 	/**
 	 * Setter for <code>T_DATES.ID</code>.

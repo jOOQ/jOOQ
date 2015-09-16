@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 
 import org.jooq.Field;
 import org.jooq.Parameter;
+import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.impl.AbstractRoutine;
 import org.jooq.test.oracle.generatedclasses.sys.Sys;
@@ -21,7 +22,7 @@ import org.jooq.test.oracle.generatedclasses.sys.udt.records.XmltypeRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Createxml8 extends AbstractRoutine<XmltypeRecord> {
 
-	private static final long serialVersionUID = -1866293366;
+	private static final long serialVersionUID = -1491177733;
 
 	/**
 	 * The parameter <code>SYS.XMLTYPE.CREATEXML.RETURN_VALUE</code>.
@@ -31,7 +32,7 @@ public class Createxml8 extends AbstractRoutine<XmltypeRecord> {
 	/**
 	 * The parameter <code>SYS.XMLTYPE.CREATEXML.XMLDATA</code>.
 	 */
-	public static final Parameter<Result<org.jooq.Record>> XMLDATA = createParameter("XMLDATA", org.jooq.impl.SQLDataType.RESULT, false);
+	public static final Parameter<Result<Record>> XMLDATA = createParameter("XMLDATA", org.jooq.impl.SQLDataType.RESULT, false);
 
 	/**
 	 * The parameter <code>SYS.XMLTYPE.CREATEXML.SCHEMA</code>.
@@ -65,14 +66,14 @@ public class Createxml8 extends AbstractRoutine<XmltypeRecord> {
 	/**
 	 * Set the <code>XMLDATA</code> parameter IN value to the routine
 	 */
-	public void setXmldata(Result<org.jooq.Record> value) {
+	public void setXmldata(Result<Record> value) {
 		setValue(XMLDATA, value);
 	}
 
 	/**
 	 * Set the <code>XMLDATA</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
-	public void setXmldata(Field<Result<org.jooq.Record>> field) {
+	public void setXmldata(Field<Result<Record>> field) {
 		setField(XMLDATA, field);
 	}
 

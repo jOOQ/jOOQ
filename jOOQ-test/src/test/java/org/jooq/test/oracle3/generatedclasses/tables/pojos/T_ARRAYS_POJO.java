@@ -4,16 +4,15 @@
 package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 
 
+import java.sql.Date;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_ARRAYS_INTERFACE;
-import org.jooq.test.oracle3.generatedclasses.udt.records.U_DATE_ARRAY;
-import org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY;
-import org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY;
-import org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY;
 
 
 /**
@@ -24,13 +23,13 @@ import org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY;
 @Table(name = "T_ARRAYS")
 public class T_ARRAYS_POJO extends ThreadDeath implements Cloneable, T_ARRAYS_INTERFACE {
 
-	private static final long serialVersionUID = 1400989437;
+	private static final long serialVersionUID = 53397176;
 
-	private Integer             ID;
-	private U_STRING_ARRAY      STRING_ARRAY;
-	private U_NUMBER_ARRAY      NUMBER_ARRAY;
-	private U_NUMBER_LONG_ARRAY NUMBER_LONG_ARRAY;
-	private U_DATE_ARRAY        DATE_ARRAY;
+	private Integer       ID;
+	private List<String>  STRING_ARRAY;
+	private List<Integer> NUMBER_ARRAY;
+	private List<Long>    NUMBER_LONG_ARRAY;
+	private List<Date>    DATE_ARRAY;
 
 	public T_ARRAYS_POJO() {}
 
@@ -43,11 +42,11 @@ public class T_ARRAYS_POJO extends ThreadDeath implements Cloneable, T_ARRAYS_IN
 	}
 
 	public T_ARRAYS_POJO(
-		Integer             ID,
-		U_STRING_ARRAY      STRING_ARRAY,
-		U_NUMBER_ARRAY      NUMBER_ARRAY,
-		U_NUMBER_LONG_ARRAY NUMBER_LONG_ARRAY,
-		U_DATE_ARRAY        DATE_ARRAY
+		Integer       ID,
+		List<String>  STRING_ARRAY,
+		List<Integer> NUMBER_ARRAY,
+		List<Long>    NUMBER_LONG_ARRAY,
+		List<Date>    DATE_ARRAY
 	) {
 		this.ID = ID;
 		this.STRING_ARRAY = STRING_ARRAY;
@@ -70,46 +69,60 @@ public class T_ARRAYS_POJO extends ThreadDeath implements Cloneable, T_ARRAYS_IN
 
 	@Column(name = "STRING_ARRAY")
 	@Override
-	public U_STRING_ARRAY getSTRING_ARRAY() {
+	public List<String> getSTRING_ARRAY() {
 		return this.STRING_ARRAY;
 	}
 
 	@Override
-	public void setSTRING_ARRAY(U_STRING_ARRAY STRING_ARRAY) {
+	public void setSTRING_ARRAY(List<String> STRING_ARRAY) {
 		this.STRING_ARRAY = STRING_ARRAY;
 	}
 
 	@Column(name = "NUMBER_ARRAY")
 	@Override
-	public U_NUMBER_ARRAY getNUMBER_ARRAY() {
+	public List<Integer> getNUMBER_ARRAY() {
 		return this.NUMBER_ARRAY;
 	}
 
 	@Override
-	public void setNUMBER_ARRAY(U_NUMBER_ARRAY NUMBER_ARRAY) {
+	public void setNUMBER_ARRAY(List<Integer> NUMBER_ARRAY) {
 		this.NUMBER_ARRAY = NUMBER_ARRAY;
 	}
 
 	@Column(name = "NUMBER_LONG_ARRAY")
 	@Override
-	public U_NUMBER_LONG_ARRAY getNUMBER_LONG_ARRAY() {
+	public List<Long> getNUMBER_LONG_ARRAY() {
 		return this.NUMBER_LONG_ARRAY;
 	}
 
 	@Override
-	public void setNUMBER_LONG_ARRAY(U_NUMBER_LONG_ARRAY NUMBER_LONG_ARRAY) {
+	public void setNUMBER_LONG_ARRAY(List<Long> NUMBER_LONG_ARRAY) {
 		this.NUMBER_LONG_ARRAY = NUMBER_LONG_ARRAY;
 	}
 
 	@Column(name = "DATE_ARRAY")
 	@Override
-	public U_DATE_ARRAY getDATE_ARRAY() {
+	public List<Date> getDATE_ARRAY() {
 		return this.DATE_ARRAY;
 	}
 
 	@Override
-	public void setDATE_ARRAY(U_DATE_ARRAY DATE_ARRAY) {
+	public void setDATE_ARRAY(List<Date> DATE_ARRAY) {
 		this.DATE_ARRAY = DATE_ARRAY;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_ARRAYS_POJO (");
+
+		sb.append(ID);
+		sb.append(", ").append(STRING_ARRAY);
+		sb.append(", ").append(NUMBER_ARRAY);
+		sb.append(", ").append(NUMBER_LONG_ARRAY);
+		sb.append(", ").append(DATE_ARRAY);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

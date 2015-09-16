@@ -5,17 +5,14 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 
 
 import java.io.Serializable;
+import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-
-import org.jooq.test.oracle.generatedclasses.test.udt.records.UDateArrayRecord;
-import org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord;
-import org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongArrayRecord;
-import org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord;
 
 
 /**
@@ -26,13 +23,13 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord
 @Table(name = "T_ARRAYS", schema = "TEST")
 public class TArrays implements Serializable {
 
-	private static final long serialVersionUID = 24047726;
+	private static final long serialVersionUID = -865798907;
 
-	private Integer                id;
-	private UStringArrayRecord     stringArray;
-	private UNumberArrayRecord     numberArray;
-	private UNumberLongArrayRecord numberLongArray;
-	private UDateArrayRecord       dateArray;
+	private Integer       id;
+	private List<String>  stringArray;
+	private List<Integer> numberArray;
+	private List<Long>    numberLongArray;
+	private List<Date>    dateArray;
 
 	public TArrays() {}
 
@@ -45,11 +42,11 @@ public class TArrays implements Serializable {
 	}
 
 	public TArrays(
-		Integer                id,
-		UStringArrayRecord     stringArray,
-		UNumberArrayRecord     numberArray,
-		UNumberLongArrayRecord numberLongArray,
-		UDateArrayRecord       dateArray
+		Integer       id,
+		List<String>  stringArray,
+		List<Integer> numberArray,
+		List<Long>    numberLongArray,
+		List<Date>    dateArray
 	) {
 		this.id = id;
 		this.stringArray = stringArray;
@@ -70,38 +67,38 @@ public class TArrays implements Serializable {
 	}
 
 	@Column(name = "STRING_ARRAY")
-	public UStringArrayRecord getStringArray() {
+	public List<String> getStringArray() {
 		return this.stringArray;
 	}
 
-	public void setStringArray(UStringArrayRecord stringArray) {
+	public void setStringArray(List<String> stringArray) {
 		this.stringArray = stringArray;
 	}
 
 	@Column(name = "NUMBER_ARRAY")
-	public UNumberArrayRecord getNumberArray() {
+	public List<Integer> getNumberArray() {
 		return this.numberArray;
 	}
 
-	public void setNumberArray(UNumberArrayRecord numberArray) {
+	public void setNumberArray(List<Integer> numberArray) {
 		this.numberArray = numberArray;
 	}
 
 	@Column(name = "NUMBER_LONG_ARRAY")
-	public UNumberLongArrayRecord getNumberLongArray() {
+	public List<Long> getNumberLongArray() {
 		return this.numberLongArray;
 	}
 
-	public void setNumberLongArray(UNumberLongArrayRecord numberLongArray) {
+	public void setNumberLongArray(List<Long> numberLongArray) {
 		this.numberLongArray = numberLongArray;
 	}
 
 	@Column(name = "DATE_ARRAY")
-	public UDateArrayRecord getDateArray() {
+	public List<Date> getDateArray() {
 		return this.dateArray;
 	}
 
-	public void setDateArray(UDateArrayRecord dateArray) {
+	public void setDateArray(List<Date> dateArray) {
 		this.dateArray = dateArray;
 	}
 

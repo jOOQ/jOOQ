@@ -12,7 +12,6 @@ import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.UDT;
 import org.jooq.impl.SchemaImpl;
-import org.jooq.test.oracle3.generatedclasses.Sequences;
 import org.jooq.test.oracle3.generatedclasses.tables.M_LIBRARY;
 import org.jooq.test.oracle3.generatedclasses.tables.T_2155;
 import org.jooq.test.oracle3.generatedclasses.tables.T_2845_CASE_sensitivity;
@@ -46,6 +45,8 @@ import org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED;
 import org.jooq.test.oracle3.generatedclasses.udt.O_INVALID_TYPE;
 import org.jooq.test.oracle3.generatedclasses.udt.U_2155_OBJECT;
 import org.jooq.test.oracle3.generatedclasses.udt.U_3005;
+import org.jooq.test.oracle3.generatedclasses.udt.U_3082_1;
+import org.jooq.test.oracle3.generatedclasses.udt.U_3082_3;
 import org.jooq.test.oracle3.generatedclasses.udt.U_3709;
 import org.jooq.test.oracle3.generatedclasses.udt.U_ADDRESS_TYPE;
 import org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE;
@@ -63,7 +64,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.U_STREET_TYPE;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DefaultSchema extends SchemaImpl implements Cloneable {
 
-	private static final long serialVersionUID = 1273877727;
+	private static final long serialVersionUID = 885086330;
 
 	/**
 	 * The reference instance of <code></code>
@@ -86,6 +87,7 @@ public class DefaultSchema extends SchemaImpl implements Cloneable {
 
 	private final List<Sequence<?>> getSequences0() {
 		return Arrays.<Sequence<?>>asList(
+			Sequences.S_AUTHOR_ID,
 			Sequences.S_3899$,
 			Sequences.S_3899_$,
 			Sequences.S_961_BIG_INTEGER,
@@ -156,6 +158,8 @@ public class DefaultSchema extends SchemaImpl implements Cloneable {
 			U_STREET_TYPE.U_STREET_TYPE,
 			U_2155_OBJECT.U_2155_OBJECT,
 			U_3005.U_3005,
+			U_3082_1.U_3082_1,
+			U_3082_3.U_3082_3,
 			U_3709.U_3709);
 	}
 }

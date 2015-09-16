@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record4;
-import org.jooq.Row;
 import org.jooq.Row4;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_LANGUAGE_INTERFACE;
@@ -32,7 +31,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_LANGUAGE_INTER
 @Table(name = "T_LANGUAGE")
 public class T_LANGUAGE extends UpdatableRecordImpl<T_LANGUAGE> implements Cloneable, Record4<String, String, String, Integer>, T_LANGUAGE_INTERFACE {
 
-	private static final long serialVersionUID = 801152423;
+	private static final long serialVersionUID = -1139986968;
 
 	/**
 	 * Setter for <code>T_LANGUAGE.CD</code>. The language ISO code

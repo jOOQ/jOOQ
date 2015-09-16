@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Package;
+import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.impl.UDTImpl;
 import org.jooq.test.oracle.generatedclasses.sys.Sys;
@@ -66,7 +67,7 @@ import org.jooq.test.oracle.generatedclasses.sys.udt.xmltype.Xmltype7;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Xmltype extends UDTImpl<XmltypeRecord> implements Package {
 
-	private static final long serialVersionUID = -1942208410;
+	private static final long serialVersionUID = -1824206112;
 
 	/**
 	 * The reference instance of <code>SYS.XMLTYPE</code>
@@ -457,7 +458,7 @@ public class Xmltype extends UDTImpl<XmltypeRecord> implements Package {
 	/**
 	 * Call <code>SYS.XMLTYPE.CREATEXML</code>
 	 */
-	public static XmltypeRecord createxml8(Configuration configuration, Result<org.jooq.Record> xmldata, String schema, String element, Number validated) {
+	public static XmltypeRecord createxml8(Configuration configuration, Result<Record> xmldata, String schema, String element, Number validated) {
 		Createxml8 f = new Createxml8();
 		f.setXmldata(xmldata);
 		f.setSchema_(schema);
@@ -471,7 +472,7 @@ public class Xmltype extends UDTImpl<XmltypeRecord> implements Package {
 	/**
 	 * Get <code>SYS.XMLTYPE.CREATEXML</code> as a field
 	 */
-	public static Field<XmltypeRecord> createxml8(Result<org.jooq.Record> xmldata, String schema, String element, Number validated) {
+	public static Field<XmltypeRecord> createxml8(Result<Record> xmldata, String schema, String element, Number validated) {
 		Createxml8 f = new Createxml8();
 		f.setXmldata(xmldata);
 		f.setSchema_(schema);
@@ -484,7 +485,7 @@ public class Xmltype extends UDTImpl<XmltypeRecord> implements Package {
 	/**
 	 * Get <code>SYS.XMLTYPE.CREATEXML</code> as a field
 	 */
-	public static Field<XmltypeRecord> createxml8(Field<Result<org.jooq.Record>> xmldata, Field<String> schema, Field<String> element, Field<? extends Number> validated) {
+	public static Field<XmltypeRecord> createxml8(Field<Result<Record>> xmldata, Field<String> schema, Field<String> element, Field<? extends Number> validated) {
 		Createxml8 f = new Createxml8();
 		f.setXmldata(xmldata);
 		f.setSchema_(schema);
@@ -1447,7 +1448,7 @@ public class Xmltype extends UDTImpl<XmltypeRecord> implements Package {
 	/**
 	 * Call <code>SYS.XMLTYPE.XMLTYPE</code>
 	 */
-	public static Xmltype7 xmltype7(Configuration configuration, XmltypeRecord self, Result<org.jooq.Record> xmldata, String schema, String element, Number validated) {
+	public static Xmltype7 xmltype7(Configuration configuration, XmltypeRecord self, Result<Record> xmldata, String schema, String element, Number validated) {
 		Xmltype7 p = new Xmltype7();
 		p.setSelf(self);
 		p.setXmldata(xmldata);

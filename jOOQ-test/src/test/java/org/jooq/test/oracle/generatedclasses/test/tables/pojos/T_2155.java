@@ -6,6 +6,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,7 +15,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.jooq.test.oracle.generatedclasses.test.udt.pojos.U_2155Object;
-import org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ArrayRecord;
 
 
 /**
@@ -25,12 +25,12 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ArrayRecord;
 @Table(name = "T_2155", schema = "TEST")
 public class T_2155 implements Serializable {
 
-	private static final long serialVersionUID = -362326278;
+	private static final long serialVersionUID = -1676101432;
 
-	private Integer           id;
-	private LocalDate         d1;
-	private U_2155Object      d2;
-	private U_2155ArrayRecord d3;
+	private Integer         id;
+	private LocalDate       d1;
+	private U_2155Object    d2;
+	private List<LocalDate> d3;
 
 	public T_2155() {}
 
@@ -42,10 +42,10 @@ public class T_2155 implements Serializable {
 	}
 
 	public T_2155(
-		Integer           id,
-		LocalDate         d1,
-		U_2155Object      d2,
-		U_2155ArrayRecord d3
+		Integer         id,
+		LocalDate       d1,
+		U_2155Object    d2,
+		List<LocalDate> d3
 	) {
 		this.id = id;
 		this.d1 = d1;
@@ -83,11 +83,11 @@ public class T_2155 implements Serializable {
 	}
 
 	@Column(name = "D3")
-	public U_2155ArrayRecord getD3() {
+	public List<LocalDate> getD3() {
 		return this.d3;
 	}
 
-	public void setD3(U_2155ArrayRecord d3) {
+	public void setD3(List<LocalDate> d3) {
 		this.d3 = d3;
 	}
 

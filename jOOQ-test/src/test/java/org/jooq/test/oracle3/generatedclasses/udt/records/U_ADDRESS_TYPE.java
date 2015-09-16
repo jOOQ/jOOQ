@@ -8,12 +8,10 @@ import java.sql.Date;
 
 import org.jooq.Field;
 import org.jooq.Record8;
-import org.jooq.Row;
 import org.jooq.Row8;
 import org.jooq.impl.UDTRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_ADDRESS_TYPE_INTERFACE;
 import org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_STREET_TYPE_INTERFACE;
-import org.jooq.test.oracle3.generatedclasses.udt.records.U_STREET_TYPE;
 
 
 /**
@@ -22,7 +20,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.records.U_STREET_TYPE;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_ADDRESS_TYPE extends UDTRecordImpl<U_ADDRESS_TYPE> implements Cloneable, Record8<U_STREET_TYPE, String, String, String, Date, Integer, byte[], String>, U_ADDRESS_TYPE_INTERFACE {
 
-	private static final long serialVersionUID = -1358296491;
+	private static final long serialVersionUID = -1717156396;
 
 	/**
 	 * Setter for <code>U_ADDRESS_TYPE.STREET</code>.

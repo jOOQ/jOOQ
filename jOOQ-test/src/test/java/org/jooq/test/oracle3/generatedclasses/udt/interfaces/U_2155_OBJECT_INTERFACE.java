@@ -6,8 +6,7 @@ package org.jooq.test.oracle3.generatedclasses.udt.interfaces;
 
 import java.io.Serializable;
 import java.sql.Date;
-
-import org.jooq.test.oracle3.generatedclasses.udt.records.U_2155_ARRAY;
+import java.util.List;
 
 
 /**
@@ -29,12 +28,12 @@ public interface U_2155_OBJECT_INTERFACE extends Cloneable, Serializable {
 	/**
 	 * Setter for <code>U_2155_OBJECT.A</code>.
 	 */
-	public void setA(U_2155_ARRAY value);
+	public void setA(List<Date> value);
 
 	/**
 	 * Getter for <code>U_2155_OBJECT.A</code>.
 	 */
-	public U_2155_ARRAY getA();
+	public List<Date> getA();
 
 	// -------------------------------------------------------------------------
 	// FROM and INTO

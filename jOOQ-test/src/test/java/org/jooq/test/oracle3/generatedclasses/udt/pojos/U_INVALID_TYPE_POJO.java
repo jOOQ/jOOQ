@@ -13,12 +13,21 @@ import org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_INVALID_TYPE_INTE
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_INVALID_TYPE_POJO extends ThreadDeath implements Cloneable, U_INVALID_TYPE_INTERFACE {
 
-	private static final long serialVersionUID = 382953703;
+	private static final long serialVersionUID = 1546173205;
 
 
 	public U_INVALID_TYPE_POJO() {}
 
 	public U_INVALID_TYPE_POJO(U_INVALID_TYPE_POJO value) {
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("U_INVALID_TYPE_POJO (");
+
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

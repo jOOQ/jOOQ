@@ -5,14 +5,13 @@ package org.jooq.test.oracle3.generatedclasses.udt.records;
 
 
 import java.sql.Date;
+import java.util.List;
 
 import org.jooq.Field;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.UDTRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_2155_OBJECT_INTERFACE;
-import org.jooq.test.oracle3.generatedclasses.udt.records.U_2155_ARRAY;
 
 
 /**
@@ -21,7 +20,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.records.U_2155_ARRAY;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_2155_OBJECT extends UDTRecordImpl<U_2155_OBJECT> implements Cloneable, Record2<Date, U_2155_ARRAY>, U_2155_OBJECT_INTERFACE {
 
-	private static final long serialVersionUID = -1066020747;
+	private static final long serialVersionUID = -356397497;
 
 	/**
 	 * Setter for <code>U_2155_OBJECT.D</code>.
@@ -43,8 +42,17 @@ public class U_2155_OBJECT extends UDTRecordImpl<U_2155_OBJECT> implements Clone
 	 * Setter for <code>U_2155_OBJECT.A</code>.
 	 */
 	@Override
-	public void setA(U_2155_ARRAY value) {
-		setValue(1, value);
+	public void setA(List<Date> value) {
+		if (value == null)
+			setValue(1, null);
+		else {
+			U_2155_ARRAY a = new U_2155_ARRAY();
+
+			for (Date i : value)
+				a.add(i);
+
+			setValue(1, a);
+		}
 	}
 
 	/**

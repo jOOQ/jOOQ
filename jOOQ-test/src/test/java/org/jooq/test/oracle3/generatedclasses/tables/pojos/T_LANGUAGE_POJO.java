@@ -26,7 +26,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_LANGUAGE_INTER
 @Table(name = "T_LANGUAGE")
 public class T_LANGUAGE_POJO extends ThreadDeath implements Cloneable, T_LANGUAGE_INTERFACE {
 
-	private static final long serialVersionUID = -168953262;
+	private static final long serialVersionUID = 169894033;
 
 	private String  CD;
 	private String  DESCRIPTION;
@@ -97,6 +97,19 @@ public class T_LANGUAGE_POJO extends ThreadDeath implements Cloneable, T_LANGUAG
 	@Override
 	public void setID(Integer ID) {
 		this.ID = ID;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_LANGUAGE_POJO (");
+
+		sb.append(CD);
+		sb.append(", ").append(DESCRIPTION);
+		sb.append(", ").append(DESCRIPTION_ENGLISH);
+		sb.append(", ").append(ID);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

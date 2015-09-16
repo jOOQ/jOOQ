@@ -21,7 +21,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_UNSIGNED_INTER
 @Table(name = "T_UNSIGNED")
 public class T_UNSIGNED_POJO extends ThreadDeath implements Cloneable, T_UNSIGNED_INTERFACE {
 
-	private static final long serialVersionUID = 1787226973;
+	private static final long serialVersionUID = 1898795699;
 
 	private Short      U_BYTE;
 	private Integer    U_SHORT;
@@ -91,6 +91,19 @@ public class T_UNSIGNED_POJO extends ThreadDeath implements Cloneable, T_UNSIGNE
 	@Override
 	public void setU_LONG(BigInteger U_LONG) {
 		this.U_LONG = U_LONG;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_UNSIGNED_POJO (");
+
+		sb.append(U_BYTE);
+		sb.append(", ").append(U_SHORT);
+		sb.append(", ").append(U_INT);
+		sb.append(", ").append(U_LONG);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

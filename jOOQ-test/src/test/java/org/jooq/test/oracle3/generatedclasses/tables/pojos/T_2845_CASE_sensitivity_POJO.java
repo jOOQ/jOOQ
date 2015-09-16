@@ -22,7 +22,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_2845_CASE_sens
 @Table(name = "T_2845_CASE_sensitivity")
 public class T_2845_CASE_sensitivity_POJO extends ThreadDeath implements Cloneable, T_2845_CASE_sensitivity_INTERFACE {
 
-	private static final long serialVersionUID = -1213945795;
+	private static final long serialVersionUID = -1717074329;
 
 	private BigDecimal ID;
 	private BigDecimal INSENSITIVE;
@@ -108,6 +108,20 @@ public class T_2845_CASE_sensitivity_POJO extends ThreadDeath implements Cloneab
 	@Override
 	public void setMixed(BigDecimal Mixed) {
 		this.Mixed = Mixed;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_2845_CASE_sensitivity_POJO (");
+
+		sb.append(ID);
+		sb.append(", ").append(INSENSITIVE);
+		sb.append(", ").append(UPPER);
+		sb.append(", ").append(lower);
+		sb.append(", ").append(Mixed);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

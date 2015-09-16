@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record3;
-import org.jooq.Row;
 import org.jooq.Row3;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_TRIGGERS_INTERFACE;
@@ -26,7 +25,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_TRIGGERS_INTER
 @Table(name = "T_TRIGGERS")
 public class T_TRIGGERS extends UpdatableRecordImpl<T_TRIGGERS> implements Cloneable, Record3<Integer, Integer, Integer>, T_TRIGGERS_INTERFACE {
 
-	private static final long serialVersionUID = 113082997;
+	private static final long serialVersionUID = 335402196;
 
 	/**
 	 * Setter for <code>T_TRIGGERS.ID_GENERATED</code>.

@@ -5,9 +5,9 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.udt.pojos;
 
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.jooq.test.oracle.generatedclasses.test.udt.pojos.UAddressType;
-import org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTableRecord;
 
 
 /**
@@ -16,11 +16,11 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTableRecor
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_4347 implements Serializable {
 
-	private static final long serialVersionUID = -988775465;
+	private static final long serialVersionUID = -1028090912;
 
-	private Integer             id;
-	private UAddressTableRecord t;
-	private UAddressType        o;
+	private Integer            id;
+	private List<UAddressType> t;
+	private UAddressType       o;
 
 	public U_4347() {}
 
@@ -31,9 +31,9 @@ public class U_4347 implements Serializable {
 	}
 
 	public U_4347(
-		Integer             id,
-		UAddressTableRecord t,
-		UAddressType        o
+		Integer            id,
+		List<UAddressType> t,
+		UAddressType       o
 	) {
 		this.id = id;
 		this.t = t;
@@ -48,11 +48,11 @@ public class U_4347 implements Serializable {
 		this.id = id;
 	}
 
-	public UAddressTableRecord getT() {
+	public List<UAddressType> getT() {
 		return this.t;
 	}
 
-	public void setT(UAddressTableRecord t) {
+	public void setT(List<UAddressType> t) {
 		this.t = t;
 	}
 

@@ -23,7 +23,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.pojos.U_ADDRESS_TYPE_POJO;
 @Table(name = "V_AUTHOR")
 public class V_AUTHOR_POJO extends ThreadDeath implements Cloneable, V_AUTHOR_INTERFACE {
 
-	private static final long serialVersionUID = 715577233;
+	private static final long serialVersionUID = -1487632566;
 
 	private Integer             ID;
 	private String              FIRST_NAME;
@@ -130,6 +130,21 @@ public class V_AUTHOR_POJO extends ThreadDeath implements Cloneable, V_AUTHOR_IN
 			this.ADDRESS = null;
 		else
 			this.ADDRESS = ADDRESS.into(new U_ADDRESS_TYPE_POJO());
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("V_AUTHOR_POJO (");
+
+		sb.append(ID);
+		sb.append(", ").append(FIRST_NAME);
+		sb.append(", ").append(LAST_NAME);
+		sb.append(", ").append(DATE_OF_BIRTH);
+		sb.append(", ").append(YEAR_OF_BIRTH);
+		sb.append(", ").append(ADDRESS);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

@@ -10,7 +10,6 @@ import javax.persistence.Table;
 
 import org.jooq.Field;
 import org.jooq.Record3;
-import org.jooq.Row;
 import org.jooq.Row3;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_785_INTERFACE;
@@ -24,7 +23,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_785_INTERFACE;
 @Table(name = "T_785")
 public class T_785 extends TableRecordImpl<T_785> implements Cloneable, Record3<Integer, String, String>, T_785_INTERFACE {
 
-	private static final long serialVersionUID = -1431396369;
+	private static final long serialVersionUID = -1113434416;
 
 	/**
 	 * Setter for <code>T_785.ID</code>.

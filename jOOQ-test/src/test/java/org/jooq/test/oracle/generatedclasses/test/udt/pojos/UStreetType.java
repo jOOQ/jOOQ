@@ -6,10 +6,9 @@ package org.jooq.test.oracle.generatedclasses.test.udt.pojos;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.validation.constraints.Size;
-
-import org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord;
 
 
 /**
@@ -18,13 +17,13 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UStreetType implements Serializable {
 
-	private static final long serialVersionUID = -1801116622;
+	private static final long serialVersionUID = -1129065057;
 
-	private String             street;
-	private String             no;
-	private UNumberArrayRecord floors;
-	private byte[]             f_1323;
-	private String             f_1326;
+	private String        street;
+	private String        no;
+	private List<Integer> floors;
+	private byte[]        f_1323;
+	private String        f_1326;
 
 	public UStreetType() {}
 
@@ -37,11 +36,11 @@ public class UStreetType implements Serializable {
 	}
 
 	public UStreetType(
-		String             street,
-		String             no,
-		UNumberArrayRecord floors,
-		byte[]             f_1323,
-		String             f_1326
+		String        street,
+		String        no,
+		List<Integer> floors,
+		byte[]        f_1323,
+		String        f_1326
 	) {
 		this.street = street;
 		this.no = no;
@@ -68,11 +67,11 @@ public class UStreetType implements Serializable {
 		this.no = no;
 	}
 
-	public UNumberArrayRecord getFloors() {
+	public List<Integer> getFloors() {
 		return this.floors;
 	}
 
-	public void setFloors(UNumberArrayRecord floors) {
+	public void setFloors(List<Integer> floors) {
 		this.floors = floors;
 	}
 

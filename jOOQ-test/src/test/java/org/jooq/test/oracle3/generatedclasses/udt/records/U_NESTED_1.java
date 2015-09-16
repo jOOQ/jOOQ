@@ -4,13 +4,13 @@
 package org.jooq.test.oracle3.generatedclasses.udt.records;
 
 
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.UDTRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_NESTED_1_INTERFACE;
-import org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE;
 
 
 /**
@@ -19,7 +19,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_NESTED_1 extends UDTRecordImpl<U_NESTED_1> implements Cloneable, Record2<Integer, U_NUMBER_TABLE>, U_NESTED_1_INTERFACE {
 
-	private static final long serialVersionUID = -1450561016;
+	private static final long serialVersionUID = -1607916274;
 
 	/**
 	 * Setter for <code>U_NESTED_1.ID</code>.
@@ -41,8 +41,17 @@ public class U_NESTED_1 extends UDTRecordImpl<U_NESTED_1> implements Cloneable, 
 	 * Setter for <code>U_NESTED_1.NESTED</code>.
 	 */
 	@Override
-	public void setNESTED(U_NUMBER_TABLE value) {
-		setValue(1, value);
+	public void setNESTED(List<Integer> value) {
+		if (value == null)
+			setValue(1, null);
+		else {
+			U_NUMBER_TABLE a = new U_NUMBER_TABLE();
+
+			for (Integer i : value)
+				a.add(i);
+
+			setValue(1, a);
+		}
 	}
 
 	/**

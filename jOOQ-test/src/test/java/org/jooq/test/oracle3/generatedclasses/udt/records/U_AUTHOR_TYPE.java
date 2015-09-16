@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Record3;
-import org.jooq.Row;
 import org.jooq.Row3;
 import org.jooq.impl.UDTRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_AUTHOR_TYPE_INTERFACE;
@@ -26,7 +25,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.u_author_type.NEW_AUTHOR;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_AUTHOR_TYPE extends UDTRecordImpl<U_AUTHOR_TYPE> implements Cloneable, Record3<Integer, String, String>, U_AUTHOR_TYPE_INTERFACE {
 
-	private static final long serialVersionUID = -991241767;
+	private static final long serialVersionUID = -1874387254;
 
 	/**
 	 * Setter for <code>U_AUTHOR_TYPE.ID</code>.

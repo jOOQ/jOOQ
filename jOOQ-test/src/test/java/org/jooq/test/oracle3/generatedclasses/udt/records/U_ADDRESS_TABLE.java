@@ -10,7 +10,6 @@ import java.util.List;
 import org.jooq.Configuration;
 import org.jooq.impl.ArrayRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.DefaultSchema;
-import org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE;
 
 
 /**
@@ -19,7 +18,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_ADDRESS_TABLE extends ArrayRecordImpl<U_ADDRESS_TYPE> implements Cloneable {
 
-	private static final long serialVersionUID = -14277486;
+	private static final long serialVersionUID = -1191608997;
 
 	/**
 	 * @deprecated - 3.4.0 - [#3126] - Use the {@link #U_ADDRESS_TABLE()} constructor instead

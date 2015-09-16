@@ -5,6 +5,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,7 +15,6 @@ import javax.persistence.Table;
 import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_2155_INTERFACE;
 import org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_2155_OBJECT_INTERFACE;
 import org.jooq.test.oracle3.generatedclasses.udt.pojos.U_2155_OBJECT_POJO;
-import org.jooq.test.oracle3.generatedclasses.udt.records.U_2155_ARRAY;
 
 
 /**
@@ -25,12 +25,12 @@ import org.jooq.test.oracle3.generatedclasses.udt.records.U_2155_ARRAY;
 @Table(name = "T_2155")
 public class T_2155_POJO extends ThreadDeath implements Cloneable, T_2155_INTERFACE {
 
-	private static final long serialVersionUID = -1196585920;
+	private static final long serialVersionUID = -1582491323;
 
 	private Integer            ID;
 	private Date               D1;
 	private U_2155_OBJECT_POJO D2;
-	private U_2155_ARRAY       D3;
+	private List<Date>         D3;
 
 	public T_2155_POJO() {}
 
@@ -45,7 +45,7 @@ public class T_2155_POJO extends ThreadDeath implements Cloneable, T_2155_INTERF
 		Integer            ID,
 		Date               D1,
 		U_2155_OBJECT_POJO D2,
-		U_2155_ARRAY       D3
+		List<Date>         D3
 	) {
 		this.ID = ID;
 		this.D1 = D1;
@@ -96,13 +96,26 @@ public class T_2155_POJO extends ThreadDeath implements Cloneable, T_2155_INTERF
 
 	@Column(name = "D3")
 	@Override
-	public U_2155_ARRAY getD3() {
+	public List<Date> getD3() {
 		return this.D3;
 	}
 
 	@Override
-	public void setD3(U_2155_ARRAY D3) {
+	public void setD3(List<Date> D3) {
 		this.D3 = D3;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_2155_POJO (");
+
+		sb.append(ID);
+		sb.append(", ").append(D1);
+		sb.append(", ").append(D2);
+		sb.append(", ").append(D3);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

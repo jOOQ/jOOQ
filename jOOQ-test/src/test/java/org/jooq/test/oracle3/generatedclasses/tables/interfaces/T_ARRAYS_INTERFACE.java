@@ -5,16 +5,13 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
 
 
 import java.io.Serializable;
+import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.jooq.test.oracle3.generatedclasses.udt.records.U_DATE_ARRAY;
-import org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY;
-import org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY;
-import org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY;
 
 
 /**
@@ -40,46 +37,46 @@ public interface T_ARRAYS_INTERFACE extends Cloneable, Serializable {
 	/**
 	 * Setter for <code>T_ARRAYS.STRING_ARRAY</code>.
 	 */
-	public void setSTRING_ARRAY(U_STRING_ARRAY value);
+	public void setSTRING_ARRAY(List<String> value);
 
 	/**
 	 * Getter for <code>T_ARRAYS.STRING_ARRAY</code>.
 	 */
 	@Column(name = "STRING_ARRAY")
-	public U_STRING_ARRAY getSTRING_ARRAY();
+	public List<String> getSTRING_ARRAY();
 
 	/**
 	 * Setter for <code>T_ARRAYS.NUMBER_ARRAY</code>.
 	 */
-	public void setNUMBER_ARRAY(U_NUMBER_ARRAY value);
+	public void setNUMBER_ARRAY(List<Integer> value);
 
 	/**
 	 * Getter for <code>T_ARRAYS.NUMBER_ARRAY</code>.
 	 */
 	@Column(name = "NUMBER_ARRAY")
-	public U_NUMBER_ARRAY getNUMBER_ARRAY();
+	public List<Integer> getNUMBER_ARRAY();
 
 	/**
 	 * Setter for <code>T_ARRAYS.NUMBER_LONG_ARRAY</code>.
 	 */
-	public void setNUMBER_LONG_ARRAY(U_NUMBER_LONG_ARRAY value);
+	public void setNUMBER_LONG_ARRAY(List<Long> value);
 
 	/**
 	 * Getter for <code>T_ARRAYS.NUMBER_LONG_ARRAY</code>.
 	 */
 	@Column(name = "NUMBER_LONG_ARRAY")
-	public U_NUMBER_LONG_ARRAY getNUMBER_LONG_ARRAY();
+	public List<Long> getNUMBER_LONG_ARRAY();
 
 	/**
 	 * Setter for <code>T_ARRAYS.DATE_ARRAY</code>.
 	 */
-	public void setDATE_ARRAY(U_DATE_ARRAY value);
+	public void setDATE_ARRAY(List<Date> value);
 
 	/**
 	 * Getter for <code>T_ARRAYS.DATE_ARRAY</code>.
 	 */
 	@Column(name = "DATE_ARRAY")
-	public U_DATE_ARRAY getDATE_ARRAY();
+	public List<Date> getDATE_ARRAY();
 
 	// -------------------------------------------------------------------------
 	// FROM and INTO

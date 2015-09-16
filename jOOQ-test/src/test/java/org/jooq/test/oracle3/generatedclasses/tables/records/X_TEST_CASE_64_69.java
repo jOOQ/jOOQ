@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record2;
-import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_64_69_INTERFACE;
@@ -26,7 +25,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_64_6
 @Table(name = "X_TEST_CASE_64_69")
 public class X_TEST_CASE_64_69 extends UpdatableRecordImpl<X_TEST_CASE_64_69> implements Cloneable, Record2<Integer, Integer>, X_TEST_CASE_64_69_INTERFACE {
 
-	private static final long serialVersionUID = 1464443400;
+	private static final long serialVersionUID = 1763873003;
 
 	/**
 	 * Setter for <code>X_TEST_CASE_64_69.ID</code>.

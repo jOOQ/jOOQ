@@ -19,7 +19,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_LIBRARY_INTERF
 @Table(name = "V_LIBRARY")
 public class V_LIBRARY_POJO extends ThreadDeath implements Cloneable, V_LIBRARY_INTERFACE {
 
-	private static final long serialVersionUID = 489426351;
+	private static final long serialVersionUID = 443161309;
 
 	private String AUTHOR;
 	private String TITLE;
@@ -59,6 +59,17 @@ public class V_LIBRARY_POJO extends ThreadDeath implements Cloneable, V_LIBRARY_
 	@Override
 	public void setTITLE(String TITLE) {
 		this.TITLE = TITLE;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("V_LIBRARY_POJO (");
+
+		sb.append(AUTHOR);
+		sb.append(", ").append(TITLE);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

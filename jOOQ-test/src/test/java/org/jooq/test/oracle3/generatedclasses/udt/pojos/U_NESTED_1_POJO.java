@@ -4,8 +4,9 @@
 package org.jooq.test.oracle3.generatedclasses.udt.pojos;
 
 
+import java.util.List;
+
 import org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_NESTED_1_INTERFACE;
-import org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE;
 
 
 /**
@@ -14,10 +15,10 @@ import org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_NESTED_1_POJO extends ThreadDeath implements Cloneable, U_NESTED_1_INTERFACE {
 
-	private static final long serialVersionUID = 1859333204;
+	private static final long serialVersionUID = 289915202;
 
-	private Integer        ID;
-	private U_NUMBER_TABLE NESTED;
+	private Integer       ID;
+	private List<Integer> NESTED;
 
 	public U_NESTED_1_POJO() {}
 
@@ -27,8 +28,8 @@ public class U_NESTED_1_POJO extends ThreadDeath implements Cloneable, U_NESTED_
 	}
 
 	public U_NESTED_1_POJO(
-		Integer        ID,
-		U_NUMBER_TABLE NESTED
+		Integer       ID,
+		List<Integer> NESTED
 	) {
 		this.ID = ID;
 		this.NESTED = NESTED;
@@ -45,13 +46,24 @@ public class U_NESTED_1_POJO extends ThreadDeath implements Cloneable, U_NESTED_
 	}
 
 	@Override
-	public U_NUMBER_TABLE getNESTED() {
+	public List<Integer> getNESTED() {
 		return this.NESTED;
 	}
 
 	@Override
-	public void setNESTED(U_NUMBER_TABLE NESTED) {
+	public void setNESTED(List<Integer> NESTED) {
 		this.NESTED = NESTED;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("U_NESTED_1_POJO (");
+
+		sb.append(ID);
+		sb.append(", ").append(NESTED);
+
+		sb.append(")");
+		return sb.toString();
 	}
 
 	// -------------------------------------------------------------------------

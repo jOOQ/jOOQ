@@ -14,7 +14,6 @@ import javax.persistence.Table;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record5;
-import org.jooq.Row;
 import org.jooq.Row5;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_2845_CASE_sensitivity_INTERFACE;
@@ -28,7 +27,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_2845_CASE_sens
 @Table(name = "T_2845_CASE_sensitivity")
 public class T_2845_CASE_sensitivity extends UpdatableRecordImpl<T_2845_CASE_sensitivity> implements Cloneable, Record5<BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal>, T_2845_CASE_sensitivity_INTERFACE {
 
-	private static final long serialVersionUID = -1161828442;
+	private static final long serialVersionUID = 1419448895;
 
 	/**
 	 * Setter for <code>T_2845_CASE_sensitivity.ID</code>.

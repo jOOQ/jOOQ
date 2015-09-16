@@ -7,6 +7,8 @@ package org.jooq.test.oracle3.generatedclasses;
 import org.jooq.test.oracle3.generatedclasses.udt.O_INVALID_TYPE;
 import org.jooq.test.oracle3.generatedclasses.udt.U_2155_OBJECT;
 import org.jooq.test.oracle3.generatedclasses.udt.U_3005;
+import org.jooq.test.oracle3.generatedclasses.udt.U_3082_1;
+import org.jooq.test.oracle3.generatedclasses.udt.U_3082_3;
 import org.jooq.test.oracle3.generatedclasses.udt.U_3709;
 import org.jooq.test.oracle3.generatedclasses.udt.U_ADDRESS_TYPE;
 import org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE;
@@ -78,6 +80,16 @@ public class UDTs {
 	 * The type <code>U_3005</code>
 	 */
 	public static U_3005 U_3005 = org.jooq.test.oracle3.generatedclasses.udt.U_3005.U_3005;
+
+	/**
+	 * The type <code>U_3082_1</code>
+	 */
+	public static U_3082_1 U_3082_1 = org.jooq.test.oracle3.generatedclasses.udt.U_3082_1.U_3082_1;
+
+	/**
+	 * The type <code>U_3082_3</code>
+	 */
+	public static U_3082_3 U_3082_3 = org.jooq.test.oracle3.generatedclasses.udt.U_3082_3.U_3082_3;
 
 	/**
 	 * The type <code>U_3709</code>

@@ -12,7 +12,6 @@ import javax.persistence.Table;
 
 import org.jooq.Field;
 import org.jooq.Record4;
-import org.jooq.Row;
 import org.jooq.Row4;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_UNSIGNED_INTERFACE;
@@ -26,7 +25,7 @@ import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_UNSIGNED_INTER
 @Table(name = "T_UNSIGNED")
 public class T_UNSIGNED extends TableRecordImpl<T_UNSIGNED> implements Cloneable, Record4<Short, Integer, Long, BigInteger>, T_UNSIGNED_INTERFACE {
 
-	private static final long serialVersionUID = 600125287;
+	private static final long serialVersionUID = -2098141222;
 
 	/**
 	 * Setter for <code>T_UNSIGNED.U_BYTE</code>.

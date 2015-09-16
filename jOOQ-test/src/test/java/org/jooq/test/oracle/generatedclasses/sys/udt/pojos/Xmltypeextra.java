@@ -5,8 +5,7 @@ package org.jooq.test.oracle.generatedclasses.sys.udt.pojos;
 
 
 import java.io.Serializable;
-
-import org.jooq.test.oracle.generatedclasses.sys.udt.records.XmltypepiRecord;
+import java.util.List;
 
 
 /**
@@ -15,10 +14,10 @@ import org.jooq.test.oracle.generatedclasses.sys.udt.records.XmltypepiRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Xmltypeextra implements Serializable {
 
-	private static final long serialVersionUID = -126245371;
+	private static final long serialVersionUID = -1740310930;
 
-	private XmltypepiRecord namespaces;
-	private XmltypepiRecord extradata;
+	private List<byte[]> namespaces;
+	private List<byte[]> extradata;
 
 	public Xmltypeextra() {}
 
@@ -28,26 +27,26 @@ public class Xmltypeextra implements Serializable {
 	}
 
 	public Xmltypeextra(
-		XmltypepiRecord namespaces,
-		XmltypepiRecord extradata
+		List<byte[]> namespaces,
+		List<byte[]> extradata
 	) {
 		this.namespaces = namespaces;
 		this.extradata = extradata;
 	}
 
-	public XmltypepiRecord getNamespaces() {
+	public List<byte[]> getNamespaces() {
 		return this.namespaces;
 	}
 
-	public void setNamespaces(XmltypepiRecord namespaces) {
+	public void setNamespaces(List<byte[]> namespaces) {
 		this.namespaces = namespaces;
 	}
 
-	public XmltypepiRecord getExtradata() {
+	public List<byte[]> getExtradata() {
 		return this.extradata;
 	}
 
-	public void setExtradata(XmltypepiRecord extradata) {
+	public void setExtradata(List<byte[]> extradata) {
 		this.extradata = extradata;
 	}
 

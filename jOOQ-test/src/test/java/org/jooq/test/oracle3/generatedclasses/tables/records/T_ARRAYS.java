@@ -4,6 +4,9 @@
 package org.jooq.test.oracle3.generatedclasses.tables.records;
 
 
+import java.sql.Date;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,7 +15,6 @@ import javax.persistence.Table;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record5;
-import org.jooq.Row;
 import org.jooq.Row5;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_ARRAYS_INTERFACE;
@@ -30,7 +32,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY;
 @Table(name = "T_ARRAYS")
 public class T_ARRAYS extends UpdatableRecordImpl<T_ARRAYS> implements Cloneable, Record5<Integer, U_STRING_ARRAY, U_NUMBER_ARRAY, U_NUMBER_LONG_ARRAY, U_DATE_ARRAY>, T_ARRAYS_INTERFACE {
 
-	private static final long serialVersionUID = -1000040351;
+	private static final long serialVersionUID = 1138194124;
 
 	/**
 	 * Setter for <code>T_ARRAYS.ID</code>.
@@ -54,8 +56,17 @@ public class T_ARRAYS extends UpdatableRecordImpl<T_ARRAYS> implements Cloneable
 	 * Setter for <code>T_ARRAYS.STRING_ARRAY</code>.
 	 */
 	@Override
-	public void setSTRING_ARRAY(U_STRING_ARRAY value) {
-		setValue(1, value);
+	public void setSTRING_ARRAY(List<String> value) {
+		if (value == null)
+			setValue(1, null);
+		else {
+			U_STRING_ARRAY a = new U_STRING_ARRAY();
+
+			for (String i : value)
+				a.add(i);
+
+			setValue(1, a);
+		}
 	}
 
 	/**
@@ -71,8 +82,17 @@ public class T_ARRAYS extends UpdatableRecordImpl<T_ARRAYS> implements Cloneable
 	 * Setter for <code>T_ARRAYS.NUMBER_ARRAY</code>.
 	 */
 	@Override
-	public void setNUMBER_ARRAY(U_NUMBER_ARRAY value) {
-		setValue(2, value);
+	public void setNUMBER_ARRAY(List<Integer> value) {
+		if (value == null)
+			setValue(2, null);
+		else {
+			U_NUMBER_ARRAY a = new U_NUMBER_ARRAY();
+
+			for (Integer i : value)
+				a.add(i);
+
+			setValue(1, a);
+		}
 	}
 
 	/**
@@ -88,8 +108,17 @@ public class T_ARRAYS extends UpdatableRecordImpl<T_ARRAYS> implements Cloneable
 	 * Setter for <code>T_ARRAYS.NUMBER_LONG_ARRAY</code>.
 	 */
 	@Override
-	public void setNUMBER_LONG_ARRAY(U_NUMBER_LONG_ARRAY value) {
-		setValue(3, value);
+	public void setNUMBER_LONG_ARRAY(List<Long> value) {
+		if (value == null)
+			setValue(3, null);
+		else {
+			U_NUMBER_LONG_ARRAY a = new U_NUMBER_LONG_ARRAY();
+
+			for (Long i : value)
+				a.add(i);
+
+			setValue(1, a);
+		}
 	}
 
 	/**
@@ -105,8 +134,17 @@ public class T_ARRAYS extends UpdatableRecordImpl<T_ARRAYS> implements Cloneable
 	 * Setter for <code>T_ARRAYS.DATE_ARRAY</code>.
 	 */
 	@Override
-	public void setDATE_ARRAY(U_DATE_ARRAY value) {
-		setValue(4, value);
+	public void setDATE_ARRAY(List<Date> value) {
+		if (value == null)
+			setValue(4, null);
+		else {
+			U_DATE_ARRAY a = new U_DATE_ARRAY();
+
+			for (Date i : value)
+				a.add(i);
+
+			setValue(1, a);
+		}
 	}
 
 	/**

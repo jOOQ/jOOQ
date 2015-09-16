@@ -1102,10 +1102,10 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
                     Schema schema = table.getSchema();
 
                     if (schema != null) {
-                        attrs.addAttribute("", "", "schema", "CDATA", field.getName());
+                        attrs.addAttribute("", "", "schema", "CDATA", schema.getName());
                     }
 
-                    attrs.addAttribute("", "", "table", "CDATA", field.getName());
+                    attrs.addAttribute("", "", "table", "CDATA", table.getName());
                 }
             }
 

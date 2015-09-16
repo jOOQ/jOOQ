@@ -190,7 +190,13 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
 
                                 unqualifiedTypes.put(unqualifiedType, qualifiedType);
                                 qualifiedTypes.add(qualifiedType);
-                                c = remainder + m.group(2);
+                                String generic = m.group(2);
+
+                                // Consider importing generic type arguments, recursively
+                                c = remainder
+                                  + (generic.startsWith("<") || generic.startsWith("[")
+                                  ?  generic.substring(0, 1) + ref(generic.substring(1, generic.length() - 1)) + generic.substring(generic.length() - 1)
+                                  :  generic);
                             }
                         }
                     }

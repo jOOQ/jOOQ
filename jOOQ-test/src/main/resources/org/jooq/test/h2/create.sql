@@ -4,6 +4,7 @@ DROP VIEW IF EXISTS "Ää"/
 DROP VIEW IF EXISTS v_author/
 DROP VIEW IF EXISTS v_book/
 DROP VIEW IF EXISTS v_library/
+DROP VIEW IF EXISTS "v.with.dots"/
 
 DROP ALIAS IF EXISTS f_arrays1/
 DROP ALIAS IF EXISTS f_arrays2/
@@ -457,6 +458,10 @@ SELECT * FROM t_book
 
 CREATE VIEW "Ää" AS
 SELECT 1 AS "Öö"
+/
+
+CREATE VIEW "v.with.dots" ("id.with.dots") AS
+SELECT 1 AS "id.dotted"
 /
 
 CREATE VIEW v_2603 AS

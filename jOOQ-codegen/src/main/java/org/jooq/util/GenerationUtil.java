@@ -205,7 +205,7 @@ class GenerationUtil {
     }
 
     private static String escape(char c) {
-        if (c == ' ' || c == '-')
+        if (c == ' ' || c == '-' || c == '.')
             return "_";
         else
             return "_" + Integer.toHexString(c);

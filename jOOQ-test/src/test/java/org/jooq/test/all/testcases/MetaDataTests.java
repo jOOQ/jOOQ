@@ -156,7 +156,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                 /* [pro] */
                 // Oracle has additional sequences for [#961]
                 else if (dialect().family() == ORACLE) {
-                    sequences += 5;
+                    sequences += 6;
                 }
                 /* [/pro] */
             }
@@ -210,8 +210,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             /* [pro] */
             // [#643] The U_INVALID types are only available in Oracle
             // [#799] The member procedure UDT's too
-            else if (dialect().family() == ORACLE) {
-                assertEquals(7, schema.getUDTs().size());
+            else if (family() == ORACLE) {
+                assertEquals(14, schema.getUDTs().size());
             }
             /* [/pro] */
             else {
@@ -391,12 +391,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
             // [#456] TODO: Should floating point numbers have precision and scale?
             else if ("FLOAT".equalsIgnoreCase(field.getName())
-                    && dialect() != SQLDialect.HSQLDB
-                    && dialect() != SQLDialect.MARIADB
-                    && dialect() != SQLDialect.MYSQL
-                    /* [pro] */
-                    && dialect() != SQLDialect.SYBASE
-                    /* [/pro] */
+                    && family() != SQLDialect.HSQLDB
+                    && family() != SQLDialect.MARIADB
+                    && family() != SQLDialect.MYSQL
+                    && family() != SQLDialect.ORACLE
+                    && family() != SQLDialect.SYBASE
             ) {
                 assertEquals(Float.class, field.getType());
                 assertEquals(SQLDataType.REAL, field.getDataType());

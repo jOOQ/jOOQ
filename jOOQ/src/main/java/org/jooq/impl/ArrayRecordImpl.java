@@ -45,6 +45,7 @@ package org.jooq.impl;
 xxxxxx xxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxx xxxxxxxxxxxxxxxxxxxxxx
 xxxxxx xxxxxxxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxx
 xxxxxx xxxxxxxxxxxxxxxxxxxxx
 xxxxxx xxxxxxxxxxxxxxxxxxx
 xxxxxx xxxxxxxxxxxxxxx
@@ -212,8 +213,10 @@ xxxxxx xxxxx xxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxx 
     xxxxxxxxx
     xxxxxxxxxxx
     xxxxxx xxxxx xxxx xxxxxxxx xxxxxx x
-        xxx xxxx x x xx x x xxxxxxxxxxxxx xxxx
-            xxxxxx xxxxxxxxxx
+        xx xxxxxx xx xxxxx
+            xxxxxxxx
+        xxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxx
     x
 
     xxxxxxxxx
@@ -225,21 +228,14 @@ xxxxxx xxxxx xxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxx 
     xxxxxxxxx
     xxxxxxxxxxx
     xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxx xxxxxxx xx xxxxxxxxxxx x
-        xxxxxxxxxx xxxxxxx xx xx x xxxxxxxxxxxxxxxxxxxxxx
-
-        xxx xxxx x x xx x x xxxxxxxxxxxxxxxxxx xxxx
-            xxxxxx xxxxxxxxxxx
+        xxxxxxxx
+        xxxxxxxxxxxxxxxxxxx
     x
 
     xxxxxxxxx
     xxxxxxxxxxx
     xxxxxx xxxxx xxxx xxxxxxxxxxxxxx xxxxxxx xx xxxxx x
         xxxxxxxxxx
-    x
-
-    xxxxxxxxx
-    xxxxxx xxxxx xxx xxxxxx x
-        xxxxxx xxxxxxxxxxxxx
     x
 
     xxxxxxxxx
@@ -289,6 +285,10 @@ xxxxxx xxxxx xxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxx 
     xx xxx xxxx xxxxxxx
     xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
+    xxxxxxxxx
+    xxxxxx xxxxx xxx xxxxxx x
+        xxxxxx xxxxxxxxxxxx
+    x
 
     xxxxxxxxx
     xxxxxx xxxxx xxxxxxx xxxxxxxxx x

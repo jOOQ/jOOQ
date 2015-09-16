@@ -236,11 +236,6 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
     }
 
     @Override
-    public final int size() {
-        return get().length;
-    }
-
-    @Override
     public final String getName() {
 
         // [#1179] When Schema is present, the name is not fully qualified
@@ -287,6 +282,10 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
     // XXX List methods
     // -------------------------------------------------------------------------
 
+    @Override
+    public final int size() {
+        return list.size();
+    }
 
     @Override
     public final boolean isEmpty() {

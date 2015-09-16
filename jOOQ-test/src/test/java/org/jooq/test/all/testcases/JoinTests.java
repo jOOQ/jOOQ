@@ -326,7 +326,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                     .on(TAuthor_ID().eq(field(name("t1", "a"), Integer.class)))
                 .antiJoin(table(select(TAuthor_ID()).from(TAuthor()).where(TAuthor_ID().eq(2))).as("t2", "a"))
                     .on(TAuthor_ID().eq(field(name("t2", "a"), Integer.class)))
-            .orderBy(TAuthor_ID())
+            .orderBy(TBook_ID())
             .fetch();
 
         assertEquals(2, a41.size());
@@ -342,7 +342,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                     .on(TAuthor_ID().eq(field(name("t1", "a"), Integer.class)))
                 .semiJoin(table(select(TAuthor_ID()).from(TAuthor()).where(TAuthor_ID().eq(2))).as("t2", "a"))
                     .on(TAuthor_ID().eq(field(name("t2", "a"), Integer.class)))
-            .orderBy(TAuthor_ID())
+            .orderBy(TBook_ID())
             .fetch();
 
         assertEquals(2, a42.size());

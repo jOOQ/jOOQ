@@ -545,17 +545,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             assertEquals(null, arrays.getValue(0, TArrays_NUMBER_R()));
             assertEquals(null, arrays.getValue(0, TArrays_DATE_R()));
 
-            assertEquals(Arrays.asList(), Arrays.asList(arrays.getValue(1, TArrays_STRING_R()).get()));
-            assertEquals(Arrays.asList(), Arrays.asList(arrays.getValue(1, TArrays_NUMBER_R()).get()));
-            assertEquals(Arrays.asList(), Arrays.asList(arrays.getValue(1, TArrays_DATE_R()).get()));
+            assertEquals(Arrays.asList(), arrays.getValue(1, TArrays_STRING_R()));
+            assertEquals(Arrays.asList(), arrays.getValue(1, TArrays_NUMBER_R()));
+            assertEquals(Arrays.asList(), arrays.getValue(1, TArrays_DATE_R()));
 
-            assertEquals(Arrays.asList("a"), Arrays.asList(arrays.getValue(2, TArrays_STRING_R()).get()));
-            assertEquals(Arrays.asList(1), Arrays.asList(arrays.getValue(2, TArrays_NUMBER_R()).get()));
-            assertEquals("[1981-07-10]", Arrays.asList(arrays.getValue(2, TArrays_DATE_R()).get()).toString());
+            assertEquals(Arrays.asList("a"), arrays.getValue(2, TArrays_STRING_R()));
+            assertEquals(Arrays.asList(1), arrays.getValue(2, TArrays_NUMBER_R()));
+            assertEquals("[1981-07-10]", arrays.getValue(2, TArrays_DATE_R()).toString());
 
-            assertEquals(Arrays.asList("a", "b"), Arrays.asList(arrays.getValue(3, TArrays_STRING_R()).get()));
-            assertEquals(Arrays.asList(1, 2), Arrays.asList(arrays.getValue(3, TArrays_NUMBER_R()).get()));
-            assertEquals("[1981-07-10, 2000-01-01]", Arrays.asList(arrays.getValue(3, TArrays_DATE_R()).get()).toString());
+            assertEquals(Arrays.asList("a", "b"), arrays.getValue(3, TArrays_STRING_R()));
+            assertEquals(Arrays.asList(1, 2), arrays.getValue(3, TArrays_NUMBER_R()));
+            assertEquals("[1981-07-10, 2000-01-01]", arrays.getValue(3, TArrays_DATE_R()).toString());
 
 
 
@@ -577,9 +577,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             .where(TArrays_ID().equal(5))
             .fetchOne();
 
-            assertEquals(Arrays.asList("a", "b", "c", "d\"\\d"), Arrays.asList(array.getValue(TArrays_STRING_R()).get()));
-            assertEquals(Arrays.asList(1, 2, 3), Arrays.asList(array.getValue(TArrays_NUMBER_R()).get()));
-            assertEquals("[1970-01-01, 1970-01-02, 1970-01-03]", Arrays.asList(array.getValue(TArrays_DATE_R()).get()).toString());
+            assertEquals(Arrays.asList("a", "b", "c", "d\"\\d"), array.getValue(TArrays_STRING_R()));
+            assertEquals(Arrays.asList(1, 2, 3), array.getValue(TArrays_NUMBER_R()));
+            assertEquals("[1970-01-01, 1970-01-02, 1970-01-03]", array.getValue(TArrays_DATE_R()).toString());
 
 
 
@@ -601,9 +601,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             .where(TArrays_ID().equal(5))
             .fetchOne();
 
-            assertEquals(Arrays.asList("d\"\\d", "c", "b", "a"), Arrays.asList(array.getValue(TArrays_STRING_R()).get()));
-            assertEquals(Arrays.asList(3, 2, 1), Arrays.asList(array.getValue(TArrays_NUMBER_R()).get()));
-            assertEquals("[1970-01-03, 1970-01-02, 1970-01-01]", Arrays.asList(array.getValue(TArrays_DATE_R()).get()).toString());
+            assertEquals(Arrays.asList("d\"\\d", "c", "b", "a"), array.getValue(TArrays_STRING_R()));
+            assertEquals(Arrays.asList(3, 2, 1), array.getValue(TArrays_NUMBER_R()));
+            assertEquals("[1970-01-03, 1970-01-02, 1970-01-01]", array.getValue(TArrays_DATE_R()).toString());
         }
         /* [/pro] */
 
@@ -819,76 +819,76 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
             assertEquals(
                 Arrays.asList(new Integer[0]),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays1", create().configuration(), i)).get()));
+                invoke(cRoutines(), "pArrays1", create().configuration(), i));
             assertEquals(
                 Arrays.asList(new Long[0]),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays2", create().configuration(), l)).get()));
+                invoke(cRoutines(), "pArrays2", create().configuration(), l));
             assertEquals(
                 Arrays.asList(new String[0]),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays3", create().configuration(), s)).get()));
+                invoke(cRoutines(), "pArrays3", create().configuration(), s));
             assertEquals(
                 Arrays.asList(new Integer[0]),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays1", create().configuration(), i)).get()));
+                invoke(cRoutines(), "fArrays1", create().configuration(), i));
             assertEquals(
                 Arrays.asList(new Long[0]),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays2", create().configuration(), l)).get()));
+                invoke(cRoutines(), "fArrays2", create().configuration(), l));
             assertEquals(
                 Arrays.asList(new String[0]),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays3", create().configuration(), s)).get()));
+                invoke(cRoutines(), "fArrays3", create().configuration(), s));
 
             i = newNUMBER_R();
             l = newNUMBER_LONG_R();
             s = newSTRING_R();
 
-            i.set((Integer) null);
-            l.set((Long) null);
-            s.set((String) null);
+            i.add((Integer) null);
+            l.add((Long) null);
+            s.add((String) null);
 
             assertEquals(
                 Arrays.asList((Integer) null),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays1", create().configuration(), i)).get()));
+                invoke(cRoutines(), "pArrays1", create().configuration(), i));
             assertEquals(
                 Arrays.asList((Long) null),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays2", create().configuration(), l)).get()));
+                invoke(cRoutines(), "pArrays2", create().configuration(), l));
             assertEquals(
                 Arrays.asList((String) null),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays3", create().configuration(), s)).get()));
+                invoke(cRoutines(), "pArrays3", create().configuration(), s));
             assertEquals(
                 Arrays.asList((Integer) null),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays1", create().configuration(), i)).get()));
+                invoke(cRoutines(), "fArrays1", create().configuration(), i));
             assertEquals(
                 Arrays.asList((Long) null),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays2", create().configuration(), l)).get()));
+                invoke(cRoutines(), "fArrays2", create().configuration(), l));
             assertEquals(
                 Arrays.asList((String) null),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays3", create().configuration(), s)).get()));
+                invoke(cRoutines(), "fArrays3", create().configuration(), s));
 
             i = newNUMBER_R();
             l = newNUMBER_LONG_R();
             s = newSTRING_R();
 
-            i.set(1, 2);
-            l.set(1L, 2L);
-            s.set("1", "2");
+            i.addAll(asList(1, 2));
+            l.addAll(asList(1L, 2L));
+            s.addAll(asList("1", "2"));
 
             assertEquals(
                 Arrays.asList(1, 2),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays1", create().configuration(), i)).get()));
+                invoke(cRoutines(), "pArrays1", create().configuration(), i));
             assertEquals(
                 Arrays.asList(1L, 2L),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays2", create().configuration(), l)).get()));
+                invoke(cRoutines(), "pArrays2", create().configuration(), l));
             assertEquals(
                 Arrays.asList("1", "2"),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays3", create().configuration(), s)).get()));
+                invoke(cRoutines(), "pArrays3", create().configuration(), s));
             assertEquals(
                 Arrays.asList(1, 2),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays1", create().configuration(), i)).get()));
+                invoke(cRoutines(), "fArrays1", create().configuration(), i));
             assertEquals(
                 Arrays.asList(1L, 2L),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays2", create().configuration(), l)).get()));
+                invoke(cRoutines(), "fArrays2", create().configuration(), l));
             assertEquals(
                 Arrays.asList("1", "2"),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays3", create().configuration(), s)).get()));
+                invoke(cRoutines(), "fArrays3", create().configuration(), s));
         }
         /* [/pro] */
 
@@ -1110,7 +1110,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
             // An array containing null
             // ------------------------
-            array.set((Integer) null);
+            array.clear();
+            array.add((Integer) null);
             result = create().select().from(table(array)).fetch();
 
             assertEquals(1, result.size());
@@ -1120,7 +1121,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
             // An array containing two values
             // ------------------------------
-            array.set((Integer) null, 1);
+            array.clear();
+            array.addAll(asList((Integer) null, 1));
             result = create().select().from(table(array)).fetch();
 
             assertEquals(2, result.size());
@@ -1131,7 +1133,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
             // An array containing three values
             // --------------------------------
-            array.set((Integer) null, 1, 2);
+            array.clear();
+            array.addAll(asList((Integer) null, 1, 2));
             result = create().select().from(table(array)).fetch();
 
             assertEquals(3, result.size());
@@ -1186,14 +1189,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             assertEquals(0, result.size());
             assertEquals(1, result.fieldsRow().size());
 
-            array.set(null, 1);
+            array.clear();
+            array.addAll(asList(null, 1));
             result = create().select().from(table(FArrays1Field_R(val(array)))).fetch();
             assertEquals(2, result.size());
             assertEquals(1, result.fieldsRow().size());
             assertEquals(null, result.getValue(0, 0));
             assertEquals("1", "" + result.getValue(1, 0));
 
-            array.set(null, 1, null, 2);
+            array.clear();
+            array.addAll(asList(null, 1, null, 2));
             result = create().select().from(table(FArrays1Field_R(val(array)))).fetch();
             assertEquals(4, result.size());
             assertEquals(1, result.fieldsRow().size());
@@ -1390,7 +1395,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                 /* [pro] */
                 if (TArrays_STRING_R() != null) {
                     ArrayRecord<Integer> i = newNUMBER_R();
-                    i.set(1, 2, 4, 6);
+                    i.addAll(asList(1, 2, 4, 6));
                     integerArray = i;
                 }
                 else
@@ -1490,7 +1495,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                 /* [pro] */
                 if (TArrays_STRING_R() != null) {
                     ArrayRecord<Integer> i = newNUMBER_R();
-                    i.set(1, 2, 4, 6);
+                    i.addAll(asList(1, 2, 4, 6));
                     integerArray = i;
                 }
                 else

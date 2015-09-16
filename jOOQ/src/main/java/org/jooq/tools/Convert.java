@@ -74,6 +74,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Pattern;
@@ -461,6 +462,13 @@ public final class Convert {
                         return convert(0, toClass);
                     }
                 }
+
+                /* [java-8] */
+                else if (toClass == Optional.class) {
+                    return (U) Optional.empty();
+                }
+                /* [/java-8] */
+
                 else {
                     return null;
                 }
@@ -495,6 +503,12 @@ public final class Convert {
                         return (U) convertArray((Object[]) from, toClass);
                     }
                 }
+
+                /* [java-8] */
+                else if (toClass == Optional.class) {
+                    return (U) Optional.of(from);
+                }
+                /* [/java-8] */
 
                 // All types can be converted into String
                 else if (toClass == String.class) {

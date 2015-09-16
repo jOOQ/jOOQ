@@ -234,8 +234,8 @@ public class MockTest extends AbstractTest {
     }
 
     @Test
-    public void testBatchSingle() {
-        DSLContext e = DSL.using(new MockConnection(new BatchSingle()), SQLDialect.H2);
+    public void testBatchMultiple() {
+        DSLContext e = DSL.using(new MockConnection(new BatchMultiple()), SQLDialect.H2);
 
         int[] result =
         e.batch(
@@ -248,7 +248,7 @@ public class MockTest extends AbstractTest {
         assertEquals(1, result[1]);
     }
 
-    class BatchSingle implements MockDataProvider {
+    class BatchMultiple implements MockDataProvider {
 
         @Override
         public MockResult[] execute(MockExecuteContext ctx) throws SQLException {
@@ -268,8 +268,8 @@ public class MockTest extends AbstractTest {
     }
 
     @Test
-    public void testBatchMultiple() {
-        DSLContext e = DSL.using(new MockConnection(new BatchMultiple()), SQLDialect.H2);
+    public void testBatchS() {
+        DSLContext e = DSL.using(new MockConnection(new BatchSingle()), SQLDialect.H2);
 
         Query query = e.query("insert into x values(?, ?)", null, null);
 
@@ -284,7 +284,7 @@ public class MockTest extends AbstractTest {
         assertEquals(1, result[1]);
     }
 
-    class BatchMultiple implements MockDataProvider {
+    class BatchSingle implements MockDataProvider {
 
         @Override
         public MockResult[] execute(MockExecuteContext ctx) throws SQLException {

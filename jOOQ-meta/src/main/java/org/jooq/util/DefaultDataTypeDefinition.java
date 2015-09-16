@@ -141,6 +141,11 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     }
 
     @Override
+    public final boolean isArray() {
+        return getDatabase().getArray(schema, udtName) != null;
+    }
+
+    @Override
     public final String getType() {
         return typeName;
     }

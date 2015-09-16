@@ -101,6 +101,11 @@ public interface DataTypeDefinition {
     boolean isUDT();
 
     /**
+     * Whether this data type represents an array.
+     */
+    boolean isArray();
+
+    /**
      * Whether this data type is a NUMBER type without precision and scale.
      */
     boolean isGenericNumberType();

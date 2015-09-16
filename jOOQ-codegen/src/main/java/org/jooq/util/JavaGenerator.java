@@ -2518,7 +2518,6 @@ public class JavaGenerator extends AbstractGenerator {
 
         for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
             final String columnType = out.ref(getJavaType(column.getType(), Mode.POJO));
-            final String columnTypeInterface = out.ref(getJavaType(column.getType(), Mode.INTERFACE));
             final String columnSetterReturnType = fluentSetters() ? className : (scala ? "Unit" : "void");
             final String columnSetter = getStrategy().getJavaSetterName(column, Mode.POJO);
             final String columnGetter = getStrategy().getJavaGetterName(column, Mode.POJO);
@@ -2572,6 +2571,8 @@ public class JavaGenerator extends AbstractGenerator {
 
                 // [#3117] To avoid covariant setters on POJOs, we need to generate two setter overloads
                 if (generateInterfaces() && (isUDT || isUDTArray)) {
+                    final String columnTypeInterface = out.ref(getJavaType(column.getType(), Mode.INTERFACE));
+
                     out.println();
 
                     if (scala) {

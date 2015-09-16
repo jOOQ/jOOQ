@@ -63,6 +63,7 @@ import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.time.ZoneOffset;
 import java.time.temporal.Temporal;
+import java.util.Optional;
 
 import org.jooq.Record;
 import org.jooq.Result;
@@ -557,6 +558,15 @@ public class ConvertAllTest extends AbstractTest {
             return 1000 * t.getLong(INSTANT_SECONDS) + t.getLong(MILLI_OF_SECOND);
         else
             return t.getLong(MILLI_OF_DAY);
+    }
+
+    @Test
+    public void testToOptional() throws Exception {
+        assertEquals(Optional.empty(), Convert.convert((Object) null, Optional.class));
+        assertEquals(Optional.empty(), Convert.convert(Optional.empty(), Optional.class));
+
+        assertEquals(Optional.of("a"), Convert.convert("a", Optional.class));
+        assertEquals(Optional.of("a"), Convert.convert(Optional.of("a"), Optional.class));
     }
     /* [/java-8] */
 }

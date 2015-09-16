@@ -65,6 +65,7 @@ import org.junit.Test;
  *
  * @author Lukas Eder
  */
+@SuppressWarnings("deprecation")
 public class ConverterTest extends AbstractTest {
 
     @Test

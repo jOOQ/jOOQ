@@ -1247,7 +1247,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // [#1544] We can safely assume that localConfiguration has been
             // set on DefaultBindContext, prior to serialising arrays to SQLOutput
             ArrayRecord<?> arrayRecord = (ArrayRecord<?>) value;
-            Object[] array = arrayRecord.get();
+            Object[] array = arrayRecord.toArray();
             Object[] converted = new Object[array.length];
 
             for (int i = 0; i < converted.length; i++)

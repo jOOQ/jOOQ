@@ -45,11 +45,10 @@ package org.jooq.impl;
 import java.lang.reflect.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import org.jooq.ArrayRecord;
 import org.jooq.Attachable;
@@ -77,7 +76,7 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
     private final DataType<T> baseType;
     private final DataType<?> type;
     private final String      name;
-    private T[]               array;
+    private final List<T>     list;
 
     /**
      * Create an empty array record
@@ -167,6 +166,7 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
 
         // Array data type initialisation
         this.type = baseType.asArrayDataType(getClass());
+        this.list = new ArrayList<T>();
     }
 
     // -------------------------------------------------------------------------
@@ -197,29 +197,23 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
 
     @SuppressWarnings("unchecked")
     @Override
+    @Deprecated
     public final T[] get() {
-        if (array == null) {
-            return (T[]) Array.newInstance(baseType.getType(), 0);
-        }
-        else {
-            return array;
-        }
+        return toArray((T[]) Array.newInstance(baseType.getType(), size()));
     }
 
     @Override
+    @Deprecated
     public final List<T> getList() {
-        if (array == null) {
-            return Collections.emptyList();
-        }
-        else {
-            return Arrays.asList(array);
-        }
+        return this;
     }
 
     @SuppressWarnings("unchecked")
     @Override
+    @Deprecated
     public final void set(T... array) {
-        this.array = array;
+        for (int i = 0; i < array.length; i++)
+            set(i, array[i]);
     }
 
     @Override
@@ -228,15 +222,13 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
         DefaultBinding.set(configuration(), this, array);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
+    @Deprecated
     public final void set(Collection<? extends T> collection) {
-        if (collection == null) {
-            array = null;
-        }
-        else {
-            array = collection.toArray((T[]) Array.newInstance(baseType.getType(), 0));
-        }
+        Iterator<? extends T> it = collection.iterator();
+
+        for (int i = 0; i < collection.size(); i++)
+            set(i, it.next());
     }
 
     @Override
@@ -282,22 +274,140 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
         result.append(getName());
         result.append("(");
 
-        if (array != null) {
-            for (T t : array) {
-                result.append(separator);
-                result.append(create().render(DSL.inline(t)));
+        for (T t : list) {
+            result.append(separator);
+            result.append(create().render(DSL.inline(t)));
 
-                separator = ", ";
-            }
+            separator = ", ";
         }
 
         result.append(")");
         return result.toString();
     }
 
+    // -------------------------------------------------------------------------
+    // XXX List methods
+    // -------------------------------------------------------------------------
+
+
+    @Override
+    public final boolean isEmpty() {
+        return list.isEmpty();
+    }
+
+    @Override
+    public final boolean contains(Object o) {
+        return list.contains(o);
+    }
+
     @Override
     public final Iterator<T> iterator() {
-        return getList().iterator();
+        return list.iterator();
+    }
+
+    @Override
+    public final Object[] toArray() {
+        return list.toArray();
+    }
+
+    @Override
+    public final <Z> Z[] toArray(Z[] a) {
+        return list.toArray(a);
+    }
+
+    @Override
+    public final boolean add(T e) {
+        return list.add(e);
+    }
+
+    @Override
+    public final boolean remove(Object o) {
+        return list.remove(o);
+    }
+
+    @Override
+    public final boolean containsAll(Collection<?> c) {
+        return list.containsAll(c);
+    }
+
+    @Override
+    public final boolean addAll(Collection<? extends T> c) {
+        return list.addAll(c);
+    }
+
+    @Override
+    public final boolean addAll(int index, Collection<? extends T> c) {
+        return list.addAll(index, c);
+    }
+
+    @Override
+    public final boolean removeAll(Collection<?> c) {
+        return list.removeAll(c);
+    }
+
+    @Override
+    public final boolean retainAll(Collection<?> c) {
+        return list.retainAll(c);
+    }
+
+    @Override
+    public final void clear() {
+        list.clear();
+    }
+
+    @Override
+    public final boolean equals(Object o) {
+        return list.equals(o);
+    }
+
+    @Override
+    public final int hashCode() {
+        return list.hashCode();
+    }
+
+    @Override
+    public final T get(int index) {
+        return list.get(index);
+    }
+
+    @Override
+    public final T set(int index, T element) {
+        return list.set(index, element);
+    }
+
+    @Override
+    public final void add(int index, T element) {
+        list.add(index, element);
+    }
+
+    @Override
+    public final T remove(int index) {
+        return list.remove(index);
+    }
+
+    @Override
+    public final int indexOf(Object o) {
+        return list.indexOf(o);
+    }
+
+    @Override
+    public final int lastIndexOf(Object o) {
+        return list.lastIndexOf(o);
+    }
+
+    @Override
+    public final ListIterator<T> listIterator() {
+        return list.listIterator();
+    }
+
+    @Override
+    public final ListIterator<T> listIterator(int index) {
+        return list.listIterator(index);
+    }
+
+    @Override
+    public final List<T> subList(int fromIndex, int toIndex) {
+        return list.subList(fromIndex, toIndex);
     }
 }
 /* [/pro] */

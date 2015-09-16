@@ -86,7 +86,7 @@ class ArrayConstant<R extends ArrayRecord<?>> extends AbstractParam<R> {
             context.sql('(');
 
             String separator = "";
-            for (Object object : array.get()) {
+            for (Object object : array) {
                 context.sql(separator);
                 context.visit(val(object));
 

@@ -54,16 +54,23 @@ import java.util.List;
  * @param <E> The array element type
  * @author Lukas Eder
  */
-public interface ArrayRecord<E> extends Attachable, Iterable<E> {
+public interface ArrayRecord<E> extends Attachable, List<E> {
 
     /**
      * Get the contained array.
+     *
+     * @deprecated - 3.7.0 - [#4566] - Use {@link #toArray()} instead.
      */
+    @Deprecated
     E[] get();
 
     /**
      * Get the contained array as a {@link List}.
+     *
+     * @deprecated - 3.7.0 - [#4566] - ArrayRecord already extends {@link List}.
+     *             There is no need to call this any more.
      */
+    @Deprecated
     List<E> getList();
 
     /**
@@ -76,13 +83,19 @@ public interface ArrayRecord<E> extends Attachable, Iterable<E> {
 
     /**
      * Set the contained array.
+     *
+     * @deprecated - 3.7.0 - [#4566] - Use {@link List} methods instead.
      */
+    @Deprecated
     @SuppressWarnings("unchecked")
     void set(E... array);
 
     /**
      * Set the contained array as a {@link List}.
+     *
+     * @deprecated - 3.7.0 - [#4566] - Use {@link List} methods instead.
      */
+    @Deprecated
     void set(Collection<? extends E> list);
 
     /**
@@ -92,11 +105,6 @@ public interface ArrayRecord<E> extends Attachable, Iterable<E> {
      */
     @Deprecated
     void setList(List<? extends E> list);
-
-    /**
-     * Get the size of the contained array.
-     */
-    int size();
 
     /**
      * Get the name of the array type.

@@ -268,7 +268,7 @@ public class MockTest extends AbstractTest {
     }
 
     @Test
-    public void testBatchS() {
+    public void testBatchSingle() {
         DSLContext e = DSL.using(new MockConnection(new BatchSingle()), SQLDialect.H2);
 
         Query query = e.query("insert into x values(?, ?)", null, null);

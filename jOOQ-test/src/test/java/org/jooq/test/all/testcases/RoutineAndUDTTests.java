@@ -1152,7 +1152,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
             // Joining an unnested array table
             // -------------------------------
-            array.set(2, 3);
+            array.clear();
+            array.addAll(asList(2, 3));
             Table<?> table = table(array);
             result = create()
                 .select(TBook_ID(), TBook_TITLE())

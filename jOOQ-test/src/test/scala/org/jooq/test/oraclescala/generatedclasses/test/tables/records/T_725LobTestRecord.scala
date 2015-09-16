@@ -21,6 +21,7 @@ import org.jooq.impl.UpdatableRecordImpl
 import org.jooq.test.oraclescala.generatedclasses.test.tables.T_725LobTest
 
 import scala.Array
+import scala.Byte
 
 
 /**
@@ -28,7 +29,7 @@ import scala.Array
  */
 @Entity
 @Table(name = "T_725_LOB_TEST", schema = "TEST")
-class T_725LobTestRecord extends UpdatableRecordImpl[T_725LobTestRecord](T_725LobTest.T_725_LOB_TEST) with Record6[Integer, Array[scala.Byte], String, Array[scala.Byte], String, Array[scala.Byte]] {
+class T_725LobTestRecord extends UpdatableRecordImpl[T_725LobTestRecord](T_725LobTest.T_725_LOB_TEST) with Record6[Integer, Array[Byte], String, Array[Byte], String, Array[Byte]] {
 
 	/**
 	 * Setter for <code>TEST.T_725_LOB_TEST.ID</code>.
@@ -51,7 +52,7 @@ class T_725LobTestRecord extends UpdatableRecordImpl[T_725LobTestRecord](T_725Lo
 	/**
 	 * Setter for <code>TEST.T_725_LOB_TEST.LOB</code>.
 	 */
-	def setLob(value : Array[scala.Byte]) : Unit = {
+	def setLob(value : Array[Byte]) : Unit = {
 		setValue(1, value)
 	}
 
@@ -59,9 +60,9 @@ class T_725LobTestRecord extends UpdatableRecordImpl[T_725LobTestRecord](T_725Lo
 	 * Getter for <code>TEST.T_725_LOB_TEST.LOB</code>.
 	 */
 	@Column(name = "LOB")
-	def getLob : Array[scala.Byte] = {
+	def getLob : Array[Byte] = {
 		val r = getValue(1)
-		if (r == null) null else r.asInstanceOf[Array[scala.Byte]]
+		if (r == null) null else r.asInstanceOf[Array[Byte]]
 	}
 
 	/**
@@ -83,7 +84,7 @@ class T_725LobTestRecord extends UpdatableRecordImpl[T_725LobTestRecord](T_725Lo
 	/**
 	 * Setter for <code>TEST.T_725_LOB_TEST.USER_JAVA_SQL_BLOB</code>.
 	 */
-	def setUserJavaSqlBlob(value : Array[scala.Byte]) : Unit = {
+	def setUserJavaSqlBlob(value : Array[Byte]) : Unit = {
 		setValue(3, value)
 	}
 
@@ -91,9 +92,9 @@ class T_725LobTestRecord extends UpdatableRecordImpl[T_725LobTestRecord](T_725Lo
 	 * Getter for <code>TEST.T_725_LOB_TEST.USER_JAVA_SQL_BLOB</code>.
 	 */
 	@Column(name = "USER_JAVA_SQL_BLOB")
-	def getUserJavaSqlBlob : Array[scala.Byte] = {
+	def getUserJavaSqlBlob : Array[Byte] = {
 		val r = getValue(3)
-		if (r == null) null else r.asInstanceOf[Array[scala.Byte]]
+		if (r == null) null else r.asInstanceOf[Array[Byte]]
 	}
 
 	/**
@@ -115,7 +116,7 @@ class T_725LobTestRecord extends UpdatableRecordImpl[T_725LobTestRecord](T_725Lo
 	/**
 	 * Setter for <code>TEST.T_725_LOB_TEST.JOOQ_JAVA_SQL_BLOB</code>.
 	 */
-	def setJooqJavaSqlBlob(value : Array[scala.Byte]) : Unit = {
+	def setJooqJavaSqlBlob(value : Array[Byte]) : Unit = {
 		setValue(5, value)
 	}
 
@@ -123,9 +124,9 @@ class T_725LobTestRecord extends UpdatableRecordImpl[T_725LobTestRecord](T_725Lo
 	 * Getter for <code>TEST.T_725_LOB_TEST.JOOQ_JAVA_SQL_BLOB</code>.
 	 */
 	@Column(name = "JOOQ_JAVA_SQL_BLOB")
-	def getJooqJavaSqlBlob : Array[scala.Byte] = {
+	def getJooqJavaSqlBlob : Array[Byte] = {
 		val r = getValue(5)
-		if (r == null) null else r.asInstanceOf[Array[scala.Byte]]
+		if (r == null) null else r.asInstanceOf[Array[Byte]]
 	}
 
 	// -------------------------------------------------------------------------
@@ -139,32 +140,32 @@ class T_725LobTestRecord extends UpdatableRecordImpl[T_725LobTestRecord](T_725Lo
 	// Record6 type implementation
 	// -------------------------------------------------------------------------
 
-	override def fieldsRow : Row6[Integer, Array[scala.Byte], String, Array[scala.Byte], String, Array[scala.Byte]] = {
-		super.fieldsRow.asInstanceOf[ Row6[Integer, Array[scala.Byte], String, Array[scala.Byte], String, Array[scala.Byte]] ]
+	override def fieldsRow : Row6[Integer, Array[Byte], String, Array[Byte], String, Array[Byte]] = {
+		super.fieldsRow.asInstanceOf[ Row6[Integer, Array[Byte], String, Array[Byte], String, Array[Byte]] ]
 	}
 
-	override def valuesRow : Row6[Integer, Array[scala.Byte], String, Array[scala.Byte], String, Array[scala.Byte]] = {
-		super.valuesRow.asInstanceOf[ Row6[Integer, Array[scala.Byte], String, Array[scala.Byte], String, Array[scala.Byte]] ]
+	override def valuesRow : Row6[Integer, Array[Byte], String, Array[Byte], String, Array[Byte]] = {
+		super.valuesRow.asInstanceOf[ Row6[Integer, Array[Byte], String, Array[Byte], String, Array[Byte]] ]
 	}
 	override def field1 : Field[Integer] = T_725LobTest.T_725_LOB_TEST.ID
-	override def field2 : Field[Array[scala.Byte]] = T_725LobTest.T_725_LOB_TEST.LOB
+	override def field2 : Field[Array[Byte]] = T_725LobTest.T_725_LOB_TEST.LOB
 	override def field3 : Field[String] = T_725LobTest.T_725_LOB_TEST.USER_JAVA_SQL_CLOB
-	override def field4 : Field[Array[scala.Byte]] = T_725LobTest.T_725_LOB_TEST.USER_JAVA_SQL_BLOB
+	override def field4 : Field[Array[Byte]] = T_725LobTest.T_725_LOB_TEST.USER_JAVA_SQL_BLOB
 	override def field5 : Field[String] = T_725LobTest.T_725_LOB_TEST.JOOQ_JAVA_SQL_CLOB
-	override def field6 : Field[Array[scala.Byte]] = T_725LobTest.T_725_LOB_TEST.JOOQ_JAVA_SQL_BLOB
+	override def field6 : Field[Array[Byte]] = T_725LobTest.T_725_LOB_TEST.JOOQ_JAVA_SQL_BLOB
 	override def value1 : Integer = getId
-	override def value2 : Array[scala.Byte] = getLob
+	override def value2 : Array[Byte] = getLob
 	override def value3 : String = getUserJavaSqlClob
-	override def value4 : Array[scala.Byte] = getUserJavaSqlBlob
+	override def value4 : Array[Byte] = getUserJavaSqlBlob
 	override def value5 : String = getJooqJavaSqlClob
-	override def value6 : Array[scala.Byte] = getJooqJavaSqlBlob
+	override def value6 : Array[Byte] = getJooqJavaSqlBlob
 
 	override def value1(value : Integer) : T_725LobTestRecord = {
 		setId(value)
 		this
 	}
 
-	override def value2(value : Array[scala.Byte]) : T_725LobTestRecord = {
+	override def value2(value : Array[Byte]) : T_725LobTestRecord = {
 		setLob(value)
 		this
 	}
@@ -174,7 +175,7 @@ class T_725LobTestRecord extends UpdatableRecordImpl[T_725LobTestRecord](T_725Lo
 		this
 	}
 
-	override def value4(value : Array[scala.Byte]) : T_725LobTestRecord = {
+	override def value4(value : Array[Byte]) : T_725LobTestRecord = {
 		setUserJavaSqlBlob(value)
 		this
 	}
@@ -184,12 +185,12 @@ class T_725LobTestRecord extends UpdatableRecordImpl[T_725LobTestRecord](T_725Lo
 		this
 	}
 
-	override def value6(value : Array[scala.Byte]) : T_725LobTestRecord = {
+	override def value6(value : Array[Byte]) : T_725LobTestRecord = {
 		setJooqJavaSqlBlob(value)
 		this
 	}
 
-	override def values(value1 : Integer, value2 : Array[scala.Byte], value3 : String, value4 : Array[scala.Byte], value5 : String, value6 : Array[scala.Byte]) : T_725LobTestRecord = {
+	override def values(value1 : Integer, value2 : Array[Byte], value3 : String, value4 : Array[Byte], value5 : String, value6 : Array[Byte]) : T_725LobTestRecord = {
 		this.value1(value1)
 		this.value2(value2)
 		this.value3(value3)
@@ -202,7 +203,7 @@ class T_725LobTestRecord extends UpdatableRecordImpl[T_725LobTestRecord](T_725Lo
 	/**
 	 * Create a detached, initialised T_725LobTestRecord
 	 */
-	def this(id : Integer, lob : Array[scala.Byte], userJavaSqlClob : String, userJavaSqlBlob : Array[scala.Byte], jooqJavaSqlClob : String, jooqJavaSqlBlob : Array[scala.Byte]) = {
+	def this(id : Integer, lob : Array[Byte], userJavaSqlClob : String, userJavaSqlBlob : Array[Byte], jooqJavaSqlClob : String, jooqJavaSqlBlob : Array[Byte]) = {
 		this()
 
 		setValue(0, id)

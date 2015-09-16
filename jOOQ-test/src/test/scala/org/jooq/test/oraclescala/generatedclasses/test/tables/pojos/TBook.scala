@@ -21,6 +21,7 @@ import javax.validation.constraints.Size
 import org.jooq.test.all.scala.Test
 
 import scala.Array
+import scala.Byte
 
 
 /**
@@ -29,17 +30,17 @@ import scala.Array
 @Entity
 @Table(name = "T_BOOK", schema = "TEST")
 class TBook(
-	  private var id : Integer          
-	, private var authorId : Integer          
-	, private var coAuthorId : Integer          
-	, private var detailsId : Integer          
-	, private var title : String           
-	, private var publishedIn : Integer          
-	, private var languageId : Integer          
-	, private var contentText : String           
-	, private var contentPdf : Array[scala.Byte]
-	, private var recVersion : BigDecimal       
-	, private var recTimestamp : Timestamp        
+	  private var id : Integer    
+	, private var authorId : Integer    
+	, private var coAuthorId : Integer    
+	, private var detailsId : Integer    
+	, private var title : String     
+	, private var publishedIn : Integer    
+	, private var languageId : Integer    
+	, private var contentText : String     
+	, private var contentPdf : Array[Byte]
+	, private var recVersion : BigDecimal 
+	, private var recTimestamp : Timestamp  
 ) extends Test with Serializable {
 
 	def this() = {
@@ -142,11 +143,11 @@ class TBook(
 	}
 
 	@Column(name = "CONTENT_PDF")
-	def getContentPdf : Array[scala.Byte] = {
+	def getContentPdf : Array[Byte] = {
 		this.contentPdf
 	}
 
-	def setContentPdf(contentPdf : Array[scala.Byte]) : Unit = {
+	def setContentPdf(contentPdf : Array[Byte]) : Unit = {
 		this.contentPdf = contentPdf
 	}
 

@@ -22,6 +22,7 @@ import org.jooq.test.oraclescala.generatedclasses.multi_schema.MultiSchema
 import org.jooq.test.oraclescala.generatedclasses.multi_schema.tables.records.TBookRecord
 
 import scala.Array
+import scala.Byte
 
 
 object TBook {
@@ -87,7 +88,7 @@ class TBook(alias : String, aliased : Table[TBookRecord], parameters : Array[ Fi
 	/**
 	 * The column <code>MULTI_SCHEMA.T_BOOK.CONTENT_PDF</code>.
 	 */
-	val CONTENT_PDF : TableField[TBookRecord, Array[scala.Byte]] = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB, "")
+	val CONTENT_PDF : TableField[TBookRecord, Array[Byte]] = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB, "")
 
 	/**
 	 * Create a <code>MULTI_SCHEMA.T_BOOK</code> table reference

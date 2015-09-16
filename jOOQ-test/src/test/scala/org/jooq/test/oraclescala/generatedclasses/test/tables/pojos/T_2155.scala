@@ -8,6 +8,7 @@ import java.io.Serializable
 import java.lang.Integer
 import java.lang.StringBuilder
 import java.time.LocalDate
+import java.util.List
 
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -16,7 +17,6 @@ import javax.persistence.Table
 import javax.validation.constraints.NotNull
 
 import org.jooq.test.oraclescala.generatedclasses.test.udt.pojos.U_2155Object
-import org.jooq.test.oraclescala.generatedclasses.test.udt.records.U_2155ArrayRecord
 
 
 /**
@@ -25,10 +25,10 @@ import org.jooq.test.oraclescala.generatedclasses.test.udt.records.U_2155ArrayRe
 @Entity
 @Table(name = "T_2155", schema = "TEST")
 class T_2155(
-	  private var id : Integer          
-	, private var d1 : LocalDate        
-	, private var d2 : U_2155Object     
-	, private var d3 : U_2155ArrayRecord
+	  private var id : Integer        
+	, private var d1 : LocalDate      
+	, private var d2 : U_2155Object   
+	, private var d3 : List[LocalDate]
 ) extends Serializable {
 
 	def this() = {
@@ -74,11 +74,11 @@ class T_2155(
 	}
 
 	@Column(name = "D3")
-	def getD3 : U_2155ArrayRecord = {
+	def getD3 : List[LocalDate] = {
 		this.d3
 	}
 
-	def setD3(d3 : U_2155ArrayRecord) : Unit = {
+	def setD3(d3 : List[LocalDate]) : Unit = {
 		this.d3 = d3
 	}
 

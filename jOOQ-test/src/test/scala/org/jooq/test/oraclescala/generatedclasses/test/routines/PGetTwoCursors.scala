@@ -5,6 +5,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.routines
 
 
 import org.jooq.Parameter
+import org.jooq.Record
 import org.jooq.Result
 import org.jooq.impl.AbstractRoutine
 import org.jooq.test.oraclescala.generatedclasses.test.Test
@@ -15,12 +16,12 @@ object PGetTwoCursors {
 	/**
 	 * The parameter <code>TEST.P_GET_TWO_CURSORS.BOOKS</code>.
 	 */
-	val BOOKS : Parameter[Result[org.jooq.Record]] = AbstractRoutine.createParameter("BOOKS", org.jooq.impl.SQLDataType.RESULT, false)
+	val BOOKS : Parameter[Result[Record]] = AbstractRoutine.createParameter("BOOKS", org.jooq.impl.SQLDataType.RESULT, false)
 
 	/**
 	 * The parameter <code>TEST.P_GET_TWO_CURSORS.AUTHORS</code>.
 	 */
-	val AUTHORS : Parameter[Result[org.jooq.Record]] = AbstractRoutine.createParameter("AUTHORS", org.jooq.impl.SQLDataType.RESULT, false)
+	val AUTHORS : Parameter[Result[Record]] = AbstractRoutine.createParameter("AUTHORS", org.jooq.impl.SQLDataType.RESULT, false)
 }
 
 /**
@@ -35,14 +36,14 @@ class PGetTwoCursors extends AbstractRoutine[java.lang.Void]("P_GET_TWO_CURSORS"
 	/**
 	 * Get the <code>BOOKS</code> parameter OUT value from the routine
 	 */
-	def getBooks : Result[org.jooq.Record] = {
+	def getBooks : Result[Record] = {
 		getValue(PGetTwoCursors.BOOKS)
 	}
 
 	/**
 	 * Get the <code>AUTHORS</code> parameter OUT value from the routine
 	 */
-	def getAuthors : Result[org.jooq.Record] = {
+	def getAuthors : Result[Record] = {
 		getValue(PGetTwoCursors.AUTHORS)
 	}
 }

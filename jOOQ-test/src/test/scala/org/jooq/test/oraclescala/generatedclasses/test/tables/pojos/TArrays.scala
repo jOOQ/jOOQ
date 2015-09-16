@@ -6,18 +6,17 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables.pojos
 
 import java.io.Serializable
 import java.lang.Integer
+import java.lang.Long
+import java.lang.String
 import java.lang.StringBuilder
+import java.sql.Date
+import java.util.List
 
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Id
 import javax.persistence.Table
 import javax.validation.constraints.NotNull
-
-import org.jooq.test.oraclescala.generatedclasses.test.udt.records.UDateArrayRecord
-import org.jooq.test.oraclescala.generatedclasses.test.udt.records.UNumberArrayRecord
-import org.jooq.test.oraclescala.generatedclasses.test.udt.records.UNumberLongArrayRecord
-import org.jooq.test.oraclescala.generatedclasses.test.udt.records.UStringArrayRecord
 
 
 /**
@@ -26,11 +25,11 @@ import org.jooq.test.oraclescala.generatedclasses.test.udt.records.UStringArrayR
 @Entity
 @Table(name = "T_ARRAYS", schema = "TEST")
 class TArrays(
-	  private var id : Integer               
-	, private var stringArray : UStringArrayRecord    
-	, private var numberArray : UNumberArrayRecord    
-	, private var numberLongArray : UNumberLongArrayRecord
-	, private var dateArray : UDateArrayRecord      
+	  private var id : Integer      
+	, private var stringArray : List[String] 
+	, private var numberArray : List[Integer]
+	, private var numberLongArray : List[Long]   
+	, private var dateArray : List[Date]   
 ) extends Serializable {
 
 	def this() = {
@@ -59,38 +58,38 @@ class TArrays(
 	}
 
 	@Column(name = "STRING_ARRAY")
-	def getStringArray : UStringArrayRecord = {
+	def getStringArray : List[String] = {
 		this.stringArray
 	}
 
-	def setStringArray(stringArray : UStringArrayRecord) : Unit = {
+	def setStringArray(stringArray : List[String]) : Unit = {
 		this.stringArray = stringArray
 	}
 
 	@Column(name = "NUMBER_ARRAY")
-	def getNumberArray : UNumberArrayRecord = {
+	def getNumberArray : List[Integer] = {
 		this.numberArray
 	}
 
-	def setNumberArray(numberArray : UNumberArrayRecord) : Unit = {
+	def setNumberArray(numberArray : List[Integer]) : Unit = {
 		this.numberArray = numberArray
 	}
 
 	@Column(name = "NUMBER_LONG_ARRAY")
-	def getNumberLongArray : UNumberLongArrayRecord = {
+	def getNumberLongArray : List[Long] = {
 		this.numberLongArray
 	}
 
-	def setNumberLongArray(numberLongArray : UNumberLongArrayRecord) : Unit = {
+	def setNumberLongArray(numberLongArray : List[Long]) : Unit = {
 		this.numberLongArray = numberLongArray
 	}
 
 	@Column(name = "DATE_ARRAY")
-	def getDateArray : UDateArrayRecord = {
+	def getDateArray : List[Date] = {
 		this.dateArray
 	}
 
-	def setDateArray(dateArray : UDateArrayRecord) : Unit = {
+	def setDateArray(dateArray : List[Date]) : Unit = {
 		this.dateArray = dateArray
 	}
 

@@ -14,6 +14,7 @@ import org.jooq.test.oraclescala.generatedclasses.test.tables.T_725LobTest
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.T_725LobTestRecord
 
 import scala.Array
+import scala.Byte
 
 
 /**
@@ -49,7 +50,7 @@ class T_725LobTestDao(configuration : Configuration) extends DAOImpl[T_725LobTes
 	/**
 	 * Fetch records that have <code>LOB IN (values)</code>
 	 */
-	def fetchByLob(values : Array[scala.Byte]*) : List[org.jooq.test.oraclescala.generatedclasses.test.tables.pojos.T_725LobTest] = {
+	def fetchByLob(values : Array[Byte]*) : List[org.jooq.test.oraclescala.generatedclasses.test.tables.pojos.T_725LobTest] = {
 		fetch(T_725LobTest.T_725_LOB_TEST.LOB, values:_*)
 	}
 
@@ -63,7 +64,7 @@ class T_725LobTestDao(configuration : Configuration) extends DAOImpl[T_725LobTes
 	/**
 	 * Fetch records that have <code>USER_JAVA_SQL_BLOB IN (values)</code>
 	 */
-	def fetchByUserJavaSqlBlob(values : Array[scala.Byte]*) : List[org.jooq.test.oraclescala.generatedclasses.test.tables.pojos.T_725LobTest] = {
+	def fetchByUserJavaSqlBlob(values : Array[Byte]*) : List[org.jooq.test.oraclescala.generatedclasses.test.tables.pojos.T_725LobTest] = {
 		fetch(T_725LobTest.T_725_LOB_TEST.USER_JAVA_SQL_BLOB, values:_*)
 	}
 
@@ -77,7 +78,7 @@ class T_725LobTestDao(configuration : Configuration) extends DAOImpl[T_725LobTes
 	/**
 	 * Fetch records that have <code>JOOQ_JAVA_SQL_BLOB IN (values)</code>
 	 */
-	def fetchByJooqJavaSqlBlob(values : Array[scala.Byte]*) : List[org.jooq.test.oraclescala.generatedclasses.test.tables.pojos.T_725LobTest] = {
+	def fetchByJooqJavaSqlBlob(values : Array[Byte]*) : List[org.jooq.test.oraclescala.generatedclasses.test.tables.pojos.T_725LobTest] = {
 		fetch(T_725LobTest.T_725_LOB_TEST.JOOQ_JAVA_SQL_BLOB, values:_*)
 	}
 }

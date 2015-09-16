@@ -23,6 +23,7 @@ import org.jooq.test.oraclescala.generatedclasses.test.Keys
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.TBookRecord
 
 import scala.Array
+import scala.Byte
 
 
 object TBook {
@@ -88,7 +89,7 @@ class TBook(alias : String, aliased : Table[TBookRecord], parameters : Array[ Fi
 	/**
 	 * The column <code>TEST.T_BOOK.CONTENT_PDF</code>. Some binary content of the book
 	 */
-	val CONTENT_PDF : TableField[TBookRecord, Array[scala.Byte]] = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB, "Some binary content of the book")
+	val CONTENT_PDF : TableField[TBookRecord, Array[Byte]] = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB, "Some binary content of the book")
 
 	/**
 	 * The column <code>TEST.T_BOOK.REC_VERSION</code>.

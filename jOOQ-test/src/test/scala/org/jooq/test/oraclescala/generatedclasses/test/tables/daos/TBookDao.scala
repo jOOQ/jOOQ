@@ -17,6 +17,7 @@ import org.jooq.test.oraclescala.generatedclasses.test.tables.TBook
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.TBookRecord
 
 import scala.Array
+import scala.Byte
 
 
 /**
@@ -101,7 +102,7 @@ class TBookDao(configuration : Configuration) extends DAOImpl[TBookRecord, org.j
 	/**
 	 * Fetch records that have <code>CONTENT_PDF IN (values)</code>
 	 */
-	def fetchByContentPdf(values : Array[scala.Byte]*) : List[org.jooq.test.oraclescala.generatedclasses.test.tables.pojos.TBook] = {
+	def fetchByContentPdf(values : Array[Byte]*) : List[org.jooq.test.oraclescala.generatedclasses.test.tables.pojos.TBook] = {
 		fetch(TBook.T_BOOK.CONTENT_PDF, values:_*)
 	}
 

@@ -5,14 +5,15 @@ package org.jooq.test.oraclescala.generatedclasses.test.tables.pojos
 
 
 import java.io.Serializable
+import java.lang.Integer
 import java.lang.StringBuilder
+import java.util.List
 
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Table
 
 import org.jooq.test.oraclescala.generatedclasses.multi_schema.udt.pojos.NumberObject
-import org.jooq.test.oraclescala.generatedclasses.multi_schema.udt.records.NumberTableRecord
 
 
 /**
@@ -21,12 +22,12 @@ import org.jooq.test.oraclescala.generatedclasses.multi_schema.udt.records.Numbe
 @Entity
 @Table(name = "T_3711", schema = "TEST")
 class T_3711(
-	  private var v1 : NumberTableRecord
-	, private var v2 : NumberObject     
-	, private var v3 : NumberTableRecord
-	, private var v4 : NumberObject     
-	, private var v7 : NumberTableRecord
-	, private var v8 : NumberObject     
+	  private var v1 : List[Integer]
+	, private var v2 : NumberObject 
+	, private var v3 : List[Integer]
+	, private var v4 : NumberObject 
+	, private var v7 : List[Integer]
+	, private var v8 : NumberObject 
 ) extends Serializable {
 
 	def this() = {
@@ -45,11 +46,11 @@ class T_3711(
 	}
 
 	@Column(name = "V1")
-	def getV1 : NumberTableRecord = {
+	def getV1 : List[Integer] = {
 		this.v1
 	}
 
-	def setV1(v1 : NumberTableRecord) : Unit = {
+	def setV1(v1 : List[Integer]) : Unit = {
 		this.v1 = v1
 	}
 
@@ -63,11 +64,11 @@ class T_3711(
 	}
 
 	@Column(name = "V3")
-	def getV3 : NumberTableRecord = {
+	def getV3 : List[Integer] = {
 		this.v3
 	}
 
-	def setV3(v3 : NumberTableRecord) : Unit = {
+	def setV3(v3 : List[Integer]) : Unit = {
 		this.v3 = v3
 	}
 
@@ -81,11 +82,11 @@ class T_3711(
 	}
 
 	@Column(name = "V7")
-	def getV7 : NumberTableRecord = {
+	def getV7 : List[Integer] = {
 		this.v7
 	}
 
-	def setV7(v7 : NumberTableRecord) : Unit = {
+	def setV7(v7 : List[Integer]) : Unit = {
 		this.v7 = v7
 	}
 

@@ -25,6 +25,7 @@ import org.jooq.test.all.scala.Test
 import org.jooq.test.oraclescala.generatedclasses.test.tables.TBook
 
 import scala.Array
+import scala.Byte
 
 
 /**
@@ -32,7 +33,7 @@ import scala.Array
  */
 @Entity
 @Table(name = "T_BOOK", schema = "TEST")
-class TBookRecord extends UpdatableRecordImpl[TBookRecord](TBook.T_BOOK) with Test with Record11[Integer, Integer, Integer, Integer, String, Integer, Integer, String, Array[scala.Byte], BigDecimal, Timestamp] {
+class TBookRecord extends UpdatableRecordImpl[TBookRecord](TBook.T_BOOK) with Test with Record11[Integer, Integer, Integer, Integer, String, Integer, Integer, String, Array[Byte], BigDecimal, Timestamp] {
 
 	/**
 	 * Setter for <code>TEST.T_BOOK.ID</code>. The book ID
@@ -172,7 +173,7 @@ class TBookRecord extends UpdatableRecordImpl[TBookRecord](TBook.T_BOOK) with Te
 	/**
 	 * Setter for <code>TEST.T_BOOK.CONTENT_PDF</code>. Some binary content of the book
 	 */
-	def setContentPdf(value : Array[scala.Byte]) : Unit = {
+	def setContentPdf(value : Array[Byte]) : Unit = {
 		setValue(8, value)
 	}
 
@@ -180,9 +181,9 @@ class TBookRecord extends UpdatableRecordImpl[TBookRecord](TBook.T_BOOK) with Te
 	 * Getter for <code>TEST.T_BOOK.CONTENT_PDF</code>. Some binary content of the book
 	 */
 	@Column(name = "CONTENT_PDF")
-	def getContentPdf : Array[scala.Byte] = {
+	def getContentPdf : Array[Byte] = {
 		val r = getValue(8)
-		if (r == null) null else r.asInstanceOf[Array[scala.Byte]]
+		if (r == null) null else r.asInstanceOf[Array[Byte]]
 	}
 
 	/**
@@ -228,12 +229,12 @@ class TBookRecord extends UpdatableRecordImpl[TBookRecord](TBook.T_BOOK) with Te
 	// Record11 type implementation
 	// -------------------------------------------------------------------------
 
-	override def fieldsRow : Row11[Integer, Integer, Integer, Integer, String, Integer, Integer, String, Array[scala.Byte], BigDecimal, Timestamp] = {
-		super.fieldsRow.asInstanceOf[ Row11[Integer, Integer, Integer, Integer, String, Integer, Integer, String, Array[scala.Byte], BigDecimal, Timestamp] ]
+	override def fieldsRow : Row11[Integer, Integer, Integer, Integer, String, Integer, Integer, String, Array[Byte], BigDecimal, Timestamp] = {
+		super.fieldsRow.asInstanceOf[ Row11[Integer, Integer, Integer, Integer, String, Integer, Integer, String, Array[Byte], BigDecimal, Timestamp] ]
 	}
 
-	override def valuesRow : Row11[Integer, Integer, Integer, Integer, String, Integer, Integer, String, Array[scala.Byte], BigDecimal, Timestamp] = {
-		super.valuesRow.asInstanceOf[ Row11[Integer, Integer, Integer, Integer, String, Integer, Integer, String, Array[scala.Byte], BigDecimal, Timestamp] ]
+	override def valuesRow : Row11[Integer, Integer, Integer, Integer, String, Integer, Integer, String, Array[Byte], BigDecimal, Timestamp] = {
+		super.valuesRow.asInstanceOf[ Row11[Integer, Integer, Integer, Integer, String, Integer, Integer, String, Array[Byte], BigDecimal, Timestamp] ]
 	}
 	override def field1 : Field[Integer] = TBook.T_BOOK.ID
 	override def field2 : Field[Integer] = TBook.T_BOOK.AUTHOR_ID
@@ -243,7 +244,7 @@ class TBookRecord extends UpdatableRecordImpl[TBookRecord](TBook.T_BOOK) with Te
 	override def field6 : Field[Integer] = TBook.T_BOOK.PUBLISHED_IN
 	override def field7 : Field[Integer] = TBook.T_BOOK.LANGUAGE_ID
 	override def field8 : Field[String] = TBook.T_BOOK.CONTENT_TEXT
-	override def field9 : Field[Array[scala.Byte]] = TBook.T_BOOK.CONTENT_PDF
+	override def field9 : Field[Array[Byte]] = TBook.T_BOOK.CONTENT_PDF
 	override def field10 : Field[BigDecimal] = TBook.T_BOOK.REC_VERSION
 	override def field11 : Field[Timestamp] = TBook.T_BOOK.REC_TIMESTAMP
 	override def value1 : Integer = getId
@@ -254,7 +255,7 @@ class TBookRecord extends UpdatableRecordImpl[TBookRecord](TBook.T_BOOK) with Te
 	override def value6 : Integer = getPublishedIn
 	override def value7 : Integer = getLanguageId
 	override def value8 : String = getContentText
-	override def value9 : Array[scala.Byte] = getContentPdf
+	override def value9 : Array[Byte] = getContentPdf
 	override def value10 : BigDecimal = getRecVersion
 	override def value11 : Timestamp = getRecTimestamp
 
@@ -298,7 +299,7 @@ class TBookRecord extends UpdatableRecordImpl[TBookRecord](TBook.T_BOOK) with Te
 		this
 	}
 
-	override def value9(value : Array[scala.Byte]) : TBookRecord = {
+	override def value9(value : Array[Byte]) : TBookRecord = {
 		setContentPdf(value)
 		this
 	}
@@ -313,7 +314,7 @@ class TBookRecord extends UpdatableRecordImpl[TBookRecord](TBook.T_BOOK) with Te
 		this
 	}
 
-	override def values(value1 : Integer, value2 : Integer, value3 : Integer, value4 : Integer, value5 : String, value6 : Integer, value7 : Integer, value8 : String, value9 : Array[scala.Byte], value10 : BigDecimal, value11 : Timestamp) : TBookRecord = {
+	override def values(value1 : Integer, value2 : Integer, value3 : Integer, value4 : Integer, value5 : String, value6 : Integer, value7 : Integer, value8 : String, value9 : Array[Byte], value10 : BigDecimal, value11 : Timestamp) : TBookRecord = {
 		this.value1(value1)
 		this.value2(value2)
 		this.value3(value3)
@@ -331,7 +332,7 @@ class TBookRecord extends UpdatableRecordImpl[TBookRecord](TBook.T_BOOK) with Te
 	/**
 	 * Create a detached, initialised TBookRecord
 	 */
-	def this(id : Integer, authorId : Integer, coAuthorId : Integer, detailsId : Integer, title : String, publishedIn : Integer, languageId : Integer, contentText : String, contentPdf : Array[scala.Byte], recVersion : BigDecimal, recTimestamp : Timestamp) = {
+	def this(id : Integer, authorId : Integer, coAuthorId : Integer, detailsId : Integer, title : String, publishedIn : Integer, languageId : Integer, contentText : String, contentPdf : Array[Byte], recVersion : BigDecimal, recTimestamp : Timestamp) = {
 		this()
 
 		setValue(0, id)

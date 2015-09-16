@@ -16,6 +16,7 @@ import org.jooq.test.oraclescala.generatedclasses.test.udt.records.UAddressTypeR
 import org.jooq.test.oraclescala.generatedclasses.test.udt.records.UStreetTypeRecord
 
 import scala.Array
+import scala.Byte
 
 
 object UAddressType {
@@ -83,7 +84,7 @@ class UAddressType extends UDTImpl[UAddressTypeRecord]("U_ADDRESS_TYPE", Test.TE
 	private val COUNTRY : UDTField[UAddressTypeRecord, String] = UDTImpl.createField("COUNTRY", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "")
 	private val SINCE : UDTField[UAddressTypeRecord, Date] = UDTImpl.createField("SINCE", org.jooq.impl.SQLDataType.DATE, this, "")
 	private val CODE : UDTField[UAddressTypeRecord, Integer] = UDTImpl.createField("CODE", org.jooq.impl.SQLDataType.INTEGER, this, "")
-	private val F_1323 : UDTField[UAddressTypeRecord, Array[scala.Byte]] = UDTImpl.createField("F_1323", org.jooq.impl.SQLDataType.BLOB, this, "")
+	private val F_1323 : UDTField[UAddressTypeRecord, Array[Byte]] = UDTImpl.createField("F_1323", org.jooq.impl.SQLDataType.BLOB, this, "")
 	private val F_1326 : UDTField[UAddressTypeRecord, String] = UDTImpl.createField("F_1326", org.jooq.impl.SQLDataType.CLOB, this, "")
 
 	{

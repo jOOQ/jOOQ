@@ -7,6 +7,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.routines
 import java.math.BigDecimal
 
 import org.jooq.Parameter
+import org.jooq.Record
 import org.jooq.Result
 import org.jooq.impl.AbstractRoutine
 import org.jooq.test.oraclescala.generatedclasses.test.Test
@@ -23,7 +24,7 @@ object PGetOneCursor {
 	/**
 	 * The parameter <code>TEST.P_GET_ONE_CURSOR.BOOKS</code>.
 	 */
-	val BOOKS : Parameter[Result[org.jooq.Record]] = AbstractRoutine.createParameter("BOOKS", org.jooq.impl.SQLDataType.RESULT, false)
+	val BOOKS : Parameter[Result[Record]] = AbstractRoutine.createParameter("BOOKS", org.jooq.impl.SQLDataType.RESULT, false)
 
 	/**
 	 * The parameter <code>TEST.P_GET_ONE_CURSOR.BOOK_IDS</code>.
@@ -58,7 +59,7 @@ class PGetOneCursor extends AbstractRoutine[java.lang.Void]("P_GET_ONE_CURSOR", 
 	/**
 	 * Get the <code>BOOKS</code> parameter OUT value from the routine
 	 */
-	def getBooks : Result[org.jooq.Record] = {
+	def getBooks : Result[Record] = {
 		getValue(PGetOneCursor.BOOKS)
 	}
 }

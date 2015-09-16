@@ -20,6 +20,7 @@ import org.jooq.test.oraclescala.generatedclasses.test.Test
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.T_725LobTestRecord
 
 import scala.Array
+import scala.Byte
 
 
 object T_725LobTest {
@@ -50,7 +51,7 @@ class T_725LobTest(alias : String, aliased : Table[T_725LobTestRecord], paramete
 	/**
 	 * The column <code>TEST.T_725_LOB_TEST.LOB</code>.
 	 */
-	val LOB : TableField[T_725LobTestRecord, Array[scala.Byte]] = createField("LOB", org.jooq.impl.SQLDataType.BLOB, "")
+	val LOB : TableField[T_725LobTestRecord, Array[Byte]] = createField("LOB", org.jooq.impl.SQLDataType.BLOB, "")
 
 	/**
 	 * The column <code>TEST.T_725_LOB_TEST.USER_JAVA_SQL_CLOB</code>.
@@ -60,7 +61,7 @@ class T_725LobTest(alias : String, aliased : Table[T_725LobTestRecord], paramete
 	/**
 	 * The column <code>TEST.T_725_LOB_TEST.USER_JAVA_SQL_BLOB</code>.
 	 */
-	val USER_JAVA_SQL_BLOB : TableField[T_725LobTestRecord, Array[scala.Byte]] = createField("USER_JAVA_SQL_BLOB", org.jooq.impl.SQLDataType.BLOB, "")
+	val USER_JAVA_SQL_BLOB : TableField[T_725LobTestRecord, Array[Byte]] = createField("USER_JAVA_SQL_BLOB", org.jooq.impl.SQLDataType.BLOB, "")
 
 	/**
 	 * The column <code>TEST.T_725_LOB_TEST.JOOQ_JAVA_SQL_CLOB</code>.
@@ -70,7 +71,7 @@ class T_725LobTest(alias : String, aliased : Table[T_725LobTestRecord], paramete
 	/**
 	 * The column <code>TEST.T_725_LOB_TEST.JOOQ_JAVA_SQL_BLOB</code>.
 	 */
-	val JOOQ_JAVA_SQL_BLOB : TableField[T_725LobTestRecord, Array[scala.Byte]] = createField("JOOQ_JAVA_SQL_BLOB", org.jooq.impl.SQLDataType.BLOB, "")
+	val JOOQ_JAVA_SQL_BLOB : TableField[T_725LobTestRecord, Array[Byte]] = createField("JOOQ_JAVA_SQL_BLOB", org.jooq.impl.SQLDataType.BLOB, "")
 
 	/**
 	 * Create a <code>TEST.T_725_LOB_TEST</code> table reference

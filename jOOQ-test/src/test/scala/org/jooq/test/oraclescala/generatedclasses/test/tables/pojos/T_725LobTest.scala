@@ -16,6 +16,7 @@ import javax.persistence.Table
 import javax.validation.constraints.NotNull
 
 import scala.Array
+import scala.Byte
 
 
 /**
@@ -24,12 +25,12 @@ import scala.Array
 @Entity
 @Table(name = "T_725_LOB_TEST", schema = "TEST")
 class T_725LobTest(
-	  private var id : Integer          
-	, private var lob : Array[scala.Byte]
-	, private var userJavaSqlClob : String           
-	, private var userJavaSqlBlob : Array[scala.Byte]
-	, private var jooqJavaSqlClob : String           
-	, private var jooqJavaSqlBlob : Array[scala.Byte]
+	  private var id : Integer    
+	, private var lob : Array[Byte]
+	, private var userJavaSqlClob : String     
+	, private var userJavaSqlBlob : Array[Byte]
+	, private var jooqJavaSqlClob : String     
+	, private var jooqJavaSqlBlob : Array[Byte]
 ) extends Serializable {
 
 	def this() = {
@@ -59,11 +60,11 @@ class T_725LobTest(
 	}
 
 	@Column(name = "LOB")
-	def getLob : Array[scala.Byte] = {
+	def getLob : Array[Byte] = {
 		this.lob
 	}
 
-	def setLob(lob : Array[scala.Byte]) : Unit = {
+	def setLob(lob : Array[Byte]) : Unit = {
 		this.lob = lob
 	}
 
@@ -77,11 +78,11 @@ class T_725LobTest(
 	}
 
 	@Column(name = "USER_JAVA_SQL_BLOB")
-	def getUserJavaSqlBlob : Array[scala.Byte] = {
+	def getUserJavaSqlBlob : Array[Byte] = {
 		this.userJavaSqlBlob
 	}
 
-	def setUserJavaSqlBlob(userJavaSqlBlob : Array[scala.Byte]) : Unit = {
+	def setUserJavaSqlBlob(userJavaSqlBlob : Array[Byte]) : Unit = {
 		this.userJavaSqlBlob = userJavaSqlBlob
 	}
 
@@ -95,11 +96,11 @@ class T_725LobTest(
 	}
 
 	@Column(name = "JOOQ_JAVA_SQL_BLOB")
-	def getJooqJavaSqlBlob : Array[scala.Byte] = {
+	def getJooqJavaSqlBlob : Array[Byte] = {
 		this.jooqJavaSqlBlob
 	}
 
-	def setJooqJavaSqlBlob(jooqJavaSqlBlob : Array[scala.Byte]) : Unit = {
+	def setJooqJavaSqlBlob(jooqJavaSqlBlob : Array[Byte]) : Unit = {
 		this.jooqJavaSqlBlob = jooqJavaSqlBlob
 	}
 

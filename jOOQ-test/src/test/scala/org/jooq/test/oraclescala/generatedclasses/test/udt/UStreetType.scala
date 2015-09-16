@@ -14,6 +14,7 @@ import org.jooq.test.oraclescala.generatedclasses.test.udt.records.UNumberArrayR
 import org.jooq.test.oraclescala.generatedclasses.test.udt.records.UStreetTypeRecord
 
 import scala.Array
+import scala.Byte
 
 
 object UStreetType {
@@ -63,7 +64,7 @@ class UStreetType extends UDTImpl[UStreetTypeRecord]("U_STREET_TYPE", Test.TEST)
 	private val STREET : UDTField[UStreetTypeRecord, String] = UDTImpl.createField("STREET", org.jooq.impl.SQLDataType.VARCHAR.length(100), this, "")
 	private val NO : UDTField[UStreetTypeRecord, String] = UDTImpl.createField("NO", org.jooq.impl.SQLDataType.VARCHAR.length(30), this, "")
 	private val FLOORS : UDTField[UStreetTypeRecord, UNumberArrayRecord] = UDTImpl.createField("FLOORS", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(classOf[org.jooq.test.oraclescala.generatedclasses.test.udt.records.UNumberArrayRecord]), this, "")
-	private val F_1323 : UDTField[UStreetTypeRecord, Array[scala.Byte]] = UDTImpl.createField("F_1323", org.jooq.impl.SQLDataType.BLOB, this, "")
+	private val F_1323 : UDTField[UStreetTypeRecord, Array[Byte]] = UDTImpl.createField("F_1323", org.jooq.impl.SQLDataType.BLOB, this, "")
 	private val F_1326 : UDTField[UStreetTypeRecord, String] = UDTImpl.createField("F_1326", org.jooq.impl.SQLDataType.CLOB, this, "")
 
 	{

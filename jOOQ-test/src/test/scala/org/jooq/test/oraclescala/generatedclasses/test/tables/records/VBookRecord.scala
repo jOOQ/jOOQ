@@ -23,6 +23,7 @@ import org.jooq.test.all.scala.Test
 import org.jooq.test.oraclescala.generatedclasses.test.tables.VBook
 
 import scala.Array
+import scala.Byte
 
 
 /**
@@ -30,7 +31,7 @@ import scala.Array
  */
 @Entity
 @Table(name = "V_BOOK", schema = "TEST")
-class VBookRecord extends TableRecordImpl[VBookRecord](VBook.V_BOOK) with Test with Record11[Integer, Integer, Integer, Integer, String, Integer, Integer, String, Array[scala.Byte], BigDecimal, Timestamp] {
+class VBookRecord extends TableRecordImpl[VBookRecord](VBook.V_BOOK) with Test with Record11[Integer, Integer, Integer, Integer, String, Integer, Integer, String, Array[Byte], BigDecimal, Timestamp] {
 
 	/**
 	 * Setter for <code>TEST.V_BOOK.ID</code>.
@@ -169,7 +170,7 @@ class VBookRecord extends TableRecordImpl[VBookRecord](VBook.V_BOOK) with Test w
 	/**
 	 * Setter for <code>TEST.V_BOOK.CONTENT_PDF</code>.
 	 */
-	def setContentPdf(value : Array[scala.Byte]) : Unit = {
+	def setContentPdf(value : Array[Byte]) : Unit = {
 		setValue(8, value)
 	}
 
@@ -177,9 +178,9 @@ class VBookRecord extends TableRecordImpl[VBookRecord](VBook.V_BOOK) with Test w
 	 * Getter for <code>TEST.V_BOOK.CONTENT_PDF</code>.
 	 */
 	@Column(name = "CONTENT_PDF")
-	def getContentPdf : Array[scala.Byte] = {
+	def getContentPdf : Array[Byte] = {
 		val r = getValue(8)
-		if (r == null) null else r.asInstanceOf[Array[scala.Byte]]
+		if (r == null) null else r.asInstanceOf[Array[Byte]]
 	}
 
 	/**
@@ -218,12 +219,12 @@ class VBookRecord extends TableRecordImpl[VBookRecord](VBook.V_BOOK) with Test w
 	// Record11 type implementation
 	// -------------------------------------------------------------------------
 
-	override def fieldsRow : Row11[Integer, Integer, Integer, Integer, String, Integer, Integer, String, Array[scala.Byte], BigDecimal, Timestamp] = {
-		super.fieldsRow.asInstanceOf[ Row11[Integer, Integer, Integer, Integer, String, Integer, Integer, String, Array[scala.Byte], BigDecimal, Timestamp] ]
+	override def fieldsRow : Row11[Integer, Integer, Integer, Integer, String, Integer, Integer, String, Array[Byte], BigDecimal, Timestamp] = {
+		super.fieldsRow.asInstanceOf[ Row11[Integer, Integer, Integer, Integer, String, Integer, Integer, String, Array[Byte], BigDecimal, Timestamp] ]
 	}
 
-	override def valuesRow : Row11[Integer, Integer, Integer, Integer, String, Integer, Integer, String, Array[scala.Byte], BigDecimal, Timestamp] = {
-		super.valuesRow.asInstanceOf[ Row11[Integer, Integer, Integer, Integer, String, Integer, Integer, String, Array[scala.Byte], BigDecimal, Timestamp] ]
+	override def valuesRow : Row11[Integer, Integer, Integer, Integer, String, Integer, Integer, String, Array[Byte], BigDecimal, Timestamp] = {
+		super.valuesRow.asInstanceOf[ Row11[Integer, Integer, Integer, Integer, String, Integer, Integer, String, Array[Byte], BigDecimal, Timestamp] ]
 	}
 	override def field1 : Field[Integer] = VBook.V_BOOK.ID
 	override def field2 : Field[Integer] = VBook.V_BOOK.AUTHOR_ID
@@ -233,7 +234,7 @@ class VBookRecord extends TableRecordImpl[VBookRecord](VBook.V_BOOK) with Test w
 	override def field6 : Field[Integer] = VBook.V_BOOK.PUBLISHED_IN
 	override def field7 : Field[Integer] = VBook.V_BOOK.LANGUAGE_ID
 	override def field8 : Field[String] = VBook.V_BOOK.CONTENT_TEXT
-	override def field9 : Field[Array[scala.Byte]] = VBook.V_BOOK.CONTENT_PDF
+	override def field9 : Field[Array[Byte]] = VBook.V_BOOK.CONTENT_PDF
 	override def field10 : Field[BigDecimal] = VBook.V_BOOK.REC_VERSION
 	override def field11 : Field[Timestamp] = VBook.V_BOOK.REC_TIMESTAMP
 	override def value1 : Integer = getId
@@ -244,7 +245,7 @@ class VBookRecord extends TableRecordImpl[VBookRecord](VBook.V_BOOK) with Test w
 	override def value6 : Integer = getPublishedIn
 	override def value7 : Integer = getLanguageId
 	override def value8 : String = getContentText
-	override def value9 : Array[scala.Byte] = getContentPdf
+	override def value9 : Array[Byte] = getContentPdf
 	override def value10 : BigDecimal = getRecVersion
 	override def value11 : Timestamp = getRecTimestamp
 
@@ -288,7 +289,7 @@ class VBookRecord extends TableRecordImpl[VBookRecord](VBook.V_BOOK) with Test w
 		this
 	}
 
-	override def value9(value : Array[scala.Byte]) : VBookRecord = {
+	override def value9(value : Array[Byte]) : VBookRecord = {
 		setContentPdf(value)
 		this
 	}
@@ -303,7 +304,7 @@ class VBookRecord extends TableRecordImpl[VBookRecord](VBook.V_BOOK) with Test w
 		this
 	}
 
-	override def values(value1 : Integer, value2 : Integer, value3 : Integer, value4 : Integer, value5 : String, value6 : Integer, value7 : Integer, value8 : String, value9 : Array[scala.Byte], value10 : BigDecimal, value11 : Timestamp) : VBookRecord = {
+	override def values(value1 : Integer, value2 : Integer, value3 : Integer, value4 : Integer, value5 : String, value6 : Integer, value7 : Integer, value8 : String, value9 : Array[Byte], value10 : BigDecimal, value11 : Timestamp) : VBookRecord = {
 		this.value1(value1)
 		this.value2(value2)
 		this.value3(value3)
@@ -321,7 +322,7 @@ class VBookRecord extends TableRecordImpl[VBookRecord](VBook.V_BOOK) with Test w
 	/**
 	 * Create a detached, initialised VBookRecord
 	 */
-	def this(id : Integer, authorId : Integer, coAuthorId : Integer, detailsId : Integer, title : String, publishedIn : Integer, languageId : Integer, contentText : String, contentPdf : Array[scala.Byte], recVersion : BigDecimal, recTimestamp : Timestamp) = {
+	def this(id : Integer, authorId : Integer, coAuthorId : Integer, detailsId : Integer, title : String, publishedIn : Integer, languageId : Integer, contentText : String, contentPdf : Array[Byte], recVersion : BigDecimal, recTimestamp : Timestamp) = {
 		this()
 
 		setValue(0, id)

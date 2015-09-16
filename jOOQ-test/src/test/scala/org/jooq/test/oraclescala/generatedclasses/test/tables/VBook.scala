@@ -18,6 +18,7 @@ import org.jooq.test.all.scala.Test
 import org.jooq.test.oraclescala.generatedclasses.test.tables.records.VBookRecord
 
 import scala.Array
+import scala.Byte
 
 
 object VBook {
@@ -83,7 +84,7 @@ class VBook(alias : String, aliased : Table[VBookRecord], parameters : Array[ Fi
 	/**
 	 * The column <code>TEST.V_BOOK.CONTENT_PDF</code>.
 	 */
-	val CONTENT_PDF : TableField[VBookRecord, Array[scala.Byte]] = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB, "")
+	val CONTENT_PDF : TableField[VBookRecord, Array[Byte]] = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB, "")
 
 	/**
 	 * The column <code>TEST.V_BOOK.REC_VERSION</code>.

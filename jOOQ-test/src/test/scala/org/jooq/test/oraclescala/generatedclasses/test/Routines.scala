@@ -13,6 +13,7 @@ import java.time.LocalDate
 import org.jooq.AggregateFunction
 import org.jooq.Configuration
 import org.jooq.Field
+import org.jooq.Record
 import org.jooq.Result
 import org.jooq.test.oraclescala.generatedclasses.test.routines.F2155
 import org.jooq.test.oraclescala.generatedclasses.test.routines.F317
@@ -237,7 +238,7 @@ object Routines {
 	/**
 	 * Call <code>TEST.F_GET_ONE_CURSOR</code>
 	 */
-	def fGetOneCursor(configuration : Configuration, bookIds : UNumberArrayRecord) : Result[org.jooq.Record] = {
+	def fGetOneCursor(configuration : Configuration, bookIds : UNumberArrayRecord) : Result[Record] = {
 		val f = new FGetOneCursor()
 		f.setBookIds(bookIds)
 
@@ -248,7 +249,7 @@ object Routines {
 	/**
 	 * Get <code>TEST.F_GET_ONE_CURSOR</code> as a field
 	 */
-	def fGetOneCursor(bookIds : UNumberArrayRecord) : Field[Result[org.jooq.Record]] = {
+	def fGetOneCursor(bookIds : UNumberArrayRecord) : Field[Result[Record]] = {
 		val f = new FGetOneCursor
 		f.setBookIds(bookIds)
 
@@ -258,7 +259,7 @@ object Routines {
 	/**
 	 * Get <code>TEST.F_GET_ONE_CURSOR</code> as a field
 	 */
-	def fGetOneCursor(bookIds : Field[UNumberArrayRecord]) : Field[Result[org.jooq.Record]] = {
+	def fGetOneCursor(bookIds : Field[UNumberArrayRecord]) : Field[Result[Record]] = {
 		val f = new FGetOneCursor
 		f.setBookIds(bookIds)
 
@@ -619,7 +620,7 @@ object Routines {
 	/**
 	 * Call <code>TEST.F691CURSOR_IN</code>
 	 */
-	def f691cursorIn(configuration : Configuration, c : Result[org.jooq.Record]) : BigDecimal = {
+	def f691cursorIn(configuration : Configuration, c : Result[Record]) : BigDecimal = {
 		val f = new F691cursorIn()
 		f.setC(c)
 
@@ -630,7 +631,7 @@ object Routines {
 	/**
 	 * Get <code>TEST.F691CURSOR_IN</code> as a field
 	 */
-	def f691cursorIn(c : Result[org.jooq.Record]) : Field[BigDecimal] = {
+	def f691cursorIn(c : Result[Record]) : Field[BigDecimal] = {
 		val f = new F691cursorIn
 		f.setC(c)
 
@@ -640,7 +641,7 @@ object Routines {
 	/**
 	 * Get <code>TEST.F691CURSOR_IN</code> as a field
 	 */
-	def f691cursorIn(c : Field[Result[org.jooq.Record]]) : Field[BigDecimal] = {
+	def f691cursorIn(c : Field[Result[Record]]) : Field[BigDecimal] = {
 		val f = new F691cursorIn
 		f.setC(c)
 
@@ -650,7 +651,7 @@ object Routines {
 	/**
 	 * Call <code>TEST.F691CURSOR_OUT</code>
 	 */
-	def f691cursorOut(configuration : Configuration) : Result[org.jooq.Record] = {
+	def f691cursorOut(configuration : Configuration) : Result[Record] = {
 		val f = new F691cursorOut()
 
 		f.execute(configuration)
@@ -660,7 +661,7 @@ object Routines {
 	/**
 	 * Get <code>TEST.F691CURSOR_OUT</code> as a field
 	 */
-	def f691cursorOut() : Field[Result[org.jooq.Record]] = {
+	def f691cursorOut() : Field[Result[Record]] = {
 		val f = new F691cursorOut
 
 		return f.asField

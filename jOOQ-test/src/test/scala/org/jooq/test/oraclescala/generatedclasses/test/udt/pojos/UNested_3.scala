@@ -7,8 +7,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.udt.pojos
 import java.io.Serializable
 import java.lang.Integer
 import java.lang.StringBuilder
-
-import org.jooq.test.oraclescala.generatedclasses.test.udt.records.UNested_2Record
+import java.util.List
 
 
 /**
@@ -16,7 +15,7 @@ import org.jooq.test.oraclescala.generatedclasses.test.udt.records.UNested_2Reco
  */
 class UNested_3(
 	  private var id : Integer        
-	, private var nested : UNested_2Record
+	, private var nested : List[UNested_1]
 ) extends Serializable {
 
 	def this() = {
@@ -38,11 +37,11 @@ class UNested_3(
 		this.id = id
 	}
 
-	def getNested : UNested_2Record = {
+	def getNested : List[UNested_1] = {
 		this.nested
 	}
 
-	def setNested(nested : UNested_2Record) : Unit = {
+	def setNested(nested : List[UNested_1]) : Unit = {
 		this.nested = nested
 	}
 

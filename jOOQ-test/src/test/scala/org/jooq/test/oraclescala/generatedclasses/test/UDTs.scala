@@ -15,6 +15,8 @@ import org.jooq.test.oraclescala.generatedclasses.test.udt.UNested_3
 import org.jooq.test.oraclescala.generatedclasses.test.udt.UStreetType
 import org.jooq.test.oraclescala.generatedclasses.test.udt.U_2155Object
 import org.jooq.test.oraclescala.generatedclasses.test.udt.U_3005
+import org.jooq.test.oraclescala.generatedclasses.test.udt.U_3082_1
+import org.jooq.test.oraclescala.generatedclasses.test.udt.U_3082_3
 import org.jooq.test.oraclescala.generatedclasses.test.udt.U_3709
 
 
@@ -77,6 +79,16 @@ object UDTs {
 	 * The type <code>TEST.U_3005</code>
 	 */
 	val U_3005 = org.jooq.test.oraclescala.generatedclasses.test.udt.U_3005.U_3005
+
+	/**
+	 * The type <code>TEST.U_3082_1</code>
+	 */
+	val U_3082_1 = org.jooq.test.oraclescala.generatedclasses.test.udt.U_3082_1.U_3082_1
+
+	/**
+	 * The type <code>TEST.U_3082_3</code>
+	 */
+	val U_3082_3 = org.jooq.test.oraclescala.generatedclasses.test.udt.U_3082_3.U_3082_3
 
 	/**
 	 * The type <code>TEST.U_3709</code>

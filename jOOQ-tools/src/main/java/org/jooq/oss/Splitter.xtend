@@ -143,6 +143,7 @@ class Splitter extends Generators {
                 && !canonicalPath.contains("jOOQ-websites")
                 && !canonicalPath.contains("jOOQ-webservices")
                 && !canonicalPath.contains("jOOQ-parse")
+                && !canonicalPath.contains("\\src\\test\\")
                 && !canonicalPath.contains("\\target\\")
                 && !canonicalPath.contains("\\bin\\")
                 && !canonicalPath.contains("\\.idea\\")

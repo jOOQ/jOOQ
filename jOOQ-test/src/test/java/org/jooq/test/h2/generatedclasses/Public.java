@@ -41,6 +41,7 @@ import org.jooq.test.h2.generatedclasses.tables.Transactions;
 import org.jooq.test.h2.generatedclasses.tables.VAuthor;
 import org.jooq.test.h2.generatedclasses.tables.VBook;
 import org.jooq.test.h2.generatedclasses.tables.VLibrary;
+import org.jooq.test.h2.generatedclasses.tables.VWithDots;
 import org.jooq.test.h2.generatedclasses.tables.V_2603;
 import org.jooq.test.h2.generatedclasses.tables.V_3176;
 import org.jooq.test.h2.generatedclasses.tables.XTestCase_2025;
@@ -57,7 +58,7 @@ import org.jooq.test.h2.generatedclasses.tables.Ää;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-	private static final long serialVersionUID = -929955488;
+	private static final long serialVersionUID = 189548992;
 
 	/**
 	 * The reference instance of <code>PUBLIC</code>
@@ -127,6 +128,7 @@ public class Public extends SchemaImpl {
 			VAuthor.V_AUTHOR,
 			VBook.V_BOOK,
 			Ää.ÄÄ,
+			VWithDots.V_WITH_DOTS,
 			V_2603.V_2603,
 			V_3176.V_3176,
 			Accounts.ACCOUNTS,

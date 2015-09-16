@@ -34,6 +34,7 @@ import org.jooq.test.h2.generatedclasses.tables.Transactions;
 import org.jooq.test.h2.generatedclasses.tables.VAuthor;
 import org.jooq.test.h2.generatedclasses.tables.VBook;
 import org.jooq.test.h2.generatedclasses.tables.VLibrary;
+import org.jooq.test.h2.generatedclasses.tables.VWithDots;
 import org.jooq.test.h2.generatedclasses.tables.V_2603;
 import org.jooq.test.h2.generatedclasses.tables.V_3176;
 import org.jooq.test.h2.generatedclasses.tables.XTestCase_2025;
@@ -219,6 +220,11 @@ public class Tables {
 	 * The table PUBLIC.Ää
 	 */
 	public static final Ää ÄÄ = org.jooq.test.h2.generatedclasses.tables.Ää.ÄÄ;
+
+	/**
+	 * The table PUBLIC.v.with.dots
+	 */
+	public static final VWithDots V_WITH_DOTS = org.jooq.test.h2.generatedclasses.tables.VWithDots.V_WITH_DOTS;
 
 	/**
 	 * The table PUBLIC.V_2603

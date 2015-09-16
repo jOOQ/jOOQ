@@ -1606,7 +1606,7 @@ public class OracleTest extends jOOQAbstractTest<
         assertEquals("Hampstead", author.getAddress().getCity());
         assertEquals("England", author.getAddress().getCountry());
         assertEquals("Parliament Hill", author.getAddress().getStreet().getStreet());
-        assertEquals(asList(1, 2, 3), asList(author.getAddress().getStreet().getFloors()));
+        assertEquals(asList(1, 2, 3), author.getAddress().getStreet().getFloors());
         assertEquals("77", author.getAddress().getStreet().getNo());
     }
 

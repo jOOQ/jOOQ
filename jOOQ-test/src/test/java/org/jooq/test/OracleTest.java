@@ -306,7 +306,7 @@ public class OracleTest extends jOOQAbstractTest<
 
     @Override
     protected SQLDialect dialect() {
-        return SQLDialect.ORACLE;
+        return SQLDialect.ORACLE11G;
     }
 
     @Override

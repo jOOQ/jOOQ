@@ -57,12 +57,12 @@ public class LocalDateTimeConverter implements Converter<Timestamp, LocalDateTim
     public LocalDateTime from(Timestamp t) {
 
         // Some troll probably implemented Timestamp.getDate()
-        return t == null ? null : LocalDateTime.of(1900 + t.getYear(), t.getMonth() + 1, t.getDate(), t.getHours(), t.getMinutes(), t.getSeconds());
+        return t == null ? null : t.toLocalDateTime();
     }
 
     @Override
     public Timestamp to(LocalDateTime u) {
-        return u == null ? null : new Timestamp(u.getYear() - 1900, u.getMonthValue() - 1, u.getDayOfMonth(), u.getHour(), u.getMinute(), u.getSecond(), 0);
+        return u == null ? null : Timestamp.valueOf(u);
     }
 
     @Override

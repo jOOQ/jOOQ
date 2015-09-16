@@ -45,11 +45,10 @@ package org.jooq.impl;
 xxxxxx xxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxx xxxxxxxxxxxxxxxxxxxxxx
 xxxxxx xxxxxxxxxxxxxxxxxxxx
-xxxxxx xxxxxxxxxxxxxxxxx
 xxxxxx xxxxxxxxxxxxxxxxxxxxx
-xxxxxx xxxxxxxxxxxxxxxxxxxxxx
 xxxxxx xxxxxxxxxxxxxxxxxxx
 xxxxxx xxxxxxxxxxxxxxx
+xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
 
 xxxxxx xxxxxxxxxxxxxxxxxxxxx
 xxxxxx xxxxxxxxxxxxxxxxxxxx
@@ -77,7 +76,7 @@ xxxxxx xxxxx xxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxx 
     xxxxxxx xxxxx xxxxxxxxxxx xxxxxxxxx
     xxxxxxx xxxxx xxxxxxxxxxx xxxxx
     xxxxxxx xxxxx xxxxxx      xxxxx
-    xxxxxxx xxx               xxxxxx
+    xxxxxxx xxxxx xxxxxxx     xxxxx
 
     xxx
      x xxxxxx xx xxxxx xxxxx xxxxxx
@@ -167,6 +166,7 @@ xxxxxx xxxxx xxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxx 
 
         xx xxxxx xxxx xxxx xxxxxxxxxxxxxx
         xxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxx x xxx xxxxxxxxxxxxxxx
     x
 
     xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -197,29 +197,23 @@ xxxxxx xxxxx xxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxx 
 
     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     xxxxxxxxx
+    xxxxxxxxxxx
     xxxxxx xxxxx xxx xxxxx x
-        xx xxxxxx xx xxxxx x
-            xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
-        x
-        xxxx x
-            xxxxxx xxxxxx
-        x
+        xxxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxx
     x
 
     xxxxxxxxx
+    xxxxxxxxxxx
     xxxxxx xxxxx xxxxxxx xxxxxxxxx x
-        xx xxxxxx xx xxxxx x
-            xxxxxx xxxxxxxxxxxxxxxxxxxxxxxx
-        x
-        xxxx x
-            xxxxxx xxxxxxxxxxxxxxxxxxxxx
-        x
+        xxxxxx xxxxx
     x
 
     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     xxxxxxxxx
+    xxxxxxxxxxx
     xxxxxx xxxxx xxxx xxxxxxxx xxxxxx x
-        xxxxxxxxxx x xxxxxx
+        xxx xxxx x x xx x x xxxxxxxxxxxxx xxxx
+            xxxxxx xxxxxxxxxx
     x
 
     xxxxxxxxx
@@ -228,15 +222,13 @@ xxxxxx xxxxx xxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxx 
         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxx
     x
 
-    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     xxxxxxxxx
+    xxxxxxxxxxx
     xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxx xxxxxxx xx xxxxxxxxxxx x
-        xx xxxxxxxxxxx xx xxxxx x
-            xxxxx x xxxxx
-        x
-        xxxx x
-            xxxxx x xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxx
-        x
+        xxxxxxxxxx xxxxxxx xx xx x xxxxxxxxxxxxxxxxxxxxxx
+
+        xxx xxxx x x xx x x xxxxxxxxxxxxxxxxxx xxxx
+            xxxxxx xxxxxxxxxxx
     x
 
     xxxxxxxxx
@@ -282,22 +274,140 @@ xxxxxx xxxxx xxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxx 
         xxxxxxxxxxxxxxxxxxxxxxxxx
         xxxxxxxxxxxxxxxxxxx
 
-        xx xxxxxx xx xxxxx x
-            xxx xx x x xxxxxx x
-                xxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxx xx x x xxxxx x
+            xxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                xxxxxxxxx x xx xx
-            x
+            xxxxxxxxx x xx xx
         x
 
         xxxxxxxxxxxxxxxxxxx
         xxxxxx xxxxxxxxxxxxxxxxxx
     x
 
+    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    xx xxx xxxx xxxxxxx
+    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxx xxxxxxxxx x
+        xxxxxx xxxxxxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxx xxxxxxxxxxxxxxx xx x
+        xxxxxx xxxxxxxxxxxxxxxxx
+    x
+
     xxxxxxxxx
     xxxxxx xxxxx xxxxxxxxxxx xxxxxxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxx
+        xxxxxx xxxxxxxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxx xxxxxxxxx x
+        xxxxxx xxxxxxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxx xxx xxxxxxxxxxx xx x
+        xxxxxx xxxxxxxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxx xxxxx xx x
+        xxxxxx xxxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxx xxxxxxxxxxxxx xx x
+        xxxxxx xxxxxxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxx xx xx x
+        xxxxxx xxxxxxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxx xxxxxxxxxx xxxxxx xxxxxxxxxxxx xxxxxxx xx xx x
+        xxxxxx xxxxxxxxxxxxxxxxxx xxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xx x
+        xxxxxx xxxxxxxxxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xx x
+        xxxxxx xxxxxxxxxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxx xxxxxxx x
+        xxxxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxx xxxxxxxxxxxxx xx x
+        xxxxxx xxxxxxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxx xxxxxxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx x xxxxxxx xxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx x xxxxxxx xxxxxx x xxxxxxxx x
+        xxxxxx xxxxxxxxxxxxxxx xxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxx xxxxxxx xxxxxx x xxxxxxxx x
+        xxxxxxxxxxxxxxx xxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx x xxxxxxxxxx xxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxx xxxxxxxxxxxxxx xx x
+        xxxxxx xxxxxxxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxx xxxxxxxxxxxxxxxxxx xx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxxxx xxxxxxxxxxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
+    x
+
+    xxxxxxxxx
+    xxxxxx xxxxx xxxxxxx xxxxxxxxxxx xxxxxxxxxx xxx xxxxxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxx
     x
 x
 xx [/pro] */

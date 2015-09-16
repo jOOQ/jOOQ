@@ -190,7 +190,13 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
     private String getJavaClassName0(Definition definition, Mode mode) {
         StringBuilder result = new StringBuilder();
 
-        result.append(StringUtils.toCamelCase(definition.getOutputName()));
+        // [#4562] Some characters should be treated like underscore
+        result.append(StringUtils.toCamelCase(
+            definition.getOutputName()
+                      .replace(' ', '_')
+                      .replace('-', '_')
+                      .replace('.', '_')
+        ));
 
         if (mode == Mode.RECORD) {
             result.append("Record");

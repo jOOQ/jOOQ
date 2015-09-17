@@ -6,7 +6,7 @@
         <password></password>
     </jdbc>
     <generator>
-        <name>org.jooq.util.DefaultGenerator</name>
+        <name>org.jooq.util.JavaGenerator</name>
         <database>
             <inputSchema>INFORMATION_SCHEMA</inputSchema>
             <includes>TABLES</includes>

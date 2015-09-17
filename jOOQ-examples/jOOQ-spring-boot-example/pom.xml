@@ -144,7 +144,6 @@
 								<password>${spring.datasource.password}</password>
 							</jdbc>
 							<generator>
-								<name>org.jooq.util.DefaultGenerator</name>
 								<database>
 									<name>org.jooq.util.h2.H2Database</name>
 									<includes>.*</includes>

@@ -635,7 +635,6 @@
                                         <password>${db.cubrid.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.cubrid.CUBRIDDatabase</name>
                                             <includes>t_.*|x_.*|v_.*|V_.*|p_.*|f_.*|(f|p)[0-9]+|s_.*</includes>
@@ -789,7 +788,6 @@
                                         <password>${db.cubrid.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.cubrid.CUBRIDDatabase</name>
                                             <includes>db_user|db_class|db_attribute|db_index|db_index_key|db_serial</includes>
@@ -850,7 +848,6 @@
                                         <password>${db.derby.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.derby.DerbyDatabase</name>
                                             <includes>.*</includes>
@@ -1012,7 +1009,6 @@
                                         <password>${db.derby.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.derby.DerbyDatabase</name>
                                             <includes>SYSSCHEMAS|SYSTABLES|SYSCOLUMNS|SYSCONSTRAINTS|SYSCONGLOMERATES|SYSKEYS|SYSSEQUENCES</includes>
@@ -1088,7 +1084,6 @@
                                         </properties>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.firebird.FirebirdDatabase</name>
                                             <includes>.*</includes>
@@ -1305,7 +1300,6 @@
                                         </properties>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.firebird.FirebirdDatabase</name>
                                             <includes>RDB\$(FIELDS|GENERATORS|INDEX_SEGMENTS|PROCEDURES|PROCEDURE_PARAMETERS|REF_CONSTRAINTS|RELATION_CONSTRAINTS|RELATION_FIELDS|RELATIONS)</includes>
@@ -1725,7 +1719,6 @@
                                         <password>${db.h2.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.jdbc.JDBCDatabase</name>
                                             <includes>.*</includes>
@@ -1881,7 +1874,6 @@
                                 </goals>
                                 <configuration>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.jpa.JPADatabase</name>
                                             <properties>
@@ -2043,7 +2035,6 @@
                                         <password>${db.h2.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <strategy>
                                             <name>Blah (should be ignored!)</name>
                                             <matchers>
@@ -2327,7 +2318,6 @@
                                         <password>${db.h2.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.h2.H2Database</name>
                                             <includes>COLUMNS|CONSTRAINTS|CROSS_REFERENCES|FUNCTION_ALIASES|FUNCTION_COLUMNS|INDEXES|SCHEMATA|SEQUENCES|TABLES|TYPE_INFO</includes>
@@ -2410,7 +2400,6 @@
                                         </properties>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.hsqldb.HSQLDBDatabase</name>
                                             <includes>.*</includes>
@@ -2628,7 +2617,6 @@
                                         </properties>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.hsqldb.HSQLDBDatabase</name>
                                             <includes>CHECK_CONSTRAINTS|COLUMNS|ELEMENT_TYPES|KEY_COLUMN_USAGE|PARAMETERS|REFERENTIAL_CONSTRAINTS|ROUTINES|SCHEMATA|SEQUENCES|TABLE_CONSTRAINTS|TABLES</includes>
@@ -2696,7 +2684,6 @@
                                         <password>${db.mysql.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.mysql.MySQLDatabase</name>
                                             <includes>.*</includes>
@@ -2847,7 +2834,6 @@
                                         <password>${db.mysql.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.mysql.MySQLDatabase</name>
                                             <includes>.*</includes>
@@ -2986,7 +2972,6 @@
                                         <password>${db.mysql.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.mysql.MySQLDatabase</name>
                                             <includes>COLUMNS|KEY_COLUMN_USAGE|PARAMETERS|REFERENTIAL_CONSTRAINTS|SCHEMATA|STATISTICS|TABLE_CONSTRAINTS|TABLES</includes>
@@ -3054,7 +3039,6 @@
                                         <password>${db.mysql.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.mysql.MySQLDatabase</name>
                                             <includes>proc.*</includes>
@@ -3122,7 +3106,6 @@
                                         <password>${db.mariadb.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.mariadb.MariaDBDatabase</name>
                                             <includes>.*</includes>
@@ -3262,7 +3245,6 @@
                                         <password>${db.postgres.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <strategy>
                                             <matchers>
                                                 <fields>
@@ -3587,7 +3569,6 @@
                                         <password>${db.postgres.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.postgres.PostgresDatabase</name>
                                             <includes>attributes|check_constraints|columns|constraint_column_usage|key_column_usage|parameters|referential_constraints|routines|schemata|sequences|table_constraints|tables</includes>
@@ -3656,7 +3637,6 @@
                                         <password>${db.postgres.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.postgres.PostgresDatabase</name>
                                             <includes>pg_attribute|pg_class|pg_cursor|pg_description|pg_enum|pg_inherits|pg_namespace|pg_proc|pg_type|format_type|count</includes>
@@ -3725,7 +3705,6 @@
                                         <password>${db.redshift.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.redshift.RedshiftDatabase</name>
                                             <includes>t_.*|x_.*|v_.*|m_.*|V_.*|p(_.*)?|f(_.*)?|u_.*|(f|p)[0-9]+|s_.*</includes>
@@ -3909,7 +3888,6 @@
                                         <password>${db.redshift.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.redshift.RedshiftDatabase</name>
                                             <includes>check_constraints|columns|referential_constraints|schemata|table_constraints|tables</includes>
@@ -3977,7 +3955,6 @@
                                         <password>${db.redshift.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.redshift.RedshiftDatabase</name>
                                             <includes>pg_constraint|pg_attribute|pg_class|pg_cursor|pg_description|pg_namespace|pg_proc|pg_type|format_type</includes>
@@ -4045,7 +4022,6 @@
                                         <password>${db.sqlite.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.sqlite.SQLiteDatabase</name>
                                             <includes>.*</includes>
@@ -4201,7 +4177,6 @@
                                         <password>${db.access.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.jdbc.JDBCDatabase</name>
                                             <includes>(?i:t_.*|x_.*|v_.*|V_.*|p_.*|f_.*|(f|p)[0-9]+|s_.*)</includes>
@@ -4389,7 +4364,6 @@
                                         <password>${db.ase.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.ase.ASEDatabase</name>
                                             <includes>t_.*|x_.*|v_.*|V_.*|p_.*|f_.*|(f|p)[0-9]+|s_.*</includes>
@@ -4536,7 +4510,6 @@
                                         <password>${db.ase.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.ase.ASEDatabase</name>
                                             <includes>sysusers|sysindexes|sysobjects|sysreferences</includes>
@@ -4605,7 +4578,6 @@
                                         <password>${db.db2.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.db2.DB2Database</name>
                                             <includes>T_.*|X_.*|V_.*|P_.*|F_.*|(F|P)[0-9]+|S_.*</includes>
@@ -4758,7 +4730,6 @@
                                         <password>${db.db2.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.db2.DB2Database</name>
                                             <includes>SCHEMATA|TABLES|COLUMNS|TABCONST|KEYCOLUSE|REFERENCES|PROCEDURES|PROCPARMS|FUNCTIONS|FUNCPARMS|DATATYPES|ATTRIBUTES|SEQUENCES</includes>
@@ -4829,7 +4800,6 @@
                                         <password>${db.informix.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.informix.InformixDatabase</name>
                                             <includes>t_.*|x_.*|v_.*|p_.*|f_.*|(f|p)[0-9]+|s_.*</includes>
@@ -4984,7 +4954,6 @@
                                         <password>${db.hana.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.hana.HanaDatabase</name>
                                             <includes>(?i:t_.*|x_.*|v_.*|p_.*|f_.*|(f|p)[0-9]+|s_.*)</includes>
@@ -5195,7 +5164,6 @@
                                         <password>${db.informix.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.informix.InformixDatabase</name>
                                             <includes>sys(columns|constraints|defaults|indexes|references|sequences|tables|xtdtypes)</includes>
@@ -5255,7 +5223,6 @@
                                         <password>${db.ingres.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.ingres.IngresDatabase</name>
                                             <includes>t_.*|x_.*|v_.*|p_.*|f_.*|(f|p)[0-9]+|s_.*</includes>
@@ -5407,7 +5374,6 @@
                                         <password>${db.ingres.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.ingres.IngresDatabase</name>
                                             <includes>iischema|iitables|iicolumns|iiconstraints|iikeys|iiref_constraints|iisequences|iidb_comments|iidb_subcomments</includes>
@@ -5475,7 +5441,6 @@
                                         <password>${db.oracle.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.oracle.OracleDatabase</name>
                                             <includes>
@@ -5923,7 +5888,6 @@
 
                                 <configuration>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.xml.XMLDatabase</name>
                                             <properties>
@@ -6096,7 +6060,6 @@
                                         <password>${db.oracle.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.jdbc.JDBCDatabase</name>
                                             <excludes>T_BOOK_DETAILS|S_TRIGGERS_SEQUENCE|.*976.*|.*1358.*|.*\$.*|U_SECOND_MAX</excludes>
@@ -6331,7 +6294,6 @@
                                         <password>${db.oracle.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <strategy>
                                             <name>org.jooq.test.utils.oracle.Oracle2Strategy</name>
                                         </strategy>
@@ -6514,7 +6476,6 @@
                                         <password>${db.oracle.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.oracle.OracleDatabase</name>
                                             <includes>
@@ -6607,7 +6568,6 @@
                                         <password>${db.sqlserver.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <strategy/>
                                         <database>
                                             <name>org.jooq.util.sqlserver.SQLServerDatabase</name>
@@ -6802,7 +6762,6 @@
                                         <password>${db.hsqldb.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.hsqldb.HSQLDBDatabase</name>
                                             <includes>CHECK_CONSTRAINTS|COLUMNS|CONSTRAINT_COLUMN_USAGE|KEY_COLUMN_USAGE|PARAMETERS|REFERENTIAL_CONSTRAINTS|ROUTINES|ROUTINE_COLUMNS|SCHEMATA|SEQUENCES|TABLE_CONSTRAINTS|TABLES</includes>
@@ -6871,7 +6830,6 @@
                                         <password>${db.sybase.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <strategy/>
                                         <database>
                                             <name>org.jooq.util.sybase.SybaseDatabase</name>
@@ -7010,7 +6968,6 @@
                                         <password>${db.sybase.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.sybase.SybaseDatabase</name>
                                             <includes>SYSUSER|SYSTAB|SYSTABLE|SYSTABCOL|SYSDOMAIN|SYSIDX|SYSIDXCOL|SYSPROCEDURE|SYSPROCPARM|SYSVIEW|SYSSEQUENCE|SYSFKEY</includes>
@@ -7080,7 +7037,6 @@
                                         <password>${db.vertica.password}</password>
                                     </jdbc>
                                     <generator>
-                                        <name>org.jooq.util.DefaultGenerator</name>
                                         <database>
                                             <name>org.jooq.util.vertica.VerticaDatabase</name>
                                             <includes>.*</includes>

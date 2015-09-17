@@ -166,7 +166,6 @@
                                 <password>${db.password}</password>
                             </jdbc>
                             <generator>
-                                <name>org.jooq.util.DefaultGenerator</name>
                                 <database>
                                     <name>org.jooq.util.oracle.OracleDatabase</name>
                                     <includes>

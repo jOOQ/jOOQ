@@ -56,7 +56,6 @@
                                 <password>test</password>
                             </jdbc>
                             <generator>
-                                <name>org.jooq.util.DefaultGenerator</name>
                                 <database>
                                     <name>org.jooq.util.postgres.PostgresDatabase</name>
                                     <includes>.*</includes>

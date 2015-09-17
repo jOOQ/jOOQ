@@ -175,7 +175,6 @@
                         </goals>
                         <configuration>
                             <generator>
-                                <name>org.jooq.util.DefaultGenerator</name>
                                 <database>
                                     <name>org.jooq.util.xml.XMLDatabase</name>
                                     <properties>

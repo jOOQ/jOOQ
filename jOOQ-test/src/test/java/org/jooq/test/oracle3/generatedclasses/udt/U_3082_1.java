@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import org.jooq.UDTField;
 import org.jooq.impl.UDTImpl;
 import org.jooq.test.oracle3.generatedclasses.DefaultSchema;
+import org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE;
 
 
 /**
@@ -17,7 +18,7 @@ import org.jooq.test.oracle3.generatedclasses.DefaultSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_3082_1 extends UDTImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_3082_1> implements Cloneable {
 
-	private static final long serialVersionUID = 751172148;
+	private static final long serialVersionUID = -1729873411;
 
 	/**
 	 * The reference instance of <code>U_3082_1</code>
@@ -36,6 +37,11 @@ public class U_3082_1 extends UDTImpl<org.jooq.test.oracle3.generatedclasses.udt
 	 * The attribute <code>U_3082_1.N</code>.
 	 */
 	public static final UDTField<org.jooq.test.oracle3.generatedclasses.udt.records.U_3082_1, BigDecimal> N = createField("N", org.jooq.impl.SQLDataType.NUMERIC, U_3082_1, "");
+
+	/**
+	 * The attribute <code>U_3082_1.NUMBERS</code>.
+	 */
+	public static final UDTField<org.jooq.test.oracle3.generatedclasses.udt.records.U_3082_1, U_NUMBER_TABLE> NUMBERS = createField("NUMBERS", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE.class), U_3082_1, "");
 
 	/**
 	 * No further instances allowed

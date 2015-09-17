@@ -17,24 +17,28 @@ import org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_3082_3_INTERFACE;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_3082_3_POJO extends ThreadDeath implements Cloneable, U_3082_3_INTERFACE {
 
-	private static final long serialVersionUID = 598972418;
+	private static final long serialVersionUID = -248763416;
 
 	private U_3082_1_POJO       O;
 	private List<U_3082_1_POJO> T;
+	private List<Integer>       NUMBERS;
 
 	public U_3082_3_POJO() {}
 
 	public U_3082_3_POJO(U_3082_3_POJO value) {
 		this.O = value.O;
 		this.T = value.T;
+		this.NUMBERS = value.NUMBERS;
 	}
 
 	public U_3082_3_POJO(
 		U_3082_1_POJO       O,
-		List<U_3082_1_POJO> T
+		List<U_3082_1_POJO> T,
+		List<Integer>       NUMBERS
 	) {
 		this.O = O;
 		this.T = T;
+		this.NUMBERS = NUMBERS;
 	}
 
 	@Override
@@ -72,11 +76,22 @@ public class U_3082_3_POJO extends ThreadDeath implements Cloneable, U_3082_3_IN
 	}
 
 	@Override
+	public List<Integer> getNUMBERS() {
+		return this.NUMBERS;
+	}
+
+	@Override
+	public void setNUMBERS(List<Integer> NUMBERS) {
+		this.NUMBERS = NUMBERS;
+	}
+
+	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("U_3082_3_POJO (");
 
 		sb.append(O);
 		sb.append(", ").append(T);
+		sb.append(", ").append(NUMBERS);
 
 		sb.append(")");
 		return sb.toString();
@@ -93,6 +108,7 @@ public class U_3082_3_POJO extends ThreadDeath implements Cloneable, U_3082_3_IN
 	public void from(U_3082_3_INTERFACE from) {
 		setO(from.getO());
 		setT(from.getT());
+		setNUMBERS(from.getNUMBERS());
 	}
 
 	/**

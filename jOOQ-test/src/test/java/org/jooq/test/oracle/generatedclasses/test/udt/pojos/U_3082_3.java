@@ -14,24 +14,28 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_3082_3 implements Serializable {
 
-	private static final long serialVersionUID = 527046460;
+	private static final long serialVersionUID = 1384121317;
 
 	private U_3082_1       o;
 	private List<U_3082_1> t;
+	private List<Integer>  numbers;
 
 	public U_3082_3() {}
 
 	public U_3082_3(U_3082_3 value) {
 		this.o = value.o;
 		this.t = value.t;
+		this.numbers = value.numbers;
 	}
 
 	public U_3082_3(
 		U_3082_1       o,
-		List<U_3082_1> t
+		List<U_3082_1> t,
+		List<Integer>  numbers
 	) {
 		this.o = o;
 		this.t = t;
+		this.numbers = numbers;
 	}
 
 	public U_3082_1 getO() {
@@ -48,6 +52,14 @@ public class U_3082_3 implements Serializable {
 
 	public void setT(List<U_3082_1> t) {
 		this.t = t;
+	}
+
+	public List<Integer> getNumbers() {
+		return this.numbers;
+	}
+
+	public void setNumbers(List<Integer> numbers) {
+		this.numbers = numbers;
 	}
 
 	@Override
@@ -71,6 +83,12 @@ public class U_3082_3 implements Serializable {
 		}
 		else if (!t.equals(other.t))
 			return false;
+		if (numbers == null) {
+			if (other.numbers != null)
+				return false;
+		}
+		else if (!numbers.equals(other.numbers))
+			return false;
 		return true;
 	}
 
@@ -80,6 +98,7 @@ public class U_3082_3 implements Serializable {
 		int result = 1;
 		result = prime * result + ((o == null) ? 0 : o.hashCode());
 		result = prime * result + ((t == null) ? 0 : t.hashCode());
+		result = prime * result + ((numbers == null) ? 0 : numbers.hashCode());
 		return result;
 	}
 
@@ -89,6 +108,7 @@ public class U_3082_3 implements Serializable {
 
 		sb.append(o);
 		sb.append(", ").append(t);
+		sb.append(", ").append(numbers);
 
 		sb.append(")");
 		return sb.toString();

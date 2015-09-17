@@ -6,6 +6,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt.pojos;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 
 /**
@@ -14,20 +15,24 @@ import java.math.BigDecimal;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_3082_1 implements Serializable {
 
-	private static final long serialVersionUID = -1388809813;
+	private static final long serialVersionUID = -1175886036;
 
-	private BigDecimal n;
+	private BigDecimal    n;
+	private List<Integer> numbers;
 
 	public U_3082_1() {}
 
 	public U_3082_1(U_3082_1 value) {
 		this.n = value.n;
+		this.numbers = value.numbers;
 	}
 
 	public U_3082_1(
-		BigDecimal n
+		BigDecimal    n,
+		List<Integer> numbers
 	) {
 		this.n = n;
+		this.numbers = numbers;
 	}
 
 	public BigDecimal getN() {
@@ -36,6 +41,14 @@ public class U_3082_1 implements Serializable {
 
 	public void setN(BigDecimal n) {
 		this.n = n;
+	}
+
+	public List<Integer> getNumbers() {
+		return this.numbers;
+	}
+
+	public void setNumbers(List<Integer> numbers) {
+		this.numbers = numbers;
 	}
 
 	@Override
@@ -53,6 +66,12 @@ public class U_3082_1 implements Serializable {
 		}
 		else if (!n.equals(other.n))
 			return false;
+		if (numbers == null) {
+			if (other.numbers != null)
+				return false;
+		}
+		else if (!numbers.equals(other.numbers))
+			return false;
 		return true;
 	}
 
@@ -61,6 +80,7 @@ public class U_3082_1 implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((n == null) ? 0 : n.hashCode());
+		result = prime * result + ((numbers == null) ? 0 : numbers.hashCode());
 		return result;
 	}
 
@@ -69,6 +89,7 @@ public class U_3082_1 implements Serializable {
 		StringBuilder sb = new StringBuilder("U_3082_1 (");
 
 		sb.append(n);
+		sb.append(", ").append(numbers);
 
 		sb.append(")");
 		return sb.toString();

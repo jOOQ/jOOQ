@@ -6,6 +6,7 @@ package org.jooq.test.oracle3.generatedclasses.udt.interfaces;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 
 /**
@@ -23,6 +24,16 @@ public interface U_3082_1_INTERFACE extends Cloneable, Serializable {
 	 * Getter for <code>U_3082_1.N</code>.
 	 */
 	public BigDecimal getN();
+
+	/**
+	 * Setter for <code>U_3082_1.NUMBERS</code>.
+	 */
+	public void setNUMBERS(List<Integer> value);
+
+	/**
+	 * Getter for <code>U_3082_1.NUMBERS</code>.
+	 */
+	public List<Integer> getNUMBERS();
 
 	// -------------------------------------------------------------------------
 	// FROM and INTO

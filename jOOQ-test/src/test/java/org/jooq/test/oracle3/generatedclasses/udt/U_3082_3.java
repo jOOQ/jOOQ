@@ -9,6 +9,7 @@ import org.jooq.impl.UDTImpl;
 import org.jooq.test.oracle3.generatedclasses.DefaultSchema;
 import org.jooq.test.oracle3.generatedclasses.udt.records.U_3082_1;
 import org.jooq.test.oracle3.generatedclasses.udt.records.U_3082_2;
+import org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE;
 
 
 /**
@@ -17,7 +18,7 @@ import org.jooq.test.oracle3.generatedclasses.udt.records.U_3082_2;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_3082_3 extends UDTImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_3082_3> implements Cloneable {
 
-	private static final long serialVersionUID = -384643659;
+	private static final long serialVersionUID = 1160159166;
 
 	/**
 	 * The reference instance of <code>U_3082_3</code>
@@ -41,6 +42,11 @@ public class U_3082_3 extends UDTImpl<org.jooq.test.oracle3.generatedclasses.udt
 	 * The attribute <code>U_3082_3.T</code>.
 	 */
 	public static final UDTField<org.jooq.test.oracle3.generatedclasses.udt.records.U_3082_3, U_3082_2> T = createField("T", org.jooq.test.oracle3.generatedclasses.udt.U_3082_1.U_3082_1.getDataType().asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_3082_2.class), U_3082_3, "");
+
+	/**
+	 * The attribute <code>U_3082_3.NUMBERS</code>.
+	 */
+	public static final UDTField<org.jooq.test.oracle3.generatedclasses.udt.records.U_3082_3, U_NUMBER_TABLE> NUMBERS = createField("NUMBERS", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE.class), U_3082_3, "");
 
 	/**
 	 * No further instances allowed

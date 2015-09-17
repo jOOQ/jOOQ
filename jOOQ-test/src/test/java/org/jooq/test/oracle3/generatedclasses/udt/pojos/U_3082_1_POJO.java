@@ -5,6 +5,7 @@ package org.jooq.test.oracle3.generatedclasses.udt.pojos;
 
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_3082_1_INTERFACE;
 
@@ -15,20 +16,24 @@ import org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_3082_1_INTERFACE;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_3082_1_POJO extends ThreadDeath implements Cloneable, U_3082_1_INTERFACE {
 
-	private static final long serialVersionUID = 553483169;
+	private static final long serialVersionUID = -427339689;
 
-	private BigDecimal N;
+	private BigDecimal    N;
+	private List<Integer> NUMBERS;
 
 	public U_3082_1_POJO() {}
 
 	public U_3082_1_POJO(U_3082_1_POJO value) {
 		this.N = value.N;
+		this.NUMBERS = value.NUMBERS;
 	}
 
 	public U_3082_1_POJO(
-		BigDecimal N
+		BigDecimal    N,
+		List<Integer> NUMBERS
 	) {
 		this.N = N;
+		this.NUMBERS = NUMBERS;
 	}
 
 	@Override
@@ -42,10 +47,21 @@ public class U_3082_1_POJO extends ThreadDeath implements Cloneable, U_3082_1_IN
 	}
 
 	@Override
+	public List<Integer> getNUMBERS() {
+		return this.NUMBERS;
+	}
+
+	@Override
+	public void setNUMBERS(List<Integer> NUMBERS) {
+		this.NUMBERS = NUMBERS;
+	}
+
+	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("U_3082_1_POJO (");
 
 		sb.append(N);
+		sb.append(", ").append(NUMBERS);
 
 		sb.append(")");
 		return sb.toString();
@@ -61,6 +77,7 @@ public class U_3082_1_POJO extends ThreadDeath implements Cloneable, U_3082_1_IN
 	@Override
 	public void from(U_3082_1_INTERFACE from) {
 		setN(from.getN());
+		setNUMBERS(from.getNUMBERS());
 	}
 
 	/**

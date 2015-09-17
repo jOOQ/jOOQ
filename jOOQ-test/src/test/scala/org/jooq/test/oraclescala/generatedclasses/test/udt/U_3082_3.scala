@@ -9,6 +9,7 @@ import java.lang.Class
 import org.jooq.UDTField
 import org.jooq.impl.UDTImpl
 import org.jooq.test.oraclescala.generatedclasses.test.Test
+import org.jooq.test.oraclescala.generatedclasses.test.udt.records.UNumberTableRecord
 import org.jooq.test.oraclescala.generatedclasses.test.udt.records.U_3082_1Record
 import org.jooq.test.oraclescala.generatedclasses.test.udt.records.U_3082_2Record
 import org.jooq.test.oraclescala.generatedclasses.test.udt.records.U_3082_3Record
@@ -30,6 +31,11 @@ object U_3082_3 {
 	 * The attribute <code>TEST.U_3082_3.T</code>.
 	 */
 	val T = U_3082_3.T
+
+	/**
+	 * The attribute <code>TEST.U_3082_3.NUMBERS</code>.
+	 */
+	val NUMBERS = U_3082_3.NUMBERS
 }
 
 /**
@@ -45,6 +51,7 @@ class U_3082_3 extends UDTImpl[U_3082_3Record]("U_3082_3", Test.TEST) {
 	}
 	private val O : UDTField[U_3082_3Record, U_3082_1Record] = UDTImpl.createField("O", org.jooq.test.oraclescala.generatedclasses.test.udt.U_3082_1.U_3082_1.getDataType(), this, "")
 	private val T : UDTField[U_3082_3Record, U_3082_2Record] = UDTImpl.createField("T", org.jooq.test.oraclescala.generatedclasses.test.udt.U_3082_1.U_3082_1.getDataType().asArrayDataType(classOf[org.jooq.test.oraclescala.generatedclasses.test.udt.records.U_3082_2Record]), this, "")
+	private val NUMBERS : UDTField[U_3082_3Record, UNumberTableRecord] = UDTImpl.createField("NUMBERS", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(classOf[org.jooq.test.oraclescala.generatedclasses.test.udt.records.UNumberTableRecord]), this, "")
 
 	{
 		// Initialise data type

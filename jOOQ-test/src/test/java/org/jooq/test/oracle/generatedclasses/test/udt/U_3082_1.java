@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import org.jooq.UDTField;
 import org.jooq.impl.UDTImpl;
 import org.jooq.test.oracle.generatedclasses.test.Test;
+import org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberTableRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.U_3082_1Record;
 
 
@@ -18,7 +19,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.U_3082_1Record;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_3082_1 extends UDTImpl<U_3082_1Record> {
 
-	private static final long serialVersionUID = 1350440901;
+	private static final long serialVersionUID = -1538070856;
 
 	/**
 	 * The reference instance of <code>TEST.U_3082_1</code>
@@ -37,6 +38,11 @@ public class U_3082_1 extends UDTImpl<U_3082_1Record> {
 	 * The attribute <code>TEST.U_3082_1.N</code>.
 	 */
 	public static final UDTField<U_3082_1Record, BigDecimal> N = createField("N", org.jooq.impl.SQLDataType.NUMERIC, U_3082_1, "");
+
+	/**
+	 * The attribute <code>TEST.U_3082_1.NUMBERS</code>.
+	 */
+	public static final UDTField<U_3082_1Record, UNumberTableRecord> NUMBERS = createField("NUMBERS", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberTableRecord.class), U_3082_1, "");
 
 	/**
 	 * No further instances allowed

@@ -34,6 +34,16 @@ public interface U_3082_3_INTERFACE extends Cloneable, Serializable {
 	 */
 	public List<? extends org.jooq.test.oracle3.generatedclasses.udt.interfaces.U_3082_1_INTERFACE> getT();
 
+	/**
+	 * Setter for <code>U_3082_3.NUMBERS</code>.
+	 */
+	public void setNUMBERS(List<Integer> value);
+
+	/**
+	 * Getter for <code>U_3082_3.NUMBERS</code>.
+	 */
+	public List<Integer> getNUMBERS();
+
 	// -------------------------------------------------------------------------
 	// FROM and INTO
 	// -------------------------------------------------------------------------

@@ -10,6 +10,7 @@ import java.math.BigDecimal
 import org.jooq.UDTField
 import org.jooq.impl.UDTImpl
 import org.jooq.test.oraclescala.generatedclasses.test.Test
+import org.jooq.test.oraclescala.generatedclasses.test.udt.records.UNumberTableRecord
 import org.jooq.test.oraclescala.generatedclasses.test.udt.records.U_3082_1Record
 
 
@@ -24,6 +25,11 @@ object U_3082_1 {
 	 * The attribute <code>TEST.U_3082_1.N</code>.
 	 */
 	val N = U_3082_1.N
+
+	/**
+	 * The attribute <code>TEST.U_3082_1.NUMBERS</code>.
+	 */
+	val NUMBERS = U_3082_1.NUMBERS
 }
 
 /**
@@ -38,6 +44,7 @@ class U_3082_1 extends UDTImpl[U_3082_1Record]("U_3082_1", Test.TEST) {
 		classOf[U_3082_1Record]
 	}
 	private val N : UDTField[U_3082_1Record, BigDecimal] = UDTImpl.createField("N", org.jooq.impl.SQLDataType.NUMERIC, this, "")
+	private val NUMBERS : UDTField[U_3082_1Record, UNumberTableRecord] = UDTImpl.createField("NUMBERS", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(classOf[org.jooq.test.oraclescala.generatedclasses.test.udt.records.UNumberTableRecord]), this, "")
 
 	{
 		// Initialise data type

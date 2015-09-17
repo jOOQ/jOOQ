@@ -7,6 +7,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt;
 import org.jooq.UDTField;
 import org.jooq.impl.UDTImpl;
 import org.jooq.test.oracle.generatedclasses.test.Test;
+import org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberTableRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.U_3082_1Record;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.U_3082_2Record;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.U_3082_3Record;
@@ -18,7 +19,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.U_3082_3Record;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class U_3082_3 extends UDTImpl<U_3082_3Record> {
 
-	private static final long serialVersionUID = -1394592201;
+	private static final long serialVersionUID = 538928524;
 
 	/**
 	 * The reference instance of <code>TEST.U_3082_3</code>
@@ -42,6 +43,11 @@ public class U_3082_3 extends UDTImpl<U_3082_3Record> {
 	 * The attribute <code>TEST.U_3082_3.T</code>.
 	 */
 	public static final UDTField<U_3082_3Record, U_3082_2Record> T = createField("T", org.jooq.test.oracle.generatedclasses.test.udt.U_3082_1.U_3082_1.getDataType().asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.U_3082_2Record.class), U_3082_3, "");
+
+	/**
+	 * The attribute <code>TEST.U_3082_3.NUMBERS</code>.
+	 */
+	public static final UDTField<U_3082_3Record, UNumberTableRecord> NUMBERS = createField("NUMBERS", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberTableRecord.class), U_3082_3, "");
 
 	/**
 	 * No further instances allowed

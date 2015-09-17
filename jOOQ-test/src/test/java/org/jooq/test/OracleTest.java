@@ -51,6 +51,7 @@ import static org.jooq.impl.DSL.currentUser;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.sum;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
@@ -130,6 +131,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import org.jooq.AggregateFunction;
 import org.jooq.ArrayRecord;
@@ -215,6 +217,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.UAuthorType;
 import org.jooq.test.oracle.generatedclasses.test.udt.UInvalidTable;
 import org.jooq.test.oracle.generatedclasses.test.udt.UInvalidType;
 import org.jooq.test.oracle.generatedclasses.test.udt.UStreetType;
+import org.jooq.test.oracle.generatedclasses.test.udt.pojos.U_3082_3;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.OInvalidTypeRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTableRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord;
@@ -234,6 +237,9 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.UStreetTypeRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ArrayRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.U_2155ObjectRecord;
+import org.jooq.test.oracle.generatedclasses.test.udt.records.U_3082_1Record;
+import org.jooq.test.oracle.generatedclasses.test.udt.records.U_3082_2Record;
+import org.jooq.test.oracle.generatedclasses.test.udt.records.U_3082_3Record;
 import org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.GetBooks;
 import org.jooq.test.oracle.generatedclasses.usr_2522_a.udt.records.U_2522Record;
 import org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampTDatesRecord;
@@ -2469,5 +2475,108 @@ public class OracleTest extends jOOQAbstractTest<
         assertEquals(1, create().fetchCount(T_BOOK_SALE.at(LOCAL_LINK)));
         assertEquals(1, create().fetchCount(T_BOOK_SALE.at(LOCAL_LINK).as("linked")));
         assertEquals(1, create().fetchCount(T_BOOK_SALE));
+    }
+
+    @Test
+    public void testOracleNestedObjectAndTablePojos() {
+        List<U_3082_3> records =
+        create().select(val(u30823rec()))
+                .unionAll(select(val(u30823rec())))
+                .fetch()
+                .stream()
+                .map(Record1::value1)
+                .map(r -> r.into(U_3082_3.class))
+                .collect(Collectors.toList());
+
+        assertEquals(2, records.size());
+
+        U_3082_3 r0 = records.get(0);
+        U_3082_3 r1 = records.get(1);
+        assertEquals(r0, r1);
+        assertEquals(BigDecimal.ZERO, r0.getO().getN());
+        assertEquals(asList(1, 2), r0.getO().getNumbers());
+        assertEquals(2, r0.getT().size());
+        assertEquals(BigDecimal.ONE, r0.getT().get(0).getN());
+        assertEquals(asList(3, 4), r0.getT().get(0).getNumbers());
+        assertEquals(BigDecimal.TEN, r0.getT().get(1).getN());
+        assertEquals(asList(5, 6), r0.getT().get(1).getNumbers());
+        assertEquals(asList(7, 8), r0.getNumbers());
+    }
+
+    @Test
+    public void testOracleNestedObjectAndTablePojosWithArrays() {
+        List<U3> records =
+        create().select(val(u30823rec()))
+                .fetch()
+                .stream()
+                .map(Record1::value1)
+                .map(r -> r.into(U3.class))
+                .collect(Collectors.toList());
+
+        assertEquals(1, records.size());
+
+        U3 r0 = records.get(0);
+        assertEquals(BigDecimal.ZERO, r0.o.n);
+        assertEquals(asList(1, 2), asList(r0.o.numbers));
+        assertEquals(2, r0.t.length);
+        assertEquals(BigDecimal.ONE, r0.t[0].n);
+        assertEquals(asList(3, 4), asList(r0.t[0].numbers));
+        assertEquals(BigDecimal.TEN, r0.t[1].n);
+        assertEquals(asList(5, 6), asList(r0.t[1].numbers));
+        assertEquals(asList(7, 8), asList(r0.numbers));
+    }
+
+    private U_3082_3Record u30823rec() {
+        return new U_3082_3Record(
+            new U_3082_1Record(BigDecimal.ZERO, new UNumberTableRecord(1, 2)),
+            new U_3082_2Record(
+                new U_3082_1Record(BigDecimal.ONE, new UNumberTableRecord(3, 4)),
+                new U_3082_1Record(BigDecimal.TEN, new UNumberTableRecord(5, 6))
+            ),
+            new UNumberTableRecord(7, 8)
+        );
+    }
+
+    static class U3 {
+        U1        o;
+        U1[]      t;
+        Integer[] numbers;
+
+        public U1 getO() {
+            return o;
+        }
+        public void setO(U1 o) {
+            this.o = o;
+        }
+        public U1[] getT() {
+            return t;
+        }
+        public void setT(U1[] t) {
+            this.t = t;
+        }
+        public Integer[] getNumbers() {
+            return numbers;
+        }
+        public void setNumbers(Integer[] numbers) {
+            this.numbers = numbers;
+        }
+    }
+
+    static class U1 {
+        BigDecimal n;
+        Integer[]  numbers;
+
+        public BigDecimal getN() {
+            return n;
+        }
+        public void setN(BigDecimal n) {
+            this.n = n;
+        }
+        public Integer[] getNumbers() {
+            return numbers;
+        }
+        public void setNumbers(Integer[] numbers) {
+            this.numbers = numbers;
+        }
     }
 }

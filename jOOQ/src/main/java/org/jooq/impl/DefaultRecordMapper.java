@@ -58,6 +58,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Proxy;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -601,7 +602,15 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                     }
 
                     for (java.lang.reflect.Method method : methods[i]) {
-                        method.invoke(result, record.getValue(i, method.getParameterTypes()[0]));
+                        Class<?> mType = method.getParameterTypes()[0];
+
+                        if (List.class.isAssignableFrom(mType)) {
+                            Class componentType = (Class) ((ParameterizedType) method.getGenericParameterTypes()[0]).getActualTypeArguments()[0];
+                            method.invoke(result, Convert.convert((List) record.getValue(i, mType), componentType));
+                        }
+                        else {
+                            method.invoke(result, record.getValue(i, mType));
+                        }
                     }
                 }
 
@@ -632,6 +641,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             }
         }
 
+        @SuppressWarnings("rawtypes")
         private final void map(Record record, Object result, java.lang.reflect.Field member, int index) throws IllegalAccessException {
             Class<?> mType = member.getType();
 
@@ -660,6 +670,14 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                 else if (mType == char.class) {
                     map(record.getValue(index, char.class), result, member);
                 }
+            }
+            else if (mType.isArray()) {
+                Class componentType = mType.getComponentType();
+                member.set(result, Convert.convertArray(((List) record.getValue(index)).toArray(), componentType));
+            }
+            else if (List.class.isAssignableFrom(mType)) {
+                Class componentType = (Class) ((ParameterizedType) member.getGenericType()).getActualTypeArguments()[0];
+                member.set(result, Convert.convert((List) record.getValue(index, mType), componentType));
             }
             else {
                 map(record.getValue(index, mType), result, member);

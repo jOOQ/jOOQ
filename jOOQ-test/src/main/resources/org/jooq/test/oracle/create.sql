@@ -108,6 +108,10 @@ DROP PACKAGE pls_objects/
 DROP TYPE multi_schema.u_4347/
 DROP TYPE multi_schema.u_4347_table/
 
+DROP TYPE u_3082_3/
+DROP TYPE u_3082_2/
+DROP TYPE u_3082_1/
+
 DROP TYPE u_nested_3/
 DROP TYPE u_nested_2/
 DROP TYPE u_nested_1/
@@ -137,10 +141,6 @@ DROP TYPE u_2155_object/
 DROP TYPE u_2155_array/
 DROP TYPE u_3709/
 
-DROP TYPE u_3082_3/
-DROP TYPE u_3082_2/
-DROP TYPE u_3082_1/
-
 
 DROP PUBLIC DATABASE LINK public_link/
 DROP DATABASE LINK local_link/
@@ -155,20 +155,6 @@ CREATE TYPE u_3709 AS OBJECT (
   --Reactivate this when we fix this
   --MEMBER FUNCTION value RETURN VARCHAR2,
   MEMBER FUNCTION value (value VARCHAR2) RETURN VARCHAR2
-)
-/
-
-CREATE TYPE u_3082_1 AS OBJECT (
-  n NUMBER
-)
-/
-
-CREATE TYPE u_3082_2 AS TABLE OF u_3082_1
-/
-
-CREATE TYPE u_3082_3 AS OBJECT (
-  o u_3082_1,
-  t u_3082_2
 )
 /
 
@@ -411,6 +397,23 @@ CREATE TYPE u_nested_3 AS OBJECT (
   ID NUMBER(7),
   NESTED u_nested_2
 )/
+
+
+CREATE TYPE u_3082_1 AS OBJECT (
+  n NUMBER,
+  numbers u_number_table
+)
+/
+
+CREATE TYPE u_3082_2 AS TABLE OF u_3082_1
+/
+
+CREATE TYPE u_3082_3 AS OBJECT (
+  o u_3082_1,
+  t u_3082_2,
+  numbers u_number_table
+)
+/
 
 CREATE OR REPLACE PROCEDURE p_nested (
   p1 IN u_nested_3,

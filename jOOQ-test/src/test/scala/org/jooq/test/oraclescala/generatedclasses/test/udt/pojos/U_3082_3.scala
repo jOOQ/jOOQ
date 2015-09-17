@@ -5,6 +5,7 @@ package org.jooq.test.oraclescala.generatedclasses.test.udt.pojos
 
 
 import java.io.Serializable
+import java.lang.Integer
 import java.lang.StringBuilder
 import java.util.List
 
@@ -15,16 +16,18 @@ import java.util.List
 class U_3082_3(
 	  private var o : U_3082_1      
 	, private var t : List[U_3082_1]
+	, private var numbers : List[Integer] 
 ) extends Serializable {
 
 	def this() = {
-		this(null, null)
+		this(null, null, null)
 	}
 
 	def this (value : U_3082_3) = {
 		this(
 			  value.o
 			, value.t
+			, value.numbers
 		)
 	}
 
@@ -42,6 +45,14 @@ class U_3082_3(
 
 	def setT(t : List[U_3082_1]) : Unit = {
 		this.t = t
+	}
+
+	def getNumbers : List[Integer] = {
+		this.numbers
+	}
+
+	def setNumbers(numbers : List[Integer]) : Unit = {
+		this.numbers = numbers
 	}
 
 	override def equals(obj : Any) : scala.Boolean = {
@@ -64,6 +75,12 @@ class U_3082_3(
 		}
 		else if (!t.equals(other.t))
 			return false
+		if (numbers == null) {
+			if (other.numbers != null)
+				return false
+		}
+		else if (!numbers.equals(other.numbers))
+			return false
 		return true
 	}
 
@@ -72,6 +89,7 @@ class U_3082_3(
 		var result = 1
 		result = prime * result + (if (o == null) 0 else o.hashCode())
 		result = prime * result + (if (t == null) 0 else t.hashCode())
+		result = prime * result + (if (numbers == null) 0 else numbers.hashCode())
 		return result
 	}
 
@@ -80,6 +98,7 @@ class U_3082_3(
 
 		sb.append(o)
 		sb.append(", ").append(t)
+		sb.append(", ").append(numbers)
 
 		sb.append(")");
 		return sb.toString

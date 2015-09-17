@@ -58,10 +58,12 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Proxy;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -586,6 +588,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             }
         }
 
+        @SuppressWarnings("rawtypes")
         @Override
         public final E map(R record) {
             try {
@@ -601,7 +604,19 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                     }
 
                     for (java.lang.reflect.Method method : methods[i]) {
-                        method.invoke(result, record.getValue(i, method.getParameterTypes()[0]));
+                        Class<?> mType = method.getParameterTypes()[0];
+                        Object value = record.getValue(i, mType);
+
+                        // [#3082] Map nested collection types
+                        if (value instanceof Collection && List.class.isAssignableFrom(mType)) {
+                            Class componentType = (Class) ((ParameterizedType) method.getGenericParameterTypes()[0]).getActualTypeArguments()[0];
+                            method.invoke(result, Convert.convert((Collection) value, componentType));
+                        }
+
+                        // Default reference types (including arrays)
+                        else {
+                            method.invoke(result, record.getValue(i, mType));
+                        }
                     }
                 }
 
@@ -632,6 +647,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             }
         }
 
+        @SuppressWarnings("rawtypes")
         private final void map(Record record, Object result, java.lang.reflect.Field member, int index) throws IllegalAccessException {
             Class<?> mType = member.getType();
 
@@ -661,8 +677,20 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                     map(record.getValue(index, char.class), result, member);
                 }
             }
+
             else {
-                map(record.getValue(index, mType), result, member);
+                Object value = record.getValue(index, mType);
+
+                // [#3082] Map nested collection types
+                if (value instanceof Collection && List.class.isAssignableFrom(mType)) {
+                    Class componentType = (Class) ((ParameterizedType) member.getGenericType()).getActualTypeArguments()[0];
+                    member.set(result, Convert.convert((Collection) value, componentType));
+                }
+
+                // Default reference types (including arrays)
+                else {
+                    map(value, result, member);
+                }
             }
         }
 

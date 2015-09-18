@@ -11,6 +11,86 @@ For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
 
+Version 3.6.3 - September 18, 2015
+================================================================================
+
+This is a patch release with some useful fixes for the 3.6 branch
+
+Features and Improvements
+-------------------------
+#4513 - Log a warning when a user accidentally sets the fetchSize with autoCommit == true in PostgreSQL
+
+Bug Fixes
+---------
+#4230 - ScalaGenerator generates unneeded imports
+#4356 - Regression with <schemaVersionProvider/> caused by formatting of @Generated annotation
+#4361 - DSL.timestamp() generates wrong output in SQLite
+#4368 - Wrong implementation of MergeImpl.andNot(Field<Boolean>) and orNot(Field)
+#4373 - UDTRecord is not "attached" when fetched from standalone stored function call
+#4377 - DefaultTransactionProvider should not cache Connection instance
+#4382 - No enums generated in MySQL when <forcedType/> contains  matcher
+#4386 - Missing @Support annotation in MySQLDSL
+#4392 - Example exception translator should only translate SQLException
+#4410 - Bad syntax generated for MySQL's ALTER TABLE .. SET DEFAULT statement
+#4414 - DSLContext.meta().getTables() returns empty fields list for table that are not in the current schema in MySQL
+#4433 - Fix routine parameter code generation for types with a binding
+#4441 - fetchMany() doesn't work with CUBRID
+#4445 - CUBRID doesn't support savepoints
+#4449 - Empty GROUP BY () clause emulation fails in CUBRID
+#4452 - UDTRecord.toString() doesn't correctly serialise attribute values
+#4482 - Missing parentheses when DSL.dateDiff(d1, d2) or timestampDiff(d1, d2) renders "d1 - d2"
+#4491 - Record not attached to Configuration yet, when RecordListener.exception() is called
+#4519 - Wrapping condition as field should produce parentheses
+#4521 - TableOnStep.onKey() generates wrong join condition when left-hand side contains aliases
+#4527 - ScalaGenerator generates broken code when using xxxImplements
+#4532 - Generated schema and generated Sequences classes import each other, which generates warnings (unused import)
+#4541 - Performance of org.jooq.impl.Fields.field(Field) could be improved heavily, if checking for identity first
+#4546 - Error generating code for Oracle Package in Oracle 10g
+#4548 - Package is not generated when an exception is thrown
+#4560 - DSLContext#batch(Query) silently discards queries
+#4564 - Incorrect Javadoc on DefaultRecordMapper claims that only public members / methods are considered
+
+Version 3.6.2 - June 03, 2015
+================================================================================
+
+This is a patch release with some useful fixes for the 3.6 branch
+
+Bug fixes
+---------
+#4162 - Malformed record literal when using PostgreSQL array of user-defined types
+#4248 - daoImplements option in MatcherStrategy not generating an implements statement in DAO class
+#4258 - Bad SQL generated for quantified row value expression predicates in Oracle
+#4269 - No columns generated for PostgreSQL SETOF [ scalar type ]
+#4287 - Remove unused import org.jooq.Row in generated records
+#4292 - Wrong emulation of "grand total" GROUP BY () clause in dialects that do not natively support them
+#4300 - DROP SEQUENCE IF EXISTS implemented incorrectly in Sybase SQL Anywhere
+#4308 - SQLSERVER2014 dialect doesn't generate correct LIMIT .. OFFSET clause
+#4313 - NullPointerException in code generator when bypassing GenerationTool without initialising all Lists and String[] to empty objects in Database
+#4314 - SQL Server UPDATE .. FROM illegally declares aliased tables in UPDATE clause
+#4321 - Invalid SQL generated when using nullable data types for Derby
+#4324 - DROP SEQUENCE statement has a mandatory RESTRICT keyword in Derby
+#4328 - Bad implementation of ALTER TABLE .. ALTER COLUMN .. SET DATA TYPE in Derby
+#4331 - REFERENCES .. ON { DELETE | UPDATE } SET DEFAULT is currently not supported by Derby
+#4333 - Firebird CREATE TABLE regression when columns are nullable
+#4341 - No Results are fetched from SQL Server procedures that contain update counts
+#4344 - MockStatement returns wrong update counts
+#4349 - The trial / pro license is accidentally delivered with the Open Source Edition
+
+Version 3.6.1 - April 29, 2015
+================================================================================
+
+This is a patch release with some useful fixes for the 3.6 branch
+
+Bug fixes
+---------
+#4224 - ORA-00904: "SYS"."ALL_PROCEDURES"."OBJECT_ID": invalid identifier when using the code generator with Oracle 10g
+#4225 - ScalaGenerator logs that it generates XXX.java files
+#4227 - ScalaGenerator should have its own list of reserved words
+#4235 - JDBCDatabase calls Meta.getPrimaryKeys() for all schemas, not just for input schemas
+#4236 - Compilation error in compiled code when column is called "null"
+#4240 - JDBCDatabase fetches tables from all schemas, not just from input schemas
+#4246 - HANADataType isn't initialised in SQLDataType's static initialiser block
+
 Version 3.6.0 - April 22, 2015
 ================================================================================
 
@@ -238,7 +318,6 @@ Behavioural changes (backwards-incompatible)
 
 Bug fixes
 ---------
-
 #2522 - Codegen Schema mapping doesn't work for UDT
 #2647 - Code generation error when Postgres stored function contains several parameters with the same name
 #3170 - Improve manual's jOOQ examples by always using fetch() or execute() where applicable
@@ -394,7 +473,7 @@ that allows to read meta information from XML formats, e.g. from a standard
 INFORMATION_SCHEMA.xml, or from Vertabelo's XML export format:
 http://blog.jooq.org/2014/09/05/importing-your-erd-export-into-jooq/
 
-Future versions of jOOQ will include built-in support for a variety of XML 
+Future versions of jOOQ will include built-in support for a variety of XML
 formats.
 
 We've had an awesome contribution by Etienne Studer from Gradleware to help our

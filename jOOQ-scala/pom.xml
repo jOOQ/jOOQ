@@ -24,6 +24,7 @@
         <testSourceDirectory>src/test/scala</testSourceDirectory>
         <plugins>
 
+            <!-- [pro] -->
             <!-- The H2 test schema is loaded here -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -125,6 +126,7 @@
                     </dependency>
                 </dependencies>
             </plugin>
+            <!-- [/pro] -->
 
             <!-- The Scala compiler plugin -->
             <plugin>

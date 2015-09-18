@@ -169,7 +169,7 @@ class Splitter extends Generators {
                     && !canonicalPath.contains("\\sybase\\")
                     && !canonicalPath.contains("\\vertica\\")
 
-                    && !canonicalPath.contains("\\src\\test\\")
+                    && !canonicalPath.contains("\\jOOQ\\src\\test\\")
                 ))
             ];
 

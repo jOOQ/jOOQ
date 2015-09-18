@@ -143,7 +143,6 @@ class Splitter extends Generators {
                 && !canonicalPath.contains("jOOQ-websites")
                 && !canonicalPath.contains("jOOQ-webservices")
                 && !canonicalPath.contains("jOOQ-parse")
-                && !canonicalPath.contains("\\src\\test\\")
                 && !canonicalPath.contains("\\target\\")
                 && !canonicalPath.contains("\\bin\\")
                 && !canonicalPath.contains("\\.idea\\")
@@ -169,6 +168,8 @@ class Splitter extends Generators {
                     && !canonicalPath.contains("\\sqlserver\\")
                     && !canonicalPath.contains("\\sybase\\")
                     && !canonicalPath.contains("\\vertica\\")
+
+                    && !canonicalPath.contains("\\src\\test\\")
                 ))
             ];
 

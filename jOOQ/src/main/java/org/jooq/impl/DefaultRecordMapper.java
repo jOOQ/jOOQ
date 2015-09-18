@@ -120,14 +120,14 @@ import org.jooq.tools.reflect.Reflect;
  * used:</h5>
  * <p>
  * <ul>
- * <li>If <code>&lt;E></code> contains public single-argument instance methods
- * annotated with <code>Column</code>, those methods are invoked</li>
- * <li>If <code>&lt;E></code> contains public no-argument instance methods
- * starting with <code>getXXX</code> or <code>isXXX</code>, annotated with
- * <code>Column</code>, then matching public <code>setXXX()</code> instance
- * methods are invoked</li>
- * <li>If <code>&lt;E></code> contains public instance member fields annotated
- * with <code>Column</code>, those members are set</li>
+ * <li>If <code>&lt;E></code> contains single-argument instance methods of any
+ * visibility annotated with <code>Column</code>, those methods are invoked</li>
+ * <li>If <code>&lt;E></code> contains no-argument instance methods of any
+ * visibility starting with <code>getXXX</code> or <code>isXXX</code>, annotated
+ * with <code>Column</code>, then matching <code>setXXX()</code> instance
+ * methods of any visibility are invoked</li>
+ * <li>If <code>&lt;E></code> contains instance member fields of any visibility
+ * annotated with <code>Column</code>, those members are set</li>
  * </ul>
  * Additional rules:
  * <ul>
@@ -144,27 +144,27 @@ import org.jooq.tools.reflect.Reflect;
  * <code>Record</code> values by naming convention:</h5>
  * <p>
  * If {@link Field#getName()} is <code>MY_field</code> (case-sensitive!), then
- * this field's value will be set on all of these:
+ * this field's value will be set on all of these (regardless of visibility):
  * <ul>
- * <li>Public single-argument instance method <code>MY_field(...)</code></li>
- * <li>Public single-argument instance method <code>myField(...)</code></li>
- * <li>Public single-argument instance method <code>setMY_field(...)</code></li>
- * <li>Public single-argument instance method <code>setMyField(...)</code></li>
- * <li>Public non-final instance member field <code>MY_field</code></li>
- * <li>Public non-final instance member field <code>myField</code></li>
+ * <li>Single-argument instance method <code>MY_field(...)</code></li>
+ * <li>Single-argument instance method <code>myField(...)</code></li>
+ * <li>Single-argument instance method <code>setMY_field(...)</code></li>
+ * <li>Single-argument instance method <code>setMyField(...)</code></li>
+ * <li>Non-final instance member field <code>MY_field</code></li>
+ * <li>Non-final instance member field <code>myField</code></li>
  * </ul>
  * <p>
  * If {@link Field#getName()} is <code>MY_field.MY_nested_field</code>
  * (case-sensitive!), then this field's value will be considered a nested value
  * <code>MY_nested_field</code>, which is set on a nested POJO that is passed to
- * all of these:
+ * all of these (regardless of visibility):
  * <ul>
- * <li>Public single-argument instance method <code>MY_field(...)</code></li>
- * <li>Public single-argument instance method <code>myField(...)</code></li>
- * <li>Public single-argument instance method <code>setMY_field(...)</code></li>
- * <li>Public single-argument instance method <code>setMyField(...)</code></li>
- * <li>Public non-final instance member field <code>MY_field</code></li>
- * <li>Public non-final instance member field <code>myField</code></li>
+ * <li>Single-argument instance method <code>MY_field(...)</code></li>
+ * <li>Single-argument instance method <code>myField(...)</code></li>
+ * <li>Single-argument instance method <code>setMY_field(...)</code></li>
+ * <li>Single-argument instance method <code>setMyField(...)</code></li>
+ * <li>Non-final instance member field <code>MY_field</code></li>
+ * <li>Non-final instance member field <code>myField</code></li>
  * </ul>
  * <p>
  * <h5>If no default constructor is available, but at least one constructor

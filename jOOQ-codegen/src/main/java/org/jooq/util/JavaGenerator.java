@@ -811,7 +811,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (scala)
-            out.println("class %s extends %s[%s](%s)[[before= with ][%s]] {", className, baseClass, className, tableIdentifier, interfaces);
+            out.println("class %s extends %s[%s](%s)[[before= with ][separator= with ][%s]] {", className, baseClass, className, tableIdentifier, interfaces);
         else
             out.println("public class %s extends %s<%s>[[before= implements ][%s]] {", className, baseClass, className, interfaces);
 
@@ -1361,7 +1361,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (scala) {
-            out.println("class %s extends %s[%s](\"%s\", %s)[[before= with ][%s]] {", className, UDTImpl.class, recordType, udt.getOutputName(), schemaId, interfaces);
+            out.println("class %s extends %s[%s](\"%s\", %s)[[before= with ][separator= with ][%s]] {", className, UDTImpl.class, recordType, udt.getOutputName(), schemaId, interfaces);
         }
         else {
             out.println("public class %s extends %s<%s>[[before= implements ][%s]] {", className, UDTImpl.class, recordType, interfaces);
@@ -1637,7 +1637,7 @@ public class JavaGenerator extends AbstractGenerator {
         xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
 
         xx xxxxxxx
-            xxxxxxxxxxxxxxxxxx xx xxxxxxx xxxxxxxxxx xxxxxxx xxxxxxxxxxxx xxxxx xxxxxxxxxxxxxxxx xxxx xxxxxx xxx
+            xxxxxxxxxxxxxxxxxx xx xxxxxxx xxxxxxxxxx xxxxxxx xxxxxxxxxxxx xxxxx xxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxx xxxx xxxxxx xxx
                     xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx xxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxx
         xxxx
             xxxxxxxxxxxxxxxxxxx xxxxx xx xxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxx xxxxxx xxx
@@ -1946,7 +1946,7 @@ public class JavaGenerator extends AbstractGenerator {
         xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
 
         xx xxxxxxx x
-            xxxxxxxxxxxxxxxxxxx xx xxxxxxx xxxxxxxxxx xxxxxxxxxxxx xxxx xxxxxx xxx xxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxx xx xxxxxxx xxxxxxxxxx xxxxxxxxxxxx xxxx xxxxxxxxxxxx xxxx xxxxxx xxx xxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxx
 
             xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxxxx xx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxxx xx x xxxx xxxxxxxxxxx xxxxxxxxxxx
@@ -2111,7 +2111,7 @@ public class JavaGenerator extends AbstractGenerator {
         printClassAnnotations(out, table.getSchema());
 
         if (scala)
-            out.println("class %s(configuration : %s) extends %s[%s, %s, %s](%s, classOf[%s], configuration)[[before= with ][%s]] {",
+            out.println("class %s(configuration : %s) extends %s[%s, %s, %s](%s, classOf[%s], configuration)[[before= with ][separator= with ][%s]] {",
                     className, Configuration.class, daoImpl, tableRecord, pType, tType, tableIdentifier, pType, interfaces);
         else
             out.println("public class %s extends %s<%s, %s, %s>[[before= implements ][%s]] {", className, daoImpl, tableRecord, pType, tType, interfaces);
@@ -2324,7 +2324,7 @@ public class JavaGenerator extends AbstractGenerator {
                 separator = ", ";
             }
 
-            out.println(")[[before= extends ][%s]][[before= with ][%s]] {", first(superTypes), remaining(superTypes));
+            out.println(")[[before= extends ][%s]][[before= with ][separator= with ][%s]] {", first(superTypes), remaining(superTypes));
         }
         else {
             out.println("public class %s[[before= extends ][%s]][[before= implements ][%s]] {", className, list(superName), interfaces);
@@ -2731,7 +2731,7 @@ public class JavaGenerator extends AbstractGenerator {
         printClassAnnotations(out, schema);
 
         if (scala) {
-            out.println("class %s(alias : String, aliased : %s[%s], parameters : Array[ %s[_] ]) extends %s[%s](alias, %s, aliased, parameters, \"%s\")[[before= with ][%s]] {",
+            out.println("class %s(alias : String, aliased : %s[%s], parameters : Array[ %s[_] ]) extends %s[%s](alias, %s, aliased, parameters, \"%s\")[[before= with ][separator= with ][%s]] {",
                     className, Table.class, recordType, Field.class, TableImpl.class, recordType, schemaId, escapeString(comment), interfaces);
         }
         else {
@@ -3151,7 +3151,7 @@ public class JavaGenerator extends AbstractGenerator {
         printClassAnnotations(out, schema);
 
         if (scala) {
-            out.println("class %s extends %s(\"%s\")[[before= with ][%s]] {", className, SchemaImpl.class, schema.getOutputName(), interfaces);
+            out.println("class %s extends %s(\"%s\")[[before= with ][separator= with ][%s]] {", className, SchemaImpl.class, schema.getOutputName(), interfaces);
         }
         else {
             out.println("public class %s extends %s[[before= implements ][%s]] {", className, SchemaImpl.class, interfaces);
@@ -3443,16 +3443,15 @@ public class JavaGenerator extends AbstractGenerator {
                 final String paramName = parameter.getName();
                 final String paramComment = StringUtils.defaultString(parameter.getComment());
                 final String isDefaulted = parameter.isDefaulted() ? "true" : "false";
-                final String paramConverterType = out.ref(parameter.getType().getConverter());
+                final List<String> converters = out.ref(list(
+                        parameter.getType().getConverter(),
+                        parameter.getType().getBinding()
+                ));
 
                 out.tab(1).javadoc("The parameter <code>%s</code>.%s", parameter.getQualifiedOutputName(), defaultIfBlank(" " + paramComment, ""));
 
-                if (paramConverterType != null)
-                    out.tab(1).println("val %s : %s[%s] = %s.createParameter(\"%s\", %s, %s, new %s)",
-                        paramId, Parameter.class, paramType, AbstractRoutine.class, paramName, paramTypeRef, isDefaulted, paramConverterType);
-                else
-                    out.tab(1).println("val %s : %s[%s] = %s.createParameter(\"%s\", %s, %s)",
-                        paramId, Parameter.class, paramType, AbstractRoutine.class, paramName, paramTypeRef, isDefaulted);
+                out.tab(1).println("val %s : %s[%s] = %s.createParameter(\"%s\", %s, %s[[before=, ][new %s]])",
+                        paramId, Parameter.class, paramType, AbstractRoutine.class, paramName, paramTypeRef, isDefaulted, converters);
             }
 
             out.println("}");
@@ -3463,7 +3462,7 @@ public class JavaGenerator extends AbstractGenerator {
         printClassAnnotations(out, schema);
 
         if (scala) {
-            out.println("class %s extends %s[%s](\"%s\", %s[[before=, ][%s]][[before=, ][%s]][[before=, ][new %s()]])[[before= with ][%s]] {",
+            out.println("class %s extends %s[%s](\"%s\", %s[[before=, ][%s]][[before=, ][%s]][[before=, ][new %s()]])[[before= with ][separator= with ][%s]] {",
                     className, AbstractRoutine.class, returnType, routine.getName(), schemaId, packageId, returnTypeRef, returnConverterType, interfaces);
         }
         else {
@@ -3478,16 +3477,15 @@ public class JavaGenerator extends AbstractGenerator {
                 final String paramName = parameter.getName();
                 final String paramComment = StringUtils.defaultString(parameter.getComment());
                 final String isDefaulted = parameter.isDefaulted() ? "true" : "false";
-                final String paramConverterType = out.ref(parameter.getType().getConverter());
+                final List<String> converters = out.ref(list(
+                        parameter.getType().getConverter(),
+                        parameter.getType().getBinding()
+                ));
 
                 out.tab(1).javadoc("The parameter <code>%s</code>.%s", parameter.getQualifiedOutputName(), defaultIfBlank(" " + paramComment, ""));
 
-                if (paramConverterType != null)
-                    out.tab(1).println("public static final %s<%s> %s = createParameter(\"%s\", %s, %s, new %s());",
-                        Parameter.class, paramType, paramId, paramName, paramTypeRef, isDefaulted, paramConverterType);
-                else
-                    out.tab(1).println("public static final %s<%s> %s = createParameter(\"%s\", %s, %s);",
-                        Parameter.class, paramType, paramId, paramName, paramTypeRef, isDefaulted);
+                out.tab(1).println("public static final %s<%s> %s = createParameter(\"%s\", %s, %s[[before=, ][new %s()]]);",
+                        Parameter.class, paramType, paramId, paramName, paramTypeRef, isDefaulted, converters);
             }
         }
 
@@ -4132,7 +4130,7 @@ public class JavaGenerator extends AbstractGenerator {
                 f.readFully(bytes);
                 String string = new String(bytes);
 
-                Matcher matcher = Pattern.compile("@(javax\\.annotation\\.)?Generated\\(value\\s+= \\{.*?\"schema version:(.*?)\" \\},").matcher(string);
+                Matcher matcher = Pattern.compile("@(?:javax\\.annotation\\.)?Generated\\(\\s*?value\\s*?=\\s*?\\{[^}]*?\"schema version:([^\"]*?)\"").matcher(string);
                 if (matcher.find()) {
                     result = matcher.group(1);
                 }

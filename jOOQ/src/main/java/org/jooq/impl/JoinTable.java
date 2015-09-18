@@ -452,10 +452,10 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
         List<?> rightToLeft = rhs.getReferencesTo(lhs);
 
         if (leftToRight.size() == 1 && rightToLeft.size() == 0) {
-            return onKey((ForeignKey<?, ?>) leftToRight.get(0));
+            return onKey((ForeignKey<?, ?>) leftToRight.get(0), lhs, rhs);
         }
         else if (rightToLeft.size() == 1 && leftToRight.size() == 0) {
-            return onKey((ForeignKey<?, ?>) rightToLeft.get(0));
+            return onKey((ForeignKey<?, ?>) rightToLeft.get(0), rhs, lhs);
         }
 
         throw onKeyException();
@@ -464,14 +464,14 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
     @Override
     public final JoinTable onKey(TableField<?, ?>... keyFields) throws DataAccessException {
         if (keyFields != null && keyFields.length > 0) {
-            if (keyFields[0].getTable().equals(lhs)) {
+            if (keyFields[0].getTable().equals(unaliased(lhs))) {
                 for (ForeignKey<?, ?> key : lhs.getReferences()) {
                     if (key.getFields().containsAll(asList(keyFields))) {
                         return onKey(key);
                     }
                 }
             }
-            else if (keyFields[0].getTable().equals(rhs)) {
+            else if (keyFields[0].getTable().equals(unaliased(rhs))) {
                 for (ForeignKey<?, ?> key : rhs.getReferences()) {
                     if (key.getFields().containsAll(asList(keyFields))) {
                         return onKey(key);
@@ -483,17 +483,35 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
         throw onKeyException();
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final JoinTable onKey(ForeignKey<?, ?> key) {
+        if (key.getTable().equals(unaliased(lhs)))
+            return onKey(key, lhs, rhs);
+        else if (key.getTable().equals(unaliased(rhs)))
+            return onKey(key, rhs, lhs);
+
+        throw onKeyException();
+    }
+
+    private final Table<?> unaliased(Table<?> aliased) {
+        return
+            (aliased instanceof TableImpl)
+          ? (((TableImpl<?>) aliased).alias == null ? (TableImpl<?>) aliased : ((TableImpl<?>) aliased).alias.wrapped())
+          : (aliased instanceof TableAlias)
+          ? ((TableAlias<?>) aliased).alias.wrapped()
+          : aliased;
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    private final JoinTable onKey(ForeignKey<?, ?> key, Table<?> fk, Table<?> pk) {
         JoinTable result = this;
 
         TableField<?, ?>[] references = key.getFieldsArray();
         TableField<?, ?>[] referenced = key.getKey().getFieldsArray();
 
         for (int i = 0; i < references.length; i++) {
-            Field f1 = references[i];
-            Field f2 = referenced[i];
+            Field f1 = fk.field(references[i]);
+            Field f2 = pk.field(referenced[i]);
 
             // [#2870] TODO: If lhs or rhs are aliased tables, extract the appropriate fields from them
             result.and(f1.equal(f2));

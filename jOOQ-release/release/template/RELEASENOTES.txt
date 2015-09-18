@@ -16,6 +16,45 @@ Version 3.6.2 - June 03, 2015
 
 This is a patch release with some useful fixes for the 3.6 branch
 
+Features and Improvements
+-------------------------
+#4513 - Log a warning when a user accidentally sets the fetchSize with autoCommit == true in PostgreSQL
+
+Bug Fixes
+---------
+#4230 - ScalaGenerator generates unneeded imports
+#4356 - Regression with <schemaVersionProvider/> caused by formatting of @Generated annotation
+#4361 - DSL.timestamp() generates wrong output in SQLite
+#4368 - Wrong implementation of MergeImpl.andNot(Field<Boolean>) and orNot(Field)
+#4373 - UDTRecord is not "attached" when fetched from standalone stored function call
+#4377 - DefaultTransactionProvider should not cache Connection instance
+#4382 - No enums generated in MySQL when <forcedType/> contains  matcher
+#4386 - Missing @Support annotation in MySQLDSL
+#4392 - Example exception translator should only translate SQLException
+#4410 - Bad syntax generated for MySQL's ALTER TABLE .. SET DEFAULT statement
+#4414 - DSLContext.meta().getTables() returns empty fields list for table that are not in the current schema in MySQL
+#4433 - Fix routine parameter code generation for types with a binding
+#4441 - fetchMany() doesn't work with CUBRID
+#4445 - CUBRID doesn't support savepoints
+#4449 - Empty GROUP BY () clause emulation fails in CUBRID
+#4452 - UDTRecord.toString() doesn't correctly serialise attribute values
+#4482 - Missing parentheses when DSL.dateDiff(d1, d2) or timestampDiff(d1, d2) renders "d1 - d2"
+#4491 - Record not attached to Configuration yet, when RecordListener.exception() is called
+#4519 - Wrapping condition as field should produce parentheses
+#4521 - TableOnStep.onKey() generates wrong join condition when left-hand side contains aliases
+#4527 - ScalaGenerator generates broken code when using xxxImplements
+#4532 - Generated schema and generated Sequences classes import each other, which generates warnings (unused import)
+#4541 - Performance of org.jooq.impl.Fields.field(Field) could be improved heavily, if checking for identity first
+#4546 - Error generating code for Oracle Package in Oracle 10g
+#4548 - Package is not generated when an exception is thrown
+#4560 - DSLContext#batch(Query) silently discards queries
+#4564 - Incorrect Javadoc on DefaultRecordMapper claims that only public members / methods are considered
+
+Version 3.6.2 - June 03, 2015
+================================================================================
+
+This is a patch release with some useful fixes for the 3.6 branch
+
 Bug fixes
 ---------
 #4162 - Malformed record literal when using PostgreSQL array of user-defined types

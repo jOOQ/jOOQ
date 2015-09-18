@@ -74,7 +74,7 @@ public abstract class AbstractPackageDefinition extends AbstractDefinition imple
             try {
                 routines = getRoutines0();
             }
-            catch (SQLException e) {
+            catch (Exception e) {
                 log.error("Error while initialising package", e);
             }
         }
@@ -92,7 +92,7 @@ public abstract class AbstractPackageDefinition extends AbstractDefinition imple
             try {
                 constants = getConstants0();
             }
-            catch (SQLException e) {
+            catch (Exception e) {
                 log.error("Error while initialising package", e);
             }
         }

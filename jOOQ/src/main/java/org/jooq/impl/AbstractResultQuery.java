@@ -46,6 +46,7 @@ import static java.util.Arrays.asList;
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.impl.Utils.DATA_LOCK_ROWS_FOR_UPDATE;
 import static org.jooq.impl.Utils.consumeResultSets;
@@ -234,6 +235,10 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     protected final int execute(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
         listener.executeStart(ctx);
+
+        // [#4511] PostgreSQL doesn't like fetchSize with autoCommit == true
+        if (ctx.family() == POSTGRES && fetchSize != 0 && ctx.connection().getAutoCommit())
+            log.info("Fetch Size", "A fetch size of " + fetchSize + " was set on a auto-commit PostgreSQL connection, which is not recommended. See http://jdbc.postgresql.org/documentation/head/query.html#query-with-cursor");
 
         /* [pro] xx
         xx xxxx xxxxxxx xxxx xx xxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx

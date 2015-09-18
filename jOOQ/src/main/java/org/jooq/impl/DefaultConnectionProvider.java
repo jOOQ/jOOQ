@@ -64,7 +64,7 @@ import org.jooq.tools.jdbc.JDBCUtils;
 public class DefaultConnectionProvider implements ConnectionProvider {
 
     private static final JooqLogger log = JooqLogger.getLogger(DefaultConnectionProvider.class);
-    private Connection              connection;
+    Connection                      connection;
     private boolean                 finalize;
 
     public DefaultConnectionProvider(Connection connection) {

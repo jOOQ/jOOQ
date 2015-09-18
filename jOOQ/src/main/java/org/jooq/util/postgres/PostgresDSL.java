@@ -77,6 +77,7 @@ public class PostgresDSL extends DSL {
      * </pre></code>
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
+    @Support({ POSTGRES })
     public static <T> Field<T[]> array(Select<? extends Record1<T>> select) {
         return DSL.field("array({0})", (DataType) select.getSelect().get(0).getDataType().getArrayDataType(), select);
     }

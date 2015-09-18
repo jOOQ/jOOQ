@@ -303,11 +303,19 @@ class AlterTableImpl extends AbstractQuery implements
                 xx [/pro] */
 
                 case MARIADB:
-                case MYSQL:
-                    // MySQL's CHANGE COLUMN clause has a mandatory RENAMING syntax...
-                    ctx.sql(' ').keyword("change column")
-                       .sql(' ').qualify(false).visit(alterColumn).qualify(true);
+                case MYSQL: {
+
+                    if (alterColumnDefault == null) {
+                        // MySQL's CHANGE COLUMN clause has a mandatory RENAMING syntax...
+                        ctx.sql(' ').keyword("change column")
+                           .sql(' ').qualify(false).visit(alterColumn).qualify(true);
+                    }
+                    else {
+                        ctx.sql(' ').keyword("alter column");
+                    }
+
                     break;
+                }
 
                 default:
                     ctx.sql(' ').keyword("alter");

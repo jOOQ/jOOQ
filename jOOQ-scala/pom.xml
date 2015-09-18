@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.jooq</groupId>
         <artifactId>jooq-parent</artifactId>
-        <version>3.6.2</version>
+        <version>3.6.3</version>
     </parent>
 
     <groupId>org.jooq</groupId>
@@ -24,106 +24,108 @@
         <testSourceDirectory>src/test/scala</testSourceDirectory>
         <plugins>
 
-            <!-- The H2 test schema is loaded here -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>sql-maven-plugin</artifactId>
-                <version>1.5</version>
+            <!-- [pro] xxx
+            xxxx xxx xx xxxx xxxxxx xx xxxxxx xxxx xxx
+            xxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxx
 
-                <dependencies>
-                    <dependency>
-                        <groupId>com.h2database</groupId>
-                        <artifactId>h2</artifactId>
-                        <version>${org.h2.version}</version>
-                    </dependency>
-                </dependencies>
+                xxxxxxxxxxxxxx
+                    xxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxx
+                xxxxxxxxxxxxxxx
 
-                <!-- common configuration shared by all executions -->
-                <configuration>
-                    <driver>org.h2.Driver</driver>
-                    <url>jdbc:h2:~/scala-test</url>
-                    <username>sa</username>
-                    <password></password>
-                    <!--all executions are ignored if -Dmaven.test.skip=true -->
-                    <skip>${maven.test.skip}</skip>
-                </configuration>
+                xxxx xxxxxx xxxxxxxxxxxxx xxxxxx xx xxx xxxxxxxxxx xxx
+                xxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxx xxxxxxxxxx xxx xxxxxxx xx xxxxxxxxxxxxxxxxxxxxxx xxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxx
 
-                <executions>
-                    <execution>
-                        <id>create-database</id>
-                        <phase>generate-test-sources</phase>
-                        <goals>
-                            <goal>execute</goal>
-                        </goals>
-                        <configuration>
-                            <autocommit>true</autocommit>
-                            <srcFiles>
-                                <srcFile>src/test/resources/db.sql</srcFile>
-                            </srcFiles>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+                xxxxxxxxxxxx
+                    xxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxx
+                            xxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxx
+                        xxxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxxxxx
+                                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxxxxxx
+                        xxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxx
+                xxxxxxxxxxxxx
+            xxxxxxxxx
 
-            <!-- The jOOQ code generator plugin for Postgres / Sybase ASE / MySQL -->
-            <plugin>
-                <groupId>org.jooq</groupId>
-                <artifactId>jooq-codegen-maven</artifactId>
-                <version>3.6.2</version>
-                <executions>
-                    <execution>
-                        <id>exec1</id>
-                        <phase>generate-test-sources</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <jdbc>
-                                <driver>org.h2.Driver</driver>
-                                <url>jdbc:h2:~/scala-test</url>
-                                <user>sa</user>
-                                <password></password>
-                            </jdbc>
-                            <generator>
-                                <database>
-                                    <inputSchema>PUBLIC</inputSchema>
-                                </database>
-                                <generate>
-                                    <deprecated>false</deprecated>
-                                    <instanceFields>true</instanceFields>
-                                    <pojos>true</pojos>
-                                </generate>
-                                
-                                <!-- [#2910] This strategy only checks if relevant XML configuration works
-                                             for the Maven plugin as well -->
-                                <strategy>
-                                    <matchers>
-                                        <fields>
-                                            <field>
-                                                <expression>DUMMY</expression>
-                                                <fieldSetter><expression>DUMMY</expression></fieldSetter>
-                                                <fieldGetter><expression>DUMMY</expression></fieldGetter>
-                                            </field>
-                                        </fields>
-                                    </matchers>
-                                </strategy>
-                                <target>
-                                    <packageName>org.jooq.scala.example.h2</packageName>
-                                    <directory>target/generated-test-sources/jooq-h2</directory>
-                                </target>
-                            </generator>
-                        </configuration>
-                    </execution>
-                </executions>
-                
-                <dependencies>
-                    <dependency>
-                        <groupId>com.h2database</groupId>
-                        <artifactId>h2</artifactId>
-                        <version>${org.h2.version}</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
+            xxxx xxx xxxx xxxx xxxxxxxxx xxxxxx xxx xxxxxxxx x xxxxxx xxx x xxxxx xxx
+            xxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxx
+                    xxxxxxxxxxx
+                        xxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxx
+                            xxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxx
+                        xxxxxxxxxxxxxxx
+                            xxxxxx
+                                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                xxxxxxxxxxxxxxx
+                                xxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxx
+                            xxxxxxxxxxx
+                                xxxxxxxxxx
+                                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                xxxxxxxxxxx
+                                xxxxxxxxxx
+                                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                    xxxxxxxxxxxxxxxxxxx
+                                xxxxxxxxxxx
+
+                                xxxx xxxxxxx xxxx xxxxxxxx xxxx xxxxxx xx xxxxxxxx xxx xxxxxxxxxxxxx xxxxx
+                                             xxx xxx xxxxx xxxxxx xx xxxx xxx
+                                xxxxxxxxxx
+                                    xxxxxxxxxx
+                                        xxxxxxxx
+                                            xxxxxxx
+                                                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                            xxxxxxxx
+                                        xxxxxxxxx
+                                    xxxxxxxxxxx
+                                xxxxxxxxxxx
+                                xxxxxxxx
+                                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                                xxxxxxxxx
+                            xxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxx
+                xxxxxxxxxxxxx
+
+                xxxxxxxxxxxxxx
+                    xxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxx
+                xxxxxxxxxxxxxxx
+            xxxxxxxxx
+            xxxx [/pro] -->
 
             <!-- The Scala compiler plugin -->
             <plugin>

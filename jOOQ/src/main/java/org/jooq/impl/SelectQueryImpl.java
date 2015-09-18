@@ -1078,8 +1078,13 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                     context.sql('0');
                 }
 
+                // [#4447] CUBRID can't handle subqueries in GROUP BY
+                else if (family == CUBRID) {
+                    context.sql("1 + 0");
+                }
+
                 // [#4292] Some dialects don't support empty GROUP BY () clauses
-                else if (asList(CUBRID, FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE).contains(family)) {
+                else if (asList(FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE).contains(family)) {
                     context.sql('(').visit(DSL.select(one())).sql(')');
                 }
 

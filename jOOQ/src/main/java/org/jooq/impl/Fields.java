@@ -79,16 +79,18 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
     @Override
     @SuppressWarnings("unchecked")
     public final <T> Field<T> field(Field<T> field) {
-        if (field == null) {
+        if (field == null)
             return null;
-        }
+
+        // [#4540] Try finding a match by identity
+        for (Field<?> f : fields)
+            if (f == field)
+                return (Field<T>) f;
 
         // [#1802] Try finding an exact match (e.g. exact matching qualified name)
-        for (Field<?> f : fields) {
-            if (f.equals(field)) {
+        for (Field<?> f : fields)
+            if (f.equals(field))
                 return (Field<T>) f;
-            }
-        }
 
         // In case no exact match was found, return the first field with matching name
         String name = field.getName();
@@ -196,10 +198,14 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
         if (compareWith != null) {
             int size = fields.length;
 
-            for (int i = 0; i < size; i++) {
+            // [#4540] Match by identity first
+            for (int i = 0; i < size; i++)
+                if (fields[i] == compareWith)
+                    return i;
+
+            for (int i = 0; i < size; i++)
                 if (fields[i].equals(compareWith))
                     return i;
-            }
         }
 
         return -1;

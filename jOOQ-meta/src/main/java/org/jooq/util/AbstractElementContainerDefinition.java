@@ -97,7 +97,7 @@ extends AbstractDefinition {
                     elements = e;
                 }
             }
-            catch (SQLException e) {
+            catch (Exception e) {
                 log.error("Error while initialising type", e);
             }
         }

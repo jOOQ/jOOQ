@@ -159,6 +159,15 @@ class BatchSingle implements BatchBindStep {
 
     @Override
     public final int[] execute() {
+
+        // [#4554] If no variables are bound this should be treated like a
+        // BatchMultiple as the intention was most likely to call the varargs
+        // version of DSLContext#batch(Query... queries) with a single parameter.
+        if (allBindValues.isEmpty()) {
+            log.info("Single batch", "No bind variables have been provided with a single statement batch execution. This may be due to accidental API misuse");
+            return BatchMultiple.execute(configuration, new Query[] { query });
+        }
+
         checkBindValues();
 
         // [#1180] Run batch queries with BatchMultiple, if no bind variables

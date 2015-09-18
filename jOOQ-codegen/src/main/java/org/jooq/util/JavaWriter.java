@@ -116,6 +116,13 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     @Override
     protected String beforeClose(String string) {
         StringBuilder importString = new StringBuilder();
+        String pkg = "";
+
+        Matcher m = Pattern.compile("(?s:^.*?\\Rpackage\\s+(.*?);?\\R.*?$)").matcher(string);
+        if (m.find())
+            pkg = m.group(1);
+
+        Pattern samePackagePattern = Pattern.compile(pkg + "\\.[^\\.]+");
 
         String previous = "";
         for (String imp : qualifiedTypes) {
@@ -127,6 +134,10 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
 
             // Don't import the class itself
             if (imp.endsWith("." + className))
+                continue;
+
+            // [#4229] [#4531] Avoid warnings due to unnecessary same-package imports
+            if (pkg.length() > 0 && samePackagePattern.matcher(imp).matches())
                 continue;
 
             String topLevelPackage = imp.split("\\.")[0];

@@ -40,6 +40,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.keyword;
+
 import java.sql.Date;
 import java.sql.Time;
 
@@ -77,13 +79,23 @@ class DateOrTime<T extends java.util.Date> extends AbstractFunction<T> {
 
     @Override
     final QueryPart getFunction0(Configuration configuration) {
-        switch (configuration.dialect().family()) {
+        switch (configuration.family()) {
             case MYSQL:
             case MARIADB:
                 return DSL.field("{" + name(getDataType()) + "}({0})", getDataType(), field);
 
+            case SQLITE: {
+                String name =
+                      getDataType().getType() == Date.class
+                    ? "date"
+                    : getDataType().getType() == Time.class
+                    ? "time"
+                    : "datetime";
+
+                return DSL.field("{0}({1})", getDataType(), keyword(name), field);
+            }
+
             default:
-            case H2:
                 return field.cast(getDataType());
         }
     }

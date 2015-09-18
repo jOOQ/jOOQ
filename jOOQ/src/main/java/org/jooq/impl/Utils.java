@@ -43,6 +43,7 @@ package org.jooq.impl;
 import static java.lang.Boolean.FALSE;
 import static java.util.Arrays.asList;
 // ...
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.conf.BackslashEscaping.DEFAULT;
@@ -2508,8 +2509,8 @@ final class Utils {
             log.warn("Maximum consumed results reached: " + maxConsumedResults + ". This is probably a bug. Please report to https://github.com/jOOQ/jOOQ/issues/new");
 
         // Call this only when there was at least one ResultSet.
-        // Otherwise, this call is not supported by ojdbc...
-        if (anyResults)
+        // Otherwise, this call is not supported by ojdbc or CUBRID [#4440]
+        if (anyResults && ctx.family() != CUBRID)
             ctx.statement().getMoreResults(Statement.CLOSE_ALL_RESULTS);
     }
 

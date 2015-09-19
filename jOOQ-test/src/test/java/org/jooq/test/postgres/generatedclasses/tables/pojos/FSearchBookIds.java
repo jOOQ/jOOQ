@@ -13,7 +13,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IFSearchBookIds
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FSearchBookIds implements IFSearchBookIds {
 
-	private static final long serialVersionUID = 731057226;
+	private static final long serialVersionUID = 1253740672;
 
 	private final Integer fSearchBookIds;
 
@@ -30,5 +30,15 @@ public class FSearchBookIds implements IFSearchBookIds {
 	@Override
 	public Integer getFSearchBookIds() {
 		return this.fSearchBookIds;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("FSearchBookIds (");
+
+		sb.append(fSearchBookIds);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

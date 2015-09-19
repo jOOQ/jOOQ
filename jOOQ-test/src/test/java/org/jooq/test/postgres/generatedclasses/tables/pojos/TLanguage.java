@@ -13,7 +13,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITLanguage;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage implements ITLanguage {
 
-	private static final long serialVersionUID = 1050427715;
+	private static final long serialVersionUID = 160852387;
 
 	private final String  cd;
 	private final String  description;
@@ -57,5 +57,18 @@ public class TLanguage implements ITLanguage {
 	@Override
 	public Integer getId() {
 		return this.id;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("TLanguage (");
+
+		sb.append(cd);
+		sb.append(", ").append(description);
+		sb.append(", ").append(descriptionEnglish);
+		sb.append(", ").append(id);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

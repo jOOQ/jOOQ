@@ -13,7 +13,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITInheritance_1
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TInheritance_1_1 implements ITInheritance_1_1 {
 
-	private static final long serialVersionUID = -1394014336;
+	private static final long serialVersionUID = -189820022;
 
 	private final String text_1;
 	private final String text_1_1;
@@ -39,5 +39,16 @@ public class TInheritance_1_1 implements ITInheritance_1_1 {
 	@Override
 	public String getText_1_1() {
 		return this.text_1_1;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("TInheritance_1_1 (");
+
+		sb.append(text_1);
+		sb.append(", ").append(text_1_1);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

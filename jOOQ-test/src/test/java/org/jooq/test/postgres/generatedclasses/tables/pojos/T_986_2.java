@@ -13,7 +13,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IT_986_2;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_986_2 implements IT_986_2 {
 
-	private static final long serialVersionUID = -1568233696;
+	private static final long serialVersionUID = -27328678;
 
 	private final Integer ref;
 
@@ -30,5 +30,15 @@ public class T_986_2 implements IT_986_2 {
 	@Override
 	public Integer getRef() {
 		return this.ref;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_986_2 (");
+
+		sb.append(ref);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

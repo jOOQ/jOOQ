@@ -13,7 +13,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IFSetofBigint;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FSetofBigint implements IFSetofBigint {
 
-	private static final long serialVersionUID = -1908908958;
+	private static final long serialVersionUID = 1072691896;
 
 	private final Long fSetofBigint;
 
@@ -30,5 +30,15 @@ public class FSetofBigint implements IFSetofBigint {
 	@Override
 	public Long getFSetofBigint() {
 		return this.fSetofBigint;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("FSetofBigint (");
+
+		sb.append(fSetofBigint);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

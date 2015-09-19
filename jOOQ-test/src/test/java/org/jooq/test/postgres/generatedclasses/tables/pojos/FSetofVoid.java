@@ -13,7 +13,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IFSetofVoid;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FSetofVoid implements IFSetofVoid {
 
-	private static final long serialVersionUID = 33549797;
+	private static final long serialVersionUID = 525348187;
 
 	private final Object fSetofVoid;
 
@@ -30,5 +30,15 @@ public class FSetofVoid implements IFSetofVoid {
 	@Override
 	public Object getFSetofVoid() {
 		return this.fSetofVoid;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("FSetofVoid (");
+
+		sb.append(fSetofVoid);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

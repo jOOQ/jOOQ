@@ -6,6 +6,7 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 
 import com.google.gson.JsonElement;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.UUID;
 
@@ -21,7 +22,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITExoticTypes;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes implements ITExoticTypes {
 
-	private static final long serialVersionUID = 504039224;
+	private static final long serialVersionUID = 1755964375;
 
 	private final Integer               id;
 	private final UUID                  uu;
@@ -173,5 +174,30 @@ public class TExoticTypes implements ITExoticTypes {
 	@Override
 	public Object getPgXmlAsDocument() {
 		return this.pgXmlAsDocument;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("TExoticTypes (");
+
+		sb.append(id);
+		sb.append(", ").append(uu);
+		sb.append(", ").append(Arrays.toString(uuArray));
+		sb.append(", ").append(uuWrapper);
+		sb.append(", ").append(Arrays.toString(uuWrapperArray));
+		sb.append(", ").append(js);
+		sb.append(", ").append(jsGson);
+		sb.append(", ").append(jsJavax);
+		sb.append(", ").append(jsJackson);
+		sb.append(", ").append(jsJacksonJsonNode);
+		sb.append(", ").append(hstore);
+		sb.append(", ").append(hstoreMap);
+		sb.append(", ").append(rangeInt4);
+		sb.append(", ").append(rangeInt8);
+		sb.append(", ").append(pgXmlAsIs);
+		sb.append(", ").append(pgXmlAsDocument);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

@@ -5,6 +5,7 @@ package org.jooq.test.postgres.generatedclasses.routines;
 
 
 import org.jooq.Parameter;
+import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.impl.AbstractRoutine;
 import org.jooq.test.postgres.generatedclasses.Public;
@@ -16,17 +17,17 @@ import org.jooq.test.postgres.generatedclasses.Public;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PGetTwoCursors extends AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 333608457;
+	private static final long serialVersionUID = 781259591;
 
 	/**
 	 * The parameter <code>public.p_get_two_cursors.books</code>.
 	 */
-	public static final Parameter<Result<org.jooq.Record>> BOOKS = createParameter("books", org.jooq.impl.SQLDataType.RESULT, false);
+	public static final Parameter<Result<Record>> BOOKS = createParameter("books", org.jooq.impl.SQLDataType.RESULT, false);
 
 	/**
 	 * The parameter <code>public.p_get_two_cursors.authors</code>.
 	 */
-	public static final Parameter<Result<org.jooq.Record>> AUTHORS = createParameter("authors", org.jooq.impl.SQLDataType.RESULT, false);
+	public static final Parameter<Result<Record>> AUTHORS = createParameter("authors", org.jooq.impl.SQLDataType.RESULT, false);
 
 	/**
 	 * Create a new routine call instance
@@ -41,14 +42,14 @@ public class PGetTwoCursors extends AbstractRoutine<java.lang.Void> {
 	/**
 	 * Get the <code>books</code> parameter OUT value from the routine
 	 */
-	public Result<org.jooq.Record> getBooks() {
+	public Result<Record> getBooks() {
 		return getValue(BOOKS);
 	}
 
 	/**
 	 * Get the <code>authors</code> parameter OUT value from the routine
 	 */
-	public Result<org.jooq.Record> getAuthors() {
+	public Result<Record> getAuthors() {
 		return getValue(AUTHORS);
 	}
 }

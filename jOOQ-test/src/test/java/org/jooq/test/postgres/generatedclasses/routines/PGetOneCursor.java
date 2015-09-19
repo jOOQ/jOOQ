@@ -5,6 +5,7 @@ package org.jooq.test.postgres.generatedclasses.routines;
 
 
 import org.jooq.Parameter;
+import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.impl.AbstractRoutine;
 import org.jooq.test.postgres.generatedclasses.Public;
@@ -16,7 +17,7 @@ import org.jooq.test.postgres.generatedclasses.Public;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PGetOneCursor extends AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 398815935;
+	private static final long serialVersionUID = 546055387;
 
 	/**
 	 * The parameter <code>public.p_get_one_cursor.total</code>.
@@ -26,7 +27,7 @@ public class PGetOneCursor extends AbstractRoutine<java.lang.Void> {
 	/**
 	 * The parameter <code>public.p_get_one_cursor.books</code>.
 	 */
-	public static final Parameter<Result<org.jooq.Record>> BOOKS = createParameter("books", org.jooq.impl.SQLDataType.RESULT, false);
+	public static final Parameter<Result<Record>> BOOKS = createParameter("books", org.jooq.impl.SQLDataType.RESULT, false);
 
 	/**
 	 * The parameter <code>public.p_get_one_cursor.book_ids</code>.
@@ -61,7 +62,7 @@ public class PGetOneCursor extends AbstractRoutine<java.lang.Void> {
 	/**
 	 * Get the <code>books</code> parameter OUT value from the routine
 	 */
-	public Result<org.jooq.Record> getBooks() {
+	public Result<Record> getBooks() {
 		return getValue(BOOKS);
 	}
 }

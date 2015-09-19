@@ -13,7 +13,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITIdentityPk;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentityPk implements ITIdentityPk {
 
-	private static final long serialVersionUID = 1451259578;
+	private static final long serialVersionUID = 144405545;
 
 	private final Integer id;
 	private final Integer val;
@@ -39,5 +39,16 @@ public class TIdentityPk implements ITIdentityPk {
 	@Override
 	public Integer getVal() {
 		return this.val;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("TIdentityPk (");
+
+		sb.append(id);
+		sb.append(", ").append(val);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

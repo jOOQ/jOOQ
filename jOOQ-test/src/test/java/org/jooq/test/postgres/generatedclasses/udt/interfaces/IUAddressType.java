@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.sql.Date;
 
 import org.jooq.test.postgres.generatedclasses.enums.UCountry;
-import org.jooq.test.postgres.generatedclasses.udt.interfaces.IUStreetType;
 
 
 /**

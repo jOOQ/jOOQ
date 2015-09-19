@@ -13,7 +13,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IVLibrary;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibrary implements IVLibrary {
 
-	private static final long serialVersionUID = -916632996;
+	private static final long serialVersionUID = -1118729178;
 
 	private final String author;
 	private final String title;
@@ -39,5 +39,16 @@ public class VLibrary implements IVLibrary {
 	@Override
 	public String getTitle() {
 		return this.title;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("VLibrary (");
+
+		sb.append(author);
+		sb.append(", ").append(title);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

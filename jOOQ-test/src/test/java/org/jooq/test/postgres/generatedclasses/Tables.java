@@ -33,7 +33,6 @@ import org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_1;
 import org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_2;
 import org.jooq.test.postgres.generatedclasses.tables.TInheritance_1_2_1;
 import org.jooq.test.postgres.generatedclasses.tables.TLanguage;
-import org.jooq.test.postgres.generatedclasses.tables.TPgExtensions;
 import org.jooq.test.postgres.generatedclasses.tables.TTriggers;
 import org.jooq.test.postgres.generatedclasses.tables.TUnsigned;
 import org.jooq.test.postgres.generatedclasses.tables.T_2781;
@@ -386,11 +385,6 @@ public class Tables {
 	 * An entity holding language master data
 	 */
 	public static final TLanguage T_LANGUAGE = org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE;
-
-	/**
-	 * The table public.t_pg_extensions
-	 */
-	public static final TPgExtensions T_PG_EXTENSIONS = org.jooq.test.postgres.generatedclasses.tables.TPgExtensions.T_PG_EXTENSIONS;
 
 	/**
 	 * The table public.t_triggers

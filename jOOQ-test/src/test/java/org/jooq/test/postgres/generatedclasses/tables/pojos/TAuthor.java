@@ -16,7 +16,7 @@ import org.jooq.test.postgres.generatedclasses.udt.pojos.UAddressType;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor implements ITAuthor {
 
-	private static final long serialVersionUID = 1213646456;
+	private static final long serialVersionUID = -665419101;
 
 	private final Integer      id;
 	private final String       firstName;
@@ -78,5 +78,20 @@ public class TAuthor implements ITAuthor {
 	@Override
 	public UAddressType getAddress() {
 		return this.address;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("TAuthor (");
+
+		sb.append(id);
+		sb.append(", ").append(firstName);
+		sb.append(", ").append(lastName);
+		sb.append(", ").append(dateOfBirth);
+		sb.append(", ").append(yearOfBirth);
+		sb.append(", ").append(address);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

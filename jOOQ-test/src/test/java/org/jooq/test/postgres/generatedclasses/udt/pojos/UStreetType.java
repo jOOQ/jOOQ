@@ -4,6 +4,8 @@
 package org.jooq.test.postgres.generatedclasses.udt.pojos;
 
 
+import java.util.Arrays;
+
 import org.jooq.test.postgres.generatedclasses.udt.interfaces.IUStreetType;
 
 
@@ -13,7 +15,7 @@ import org.jooq.test.postgres.generatedclasses.udt.interfaces.IUStreetType;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UStreetType implements IUStreetType {
 
-	private static final long serialVersionUID = 1064237598;
+	private static final long serialVersionUID = -673187299;
 
 	private final String    street;
 	private final String    no;
@@ -57,5 +59,18 @@ public class UStreetType implements IUStreetType {
 	@Override
 	public byte[] getF_1323() {
 		return this.f_1323;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("UStreetType (");
+
+		sb.append(street);
+		sb.append(", ").append(no);
+		sb.append(", ").append(Arrays.toString(floors));
+		sb.append(", ").append("[binary...]");
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

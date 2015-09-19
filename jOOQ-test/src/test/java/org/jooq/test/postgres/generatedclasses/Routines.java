@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 import org.jooq.AggregateFunction;
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.test.postgres.generatedclasses.routines.F;
 import org.jooq.test.postgres.generatedclasses.routines.F317;
@@ -238,7 +239,7 @@ public class Routines {
 	/**
 	 * Call <code>public.f_get_one_cursor</code>
 	 */
-	public static Result<org.jooq.Record> fGetOneCursor(Configuration configuration, Integer[] bookIds) {
+	public static Result<Record> fGetOneCursor(Configuration configuration, Integer[] bookIds) {
 		FGetOneCursor f = new FGetOneCursor();
 		f.setBookIds(bookIds);
 
@@ -249,7 +250,7 @@ public class Routines {
 	/**
 	 * Get <code>public.f_get_one_cursor</code> as a field
 	 */
-	public static Field<Result<org.jooq.Record>> fGetOneCursor(Integer[] bookIds) {
+	public static Field<Result<Record>> fGetOneCursor(Integer[] bookIds) {
 		FGetOneCursor f = new FGetOneCursor();
 		f.setBookIds(bookIds);
 
@@ -259,7 +260,7 @@ public class Routines {
 	/**
 	 * Get <code>public.f_get_one_cursor</code> as a field
 	 */
-	public static Field<Result<org.jooq.Record>> fGetOneCursor(Field<Integer[]> bookIds) {
+	public static Field<Result<Record>> fGetOneCursor(Field<Integer[]> bookIds) {
 		FGetOneCursor f = new FGetOneCursor();
 		f.setBookIds(bookIds);
 

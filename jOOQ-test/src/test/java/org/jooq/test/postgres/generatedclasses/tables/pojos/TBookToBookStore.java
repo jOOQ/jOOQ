@@ -13,7 +13,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITBookToBookSto
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStore implements ITBookToBookStore {
 
-	private static final long serialVersionUID = -1694192056;
+	private static final long serialVersionUID = -107949509;
 
 	private final String  bookStoreName;
 	private final Integer bookId;
@@ -48,5 +48,17 @@ public class TBookToBookStore implements ITBookToBookStore {
 	@Override
 	public Integer getStock() {
 		return this.stock;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("TBookToBookStore (");
+
+		sb.append(bookStoreName);
+		sb.append(", ").append(bookId);
+		sb.append(", ").append(stock);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

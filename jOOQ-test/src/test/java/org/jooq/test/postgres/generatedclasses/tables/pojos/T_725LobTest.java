@@ -13,7 +13,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IT_725LobTest;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTest implements IT_725LobTest {
 
-	private static final long serialVersionUID = -1955227774;
+	private static final long serialVersionUID = 1642951602;
 
 	private final Integer id;
 	private final byte[]  lob;
@@ -39,5 +39,16 @@ public class T_725LobTest implements IT_725LobTest {
 	@Override
 	public byte[] getLob() {
 		return this.lob;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_725LobTest (");
+
+		sb.append(id);
+		sb.append(", ").append("[binary...]");
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

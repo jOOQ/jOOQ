@@ -13,7 +13,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IT_3111;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_3111 implements IT_3111 {
 
-	private static final long serialVersionUID = 741494482;
+	private static final long serialVersionUID = 1354082595;
 
 	private final Integer id;
 	private final Integer inverse;
@@ -57,5 +57,18 @@ public class T_3111 implements IT_3111 {
 	@Override
 	public Integer getBool2() {
 		return this.bool2;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_3111 (");
+
+		sb.append(id);
+		sb.append(", ").append(inverse);
+		sb.append(", ").append(bool1);
+		sb.append(", ").append(bool2);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

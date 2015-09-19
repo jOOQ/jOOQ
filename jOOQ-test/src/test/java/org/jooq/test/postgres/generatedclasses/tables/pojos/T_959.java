@@ -14,7 +14,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IT_959;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_959 implements IT_959 {
 
-	private static final long serialVersionUID = -18232947;
+	private static final long serialVersionUID = -1349454527;
 
 	private final U_959 javaKeywords;
 
@@ -31,5 +31,15 @@ public class T_959 implements IT_959 {
 	@Override
 	public U_959 getJavaKeywords() {
 		return this.javaKeywords;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("T_959 (");
+
+		sb.append(javaKeywords);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

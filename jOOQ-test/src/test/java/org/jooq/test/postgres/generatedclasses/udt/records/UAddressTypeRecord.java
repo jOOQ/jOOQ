@@ -13,7 +13,6 @@ import org.jooq.impl.UDTRecordImpl;
 import org.jooq.test.postgres.generatedclasses.enums.UCountry;
 import org.jooq.test.postgres.generatedclasses.udt.UAddressType;
 import org.jooq.test.postgres.generatedclasses.udt.interfaces.IUAddressType;
-import org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord;
 
 
 /**
@@ -22,7 +21,7 @@ import org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UAddressTypeRecord extends UDTRecordImpl<UAddressTypeRecord> implements Record7<UStreetTypeRecord, String, String, UCountry, Date, Integer, byte[]>, IUAddressType {
 
-	private static final long serialVersionUID = -260597879;
+	private static final long serialVersionUID = -1277672248;
 
 	/**
 	 * Setter for <code>public.u_address_type.street</code>.

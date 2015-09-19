@@ -4,6 +4,8 @@
 package org.jooq.test.postgres.generatedclasses.tables.pojos;
 
 
+import java.util.Arrays;
+
 import org.jooq.test.postgres.generatedclasses.tables.interfaces.IFArrayTables;
 
 
@@ -13,7 +15,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IFArrayTables;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FArrayTables implements IFArrayTables {
 
-	private static final long serialVersionUID = -1629178105;
+	private static final long serialVersionUID = 719839904;
 
 	private final String[]  outText;
 	private final Integer[] outInteger;
@@ -39,5 +41,16 @@ public class FArrayTables implements IFArrayTables {
 	@Override
 	public Integer[] getOutInteger() {
 		return this.outInteger;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("FArrayTables (");
+
+		sb.append(Arrays.toString(outText));
+		sb.append(", ").append(Arrays.toString(outInteger));
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

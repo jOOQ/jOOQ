@@ -13,7 +13,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IFTables3;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FTables3 implements IFTables3 {
 
-	private static final long serialVersionUID = 1938524765;
+	private static final long serialVersionUID = 1354729246;
 
 	private final String columnValue;
 
@@ -30,5 +30,15 @@ public class FTables3 implements IFTables3 {
 	@Override
 	public String getColumnValue() {
 		return this.columnValue;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("FTables3 (");
+
+		sb.append(columnValue);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

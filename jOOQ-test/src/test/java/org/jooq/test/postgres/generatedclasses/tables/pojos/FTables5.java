@@ -13,7 +13,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IFTables5;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FTables5 implements IFTables5 {
 
-	private static final long serialVersionUID = -1622908682;
+	private static final long serialVersionUID = -2110001137;
 
 	private final Integer v;
 	private final Integer s;
@@ -39,5 +39,16 @@ public class FTables5 implements IFTables5 {
 	@Override
 	public Integer getS() {
 		return this.s;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("FTables5 (");
+
+		sb.append(v);
+		sb.append(", ").append(s);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

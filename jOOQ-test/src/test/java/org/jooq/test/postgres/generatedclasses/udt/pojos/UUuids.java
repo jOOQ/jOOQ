@@ -4,6 +4,7 @@
 package org.jooq.test.postgres.generatedclasses.udt.pojos;
 
 
+import java.util.Arrays;
 import java.util.UUID;
 
 import org.jooq.test.postgres.generatedclasses.udt.interfaces.IUUuids;
@@ -15,7 +16,7 @@ import org.jooq.test.postgres.generatedclasses.udt.interfaces.IUUuids;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UUuids implements IUUuids {
 
-	private static final long serialVersionUID = 299364127;
+	private static final long serialVersionUID = -1799719928;
 
 	private final UUID   u1;
 	private final UUID[] u2;
@@ -41,5 +42,16 @@ public class UUuids implements IUUuids {
 	@Override
 	public UUID[] getU2() {
 		return this.u2;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("UUuids (");
+
+		sb.append(u1);
+		sb.append(", ").append(Arrays.toString(u2));
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

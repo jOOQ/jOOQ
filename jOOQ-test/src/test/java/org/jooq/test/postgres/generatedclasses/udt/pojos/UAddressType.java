@@ -8,7 +8,6 @@ import java.sql.Date;
 
 import org.jooq.test.postgres.generatedclasses.enums.UCountry;
 import org.jooq.test.postgres.generatedclasses.udt.interfaces.IUAddressType;
-import org.jooq.test.postgres.generatedclasses.udt.pojos.UStreetType;
 
 
 /**
@@ -17,7 +16,7 @@ import org.jooq.test.postgres.generatedclasses.udt.pojos.UStreetType;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UAddressType implements IUAddressType {
 
-	private static final long serialVersionUID = 1470716450;
+	private static final long serialVersionUID = 1089755483;
 
 	private final UStreetType street;
 	private final String      zip;
@@ -88,5 +87,21 @@ public class UAddressType implements IUAddressType {
 	@Override
 	public byte[] getF_1323() {
 		return this.f_1323;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("UAddressType (");
+
+		sb.append(street);
+		sb.append(", ").append(zip);
+		sb.append(", ").append(city);
+		sb.append(", ").append(country);
+		sb.append(", ").append(since);
+		sb.append(", ").append(code);
+		sb.append(", ").append("[binary...]");
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

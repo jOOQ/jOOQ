@@ -14,7 +14,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITBook;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook implements ITBook {
 
-	private static final long serialVersionUID = -208558849;
+	private static final long serialVersionUID = 574852871;
 
 	private final Integer     id;
 	private final Integer     authorId;
@@ -112,5 +112,24 @@ public class TBook implements ITBook {
 	@Override
 	public UBookStatus getStatus() {
 		return this.status;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("TBook (");
+
+		sb.append(id);
+		sb.append(", ").append(authorId);
+		sb.append(", ").append(coAuthorId);
+		sb.append(", ").append(detailsId);
+		sb.append(", ").append(title);
+		sb.append(", ").append(publishedIn);
+		sb.append(", ").append(languageId);
+		sb.append(", ").append(contentText);
+		sb.append(", ").append("[binary...]");
+		sb.append(", ").append(status);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

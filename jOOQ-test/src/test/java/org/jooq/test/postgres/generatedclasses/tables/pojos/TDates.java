@@ -17,7 +17,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITDates;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates implements ITDates {
 
-	private static final long serialVersionUID = 6026993;
+	private static final long serialVersionUID = -380584264;
 
 	private final Integer   id;
 	private final Date      d;
@@ -97,5 +97,22 @@ public class TDates implements ITDates {
 	@Override
 	public Long getTsBigint() {
 		return this.tsBigint;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("TDates (");
+
+		sb.append(id);
+		sb.append(", ").append(d);
+		sb.append(", ").append(t);
+		sb.append(", ").append(ts);
+		sb.append(", ").append(tTz);
+		sb.append(", ").append(tsTz);
+		sb.append(", ").append(dInt);
+		sb.append(", ").append(tsBigint);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

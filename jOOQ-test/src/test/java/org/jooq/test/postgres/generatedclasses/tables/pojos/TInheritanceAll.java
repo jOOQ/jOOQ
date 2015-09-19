@@ -13,7 +13,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.ITInheritanceAl
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TInheritanceAll implements ITInheritanceAll {
 
-	private static final long serialVersionUID = 2131594622;
+	private static final long serialVersionUID = -1703013599;
 
 	private final String text_1;
 	private final String text_1_1;
@@ -57,5 +57,18 @@ public class TInheritanceAll implements ITInheritanceAll {
 	@Override
 	public String getText_1All() {
 		return this.text_1All;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("TInheritanceAll (");
+
+		sb.append(text_1);
+		sb.append(", ").append(text_1_1);
+		sb.append(", ").append(text_1_2);
+		sb.append(", ").append(text_1All);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

@@ -5,6 +5,7 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 
 
 import java.sql.Date;
+import java.util.Arrays;
 
 import org.jooq.test.postgres.generatedclasses.enums.UCountry;
 import org.jooq.test.postgres.generatedclasses.tables.interfaces.IFGetArrays;
@@ -18,7 +19,7 @@ import org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FGetArrays implements IFGetArrays {
 
-	private static final long serialVersionUID = 1748788147;
+	private static final long serialVersionUID = -2067032346;
 
 	private final Integer              id;
 	private final String[]             stringArray;
@@ -125,5 +126,25 @@ public class FGetArrays implements IFGetArrays {
 	@Override
 	public String[] getDateList() {
 		return this.dateList;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("FGetArrays (");
+
+		sb.append(id);
+		sb.append(", ").append(Arrays.toString(stringArray));
+		sb.append(", ").append(Arrays.toString(numberArray));
+		sb.append(", ").append(Arrays.toString(dateArray));
+		sb.append(", ").append(Arrays.toString(udtArray));
+		sb.append(", ").append(Arrays.toString(addressArray));
+		sb.append(", ").append(Arrays.toString(enumArray));
+		sb.append(", ").append(Arrays.toString(arrayArray));
+		sb.append(", ").append(Arrays.toString(numberList));
+		sb.append(", ").append(Arrays.toString(stringList));
+		sb.append(", ").append(Arrays.toString(dateList));
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

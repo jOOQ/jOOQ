@@ -14,7 +14,7 @@ import org.jooq.test.postgres.generatedclasses.tables.interfaces.IVBook;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBook implements IVBook {
 
-	private static final long serialVersionUID = 646983565;
+	private static final long serialVersionUID = 817456851;
 
 	private final Integer     id;
 	private final Integer     authorId;
@@ -112,5 +112,24 @@ public class VBook implements IVBook {
 	@Override
 	public UBookStatus getStatus() {
 		return this.status;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("VBook (");
+
+		sb.append(id);
+		sb.append(", ").append(authorId);
+		sb.append(", ").append(coAuthorId);
+		sb.append(", ").append(detailsId);
+		sb.append(", ").append(title);
+		sb.append(", ").append(publishedIn);
+		sb.append(", ").append(languageId);
+		sb.append(", ").append(contentText);
+		sb.append(", ").append("[binary...]");
+		sb.append(", ").append(status);
+
+		sb.append(")");
+		return sb.toString();
 	}
 }

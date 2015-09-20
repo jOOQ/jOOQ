@@ -54,6 +54,7 @@ import org.jooq.Record;
 import org.jooq.RecordType;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.tools.JooqLogger;
 
 /**
  * A simple wrapper for <code>Field[]</code>, providing some useful lookup
@@ -63,8 +64,9 @@ import org.jooq.TableField;
  */
 class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R> {
 
-    private static final long serialVersionUID = -6911012275707591576L;
-    Field<?>[]                fields;
+    private static final long       serialVersionUID = -6911012275707591576L;
+    private static final JooqLogger log              = JooqLogger.getLogger(Fields.class);
+    Field<?>[]                      fields;
 
     Fields(Field<?>... fields) {
         this.fields = fields;
@@ -110,8 +112,14 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
             }
 
             // In case no exact match was found, return the first field with matching name
-            if (columnMatch == null && f.getName().equals(fieldName))
-                columnMatch = f;
+            if (f.getName().equals(fieldName)) {
+                if (columnMatch == null)
+                    columnMatch = f;
+                else
+                    // [#4476] [#4477] This might be unintentional from a user
+                    // perspective, e.g. when ambiguous ID columns are present.
+                    log.info("Ambiguous match found for " + fieldName + ". Both " + columnMatch + " and " + f + " match.");
+            }
         }
 
         return (Field<T>) columnMatch;

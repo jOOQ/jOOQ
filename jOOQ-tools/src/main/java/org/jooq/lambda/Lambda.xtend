@@ -61,7 +61,7 @@ class Lambda extends Generators {
     }
     
     def max() {
-        8;
+        16;
     }
     
     def copyright() {

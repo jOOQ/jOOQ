@@ -118,7 +118,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
         StringBuilder importString = new StringBuilder();
         String pkg = "";
 
-        Matcher m = Pattern.compile("(?s:^.*?\\Rpackage\\s+(.*?);?\\R.*?$)").matcher(string);
+        Matcher m = Pattern.compile("(?s:^.*?[\\r\\n]+package\\s+(.*?);?[\\r\\n]+.*?$)").matcher(string);
         if (m.find())
             pkg = m.group(1);
 

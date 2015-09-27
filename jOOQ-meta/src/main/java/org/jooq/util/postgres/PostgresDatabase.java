@@ -322,6 +322,8 @@ public class PostgresDatabase extends AbstractDatabase {
                     .join(i).on(i.INHRELID.eq(oid(ct)))
                     .join(pt).on(i.INHPARENT.eq(oid(pt)))
                     .join(pn).on(pt.RELNAMESPACE.eq(oid(pn)))
+                    .where(cn.NSPNAME.in(getInputSchemata()))
+                    .and(pn.NSPNAME.in(getInputSchemata()))
                     .fetch()) {
 
                 Name child = name(inheritance.value1(), inheritance.value2());

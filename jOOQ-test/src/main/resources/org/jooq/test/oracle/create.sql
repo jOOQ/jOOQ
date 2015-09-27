@@ -566,7 +566,12 @@ Oh oh. Newline character.
 Oh, and beware of end-of-javadoc *' || CHR(47) || '''';
 END;
 /
-COMMENT ON COLUMN t_language.id IS 'The language ID'/
+
+BEGIN
+  EXECUTE IMMEDIATE 'COMMENT ON COLUMN t_language.id IS ''' || CHR(47) || '*The language ID*' || CHR(47) || '''';
+END;
+/
+
 COMMENT ON COLUMN t_language.cd IS 'The language ISO code'/
 COMMENT ON COLUMN t_language.description IS 'The language description'/
 

@@ -58,15 +58,23 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     public JavaWriter javadoc(String string, Object... args) {
         final int t = tab();
 
-        // [#3450] Must not print */ inside Javadoc
-        String escaped = string.replace("*/", "* /");
+        // [#3450] [#4575] Must not print */ inside Javadoc
+        String escaped = escapeJavadoc(string);
+        Object[] escapedArgs = Arrays.copyOf(args, args.length);
+        for (int i = 0; i < escapedArgs.length; i++)
+            if (escapedArgs[i] instanceof String)
+                escapedArgs[i] = escapeJavadoc((String) escapedArgs[i]);
 
         tab(t).println();
         tab(t).println("/**");
-        tab(t).println(" * " + escaped, args);
+        tab(t).println(" * " + escaped, escapedArgs);
         tab(t).println(" */");
 
         return this;
+    }
+
+    private String escapeJavadoc(String string) {
+        return string.replace("*/", "* /");
     }
 
     public JavaWriter header(String header, Object... args) {

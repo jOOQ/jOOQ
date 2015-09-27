@@ -33,7 +33,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.TLanguage;
 @Table(name = "T_LANGUAGE", schema = "TEST")
 public class TLanguageRecord extends UpdatableRecordImpl<TLanguageRecord> implements Record4<String, String, String, Integer> {
 
-	private static final long serialVersionUID = 1722349163;
+	private static final long serialVersionUID = -597517987;
 
 	/**
 	 * Setter for <code>TEST.T_LANGUAGE.CD</code>. The language ISO code
@@ -85,14 +85,14 @@ public class TLanguageRecord extends UpdatableRecordImpl<TLanguageRecord> implem
 	}
 
 	/**
-	 * Setter for <code>TEST.T_LANGUAGE.ID</code>. The language ID
+	 * Setter for <code>TEST.T_LANGUAGE.ID</code>. /*The language ID* /
 	 */
 	public void setId(Integer value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_LANGUAGE.ID</code>. The language ID
+	 * Getter for <code>TEST.T_LANGUAGE.ID</code>. /*The language ID* /
 	 */
 	@Id
 	@Column(name = "ID", unique = true, nullable = false, precision = 7)

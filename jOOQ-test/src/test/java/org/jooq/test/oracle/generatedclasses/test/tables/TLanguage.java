@@ -29,7 +29,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage extends TableImpl<TLanguageRecord> {
 
-	private static final long serialVersionUID = 405905891;
+	private static final long serialVersionUID = 206205009;
 
 	/**
 	 * The reference instance of <code>TEST.T_LANGUAGE</code>
@@ -60,9 +60,9 @@ public class TLanguage extends TableImpl<TLanguageRecord> {
 	public final TableField<TLanguageRecord, String> DESCRIPTION_ENGLISH = createField("DESCRIPTION_ENGLISH", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
 	/**
-	 * The column <code>TEST.T_LANGUAGE.ID</code>. The language ID
+	 * The column <code>TEST.T_LANGUAGE.ID</code>. /*The language ID* /
 	 */
-	public final TableField<TLanguageRecord, Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "The language ID");
+	public final TableField<TLanguageRecord, Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "/*The language ID*/");
 
 	/**
 	 * Create a <code>TEST.T_LANGUAGE</code> table reference

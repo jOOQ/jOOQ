@@ -16,6 +16,16 @@ Version 3.6.3 - September 18, 2015
 
 This is a patch release with some useful fixes for the 3.6 branch
 
+Bug Fixes
+---------
+#4583 - JavaWriter uses regex syntax unsupported in Java <1.8
+#4584 - SQL comments with javadoc terminators break generated code
+
+Version 3.6.3 - September 18, 2015
+================================================================================
+
+This is a patch release with some useful fixes for the 3.6 branch
+
 Features and Improvements
 -------------------------
 #4513 - Log a warning when a user accidentally sets the fetchSize with autoCommit == true in PostgreSQL

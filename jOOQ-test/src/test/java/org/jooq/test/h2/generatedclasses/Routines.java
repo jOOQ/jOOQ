@@ -6,6 +6,7 @@ package org.jooq.test.h2.generatedclasses;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.test.h2.generatedclasses.routines.F1256;
 import org.jooq.test.h2.generatedclasses.routines.F317;
@@ -224,7 +225,7 @@ public class Routines {
 	/**
 	 * Call <code>PUBLIC.F_GET_ONE_CURSOR</code>
 	 */
-	public static Result<org.jooq.Record> fGetOneCursor(Configuration configuration, Object[] p2) {
+	public static Result<Record> fGetOneCursor(Configuration configuration, Object[] p2) {
 		FGetOneCursor f = new FGetOneCursor();
 		f.setP2(p2);
 
@@ -235,7 +236,7 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_GET_ONE_CURSOR</code> as a field
 	 */
-	public static Field<Result<org.jooq.Record>> fGetOneCursor(Object[] p2) {
+	public static Field<Result<Record>> fGetOneCursor(Object[] p2) {
 		FGetOneCursor f = new FGetOneCursor();
 		f.setP2(p2);
 
@@ -245,7 +246,7 @@ public class Routines {
 	/**
 	 * Get <code>PUBLIC.F_GET_ONE_CURSOR</code> as a field
 	 */
-	public static Field<Result<org.jooq.Record>> fGetOneCursor(Field<Object[]> p2) {
+	public static Field<Result<Record>> fGetOneCursor(Field<Object[]> p2) {
 		FGetOneCursor f = new FGetOneCursor();
 		f.setP2(p2);
 

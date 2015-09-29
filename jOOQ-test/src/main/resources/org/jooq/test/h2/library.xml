@@ -8,7 +8,9 @@
     <generator>
         <name>org.jooq.util.JavaGenerator</name>
         <database>
-            <inputSchema>INFORMATION_SCHEMA</inputSchema>
+            <inputSchema>
+                INFORMATION_SCHEMA
+            </inputSchema>
             <includes>TABLES</includes>
         </database>
         <target>

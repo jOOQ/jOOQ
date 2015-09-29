@@ -170,6 +170,7 @@ class Splitter extends Generators {
                     && !canonicalPath.contains("\\vertica\\")
 
                     && !canonicalPath.contains("\\jOOQ\\src\\test\\")
+                    && !canonicalPath.contains("\\jOOQ-scala\\src\\test\\")
                 ))
             ];
 

@@ -100,13 +100,24 @@
             <artifactId>dom4j</artifactId>
             <version>1.6.1</version>
         </dependency>
-        <!-- This is needed because of https://sourceforge.net/p/dom4j/bugs/207/ -->
+        <!-- This is needed because of https://sourceforge.net/p/dom4j/bugs/207/ 
         <dependency>
             <groupId>jaxen</groupId>
             <artifactId>jaxen</artifactId>
             <version>1.1-beta-6</version>
+            
+            <exclusions>
+                <exclusion>
+                    <groupId>xerces</groupId>
+                    <artifactId>xercesImpl</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>xerces</groupId>
+                    <artifactId>xmlParserAPIs</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
-
+        -->
 
         <!-- Run Scala tests -->
         <dependency>

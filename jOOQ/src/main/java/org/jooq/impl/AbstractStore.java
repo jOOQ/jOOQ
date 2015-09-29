@@ -87,8 +87,13 @@ abstract class AbstractStore implements AttachableInternal {
 
         final List<Attachable> attachables = getAttachables();
         final int size = attachables.size();
-        for (int i = 0; i < size; i++)
-            attachables.get(i).attach(c);
+
+        for (int i = 0; i < size; i++) {
+            Attachable attachable = attachables.get(i);
+
+            if (attachable != null)
+                attachable.attach(c);
+        }
     }
 
     @Override

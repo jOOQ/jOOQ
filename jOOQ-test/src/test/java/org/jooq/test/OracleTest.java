@@ -174,6 +174,7 @@ import org.jooq.test.all.converters.Boolean_YES_NO_LC;
 import org.jooq.test.all.converters.Boolean_YES_NO_UC;
 import org.jooq.test.all.converters.Boolean_YN_LC;
 import org.jooq.test.all.converters.Boolean_YN_UC;
+import org.jooq.test.oracle.generatedclasses.multi_schema.MultiSchema;
 import org.jooq.test.oracle.generatedclasses.multi_schema.packages.MsSynonymPackage;
 import org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord;
 import org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.NumberObjectRecord;
@@ -2583,6 +2584,16 @@ public class OracleTest extends jOOQAbstractTest<
     }
 
     @Test
+    public void testOracleTableOfObjectWithNullObject() throws Exception {
+        UNested_2Record rec = new UNested_2Record(new UNested_1Record(1, null), null, null);
+
+        assertEquals(rec,
+            create().select(val(new UNested_2Record(new UNested_1Record(1, null), null, null)))
+                   .fetchOne()
+                   .value1());
+    }
+
+    @Test
     public void testOracleArraySchemaMapping() throws Exception {
         DSLContext create = create();
         create.configuration().settings().setRenderMapping(
@@ -2592,6 +2603,9 @@ public class OracleTest extends jOOQAbstractTest<
                     .withOutput(new org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.UNumberTableRecord().getSchema().getName())
             )
         );
+
+        // Implicit data type initialisation
+        MultiSchema.MULTI_SCHEMA.getUDTs();
 
         Record2<UNumberTableRecord, UNested_3Record> result =
         create.select(

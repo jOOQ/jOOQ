@@ -2013,6 +2013,24 @@ DROP SYNONYM transitive_synonym_1/
 DROP TYPE multi_schema.number_table/
 DROP TYPE multi_schema.number_object/
 
+DROP TYPE multi_schema.u_nested_3/
+DROP TYPE multi_schema.u_nested_2/
+DROP TYPE multi_schema.u_nested_1/
+DROP TYPE multi_schema.u_number_table/
+
+
+CREATE TYPE multi_schema.u_number_table AS TABLE OF NUMBER(7)/
+CREATE TYPE multi_schema.u_nested_1 AS OBJECT (
+  ID NUMBER(7),
+  NESTED multi_schema.u_number_table
+)/
+
+CREATE TYPE multi_schema.u_nested_2 AS TABLE OF multi_schema.u_nested_1/
+CREATE TYPE multi_schema.u_nested_3 AS OBJECT (
+  ID NUMBER(7),
+  NESTED multi_schema.u_nested_2
+)/
+
 CREATE TYPE multi_schema.number_table AS VARRAY(100) OF NUMBER(7)/
 CREATE TYPE multi_schema.number_object AS OBJECT(a NUMBER(7), b NUMBER(7), c NUMBER(7))/
 

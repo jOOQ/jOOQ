@@ -11,7 +11,17 @@ For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
 
-Version 3.6.2 - June 03, 2015
+Version 3.6.3 - September 18, 2015
+================================================================================
+
+This is a patch release with some useful fixes for the 3.6 branch
+
+Bug Fixes
+---------
+#4583 - JavaWriter uses regex syntax unsupported in Java <1.8
+#4584 - SQL comments with javadoc terminators break generated code
+
+Version 3.6.3 - September 18, 2015
 ================================================================================
 
 This is a patch release with some useful fixes for the 3.6 branch

@@ -107,6 +107,11 @@ public interface ArrayRecord<E> extends Attachable, List<E> {
     void setList(List<? extends E> list);
 
     /**
+     * Get the record type's schema.
+     */
+    Schema getSchema();
+
+    /**
      * Get the name of the array type.
      */
     String getName();

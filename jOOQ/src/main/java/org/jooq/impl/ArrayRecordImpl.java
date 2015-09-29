@@ -239,6 +239,11 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
     }
 
     @Override
+    public final Schema getSchema() {
+        return schema;
+    }
+
+    @Override
     public final String getName() {
 
         // [#1179] When Schema is present, the name is not fully qualified

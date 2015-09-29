@@ -47,7 +47,7 @@ import collection.JavaConversions._
 import java.sql.DriverManager
 
 import org.jooq._
-import org.jooq.impl._
+import org.jooq.impl.DSL
 import org.jooq.impl.DSL._
 import org.jooq.scala.example.h2.Tables._
 import org.jooq.scala.Conversions._

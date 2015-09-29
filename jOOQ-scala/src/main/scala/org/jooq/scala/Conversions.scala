@@ -45,6 +45,8 @@ import java.sql.ResultSet
 import org.jooq._
 import org.jooq.impl._
 
+// Avoid ambiguity with the internal org.jooq.impl.Array type.
+import _root_.scala.Array
 import _root_.scala.collection.convert.WrapAsScala
 
 /**

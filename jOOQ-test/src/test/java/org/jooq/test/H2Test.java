@@ -64,33 +64,33 @@ import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.update;
 import static org.jooq.lambda.Unchecked.runnable;
-import static org.jooq.test.h2.generatedclasses.Tables.ACCOUNTS;
-import static org.jooq.test.h2.generatedclasses.Tables.TRANSACTIONS;
-import static org.jooq.test.h2.generatedclasses.Tables.T_2486;
-import static org.jooq.test.h2.generatedclasses.Tables.T_2698;
-import static org.jooq.test.h2.generatedclasses.Tables.T_3485;
-import static org.jooq.test.h2.generatedclasses.Tables.T_3571;
-import static org.jooq.test.h2.generatedclasses.Tables.T_3666;
-import static org.jooq.test.h2.generatedclasses.Tables.T_639_NUMBERS_TABLE;
-import static org.jooq.test.h2.generatedclasses.Tables.T_725_LOB_TEST;
-import static org.jooq.test.h2.generatedclasses.Tables.T_785;
-import static org.jooq.test.h2.generatedclasses.Tables.T_ARRAYS;
-import static org.jooq.test.h2.generatedclasses.Tables.T_AUTHOR;
-import static org.jooq.test.h2.generatedclasses.Tables.T_BOOK;
-import static org.jooq.test.h2.generatedclasses.Tables.T_BOOK_STORE;
-import static org.jooq.test.h2.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
-import static org.jooq.test.h2.generatedclasses.Tables.T_BOOLEANS;
-import static org.jooq.test.h2.generatedclasses.Tables.T_DATES;
-import static org.jooq.test.h2.generatedclasses.Tables.T_EXOTIC_TYPES;
-import static org.jooq.test.h2.generatedclasses.Tables.T_IDENTITY;
-import static org.jooq.test.h2.generatedclasses.Tables.T_IDENTITY_PK;
-import static org.jooq.test.h2.generatedclasses.Tables.T_TRIGGERS;
-import static org.jooq.test.h2.generatedclasses.Tables.T_UNSIGNED;
-import static org.jooq.test.h2.generatedclasses.Tables.V_2603;
-import static org.jooq.test.h2.generatedclasses.Tables.V_AUTHOR;
-import static org.jooq.test.h2.generatedclasses.Tables.V_BOOK;
-import static org.jooq.test.h2.generatedclasses.Tables.V_LIBRARY;
-import static org.jooq.test.h2.generatedclasses.Tables.X_UNUSED;
+import static org.jooq.test.h2.generatedclasses.public_.Tables.ACCOUNTS;
+import static org.jooq.test.h2.generatedclasses.public_.Tables.TRANSACTIONS;
+import static org.jooq.test.h2.generatedclasses.public_.Tables.T_2486;
+import static org.jooq.test.h2.generatedclasses.public_.Tables.T_2698;
+import static org.jooq.test.h2.generatedclasses.public_.Tables.T_3485;
+import static org.jooq.test.h2.generatedclasses.public_.Tables.T_3571;
+import static org.jooq.test.h2.generatedclasses.public_.Tables.T_3666;
+import static org.jooq.test.h2.generatedclasses.public_.Tables.T_639_NUMBERS_TABLE;
+import static org.jooq.test.h2.generatedclasses.public_.Tables.T_725_LOB_TEST;
+import static org.jooq.test.h2.generatedclasses.public_.Tables.T_785;
+import static org.jooq.test.h2.generatedclasses.public_.Tables.T_ARRAYS;
+import static org.jooq.test.h2.generatedclasses.public_.Tables.T_AUTHOR;
+import static org.jooq.test.h2.generatedclasses.public_.Tables.T_BOOK;
+import static org.jooq.test.h2.generatedclasses.public_.Tables.T_BOOK_STORE;
+import static org.jooq.test.h2.generatedclasses.public_.Tables.T_BOOK_TO_BOOK_STORE;
+import static org.jooq.test.h2.generatedclasses.public_.Tables.T_BOOLEANS;
+import static org.jooq.test.h2.generatedclasses.public_.Tables.T_DATES;
+import static org.jooq.test.h2.generatedclasses.public_.Tables.T_EXOTIC_TYPES;
+import static org.jooq.test.h2.generatedclasses.public_.Tables.T_IDENTITY;
+import static org.jooq.test.h2.generatedclasses.public_.Tables.T_IDENTITY_PK;
+import static org.jooq.test.h2.generatedclasses.public_.Tables.T_TRIGGERS;
+import static org.jooq.test.h2.generatedclasses.public_.Tables.T_UNSIGNED;
+import static org.jooq.test.h2.generatedclasses.public_.Tables.V_2603;
+import static org.jooq.test.h2.generatedclasses.public_.Tables.V_AUTHOR;
+import static org.jooq.test.h2.generatedclasses.public_.Tables.V_BOOK;
+import static org.jooq.test.h2.generatedclasses.public_.Tables.V_LIBRARY;
+import static org.jooq.test.h2.generatedclasses.public_.Tables.X_UNUSED;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -138,46 +138,46 @@ import org.jooq.test.all.converters.Boolean_YES_NO_LC;
 import org.jooq.test.all.converters.Boolean_YES_NO_UC;
 import org.jooq.test.all.converters.Boolean_YN_LC;
 import org.jooq.test.all.converters.Boolean_YN_UC;
-import org.jooq.test.h2.generatedclasses.Keys;
-import org.jooq.test.h2.generatedclasses.Routines;
-import org.jooq.test.h2.generatedclasses.Sequences;
-import org.jooq.test.h2.generatedclasses.Tables;
-import org.jooq.test.h2.generatedclasses.tables.Accounts;
-import org.jooq.test.h2.generatedclasses.tables.TArrays;
-import org.jooq.test.h2.generatedclasses.tables.TAuthor;
-import org.jooq.test.h2.generatedclasses.tables.TBook;
-import org.jooq.test.h2.generatedclasses.tables.TTriggers;
-import org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable;
-import org.jooq.test.h2.generatedclasses.tables.T_725LobTest;
-import org.jooq.test.h2.generatedclasses.tables.Transactions;
-import org.jooq.test.h2.generatedclasses.tables.VLibrary;
-import org.jooq.test.h2.generatedclasses.tables.daos.TAuthorDao;
-import org.jooq.test.h2.generatedclasses.tables.daos.T_2698Dao;
-import org.jooq.test.h2.generatedclasses.tables.daos.XUnusedDao;
-import org.jooq.test.h2.generatedclasses.tables.pojos.T_2698;
-import org.jooq.test.h2.generatedclasses.tables.pojos.XUnused;
-import org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord;
-import org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord;
-import org.jooq.test.h2.generatedclasses.tables.records.TBookRecord;
-import org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord;
-import org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord;
-import org.jooq.test.h2.generatedclasses.tables.records.TBooleansRecord;
-import org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord;
-import org.jooq.test.h2.generatedclasses.tables.records.TExoticTypesRecord;
-import org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord;
-import org.jooq.test.h2.generatedclasses.tables.records.TIdentityRecord;
-import org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord;
-import org.jooq.test.h2.generatedclasses.tables.records.TUnsignedRecord;
-import org.jooq.test.h2.generatedclasses.tables.records.T_2486Record;
-import org.jooq.test.h2.generatedclasses.tables.records.T_2698Record;
-import org.jooq.test.h2.generatedclasses.tables.records.T_3485Record;
-import org.jooq.test.h2.generatedclasses.tables.records.T_3666Record;
-import org.jooq.test.h2.generatedclasses.tables.records.T_639NumbersTableRecord;
-import org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord;
-import org.jooq.test.h2.generatedclasses.tables.records.T_785Record;
-import org.jooq.test.h2.generatedclasses.tables.records.VLibraryRecord;
-import org.jooq.test.h2.generatedclasses.tables.records.V_2603Record;
-import org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord;
+import org.jooq.test.h2.generatedclasses.public_.Keys;
+import org.jooq.test.h2.generatedclasses.public_.Routines;
+import org.jooq.test.h2.generatedclasses.public_.Sequences;
+import org.jooq.test.h2.generatedclasses.public_.Tables;
+import org.jooq.test.h2.generatedclasses.public_.tables.Accounts;
+import org.jooq.test.h2.generatedclasses.public_.tables.TArrays;
+import org.jooq.test.h2.generatedclasses.public_.tables.TAuthor;
+import org.jooq.test.h2.generatedclasses.public_.tables.TBook;
+import org.jooq.test.h2.generatedclasses.public_.tables.TTriggers;
+import org.jooq.test.h2.generatedclasses.public_.tables.T_639NumbersTable;
+import org.jooq.test.h2.generatedclasses.public_.tables.T_725LobTest;
+import org.jooq.test.h2.generatedclasses.public_.tables.Transactions;
+import org.jooq.test.h2.generatedclasses.public_.tables.VLibrary;
+import org.jooq.test.h2.generatedclasses.public_.tables.daos.TAuthorDao;
+import org.jooq.test.h2.generatedclasses.public_.tables.daos.T_2698Dao;
+import org.jooq.test.h2.generatedclasses.public_.tables.daos.XUnusedDao;
+import org.jooq.test.h2.generatedclasses.public_.tables.pojos.T_2698;
+import org.jooq.test.h2.generatedclasses.public_.tables.pojos.XUnused;
+import org.jooq.test.h2.generatedclasses.public_.tables.records.TArraysRecord;
+import org.jooq.test.h2.generatedclasses.public_.tables.records.TAuthorRecord;
+import org.jooq.test.h2.generatedclasses.public_.tables.records.TBookRecord;
+import org.jooq.test.h2.generatedclasses.public_.tables.records.TBookStoreRecord;
+import org.jooq.test.h2.generatedclasses.public_.tables.records.TBookToBookStoreRecord;
+import org.jooq.test.h2.generatedclasses.public_.tables.records.TBooleansRecord;
+import org.jooq.test.h2.generatedclasses.public_.tables.records.TDatesRecord;
+import org.jooq.test.h2.generatedclasses.public_.tables.records.TExoticTypesRecord;
+import org.jooq.test.h2.generatedclasses.public_.tables.records.TIdentityPkRecord;
+import org.jooq.test.h2.generatedclasses.public_.tables.records.TIdentityRecord;
+import org.jooq.test.h2.generatedclasses.public_.tables.records.TTriggersRecord;
+import org.jooq.test.h2.generatedclasses.public_.tables.records.TUnsignedRecord;
+import org.jooq.test.h2.generatedclasses.public_.tables.records.T_2486Record;
+import org.jooq.test.h2.generatedclasses.public_.tables.records.T_2698Record;
+import org.jooq.test.h2.generatedclasses.public_.tables.records.T_3485Record;
+import org.jooq.test.h2.generatedclasses.public_.tables.records.T_3666Record;
+import org.jooq.test.h2.generatedclasses.public_.tables.records.T_639NumbersTableRecord;
+import org.jooq.test.h2.generatedclasses.public_.tables.records.T_725LobTestRecord;
+import org.jooq.test.h2.generatedclasses.public_.tables.records.T_785Record;
+import org.jooq.test.h2.generatedclasses.public_.tables.records.VLibraryRecord;
+import org.jooq.test.h2.generatedclasses.public_.tables.records.V_2603Record;
+import org.jooq.test.h2.generatedclasses.public_.tables.records.XUnusedRecord;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
@@ -193,7 +193,7 @@ import org.junit.Test;
  */
 public class H2Test extends jOOQAbstractTest<
         TAuthorRecord,
-        org.jooq.test.h2.generatedclasses.tables.pojos.TAuthor,
+        org.jooq.test.h2.generatedclasses.public_.tables.pojos.TAuthor,
         TBookRecord,
         TBookStoreRecord,
         TBookToBookStoreRecord,
@@ -220,7 +220,7 @@ public class H2Test extends jOOQAbstractTest<
     }
 
     @Override
-    protected DAO<TAuthorRecord, org.jooq.test.h2.generatedclasses.tables.pojos.TAuthor, Integer> TAuthorDao() {
+    protected DAO<TAuthorRecord, org.jooq.test.h2.generatedclasses.public_.tables.pojos.TAuthor, Integer> TAuthorDao() {
         return new TAuthorDao(create().configuration());
     }
 

@@ -1422,6 +1422,14 @@
                                     <generator>
                                         <name>org.jooq.test.utils.h2.H2Generator</name>
                                         <database>
+                                            <schemata>
+                                                <schema>
+                                                    <inputSchema>${db.h2.schema}</inputSchema>
+                                                </schema>
+                                                <schema>
+                                                    <inputSchema>CASE sensitive SCHEMA with SPACES</inputSchema>
+                                                </schema>
+                                            </schemata>
                                             <includes>.*</includes>
                                             <excludes>
                                                        T_BOOK_DETAILS        # Check if dependent objects (e.g. foreign keys) are not generated
@@ -1447,7 +1455,6 @@
                                                      )
                                             </syntheticPrimaryKeys>
                                             <unsignedTypes>true</unsignedTypes>
-                                            <inputSchema>${db.h2.schema}</inputSchema>
 
                                             <customTypes>
                                                 <!-- [#2844] This typo should emit a warning -->

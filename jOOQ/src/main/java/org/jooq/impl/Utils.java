@@ -1799,6 +1799,30 @@ final class Utils {
         }
     }
 
+    /* [pro] xx
+    xxx
+     x xxx xx xxxxxx xxxxxxxxxxxx xxxxxxxxx xx xxx xxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
+     xx
+    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    xxxxxx xxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxx xxxxxxx xxxxxxxxxxxxxxx xxxxx x
+        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
+    x
+
+    xxx
+     x xxx xx xxxxxx xxxxxxxxxxxx xxxxxxxxx xx xxx xxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
+     xx
+    xxxxxx xxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxx x
+        xxxxxx xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxx xx x xxx xxxxxxxxxxxxxxxx
+
+        xx xxxxxxx xx xxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+        xxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxx xxxxxxxxxxxxxx
+    x
+    xx [/pro] */
+
     /**
      * Return a non-negative hash code for a {@link QueryPart}, taking into
      * account FindBugs' <code>RV_ABSOLUTE_VALUE_OF_HASHCODE</code> pattern

@@ -770,6 +770,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         return new String(buff);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void register(BindingRegisterContext<U> ctx) throws SQLException {
         Configuration configuration = ctx.configuration();
@@ -789,8 +790,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 x
 
                 xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                    xxxxxxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxx xxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
                 x
 
                 xx xxx xxxxxxx xxxxxxxxx xx xxx xx xxxxxxxx x xxxx
@@ -810,6 +810,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void set(BindingSetStatementContext<U> ctx) throws SQLException {
         Configuration configuration = ctx.configuration();
@@ -833,8 +834,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             /* [pro] xx
             xx xxxxxxxxxxxx xxxxx xxxxx xxxx xx xx xxxxx xxxx xxxxx xxxx xxxx
             xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                xxxxxx xxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
             x
 
             xxxx
@@ -1115,8 +1115,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
             /* [pro] xx
             xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                xxxxxxxxxxxxxx xxxxxxxxxxx x xxxxxxxxxxxxxxxx xxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxxxx xxxxx x xxxxxxxxxxxxxxxx xxxxxx
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
             x
             xx [/pro] */
             else if (EnumType.class.isAssignableFrom(actualType)) {
@@ -1128,9 +1128,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void set(BindingSetSQLOutputContext<U> ctx) throws SQLException {
+        Configuration configuration = ctx.configuration();
         T value = converter.to(ctx.value());
+
         if (value == null) {
             ctx.output().writeObject(null);
         }
@@ -1246,14 +1249,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             xx xxxxxxx xx xxx xxxxxx xxxxxx xxxx xxxxxxxxxxxxxxxxxx xxx xxxx
             xx xxx xx xxxxxxxxxxxxxxxxxxx xxxxx xx xxxxxxxxxxx xxxxxx xx xxxxxxxxx
-            xxxxxxxxxxxxxx xxxxxxxxxxx x xxxxxxxxxxxxxxxx xxxxxx
-            xxxxxxxx xxxxx x xxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxx xxxxxxxxx x xxx xxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxx xxxxx x xxxxxxxxxxxxxxxx xxxxxx
+            xxxxxxxx x x xxxxxxxxxxxxxxxx
+            xxxxxxxx xxxxxxxxx x xxx xxxxxxxxxxxxxxxxx
 
             xxx xxxx x x xx x x xxxxxxxxxxxxxxxxx xxxx
-                xxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                xxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
         x
         xx [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {

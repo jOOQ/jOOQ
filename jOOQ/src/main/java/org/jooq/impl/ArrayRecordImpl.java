@@ -246,15 +246,8 @@ xxxxxx xxxxx xxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxx 
     xxxxxxxxx
     xxxxxx xxxxx xxxxxx xxxxxxxxx x
 
-        xx xxxxxxx xxxx xxxxxx xx xxxxxxxx xxx xxxx xx xxx xxxxx xxxxxxxxx
-        xx xxxxxxx xx xxxxx x
-            xxxxxx xxxxxxxxxxxxxxxx x xxx x xxxxx
-        x
-
-        xx xxxx xxxxxx xx xxxxxxx xxx xxxx xx xxxxx xxxxxxxxx xxxxxxxxxxxx xxx xxxxxx
-        xxxx x
-            xxxxxx xxxxx
-        x
+        xx xxxxxxx xxxxxxx xxxx xxxx xxxxx xxxx xx xx xxxxxx x xxxxxxxxx xxxxx
+        xxxxxx xxxxx
     x
 
     xxxxxxxxx
@@ -272,7 +265,7 @@ xxxxxx xxxxx xxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxx 
         xxxxxxxxxxxxx xxxxxx x xxx xxxxxxxxxxxxxxxx
         xxxxxx xxxxxxxxx x xxx
 
-        xxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
         xxxxxxxxxxxxxxxxxxx
 
         xxx xx x x xxxxx x

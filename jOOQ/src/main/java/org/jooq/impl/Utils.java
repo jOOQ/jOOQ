@@ -1800,6 +1800,28 @@ final class Utils {
     }
 
     /**
+     * Map an {@link ArrayRecord} according to the configured {@link org.jooq.SchemaMapping}
+     */
+    @SuppressWarnings("unchecked")
+    static final String getMappedArrayName(Configuration configuration, Class<? extends ArrayRecord<?>> type) {
+        return getMappedArrayName(configuration, Utils.newArrayRecord((Class<ArrayRecord<?>>) type));
+    }
+
+    /**
+     * Map an {@link ArrayRecord} according to the configured {@link org.jooq.SchemaMapping}
+     */
+    static final String getMappedArrayName(Configuration configuration, ArrayRecord<?> array) {
+        Schema mapped = getMappedSchema(configuration, array.getSchema());
+        StringBuilder sb = new StringBuilder();
+
+        if (mapped != null)
+            sb.append(mapped.getName()).append('.');
+
+        sb.append(array.getName());
+        return sb.toString();
+    }
+
+    /**
      * Return a non-negative hash code for a {@link QueryPart}, taking into
      * account FindBugs' <code>RV_ABSOLUTE_VALUE_OF_HASHCODE</code> pattern
      */

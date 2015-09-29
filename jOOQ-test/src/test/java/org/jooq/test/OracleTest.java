@@ -158,6 +158,8 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
+import org.jooq.conf.MappedSchema;
+import org.jooq.conf.RenderMapping;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.CustomField;
 import org.jooq.impl.DSL;
@@ -2578,5 +2580,26 @@ public class OracleTest extends jOOQAbstractTest<
         public void setNumbers(Integer[] numbers) {
             this.numbers = numbers;
         }
+    }
+
+    @Test
+    public void testOracleArraySchemaMapping() throws Exception {
+        DSLContext create = create();
+        create.configuration().settings().setRenderMapping(
+            new RenderMapping().withSchemata(
+                new MappedSchema()
+                    .withInput(new org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberTableRecord().getSchema().getName())
+                    .withOutput(new org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.UNumberTableRecord().getSchema().getName())
+            )
+        );
+
+        Record1<UNumberTableRecord> result =
+        create.select(val(new org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberTableRecord(1, 2, 3)))
+              .fetchOne();
+
+        assertEquals(
+            new org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.UNumberTableRecord(1, 2, 3),
+            result.getValue(0)
+        );
     }
 }

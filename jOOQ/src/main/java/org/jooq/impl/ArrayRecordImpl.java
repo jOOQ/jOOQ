@@ -246,15 +246,8 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
     @Override
     public final String getName() {
 
-        // [#1179] When Schema is present, the name is not fully qualified
-        if (schema != null) {
-            return schema.getName() + "." + name;
-        }
-
-        // When Schema is absent, the name is fully qualified (deprecated, pre 2.0.5)
-        else {
-            return name;
-        }
+        // [#1179] [#4306] With jOOQ 3.7.0 This is no longer a qualified name.
+        return name;
     }
 
     @Override
@@ -272,7 +265,7 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
         StringBuilder result = new StringBuilder();
         String separator = "";
 
-        result.append(getName());
+        result.append(Utils.getMappedArrayName(configuration(), this));
         result.append("(");
 
         for (T t : list) {

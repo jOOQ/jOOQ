@@ -50,6 +50,7 @@ import org.jooq.BindContext;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.RenderContext;
+import org.jooq.Schema;
 
 /**
  * @author Lukas Eder
@@ -82,7 +83,12 @@ class ArrayConstant<R extends ArrayRecord<?>> extends AbstractParam<R> {
 
     final void toSQL0(RenderContext context) {
         if (context.paramType() == INLINED) {
-            context.sql(array.getName());
+            Schema mapped = Utils.getMappedSchema(context.configuration(), array.getSchema());
+
+            if (mapped != null)
+                context.visit(mapped).sql('.');
+
+            context.literal(array.getName());
             context.sql('(');
 
             String separator = "";

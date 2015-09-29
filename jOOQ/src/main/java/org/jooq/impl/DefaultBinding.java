@@ -68,6 +68,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.impl.Utils.attachRecords;
+import static org.jooq.impl.Utils.getMappedArrayName;
 import static org.jooq.impl.Utils.needsBackslashEscaping;
 import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
 import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
@@ -770,6 +771,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         return new String(buff);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void register(BindingRegisterContext<U> ctx) throws SQLException {
         Configuration configuration = ctx.configuration();
@@ -789,8 +791,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 }
 
                 else if (ArrayRecord.class.isAssignableFrom(type)) {
-                    ArrayRecord<?> record = Utils.newArrayRecord((Class<? extends ArrayRecord<?>>) type);
-                    ctx.statement().registerOutParameter(ctx.index(), Types.ARRAY, record.getName());
+                    ctx.statement().registerOutParameter(ctx.index(), Types.ARRAY, getMappedArrayName(configuration, (Class<ArrayRecord<?>>) type));
                 }
 
                 // The default behaviour is not to register a type
@@ -810,6 +811,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void set(BindingSetStatementContext<U> ctx) throws SQLException {
         Configuration configuration = ctx.configuration();
@@ -833,8 +835,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             /* [pro] */
             // Oracle-style ARRAY types need to be bound with their type name
             if (ArrayRecord.class.isAssignableFrom(type)) {
-                String typeName = Utils.newArrayRecord((Class<ArrayRecord<?>>) type).getName();
-                ctx.statement().setNull(ctx.index(), sqlType, typeName);
+                ctx.statement().setNull(ctx.index(), sqlType, getMappedArrayName(configuration, (Class<ArrayRecord<?>>) type));
             }
 
             else
@@ -1115,8 +1116,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
             /* [pro] */
             else if (ArrayRecord.class.isAssignableFrom(actualType)) {
-                ArrayRecord<?> arrayRecord = (ArrayRecord<?>) value;
-                ctx.statement().setArray(ctx.index(), on(localTargetConnection()).call("createARRAY", arrayRecord.getName(), arrayRecord.get()).<Array>get());
+                ArrayRecord<?> array = (ArrayRecord<?>) value;
+                ctx.statement().setArray(ctx.index(), on(localTargetConnection()).call("createARRAY", getMappedArrayName(configuration, array), array.get()).<Array>get());
             }
             /* [/pro] */
             else if (EnumType.class.isAssignableFrom(actualType)) {
@@ -1128,9 +1129,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void set(BindingSetSQLOutputContext<U> ctx) throws SQLException {
+        Configuration configuration = ctx.configuration();
         T value = converter.to(ctx.value());
+
         if (value == null) {
             ctx.output().writeObject(null);
         }
@@ -1246,14 +1250,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // [#1544] We can safely assume that localConfiguration has been
             // set on DefaultBindContext, prior to serialising arrays to SQLOutput
-            ArrayRecord<?> arrayRecord = (ArrayRecord<?>) value;
-            Object[] array = arrayRecord.toArray();
-            Object[] converted = new Object[array.length];
+            ArrayRecord<?> array = (ArrayRecord<?>) value;
+            Object[] a = array.toArray();
+            Object[] converted = new Object[a.length];
 
             for (int i = 0; i < converted.length; i++)
-                converted[i] = ((DataType<Object>) arrayRecord.getDataType()).getConverter().to(array[i]);
+                converted[i] = ((DataType<Object>) array.getDataType()).getConverter().to(a[i]);
 
-            ctx.output().writeArray(on(localTargetConnection()).call("createARRAY", arrayRecord.getName(), converted).<Array>get());
+            ctx.output().writeArray(on(localTargetConnection()).call("createARRAY", Utils.getMappedArrayName(configuration, array), converted).<Array>get());
         }
         /* [/pro] */
         else if (EnumType.class.isAssignableFrom(type)) {

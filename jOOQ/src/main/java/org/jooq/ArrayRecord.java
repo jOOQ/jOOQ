@@ -112,7 +112,7 @@ public interface ArrayRecord<E> extends Attachable, List<E> {
     Schema getSchema();
 
     /**
-     * Get the name of the array type.
+     * Get the unqualified name of the array type.
      */
     String getName();
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-  xmlns:tns="http://www.jooq.org/xsd/jooq-codegen-3.6.0.xsd"
-  targetNamespace="http://www.jooq.org/xsd/jooq-codegen-3.6.0.xsd"
+  xmlns:tns="http://www.jooq.org/xsd/jooq-codegen-3.7.0.xsd"
+  targetNamespace="http://www.jooq.org/xsd/jooq-codegen-3.7.0.xsd"
   elementFormDefault="qualified">
 
   <element name="configuration">

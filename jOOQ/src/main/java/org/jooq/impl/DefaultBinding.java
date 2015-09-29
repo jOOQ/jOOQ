@@ -783,10 +783,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             xx xxxx xxx xxxx xxxx
             xxxx xxxxxxx x
                 xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                    xxxxxxxxxxxx xxxxxx x xxxxx
-                        xxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxx xxxxxxxxxxxxxx xxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxx
                 x
 
                 xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
@@ -841,11 +838,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             xx [/pro] */
             // [#1126] Oracle's UDTs need to be bound with their type name
             if (UDTRecord.class.isAssignableFrom(type)) {
-                String typeName = Utils.newRecord(false, (Class<UDTRecord<?>>) type)
-                                       .<RuntimeException>operate(null)
-                                       .getUDT()
-                                       .getName();
-                ctx.statement().setNull(ctx.index(), sqlType, typeName);
+                ctx.statement().setNull(ctx.index(), sqlType, Utils.getMappedUDTName(configuration, (Class<UDTRecord<?>>) type));
             }
 
             // [#1225] [#1227] TODO Put this logic into DataType

@@ -1799,6 +1799,29 @@ final class Utils {
         }
     }
 
+    /**
+     * Map an {@link ArrayRecord} according to the configured {@link org.jooq.SchemaMapping}
+     */
+    @SuppressWarnings("unchecked")
+    static final String getMappedUDTName(Configuration configuration, Class<? extends UDTRecord<?>> type) {
+        return getMappedUDTName(configuration, Utils.newRecord(false, (Class<UDTRecord<?>>) type).<RuntimeException>operate(null));
+    }
+
+    /**
+     * Map an {@link ArrayRecord} according to the configured {@link org.jooq.SchemaMapping}
+     */
+    static final String getMappedUDTName(Configuration configuration, UDTRecord<?> record) {
+        UDT<?> udt = record.getUDT();
+        Schema mapped = getMappedSchema(configuration, udt.getSchema());
+        StringBuilder sb = new StringBuilder();
+
+        if (mapped != null)
+            sb.append(mapped.getName()).append('.');
+
+        sb.append(record.getUDT().getName());
+        return sb.toString();
+    }
+
     /* [pro] xx
     xxx
      x xxx xx xxxxxx xxxxxxxxxxxx xxxxxxxxx xx xxx xxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxx

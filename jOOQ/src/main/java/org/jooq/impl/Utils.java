@@ -1799,6 +1799,7 @@ final class Utils {
         }
     }
 
+    /* [pro] */
     /**
      * Map an {@link ArrayRecord} according to the configured {@link org.jooq.SchemaMapping}
      */
@@ -1820,6 +1821,7 @@ final class Utils {
         sb.append(array.getName());
         return sb.toString();
     }
+    /* [/pro] */
 
     /**
      * Return a non-negative hash code for a {@link QueryPart}, taking into

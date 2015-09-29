@@ -68,7 +68,6 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.impl.Utils.attachRecords;
-import static org.jooq.impl.Utils.getMappedArrayName;
 import static org.jooq.impl.Utils.needsBackslashEscaping;
 import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
 import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
@@ -791,7 +790,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 }
 
                 else if (ArrayRecord.class.isAssignableFrom(type)) {
-                    ctx.statement().registerOutParameter(ctx.index(), Types.ARRAY, getMappedArrayName(configuration, (Class<ArrayRecord<?>>) type));
+                    ctx.statement().registerOutParameter(ctx.index(), Types.ARRAY, Utils.getMappedArrayName(configuration, (Class<ArrayRecord<?>>) type));
                 }
 
                 // The default behaviour is not to register a type
@@ -835,7 +834,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             /* [pro] */
             // Oracle-style ARRAY types need to be bound with their type name
             if (ArrayRecord.class.isAssignableFrom(type)) {
-                ctx.statement().setNull(ctx.index(), sqlType, getMappedArrayName(configuration, (Class<ArrayRecord<?>>) type));
+                ctx.statement().setNull(ctx.index(), sqlType, Utils.getMappedArrayName(configuration, (Class<ArrayRecord<?>>) type));
             }
 
             else
@@ -1117,7 +1116,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             /* [pro] */
             else if (ArrayRecord.class.isAssignableFrom(actualType)) {
                 ArrayRecord<?> array = (ArrayRecord<?>) value;
-                ctx.statement().setArray(ctx.index(), on(localTargetConnection()).call("createARRAY", getMappedArrayName(configuration, array), array.get()).<Array>get());
+                ctx.statement().setArray(ctx.index(), on(localTargetConnection()).call("createARRAY", Utils.getMappedArrayName(configuration, array), array.get()).<Array>get());
             }
             /* [/pro] */
             else if (EnumType.class.isAssignableFrom(actualType)) {

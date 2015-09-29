@@ -783,10 +783,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // also the type name
             case ORACLE: {
                 if (UDTRecord.class.isAssignableFrom(type)) {
-                    UDTRecord<?> record = Utils
-                        .newRecord(false, (Class<? extends UDTRecord<?>>) type)
-                        .<RuntimeException>operate(null);
-                    ctx.statement().registerOutParameter(ctx.index(), Types.STRUCT, record.getSQLTypeName());
+                    ctx.statement().registerOutParameter(ctx.index(), Types.STRUCT, Utils.getMappedUDTName(configuration, (Class<UDTRecord<?>>) type));
                 }
 
                 else if (ArrayRecord.class.isAssignableFrom(type)) {
@@ -841,11 +838,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             /* [/pro] */
             // [#1126] Oracle's UDTs need to be bound with their type name
             if (UDTRecord.class.isAssignableFrom(type)) {
-                String typeName = Utils.newRecord(false, (Class<UDTRecord<?>>) type)
-                                       .<RuntimeException>operate(null)
-                                       .getUDT()
-                                       .getName();
-                ctx.statement().setNull(ctx.index(), sqlType, typeName);
+                ctx.statement().setNull(ctx.index(), sqlType, Utils.getMappedUDTName(configuration, (Class<UDTRecord<?>>) type));
             }
 
             // [#1225] [#1227] TODO Put this logic into DataType

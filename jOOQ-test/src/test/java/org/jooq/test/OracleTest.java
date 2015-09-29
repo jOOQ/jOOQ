@@ -2593,13 +2593,55 @@ public class OracleTest extends jOOQAbstractTest<
             )
         );
 
-        Record1<UNumberTableRecord> result =
-        create.select(val(new org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberTableRecord(1, 2, 3)))
+        Record2<UNumberTableRecord, UNested_3Record> result =
+        create.select(
+                val(new org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberTableRecord(1, 2, 3)),
+                val(new org.jooq.test.oracle.generatedclasses.test.udt.records.UNested_3Record(
+                    1,
+                    new org.jooq.test.oracle.generatedclasses.test.udt.records.UNested_2Record(
+                        new org.jooq.test.oracle.generatedclasses.test.udt.records.UNested_1Record(
+                            1,
+                            new org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberTableRecord(1)
+                        ),
+                        new org.jooq.test.oracle.generatedclasses.test.udt.records.UNested_1Record(
+                            2,
+                            new org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberTableRecord(1, 2)
+                        ),
+                        new org.jooq.test.oracle.generatedclasses.test.udt.records.UNested_1Record(
+                            3,
+                            null
+                        ),
+                        null
+                    )
+                ))
+              )
               .fetchOne();
 
         assertEquals(
             new org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.UNumberTableRecord(1, 2, 3),
             result.getValue(0)
+        );
+
+        assertEquals(
+            new org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.UNested_3Record(
+                1,
+                new org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.UNested_2Record(
+                    new org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.UNested_1Record(
+                        1,
+                        new org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.UNumberTableRecord(1)
+                    ),
+                    new org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.UNested_1Record(
+                        2,
+                        new org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.UNumberTableRecord(1, 2)
+                    ),
+                    new org.jooq.test.oracle.generatedclasses.multi_schema.udt.records.UNested_1Record(
+                        3,
+                        null
+                    ),
+                    null
+                )
+            ),
+            result.getValue(1)
         );
     }
 }

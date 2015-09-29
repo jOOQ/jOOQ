@@ -48,8 +48,6 @@ import org.jooq.BindContext;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.RenderContext;
-import org.jooq.Schema;
-import org.jooq.UDT;
 import org.jooq.UDTRecord;
 import org.jooq.exception.SQLDialectNotSupportedException;
 
@@ -122,8 +120,24 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
         }
     }
 
-    private void toSQLInline(RenderContext context) {
-        context.sql(getInlineConstructor(context));
+    private final void toSQLInline(RenderContext context) {
+        switch (context.family()) {
+            case POSTGRES:
+                context.keyword("row");
+                break;
+
+            /* [pro] */
+            case ORACLE:
+            case DB2:
+            /* [/pro] */
+
+            // Assume default behaviour if dialect is not available
+            default: {
+                context.visit(value.getUDT());
+                break;
+            }
+        }
+
         context.sql('(');
 
         String separator = "";
@@ -136,8 +150,8 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
         context.sql(')');
     }
 
-    private String getInlineConstructor(RenderContext context) {
-        // TODO [#884] Fix this with a local render context (using ctx.literal)
+    @Deprecated
+    private final String getInlineConstructor(RenderContext context) {
         switch (context.family()) {
             case POSTGRES:
                 return "ROW";
@@ -148,17 +162,8 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
             /* [/pro] */
 
             // Assume default behaviour if dialect is not available
-            default: {
-                UDT<?> udt = value.getUDT();
-                Schema mappedSchema = Utils.getMappedSchema(context.configuration(), udt.getSchema());
-
-                if (mappedSchema != null) {
-                    return mappedSchema + "." + udt.getName();
-                }
-                else {
-                    return udt.getName();
-                }
-            }
+            default:
+                return Utils.getMappedUDTName(context.configuration(), value);
         }
     }
 

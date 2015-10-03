@@ -117,6 +117,22 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
+     * @see DSL#condition(SQL)
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    SelectConditionStep<R> and(SQL sql);
+
+    /**
+     * Combine the currently assembled conditions with another one using the
+     * {@link Operator#AND} operator and proceed to the next step.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
      * @see DSL#condition(String)
      * @see SQL
      */
@@ -211,6 +227,22 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      */
     @Support
     SelectConditionStep<R> or(Boolean condition);
+
+    /**
+     * Combine the currently assembled conditions with another one using the
+     * {@link Operator#OR} operator and proceed to the next step.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#condition(SQL)
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    SelectConditionStep<R> or(SQL sql);
 
     /**
      * Combine the currently assembled conditions with another one using the

@@ -86,6 +86,21 @@ public interface AggregateFilterStep<T> extends WindowBeforeOverStep<T> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
+     * @see DSL#condition(SQL)
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    WindowBeforeOverStep<T> filterWhere(SQL sql);
+
+    /**
+     * Add a <code>FILTER clause</code> to the aggregate function.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
      * @see DSL#condition(String)
      * @see SQL
      */

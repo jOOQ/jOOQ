@@ -100,6 +100,7 @@ import org.jooq.JoinType;
 import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+import org.jooq.SQL;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -490,6 +491,12 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep<Rec
     }
 
     @Override
+    public final JoinTable on(SQL sql) {
+        and(sql);
+        return this;
+    }
+
+    @Override
     public final JoinTable on(String sql) {
         and(sql);
         return this;
@@ -613,6 +620,11 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep<Rec
     }
 
     @Override
+    public final JoinTable and(SQL sql) {
+        return and(condition(sql));
+    }
+
+    @Override
     public final JoinTable and(String sql) {
         return and(condition(sql));
     }
@@ -666,6 +678,11 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep<Rec
     @Override
     public final JoinTable or(Boolean c) {
         return or(condition(c));
+    }
+
+    @Override
+    public final JoinTable or(SQL sql) {
+        return or(condition(sql));
     }
 
     @Override

@@ -97,6 +97,21 @@ public interface MergeOnStep<R extends Record> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
+     * @see DSL#condition(SQL)
+     * @see SQL
+     */
+    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @PlainSQL
+    MergeOnConditionStep<R> on(SQL sql);
+
+    /**
+     * Provide join conditions and proceed to the next step
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
      * @see DSL#condition(String)
      * @see SQL
      */

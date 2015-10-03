@@ -81,6 +81,7 @@ import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RecordType;
 import org.jooq.Row;
+import org.jooq.SQL;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -688,6 +689,11 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     }
 
     @Override
+    public final TableOnStep<Record> join(SQL sql) {
+        return innerJoin(sql);
+    }
+
+    @Override
     public final TableOnStep<Record> join(String sql) {
         return innerJoin(sql);
     }
@@ -705,6 +711,11 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     @Override
     public final TableOnStep<Record> innerJoin(TableLike<?> table) {
         return join(table, JOIN);
+    }
+
+    @Override
+    public final TableOnStep<Record> innerJoin(SQL sql) {
+        return innerJoin(table(sql));
     }
 
     @Override
@@ -728,6 +739,11 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     }
 
     @Override
+    public final TablePartitionByStep<Record> leftJoin(SQL sql) {
+        return leftOuterJoin(sql);
+    }
+
+    @Override
     public final TablePartitionByStep<Record> leftJoin(String sql) {
         return leftOuterJoin(sql);
     }
@@ -745,6 +761,11 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     @Override
     public final TablePartitionByStep<Record> leftOuterJoin(TableLike<?> table) {
         return join(table, LEFT_OUTER_JOIN);
+    }
+
+    @Override
+    public final TablePartitionByStep<Record> leftOuterJoin(SQL sql) {
+        return leftOuterJoin(table(sql));
     }
 
     @Override
@@ -768,6 +789,11 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     }
 
     @Override
+    public final TablePartitionByStep<Record> rightJoin(SQL sql) {
+        return rightOuterJoin(sql);
+    }
+
+    @Override
     public final TablePartitionByStep<Record> rightJoin(String sql) {
         return rightOuterJoin(sql);
     }
@@ -785,6 +811,11 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     @Override
     public final TablePartitionByStep<Record> rightOuterJoin(TableLike<?> table) {
         return join(table, RIGHT_OUTER_JOIN);
+    }
+
+    @Override
+    public final TablePartitionByStep<Record> rightOuterJoin(SQL sql) {
+        return rightOuterJoin(table(sql));
     }
 
     @Override
@@ -808,6 +839,11 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     }
 
     @Override
+    public final TableOnStep<Record> fullOuterJoin(SQL sql) {
+        return fullOuterJoin(table(sql));
+    }
+
+    @Override
     public final TableOnStep<Record> fullOuterJoin(String sql) {
         return fullOuterJoin(table(sql));
     }
@@ -825,6 +861,11 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     @Override
     public final Table<Record> crossJoin(TableLike<?> table) {
         return join(table, CROSS_JOIN);
+    }
+
+    @Override
+    public final Table<Record> crossJoin(SQL sql) {
+        return crossJoin(table(sql));
     }
 
     @Override
@@ -848,6 +889,11 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     }
 
     @Override
+    public final Table<Record> naturalJoin(SQL sql) {
+        return naturalJoin(table(sql));
+    }
+
+    @Override
     public final Table<Record> naturalJoin(String sql) {
         return naturalJoin(table(sql));
     }
@@ -865,6 +911,11 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     @Override
     public final Table<Record> naturalLeftOuterJoin(TableLike<?> table) {
         return join(table, NATURAL_LEFT_OUTER_JOIN);
+    }
+
+    @Override
+    public final Table<Record> naturalLeftOuterJoin(SQL sql) {
+        return naturalLeftOuterJoin(table(sql));
     }
 
     @Override
@@ -888,6 +939,11 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     }
 
     @Override
+    public final Table<Record> naturalRightOuterJoin(SQL sql) {
+        return naturalRightOuterJoin(table(sql));
+    }
+
+    @Override
     public final Table<Record> naturalRightOuterJoin(String sql) {
         return naturalRightOuterJoin(table(sql));
     }
@@ -905,6 +961,11 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     @Override
     public final Table<Record> crossApply(TableLike<?> table) {
         return join(table, CROSS_APPLY);
+    }
+
+    @Override
+    public final Table<Record> crossApply(SQL sql) {
+        return crossApply(table(sql));
     }
 
     @Override
@@ -928,6 +989,11 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     }
 
     @Override
+    public final Table<Record> outerApply(SQL sql) {
+        return outerApply(table(sql));
+    }
+
+    @Override
     public final Table<Record> outerApply(String sql) {
         return outerApply(table(sql));
     }
@@ -945,6 +1011,16 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     @Override
     public final TableOptionalOnStep<Record> straightJoin(TableLike<?> table) {
         return join(table, STRAIGHT_JOIN);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> straightJoin(SQL sql) {
+        return straightJoin(table(sql));
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> straightJoin(String sql) {
+        return straightJoin(table(sql));
     }
 
     @Override

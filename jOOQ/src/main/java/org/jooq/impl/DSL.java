@@ -6313,6 +6313,30 @@ public class DSL {
      */
     @Support
     @PlainSQL
+    public static Query query(SQL sql) {
+        return using(new DefaultConfiguration()).query(sql);
+    }
+
+    /**
+     * Create a new query holding plain SQL. There must not be any binding
+     * variables contained in the SQL.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * String sql = "SET SCHEMA 'abc'";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return A query wrapping the plain SQL
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
     public static Query query(String sql) {
         return using(new DefaultConfiguration()).query(sql);
     }
@@ -6373,6 +6397,54 @@ public class DSL {
     @PlainSQL
     public static Query query(String sql, QueryPart... parts) {
         return using(new DefaultConfiguration()).query(sql, parts);
+    }
+
+    /**
+     * Create a new query holding plain SQL.
+     * <p>
+     * There must not be any binding variables contained in the SQL
+     * <p>
+     * Use this method, when you want to take advantage of the many ways to
+     * fetch results in jOOQ, using {@link ResultQuery}. Some examples:
+     * <p>
+     * <table border="1">
+     * <tr>
+     * <td> {@link ResultQuery#fetchLazy()}</td>
+     * <td>Open a cursor and fetch records one by one</td>
+     * </tr>
+     * <tr>
+     * <td> {@link ResultQuery#fetchInto(Class)}</td>
+     * <td>Fetch records into a custom POJO (optionally annotated with JPA
+     * annotations)</td>
+     * </tr>
+     * <tr>
+     * <td> {@link ResultQuery#fetchInto(RecordHandler)}</td>
+     * <td>Fetch records into a custom callback (similar to Spring's RowMapper)</td>
+     * </tr>
+     * </table>
+     * <p>
+     * Example (Postgres):
+     * <p>
+     * <code><pre>
+     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * (SQLite):
+     * <p>
+     * <code><pre>
+     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return An executable query
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    public static ResultQuery<Record> resultQuery(SQL sql) {
+        return using(new DefaultConfiguration()).resultQuery(sql);
     }
 
     /**
@@ -6535,6 +6607,39 @@ public class DSL {
      */
     @Support
     @PlainSQL
+    public static Table<Record> table(SQL sql) {
+        return new SQLTable(sql);
+    }
+
+    /**
+     * A custom SQL clause that can render arbitrary table expressions.
+     * <p>
+     * A plain SQL table is a table that can contain user-defined plain SQL,
+     * because sometimes it is easier to express things directly in SQL, for
+     * instance complex, but static subqueries or tables from different schemas.
+     * <p>
+     * Example
+     * <p>
+     * <code><pre>
+     * String sql = "SELECT * FROM USER_TABLES WHERE OWNER = 'MY_SCHEMA'";
+     * </pre></code>
+     * <p>
+     * The provided SQL must evaluate as a table whose type can be dynamically
+     * discovered using JDBC's {@link ResultSetMetaData} methods. That way, you
+     * can be sure that calling methods, such as {@link Table#fieldsRow()} will
+     * list the actual fields returned from your result set.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return A table wrapping the plain SQL
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
     public static Table<Record> table(String sql) {
         return table(sql, new Object[0]);
     }
@@ -6572,7 +6677,7 @@ public class DSL {
     @Support
     @PlainSQL
     public static Table<Record> table(String sql, Object... bindings) {
-        return new SQLTable(sql(sql, bindings));
+        return table(sql(sql, bindings));
     }
 
     /**
@@ -6693,6 +6798,35 @@ public class DSL {
      */
     @Support
     @PlainSQL
+    public static Field<Object> field(SQL sql) {
+        return field(sql, Object.class);
+    }
+
+    /**
+     * Create a "plain SQL" field.
+     * <p>
+     * A PlainSQLField is a field that can contain user-defined plain SQL,
+     * because sometimes it is easier to express things directly in SQL, for
+     * instance complex proprietary functions. There must not be any binding
+     * variables contained in the SQL.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * String sql = "DECODE(MY_FIELD, 1, 100, 200)";
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return A field wrapping the plain SQL
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
     public static Field<Object> field(String sql) {
         return field(sql, new Object[0]);
     }
@@ -6725,6 +6859,36 @@ public class DSL {
     @PlainSQL
     public static Field<Object> field(String sql, Object... bindings) {
         return field(sql, Object.class, bindings);
+    }
+
+    /**
+     * Create a "plain SQL" field.
+     * <p>
+     * A PlainSQLField is a field that can contain user-defined plain SQL,
+     * because sometimes it is easier to express things directly in SQL, for
+     * instance complex proprietary functions. There must not be any binding
+     * variables contained in the SQL.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * String sql = "DECODE(MY_FIELD, 1, 100, 200)";
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @param type The field type
+     * @return A field wrapping the plain SQL
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    public static <T> Field<T> field(SQL sql, Class<T> type) {
+        return field(sql, getDataType(type));
     }
 
     /**
@@ -6814,6 +6978,36 @@ public class DSL {
      */
     @Support
     @PlainSQL
+    public static <T> Field<T> field(SQL sql, DataType<T> type) {
+        return new SQLField(type, sql);
+    }
+
+    /**
+     * Create a "plain SQL" field.
+     * <p>
+     * A PlainSQLField is a field that can contain user-defined plain SQL,
+     * because sometimes it is easier to express things directly in SQL, for
+     * instance complex proprietary functions. There must not be any binding
+     * variables contained in the SQL.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * String sql = "DECODE(MY_FIELD, 1, 100, 200)";
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @param type The field type
+     * @return A field wrapping the plain SQL
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
     public static <T> Field<T> field(String sql, DataType<T> type) {
         return field(sql, type, new Object[0]);
     }
@@ -6846,7 +7040,7 @@ public class DSL {
     @Support
     @PlainSQL
     public static <T> Field<T> field(String sql, DataType<T> type, Object... bindings) {
-        return new SQLField(type, sql(sql, bindings));
+        return field(sql(sql, bindings), type);
     }
 
     /**
@@ -6882,7 +7076,7 @@ public class DSL {
     @Support
     @PlainSQL
     public static <T> Field<T> field(String sql, DataType<T> type, QueryPart... parts) {
-        return new SQLField(type, sql(sql, parts));
+        return field(sql(sql, parts), type);
     }
 
     /**
@@ -7045,6 +7239,31 @@ public class DSL {
      */
     @Support
     @PlainSQL
+    public static Condition condition(SQL sql) {
+        return new SQLCondition(sql);
+    }
+
+    /**
+     * Create a new condition holding plain SQL.
+     * <p>
+     * There must not be any binding variables contained in the SQL.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * String sql = "(X = 1 and Y = 2)";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return A condition wrapping the plain SQL
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
     public static Condition condition(String sql) {
         return condition(sql, new Object[0]);
     }
@@ -7074,7 +7293,7 @@ public class DSL {
     @Support
     @PlainSQL
     public static Condition condition(String sql, Object... bindings) {
-        return new SQLCondition(sql(sql, bindings));
+        return condition(sql(sql, bindings));
     }
 
     /**

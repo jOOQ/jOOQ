@@ -82,6 +82,21 @@ public interface TableOnStep<R extends Record> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
+     * @see DSL#condition(SQL)
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    TableOnConditionStep<R> on(SQL sql);
+
+    /**
+     * Add an <code>ON</code> clause to the <code>JOIN</code>.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
      * @see DSL#condition(String)
      * @see SQL
      */

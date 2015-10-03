@@ -425,6 +425,28 @@ public interface DSLContext extends Scope /* [java-8] */, AutoCloseable /* [/jav
      */
     @Support
     @PlainSQL
+    Query query(SQL sql);
+
+    /**
+     * Create a new query holding plain SQL. There must not be any binding
+     * variables contained in the SQL.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * String sql = "SET SCHEMA 'abc'";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return A query wrapping the plain SQL
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
     Query query(String sql);
 
     /**
@@ -480,6 +502,34 @@ public interface DSLContext extends Scope /* [java-8] */, AutoCloseable /* [/jav
     @Support
     @PlainSQL
     Query query(String sql, QueryPart... parts);
+
+    /**
+     * Execute a new query holding plain SQL.
+     * <p>
+     * Example (Postgres):
+     * <p>
+     * <code><pre>
+     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * (SQLite):
+     * <p>
+     * <code><pre>
+     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return The results from the executed query. This is never
+     *         <code>null</code>, even if the database returns no
+     *         {@link ResultSet}
+     * @throws DataAccessException if something went wrong executing the query
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    Result<Record> fetch(SQL sql) throws DataAccessException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -572,6 +622,40 @@ public interface DSLContext extends Scope /* [java-8] */, AutoCloseable /* [/jav
     @Support
     @PlainSQL
     Result<Record> fetch(String sql, QueryPart... parts) throws DataAccessException;
+
+    /**
+     * Execute a new query holding plain SQL and "lazily" return the generated
+     * result.
+     * <p>
+     * The returned {@link Cursor} holds a reference to the executed
+     * {@link PreparedStatement} and the associated {@link ResultSet}. Data can
+     * be fetched (or iterated over) lazily, fetching records from the
+     * {@link ResultSet} one by one.
+     * <p>
+     * Example (Postgres):
+     * <p>
+     * <code><pre>
+     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * (SQLite):
+     * <p>
+     * <code><pre>
+     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return The results from the executed query. This is never
+     *         <code>null</code>, even if the database returns no
+     *         {@link ResultSet}
+     * @throws DataAccessException if something went wrong executing the query
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    Cursor<Record> fetchLazy(SQL sql) throws DataAccessException;
 
     /**
      * Execute a new query holding plain SQL and "lazily" return the generated
@@ -718,6 +802,40 @@ public interface DSLContext extends Scope /* [java-8] */, AutoCloseable /* [/jav
      */
     @Support
     @PlainSQL
+    Stream<Record> fetchStream(SQL sql) throws DataAccessException;
+
+    /**
+     * Execute a new query holding plain SQL and "lazily" return the generated
+     * result.
+     * <p>
+     * The returned {@link Stream} holds a reference to the executed
+     * {@link PreparedStatement} and the associated {@link ResultSet}. Data can
+     * be fetched (or iterated over) lazily, fetching records from the
+     * {@link ResultSet} one by one.
+     * <p>
+     * Example (Postgres):
+     * <p>
+     * <code><pre>
+     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * (SQLite):
+     * <p>
+     * <code><pre>
+     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return The results from the executed query. This is never
+     *         <code>null</code>, even if the database returns no
+     *         {@link ResultSet}
+     * @throws DataAccessException if something went wrong executing the query
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
     Stream<Record> fetchStream(String sql) throws DataAccessException;
 
     /**
@@ -822,6 +940,31 @@ public interface DSLContext extends Scope /* [java-8] */, AutoCloseable /* [/jav
      */
     @Support
     @PlainSQL
+    Results fetchMany(SQL sql) throws DataAccessException;
+
+    /**
+     * Execute a new query holding plain SQL, possibly returning several result
+     * sets.
+     * <p>
+     * Example (Sybase ASE):
+     * <p>
+     * <code><pre>
+     * String sql = "sp_help 'my_table'";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return The results from the executed query. This is never
+     *         <code>null</code>, even if the database returns no
+     *         {@link ResultSet}
+     * @throws DataAccessException if something went wrong executing the query
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
     Results fetchMany(String sql) throws DataAccessException;
 
     /**
@@ -885,6 +1028,33 @@ public interface DSLContext extends Scope /* [java-8] */, AutoCloseable /* [/jav
     @Support
     @PlainSQL
     Results fetchMany(String sql, QueryPart... parts) throws DataAccessException;
+
+    /**
+     * Execute a new query holding plain SQL.
+     * <p>
+     * Example (Postgres):
+     * <p>
+     * <code><pre>
+     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * (SQLite):
+     * <p>
+     * <code><pre>
+     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return The results from the executed query.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    Record fetchOne(SQL sql) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -1005,6 +1175,33 @@ public interface DSLContext extends Scope /* [java-8] */, AutoCloseable /* [/jav
      */
     @Support
     @PlainSQL
+    Optional<Record> fetchOptional(SQL sql) throws DataAccessException, TooManyRowsException;
+
+    /**
+     * Execute a new query holding plain SQL.
+     * <p>
+     * Example (Postgres):
+     * <p>
+     * <code><pre>
+     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * (SQLite):
+     * <p>
+     * <code><pre>
+     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return The results from the executed query
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
     Optional<Record> fetchOptional(String sql) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1071,6 +1268,36 @@ public interface DSLContext extends Scope /* [java-8] */, AutoCloseable /* [/jav
     @PlainSQL
     Optional<Record> fetchOptional(String sql, QueryPart... parts) throws DataAccessException, TooManyRowsException;
     /* [/java-8] */
+
+    /**
+     * Execute a new query holding plain SQL.
+     * <p>
+     * Example (Postgres):
+     * <p>
+     * <code><pre>
+     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * (SQLite):
+     * <p>
+     * <code><pre>
+     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return The result value from the executed query. This may be
+     *         <code>null</code> if the database returned no records
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     * @throws InvalidResultException if the query returned a record with more
+     *             than one value
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    Object fetchValue(SQL sql) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -1200,6 +1427,35 @@ public interface DSLContext extends Scope /* [java-8] */, AutoCloseable /* [/jav
      */
     @Support
     @PlainSQL
+    Optional<?> fetchOptionalValue(SQL sql) throws DataAccessException, TooManyRowsException, InvalidResultException;
+
+    /**
+     * Execute a new query holding plain SQL.
+     * <p>
+     * Example (Postgres):
+     * <p>
+     * <code><pre>
+     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * (SQLite):
+     * <p>
+     * <code><pre>
+     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return The result value from the executed query
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws TooManyRowsException if the query returned more than one record
+     * @throws InvalidResultException if the query returned a record with more
+     *             than one value
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
     Optional<?> fetchOptionalValue(String sql) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
@@ -1270,6 +1526,33 @@ public interface DSLContext extends Scope /* [java-8] */, AutoCloseable /* [/jav
     @PlainSQL
     Optional<?> fetchOptionalValue(String sql, QueryPart... parts) throws DataAccessException, TooManyRowsException, InvalidResultException;
     /* [/java-8] */
+
+    /**
+     * Execute a new query holding plain SQL.
+     * <p>
+     * Example (Postgres):
+     * <p>
+     * <code><pre>
+     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * (SQLite):
+     * <p>
+     * <code><pre>
+     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return The result values from the executed query. This is never
+     *         <code>null</code>.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    List<?> fetchValues(SQL sql) throws DataAccessException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -1377,6 +1660,23 @@ public interface DSLContext extends Scope /* [java-8] */, AutoCloseable /* [/jav
      */
     @Support
     @PlainSQL
+    int execute(SQL sql) throws DataAccessException;
+
+    /**
+     * Execute a query holding plain SQL.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return The results from the executed query
+     * @throws DataAccessException if something went wrong executing the query
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
     int execute(String sql) throws DataAccessException;
 
     /**
@@ -1431,6 +1731,52 @@ public interface DSLContext extends Scope /* [java-8] */, AutoCloseable /* [/jav
     @Support
     @PlainSQL
     int execute(String sql, QueryPart... parts) throws DataAccessException;
+
+    /**
+     * Create a new query holding plain SQL.
+     * <p>
+     * There must not be any binding variables contained in the SQL
+     * <p>
+     * Use this method, when you want to take advantage of the many ways to
+     * fetch results in jOOQ, using {@link ResultQuery}. Some examples:
+     * <p>
+     * <table border="1">
+     * <tr>
+     * <td> {@link ResultQuery#fetchLazy()}</td>
+     * <td>Open a cursor and fetch records one by one</td>
+     * </tr>
+     * <tr>
+     * <td> {@link ResultQuery#fetchInto(Class)}</td>
+     * <td>Fetch records into a custom POJO (optionally annotated with JPA
+     * annotations)</td>
+     * </tr>
+     * <tr>
+     * <td> {@link ResultQuery#fetchInto(RecordHandler)}</td>
+     * <td>Fetch records into a custom callback (similar to Spring's RowMapper)</td>
+     * </tr>
+     * </table>
+     * <p>
+     * Example (Postgres):
+     * <p>
+     * <code><pre>
+     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * (SQLite):
+     * <p>
+     * <code><pre>
+     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return An executable query
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    ResultQuery<Record> resultQuery(SQL sql);
 
     /**
      * Create a new query holding plain SQL.

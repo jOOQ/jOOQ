@@ -50,6 +50,7 @@ import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.QueryPart;
+import org.jooq.SQL;
 import org.jooq.Select;
 
 /**
@@ -105,6 +106,11 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
     }
 
     @Override
+    public final Condition and(SQL sql) {
+        return and(condition(sql));
+    }
+
+    @Override
     public final Condition and(String sql) {
         return and(condition(sql));
     }
@@ -117,6 +123,11 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
     @Override
     public final Condition and(String sql, QueryPart... parts) {
         return and(condition(sql, parts));
+    }
+
+    @Override
+    public final Condition or(SQL sql) {
+        return or(condition(sql));
     }
 
     @Override

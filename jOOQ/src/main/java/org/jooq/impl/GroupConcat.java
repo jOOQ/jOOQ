@@ -54,6 +54,7 @@ import org.jooq.GroupConcatOrderByStep;
 import org.jooq.GroupConcatSeparatorStep;
 import org.jooq.Name;
 import org.jooq.QueryPart;
+import org.jooq.SQL;
 import org.jooq.SortField;
 import org.jooq.WindowDefinition;
 import org.jooq.WindowFinalStep;
@@ -152,6 +153,11 @@ class GroupConcat extends AbstractFunction<String> implements GroupConcatOrderBy
 
     @Override
     public final AggregateFilterStep<String> filterWhere(Boolean c) {
+        throw new UnsupportedOperationException("FILTER() not supported on GROUP_CONCAT aggregate function");
+    }
+
+    @Override
+    public final AggregateFilterStep<String> filterWhere(SQL sql) {
         throw new UnsupportedOperationException("FILTER() not supported on GROUP_CONCAT aggregate function");
     }
 

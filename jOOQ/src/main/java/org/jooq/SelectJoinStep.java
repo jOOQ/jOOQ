@@ -142,6 +142,26 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
+     * @see DSL#table(SQL)
+     * @see Table#join(SQL)
+     * @see #innerJoin(SQL)
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    SelectOnStep<R> join(SQL sql);
+
+    /**
+     * Convenience method to <code>INNER JOIN</code> a table to the last table
+     * added to the <code>FROM</code> clause using {@link Table#join(String)}.
+     * <p>
+     * A synonym for {@link #innerJoin(String)}.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
      * @see DSL#table(String)
      * @see Table#join(String)
      * @see #innerJoin(String)
@@ -201,6 +221,23 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      */
     @Support
     SelectOnStep<R> innerJoin(TableLike<?> table);
+
+    /**
+     * Convenience method to <code>INNER JOIN</code> a table to the last table
+     * added to the <code>FROM</code> clause using {@link Table#join(String)}.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(SQL)
+     * @see Table#innerJoin(SQL)
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    SelectOnStep<R> innerJoin(SQL sql);
 
     /**
      * Convenience method to <code>INNER JOIN</code> a table to the last table
@@ -271,6 +308,31 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     SelectJoinStep<R> crossJoin(TableLike<?> table);
+
+    /**
+     * Convenience method to <code>CROSS JOIN</code> a table to the last table
+     * added to the <code>FROM</code> clause using
+     * {@link Table#crossJoin(String)}
+     * <p>
+     * If this syntax is unavailable, it is emulated with a regular
+     * <code>INNER JOIN</code>. The following two constructs are equivalent:
+     * <code><pre>
+     * A cross join B
+     * A join B on 1 = 1
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(SQL)
+     * @see Table#crossJoin(SQL)
+     * @see SQL
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @PlainSQL
+    SelectJoinStep<R> crossJoin(SQL sql);
 
     /**
      * Convenience method to <code>CROSS JOIN</code> a table to the last table
@@ -372,6 +434,27 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
+     * @see DSL#table(SQL)
+     * @see Table#leftOuterJoin(SQL)
+     * @see #leftOuterJoin(SQL)
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    SelectJoinPartitionByStep<R> leftJoin(SQL sql);
+
+    /**
+     * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#leftOuterJoin(String)}.
+     * <p>
+     * A synonym for {@link #leftOuterJoin(String)}.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
      * @see DSL#table(String)
      * @see Table#leftOuterJoin(String)
      * @see #leftOuterJoin(String)
@@ -443,6 +526,24 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
+     * @see DSL#table(SQL)
+     * @see Table#leftOuterJoin(SQL)
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    SelectJoinPartitionByStep<R> leftOuterJoin(SQL sql);
+
+    /**
+     * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#leftOuterJoin(String)}
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
      * @see DSL#table(String)
      * @see Table#leftOuterJoin(String)
      * @see SQL
@@ -501,6 +602,29 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      */
     @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectJoinPartitionByStep<R> rightJoin(TableLike<?> table);
+
+    /**
+     * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#rightOuterJoin(String)}.
+     * <p>
+     * A synonym for {@link #rightOuterJoin(String)}.
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(SQL)
+     * @see Table#rightOuterJoin(SQL)
+     * @see #rightOuterJoin(SQL)
+     * @see SQL
+     */
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @PlainSQL
+    SelectJoinPartitionByStep<R> rightJoin(SQL sql);
 
     /**
      * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
@@ -595,6 +719,26 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
+     * @see DSL#table(SQL)
+     * @see Table#rightOuterJoin(SQL)
+     * @see SQL
+     */
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @PlainSQL
+    SelectJoinPartitionByStep<R> rightOuterJoin(SQL sql);
+
+    /**
+     * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#rightOuterJoin(String)}
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
      * @see DSL#table(String)
      * @see Table#rightOuterJoin(String)
      * @see SQL
@@ -654,6 +798,26 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      */
     @Support({ DB2, FIREBIRD, HANA, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectOnStep<R> fullOuterJoin(TableLike<?> table);
+
+    /**
+     * Convenience method to <code>FULL OUTER JOIN</code> a table to the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#fullOuterJoin(String)}
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(SQL)
+     * @see Table#fullOuterJoin(SQL)
+     * @see SQL
+     */
+    @Support({ DB2, FIREBIRD, HANA, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @PlainSQL
+    SelectOnStep<R> fullOuterJoin(SQL sql);
 
     /**
      * Convenience method to <code>FULL OUTER JOIN</code> a table to the last
@@ -727,6 +891,27 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      */
     @Support
     SelectJoinStep<R> naturalJoin(TableLike<?> table);
+
+    /**
+     * Convenience method to <code>NATURAL JOIN</code> a table to the last table
+     * added to the <code>FROM</code> clause using
+     * {@link Table#naturalJoin(String)}
+     * <p>
+     * Natural joins are supported by most RDBMS. If they aren't supported, they
+     * are emulated if jOOQ has enough information.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(SQL)
+     * @see Table#naturalJoin(SQL)
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    SelectJoinStep<R> naturalJoin(SQL sql);
 
     /**
      * Convenience method to <code>NATURAL JOIN</code> a table to the last table
@@ -817,6 +1002,27 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
+     * @see DSL#table(SQL)
+     * @see Table#naturalLeftOuterJoin(SQL)
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    SelectJoinStep<R> naturalLeftOuterJoin(SQL sql);
+
+    /**
+     * Convenience method to <code>NATURAL LEFT OUTER JOIN</code> a table to the
+     * last table added to the <code>FROM</code> clause using
+     * {@link Table#naturalLeftOuterJoin(String)}
+     * <p>
+     * Natural joins are supported by most RDBMS. If they aren't supported, they
+     * are emulated if jOOQ has enough information.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
      * @see DSL#table(String)
      * @see Table#naturalLeftOuterJoin(String)
      * @see SQL
@@ -879,6 +1085,27 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      */
     @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectJoinStep<R> naturalRightOuterJoin(TableLike<?> table);
+
+    /**
+     * Convenience method to <code>NATURAL RIGHT OUTER JOIN</code> a table to
+     * the last table added to the <code>FROM</code> clause using
+     * {@link Table#naturalRightOuterJoin(String)}
+     * <p>
+     * Natural joins are supported by most RDBMS. If they aren't supported, they
+     * are emulated if jOOQ has enough information.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(SQL)
+     * @see Table#naturalRightOuterJoin(SQL)
+     * @see SQL
+     */
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @PlainSQL
+    SelectJoinStep<R> naturalRightOuterJoin(SQL sql);
 
     /**
      * Convenience method to <code>NATURAL RIGHT OUTER JOIN</code> a table to
@@ -1013,6 +1240,22 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
+     * @see DSL#table(SQL)
+     * @see Table#crossApply(SQL)
+     * @see SQL
+     */
+    @Support({ ORACLE12C, POSTGRES_9_3, SQLSERVER, SYBASE })
+    @PlainSQL
+    SelectJoinStep<R> crossApply(SQL sql);
+
+    /**
+     * <code>CROSS APPLY</code> a table to this table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
      * @see DSL#table(String)
      * @see Table#crossApply(String)
      * @see SQL
@@ -1060,6 +1303,22 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      */
     @Support({ ORACLE12C, POSTGRES_9_3, SQLSERVER, SYBASE })
     SelectJoinStep<R> outerApply(TableLike<?> table);
+
+    /**
+     * <code>OUTER APPLY</code> a table to this table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#table(SQL)
+     * @see Table#outerApply(SQL)
+     * @see SQL
+     */
+    @Support({ ORACLE12C, POSTGRES_9_3, SQLSERVER, SYBASE })
+    @PlainSQL
+    SelectJoinStep<R> outerApply(SQL sql);
 
     /**
      * <code>OUTER APPLY</code> a table to this table.

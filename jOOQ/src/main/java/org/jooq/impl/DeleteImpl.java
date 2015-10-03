@@ -57,6 +57,7 @@ import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.SQL;
 import org.jooq.Select;
 import org.jooq.Table;
 
@@ -104,6 +105,11 @@ class DeleteImpl<R extends Record>
     }
 
     @Override
+    public final DeleteImpl<R> where(SQL sql) {
+        return where(condition(sql));
+    }
+
+    @Override
     public final DeleteImpl<R> where(String sql) {
         return where(condition(sql));
     }
@@ -142,6 +148,11 @@ class DeleteImpl<R extends Record>
     @Override
     public final DeleteImpl<R> and(Boolean condition) {
         return and(condition(condition));
+    }
+
+    @Override
+    public final DeleteImpl<R> and(SQL sql) {
+        return and(condition(sql));
     }
 
     @Override
@@ -198,6 +209,11 @@ class DeleteImpl<R extends Record>
     @Override
     public final DeleteImpl<R> or(Boolean condition) {
         return or(condition(condition));
+    }
+
+    @Override
+    public final DeleteImpl<R> or(SQL sql) {
+        return or(condition(sql));
     }
 
     @Override

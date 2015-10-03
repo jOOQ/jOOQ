@@ -53,6 +53,7 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Operator;
 import org.jooq.QueryPart;
+import org.jooq.SQL;
 import org.jooq.Select;
 
 /**
@@ -146,6 +147,11 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
     }
 
     @Override
+    public final Condition and(SQL sql) {
+        return getWhere().and(sql);
+    }
+
+    @Override
     public final Condition and(String sql) {
         return getWhere().and(sql);
     }
@@ -198,6 +204,11 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
     @Override
     public final Condition or(Boolean other) {
         return getWhere().or(other);
+    }
+
+    @Override
+    public final Condition or(SQL sql) {
+        return getWhere().or(sql);
     }
 
     @Override

@@ -103,6 +103,7 @@ import org.jooq.Row7;
 import org.jooq.Row8;
 import org.jooq.Row9;
 import org.jooq.RowN;
+import org.jooq.SQL;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableLike;
@@ -511,6 +512,11 @@ final class UpdateImpl<R extends Record>
     }
 
     @Override
+    public final UpdateWhereStep<R> from(SQL sql) {
+        return from(table(sql));
+    }
+
+    @Override
     public final UpdateWhereStep<R> from(String sql) {
         return from(table(sql));
     }
@@ -545,6 +551,11 @@ final class UpdateImpl<R extends Record>
     @Override
     public final UpdateImpl<R> where(Boolean condition) {
         return where(condition(condition));
+    }
+
+    @Override
+    public final UpdateImpl<R> where(SQL sql) {
+        return where(condition(sql));
     }
 
     @Override
@@ -586,6 +597,11 @@ final class UpdateImpl<R extends Record>
     @Override
     public final UpdateImpl<R> and(Boolean condition) {
         return and(condition(condition));
+    }
+
+    @Override
+    public final UpdateImpl<R> and(SQL sql) {
+        return and(condition(sql));
     }
 
     @Override
@@ -642,6 +658,11 @@ final class UpdateImpl<R extends Record>
     @Override
     public final UpdateImpl<R> or(Boolean condition) {
         return or(condition(condition));
+    }
+
+    @Override
+    public final UpdateImpl<R> or(SQL sql) {
+        return or(condition(sql));
     }
 
     @Override

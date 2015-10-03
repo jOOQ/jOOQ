@@ -130,6 +130,7 @@ import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Row;
+import org.jooq.SQL;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableLike;
@@ -593,6 +594,11 @@ implements
     }
 
     @Override
+    public final MergeImpl on(SQL sql) {
+        return on(condition(sql));
+    }
+
+    @Override
     public final MergeImpl on(String sql) {
         return on(condition(sql));
     }
@@ -621,6 +627,11 @@ implements
     @Override
     public final MergeImpl and(Boolean condition) {
         return and(condition(condition));
+    }
+
+    @Override
+    public final MergeImpl and(SQL sql) {
+        return and(condition(sql));
     }
 
     @Override
@@ -677,6 +688,11 @@ implements
     @Override
     public final MergeImpl or(Boolean condition) {
         return and(condition(condition));
+    }
+
+    @Override
+    public final MergeImpl or(SQL sql) {
+        return or(condition(sql));
     }
 
     @Override

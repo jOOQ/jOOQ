@@ -88,6 +88,22 @@ public interface DeleteConditionStep<R extends Record> extends DeleteFinalStep<R
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
+     * @see DSL#condition(SQL)
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    DeleteConditionStep<R> and(SQL sql);
+
+    /**
+     * Combine the currently assembled conditions with another one using the
+     * {@link Operator#AND} operator
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
      * @see DSL#condition(String)
      * @see SQL
      */
@@ -181,6 +197,22 @@ public interface DeleteConditionStep<R extends Record> extends DeleteFinalStep<R
      */
     @Support
     DeleteConditionStep<R> or(Boolean condition);
+
+    /**
+     * Combine the currently assembled conditions with another one using the
+     * {@link Operator#OR} operator
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#condition(SQL)
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    DeleteConditionStep<R> or(SQL sql);
 
     /**
      * Combine the currently assembled conditions with another one using the

@@ -120,6 +120,22 @@ public interface SelectStartWithStep<R extends Record> extends SelectGroupByStep
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
+     * @see DSL#condition(SQL)
+     * @see SQL
+     */
+    @Support({ CUBRID, INFORMIX, ORACLE })
+    @PlainSQL
+    SelectGroupByStep<R> startWith(SQL sql);
+
+    /**
+     * Add an Oracle-specific <code>START WITH</code> clause to the query's
+     * <code>CONNECT BY</code> clause.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
      * @see DSL#condition(String)
      * @see SQL
      */

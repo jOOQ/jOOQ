@@ -77,6 +77,7 @@ import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.OrderedAggregateFunction;
 import org.jooq.QueryPart;
+import org.jooq.SQL;
 import org.jooq.SQLDialect;
 import org.jooq.SortField;
 import org.jooq.WindowBeforeOverStep;
@@ -605,6 +606,11 @@ class Function<T> extends AbstractField<T> implements
     @Override
     public final WindowBeforeOverStep<T> filterWhere(Boolean field) {
         return filterWhere(condition(field));
+    }
+
+    @Override
+    public final WindowBeforeOverStep<T> filterWhere(SQL sql) {
+        return filterWhere(condition(sql));
     }
 
     @Override

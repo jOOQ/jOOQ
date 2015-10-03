@@ -92,6 +92,24 @@ public interface Condition extends QueryPart {
      *
      * @param sql The other condition
      * @return The combined condition
+     * @see DSL#condition(SQL)
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    Condition and(SQL sql);
+
+    /**
+     * Combine this condition with another one using the {@link Operator#AND}
+     * operator.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The other condition
+     * @return The combined condition
      * @see DSL#condition(String)
      * @see SQL
      */
@@ -218,6 +236,24 @@ public interface Condition extends QueryPart {
      */
     @Support
     Condition or(Boolean other);
+
+    /**
+     * Combine this condition with another one using the {@link Operator#OR}
+     * operator.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The other condition
+     * @return The combined condition
+     * @see DSL#condition(SQL)
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    Condition or(SQL sql);
 
     /**
      * Combine this condition with another one using the {@link Operator#OR}

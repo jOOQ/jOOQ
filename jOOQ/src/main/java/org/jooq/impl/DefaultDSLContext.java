@@ -185,6 +185,7 @@ import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.Results;
+import org.jooq.SQL;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Select;
@@ -213,7 +214,6 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.BatchCRUD.Action;
-import org.jooq.tools.JooqLogger;
 import org.jooq.tools.csv.CSVReader;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.tools.jdbc.MockCallable;
@@ -236,8 +236,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     /**
      * Generated UID
      */
-    private static final long       serialVersionUID = 2681360188806309513L;
-    private static final JooqLogger log              = JooqLogger.getLogger(DefaultDSLContext.class);
+    private static final long serialVersionUID = 2681360188806309513L;
 
     // -------------------------------------------------------------------------
     // XXX Constructors
@@ -522,18 +521,28 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     // -------------------------------------------------------------------------
 
     @Override
+    public Query query(SQL sql) {
+        return new SQLQuery(configuration(), sql);
+    }
+
+    @Override
     public Query query(String sql) {
         return query(sql, new Object[0]);
     }
 
     @Override
     public Query query(String sql, Object... bindings) {
-        return new SQLQuery(configuration(), sql(sql, bindings));
+        return query(sql(sql, bindings));
     }
 
     @Override
     public Query query(String sql, QueryPart... parts) {
         return query(sql, (Object[]) parts);
+    }
+
+    @Override
+    public Result<Record> fetch(SQL sql) {
+        return resultQuery(sql).fetch();
     }
 
     @Override
@@ -549,6 +558,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public Result<Record> fetch(String sql, QueryPart... parts) {
         return resultQuery(sql, parts).fetch();
+    }
+
+    @Override
+    public Cursor<Record> fetchLazy(SQL sql) {
+        return resultQuery(sql).fetchLazy();
     }
 
     @Override
@@ -568,6 +582,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     /* [java-8] */
     @Override
+    public Stream<Record> fetchStream(SQL sql) {
+        return resultQuery(sql).stream();
+    }
+
+    @Override
     public Stream<Record> fetchStream(String sql) {
         return resultQuery(sql).stream();
     }
@@ -584,6 +603,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     /* [/java-8] */
 
     @Override
+    public Results fetchMany(SQL sql) {
+        return resultQuery(sql).fetchMany();
+    }
+
+    @Override
     public Results fetchMany(String sql) {
         return resultQuery(sql).fetchMany();
     }
@@ -596,6 +620,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public Results fetchMany(String sql, QueryPart... parts) {
         return resultQuery(sql, parts).fetchMany();
+    }
+
+    @Override
+    public Record fetchOne(SQL sql) {
+        return resultQuery(sql).fetchOne();
     }
 
     @Override
@@ -615,6 +644,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     /* [java-8] */
     @Override
+    public Optional<Record> fetchOptional(SQL sql) {
+        return Optional.ofNullable(fetchOne(sql));
+    }
+
+    @Override
     public Optional<Record> fetchOptional(String sql) {
         return Optional.ofNullable(fetchOne(sql));
     }
@@ -629,6 +663,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return Optional.ofNullable(fetchOne(sql, parts));
     }
     /* [/java-8] */
+
+    @Override
+    public Object fetchValue(SQL sql) {
+        return fetchValue((ResultQuery) resultQuery(sql));
+    }
 
     @Override
     public Object fetchValue(String sql) {
@@ -647,6 +686,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     /* [java-8] */
     @Override
+    public Optional<?> fetchOptionalValue(SQL sql) {
+        return Optional.ofNullable(fetchValue(sql));
+    }
+
+    @Override
     public Optional<?> fetchOptionalValue(String sql) {
         return Optional.ofNullable(fetchValue(sql));
     }
@@ -663,6 +707,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     /* [/java-8] */
 
     @Override
+    public List<?> fetchValues(SQL sql) {
+        return fetchValues((ResultQuery) resultQuery(sql));
+    }
+
+    @Override
     public List<?> fetchValues(String sql) {
         return fetchValues((ResultQuery) resultQuery(sql));
     }
@@ -675,6 +724,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public List<?> fetchValues(String sql, QueryPart... parts) {
         return fetchValues((ResultQuery) resultQuery(sql, parts));
+    }
+
+    @Override
+    public int execute(SQL sql) {
+        return query(sql).execute();
     }
 
     @Override
@@ -693,13 +747,18 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public ResultQuery<Record> resultQuery(SQL sql) {
+        return new SQLResultQuery(configuration(), sql);
+    }
+
+    @Override
     public ResultQuery<Record> resultQuery(String sql) {
         return resultQuery(sql, new Object[0]);
     }
 
     @Override
     public ResultQuery<Record> resultQuery(String sql, Object... bindings) {
-        return new SQLResultQuery(configuration(), sql(sql, bindings));
+        return resultQuery(sql(sql, bindings));
     }
 
     @Override

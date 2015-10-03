@@ -58,6 +58,7 @@ import org.jooq.Field;
 import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+import org.jooq.SQL;
 import org.jooq.Select;
 import org.jooq.Table;
 
@@ -170,6 +171,12 @@ implements
     }
 
     @Override
+    public final DivideByOnConditionStep on(SQL sql) {
+        and(sql);
+        return this;
+    }
+
+    @Override
     public final DivideByOnConditionStep on(String sql) {
         and(sql);
         return this;
@@ -212,6 +219,11 @@ implements
     @Override
     public final DivideByOnConditionStep and(Boolean c) {
         return and(condition(c));
+    }
+
+    @Override
+    public final DivideByOnConditionStep and(SQL sql) {
+        return and(condition(sql));
     }
 
     @Override
@@ -268,6 +280,11 @@ implements
     @Override
     public final DivideByOnConditionStep or(Boolean c) {
         return or(condition(c));
+    }
+
+    @Override
+    public final DivideByOnConditionStep or(SQL sql) {
+        return or(condition(sql));
     }
 
     @Override

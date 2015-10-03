@@ -114,6 +114,21 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
+     * @see DSL#table(SQL)
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    SelectJoinStep<R> from(SQL sql);
+
+    /**
+     * Add a <code>FROM</code> clause to the query.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
      * @see DSL#table(String)
      * @see SQL
      */

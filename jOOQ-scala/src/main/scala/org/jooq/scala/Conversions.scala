@@ -92,6 +92,41 @@ object Conversions {
   // Enhanced jOOQ types
   // -------------------------------------------------------------------------
 
+  implicit class SQLInterpolation(val sc : StringContext) extends AnyVal {
+
+    @PlainSQL
+    def sql(args: Any*) : SQL = DSL.sql(string(args), args.asInstanceOf[Seq[AnyRef]] : _*)
+
+    @PlainSQL
+    def condition(args : Any*) : Condition = DSL.condition(string(args), args.asInstanceOf[Seq[AnyRef]] : _*)
+
+    @PlainSQL
+    def table(args : Any*) : Table[Record] = DSL.table(string(args), args.asInstanceOf[Seq[AnyRef]] : _*)
+
+    @PlainSQL
+    def query(args : Any*) : Query = DSL.query(string(args), args.asInstanceOf[Seq[AnyRef]] : _*)
+
+    @PlainSQL
+    def resultQuery(args : Any*) : ResultQuery[Record] = DSL.resultQuery(string(args), args.asInstanceOf[Seq[AnyRef]] : _*)
+
+    private def string(args : Any*) = {
+      val pi = sc.parts.iterator
+      val sb = new StringBuilder(pi.next())
+      var i = 0;
+
+      while (pi.hasNext) {
+        sb += '{'
+        sb ++= (i toString)
+        sb += '}'
+        sb ++= pi.next()
+
+        i = i + 1;
+      }
+
+      sb.result
+    }
+  }
+
   implicit class ScalaDSLContext (val ctx : DSLContext) {
     def fetchAnyOption[R <: Record]          (table : Table[R])                        : Option[R]      = Option(ctx.fetchAny(table))
     def fetchAnyOption[R <: Record]          (table : Table[R], condition : Condition) : Option[R]      = Option(ctx.fetchAny(table, condition))

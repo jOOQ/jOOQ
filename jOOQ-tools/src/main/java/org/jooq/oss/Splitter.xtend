@@ -53,6 +53,7 @@ import org.jooq.SQLDialect
 import org.jooq.xtend.Generators
 
 import static java.util.regex.Pattern.*
+import java.util.regex.PatternSyntaxException
 
 // Use this to generate the jOOQ Open Source Edition code
 class RemoveProCode {
@@ -97,6 +98,7 @@ class Splitter extends Generators {
     static ExecutorService ex;
     static AtomicInteger charsTotal = new AtomicInteger(0);
     static AtomicInteger charsMasked = new AtomicInteger(0);
+    static Pattern patterns = Pattern.compile('''(?:compile|split|replaceAll|replaceFirst)\("(.*?)"''')
     List<String> tokens;
 
     def static void split(String workspace, String... tokens) {
@@ -212,6 +214,19 @@ For more information, please visit: http://www.jooq.org/licenses''');
             ex.submit[
                 var original = read(in);
                 var content = original;
+
+                if (tokens.contains("java-8")) {
+                    val matcher = patterns.matcher(original);
+                    
+                    while (matcher.find) {
+                        val exp = matcher.group(1);
+                        
+                        if (exp.contains("\\R")) {
+                            System.err.println("Pattern not supported in Java 6: " + exp);
+                            return;
+                        }
+                    }
+                }
 
                 for (pattern : translateAll) {
                     val m = pattern.matcher(content);

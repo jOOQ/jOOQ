@@ -257,7 +257,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         Result<A> a11 = create()
             .selectFrom(
                 TAuthor()
-            .semiJoin(TBook()).on(TAuthor_ID().eq(TBook_AUTHOR_ID())))
+            .leftSemiJoin(TBook()).on(TAuthor_ID().eq(TBook_AUTHOR_ID())))
             .orderBy(TAuthor_ID())
             .fetch();
 
@@ -268,7 +268,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         Result<A> a12 = create()
             .selectFrom(
                 TAuthor()
-            .antiJoin(TBook()).on(TAuthor_ID().eq(TBook_AUTHOR_ID())))
+            .leftAntiJoin(TBook()).on(TAuthor_ID().eq(TBook_AUTHOR_ID())))
             .orderBy(TAuthor_ID())
             .fetch();
 
@@ -278,7 +278,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         Result<Record> a21 = create()
             .select()
             .from(TAuthor())
-            .semiJoin(TBook()).onKey(TBook_AUTHOR_ID())
+            .leftSemiJoin(TBook()).onKey(TBook_AUTHOR_ID())
             .orderBy(TAuthor_ID())
             .fetch();
 
@@ -289,7 +289,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         Result<Record> a22 = create()
             .select()
             .from(TAuthor())
-            .antiJoin(TBook()).onKey(TBook_AUTHOR_ID())
+            .leftAntiJoin(TBook()).onKey(TBook_AUTHOR_ID())
             .orderBy(TAuthor_ID())
             .fetch();
 
@@ -299,7 +299,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         Result<Record> a31 = create()
             .select()
             .from(TAuthor())
-            .semiJoin(table(selectOne()).as("t", "a")).on(TAuthor_ID().eq(field(name("t", "a"), Integer.class)))
+            .leftSemiJoin(table(selectOne()).as("t", "a")).on(TAuthor_ID().eq(field(name("t", "a"), Integer.class)))
             .orderBy(TAuthor_ID())
             .fetch();
 
@@ -310,7 +310,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         Result<Record> a32 = create()
             .select()
             .from(TAuthor())
-            .antiJoin(table(selectOne()).as("t", "a")).on(TAuthor_ID().eq(field(name("t", "a"), Integer.class)))
+            .leftAntiJoin(table(selectOne()).as("t", "a")).on(TAuthor_ID().eq(field(name("t", "a"), Integer.class)))
             .orderBy(TAuthor_ID())
             .fetch();
 
@@ -322,9 +322,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             .select(TAuthor_ID(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME(), TBook_TITLE())
             .from(TAuthor())
             .join(TBook()).onKey(TBook_AUTHOR_ID())
-                .semiJoin(table(selectOne()).as("t1", "a"))
+                .leftSemiJoin(table(selectOne()).as("t1", "a"))
                     .on(TAuthor_ID().eq(field(name("t1", "a"), Integer.class)))
-                .antiJoin(table(select(TAuthor_ID()).from(TAuthor()).where(TAuthor_ID().eq(2))).as("t2", "a"))
+                .leftAntiJoin(table(select(TAuthor_ID()).from(TAuthor()).where(TAuthor_ID().eq(2))).as("t2", "a"))
                     .on(TAuthor_ID().eq(field(name("t2", "a"), Integer.class)))
             .orderBy(TBook_ID())
             .fetch();
@@ -338,9 +338,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             .select(TAuthor_ID(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME(), TBook_TITLE())
             .from(TAuthor())
             .join(TBook()).onKey(TBook_AUTHOR_ID())
-                .antiJoin(table(selectOne()).as("t1", "a"))
+                .leftAntiJoin(table(selectOne()).as("t1", "a"))
                     .on(TAuthor_ID().eq(field(name("t1", "a"), Integer.class)))
-                .semiJoin(table(select(TAuthor_ID()).from(TAuthor()).where(TAuthor_ID().eq(2))).as("t2", "a"))
+                .leftSemiJoin(table(select(TAuthor_ID()).from(TAuthor()).where(TAuthor_ID().eq(2))).as("t2", "a"))
                     .on(TAuthor_ID().eq(field(name("t2", "a"), Integer.class)))
             .orderBy(TBook_ID())
             .fetch();

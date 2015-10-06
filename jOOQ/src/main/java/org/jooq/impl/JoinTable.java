@@ -43,7 +43,7 @@ package org.jooq.impl;
 import static java.util.Arrays.asList;
 import static org.jooq.Clause.TABLE;
 import static org.jooq.Clause.TABLE_JOIN;
-import static org.jooq.Clause.TABLE_JOIN_ANTI;
+import static org.jooq.Clause.TABLE_JOIN_ANTI_LEFT;
 import static org.jooq.Clause.TABLE_JOIN_CROSS;
 import static org.jooq.Clause.TABLE_JOIN_CROSS_APPLY;
 import static org.jooq.Clause.TABLE_JOIN_INNER;
@@ -56,19 +56,19 @@ import static org.jooq.Clause.TABLE_JOIN_OUTER_FULL;
 import static org.jooq.Clause.TABLE_JOIN_OUTER_LEFT;
 import static org.jooq.Clause.TABLE_JOIN_OUTER_RIGHT;
 import static org.jooq.Clause.TABLE_JOIN_PARTITION_BY;
-import static org.jooq.Clause.TABLE_JOIN_SEMI;
+import static org.jooq.Clause.TABLE_JOIN_SEMI_LEFT;
 import static org.jooq.Clause.TABLE_JOIN_USING;
-import static org.jooq.JoinType.ANTI_JOIN;
 import static org.jooq.JoinType.CROSS_APPLY;
 import static org.jooq.JoinType.CROSS_JOIN;
 import static org.jooq.JoinType.JOIN;
+import static org.jooq.JoinType.LEFT_ANTI_JOIN;
 import static org.jooq.JoinType.LEFT_OUTER_JOIN;
+import static org.jooq.JoinType.LEFT_SEMI_JOIN;
 import static org.jooq.JoinType.NATURAL_JOIN;
 import static org.jooq.JoinType.NATURAL_LEFT_OUTER_JOIN;
 import static org.jooq.JoinType.NATURAL_RIGHT_OUTER_JOIN;
 import static org.jooq.JoinType.OUTER_APPLY;
 import static org.jooq.JoinType.RIGHT_OUTER_JOIN;
-import static org.jooq.JoinType.SEMI_JOIN;
 import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
@@ -182,8 +182,8 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep<Rec
         toSQLTable(ctx, lhs);
 
         switch (translatedType) {
-            case SEMI_JOIN:
-            case ANTI_JOIN:
+            case LEFT_SEMI_JOIN:
+            case LEFT_ANTI_JOIN:
                 if (ctx.data(DATA_COLLECT_SEMI_ANTI_JOIN) != null) {
 
                     @SuppressWarnings("unchecked")
@@ -195,11 +195,11 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep<Rec
                     }
 
                     switch (translatedType) {
-                        case SEMI_JOIN:
+                        case LEFT_SEMI_JOIN:
                             semiAntiJoinPredicates.add(exists(selectOne().from(rhs).where(condition)));
                             break;
 
-                        case ANTI_JOIN:
+                        case LEFT_ANTI_JOIN:
                             semiAntiJoinPredicates.add(notExists(selectOne().from(rhs).where(condition)));
                             break;
                     }
@@ -287,8 +287,8 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep<Rec
             case NATURAL_RIGHT_OUTER_JOIN: return TABLE_JOIN_NATURAL_OUTER_RIGHT;
             case CROSS_APPLY:              return TABLE_JOIN_CROSS_APPLY;
             case OUTER_APPLY:              return TABLE_JOIN_OUTER_APPLY;
-            case SEMI_JOIN:                return TABLE_JOIN_SEMI;
-            case ANTI_JOIN:                return TABLE_JOIN_ANTI;
+            case LEFT_SEMI_JOIN:           return TABLE_JOIN_SEMI_LEFT;
+            case LEFT_ANTI_JOIN:           return TABLE_JOIN_ANTI_LEFT;
             default: throw new IllegalArgumentException("Bad join type: " + translatedType);
         }
     }
@@ -437,7 +437,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep<Rec
 
     @Override
     final Fields<Record> fields0() {
-        if (type == SEMI_JOIN || type == ANTI_JOIN) {
+        if (type == LEFT_SEMI_JOIN || type == LEFT_ANTI_JOIN) {
             return new Fields<Record>(lhs.asTable().fields());
         }
         else {

@@ -41,18 +41,18 @@
 package org.jooq.impl;
 
 import static org.jooq.Clause.TABLE;
-import static org.jooq.JoinType.ANTI_JOIN;
 import static org.jooq.JoinType.CROSS_APPLY;
 import static org.jooq.JoinType.CROSS_JOIN;
 import static org.jooq.JoinType.FULL_OUTER_JOIN;
 import static org.jooq.JoinType.JOIN;
+import static org.jooq.JoinType.LEFT_ANTI_JOIN;
 import static org.jooq.JoinType.LEFT_OUTER_JOIN;
+import static org.jooq.JoinType.LEFT_SEMI_JOIN;
 import static org.jooq.JoinType.NATURAL_JOIN;
 import static org.jooq.JoinType.NATURAL_LEFT_OUTER_JOIN;
 import static org.jooq.JoinType.NATURAL_RIGHT_OUTER_JOIN;
 import static org.jooq.JoinType.OUTER_APPLY;
 import static org.jooq.JoinType.RIGHT_OUTER_JOIN;
-import static org.jooq.JoinType.SEMI_JOIN;
 import static org.jooq.JoinType.STRAIGHT_JOIN;
 import static org.jooq.impl.DSL.link;
 import static org.jooq.impl.DSL.table;
@@ -664,14 +664,14 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public final TableOnStep<R> semiJoin(TableLike<?> table) {
-        return (TableOnStep) join(table, SEMI_JOIN);
+    public final TableOnStep<R> leftSemiJoin(TableLike<?> table) {
+        return (TableOnStep) join(table, LEFT_SEMI_JOIN);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public final TableOnStep<R> antiJoin(TableLike<?> table) {
-        return (TableOnStep) join(table, ANTI_JOIN);
+    public final TableOnStep<R> leftAntiJoin(TableLike<?> table) {
+        return (TableOnStep) join(table, LEFT_ANTI_JOIN);
     }
 
     // ------------------------------------------------------------------------

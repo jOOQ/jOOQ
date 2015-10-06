@@ -121,16 +121,16 @@ public enum JoinType {
     STRAIGHT_JOIN("straight_join"),
 
     /**
-     * <code>SEMI JOIN</code> two tables.
+     * <code>LEFT SEMI JOIN</code> two tables.
      */
     @Support
-    SEMI_JOIN("semi join"),
+    LEFT_SEMI_JOIN("left semi join"),
 
     /**
-     * <code>ANTI JOIN</code> two tables.
+     * <code>LEFT ANTI JOIN</code> two tables.
      */
     @Support
-    ANTI_JOIN("anti join")
+    LEFT_ANTI_JOIN("left anti join")
 
     ;
 

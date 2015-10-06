@@ -201,43 +201,57 @@ object Conversions {
    * A Scala-esque representation of {@link org.jooq.Field}, adding overloaded
    * operators for common jOOQ operations to arbitrary fields
    */
-  trait SAnyField[T] extends Field[T] {
+  implicit class ScalaField[T](val field : Field[T]) extends AnyVal {
 
     // String operations
     // -----------------
 
-    def ||(value : String)            : Field[String]
-    def ||(value : Field[_])          : Field[String]
+    def ||(value : String)                             : Field[String] = field.concat(value)
+    def ||(value : Field[_])                           : Field[String] = field.concat(value)
 
     // Comparison predicates
     // ---------------------
 
-    def ===(value : T)                : Condition
-    def ===(value : Field[T])         : Condition
+    def ===(value : T)                                 : Condition = field.equal(value)
+    def ===(value : Field[T])                          : Condition = field.equal(value)
+    def ===(value : Select[_ <: Record1[T]])           : Condition = field.equal(value)
+    def ===(value : QuantifiedSelect[_ <: Record1[T]]) : Condition = field.equal(value)
 
-    def !==(value : T)                : Condition
-    def !==(value : Field[T])         : Condition
+    def !==(value : T)                                 : Condition = field.notEqual(value)
+    def !==(value : Field[T])                          : Condition = field.notEqual(value)
+    def !==(value : Select[_ <: Record1[T]])           : Condition = field.notEqual(value)
+    def !==(value : QuantifiedSelect[_ <: Record1[T]]) : Condition = field.notEqual(value)
 
-    def <>(value : T)                 : Condition
-    def <>(value : Field[T])          : Condition
+    def <>(value : T)                                  : Condition = field.notEqual(value)
+    def <>(value : Field[T])                           : Condition = field.notEqual(value)
+    def <>(value : Select[_ <: Record1[T]])            : Condition = field.notEqual(value)
+    def <>(value : QuantifiedSelect[_ <: Record1[T]])  : Condition = field.notEqual(value)
 
-    def >(value : T)                  : Condition
-    def >(value : Field[T])           : Condition
+    def >(value : T)                                   : Condition = field.greaterThan(value)
+    def >(value : Field[T])                            : Condition = field.greaterThan(value)
+    def >(value : Select[_ <: Record1[T]])             : Condition = field.greaterThan(value)
+    def >(value : QuantifiedSelect[_ <: Record1[T]])   : Condition = field.greaterThan(value)
 
-    def >=(value : T)                 : Condition
-    def >=(value : Field[T])          : Condition
+    def >=(value : T)                                  : Condition = field.greaterOrEqual(value)
+    def >=(value : Field[T])                           : Condition = field.greaterOrEqual(value)
+    def >=(value : Select[_ <: Record1[T]])            : Condition = field.greaterOrEqual(value)
+    def >=(value : QuantifiedSelect[_ <: Record1[T]])  : Condition = field.greaterOrEqual(value)
 
-    def <(value : T)                  : Condition
-    def <(value : Field[T])           : Condition
+    def <(value : T)                                   : Condition = field.lessThan(value)
+    def <(value : Field[T])                            : Condition = field.lessThan(value)
+    def <(value : Select[_ <: Record1[T]])             : Condition = field.lessThan(value)
+    def <(value : QuantifiedSelect[_ <: Record1[T]])   : Condition = field.lessThan(value)
 
-    def <=(value : T)                 : Condition
-    def <=(value : Field[T])          : Condition
+    def <=(value : T)                                  : Condition = field.lessOrEqual(value)
+    def <=(value : Field[T])                           : Condition = field.lessOrEqual(value)
+    def <=(value : Select[_ <: Record1[T]])            : Condition = field.lessOrEqual(value)
+    def <=(value : QuantifiedSelect[_ <: Record1[T]])  : Condition = field.lessOrEqual(value)
 
-    def <=>(value : T)                : Condition
-    def <=>(value : Field[T])         : Condition
+    def <=>(value : T)                                 : Condition = field.isNotDistinctFrom(value)
+    def <=>(value : Field[T])                          : Condition = field.isNotDistinctFrom(value)
 
     /* [pro] */
-    def <+>                           : Field[T]
+    def <+>                                            : Field[T]  = field.plus
     /* [/pro] */
   }
 
@@ -245,241 +259,49 @@ object Conversions {
    * A Scala-esque representation of {@link org.jooq.Field}, adding overloaded
    * operators for common jOOQ operations to numeric fields
    */
-  trait SNumberField[T <: Number] extends SAnyField[T] {
-
-    // Arithmetic operations
-    // ---------------------
-
-    def unary_-                       : Field[T]
-
-    def +(value : Number)             : Field[T]
-    def +(value : Field[_ <: Number]) : Field[T]
-
-    def -(value : Number)             : Field[T]
-    def -(value : Field[_ <: Number]) : Field[T]
-
-    def *(value : Number)             : Field[T]
-    def *(value : Field[_ <: Number]) : Field[T]
-
-    def /(value : Number)             : Field[T]
-    def /(value : Field[_ <: Number]) : Field[T]
-
-    def %(value : Number)             : Field[T]
-    def %(value : Field[_ <: Number]) : Field[T]
-
-    // Bitwise operations
-    // ------------------
-
-    def unary_~                       : Field[T]
-
-    def &(value : T)                  : Field[T]
-    def &(value : Field[T])           : Field[T]
-
-    def |(value : T)                  : Field[T]
-    def |(value : Field[T])           : Field[T]
-
-    def ^(value : T)                  : Field[T]
-    def ^(value : Field[T])           : Field[T]
-
-    def <<(value : T)                 : Field[T]
-    def <<(value : Field[T])          : Field[T]
-
-    def >>(value : T)                 : Field[T]
-    def >>(value : Field[T])          : Field[T]
-  }
-
-  /**
-   * A Scala-esque trait representation of {@link org.jooq.Param}, implementing
-   * the param-specific extendsion to {@link org.jooq.Field}. This can be
-   * mixed-in with the other base implmentations for parameters.
-   */
-  trait AnyParamBase[T] extends Param[T] {
-    val underlying: Param[T]
-
-    override def getParamName = underlying.getParamName()
-
-    override def getValue = underlying.getValue()
-
-    override def setValue(value: T) = underlying.setValue(value)
-
-    override def setConverted(value: Any) = underlying.setConverted(value)
-
-    override def setInline(inline: Boolean) = underlying.setInline(inline)
-
-    override def isInline = underlying.isInline()
-  }
-
-  // ------------------------------------------------------------------------
-  // Trait implementations
-  // ------------------------------------------------------------------------
-
-  /**
-   * A Scala-esque representation of {@link org.jooq.Field}, implementing
-   * overloaded operators for common jOOQ operations to arbitrary fields
-   */
-  abstract class AnyFieldBase[T](val underlying: Field[T])
-        extends CustomField[T] (underlying.getName(), underlying.getDataType())
-        with SAnyField[T] {
-
-    // QueryPart API
-    // -------------
-
-    override def toSQL(context : RenderContext) = underlying.asInstanceOf[QueryPartInternal].toSQL(context)
-    override def bind (context : BindContext)   = underlying.asInstanceOf[QueryPartInternal].bind(context)
-
-    // String operations
-    // -----------------
-
-             def ||(value : String)            = underlying.concat(value)
-             def ||(value : Field[_])          = underlying.concat(value)
-
-    // Comparison predicates
-    // ---------------------
-
-             def ===(value : T)                = underlying.equal(value)
-             def ===(value : Field[T])         = underlying.equal(value)
-
-             def !==(value : T)                = underlying.notEqual(value)
-             def !==(value : Field[T])         = underlying.notEqual(value)
-
-             def <>(value : T)                 = underlying.notEqual(value)
-             def <>(value : Field[T])          = underlying.notEqual(value)
-
-             def >(value : T)                  = underlying.greaterThan(value)
-             def >(value : Field[T])           = underlying.greaterThan(value)
-
-             def >=(value : T)                 = underlying.greaterOrEqual(value)
-             def >=(value : Field[T])          = underlying.greaterOrEqual(value)
-
-             def <(value : T)                  = underlying.lessThan(value)
-             def <(value : Field[T])           = underlying.lessThan(value)
-
-             def <=(value : T)                 = underlying.lessOrEqual(value)
-             def <=(value : Field[T])          = underlying.lessOrEqual(value)
-
-             def <=>(value : T)                = underlying.isNotDistinctFrom(value)
-             def <=>(value : Field[T])         = underlying.isNotDistinctFrom(value)
-
-             /* [pro] */
-             def <+>                           = underlying.plus()
-             /* [/pro] */
-  }
-
-  /**
-   * A Scala-esque representation of {@link org.jooq.Field}, implementing
-   * overloaded operators for common jOOQ operations to numeric fields
-   */
-  abstract class NumberFieldBase[T <: Number](override val underlying: Field[T])
-        extends AnyFieldBase[T] (underlying)
-        with SNumberField[T] {
+  implicit class ScalaNumberField[T <: Number](val field : Field[T]) extends AnyVal {
 
     // ------------------------------------------------------------------------
     // Arithmetic operations
     // ------------------------------------------------------------------------
 
-    def unary_-                       = underlying.neg()
+    def unary_-                       = field.neg()
 
-    def +(value : Number)             = underlying.add(value)
-    def +(value : Field[_ <: Number]) = underlying.add(value)
+    def +(value : Number)             = field.add(value)
+    def +(value : Field[_ <: Number]) = field.add(value)
 
-    def -(value : Number)             = underlying.sub(value)
-    def -(value : Field[_ <: Number]) = underlying.sub(value)
+    def -(value : Number)             = field.sub(value)
+    def -(value : Field[_ <: Number]) = field.sub(value)
 
-    def *(value : Number)             = underlying.mul(value)
-    def *(value : Field[_ <: Number]) = underlying.mul(value)
+    def *(value : Number)             = field.mul(value)
+    def *(value : Field[_ <: Number]) = field.mul(value)
 
-    def /(value : Number)             = underlying.div(value)
-    def /(value : Field[_ <: Number]) = underlying.div(value)
+    def /(value : Number)             = field.div(value)
+    def /(value : Field[_ <: Number]) = field.div(value)
 
-    def %(value : Number)             = underlying.mod(value)
-    def %(value : Field[_ <: Number]) = underlying.mod(value)
-
+    def %(value : Number)             = field.mod(value)
+    def %(value : Field[_ <: Number]) = field.mod(value)
+    
     // -------------------------------------------------------------------------
     // Bitwise operations
     // -------------------------------------------------------------------------
 
-    def unary_~                       = DSL.bitNot(underlying)
+    def unary_~                       = DSL.bitNot(field)
 
-    def &(value : T)                  = DSL.bitAnd(underlying, value)
-    def &(value : Field[T])           = DSL.bitAnd(underlying, value)
+    def &(value : T)                  = DSL.bitAnd(field, value)
+    def &(value : Field[T])           = DSL.bitAnd(field, value)
 
-    def |(value : T)                  = DSL.bitOr (underlying, value)
-    def |(value : Field[T])           = DSL.bitOr (underlying, value)
+    def |(value : T)                  = DSL.bitOr (field, value)
+    def |(value : Field[T])           = DSL.bitOr (field, value)
 
-    def ^(value : T)                  = DSL.bitXor(underlying, value)
-    def ^(value : Field[T])           = DSL.bitXor(underlying, value)
+    def ^(value : T)                  = DSL.bitXor(field, value)
+    def ^(value : Field[T])           = DSL.bitXor(field, value)
 
-    def <<(value : T)                 = DSL.shl(underlying, value)
-    def <<(value : Field[T])          = DSL.shl(underlying, value)
+    def <<(value : T)                 = DSL.shl(field, value)
+    def <<(value : Field[T])          = DSL.shl(field, value)
 
-    def >>(value : T)                 = DSL.shr(underlying, value)
-    def >>(value : Field[T])          = DSL.shr(underlying, value)
-  }
-
-  // ------------------------------------------------------------------------
-  // Implicit conversions
-  // ------------------------------------------------------------------------
-
-  /**
-   * A Scala-esque representation of {@link org.jooq.Field}, implementing
-   * overloaded operators for common jOOQ operations to arbitrary fields
-   */
-  case class AnyFieldWrapper[T] (override val underlying: Field[T])
-        extends AnyFieldBase[T] (underlying) {}
-
-  /**
-   * A Scala-esque representation of {@link org.jooq.Field}, implementing
-   * overloaded operators for common jOOQ operations to numeric fields
-   */
-  case class NumberFieldWrapper[T <: Number](override val underlying: Field[T])
-        extends NumberFieldBase[T] (underlying) {}
-
-  /**
-   * A Scala-esque representation of {@link org.jooq.Param}, implementing
-   * overloaded operators for common jOOQ operations to arbitrary fields
-   */
-  case class AnyParamWrapper[T](override val underlying: Param[T])
-        extends AnyFieldBase[T](underlying) with AnyParamBase[T] {}
-
-  /**
-   * A Scala-esque representation of {@link org.jooq.Param}, implementing
-   * overloaded operators for common jOOQ operations to numeric fields
-   */
-  case class NumberParamWrapper[T <: Number](override val underlying: Param[T])
-        extends NumberFieldBase[T](underlying) with AnyParamBase[T] {}
-
-  /**
-   * Enrich numeric {@link org.jooq.Param} with the {@link SNumberField} trait
-   */
-  implicit def asSNumberParam[T <: Number](p: Param[T]): SNumberField[T] = p match {
-    case AnyParamWrapper(p) => p
-    case NumberParamWrapper(p) => p
-    case _ => new NumberParamWrapper(p)
-  }
-
-  /**
-   * Enrich any {@link org.jooq.Param} with the {@link SAnyField} trait
-   */
-  implicit def asSAnyParam[T](p: Param[T]): SAnyField[T] = p match {
-    case AnyParamWrapper(p) => p
-    case _ => new AnyParamWrapper(p)
-  }
-
-  /**
-   * Enrich numeric {@link org.jooq.Field} with the {@link SNumberField} trait
-   */
-  implicit def asSNumberField[T <: Number](f : Field[T]): SNumberField[T] = f match {
-    case AnyFieldWrapper(f) => f
-    case NumberFieldWrapper(f) => f
-    case _ => new NumberFieldWrapper(f)
-  }
-
-  /**
-   * Enrich any {@link org.jooq.Field} with the {@link SAnyField} trait
-   */
-  implicit def asSAnyField[T](f : Field[T]): SAnyField[T] = f match {
-    case AnyFieldWrapper(f) => f
-    case _ => new AnyFieldWrapper(f)
+    def >>(value : T)                 = DSL.shr(field, value)
+    def >>(value : Field[T])          = DSL.shr(field, value)
   }
 
   // --------------------------------------------------------------------------

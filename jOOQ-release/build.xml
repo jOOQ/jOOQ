@@ -8,52 +8,52 @@
     <!-- Run a full mvn clean package install deploy first before this -->
     <target name="copy-lib-javadoc">
         <mkdir dir="${dir.release}/versions" />
-        <mkdir dir="${dir.release}/${version}" />
-        <mkdir dir="${dir.release}/${version}/jOOQ-lib" />
-        <mkdir dir="${dir.release}/${version}/jOOQ-pom"/>
-        <mkdir dir="${dir.release}/${version}/jOOQ-pom/jooq"/>
-        <mkdir dir="${dir.release}/${version}/jOOQ-pom/jooq-meta"/>
-        <mkdir dir="${dir.release}/${version}/jOOQ-pom/jooq-codegen"/>
-        <mkdir dir="${dir.release}/${version}/jOOQ-pom/jooq-codegen-maven"/>
-        <mkdir dir="${dir.release}/${version}/jOOQ-pom/jooq-scala"/>
+        <mkdir dir="${dir.release}/${dir.version}" />
+        <mkdir dir="${dir.release}/${dir.version}/jOOQ-lib" />
+        <mkdir dir="${dir.release}/${dir.version}/jOOQ-pom"/>
+        <mkdir dir="${dir.release}/${dir.version}/jOOQ-pom/jooq"/>
+        <mkdir dir="${dir.release}/${dir.version}/jOOQ-pom/jooq-meta"/>
+        <mkdir dir="${dir.release}/${dir.version}/jOOQ-pom/jooq-codegen"/>
+        <mkdir dir="${dir.release}/${dir.version}/jOOQ-pom/jooq-codegen-maven"/>
+        <mkdir dir="${dir.release}/${dir.version}/jOOQ-pom/jooq-scala"/>
 
-        <copy todir="${dir.release}/${version}/jOOQ-lib" file="${dir.workspace}/jOOQ/target/jooq-${version}.jar"/>
-        <copy todir="${dir.release}/${version}/jOOQ-lib" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version}.jar"/>
-        <copy todir="${dir.release}/${version}/jOOQ-lib" file="${dir.workspace}/jOOQ-meta-extensions/target/jooq-meta-extensions-${version}.jar"/>
-        <copy todir="${dir.release}/${version}/jOOQ-lib" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version}.jar"/>
-        <copy todir="${dir.release}/${version}/jOOQ-lib" file="${dir.workspace}/jOOQ-codegen-maven/target/jooq-codegen-maven-${version}.jar"/>
-        <copy todir="${dir.release}/${version}/jOOQ-lib" file="${dir.workspace}/jOOQ-scala/target/jooq-scala-${version}.jar"/>
+        <copy todir="${dir.release}/${dir.version}/jOOQ-lib" file="${dir.workspace}/jOOQ/target/jooq-${version-prefix}.jar"/>
+        <copy todir="${dir.release}/${dir.version}/jOOQ-lib" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version-prefix}.jar"/>
+        <copy todir="${dir.release}/${dir.version}/jOOQ-lib" file="${dir.workspace}/jOOQ-meta-extensions/target/jooq-meta-extensions-${version-prefix}.jar"/>
+        <copy todir="${dir.release}/${dir.version}/jOOQ-lib" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version-prefix}.jar"/>
+        <copy todir="${dir.release}/${dir.version}/jOOQ-lib" file="${dir.workspace}/jOOQ-codegen-maven/target/jooq-codegen-maven-${version-prefix}.jar"/>
+        <copy todir="${dir.release}/${dir.version}/jOOQ-lib" file="${dir.workspace}/jOOQ-scala/target/jooq-scala-${version-prefix}.jar"/>
 
-        <copy todir="${dir.release}/${version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ/target/jooq-${version-prefix}-javadoc.jar"/>
-        <copy todir="${dir.release}/${version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version-prefix}-javadoc.jar"/>
-        <copy todir="${dir.release}/${version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-meta-extensions/target/jooq-meta-extensions-${version-prefix}-javadoc.jar"/>
-        <copy todir="${dir.release}/${version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version-prefix}-javadoc.jar"/>
-        <copy todir="${dir.release}/${version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-codegen-maven/target/jooq-codegen-maven-${version-prefix}-javadoc.jar"/>
-        <copy todir="${dir.release}/${version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-scala/target/jooq-scala-${version-prefix}-javadoc.jar"/>
+        <copy todir="${dir.release}/${dir.version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ/target/jooq-${version-prefix}-javadoc.jar"/>
+        <copy todir="${dir.release}/${dir.version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version-prefix}-javadoc.jar"/>
+        <copy todir="${dir.release}/${dir.version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-meta-extensions/target/jooq-meta-extensions-${version-prefix}-javadoc.jar"/>
+        <copy todir="${dir.release}/${dir.version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version-prefix}-javadoc.jar"/>
+        <copy todir="${dir.release}/${dir.version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-codegen-maven/target/jooq-codegen-maven-${version-prefix}-javadoc.jar"/>
+        <copy todir="${dir.release}/${dir.version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-scala/target/jooq-scala-${version-prefix}-javadoc.jar"/>
 
-        <copy todir="${dir.release}/${version}/jOOQ-pom"                      file="${dir.workspace}/pom.xml"/>
-        <copy todir="${dir.release}/${version}/jOOQ-pom/jooq"                 file="${dir.workspace}/jOOQ/pom.xml"/>
-        <copy todir="${dir.release}/${version}/jOOQ-pom/jooq-meta"            file="${dir.workspace}/jOOQ-meta/pom.xml"/>
-        <copy todir="${dir.release}/${version}/jOOQ-pom/jooq-meta-extensions" file="${dir.workspace}/jOOQ-meta-extensions/pom.xml"/>
-        <copy todir="${dir.release}/${version}/jOOQ-pom/jooq-codegen"         file="${dir.workspace}/jOOQ-codegen/pom.xml"/>
-        <copy todir="${dir.release}/${version}/jOOQ-pom/jooq-codegen-maven"   file="${dir.workspace}/jOOQ-codegen-maven/pom.xml"/>
-        <copy todir="${dir.release}/${version}/jOOQ-pom/jooq-scala"           file="${dir.workspace}/jOOQ-scala/pom.xml"/>
+        <copy todir="${dir.release}/${dir.version}/jOOQ-pom"                      file="${dir.workspace}/pom.xml"/>
+        <copy todir="${dir.release}/${dir.version}/jOOQ-pom/jooq"                 file="${dir.workspace}/jOOQ/pom.xml"/>
+        <copy todir="${dir.release}/${dir.version}/jOOQ-pom/jooq-meta"            file="${dir.workspace}/jOOQ-meta/pom.xml"/>
+        <copy todir="${dir.release}/${dir.version}/jOOQ-pom/jooq-meta-extensions" file="${dir.workspace}/jOOQ-meta-extensions/pom.xml"/>
+        <copy todir="${dir.release}/${dir.version}/jOOQ-pom/jooq-codegen"         file="${dir.workspace}/jOOQ-codegen/pom.xml"/>
+        <copy todir="${dir.release}/${dir.version}/jOOQ-pom/jooq-codegen-maven"   file="${dir.workspace}/jOOQ-codegen-maven/pom.xml"/>
+        <copy todir="${dir.release}/${dir.version}/jOOQ-pom/jooq-scala"           file="${dir.workspace}/jOOQ-scala/pom.xml"/>
     </target>
 
     <target name="copy-src">
         <mkdir dir="${dir.release}/versions" />
-        <mkdir dir="${dir.release}/${version}/jOOQ-src" />
+        <mkdir dir="${dir.release}/${dir.version}/jOOQ-src" />
 
-        <copy todir="${dir.release}/${version}/jOOQ-src" file="${dir.workspace}/jOOQ/target/jooq-${version-prefix}-sources.jar"/>
-        <copy todir="${dir.release}/${version}/jOOQ-src" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version-prefix}-sources.jar"/>
-        <copy todir="${dir.release}/${version}/jOOQ-src" file="${dir.workspace}/jOOQ-meta-extensions/target/jooq-meta-extensions-${version-prefix}-sources.jar"/>
-        <copy todir="${dir.release}/${version}/jOOQ-src" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version-prefix}-sources.jar"/>
-        <copy todir="${dir.release}/${version}/jOOQ-src" file="${dir.workspace}/jOOQ-codegen-maven/target/jooq-codegen-maven-${version-prefix}-sources.jar"/>
-        <copy todir="${dir.release}/${version}/jOOQ-src" file="${dir.workspace}/jOOQ-scala/target/jooq-scala-${version-prefix}-sources.jar"/>
+        <copy todir="${dir.release}/${dir.version}/jOOQ-src" file="${dir.workspace}/jOOQ/target/jooq-${version-prefix}-sources.jar"/>
+        <copy todir="${dir.release}/${dir.version}/jOOQ-src" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version-prefix}-sources.jar"/>
+        <copy todir="${dir.release}/${dir.version}/jOOQ-src" file="${dir.workspace}/jOOQ-meta-extensions/target/jooq-meta-extensions-${version-prefix}-sources.jar"/>
+        <copy todir="${dir.release}/${dir.version}/jOOQ-src" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version-prefix}-sources.jar"/>
+        <copy todir="${dir.release}/${dir.version}/jOOQ-src" file="${dir.workspace}/jOOQ-codegen-maven/target/jooq-codegen-maven-${version-prefix}-sources.jar"/>
+        <copy todir="${dir.release}/${dir.version}/jOOQ-src" file="${dir.workspace}/jOOQ-scala/target/jooq-scala-${version-prefix}-sources.jar"/>
     </target>
 
     <target name="copy-trial">
-        <copy todir="${dir.release}/${version}">
+        <copy todir="${dir.release}/${dir.version}">
             <fileset dir="${dir.release}/template-trial">
                 <include name="**/*"/>
             </fileset>
@@ -61,32 +61,34 @@
     </target>
 
     <target name="rest">
-        <copy todir="${dir.release}/${version}">
+        <copy todir="${dir.release}/${dir.version}">
             <fileset dir="${dir.release}/template">
                 <include name="**/*"/>
             </fileset>
         </copy>
 
-        <mkdir dir="${dir.release}/${version}/third-party/lib" />
-        <mkdir dir="${dir.release}/${version}/third-party/src" />
+        <mkdir dir="${dir.release}/${dir.version}/third-party/lib" />
+        <mkdir dir="${dir.release}/${dir.version}/third-party/src" />
 
-        <copy todir="${dir.release}/${version}/third-party/lib" file="${user.home}/.m2/repository/org/slf4j/slf4j-api/1.6.1/slf4j-api-1.6.1.jar"/>
-        <copy todir="${dir.release}/${version}/third-party/src" file="${user.home}/.m2/repository/org/slf4j/slf4j-api/1.6.1/slf4j-api-1.6.1-sources.jar"/>
+        <copy todir="${dir.release}/${dir.version}/third-party/lib" file="${user.home}/.m2/repository/org/slf4j/slf4j-api/1.6.1/slf4j-api-1.6.1.jar"/>
+        <copy todir="${dir.release}/${dir.version}/third-party/src" file="${user.home}/.m2/repository/org/slf4j/slf4j-api/1.6.1/slf4j-api-1.6.1-sources.jar"/>
 
-        <copy todir="${dir.release}/${version}/third-party/lib" file="${user.home}/.m2/repository/log4j/log4j/1.2.16/log4j-1.2.16.jar"/>
-        <copy todir="${dir.release}/${version}/third-party/src" file="${user.home}/.m2/repository/log4j/log4j/1.2.16/log4j-1.2.16-sources.jar"/>
+        <copy todir="${dir.release}/${dir.version}/third-party/lib" file="${user.home}/.m2/repository/log4j/log4j/1.2.16/log4j-1.2.16.jar"/>
+        <copy todir="${dir.release}/${dir.version}/third-party/src" file="${user.home}/.m2/repository/log4j/log4j/1.2.16/log4j-1.2.16-sources.jar"/>
 
-        <copy todir="${dir.release}/${version}/third-party/lib" file="${user.home}/.m2/repository/javax/persistence/persistence-api/1.0/persistence-api-1.0.jar"/>
-        <copy todir="${dir.release}/${version}/third-party/src" file="${user.home}/.m2/repository/javax/persistence/persistence-api/1.0/persistence-api-1.0-sources.jar"/>
+        <copy todir="${dir.release}/${dir.version}/third-party/lib" file="${user.home}/.m2/repository/javax/persistence/persistence-api/1.0/persistence-api-1.0.jar"/>
+        <copy todir="${dir.release}/${dir.version}/third-party/src" file="${user.home}/.m2/repository/javax/persistence/persistence-api/1.0/persistence-api-1.0-sources.jar"/>
 
-        <copy todir="${dir.release}/${version}/third-party/lib" file="${user.home}/.m2/repository/javax/validation/validation-api/1.1.0.Alpha1/validation-api-1.1.0.Alpha1.jar"/>
-        <copy todir="${dir.release}/${version}/third-party/src" file="${user.home}/.m2/repository/javax/validation/validation-api/1.1.0.Alpha1/validation-api-1.1.0.Alpha1-sources.jar"/>
+        <copy todir="${dir.release}/${dir.version}/third-party/lib" file="${user.home}/.m2/repository/javax/validation/validation-api/1.1.0.Alpha1/validation-api-1.1.0.Alpha1.jar"/>
+        <copy todir="${dir.release}/${dir.version}/third-party/src" file="${user.home}/.m2/repository/javax/validation/validation-api/1.1.0.Alpha1/validation-api-1.1.0.Alpha1-sources.jar"/>
 
-        <zip destfile="${dir.release}/versions/jOOQ-${version}.zip">
-            <fileset dir="${dir.release}/${version}"/>
+        <zip destfile="${dir.release}/versions/jOOQ-${version-prefix}.zip">
+            <fileset dir="${dir.release}">
+                <include name="${dir.version}/**"/>
+            </fileset>
         </zip>
 
-        <delete dir="${dir.release}/${version}"/>
+        <delete dir="${dir.release}/${dir.version}"/>
     </target>
 
     <!-- [java-8] -->
@@ -102,6 +104,7 @@
     <!-- [pro] -->
     <target name="release-trial" description="Release a new version">
         <property name="version" value="${version-prefix}"/>
+        <property name="dir.version" value="jOOQ-${version-prefix}"/>
 
         <antcall target="copy-lib-javadoc"/>
         <antcall target="copy-trial"/>
@@ -111,6 +114,7 @@
 
     <target name="release-pro" description="Release a new version">
         <property name="version" value="${version-prefix}"/>
+        <property name="dir.version" value="jOOQ-${version-prefix}"/>
 
         <antcall target="copy-lib-javadoc"/>
         <antcall target="copy-src"/>
@@ -120,6 +124,7 @@
 
     <target name="release-pro-java-6" description="Release a new version">
         <property name="version" value="${version-prefix}"/>
+        <property name="dir.version" value="jOOQ-${version-prefix}"/>
 
         <antcall target="copy-lib-javadoc"/>
         <antcall target="copy-src"/>

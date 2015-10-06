@@ -1757,14 +1757,14 @@ public interface Table<R extends Record> extends TableLike<R> {
     DivideByOnStep divideBy(Table<?> divisor);
 
     /**
-     * A synthetic <code>SEMI JOIN</code> clause that translates to an
+     * A synthetic <code>LEFT SEMI JOIN</code> clause that translates to an
      * equivalent <code>EXISTS</code> predicate.
      * <p>
      * The following two SQL snippets are semantically equivalent:
      * <code><pre>
-     * -- Using SEMI JOIN
+     * -- Using LEFT SEMI JOIN
      * FROM A
-     *     SEMI JOIN B
+     *     LEFT SEMI JOIN B
      *         ON A.ID = B.ID
      *
      * -- Using WHERE EXISTS
@@ -1775,17 +1775,17 @@ public interface Table<R extends Record> extends TableLike<R> {
      * </pre></code>
      */
     @Support
-    TableOnStep<R> semiJoin(TableLike<?> table);
+    TableOnStep<R> leftSemiJoin(TableLike<?> table);
 
     /**
-     * A synthetic <code>ANTI JOIN</code> clause that translates to an
+     * A synthetic <code>LEFT ANTI JOIN</code> clause that translates to an
      * equivalent <code>NOT EXISTS</code> predicate.
      * <p>
      * The following two SQL snippets are semantically equivalent:
      * <code><pre>
-     * -- Using ANTI JOIN
+     * -- Using LEFT ANTI JOIN
      * FROM A
-     *     ANTI JOIN B
+     *     LEFT ANTI JOIN B
      *         ON A.ID = B.ID
      *
      * -- Using WHERE NOT EXISTS
@@ -1794,11 +1794,9 @@ public interface Table<R extends Record> extends TableLike<R> {
      *     SELECT 1 FROM B WHERE A.ID = B.ID
      * )
      * </pre></code>
-     *
-     * @see Table#antiJoin(TableLike)
      */
     @Support
-    TableOnStep<R> antiJoin(TableLike<?> table);
+    TableOnStep<R> leftAntiJoin(TableLike<?> table);
 
     /* [pro] xx
     xxx

@@ -1175,14 +1175,14 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     // -------------------------------------------------------------------------
 
     /**
-     * A synthetic <code>SEMI JOIN</code> clause that translates to an
+     * A synthetic <code>LEFT SEMI JOIN</code> clause that translates to an
      * equivalent <code>EXISTS</code> predicate.
      * <p>
      * The following two SQL snippets are semantically equivalent:
      * <code><pre>
-     * -- Using SEMI JOIN
+     * -- Using LEFT SEMI JOIN
      * FROM A
-     *     SEMI JOIN B
+     *     LEFT SEMI JOIN B
      *         ON A.ID = B.ID
      *
      * -- Using WHERE EXISTS
@@ -1192,20 +1192,20 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * )
      * </pre></code>
      *
-     * @see Table#semiJoin(TableLike)
+     * @see Table#leftSemiJoin(TableLike)
      */
     @Support
-    SelectOnStep<R> semiJoin(TableLike<?> table);
+    SelectOnStep<R> leftSemiJoin(TableLike<?> table);
 
     /**
-     * A synthetic <code>ANTI JOIN</code> clause that translates to an
+     * A synthetic <code>LEFT ANTI JOIN</code> clause that translates to an
      * equivalent <code>NOT EXISTS</code> predicate.
      * <p>
      * The following two SQL snippets are semantically equivalent:
      * <code><pre>
-     * -- Using ANTI JOIN
+     * -- Using LEFT ANTI JOIN
      * FROM A
-     *     ANTI JOIN B
+     *     LEFT ANTI JOIN B
      *         ON A.ID = B.ID
      *
      * -- Using WHERE NOT EXISTS
@@ -1215,10 +1215,10 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * )
      * </pre></code>
      *
-     * @see Table#antiJoin(TableLike)
+     * @see Table#leftAntiJoin(TableLike)
      */
     @Support
-    SelectOnStep<R> antiJoin(TableLike<?> table);
+    SelectOnStep<R> leftAntiJoin(TableLike<?> table);
 
     // -------------------------------------------------------------------------
     // XXX: APPLY clauses on tables

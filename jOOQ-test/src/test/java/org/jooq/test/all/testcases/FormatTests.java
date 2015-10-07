@@ -474,7 +474,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
     public void testFormatXML() throws Exception {
         Result<B> books = create().selectFrom(TBook()).fetch();
-        String xml = books.formatXML();
+
+        // Ignore namespaces for testing
+        String xml = books.formatXML().replaceAll(" xmlns=\".*?\"", "");
         InputStream is = new ByteArrayInputStream(xml.getBytes());
 
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();

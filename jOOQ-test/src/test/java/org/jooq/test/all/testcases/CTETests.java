@@ -405,7 +405,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testCTEWithDML() {
-        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DERBY, H2, HANA, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, SQLITE);
+        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DERBY, H2, HANA, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, SQLITE, VERTICA);
 
         clean(TDates());
 

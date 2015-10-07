@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.VERTICA;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.val;
@@ -466,7 +467,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testIntersectAllAndExceptAll() throws Exception {
-        assumeFamilyNotIn(FIREBIRD, MARIADB, MYSQL, H2, ORACLE, REDSHIFT, SQLITE, SQLSERVER);
+        assumeFamilyNotIn(FIREBIRD, MARIADB, MYSQL, H2, ORACLE, REDSHIFT, SQLITE, SQLSERVER, VERTICA);
 
         Result<Record1<Integer>> r1 =
         create().select(TBook_AUTHOR_ID())

@@ -1192,6 +1192,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                 assertEquals("dbo", record.value2());
                 break;
 
+            case VERTICA:
+                assertEquals("test", record.value1());
+                assertEquals("public", record.value2());
+                break;
+
             default:
                 Assert.fail();
         }

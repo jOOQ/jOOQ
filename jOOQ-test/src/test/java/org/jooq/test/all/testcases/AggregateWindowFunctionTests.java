@@ -562,7 +562,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         }
     }
 
-    public void testLinearRegressionFunctions() throws Exception {
+    public void testAggregateFunctions_LinearRegressionFunctions() throws Exception {
         assumeFamilyNotIn(ASE, CUBRID, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, REDSHIFT, SQLITE, SQLSERVER);
 
         // [#600] As aggregate functions
@@ -583,13 +583,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         List<String> values = Arrays.asList("1.5", "2.5", "4.0", "-0.5", "0.8", "2.0", "1.0", "2.0", "5.0");
         assertEquals(values, Arrays.asList(roundStrings(1, record.into(String[].class))));
 
-        /* [pro] */
-        switch (dialect()) {
-            case DB2:
-                log.info("SKIPPING", "Skipping linear regression window function tests");
-                return;
-        }
-        /* [/pro] */
+    }
+
+    public void testWindowFunctions_LinearRegressionFunctions() throws Exception {
+        assumeFamilyNotIn(ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, REDSHIFT, SQLITE, SQLSERVER, VERTICA);
 
         // [#600] As window functions
         Result<Record9<BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal>> result =
@@ -607,6 +604,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                 .orderBy(TBook_ID())
                 .fetch();
 
+        List<String> values = Arrays.asList("1.5", "2.5", "4.0", "-0.5", "0.8", "2.0", "1.0", "2.0", "5.0");
         assertEquals(values, Arrays.asList(roundStrings(1, result.get(0).into(String[].class))));
         assertEquals(values, Arrays.asList(roundStrings(1, result.get(1).into(String[].class))));
         assertEquals(values, Arrays.asList(roundStrings(1, result.get(2).into(String[].class))));
@@ -1128,7 +1126,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testWindowFunctions_NTH_VALUE() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, DERBY, H2, HSQLDB, INGRES, FIREBIRD, MARIADB, MYSQL, SQLITE, SQLSERVER);
+        assumeFamilyNotIn(ACCESS, ASE, DERBY, H2, HSQLDB, INGRES, FIREBIRD, MARIADB, MYSQL, SQLITE, SQLSERVER, VERTICA);
 
         Result<Record4<Integer, Integer, Integer, Integer>> result =
         create().select(

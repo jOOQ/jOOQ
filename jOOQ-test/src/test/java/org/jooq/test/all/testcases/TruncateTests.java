@@ -131,8 +131,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testTruncateRestartIdentity() throws Exception {
-        assumeFamilyNotIn(ACCESS, ASE, DB2, HANA, INFORMIX, INGRES, ORACLE, REDSHIFT, SQLSERVER, SYBASE, CUBRID, DERBY, FIREBIRD,
-            H2, MARIADB, MYSQL, SQLITE);
+        assumeFamilyNotIn(ACCESS, ASE, DB2, HANA, INFORMIX, INGRES, ORACLE, REDSHIFT, SQLSERVER, SYBASE, CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, SQLITE);
 
         jOOQAbstractTest.reset = false;
 

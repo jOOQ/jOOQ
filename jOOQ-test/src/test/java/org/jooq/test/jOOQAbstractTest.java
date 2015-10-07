@@ -3073,8 +3073,13 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testLinearRegressionFunctions() throws Exception {
-        new AggregateWindowFunctionTests(this).testLinearRegressionFunctions();
+    public void testAggregateFunctions_LinearRegressionFunctions() throws Exception {
+        new AggregateWindowFunctionTests(this).testAggregateFunctions_LinearRegressionFunctions();
+    }
+
+    @Test
+    public void testWindowFunctions_LinearRegressionFunctions() throws Exception {
+        new AggregateWindowFunctionTests(this).testWindowFunctions_LinearRegressionFunctions();
     }
 
     @Test

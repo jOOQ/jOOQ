@@ -609,7 +609,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                 Result<Record2<String, Integer>> r6 =
                 create().select(TBook_TITLE().as("yy"), TBook_ID().as("xx"))
                         .from(TBook())
-                        .orderBy(select(TAuthor_LAST_NAME().as("xx")).from(TAuthor()).where(TAuthor_ID().eq(TBook_AUTHOR_ID())).asField())
+                        .orderBy(
+                            select(TAuthor_LAST_NAME().as("xx")).from(TAuthor()).where(TAuthor_ID().eq(TBook_AUTHOR_ID())).asField(),
+                            TBook_ID()
+                        )
                         .limit(param("x", 1), param("y", 2))
                         .fetch();
 

@@ -63,6 +63,7 @@ import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.SQLDialect.VERTICA;
 import static org.jooq.impl.DSL.castNull;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.count;
@@ -1056,9 +1057,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testUpdateReturning() throws Exception {
-        assumeFamilyNotIn(ASE, INGRES, ORACLE, REDSHIFT, SQLSERVER, SYBASE, CUBRID, DERBY, HANA, H2, HSQLDB, MARIADB,
-            MYSQL, SQLITE);
-
+        assumeFamilyNotIn(ASE, INGRES, ORACLE, REDSHIFT, SQLSERVER, SYBASE, CUBRID, DERBY, HANA, H2, HSQLDB, MARIADB, MYSQL, SQLITE, VERTICA);
         jOOQAbstractTest.reset = false;
 
         Result<?> result1 =
@@ -1097,26 +1096,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testDeleteReturning() throws Exception {
-        switch (dialect().family()) {
-            /* [pro] */
-            case ASE:
-            case HANA:
-            case INGRES:
-            case ORACLE:
-            case SQLSERVER:
-            case SYBASE:
-            case VERTICA:
-            /* [/pro] */
-            case CUBRID:
-            case DERBY:
-            case H2:
-            case HSQLDB:
-            case MARIADB:
-            case MYSQL:
-            case SQLITE:
-                log.info("SKIPPING", "DELETE .. RETURNING tests");
-                return;
-        }
+        assumeFamilyNotIn(ASE, INGRES, ORACLE, REDSHIFT, SQLSERVER, SYBASE, CUBRID, DERBY, HANA, H2, HSQLDB, MARIADB, MYSQL, SQLITE, VERTICA);
 
         jOOQAbstractTest.reset = false;
         Result<?> result1 =

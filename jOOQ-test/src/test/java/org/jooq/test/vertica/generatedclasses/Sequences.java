@@ -17,7 +17,7 @@ public class Sequences {
 	/**
 	 * The sequence <code>public.s_author_id</code>
 	 */
-	public static final Sequence<Byte> S_AUTHOR_ID = new SequenceImpl<Byte>("s_author_id", Public.PUBLIC, org.jooq.impl.SQLDataType.TINYINT.nullable(false));
+	public static final Sequence<Integer> S_AUTHOR_ID = new SequenceImpl<Integer>("s_author_id", Public.PUBLIC, org.jooq.impl.SQLDataType.INTEGER.nullable(false));
 
 	/**
 	 * The sequence <code>public.t_identity_id_seq</code>

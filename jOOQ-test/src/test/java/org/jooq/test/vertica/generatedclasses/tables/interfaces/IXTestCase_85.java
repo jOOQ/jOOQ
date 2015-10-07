@@ -16,22 +16,22 @@ public interface IXTestCase_85 extends Serializable {
 	/**
 	 * Setter for <code>public.x_test_case_85.id</code>.
 	 */
-	public void setId(Long value);
+	public void setId(Integer value);
 
 	/**
 	 * Getter for <code>public.x_test_case_85.id</code>.
 	 */
-	public Long getId();
+	public Integer getId();
 
 	/**
 	 * Setter for <code>public.x_test_case_85.x_unused_id</code>.
 	 */
-	public void setXUnusedId(Long value);
+	public void setXUnusedId(Integer value);
 
 	/**
 	 * Getter for <code>public.x_test_case_85.x_unused_id</code>.
 	 */
-	public Long getXUnusedId();
+	public Integer getXUnusedId();
 
 	/**
 	 * Setter for <code>public.x_test_case_85.x_unused_name</code>.

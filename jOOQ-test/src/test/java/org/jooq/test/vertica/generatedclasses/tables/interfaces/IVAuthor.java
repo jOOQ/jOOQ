@@ -17,12 +17,12 @@ public interface IVAuthor extends Serializable {
 	/**
 	 * Setter for <code>public.v_author.ID</code>.
 	 */
-	public void setId(Long value);
+	public void setId(Integer value);
 
 	/**
 	 * Getter for <code>public.v_author.ID</code>.
 	 */
-	public Long getId();
+	public Integer getId();
 
 	/**
 	 * Setter for <code>public.v_author.FIRST_NAME</code>.
@@ -57,12 +57,12 @@ public interface IVAuthor extends Serializable {
 	/**
 	 * Setter for <code>public.v_author.YEAR_OF_BIRTH</code>.
 	 */
-	public void setYearOfBirth(Long value);
+	public void setYearOfBirth(Integer value);
 
 	/**
 	 * Getter for <code>public.v_author.YEAR_OF_BIRTH</code>.
 	 */
-	public Long getYearOfBirth();
+	public Integer getYearOfBirth();
 
 	/**
 	 * Setter for <code>public.v_author.ADDRESS</code>.

@@ -23,7 +23,7 @@ import org.jooq.test.vertica.generatedclasses.tables.records.TIdentityPkRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentityPk extends TableImpl<TIdentityPkRecord> {
 
-	private static final long serialVersionUID = -186618663;
+	private static final long serialVersionUID = -1136063111;
 
 	/**
 	 * The reference instance of <code>public.t_identity_pk</code>
@@ -41,12 +41,12 @@ public class TIdentityPk extends TableImpl<TIdentityPkRecord> {
 	/**
 	 * The column <code>public.t_identity_pk.id</code>.
 	 */
-	public final TableField<TIdentityPkRecord, Long> ID = createField("id", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+	public final TableField<TIdentityPkRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>public.t_identity_pk.val</code>.
 	 */
-	public final TableField<TIdentityPkRecord, Long> VAL = createField("val", org.jooq.impl.SQLDataType.BIGINT.defaulted(true), this, "");
+	public final TableField<TIdentityPkRecord, Integer> VAL = createField("val", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
 
 	/**
 	 * Create a <code>public.t_identity_pk</code> table reference

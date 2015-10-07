@@ -5468,11 +5468,11 @@
                                         <database>
                                             <name>org.jooq.util.oracle.OracleDatabase</name>
                                             <includes>
-                                            	${db.oracle.schema}\..*
+                                                ${db.oracle.schema}\..*
                                               | MULTI_SCHEMA\..*
                                               | SYS\.XMLTYPE.*?
                                               | USR_2522\..*
-                                           	</includes>
+                                               </includes>
                                             <excludes>T_BOOK_DETAILS|S_TRIGGERS_SEQUENCE|.*976.*|.*1358.*|U_SECOND_MAX</excludes>
                                             <recordVersionFields>REC_VERSION</recordVersionFields>
                                             <recordTimestampFields>REC_TIMESTAMP</recordTimestampFields>
@@ -6047,11 +6047,11 @@
                         </executions>
 
                         <dependencies>
-                        	<dependency>
-							    <groupId>xerces</groupId>
-							    <artifactId>xercesImpl</artifactId>
-							    <version>2.11.0</version>
-							</dependency>
+                            <dependency>
+                                <groupId>xerces</groupId>
+                                <artifactId>xercesImpl</artifactId>
+                                <version>2.11.0</version>
+                            </dependency>
                         </dependencies>
                     </plugin>
                 </plugins>
@@ -7174,6 +7174,29 @@
                                                     <name>BIGINTUNSIGNED</name>
                                                     <expression>(?i:(.*?.)?T_UNSIGNED.U_LONG)</expression>
                                                 </forcedType>
+                                                
+                                                <!-- Vertica only knows BIGINT -->
+                                                <forcedType>
+                                                    <name>TINYINT</name>
+                                                    <expression>(?i:(.*?.)?T_639_NUMBERS_TABLE.BYTE)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>SMALLINT</name>
+                                                    <expression>(?i:(.*?.)?T_639_NUMBERS_TABLE.SHORT)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>INT</name>
+                                                    <expression>(?i:(.*?.)?T_639_NUMBERS_TABLE.INTEGER)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>BIGINT</name>
+                                                    <expression>(?i:(.*?.)?T_639_NUMBERS_TABLE.LONG)</expression>
+                                                </forcedType>
+                                                <forcedType>
+                                                    <name>INT</name>
+                                                    <expression>(?i:(.*?.)?(ID|YEAR_OF_BIRTH|REC_VERSION|STOCK|PUBLISHED_IN|VAL))</expression>
+                                                </forcedType>
+                                                
 
                                                 <forcedType>
                                                     <name>org.jooq.test.all.converters.Boolean_YES_NO_LC</name>

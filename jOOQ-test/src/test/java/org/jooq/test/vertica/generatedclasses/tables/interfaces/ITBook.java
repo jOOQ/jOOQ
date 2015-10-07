@@ -17,42 +17,42 @@ public interface ITBook extends Serializable {
 	/**
 	 * Setter for <code>public.t_book.ID</code>.
 	 */
-	public void setId(Long value);
+	public void setId(Integer value);
 
 	/**
 	 * Getter for <code>public.t_book.ID</code>.
 	 */
-	public Long getId();
+	public Integer getId();
 
 	/**
 	 * Setter for <code>public.t_book.AUTHOR_ID</code>.
 	 */
-	public void setAuthorId(Long value);
+	public void setAuthorId(Integer value);
 
 	/**
 	 * Getter for <code>public.t_book.AUTHOR_ID</code>.
 	 */
-	public Long getAuthorId();
+	public Integer getAuthorId();
 
 	/**
 	 * Setter for <code>public.t_book.co_author_id</code>.
 	 */
-	public void setCoAuthorId(Long value);
+	public void setCoAuthorId(Integer value);
 
 	/**
 	 * Getter for <code>public.t_book.co_author_id</code>.
 	 */
-	public Long getCoAuthorId();
+	public Integer getCoAuthorId();
 
 	/**
 	 * Setter for <code>public.t_book.DETAILS_ID</code>.
 	 */
-	public void setDetailsId(Long value);
+	public void setDetailsId(Integer value);
 
 	/**
 	 * Getter for <code>public.t_book.DETAILS_ID</code>.
 	 */
-	public Long getDetailsId();
+	public Integer getDetailsId();
 
 	/**
 	 * Setter for <code>public.t_book.TITLE</code>.
@@ -67,22 +67,22 @@ public interface ITBook extends Serializable {
 	/**
 	 * Setter for <code>public.t_book.PUBLISHED_IN</code>.
 	 */
-	public void setPublishedIn(Long value);
+	public void setPublishedIn(Integer value);
 
 	/**
 	 * Getter for <code>public.t_book.PUBLISHED_IN</code>.
 	 */
-	public Long getPublishedIn();
+	public Integer getPublishedIn();
 
 	/**
 	 * Setter for <code>public.t_book.LANGUAGE_ID</code>.
 	 */
-	public void setLanguageId(Long value);
+	public void setLanguageId(Integer value);
 
 	/**
 	 * Getter for <code>public.t_book.LANGUAGE_ID</code>.
 	 */
-	public Long getLanguageId();
+	public Integer getLanguageId();
 
 	/**
 	 * Setter for <code>public.t_book.CONTENT_TEXT</code>.
@@ -107,12 +107,12 @@ public interface ITBook extends Serializable {
 	/**
 	 * Setter for <code>public.t_book.REC_VERSION</code>.
 	 */
-	public void setRecVersion(Long value);
+	public void setRecVersion(Integer value);
 
 	/**
 	 * Getter for <code>public.t_book.REC_VERSION</code>.
 	 */
-	public Long getRecVersion();
+	public Integer getRecVersion();
 
 	/**
 	 * Setter for <code>public.t_book.REC_TIMESTAMP</code>.

@@ -24,7 +24,7 @@ import org.jooq.test.vertica.generatedclasses.tables.records.TBookToBookStoreRec
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStore extends TableImpl<TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -1170977544;
+	private static final long serialVersionUID = 1306493144;
 
 	/**
 	 * The reference instance of <code>public.t_book_to_book_store</code>
@@ -47,12 +47,12 @@ public class TBookToBookStore extends TableImpl<TBookToBookStoreRecord> {
 	/**
 	 * The column <code>public.t_book_to_book_store.book_id</code>.
 	 */
-	public final TableField<TBookToBookStoreRecord, Long> BOOK_ID = createField("book_id", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaulted(true), this, "");
+	public final TableField<TBookToBookStoreRecord, Integer> BOOK_ID = createField("book_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.t_book_to_book_store.stock</code>.
 	 */
-	public final TableField<TBookToBookStoreRecord, Long> STOCK = createField("stock", org.jooq.impl.SQLDataType.BIGINT.defaulted(true), this, "");
+	public final TableField<TBookToBookStoreRecord, Integer> STOCK = createField("stock", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
 
 	/**
 	 * Create a <code>public.t_book_to_book_store</code> table reference

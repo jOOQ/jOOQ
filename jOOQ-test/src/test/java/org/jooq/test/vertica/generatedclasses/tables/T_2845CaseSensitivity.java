@@ -23,7 +23,7 @@ import org.jooq.test.vertica.generatedclasses.tables.records.T_2845CaseSensitivi
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2845CaseSensitivity extends TableImpl<T_2845CaseSensitivityRecord> {
 
-	private static final long serialVersionUID = 613259603;
+	private static final long serialVersionUID = 1438660240;
 
 	/**
 	 * The reference instance of <code>public.T_2845_CASE_sensitivity</code>
@@ -41,7 +41,7 @@ public class T_2845CaseSensitivity extends TableImpl<T_2845CaseSensitivityRecord
 	/**
 	 * The column <code>public.T_2845_CASE_sensitivity.id</code>.
 	 */
-	public final TableField<T_2845CaseSensitivityRecord, Long> ID = createField("id", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaulted(true), this, "");
+	public final TableField<T_2845CaseSensitivityRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.T_2845_CASE_sensitivity.insensitive</code>.

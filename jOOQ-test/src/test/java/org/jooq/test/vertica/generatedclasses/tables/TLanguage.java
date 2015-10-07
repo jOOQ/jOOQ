@@ -23,7 +23,7 @@ import org.jooq.test.vertica.generatedclasses.tables.records.TLanguageRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage extends TableImpl<TLanguageRecord> {
 
-	private static final long serialVersionUID = -960045903;
+	private static final long serialVersionUID = 246588142;
 
 	/**
 	 * The reference instance of <code>public.t_language</code>
@@ -56,7 +56,7 @@ public class TLanguage extends TableImpl<TLanguageRecord> {
 	/**
 	 * The column <code>public.t_language.id</code>.
 	 */
-	public final TableField<TLanguageRecord, Long> ID = createField("id", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaulted(true), this, "");
+	public final TableField<TLanguageRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * Create a <code>public.t_language</code> table reference

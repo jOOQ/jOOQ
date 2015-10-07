@@ -37,7 +37,7 @@ import org.jooq.test.vertica.generatedclasses.tables.records.TBooleansRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleans extends TableImpl<TBooleansRecord> {
 
-	private static final long serialVersionUID = 139906334;
+	private static final long serialVersionUID = 2124765787;
 
 	/**
 	 * The reference instance of <code>public.t_booleans</code>
@@ -55,7 +55,7 @@ public class TBooleans extends TableImpl<TBooleansRecord> {
 	/**
 	 * The column <code>public.t_booleans.id</code>.
 	 */
-	public final TableField<TBooleansRecord, Long> ID = createField("id", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaulted(true), this, "");
+	public final TableField<TBooleansRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.t_booleans.one_zero</code>.

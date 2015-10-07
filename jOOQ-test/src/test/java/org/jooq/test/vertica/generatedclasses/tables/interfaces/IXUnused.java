@@ -18,12 +18,12 @@ public interface IXUnused extends Serializable {
 	/**
 	 * Setter for <code>public.x_unused.ID</code>.
 	 */
-	public void setId(Long value);
+	public void setId(Integer value);
 
 	/**
 	 * Getter for <code>public.x_unused.ID</code>.
 	 */
-	public Long getId();
+	public Integer getId();
 
 	/**
 	 * Setter for <code>public.x_unused.NAME</code>.

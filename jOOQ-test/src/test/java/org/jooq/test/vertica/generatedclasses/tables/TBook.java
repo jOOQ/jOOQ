@@ -25,7 +25,7 @@ import org.jooq.test.vertica.generatedclasses.tables.records.TBookRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends TableImpl<TBookRecord> {
 
-	private static final long serialVersionUID = 1941375329;
+	private static final long serialVersionUID = -215808524;
 
 	/**
 	 * The reference instance of <code>public.t_book</code>
@@ -43,22 +43,22 @@ public class TBook extends TableImpl<TBookRecord> {
 	/**
 	 * The column <code>public.t_book.ID</code>.
 	 */
-	public final TableField<TBookRecord, Long> ID = createField("ID", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaulted(true), this, "");
+	public final TableField<TBookRecord, Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.t_book.AUTHOR_ID</code>.
 	 */
-	public final TableField<TBookRecord, Long> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaulted(true), this, "");
+	public final TableField<TBookRecord, Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.t_book.co_author_id</code>.
 	 */
-	public final TableField<TBookRecord, Long> CO_AUTHOR_ID = createField("co_author_id", org.jooq.impl.SQLDataType.BIGINT.defaulted(true), this, "");
+	public final TableField<TBookRecord, Integer> CO_AUTHOR_ID = createField("co_author_id", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.t_book.DETAILS_ID</code>.
 	 */
-	public final TableField<TBookRecord, Long> DETAILS_ID = createField("DETAILS_ID", org.jooq.impl.SQLDataType.BIGINT.defaulted(true), this, "");
+	public final TableField<TBookRecord, Integer> DETAILS_ID = createField("DETAILS_ID", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.t_book.TITLE</code>.
@@ -68,12 +68,12 @@ public class TBook extends TableImpl<TBookRecord> {
 	/**
 	 * The column <code>public.t_book.PUBLISHED_IN</code>.
 	 */
-	public final TableField<TBookRecord, Long> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaulted(true), this, "");
+	public final TableField<TBookRecord, Integer> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.t_book.LANGUAGE_ID</code>.
 	 */
-	public final TableField<TBookRecord, Long> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaulted(true), this, "");
+	public final TableField<TBookRecord, Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.t_book.CONTENT_TEXT</code>.
@@ -88,7 +88,7 @@ public class TBook extends TableImpl<TBookRecord> {
 	/**
 	 * The column <code>public.t_book.REC_VERSION</code>.
 	 */
-	public final TableField<TBookRecord, Long> REC_VERSION = createField("REC_VERSION", org.jooq.impl.SQLDataType.BIGINT.defaulted(true), this, "");
+	public final TableField<TBookRecord, Integer> REC_VERSION = createField("REC_VERSION", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.t_book.REC_TIMESTAMP</code>.

@@ -18,42 +18,42 @@ public interface IT_639NumbersTable extends Serializable {
 	/**
 	 * Setter for <code>public.t_639_numbers_table.ID</code>.
 	 */
-	public void setId(Long value);
+	public void setId(Integer value);
 
 	/**
 	 * Getter for <code>public.t_639_numbers_table.ID</code>.
 	 */
-	public Long getId();
+	public Integer getId();
 
 	/**
 	 * Setter for <code>public.t_639_numbers_table.BYTE</code>.
 	 */
-	public void setByte(Long value);
+	public void setByte(Byte value);
 
 	/**
 	 * Getter for <code>public.t_639_numbers_table.BYTE</code>.
 	 */
-	public Long getByte();
+	public Byte getByte();
 
 	/**
 	 * Setter for <code>public.t_639_numbers_table.SHORT</code>.
 	 */
-	public void setShort(Long value);
+	public void setShort(Short value);
 
 	/**
 	 * Getter for <code>public.t_639_numbers_table.SHORT</code>.
 	 */
-	public Long getShort();
+	public Short getShort();
 
 	/**
 	 * Setter for <code>public.t_639_numbers_table.INTEGER</code>.
 	 */
-	public void setInteger(Long value);
+	public void setInteger(Integer value);
 
 	/**
 	 * Getter for <code>public.t_639_numbers_table.INTEGER</code>.
 	 */
-	public Long getInteger();
+	public Integer getInteger();
 
 	/**
 	 * Setter for <code>public.t_639_numbers_table.LONG</code>.

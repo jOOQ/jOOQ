@@ -17,12 +17,12 @@ public interface ITExoticTypes extends Serializable {
 	/**
 	 * Setter for <code>public.t_exotic_types.ID</code>.
 	 */
-	public void setId(Long value);
+	public void setId(Integer value);
 
 	/**
 	 * Getter for <code>public.t_exotic_types.ID</code>.
 	 */
-	public Long getId();
+	public Integer getId();
 
 	/**
 	 * Setter for <code>public.t_exotic_types.UU</code>.

@@ -18,7 +18,7 @@ import org.jooq.test.vertica.generatedclasses.tables.records.T_785Record;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_785 extends TableImpl<T_785Record> {
 
-	private static final long serialVersionUID = 781118960;
+	private static final long serialVersionUID = -1075154835;
 
 	/**
 	 * The reference instance of <code>public.t_785</code>
@@ -36,7 +36,7 @@ public class T_785 extends TableImpl<T_785Record> {
 	/**
 	 * The column <code>public.t_785.ID</code>.
 	 */
-	public final TableField<T_785Record, Long> ID = createField("ID", org.jooq.impl.SQLDataType.BIGINT.defaulted(true), this, "");
+	public final TableField<T_785Record, Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.t_785.NAME</code>.

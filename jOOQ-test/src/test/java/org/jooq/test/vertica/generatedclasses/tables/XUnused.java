@@ -26,7 +26,7 @@ import org.jooq.test.vertica.generatedclasses.tables.records.XUnusedRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnused extends TableImpl<XUnusedRecord> {
 
-	private static final long serialVersionUID = -1700418042;
+	private static final long serialVersionUID = -212702653;
 
 	/**
 	 * The reference instance of <code>public.x_unused</code>
@@ -44,7 +44,7 @@ public class XUnused extends TableImpl<XUnusedRecord> {
 	/**
 	 * The column <code>public.x_unused.ID</code>.
 	 */
-	public final TableField<XUnusedRecord, Long> ID = createField("ID", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaulted(true), this, "");
+	public final TableField<XUnusedRecord, Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.x_unused.NAME</code>.

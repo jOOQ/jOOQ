@@ -26,22 +26,22 @@ public interface ITBookToBookStore extends Serializable {
 	/**
 	 * Setter for <code>public.t_book_to_book_store.book_id</code>.
 	 */
-	public void setBookId(Long value);
+	public void setBookId(Integer value);
 
 	/**
 	 * Getter for <code>public.t_book_to_book_store.book_id</code>.
 	 */
-	public Long getBookId();
+	public Integer getBookId();
 
 	/**
 	 * Setter for <code>public.t_book_to_book_store.stock</code>.
 	 */
-	public void setStock(Long value);
+	public void setStock(Integer value);
 
 	/**
 	 * Getter for <code>public.t_book_to_book_store.stock</code>.
 	 */
-	public Long getStock();
+	public Integer getStock();
 
 	// -------------------------------------------------------------------------
 	// FROM and INTO

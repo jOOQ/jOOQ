@@ -71,12 +71,11 @@ public class VerticaDataType {
     // Default SQL data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final DataType<Byte>        TINYINT               = new DefaultDataType<Byte>(SQLDialect.VERTICA, SQLDataType.TINYINT, "tinyint");
-    public static final DataType<Short>       SMALLINT              = new DefaultDataType<Short>(SQLDialect.VERTICA, SQLDataType.SMALLINT, "smallint");
-    public static final DataType<Integer>     INT                   = new DefaultDataType<Integer>(SQLDialect.VERTICA, SQLDataType.INTEGER, "int");
-    public static final DataType<Integer>     INTEGER               = new DefaultDataType<Integer>(SQLDialect.VERTICA, SQLDataType.INTEGER, "integer");
+    public static final DataType<Long>        TINYINT               = new DefaultDataType<Long>(SQLDialect.VERTICA, SQLDataType.BIGINT, "tinyint");
+    public static final DataType<Long>        SMALLINT              = new DefaultDataType<Long>(SQLDialect.VERTICA, SQLDataType.BIGINT, "smallint");
+    public static final DataType<Long>        INT                   = new DefaultDataType<Long>(SQLDialect.VERTICA, SQLDataType.BIGINT, "int");
+    public static final DataType<Long>        INTEGER               = new DefaultDataType<Long>(SQLDialect.VERTICA, SQLDataType.BIGINT, "integer");
     public static final DataType<Long>        BIGINT                = new DefaultDataType<Long>(SQLDialect.VERTICA, SQLDataType.BIGINT, "bigint");
-    public static final DataType<Double>      DOUBLE                = new DefaultDataType<Double>(SQLDialect.VERTICA, SQLDataType.DOUBLE, "double");
     public static final DataType<Double>      DOUBLEPRECISION       = new DefaultDataType<Double>(SQLDialect.VERTICA, SQLDataType.DOUBLE, "double precision");
     public static final DataType<Double>      FLOAT                 = new DefaultDataType<Double>(SQLDialect.VERTICA, SQLDataType.FLOAT, "float");
     public static final DataType<Float>       REAL                  = new DefaultDataType<Float>(SQLDialect.VERTICA, SQLDataType.REAL, "real");
@@ -101,6 +100,10 @@ public class VerticaDataType {
     // Compatibility types for supported SQLDialect.VERTICA, SQLDataTypes
     // -------------------------------------------------------------------------
 
+
+    protected static final DataType<Byte>     __TINYINT             = new DefaultDataType<Byte>(SQLDialect.VERTICA, SQLDataType.TINYINT, "tinyint");
+    protected static final DataType<Short>    __SMALLINT            = new DefaultDataType<Short>(SQLDialect.VERTICA, SQLDataType.SMALLINT, "smallint");
+    protected static final DataType<Integer>  __INT                 = new DefaultDataType<Integer>(SQLDialect.VERTICA, SQLDataType.INTEGER, "int");
     protected static final DataType<Boolean>  __BIT                 = new DefaultDataType<Boolean>(SQLDialect.VERTICA, SQLDataType.BIT, "boolean");
     protected static final DataType<byte[]>   __BLOB                = new DefaultDataType<byte[]>(SQLDialect.VERTICA, SQLDataType.BLOB, "long varbinary");
     protected static final DataType<String>   __CLOB                = new DefaultDataType<String>(SQLDialect.VERTICA, SQLDataType.CLOB, "long varchar");

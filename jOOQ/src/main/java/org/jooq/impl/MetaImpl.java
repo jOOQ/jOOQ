@@ -625,7 +625,7 @@ class MetaImpl implements Meta, Serializable {
                 // TODO: Exception handling should be moved inside SQLDataType
                 DataType<?> type = null;
                 try {
-                    type = DefaultDataType.getDataType(configuration.dialect(), typeName, precision, scale);
+                    type = DefaultDataType.getDataType(configuration.family(), typeName, precision, scale);
 
                     // JDBC doesn't distinguish between precision and length
                     type = type.precision(precision, scale);

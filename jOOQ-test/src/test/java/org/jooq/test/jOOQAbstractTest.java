@@ -3832,7 +3832,7 @@ public abstract class jOOQAbstractTest<
         new CollationTests(this).testCollations();
     }
 
-    @Test
+    // @Test [#4277] TODO
     public void testConnectionProviderForInsertReturning() throws Exception {
         new ConnectionProviderTests(this).testConnectionProviderForInsertReturning();
     }

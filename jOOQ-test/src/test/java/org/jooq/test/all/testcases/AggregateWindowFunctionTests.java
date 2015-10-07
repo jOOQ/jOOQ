@@ -1128,7 +1128,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testWindowFunctions_NTH_VALUE() throws Exception {
-        assumeDialectNotIn(ACCESS, ASE, DERBY, H2, HSQLDB, INGRES, FIREBIRD, MARIADB, MYSQL, SQLITE);
+        assumeFamilyNotIn(ACCESS, ASE, DERBY, H2, HSQLDB, INGRES, FIREBIRD, MARIADB, MYSQL, SQLITE, SQLSERVER);
 
         Result<Record4<Integer, Integer, Integer, Integer>> result =
         create().select(

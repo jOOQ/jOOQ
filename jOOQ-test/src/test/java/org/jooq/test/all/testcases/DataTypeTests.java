@@ -1549,6 +1549,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testJava8TimeAPIQueries() throws Exception {
+        assumeFamilyNotIn(H2);
         clean(T_DATES);
 
         ZoneOffset offset = OffsetTime.now().getOffset();
@@ -1665,6 +1666,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testJava8TimeAPIProcedures() throws Exception {
+        assumeFamilyNotIn(H2);
         ZoneOffset offset = OffsetTime.now().getOffset();
 
         LocalDate d = LocalDate.parse("2000-01-02");

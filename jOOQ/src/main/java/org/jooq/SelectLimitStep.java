@@ -56,6 +56,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.SQLDialect.VERTICA;
 
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
@@ -129,7 +130,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * This is the same as calling {@link #limit(int, int)} with offset = 0, or
      * calling <code>.limit(numberOfRows).offset(0)</code>
      */
-    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE, VERTICA })
     SelectOffsetStep<R> limit(Param<Integer> numberOfRows);
 
     /**
@@ -143,7 +144,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * emulated with a <code>ROW_NUMBER()</code> window function and nested
      * <code>SELECT</code> statements.
      */
-    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE, VERTICA })
     SelectForUpdateStep<R> limit(int offset, int numberOfRows);
 
     /**
@@ -158,7 +159,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * this may be emulated with a <code>ROW_NUMBER()</code> window function
      * and nested <code>SELECT</code> statements.
      */
-    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE, VERTICA })
     SelectForUpdateStep<R> limit(int offset, Param<Integer> numberOfRows);
 
     /**
@@ -173,7 +174,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * this may be emulated with a <code>ROW_NUMBER()</code> window function
      * and nested <code>SELECT</code> statements.
      */
-    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE, VERTICA })
     SelectForUpdateStep<R> limit(Param<Integer> offset, int numberOfRows);
 
     /**
@@ -188,6 +189,6 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * this may be emulated with a <code>ROW_NUMBER()</code> window function
      * and nested <code>SELECT</code> statements.
      */
-    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE, VERTICA })
     SelectForUpdateStep<R> limit(Param<Integer> offset, Param<Integer> numberOfRows);
 }

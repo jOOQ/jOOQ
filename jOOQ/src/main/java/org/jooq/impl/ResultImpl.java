@@ -43,7 +43,6 @@ package org.jooq.impl;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
-import static org.jooq.Converters.identity;
 import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
@@ -319,7 +318,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final <T> List<T> getValues(Field<T> field) {
-        return getValues(indexOrFail(fieldsRow(), field), field.getConverter());
+        return (List<T>) getValues(indexOrFail(fieldsRow(), field));
     }
 
     @Override
@@ -1167,12 +1166,12 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final <K> Map<K, R> intoMap(Field<K> key) {
-        return intoMap0(indexOrFail(fieldsRow(), key), key.getConverter());
+        return intoMap0(indexOrFail(fieldsRow(), key));
     }
 
     @Override
     public final Map<?, R> intoMap(int keyFieldIndex) {
-        return intoMap0(keyFieldIndex, identity(Object.class));
+        return intoMap0(keyFieldIndex);
     }
 
     @Override
@@ -1185,11 +1184,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return intoMap(field(keyFieldName));
     }
 
-    private final <K> Map<K, R> intoMap0(int keyFieldIndex, Converter<?, K> keyConverter) {
+    private final <K> Map<K, R> intoMap0(int keyFieldIndex) {
         Map<K, R> map = new LinkedHashMap<K, R>();
 
         for (R record : this)
-            if (map.put(record.getValue(keyFieldIndex, keyConverter), record) != null)
+            if (map.put((K) record.getValue(keyFieldIndex), record) != null)
                 throw new InvalidResultException("Key " + keyFieldIndex + " is not unique in Result for " + this);
 
         return map;
@@ -1200,12 +1199,12 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         int kIndex = indexOrFail(fieldsRow(), key);
         int vIndex = indexOrFail(fieldsRow(), value);
 
-        return intoMap0(kIndex, key.getConverter(), vIndex, value.getConverter());
+        return intoMap0(kIndex, vIndex);
     }
 
     @Override
     public final Map<?, ?> intoMap(int keyFieldIndex, int valueFieldIndex) {
-        return intoMap0(keyFieldIndex, identity(Object.class), valueFieldIndex, identity(Object.class));
+        return intoMap0(keyFieldIndex, valueFieldIndex);
     }
 
     @Override
@@ -1218,11 +1217,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return intoMap(field(keyFieldName), field(valueFieldName));
     }
 
-    private final <K, V> Map<K, V> intoMap0(int kIndex, Converter<?, K> kConverter, int vIndex, Converter<?, V> vConverter) {
+    private final <K, V> Map<K, V> intoMap0(int kIndex, int vIndex) {
         Map<K, V> map = new LinkedHashMap<K, V>();
 
         for (R record : this)
-            if (map.put(record.getValue(kIndex, kConverter), record.getValue(vIndex, vConverter)) != null)
+            if (map.put((K) record.getValue(kIndex), (V) record.getValue(vIndex)) != null)
                 throw new InvalidResultException("Key " + kIndex + " is not unique in Result for " + this);
 
         return map;
@@ -1429,7 +1428,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final <E> Map<?, E> intoMap(int keyFieldIndex, RecordMapper<? super R, E> mapper) {
-        return intoMap0(keyFieldIndex, identity(Object.class), mapper);
+        return intoMap0(keyFieldIndex, mapper);
     }
 
     @Override
@@ -1444,14 +1443,14 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final <K, E> Map<K, E> intoMap(Field<K> key, RecordMapper<? super R, E> mapper) {
-        return intoMap0(indexOrFail(fieldsRow(), key), key.getConverter(), mapper);
+        return intoMap0(indexOrFail(fieldsRow(), key), mapper);
     }
 
-    private final <K, E> Map<K, E> intoMap0(int keyFieldIndex, Converter<?, K> keyConverter, RecordMapper<? super R, E> mapper) {
+    private final <K, E> Map<K, E> intoMap0(int keyFieldIndex, RecordMapper<? super R, E> mapper) {
         Map<K, E> map = new LinkedHashMap<K, E>();
 
         for (R record : this)
-            if (map.put(record.getValue(keyFieldIndex, keyConverter), mapper.map(record)) != null)
+            if (map.put((K) record.getValue(keyFieldIndex), mapper.map(record)) != null)
                 throw new InvalidResultException("Key " + keyFieldIndex + " is not unique in Result for " + this);
 
         return map;
@@ -1459,12 +1458,12 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final <K> Map<K, Result<R>> intoGroups(Field<K> key) {
-        return intoGroups0(indexOrFail(fieldsRow(), key), key.getConverter());
+        return intoGroups0(indexOrFail(fieldsRow(), key));
     }
 
     @Override
     public final Map<?, Result<R>> intoGroups(int keyFieldIndex) {
-        return intoGroups0(keyFieldIndex, identity(Object.class));
+        return intoGroups0(keyFieldIndex);
     }
 
     @Override
@@ -1477,11 +1476,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return intoGroups(field(keyFieldName));
     }
 
-    private final <K> Map<K, Result<R>> intoGroups0(int keyFieldIndex, Converter<?, K> keyConverter) {
+    private final <K> Map<K, Result<R>> intoGroups0(int keyFieldIndex) {
         Map<K, Result<R>> map = new LinkedHashMap<K, Result<R>>();
 
         for (R record : this) {
-            K val = record.getValue(keyFieldIndex, keyConverter);
+            K val = (K) record.getValue(keyFieldIndex);
             Result<R> result = map.get(val);
 
             if (result == null) {
@@ -1500,12 +1499,12 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         int kIndex = indexOrFail(fieldsRow(), key);
         int vIndex = indexOrFail(fieldsRow(), value);
 
-        return intoGroups0(kIndex, key.getConverter(), vIndex, value.getConverter());
+        return intoGroups0(kIndex, vIndex);
     }
 
     @Override
     public final Map<?, List<?>> intoGroups(int keyFieldIndex, int valueFieldIndex) {
-        return (Map) intoGroups0(keyFieldIndex, identity(Object.class), valueFieldIndex, identity(Object.class));
+        return (Map) intoGroups0(keyFieldIndex, valueFieldIndex);
     }
 
     @Override
@@ -1518,12 +1517,12 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return (Map) intoGroups(field(keyFieldName), field(valueFieldName));
     }
 
-    private final <K, V> Map<K, List<V>> intoGroups0(int kIndex, Converter<?, K> kConverter, int vIndex, Converter<?, V> vConverter) {
+    private final <K, V> Map<K, List<V>> intoGroups0(int kIndex, int vIndex) {
         Map<K, List<V>> map = new LinkedHashMap<K, List<V>>();
 
         for (R record : this) {
-            K k = record.getValue(kIndex, kConverter);
-            V v = record.getValue(vIndex, vConverter);
+            K k = (K) record.getValue(kIndex);
+            V v = (V) record.getValue(vIndex);
             List<V> result = map.get(k);
 
             if (result == null) {
@@ -1559,12 +1558,12 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final <K, E> Map<K, List<E>> intoGroups(Field<K> key, RecordMapper<? super R, E> mapper) {
-        return intoGroups0(indexOrFail(fieldsRow(), key), key.getConverter(), mapper);
+        return intoGroups0(indexOrFail(fieldsRow(), key), mapper);
     }
 
     @Override
     public final <E> Map<?, List<E>> intoGroups(int keyFieldIndex, RecordMapper<? super R, E> mapper) {
-        return intoGroups0(keyFieldIndex, identity(Object.class), mapper);
+        return intoGroups0(keyFieldIndex, mapper);
     }
 
     @Override
@@ -1577,11 +1576,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return intoGroups(field(keyFieldName), mapper);
     }
 
-    private final <K, E> Map<K, List<E>> intoGroups0(int keyFieldIndex, Converter<?, K> keyConverter, RecordMapper<? super R, E> mapper) {
+    private final <K, E> Map<K, List<E>> intoGroups0(int keyFieldIndex, RecordMapper<? super R, E> mapper) {
         Map<K, List<E>> map = new LinkedHashMap<K, List<E>>();
 
         for (R record : this) {
-            K keyVal = record.getValue(keyFieldIndex, keyConverter);
+            K keyVal = (K) record.getValue(keyFieldIndex);
 
             List<E> list = map.get(keyVal);
             if (list == null) {

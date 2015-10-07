@@ -53,7 +53,6 @@ import org.jooq.SQLDialect
 import org.jooq.xtend.Generators
 
 import static java.util.regex.Pattern.*
-import java.util.regex.PatternSyntaxException
 
 // Use this to generate the jOOQ Open Source Edition code
 class RemoveProCode {

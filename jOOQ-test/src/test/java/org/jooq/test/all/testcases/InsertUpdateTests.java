@@ -949,6 +949,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             1 * i1.getReturnedRecord().getValue(TTriggers_COUNTER()));
 
 
+        /*
         // [#2374] When the IDENTITY column is unknown, the following should still work
         InsertQuery<?> i2 = create().insertQuery(table(name(TTriggers().getName())));
         i2.addValue(field(name(TTriggers_ID().getName())), 1);
@@ -959,6 +960,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         assertEquals(
             2 * i2.getReturnedRecord().getValue(TTriggers_ID_GENERATED().getName(), int.class),
             1 * i2.getReturnedRecord().getValue(TTriggers_COUNTER().getName(), int.class));
+        */
     }
 
     public void testInsertReturningWithSetClause() throws Exception {

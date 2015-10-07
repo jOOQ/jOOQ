@@ -16,12 +16,12 @@ public interface IT_785 extends Serializable {
 	/**
 	 * Setter for <code>public.t_785.ID</code>.
 	 */
-	public void setId(Integer value);
+	public void setId(Long value);
 
 	/**
 	 * Getter for <code>public.t_785.ID</code>.
 	 */
-	public Integer getId();
+	public Long getId();
 
 	/**
 	 * Setter for <code>public.t_785.NAME</code>.

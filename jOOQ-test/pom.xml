@@ -7094,7 +7094,7 @@
 
                                                 <customType>
                                                     <name>org.jooq.test.all.converters.Boolean_10</name>
-                                                    <converter>org.jooq.test.all.converters.Boolean_10_Converter</converter>
+                                                    <converter>org.jooq.test.all.converters.Boolean_10Long_Converter</converter>
                                                 </customType>
                                                 <customType>
                                                     <name>org.jooq.test.all.converters.Boolean_TF_LC</name>

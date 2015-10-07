@@ -23,7 +23,7 @@ import org.jooq.test.vertica.generatedclasses.tables.records.T_2845CaseSensitivi
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_2845CaseSensitivity extends TableImpl<T_2845CaseSensitivityRecord> {
 
-	private static final long serialVersionUID = 460326160;
+	private static final long serialVersionUID = 613259603;
 
 	/**
 	 * The reference instance of <code>public.T_2845_CASE_sensitivity</code>
@@ -41,27 +41,27 @@ public class T_2845CaseSensitivity extends TableImpl<T_2845CaseSensitivityRecord
 	/**
 	 * The column <code>public.T_2845_CASE_sensitivity.id</code>.
 	 */
-	public final TableField<T_2845CaseSensitivityRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+	public final TableField<T_2845CaseSensitivityRecord, Long> ID = createField("id", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.T_2845_CASE_sensitivity.insensitive</code>.
 	 */
-	public final TableField<T_2845CaseSensitivityRecord, Integer> INSENSITIVE = createField("insensitive", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
+	public final TableField<T_2845CaseSensitivityRecord, Long> INSENSITIVE = createField("insensitive", org.jooq.impl.SQLDataType.BIGINT.defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.T_2845_CASE_sensitivity.UPPER</code>.
 	 */
-	public final TableField<T_2845CaseSensitivityRecord, Integer> UPPER = createField("UPPER", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
+	public final TableField<T_2845CaseSensitivityRecord, Long> UPPER = createField("UPPER", org.jooq.impl.SQLDataType.BIGINT.defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.T_2845_CASE_sensitivity.lower</code>.
 	 */
-	public final TableField<T_2845CaseSensitivityRecord, Integer> LOWER = createField("lower", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
+	public final TableField<T_2845CaseSensitivityRecord, Long> LOWER = createField("lower", org.jooq.impl.SQLDataType.BIGINT.defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.T_2845_CASE_sensitivity.Mixed</code>.
 	 */
-	public final TableField<T_2845CaseSensitivityRecord, Integer> MIXED = createField("Mixed", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
+	public final TableField<T_2845CaseSensitivityRecord, Long> MIXED = createField("Mixed", org.jooq.impl.SQLDataType.BIGINT.defaulted(true), this, "");
 
 	/**
 	 * Create a <code>public.T_2845_CASE_sensitivity</code> table reference

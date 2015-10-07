@@ -20,7 +20,7 @@ import org.jooq.test.vertica.generatedclasses.tables.records.VBookRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBook extends TableImpl<VBookRecord> {
 
-	private static final long serialVersionUID = -1843876647;
+	private static final long serialVersionUID = -1410171642;
 
 	/**
 	 * The reference instance of <code>public.v_book</code>
@@ -38,22 +38,22 @@ public class VBook extends TableImpl<VBookRecord> {
 	/**
 	 * The column <code>public.v_book.ID</code>.
 	 */
-	public final TableField<VBookRecord, Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final TableField<VBookRecord, Long> ID = createField("ID", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
 	/**
 	 * The column <code>public.v_book.AUTHOR_ID</code>.
 	 */
-	public final TableField<VBookRecord, Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final TableField<VBookRecord, Long> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
 	/**
 	 * The column <code>public.v_book.co_author_id</code>.
 	 */
-	public final TableField<VBookRecord, Integer> CO_AUTHOR_ID = createField("co_author_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final TableField<VBookRecord, Long> CO_AUTHOR_ID = createField("co_author_id", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
 	/**
 	 * The column <code>public.v_book.DETAILS_ID</code>.
 	 */
-	public final TableField<VBookRecord, Integer> DETAILS_ID = createField("DETAILS_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final TableField<VBookRecord, Long> DETAILS_ID = createField("DETAILS_ID", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
 	/**
 	 * The column <code>public.v_book.TITLE</code>.
@@ -63,12 +63,12 @@ public class VBook extends TableImpl<VBookRecord> {
 	/**
 	 * The column <code>public.v_book.PUBLISHED_IN</code>.
 	 */
-	public final TableField<VBookRecord, Integer> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final TableField<VBookRecord, Long> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
 	/**
 	 * The column <code>public.v_book.LANGUAGE_ID</code>.
 	 */
-	public final TableField<VBookRecord, Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final TableField<VBookRecord, Long> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
 	/**
 	 * The column <code>public.v_book.CONTENT_TEXT</code>.
@@ -83,7 +83,7 @@ public class VBook extends TableImpl<VBookRecord> {
 	/**
 	 * The column <code>public.v_book.REC_VERSION</code>.
 	 */
-	public final TableField<VBookRecord, Integer> REC_VERSION = createField("REC_VERSION", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final TableField<VBookRecord, Long> REC_VERSION = createField("REC_VERSION", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
 	/**
 	 * The column <code>public.v_book.REC_TIMESTAMP</code>.

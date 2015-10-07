@@ -20,7 +20,7 @@ import org.jooq.test.vertica.generatedclasses.tables.records.VAuthorRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthor extends TableImpl<VAuthorRecord> {
 
-	private static final long serialVersionUID = -1157537082;
+	private static final long serialVersionUID = 1691466918;
 
 	/**
 	 * The reference instance of <code>public.v_author</code>
@@ -38,7 +38,7 @@ public class VAuthor extends TableImpl<VAuthorRecord> {
 	/**
 	 * The column <code>public.v_author.ID</code>.
 	 */
-	public final TableField<VAuthorRecord, Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final TableField<VAuthorRecord, Long> ID = createField("ID", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
 	/**
 	 * The column <code>public.v_author.FIRST_NAME</code>.
@@ -58,7 +58,7 @@ public class VAuthor extends TableImpl<VAuthorRecord> {
 	/**
 	 * The column <code>public.v_author.YEAR_OF_BIRTH</code>.
 	 */
-	public final TableField<VAuthorRecord, Integer> YEAR_OF_BIRTH = createField("YEAR_OF_BIRTH", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final TableField<VAuthorRecord, Long> YEAR_OF_BIRTH = createField("YEAR_OF_BIRTH", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
 	/**
 	 * The column <code>public.v_author.ADDRESS</code>.

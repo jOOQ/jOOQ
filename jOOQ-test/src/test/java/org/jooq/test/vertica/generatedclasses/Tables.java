@@ -19,7 +19,6 @@ import org.jooq.test.vertica.generatedclasses.tables.T_2845CaseSensitivity;
 import org.jooq.test.vertica.generatedclasses.tables.T_639NumbersTable;
 import org.jooq.test.vertica.generatedclasses.tables.T_725LobTest;
 import org.jooq.test.vertica.generatedclasses.tables.T_785;
-import org.jooq.test.vertica.generatedclasses.tables.T_937;
 import org.jooq.test.vertica.generatedclasses.tables.VAuthor;
 import org.jooq.test.vertica.generatedclasses.tables.VBook;
 import org.jooq.test.vertica.generatedclasses.tables.VLibrary;
@@ -37,11 +36,6 @@ public class Tables {
 	 * The table public.T_2845_CASE_sensitivity
 	 */
 	public static final T_2845CaseSensitivity T_2845_CASE_SENSITIVITY = org.jooq.test.vertica.generatedclasses.tables.T_2845CaseSensitivity.T_2845_CASE_SENSITIVITY;
-
-	/**
-	 * The table public.T_937
-	 */
-	public static final T_937 T_937 = org.jooq.test.vertica.generatedclasses.tables.T_937.T_937;
 
 	/**
 	 * The table public.V_LIBRARY

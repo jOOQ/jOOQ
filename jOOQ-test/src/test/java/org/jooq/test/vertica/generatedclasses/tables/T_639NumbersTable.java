@@ -25,7 +25,7 @@ import org.jooq.test.vertica.generatedclasses.tables.records.T_639NumbersTableRe
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTable extends TableImpl<T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = -2021693357;
+	private static final long serialVersionUID = 1494422852;
 
 	/**
 	 * The reference instance of <code>public.t_639_numbers_table</code>
@@ -43,27 +43,27 @@ public class T_639NumbersTable extends TableImpl<T_639NumbersTableRecord> {
 	/**
 	 * The column <code>public.t_639_numbers_table.ID</code>.
 	 */
-	public final TableField<T_639NumbersTableRecord, Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+	public final TableField<T_639NumbersTableRecord, Long> ID = createField("ID", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.t_639_numbers_table.BYTE</code>.
 	 */
-	public final TableField<T_639NumbersTableRecord, Integer> BYTE = createField("BYTE", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
+	public final TableField<T_639NumbersTableRecord, Long> BYTE = createField("BYTE", org.jooq.impl.SQLDataType.BIGINT.defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.t_639_numbers_table.SHORT</code>.
 	 */
-	public final TableField<T_639NumbersTableRecord, Integer> SHORT = createField("SHORT", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
+	public final TableField<T_639NumbersTableRecord, Long> SHORT = createField("SHORT", org.jooq.impl.SQLDataType.BIGINT.defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.t_639_numbers_table.INTEGER</code>.
 	 */
-	public final TableField<T_639NumbersTableRecord, Integer> INTEGER = createField("INTEGER", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
+	public final TableField<T_639NumbersTableRecord, Long> INTEGER = createField("INTEGER", org.jooq.impl.SQLDataType.BIGINT.defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.t_639_numbers_table.LONG</code>.
 	 */
-	public final TableField<T_639NumbersTableRecord, Integer> LONG = createField("LONG", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
+	public final TableField<T_639NumbersTableRecord, Long> LONG = createField("LONG", org.jooq.impl.SQLDataType.BIGINT.defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.t_639_numbers_table.BYTE_DECIMAL</code>.

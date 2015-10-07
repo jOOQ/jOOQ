@@ -16,22 +16,22 @@ public interface ITIdentityPk extends Serializable {
 	/**
 	 * Setter for <code>public.t_identity_pk.id</code>.
 	 */
-	public void setId(Integer value);
+	public void setId(Long value);
 
 	/**
 	 * Getter for <code>public.t_identity_pk.id</code>.
 	 */
-	public Integer getId();
+	public Long getId();
 
 	/**
 	 * Setter for <code>public.t_identity_pk.val</code>.
 	 */
-	public void setVal(Integer value);
+	public void setVal(Long value);
 
 	/**
 	 * Getter for <code>public.t_identity_pk.val</code>.
 	 */
-	public Integer getVal();
+	public Long getVal();
 
 	// -------------------------------------------------------------------------
 	// FROM and INTO

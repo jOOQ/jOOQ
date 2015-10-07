@@ -24,7 +24,7 @@ import org.jooq.test.vertica.generatedclasses.tables.records.TExoticTypesRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes extends TableImpl<TExoticTypesRecord> {
 
-	private static final long serialVersionUID = 1953015034;
+	private static final long serialVersionUID = -1836221033;
 
 	/**
 	 * The reference instance of <code>public.t_exotic_types</code>
@@ -42,7 +42,7 @@ public class TExoticTypes extends TableImpl<TExoticTypesRecord> {
 	/**
 	 * The column <code>public.t_exotic_types.ID</code>.
 	 */
-	public final TableField<TExoticTypesRecord, Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+	public final TableField<TExoticTypesRecord, Long> ID = createField("ID", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.t_exotic_types.UU</code>.

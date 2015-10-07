@@ -18,52 +18,52 @@ public interface IT_639NumbersTable extends Serializable {
 	/**
 	 * Setter for <code>public.t_639_numbers_table.ID</code>.
 	 */
-	public void setId(Integer value);
+	public void setId(Long value);
 
 	/**
 	 * Getter for <code>public.t_639_numbers_table.ID</code>.
 	 */
-	public Integer getId();
+	public Long getId();
 
 	/**
 	 * Setter for <code>public.t_639_numbers_table.BYTE</code>.
 	 */
-	public void setByte(Integer value);
+	public void setByte(Long value);
 
 	/**
 	 * Getter for <code>public.t_639_numbers_table.BYTE</code>.
 	 */
-	public Integer getByte();
+	public Long getByte();
 
 	/**
 	 * Setter for <code>public.t_639_numbers_table.SHORT</code>.
 	 */
-	public void setShort(Integer value);
+	public void setShort(Long value);
 
 	/**
 	 * Getter for <code>public.t_639_numbers_table.SHORT</code>.
 	 */
-	public Integer getShort();
+	public Long getShort();
 
 	/**
 	 * Setter for <code>public.t_639_numbers_table.INTEGER</code>.
 	 */
-	public void setInteger(Integer value);
+	public void setInteger(Long value);
 
 	/**
 	 * Getter for <code>public.t_639_numbers_table.INTEGER</code>.
 	 */
-	public Integer getInteger();
+	public Long getInteger();
 
 	/**
 	 * Setter for <code>public.t_639_numbers_table.LONG</code>.
 	 */
-	public void setLong(Integer value);
+	public void setLong(Long value);
 
 	/**
 	 * Getter for <code>public.t_639_numbers_table.LONG</code>.
 	 */
-	public Integer getLong();
+	public Long getLong();
 
 	/**
 	 * Setter for <code>public.t_639_numbers_table.BYTE_DECIMAL</code>.

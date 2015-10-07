@@ -17,12 +17,12 @@ public interface ITAuthor extends Serializable {
 	/**
 	 * Setter for <code>public.t_author.ID</code>.
 	 */
-	public void setId(Integer value);
+	public void setId(Long value);
 
 	/**
 	 * Getter for <code>public.t_author.ID</code>.
 	 */
-	public Integer getId();
+	public Long getId();
 
 	/**
 	 * Setter for <code>public.t_author.FIRST_NAME</code>.
@@ -57,12 +57,12 @@ public interface ITAuthor extends Serializable {
 	/**
 	 * Setter for <code>public.t_author.YEAR_OF_BIRTH</code>.
 	 */
-	public void setYearOfBirth(Integer value);
+	public void setYearOfBirth(Long value);
 
 	/**
 	 * Getter for <code>public.t_author.YEAR_OF_BIRTH</code>.
 	 */
-	public Integer getYearOfBirth();
+	public Long getYearOfBirth();
 
 	/**
 	 * Setter for <code>public.t_author.ADDRESS</code>.

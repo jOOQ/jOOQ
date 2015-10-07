@@ -18,12 +18,12 @@ public interface IXUnused extends Serializable {
 	/**
 	 * Setter for <code>public.x_unused.ID</code>.
 	 */
-	public void setId(Integer value);
+	public void setId(Long value);
 
 	/**
 	 * Getter for <code>public.x_unused.ID</code>.
 	 */
-	public Integer getId();
+	public Long getId();
 
 	/**
 	 * Setter for <code>public.x_unused.NAME</code>.
@@ -48,92 +48,92 @@ public interface IXUnused extends Serializable {
 	/**
 	 * Setter for <code>public.x_unused.ID_REF</code>.
 	 */
-	public void setIdRef(Integer value);
+	public void setIdRef(Long value);
 
 	/**
 	 * Getter for <code>public.x_unused.ID_REF</code>.
 	 */
-	public Integer getIdRef();
+	public Long getIdRef();
 
 	/**
 	 * Setter for <code>public.x_unused.CLASS</code>.
 	 */
-	public void setClass_(Integer value);
+	public void setClass_(Long value);
 
 	/**
 	 * Getter for <code>public.x_unused.CLASS</code>.
 	 */
-	public Integer getClass_();
+	public Long getClass_();
 
 	/**
 	 * Setter for <code>public.x_unused.FIELDS</code>.
 	 */
-	public void setFields(Integer value);
+	public void setFields(Long value);
 
 	/**
 	 * Getter for <code>public.x_unused.FIELDS</code>.
 	 */
-	public Integer getFields();
+	public Long getFields();
 
 	/**
 	 * Setter for <code>public.x_unused.CONFIGURATION</code>.
 	 */
-	public void setConfiguration(Integer value);
+	public void setConfiguration(Long value);
 
 	/**
 	 * Getter for <code>public.x_unused.CONFIGURATION</code>.
 	 */
-	public Integer getConfiguration();
+	public Long getConfiguration();
 
 	/**
 	 * Setter for <code>public.x_unused.U_D_T</code>.
 	 */
-	public void setUDT(Integer value);
+	public void setUDT(Long value);
 
 	/**
 	 * Getter for <code>public.x_unused.U_D_T</code>.
 	 */
-	public Integer getUDT();
+	public Long getUDT();
 
 	/**
 	 * Setter for <code>public.x_unused.META_DATA</code>.
 	 */
-	public void setMetaData(Integer value);
+	public void setMetaData(Long value);
 
 	/**
 	 * Getter for <code>public.x_unused.META_DATA</code>.
 	 */
-	public Integer getMetaData();
+	public Long getMetaData();
 
 	/**
 	 * Setter for <code>public.x_unused.TYPE0</code>.
 	 */
-	public void setType0(Integer value);
+	public void setType0(Long value);
 
 	/**
 	 * Getter for <code>public.x_unused.TYPE0</code>.
 	 */
-	public Integer getType0();
+	public Long getType0();
 
 	/**
 	 * Setter for <code>public.x_unused.PRIMARY_KEY</code>.
 	 */
-	public void setPrimaryKey_(Integer value);
+	public void setPrimaryKey_(Long value);
 
 	/**
 	 * Getter for <code>public.x_unused.PRIMARY_KEY</code>.
 	 */
-	public Integer getPrimaryKey_();
+	public Long getPrimaryKey_();
 
 	/**
 	 * Setter for <code>public.x_unused.PRIMARYKEY</code>.
 	 */
-	public void setPrimarykey(Integer value);
+	public void setPrimarykey(Long value);
 
 	/**
 	 * Getter for <code>public.x_unused.PRIMARYKEY</code>.
 	 */
-	public Integer getPrimarykey();
+	public Long getPrimarykey();
 
 	/**
 	 * Setter for <code>public.x_unused.NAME_REF</code>.
@@ -158,22 +158,22 @@ public interface IXUnused extends Serializable {
 	/**
 	 * Setter for <code>public.x_unused.CONNECTION</code>.
 	 */
-	public void setConnection(Integer value);
+	public void setConnection(Long value);
 
 	/**
 	 * Getter for <code>public.x_unused.CONNECTION</code>.
 	 */
-	public Integer getConnection();
+	public Long getConnection();
 
 	/**
 	 * Setter for <code>public.x_unused.PREPARED_STATEMENT</code>.
 	 */
-	public void setPreparedStatement(Integer value);
+	public void setPreparedStatement(Long value);
 
 	/**
 	 * Getter for <code>public.x_unused.PREPARED_STATEMENT</code>.
 	 */
-	public Integer getPreparedStatement();
+	public Long getPreparedStatement();
 
 	// -------------------------------------------------------------------------
 	// FROM and INTO

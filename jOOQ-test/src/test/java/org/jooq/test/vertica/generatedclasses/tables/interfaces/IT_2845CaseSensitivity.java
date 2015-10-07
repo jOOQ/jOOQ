@@ -16,52 +16,52 @@ public interface IT_2845CaseSensitivity extends Serializable {
 	/**
 	 * Setter for <code>public.T_2845_CASE_sensitivity.id</code>.
 	 */
-	public void setId(Integer value);
+	public void setId(Long value);
 
 	/**
 	 * Getter for <code>public.T_2845_CASE_sensitivity.id</code>.
 	 */
-	public Integer getId();
+	public Long getId();
 
 	/**
 	 * Setter for <code>public.T_2845_CASE_sensitivity.insensitive</code>.
 	 */
-	public void setInsensitive(Integer value);
+	public void setInsensitive(Long value);
 
 	/**
 	 * Getter for <code>public.T_2845_CASE_sensitivity.insensitive</code>.
 	 */
-	public Integer getInsensitive();
+	public Long getInsensitive();
 
 	/**
 	 * Setter for <code>public.T_2845_CASE_sensitivity.UPPER</code>.
 	 */
-	public void setUpper(Integer value);
+	public void setUpper(Long value);
 
 	/**
 	 * Getter for <code>public.T_2845_CASE_sensitivity.UPPER</code>.
 	 */
-	public Integer getUpper();
+	public Long getUpper();
 
 	/**
 	 * Setter for <code>public.T_2845_CASE_sensitivity.lower</code>.
 	 */
-	public void setLower(Integer value);
+	public void setLower(Long value);
 
 	/**
 	 * Getter for <code>public.T_2845_CASE_sensitivity.lower</code>.
 	 */
-	public Integer getLower();
+	public Long getLower();
 
 	/**
 	 * Setter for <code>public.T_2845_CASE_sensitivity.Mixed</code>.
 	 */
-	public void setMixed(Integer value);
+	public void setMixed(Long value);
 
 	/**
 	 * Getter for <code>public.T_2845_CASE_sensitivity.Mixed</code>.
 	 */
-	public Integer getMixed();
+	public Long getMixed();
 
 	// -------------------------------------------------------------------------
 	// FROM and INTO

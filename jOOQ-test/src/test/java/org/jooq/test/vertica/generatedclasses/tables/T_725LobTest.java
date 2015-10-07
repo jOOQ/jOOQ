@@ -23,7 +23,7 @@ import org.jooq.test.vertica.generatedclasses.tables.records.T_725LobTestRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTest extends TableImpl<T_725LobTestRecord> {
 
-	private static final long serialVersionUID = -312451546;
+	private static final long serialVersionUID = -1602793725;
 
 	/**
 	 * The reference instance of <code>public.t_725_lob_test</code>
@@ -41,7 +41,7 @@ public class T_725LobTest extends TableImpl<T_725LobTestRecord> {
 	/**
 	 * The column <code>public.t_725_lob_test.ID</code>.
 	 */
-	public final TableField<T_725LobTestRecord, Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+	public final TableField<T_725LobTestRecord, Long> ID = createField("ID", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.t_725_lob_test.LOB</code>.

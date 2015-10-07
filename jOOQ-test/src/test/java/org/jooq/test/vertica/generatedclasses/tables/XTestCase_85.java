@@ -24,7 +24,7 @@ import org.jooq.test.vertica.generatedclasses.tables.records.XTestCase_85Record;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_85 extends TableImpl<XTestCase_85Record> {
 
-	private static final long serialVersionUID = 15449216;
+	private static final long serialVersionUID = 364980512;
 
 	/**
 	 * The reference instance of <code>public.x_test_case_85</code>
@@ -42,12 +42,12 @@ public class XTestCase_85 extends TableImpl<XTestCase_85Record> {
 	/**
 	 * The column <code>public.x_test_case_85.id</code>.
 	 */
-	public final TableField<XTestCase_85Record, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+	public final TableField<XTestCase_85Record, Long> ID = createField("id", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.x_test_case_85.x_unused_id</code>.
 	 */
-	public final TableField<XTestCase_85Record, Integer> X_UNUSED_ID = createField("x_unused_id", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
+	public final TableField<XTestCase_85Record, Long> X_UNUSED_ID = createField("x_unused_id", org.jooq.impl.SQLDataType.BIGINT.defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.x_test_case_85.x_unused_name</code>.

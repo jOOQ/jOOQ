@@ -27,7 +27,7 @@ import org.jooq.types.YearToMonth;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates extends TableImpl<TDatesRecord> {
 
-	private static final long serialVersionUID = 377265068;
+	private static final long serialVersionUID = -462899223;
 
 	/**
 	 * The reference instance of <code>public.t_dates</code>
@@ -45,7 +45,7 @@ public class TDates extends TableImpl<TDatesRecord> {
 	/**
 	 * The column <code>public.t_dates.id</code>.
 	 */
-	public final TableField<TDatesRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+	public final TableField<TDatesRecord, Long> ID = createField("id", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.t_dates.d</code>.
@@ -65,12 +65,12 @@ public class TDates extends TableImpl<TDatesRecord> {
 	/**
 	 * The column <code>public.t_dates.d_int</code>.
 	 */
-	public final TableField<TDatesRecord, Integer> D_INT = createField("d_int", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
+	public final TableField<TDatesRecord, Long> D_INT = createField("d_int", org.jooq.impl.SQLDataType.BIGINT.defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.t_dates.ts_bigint</code>.
 	 */
-	public final TableField<TDatesRecord, Integer> TS_BIGINT = createField("ts_bigint", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
+	public final TableField<TDatesRecord, Long> TS_BIGINT = createField("ts_bigint", org.jooq.impl.SQLDataType.BIGINT.defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.t_dates.i_y</code>.

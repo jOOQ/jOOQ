@@ -21,12 +21,12 @@ public interface ITDates extends Serializable {
 	/**
 	 * Setter for <code>public.t_dates.id</code>.
 	 */
-	public void setId(Integer value);
+	public void setId(Long value);
 
 	/**
 	 * Getter for <code>public.t_dates.id</code>.
 	 */
-	public Integer getId();
+	public Long getId();
 
 	/**
 	 * Setter for <code>public.t_dates.d</code>.
@@ -61,22 +61,22 @@ public interface ITDates extends Serializable {
 	/**
 	 * Setter for <code>public.t_dates.d_int</code>.
 	 */
-	public void setDInt(Integer value);
+	public void setDInt(Long value);
 
 	/**
 	 * Getter for <code>public.t_dates.d_int</code>.
 	 */
-	public Integer getDInt();
+	public Long getDInt();
 
 	/**
 	 * Setter for <code>public.t_dates.ts_bigint</code>.
 	 */
-	public void setTsBigint(Integer value);
+	public void setTsBigint(Long value);
 
 	/**
 	 * Getter for <code>public.t_dates.ts_bigint</code>.
 	 */
-	public Integer getTsBigint();
+	public Long getTsBigint();
 
 	/**
 	 * Setter for <code>public.t_dates.i_y</code>.

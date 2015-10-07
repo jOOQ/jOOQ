@@ -16,12 +16,12 @@ public interface IT_725LobTest extends Serializable {
 	/**
 	 * Setter for <code>public.t_725_lob_test.ID</code>.
 	 */
-	public void setId(Integer value);
+	public void setId(Long value);
 
 	/**
 	 * Getter for <code>public.t_725_lob_test.ID</code>.
 	 */
-	public Integer getId();
+	public Long getId();
 
 	/**
 	 * Setter for <code>public.t_725_lob_test.LOB</code>.

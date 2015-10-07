@@ -26,7 +26,7 @@ import org.jooq.test.vertica.generatedclasses.tables.records.XUnusedRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnused extends TableImpl<XUnusedRecord> {
 
-	private static final long serialVersionUID = -1021224170;
+	private static final long serialVersionUID = -1700418042;
 
 	/**
 	 * The reference instance of <code>public.x_unused</code>
@@ -44,7 +44,7 @@ public class XUnused extends TableImpl<XUnusedRecord> {
 	/**
 	 * The column <code>public.x_unused.ID</code>.
 	 */
-	public final TableField<XUnusedRecord, Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+	public final TableField<XUnusedRecord, Long> ID = createField("ID", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.x_unused.NAME</code>.
@@ -59,47 +59,47 @@ public class XUnused extends TableImpl<XUnusedRecord> {
 	/**
 	 * The column <code>public.x_unused.ID_REF</code>.
 	 */
-	public final TableField<XUnusedRecord, Integer> ID_REF = createField("ID_REF", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
+	public final TableField<XUnusedRecord, Long> ID_REF = createField("ID_REF", org.jooq.impl.SQLDataType.BIGINT.defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.x_unused.CLASS</code>.
 	 */
-	public final TableField<XUnusedRecord, Integer> CLASS = createField("CLASS", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
+	public final TableField<XUnusedRecord, Long> CLASS = createField("CLASS", org.jooq.impl.SQLDataType.BIGINT.defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.x_unused.FIELDS</code>.
 	 */
-	public final TableField<XUnusedRecord, Integer> FIELDS = createField("FIELDS", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
+	public final TableField<XUnusedRecord, Long> FIELDS = createField("FIELDS", org.jooq.impl.SQLDataType.BIGINT.defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.x_unused.CONFIGURATION</code>.
 	 */
-	public final TableField<XUnusedRecord, Integer> CONFIGURATION = createField("CONFIGURATION", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
+	public final TableField<XUnusedRecord, Long> CONFIGURATION = createField("CONFIGURATION", org.jooq.impl.SQLDataType.BIGINT.defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.x_unused.U_D_T</code>.
 	 */
-	public final TableField<XUnusedRecord, Integer> U_D_T = createField("U_D_T", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
+	public final TableField<XUnusedRecord, Long> U_D_T = createField("U_D_T", org.jooq.impl.SQLDataType.BIGINT.defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.x_unused.META_DATA</code>.
 	 */
-	public final TableField<XUnusedRecord, Integer> META_DATA = createField("META_DATA", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
+	public final TableField<XUnusedRecord, Long> META_DATA = createField("META_DATA", org.jooq.impl.SQLDataType.BIGINT.defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.x_unused.TYPE0</code>.
 	 */
-	public final TableField<XUnusedRecord, Integer> TYPE0 = createField("TYPE0", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
+	public final TableField<XUnusedRecord, Long> TYPE0 = createField("TYPE0", org.jooq.impl.SQLDataType.BIGINT.defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.x_unused.PRIMARY_KEY</code>.
 	 */
-	public final TableField<XUnusedRecord, Integer> PRIMARY_KEY = createField("PRIMARY_KEY", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
+	public final TableField<XUnusedRecord, Long> PRIMARY_KEY = createField("PRIMARY_KEY", org.jooq.impl.SQLDataType.BIGINT.defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.x_unused.PRIMARYKEY</code>.
 	 */
-	public final TableField<XUnusedRecord, Integer> PRIMARYKEY = createField("PRIMARYKEY", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
+	public final TableField<XUnusedRecord, Long> PRIMARYKEY = createField("PRIMARYKEY", org.jooq.impl.SQLDataType.BIGINT.defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.x_unused.NAME_REF</code>.
@@ -114,12 +114,12 @@ public class XUnused extends TableImpl<XUnusedRecord> {
 	/**
 	 * The column <code>public.x_unused.CONNECTION</code>.
 	 */
-	public final TableField<XUnusedRecord, Integer> CONNECTION = createField("CONNECTION", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
+	public final TableField<XUnusedRecord, Long> CONNECTION = createField("CONNECTION", org.jooq.impl.SQLDataType.BIGINT.defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.x_unused.PREPARED_STATEMENT</code>.
 	 */
-	public final TableField<XUnusedRecord, Integer> PREPARED_STATEMENT = createField("PREPARED_STATEMENT", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
+	public final TableField<XUnusedRecord, Long> PREPARED_STATEMENT = createField("PREPARED_STATEMENT", org.jooq.impl.SQLDataType.BIGINT.defaulted(true), this, "");
 
 	/**
 	 * Create a <code>public.x_unused</code> table reference

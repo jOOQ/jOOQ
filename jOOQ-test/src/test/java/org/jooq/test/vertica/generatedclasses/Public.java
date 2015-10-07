@@ -11,7 +11,6 @@ import java.util.List;
 import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
-import org.jooq.test.vertica.generatedclasses.Sequences;
 import org.jooq.test.vertica.generatedclasses.tables.TAuthor;
 import org.jooq.test.vertica.generatedclasses.tables.TBook;
 import org.jooq.test.vertica.generatedclasses.tables.TBookStore;
@@ -27,7 +26,6 @@ import org.jooq.test.vertica.generatedclasses.tables.T_2845CaseSensitivity;
 import org.jooq.test.vertica.generatedclasses.tables.T_639NumbersTable;
 import org.jooq.test.vertica.generatedclasses.tables.T_725LobTest;
 import org.jooq.test.vertica.generatedclasses.tables.T_785;
-import org.jooq.test.vertica.generatedclasses.tables.T_937;
 import org.jooq.test.vertica.generatedclasses.tables.VAuthor;
 import org.jooq.test.vertica.generatedclasses.tables.VBook;
 import org.jooq.test.vertica.generatedclasses.tables.VLibrary;
@@ -41,7 +39,7 @@ import org.jooq.test.vertica.generatedclasses.tables.XUnused;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-	private static final long serialVersionUID = 1021339210;
+	private static final long serialVersionUID = 439272340;
 
 	/**
 	 * The reference instance of <code>public</code>
@@ -79,7 +77,6 @@ public class Public extends SchemaImpl {
 	private final List<Table<?>> getTables0() {
 		return Arrays.<Table<?>>asList(
 			T_2845CaseSensitivity.T_2845_CASE_SENSITIVITY,
-			T_937.T_937,
 			VLibrary.V_LIBRARY,
 			T_639NumbersTable.T_639_NUMBERS_TABLE,
 			T_725LobTest.T_725_LOB_TEST,

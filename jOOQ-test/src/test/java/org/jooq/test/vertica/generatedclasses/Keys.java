@@ -38,7 +38,7 @@ import org.jooq.test.vertica.generatedclasses.tables.records.XUnusedRecord;
 
 
 /**
- * A class modelling foreign key relationships between tables of the <code>public</code>
+ * A class modelling foreign key relationships between tables of the <code>public</code> 
  * schema
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
@@ -92,7 +92,7 @@ public class Keys {
 		public static final UniqueKey<TAuthorRecord> PK_T_AUTHOR = createUniqueKey(TAuthor.T_AUTHOR, TAuthor.T_AUTHOR.ID);
 		public static final UniqueKey<TBookRecord> PK_T_BOOK = createUniqueKey(TBook.T_BOOK, TBook.T_BOOK.ID);
 		public static final UniqueKey<TBookStoreRecord> UK_T_BOOK_STORE_NAME = createUniqueKey(TBookStore.T_BOOK_STORE, TBookStore.T_BOOK_STORE.NAME);
-		public static final UniqueKey<TBookToBookStoreRecord> PK_B2BS = createUniqueKey(TBookToBookStore.T_BOOK_TO_BOOK_STORE, TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME, TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID);
+		public static final UniqueKey<TBookToBookStoreRecord> PK_B2BS = createUniqueKey(TBookToBookStore.T_BOOK_TO_BOOK_STORE, TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID, TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME);
 		public static final UniqueKey<TBooleansRecord> PK_T_BOOLEANS = createUniqueKey(TBooleans.T_BOOLEANS, TBooleans.T_BOOLEANS.ID);
 		public static final UniqueKey<TDatesRecord> PK_T_DATES = createUniqueKey(TDates.T_DATES, TDates.T_DATES.ID);
 		public static final UniqueKey<TExoticTypesRecord> PK_T_EXOTIC_TYPES = createUniqueKey(TExoticTypes.T_EXOTIC_TYPES, TExoticTypes.T_EXOTIC_TYPES.ID);

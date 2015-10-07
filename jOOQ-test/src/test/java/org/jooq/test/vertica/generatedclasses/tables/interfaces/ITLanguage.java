@@ -46,12 +46,12 @@ public interface ITLanguage extends Serializable {
 	/**
 	 * Setter for <code>public.t_language.id</code>.
 	 */
-	public void setId(Integer value);
+	public void setId(Long value);
 
 	/**
 	 * Getter for <code>public.t_language.id</code>.
 	 */
-	public Integer getId();
+	public Long getId();
 
 	// -------------------------------------------------------------------------
 	// FROM and INTO

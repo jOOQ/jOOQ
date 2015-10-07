@@ -13,7 +13,7 @@ import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.impl.TableImpl;
 import org.jooq.test.all.converters.Boolean_10;
-import org.jooq.test.all.converters.Boolean_10_Converter;
+import org.jooq.test.all.converters.Boolean_10Long_Converter;
 import org.jooq.test.all.converters.Boolean_TF_LC;
 import org.jooq.test.all.converters.Boolean_TF_LC_Converter;
 import org.jooq.test.all.converters.Boolean_TF_UC;
@@ -37,7 +37,7 @@ import org.jooq.test.vertica.generatedclasses.tables.records.TBooleansRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleans extends TableImpl<TBooleansRecord> {
 
-	private static final long serialVersionUID = -177424696;
+	private static final long serialVersionUID = 139906334;
 
 	/**
 	 * The reference instance of <code>public.t_booleans</code>
@@ -55,12 +55,12 @@ public class TBooleans extends TableImpl<TBooleansRecord> {
 	/**
 	 * The column <code>public.t_booleans.id</code>.
 	 */
-	public final TableField<TBooleansRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+	public final TableField<TBooleansRecord, Long> ID = createField("id", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.t_booleans.one_zero</code>.
 	 */
-	public final TableField<TBooleansRecord, Boolean_10> ONE_ZERO = createField("one_zero", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "", new Boolean_10_Converter());
+	public final TableField<TBooleansRecord, Boolean_10> ONE_ZERO = createField("one_zero", org.jooq.impl.SQLDataType.BIGINT.defaulted(true), this, "", new Boolean_10Long_Converter());
 
 	/**
 	 * The column <code>public.t_booleans.true_false_lc</code>.

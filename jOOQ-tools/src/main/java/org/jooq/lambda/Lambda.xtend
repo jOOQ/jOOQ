@@ -435,7 +435,7 @@ class Lambda extends Generators {
 
                     public Tuple«degree»() {
                     }
-                    «ENDIF»  
+                    «ENDIF»
                     «IF degree < max»
 
                     /**
@@ -451,6 +451,51 @@ class Lambda extends Generators {
                      */
                     public final <«TN(degree + 1, d)»> Tuple«d»<«TN(d)»> concat(Tuple«d - degree»<«TN(degree + 1, d)»> tuple) {
                         return new Tuple«d»<>(«IF degree > 0»«XXXn(degree, "v")», «ENDIF»«XXXn(d - degree, "tuple.v")»);
+                    }
+                    «ENDFOR»
+                    «ENDIF»
+                    «FOR d : (0 .. degree)»
+
+                    /**
+                     * Split this tuple into two tuples of degree «d» and «degree - d».
+                     */
+                    public final Tuple2<Tuple«d»«IF d > 0»<«TN(d)»>«ENDIF», Tuple«degree - d»«IF degree - d > 0»<«TN(d + 1, degree)»>«ENDIF»> split«d»() {
+                        return new Tuple2<>(limit«d»(), skip«d»());
+                    }
+                    «ENDFOR»
+                    «IF degree > 0»
+                    «FOR d : (0 .. degree - 1)»
+
+                    /**
+                     * Limit this tuple to degree «d».
+                     */
+                    public final Tuple«d»«IF d > 0»<«TN(d)»>«ENDIF» limit«d»() {
+                        return new Tuple«d»«IF d > 0»<>(«XXXn(d, "v")»)«ELSE»()«ENDIF»;
+                    }
+                    «ENDFOR»
+                    «ENDIF»
+
+                    /**
+                     * Limit this tuple to degree «degree».
+                     */
+                    public final Tuple«degree»«IF degree > 0»<«TN(degree)»>«ENDIF» limit«degree»() {
+                        return this;
+                    }
+
+                    /**
+                     * Skip 0 degrees from this tuple.
+                     */
+                    public final Tuple«degree»«IF degree > 0»<«TN(degree)»>«ENDIF» skip0() {
+                        return this;
+                    }
+                    «IF degree > 0»
+                    «FOR d : (1 .. degree)»
+
+                    /**
+                     * Skip «d» degrees from this tuple.
+                     */
+                    public final Tuple«degree - d»«IF degree - d > 0»<«TN(d + 1, degree)»>«ENDIF» skip«d»() {
+                        return new Tuple«degree - d»«IF degree - d > 0»<>(«XXXn(d + 1, degree, "v")»)«ELSE»()«ENDIF»;
                     }
                     «ENDFOR»
                     «ENDIF»

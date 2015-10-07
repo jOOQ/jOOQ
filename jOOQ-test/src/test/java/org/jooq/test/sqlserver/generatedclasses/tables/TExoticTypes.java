@@ -28,7 +28,7 @@ import org.w3c.dom.Node;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes extends TableImpl<TExoticTypesRecord> {
 
-	private static final long serialVersionUID = -721228641;
+	private static final long serialVersionUID = -60611711;
 
 	/**
 	 * The reference instance of <code>dbo.t_exotic_types</code>

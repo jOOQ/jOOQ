@@ -6,7 +6,6 @@ package org.jooq.test.sqlserver.generatedclasses;
 
 import org.jooq.Sequence;
 import org.jooq.impl.SequenceImpl;
-import org.jooq.test.sqlserver.generatedclasses.Dbo;
 
 
 /**

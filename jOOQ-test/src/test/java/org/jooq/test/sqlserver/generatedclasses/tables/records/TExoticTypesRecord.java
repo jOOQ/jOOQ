@@ -29,7 +29,7 @@ import org.w3c.dom.Node;
 @Table(name = "t_exotic_types", schema = "dbo")
 public class TExoticTypesRecord extends UpdatableRecordImpl<TExoticTypesRecord> implements Record4<Integer, UUID, Node, JAXBBook> {
 
-	private static final long serialVersionUID = 2077236250;
+	private static final long serialVersionUID = 587186718;
 
 	/**
 	 * Setter for <code>dbo.t_exotic_types.ID</code>.

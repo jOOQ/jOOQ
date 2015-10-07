@@ -44,11 +44,14 @@ package org.jooq.util;
 import static org.jooq.tools.Convert.convert;
 import static org.jooq.tools.StringUtils.isEmpty;
 
+import java.io.StringWriter;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.xml.bind.JAXB;
 
 import org.jooq.DataType;
 import org.jooq.exception.SQLDialectNotSupportedException;
@@ -189,12 +192,21 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
             }
 
             // Other forced types are UDT's, enums, etc.
-            else {
+            else if (customType != null) {
                 l = result.getLength();
                 p = result.getPrecision();
                 s = result.getScale();
                 String t = result.getType();
                 result = new DefaultDataTypeDefinition(db, child.getSchema(), t, l, p, s, n, d, type, converter, binding);
+            }
+
+            // [#4597] If we don't have a type-rewrite (forcedDataType) or a
+            //         matching customType, the user probably malconfigured
+            //         their <forcedTypes/> or <customTypes/>
+            else {
+                StringWriter writer = new StringWriter();
+                JAXB.marshal(forcedType, writer);
+                log.warn("Bad configuration for <forcedType/> " + forcedType.getName() + ". No matching <customType/> found, and no matching SQLDataType found: " + writer);
             }
         }
 

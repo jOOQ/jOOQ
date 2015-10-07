@@ -1517,6 +1517,12 @@
 
                                             <forcedTypes>
 
+                                                <!-- [#4597] This forced type should issue a warning and have no effect -->
+                                                <forcedType>
+                                                    <name>NameDoesNotExist</name>
+                                                    <expression>(?i:TITLE)</expression>
+                                                </forcedType>
+                                                
                                                 <!-- [#3485] -->
                                                 <forcedType>
                                                     <name>3485</name>

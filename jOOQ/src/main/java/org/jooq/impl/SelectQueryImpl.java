@@ -2032,8 +2032,8 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
         switch (type) {
             case JOIN:
-            case SEMI_JOIN:
-            case ANTI_JOIN:
+            case LEFT_SEMI_JOIN:
+            case LEFT_ANTI_JOIN:
             case FULL_OUTER_JOIN: {
                 joined = getFrom().get(index).join(table, type).on(conditions);
                 break;
@@ -2079,8 +2079,8 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
             case LEFT_OUTER_JOIN:
             case RIGHT_OUTER_JOIN:
             case FULL_OUTER_JOIN:
-            case SEMI_JOIN:
-            case ANTI_JOIN:
+            case LEFT_SEMI_JOIN:
+            case LEFT_ANTI_JOIN:
                 joined = getFrom().get(index).join(table, type).onKey();
                 break;
 
@@ -2103,8 +2103,8 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
             case LEFT_OUTER_JOIN:
             case RIGHT_OUTER_JOIN:
             case FULL_OUTER_JOIN:
-            case SEMI_JOIN:
-            case ANTI_JOIN:
+            case LEFT_SEMI_JOIN:
+            case LEFT_ANTI_JOIN:
                 joined = getFrom().get(index).join(table, type).onKey(keyFields);
                 break;
 
@@ -2127,8 +2127,8 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
             case LEFT_OUTER_JOIN:
             case RIGHT_OUTER_JOIN:
             case FULL_OUTER_JOIN:
-            case SEMI_JOIN:
-            case ANTI_JOIN:
+            case LEFT_SEMI_JOIN:
+            case LEFT_ANTI_JOIN:
                 joined = getFrom().get(index).join(table, type).onKey(key);
                 break;
 
@@ -2156,8 +2156,8 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
             case LEFT_OUTER_JOIN:
             case RIGHT_OUTER_JOIN:
             case FULL_OUTER_JOIN:
-            case SEMI_JOIN:
-            case ANTI_JOIN:
+            case LEFT_SEMI_JOIN:
+            case LEFT_ANTI_JOIN:
                 joined = getFrom().get(index).join(table, type).using(fields);
                 break;
 

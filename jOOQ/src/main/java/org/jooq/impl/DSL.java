@@ -582,7 +582,7 @@ public class DSL {
      * and {@link #withRecursive(String)} for strictly
      * recursive CTE.
      */
-    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE, VERTICA })
     public static WithAsStep with(String alias) {
         return new WithImpl(null, false).with(alias);
     }
@@ -600,7 +600,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE, VERTICA })
     public static WithAsStep with(String alias, String... fieldAliases) {
         return new WithImpl(null, false).with(alias, fieldAliases);
     }
@@ -626,7 +626,7 @@ public class DSL {
      * and {@link #withRecursive(CommonTableExpression...)} for strictly
      * recursive CTE.
      */
-    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE, VERTICA })
     public static WithStep with(CommonTableExpression<?>... tables) {
         return new WithImpl(null, false).with(tables);
     }

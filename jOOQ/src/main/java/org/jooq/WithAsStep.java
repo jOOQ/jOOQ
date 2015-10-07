@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.SQLDialect.VERTICA;
 
 /**
  * This type is part of the jOOQ DSL to create {@link Select}, {@link Insert},
@@ -70,6 +71,6 @@ public interface WithAsStep {
     /**
      * Associate a subselect with a common table expression's table and column names.
      */
-    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE, VERTICA })
     WithStep as(Select<?> select);
 }

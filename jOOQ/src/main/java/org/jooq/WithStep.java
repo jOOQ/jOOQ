@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.SQLDialect.VERTICA;
 
 import java.util.Collection;
 
@@ -82,13 +83,13 @@ public interface WithStep extends QueryPart {
     /**
      * Add another common table expression to the <code>WITH</code> clause.
      */
-    @Support({ DB2, FIREBIRD, H2, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, H2, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE, VERTICA })
     WithAsStep with(String alias);
 
     /**
      * Add another common table expression to the <code>WITH</code> clause.
      */
-    @Support({ DB2, FIREBIRD, H2, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, H2, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE, VERTICA })
     WithAsStep with(String alias, String... fieldAliases);
 
     /**
@@ -102,7 +103,7 @@ public interface WithStep extends QueryPart {
      * {@link DerivedColumnList#as(Select)}</li>
      * </ul>
      */
-    @Support({ DB2, FIREBIRD, H2, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, H2, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE, VERTICA })
     WithStep with(CommonTableExpression<?>... tables);
 
     // -------------------------------------------------------------------------
@@ -116,7 +117,7 @@ public interface WithStep extends QueryPart {
      * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
      * </pre></code>
      */
-    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE, VERTICA })
     <R extends Record> SelectWhereStep<R> selectFrom(Table<R> table);
 
     /**
@@ -140,7 +141,7 @@ public interface WithStep extends QueryPart {
      *
      * @see DSL#select(Collection)
      */
-    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE, VERTICA })
     SelectSelectStep<Record> select(Collection<? extends SelectField<?>> fields);
 
     /**
@@ -165,7 +166,7 @@ public interface WithStep extends QueryPart {
      *
      * @see DSL#select(Field...)
      */
-    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE, VERTICA })
     SelectSelectStep<Record> select(SelectField<?>... fields);
 
     // [jooq-tools] START [select]
@@ -875,7 +876,7 @@ public interface WithStep extends QueryPart {
      *
      * @see DSL#selectDistinct(Collection)
      */
-    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE, VERTICA })
     SelectSelectStep<Record> selectDistinct(Collection<? extends SelectField<?>> fields);
 
     /**
@@ -899,7 +900,7 @@ public interface WithStep extends QueryPart {
      *
      * @see DSL#selectDistinct(Field...)
      */
-    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE, VERTICA })
     SelectSelectStep<Record> selectDistinct(SelectField<?>... fields);
 
     // [jooq-tools] START [selectDistinct]
@@ -932,7 +933,7 @@ public interface WithStep extends QueryPart {
      * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE, VERTICA })
     <T1> SelectSelectStep<Record1<T1>> selectDistinct(SelectField<T1> field1);
 
     /**
@@ -963,7 +964,7 @@ public interface WithStep extends QueryPart {
      * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE, VERTICA })
     <T1, T2> SelectSelectStep<Record2<T1, T2>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2);
 
     /**
@@ -994,7 +995,7 @@ public interface WithStep extends QueryPart {
      * @see #selectDistinct(SelectField...)
      */
     @Generated("This method was generated using jOOQ-tools")
-    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE, VERTICA })
     <T1, T2, T3> SelectSelectStep<Record3<T1, T2, T3>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3);
 
     /**
@@ -1610,7 +1611,7 @@ public interface WithStep extends QueryPart {
      * @see DSL#zero()
      * @see DSL#selectZero()
      */
-    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE, VERTICA })
     SelectSelectStep<Record1<Integer>> selectZero();
 
     /**
@@ -1635,7 +1636,7 @@ public interface WithStep extends QueryPart {
      * @see DSL#one()
      * @see DSL#selectOne()
      */
-    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE, VERTICA })
     SelectSelectStep<Record1<Integer>> selectOne();
 
     /**
@@ -1659,7 +1660,7 @@ public interface WithStep extends QueryPart {
      *
      * @see DSL#selectCount()
      */
-    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE, VERTICA })
     SelectSelectStep<Record1<Integer>> selectCount();
 
     /**

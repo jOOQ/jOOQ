@@ -454,6 +454,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         List<? extends ForeignKey<?, ?>> references;
 
         for (Table<?> table : meta.getTables()) {
+            if (table.getSchema().getName().toUpperCase().equals("MULTI_SCHEMA"))
+                continue;
+
             if (table.getName().equals(TAuthor().getName()))
                 author = table;
 

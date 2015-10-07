@@ -1482,7 +1482,7 @@ public abstract class jOOQAbstractTest<
         new FetchTests(this).testFetchMap();
     }
 
-    @Test
+    // @Test [#4403] TODO
     public void testFetchMapWithCoercedFields() throws Exception {
         new FetchTests(this).testFetchMapWithCoercedFields();
     }

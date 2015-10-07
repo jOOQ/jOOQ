@@ -47,6 +47,7 @@ import java.sql.SQLXML;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
@@ -159,11 +160,33 @@ public class XMLasDOMBinding extends AbstractVarcharBinding<Node> {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
+            // -----------------------------------------------------------------
+            // [#4592] FIX START: Prevent OWASP attack vectors
+            try {
+                factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            }
+            catch (ParserConfigurationException ignore) {}
+
+            try {
+                factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+            }
+            catch (ParserConfigurationException ignore) {}
+
+            try {
+                factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+            }
+            catch (ParserConfigurationException ignore) {}
+
+            factory.setXIncludeAware(false);
+            factory.setExpandEntityReferences(false);
+            // [#4592] FIX END
+            // -----------------------------------------------------------------
+
             // [#9] [#107] In order to take advantage of namespace-related DOM
             // features, the internal builder should be namespace-aware
             factory.setNamespaceAware(true);
-            DocumentBuilder builder = factory.newDocumentBuilder();
 
+            DocumentBuilder builder = factory.newDocumentBuilder();
             return builder;
         }
         catch (Exception e) {

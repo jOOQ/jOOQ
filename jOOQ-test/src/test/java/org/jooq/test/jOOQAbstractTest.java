@@ -2382,7 +2382,7 @@ public abstract class jOOQAbstractTest<
         new InsertUpdateTests(this).testInsertMultiple();
     }
 
-    @Test
+    // @Test [#4402] TODO
     public void testInsertMultipleWithDifferentChangedFlags() throws Exception {
         new InsertUpdateTests(this).testInsertMultipleWithDifferentChangedFlags();
     }

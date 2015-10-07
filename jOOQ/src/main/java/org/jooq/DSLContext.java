@@ -885,7 +885,7 @@ public interface DSLContext extends Scope /* [java-8] */, AutoCloseable /* [/jav
      * be fetched (or iterated over) lazily, fetching records from the
      * {@link ResultSet} one by one.
      * <p>
-     * Unlike {@link #stream(String, Object...)}, the SQL passed to this
+     * Unlike {@link #fetchStream(String, Object...)}, the SQL passed to this
      * method should not contain any bind variables. Instead, you can pass
      * {@link QueryPart} objects to the method which will be rendered at indexed
      * locations of your SQL string as such: <code><pre>

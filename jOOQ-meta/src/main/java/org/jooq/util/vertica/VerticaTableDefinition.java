@@ -41,6 +41,7 @@
 
 package org.jooq.util.vertica;
 
+import static org.jooq.impl.DSL.choose;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.util.vertica.v_catalog.Tables.COLUMNS;
@@ -76,7 +77,9 @@ public class VerticaTableDefinition extends AbstractTableDefinition {
                 .select(
                     COLUMNS.COLUMN_NAME,
                     COLUMNS.ORDINAL_POSITION,
-                    COLUMNS.DATA_TYPE,
+                    choose(COLUMNS.DATA_TYPE)
+                        .when(inline("int"), inline("bigint"))
+                        .otherwise(COLUMNS.DATA_TYPE).as(COLUMNS.DATA_TYPE),
                     COLUMNS.IS_NULLABLE,
                     COLUMNS.COLUMN_DEFAULT,
                     COLUMNS.CHARACTER_MAXIMUM_LENGTH,

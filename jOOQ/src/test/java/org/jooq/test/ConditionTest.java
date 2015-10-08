@@ -62,14 +62,14 @@ public class ConditionTest extends AbstractTest {
 
     @Test
     public void testMapCondition() {
-        Map<Field<?>, Object> m1 = new LinkedHashMap<>();
-        Map<Field<?>, Object> m2 = new LinkedHashMap<>(m1);
+        Map<Field<?>, Object> m1 = new LinkedHashMap<Field<?>, Object>();
+        Map<Field<?>, Object> m2 = new LinkedHashMap<Field<?>, Object>(m1);
         m2.put(FIELD_ID1, 1);
 
-        Map<Field<?>, Object> m3 = new LinkedHashMap<>(m2);
+        Map<Field<?>, Object> m3 = new LinkedHashMap<Field<?>, Object>(m2);
         m3.put(FIELD_ID2, "2");
 
-        Map<Field<?>, Object> m4 = new LinkedHashMap<>(m3);
+        Map<Field<?>, Object> m4 = new LinkedHashMap<Field<?>, Object>(m3);
         m4.put(FIELD_ID3, FIELD_ID1);
         System.out.println(m4);
 

@@ -93,6 +93,7 @@ class CurrentSchema extends AbstractFunction<String> {
             case MYSQL:
                 return field("{database}()", String.class);
 
+            case HSQLDB:
             case POSTGRES:
                 return field("{current_schema}", String.class);
         }

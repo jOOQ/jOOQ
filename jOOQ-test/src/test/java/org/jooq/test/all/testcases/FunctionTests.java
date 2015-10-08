@@ -1162,6 +1162,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                 break;
 
             case H2:
+            case HSQLDB:
                 assertEquals("sa", record.value1());
                 assertEquals("public", record.value2());
                 break;

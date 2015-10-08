@@ -310,11 +310,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
 
         // Redshift, SQL Server, and Vertica support this function, and other
         // ordered set aggregates, but only as window functions
-        if (family() == HSQLDB) {
-            assertEquals(2, create().fetchValue(select(median(TBook_ID())).from(TBook())).intValue());
-            assertEquals(1, create().fetchValue(select(median(TBook_ID()).filterWhere(TBook_ID().ne(4))).from(TBook())).intValue());
-        }
-        else if (family() == SYBASE) {
+        if (asList(HSQLDB, SYBASE).contains(family())) {
             assertEquals(2, create().fetchValue(select(median(TBook_ID())).from(TBook())).intValue());
             assertEquals(2, create().fetchValue(select(median(TBook_ID()).filterWhere(TBook_ID().ne(4))).from(TBook())).intValue());
         }

@@ -389,7 +389,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public void connection(ConnectionRunnable runnable) {
+    public void connection(final ConnectionRunnable runnable) {
         connectionResult(new ConnectionCallable<Void>() {
             @Override
             public Void run(Connection connection) throws Exception {

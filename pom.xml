@@ -376,6 +376,41 @@
             <build>
                 <plugins>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>3.1</version>
+                        <configuration>
+                            <verbose>true</verbose>
+                            <fork>true</fork>
+                            <maxmem>512m</maxmem>
+                            <meminitial>256m</meminitial>
+                            <encoding>UTF-8</encoding>
+                            <source>${java.version}</source>
+                            <target>${java.version}</target>
+                            <debug>true</debug>
+                            <debuglevel>lines,vars,source</debuglevel>
+                            <!-- [#2413] Make compiler warnings a bit more visible
+                                 But don't fail (yet) -->
+                            <compilerArgs>
+                                <arg>-Xlint:varargs</arg>
+                            </compilerArgs>
+
+                            <!-- Define this in your settings.xml, e.g.
+                            <profile>
+                                <id>release-pro-java-6</id>
+                                <properties>
+                                    <JAVA_1_6_HOME>C:\Program Files\Java\jdk1.6.0_45</JAVA_1_6_HOME>
+                                </properties>
+                            </profile>
+                            -->
+
+                            <!-- This doesn't seem to work due to compiler bugs in 1.6.0_45
+                            <executable>${JAVA_1_6_HOME}/bin/javac</executable>
+                             -->
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
                         <inherited>true</inherited>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>

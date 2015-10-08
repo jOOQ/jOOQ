@@ -14,6 +14,54 @@ http://www.jooq.org/inc/RELEASENOTES.txt
 Version 3.7.0 - October 8, 2015
 ================================================================================
 
+jOOQ 3.7 means Java 8
+---------------------
+This release is great news for all of you working with Java 8. From jOOQ 3.7
+onwards, we officially support Java 8 and its new APIs, including Stream,
+Optional, FunctionalInterface, as well as Java 7 features like AutoCloseable,
+SafeVarargs, and many more. The newly introduced Stream type is a very suitable
+match for a JDBC ResultSet, or a jOOQ Cursor, given that jOOQ already knows all
+the type information on individual streaming elements.
+
+The new paradigm that has reached the JDK with Java 8 is functional programming.
+SQL and functional programming are a perfect match for data-driven algorithms
+that aim for transforming values with functions. We've blogged about this in the
+past:
+
+- http://blog.jooq.org/2014/04/11/java-8-friday-no-more-need-for-orms/
+- http://blog.jooq.org/2014/07/11/java-8-friday-more-functional-relational-transformation/
+
+If you're still on an older version of Java, we'll continue supporting Java 6
+for our commercial customers, where we offer a Java 6 build and a Java 8 build.
+
+jOOQ 3.7 means even more Big Data: Azure, Redshift, Vertica
+-----------------------------------------------------------
+SQL is the language of Big Data. When you have billions of rows in your table,
+a column store might seem more suitable than a row store ("NewSQL"), and with
+SQL, you can optimally query, transform, and aggregate your data. jOOQ fits this
+model perfectly!
+
+jOOQ 3.6 added support for SAP HANA. jOOQ 3.7 now also adds support for SQL
+Azure, Redshift, and Vertica. With these additions, jOOQ is the best choic for
+your Java / Big Data application.
+
+jOOQ 3.7 adds support for PostgreSQL 9.5
+----------------------------------------
+PostgreSQL is advancing fast. We've now added support for their next major
+release, which includes GROUPING SETS, UPSERT, SKIP LOCKED, ROW UPDATES and many
+other features
+
+Other minor improvements
+------------------------
+As always, the convenience of the jOOQ API has greatly increased, having added
+new overloads for popular methods as well as new access paths to existing
+functionality.
+
+We've also added support for new JOIN types, such as LEFT SEMI JOIN (EXISTS),
+LEFT ANTI JOIN (NOT EXISTS), or MySQL's STRAIGHT_JOIN syntax.
+
+Writing PL/SQL? Working with TABLE and OBJECT types has now gotten even simpler,
+and we've also added support for Oracle database links.
 
 
 Features and Improvements
@@ -45,7 +93,6 @@ Features and Improvements
 #4253 - Provide an out-of-the-box mapping between jOOQ's SQLDialect and Hibernate dialect names
 #4254 - Add support for default routine parameters in PostgreSQL
 #4255 - Add the PostgreSQL VOID data type
-#4264 - Deprecate the <jpaAnnotations/> code generation flag
 #4271 - Add implicit ScalaResultQuery type to add additional functionality to ResultQuery for Scala users
 #4272 - Add missing <E> E ResultQuery.fetchAny(RecordMapper<? super R, E>)
 #4273 - Add implicit ScalaDSLContext type to add additional functionality to DSLContext for Scala users
@@ -108,7 +155,7 @@ Features and Improvements
 #4538 - Add Constants.XSD_EXPORT and NS_EXPORT
 #4552 - Add DSLContext.connection(ConnectionRunnable)
 #4553 - Add @FunctionalInterface annotation to all relevant callback types
-#4555 - [#4554] Ensure batches are sent
+#4555 - Ensure batches are sent
 #4562 - Do not escape dot in table names during code generation, but use capital case after it
 #4565 - Add Optional support to org.jooq.tools.Convert
 #4566 - Let ArrayRecord<E> extend List<E>
@@ -118,14 +165,12 @@ Features and Improvements
 #4597 - Log warning when <forcedType/> doesn't have any matching SQLDataType or <customType/>
 #4600 - Add support for plain SQL APIs via Scala string interpolation
 
-
 Breaking changes
 ----------------
 #4326 - CREATE SEQUENCE statement lets sequences start with MIN_VALUE, not 1 in Derby
 #4423 - Relax type constraint of DSL.shl() and DSL.shr()
 #4459 - Result.formatHTML() doesn't escape HTML content, which might produce XSS vulnerabilities
 #4488 - Relax bound on <T> for Table.getIdentity() from <? extends Number> to <?>
-
 
 Bug Fixes
 ---------

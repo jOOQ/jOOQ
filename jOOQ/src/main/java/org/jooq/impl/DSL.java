@@ -14326,7 +14326,7 @@ public class DSL {
     /**
      * Get the <code>current_schema()</code> function.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> currentSchema() {
         return new CurrentSchema();
     }

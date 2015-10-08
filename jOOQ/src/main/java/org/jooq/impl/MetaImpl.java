@@ -519,8 +519,8 @@ class MetaImpl implements Meta, Serializable {
                 );
 
                 Map<Record, Result<Record>> groups = result.intoGroups(new Field[] {
-                    result.field(0),
-                    result.field(1),
+                    result.field(inverseSchemaCatalog ? 1 : 0),
+                    result.field(inverseSchemaCatalog ? 0 : 1),
                     result.field(2),
                     result.field(11),
                     result.field(12),
@@ -701,8 +701,8 @@ class MetaImpl implements Meta, Serializable {
                 );
 
                 Map<Record, Result<Record>> groups = result.intoGroups(new Field[] {
-                    result.field(4),
-                    result.field(5),
+                    result.field(inverseSchemaCatalog ? 5 : 4),
+                    result.field(inverseSchemaCatalog ? 4 : 5),
                     result.field(6),
                     result.field(11),
                     result.field(12),

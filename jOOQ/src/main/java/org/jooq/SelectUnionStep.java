@@ -125,7 +125,7 @@ public interface SelectUnionStep<R extends Record> extends SelectFinalStep<R> {
      * Apply the <code>EXCEPT ALL</code> set operation.
      */
     @Override
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, DERBY, POSTGRES })
     SelectOrderByStep<R> exceptAll(Select<? extends R> select);
 
     /**
@@ -139,6 +139,6 @@ public interface SelectUnionStep<R extends Record> extends SelectFinalStep<R> {
      * Apply the <code>INTERSECT ALL</code> set operation.
      */
     @Override
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, DERBY, POSTGRES })
     SelectOrderByStep<R> intersectAll(Select<? extends R> select);
 }

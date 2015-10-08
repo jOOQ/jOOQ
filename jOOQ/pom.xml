@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.jooq</groupId>
         <artifactId>jooq-parent</artifactId>
-        <version>3.7.0</version>
+        <version>3.8.0-SNAPSHOT</version>
     </parent>
 
     <groupId>org.jooq</groupId>
@@ -54,7 +54,7 @@
                     <schemaDirectory>src/main/resources/xsd</schemaDirectory>
                     <bindingDirectory>src/main/resources/xjb</bindingDirectory>
                     <schemaIncludes>
-                        <include>jooq-runtime-3.7.0.xsd</include>
+                        <include>jooq-runtime-3.8.0-SNAPSHOT.xsd</include>
                     </schemaIncludes>
                     <generatePackage>org.jooq.conf</generatePackage>
                     <args>

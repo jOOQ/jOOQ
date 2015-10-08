@@ -24,5 +24,5 @@
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.jooq.test.SQLServerTest"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="jOOQ-test"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dorg.jooq.test-dialects=sqlserver -DXX:+UnlockCommercialFeatures -DXX:+FlightRecorder -javaagent:../jOOQ-test-agent/target/jooq-test-agent-3.7.0-jar-with-dependencies.jar&#13;&#10;-Djava.library.path=${workspace_loc:jOOQ-test}\lib\jtds\x64\SSO"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dorg.jooq.test-dialects=sqlserver -DXX:+UnlockCommercialFeatures -DXX:+FlightRecorder -javaagent:../jOOQ-test-agent/target/jooq-test-agent-3.8.0-SNAPSHOT-jar-with-dependencies.jar&#13;&#10;-Djava.library.path=${workspace_loc:jOOQ-test}\lib\jtds\x64\SSO"/>
 </launchConfiguration>

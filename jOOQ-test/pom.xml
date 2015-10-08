@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.jooq</groupId>
         <artifactId>jooq-parent</artifactId>
-        <version>3.7.0</version>
+        <version>3.8.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>jooq-test</artifactId>
@@ -34,7 +34,7 @@
         <org.hibernate.version>5.0.0.Final</org.hibernate.version>
         <org.springframework.version>4.1.6.RELEASE</org.springframework.version>
         <scala.version>2.10.4</scala.version>
-        <org.jooq.version>3.7.0</org.jooq.version>
+        <org.jooq.version>3.8.0-SNAPSHOT</org.jooq.version>
 
         <db.cubrid.version>9.2.0.0155</db.cubrid.version>
         <db.derby.version>10.11.1.1</db.derby.version>

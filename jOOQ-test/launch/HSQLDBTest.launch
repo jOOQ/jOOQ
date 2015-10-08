@@ -24,6 +24,6 @@
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.jooq.test.HSQLDBTest"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="jOOQ-test"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dorg.jooq.test-dialects=hsqldb -DXX:+UnlockCommercialFeatures -DXX:+FlightRecorder -javaagent:../jOOQ-test-agent/target/jooq-test-agent-3.7.0-jar-with-dependencies.jar"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dorg.jooq.test-dialects=hsqldb -DXX:+UnlockCommercialFeatures -DXX:+FlightRecorder -javaagent:../jOOQ-test-agent/target/jooq-test-agent-3.8.0-SNAPSHOT-jar-with-dependencies.jar"/>
 <stringAttribute key="yk-options" value="&#13;&#10;use-64-bit=true&#13;&#10;additional-options2=onexit\=snapshot&#13;&#10;"/>
 </launchConfiguration>

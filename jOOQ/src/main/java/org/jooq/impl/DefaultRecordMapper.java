@@ -81,7 +81,6 @@ import org.jooq.Record1;
 import org.jooq.RecordMapper;
 import org.jooq.RecordMapperProvider;
 import org.jooq.RecordType;
-import org.jooq.conf.Settings;
 import org.jooq.exception.MappingException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.StringUtils;
@@ -118,9 +117,9 @@ import org.jooq.tools.reflect.Reflect;
  * <code>0.0</code> for <code>double</code>, <code>false</code> for
  * <code>boolean</code>.</li>
  * </ul>
- * <h5>(Deprecated) If a default constructor is available and any JPA
- * {@link Column} annotations are found on the provided <code>&lt;E></code>,
- * only those are used:</h5>
+ * <h5>If a default constructor is available and any JPA {@link Column}
+ * annotations are found on the provided <code>&lt;E></code>, only those are
+ * used:</h5>
  * <p>
  * <ul>
  * <li>If <code>&lt;E></code> contains single-argument instance methods of any
@@ -140,14 +139,6 @@ import org.jooq.tools.reflect.Reflect;
  * <li>Static methods / member fields are ignored</li>
  * <li>Final member fields are ignored</li>
  * </ul>
- * <p>
- * <strong>Deprecation remark:</strong>
- * <p>
- * This functionality has been deprecated in jOOQ 3.7 and will be removed in
- * jOOQ 4.0. In order to keep this functionality enabled, in jOOQ 3.x, use
- * {@link Settings#isMapJPAAnnotations()}. More details here:
- * <a href="https://github.com/jOOQ/jOOQ/issues/4263">https://github.com/jOOQ/
- * jOOQ/issues/4263</a>
  * <p>
  * <h5>If a default constructor is available and if there are no JPA
  * <code>Column</code> annotations, or jOOQ can't find the

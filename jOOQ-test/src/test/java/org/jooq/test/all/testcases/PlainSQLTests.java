@@ -43,6 +43,7 @@ package org.jooq.test.all.testcases;
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.conf.ParamType.INDEXED;
@@ -291,7 +292,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     public void testPlainSQLAmbiguousColumnNames() throws Exception {
 
         // Not all JDBC drivers can access the schema / table names from such statements
-        assumeFamilyNotIn(SQLSERVER);
+        assumeFamilyNotIn(ORACLE, SQLSERVER);
 
         String schema = TBook().getSchema().getName();
         String book = TBook().getName();

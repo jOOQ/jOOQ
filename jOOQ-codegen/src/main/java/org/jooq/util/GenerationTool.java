@@ -421,9 +421,6 @@ public class GenerationTool {
             if (g.getGenerate().getFullyQualifiedTypes() != null)
                 generator.setFullyQualifiedTypes(g.getGenerate().getFullyQualifiedTypes());
 
-            if (Boolean.TRUE.equals(g.getGenerate().isJpaAnnotations()))
-                log.warn("DEPRECATED", "The <jpaAnnotations/> flag is deprecated and used for backwards-compatibility only. It will be removed in the future.");
-
             // [#3669] Optional Database element
             if (g.getDatabase() == null)
                 g.setDatabase(new org.jooq.util.jaxb.Database());

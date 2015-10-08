@@ -153,7 +153,7 @@ class Lambda extends Generators {
                  * </pre></code>
                  */
                 @Generated("This method was generated using jOOQ-tools")
-                static <«TN(degree)», R> Seq<R> zip(«(1 .. degree).map([d | '''Stream<T«d»> s«d»''']).join(", ")», «IF degree == 2»BiFunction«ELSE»Function«degree»«ENDIF»<«TN(degree)», R> zipper) {
+                static <«TN(degree)», R> Seq<R> zip(«(1 .. degree).map([d | '''Stream<T«d»> s«d»''']).join(", ")», «IF degree == 2»BiFunction«ELSE»Function«degree»«ENDIF»<«XXXn(degree, "? super T")», ? extends R> zipper) {
                     return zip(«(1 .. degree).map([d | '''seq(s«d»)''']).join(", ")», zipper);
                 }
             ''')
@@ -171,7 +171,7 @@ class Lambda extends Generators {
                  * </pre></code>
                  */
                 @Generated("This method was generated using jOOQ-tools")
-                static <«TN(degree)», R> Seq<R> zip(«(1 .. degree).map([d | '''Iterable<T«d»> i«d»''']).join(", ")», «IF degree == 2»BiFunction«ELSE»Function«degree»«ENDIF»<«TN(degree)», R> zipper) {
+                static <«TN(degree)», R> Seq<R> zip(«(1 .. degree).map([d | '''Iterable<T«d»> i«d»''']).join(", ")», «IF degree == 2»BiFunction«ELSE»Function«degree»«ENDIF»<«XXXn(degree, "? super T")», ? extends R> zipper) {
                     return zip(«(1 .. degree).map([d | '''seq(i«d»)''']).join(", ")», zipper);
                 }
             ''')
@@ -189,7 +189,7 @@ class Lambda extends Generators {
                  * </pre></code>
                  */
                 @Generated("This method was generated using jOOQ-tools")
-                static <«TN(degree)», R> Seq<R> zip(«(1 .. degree).map([d | '''Seq<T«d»> s«d»''']).join(", ")», «IF degree == 2»BiFunction«ELSE»Function«degree»«ENDIF»<«TN(degree)», R> zipper) {
+                static <«TN(degree)», R> Seq<R> zip(«(1 .. degree).map([d | '''Seq<T«d»> s«d»''']).join(", ")», «IF degree == 2»BiFunction«ELSE»Function«degree»«ENDIF»<«XXXn(degree, "? super T")», ? extends R> zipper) {
                     «FOR d : (1 .. degree)»
                     final Iterator<T«d»> it«d» = s«d».iterator();
                     «ENDFOR»

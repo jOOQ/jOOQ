@@ -87,7 +87,6 @@ import static org.jooq.test.postgres.generatedclasses.Tables.T_EXOTIC_TYPES;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_IDENTITY;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_IDENTITY_PK;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_INHERITANCE_1;
-import static org.jooq.test.postgres.generatedclasses.Tables.T_PG_EXTENSIONS;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_TRIGGERS;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_UNSIGNED;
 import static org.jooq.test.postgres.generatedclasses.Tables.V_AUTHOR;

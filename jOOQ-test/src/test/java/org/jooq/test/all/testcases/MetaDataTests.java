@@ -460,6 +460,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             if (table.getSchema().getName().toUpperCase().equals("MULTI_SCHEMA"))
                 continue;
 
+            if (table.getSchema().getName().toUpperCase().equals("TEST2"))
+                continue;
+
             if (table.getName().equals(TAuthor().getName()))
                 author = table;
 

@@ -50,6 +50,7 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HANA;
+import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INFORMIX;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
@@ -405,7 +406,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testCTEWithDML() {
-        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DERBY, H2, HANA, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, SQLITE, VERTICA);
+        assumeFamilyNotIn(ACCESS, ASE, CUBRID, DERBY, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, SQLITE, VERTICA);
 
         clean(TDates());
 

@@ -3,13 +3,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>jOOQ-tools</groupId>
     <artifactId>jOOQ-tools</artifactId>
-    <version>3.7.0-SNAPSHOT</version>
+    <version>3.7.0</version>
 
     <dependencies>
         <dependency>
             <artifactId>jooq</artifactId>
             <groupId>org.jooq</groupId>
-            <version>3.7.0-SNAPSHOT</version>
+            <version>3.7.0</version>
         </dependency>
         
         <dependency>

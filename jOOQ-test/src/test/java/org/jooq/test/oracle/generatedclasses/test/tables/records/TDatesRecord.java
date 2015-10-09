@@ -6,6 +6,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,8 +16,8 @@ import javax.validation.constraints.NotNull;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Record8;
-import org.jooq.Row8;
+import org.jooq.Record10;
+import org.jooq.Row10;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.test.oracle.generatedclasses.test.tables.TDates;
 import org.jooq.types.DayToSecond;
@@ -29,9 +30,9 @@ import org.jooq.types.YearToMonth;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @Entity
 @Table(name = "T_DATES", schema = "TEST")
-public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements Record8<Integer, Date, Timestamp, Timestamp, Integer, Long, YearToMonth, DayToSecond> {
+public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements Record10<Integer, Date, Timestamp, Timestamp, OffsetDateTime, OffsetDateTime, Integer, Long, YearToMonth, DayToSecond> {
 
-	private static final long serialVersionUID = -1148917152;
+	private static final long serialVersionUID = -2000724286;
 
 	/**
 	 * Setter for <code>TEST.T_DATES.ID</code>.
@@ -96,10 +97,40 @@ public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements R
 	}
 
 	/**
+	 * Setter for <code>TEST.T_DATES.T_TZ</code>.
+	 */
+	public void setTTz(OffsetDateTime value) {
+		setValue(4, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.T_DATES.T_TZ</code>.
+	 */
+	@Column(name = "T_TZ")
+	public OffsetDateTime getTTz() {
+		return (OffsetDateTime) getValue(4);
+	}
+
+	/**
+	 * Setter for <code>TEST.T_DATES.TS_TZ</code>.
+	 */
+	public void setTsTz(OffsetDateTime value) {
+		setValue(5, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.T_DATES.TS_TZ</code>.
+	 */
+	@Column(name = "TS_TZ")
+	public OffsetDateTime getTsTz() {
+		return (OffsetDateTime) getValue(5);
+	}
+
+	/**
 	 * Setter for <code>TEST.T_DATES.D_INT</code>.
 	 */
 	public void setDInt(Integer value) {
-		setValue(4, value);
+		setValue(6, value);
 	}
 
 	/**
@@ -107,14 +138,14 @@ public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements R
 	 */
 	@Column(name = "D_INT", precision = 7)
 	public Integer getDInt() {
-		return (Integer) getValue(4);
+		return (Integer) getValue(6);
 	}
 
 	/**
 	 * Setter for <code>TEST.T_DATES.TS_BIGINT</code>.
 	 */
 	public void setTsBigint(Long value) {
-		setValue(5, value);
+		setValue(7, value);
 	}
 
 	/**
@@ -122,14 +153,14 @@ public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements R
 	 */
 	@Column(name = "TS_BIGINT", precision = 18)
 	public Long getTsBigint() {
-		return (Long) getValue(5);
+		return (Long) getValue(7);
 	}
 
 	/**
 	 * Setter for <code>TEST.T_DATES.I_Y</code>.
 	 */
 	public void setIY(YearToMonth value) {
-		setValue(6, value);
+		setValue(8, value);
 	}
 
 	/**
@@ -137,14 +168,14 @@ public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements R
 	 */
 	@Column(name = "I_Y", precision = 2)
 	public YearToMonth getIY() {
-		return (YearToMonth) getValue(6);
+		return (YearToMonth) getValue(8);
 	}
 
 	/**
 	 * Setter for <code>TEST.T_DATES.I_D</code>.
 	 */
 	public void setID(DayToSecond value) {
-		setValue(7, value);
+		setValue(9, value);
 	}
 
 	/**
@@ -152,7 +183,7 @@ public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements R
 	 */
 	@Column(name = "I_D", precision = 2, scale = 6)
 	public DayToSecond getID() {
-		return (DayToSecond) getValue(7);
+		return (DayToSecond) getValue(9);
 	}
 
 	// -------------------------------------------------------------------------
@@ -168,23 +199,23 @@ public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements R
 	}
 
 	// -------------------------------------------------------------------------
-	// Record8 type implementation
+	// Record10 type implementation
 	// -------------------------------------------------------------------------
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Row8<Integer, Date, Timestamp, Timestamp, Integer, Long, YearToMonth, DayToSecond> fieldsRow() {
-		return (Row8) super.fieldsRow();
+	public Row10<Integer, Date, Timestamp, Timestamp, OffsetDateTime, OffsetDateTime, Integer, Long, YearToMonth, DayToSecond> fieldsRow() {
+		return (Row10) super.fieldsRow();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Row8<Integer, Date, Timestamp, Timestamp, Integer, Long, YearToMonth, DayToSecond> valuesRow() {
-		return (Row8) super.valuesRow();
+	public Row10<Integer, Date, Timestamp, Timestamp, OffsetDateTime, OffsetDateTime, Integer, Long, YearToMonth, DayToSecond> valuesRow() {
+		return (Row10) super.valuesRow();
 	}
 
 	/**
@@ -223,7 +254,23 @@ public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements R
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Field<Integer> field5() {
+	public Field<OffsetDateTime> field5() {
+		return TDates.T_DATES.T_TZ;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Field<OffsetDateTime> field6() {
+		return TDates.T_DATES.TS_TZ;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Field<Integer> field7() {
 		return TDates.T_DATES.D_INT;
 	}
 
@@ -231,7 +278,7 @@ public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements R
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Field<Long> field6() {
+	public Field<Long> field8() {
 		return TDates.T_DATES.TS_BIGINT;
 	}
 
@@ -239,7 +286,7 @@ public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements R
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Field<YearToMonth> field7() {
+	public Field<YearToMonth> field9() {
 		return TDates.T_DATES.I_Y;
 	}
 
@@ -247,7 +294,7 @@ public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements R
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Field<DayToSecond> field8() {
+	public Field<DayToSecond> field10() {
 		return TDates.T_DATES.I_D;
 	}
 
@@ -287,7 +334,23 @@ public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements R
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Integer value5() {
+	public OffsetDateTime value5() {
+		return getTTz();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public OffsetDateTime value6() {
+		return getTsTz();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer value7() {
 		return getDInt();
 	}
 
@@ -295,7 +358,7 @@ public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements R
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Long value6() {
+	public Long value8() {
 		return getTsBigint();
 	}
 
@@ -303,7 +366,7 @@ public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements R
 	 * {@inheritDoc}
 	 */
 	@Override
-	public YearToMonth value7() {
+	public YearToMonth value9() {
 		return getIY();
 	}
 
@@ -311,7 +374,7 @@ public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements R
 	 * {@inheritDoc}
 	 */
 	@Override
-	public DayToSecond value8() {
+	public DayToSecond value10() {
 		return getID();
 	}
 
@@ -355,7 +418,25 @@ public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements R
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TDatesRecord value5(Integer value) {
+	public TDatesRecord value5(OffsetDateTime value) {
+		setTTz(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord value6(OffsetDateTime value) {
+		setTsTz(value);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TDatesRecord value7(Integer value) {
 		setDInt(value);
 		return this;
 	}
@@ -364,7 +445,7 @@ public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements R
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TDatesRecord value6(Long value) {
+	public TDatesRecord value8(Long value) {
 		setTsBigint(value);
 		return this;
 	}
@@ -373,7 +454,7 @@ public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements R
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TDatesRecord value7(YearToMonth value) {
+	public TDatesRecord value9(YearToMonth value) {
 		setIY(value);
 		return this;
 	}
@@ -382,7 +463,7 @@ public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements R
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TDatesRecord value8(DayToSecond value) {
+	public TDatesRecord value10(DayToSecond value) {
 		setID(value);
 		return this;
 	}
@@ -391,7 +472,7 @@ public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements R
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TDatesRecord values(Integer value1, Date value2, Timestamp value3, Timestamp value4, Integer value5, Long value6, YearToMonth value7, DayToSecond value8) {
+	public TDatesRecord values(Integer value1, Date value2, Timestamp value3, Timestamp value4, OffsetDateTime value5, OffsetDateTime value6, Integer value7, Long value8, YearToMonth value9, DayToSecond value10) {
 		value1(value1);
 		value2(value2);
 		value3(value3);
@@ -400,6 +481,8 @@ public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements R
 		value6(value6);
 		value7(value7);
 		value8(value8);
+		value9(value9);
+		value10(value10);
 		return this;
 	}
 
@@ -417,16 +500,18 @@ public class TDatesRecord extends UpdatableRecordImpl<TDatesRecord> implements R
 	/**
 	 * Create a detached, initialised TDatesRecord
 	 */
-	public TDatesRecord(Integer id, Date d, Timestamp t, Timestamp ts, Integer dInt, Long tsBigint, YearToMonth iY, DayToSecond iD) {
+	public TDatesRecord(Integer id, Date d, Timestamp t, Timestamp ts, OffsetDateTime tTz, OffsetDateTime tsTz, Integer dInt, Long tsBigint, YearToMonth iY, DayToSecond iD) {
 		super(TDates.T_DATES);
 
 		setValue(0, id);
 		setValue(1, d);
 		setValue(2, t);
 		setValue(3, ts);
-		setValue(4, dInt);
-		setValue(5, tsBigint);
-		setValue(6, iY);
-		setValue(7, iD);
+		setValue(4, tTz);
+		setValue(5, tsTz);
+		setValue(6, dInt);
+		setValue(7, tsBigint);
+		setValue(8, iY);
+		setValue(9, iD);
 	}
 }

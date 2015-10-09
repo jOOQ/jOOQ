@@ -7,6 +7,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,16 +27,18 @@ import org.jooq.types.YearToMonth;
 @Table(name = "T_DATES", schema = "TEST")
 public class TDates implements Serializable {
 
-	private static final long serialVersionUID = 728891948;
+	private static final long serialVersionUID = 396474413;
 
-	private Integer     id;
-	private Date        d;
-	private Timestamp   t;
-	private Timestamp   ts;
-	private Integer     dInt;
-	private Long        tsBigint;
-	private YearToMonth iY;
-	private DayToSecond iD;
+	private Integer        id;
+	private Date           d;
+	private Timestamp      t;
+	private Timestamp      ts;
+	private OffsetDateTime tTz;
+	private OffsetDateTime tsTz;
+	private Integer        dInt;
+	private Long           tsBigint;
+	private YearToMonth    iY;
+	private DayToSecond    iD;
 
 	public TDates() {}
 
@@ -44,6 +47,8 @@ public class TDates implements Serializable {
 		this.d = value.d;
 		this.t = value.t;
 		this.ts = value.ts;
+		this.tTz = value.tTz;
+		this.tsTz = value.tsTz;
 		this.dInt = value.dInt;
 		this.tsBigint = value.tsBigint;
 		this.iY = value.iY;
@@ -51,19 +56,23 @@ public class TDates implements Serializable {
 	}
 
 	public TDates(
-		Integer     id,
-		Date        d,
-		Timestamp   t,
-		Timestamp   ts,
-		Integer     dInt,
-		Long        tsBigint,
-		YearToMonth iY,
-		DayToSecond iD
+		Integer        id,
+		Date           d,
+		Timestamp      t,
+		Timestamp      ts,
+		OffsetDateTime tTz,
+		OffsetDateTime tsTz,
+		Integer        dInt,
+		Long           tsBigint,
+		YearToMonth    iY,
+		DayToSecond    iD
 	) {
 		this.id = id;
 		this.d = d;
 		this.t = t;
 		this.ts = ts;
+		this.tTz = tTz;
+		this.tsTz = tsTz;
 		this.dInt = dInt;
 		this.tsBigint = tsBigint;
 		this.iY = iY;
@@ -106,6 +115,24 @@ public class TDates implements Serializable {
 
 	public void setTs(Timestamp ts) {
 		this.ts = ts;
+	}
+
+	@Column(name = "T_TZ")
+	public OffsetDateTime getTTz() {
+		return this.tTz;
+	}
+
+	public void setTTz(OffsetDateTime tTz) {
+		this.tTz = tTz;
+	}
+
+	@Column(name = "TS_TZ")
+	public OffsetDateTime getTsTz() {
+		return this.tsTz;
+	}
+
+	public void setTsTz(OffsetDateTime tsTz) {
+		this.tsTz = tsTz;
 	}
 
 	@Column(name = "D_INT", precision = 7)
@@ -177,6 +204,18 @@ public class TDates implements Serializable {
 		}
 		else if (!ts.equals(other.ts))
 			return false;
+		if (tTz == null) {
+			if (other.tTz != null)
+				return false;
+		}
+		else if (!tTz.equals(other.tTz))
+			return false;
+		if (tsTz == null) {
+			if (other.tsTz != null)
+				return false;
+		}
+		else if (!tsTz.equals(other.tsTz))
+			return false;
 		if (dInt == null) {
 			if (other.dInt != null)
 				return false;
@@ -212,6 +251,8 @@ public class TDates implements Serializable {
 		result = prime * result + ((d == null) ? 0 : d.hashCode());
 		result = prime * result + ((t == null) ? 0 : t.hashCode());
 		result = prime * result + ((ts == null) ? 0 : ts.hashCode());
+		result = prime * result + ((tTz == null) ? 0 : tTz.hashCode());
+		result = prime * result + ((tsTz == null) ? 0 : tsTz.hashCode());
 		result = prime * result + ((dInt == null) ? 0 : dInt.hashCode());
 		result = prime * result + ((tsBigint == null) ? 0 : tsBigint.hashCode());
 		result = prime * result + ((iY == null) ? 0 : iY.hashCode());
@@ -227,6 +268,8 @@ public class TDates implements Serializable {
 		sb.append(", ").append(d);
 		sb.append(", ").append(t);
 		sb.append(", ").append(ts);
+		sb.append(", ").append(tTz);
+		sb.append(", ").append(tsTz);
 		sb.append(", ").append(dInt);
 		sb.append(", ").append(tsBigint);
 		sb.append(", ").append(iY);

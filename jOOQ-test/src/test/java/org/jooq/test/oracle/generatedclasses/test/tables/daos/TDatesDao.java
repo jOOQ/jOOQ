@@ -6,6 +6,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.daos;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import org.jooq.Configuration;
@@ -77,6 +78,20 @@ public class TDatesDao extends DAOImpl<TDatesRecord, org.jooq.test.oracle.genera
 	 */
 	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.TDates> fetchByTs(Timestamp... values) {
 		return fetch(TDates.T_DATES.TS, values);
+	}
+
+	/**
+	 * Fetch records that have <code>T_TZ IN (values)</code>
+	 */
+	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.TDates> fetchByTTz(OffsetDateTime... values) {
+		return fetch(TDates.T_DATES.T_TZ, values);
+	}
+
+	/**
+	 * Fetch records that have <code>TS_TZ IN (values)</code>
+	 */
+	public List<org.jooq.test.oracle.generatedclasses.test.tables.pojos.TDates> fetchByTsTz(OffsetDateTime... values) {
+		return fetch(TDates.T_DATES.TS_TZ, values);
 	}
 
 	/**

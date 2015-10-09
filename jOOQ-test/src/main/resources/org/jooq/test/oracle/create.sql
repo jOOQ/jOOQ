@@ -461,6 +461,8 @@ CREATE TABLE t_dates (
   d date,
   t timestamp,
   ts timestamp,
+  t_tz timestamp with time zone,
+  ts_tz timestamp with time zone,
   d_int number(7),
   ts_bigint number(18),
   i_y interval year to month,

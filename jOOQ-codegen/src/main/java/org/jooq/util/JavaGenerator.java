@@ -458,7 +458,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         out.println("}");
-        out.close();
+        closeJavaWriter(out);
 
         watch.splitInfo("Queues generated");
     }
@@ -491,7 +491,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         out.println("}");
-        out.close();
+        closeJavaWriter(out);
 
         watch.splitInfo("Links generated");
     }
@@ -651,7 +651,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         out.println("}");
-        out.close();
+        closeJavaWriter(out);
 
         watch.splitInfo("Keys generated");
     }
@@ -783,14 +783,14 @@ public class JavaGenerator extends AbstractGenerator {
         JavaWriter out = newJavaWriter(getStrategy().getFile(table, Mode.RECORD));
         log.info("Generating record", out.file().getName());
         generateRecord(table, out);
-        out.close();
+        closeJavaWriter(out);
     }
 
     protected void generateUDTRecord(UDTDefinition udt) {
         JavaWriter out = newJavaWriter(getStrategy().getFile(udt, Mode.RECORD));
         log.info("Generating record", out.file().getName());
         generateRecord(udt, out);
-        out.close();
+        closeJavaWriter(out);
     }
 
     protected void generateRecord(TableDefinition table, JavaWriter out) {
@@ -1264,14 +1264,14 @@ public class JavaGenerator extends AbstractGenerator {
         JavaWriter out = newJavaWriter(getStrategy().getFile(table, Mode.INTERFACE));
         log.info("Generating interface", out.file().getName());
         generateInterface(table, out);
-        out.close();
+        closeJavaWriter(out);
     }
 
     protected void generateUDTInterface(UDTDefinition udt) {
         JavaWriter out = newJavaWriter(getStrategy().getFile(udt, Mode.INTERFACE));
         log.info("Generating interface", out.file().getName());
         generateInterface(udt, out);
-        out.close();
+        closeJavaWriter(out);
     }
 
     protected void generateInterface(TableDefinition table, JavaWriter out) {
@@ -1395,7 +1395,7 @@ public class JavaGenerator extends AbstractGenerator {
         JavaWriter out = newJavaWriter(getStrategy().getFile(udt));
         log.info("Generating UDT ", out.file().getName());
         generateUDT(udt, out);
-        out.close();
+        closeJavaWriter(out);
     }
 
     protected void generateUDT(UDTDefinition udt, JavaWriter out) {
@@ -1510,7 +1510,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         generateUDTClassFooter(udt, out);
         out.println("}");
-        out.close();
+        closeJavaWriter(out);
     }
 
     /**
@@ -1663,7 +1663,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         out.println("}");
-        out.close();
+        closeJavaWriter(out);
 
         watch.splitInfo("UDT references generated");
     }
@@ -1687,8 +1687,9 @@ public class JavaGenerator extends AbstractGenerator {
         JavaWriter out = newJavaWriter(getStrategy().getFile(array, Mode.RECORD));
         log.info("Generating ARRAY", out.file().getName());
         generateArray(array, out);
-        out.close();
+        closeJavaWriter(out);
     }
+
 
     protected void generateArray(ArrayDefinition array, JavaWriter out) {
         /* [pro] */
@@ -1817,7 +1818,7 @@ public class JavaGenerator extends AbstractGenerator {
         JavaWriter out = newJavaWriter(getStrategy().getFile(e, Mode.ENUM));
         log.info("Generating ENUM", out.file().getName());
         generateEnum(e, out);
-        out.close();
+        closeJavaWriter(out);
     }
 
     protected void generateEnum(EnumDefinition e, JavaWriter out) {
@@ -1921,7 +1922,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         out.println("}");
-        out.close();
+        closeJavaWriter(out);
 
         watch.splitInfo("Routines generated");
     }
@@ -2000,8 +2001,7 @@ public class JavaGenerator extends AbstractGenerator {
         JavaWriter out = newJavaWriter(getStrategy().getFile(pkg));
         log.info("Generating package", pkg);
         generatePackage(pkg, out);
-        out.close();
-        /* [/pro] */
+        closeJavaWriter(out);
     }
 
     protected void generatePackage(PackageDefinition pkg, JavaWriter out) {
@@ -2110,7 +2110,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         out.println("}");
-        out.close();
+        closeJavaWriter(out);
 
         watch.splitInfo("Table refs generated");
     }
@@ -2134,7 +2134,7 @@ public class JavaGenerator extends AbstractGenerator {
         JavaWriter out = newJavaWriter(getStrategy().getFile(table, Mode.DAO));
         log.info("Generating DAO", out.file().getName());
         generateDao(table, out);
-        out.close();
+        closeJavaWriter(out);
     }
 
     protected void generateDao(TableDefinition table, JavaWriter out) {
@@ -2344,14 +2344,14 @@ public class JavaGenerator extends AbstractGenerator {
         JavaWriter out = newJavaWriter(getStrategy().getFile(table, Mode.POJO));
         log.info("Generating POJO", out.file().getName());
         generatePojo(table, out);
-        out.close();
+        closeJavaWriter(out);
     }
 
     protected void generateUDTPojo(UDTDefinition udt) {
         JavaWriter out = newJavaWriter(getStrategy().getFile(udt, Mode.POJO));
         log.info("Generating POJO", out.file().getName());
         generatePojo(udt, out);
-        out.close();
+        closeJavaWriter(out);
     }
 
     protected void generatePojo(TableDefinition table, JavaWriter out) {
@@ -2639,7 +2639,7 @@ public class JavaGenerator extends AbstractGenerator {
             generateUDTPojoClassFooter((UDTDefinition) tableOrUDT, out);
 
         out.println("}");
-        out.close();
+        closeJavaWriter(out);
     }
 
     protected void generatePojoEqualsAndHashCode(Definition tableOrUDT, JavaWriter out) {
@@ -2867,7 +2867,7 @@ public class JavaGenerator extends AbstractGenerator {
     protected void generateTable(SchemaDefinition schema, TableDefinition table) {
         JavaWriter out = newJavaWriter(getStrategy().getFile(table));
         generateTable(table, out);
-        out.close();
+        closeJavaWriter(out);
     }
 
     protected void generateTable(TableDefinition table, JavaWriter out) {
@@ -3236,7 +3236,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         generateTableClassFooter(table, out);
         out.println("}");
-        out.close();
+        closeJavaWriter(out);
     }
 
     private String escapeString(String comment) {
@@ -3290,7 +3290,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         out.println("}");
-        out.close();
+        closeJavaWriter(out);
 
         watch.splitInfo("Sequences generated");
     }
@@ -3300,7 +3300,7 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating schema", out.file().getName());
         log.info("----------------------------------------------------------");
         generateSchema(schema, out);
-        out.close();
+        closeJavaWriter(out);
     }
 
     protected void generateSchema(SchemaDefinition schema, JavaWriter out) {
@@ -3580,7 +3580,7 @@ public class JavaGenerator extends AbstractGenerator {
         JavaWriter out = newJavaWriter(getStrategy().getFile(routine));
         log.info("Generating routine", out.file().getName());
         generateRoutine(routine, out);
-        out.close();
+        closeJavaWriter(out);
     }
 
     protected void generateRoutine(RoutineDefinition routine, JavaWriter out) {
@@ -4741,18 +4741,23 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private final String classOf(String string) {
-    	if (scala)
-    		return "classOf[" + string + "]";
-    	else
-    		return string + ".class";
+        if (scala)
+            return "classOf[" + string + "]";
+        else
+            return string + ".class";
     }
 
     // [#3880] Users may need to call this method
     protected final JavaWriter newJavaWriter(File file) {
-    	if (scala)
-    		file = new File(file.getParentFile(), file.getName().replace(".java", ".scala"));
+        if (scala)
+            file = new File(file.getParentFile(), file.getName().replace(".java", ".scala"));
 
-        files.add(file);
         return new JavaWriter(file, fullyQualifiedTypes());
+    }
+
+    // [#4626] Users may need to call this method
+    protected final void closeJavaWriter(JavaWriter out) {
+        if (out.close())
+            files.add(out.file());
     }
 }

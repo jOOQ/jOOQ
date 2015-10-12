@@ -233,8 +233,12 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
         return indentTabs;
     }
 
-    public final void close() {
+    public final boolean close() {
         String newContent = beforeClose(sb.toString());
+
+        // [#4626] Don't write empty files
+        if (StringUtils.isBlank(newContent))
+            return false;
 
         try {
             // [#3756] Regenerate files only if there is a difference
@@ -260,7 +264,10 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
                 writer.append(newContent);
                 writer.flush();
                 writer.close();
+
             }
+
+            return true;
         }
         catch (IOException e) {
             throw new GeneratorException("Error writing " + file.getAbsolutePath());

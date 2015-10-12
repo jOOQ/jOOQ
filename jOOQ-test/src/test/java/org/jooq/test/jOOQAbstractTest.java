@@ -2448,6 +2448,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testInsertPlainSQLNoColumns() throws Exception {
+        new InsertUpdateTests(this).testInsertPlainSQLNoColumns();
+    }
+
+    @Test
     public void testInsertReturning() throws Exception {
         new InsertUpdateTests(this).testInsertReturning();
     }

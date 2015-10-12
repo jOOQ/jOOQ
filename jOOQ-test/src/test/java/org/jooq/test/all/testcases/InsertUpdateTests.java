@@ -85,6 +85,7 @@ import static org.jooq.impl.DSL.val;
 import static org.jooq.lambda.Seq.seq;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeNotNull;
 
 import java.math.BigDecimal;
@@ -706,6 +707,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
             assertEquals("select3d", author.getValue(TAuthor_LAST_NAME()));
             assertEquals(33, (int) author.getValue(TAuthor_YEAR_OF_BIRTH()));
         }
+    }
+
+    public void testInsertPlainSQLNoColumns() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        assertEquals(1,
+        create().insertInto(table(name(TBookStore().getName())))
+                .values("a")
+                .execute());
+
+        assertTrue(create().fetchExists(selectFrom(TBookStore()).where(TBookStore_NAME().eq("a"))));
     }
 
     public void testInsertReturning() throws Exception {

@@ -201,7 +201,7 @@ public class GenerationTool {
 
                 Properties properties = properties(j.getProperties());
                 if (!properties.containsKey("user"))
-                    properties.put("user", defaultString(j.getUser()));
+                    properties.put("user", defaultString(defaultString(j.getUser(), j.getUsername())));
                 if (!properties.containsKey("password"))
                     properties.put("password", defaultString(j.getPassword()));
 

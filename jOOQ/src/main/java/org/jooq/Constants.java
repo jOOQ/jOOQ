@@ -101,7 +101,7 @@ public final class Constants {
     /**
      * The current jooq-codegen XSD file name.
      */
-    public static final String XSD_CODEGEN    = "jooq-codegen-3.7.0.xsd";
+    public static final String XSD_CODEGEN    = "jooq-codegen-3.8.0.xsd";
 
     /**
      * The current jooq-codegen XML namespace.

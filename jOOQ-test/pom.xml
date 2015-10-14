@@ -1427,7 +1427,9 @@
                                     <jdbc>
                                         <driver>${db.h2.driver}</driver>
                                         <url>${db.h2.url}</url>
-                                        <user>${db.h2.username}</user>
+                                        
+                                        <!-- [#4124] Test the <username/> synonym of <user/> -->
+                                        <username>${db.h2.username}</username>
                                         <password>${db.h2.password}</password>
                                     </jdbc>
                                     <generator>

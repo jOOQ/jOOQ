@@ -1005,6 +1005,7 @@ public abstract class jOOQAbstractTest<
             jdbcUser =
                 jdbcUser != null ? jdbcUser :
                 jdbc.getUser() != null ? jdbc.getUser() :
+                jdbc.getUsername() != null ? jdbc.getUsername() :
                 getProperty(jdbc.getProperties(), "user");
             jdbcPassword =
                 jdbcPassword != null ? jdbcPassword :

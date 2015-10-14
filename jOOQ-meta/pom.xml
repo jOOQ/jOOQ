@@ -47,7 +47,7 @@
                             <schemaDirectory>src/main/resources/xsd</schemaDirectory>
                             <bindingDirectory>src/main/resources/xjb/codegen</bindingDirectory>
                             <schemaIncludes>
-                                <include>jooq-codegen-3.7.0.xsd</include>
+                                <include>jooq-codegen-3.8.0.xsd</include>
                             </schemaIncludes>
                             <generatePackage>org.jooq.util.jaxb</generatePackage>
                             <args>

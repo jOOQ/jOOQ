@@ -524,10 +524,28 @@ CREATE TABLE accounts (
   account_owner VARCHAR(20) NOT NULL,
   account_name VARCHAR(20) NOT NULL,
   amount DECIMAL(18, 2) NOT NULL
-);
+)/
 
 CREATE TABLE transactions (
   id INT NOT NULL PRIMARY KEY,
   account_id INT NOT NULL,
   amount DECIMAL(18, 2) NOT NULL
-);
+)/
+
+
+DROP TABLE IF EXISTS t_performance_jdbc/
+DROP TABLE IF EXISTS t_performance_jooq/
+
+CREATE TABLE t_performance_jdbc (
+  id INTEGER NOT NULL AUTO_INCREMENT,
+  value_int int,
+  value_string varchar(50),
+  CONSTRAINT pk_t_performance_jdbc_pk PRIMARY KEY (id)
+)/
+
+CREATE TABLE t_performance_jooq (
+  id INTEGER NOT NULL AUTO_INCREMENT,
+  value_int int,
+  value_string varchar(50),
+  CONSTRAINT pk_t_performance_jooq_pk PRIMARY KEY (id)
+)/

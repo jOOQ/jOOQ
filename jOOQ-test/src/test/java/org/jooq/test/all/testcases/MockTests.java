@@ -171,8 +171,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         // Non-cached connection:
         assertEquals(1, newAuthor(5).insert());
 
-        assertEquals(2, create().mockResult(cache, c -> DSL.using(c).fetchCount(TAuthor())));
-        assertEquals(3, create().mockResult(cache, c -> DSL.using(c).select(count(), count()).from(TAuthor()).fetchOne().value1()));
+        assertEquals(2, (int) create().mockResult(cache, c -> DSL.using(c).fetchCount(TAuthor())));
+        assertEquals(3, (int) create().mockResult(cache, c -> DSL.using(c).select(count(), count()).from(TAuthor()).fetchOne().value1()));
         assertEquals(3, create().fetchCount(TAuthor()));
 
         assertEquals(1, newAuthor(6).insert());

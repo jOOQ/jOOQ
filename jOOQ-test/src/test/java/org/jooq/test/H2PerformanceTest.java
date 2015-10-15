@@ -44,6 +44,8 @@ package org.jooq.test;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.lambda.Unchecked.intConsumer;
 import static org.jooq.lambda.Unchecked.runnable;
+import static org.jooq.test.h2.generatedclasses.public_.Tables.T_PERFORMANCE_JDBC;
+import static org.jooq.test.h2.generatedclasses.public_.Tables.T_PERFORMANCE_JOOQ;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.Connection;

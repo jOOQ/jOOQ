@@ -220,7 +220,7 @@ class ReferenceImpl<R extends Record, O extends Record> extends AbstractKey<R> i
         String s1 = "";
         for (Field<?> field : getFields()) {
             sb.append(s1);
-            sb.append(field);
+            sb.append(DSL.name(field.getName()));
 
             s1 = ", ";
         }
@@ -230,9 +230,9 @@ class ReferenceImpl<R extends Record, O extends Record> extends AbstractKey<R> i
         sb.append("(");
 
         String s2 = "";
-        for (Field<?> field : getFields()) {
+        for (Field<?> field : key.getFields()) {
             sb.append(s2);
-            sb.append(field);
+            sb.append(DSL.name(field.getName()));
 
             s2 = ", ";
         }

@@ -172,7 +172,8 @@ public class H2PerformanceTest {
             i -> {
                 ctx.select(T_PERFORMANCE_JOOQ.ID, T_PERFORMANCE_JOOQ.VALUE_INT, T_PERFORMANCE_JOOQ.VALUE_STRING)
                    .from(T_PERFORMANCE_JOOQ)
-                   .fetch();
+                   .fetchLazy()
+                   .forEach(r -> {});
             },
 
             this::init,
@@ -206,7 +207,8 @@ public class H2PerformanceTest {
             },
 
             i -> {
-                ctx.fetch("select id, value_int, value_string from t_performance_jooq");
+                ctx.fetchLazy("select id, value_int, value_string from t_performance_jooq")
+                   .forEach(r -> {});
             },
 
             this::init,

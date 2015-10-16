@@ -181,6 +181,40 @@ public class H2PerformanceTest {
         );
     }
 
+    @Test
+    public void testPerformance_SELECT_LIMIT() {
+        compareWithJDBC(
+            5000000,
+            i -> {
+                try (PreparedStatement stmt = connection.prepareStatement("select id, value_int, value_string from t_performance_jdbc limit 1");
+                    ResultSet rs = stmt.executeQuery()) {
+                    Object[] o;
+
+                    while (rs.next()) {
+                        o = new Object[3];
+                        o[0] = rs.getInt(1); rs.wasNull();
+                        o[1] = rs.getInt(2); rs.wasNull();
+                        o[2] = rs.getString(3); rs.wasNull();
+
+                        // Prevent JIT from optimising this
+                        overhead(o);
+                    }
+                }
+            },
+
+            i -> {
+                ctx.select(T_PERFORMANCE_JOOQ.ID, T_PERFORMANCE_JOOQ.VALUE_INT, T_PERFORMANCE_JOOQ.VALUE_STRING)
+                   .from(T_PERFORMANCE_JOOQ)
+                   .limit(1)
+                   .fetchLazy()
+                   .forEach(r -> {});
+            },
+
+            this::init,
+            this::cleanup
+        );
+    }
+
     private void overhead(Object[] o) {
         Collections.shuffle(Arrays.asList(o));
     }

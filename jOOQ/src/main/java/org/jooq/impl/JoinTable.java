@@ -123,8 +123,8 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep<Rec
     private static final long             serialVersionUID = 8377996833996498178L;
     private static final Clause[]         CLAUSES          = { TABLE, TABLE_JOIN };
 
-    private final Table<?>                lhs;
-    private final Table<?>                rhs;
+    final Table<?>                        lhs;
+    final Table<?>                        rhs;
     private final QueryPartList<Field<?>> rhsPartitionBy;
 
     private final JoinType                type;
@@ -532,14 +532,14 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep<Rec
     @Override
     public final JoinTable onKey(TableField<?, ?>... keyFields) throws DataAccessException {
         if (keyFields != null && keyFields.length > 0) {
-            if (keyFields[0].getTable().equals(unaliased(lhs))) {
+            if (search(lhs, keyFields[0].getTable()) != null) {
                 for (ForeignKey<?, ?> key : lhs.getReferences()) {
                     if (key.getFields().containsAll(asList(keyFields))) {
                         return onKey(key);
                     }
                 }
             }
-            else if (keyFields[0].getTable().equals(unaliased(rhs))) {
+            else if (search(rhs, keyFields[0].getTable()) != null) {
                 for (ForeignKey<?, ?> key : rhs.getReferences()) {
                     if (key.getFields().containsAll(asList(keyFields))) {
                         return onKey(key);
@@ -553,21 +553,47 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep<Rec
 
     @Override
     public final JoinTable onKey(ForeignKey<?, ?> key) {
-        if (key.getTable().equals(unaliased(lhs)))
+        if (search(lhs, key.getTable()) != null)
             return onKey(key, lhs, rhs);
-        else if (key.getTable().equals(unaliased(rhs)))
+        else if (search(rhs, key.getTable()) != null)
             return onKey(key, rhs, lhs);
 
         throw onKeyException();
     }
 
-    private final Table<?> unaliased(Table<?> aliased) {
-        return
-            (aliased instanceof TableImpl)
-          ? (((TableImpl<?>) aliased).alias == null ? (TableImpl<?>) aliased : ((TableImpl<?>) aliased).alias.wrapped())
-          : (aliased instanceof TableAlias)
-          ? ((TableAlias<?>) aliased).alias.wrapped()
-          : aliased;
+    private final Table<?> search(Table<?> tree, Table<?> search) {
+
+        // TODO: Another instanceof, and we should probably resort to
+        //       implementing a new org.jooq.Context to traverse the AST
+        if (tree instanceof TableImpl) {
+            TableImpl<?> t = (TableImpl<?>) tree;
+
+            if (t.alias == null && search.equals(t))
+                return t;
+            else if (t.alias != null && search.equals(t.alias.wrapped()))
+                return t;
+            else
+                return null;
+        }
+        else if (tree instanceof TableAlias) {
+            TableAlias<?> t = (TableAlias<?>) tree;
+
+            if (search.equals(t.alias.wrapped()))
+                return t;
+            else
+                return null;
+        }
+        else if (tree instanceof JoinTable) {
+            JoinTable t = (JoinTable) tree;
+
+            Table<?> r = search(t.lhs, search);
+            if (r == null)
+                r = search(t.rhs, search);
+
+            return r;
+        }
+
+        return tree;
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

@@ -66,6 +66,7 @@ import static org.jooq.impl.DSL.update;
 import static org.jooq.lambda.Unchecked.runnable;
 import static org.jooq.test.h2.generatedclasses.public_.Keys.FK_B2BS_BS_NAME;
 import static org.jooq.test.h2.generatedclasses.public_.Keys.FK_B2BS_B_ID;
+import static org.jooq.test.h2.generatedclasses.public_.Keys.FK_T_BOOK_AUTHOR_ID;
 import static org.jooq.test.h2.generatedclasses.public_.Tables.ACCOUNTS;
 import static org.jooq.test.h2.generatedclasses.public_.Tables.TRANSACTIONS;
 import static org.jooq.test.h2.generatedclasses.public_.Tables.T_2486;
@@ -121,6 +122,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -1112,18 +1114,28 @@ public class H2Test extends jOOQAbstractTest<
 
     @Test
     public void testH2JoinOnKey() {
+        assertEquals(asList(1, 1, 2, 10, 10, 10),
         create().select(T_BOOK_TO_BOOK_STORE.STOCK)
                 .from(T_BOOK_TO_BOOK_STORE)
                 .join(T_BOOK_STORE).onKey()
                 .join(T_BOOK).onKey()
-                .fetch();
+                .orderBy(
+                    T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME,
+                    T_BOOK_TO_BOOK_STORE.BOOK_ID)
+                .fetch()
+                .map(Record1::value1));
 
+        assertEquals(asList(1, 1, 2, 10, 10, 10),
         create().select(T_BOOK_TO_BOOK_STORE.STOCK)
                 .from(T_BOOK_TO_BOOK_STORE)
                 .join(T_BOOK_STORE).onKey(FK_B2BS_BS_NAME)
                 .join(T_BOOK).onKey(FK_B2BS_B_ID)
-                .orderBy(T_BOOK.ID)
-                .fetch();
+                .join(T_AUTHOR).onKey(FK_T_BOOK_AUTHOR_ID)
+                .orderBy(
+                    T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME,
+                    T_BOOK_TO_BOOK_STORE.BOOK_ID)
+                .fetch()
+                .map(Record1::value1));
     }
 
     @Test

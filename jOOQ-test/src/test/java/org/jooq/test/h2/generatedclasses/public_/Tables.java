@@ -16,6 +16,8 @@ import org.jooq.test.h2.generatedclasses.public_.tables.TExoticTypes;
 import org.jooq.test.h2.generatedclasses.public_.tables.TIdentity;
 import org.jooq.test.h2.generatedclasses.public_.tables.TIdentityPk;
 import org.jooq.test.h2.generatedclasses.public_.tables.TLanguage;
+import org.jooq.test.h2.generatedclasses.public_.tables.TPerformanceJdbc;
+import org.jooq.test.h2.generatedclasses.public_.tables.TPerformanceJooq;
 import org.jooq.test.h2.generatedclasses.public_.tables.TTriggers;
 import org.jooq.test.h2.generatedclasses.public_.tables.TUnsigned;
 import org.jooq.test.h2.generatedclasses.public_.tables.T_2327UkOnly;
@@ -245,4 +247,14 @@ public class Tables {
 	 * The table PUBLIC.TRANSACTIONS
 	 */
 	public static final Transactions TRANSACTIONS = org.jooq.test.h2.generatedclasses.public_.tables.Transactions.TRANSACTIONS;
+
+	/**
+	 * The table PUBLIC.T_PERFORMANCE_JDBC
+	 */
+	public static final TPerformanceJdbc T_PERFORMANCE_JDBC = org.jooq.test.h2.generatedclasses.public_.tables.TPerformanceJdbc.T_PERFORMANCE_JDBC;
+
+	/**
+	 * The table PUBLIC.T_PERFORMANCE_JOOQ
+	 */
+	public static final TPerformanceJooq T_PERFORMANCE_JOOQ = org.jooq.test.h2.generatedclasses.public_.tables.TPerformanceJooq.T_PERFORMANCE_JOOQ;
 }

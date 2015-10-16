@@ -8,9 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Identity;
-import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -26,7 +24,7 @@ import org.jooq.test.h2.generatedclasses.public_.tables.records.TPerformanceJdbc
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TPerformanceJdbc extends TableImpl<TPerformanceJdbcRecord> {
 
-	private static final long serialVersionUID = -1044506386;
+	private static final long serialVersionUID = -1175036488;
 
 	/**
 	 * The reference instance of <code>PUBLIC.T_PERFORMANCE_JDBC</code>
@@ -68,13 +66,6 @@ public class TPerformanceJdbc extends TableImpl<TPerformanceJdbcRecord> {
 	 */
 	public TPerformanceJdbc(String alias) {
 		this(alias, T_PERFORMANCE_JDBC);
-	}
-
-	/**
-	 * Create a navigational <code>PUBLIC.T_PERFORMANCE_JDBC</code> table reference
-	 */
-	public <R extends Record> TPerformanceJdbc(Table<R> table, ForeignKey<R, TPerformanceJdbcRecord> key) {
-		this();
 	}
 
 	private TPerformanceJdbc(String alias, Table<TPerformanceJdbcRecord> aliased) {

@@ -20,6 +20,8 @@ import org.jooq.test.h2.generatedclasses.public_.tables.TExoticTypes;
 import org.jooq.test.h2.generatedclasses.public_.tables.TIdentity;
 import org.jooq.test.h2.generatedclasses.public_.tables.TIdentityPk;
 import org.jooq.test.h2.generatedclasses.public_.tables.TLanguage;
+import org.jooq.test.h2.generatedclasses.public_.tables.TPerformanceJdbc;
+import org.jooq.test.h2.generatedclasses.public_.tables.TPerformanceJooq;
 import org.jooq.test.h2.generatedclasses.public_.tables.TTriggers;
 import org.jooq.test.h2.generatedclasses.public_.tables.T_2327UkOnly;
 import org.jooq.test.h2.generatedclasses.public_.tables.T_2698;
@@ -49,6 +51,8 @@ import org.jooq.test.h2.generatedclasses.public_.tables.records.TExoticTypesReco
 import org.jooq.test.h2.generatedclasses.public_.tables.records.TIdentityPkRecord;
 import org.jooq.test.h2.generatedclasses.public_.tables.records.TIdentityRecord;
 import org.jooq.test.h2.generatedclasses.public_.tables.records.TLanguageRecord;
+import org.jooq.test.h2.generatedclasses.public_.tables.records.TPerformanceJdbcRecord;
+import org.jooq.test.h2.generatedclasses.public_.tables.records.TPerformanceJooqRecord;
 import org.jooq.test.h2.generatedclasses.public_.tables.records.TTriggersRecord;
 import org.jooq.test.h2.generatedclasses.public_.tables.records.T_2327UkOnlyRecord;
 import org.jooq.test.h2.generatedclasses.public_.tables.records.T_2698Record;
@@ -83,6 +87,8 @@ public class Keys {
 	public static final Identity<TIdentityRecord, Integer> IDENTITY_T_IDENTITY = Identities0.IDENTITY_T_IDENTITY;
 	public static final Identity<TTriggersRecord, Integer> IDENTITY_T_TRIGGERS = Identities0.IDENTITY_T_TRIGGERS;
 	public static final Identity<T_877Record, Integer> IDENTITY_T_877 = Identities0.IDENTITY_T_877;
+	public static final Identity<TPerformanceJdbcRecord, Integer> IDENTITY_T_PERFORMANCE_JDBC = Identities0.IDENTITY_T_PERFORMANCE_JDBC;
+	public static final Identity<TPerformanceJooqRecord, Integer> IDENTITY_T_PERFORMANCE_JOOQ = Identities0.IDENTITY_T_PERFORMANCE_JOOQ;
 
 	// -------------------------------------------------------------------------
 	// UNIQUE and PRIMARY KEY definitions
@@ -115,6 +121,8 @@ public class Keys {
 	public static final UniqueKey<VBookRecord> SYNTHETIC_PK_V_BOOK = UniqueKeys0.SYNTHETIC_PK_V_BOOK;
 	public static final UniqueKey<AccountsRecord> CONSTRAINT_A = UniqueKeys0.CONSTRAINT_A;
 	public static final UniqueKey<TransactionsRecord> CONSTRAINT_F = UniqueKeys0.CONSTRAINT_F;
+	public static final UniqueKey<TPerformanceJdbcRecord> PK_T_PERFORMANCE_JDBC_PK = UniqueKeys0.PK_T_PERFORMANCE_JDBC_PK;
+	public static final UniqueKey<TPerformanceJooqRecord> PK_T_PERFORMANCE_JOOQ_PK = UniqueKeys0.PK_T_PERFORMANCE_JOOQ_PK;
 
 	// -------------------------------------------------------------------------
 	// FOREIGN KEY definitions
@@ -143,6 +151,8 @@ public class Keys {
 		public static Identity<TIdentityRecord, Integer> IDENTITY_T_IDENTITY = createIdentity(TIdentity.T_IDENTITY, TIdentity.T_IDENTITY.ID);
 		public static Identity<TTriggersRecord, Integer> IDENTITY_T_TRIGGERS = createIdentity(TTriggers.T_TRIGGERS, TTriggers.T_TRIGGERS.ID_GENERATED);
 		public static Identity<T_877Record, Integer> IDENTITY_T_877 = createIdentity(T_877.T_877, T_877.T_877.ID);
+		public static Identity<TPerformanceJdbcRecord, Integer> IDENTITY_T_PERFORMANCE_JDBC = createIdentity(TPerformanceJdbc.T_PERFORMANCE_JDBC, TPerformanceJdbc.T_PERFORMANCE_JDBC.ID);
+		public static Identity<TPerformanceJooqRecord, Integer> IDENTITY_T_PERFORMANCE_JOOQ = createIdentity(TPerformanceJooq.T_PERFORMANCE_JOOQ, TPerformanceJooq.T_PERFORMANCE_JOOQ.ID);
 	}
 
 	private static class UniqueKeys0 extends AbstractKeys {
@@ -173,6 +183,8 @@ public class Keys {
 		public static final UniqueKey<VBookRecord> SYNTHETIC_PK_V_BOOK = createUniqueKey(VBook.V_BOOK, VBook.V_BOOK.ID);
 		public static final UniqueKey<AccountsRecord> CONSTRAINT_A = createUniqueKey(Accounts.ACCOUNTS, Accounts.ACCOUNTS.ID);
 		public static final UniqueKey<TransactionsRecord> CONSTRAINT_F = createUniqueKey(Transactions.TRANSACTIONS, Transactions.TRANSACTIONS.ID);
+		public static final UniqueKey<TPerformanceJdbcRecord> PK_T_PERFORMANCE_JDBC_PK = createUniqueKey(TPerformanceJdbc.T_PERFORMANCE_JDBC, TPerformanceJdbc.T_PERFORMANCE_JDBC.ID);
+		public static final UniqueKey<TPerformanceJooqRecord> PK_T_PERFORMANCE_JOOQ_PK = createUniqueKey(TPerformanceJooq.T_PERFORMANCE_JOOQ, TPerformanceJooq.T_PERFORMANCE_JOOQ.ID);
 	}
 
 	private static class ForeignKeys0 extends AbstractKeys {

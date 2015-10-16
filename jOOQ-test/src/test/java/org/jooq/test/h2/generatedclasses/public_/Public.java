@@ -23,6 +23,8 @@ import org.jooq.test.h2.generatedclasses.public_.tables.TExoticTypes;
 import org.jooq.test.h2.generatedclasses.public_.tables.TIdentity;
 import org.jooq.test.h2.generatedclasses.public_.tables.TIdentityPk;
 import org.jooq.test.h2.generatedclasses.public_.tables.TLanguage;
+import org.jooq.test.h2.generatedclasses.public_.tables.TPerformanceJdbc;
+import org.jooq.test.h2.generatedclasses.public_.tables.TPerformanceJooq;
 import org.jooq.test.h2.generatedclasses.public_.tables.TTriggers;
 import org.jooq.test.h2.generatedclasses.public_.tables.TUnsigned;
 import org.jooq.test.h2.generatedclasses.public_.tables.T_2327UkOnly;
@@ -58,7 +60,7 @@ import org.jooq.test.h2.generatedclasses.public_.tables.Ää;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-	private static final long serialVersionUID = 157514528;
+	private static final long serialVersionUID = -781966878;
 
 	/**
 	 * The reference instance of <code>PUBLIC</code>
@@ -132,6 +134,8 @@ public class Public extends SchemaImpl {
 			V_2603.V_2603,
 			V_3176.V_3176,
 			Accounts.ACCOUNTS,
-			Transactions.TRANSACTIONS);
+			Transactions.TRANSACTIONS,
+			TPerformanceJdbc.T_PERFORMANCE_JDBC,
+			TPerformanceJooq.T_PERFORMANCE_JOOQ);
 	}
 }

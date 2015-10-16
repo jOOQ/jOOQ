@@ -114,6 +114,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     private transient DefaultBindingGetResultSetContext<?> rsContext;
     private transient Iterator<R>                          iterator;
     private transient int                                  rows;
+    private transient boolean                              lockRowsForUpdate;
 
 
     @SuppressWarnings("unchecked")
@@ -132,6 +133,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         this.rsContext = new DefaultBindingGetResultSetContext<Object>(ctx.configuration(), ctx.data(), rs, 0);
         this.intern = new boolean[fields.length];
         this.maxRows = maxRows;
+        this.lockRowsForUpdate = TRUE.equals(ctx.data(DATA_LOCK_ROWS_FOR_UPDATE));
 
         if (internIndexes != null) {
             for (int i : internIndexes) {
@@ -1480,7 +1482,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
                     // [#1296] Force a row-lock by updating the row if the
                     // FOR UPDATE clause is emulated
-                    if (TRUE.equals(ctx.data(DATA_LOCK_ROWS_FOR_UPDATE))) {
+                    if (lockRowsForUpdate) {
                         rs.updateObject(1, rs.getObject(1));
                         rs.updateRow();
                     }

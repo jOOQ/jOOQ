@@ -52,6 +52,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Arrays;
+import java.util.Collections;
 
 import org.jooq.DSLContext;
 import org.jooq.conf.RenderNameStyle;
@@ -160,6 +162,9 @@ public class H2PerformanceTest {
                         o[0] = rs.getInt(1); rs.wasNull();
                         o[1] = rs.getInt(2); rs.wasNull();
                         o[2] = rs.getString(3); rs.wasNull();
+
+                        // Prevent JIT from optimising this
+                        overhead(o);
                     }
                 }
             },
@@ -173,6 +178,10 @@ public class H2PerformanceTest {
             this::init,
             this::cleanup
         );
+    }
+
+    private void overhead(Object[] o) {
+        Collections.shuffle(Arrays.asList(o));
     }
 
     @Test
@@ -189,6 +198,9 @@ public class H2PerformanceTest {
                         o[0] = rs.getInt(1); rs.wasNull();
                         o[1] = rs.getInt(2); rs.wasNull();
                         o[2] = rs.getString(3); rs.wasNull();
+
+                        // Prevent JIT from optimising this
+                        overhead(o);
                     }
                 }
             },

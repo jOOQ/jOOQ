@@ -108,6 +108,9 @@ import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.util.sybase.SybaseDataType;
 
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
+
 
 /**
  * Integration test that creates tables and performs various sql operations.
@@ -115,6 +118,7 @@ import org.jooq.util.sybase.SybaseDataType;
  * @author Espen Stromsnes
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SybaseTest extends jOOQAbstractTest<
         TAuthorRecord,
         Object,

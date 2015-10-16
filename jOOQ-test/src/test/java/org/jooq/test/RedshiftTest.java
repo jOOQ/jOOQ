@@ -98,10 +98,14 @@ import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.util.redshift.RedshiftDataType;
 
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
+
 
 /**
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class RedshiftTest extends jOOQAbstractTest<
         TAuthorRecord,
         Object,

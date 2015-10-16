@@ -116,11 +116,14 @@ import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.util.derby.DerbyDataType;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DerbyTest extends jOOQAbstractTest<
         TAuthorRecord,
         Object,

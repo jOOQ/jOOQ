@@ -47,10 +47,14 @@ import org.jooq.DSLContext;
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
 
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
+
 
 /**
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SQLServerTestInline extends SQLServerTest {
 
     @Override

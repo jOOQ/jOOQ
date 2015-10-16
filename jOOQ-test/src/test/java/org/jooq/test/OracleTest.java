@@ -257,7 +257,9 @@ import org.jooq.types.UShort;
 import org.jooq.util.oracle.OracleDataType;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
 
@@ -270,6 +272,7 @@ import oracle.sql.CLOB;
 /**
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class OracleTest extends jOOQAbstractTest<
         TAuthorRecord,
         org.jooq.test.oracle.generatedclasses.test.tables.pojos.TAuthor,

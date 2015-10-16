@@ -109,12 +109,16 @@ import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.util.informix.InformixDataType;
 
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
+
 
 /**
  * Integration test that creates tables and performs various sql operations.
  *
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class InformixTest extends jOOQAbstractTest<
         TAuthorRecord,
         Object,

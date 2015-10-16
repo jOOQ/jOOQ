@@ -84,6 +84,7 @@ import static org.jooq.test.h2.generatedclasses.public_.Tables.T_DATES;
 import static org.jooq.test.h2.generatedclasses.public_.Tables.T_EXOTIC_TYPES;
 import static org.jooq.test.h2.generatedclasses.public_.Tables.T_IDENTITY;
 import static org.jooq.test.h2.generatedclasses.public_.Tables.T_IDENTITY_PK;
+import static org.jooq.test.h2.generatedclasses.public_.Tables.T_LANGUAGE;
 import static org.jooq.test.h2.generatedclasses.public_.Tables.T_TRIGGERS;
 import static org.jooq.test.h2.generatedclasses.public_.Tables.T_UNSIGNED;
 import static org.jooq.test.h2.generatedclasses.public_.Tables.V_2603;
@@ -184,13 +185,16 @@ import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.util.h2.H2DataType;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  * Integration test for the H2 database
  *
  * @author Espen Stromsnes
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class H2Test extends jOOQAbstractTest<
         TAuthorRecord,
         org.jooq.test.h2.generatedclasses.public_.tables.pojos.TAuthor,

@@ -147,12 +147,15 @@ import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.util.sqlserver.SQLServerDataType;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.w3c.dom.Node;
 
 /**
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SQLServerTest extends jOOQAbstractTest<
         TAuthorRecord,
         Object,

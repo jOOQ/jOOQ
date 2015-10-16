@@ -209,8 +209,10 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.internal.AssumptionViolatedException;
+import org.junit.runners.MethodSorters;
 import org.postgresql.util.PSQLException;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.w3c.dom.Node;
@@ -224,6 +226,7 @@ import com.microsoft.sqlserver.jdbc.SQLServerException;
  * @author Lukas Eder
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public abstract class jOOQAbstractTest<
 
         // T_AUTHOR table
@@ -289,6 +292,7 @@ public abstract class jOOQAbstractTest<
     protected static final List<String>     BOOK_TITLES        = Arrays.asList("1984", "Animal Farm", "O Alquimista", "Brida");
     protected static final List<String>     BOOK_FIRST_NAMES   = Arrays.asList("George", "George", "Paulo", "Paulo");
     protected static final List<String>     BOOK_LAST_NAMES    = Arrays.asList("Orwell", "Orwell", "Coelho", "Coelho");
+    protected static final List<String>     BOOK_LANGUAGE_CDS  = Arrays.asList("en", "en", "pt", "de");
     protected static final List<Integer>    AUTHOR_IDS         = Arrays.asList(1, 2);
     protected static final List<String>     AUTHOR_FIRST_NAMES = Arrays.asList("George", "Paulo");
     protected static final List<String>     AUTHOR_LAST_NAMES  = Arrays.asList("Orwell", "Coelho");

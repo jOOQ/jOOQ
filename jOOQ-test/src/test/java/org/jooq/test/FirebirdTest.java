@@ -114,13 +114,16 @@ import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.util.firebird.FirebirdDataType;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  * Integration test for the SQLite database
  *
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FirebirdTest extends jOOQAbstractTest<
         TAuthorRecord,
         Object,

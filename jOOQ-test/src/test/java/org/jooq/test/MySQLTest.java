@@ -151,12 +151,15 @@ import org.jooq.types.UShort;
 import org.jooq.util.mysql.MySQLDSL;
 import org.jooq.util.mysql.MySQLDataType;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 
 /**
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MySQLTest extends jOOQAbstractTest<
         TAuthorRecord,
         org.jooq.test.mysql.generatedclasses.tables.pojos.TAuthor,

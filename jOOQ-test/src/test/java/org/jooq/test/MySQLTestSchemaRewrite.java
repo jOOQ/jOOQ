@@ -103,10 +103,14 @@ import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.util.mysql.MySQLDataType;
 
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
+
 
 /**
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MySQLTestSchemaRewrite extends jOOQAbstractTest<
         TAuthorRecord,
         org.jooq.test.mysql2.generatedclasses.tables.pojos.TAuthor,

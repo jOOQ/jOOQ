@@ -114,12 +114,16 @@ import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.util.cubrid.CUBRIDDataType;
 
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
+
 
 /**
  * Integration test that creates tables and performs various sql operations.
  *
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CUBRIDTest extends jOOQAbstractTest<
         TAuthorRecord,
         Object,

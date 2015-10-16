@@ -135,12 +135,15 @@ import org.jooq.types.UShort;
 import org.jooq.util.mariadb.MariaDBDSL;
 import org.jooq.util.mariadb.MariaDBDataType;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 
 /**
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MariaDBTest extends jOOQAbstractTest<
         TAuthorRecord,
         org.jooq.test.mariadb.generatedclasses.tables.pojos.TAuthor,

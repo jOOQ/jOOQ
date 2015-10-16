@@ -111,12 +111,16 @@ import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.util.db2.DB2DataType;
 
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
+
 
 /**
  * Integration test that creates tables and performs various sql operations.
  *
  * @author Espen Stromsnes
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DB2Test extends jOOQAbstractTest<
         TAuthorRecord,
         Object,

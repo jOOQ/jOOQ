@@ -64,11 +64,14 @@ import org.jooq.tools.StopWatch;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  * Performance test for the H2 database
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class H2PerformanceTest {
 
     static Connection connection;

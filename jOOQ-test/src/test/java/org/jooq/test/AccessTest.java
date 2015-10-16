@@ -105,9 +105,13 @@ import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.util.access.AccessDataType;
 
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
+
 /**
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AccessTest extends jOOQAbstractTest<
         TAuthorRecord,
         Object,

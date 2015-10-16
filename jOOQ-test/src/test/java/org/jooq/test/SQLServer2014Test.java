@@ -45,9 +45,13 @@ package org.jooq.test;
 
 import org.jooq.SQLDialect;
 
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
+
 /**
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SQLServer2014Test extends SQLServerTest {
 
     @Override

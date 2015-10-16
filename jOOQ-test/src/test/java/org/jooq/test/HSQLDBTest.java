@@ -112,9 +112,13 @@ import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.util.hsqldb.HSQLDBDataType;
 
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
+
 /**
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class HSQLDBTest extends jOOQAbstractTest<
         TAuthorRecord,
         Object,

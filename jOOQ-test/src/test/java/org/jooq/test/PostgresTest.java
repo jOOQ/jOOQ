@@ -207,7 +207,9 @@ import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.NullNode;
 import org.codehaus.jackson.node.ObjectNode;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -218,6 +220,7 @@ import com.google.gson.JsonObject;
 /**
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class PostgresTest extends jOOQAbstractTest<
         TAuthorRecord,
         Object,

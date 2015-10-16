@@ -64,6 +64,8 @@ import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.update;
 import static org.jooq.lambda.Unchecked.runnable;
+import static org.jooq.test.h2.generatedclasses.public_.Keys.FK_B2BS_BS_NAME;
+import static org.jooq.test.h2.generatedclasses.public_.Keys.FK_B2BS_B_ID;
 import static org.jooq.test.h2.generatedclasses.public_.Tables.ACCOUNTS;
 import static org.jooq.test.h2.generatedclasses.public_.Tables.TRANSACTIONS;
 import static org.jooq.test.h2.generatedclasses.public_.Tables.T_2486;
@@ -84,7 +86,6 @@ import static org.jooq.test.h2.generatedclasses.public_.Tables.T_DATES;
 import static org.jooq.test.h2.generatedclasses.public_.Tables.T_EXOTIC_TYPES;
 import static org.jooq.test.h2.generatedclasses.public_.Tables.T_IDENTITY;
 import static org.jooq.test.h2.generatedclasses.public_.Tables.T_IDENTITY_PK;
-import static org.jooq.test.h2.generatedclasses.public_.Tables.T_LANGUAGE;
 import static org.jooq.test.h2.generatedclasses.public_.Tables.T_TRIGGERS;
 import static org.jooq.test.h2.generatedclasses.public_.Tables.T_UNSIGNED;
 import static org.jooq.test.h2.generatedclasses.public_.Tables.V_2603;
@@ -1107,6 +1108,22 @@ public class H2Test extends jOOQAbstractTest<
         assertEquals(4, T_2486.VAL6.getDataType().scale());
         assertEquals(0, T_2486.VAL7.getDataType().scale());
         assertEquals(0, T_2486.VAL8.getDataType().scale());
+    }
+
+    @Test
+    public void testH2JoinOnKey() {
+        create().select(T_BOOK_TO_BOOK_STORE.STOCK)
+                .from(T_BOOK_TO_BOOK_STORE)
+                .join(T_BOOK_STORE).onKey()
+                .join(T_BOOK).onKey()
+                .fetch();
+
+        create().select(T_BOOK_TO_BOOK_STORE.STOCK)
+                .from(T_BOOK_TO_BOOK_STORE)
+                .join(T_BOOK_STORE).onKey(FK_B2BS_BS_NAME)
+                .join(T_BOOK).onKey(FK_B2BS_B_ID)
+                .orderBy(T_BOOK.ID)
+                .fetch();
     }
 
     @Test

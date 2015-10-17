@@ -48,7 +48,7 @@ import static org.jooq.SQLDialect.VERTICA;
 import static org.jooq.conf.RenderNameStyle.LOWER;
 import static org.jooq.conf.RenderNameStyle.UPPER;
 import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.Utils.DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE;
+import static org.jooq.impl.Utils.DataKey.DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE;
 import static org.jooq.impl.Utils.fieldArray;
 import static org.jooq.impl.Utils.unqualify;
 import static org.jooq.util.sqlite.SQLiteDSL.rowid;

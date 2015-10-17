@@ -55,7 +55,7 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.sql;
-import static org.jooq.impl.Utils.DATA_DROP_CONSTRAINT;
+import static org.jooq.impl.Utils.DataKey.DATA_DROP_CONSTRAINT;
 import static org.jooq.impl.Utils.toSQLDDLTypeDeclaration;
 
 import org.jooq.AlterTableAlterStep;

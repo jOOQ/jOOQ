@@ -40,7 +40,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Utils.DATA_LIST_ALREADY_INDENTED;
+import static org.jooq.impl.Utils.DataKey.DATA_LIST_ALREADY_INDENTED;
 
 import org.jooq.Context;
 import org.jooq.Converter;

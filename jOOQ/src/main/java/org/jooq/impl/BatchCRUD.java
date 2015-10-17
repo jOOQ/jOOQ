@@ -41,6 +41,7 @@
 package org.jooq.impl;
 
 import static org.jooq.conf.SettingsTools.executeStaticStatements;
+import static org.jooq.impl.Utils.DataKey.DATA_OMIT_RETURNING_CLAUSE;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -111,7 +112,7 @@ class BatchCRUD implements Batch {
         ));
 
         // [#1537] Communicate with UpdatableRecordImpl
-        local.data(Utils.DATA_OMIT_RETURNING_CLAUSE, true);
+        local.data(DATA_OMIT_RETURNING_CLAUSE, true);
 
         // [#1529] Avoid DEBUG logging of single INSERT / UPDATE statements
         local.settings().setExecuteLogging(false);

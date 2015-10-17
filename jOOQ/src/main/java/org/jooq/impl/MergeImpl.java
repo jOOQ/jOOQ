@@ -57,7 +57,7 @@ import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.nullSafe;
-import static org.jooq.impl.Utils.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
+import static org.jooq.impl.Utils.DataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -44,6 +44,7 @@ import static java.lang.Boolean.TRUE;
 import static org.jooq.impl.RecordDelegate.delegate;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.INSERT;
 import static org.jooq.impl.Utils.indexOrFail;
+import static org.jooq.impl.Utils.DataKey.DATA_OMIT_RETURNING_CLAUSE;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
@@ -168,7 +169,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         // [#1002] Consider also identity columns of non-updatable records
         // [#1537] Avoid refreshing identity columns on batch inserts
         Collection<Field<?>> key = null;
-        if (!TRUE.equals(create.configuration().data(Utils.DATA_OMIT_RETURNING_CLAUSE))) {
+        if (!TRUE.equals(create.configuration().data(DATA_OMIT_RETURNING_CLAUSE))) {
             key = getReturning();
             insert.setReturning(key);
         }

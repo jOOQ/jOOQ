@@ -48,7 +48,7 @@ import static org.jooq.impl.ConstraintImpl.Action.SET_DEFAULT;
 import static org.jooq.impl.ConstraintImpl.Action.SET_NULL;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
-import static org.jooq.impl.Utils.DATA_DROP_CONSTRAINT;
+import static org.jooq.impl.Utils.DataKey.DATA_DROP_CONSTRAINT;
 import static org.jooq.impl.Utils.fieldsByName;
 
 import javax.annotation.Generated;

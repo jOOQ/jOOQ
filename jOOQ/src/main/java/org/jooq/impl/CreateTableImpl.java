@@ -55,7 +55,7 @@ import static org.jooq.SQLDialect.REDSHIFT;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.Utils.DATA_SELECT_INTO_TABLE;
+import static org.jooq.impl.Utils.DataKey.DATA_SELECT_INTO_TABLE;
 
 import java.util.ArrayList;
 import java.util.List;

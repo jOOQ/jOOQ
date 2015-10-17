@@ -40,7 +40,6 @@
  */
 package org.jooq.impl;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.jooq.Configuration;
@@ -69,7 +68,7 @@ abstract class AbstractScope implements Scope {
         }
 
         if (data == null) {
-            data = new HashMap<Object, Object>();
+            data = new DataMap();
         }
 
         this.configuration = configuration;

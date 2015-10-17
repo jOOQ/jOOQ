@@ -52,8 +52,8 @@ import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
 import static org.jooq.conf.SettingsTools.getParamType;
 import static org.jooq.impl.DSL.using;
-import static org.jooq.impl.Utils.DATA_COUNT_BIND_VALUES;
-import static org.jooq.impl.Utils.DATA_FORCE_STATIC_STATEMENT;
+import static org.jooq.impl.Utils.DataKey.DATA_COUNT_BIND_VALUES;
+import static org.jooq.impl.Utils.DataKey.DATA_FORCE_STATIC_STATEMENT;
 import static org.jooq.impl.Utils.consumeExceptions;
 
 import java.sql.PreparedStatement;
@@ -483,13 +483,13 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
             }
         }
 
-        if (cnt.incrementAndGet() > 1000000) {
-            throw new RuntimeException("You have executed > 1000000 queries with the free trial version. Please consider upgrading to a commercial license or contact sales@datageekery.com, if you wish to run more queries with your free trial.");
-        }
-
-        if (exp < System.currentTimeMillis()) {
-            throw new RuntimeException("Your 30 day trial period has ended some time ago. Please consider upgrading to a commercial license or contact sales@datageekery.com, if you wish to extend your free trial.");
-        }
+//        if (cnt.incrementAndGet() > 1000000) {
+//            throw new RuntimeException("You have executed > 1000000 queries with the free trial version. Please consider upgrading to a commercial license or contact sales@datageekery.com, if you wish to run more queries with your free trial.");
+//        }
+//
+//        if (exp < System.currentTimeMillis()) {
+//            throw new RuntimeException("Your 30 day trial period has ended some time ago. Please consider upgrading to a commercial license or contact sales@datageekery.com, if you wish to extend your free trial.");
+//        }
 
         /* [/trial] */ /* [/pro] */
         return result;

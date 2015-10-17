@@ -42,7 +42,7 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
-import static org.jooq.impl.Utils.DATA_LIST_ALREADY_INDENTED;
+import static org.jooq.impl.Utils.DataKey.DATA_LIST_ALREADY_INDENTED;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -59,7 +59,6 @@ import java.util.Collections;
 import org.jooq.DSLContext;
 import org.jooq.conf.RenderNameStyle;
 import org.jooq.conf.Settings;
-import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.lambda.fi.lang.CheckedRunnable;
@@ -92,7 +91,7 @@ public class H2PerformanceTest {
         ctx = DSL.using(connection, new Settings()
             .withExecuteLogging(false)
             .withRenderNameStyle(RenderNameStyle.AS_IS)
-            .withStatementType(StatementType.STATIC_STATEMENT));
+        );
         System.in.read();
         System.in.read();
 

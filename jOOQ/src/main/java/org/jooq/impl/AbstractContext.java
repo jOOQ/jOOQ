@@ -40,6 +40,11 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.SQLSERVER2008;
+import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.impl.Utils.DataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION;
 
@@ -98,15 +103,26 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
         VisitListenerProvider[] providers = configuration.visitListenerProviders();
 
-        this.visitListeners = new VisitListener[providers.length + 1];
+        boolean userInternalVisitListener =
+            false
+        /* [pro] */
+        // [#2080] [#3935] Currently, the InternalVisitListener
+         || SQLSERVER2008 == configuration.dialect()
+         || asList(DB2, ORACLE, SYBASE).contains(configuration.family())
+        /* [/pro] */
+            ;
+
+        this.visitListeners = new VisitListener[providers.length + (userInternalVisitListener ? 1 : 0)];
         this.visitContext = new DefaultVisitContext();
         this.visitParts = new ArrayDeque<QueryPart>();
 
-        for (int i = 0; i < providers.length; i++) {
+        for (int i = 0; i < providers.length; i++)
             this.visitListeners[i] = providers[i].provide();
-        }
 
-        this.visitListeners[providers.length] = new InternalVisitListener();
+        /* [pro] */
+        if (userInternalVisitListener)
+            this.visitListeners[providers.length] = new InternalVisitListener();
+        /* [/pro] */
     }
 
     // ------------------------------------------------------------------------

@@ -71,9 +71,9 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
 
         this.wrappedList = new ArrayList<T>();
 
-        if (wrappedList != null) {
+        // [#4664] Don't allocate the backing array if not necessary!
+        if (wrappedList != null && !wrappedList.isEmpty())
             addAll(wrappedList);
-        }
     }
 
     QueryPartList(T... wrappedList) {

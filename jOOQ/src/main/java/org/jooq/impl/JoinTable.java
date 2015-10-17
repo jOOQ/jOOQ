@@ -84,8 +84,8 @@ import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.selectOne;
-import static org.jooq.impl.Utils.DATA_COLLECTED_SEMI_ANTI_JOIN;
-import static org.jooq.impl.Utils.DATA_COLLECT_SEMI_ANTI_JOIN;
+import static org.jooq.impl.Utils.DataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
+import static org.jooq.impl.Utils.DataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
 
 import java.util.ArrayList;
 import java.util.Collection;

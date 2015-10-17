@@ -98,18 +98,18 @@ import static org.jooq.impl.DSL.orderBy;
 import static org.jooq.impl.DSL.row;
 // ...
 // ...
-import static org.jooq.impl.Utils.DATA_COLLECTED_SEMI_ANTI_JOIN;
-import static org.jooq.impl.Utils.DATA_COLLECT_SEMI_ANTI_JOIN;
-import static org.jooq.impl.Utils.DATA_LOCALLY_SCOPED_DATA_MAP;
-import static org.jooq.impl.Utils.DATA_OMIT_INTO_CLAUSE;
-import static org.jooq.impl.Utils.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
+import static org.jooq.impl.Utils.DataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
+import static org.jooq.impl.Utils.DataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
+import static org.jooq.impl.Utils.DataKey.DATA_LOCALLY_SCOPED_DATA_MAP;
+import static org.jooq.impl.Utils.DataKey.DATA_OMIT_INTO_CLAUSE;
+import static org.jooq.impl.Utils.DataKey.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
 // ...
-import static org.jooq.impl.Utils.DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE;
-import static org.jooq.impl.Utils.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
-import static org.jooq.impl.Utils.DATA_SELECT_INTO_TABLE;
-import static org.jooq.impl.Utils.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
-import static org.jooq.impl.Utils.DATA_WINDOW_DEFINITIONS;
-import static org.jooq.impl.Utils.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
+import static org.jooq.impl.Utils.DataKey.DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE;
+import static org.jooq.impl.Utils.DataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
+import static org.jooq.impl.Utils.DataKey.DATA_SELECT_INTO_TABLE;
+import static org.jooq.impl.Utils.DataKey.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
+import static org.jooq.impl.Utils.DataKey.DATA_WINDOW_DEFINITIONS;
+import static org.jooq.impl.Utils.DataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 import static org.jooq.impl.Utils.fieldArray;
 
 import java.sql.ResultSetMetaData;

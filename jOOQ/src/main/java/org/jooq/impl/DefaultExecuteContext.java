@@ -51,7 +51,6 @@ import java.sql.SQLOutput;
 import java.sql.SQLWarning;
 import java.sql.SQLXML;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -371,7 +370,7 @@ class DefaultExecuteContext implements ExecuteContext {
 
     private DefaultExecuteContext(Configuration configuration, Query query, Query[] batchQueries, Routine<?> routine) {
         this.configuration = configuration;
-        this.data = new HashMap<Object, Object>();
+        this.data = new DataMap();
         this.query = query;
         this.batchQueries = (batchQueries == null ? new Query[0] : batchQueries);
         this.routine = routine;

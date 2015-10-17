@@ -51,7 +51,7 @@ import static org.jooq.impl.Identifiers.QUOTES;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
 import static org.jooq.impl.Identifiers.QUOTE_START_DELIMITER;
-import static org.jooq.impl.Utils.DATA_COUNT_BIND_VALUES;
+import static org.jooq.impl.Utils.DataKey.DATA_COUNT_BIND_VALUES;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;

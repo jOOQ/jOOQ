@@ -59,8 +59,8 @@ import static org.jooq.impl.Term.ARRAY_AGG;
 import static org.jooq.impl.Term.LIST_AGG;
 import static org.jooq.impl.Term.MEDIAN;
 import static org.jooq.impl.Term.ROW_NUMBER;
-import static org.jooq.impl.Utils.DATA_LOCALLY_SCOPED_DATA_MAP;
-import static org.jooq.impl.Utils.DATA_WINDOW_DEFINITIONS;
+import static org.jooq.impl.Utils.DataKey.DATA_LOCALLY_SCOPED_DATA_MAP;
+import static org.jooq.impl.Utils.DataKey.DATA_WINDOW_DEFINITIONS;
 
 import java.math.BigDecimal;
 import java.util.Arrays;

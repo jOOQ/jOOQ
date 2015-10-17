@@ -52,8 +52,8 @@ import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
 import static org.jooq.conf.SettingsTools.getParamType;
 import static org.jooq.impl.DSL.using;
-import static org.jooq.impl.Utils.DATA_COUNT_BIND_VALUES;
-import static org.jooq.impl.Utils.DATA_FORCE_STATIC_STATEMENT;
+import static org.jooq.impl.Utils.DataKey.DATA_COUNT_BIND_VALUES;
+import static org.jooq.impl.Utils.DataKey.DATA_FORCE_STATIC_STATEMENT;
 import static org.jooq.impl.Utils.consumeExceptions;
 
 import java.sql.PreparedStatement;
@@ -483,13 +483,13 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
             x
         x
 
-        xx xxxxxxxxxxxxxxxxxxxxxx x xxxxxxxx x
-            xxxxx xxx xxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxx x xxxxxxx xxxxxxx xxxx xxx xxxx xxxxx xxxxxxxx xxxxxx xxxxxxxx xxxxxxxxx xx x xxxxxxxxxx xxxxxxx xx xxxxxxx xxxxxxxxxxxxxxxxxxxxxx xx xxx xxxx xx xxx xxxx xxxxxxx xxxx xxxx xxxx xxxxxxxxx
-        x
-
-        xx xxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxx xxx xxxxxxxxxxxxxxxxxxxxxx xx xxx xxxxx xxxxxx xxx xxxxx xxxx xxxx xxxx xxxxxx xxxxxxxx xxxxxxxxx xx x xxxxxxxxxx xxxxxxx xx xxxxxxx xxxxxxxxxxxxxxxxxxxxxx xx xxx xxxx xx xxxxxx xxxx xxxx xxxxxxxxx
-        x
+xx        xx xxxxxxxxxxxxxxxxxxxxxx x xxxxxxxx x
+xx            xxxxx xxx xxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxx x xxxxxxx xxxxxxx xxxx xxx xxxx xxxxx xxxxxxxx xxxxxx xxxxxxxx xxxxxxxxx xx x xxxxxxxxxx xxxxxxx xx xxxxxxx xxxxxxxxxxxxxxxxxxxxxx xx xxx xxxx xx xxx xxxx xxxxxxx xxxx xxxx xxxx xxxxxxxxx
+xx        x
+xx
+xx        xx xxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxx x
+xx            xxxxx xxx xxxxxxxxxxxxxxxxxxxxxx xx xxx xxxxx xxxxxx xxx xxxxx xxxx xxxx xxxx xxxxxx xxxxxxxx xxxxxxxxx xx x xxxxxxxxxx xxxxxxx xx xxxxxxx xxxxxxxxxxxxxxxxxxxxxx xx xxx xxxx xx xxxxxx xxxx xxxx xxxxxxxxx
+xx        x
 
         xx xxxxxxxx xx xx [/pro] */
         return result;

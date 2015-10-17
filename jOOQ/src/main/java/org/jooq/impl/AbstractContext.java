@@ -41,7 +41,7 @@
 package org.jooq.impl;
 
 import static org.jooq.conf.ParamType.INDEXED;
-import static org.jooq.impl.Utils.DATA_OMIT_CLAUSE_EVENT_EMISSION;
+import static org.jooq.impl.Utils.DataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION;
 
 import java.sql.PreparedStatement;
 import java.util.ArrayDeque;

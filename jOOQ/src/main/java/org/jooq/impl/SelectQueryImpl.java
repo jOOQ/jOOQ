@@ -98,6 +98,7 @@ import static org.jooq.impl.DSL.orderBy;
 import static org.jooq.impl.DSL.row;
 // ...
 // ...
+import static org.jooq.impl.Utils.fieldArray;
 import static org.jooq.impl.Utils.DataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Utils.DataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Utils.DataKey.DATA_LOCALLY_SCOPED_DATA_MAP;
@@ -110,7 +111,6 @@ import static org.jooq.impl.Utils.DataKey.DATA_SELECT_INTO_TABLE;
 import static org.jooq.impl.Utils.DataKey.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
 import static org.jooq.impl.Utils.DataKey.DATA_WINDOW_DEFINITIONS;
 import static org.jooq.impl.Utils.DataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
-import static org.jooq.impl.Utils.fieldArray;
 
 import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
@@ -1020,20 +1020,15 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         context.start(SELECT_FROM)
                .declareTables(true);
 
-        // The simplest way to see if no FROM clause needs to be rendered is to
-        // render it. But use a new RenderContext (without any VisitListeners)
-        // for that purpose!
-        boolean hasFrom = false
+        // [#....] Some SQL dialects do not require a FROM clause. Others do and
+        //         jOOQ generates a "DUAL" table or something equivalent.
+        //         See also org.jooq.impl.Dual for details.
+        boolean hasFrom = !getFrom().isEmpty()
             /* [pro] xx
             xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxx
             xx [/pro] */
+            || !asList(CUBRID, DERBY, FIREBIRD, HSQLDB).contains(family)
         ;
-
-        if (!hasFrom) {
-            DefaultConfiguration c = new DefaultConfiguration(dialect);
-            String renderedFrom = new DefaultRenderContext(c).render(getFrom());
-            hasFrom = !renderedFrom.isEmpty();
-        }
 
         List<Condition> semiAntiJoinPredicates = null;
 

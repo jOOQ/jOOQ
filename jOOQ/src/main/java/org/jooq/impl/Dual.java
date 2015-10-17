@@ -118,6 +118,7 @@ class Dual extends AbstractTable<Record> {
                 case SQLSERVER:
                 case VERTICA:
                 /* [/pro] */
+                case H2:
                 case POSTGRES:
                 case SQLITE:
                     break;
@@ -168,6 +169,12 @@ class Dual extends AbstractTable<Record> {
                        .sql('.')
                        .literal("SYSDUMMY1");
                     break;
+
+                case MARIADB:
+                case MYSQL:
+                /* [pro] */
+                case ORACLE:
+                /* [/pro] */
 
                 default:
                     ctx.keyword("dual");

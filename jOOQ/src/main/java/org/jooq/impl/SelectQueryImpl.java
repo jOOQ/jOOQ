@@ -1027,7 +1027,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
             /* [pro] xx
             xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxx
             xx [/pro] */
-            || asList(CUBRID, DERBY, FIREBIRD, HSQLDB).contains(family)
+            || asList(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL).contains(family)
         ;
 
         List<Condition> semiAntiJoinPredicates = null;

@@ -274,43 +274,45 @@ public class SchemaMapping implements Serializable {
         // The DefaultConfiguration's ignoreMapping flag!
         if (!renderSchema()) return null;
 
-        Schema result = null;
-        if (schema != null) {
-            String schemaName = schema.getName();
+        Schema result = schema;
+        if (result != null) {
+            String schemaName = result.getName();
 
             // [#2089] DefaultSchema has an empty schema name
             if (!StringUtils.isEmpty(schemaName)) {
 
-                // Lazy initialise schema mapping
-                if (!getSchemata().containsKey(schemaName)) {
+                // [#4652] Don't initialise schema mapping if not necessary
+                if (!mapping().getSchemata().isEmpty()) {
 
-                    // [#1857] thread-safe lazy initialisation for those users who
-                    // want to use a Configuration and dependent objects in a "thread-safe" manner
-                    synchronized (this) {
-                        if (!getSchemata().containsKey(schemaName)) {
-                            Schema mapped = schema;
+                    // Lazy initialise schema mapping
+                    if (!getSchemata().containsKey(schemaName)) {
 
-                            for (MappedSchema s : mapping().getSchemata()) {
+                        // [#1857] thread-safe lazy initialisation for those users who
+                        // want to use a Configuration and dependent objects in a "thread-safe" manner
+                        synchronized (this) {
+                            if (!getSchemata().containsKey(schemaName)) {
+                                for (MappedSchema s : mapping().getSchemata()) {
 
-                                // A configured mapping was found, add a renamed schema
-                                if (schemaName.equals(s.getInput())) {
+                                    // A configured mapping was found, add a renamed schema
+                                    if (schemaName.equals(s.getInput())) {
 
-                                    // Ignore self-mappings and void-mappings
-                                    if (!isBlank(s.getOutput()) && !s.getOutput().equals(s.getInput())) {
-                                        mapped = new RenamedSchema(schema, s.getOutput());
+                                        // Ignore self-mappings and void-mappings
+                                        if (!isBlank(s.getOutput()) && !s.getOutput().equals(s.getInput())) {
+                                            result = new RenamedSchema(result, s.getOutput());
+                                        }
+
+                                        break;
                                     }
-
-                                    break;
                                 }
-                            }
 
-                            // Add mapped schema or self if no mapping was found
-                            getSchemata().put(schemaName, mapped);
+                                // Add mapped schema or self if no mapping was found
+                                getSchemata().put(schemaName, result);
+                            }
                         }
                     }
-                }
 
-                result = getSchemata().get(schemaName);
+                    result = getSchemata().get(schemaName);
+                }
 
                 // The configured default schema is mapped to "null". This prevents
                 // it from being rendered to SQL
@@ -331,16 +333,17 @@ public class SchemaMapping implements Serializable {
      */
     @SuppressWarnings("unchecked")
     public <R extends Record> Table<R> map(Table<R> table) {
-        Table<R> result = null;
+        Table<R> result = table;
 
-        if (table != null) {
-            Schema schema = table.getSchema();
+        // [#4652] Don't initialise table mapping if not necessary
+        if (result != null && !mapping().getSchemata().isEmpty()) {
+            Schema schema = result.getSchema();
 
             // [#1189] Schema can be null in SQLite
             // [#2089] DefaultSchema have empty schema names
             // [#1186] TODO: replace this by calling table.getQualifiedName()
             String schemaName = (schema == null) ? "" : schema.getName();
-            String tableName = table.getName();
+            String tableName = result.getName();
             String key = (schema == null || StringUtils.isEmpty(schemaName)) ? tableName : (schemaName + "." + tableName);
 
             // Lazy initialise table mapping
@@ -350,7 +353,6 @@ public class SchemaMapping implements Serializable {
                 // want to use Configuration and dependent objects in a "thread-safe" manner
                 synchronized (this) {
                     if (!getTables().containsKey(key)) {
-                        Table<R> mapped = table;
 
                         schemaLoop:
                         for (MappedSchema s : mapping().getSchemata()) {
@@ -362,7 +364,7 @@ public class SchemaMapping implements Serializable {
 
                                         // Ignore self-mappings and void-mappings
                                         if (!isBlank(t.getOutput()) && !t.getOutput().equals(t.getInput())) {
-                                            mapped = new RenamedTable<R>(table, t.getOutput());
+                                            result = new RenamedTable<R>(result, t.getOutput());
                                         }
 
                                         break schemaLoop;
@@ -372,7 +374,7 @@ public class SchemaMapping implements Serializable {
                         }
 
                         // Add mapped table or self if no mapping was found
-                        getTables().put(key, mapped);
+                        getTables().put(key, result);
                     }
                 }
             }

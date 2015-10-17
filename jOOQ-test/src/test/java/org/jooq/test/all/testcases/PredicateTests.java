@@ -128,7 +128,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
     }
 
     public void testIsTrue() throws Exception {
-        assertEquals(0, create().select().where(val(null).isTrue()).fetch().size());
+        assertEquals(0, create().select().where(val((Boolean) null).isTrue()).fetch().size());
         assertEquals(0, create().select().where(val("asdf").isTrue()).fetch().size());
 
         assertEquals(0, create().select().where(val(0).isTrue()).fetch().size());
@@ -148,7 +148,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         assertEquals(1, create().select().where(val("on").isTrue()).fetch().size());
 
         assertEquals(0, create().select().where(val("asdf").isFalse()).fetch().size());
-        assertEquals(0, create().select().where(val(null).isFalse()).fetch().size());
+        assertEquals(0, create().select().where(val((Boolean) null).isFalse()).fetch().size());
 
         assertEquals(1, create().select().where(val(0).isFalse()).fetch().size());
         assertEquals(1, create().select().where(val("false").isFalse()).fetch().size());

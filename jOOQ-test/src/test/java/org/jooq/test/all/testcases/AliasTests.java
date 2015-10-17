@@ -183,7 +183,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                     .from(
                         table(select(one().as("one"))).as("t1", "v1"),
                         table(select(two().as("two"), zero().as("zero"))).as("t2", "v2a", "v2b"),
-                        table(select(val(null).as("one"))).as("t3", "v3"))
+                        table(select(val((Integer) null).as("one"))).as("t3", "v3"))
                     .fetchOne();
                 break;
             }

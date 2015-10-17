@@ -14251,7 +14251,7 @@ public class DSL {
      * @return A <code>0</code> literal as a <code>Field</code>
      */
     @Support
-    public static Field<Integer> zero() {
+    public static Param<Integer> zero() {
         return inline(0);
     }
 
@@ -14266,7 +14266,7 @@ public class DSL {
      * @return A <code>1</code> literal as a <code>Field</code>
      */
     @Support
-    public static Field<Integer> one() {
+    public static Param<Integer> one() {
         return inline(1);
     }
 
@@ -14279,7 +14279,7 @@ public class DSL {
      * @return A <code>2</code> literal as a <code>Field</code>
      */
     @Support
-    public static Field<Integer> two() {
+    public static Param<Integer> two() {
         return inline(2);
     }
 

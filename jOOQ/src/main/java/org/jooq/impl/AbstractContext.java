@@ -40,6 +40,11 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
+// ...
+// ...
+// ...
+// ...
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.impl.Utils.DataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION;
 
@@ -98,15 +103,26 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
         VisitListenerProvider[] providers = configuration.visitListenerProviders();
 
-        this.visitListeners = new VisitListener[providers.length + 1];
+        boolean userInternalVisitListener =
+            false
+        /* [pro] xx
+        xx xxxxxxx xxxxxxx xxxxxxxxxx xxx xxxxxxxxxxxxxxxxxxxxx
+         xx xxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxx
+         xx xxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xx [/pro] */
+            ;
+
+        this.visitListeners = new VisitListener[providers.length + (userInternalVisitListener ? 1 : 0)];
         this.visitContext = new DefaultVisitContext();
         this.visitParts = new ArrayDeque<QueryPart>();
 
-        for (int i = 0; i < providers.length; i++) {
+        for (int i = 0; i < providers.length; i++)
             this.visitListeners[i] = providers[i].provide();
-        }
 
-        this.visitListeners[providers.length] = new InternalVisitListener();
+        /* [pro] xx
+        xx xxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxx
+        xx [/pro] */
     }
 
     // ------------------------------------------------------------------------

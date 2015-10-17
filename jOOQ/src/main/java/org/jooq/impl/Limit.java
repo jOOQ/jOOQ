@@ -43,7 +43,9 @@ package org.jooq.impl;
 import static org.jooq.RenderContext.CastMode.NEVER;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.DSL.zero;
 
 import org.jooq.Clause;
 import org.jooq.Context;
@@ -61,13 +63,15 @@ class Limit extends AbstractQueryPart {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 2053741242981425602L;
+    private static final long           serialVersionUID = 2053741242981425602L;
+    private static final Field<Integer> ZERO             = zero();
+    private static final Field<Integer> ONE              = one();
 
-    private Field<Integer>    numberOfRows;
-    private Field<Integer>    offset;
-    private Field<Integer>    offsetOrZero     = inline(0);
-    private Field<Integer>    offsetPlusOne    = inline(1);
-    private boolean           rendersParams;
+    private Field<Integer>              numberOfRows;
+    private Field<Integer>              offset;
+    private Field<Integer>              offsetOrZero     = ZERO;
+    private Field<Integer>              offsetPlusOne    = ONE;
+    private boolean                     rendersParams;
 
     @Override
     public final void accept(Context<?> context) {
@@ -147,7 +151,7 @@ class Limit extends AbstractQueryPart {
                 context.castMode(NEVER)
                        .formatSeparator()
                        .keyword("rows")
-                       .sql(' ').visit(getLowerRownum().add(inline(1)))
+                       .sql(' ').visit(getLowerRownum().add(inline(1, SQLDataType.INTEGER)))
                        .sql(' ').keyword("to")
                        .sql(' ').visit(getUpperRownum())
                        .castMode(castMode);
@@ -330,9 +334,9 @@ class Limit extends AbstractQueryPart {
 
     final void setOffset(int offset) {
         if (offset != 0) {
-            this.offset = val(offset);
+            this.offset = val(offset, SQLDataType.INTEGER);
             this.offsetOrZero = this.offset;
-            this.offsetPlusOne = val(offset + 1);
+            this.offsetPlusOne = val(offset + 1, SQLDataType.INTEGER);
         }
     }
 
@@ -343,7 +347,7 @@ class Limit extends AbstractQueryPart {
     }
 
     final void setNumberOfRows(int numberOfRows) {
-        this.numberOfRows = val(numberOfRows);
+        this.numberOfRows = val(numberOfRows, SQLDataType.INTEGER);
     }
 
     final void setNumberOfRows(Param<Integer> numberOfRows) {

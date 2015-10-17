@@ -488,9 +488,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
                     create().select(val(38)),
                     val("Alfred"),
                     inline("Hitchcock"),
-                    val(null),
+                    val((Object) null),
                     inline((Object) null),
-                    create().select(val(null)).asField())
+                    create().select(val((Object) null)).asField())
                 .execute());
     }
 

@@ -82,12 +82,18 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.UUID;
 
 import javax.annotation.Generated;
 import javax.sql.DataSource;
@@ -263,6 +269,10 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.types.DayToSecond;
+import org.jooq.types.UByte;
+import org.jooq.types.UInteger;
+import org.jooq.types.ULong;
+import org.jooq.types.UShort;
 
 /**
  * A DSL "entry point" providing implementations to the <code>org.jooq</code>
@@ -12538,6 +12548,318 @@ public class DSL {
     }
 
     /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Byte> value(byte value) {
+        return value((Object) value, SQLDataType.TINYINT);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Byte> value(Byte value) {
+        return value((Object) value, SQLDataType.TINYINT);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<UByte> value(UByte value) {
+        return value((Object) value, SQLDataType.TINYINTUNSIGNED);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Short> value(short value) {
+        return value((Object) value, SQLDataType.SMALLINT);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Short> value(Short value) {
+        return value((Object) value, SQLDataType.SMALLINT);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<UShort> value(UShort value) {
+        return value((Object) value, SQLDataType.SMALLINTUNSIGNED);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Integer> value(int value) {
+        return value((Object) value, SQLDataType.INTEGER);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Integer> value(Integer value) {
+        return value((Object) value, SQLDataType.INTEGER);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<UInteger> value(UInteger value) {
+        return value((Object) value, SQLDataType.INTEGERUNSIGNED);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Long> value(long value) {
+        return value((Object) value, SQLDataType.BIGINT);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Long> value(Long value) {
+        return value((Object) value, SQLDataType.BIGINT);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<ULong> value(ULong value) {
+        return value((Object) value, SQLDataType.BIGINTUNSIGNED);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Float> value(float value) {
+        return value((Object) value, SQLDataType.REAL);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Float> value(Float value) {
+        return value((Object) value, SQLDataType.REAL);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Double> value(double value) {
+        return value((Object) value, SQLDataType.DOUBLE);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Double> value(Double value) {
+        return value((Object) value, SQLDataType.DOUBLE);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Boolean> value(boolean value) {
+        return value((Object) value, SQLDataType.BOOLEAN);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Boolean> value(Boolean value) {
+        return value((Object) value, SQLDataType.BOOLEAN);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<BigDecimal> value(BigDecimal value) {
+        return value((Object) value, SQLDataType.DECIMAL);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<BigInteger> value(BigInteger value) {
+        return value((Object) value, SQLDataType.DECIMAL_INTEGER);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<byte[]> value(byte[] value) {
+        return value((Object) value, SQLDataType.VARBINARY);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<String> value(String value) {
+        return value((Object) value, SQLDataType.VARCHAR);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Date> value(Date value) {
+        return value((Object) value, SQLDataType.DATE);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Time> value(Time value) {
+        return value((Object) value, SQLDataType.TIME);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Timestamp> value(Timestamp value) {
+        return value((Object) value, SQLDataType.TIMESTAMP);
+    }
+
+    /* [java-8] */
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<LocalDate> value(LocalDate value) {
+        return value((Object) value, SQLDataType.LOCALDATE);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<LocalTime> value(LocalTime value) {
+        return value((Object) value, SQLDataType.LOCALTIME);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<LocalDateTime> value(LocalDateTime value) {
+        return value((Object) value, SQLDataType.LOCALDATETIME);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<OffsetTime> value(OffsetTime value) {
+        return value((Object) value, SQLDataType.OFFSETTIME);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<OffsetDateTime> value(OffsetDateTime value) {
+        return value((Object) value, SQLDataType.OFFSETDATETIME);
+    }
+    /* [/java-8] */
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static Param<UUID> value(UUID value) {
+        return value((Object) value, SQLDataType.UUID);
+    }
+
+    /**
      * A synonym for {@link #val(Object, Class)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
@@ -12590,6 +12912,628 @@ public class DSL {
         Param<T> val = val(value);
         val.setInline(true);
         return val;
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<Byte> inline(byte value) {
+        return inline((Object) value, SQLDataType.TINYINT);
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<Byte> inline(Byte value) {
+        return inline((Object) value, SQLDataType.TINYINT);
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<UByte> inline(UByte value) {
+        return inline((Object) value, SQLDataType.TINYINTUNSIGNED);
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<Short> inline(short value) {
+        return inline((Object) value, SQLDataType.SMALLINT);
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<Short> inline(Short value) {
+        return inline((Object) value, SQLDataType.SMALLINT);
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<UShort> inline(UShort value) {
+        return inline((Object) value, SQLDataType.SMALLINTUNSIGNED);
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<Integer> inline(int value) {
+        return inline((Object) value, SQLDataType.INTEGER);
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<Integer> inline(Integer value) {
+        return inline((Object) value, SQLDataType.INTEGER);
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<UInteger> inline(UInteger value) {
+        return inline((Object) value, SQLDataType.INTEGERUNSIGNED);
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<Long> inline(long value) {
+        return inline((Object) value, SQLDataType.BIGINT);
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<Long> inline(Long value) {
+        return inline((Object) value, SQLDataType.BIGINT);
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<ULong> inline(ULong value) {
+        return inline((Object) value, SQLDataType.BIGINTUNSIGNED);
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<Float> inline(float value) {
+        return inline((Object) value, SQLDataType.REAL);
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<Float> inline(Float value) {
+        return inline((Object) value, SQLDataType.REAL);
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<Double> inline(double value) {
+        return inline((Object) value, SQLDataType.DOUBLE);
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<Double> inline(Double value) {
+        return inline((Object) value, SQLDataType.DOUBLE);
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<Boolean> inline(boolean value) {
+        return inline((Object) value, SQLDataType.BOOLEAN);
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<Boolean> inline(Boolean value) {
+        return inline((Object) value, SQLDataType.BOOLEAN);
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<BigDecimal> inline(BigDecimal value) {
+        return inline((Object) value, SQLDataType.DECIMAL);
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<BigInteger> inline(BigInteger value) {
+        return inline((Object) value, SQLDataType.DECIMAL_INTEGER);
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<byte[]> inline(byte[] value) {
+        return inline((Object) value, SQLDataType.VARBINARY);
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<String> inline(String value) {
+        return inline((Object) value, SQLDataType.VARCHAR);
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<Date> inline(Date value) {
+        return inline((Object) value, SQLDataType.DATE);
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<Time> inline(Time value) {
+        return inline((Object) value, SQLDataType.TIME);
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<Timestamp> inline(Timestamp value) {
+        return inline((Object) value, SQLDataType.TIMESTAMP);
+    }
+
+    /* [java-8] */
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<LocalDate> inline(LocalDate value) {
+        return inline((Object) value, SQLDataType.LOCALDATE);
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<LocalTime> inline(LocalTime value) {
+        return inline((Object) value, SQLDataType.LOCALTIME);
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<LocalDateTime> inline(LocalDateTime value) {
+        return inline((Object) value, SQLDataType.LOCALDATETIME);
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<OffsetTime> inline(OffsetTime value) {
+        return inline((Object) value, SQLDataType.OFFSETTIME);
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<OffsetDateTime> inline(OffsetDateTime value) {
+        return inline((Object) value, SQLDataType.OFFSETDATETIME);
+    }
+    /* [/java-8] */
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    public static Param<UUID> inline(UUID value) {
+        return inline((Object) value, SQLDataType.UUID);
     }
 
     /**
@@ -12730,6 +13674,287 @@ public class DSL {
     public static <T> Param<T> val(T value) {
         Class<?> type = (value == null) ? Object.class : value.getClass();
         return (Param<T>) val(value, getDataType(type));
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Byte> val(byte value) {
+        return val((Object) value, SQLDataType.TINYINT);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Byte> val(Byte value) {
+        return val((Object) value, SQLDataType.TINYINT);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<UByte> val(UByte value) {
+        return val((Object) value, SQLDataType.TINYINTUNSIGNED);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Short> val(short value) {
+        return val((Object) value, SQLDataType.SMALLINT);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Short> val(Short value) {
+        return val((Object) value, SQLDataType.SMALLINT);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<UShort> val(UShort value) {
+        return val((Object) value, SQLDataType.SMALLINTUNSIGNED);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Integer> val(int value) {
+        return val((Object) value, SQLDataType.INTEGER);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Integer> val(Integer value) {
+        return val((Object) value, SQLDataType.INTEGER);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<UInteger> val(UInteger value) {
+        return val((Object) value, SQLDataType.INTEGERUNSIGNED);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Long> val(long value) {
+        return val((Object) value, SQLDataType.BIGINT);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Long> val(Long value) {
+        return val((Object) value, SQLDataType.BIGINT);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<ULong> val(ULong value) {
+        return val((Object) value, SQLDataType.BIGINTUNSIGNED);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Float> val(float value) {
+        return val((Object) value, SQLDataType.REAL);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Float> val(Float value) {
+        return val((Object) value, SQLDataType.REAL);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Double> val(double value) {
+        return val((Object) value, SQLDataType.DOUBLE);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Double> val(Double value) {
+        return val((Object) value, SQLDataType.DOUBLE);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Boolean> val(boolean value) {
+        return val((Object) value, SQLDataType.BOOLEAN);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Boolean> val(Boolean value) {
+        return val((Object) value, SQLDataType.BOOLEAN);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<BigDecimal> val(BigDecimal value) {
+        return val((Object) value, SQLDataType.DECIMAL);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<BigInteger> val(BigInteger value) {
+        return val((Object) value, SQLDataType.DECIMAL_INTEGER);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<byte[]> val(byte[] value) {
+        return val((Object) value, SQLDataType.VARBINARY);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<String> val(String value) {
+        return val((Object) value, SQLDataType.VARCHAR);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Date> val(Date value) {
+        return val((Object) value, SQLDataType.DATE);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Time> val(Time value) {
+        return val((Object) value, SQLDataType.TIME);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<Timestamp> val(Timestamp value) {
+        return val((Object) value, SQLDataType.TIMESTAMP);
+    }
+
+    /* [java-8] */
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<LocalDate> val(LocalDate value) {
+        return val((Object) value, SQLDataType.LOCALDATE);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<LocalTime> val(LocalTime value) {
+        return val((Object) value, SQLDataType.LOCALTIME);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<LocalDateTime> val(LocalDateTime value) {
+        return val((Object) value, SQLDataType.LOCALDATETIME);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<OffsetTime> val(OffsetTime value) {
+        return val((Object) value, SQLDataType.OFFSETTIME);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<OffsetDateTime> val(OffsetDateTime value) {
+        return val((Object) value, SQLDataType.OFFSETDATETIME);
+    }
+    /* [/java-8] */
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    public static Param<UUID> val(UUID value) {
+        return val((Object) value, SQLDataType.UUID);
     }
 
     /**

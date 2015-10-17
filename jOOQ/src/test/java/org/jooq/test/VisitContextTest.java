@@ -522,7 +522,7 @@ public class VisitContextTest extends AbstractTest {
             asList(INSERT, INSERT_RETURNING)
         ),
         ctx.insertInto(TABLE1)
-           .select(select(val(1), val("value"), val(null))));
+           .select(select(val(1), val("value"), val((Object) null))));
     }
 
     @Test

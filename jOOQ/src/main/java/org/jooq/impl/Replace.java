@@ -70,7 +70,7 @@ class Replace extends AbstractFunction<String> {
             /* [pro] */
             case ASE: {
                 if (args.length == 2) {
-                    return function("str_replace", VARCHAR, args[0], args[1], val(null));
+                    return function("str_replace", VARCHAR, args[0], args[1], val((String) null));
                 }
                 else {
                     return function("str_replace", VARCHAR, args);

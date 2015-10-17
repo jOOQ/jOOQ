@@ -279,7 +279,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     public DefaultDSLContext(Configuration configuration) {
-        super(configuration);
+        super(configuration, configuration == null ? null : configuration.data());
     }
 
     // -------------------------------------------------------------------------
@@ -434,22 +434,22 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public String render(QueryPart part) {
-        return renderContext().render(part);
+        return renderContext().visit(part).render();
     }
 
     @Override
     public String renderNamedParams(QueryPart part) {
-        return renderContext().paramType(NAMED).render(part);
+        return renderContext().paramType(NAMED).visit(part).render();
     }
 
     @Override
     public String renderNamedOrInlinedParams(QueryPart part) {
-        return renderContext().paramType(NAMED_OR_INLINED).render(part);
+        return renderContext().paramType(NAMED_OR_INLINED).visit(part).render();
     }
 
     @Override
     public String renderInlined(QueryPart part) {
-        return renderContext().paramType(INLINED).render(part);
+        return renderContext().paramType(INLINED).visit(part).render();
     }
 
     @Override

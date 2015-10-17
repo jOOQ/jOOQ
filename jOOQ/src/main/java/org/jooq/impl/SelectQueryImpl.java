@@ -1027,7 +1027,7 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
             /* [pro] */
             || (context.data(DATA_RENDERING_DB2_FINAL_TABLE_CLAUSE) != null)
             /* [/pro] */
-            || !asList(ACCESS, CUBRID, DB2, DERBY, FIREBIRD, HSQLDB, INFORMIX, INGRES, HANA, SYBASE).contains(family)
+            || asList(ACCESS, CUBRID, DB2, DERBY, FIREBIRD, HSQLDB, INFORMIX, INGRES, HANA, SYBASE).contains(family)
         ;
 
         List<Condition> semiAntiJoinPredicates = null;

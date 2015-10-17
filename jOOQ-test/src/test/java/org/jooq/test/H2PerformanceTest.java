@@ -189,7 +189,7 @@ public class H2PerformanceTest {
     @Test
     public void testPerformance_SELECT_LIMIT() {
         compareWithJDBC(
-            5000000,
+            25000000,
             i -> {
                 try (PreparedStatement stmt = connection.prepareStatement("select id, value_int, value_string from t_performance_jdbc limit 1");
                     ResultSet rs = stmt.executeQuery()) {

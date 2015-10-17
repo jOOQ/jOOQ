@@ -70,7 +70,7 @@ class Replace extends AbstractFunction<String> {
             /* [pro] xx
             xxxx xxxx x
                 xx xxxxxxxxxxxx xx xx x
-                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxxxxx
+                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxxxxxx xxxxxxx
                 x
                 xxxx x
                     xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxx

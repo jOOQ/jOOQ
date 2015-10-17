@@ -42,6 +42,7 @@
 package org.jooq.test;
 
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.impl.DSL.one;
 import static org.jooq.lambda.Unchecked.intConsumer;
 import static org.jooq.lambda.Unchecked.runnable;
 import static org.jooq.test.h2.generatedclasses.public_.Tables.T_PERFORMANCE_JDBC;
@@ -58,6 +59,7 @@ import java.util.Collections;
 import org.jooq.DSLContext;
 import org.jooq.conf.RenderNameStyle;
 import org.jooq.conf.Settings;
+import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.lambda.fi.lang.CheckedRunnable;
@@ -87,7 +89,10 @@ public class H2PerformanceTest {
             jOOQAbstractTest.getPassword(H2)
         );
 
-        ctx = DSL.using(connection, new Settings().withExecuteLogging(false).withRenderNameStyle(RenderNameStyle.AS_IS));
+        ctx = DSL.using(connection, new Settings()
+            .withExecuteLogging(false)
+            .withRenderNameStyle(RenderNameStyle.AS_IS)
+            .withStatementType(StatementType.STATIC_STATEMENT));
         System.in.read();
         System.in.read();
 
@@ -205,7 +210,7 @@ public class H2PerformanceTest {
             i -> {
                 ctx.select(T_PERFORMANCE_JOOQ.ID, T_PERFORMANCE_JOOQ.VALUE_INT, T_PERFORMANCE_JOOQ.VALUE_STRING)
                    .from(T_PERFORMANCE_JOOQ)
-                   .limit(1)
+                   .limit(one())
                    .fetchLazy()
                    .forEach(r -> {});
             },

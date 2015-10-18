@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -529,6 +530,11 @@ final class UpdateImpl<R extends Record>
     @Override
     public final UpdateWhereStep<R> from(String sql, QueryPart... parts) {
         return from(table(sql, parts));
+    }
+
+    @Override
+    public final UpdateWhereStep<R> from(Name name) {
+        return from(table(name));
     }
 
     @Override

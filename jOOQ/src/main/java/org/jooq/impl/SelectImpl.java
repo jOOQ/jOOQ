@@ -328,6 +328,11 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     }
 
     @Override
+    public final SelectJoinStep<R> from(Name name) {
+        return from(table(name));
+    }
+
+    @Override
     public final SelectImpl where(Condition... conditions) {
         conditionStep = ConditionStep.WHERE;
         getQuery().addConditions(conditions);
@@ -2149,7 +2154,7 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     }
 
     @Override
-    public final SelectOnStep<R> fullOuterJoin(TableLike<?> table) {
+    public final SelectImpl fullOuterJoin(TableLike<?> table) {
         return join(table, JoinType.FULL_OUTER_JOIN);
     }
 
@@ -2183,7 +2188,7 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     }
 
     @Override
-    public final SelectJoinStep<R> crossJoin(TableLike<?> table) {
+    public final SelectImpl crossJoin(TableLike<?> table) {
         return join(table, JoinType.CROSS_JOIN);
     }
 
@@ -2248,6 +2253,11 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     }
 
     @Override
+    public final SelectImpl join(Name name) {
+        return innerJoin(table(name));
+    }
+
+    @Override
     public final SelectImpl innerJoin(SQL sql) {
         return innerJoin(table(sql));
     }
@@ -2265,6 +2275,11 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     @Override
     public final SelectImpl innerJoin(String sql, QueryPart... parts) {
         return innerJoin(table(sql, parts));
+    }
+
+    @Override
+    public final SelectImpl innerJoin(Name name) {
+        return innerJoin(table(name));
     }
 
     @Override
@@ -2288,6 +2303,11 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     }
 
     @Override
+    public final SelectImpl leftJoin(Name name) {
+        return leftOuterJoin(table(name));
+    }
+
+    @Override
     public final SelectImpl leftOuterJoin(SQL sql) {
         return leftOuterJoin(table(sql));
     }
@@ -2305,6 +2325,11 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     @Override
     public final SelectImpl leftOuterJoin(String sql, QueryPart... parts) {
         return leftOuterJoin(table(sql, parts));
+    }
+
+    @Override
+    public final SelectImpl leftOuterJoin(Name name) {
+        return leftOuterJoin(table(name));
     }
 
     @Override
@@ -2328,6 +2353,11 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     }
 
     @Override
+    public final SelectImpl rightJoin(Name name) {
+        return rightOuterJoin(table(name));
+    }
+
+    @Override
     public final SelectImpl rightOuterJoin(SQL sql) {
         return rightOuterJoin(table(sql));
     }
@@ -2345,6 +2375,11 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     @Override
     public final SelectImpl rightOuterJoin(String sql, QueryPart... parts) {
         return rightOuterJoin(table(sql, parts));
+    }
+
+    @Override
+    public final SelectImpl rightOuterJoin(Name name) {
+        return rightOuterJoin(table(name));
     }
 
     @Override
@@ -2368,6 +2403,11 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     }
 
     @Override
+    public final SelectImpl fullOuterJoin(Name name) {
+        return fullOuterJoin(table(name));
+    }
+
+    @Override
     public final SelectJoinStep<R> crossJoin(SQL sql) {
         return crossJoin(table(sql));
     }
@@ -2385,6 +2425,11 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     @Override
     public final SelectJoinStep<R> crossJoin(String sql, QueryPart... parts) {
         return crossJoin(table(sql, parts));
+    }
+
+    @Override
+    public final SelectImpl crossJoin(Name name) {
+        return crossJoin(table(name));
     }
 
     @Override
@@ -2408,6 +2453,11 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     }
 
     @Override
+    public final SelectImpl naturalJoin(Name name) {
+        return naturalJoin(table(name));
+    }
+
+    @Override
     public final SelectImpl naturalLeftOuterJoin(SQL sql) {
         return naturalLeftOuterJoin(table(sql));
     }
@@ -2425,6 +2475,11 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     @Override
     public final SelectImpl naturalLeftOuterJoin(String sql, QueryPart... parts) {
         return naturalLeftOuterJoin(table(sql, parts));
+    }
+
+    @Override
+    public final SelectImpl naturalLeftOuterJoin(Name name) {
+        return naturalLeftOuterJoin(table(name));
     }
 
     @Override
@@ -2448,6 +2503,11 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     }
 
     @Override
+    public final SelectImpl naturalRightOuterJoin(Name name) {
+        return naturalRightOuterJoin(table(name));
+    }
+
+    @Override
     public final SelectImpl crossApply(SQL sql) {
         return crossApply(table(sql));
     }
@@ -2468,6 +2528,11 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     }
 
     @Override
+    public final SelectImpl crossApply(Name name) {
+        return crossApply(table(name));
+    }
+
+    @Override
     public final SelectImpl outerApply(SQL sql) {
         return outerApply(table(sql));
     }
@@ -2485,6 +2550,11 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     @Override
     public final SelectImpl outerApply(String sql, QueryPart... parts) {
         return outerApply(table(sql, parts));
+    }
+
+    @Override
+    public final SelectImpl outerApply(Name name) {
+        return outerApply(table(name));
     }
 
     /* [pro] */
@@ -2510,6 +2580,11 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     @Override
     public final SelectImpl straightJoin(String sql, QueryPart... parts) {
         return straightJoin(table(sql, parts));
+    }
+
+    @Override
+    public final SelectImpl straightJoin(Name name) {
+        return straightJoin(table(name));
     }
 
     @Override

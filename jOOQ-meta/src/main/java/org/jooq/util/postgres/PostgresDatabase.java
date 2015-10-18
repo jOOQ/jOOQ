@@ -50,7 +50,6 @@ import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectOne;
-import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.upper;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.util.postgres.PostgresDSL.arrayAppend;
@@ -499,7 +498,7 @@ public class PostgresDatabase extends AbstractDatabase {
                                  .when(c.CONSRC.isNull(), src)
                                  .otherwise(arrayAppend(src, c.CONSRC))
                          )
-                        .from(table(name("domains")))
+                        .from(name("domains"))
                         .join(d)
                             .on(field(name("domains", d.TYPBASETYPE.getName())).eq(oid(d)))
                         .leftJoin(c)
@@ -514,7 +513,7 @@ public class PostgresDatabase extends AbstractDatabase {
                         b.TYPLEN,
                         src)
                     .from(d)
-                    .join(table(name("domains")))
+                    .join(name("domains"))
                         .on(field(name("domains", "typbasetype")).eq(0))
                         .and(field(name("domains", "domain_id")).eq(oid(d)))
                     .join(b)

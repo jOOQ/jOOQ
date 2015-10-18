@@ -167,6 +167,14 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
     SelectJoinStep<R> from(String sql, QueryPart... parts);
 
     /**
+     * Add a <code>FROM</code> clause to the query.
+     *
+     * @see DSL#table(Name)
+     */
+    @Support
+    SelectJoinStep<R> from(Name name);
+
+    /**
      * Add an Oracle-style hint to the preceding select clause.
      * <p>
      * Example: <code><pre>

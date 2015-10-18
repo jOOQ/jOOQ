@@ -215,6 +215,21 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
 
     /**
      * Convenience method to <code>INNER JOIN</code> a table to the last table
+     * added to the <code>FROM</code> clause using
+     * {@link Table#join(Name)}.
+     * <p>
+     * A synonym for {@link #innerJoin(Name)}.
+     *
+     * @see DSL#table(Name)
+     * @see Table#join(Name)
+     * @see #innerJoin(Name)
+     */
+    @Support
+    @PlainSQL
+    SelectOnStep<R> join(Name name);
+
+    /**
+     * Convenience method to <code>INNER JOIN</code> a table to the last table
      * added to the <code>FROM</code> clause using {@link Table#join(TableLike)}.
      *
      * @see Table#innerJoin(TableLike)
@@ -291,6 +306,17 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @Support
     @PlainSQL
     SelectOnStep<R> innerJoin(String sql, QueryPart... parts);
+
+    /**
+     * Convenience method to <code>INNER JOIN</code> a table to the last table
+     * added to the <code>FROM</code> clause using
+     * {@link Table#join(Name)}.
+     *
+     * @see DSL#table(Name)
+     * @see Table#innerJoin(Name)
+     */
+    @Support
+    SelectOnStep<R> innerJoin(Name name);
 
     /**
      * Convenience method to <code>CROSS JOIN</code> a table to the last table
@@ -410,6 +436,24 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     SelectJoinStep<R> crossJoin(String sql, QueryPart... parts);
 
     /**
+     * Convenience method to <code>CROSS JOIN</code> a table to the last table
+     * added to the <code>FROM</code> clause using
+     * {@link Table#crossJoin(Name)}
+     * <p>
+     * If this syntax is unavailable, it is emulated with a regular
+     * <code>INNER JOIN</code>. The following two constructs are equivalent:
+     * <code><pre>
+     * A cross join B
+     * A join B on 1 = 1
+     * </pre></code>
+     *
+     * @see DSL#table(Name)
+     * @see Table#crossJoin(Name)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    SelectJoinStep<R> crossJoin(Name name);
+
+    /**
      * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
      * table added to the <code>FROM</code> clause using
      * {@link Table#leftOuterJoin(TableLike)}.
@@ -509,6 +553,20 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     /**
      * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
      * table added to the <code>FROM</code> clause using
+     * {@link Table#leftOuterJoin(Name)}.
+     * <p>
+     * A synonym for {@link #leftOuterJoin(Name)}.
+     *
+     * @see DSL#table(Name)
+     * @see Table#leftOuterJoin(Name)
+     * @see #leftOuterJoin(Name)
+     */
+    @Support
+    SelectJoinPartitionByStep<R> leftJoin(Name name);
+
+    /**
+     * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
+     * table added to the <code>FROM</code> clause using
      * {@link Table#leftOuterJoin(TableLike)}
      *
      * @see Table#leftOuterJoin(TableLike)
@@ -587,6 +645,17 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @Support
     @PlainSQL
     SelectJoinPartitionByStep<R> leftOuterJoin(String sql, QueryPart... parts);
+
+    /**
+     * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#leftOuterJoin(Name)}
+     *
+     * @see DSL#table(Name)
+     * @see Table#leftOuterJoin(Name)
+     */
+    @Support
+    SelectJoinPartitionByStep<R> leftOuterJoin(Name name);
 
     /**
      * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
@@ -698,6 +767,22 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     /**
      * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
      * table added to the <code>FROM</code> clause using
+     * {@link Table#rightOuterJoin(Name)}.
+     * <p>
+     * A synonym for {@link #rightOuterJoin(Name)}.
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     *
+     * @see DSL#table(Name)
+     * @see Table#rightOuterJoin(Name)
+     * @see #rightOuterJoin(Name)
+     */
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    SelectJoinPartitionByStep<R> rightJoin(Name name);
+
+    /**
+     * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
+     * table added to the <code>FROM</code> clause using
      * {@link Table#rightOuterJoin(TableLike)}
      * <p>
      * This is only possible where the underlying RDBMS supports it
@@ -786,6 +871,19 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @PlainSQL
     SelectJoinPartitionByStep<R> rightOuterJoin(String sql, QueryPart... parts);
+
+    /**
+     * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#rightOuterJoin(Name)}
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     *
+     * @see DSL#table(Name)
+     * @see Table#rightOuterJoin(Name)
+     */
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    SelectJoinPartitionByStep<R> rightOuterJoin(Name name);
 
     /**
      * Convenience method to <code>FULL OUTER JOIN</code> a table to the last
@@ -878,6 +976,19 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @Support({ DB2, FIREBIRD, HANA, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @PlainSQL
     SelectOnStep<R> fullOuterJoin(String sql, QueryPart... parts);
+
+    /**
+     * Convenience method to <code>FULL OUTER JOIN</code> a tableto the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#fullOuterJoin(Name)}
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     *
+     * @see DSL#table(Name)
+     * @see Table#fullOuterJoin(Name)
+     */
+    @Support({ DB2, FIREBIRD, HANA, HSQLDB, INFORMIX, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    SelectOnStep<R> fullOuterJoin(Name name);
 
     /**
      * Convenience method to <code>NATURAL JOIN</code> a table to the last table
@@ -977,6 +1088,20 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     SelectJoinStep<R> naturalJoin(String sql, QueryPart... parts);
 
     /**
+     * Convenience method to <code>NATURAL JOIN</code> a table to the last table
+     * added to the <code>FROM</code> clause using
+     * {@link Table#naturalJoin(Name)}
+     * <p>
+     * Natural joins are supported by most RDBMS. If they aren't supported, they
+     * are emulated if jOOQ has enough information.
+     *
+     * @see DSL#table(Name)
+     * @see Table#naturalJoin(Name)
+     */
+    @Support
+    SelectJoinStep<R> naturalJoin(Name name);
+
+    /**
      * Convenience method to <code>NATURAL LEFT OUTER JOIN</code> a table to the
      * last table added to the <code>FROM</code> clause using
      * {@link Table#naturalLeftOuterJoin(TableLike)}
@@ -1074,6 +1199,20 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     SelectJoinStep<R> naturalLeftOuterJoin(String sql, QueryPart... parts);
 
     /**
+     * Convenience method to <code>NATURAL LEFT OUTER JOIN</code> a table to the
+     * last table added to the <code>FROM</code> clause using
+     * {@link Table#naturalLeftOuterJoin(Name)}
+     * <p>
+     * Natural joins are supported by most RDBMS. If they aren't supported, they
+     * are emulated if jOOQ has enough information.
+     *
+     * @see DSL#table(Name)
+     * @see Table#naturalLeftOuterJoin(Name)
+     */
+    @Support
+    SelectJoinStep<R> naturalLeftOuterJoin(Name name);
+
+    /**
      * Convenience method to <code>NATURAL RIGHT OUTER JOIN</code> a table to
      * the last table added to the <code>FROM</code> clause using
      * {@link Table#naturalRightOuterJoin(TableLike)}
@@ -1169,6 +1308,20 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @PlainSQL
     SelectJoinStep<R> naturalRightOuterJoin(String sql, QueryPart... parts);
+
+    /**
+     * Convenience method to <code>NATURAL RIGHT OUTER JOIN</code> a table to
+     * the last table added to the <code>FROM</code> clause using
+     * {@link Table#naturalRightOuterJoin(Name)}
+     * <p>
+     * Natural joins are supported by most RDBMS. If they aren't supported, they
+     * are emulated if jOOQ has enough information.
+     *
+     * @see DSL#table(Name)
+     * @see Table#naturalRightOuterJoin(Name)
+     */
+    @Support({ ACCESS, ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INFORMIX, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    SelectJoinStep<R> naturalRightOuterJoin(Name name);
 
     // -------------------------------------------------------------------------
     // XXX: SEMI and ANTI JOIN
@@ -1297,6 +1450,15 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     SelectJoinStep<R> crossApply(String sql, QueryPart... parts);
 
     /**
+     * <code>CROSS APPLY</code> a table to this table.
+     *
+     * @see DSL#table(Name)
+     * @see Table#crossApply(Name)
+     */
+    @Support({ ORACLE12C, POSTGRES_9_3, SQLSERVER, SYBASE })
+    SelectJoinStep<R> crossApply(Name name);
+
+    /**
      * <code>OUTER APPLY</code> a table to this table.
      *
      * @see Table#outerApply(TableLike)
@@ -1369,6 +1531,15 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     SelectJoinStep<R> outerApply(String sql, QueryPart... parts);
 
     /**
+     * <code>OUTER APPLY</code> a table to this table.
+     *
+     * @see DSL#table(Name)
+     * @see Table#outerApply(Name)
+     */
+    @Support({ ORACLE12C, POSTGRES_9_3, SQLSERVER, SYBASE })
+    SelectJoinStep<R> outerApply(Name name);
+
+    /**
      * <code>STRAIGHT_JOIN</code> a table to this table.
      *
      * @see Table#straightJoin(TableLike)
@@ -1403,4 +1574,13 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      */
     @Support({ MYSQL })
     SelectOnStep<R> straightJoin(String sql, QueryPart... parts);
+
+    /**
+     * <code>STRAIGHT_JOIN</code> a table to this table.
+     *
+     * @see DSL#table(Name)
+     * @see Table#straightJoin(Name)
+     */
+    @Support({ MYSQL })
+    SelectOnStep<R> straightJoin(Name name);
 }

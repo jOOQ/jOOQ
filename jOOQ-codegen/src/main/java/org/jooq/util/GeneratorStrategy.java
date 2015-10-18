@@ -262,9 +262,9 @@ public interface GeneratorStrategy {
      * (for POJOs) or as a method argument (for setters). Example definitions
      * are
      * <ul>
-     * <li> {@link ColumnDefinition}</li>
-     * <li> {@link ParameterDefinition}</li>
-     * <li> {@link AttributeDefinition}</li>
+     * <li>{@link ColumnDefinition}</li>
+     * <li>{@link ParameterDefinition}</li>
+     * <li>{@link AttributeDefinition}</li>
      * </ul>
      * This is the same as calling
      * <code>getJavaMemberName(definition, Mode.DEFAULT)</code>
@@ -279,9 +279,9 @@ public interface GeneratorStrategy {
      * (for POJOs) or as a method argument (for setters). Example definitions
      * are
      * <ul>
-     * <li> {@link ColumnDefinition}</li>
-     * <li> {@link ParameterDefinition}</li>
-     * <li> {@link AttributeDefinition}</li>
+     * <li>{@link ColumnDefinition}</li>
+     * <li>{@link ParameterDefinition}</li>
+     * <li>{@link AttributeDefinition}</li>
      * </ul>
      *
      * @return The Java class name representing this object, starting with a
@@ -365,8 +365,8 @@ public interface GeneratorStrategy {
         INTERFACE,
 
         /**
-         * The dao mode. This is used when a {@link TableDefinition}'s dao
-         * class is being rendered
+         * The dao mode. This is used when a {@link TableDefinition}'s dao class
+         * is being rendered
          */
         DAO,
 
@@ -374,7 +374,13 @@ public interface GeneratorStrategy {
          * The enum mode. This is used when a {@link EnumDefinition}'s class is
          * being rendered
          */
-        ENUM
+        ENUM,
+
+        /**
+         * The domain mode. This is used when a {@link DomainDefinition}'s class
+         * is being rendered
+         */
+        DOMAIN
 
     }
 }

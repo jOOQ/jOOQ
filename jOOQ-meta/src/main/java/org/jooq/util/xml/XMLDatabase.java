@@ -51,6 +51,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -75,6 +76,7 @@ import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.DefaultSequenceDefinition;
+import org.jooq.util.DomainDefinition;
 import org.jooq.util.EnumDefinition;
 import org.jooq.util.PackageDefinition;
 import org.jooq.util.RoutineDefinition;
@@ -351,6 +353,12 @@ public class XMLDatabase extends AbstractDatabase {
     @Override
     protected List<EnumDefinition> getEnums0() {
         List<EnumDefinition> result = new ArrayList<EnumDefinition>();
+        return result;
+    }
+
+    @Override
+    protected List<DomainDefinition> getDomains0() throws SQLException {
+        List<DomainDefinition> result = new ArrayList<DomainDefinition>();
         return result;
     }
 

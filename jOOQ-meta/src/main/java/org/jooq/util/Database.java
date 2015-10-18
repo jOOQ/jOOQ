@@ -132,6 +132,21 @@ public interface Database {
     EnumDefinition getEnum(SchemaDefinition schema, String name, boolean ignoreCase);
 
     /**
+     * The domain UDTs defined in this database.
+     */
+    List<DomainDefinition> getDomains(SchemaDefinition schema);
+
+    /**
+     * Get an domain UDT defined in this database by name.
+     */
+    DomainDefinition getDomain(SchemaDefinition schema, String name);
+
+    /**
+     * Get an domain UDT defined in this database by name.
+     */
+    DomainDefinition getDomain(SchemaDefinition schema, String name, boolean ignoreCase);
+
+    /**
      * The UDTs defined in this database.
      */
     List<UDTDefinition> getUDTs(SchemaDefinition schema);
@@ -426,6 +441,11 @@ public interface Database {
      * Check for the existence of a table in the dictionary views.
      */
     boolean exists(Table<?> table);
+
+    /**
+     * Check for the existence of several tables in the dictionary views.
+     */
+    boolean existAll(Table<?>... tables);
 
     /**
      * Database properties.

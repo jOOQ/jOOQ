@@ -363,6 +363,10 @@ public class JavaGenerator extends AbstractGenerator {
             generateEnums(schema);
         }
 
+        if (database.getDomains(schema).size() > 0) {
+            generateDomains(schema);
+        }
+
         if (generateGlobalObjectReferences() && generateGlobalRoutineReferences() && database.getRoutines(schema).size() > 0 || hasTableValuedFunctions(schema)) {
             generateRoutines(schema);
         }
@@ -1814,6 +1818,20 @@ public class JavaGenerator extends AbstractGenerator {
         watch.splitInfo("Enums generated");
     }
 
+    protected void generateDomains(SchemaDefinition schema) {
+        log.info("Generating DOMAINs");
+
+        for (DomainDefinition d : database.getDomains(schema)) {
+            try {
+                generateDomain(d);
+            } catch (Exception ex) {
+                log.error("Error while generating domain " + d, ex);
+            }
+        }
+
+        watch.splitInfo("Domains generated");
+    }
+
     protected void generateEnum(EnumDefinition e) {
         JavaWriter out = newJavaWriter(getStrategy().getFile(e, Mode.ENUM));
         log.info("Generating ENUM", out.file().getName());
@@ -1889,6 +1907,44 @@ public class JavaGenerator extends AbstractGenerator {
      * Subclasses may override this method to provide their own Javadoc.
      */
     protected void generateEnumClassJavadoc(EnumDefinition e, JavaWriter out) {
+        printClassJavadoc(out, e);
+    }
+
+    protected void generateDomain(DomainDefinition d) {
+        JavaWriter out = newJavaWriter(getStrategy().getFile(d, Mode.DOMAIN));
+        log.info("Generating DOMAIN", out.file().getName());
+        generateDomain(d, out);
+        closeJavaWriter(out);
+    }
+
+    protected void generateDomain(DomainDefinition d, JavaWriter out) {
+        final String className = getStrategy().getJavaClassName(d, Mode.DOMAIN);
+        final String superName = out.ref(getStrategy().getJavaClassExtends(d, Mode.DOMAIN));
+        final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(d, Mode.DOMAIN));
+
+        printPackage(out, d);
+        generateDomainClassJavadoc(d, out);
+        printClassAnnotations(out, d.getSchema());
+
+        for (String clause : d.getCheckClauses())
+            out.println("// " + clause);
+
+        out.println("public class %s[[before= extends ][%s]][[before= implements ][%s]] {", className, list(superName), interfaces);
+
+        generateDomainClassFooter(d, out);
+        out.println("}");
+    }
+
+    /**
+     * Subclasses may override this method to provide enum class footer code.
+     */
+    @SuppressWarnings("unused")
+    protected void generateDomainClassFooter(DomainDefinition d, JavaWriter out) {}
+
+    /**
+     * Subclasses may override this method to provide their own Javadoc.
+     */
+    protected void generateDomainClassJavadoc(DomainDefinition e, JavaWriter out) {
         printClassJavadoc(out, e);
     }
 

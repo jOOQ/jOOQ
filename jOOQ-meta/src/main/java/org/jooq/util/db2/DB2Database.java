@@ -75,6 +75,7 @@ import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.DefaultSequenceDefinition;
+import org.jooq.util.DomainDefinition;
 import org.jooq.util.EnumDefinition;
 import org.jooq.util.PackageDefinition;
 import org.jooq.util.RoutineDefinition;
@@ -323,6 +324,12 @@ public class DB2Database extends AbstractDatabase {
     @Override
     protected List<EnumDefinition> getEnums0() throws SQLException {
         List<EnumDefinition> result = new ArrayList<EnumDefinition>();
+        return result;
+    }
+
+    @Override
+    protected List<DomainDefinition> getDomains0() throws SQLException {
+        List<DomainDefinition> result = new ArrayList<DomainDefinition>();
         return result;
     }
 

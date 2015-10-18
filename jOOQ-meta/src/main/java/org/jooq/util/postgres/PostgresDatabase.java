@@ -41,6 +41,7 @@
 
 package org.jooq.util.postgres;
 
+import static org.jooq.impl.DSL.array;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.field;
@@ -49,8 +50,10 @@ import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectOne;
+import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.upper;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.util.postgres.PostgresDSL.arrayAppend;
 import static org.jooq.util.postgres.PostgresDSL.oid;
 import static org.jooq.util.postgres.information_schema.Tables.ATTRIBUTES;
 import static org.jooq.util.postgres.information_schema.Tables.CHECK_CONSTRAINTS;
@@ -61,6 +64,7 @@ import static org.jooq.util.postgres.information_schema.Tables.SEQUENCES;
 import static org.jooq.util.postgres.information_schema.Tables.TABLES;
 import static org.jooq.util.postgres.information_schema.Tables.TABLE_CONSTRAINTS;
 import static org.jooq.util.postgres.pg_catalog.Tables.PG_CLASS;
+import static org.jooq.util.postgres.pg_catalog.Tables.PG_CONSTRAINT;
 import static org.jooq.util.postgres.pg_catalog.Tables.PG_DESCRIPTION;
 import static org.jooq.util.postgres.pg_catalog.Tables.PG_ENUM;
 import static org.jooq.util.postgres.pg_catalog.Tables.PG_INHERITS;
@@ -92,9 +96,11 @@ import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.DefaultCheckConstraintDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
+import org.jooq.util.DefaultDomainDefinition;
 import org.jooq.util.DefaultEnumDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.DefaultSequenceDefinition;
+import org.jooq.util.DomainDefinition;
 import org.jooq.util.EnumDefinition;
 import org.jooq.util.PackageDefinition;
 import org.jooq.util.RoutineDefinition;
@@ -107,8 +113,10 @@ import org.jooq.util.postgres.information_schema.tables.CheckConstraints;
 import org.jooq.util.postgres.information_schema.tables.Routines;
 import org.jooq.util.postgres.information_schema.tables.TableConstraints;
 import org.jooq.util.postgres.pg_catalog.tables.PgClass;
+import org.jooq.util.postgres.pg_catalog.tables.PgConstraint;
 import org.jooq.util.postgres.pg_catalog.tables.PgInherits;
 import org.jooq.util.postgres.pg_catalog.tables.PgNamespace;
+import org.jooq.util.postgres.pg_catalog.tables.PgType;
 
 /**
  * Postgres uses the ANSI default INFORMATION_SCHEMA, but unfortunately ships
@@ -443,6 +451,101 @@ public class PostgresDatabase extends AbstractDatabase {
 
                     definition.addLiteral(label);
                 }
+            }
+        }
+
+        return result;
+    }
+
+    @Override
+    protected List<DomainDefinition> getDomains0() throws SQLException {
+        List<DomainDefinition> result = new ArrayList<DomainDefinition>();
+
+        if (existAll(PG_CONSTRAINT, PG_TYPE)) {
+            PgNamespace n = PG_NAMESPACE.as("n");
+            PgConstraint c = PG_CONSTRAINT.as("c");
+            PgType d = PG_TYPE.as("d");
+            PgType b = PG_TYPE.as("b");
+
+            Field<String[]> src = field(name("domains", "src"), String[].class);
+
+            for (Record record : create()
+                    .withRecursive("domains",
+                        "domain_id",
+                        "base_id",
+                        "typbasetype",
+                        "src"
+                    )
+                    .as(
+                         select(
+                             oid(d),
+                             oid(d),
+                             d.TYPBASETYPE,
+                             array(c.CONSRC)
+                         )
+                        .from(d)
+                        .join(n)
+                            .on(oid(n).eq(d.TYPNAMESPACE))
+                        .leftJoin(c)
+                            .on(oid(d).eq(c.CONTYPID))
+                        .where(d.TYPTYPE.eq("d"))
+                        .and(n.NSPNAME.in(getInputSchemata()))
+                    .unionAll(
+                         select(
+                             field(name("domains", "domain_id"), Long.class),
+                             oid(d),
+                             d.TYPBASETYPE,
+                             decode()
+                                 .when(c.CONSRC.isNull(), src)
+                                 .otherwise(arrayAppend(src, c.CONSRC))
+                         )
+                        .from(table(name("domains")))
+                        .join(d)
+                            .on(field(name("domains", d.TYPBASETYPE.getName())).eq(oid(d)))
+                        .leftJoin(c)
+                            .on(oid(d).eq(c.CONTYPID))
+                    ))
+                    .select(
+                        n.NSPNAME,
+                        d.TYPNAME,
+                        d.TYPNOTNULL,
+                        d.TYPDEFAULT,
+                        b.TYPNAME,
+                        b.TYPLEN,
+                        src)
+                    .from(d)
+                    .join(table(name("domains")))
+                        .on(field(name("domains", "typbasetype")).eq(0))
+                        .and(field(name("domains", "domain_id")).eq(oid(d)))
+                    .join(b)
+                        .on(field(name("domains", "base_id")).eq(oid(b)))
+                    .join(n)
+                        .on(oid(n).eq(d.TYPNAMESPACE))
+                    .where(d.TYPTYPE.eq("d"))
+                    .and(n.NSPNAME.in(getInputSchemata()))) {
+
+                SchemaDefinition schema = getSchema(record.getValue(n.NSPNAME));
+
+                DataTypeDefinition baseType = new DefaultDataTypeDefinition(
+                    this,
+                    schema,
+                    record.getValue(b.TYPNAME),
+                    record.getValue(b.TYPLEN),
+                    record.getValue(b.TYPLEN),
+                    0, // ?
+                   !record.getValue(d.TYPNOTNULL, boolean.class),
+                    record.getValue(d.TYPDEFAULT) != null,
+                    record.getValue(b.TYPNAME, String.class)
+                );
+
+                DefaultDomainDefinition domain = new DefaultDomainDefinition(
+                    schema,
+                    record.getValue(d.TYPNAME),
+                    baseType
+                );
+
+                domain.addCheckClause(record.getValue(src));
+                result.add(domain);
             }
         }
 

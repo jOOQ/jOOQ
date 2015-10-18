@@ -132,6 +132,7 @@ public abstract class AbstractDatabase implements Database {
     private List<CheckConstraintDefinition>                                  checkConstraints;
     private List<TableDefinition>                                            tables;
     private List<EnumDefinition>                                             enums;
+    private List<DomainDefinition>                                           domains;
     private List<UDTDefinition>                                              udts;
     private List<ArrayDefinition>                                            arrays;
     private List<RoutineDefinition>                                          routines;
@@ -232,6 +233,15 @@ public abstract class AbstractDatabase implements Database {
         }
 
         return result;
+    }
+
+    @Override
+    public final boolean existAll(Table<?>... t) {
+        for (Table<?> table : t)
+            if (!exists(table))
+                return false;
+
+        return true;
     }
 
     final Pattern pattern(String regex) {
@@ -853,6 +863,34 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public final List<DomainDefinition> getDomains(SchemaDefinition schema) {
+        if (domains == null) {
+            domains = new ArrayList<DomainDefinition>();
+
+            try {
+                List<DomainDefinition> e = getDomains0();
+
+                domains = filterExcludeInclude(e);
+                log.info("Domains fetched", fetchedSize(e, domains));
+            } catch (Exception e) {
+                log.error("Error while fetching domains", e);
+            }
+        }
+
+        return domains;
+    }
+
+    @Override
+    public final DomainDefinition getDomain(SchemaDefinition schema, String name) {
+        return getDomain(schema, name, false);
+    }
+
+    @Override
+    public final DomainDefinition getDomain(SchemaDefinition schema, String name, boolean ignoreCase) {
+        return getDefinition(getDomains(schema), name, ignoreCase);
+    }
+
+    @Override
     public final List<ArrayDefinition> getArrays(SchemaDefinition schema) {
         if (arrays == null) {
             arrays = new ArrayList<ArrayDefinition>();
@@ -1251,6 +1289,12 @@ public abstract class AbstractDatabase implements Database {
      * {@link #getEnums(SchemaDefinition)}
      */
     protected abstract List<EnumDefinition> getEnums0() throws SQLException;
+
+    /**
+     * Retrieve ALL domain UDTs from the database. This will be filtered in
+     * {@link #getDomains(SchemaDefinition)}
+     */
+    protected abstract List<DomainDefinition> getDomains0() throws SQLException;
 
     /**
      * Retrieve ALL UDTs from the database. This will be filtered in

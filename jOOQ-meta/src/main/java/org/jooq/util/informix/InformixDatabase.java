@@ -63,6 +63,7 @@ import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.DefaultSequenceDefinition;
+import org.jooq.util.DomainDefinition;
 import org.jooq.util.EnumDefinition;
 import org.jooq.util.PackageDefinition;
 import org.jooq.util.RoutineDefinition;
@@ -325,10 +326,14 @@ public class InformixDatabase extends AbstractDatabase {
     }
 
     @Override
+    protected List<DomainDefinition> getDomains0() throws SQLException {
+        List<DomainDefinition> result = new ArrayList<DomainDefinition>();
+        return result;
+    }
+
+    @Override
     protected List<UDTDefinition> getUDTs0() throws SQLException {
         List<UDTDefinition> result = new ArrayList<UDTDefinition>();
-
-
         return result;
     }
 

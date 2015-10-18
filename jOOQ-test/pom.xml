@@ -3287,7 +3287,7 @@
                                         </strategy>
                                         <database>
                                             <name>org.jooq.util.postgres.PostgresDatabase</name>
-                                            <includes>t_.*|x_.*|v_.*|m_.*|V_.*|p(_.*)?|f(_.*)?|u_.*|(f|p)[0-9]+|s_.*|second_max</includes>
+                                            <includes>t_.*|x_.*|v_.*|m_.*|V_.*|p(_.*)?|f(_.*)?|u_.*|d_.*|(f|p)[0-9]+|s_.*|second_max</includes>
                                             <excludes>t_book_details|.*?_seq|_.*</excludes>
                                             <unsignedTypes>true</unsignedTypes>
                                             <customTypes>
@@ -3665,7 +3665,7 @@
                                     <generator>
                                         <database>
                                             <name>org.jooq.util.postgres.PostgresDatabase</name>
-                                            <includes>pg_attribute|pg_class|pg_cursor|pg_description|pg_enum|pg_inherits|pg_namespace|pg_proc|pg_type|format_type|count</includes>
+                                            <includes>pg_attribute|pg_class|pg_constraint|pg_cursor|pg_description|pg_enum|pg_inherits|pg_namespace|pg_proc|pg_type|format_type|count</includes>
                                             <excludes></excludes>
                                             <recordVersionFields></recordVersionFields>
                                             <recordTimestampFields></recordTimestampFields>

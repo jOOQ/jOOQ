@@ -40,49 +40,22 @@
  */
 package org.jooq.util;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
+ * A definition for a domain UDT.
+ *
  * @author Lukas Eder
  */
-public class DefaultEnumDefinition extends AbstractDefinition implements EnumDefinition {
+public interface DomainDefinition extends Definition {
 
-    private final List<String> literals;
-    private final boolean isSynthetic;
+    /**
+     * @return The check constraints defined in this domain.
+     */
+    List<String> getCheckClauses();
 
-    public DefaultEnumDefinition(SchemaDefinition schema, String name, String comment) {
-        this(schema, name, comment, false);
-    }
-
-    public DefaultEnumDefinition(SchemaDefinition schema, String name, String comment, boolean isSynthetic) {
-        super(schema.getDatabase(), schema, name, comment);
-
-        this.literals = new ArrayList<String>();
-        this.isSynthetic = isSynthetic;
-    }
-
-    @Override
-    public List<Definition> getDefinitionPath() {
-        return Arrays.<Definition>asList(getSchema(), this);
-    }
-
-    public void addLiteral(String literal) {
-        literals.add(literal);
-    }
-
-    public void addLiterals(String... literal) {
-        literals.addAll(Arrays.asList(literal));
-    }
-
-    @Override
-    public List<String> getLiterals() {
-        return literals;
-    }
-
-    @Override
-    public boolean isSynthetic() {
-        return isSynthetic;
-    }
+    /**
+     * @return The domain's base type.
+     */
+    DataTypeDefinition getBaseType();
 }

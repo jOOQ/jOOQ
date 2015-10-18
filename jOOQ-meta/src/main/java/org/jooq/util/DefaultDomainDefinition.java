@@ -47,20 +47,16 @@ import java.util.List;
 /**
  * @author Lukas Eder
  */
-public class DefaultEnumDefinition extends AbstractDefinition implements EnumDefinition {
+public class DefaultDomainDefinition extends AbstractDefinition implements DomainDefinition {
 
-    private final List<String> literals;
-    private final boolean isSynthetic;
+    private final List<String>       checkClauses;
+    private final DataTypeDefinition baseType;
 
-    public DefaultEnumDefinition(SchemaDefinition schema, String name, String comment) {
-        this(schema, name, comment, false);
-    }
+    public DefaultDomainDefinition(SchemaDefinition schema, String name, DataTypeDefinition baseType) {
+        super(schema.getDatabase(), schema, name, "");
+        this.baseType = baseType;
 
-    public DefaultEnumDefinition(SchemaDefinition schema, String name, String comment, boolean isSynthetic) {
-        super(schema.getDatabase(), schema, name, comment);
-
-        this.literals = new ArrayList<String>();
-        this.isSynthetic = isSynthetic;
+        this.checkClauses = new ArrayList<String>();
     }
 
     @Override
@@ -68,21 +64,21 @@ public class DefaultEnumDefinition extends AbstractDefinition implements EnumDef
         return Arrays.<Definition>asList(getSchema(), this);
     }
 
-    public void addLiteral(String literal) {
-        literals.add(literal);
+    public void addCheckClause(String checkClause) {
+        checkClauses.add(checkClause);
     }
 
-    public void addLiterals(String... literal) {
-        literals.addAll(Arrays.asList(literal));
-    }
-
-    @Override
-    public List<String> getLiterals() {
-        return literals;
+    public void addCheckClause(String... checkClause) {
+        checkClauses.addAll(Arrays.asList(checkClause));
     }
 
     @Override
-    public boolean isSynthetic() {
-        return isSynthetic;
+    public List<String> getCheckClauses() {
+        return checkClauses;
+    }
+
+    @Override
+    public DataTypeDefinition getBaseType() {
+        return baseType;
     }
 }

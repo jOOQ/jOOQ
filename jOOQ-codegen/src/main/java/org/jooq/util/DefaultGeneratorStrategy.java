@@ -239,6 +239,9 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
         else if (definition instanceof EnumDefinition) {
             return "enums";
         }
+        else if (definition instanceof DomainDefinition) {
+            return "domains";
+        }
         else if (definition instanceof ArrayDefinition) {
             return "udt";
         }

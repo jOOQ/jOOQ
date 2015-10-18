@@ -62,6 +62,7 @@ import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DefaultRelations;
+import org.jooq.util.DomainDefinition;
 import org.jooq.util.EnumDefinition;
 import org.jooq.util.PackageDefinition;
 import org.jooq.util.RoutineDefinition;
@@ -246,6 +247,11 @@ public class RedshiftDatabase extends AbstractDatabase {
     @Override
     protected List<UDTDefinition> getUDTs0() throws SQLException {
         return new ArrayList<UDTDefinition>();
+    }
+
+    @Override
+    protected List<DomainDefinition> getDomains0() throws SQLException {
+        return new ArrayList<DomainDefinition>();
     }
 
     @Override

@@ -102,6 +102,7 @@ DROP TABLE IF EXISTS t_inheritance_1_1/
 DROP TABLE IF EXISTS t_inheritance_1/
 DROP TABLE IF EXISTS t_2781/
 DROP TABLE IF EXISTS t_3111/
+DROP TABLE IF EXISTS t_681/
 
 DROP TYPE IF EXISTS u_address_type/
 DROP TYPE IF EXISTS u_street_type/
@@ -110,6 +111,18 @@ DROP TYPE IF EXISTS u_country/
 DROP TYPE IF EXISTS u_959/
 DROP TYPE IF EXISTS u_2781/
 DROP TYPE IF EXISTS u_uuids/
+
+DROP DOMAIN IF EXISTS d_email/
+DROP DOMAIN IF EXISTS d_year/
+DROP DOMAIN IF EXISTS d_recursive_int_3/
+DROP DOMAIN IF EXISTS d_recursive_int_2/
+DROP DOMAIN IF EXISTS d_recursive_int_1/
+
+CREATE DOMAIN d_recursive_int_1 AS int CHECK (VALUE > 0)/
+CREATE DOMAIN d_recursive_int_2 AS d_recursive_int_1 CHECK (VALUE > 10)/
+CREATE DOMAIN d_recursive_int_3 AS d_recursive_int_2 CHECK (VALUE > 20)/
+CREATE DOMAIN d_year AS int CHECK (VALUE BETWEEN 1900 AND 2050)/
+CREATE DOMAIN d_email AS text CHECK (VALUE ~ '\w+@\w+\.\w+')/
 
 CREATE TYPE u_uuids AS (
   u1 uuid,
@@ -145,6 +158,15 @@ CREATE TYPE u_address_type AS (
   since DATE,
   code INTEGER,
   f_1323 bytea
+)
+/
+
+CREATE TABLE t_681 (
+  id int,
+  year d_year,
+  email d_email,
+  
+  CONSTRAINT pk_t_681 PRIMARY KEY (id)
 )
 /
 

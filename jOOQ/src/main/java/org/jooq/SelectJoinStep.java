@@ -1559,6 +1559,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#straightJoin(String, Object...)
      */
     @Support({ MYSQL })
+    @PlainSQL
     SelectOnStep<R> straightJoin(String sql, Object... bindings);
 
     /**
@@ -1573,6 +1574,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#straightJoin(String, QueryPart...)
      */
     @Support({ MYSQL })
+    @PlainSQL
     SelectOnStep<R> straightJoin(String sql, QueryPart... parts);
 
     /**

@@ -144,4 +144,12 @@ public interface UpdateFromStep<R extends Record> extends UpdateWhereStep<R> {
     @Support({ POSTGRES })
     @PlainSQL
     UpdateWhereStep<R> from(String sql, QueryPart... parts);
+
+    /**
+     * Add a <code>FROM</code> clause to the query.
+     *
+     * @see DSL#table(Name)
+     */
+    @Support({ POSTGRES })
+    UpdateWhereStep<R> from(Name name);
 }

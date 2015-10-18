@@ -433,6 +433,18 @@ public interface Table<R extends Record> extends TableLike<R> {
 
     /**
      * <code>INNER JOIN</code> a table to this table.
+     * <p>
+     * A synonym for {@link #innerJoin(Name)}.
+     *
+     * @see DSL#table(Name)
+     * @see #innerJoin(Name)
+     */
+    @Support
+    @PlainSQL
+    TableOnStep<Record> join(Name name);
+
+    /**
+     * <code>INNER JOIN</code> a table to this table.
      */
     @Support
     TableOnStep<Record> innerJoin(TableLike<?> table);
@@ -496,6 +508,14 @@ public interface Table<R extends Record> extends TableLike<R> {
     @Support
     @PlainSQL
     TableOnStep<Record> innerJoin(String sql, QueryPart... parts);
+
+    /**
+     * <code>INNER JOIN</code> a table to this table.
+     *
+     * @see DSL#table(Name)
+     */
+    @Support
+    TableOnStep<Record> innerJoin(Name name);
 
     /**
      * <code>LEFT OUTER JOIN</code> a table to this table.
@@ -581,6 +601,17 @@ public interface Table<R extends Record> extends TableLike<R> {
 
     /**
      * <code>LEFT OUTER JOIN</code> a table to this table.
+     * <p>
+     * A synonym for {@link #leftOuterJoin(Name)}.
+     *
+     * @see DSL#table(Name)
+     * @see #leftOuterJoin(Name)
+     */
+    @Support
+    TablePartitionByStep<Record> leftJoin(Name name);
+
+    /**
+     * <code>LEFT OUTER JOIN</code> a table to this table.
      */
     @Support
     TablePartitionByStep<Record> leftOuterJoin(TableLike<?> table);
@@ -644,6 +675,15 @@ public interface Table<R extends Record> extends TableLike<R> {
     @Support
     @PlainSQL
     TablePartitionByStep<Record> leftOuterJoin(String sql, QueryPart... parts);
+
+    /**
+     * <code>LEFT OUTER JOIN</code> a table to this table.
+     *
+     * @see DSL#table(Name)
+     * @see SQL
+     */
+    @Support
+    TablePartitionByStep<Record> leftOuterJoin(Name name);
 
     /**
      * <code>RIGHT OUTER JOIN</code> a table to this table.
@@ -740,6 +780,19 @@ public interface Table<R extends Record> extends TableLike<R> {
     /**
      * <code>RIGHT OUTER JOIN</code> a table to this table.
      * <p>
+     * A synonym for {@link #rightOuterJoin(Name)}.
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     *
+     * @see DSL#table(Name)
+     * @see #rightOuterJoin(Name)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    TablePartitionByStep<Record> rightJoin(Name name);
+
+    /**
+     * <code>RIGHT OUTER JOIN</code> a table to this table.
+     * <p>
      * This is only possible where the underlying RDBMS supports it
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
@@ -812,6 +865,16 @@ public interface Table<R extends Record> extends TableLike<R> {
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     TablePartitionByStep<Record> rightOuterJoin(String sql, QueryPart... parts);
+
+    /**
+     * <code>RIGHT OUTER JOIN</code> a table to this table.
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     *
+     * @see DSL#table(Name)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    TablePartitionByStep<Record> rightOuterJoin(Name name);
 
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
@@ -888,6 +951,16 @@ public interface Table<R extends Record> extends TableLike<R> {
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @PlainSQL
     TableOnStep<Record> fullOuterJoin(String sql, QueryPart... parts);
+
+    /**
+     * <code>FULL OUTER JOIN</code> a table to this table.
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     *
+     * @see DSL#table(Name)
+     */
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    TableOnStep<Record> fullOuterJoin(Name name);
 
     /**
      * <code>CROSS JOIN</code> a table to this table.
@@ -991,6 +1064,21 @@ public interface Table<R extends Record> extends TableLike<R> {
     Table<Record> crossJoin(String sql, QueryPart... parts);
 
     /**
+     * <code>CROSS JOIN</code> a table to this table.
+     * <p>
+     * If this syntax is unavailable, it is emulated with a regular
+     * <code>INNER JOIN</code>. The following two constructs are equivalent:
+     * <code><pre>
+     * A cross join B
+     * A join B on 1 = 1
+     * </pre></code>
+     *
+     * @see DSL#table(Name)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    Table<Record> crossJoin(Name name);
+
+    /**
      * <code>NATURAL JOIN</code> a table to this table.
      * <p>
      * If this is not supported by your RDBMS, then jOOQ will try to emulate
@@ -1052,6 +1140,17 @@ public interface Table<R extends Record> extends TableLike<R> {
     @Support
     @PlainSQL
     Table<Record> naturalJoin(String sql, Object... bindings);
+
+    /**
+     * <code>NATURAL JOIN</code> a table to this table.
+     * <p>
+     * If this is not supported by your RDBMS, then jOOQ will try to emulate
+     * this behaviour using the information provided in this query.
+     *
+     * @see DSL#table(Name)
+     */
+    @Support
+    Table<Record> naturalJoin(Name name);
 
     /**
      * <code>NATURAL JOIN</code> a table to this table.
@@ -1153,6 +1252,18 @@ public interface Table<R extends Record> extends TableLike<R> {
     Table<Record> naturalLeftOuterJoin(String sql, QueryPart... parts);
 
     /**
+     * <code>NATURAL LEFT OUTER JOIN</code> a table to this table.
+     * <p>
+     * If this is not supported by your RDBMS, then jOOQ will try to emulate
+     * this behaviour using the information provided in this query.
+     *
+     * @see DSL#table(Name)
+     */
+    @Support
+    @PlainSQL
+    Table<Record> naturalLeftOuterJoin(Name name);
+
+    /**
      * <code>NATURAL RIGHT OUTER JOIN</code> a table to this table.
      * <p>
      * If this is not supported by your RDBMS, then jOOQ will try to emulate
@@ -1233,6 +1344,17 @@ public interface Table<R extends Record> extends TableLike<R> {
     @PlainSQL
     Table<Record> naturalRightOuterJoin(String sql, QueryPart... parts);
 
+    /**
+     * <code>NATURAL RIGHT OUTER JOIN</code> a table to this table.
+     * <p>
+     * If this is not supported by your RDBMS, then jOOQ will try to emulate
+     * this behaviour using the information provided in this query.
+     *
+     * @see DSL#table(Name)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    Table<Record> naturalRightOuterJoin(Name name);
+
     // -------------------------------------------------------------------------
     // XXX: APPLY clauses on tables
     // -------------------------------------------------------------------------
@@ -1304,6 +1426,14 @@ public interface Table<R extends Record> extends TableLike<R> {
     Table<Record> crossApply(String sql, QueryPart... parts);
 
     /**
+     * <code>CROSS APPLY</code> a table to this table.
+     *
+     * @see DSL#table(Name)
+     */
+    @Support({ POSTGRES_9_3 })
+    Table<Record> crossApply(Name name);
+
+    /**
      * <code>OUTER APPLY</code> a table to this table.
      */
     @Support({ POSTGRES_9_3 })
@@ -1370,6 +1500,14 @@ public interface Table<R extends Record> extends TableLike<R> {
     Table<Record> outerApply(String sql, QueryPart... parts);
 
     /**
+     * <code>OUTER APPLY</code> a table to this table.
+     *
+     * @see DSL#table(Name)
+     */
+    @Support({ POSTGRES_9_3 })
+    Table<Record> outerApply(Name name);
+
+    /**
      * <code>STRAIGHT_JOIN</code> a table to this table.
      */
     @Support({ MYSQL })
@@ -1434,6 +1572,15 @@ public interface Table<R extends Record> extends TableLike<R> {
     @Support({ MYSQL })
     @PlainSQL
     TableOnStep<Record> straightJoin(String sql, QueryPart... parts);
+
+    /**
+     * <code>STRAIGHT_JOIN</code> a table to this table.
+     *
+     * @see DSL#table(Name)
+     */
+    @Support({ MYSQL })
+    @PlainSQL
+    TableOnStep<Record> straightJoin(Name name);
 
     // -------------------------------------------------------------------------
     // XXX: Exotic and vendor-specific clauses on tables

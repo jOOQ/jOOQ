@@ -38,6 +38,7 @@ import org.jooq.test.postgres.generatedclasses.tables.TUnsigned;
 import org.jooq.test.postgres.generatedclasses.tables.T_2781;
 import org.jooq.test.postgres.generatedclasses.tables.T_3111;
 import org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable;
+import org.jooq.test.postgres.generatedclasses.tables.T_681;
 import org.jooq.test.postgres.generatedclasses.tables.T_725LobTest;
 import org.jooq.test.postgres.generatedclasses.tables.T_785;
 import org.jooq.test.postgres.generatedclasses.tables.T_959;
@@ -280,6 +281,11 @@ public class Tables {
 	 * The table public.t_639_numbers_table
 	 */
 	public static final T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;
+
+	/**
+	 * The table public.t_681
+	 */
+	public static final T_681 T_681 = org.jooq.test.postgres.generatedclasses.tables.T_681.T_681;
 
 	/**
 	 * The table public.t_725_lob_test

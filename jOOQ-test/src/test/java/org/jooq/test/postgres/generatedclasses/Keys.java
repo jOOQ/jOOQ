@@ -21,6 +21,7 @@ import org.jooq.test.postgres.generatedclasses.tables.TLanguage;
 import org.jooq.test.postgres.generatedclasses.tables.TTriggers;
 import org.jooq.test.postgres.generatedclasses.tables.T_3111;
 import org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable;
+import org.jooq.test.postgres.generatedclasses.tables.T_681;
 import org.jooq.test.postgres.generatedclasses.tables.T_725LobTest;
 import org.jooq.test.postgres.generatedclasses.tables.T_986_1;
 import org.jooq.test.postgres.generatedclasses.tables.T_986_2;
@@ -43,6 +44,7 @@ import org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.T_3111Record;
 import org.jooq.test.postgres.generatedclasses.tables.records.T_639NumbersTableRecord;
+import org.jooq.test.postgres.generatedclasses.tables.records.T_681Record;
 import org.jooq.test.postgres.generatedclasses.tables.records.T_725LobTestRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.T_986_1Record;
 import org.jooq.test.postgres.generatedclasses.tables.records.T_986_2Record;
@@ -74,6 +76,7 @@ public class Keys {
 
 	public static final UniqueKey<T_3111Record> PK_T_3111 = UniqueKeys0.PK_T_3111;
 	public static final UniqueKey<T_639NumbersTableRecord> PK_T_639_NUMBERS_TABLE = UniqueKeys0.PK_T_639_NUMBERS_TABLE;
+	public static final UniqueKey<T_681Record> PK_T_681 = UniqueKeys0.PK_T_681;
 	public static final UniqueKey<T_725LobTestRecord> PK_T_725_LOB_TEST = UniqueKeys0.PK_T_725_LOB_TEST;
 	public static final UniqueKey<TArraysRecord> PK_T_ARRAYS = UniqueKeys0.PK_T_ARRAYS;
 	public static final UniqueKey<TAuthorRecord> PK_T_AUTHOR = UniqueKeys0.PK_T_AUTHOR;
@@ -125,6 +128,7 @@ public class Keys {
 	private static class UniqueKeys0 extends AbstractKeys {
 		public static final UniqueKey<T_3111Record> PK_T_3111 = createUniqueKey(T_3111.T_3111, T_3111.T_3111.ID);
 		public static final UniqueKey<T_639NumbersTableRecord> PK_T_639_NUMBERS_TABLE = createUniqueKey(T_639NumbersTable.T_639_NUMBERS_TABLE, T_639NumbersTable.T_639_NUMBERS_TABLE.ID);
+		public static final UniqueKey<T_681Record> PK_T_681 = createUniqueKey(T_681.T_681, T_681.T_681.ID);
 		public static final UniqueKey<T_725LobTestRecord> PK_T_725_LOB_TEST = createUniqueKey(T_725LobTest.T_725_LOB_TEST, T_725LobTest.T_725_LOB_TEST.ID);
 		public static final UniqueKey<TArraysRecord> PK_T_ARRAYS = createUniqueKey(TArrays.T_ARRAYS, TArrays.T_ARRAYS.ID);
 		public static final UniqueKey<TAuthorRecord> PK_T_AUTHOR = createUniqueKey(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR, org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.ID);

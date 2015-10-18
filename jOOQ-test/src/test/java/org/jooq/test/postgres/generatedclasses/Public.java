@@ -44,6 +44,7 @@ import org.jooq.test.postgres.generatedclasses.tables.TUnsigned;
 import org.jooq.test.postgres.generatedclasses.tables.T_2781;
 import org.jooq.test.postgres.generatedclasses.tables.T_3111;
 import org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable;
+import org.jooq.test.postgres.generatedclasses.tables.T_681;
 import org.jooq.test.postgres.generatedclasses.tables.T_725LobTest;
 import org.jooq.test.postgres.generatedclasses.tables.T_785;
 import org.jooq.test.postgres.generatedclasses.tables.T_959;
@@ -67,7 +68,7 @@ import org.jooq.test.postgres.generatedclasses.udt.UUuids;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-	private static final long serialVersionUID = -1979567803;
+	private static final long serialVersionUID = 1767235644;
 
 	/**
 	 * The reference instance of <code>public</code>
@@ -117,6 +118,7 @@ public class Public extends SchemaImpl {
 			T_2781.T_2781,
 			T_3111.T_3111,
 			T_639NumbersTable.T_639_NUMBERS_TABLE,
+			T_681.T_681,
 			T_725LobTest.T_725_LOB_TEST,
 			T_785.T_785,
 			T_959.T_959,

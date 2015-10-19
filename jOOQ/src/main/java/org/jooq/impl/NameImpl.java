@@ -42,10 +42,11 @@ package org.jooq.impl;
 
 import java.util.Arrays;
 
+import javax.annotation.Generated;
+
 import org.jooq.Clause;
 import org.jooq.CommonTableExpression;
 import org.jooq.Context;
-import org.jooq.DerivedColumnList;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Select;
@@ -105,18 +106,155 @@ class NameImpl extends AbstractQueryPart implements Name {
         return new WindowDefinitionImpl(this, window);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final <R extends Record> CommonTableExpression<R> as(Select<R> select) {
         return fields(new String[0]).as(select);
     }
 
     @Override
-    public final DerivedColumnList fields(String... fieldNames) {
+    public final DerivedColumnListImpl fields(String... fieldNames) {
         if (qualifiedName.length != 1)
             throw new IllegalStateException("Cannot create a DerivedColumnList from a qualified name : " + Arrays.asList(qualifiedName));
 
         return new DerivedColumnListImpl(qualifiedName[0], fieldNames);
     }
+
+    // [jooq-tools] START [fields]
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final DerivedColumnListImpl fields(String fieldName1) {
+        return fields(new String[] { fieldName1 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final DerivedColumnListImpl fields(String fieldName1, String fieldName2) {
+        return fields(new String[] { fieldName1, fieldName2 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final DerivedColumnListImpl fields(String fieldName1, String fieldName2, String fieldName3) {
+        return fields(new String[] { fieldName1, fieldName2, fieldName3 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final DerivedColumnListImpl fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4) {
+        return fields(new String[] { fieldName1, fieldName2, fieldName3, fieldName4 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final DerivedColumnListImpl fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5) {
+        return fields(new String[] { fieldName1, fieldName2, fieldName3, fieldName4, fieldName5 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final DerivedColumnListImpl fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6) {
+        return fields(new String[] { fieldName1, fieldName2, fieldName3, fieldName4, fieldName5, fieldName6 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final DerivedColumnListImpl fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7) {
+        return fields(new String[] { fieldName1, fieldName2, fieldName3, fieldName4, fieldName5, fieldName6, fieldName7 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final DerivedColumnListImpl fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8) {
+        return fields(new String[] { fieldName1, fieldName2, fieldName3, fieldName4, fieldName5, fieldName6, fieldName7, fieldName8 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final DerivedColumnListImpl fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9) {
+        return fields(new String[] { fieldName1, fieldName2, fieldName3, fieldName4, fieldName5, fieldName6, fieldName7, fieldName8, fieldName9 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final DerivedColumnListImpl fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10) {
+        return fields(new String[] { fieldName1, fieldName2, fieldName3, fieldName4, fieldName5, fieldName6, fieldName7, fieldName8, fieldName9, fieldName10 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final DerivedColumnListImpl fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11) {
+        return fields(new String[] { fieldName1, fieldName2, fieldName3, fieldName4, fieldName5, fieldName6, fieldName7, fieldName8, fieldName9, fieldName10, fieldName11 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final DerivedColumnListImpl fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12) {
+        return fields(new String[] { fieldName1, fieldName2, fieldName3, fieldName4, fieldName5, fieldName6, fieldName7, fieldName8, fieldName9, fieldName10, fieldName11, fieldName12 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final DerivedColumnListImpl fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13) {
+        return fields(new String[] { fieldName1, fieldName2, fieldName3, fieldName4, fieldName5, fieldName6, fieldName7, fieldName8, fieldName9, fieldName10, fieldName11, fieldName12, fieldName13 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final DerivedColumnListImpl fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13, String fieldName14) {
+        return fields(new String[] { fieldName1, fieldName2, fieldName3, fieldName4, fieldName5, fieldName6, fieldName7, fieldName8, fieldName9, fieldName10, fieldName11, fieldName12, fieldName13, fieldName14 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final DerivedColumnListImpl fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13, String fieldName14, String fieldName15) {
+        return fields(new String[] { fieldName1, fieldName2, fieldName3, fieldName4, fieldName5, fieldName6, fieldName7, fieldName8, fieldName9, fieldName10, fieldName11, fieldName12, fieldName13, fieldName14, fieldName15 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final DerivedColumnListImpl fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13, String fieldName14, String fieldName15, String fieldName16) {
+        return fields(new String[] { fieldName1, fieldName2, fieldName3, fieldName4, fieldName5, fieldName6, fieldName7, fieldName8, fieldName9, fieldName10, fieldName11, fieldName12, fieldName13, fieldName14, fieldName15, fieldName16 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final DerivedColumnListImpl fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13, String fieldName14, String fieldName15, String fieldName16, String fieldName17) {
+        return fields(new String[] { fieldName1, fieldName2, fieldName3, fieldName4, fieldName5, fieldName6, fieldName7, fieldName8, fieldName9, fieldName10, fieldName11, fieldName12, fieldName13, fieldName14, fieldName15, fieldName16, fieldName17 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final DerivedColumnListImpl fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13, String fieldName14, String fieldName15, String fieldName16, String fieldName17, String fieldName18) {
+        return fields(new String[] { fieldName1, fieldName2, fieldName3, fieldName4, fieldName5, fieldName6, fieldName7, fieldName8, fieldName9, fieldName10, fieldName11, fieldName12, fieldName13, fieldName14, fieldName15, fieldName16, fieldName17, fieldName18 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final DerivedColumnListImpl fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13, String fieldName14, String fieldName15, String fieldName16, String fieldName17, String fieldName18, String fieldName19) {
+        return fields(new String[] { fieldName1, fieldName2, fieldName3, fieldName4, fieldName5, fieldName6, fieldName7, fieldName8, fieldName9, fieldName10, fieldName11, fieldName12, fieldName13, fieldName14, fieldName15, fieldName16, fieldName17, fieldName18, fieldName19 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final DerivedColumnListImpl fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13, String fieldName14, String fieldName15, String fieldName16, String fieldName17, String fieldName18, String fieldName19, String fieldName20) {
+        return fields(new String[] { fieldName1, fieldName2, fieldName3, fieldName4, fieldName5, fieldName6, fieldName7, fieldName8, fieldName9, fieldName10, fieldName11, fieldName12, fieldName13, fieldName14, fieldName15, fieldName16, fieldName17, fieldName18, fieldName19, fieldName20 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final DerivedColumnListImpl fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13, String fieldName14, String fieldName15, String fieldName16, String fieldName17, String fieldName18, String fieldName19, String fieldName20, String fieldName21) {
+        return fields(new String[] { fieldName1, fieldName2, fieldName3, fieldName4, fieldName5, fieldName6, fieldName7, fieldName8, fieldName9, fieldName10, fieldName11, fieldName12, fieldName13, fieldName14, fieldName15, fieldName16, fieldName17, fieldName18, fieldName19, fieldName20, fieldName21 });
+    }
+
+    @Generated("This method was generated using jOOQ-tools")
+    @Override
+    public final DerivedColumnListImpl fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13, String fieldName14, String fieldName15, String fieldName16, String fieldName17, String fieldName18, String fieldName19, String fieldName20, String fieldName21, String fieldName22) {
+        return fields(new String[] { fieldName1, fieldName2, fieldName3, fieldName4, fieldName5, fieldName6, fieldName7, fieldName8, fieldName9, fieldName10, fieldName11, fieldName12, fieldName13, fieldName14, fieldName15, fieldName16, fieldName17, fieldName18, fieldName19, fieldName20, fieldName21, fieldName22 });
+    }
+
+// [jooq-tools] END [fields]
 
     // ------------------------------------------------------------------------
     // XXX: Object API

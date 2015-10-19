@@ -91,6 +91,28 @@ import org.jooq.SelectSelectStep;
 import org.jooq.SelectWhereStep;
 import org.jooq.Table;
 import org.jooq.WithAsStep;
+import org.jooq.WithAsStep1;
+import org.jooq.WithAsStep10;
+import org.jooq.WithAsStep11;
+import org.jooq.WithAsStep12;
+import org.jooq.WithAsStep13;
+import org.jooq.WithAsStep14;
+import org.jooq.WithAsStep15;
+import org.jooq.WithAsStep16;
+import org.jooq.WithAsStep17;
+import org.jooq.WithAsStep18;
+import org.jooq.WithAsStep19;
+import org.jooq.WithAsStep2;
+import org.jooq.WithAsStep20;
+import org.jooq.WithAsStep21;
+import org.jooq.WithAsStep22;
+import org.jooq.WithAsStep3;
+import org.jooq.WithAsStep4;
+import org.jooq.WithAsStep5;
+import org.jooq.WithAsStep6;
+import org.jooq.WithAsStep7;
+import org.jooq.WithAsStep8;
+import org.jooq.WithAsStep9;
 import org.jooq.WithStep;
 
 /**
@@ -100,7 +122,38 @@ import org.jooq.WithStep;
  * @author Lukas Eder
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-class WithImpl extends AbstractQueryPart implements WithStep, WithAsStep {
+class WithImpl extends AbstractQueryPart
+implements
+    WithAsStep,
+
+    // [jooq-tools] START [implements-with-as-step]
+    WithAsStep1,
+    WithAsStep2,
+    WithAsStep3,
+    WithAsStep4,
+    WithAsStep5,
+    WithAsStep6,
+    WithAsStep7,
+    WithAsStep8,
+    WithAsStep9,
+    WithAsStep10,
+    WithAsStep11,
+    WithAsStep12,
+    WithAsStep13,
+    WithAsStep14,
+    WithAsStep15,
+    WithAsStep16,
+    WithAsStep17,
+    WithAsStep18,
+    WithAsStep19,
+    WithAsStep20,
+    WithAsStep21,
+    WithAsStep22,
+
+// [jooq-tools] END [implements-with-as-step]
+
+    WithStep
+{
 
     /**
      * Generated UID
@@ -151,7 +204,7 @@ class WithImpl extends AbstractQueryPart implements WithStep, WithAsStep {
     // -------------------------------------------------------------------------
 
     @Override
-    public final WithStep as(Select<?> select) {
+    public final WithStep as(Select select) {
         cte.add(name(alias).fields(fieldAliases).as(select));
 
         this.alias = null;
@@ -172,6 +225,186 @@ class WithImpl extends AbstractQueryPart implements WithStep, WithAsStep {
 
         return this;
     }
+
+    // [jooq-tools] START [with]
+
+    @Override
+    public final WithAsStep1 with(String a, String fieldAlias1) {
+        this.alias = a;
+        this.fieldAliases = new String[] { fieldAlias1 };
+
+        return this;
+    }
+
+    @Override
+    public final WithAsStep2 with(String a, String fieldAlias1, String fieldAlias2) {
+        this.alias = a;
+        this.fieldAliases = new String[] { fieldAlias1, fieldAlias2 };
+
+        return this;
+    }
+
+    @Override
+    public final WithAsStep3 with(String a, String fieldAlias1, String fieldAlias2, String fieldAlias3) {
+        this.alias = a;
+        this.fieldAliases = new String[] { fieldAlias1, fieldAlias2, fieldAlias3 };
+
+        return this;
+    }
+
+    @Override
+    public final WithAsStep4 with(String a, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4) {
+        this.alias = a;
+        this.fieldAliases = new String[] { fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4 };
+
+        return this;
+    }
+
+    @Override
+    public final WithAsStep5 with(String a, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5) {
+        this.alias = a;
+        this.fieldAliases = new String[] { fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5 };
+
+        return this;
+    }
+
+    @Override
+    public final WithAsStep6 with(String a, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6) {
+        this.alias = a;
+        this.fieldAliases = new String[] { fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6 };
+
+        return this;
+    }
+
+    @Override
+    public final WithAsStep7 with(String a, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7) {
+        this.alias = a;
+        this.fieldAliases = new String[] { fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7 };
+
+        return this;
+    }
+
+    @Override
+    public final WithAsStep8 with(String a, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8) {
+        this.alias = a;
+        this.fieldAliases = new String[] { fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8 };
+
+        return this;
+    }
+
+    @Override
+    public final WithAsStep9 with(String a, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9) {
+        this.alias = a;
+        this.fieldAliases = new String[] { fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9 };
+
+        return this;
+    }
+
+    @Override
+    public final WithAsStep10 with(String a, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10) {
+        this.alias = a;
+        this.fieldAliases = new String[] { fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10 };
+
+        return this;
+    }
+
+    @Override
+    public final WithAsStep11 with(String a, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11) {
+        this.alias = a;
+        this.fieldAliases = new String[] { fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11 };
+
+        return this;
+    }
+
+    @Override
+    public final WithAsStep12 with(String a, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12) {
+        this.alias = a;
+        this.fieldAliases = new String[] { fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12 };
+
+        return this;
+    }
+
+    @Override
+    public final WithAsStep13 with(String a, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13) {
+        this.alias = a;
+        this.fieldAliases = new String[] { fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13 };
+
+        return this;
+    }
+
+    @Override
+    public final WithAsStep14 with(String a, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14) {
+        this.alias = a;
+        this.fieldAliases = new String[] { fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14 };
+
+        return this;
+    }
+
+    @Override
+    public final WithAsStep15 with(String a, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15) {
+        this.alias = a;
+        this.fieldAliases = new String[] { fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15 };
+
+        return this;
+    }
+
+    @Override
+    public final WithAsStep16 with(String a, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16) {
+        this.alias = a;
+        this.fieldAliases = new String[] { fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16 };
+
+        return this;
+    }
+
+    @Override
+    public final WithAsStep17 with(String a, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17) {
+        this.alias = a;
+        this.fieldAliases = new String[] { fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17 };
+
+        return this;
+    }
+
+    @Override
+    public final WithAsStep18 with(String a, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18) {
+        this.alias = a;
+        this.fieldAliases = new String[] { fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18 };
+
+        return this;
+    }
+
+    @Override
+    public final WithAsStep19 with(String a, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19) {
+        this.alias = a;
+        this.fieldAliases = new String[] { fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19 };
+
+        return this;
+    }
+
+    @Override
+    public final WithAsStep20 with(String a, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20) {
+        this.alias = a;
+        this.fieldAliases = new String[] { fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20 };
+
+        return this;
+    }
+
+    @Override
+    public final WithAsStep21 with(String a, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21) {
+        this.alias = a;
+        this.fieldAliases = new String[] { fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21 };
+
+        return this;
+    }
+
+    @Override
+    public final WithAsStep22 with(String a, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21, String fieldAlias22) {
+        this.alias = a;
+        this.fieldAliases = new String[] { fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21, fieldAlias22 };
+
+        return this;
+    }
+
+// [jooq-tools] END [with]
 
     @Override
     public final WithStep with(CommonTableExpression<?>... tables) {

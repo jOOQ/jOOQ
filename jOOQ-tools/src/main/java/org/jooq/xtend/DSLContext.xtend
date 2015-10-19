@@ -44,6 +44,7 @@ package org.jooq.xtend
 /**
  * @author Lukas Eder
  */
+
 import org.jooq.Constants
 
 class DSLContext extends Generators {
@@ -52,6 +53,7 @@ class DSLContext extends Generators {
         val ctx = new DSLContext();
         ctx.generateNewRecord();
         ctx.generateNewResult();
+        ctx.generateWith();
         ctx.generateSelect();
         ctx.generateSelectDistinct();
         ctx.generateInsert();
@@ -136,6 +138,132 @@ class DSLContext extends Generators {
 
         insert("org.jooq.DSLContext", outAPI, "newResult");
         insert("org.jooq.impl.DefaultDSLContext", outImpl, "newResult");
+    }
+    
+    def generateWith() {
+        val outDSL = new StringBuilder();
+        val outDSLRecursive = new StringBuilder();
+        val outImpl = new StringBuilder();
+        val outImplRecursive = new StringBuilder();
+        val outAPI = new StringBuilder();
+        val outAPIRecursive = new StringBuilder();
+        
+        for (degree : (1 .. Constants::MAX_ROW_DEGREE)) {
+            outAPI.append('''
+            
+                /**
+                 * Create a <code>WITH</code> clause to supply subsequent
+                 * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+                 * <code>DELETE</code>, and <code>MERGE</code> statements with
+                 * {@link CommonTableExpression}s.
+                 * <p>
+                 * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+                 * databases, in case of which it will not be rendered. For optimal database
+                 * interoperability and readability, however, it is suggested that you use
+                 * {@link #with(String, String...)} for strictly non-recursive CTE
+                 * and {@link #withRecursive(String, String...)} for strictly
+                 * recursive CTE.
+                 */
+                «generatedMethod»
+                @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+                WithAsStep«degree» with(String alias, «XXXn(degree, "String fieldAlias")»);
+            ''');
+            
+            outAPIRecursive.append('''
+            
+                /**
+                 * Create a <code>WITH</code> clause to supply subsequent
+                 * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+                 * <code>DELETE</code>, and <code>MERGE</code> statements with
+                 * {@link CommonTableExpression}s.
+                 * <p>
+                 * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+                 * databases, in case of which it will not be rendered. For optimal database
+                 * interoperability and readability, however, it is suggested that you use
+                 * {@link #with(String, String...)} for strictly non-recursive CTE
+                 * and {@link #withRecursive(String, String...)} for strictly
+                 * recursive CTE.
+                 * <p>
+                 * Note that the {@link SQLDialect#H2} database only supports single-table,
+                 * <code>RECURSIVE</code> common table expression lists.
+                 */
+                «generatedMethod»
+                @Support({ DB2, FIREBIRD, H2, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+                WithAsStep«degree» withRecursive(String alias, «XXXn(degree, "String fieldAlias")»);
+            ''');
+            
+            outDSL.append('''
+            
+                /**
+                 * Create a <code>WITH</code> clause to supply subsequent
+                 * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+                 * <code>DELETE</code>, and <code>MERGE</code> statements with
+                 * {@link CommonTableExpression}s.
+                 * <p>
+                 * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+                 * databases, in case of which it will not be rendered. For optimal database
+                 * interoperability and readability, however, it is suggested that you use
+                 * {@link #with(String, String...)} for strictly non-recursive CTE
+                 * and {@link #withRecursive(String, String...)} for strictly
+                 * recursive CTE.
+                 */
+                «generatedMethod»
+                @Support({ DB2, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE, VERTICA })
+                public static WithAsStep«degree» with(String alias, «XXXn(degree, "String fieldAlias")») {
+                    return new WithImpl(null, false).with(alias, «XXXn(degree, "fieldAlias")»);
+                }
+            ''');
+            
+            outDSLRecursive.append('''
+            
+                /**
+                 * Create a <code>WITH</code> clause to supply subsequent
+                 * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+                 * <code>DELETE</code>, and <code>MERGE</code> statements with
+                 * {@link CommonTableExpression}s.
+                 * <p>
+                 * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+                 * databases, in case of which it will not be rendered. For optimal database
+                 * interoperability and readability, however, it is suggested that you use
+                 * {@link #with(String, String...)} for strictly non-recursive CTE
+                 * and {@link #withRecursive(String, String...)} for strictly
+                 * recursive CTE.
+                 * <p>
+                 * Note that the {@link SQLDialect#H2} database only supports single-table,
+                 * <code>RECURSIVE</code> common table expression lists.
+                 */
+                «generatedMethod»
+                @Support({ DB2, FIREBIRD, H2, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+                public static WithAsStep«degree» withRecursive(String alias, «XXXn(degree, "String fieldAlias")») {
+                    return new WithImpl(null, true).with(alias, «XXXn(degree, "fieldAlias")»);
+                }
+            ''');
+            
+            outImpl.append('''
+            
+                «generatedMethod»
+                @Override
+                public WithAsStep«degree» with(String alias, «XXXn(degree, "String fieldAlias")») {
+                    return new WithImpl(configuration(), false).with(alias, «XXXn(degree, "fieldAlias")»);
+                }
+            ''');
+            
+            outImplRecursive.append('''
+            
+                «generatedMethod»
+                @Override
+                public WithAsStep«degree» withRecursive(String alias, «XXXn(degree, "String fieldAlias")») {
+                    return new WithImpl(configuration(), true).with(alias, «XXXn(degree, "fieldAlias")»);
+                }
+            ''');
+        }
+
+        insert("org.jooq.DSLContext", outAPI, "with");
+        insert("org.jooq.DSLContext", outAPIRecursive, "with-recursive");
+        insert("org.jooq.impl.DefaultDSLContext", outImpl, "with");
+        insert("org.jooq.impl.DefaultDSLContext", outImplRecursive, "with-recursive");
+        insert("org.jooq.impl.DSL", outDSL, "with");
+        insert("org.jooq.impl.DSL", outDSLRecursive, "with-recursive");
     }
     
     def generateSelect() {

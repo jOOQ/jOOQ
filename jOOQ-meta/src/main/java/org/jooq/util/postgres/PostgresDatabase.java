@@ -456,6 +456,7 @@ public class PostgresDatabase extends AbstractDatabase {
         return result;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected List<DomainDefinition> getDomains0() throws SQLException {
         List<DomainDefinition> result = new ArrayList<DomainDefinition>();

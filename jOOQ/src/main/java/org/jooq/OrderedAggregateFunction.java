@@ -55,9 +55,9 @@ import static org.jooq.SQLDialect.POSTGRES;
 import java.util.Collection;
 
 /**
- * An ordered aggregate function.
+ * An ordered-set aggregate function.
  * <p>
- * An ordered aggregate function is an aggregate function with a mandatory
+ * An ordered-set aggregate function is an aggregate function with a mandatory
  * Oracle-specific <code>WITHIN GROUP (ORDER BY ..)</code> clause. An example is
  * <code>LISTAGG</code>: <code><pre>
  * SELECT   LISTAGG(TITLE, ', ')
@@ -67,7 +67,7 @@ import java.util.Collection;
  * </pre></code> The above function groups books by author and aggregates titles
  * into a concatenated string.
  * <p>
- * Ordered aggregate functions can be further converted into window functions
+ * Ordered-set aggregate functions can be further converted into window functions
  * using the <code>OVER(PARTITION BY ..)</code> clause. For example: <code><pre>
  * SELECT LISTAGG(TITLE, ', ')
  *        WITHIN GROUP (ORDER BY TITLE)

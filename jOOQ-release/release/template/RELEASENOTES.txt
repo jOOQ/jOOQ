@@ -146,7 +146,7 @@ Features and Improvements
 #4508 - Add DSL.condition(Map<Field<?>, ?>) to construct a predicate from a field=>value map
 #4511 - Log a warning when a user accidentally sets the fetchSize with autoCommit == true in PostgreSQL
 #4515 - Emulate POSITION() with INSTR() in SQLite
-#4523 - Add the @SafeVarargs annotation to all methods taking Field<T>... and similar arguments
+#4523 - Add the @SafeVarargs annotation to all methods taking Field<T>... and similar arguments
 #4524 - Add missing DSL.field(String, DataType, QueryPart...) method
 #4530 - Add support for boolAnd(Condition), boolAnd(Field<Boolean>), boolOr(Condition), boolOr(Field<Boolean>)
 #4535 - Make existing join() a synonym for a new innerJoin() method

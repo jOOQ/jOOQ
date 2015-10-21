@@ -48,8 +48,8 @@ import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.impl.Utils.DataKey.DATA_LOCK_ROWS_FOR_UPDATE;
 import static org.jooq.impl.Utils.consumeResultSets;
+import static org.jooq.impl.Utils.DataKey.DATA_LOCK_ROWS_FOR_UPDATE;
 
 import java.lang.reflect.Array;
 import java.sql.ResultSet;
@@ -79,7 +79,6 @@ import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.Results;
 import org.jooq.Table;
-import org.jooq.exception.DataAccessException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 
@@ -318,7 +317,12 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     /* [java-8] */
     @Override
-    public final Stream<R> stream() throws DataAccessException {
+    public final Stream<R> fetchStream() {
+        return fetchLazy().stream();
+    }
+
+    @Override
+    public final Stream<R> stream() {
         return fetchLazy().stream();
     }
     /* [/java-8] */

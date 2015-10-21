@@ -149,6 +149,17 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     /**
      * Stream this query.
      * <p>
+     * This is just a synonym for {@link #stream()}.
+     *
+     * @return The result.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see #stream()
+     */
+    Stream<R> fetchStream() throws DataAccessException;
+
+    /**
+     * Stream this query.
+     * <p>
      * This is essentially the same as {@link #fetchLazy()} but instead of
      * returning a {@link Cursor}, a Java 8 {@link Stream} is returned. Clients
      * should ensure the {@link Stream} is properly closed, e.g. in a

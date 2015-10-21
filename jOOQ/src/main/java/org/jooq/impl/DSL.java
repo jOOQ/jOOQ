@@ -12966,7 +12966,7 @@ public class DSL {
 
     /**
      * The <code>rank(expr) within group (order by [order clause])</code>
-     * ordered aggregate function.
+     * ordered-set aggregate function.
      */
     @Support({ ORACLE, POSTGRES_9_4 })
     public static OrderedAggregateFunction<Integer> rank(Field<?>... fields) {
@@ -12975,7 +12975,7 @@ public class DSL {
 
     /**
      * The <code>dense_rank(expr) within group (order by [order clause])</code>
-     * ordered aggregate function.
+     * ordered-set aggregate function.
      */
     @Support({ ORACLE, POSTGRES_9_4 })
     public static OrderedAggregateFunction<Integer> denseRank(Field<?>... fields) {
@@ -12984,7 +12984,7 @@ public class DSL {
 
     /**
      * The <code>percent_rank(expr) within group (order by [order clause])</code>
-     * ordered aggregate function.
+     * ordered-set aggregate function.
      */
     @Support({ ORACLE, POSTGRES_9_4 })
     public static OrderedAggregateFunction<Integer> percentRank(Field<?>... fields) {
@@ -12993,7 +12993,7 @@ public class DSL {
 
     /**
      * The <code>cume_dist(expr) within group (order by [order clause])</code>
-     * ordered aggregate function.
+     * ordered-set aggregate function.
      */
     @Support({ ORACLE, POSTGRES_9_4 })
     public static OrderedAggregateFunction<BigDecimal> cumeDist(Field<?>... fields) {

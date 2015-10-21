@@ -279,46 +279,46 @@ public class SchemaMapping implements Serializable {
             String schemaName = result.getName();
 
             // [#2089] DefaultSchema has an empty schema name
-            if (!StringUtils.isEmpty(schemaName)) {
+            if (StringUtils.isEmpty(schemaName))
+                return null;
 
-                // [#4652] Don't initialise schema mapping if not necessary
-                if (!mapping().getSchemata().isEmpty()) {
+            // [#4642] Don't initialise schema mapping if not necessary
+            if (!mapping().getSchemata().isEmpty()) {
 
-                    // Lazy initialise schema mapping
-                    if (!getSchemata().containsKey(schemaName)) {
+                // Lazy initialise schema mapping
+                if (!getSchemata().containsKey(schemaName)) {
 
-                        // [#1857] thread-safe lazy initialisation for those users who
-                        // want to use a Configuration and dependent objects in a "thread-safe" manner
-                        synchronized (this) {
-                            if (!getSchemata().containsKey(schemaName)) {
-                                for (MappedSchema s : mapping().getSchemata()) {
+                    // [#1857] thread-safe lazy initialisation for those users who
+                    // want to use a Configuration and dependent objects in a "thread-safe" manner
+                    synchronized (this) {
+                        if (!getSchemata().containsKey(schemaName)) {
+                            for (MappedSchema s : mapping().getSchemata()) {
 
-                                    // A configured mapping was found, add a renamed schema
-                                    if (schemaName.equals(s.getInput())) {
+                                // A configured mapping was found, add a renamed schema
+                                if (schemaName.equals(s.getInput())) {
 
-                                        // Ignore self-mappings and void-mappings
-                                        if (!isBlank(s.getOutput()) && !s.getOutput().equals(s.getInput())) {
-                                            result = new RenamedSchema(result, s.getOutput());
-                                        }
-
-                                        break;
+                                    // Ignore self-mappings and void-mappings
+                                    if (!isBlank(s.getOutput()) && !s.getOutput().equals(s.getInput())) {
+                                        result = new RenamedSchema(result, s.getOutput());
                                     }
-                                }
 
-                                // Add mapped schema or self if no mapping was found
-                                getSchemata().put(schemaName, result);
+                                    break;
+                                }
                             }
+
+                            // Add mapped schema or self if no mapping was found
+                            getSchemata().put(schemaName, result);
                         }
                     }
-
-                    result = getSchemata().get(schemaName);
                 }
 
-                // The configured default schema is mapped to "null". This prevents
-                // it from being rendered to SQL
-                if (result.getName().equals(mapping().getDefaultSchema())) {
-                    result = null;
-                }
+                result = getSchemata().get(schemaName);
+            }
+
+            // The configured default schema is mapped to "null". This prevents
+            // it from being rendered to SQL
+            if (result.getName().equals(mapping().getDefaultSchema())) {
+                result = null;
             }
         }
 

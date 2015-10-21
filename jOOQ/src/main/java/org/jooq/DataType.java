@@ -47,6 +47,7 @@ import java.util.List;
 
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.SQLDataType;
+import org.jooq.tools.Convert;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.YearToMonth;
 
@@ -158,6 +159,8 @@ public interface DataType<T> extends Serializable {
 
     /**
      * Convert an arbitrary object into <code>&lt;T&gt;</code>.
+     * <p>
+     * See {@link Convert#convert(Object, Class)} for details about conversion rules.
      *
      * @param object The object to be converted
      * @return The converted object
@@ -167,6 +170,8 @@ public interface DataType<T> extends Serializable {
 
     /**
      * Convert an arbitrary set of objects into <code>&lt;T&gt;</code>.
+     * <p>
+     * See {@link Convert#convert(Object, Class)} for details about conversion rules.
      *
      * @param objects The objects to be converted
      * @return The converted objects
@@ -176,6 +181,8 @@ public interface DataType<T> extends Serializable {
 
     /**
      * Convert an arbitrary set of objects into <code>&lt;T&gt;</code>.
+     * <p>
+     * See {@link Convert#convert(Object, Class)} for details about conversion rules.
      *
      * @param objects The objects to be converted
      * @return The converted objects

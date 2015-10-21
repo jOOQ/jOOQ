@@ -52,6 +52,7 @@ import static org.jooq.impl.DSL.denseRank;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.lateral;
+import static org.jooq.impl.DSL.mode;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.percentRank;
 import static org.jooq.impl.DSL.rank;
@@ -1999,5 +2000,18 @@ public class PostgresTest extends jOOQAbstractTest<
         Position position = create().fetchOne(T_PG_EXTENSIONS).getPgPosition();
         assertEquals(0, BigDecimal.ZERO.compareTo(position.latitude));
         assertEquals(0, BigDecimal.ONE.compareTo(position.longitude));
+    }
+
+    @Test
+    public void testPostgresMode() {
+        Record2<Integer, String> result =
+        create().select(
+                    mode().withinGroupOrderBy(T_BOOK.AUTHOR_ID),
+                    mode().withinGroupOrderBy(T_BOOK.TITLE.desc()))
+                .from(T_BOOK)
+                .fetchOne();
+
+        assertEquals(1, (int) result.value1());
+        assertEquals("O Alquimista", result.value2());
     }
 }

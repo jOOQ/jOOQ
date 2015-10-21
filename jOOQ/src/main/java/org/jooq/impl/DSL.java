@@ -184,6 +184,7 @@ import org.jooq.MergeUsingStep;
 import org.jooq.Name;
 import org.jooq.Operator;
 import org.jooq.OrderedAggregateFunction;
+import org.jooq.OrderedAggregateFunctionOfDeferredType;
 import org.jooq.Param;
 import org.jooq.PlainSQL;
 import org.jooq.QuantifiedSelect;
@@ -12953,6 +12954,15 @@ public class DSL {
     // -------------------------------------------------------------------------
     // XXX Ordered-set aggregate functions and hypothetical set functions
     // -------------------------------------------------------------------------
+
+    /**
+     * The <code>mode() within group (oder by [order clause])</code> ordered
+     * aggregate function.
+     */
+    @Support(POSTGRES_9_4)
+    public static OrderedAggregateFunctionOfDeferredType mode() {
+        return new Mode();
+    }
 
     /**
      * The <code>rank(expr) within group (order by [order clause])</code>

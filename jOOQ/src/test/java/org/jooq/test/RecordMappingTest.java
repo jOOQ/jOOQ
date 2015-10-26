@@ -63,7 +63,9 @@ import org.jooq.Record4;
 import org.jooq.Result;
 import org.jooq.test.data.Table1Record;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 
 /**
@@ -71,6 +73,7 @@ import org.junit.Test;
  *
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class RecordMappingTest extends AbstractTest {
 
     @Test

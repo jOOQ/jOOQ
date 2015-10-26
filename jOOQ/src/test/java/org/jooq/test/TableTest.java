@@ -49,7 +49,9 @@ import static org.jooq.test.data.Table2.TABLE2;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 
 /**
@@ -57,6 +59,7 @@ import org.junit.Test;
  *
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TableTest extends AbstractTest {
 
     @Test

@@ -52,7 +52,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.jooq.SQLDialect;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 
 /**
@@ -60,6 +62,7 @@ import org.junit.Test;
  *
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DialectTest extends AbstractTest {
 
     @Test

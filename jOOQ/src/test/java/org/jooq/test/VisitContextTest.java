@@ -154,6 +154,7 @@ import static org.junit.Assert.fail;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.IdentityHashMap;
 import java.util.List;
 
 import org.jooq.BindContext;
@@ -173,7 +174,9 @@ import org.jooq.tools.jdbc.MockStatement;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  * Some common tests related to {@link VisitContext}
@@ -181,6 +184,7 @@ import org.junit.Test;
  * @author Lukas Eder
  */
 @SuppressWarnings("unchecked")
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class VisitContextTest extends AbstractTest {
 
     private DSLContext ctx;
@@ -1236,16 +1240,14 @@ public class VisitContextTest extends AbstractTest {
     }
 
     private void assertEvents(List<List<Clause>> expected, QueryPart part, RenderContext r_ctx, BindContext b_ctx) {
-        listener.clauses.clear();
+        listener.clear();
         r_ctx.visit(part);
         assertEvents0(expected);
 
         // TODO: Re-enable this once bind variable visiting is implemented
-        if (false) {
-            listener.clauses.clear();
+            listener.clear();
             b_ctx.visit(part);
             assertEvents0(expected);
-        }
     }
 
     private void assertEvents0(List<List<Clause>> expected) {
@@ -1263,11 +1265,25 @@ public class VisitContextTest extends AbstractTest {
 
     private static class SimpleListener implements VisitListener {
 
-        List<List<Clause>> clauses = new ArrayList<List<Clause>>();
+        List<List<Clause>>                    clauses = new ArrayList<List<Clause>>();
+        IdentityHashMap<VisitContext, Object> map     = new IdentityHashMap<VisitContext, Object>();
+
+        void clear() {
+            clauses.clear();
+            map.clear();
+        }
 
         @Override
         public void clauseStart(VisitContext context) {
-            clauses.add(asList(context.clauses()));
+
+            // [#1502] Some visit events happen in nested scopes, e.g. because
+            // a query needs to collect some implicit joins from its parts.
+            // We'll ignore those nested visit events.
+            if (map.isEmpty())
+                map.put(context, new Object());
+
+            if (map.containsKey(context))
+                clauses.add(asList(context.clauses()));
         }
 
         @Override

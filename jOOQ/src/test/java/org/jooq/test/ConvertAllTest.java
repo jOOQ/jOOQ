@@ -69,13 +69,16 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.tools.Convert;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  * Unit tests for data type conversion
  *
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ConvertAllTest extends AbstractTest {
 
     @Test

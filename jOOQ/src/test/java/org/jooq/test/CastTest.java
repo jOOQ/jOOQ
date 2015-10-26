@@ -44,7 +44,9 @@ import static org.jooq.test.data.Table1.FIELD_ID1;
 
 import org.jooq.impl.SQLDataType;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 
 /**
@@ -52,6 +54,7 @@ import org.junit.Test;
  *
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CastTest extends AbstractTest {
 
     @Test

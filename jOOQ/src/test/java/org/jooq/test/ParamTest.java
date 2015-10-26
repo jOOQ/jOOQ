@@ -54,14 +54,16 @@ import java.util.List;
 import org.jooq.Param;
 import org.jooq.Query;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ParamTest extends AbstractTest {
 
-    @SuppressWarnings("unchecked")
     @Test
     public void testData() {
         Query query = create.select(val(1), inline(2)).where(val(3).ne(inline(4)));

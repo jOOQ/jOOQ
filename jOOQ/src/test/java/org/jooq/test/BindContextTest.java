@@ -46,13 +46,16 @@ import org.jooq.RenderContext;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.CustomCondition;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  * Some common tests related to {@link RenderContext}
  *
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class BindContextTest extends AbstractTest {
 
     @Test

@@ -88,13 +88,16 @@ import org.jooq.tools.jdbc.MockFileDatabase;
 import org.jooq.tools.jdbc.MockResult;
 
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  * This test suite contains tests for the JDBC mock implementations.
  *
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MockTest extends AbstractTest {
 
     private static DSLContext MOCK;

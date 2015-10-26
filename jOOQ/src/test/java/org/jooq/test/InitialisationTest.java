@@ -43,10 +43,13 @@ package org.jooq.test;
 import org.jooq.impl.DSL;
 import org.jooq.test.init.SeparateClassloaderTestRunner;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 @RunWith(SeparateClassloaderTestRunner.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class InitialisationTest {
 
     @Test

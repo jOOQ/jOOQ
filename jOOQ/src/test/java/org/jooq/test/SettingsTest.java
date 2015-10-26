@@ -60,13 +60,16 @@ import org.jooq.impl.SchemaImpl;
 import org.jooq.impl.TableImpl;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  * Some common tests related to {@link Settings}
  *
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SettingsTest {
 
     private Settings settings;

@@ -58,7 +58,9 @@ import org.jooq.tools.jdbc.MockDataProvider;
 import org.jooq.tools.jdbc.MockExecuteContext;
 import org.jooq.tools.jdbc.MockResult;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  * Unit tests for data type conversion
@@ -66,6 +68,7 @@ import org.junit.Test;
  * @author Lukas Eder
  */
 @SuppressWarnings("deprecation")
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ConverterTest extends AbstractTest {
 
     @Test

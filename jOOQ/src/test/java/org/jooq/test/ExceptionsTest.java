@@ -43,13 +43,16 @@ package org.jooq.test;
 import static org.jooq.impl.DSL.count;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  * Common tests related to jOOQ's exception handling
  *
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ExceptionsTest extends AbstractTest {
 
     @Test

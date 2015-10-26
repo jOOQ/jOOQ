@@ -89,13 +89,16 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 
 import org.jmock.Expectations;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  * A test suite for basic jOOQ functionality
  *
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class BasicTest extends AbstractTest {
 
     @Test

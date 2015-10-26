@@ -48,7 +48,9 @@ import static org.jooq.test.data.Table3.FIELD_ID3;
 import org.jooq.Record3;
 import org.jooq.Result;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 
 /**
@@ -56,6 +58,7 @@ import org.junit.Test;
  *
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ResultSortTest extends AbstractTest {
 
     @Test

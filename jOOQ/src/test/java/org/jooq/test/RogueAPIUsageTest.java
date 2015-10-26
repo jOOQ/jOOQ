@@ -50,7 +50,9 @@ import org.jooq.Field;
 import org.jooq.Select;
 import org.jooq.impl.DSL;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  * Test cases in this class check if the jOOQ API implementation defends itself against "rogue API usage".
@@ -60,6 +62,7 @@ import org.junit.Test;
  *
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class RogueAPIUsageTest extends AbstractTest {
 
     @Test

@@ -53,11 +53,14 @@ import org.jooq.Condition;
 import org.jooq.QueryPart;
 
 import org.jmock.Expectations;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class PlainSQLTest extends AbstractTest {
 
     @Test

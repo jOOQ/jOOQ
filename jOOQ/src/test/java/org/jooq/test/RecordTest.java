@@ -64,7 +64,9 @@ import org.jooq.test.data.Table2Record;
 import org.jooq.test.data.Table4;
 import org.jooq.test.data.Table4Record;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 
 /**
@@ -72,6 +74,7 @@ import org.junit.Test;
  *
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class RecordTest extends AbstractTest {
 
     @Test

@@ -48,13 +48,16 @@ import org.jooq.impl.CustomQueryPart;
 import org.jooq.impl.DSL;
 
 import org.jmock.Expectations;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  * Test cases for custom {@link QueryPart}s.
  *
  * @author Lukas Eder
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CustomQueryPartTest extends AbstractTest {
 
     @SuppressWarnings("serial")

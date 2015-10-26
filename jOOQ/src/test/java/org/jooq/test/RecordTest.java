@@ -41,11 +41,22 @@
 
 package org.jooq.test;
 
+import static org.jooq.impl.DSL.row;
+import static org.jooq.test.data.Table1.FIELD_DATE1;
+import static org.jooq.test.data.Table1.FIELD_ID1;
+import static org.jooq.test.data.Table1.FIELD_NAME1;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.sql.Date;
+
 import org.jooq.Record1;
+import org.jooq.Record2;
+import org.jooq.Record3;
+import org.jooq.Row1;
+import org.jooq.Row2;
+import org.jooq.Row3;
 import org.jooq.test.data.Table1;
 import org.jooq.test.data.Table1Record;
 import org.jooq.test.data.Table2;
@@ -134,5 +145,45 @@ public class RecordTest extends AbstractTest {
         assertEquals(Table1.FIELD_ID1, r2.field(0));
         assertEquals(1, (int) r2.value1());
         assertFalse(r2.changed());
+    }
+
+    @SuppressWarnings("cast")
+    @Test
+    public void testRecordTypes() {
+        Record1<Integer> r1 = create.newRecord(FIELD_ID1);
+        Record2<Integer, String> r2 = create.newRecord(FIELD_ID1, FIELD_NAME1);
+        Record3<Integer, String, Date> r3 = create.newRecord(FIELD_ID1, FIELD_NAME1, FIELD_DATE1);
+
+        assertTrue(r1 instanceof Record1);
+        assertFalse(r1 instanceof Record2);
+        assertFalse(r1 instanceof Record3);
+
+        assertFalse(r2 instanceof Record1);
+        assertTrue(r2 instanceof Record2);
+        assertFalse(r2 instanceof Record3);
+
+        assertFalse(r3 instanceof Record1);
+        assertFalse(r3 instanceof Record2);
+        assertTrue(r3 instanceof Record3);
+    }
+
+    @SuppressWarnings("cast")
+    @Test
+    public void testRowTypes() {
+        Row1<Integer> r1 = row(FIELD_ID1);
+        Row2<Integer, String> r2 = row(FIELD_ID1, FIELD_NAME1);
+        Row3<Integer, String, Date> r3 = row(FIELD_ID1, FIELD_NAME1, FIELD_DATE1);
+
+        assertTrue(r1 instanceof Row1);
+        assertFalse(r1 instanceof Row2);
+        assertFalse(r1 instanceof Row3);
+
+        assertFalse(r2 instanceof Row1);
+        assertTrue(r2 instanceof Row2);
+        assertFalse(r2 instanceof Row3);
+
+        assertFalse(r3 instanceof Row1);
+        assertFalse(r3 instanceof Row2);
+        assertTrue(r3 instanceof Row3);
     }
 }

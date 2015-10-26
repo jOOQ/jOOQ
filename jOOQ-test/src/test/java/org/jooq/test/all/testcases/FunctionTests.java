@@ -132,6 +132,8 @@ import static org.jooq.impl.DSL.tan;
 import static org.jooq.impl.DSL.tanh;
 import static org.jooq.impl.DSL.time;
 import static org.jooq.impl.DSL.timestamp;
+import static org.jooq.impl.DSL.toDate;
+import static org.jooq.impl.DSL.toTimestamp;
 import static org.jooq.impl.DSL.trim;
 import static org.jooq.impl.DSL.trunc;
 import static org.jooq.impl.DSL.upper;
@@ -1014,6 +1016,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, CS, I, IPK
         assertEquals("1970-01-01 02:00:00.0", record.getValue(ts2).toString());
         assertEquals("1970-01-01", record.getValue(d2).toString());
         assertEquals("02:00:00", record.getValue(t2).toString());
+    }
+
+    public void testToDateToTimestamp() {
+        Record2<Date, Timestamp> result =
+        create().select(
+                    toDate("20000401", "YYYYMMDD"),
+                    toTimestamp("20000401 121537", "YYYYMMDD HH24MISS"))
+                .fetchOne();
+
+        assertEquals(Date.valueOf("2000-04-01"), result.value1());
+        assertEquals(Timestamp.valueOf("2000-04-01 12:15:37"), result.value2());
     }
 
     public void testCurrentDateTime() {

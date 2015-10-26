@@ -10902,6 +10902,94 @@ public class DSL {
         return new DateOrTime<Timestamp>(field, SQLDataType.TIMESTAMP);
     }
 
+    /**
+     * Parse a value to a <code>DATE</code>.
+     *
+     * @param value The formatted <code>DATE</code> value.
+     * @param format The vendor-specific formatting string.
+     */
+    @Support({ ORACLE, POSTGRES })
+    public static Field<Date> toDate(String value, String format) {
+        return toDate(Utils.field(value, SQLDataType.VARCHAR), Utils.field(format, SQLDataType.VARCHAR));
+    }
+
+    /**
+     * Parse a value to a <code>DATE</code>.
+     *
+     * @param value The formatted <code>DATE</code> value.
+     * @param format The vendor-specific formatting string.
+     */
+    @Support({ ORACLE, POSTGRES })
+    public static Field<Date> toDate(String value, Field<String> format) {
+        return toDate(Utils.field(value, SQLDataType.VARCHAR), nullSafe(format));
+    }
+
+    /**
+     * Parse a value to a <code>DATE</code>.
+     *
+     * @param value The formatted <code>DATE</code> value.
+     * @param format The vendor-specific formatting string.
+     */
+    @Support({ ORACLE, POSTGRES })
+    public static Field<Date> toDate(Field<String> value, String format) {
+        return toDate(nullSafe(value), Utils.field(format, SQLDataType.VARCHAR));
+    }
+
+    /**
+     * Parse a value to a <code>DATE</code>.
+     *
+     * @param value The formatted <code>DATE</code> value.
+     * @param format The vendor-specific formatting string.
+     */
+    @Support({ ORACLE, POSTGRES })
+    public static Field<Date> toDate(Field<String> value, Field<String> format) {
+        return DSL.field("to_date({0}, {1})", SQLDataType.DATE, nullSafe(value), nullSafe(format));
+    }
+
+    /**
+     * Parse a value to a <code>TIMESTAMP</code>.
+     *
+     * @param value The formatted <code>TIMESTAMP</code> value.
+     * @param format The vendor-specific formatting string.
+     */
+    @Support({ ORACLE, POSTGRES })
+    public static Field<Timestamp> toTimestamp(String value, String format) {
+        return toTimestamp(Utils.field(value, SQLDataType.VARCHAR), Utils.field(format, SQLDataType.VARCHAR));
+    }
+
+    /**
+     * Parse a value to a <code>TIMESTAMP</code>.
+     *
+     * @param value The formatted <code>TIMESTAMP</code> value.
+     * @param format The vendor-specific formatting string.
+     */
+    @Support({ ORACLE, POSTGRES })
+    public static Field<Timestamp> toTimestamp(String value, Field<String> format) {
+        return toTimestamp(Utils.field(value, SQLDataType.VARCHAR), nullSafe(format));
+    }
+
+    /**
+     * Parse a value to a <code>TIMESTAMP</code>.
+     *
+     * @param value The formatted <code>TIMESTAMP</code> value.
+     * @param format The vendor-specific formatting string.
+     */
+    @Support({ ORACLE, POSTGRES })
+    public static Field<Timestamp> toTimestamp(Field<String> value, String format) {
+        return toTimestamp(nullSafe(value), Utils.field(format, SQLDataType.VARCHAR));
+    }
+
+    /**
+     * Parse a value to a <code>TIMESTAMP</code>.
+     *
+     * @param value The formatted <code>TIMESTAMP</code> value.
+     * @param format The vendor-specific formatting string.
+     */
+    @Support({ ORACLE, POSTGRES })
+    public static Field<Timestamp> toTimestamp(Field<String> value, Field<String> format) {
+        return DSL.field("to_timestamp({0}, {1})", SQLDataType.TIMESTAMP, nullSafe(value), nullSafe(format));
+    }
+
     // ------------------------------------------------------------------------
     // XXX Construction of GROUPING SET functions
     // ------------------------------------------------------------------------

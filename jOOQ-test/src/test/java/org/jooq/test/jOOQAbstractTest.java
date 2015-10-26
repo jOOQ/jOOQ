@@ -3138,6 +3138,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testToDateToTimestamp() throws Exception {
+        new FunctionTests(this).testToDateToTimestamp();
+    }
+
+    @Test
     public void testCurrentDateTime() throws Exception {
         new FunctionTests(this).testCurrentDateTime();
     }

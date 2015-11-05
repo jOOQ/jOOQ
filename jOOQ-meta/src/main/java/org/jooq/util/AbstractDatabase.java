@@ -146,7 +146,6 @@ public abstract class AbstractDatabase implements Database {
     private transient Map<SchemaDefinition, List<ForeignKeyDefinition>>      foreignKeysBySchema;
     private transient Map<SchemaDefinition, List<CheckConstraintDefinition>> checkConstraintsBySchema;
     private transient Map<SchemaDefinition, List<TableDefinition>>           tablesBySchema;
-    @SuppressWarnings("unused")
     private transient Map<SchemaDefinition, List<EnumDefinition>>            enumsBySchema;
     private transient Map<SchemaDefinition, List<UDTDefinition>>             udtsBySchema;
     private transient Map<SchemaDefinition, List<ArrayDefinition>>           arraysBySchema;
@@ -781,7 +780,11 @@ public abstract class AbstractDatabase implements Database {
             }
         }
 
-        return enums;
+        if (enumsBySchema == null) {
+            enumsBySchema = new LinkedHashMap<SchemaDefinition, List<EnumDefinition>>();
+        }
+
+        return filterSchema(enums, schema, enumsBySchema);
     }
 
     private final List<EnumDefinition> getConfiguredEnums() {

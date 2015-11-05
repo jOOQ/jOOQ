@@ -82,6 +82,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 COLUMNS.NUMERIC_SCALE,
                 COLUMNS.IS_NULLABLE,
                 COLUMNS.COLUMN_DEFAULT,
+                COLUMNS.UDT_SCHEMA,
                 COLUMNS.UDT_NAME,
                 PG_DESCRIPTION.DESCRIPTION)
             .from(COLUMNS)
@@ -98,9 +99,15 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
             .orderBy(COLUMNS.ORDINAL_POSITION)
             .fetch()) {
 
+            SchemaDefinition typeSchema = null;
+
+            String schemaName = record.getValue(COLUMNS.UDT_SCHEMA);
+            if (schemaName != null)
+                typeSchema = getDatabase().getSchema(schemaName);
+
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
-                getSchema(),
+                typeSchema,
                 record.getValue(COLUMNS.DATA_TYPE),
                 record.getValue(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
                 record.getValue(COLUMNS.NUMERIC_PRECISION),

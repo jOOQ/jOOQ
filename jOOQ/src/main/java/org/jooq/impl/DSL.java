@@ -382,8 +382,17 @@ public class DSL {
     /**
      * Create an executor from a JDBC connection URL.
      * <p>
-     * The connections created this way will be closed upon finalization. This
-     * is useful for standalone scripts, but not for managed connections.
+     * Clients must ensure connections are closed properly by calling
+     * {@link DSLContext#close()} on the resulting {@link DSLContext}. For
+     * example:
+     * <p>
+     * <code><pre>
+     * // Auto-closing DSLContext instance to free resources
+     * try (DSLContext ctx = DSL.using("jdbc:h2:~/test")) {
+     *
+     *     // ...
+     * }
+     * </pre></code>
      *
      * @param url The connection URL.
      * @see DefaultConnectionProvider
@@ -402,8 +411,17 @@ public class DSL {
     /**
      * Create an executor from a JDBC connection URL.
      * <p>
-     * The connections created this way will be closed upon finalization. This
-     * is useful for standalone scripts, but not for managed connections.
+     * Clients must ensure connections are closed properly by calling
+     * {@link DSLContext#close()} on the resulting {@link DSLContext}. For
+     * example:
+     * <p>
+     * <code><pre>
+     * // Auto-closing DSLContext instance to free resources
+     * try (DSLContext ctx = DSL.using("jdbc:h2:~/test", "sa", "")) {
+     *
+     *     // ...
+     * }
+     * </pre></code>
      *
      * @param url The connection URL.
      * @param username The connection user name.
@@ -424,8 +442,17 @@ public class DSL {
     /**
      * Create an executor from a JDBC connection URL.
      * <p>
-     * The connections created this way will be closed upon finalization. This
-     * is useful for standalone scripts, but not for managed connections.
+     * Clients must ensure connections are closed properly by calling
+     * {@link DSLContext#close()} on the resulting {@link DSLContext}. For
+     * example:
+     * <p>
+     * <code><pre>
+     * // Auto-closing DSLContext instance to free resources
+     * try (DSLContext ctx = DSL.using("jdbc:h2:~/test", properties)) {
+     *
+     *     // ...
+     * }
+     * </pre></code>
      *
      * @param url The connection URL.
      * @param properties The connection properties.

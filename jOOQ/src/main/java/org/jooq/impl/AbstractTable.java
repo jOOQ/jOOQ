@@ -55,6 +55,7 @@ import static org.jooq.JoinType.OUTER_APPLY;
 import static org.jooq.JoinType.RIGHT_OUTER_JOIN;
 import static org.jooq.JoinType.STRAIGHT_JOIN;
 // ...
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
 
@@ -66,6 +67,7 @@ import java.util.List;
 
 import org.jooq.Binding;
 import org.jooq.Clause;
+import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Converter;
 import org.jooq.DataType;
@@ -497,6 +499,46 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
      */
     protected final <T, X, U> TableField<R, U> createField(String name, DataType<T> type, String comment, Converter<X, U> converter, Binding<T, X> binding) {
         return createField(name, type, this, comment, converter, binding);
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: Convenience methods and synthetic methods
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final Condition eq(Table<R> that) {
+        return equal(that);
+    }
+
+    @Override
+    public final Condition equal(Table<R> that) {
+        UniqueKey<R> thisPK = this.getPrimaryKey();
+        UniqueKey<R> thatPK = that.getPrimaryKey();
+
+        if (thisPK != null && thatPK != null) {
+            return row(fields(thisPK.getFieldsArray())).eq(row(that.fields(thatPK.getFieldsArray())));
+        }
+        else {
+            return row(fields()).eq(row(that.fields()));
+        }
+    }
+
+    @Override
+    public final Condition ne(Table<R> that) {
+        return notEqual(that);
+    }
+
+    @Override
+    public final Condition notEqual(Table<R> that) {
+        UniqueKey<R> thisPK = this.getPrimaryKey();
+        UniqueKey<R> thatPK = that.getPrimaryKey();
+
+        if (thisPK != null && thatPK != null) {
+            return row(fields(thisPK.getFieldsArray())).ne(row(that.fields(thatPK.getFieldsArray())));
+        }
+        else {
+            return row(fields()).ne(row(that.fields()));
+        }
     }
 
     // ------------------------------------------------------------------------

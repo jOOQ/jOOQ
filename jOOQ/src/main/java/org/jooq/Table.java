@@ -1583,6 +1583,98 @@ public interface Table<R extends Record> extends TableLike<R> {
     TableOnStep<Record> straightJoin(Name name);
 
     // -------------------------------------------------------------------------
+    // XXX: Convenience methods and synthetic methods
+    // -------------------------------------------------------------------------
+
+    /**
+     * Create a predicate comparing records from self-joined tables.
+     * <p>
+     * This is a convenience method for self-joins, comparing either:
+     * <ul>
+     * <li>Primary key values, if {@link #getPrimaryKey()} is available</li>
+     * <li>Complete records, otherwise</li>
+     * </ul>
+     * For example:
+     * <code><pre>
+     * MyTable a = MY_TABLE.as("a");
+     * MyTable b = MY_TABLE.as("b");
+     *
+     * DSL.using(configuration)
+     *    .select()
+     *    .from(a)
+     *    .join(b).on(a.eq(b));
+     * </pre></code>
+     *
+     * @see #equal(Table)
+     */
+    Condition eq(Table<R> table);
+
+    /**
+     * Create a predicate comparing records from self-joined tables.
+     * <p>
+     * This is a convenience method for self-joins, comparing either:
+     * <ul>
+     * <li>Primary key values, if {@link #getPrimaryKey()} is available</li>
+     * <li>Complete records, otherwise</li>
+     * </ul>
+     * For example:
+     * <code><pre>
+     * MyTable a = MY_TABLE.as("a");
+     * MyTable b = MY_TABLE.as("b");
+     *
+     * DSL.using(configuration)
+     *    .select()
+     *    .from(a)
+     *    .join(b).on(a.equal(b));
+     * </pre></code>
+     */
+    Condition equal(Table<R> table);
+
+    /**
+     * Create a predicate comparing records from self-non-equi-joined tables.
+     * <p>
+     * This is a convenience method for self-non-equi-joins, comparing either:
+     * <ul>
+     * <li>Primary key values, if {@link #getPrimaryKey()} is available</li>
+     * <li>Complete records, otherwise</li>
+     * </ul>
+     * For example:
+     * <code><pre>
+     * MyTable a = MY_TABLE.as("a");
+     * MyTable b = MY_TABLE.as("b");
+     *
+     * DSL.using(configuration)
+     *    .select()
+     *    .from(a)
+     *    .join(b).on(a.ne(b));
+     * </pre></code>
+     *
+     * @see #notEqual(Table)
+     */
+    Condition ne(Table<R> table);
+
+    /**
+     * Create a predicate comparing records from self-non-equi-joined tables.
+     * <p>
+     * This is a convenience method for self-non-equi-joins, comparing either:
+     * <ul>
+     * <li>Primary key values, if {@link #getPrimaryKey()} is available</li>
+     * <li>Complete records, otherwise</li>
+     * </ul>
+     * For example:
+     * <code><pre>
+     * MyTable a = MY_TABLE.as("a");
+     * MyTable b = MY_TABLE.as("b");
+     *
+     * DSL.using(configuration)
+     *    .select()
+     *    .from(a)
+     *    .join(b).on(a.notEqual(b));
+     * </pre></code>
+     */
+    Condition notEqual(Table<R> table);
+
+    // -------------------------------------------------------------------------
     // XXX: Exotic and vendor-specific clauses on tables
     // -------------------------------------------------------------------------
 

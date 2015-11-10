@@ -515,7 +515,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
         UniqueKey<R> thisPK = this.getPrimaryKey();
         UniqueKey<R> thatPK = that.getPrimaryKey();
 
-        if (thisPK != null && thatPK != null) {
+        if (thisPK != null && thatPK != null && thisPK.getTable().equals(thatPK.getTable())) {
             return row(fields(thisPK.getFieldsArray())).eq(row(that.fields(thatPK.getFieldsArray())));
         }
         else {
@@ -533,7 +533,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
         UniqueKey<R> thisPK = this.getPrimaryKey();
         UniqueKey<R> thatPK = that.getPrimaryKey();
 
-        if (thisPK != null && thatPK != null) {
+        if (thisPK != null && thatPK != null && thisPK.getTable().equals(thatPK.getTable())) {
             return row(fields(thisPK.getFieldsArray())).ne(row(that.fields(thatPK.getFieldsArray())));
         }
         else {

@@ -55,7 +55,6 @@ import static org.jooq.JoinType.OUTER_APPLY;
 import static org.jooq.JoinType.RIGHT_OUTER_JOIN;
 import static org.jooq.JoinType.STRAIGHT_JOIN;
 // ...
-import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
 
@@ -67,6 +66,7 @@ import java.util.List;
 
 import org.jooq.Binding;
 import org.jooq.Clause;
+import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Converter;
@@ -512,15 +512,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
 
     @Override
     public final Condition equal(Table<R> that) {
-        UniqueKey<R> thisPK = this.getPrimaryKey();
-        UniqueKey<R> thatPK = that.getPrimaryKey();
-
-        if (thisPK != null && thatPK != null && thisPK.getTable().equals(thatPK.getTable())) {
-            return row(fields(thisPK.getFieldsArray())).eq(row(that.fields(thatPK.getFieldsArray())));
-        }
-        else {
-            return row(fields()).eq(row(that.fields()));
-        }
+        return new TableComparison<R>(this, that, Comparator.EQUALS);
     }
 
     @Override
@@ -530,15 +522,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
 
     @Override
     public final Condition notEqual(Table<R> that) {
-        UniqueKey<R> thisPK = this.getPrimaryKey();
-        UniqueKey<R> thatPK = that.getPrimaryKey();
-
-        if (thisPK != null && thatPK != null && thisPK.getTable().equals(thatPK.getTable())) {
-            return row(fields(thisPK.getFieldsArray())).ne(row(that.fields(thatPK.getFieldsArray())));
-        }
-        else {
-            return row(fields()).ne(row(that.fields()));
-        }
+        return new TableComparison<R>(this, that, Comparator.NOT_EQUALS);
     }
 
     // ------------------------------------------------------------------------

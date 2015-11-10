@@ -1607,6 +1607,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *
      * @see #equal(Table)
      */
+    @Support
     Condition eq(Table<R> table);
 
     /**
@@ -1628,6 +1629,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *    .join(b).on(a.equal(b));
      * </pre></code>
      */
+    @Support
     Condition equal(Table<R> table);
 
     /**
@@ -1651,6 +1653,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *
      * @see #notEqual(Table)
      */
+    @Support
     Condition ne(Table<R> table);
 
     /**
@@ -1672,6 +1675,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *    .join(b).on(a.notEqual(b));
      * </pre></code>
      */
+    @Support
     Condition notEqual(Table<R> table);
 
     // -------------------------------------------------------------------------

@@ -136,7 +136,8 @@ public class JDBCUtils {
         /* [pro] xx
         xx xxxx xxx xx xx xxxxx
         xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-             xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
+             xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+             xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
             xxxxxx xxxxxxxxx
         x
         xx [/pro] */
@@ -163,7 +164,8 @@ public class JDBCUtils {
               || url.startsWith("jdbc:google:")) {
             return MYSQL;
         }
-        else if (url.startsWith("jdbc:postgresql:")) {
+        else if (url.startsWith("jdbc:postgresql:")
+              || url.startsWith("jdbc:pgsql:")) {
             return POSTGRES;
         }
         else if (url.startsWith("jdbc:sqlite:")

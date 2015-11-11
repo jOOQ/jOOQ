@@ -12525,10 +12525,14 @@ public class DSL {
 
     /**
      * Get the count(table) function.
+     * <p>
+     * If this is not supported by a given database (i.e. non
+     * {@link SQLDialect#POSTGRES}, then the primary key is used with
+     * {@link #count(Field)}, instead.
      */
-    @Support(POSTGRES)
+    @Support
     public static AggregateFunction<Integer> count(Table<?> table) {
-        return new Function<Integer>("count", SQLDataType.INTEGER, tableByName(table.getName()));
+        return new CountTable(table, false);
     }
 
     /**
@@ -12541,10 +12545,14 @@ public class DSL {
 
     /**
      * Get the count(distinct table) function.
+     * <p>
+     * If this is not supported by a given database (i.e. non
+     * {@link SQLDialect#POSTGRES}, then the primary key is used with
+     * {@link #count(Field)}, instead.
      */
-    @Support(POSTGRES)
+    @Support({ CUBRID, DERBY, H2, HSQLDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static AggregateFunction<Integer> countDistinct(Table<?> table) {
-        return new Function<Integer>("count", true, SQLDataType.INTEGER, tableByName(table.getName()));
+        return new CountTable(table, true);
     }
 
     /**

@@ -1633,6 +1633,15 @@ public interface Table<R extends Record> extends TableLike<R> {
     Condition equal(Table<R> table);
 
     /**
+     * {@inheritDoc}
+     * <p>
+     * <strong>Watch out! This is {@link Object#equals(Object)}, not a jOOQ DSL
+     * feature!</strong>
+     */
+    @Override
+    boolean equals(Object other);
+
+    /**
      * Create a predicate comparing records from self-non-equi-joined tables.
      * <p>
      * This is a convenience method for self-non-equi-joins, comparing either:

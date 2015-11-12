@@ -95,6 +95,7 @@
     <!-- [trial] -->
     <target name="release-oss" description="Release a new version">
         <property name="version" value="${version-prefix}"/>
+        <property name="dir.version" value="jOOQ-${version-prefix}"/>
 
         <antcall target="copy-lib-javadoc"/>
         <antcall target="copy-src"/>

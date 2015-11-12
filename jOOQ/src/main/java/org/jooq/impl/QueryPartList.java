@@ -42,7 +42,7 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
-import static org.jooq.impl.Utils.DATA_LIST_ALREADY_INDENTED;
+import static org.jooq.impl.Utils.DataKey.DATA_LIST_ALREADY_INDENTED;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -71,9 +71,9 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
 
         this.wrappedList = new ArrayList<T>();
 
-        if (wrappedList != null) {
+        // [#4664] Don't allocate the backing array if not necessary!
+        if (wrappedList != null && !wrappedList.isEmpty())
             addAll(wrappedList);
-        }
     }
 
     QueryPartList(T... wrappedList) {

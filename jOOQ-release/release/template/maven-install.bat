@@ -1,5 +1,5 @@
 @echo off
-set VERSION=3.7.0
+set VERSION=3.7.1
 
 if exist jOOQ-javadoc\jooq-%VERSION%-javadoc.jar (
   set JAVADOC_JOOQ=-Djavadoc=jOOQ-javadoc\jooq-%VERSION%-javadoc.jar
@@ -26,3 +26,12 @@ call mvn install:install-file -Dfile=jOOQ-lib\jooq-meta-extensions-%VERSION%.jar
 call mvn install:install-file -Dfile=jOOQ-lib\jooq-codegen-%VERSION%.jar         -DgroupId=org.jooq -DartifactId=jooq-codegen         -Dversion=%VERSION% -Dpackaging=jar %JAVADOC_JOOQ_CODEGEN%         %SOURCES_JOOQ_CODEGEN%         -DpomFile=jOOQ-pom\jooq-codegen\pom.xml
 call mvn install:install-file -Dfile=jOOQ-lib\jooq-codegen-maven-%VERSION%.jar   -DgroupId=org.jooq -DartifactId=jooq-codegen-maven   -Dversion=%VERSION% -Dpackaging=jar %JAVADOC_JOOQ_CODEGEN_MAVEN%   %SOURCES_JOOQ_CODEGEN_META%    -DpomFile=jOOQ-pom\jooq-codegen-maven\pom.xml
 call mvn install:install-file -Dfile=jOOQ-lib\jooq-scala-%VERSION%.jar           -DgroupId=org.jooq -DartifactId=jooq-scala           -Dversion=%VERSION% -Dpackaging=jar %JAVADOC_JOOQ_SCALA%           %SOURCES_JOOQ_SCALA%           -DpomFile=jOOQ-pom\jooq-scala\pom.xml
+
+echo
+echo
+echo The different jOOQ editions are released under different Maven groupIds!
+echo ------------------------------------------------------------------------
+echo - org.jooq.pro        : The jOOQ Express, Professional, and Enterprise Editions
+echo - org.jooq.pro-java-6 : The jOOQ Express, Professional, and Enterprise Editions with support for Java 6
+echo - org.jooq.trial      : The jOOQ Trial Edition
+echo - org.jooq            : The jOOQ Open Source Edition

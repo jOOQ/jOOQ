@@ -507,10 +507,13 @@ public class GenerationTool {
             }
         }
 
-        // [#2801]
+        // [#2801] [#4620]
         catch (ClassNotFoundException e) {
             if (className.startsWith("org.jooq.util.") && className.endsWith("Database")) {
-                log.warn("Licensing", "With jOOQ 3.2, licensing has changed, and your database may no longer be supported with jOOQ Open Source Edition. See http://www.jooq.org/licensing for details");
+                log.warn("Type not found",
+                      "Your configured database type was not found. This can have several reasons:\n"
+                    + "- You want to use a commercial jOOQ Edition, but you pulled the Open Source Edition from Maven Central.\n"
+                    + "- You have mis-typed your class name.");
             }
 
             throw e;

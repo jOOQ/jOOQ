@@ -52,9 +52,9 @@ import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
 import static org.jooq.conf.SettingsTools.getParamType;
 import static org.jooq.impl.DSL.using;
-import static org.jooq.impl.Utils.DATA_COUNT_BIND_VALUES;
-import static org.jooq.impl.Utils.DATA_FORCE_STATIC_STATEMENT;
 import static org.jooq.impl.Utils.consumeExceptions;
+import static org.jooq.impl.Utils.DataKey.DATA_COUNT_BIND_VALUES;
+import static org.jooq.impl.Utils.DataKey.DATA_FORCE_STATIC_STATEMENT;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

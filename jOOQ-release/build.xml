@@ -3,7 +3,7 @@
     <property name="dir.workspace" value="${basedir}/.." />
     <property name="dir.target" value="${basedir}/target" />
     <property name="dir.release" value="${basedir}/release" />
-    <property name="version-prefix" value="3.7.0"/>
+    <property name="version-prefix" value="3.7.1"/>
 
     <!-- Run a full mvn clean package install deploy first before this -->
     <target name="copy-lib-javadoc">
@@ -95,7 +95,6 @@
     <!-- [trial] -->
     <target name="release-oss" description="Release a new version">
         <property name="version" value="${version-prefix}"/>
-        <property name="dir.version" value="jOOQ-${version-prefix}"/>
 
         <antcall target="copy-lib-javadoc"/>
         <antcall target="copy-src"/>

@@ -40,9 +40,9 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Utils.DATA_DEFAULT_TRANSACTION_PROVIDER_AUTOCOMMIT;
-import static org.jooq.impl.Utils.DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION;
-import static org.jooq.impl.Utils.DATA_DEFAULT_TRANSACTION_PROVIDER_SAVEPOINTS;
+import static org.jooq.impl.Utils.DataKey.DATA_DEFAULT_TRANSACTION_PROVIDER_AUTOCOMMIT;
+import static org.jooq.impl.Utils.DataKey.DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION;
+import static org.jooq.impl.Utils.DataKey.DATA_DEFAULT_TRANSACTION_PROVIDER_SAVEPOINTS;
 
 import java.sql.Connection;
 import java.sql.SQLException;

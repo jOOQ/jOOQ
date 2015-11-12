@@ -48,7 +48,7 @@ import static java.util.concurrent.Executors.newSingleThreadExecutor;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
-import static org.jooq.impl.Utils.DATA_LOCK_ROWS_FOR_UPDATE;
+import static org.jooq.impl.Utils.DataKey.DATA_LOCK_ROWS_FOR_UPDATE;
 import static org.jooq.impl.Utils.consumeResultSets;
 
 import java.lang.reflect.Array;

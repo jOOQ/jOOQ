@@ -40,7 +40,6 @@
  */
 package org.jooq.impl;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.jooq.Configuration;
@@ -58,16 +57,16 @@ import org.jooq.conf.Settings;
  */
 class DefaultRecordContext implements RecordContext {
 
-    private final Configuration           configuration;
-    private final HashMap<Object, Object> data;
-    private final ExecuteType             type;
-    private final Record[]                records;
-    Exception                             exception;
+    private final Configuration       configuration;
+    private final Map<Object, Object> data;
+    private final ExecuteType         type;
+    private final Record[]            records;
+    Exception                         exception;
 
     DefaultRecordContext(Configuration configuration, ExecuteType type, Record... records) {
         this.configuration = configuration;
         this.type = type;
-        this.data = new HashMap<Object, Object>();
+        this.data = new DataMap();
         this.records = records;
     }
 

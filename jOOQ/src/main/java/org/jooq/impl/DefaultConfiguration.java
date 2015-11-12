@@ -41,7 +41,7 @@
 package org.jooq.impl;
 
 import static org.jooq.SQLDialect.DEFAULT;
-import static org.jooq.impl.Utils.DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION;
+import static org.jooq.impl.Utils.DataKey.DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

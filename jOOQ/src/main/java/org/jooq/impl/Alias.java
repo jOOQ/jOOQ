@@ -68,7 +68,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.Utils.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
+import static org.jooq.impl.Utils.DataKey.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
 import static org.jooq.impl.Utils.list;
 
 import org.jooq.Clause;

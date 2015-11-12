@@ -301,6 +301,20 @@ public final class SQLDataType {
      * The {@link Types#TIMESTAMP_WITH_TIMEZONE} type.
      */
     public static final DataType<OffsetDateTime> OFFSETDATETIME = new DefaultDataType<OffsetDateTime>(null, OffsetDateTime.class, "timestamp with time zone");
+
+    /**
+     * The {@link Types#TIME_WITH_TIMEZONE} type.
+     * <p>
+     * An alias for {@link #OFFSETTIME}
+     */
+    public static final DataType<OffsetTime> TIMEWITHTIMEZONE = OFFSETTIME;
+
+    /**
+     * The {@link Types#TIMESTAMP_WITH_TIMEZONE} type.
+     * <p>
+     * An alias for {@link #OFFSETDATETIME}
+     */
+    public static final DataType<OffsetDateTime> TIMESTAMPWITHTIMEZONE = OFFSETDATETIME;
     /* [/java-8] */
 
     // -------------------------------------------------------------------------

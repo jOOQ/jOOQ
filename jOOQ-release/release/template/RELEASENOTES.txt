@@ -10,6 +10,33 @@ http://www.jooq.org/notes
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.7.1 - November 12, 2015
+================================================================================
+
+This is a patch release with some useful fixes for the 3.7 branch
+
+Features and Improvements
+-------------------------
+#3073 - Distribute commercial jOOQ artifacts under a different groupId to avoid conflicts
+#4620 - Change error message when jOOQ-meta database type could not be found
+#4659 - Significant overhead caused by type lookup when using DSL.val(T) or DSL.inline(T) in org.jooq.impl.Limit
+#4721 - Add Javadoc examples to DSL.using(String), showing proper use with try-with-resources
+
+Bug Fixes
+---------
+#3935 - InternalVisitListener accounts for a lot of CPU load
+#4624 - Column of type "TIMESTAMP WITH TIME ZONE" lead to invalid TableImpl in 3.7.0
+#4626 - Zero-length DAO source files generated for non-updatable tables
+#4634 - Significant CPU overhead in CursorImpl$CursorIterator#fetchOne() due to frequent HashMap access
+#4637 - Regression in Table.onKey(ForeignKey) with multiple joins
+#4638 - Misleading ReferenceImpl.toString() implementation
+#4642 - Significant schema mapping initialisation overhead when schema mapping isn't even used
+#4646 - Significant overhead from Scope.data() Map access
+#4651 - Significant overhead caused by AbstractContext's internal ArrayDeque stacks that created even if there are no VisitListeners
+#4664 - Inefficent initialisation of SortFieldList and other QueryPartLists
+#4668 - Significant overhead caused by check if FROM clause is needed
+#4672 - Too many context objects are created when generating SQL
+
 
 Version 3.7.0 - October 8, 2015
 ================================================================================

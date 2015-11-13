@@ -6940,7 +6940,7 @@ public class DSL {
      *            name.
      * @param type The type of the returned field
      * @return A field referenced by <code>fieldName</code>
-     * @deprecated - [#3843] - 3.6.0 - use {@link #sequence(Name, Class)} instead
+     * @deprecated - [#3843] - 3.6.0 - use {@link #field(Name, Class)} instead
      */
     @Deprecated
     @Support
@@ -6978,7 +6978,7 @@ public class DSL {
      *            name.
      * @param type The type of the returned field
      * @return A field referenced by <code>fieldName</code>
-     * @deprecated - [#3843] - 3.6.0 - use {@link #sequence(Name, DataType)} instead
+     * @deprecated - [#3843] - 3.6.0 - use {@link #field(Name, DataType)} instead
      */
     @Deprecated
     @Support

@@ -8352,6 +8352,25 @@ public class DSL {
         return new MapCondition(map);
     }
 
+    /**
+     * Create a "Query By Example" (QBE) {@link Condition} from a {@link Record}
+     * .
+     * <p>
+     * This will take all the non-null values in the argument
+     * <code>record</code> to form a predicate from them. If all values in the
+     * <code>record</code> are <code>null</code>, the predicate will be the
+     * {@link #trueCondition()}.
+     *
+     * @param record The record from which to create a condition.
+     * @return The condition.
+     * @see <a href="https://en.wikipedia.org/wiki/Query_by_Example">https://en.
+     *      wikipedia.org/wiki/Query_by_Example</a>
+     */
+    @Support
+    public static Condition condition(Record record) {
+        return new RecordCondition(record);
+    }
+
     // -------------------------------------------------------------------------
     // XXX Global Condition factory
     // -------------------------------------------------------------------------

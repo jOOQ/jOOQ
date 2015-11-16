@@ -114,7 +114,7 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
         return result;
     }
 
-    private boolean existsSqliteSequence() {
+    private synchronized boolean existsSqliteSequence() {
         if (existsSqliteSequence == null) {
             existsSqliteSequence = create()
                 .selectCount()

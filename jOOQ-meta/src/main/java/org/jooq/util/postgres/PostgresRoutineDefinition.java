@@ -159,7 +159,7 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
         }
     }
 
-    private boolean is94() {
+    private synchronized boolean is94() {
         if (is94 == null) {
 
             // [#4254] INFORMATION_SCHEMA.PARAMETERS.PARAMETER_DEFAULT was added

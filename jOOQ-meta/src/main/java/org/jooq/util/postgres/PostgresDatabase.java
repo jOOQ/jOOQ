@@ -660,7 +660,7 @@ public class PostgresDatabase extends AbstractDatabase {
         return DSL.using(getConnection(), SQLDialect.POSTGRES);
     }
 
-    private boolean is84() {
+    private synchronized boolean is84() {
         if (is84 == null) {
 
             // [#2916] Window functions were introduced with PostgreSQL 9.0
@@ -677,7 +677,7 @@ public class PostgresDatabase extends AbstractDatabase {
         return is84;
     }
 
-    private List<String> enumLabels(String nspname, String typname) {
+    private synchronized List<String> enumLabels(String nspname, String typname) {
         Field<Object> cast = field("{0}::{1}", PG_ENUM.ENUMLABEL, name(nspname, typname));
 
         if (canCastToEnumType == null) {

@@ -2156,7 +2156,7 @@ final class Utils {
     /**
      * Check if JPA classes can be loaded. This is only done once per JVM!
      */
-    private static final boolean isJPAAvailable() {
+    private synchronized static final boolean isJPAAvailable() {
         if (isJPAAvailable == null) {
             try {
                 Class.forName(Column.class.getName());

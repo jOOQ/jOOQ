@@ -72,6 +72,7 @@ import org.jooq.Query;
 import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.conf.ParamType;
+import org.jooq.conf.SettingsTools;
 import org.jooq.conf.StatementType;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DetachedException;
@@ -319,9 +320,10 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
                     statement = ctx.statement();
                 }
 
-                // [#1856] Set the query timeout onto the Statement
-                if (timeout != 0) {
-                    ctx.statement().setQueryTimeout(timeout);
+                // [#1856] [#4753] Set the query timeout onto the Statement
+                int t = SettingsTools.getQueryTimeout(timeout, ctx.settings());
+                if (t != 0) {
+                    ctx.statement().setQueryTimeout(t);
                 }
 
                 if (

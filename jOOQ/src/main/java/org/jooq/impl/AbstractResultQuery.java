@@ -79,6 +79,7 @@ import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.Results;
 import org.jooq.Table;
+import org.jooq.conf.SettingsTools;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 
@@ -226,18 +227,20 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
             ctx.statement(ctx.connection().prepareStatement(ctx.sql()));
         }
 
-        // [#1263] Allow for negative fetch sizes to support some non-standard
+        // [#1263] [#4753] Allow for negative fetch sizes to support some non-standard
         // MySQL feature, where Integer.MIN_VALUE is used
-        if (fetchSize != 0) {
+        int f = SettingsTools.getFetchSize(fetchSize, ctx.settings());
+        if (f != 0) {
             if (log.isDebugEnabled())
-                log.debug("Setting fetch size", fetchSize);
+                log.debug("Setting fetch size", f);
 
-            ctx.statement().setFetchSize(fetchSize);
+            ctx.statement().setFetchSize(f);
         }
 
-        // [#1854] Set the max number of rows for this result query
-        if (maxRows != 0) {
-            ctx.statement().setMaxRows(maxRows);
+        // [#1854] [#4753] Set the max number of rows for this result query
+        int m = SettingsTools.getMaxRows(maxRows, ctx.settings());
+        if (m != 0) {
+            ctx.statement().setMaxRows(m);
         }
     }
 
@@ -245,9 +248,10 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     protected final int execute(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
         listener.executeStart(ctx);
 
-        // [#4511] PostgreSQL doesn't like fetchSize with autoCommit == true
-        if (ctx.family() == POSTGRES && fetchSize != 0 && ctx.connection().getAutoCommit())
-            log.info("Fetch Size", "A fetch size of " + fetchSize + " was set on a auto-commit PostgreSQL connection, which is not recommended. See http://jdbc.postgresql.org/documentation/head/query.html#query-with-cursor");
+        // [#4511] [#4753] PostgreSQL doesn't like fetchSize with autoCommit == true
+        int f = SettingsTools.getFetchSize(fetchSize, ctx.settings());
+        if (ctx.family() == POSTGRES && f != 0 && ctx.connection().getAutoCommit())
+            log.info("Fetch Size", "A fetch size of " + f + " was set on a auto-commit PostgreSQL connection, which is not recommended. See http://jdbc.postgresql.org/documentation/head/query.html#query-with-cursor");
 
         /* [pro] xx
         xx xxxx xxxxxxx xxxx xx xxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -268,7 +272,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         if (!many) {
             if (ctx.resultSet() != null) {
                 Field<?>[] fields = getFields(ctx.resultSet().getMetaData());
-                cursor = new CursorImpl<R>(ctx, listener, fields, intern.internIndexes(fields), keepStatement(), keepResultSet(), getRecordType(), maxRows);
+                cursor = new CursorImpl<R>(ctx, listener, fields, intern.internIndexes(fields), keepStatement(), keepResultSet(), getRecordType(), SettingsTools.getMaxRows(maxRows, ctx.settings()));
 
                 if (!lazy) {
                     result = cursor.fetch();

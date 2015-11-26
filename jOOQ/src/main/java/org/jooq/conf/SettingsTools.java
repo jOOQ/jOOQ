@@ -210,4 +210,40 @@ public final class SettingsTools {
     public static final Settings clone(Settings settings) {
         return (Settings) settings.clone();
     }
+
+    /**
+     * Return <code>timeout</code> if it is not <code>0</code>, or the specified
+     * {@link Settings#getQueryTimeout()}.
+     */
+    public static int getQueryTimeout(int timeout, Settings settings) {
+        return timeout != 0
+             ? timeout
+             : settings.getQueryTimeout() != null
+             ? settings.getQueryTimeout()
+             : 0;
+    }
+
+    /**
+     * Return <code>maxRows</code> if it is not <code>0</code>, or the specified
+     * {@link Settings#getMaxRows()}.
+     */
+    public static int getMaxRows(int maxRows, Settings settings) {
+        return maxRows != 0
+             ? maxRows
+             : settings.getMaxRows() != null
+             ? settings.getMaxRows()
+             : 0;
+    }
+
+    /**
+     * Return <code>fetchSize</code> if it is not <code>0</code>, or the specified
+     * {@link Settings#getFetchSize()}.
+     */
+    public static int getFetchSize(int fetchSize, Settings settings) {
+        return fetchSize != 0
+             ? fetchSize
+             : settings.getFetchSize() != null
+             ? settings.getFetchSize()
+             : 0;
+    }
 }

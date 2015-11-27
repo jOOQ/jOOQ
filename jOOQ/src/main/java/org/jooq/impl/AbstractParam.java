@@ -93,10 +93,10 @@ abstract class AbstractParam<T> extends AbstractField<T> implements Param<T> {
         return paramName != null
              ? paramName
 
+             // [#3707] Protect value.toString call for certain jOOQ types.
+             : value instanceof UDTRecord
+             ? ((UDTRecord<?>) value).getUDT().getName()
              /* [pro] xx
-             xx xxxxxxx xxxxxxx xxxxxxxxxxxxxx xxxx xxx xxxxxxx xxxx xxxxxx
-             x xxxxx xxxxxxxxxx xxxxxxxxx
-             x xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
              x xxxxx xxxxxxxxxx xxxxxxxxxxx
              x xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
              xx [/pro] */

@@ -38,6 +38,46 @@
  *
  *
  */
+/**
+ * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * Other licenses:
+ * -----------------------------------------------------------------------------
+ * Commercial licenses for this work are available. These replace the above
+ * ASL 2.0 and offer limited warranties, support, maintenance, and commercial
+ * database integrations.
+ *
+ * For more information, please visit: http://www.jooq.org/licenses
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
@@ -81,7 +121,6 @@ import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.SQLDialectNotSupportedException;
-import org.jooq.tools.JooqLogger;
 
 /**
  * An implementation of the public {@link Meta} type.
@@ -97,12 +136,10 @@ class MetaImpl implements Meta, Serializable {
      * Generated UID
      */
     private static final long                   serialVersionUID = 3582980783173033809L;
-    private static final JooqLogger             log              = JooqLogger.getLogger(MetaImpl.class);
 
     private final DSLContext                    create;
     private final Configuration                 configuration;
     private final boolean                       inverseSchemaCatalog;
-    private transient volatile DatabaseMetaData meta;
 
     MetaImpl(Configuration configuration) {
         this.create = DSL.using(configuration);
@@ -110,55 +147,54 @@ class MetaImpl implements Meta, Serializable {
         this.inverseSchemaCatalog = asList(MYSQL, MARIADB).contains(configuration.family());
     }
 
-    private final DatabaseMetaData meta() {
-        if (meta == null) {
-            ConnectionProvider provider = configuration.connectionProvider();
-            Connection connection = null;
-
-            try {
-                connection = provider.acquire();
-                meta = connection.getMetaData();
-            }
-            catch (SQLException e) {
-                throw new DataAccessException("Error while accessing DatabaseMetaData", e);
-            }
-            finally {
-                if (connection != null) {
-                    provider.release(connection);
-                }
-            }
-        }
-
-        return meta;
+    private interface MetaFunction {
+        Result<Record> run(DatabaseMetaData meta) throws SQLException;
     }
 
-    @Override
-    public final List<Catalog> getCatalogs() {
+    private final Result<Record> meta(MetaFunction consumer) {
+        ConnectionProvider provider = configuration.connectionProvider();
+        Connection connection = null;
+
         try {
-            List<Catalog> result = new ArrayList<Catalog>();
-
-            // [#2760] MySQL JDBC confuses "catalog" and "schema"
-            if (!inverseSchemaCatalog) {
-                Result<Record> catalogs = create.fetch(
-                    meta().getCatalogs(),
-                    SQLDataType.VARCHAR // TABLE_CATALOG
-                );
-
-                for (String name : catalogs.getValues(0, String.class)) {
-                    result.add(new MetaCatalog(name));
-                }
-            }
-
-            // There should always be at least one (empty) catalog in a database
-            if (result.isEmpty()) {
-                result.add(new MetaCatalog(""));
-            }
-
-            return result;
+            connection = provider.acquire();
+            return consumer.run(connection.getMetaData());
         }
         catch (SQLException e) {
             throw new DataAccessException("Error while accessing DatabaseMetaData", e);
         }
+        finally {
+            if (connection != null)
+                provider.release(connection);
+        }
+    }
+
+    @Override
+    public final List<Catalog> getCatalogs() {
+        List<Catalog> result = new ArrayList<Catalog>();
+
+        // [#2760] MySQL JDBC confuses "catalog" and "schema"
+        if (!inverseSchemaCatalog) {
+            Result<Record> catalogs = meta(new MetaFunction() {
+                @Override
+                public Result<Record> run(DatabaseMetaData meta) throws SQLException {
+                    return create.fetch(
+                        meta.getCatalogs(),
+                        SQLDataType.VARCHAR // TABLE_CATALOG
+                    );
+                }
+            });
+
+            for (String name : catalogs.getValues(0, String.class)) {
+                result.add(new MetaCatalog(name));
+            }
+        }
+
+        // There should always be at least one (empty) catalog in a database
+        if (result.isEmpty()) {
+            result.add(new MetaCatalog(""));
+        }
+
+        return result;
     }
 
     @Override
@@ -211,53 +247,59 @@ class MetaImpl implements Meta, Serializable {
 
         @Override
         public final List<Schema> getSchemas() {
-            try {
-                List<Schema> result = new ArrayList<Schema>();
+            List<Schema> result = new ArrayList<Schema>();
 
-                /* [pro] xx
-                xx xxxxxxxxxxx xxxxxxxxx xxxx xxx xxxxxxx xxxxxxx xxxxxxx xxxx xxxxxx
-                xx xx xxxxx xxx xxx xx xxxxxx
-                xx xxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                x
+            /* [pro] xx
+            xx xxxxxxxxxxx xxxxxxxxx xxxx xxx xxxxxxx xxxxxxx xxxxxxx xxxx xxxxxx
+            xx xx xxxxx xxx xxx xx xxxxxx
+            xx xxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxx x
+            x
 
-                xxxx
-                xx [/pro] */
+            xxxx
+            xx [/pro] */
 
-                if (!inverseSchemaCatalog) {
-                    Result<Record> schemas = create.fetch(
-                        meta().getSchemas(),
+            if (!inverseSchemaCatalog) {
+                Result<Record> schemas = meta(new MetaFunction() {
+                    @Override
+                    public Result<Record> run(DatabaseMetaData meta) throws SQLException {
+                        return create.fetch(
+                            meta.getSchemas(),
 
-                        // [#2681] Work around a flaw in the MySQL JDBC driver
-                        SQLDataType.VARCHAR // TABLE_SCHEM
-                    );
-
-                    for (String name : schemas.getValues(0, String.class)) {
-                        result.add(new MetaSchema(name));
+                            // [#2681] Work around a flaw in the MySQL JDBC driver
+                            SQLDataType.VARCHAR // TABLE_SCHEM
+                        );
                     }
+                });
+
+
+                for (String name : schemas.getValues(0, String.class)) {
+                    result.add(new MetaSchema(name));
                 }
+            }
 
-                // [#2760] MySQL JDBC confuses "catalog" and "schema"
-                else {
-                    Result<Record> schemas = create.fetch(
-                        meta().getCatalogs(),
-                        SQLDataType.VARCHAR  // TABLE_CATALOG
-                    );
-
-                    for (String name : schemas.getValues(0, String.class)) {
-                        result.add(new MetaSchema(name));
+            // [#2760] MySQL JDBC confuses "catalog" and "schema"
+            else {
+                Result<Record> schemas = meta(new MetaFunction() {
+                    @Override
+                    public Result<Record> run(DatabaseMetaData meta) throws SQLException {
+                        return create.fetch(
+                            meta.getCatalogs(),
+                            SQLDataType.VARCHAR  // TABLE_CATALOG
+                        );
                     }
-                }
+                });
 
-                // There should always be at least one (empty) schema in a database
-                if (result.isEmpty()) {
-                    result.add(new MetaSchema(""));
+                for (String name : schemas.getValues(0, String.class)) {
+                    result.add(new MetaSchema(name));
                 }
+            }
 
-                return result;
+            // There should always be at least one (empty) schema in a database
+            if (result.isEmpty()) {
+                result.add(new MetaSchema(""));
             }
-            catch (SQLException e) {
-                throw new DataAccessException("Error while accessing DatabaseMetaData", e);
-            }
+
+            return result;
         }
     }
 
@@ -275,91 +317,91 @@ class MetaImpl implements Meta, Serializable {
 
         @Override
         public final synchronized List<Table<?>> getTables() {
-            try {
-                String[] types = null;
+            Result<Record> tables = meta(new MetaFunction() {
+                @Override
+                public Result<Record> run(DatabaseMetaData meta) throws SQLException {
+                    String[] types = null;
 
-                switch (configuration.dialect().family()) {
+                    switch (configuration.family()) {
 
-                    // [#3977] PostgreSQL returns other object types, too
-                    case POSTGRES:
-                        types = new String[] { "TABLE", "VIEW", "SYSTEM_TABLE", "SYSTEM_VIEW", "MATERIALIZED VIEW" };
-                        break;
+                        // [#3977] PostgreSQL returns other object types, too
+                        case POSTGRES:
+                            types = new String[] { "TABLE", "VIEW", "SYSTEM_TABLE", "SYSTEM_VIEW", "MATERIALIZED VIEW" };
+                            break;
 
-                    // [#2323] SQLite JDBC drivers have a bug. They return other
-                    // object types, too: https://bitbucket.org/xerial/sqlite-jdbc/issue/68
-                    case SQLITE:
-                        types = new String[] { "TABLE", "VIEW" };
-                        break;
+                        // [#2323] SQLite JDBC drivers have a bug. They return other
+                        // object types, too: https://bitbucket.org/xerial/sqlite-jdbc/issue/68
+                        case SQLITE:
+                            types = new String[] { "TABLE", "VIEW" };
+                            break;
+
+                        /* [pro] xx
+                        xx xxxxxxx xxxxx xxxxxxxxx xxxxxx xxxxx xxxxxxxxx
+                        xx xxxxx xxxxxxxxxxxxx xxxxx xx xxx xxxxxxxxx xx xxxx xxx xxxx
+                        xx xxxxxxxx xx xxxxxxx xx xxxxxx xxxx
+                        xxxx xxxxxxx
+                            xxxxx x xxx xxxxxxxx x xxxxxxxx xxxxxx xx
+                            xxxxxx
+                        xx [/pro] */
+                    }
+
+                    ResultSet rs;
 
                     /* [pro] xx
-                    xx xxxxxxx xxxxx xxxxxxxxx xxxxxx xxxxx xxxxxxxxx
-                    xx xxxxx xxxxxxxxxxxxx xxxxx xx xxx xxxxxxxxx xx xxxx xxx xxxx
-                    xx xxxxxxxx xx xxxxxxx xx xxxxxx xxxx
-                    xxxx xxxxxxx
-                        xxxxx x xxx xxxxxxxx x xxxxxxxx xxxxxx xx
-                        xxxxxx
+                    xx xxxxxxxx xxx xxxxxxxxx xxxxxx xxxxxxx xxx xxxxxxxx xxxx xx xxx xx xxxxxx
+                    xx xxxxxxxx xxxx xxxxxxxxxxx xxxxxx xx xxxxxx xx xxx xxxxxxxxxxx xxxxxx
+                    xx xxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxx x
+                        xx x xxxxxxxxxxxxxxxxxxxx xxxxx xxxx xxxxxxx
+                    x
+                    xxxx
+
                     xx [/pro] */
-                }
 
-                ResultSet rs;
-
-                /* [pro] xx
-                xx xxxxxxxx xxx xxxxxxxxx xxxxxx xxxxxxx xxx xxxxxxxx xxxx xx xxx xx xxxxxx
-                xx xxxxxxxx xxxx xxxxxxxxxxx xxxxxx xx xxxxxx xx xxx xxxxxxxxxxx xxxxxx
-                xx xxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                    xx x xxxxxxxxxxxxxxxxxxxxxx xxxxx xxxx xxxxxxx
-                x
-                xxxx
-
-                xx [/pro] */
-
-                if (!inverseSchemaCatalog) {
-                    rs = meta().getTables(null, getName(), "%", types);
-                }
-
-                // [#2760] MySQL JDBC confuses "catalog" and "schema"
-                else {
-                    rs = meta().getTables(getName(), null, "%", types);
-                }
-
-                List<Table<?>> result = new ArrayList<Table<?>>();
-                Result<Record> tables = create.fetch(
-                    rs,
-
-                    // [#2681] Work around a flaw in the MySQL JDBC driver
-                    SQLDataType.VARCHAR, // TABLE_CAT
-                    SQLDataType.VARCHAR, // TABLE_SCHEM
-                    SQLDataType.VARCHAR, // TABLE_NAME
-                    SQLDataType.VARCHAR  // TABLE_TYPE
-                );
-
-                for (Record table : tables) {
-                    String catalog = table.getValue(0, String.class);
-                    String schema = table.getValue(1, String.class);
-                    String name = table.getValue(2, String.class);
+                    if (!inverseSchemaCatalog) {
+                        rs = meta.getTables(null, getName(), "%", types);
+                    }
 
                     // [#2760] MySQL JDBC confuses "catalog" and "schema"
-                    result.add(new MetaTable(name, this, getColumns(
-                        inverseSchemaCatalog ? catalog : schema,
-                        name
-                    )));
+                    else {
+                        rs = meta.getTables(getName(), null, "%", types);
+                    }
 
-//                  TODO: Find a more efficient way to do this
-//                  Result<Record> pkColumns = executor.fetch(meta().getPrimaryKeys(catalog, schema, name))
-//                                                     .sortAsc("KEY_SEQ");
-//
-//                  result.add(new MetaTable(name, this, columnCache.get(name)));
+                    return create.fetch(
+                        rs,
+
+                        // [#2681] Work around a flaw in the MySQL JDBC driver
+                        SQLDataType.VARCHAR, // TABLE_CAT
+                        SQLDataType.VARCHAR, // TABLE_SCHEM
+                        SQLDataType.VARCHAR, // TABLE_NAME
+                        SQLDataType.VARCHAR  // TABLE_TYPE
+                    );
                 }
+            });
 
-                return result;
+            List<Table<?>> result = new ArrayList<Table<?>>();
+            for (Record table : tables) {
+                String catalog = table.getValue(0, String.class);
+                String schema = table.getValue(1, String.class);
+                String name = table.getValue(2, String.class);
+
+                // [#2760] MySQL JDBC confuses "catalog" and "schema"
+                result.add(new MetaTable(name, this, getColumns(
+                    inverseSchemaCatalog ? catalog : schema,
+                    name
+                )));
+
+//              TODO: Find a more efficient way to do this
+//              Result<Record> pkColumns = executor.fetch(meta().getPrimaryKeys(catalog, schema, name))
+//                                                 .sortAsc("KEY_SEQ");
+//
+//              result.add(new MetaTable(name, this, columnCache.get(name)));
             }
-            catch (SQLException e) {
-                throw new DataAccessException("Error while accessing DatabaseMetaData", e);
-            }
+
+            return result;
         }
 
         @SuppressWarnings("unchecked")
-        private final Result<Record> getColumns(String schema, String table) throws SQLException {
+        private final Result<Record> getColumns(String schema, String table) {
 
             // SQLite JDBC's DatabaseMetaData.getColumns() can only return a single
             // table's columns
@@ -393,36 +435,41 @@ class MetaImpl implements Meta, Serializable {
             }
         }
 
-        private final Result<Record> getColumns0(String schema, String table) throws SQLException {
-            ResultSet rs;
-            if (!inverseSchemaCatalog) {
-                rs = meta().getColumns(null, schema, table, "%");
-            }
+        private final Result<Record> getColumns0(String schema, String table) {
+            return meta(new MetaFunction() {
+                @Override
+                public Result<Record> run(DatabaseMetaData meta) throws SQLException {
+                    ResultSet rs;
+                    if (!inverseSchemaCatalog) {
+                        rs = meta.getColumns(null, schema, table, "%");
+                    }
 
-            // [#2760] MySQL JDBC confuses "catalog" and "schema"
-            else {
-                rs = meta().getColumns(schema, null, table, "%");
-            }
+                    // [#2760] MySQL JDBC confuses "catalog" and "schema"
+                    else {
+                        rs = meta.getColumns(schema, null, table, "%");
+                    }
 
-            return create.fetch(
-                rs,
+                    return create.fetch(
+                        rs,
 
-                // Work around a bug in the SQL Server JDBC driver by
-                // coercing data types to the expected types
-                // The bug was reported here:
-                // https://connect.microsoft.com/SQLServer/feedback/details/775425/jdbc-4-0-databasemetadata-getcolumns-returns-a-resultset-whose-resultsetmetadata-is-inconsistent
-                String.class, // TABLE_CAT
-                String.class, // TABLE_SCHEM
-                String.class, // TABLE_NAME
-                String.class, // COLUMN_NAME
-                int.class,    // DATA_TYPE
-                String.class, // TYPE_NAME
-                int.class,    // COLUMN_SIZE
-                String.class, // BUFFER_LENGTH
-                int.class,    // DECIMAL_DIGITS
-                int.class,    // NUM_PREC_RADIX
-                int.class     // NULLABLE
-            );
+                        // Work around a bug in the SQL Server JDBC driver by
+                        // coercing data types to the expected types
+                        // The bug was reported here:
+                        // https://connect.microsoft.com/SQLServer/feedback/details/775425/jdbc-4-0-databasemetadata-getcolumns-returns-a-resultset-whose-resultsetmetadata-is-inconsistent
+                        String.class, // TABLE_CAT
+                        String.class, // TABLE_SCHEM
+                        String.class, // TABLE_NAME
+                        String.class, // COLUMN_NAME
+                        int.class,    // DATA_TYPE
+                        String.class, // TYPE_NAME
+                        int.class,    // COLUMN_SIZE
+                        String.class, // BUFFER_LENGTH
+                        int.class,    // DECIMAL_DIGITS
+                        int.class,    // NUM_PREC_RADIX
+                        int.class     // NULLABLE
+                    );
+                }
+            });
         }
     }
 
@@ -450,7 +497,7 @@ class MetaImpl implements Meta, Serializable {
 
         @Override
         public final UniqueKey<Record> getPrimaryKey() {
-            SQLDialect family = configuration.dialect().family();
+            SQLDialect family = configuration.family();
 
             /* [pro] xx
             xx xxxxxxx xx xxxxxxx x
@@ -459,96 +506,95 @@ class MetaImpl implements Meta, Serializable {
             xx [/pro] */
 
             String schema = getSchema() == null ? null : getSchema().getName();
-            try {
-                ResultSet rs;
+            Result<Record> result = meta(new MetaFunction() {
+                @Override
+                public Result<Record> run(DatabaseMetaData meta) throws SQLException {
+                    ResultSet rs;
 
-                if (!inverseSchemaCatalog) {
-                    rs = meta().getPrimaryKeys(null, schema, getName());
+                    if (!inverseSchemaCatalog) {
+                        rs = meta.getPrimaryKeys(null, schema, getName());
+                    }
+
+                    // [#2760] MySQL JDBC confuses "catalog" and "schema"
+                    else {
+                        rs = meta.getPrimaryKeys(schema, null, getName());
+                    }
+
+                    return
+                    create.fetch(
+                        rs,
+                        String.class, // TABLE_CAT
+                        String.class, // TABLE_SCHEM
+                        String.class, // TABLE_NAME
+                        String.class, // COLUMN_NAME
+                        int.class,    // KEY_SEQ
+                        String.class  // PK_NAME
+                    );
                 }
+            });
 
-                // [#2760] MySQL JDBC confuses "catalog" and "schema"
-                else {
-                    rs = meta().getPrimaryKeys(schema, null, getName());
-                }
-
-                Result<Record> result =
-                create.fetch(
-                    rs,
-                    String.class, // TABLE_CAT
-                    String.class, // TABLE_SCHEM
-                    String.class, // TABLE_NAME
-                    String.class, // COLUMN_NAME
-                    int.class,    // KEY_SEQ
-                    String.class  // PK_NAME
-                );
-
-                // Sort by KEY_SEQ
-                result.sortAsc(4);
-                return createPrimaryKey(result, 3);
-            }
-            catch (SQLException e) {
-                throw new DataAccessException("Error while accessing DatabaseMetaData", e);
-            }
+            // Sort by KEY_SEQ
+            result.sortAsc(4);
+            return createPrimaryKey(result, 3);
         }
 
         @Override
         @SuppressWarnings("unchecked")
         public List<ForeignKey<Record, ?>> getReferences() {
             List<ForeignKey<Record, ?>> references = new ArrayList<ForeignKey<Record, ?>>();
+            Result<Record> result = meta(new MetaFunction() {
+                @Override
+                public Result<Record> run(DatabaseMetaData meta) throws SQLException {
+                    ResultSet rs = meta.getImportedKeys(null, getSchema().getName(), getName());
+                    return
+                    create.fetch(
+                        rs,
+                        String.class,  // PKTABLE_CAT
+                        String.class,  // PKTABLE_SCHEM
+                        String.class,  // PKTABLE_NAME
+                        String.class,  // PKCOLUMN_NAME
+                        String.class,  // FKTABLE_CAT
 
-            try {
-                ResultSet rs = meta().getImportedKeys(null, getSchema().getName(), getName());
-                Result<Record> result =
-                create.fetch(
-                    rs,
-                    String.class,  // PKTABLE_CAT
-                    String.class,  // PKTABLE_SCHEM
-                    String.class,  // PKTABLE_NAME
-                    String.class,  // PKCOLUMN_NAME
-                    String.class,  // FKTABLE_CAT
+                        String.class,  // FKTABLE_SCHEM
+                        String.class,  // FKTABLE_NAME
+                        String.class,  // FKCOLUMN_NAME
+                        Short.class,   // KEY_SEQ
+                        Short.class,   // UPDATE_RULE
 
-                    String.class,  // FKTABLE_SCHEM
-                    String.class,  // FKTABLE_NAME
-                    String.class,  // FKCOLUMN_NAME
-                    Short.class,   // KEY_SEQ
-                    Short.class,   // UPDATE_RULE
-
-                    Short.class,   // DELETE_RULE
-                    String.class,  // FK_NAME
-                    String.class   // PK_NAME
-                );
-
-                Map<Record, Result<Record>> groups = result.intoGroups(new Field[] {
-                    result.field(inverseSchemaCatalog ? 1 : 0),
-                    result.field(inverseSchemaCatalog ? 0 : 1),
-                    result.field(2),
-                    result.field(11),
-                    result.field(12),
-                });
-
-                Map<String, Schema> schemas = new HashMap<String, Schema>();
-                for (Schema schema : getSchemas()) {
-                    schemas.put(schema.getName(), schema);
+                        Short.class,   // DELETE_RULE
+                        String.class,  // FK_NAME
+                        String.class   // PK_NAME
+                    );
                 }
+            });
 
-                for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
-                    Schema schema = schemas.get(entry.getKey().getValue(1));
+            Map<Record, Result<Record>> groups = result.intoGroups(new Field[] {
+                result.field(inverseSchemaCatalog ? 1 : 0),
+                result.field(inverseSchemaCatalog ? 0 : 1),
+                result.field(2),
+                result.field(11),
+                result.field(12),
+            });
 
-                    Table<Record> pkTable = (Table<Record>) schema.getTable(entry.getKey().getValue(2, String.class));
-                    TableField<Record, ?>[] pkFields = new TableField[entry.getValue().size()];
-                    TableField<Record, ?>[] fkFields = new TableField[entry.getValue().size()];
-
-                    for (int i = 0; i < entry.getValue().size(); i++) {
-                        Record record = entry.getValue().get(i);
-                        pkFields[i] = (TableField<Record, ?>) pkTable.field(record.getValue(3, String.class));
-                        fkFields[i] = (TableField<Record, ?>)         field(record.getValue(7, String.class));
-                    }
-
-                    references.add(new ReferenceImpl<Record, Record>(new MetaUniqueKey(pkTable, pkFields), this, fkFields));
-                }
+            Map<String, Schema> schemas = new HashMap<String, Schema>();
+            for (Schema schema : getSchemas()) {
+                schemas.put(schema.getName(), schema);
             }
-            catch (SQLException e) {
-                log.info("Primary key access error", e.getMessage());
+
+            for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
+                Schema schema = schemas.get(entry.getKey().getValue(1));
+
+                Table<Record> pkTable = (Table<Record>) schema.getTable(entry.getKey().getValue(2, String.class));
+                TableField<Record, ?>[] pkFields = new TableField[entry.getValue().size()];
+                TableField<Record, ?>[] fkFields = new TableField[entry.getValue().size()];
+
+                for (int i = 0; i < entry.getValue().size(); i++) {
+                    Record record = entry.getValue().get(i);
+                    pkFields[i] = (TableField<Record, ?>) pkTable.field(record.getValue(3, String.class));
+                    fkFields[i] = (TableField<Record, ?>)         field(record.getValue(7, String.class));
+                }
+
+                references.add(new ReferenceImpl<Record, Record>(new MetaUniqueKey(pkTable, pkFields), this, fkFields));
             }
 
             return references;
@@ -559,43 +605,41 @@ class MetaImpl implements Meta, Serializable {
 
             xx xxx xxxxxxxxx xxxxxx xxxx xxx xxxxxxxxx xxxxxx xxxxxxx xxxx xxx xx xxxxxxx
             xx xxxxxx xxxx xxx xxxxxxxxx xxxxxxx xxx xxxx xxxxx xxxx xxxx xxxxx xxxxxx
-            xxx x
-                xxxxxxxxx xx x xxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxx xxxxx xxxxxx
-                xxxxxxxxxxxxxx xxxxxx x
-                xxxxxxxxxxxxx
-                    xxx
-                    xxxxxxxxxxxxx  xx xxxxxxxxx
-                    xxxxxxxxxxxxx  xx xxxxxxxxxxx
-                    xxxxxxxxxxxxx  xx xxxxxxxxxx
-                    xxxxxxxxxxxxxx xx xxxxxxxxxx
-                    xxxxxxxxxxxxx  xx xxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxx  xx xxxxxxxxxx
-                    xxxxxxxxxxxxx  xx xxxx
-                    xxxxxxxxxxxxx  xx xxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxx   xx xxxxxxxxxxx
-                xx
+            xxxxxxxxxxxxxx xxxxxx x xxxxxxxx xxxxxxxxxxxxxx x
+                xxxxxxxxx
+                xxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxx xxxxxx xxxxxxxxxxxx x
+                    xxxxxxxxx xx x xxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxx xxxxx xxxxxx
 
-                xx xxxxxx xxxx xxxxxx xxxxxxxx xxxx xxxxxxxxxx x xxxxx
-                xxxxxxxxxxxxxxxx xx x xxxxxxxxxxxxxxxxxx
-                xxxxx xxxxxxxxxxxxxx
-                    xx xxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxx
-                        xxxxxxxxxxxx
+                    xxxxxx xxxxxxxxxxxxx
+                        xxx
+                        xxxxxxxxxxxxx  xx xxxxxxxxx
+                        xxxxxxxxxxxxx  xx xxxxxxxxxxx
+                        xxxxxxxxxxxxx  xx xxxxxxxxxx
+                        xxxxxxxxxxxxxx xx xxxxxxxxxx
+                        xxxxxxxxxxxxx  xx xxxxxxxxxxxxxxx
+                        xxxxxxxxxxxxx  xx xxxxxxxxxx
+                        xxxxxxxxxxxxx  xx xxxx
+                        xxxxxxxxxxxxx  xx xxxxxxxxxxxxxxxx
+                        xxxxxxxxxxxx   xx xxxxxxxxxxx
+                    xx
+                x
+            xxx
 
-                xx xxxxxx xxxx xxx xxxxx xxxxxx xxxxxx xxxx xxxxx xx xxxxxxxxxx
-                xx xxxxxxxxxxxxxxxxxxxxx
-                    xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xx xxxxxx xxxx xxxxxx xxxxxxxx xxxx xxxxxxxxxx x xxxxx
+            xxxxxxxxxxxxxxxx xx x xxxxxxxxxxxxxxxxxx
+            xxxxx xxxxxxxxxxxxxx
+                xx xxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxx
+                    xxxxxxxxxxxx
 
-                xx xxxx xx xxxxxxxxxxxxxxxx
-                xxxxxxxxxxxxxxxxxx
+            xx xxxxxx xxxx xxx xxxxx xxxxxx xxxxxx xxxx xxxxx xx xxxxxxxxxx
+            xx xxxxxxxxxxxxxxxxxxxxx
+                xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                xx xxxx xxx xxxxxxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxx
-            x
-            xxxxx xxxxxxxxxxxxx xx x
-                xxxxxxxxxxxxxxx xxxxxx xxxxxxx xxxxxxxxxxxxxxxx
-            x
+            xx xxxx xx xxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxx
 
-            xxxxxx xxxxx
+            xx xxxx xxx xxxxxxxxxxx
+            xxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxx
         x
         xx [/pro] */
 
@@ -677,58 +721,57 @@ class MetaImpl implements Meta, Serializable {
         @SuppressWarnings("unchecked")
         public final List<ForeignKey<?, Record>> getReferences() {
             List<ForeignKey<?, Record>> references = new ArrayList<ForeignKey<?, Record>>();
+            Result<Record> result = meta(new MetaFunction() {
+                @Override
+                public Result<Record> run(DatabaseMetaData meta) throws SQLException {
+                    ResultSet rs = meta.getExportedKeys(null, pkTable.getSchema().getName(), pkTable.getName());
 
-            try {
-                ResultSet rs = meta().getExportedKeys(null, pkTable.getSchema().getName(), pkTable.getName());
-                Result<Record> result =
-                create.fetch(
-                    rs,
-                    String.class,  // PKTABLE_CAT
-                    String.class,  // PKTABLE_SCHEM
-                    String.class,  // PKTABLE_NAME
-                    String.class,  // PKCOLUMN_NAME
-                    String.class,  // FKTABLE_CAT
+                    return create.fetch(
+                        rs,
+                        String.class,  // PKTABLE_CAT
+                        String.class,  // PKTABLE_SCHEM
+                        String.class,  // PKTABLE_NAME
+                        String.class,  // PKCOLUMN_NAME
+                        String.class,  // FKTABLE_CAT
 
-                    String.class,  // FKTABLE_SCHEM
-                    String.class,  // FKTABLE_NAME
-                    String.class,  // FKCOLUMN_NAME
-                    Short.class,   // KEY_SEQ
-                    Short.class,   // UPDATE_RULE
+                        String.class,  // FKTABLE_SCHEM
+                        String.class,  // FKTABLE_NAME
+                        String.class,  // FKCOLUMN_NAME
+                        Short.class,   // KEY_SEQ
+                        Short.class,   // UPDATE_RULE
 
-                    Short.class,   // DELETE_RULE
-                    String.class,  // FK_NAME
-                    String.class   // PK_NAME
-                );
-
-                Map<Record, Result<Record>> groups = result.intoGroups(new Field[] {
-                    result.field(inverseSchemaCatalog ? 5 : 4),
-                    result.field(inverseSchemaCatalog ? 4 : 5),
-                    result.field(6),
-                    result.field(11),
-                    result.field(12),
-                });
-
-                Map<String, Schema> schemas = new HashMap<String, Schema>();
-                for (Schema schema : getSchemas()) {
-                    schemas.put(schema.getName(), schema);
+                        Short.class,   // DELETE_RULE
+                        String.class,  // FK_NAME
+                        String.class   // PK_NAME
+                    );
                 }
+            });
 
-                for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
-                    Schema schema = schemas.get(entry.getKey().getValue(1));
+            Map<Record, Result<Record>> groups = result.intoGroups(new Field[] {
+                result.field(inverseSchemaCatalog ? 5 : 4),
+                result.field(inverseSchemaCatalog ? 4 : 5),
+                result.field(6),
+                result.field(11),
+                result.field(12),
+            });
 
-                    Table<Record> fkTable = (Table<Record>) schema.getTable(entry.getKey().getValue(2, String.class));
-                    TableField<Record, ?>[] fkFields = new TableField[entry.getValue().size()];
-
-                    for (int i = 0; i < entry.getValue().size(); i++) {
-                        Record record = entry.getValue().get(i);
-                        fkFields[i] = (TableField<Record, ?>) fkTable.field(record.getValue(7, String.class));
-                    }
-
-                    references.add(new ReferenceImpl<Record, Record>(this, fkTable, fkFields));
-                }
+            Map<String, Schema> schemas = new HashMap<String, Schema>();
+            for (Schema schema : getSchemas()) {
+                schemas.put(schema.getName(), schema);
             }
-            catch (SQLException e) {
-                log.info("Foreign key access error", e.getMessage());
+
+            for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
+                Schema schema = schemas.get(entry.getKey().getValue(1));
+
+                Table<Record> fkTable = (Table<Record>) schema.getTable(entry.getKey().getValue(2, String.class));
+                TableField<Record, ?>[] fkFields = new TableField[entry.getValue().size()];
+
+                for (int i = 0; i < entry.getValue().size(); i++) {
+                    Record record = entry.getValue().get(i);
+                    fkFields[i] = (TableField<Record, ?>) fkTable.field(record.getValue(7, String.class));
+                }
+
+                references.add(new ReferenceImpl<Record, Record>(this, fkTable, fkFields));
             }
 
             return references;

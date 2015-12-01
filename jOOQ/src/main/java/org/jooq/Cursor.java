@@ -82,6 +82,9 @@ public interface Cursor<R extends Record> extends Iterable<R> /* [java-8] */, Au
 
     /**
      * Get a specific field from this Cursor.
+     * <p>
+     * Usually, this will return the field itself. However, if this is a row
+     * from an aliased table, the field will be aliased accordingly.
      *
      * @see Row#field(Field)
      */

@@ -84,6 +84,9 @@ public interface Result<R extends Record> extends List<R>, Attachable {
 
     /**
      * Get a specific field from this Result.
+     * <p>
+     * Usually, this will return the field itself. However, if this is a row
+     * from an aliased table, the field will be aliased accordingly.
      *
      * @see Row#field(Field)
      */

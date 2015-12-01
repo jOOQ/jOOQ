@@ -57,6 +57,9 @@ public interface UDT<R extends UDTRecord<R>> extends QueryPart {
 
     /**
      * Get a specific field from this UDT.
+     * <p>
+     * Usually, this will return the field itself. However, if this is a row
+     * from an aliased UDT, the field will be aliased accordingly.
      *
      * @see Row#field(Field)
      */

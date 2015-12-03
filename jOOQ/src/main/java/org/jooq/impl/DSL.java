@@ -9411,6 +9411,46 @@ public class DSL {
         return nvl0(value, defaultValue);
     }
 
+    /**
+     * The <code>IFNULL()</code> function, a synonym of <code>NVL()</code>.
+     *
+     * @see #nvl(Field, Field)
+     */
+    @Support
+    public static <T> Field<T> ifnull(T value, T defaultValue) {
+        return nvl(value, defaultValue);
+    }
+
+    /**
+     * The <code>IFNULL()</code> function, a synonym of <code>NVL()</code>.
+     *
+     * @see #nvl(Field, Field)
+     */
+    @Support
+    public static <T> Field<T> ifnull(T value, Field<T> defaultValue) {
+        return nvl(value, defaultValue);
+    }
+
+    /**
+     * The <code>IFNULL()</code> function, a synonym of <code>NVL()</code>.
+     *
+     * @see #nvl(Field, Object)
+     */
+    @Support
+    public static <T> Field<T> ifnull(Field<T> value, T defaultValue) {
+        return nvl(value, defaultValue);
+    }
+
+    /**
+     * The <code>IFNULL()</code> function, a synonym of <code>NVL()</code>.
+     *
+     * @see #nvl(Field, Field)
+     */
+    @Support
+    public static <T> Field<T> ifnull(Field<T> value, Field<T> defaultValue) {
+        return nvl(value, defaultValue);
+    }
+
     // Java 8 is stricter than Java 7 with respect to generics and overload
     // resolution (http://stackoverflow.com/q/5361513/521799)
     static <T> Field<T> nvl0(Field<T> value, Field<T> defaultValue) {

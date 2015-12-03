@@ -784,6 +784,10 @@ final class Utils {
         return result;
     }
 
+    private static IllegalArgumentException fieldExpected(Object value) {
+        return new IllegalArgumentException("Cannot interpret argument of type " + value.getClass() + " as a Field: " + value);
+    }
+
     /**
      * Be sure that a given object is a field.
      *
@@ -797,6 +801,11 @@ final class Utils {
         // Fields can be mixed with constant values
         if (value instanceof Field<?>) {
             return (Field<T>) value;
+        }
+
+        // [#4771] Any other QueryPart type is not supported here
+        else if (value instanceof QueryPart) {
+            throw fieldExpected(value);
         }
         else {
             return val(value);
@@ -826,6 +835,11 @@ final class Utils {
         if (value instanceof Field<?>) {
             return (Field<T>) value;
         }
+
+        // [#4771] Any other QueryPart type is not supported here
+        else if (value instanceof QueryPart) {
+            throw fieldExpected(value);
+        }
         else {
             return val(value, field);
         }
@@ -846,6 +860,11 @@ final class Utils {
         if (value instanceof Field<?>) {
             return (Field<T>) value;
         }
+
+        // [#4771] Any other QueryPart type is not supported here
+        else if (value instanceof QueryPart) {
+            throw fieldExpected(value);
+        }
         else {
             return val(value, type);
         }
@@ -865,6 +884,11 @@ final class Utils {
         // Fields can be mixed with constant values
         if (value instanceof Field<?>) {
             return (Field<T>) value;
+        }
+
+        // [#4771] Any other QueryPart type is not supported here
+        else if (value instanceof QueryPart) {
+            throw fieldExpected(value);
         }
         else {
             return val(value, type);

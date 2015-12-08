@@ -524,6 +524,28 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addSeekBefore(Collection<? extends Field<?>> fields);
 
     /**
+     * Add an <code>OFFSET</code> clause to the query.
+     * <p>
+     * If there is no <code>LIMIT .. OFFSET</code> or <code>TOP</code> clause in
+     * your RDBMS, or if your RDBMS does not natively support offsets, this is
+     * emulated with a <code>ROW_NUMBER()</code> window function and nested
+     * <code>SELECT</code> statements.
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    void addOffset(int offset);
+
+    /**
+     * Add an <code>OFFSET</code> clause to the query using a named parameter.
+     * <p>
+     * If there is no <code>LIMIT .. OFFSET</code> or <code>TOP</code> clause in
+     * your RDBMS, or if your RDBMS does not natively support offsets, this is
+     * emulated with a <code>ROW_NUMBER()</code> window function and nested
+     * <code>SELECT</code> statements.
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    void addOffset(Param<Integer> offset);
+
+    /**
      * Limit the results of this select.
      * <p>
      * This is the same as calling {@link #addLimit(int, int)} with offset = 0

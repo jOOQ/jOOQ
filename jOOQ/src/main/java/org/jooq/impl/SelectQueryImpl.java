@@ -1472,6 +1472,16 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
     }
 
     @Override
+    public final void addOffset(int offset) {
+        getLimit().setOffset(offset);
+    }
+
+    @Override
+    public final void addOffset(Param<Integer> offset) {
+        getLimit().setOffset(offset);
+    }
+
+    @Override
     public final void addLimit(int numberOfRows) {
         getLimit().setNumberOfRows(numberOfRows);
     }

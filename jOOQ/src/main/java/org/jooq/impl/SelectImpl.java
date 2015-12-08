@@ -1901,12 +1901,10 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
                 getQuery().addLimit(limitParam);
         }
         else {
-
-            // [#4785] Replace usage of Integer.MAX_VALUE by "LIMIT-less" API call
             if (offset != null)
-                getQuery().addLimit(offset, Integer.MAX_VALUE);
+                getQuery().addOffset(offset);
             else if (offsetParam != null)
-                getQuery().addLimit(offsetParam, Integer.MAX_VALUE);
+                getQuery().addOffset(offsetParam);
         }
 
         return this;

@@ -103,7 +103,7 @@ import static org.jooq.SQLDialect.SQLITE;
 public interface SelectOffsetStep<R extends Record> extends SelectForUpdateStep<R> {
 
     /**
-     * Add an <code>OFFSET</code> clause to the query
+     * Add an <code>OFFSET</code> clause to the query.
      * <p>
      * If there is no <code>LIMIT .. OFFSET</code> or <code>TOP</code> clause in
      * your RDBMS, or if your RDBMS does not natively support offsets, this is
@@ -114,7 +114,7 @@ public interface SelectOffsetStep<R extends Record> extends SelectForUpdateStep<
     SelectForUpdateStep<R> offset(int offset);
 
     /**
-     * Add an <code>OFFSET</code> clause to the query using a named parameter
+     * Add an <code>OFFSET</code> clause to the query using a named parameter.
      * <p>
      * If there is no <code>LIMIT .. OFFSET</code> or <code>TOP</code> clause in
      * your RDBMS, or if your RDBMS does not natively support offsets, this is

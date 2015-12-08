@@ -63,14 +63,15 @@ class Limit extends AbstractQueryPart {
     /**
      * Generated UID
      */
-    private static final long           serialVersionUID = 2053741242981425602L;
-    private static final Field<Integer> ZERO             = zero();
-    private static final Field<Integer> ONE              = one();
+    private static final long           serialVersionUID  = 2053741242981425602L;
+    private static final Field<Integer> ZERO              = zero();
+    private static final Field<Integer> ONE               = one();
 
     private Field<Integer>              numberOfRows;
+    private Field<Integer>              numberOfRowsOrMax = DSL.inline(Integer.MAX_VALUE);
     private Field<Integer>              offset;
-    private Field<Integer>              offsetOrZero     = ZERO;
-    private Field<Integer>              offsetPlusOne    = ONE;
+    private Field<Integer>              offsetOrZero      = ZERO;
+    private Field<Integer>              offsetPlusOne     = ONE;
     private boolean                     rendersParams;
 
     @Override
@@ -109,22 +110,42 @@ class Limit extends AbstractQueryPart {
             x
             xx [/pro] */
 
+            // [#4785] OFFSET cannot be without LIMIT
+            case H2: {
+                context.castMode(NEVER)
+                       .formatSeparator()
+                       .keyword("limit")
+                       .sql(' ').visit(numberOfRowsOrMax);
+
+                if (!offsetZero())
+                    context.formatSeparator()
+                           .keyword("offset")
+                           .sql(' ').visit(offsetOrZero);
+
+                context.castMode(castMode);
+
+                break;
+            }
+
+            // [#4785] OFFSET can be without LIMIT
             case MARIADB:
             case MYSQL:
-            case H2:
             case HSQLDB:
             case POSTGRES:
             case POSTGRES_9_3:
             case POSTGRES_9_4:
             case POSTGRES_9_5:
             case SQLITE: {
-                context.castMode(NEVER)
-                       .formatSeparator()
-                       .keyword("limit")
-                       .sql(' ').visit(numberOfRows);
+                context.castMode(NEVER);
+
+                if (!limitZero())
+                    context.formatSeparator()
+                           .keyword("limit")
+                           .sql(' ').visit(numberOfRows);
 
                 if (!offsetZero())
-                    context.sql(' ').keyword("offset")
+                    context.formatSeparator()
+                           .keyword("offset")
                            .sql(' ').visit(offsetOrZero);
 
                 context.castMode(castMode);
@@ -295,6 +316,13 @@ class Limit extends AbstractQueryPart {
     /**
      * Whether this limit has an offset of zero
      */
+    final boolean limitZero() {
+        return numberOfRows == null;
+    }
+
+    /**
+     * Whether this limit has an offset of zero
+     */
     final boolean offsetZero() {
         return offset == null;
     }
@@ -348,10 +376,12 @@ class Limit extends AbstractQueryPart {
 
     final void setNumberOfRows(int numberOfRows) {
         this.numberOfRows = val(numberOfRows, SQLDataType.INTEGER);
+        this.numberOfRowsOrMax = this.numberOfRows;
     }
 
     final void setNumberOfRows(Param<Integer> numberOfRows) {
         this.numberOfRows = numberOfRows;
+        this.numberOfRowsOrMax = numberOfRows;
         this.rendersParams = true;
     }
 }

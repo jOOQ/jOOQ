@@ -101,6 +101,7 @@ public abstract class AbstractDatabase implements Database {
     private SQLDialect                                                       dialect;
     private Connection                                                       connection;
     private DSLContext                                                       create;
+    private DSLContext                                                       createMuted;
     private List<RegexFlag>                                                  regexFlags;
     private List<Filter>                                                     filters;
     private String[]                                                         excludes;
@@ -181,14 +182,22 @@ public abstract class AbstractDatabase implements Database {
         return connection;
     }
 
-    @SuppressWarnings("serial")
     @Override
     public final DSLContext create() {
-        if (create == null) {
+        return create(false);
+    }
 
-            // [#3800] Make sure that faulty queries are logged in a formatted
-            // way to help users provide us with bug reports
-            final Configuration configuration = create0().configuration();
+    @SuppressWarnings("serial")
+    protected final DSLContext create(boolean muteExceptions) {
+
+        // [#3800] Make sure that faulty queries are logged in a formatted
+        // way to help users provide us with bug reports
+        final Configuration configuration = create0().configuration();
+
+        if (muteExceptions) {
+            return DSL.using(configuration);
+        }
+        else {
             final Settings newSettings = SettingsTools.clone(configuration.settings()).withRenderFormatted(true);
             final ExecuteListenerProvider[] oldProviders = configuration.executeListenerProviders();
             final ExecuteListenerProvider[] newProviders = new ExecuteListenerProvider[oldProviders.length + 1];
@@ -209,10 +218,8 @@ public abstract class AbstractDatabase implements Database {
                       + DSL.using(configuration.derive(newSettings)).renderInlined(ctx.query()));
                 }
             });
-            create = DSL.using(configuration.derive(newProviders));
+            return DSL.using(configuration.derive(newProviders));
         }
-
-        return create;
     }
 
     @Override
@@ -221,7 +228,12 @@ public abstract class AbstractDatabase implements Database {
 
         if (result == null) {
             try {
-                create().selectOne().from(table).where(falseCondition()).fetch();
+                create(true)
+                    .selectOne()
+                    .from(table)
+                    .where(falseCondition())
+                    .fetch();
+
                 result = true;
             }
             catch (DataAccessException e) {

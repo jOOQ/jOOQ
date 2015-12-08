@@ -220,6 +220,10 @@ public abstract class AbstractDefinition implements Definition {
         return database.create();
     }
 
+    protected final DSLContext create(boolean muteExceptions) {
+        return database.create(muteExceptions);
+    }
+
     protected final SQLDialect getDialect() {
         return database.getDialect();
     }

@@ -165,10 +165,11 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
             // [#4254] INFORMATION_SCHEMA.PARAMETERS.PARAMETER_DEFAULT was added
             // in PostgreSQL 9.4 only
             try {
-                create().select(PARAMETERS.PARAMETER_DEFAULT)
-                        .from(PARAMETERS)
-                        .where(falseCondition())
-                        .fetch();
+                create(true)
+                    .select(PARAMETERS.PARAMETER_DEFAULT)
+                    .from(PARAMETERS)
+                    .where(falseCondition())
+                    .fetch();
 
                 is94 = true;
             }

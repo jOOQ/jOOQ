@@ -338,7 +338,7 @@ public class MySQLDatabase extends AbstractDatabase {
         List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
 
         try {
-            create().fetchCount(PROC);
+            create(true).fetchCount(PROC);
         }
         catch (DataAccessException e) {
             log.warn("Table unavailable", "The `mysql`.`proc` table is unavailable. Stored procedures cannot be loaded. Check if you have sufficient grants");

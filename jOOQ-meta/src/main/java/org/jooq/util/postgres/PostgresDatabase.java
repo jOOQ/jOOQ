@@ -665,7 +665,9 @@ public class PostgresDatabase extends AbstractDatabase {
 
             // [#2916] Window functions were introduced with PostgreSQL 9.0
             try {
-                create().select(count().over()).fetch();
+                create(true)
+                    .select(count().over())
+                    .fetch();
 
                 is84 = true;
             }

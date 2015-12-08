@@ -191,4 +191,26 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectForUpdateStep<R> limit(Param<Integer> offset, Param<Integer> numberOfRows);
+
+    /**
+     * Add an <code>OFFSET</code> clause to the query
+     * <p>
+     * If there is no <code>LIMIT .. OFFSET</code> or <code>TOP</code> clause in
+     * your RDBMS, or if your RDBMS does not natively support offsets, this is
+     * emulated with a <code>ROW_NUMBER()</code> window function and nested
+     * <code>SELECT</code> statements.
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    SelectLimitAfterOffsetStep<R> offset(int offset);
+
+    /**
+     * Add an <code>OFFSET</code> clause to the query using a named parameter
+     * <p>
+     * If there is no <code>LIMIT .. OFFSET</code> or <code>TOP</code> clause in
+     * your RDBMS, or if your RDBMS does not natively support offsets, this is
+     * emulated with a <code>ROW_NUMBER()</code> window function and nested
+     * <code>SELECT</code> statements.
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    SelectLimitAfterOffsetStep<R> offset(Param<Integer> offset);
 }

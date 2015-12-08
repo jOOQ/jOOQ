@@ -88,6 +88,7 @@ import org.jooq.SelectForUpdateOfStep;
 import org.jooq.SelectHavingConditionStep;
 import org.jooq.SelectIntoStep;
 import org.jooq.SelectJoinStep;
+import org.jooq.SelectLimitAfterOffsetStep;
 import org.jooq.SelectOffsetStep;
 import org.jooq.SelectOnConditionStep;
 import org.jooq.SelectOnStep;
@@ -168,6 +169,7 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     SelectSeekStepN<R>,
     SelectSeekLimitStep<R>,
     SelectOffsetStep<R>,
+    SelectLimitAfterOffsetStep<R>,
     SelectForUpdateOfStep<R> {
 
     /**
@@ -205,6 +207,8 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
      */
     private transient Integer               limit;
     private transient Param<Integer>        limitParam;
+    private transient Integer               offset;
+    private transient Param<Integer>        offsetParam;
 
     SelectImpl(Configuration configuration, WithImpl with) {
         this(configuration, with, false);
@@ -1816,64 +1820,93 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     }
 
     @Override
-    public final SelectImpl limit(int numberOfRows) {
-        this.limit = numberOfRows;
-        this.limitParam = null;
-        getQuery().addLimit(numberOfRows);
-        return this;
+    public final SelectImpl limit(int l) {
+        limit = l;
+        limitParam = null;
+        return limitOffset();
     }
 
     @Override
-    public final SelectImpl limit(Param<Integer> numberOfRows) {
-        this.limit = null;
-        this.limitParam = numberOfRows;
-        getQuery().addLimit(numberOfRows);
-        return this;
+    public final SelectImpl limit(Param<Integer> l) {
+        limit = null;
+        limitParam = l;
+        return limitOffset();
     }
 
     @Override
-    public final SelectImpl limit(int offset, int numberOfRows) {
-        getQuery().addLimit(offset, numberOfRows);
-        return this;
+    public final SelectImpl limit(int o, int l) {
+        offset = o;
+        offsetParam = null;
+        limit = l;
+        limitParam = null;
+        return limitOffset();
     }
 
     @Override
-    public final SelectImpl limit(int offset, Param<Integer> numberOfRows) {
-        getQuery().addLimit(offset, numberOfRows);
-        return this;
+    public final SelectImpl limit(int o, Param<Integer> l) {
+        offset = o;
+        offsetParam = null;
+        limit = null;
+        limitParam = l;
+        return limitOffset();
     }
 
     @Override
-    public final SelectImpl limit(Param<Integer> offset, int numberOfRows) {
-        getQuery().addLimit(offset, numberOfRows);
-        return this;
+    public final SelectImpl limit(Param<Integer> o, int l) {
+        offset = null;
+        offsetParam = o;
+        limit = l;
+        limitParam = null;
+        return limitOffset();
     }
 
     @Override
-    public final SelectImpl limit(Param<Integer> offset, Param<Integer> numberOfRows) {
-        getQuery().addLimit(offset, numberOfRows);
-        return this;
+    public final SelectImpl limit(Param<Integer> o, Param<Integer> l) {
+        offset = null;
+        offsetParam = o;
+        limit = null;
+        limitParam = l;
+        return limitOffset();
     }
 
     @Override
-    public final SelectImpl offset(int offset) {
+    public final SelectImpl offset(int o) {
+        offset = o;
+        offsetParam = null;
+        return limitOffset();
+    }
+
+    @Override
+    public final SelectImpl offset(Param<Integer> o) {
+        offset = null;
+        offsetParam = o;
+        return limitOffset();
+    }
+
+    private final SelectImpl limitOffset() {
         if (limit != null) {
-            getQuery().addLimit(offset, limit);
+            if (offset != null)
+                getQuery().addLimit(offset, limit);
+            else if (offsetParam != null)
+                getQuery().addLimit(offsetParam, limit);
+            else
+                getQuery().addLimit(limit);
         }
         else if (limitParam != null) {
-            getQuery().addLimit(offset, limitParam);
+            if (offset != null)
+                getQuery().addLimit(offset, limitParam);
+            else if (offsetParam != null)
+                getQuery().addLimit(offsetParam, limitParam);
+            else
+                getQuery().addLimit(limitParam);
         }
+        else {
 
-        return this;
-    }
-
-    @Override
-    public final SelectImpl offset(Param<Integer> offset) {
-        if (limit != null) {
-            getQuery().addLimit(offset, limit);
-        }
-        else if (limitParam != null) {
-            getQuery().addLimit(offset, limitParam);
+            // [#4785] Replace usage of Integer.MAX_VALUE by "LIMIT-less" API call
+            if (offset != null)
+                getQuery().addLimit(offset, Integer.MAX_VALUE);
+            else if (offsetParam != null)
+                getQuery().addLimit(offsetParam, Integer.MAX_VALUE);
         }
 
         return this;

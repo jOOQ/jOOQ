@@ -47,6 +47,7 @@ import static org.jooq.example.db.oracle.sp.Queues.NEW_AUTHOR_AQ;
 // ...
 import static org.junit.Assert.assertEquals;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.jooq.example.db.oracle.sp.udt.records.AuthorTRecord;
@@ -57,6 +58,7 @@ import org.jooq.impl.DSL;
 // ...
 // ...
 
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -67,6 +69,20 @@ public class OracleAQExamples extends Utils {
     // Generate 10 authors
     static final List<AuthorTRecord> authors =
         range(0, 10).mapToObj(i -> new AuthorTRecord(i, "F" + i, "L1" + i, null)).collect(toList());
+
+    @Before
+    public void setup() throws Exception {
+        try {
+
+            // Dequeue them again
+            DEQUEUE_OPTIONS_T deq = new DEQUEUE_OPTIONS_T().wait(NO_WAIT);
+
+            // Empty the queue in case failing tests leave messages in the queue
+            for (int i = 0; i < 99; i++)
+                DBMS_AQ.dequeue(dsl.configuration(), NEW_AUTHOR_AQ, deq);
+        }
+        catch (Exception ignore) {}
+    }
 
     @Test
     public void testAQSimple() throws Exception {
@@ -91,14 +107,27 @@ public class OracleAQExamples extends Utils {
             ENQUEUE_OPTIONS_T enq = new ENQUEUE_OPTIONS_T().visibility(IMMEDIATE);
 
             // Enqueue two authors
-            DBMS_AQ.enqueue(c, NEW_AUTHOR_AQ, authors.get(0), enq, props);
-            DBMS_AQ.enqueue(c, NEW_AUTHOR_AQ, authors.get(1), enq, props);
+            DBMS_AQ.enqueue(c, NEW_AUTHOR_AQ, authors.get(0), enq,
+                props.correlation("A")
+                     .delay(BigDecimal.ZERO)
+            );
+            DBMS_AQ.enqueue(c, NEW_AUTHOR_AQ, authors.get(1), enq,
+                props.correlation("B")
+                     .delay(BigDecimal.ZERO)
+            );
 
             // Dequeue them again
-            DEQUEUE_OPTIONS_T deq = new DEQUEUE_OPTIONS_T().wait(NO_WAIT);
+            DEQUEUE_OPTIONS_T deq = new DEQUEUE_OPTIONS_T();
 
-            assertEquals(authors.get(0), DBMS_AQ.dequeue(c, NEW_AUTHOR_AQ, deq, props));
-            assertEquals(authors.get(1), DBMS_AQ.dequeue(c, NEW_AUTHOR_AQ, deq, props));
+            assertEquals(authors.get(0), DBMS_AQ.dequeue(c, NEW_AUTHOR_AQ, deq.wait(NO_WAIT), props));
+            assertEquals(0, (int) props.attempts);
+            assertEquals("A", props.correlation);
+            assertEquals(BigDecimal.ZERO, props.delay);
+
+            assertEquals(authors.get(1), DBMS_AQ.dequeue(c, NEW_AUTHOR_AQ, deq.wait(NO_WAIT), props));
+            assertEquals(0, (int) props.attempts);
+            assertEquals("B", props.correlation);
+            assertEquals(BigDecimal.ZERO, props.delay);
 
             // The queue is empty, this should fail
             assertThrows(DataAccessException.class, () -> {

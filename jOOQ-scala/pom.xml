@@ -15,7 +15,7 @@
     <name>jOOQ Scala</name>
 
     <properties>
-        <scala.version>2.10.5</scala.version>
+        <scala.version>2.10.6</scala.version>
         <org.h2.version>1.4.181</org.h2.version>
     </properties>
 

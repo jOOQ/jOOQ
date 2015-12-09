@@ -756,8 +756,10 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
            xxxxxxxxxxxxxxxxxxxxxxx xx
            xxxxxxxxxxxxxxxxxx
            xxxxxx x xx
-           xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-           xxxxxxxxxxxxxxxxxx
+           xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+        xx xxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxx
            xxxxxxxxxxxxxxxxxxxxx xx
            xxxxxxxxxxxxxxxxxx
            xxxxxx xx xx
@@ -817,13 +819,16 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         xxx  xxxxxxxxxxxxxxxxxx
              xxxxxxxxxxxxxxxx
              xxxxxxx xx
-             xxxxxxxxxxxxxxxxx
              xxxxxxxxxxxxxxxxxx
+
+        xx xxxxxxxxxxxxxxxxxxxxxxxxx
+        xxx  xxxxxxxxxxxxxxxxxx
              xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xx
-             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-           xxxxxxxxxxxxxxxxxx
+             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+        xxxxxxxxxxxxxxxxxxxxx
            xxxxxxxxxxxxxxxx
-           xxxxxxx xx
+           xxxxxxxxx
            xxxxxxxxxxxxxxxxxx
            xxxxxxxxxxxxxxxxxxxxxxx xx
            xxxxxxxxxxxxxxxxxx

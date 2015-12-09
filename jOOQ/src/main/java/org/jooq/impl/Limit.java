@@ -111,7 +111,10 @@ class Limit extends AbstractQueryPart {
             xx [/pro] */
 
             // [#4785] OFFSET cannot be without LIMIT
-            case H2: {
+            case H2:
+            case MARIADB:
+            case MYSQL:
+            case SQLITE: {
                 context.castMode(NEVER)
                        .formatSeparator()
                        .keyword("limit")
@@ -128,14 +131,11 @@ class Limit extends AbstractQueryPart {
             }
 
             // [#4785] OFFSET can be without LIMIT
-            case MARIADB:
-            case MYSQL:
             case HSQLDB:
             case POSTGRES:
             case POSTGRES_9_3:
             case POSTGRES_9_4:
-            case POSTGRES_9_5:
-            case SQLITE: {
+            case POSTGRES_9_5: {
                 context.castMode(NEVER);
 
                 if (!limitZero())
@@ -192,10 +192,14 @@ class Limit extends AbstractQueryPart {
                        .formatSeparator()
                        .keyword("offset")
                        .sql(' ').visit(offsetOrZero)
-                       .sql(' ').keyword("rows fetch next")
-                       .sql(' ').visit(numberOfRows)
-                       .sql(' ').keyword("rows only")
-                       .castMode(castMode);
+                       .sql(' ').keyword("rows");
+
+                if (!limitZero())
+                    context.sql(' ').keyword("fetch next")
+                           .sql(' ').visit(numberOfRows)
+                           .sql(' ').keyword("rows only");
+
+                context.castMode(castMode);
 
                 break;
             }

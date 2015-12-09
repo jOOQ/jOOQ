@@ -47,6 +47,7 @@ import static org.jooq.Clause.SCHEMA_REFERENCE;
 import java.util.Collections;
 import java.util.List;
 
+import org.jooq.Catalog;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Name;
@@ -68,16 +69,30 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
     private static final long     serialVersionUID = -8101463810207566546L;
     private static final Clause[] CLAUSES          = { SCHEMA, SCHEMA_REFERENCE };
 
+    private final Catalog         catalog;
     private final String          schemaName;
 
     SchemaImpl(Name name) {
-        this(name.getName()[0]);
+        this(
+            name.getName()[name.getName().length - 1],
+            name.getName().length > 1 ? DSL.catalog(DSL.name(name.getName()[0])) : null
+        );
     }
 
     public SchemaImpl(String name) {
+        this(name, null);
+    }
+
+    public SchemaImpl(String name, Catalog catalog) {
         super();
 
         this.schemaName = name;
+        this.catalog = catalog;
+    }
+
+    @Override
+    public final Catalog getCatalog() {
+        return catalog;
     }
 
     @Override
@@ -87,6 +102,15 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
 
     @Override
     public final void accept(Context<?> ctx) {
+        Catalog mappedCatalog = getCatalog();
+        // [#4793] TODO: Support this
+        // Utils.getMappedCatalog(ctx.configuration(), getCatalog());
+
+        if (mappedCatalog != null) {
+            ctx.visit(mappedCatalog);
+            ctx.sql('.');
+        }
+
         ctx.literal(getName());
     }
 
@@ -179,7 +203,10 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
         // [#2144] SchemaImpl equality can be decided without executing the
         // rather expensive implementation of AbstractQueryPart.equals()
         if (that instanceof SchemaImpl) {
-            return StringUtils.equals(getName(), (((SchemaImpl) that).getName()));
+            SchemaImpl other = (SchemaImpl) that;
+            return
+                StringUtils.equals(getCatalog(), other.getCatalog()) &&
+                StringUtils.equals(getName(), other.getName());
         }
 
         return super.equals(that);

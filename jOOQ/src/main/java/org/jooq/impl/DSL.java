@@ -106,6 +106,7 @@ import org.jooq.ArrayAggOrderByStep;
 import org.jooq.Case;
 import org.jooq.CaseConditionStep;
 import org.jooq.CaseValueStep;
+import org.jooq.Catalog;
 import org.jooq.CommonTableExpression;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -6632,6 +6633,28 @@ public class DSL {
     }
 
     /**
+     * Create a qualified catalog, given its catalog name.
+     * <p>
+     * This constructs a catalog reference given the catalog's qualified name.
+     * jOOQ will render the catalog name according to your
+     * {@link Settings#getRenderNameStyle()} settings. Choose
+     * {@link RenderNameStyle#QUOTED} to prevent syntax errors and/or SQL
+     * injection.
+     * <p>
+     * Example: <code><pre>
+     * // This catalog...
+     * catalog(name("MY_CATALOG"));
+     *
+     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * [MY_CATALOG]
+     * </pre></code>
+     */
+    @Support
+    public static Catalog catalog(Name name) {
+        return new CatalogImpl(name);
+    }
+
+    /**
      * Create a qualified schema, given its schema name.
      * <p>
      * This constructs a schema reference given the schema's qualified name.
@@ -6642,10 +6665,10 @@ public class DSL {
      * <p>
      * Example: <code><pre>
      * // This schema...
-     * schema(name("MY_SCHEMA"));
+     * schema(name("MY_CATALOG", "MY_SCHEMA"));
      *
      * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
-     * [MY_SCHEMA]
+     * [MY_CATALOG].[MY_SCHEMA]
      * </pre></code>
      */
     @Support

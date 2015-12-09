@@ -49,6 +49,7 @@ import java.util.List;
 import org.jooq.Catalog;
 import org.jooq.Clause;
 import org.jooq.Context;
+import org.jooq.Name;
 import org.jooq.Schema;
 import org.jooq.tools.StringUtils;
 
@@ -67,6 +68,10 @@ public class CatalogImpl extends AbstractQueryPart implements Catalog {
     private static final long     serialVersionUID = -3650318934053960244L;
     private static final Clause[] CLAUSES          = { CATALOG, CATALOG_REFERENCE };
     private final String          catalogName;
+
+    CatalogImpl(Name name) {
+        this(name.getName()[0]);
+    }
 
     public CatalogImpl(String name) {
         super();

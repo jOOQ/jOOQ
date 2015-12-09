@@ -273,7 +273,7 @@ class MetaImpl implements Meta, Serializable {
 
 
                 for (String name : schemas.getValues(0, String.class)) {
-                    result.add(new MetaSchema(name));
+                    result.add(new MetaSchema(name, MetaCatalog.this));
                 }
             }
 
@@ -290,13 +290,13 @@ class MetaImpl implements Meta, Serializable {
                 });
 
                 for (String name : schemas.getValues(0, String.class)) {
-                    result.add(new MetaSchema(name));
+                    result.add(new MetaSchema(name, MetaCatalog.this));
                 }
             }
 
             // There should always be at least one (empty) schema in a database
             if (result.isEmpty()) {
-                result.add(new MetaSchema(""));
+                result.add(new MetaSchema("", MetaCatalog.this));
             }
 
             return result;
@@ -311,8 +311,8 @@ class MetaImpl implements Meta, Serializable {
         private static final long                            serialVersionUID = -2621899850912554198L;
         private transient volatile Map<Name, Result<Record>> columnCache;
 
-        MetaSchema(String name) {
-            super(name);
+        MetaSchema(String name, Catalog catalog) {
+            super(name, catalog);
         }
 
         @Override

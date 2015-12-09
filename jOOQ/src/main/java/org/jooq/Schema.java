@@ -44,47 +44,52 @@ package org.jooq;
 import java.util.List;
 
 /**
- * An object representing a database schema
+ * An object representing a database schema.
  *
  * @author Lukas Eder
  */
 public interface Schema extends QueryPart {
 
     /**
-     * The name of this schema
+     * The catalog of this schema.
+     */
+    Catalog getCatalog();
+
+    /**
+     * The name of this schema.
      */
     String getName();
 
     /**
-     * List all tables contained in this schema
+     * List all tables contained in this schema.
      */
     List<Table<?>> getTables();
 
     /**
      * Get a table by its name (case-sensitive) in this schema, or
-     * <code>null</code> if no such table exists
+     * <code>null</code> if no such table exists.
      */
     Table<?> getTable(String name);
 
     /**
-     * List all UDTs contained in this schema
+     * List all UDTs contained in this schema.
      */
     List<UDT<?>> getUDTs();
 
     /**
      * Get a UDT by its name (case-sensitive) in this schema, or
-     * <code>null</code> if no such UDT exists
+     * <code>null</code> if no such UDT exists.
      */
     UDT<?> getUDT(String name);
 
     /**
-     * List all sequences contained in this schema
+     * List all sequences contained in this schema.
      */
     List<Sequence<?>> getSequences();
 
     /**
      * Get a sequence by its name (case-sensitive) in this schema, or
-     * <code>null</code> if no such sequence exists
+     * <code>null</code> if no such sequence exists.
      */
     Sequence<?> getSequence(String name);
 }

@@ -62,9 +62,24 @@ import org.jooq.util.jaxb.Schema;
 public interface Database {
 
     /**
+     * The catalogs generated from this database.
+     */
+    List<CatalogDefinition> getCatalogs();
+
+    /**
+     * Get a catalog defined in this database by name.
+     */
+    CatalogDefinition getCatalog(String name);
+
+    /**
      * The schemata generated from this database.
      */
     List<SchemaDefinition> getSchemata();
+
+    /**
+     * The schemata generated from this database and a given catalog.
+     */
+    List<SchemaDefinition> getSchemata(CatalogDefinition catalog);
 
     /**
      * Get a schema defined in this database by name.

@@ -68,6 +68,7 @@ import org.jooq.impl.DSL;
 import org.jooq.tools.JooqLogger;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
+import org.jooq.util.CatalogDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.DefaultCheckConstraintDefinition;
@@ -223,6 +224,12 @@ public class HSQLDBDatabase extends AbstractDatabase {
         }
     }
 
+    @Override
+    protected List<CatalogDefinition> getCatalogs0() throws SQLException {
+        List<CatalogDefinition> result = new ArrayList<CatalogDefinition>();
+        result.add(new CatalogDefinition(this, "", ""));
+        return result;
+    }
 
     @Override
     protected List<SchemaDefinition> getSchemata0() throws SQLException {

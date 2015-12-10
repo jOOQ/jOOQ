@@ -90,6 +90,11 @@ public abstract class AbstractDefinition implements Definition {
     }
 
     @Override
+    public /* non-final */ CatalogDefinition getCatalog() {
+        return getSchema().getCatalog();
+    }
+
+    @Override
     public final SchemaDefinition getSchema() {
         return schema;
     }

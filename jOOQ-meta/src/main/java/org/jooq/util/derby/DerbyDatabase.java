@@ -64,6 +64,7 @@ import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
+import org.jooq.util.CatalogDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
@@ -223,6 +224,13 @@ public class DerbyDatabase extends AbstractDatabase {
     @Override
     protected void loadCheckConstraints(DefaultRelations r) throws SQLException {
         // Currently not supported
+    }
+
+    @Override
+    protected List<CatalogDefinition> getCatalogs0() throws SQLException {
+        List<CatalogDefinition> result = new ArrayList<CatalogDefinition>();
+        result.add(new CatalogDefinition(this, "", ""));
+        return result;
     }
 
     @Override

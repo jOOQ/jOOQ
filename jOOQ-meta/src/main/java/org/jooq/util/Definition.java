@@ -57,7 +57,13 @@ public interface Definition {
     Database getDatabase();
 
     /**
-     * @return The schema of this object
+     * @return The catalog of this object.
+     */
+    CatalogDefinition getCatalog();
+
+    /**
+     * @return The schema of this object or <code>null</code> if this object is
+     *         a {@link CatalogDefinition}.
      */
     SchemaDefinition getSchema();
 

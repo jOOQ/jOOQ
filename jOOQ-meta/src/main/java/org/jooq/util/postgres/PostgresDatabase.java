@@ -91,6 +91,7 @@ import org.jooq.impl.DSL;
 import org.jooq.tools.JooqLogger;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
+import org.jooq.util.CatalogDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.DefaultCheckConstraintDefinition;
@@ -355,6 +356,13 @@ public class PostgresDatabase extends AbstractDatabase {
             }
         }
 
+        return result;
+    }
+
+    @Override
+    protected List<CatalogDefinition> getCatalogs0() throws SQLException {
+        List<CatalogDefinition> result = new ArrayList<CatalogDefinition>();
+        result.add(new CatalogDefinition(this, "", ""));
         return result;
     }
 

@@ -55,6 +55,7 @@ import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
+import org.jooq.util.CatalogDefinition;
 import org.jooq.util.CheckConstraintDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataTypeDefinition;
@@ -313,6 +314,12 @@ public class VertabeloXMLDatabase extends AbstractDatabase {
         });
     }
 
+    @Override
+    protected List<CatalogDefinition> getCatalogs0() throws SQLException {
+        List<CatalogDefinition> result = new ArrayList<CatalogDefinition>();
+        result.add(new CatalogDefinition(this, "", ""));
+        return result;
+    }
 
     @Override
     protected List<SchemaDefinition> getSchemata0() throws SQLException {

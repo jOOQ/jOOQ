@@ -47,31 +47,31 @@ import java.util.List;
 import org.jooq.tools.StringUtils;
 
 /**
- * The definition of a database schema
+ * The definition of a database catalog.
  *
  * @author Lukas Eder
  */
-public class SchemaDefinition extends AbstractDefinition {
+public class CatalogDefinition extends AbstractDefinition {
 
-    private final CatalogDefinition catalog;
-
-    public SchemaDefinition(Database database, String name, String comment) {
-        this(database, name, comment, null);
-    }
-
-    public SchemaDefinition(Database database, String name, String comment, CatalogDefinition catalog) {
-        super(database, null, name, comment);
-
-        this.catalog = catalog == null ? new CatalogDefinition(database, "", "") : catalog;
-    }
+	public CatalogDefinition(Database database, String name, String comment) {
+		super(database, null, name, comment);
+	}
 
 	@Override
     public final CatalogDefinition getCatalog() {
-        return catalog;
+        return this;
     }
 
-    public final List<TableDefinition> getTables() {
-	    return getDatabase().getTables(this);
+    public final List<SchemaDefinition> getSchemata() {
+	    return getDatabase().getSchemata(this);
+	}
+
+	public final SchemaDefinition getSchema(String name) {
+	    for (SchemaDefinition schema : getSchemata())
+	        if (schema.getInputName().equals(name))
+	            return schema;
+
+	    return null;
 	}
 
 	@SuppressWarnings("deprecation")
@@ -82,13 +82,10 @@ public class SchemaDefinition extends AbstractDefinition {
 
     @Override
     public final List<Definition> getDefinitionPath() {
-        if (StringUtils.isEmpty(catalog.getName()))
-            return Arrays.<Definition>asList(this);
-        else
-            return Arrays.<Definition>asList(catalog, this);
+        return Arrays.<Definition>asList(this);
     }
 
-    public boolean isDefaultSchema() {
+    public boolean isDefaultCatalog() {
         return StringUtils.isBlank(getOutputName());
     }
 }

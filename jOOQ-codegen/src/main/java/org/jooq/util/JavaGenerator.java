@@ -94,6 +94,7 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.AbstractKeys;
 import org.jooq.impl.AbstractRoutine;
 // ...
+import org.jooq.impl.CatalogImpl;
 import org.jooq.impl.DAOImpl;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultDataType;
@@ -133,45 +134,45 @@ import org.jooq.util.postgres.PostgresDatabase;
  */
 public class JavaGenerator extends AbstractGenerator {
 
-    private static final JooqLogger       log                          = JooqLogger.getLogger(JavaGenerator.class);
+    private static final JooqLogger        log                          = JooqLogger.getLogger(JavaGenerator.class);
 
     /**
      * The Javadoc to be used for private constructors
      */
-    private static final String           NO_FURTHER_INSTANCES_ALLOWED = "No further instances allowed";
+    private static final String            NO_FURTHER_INSTANCES_ALLOWED = "No further instances allowed";
 
     /**
      * [#1459] Prevent large static initialisers by splitting nested classes
      */
-    private static final int              INITIALISER_SIZE             = 500;
+    private static final int               INITIALISER_SIZE             = 500;
 
     /**
      * An overall stop watch to measure the speed of source code generation
      */
-    private final StopWatch               watch                        = new StopWatch();
+    private final StopWatch                watch                        = new StopWatch();
 
     /**
      * The underlying database of this generator
      */
-    private Database                      database;
+    private Database                       database;
 
     /**
      * The code generation date, if needed.
      */
-    private String                        isoDate;
+    private String                         isoDate;
 
     /**
-     * The cached schema version numbers
+     * The cached catalog version numbers
      */
-    private Map<SchemaDefinition, String> schemaVersions;
+    private Map<CatalogDefinition, String> catalogVersions;
 
     /**
      * All files modified by this generator
      */
-    private Set<File>                     files                        = new LinkedHashSet<File>();
+    private Set<File>                      files                        = new LinkedHashSet<File>();
 
-    private final boolean                 scala;
-    private final String                  tokenVoid;
+    private final boolean                  scala;
+    private final String                   tokenVoid;
 
     public JavaGenerator() {
         this(JAVA);
@@ -187,7 +188,7 @@ public class JavaGenerator extends AbstractGenerator {
     @Override
     public final void generate(Database db) {
         this.isoDate = DatatypeConverter.printDateTime(Calendar.getInstance(TimeZone.getTimeZone("UTC")));
-        this.schemaVersions = new LinkedHashMap<SchemaDefinition, String>();
+        this.catalogVersions = new LinkedHashMap<CatalogDefinition, String>();
 
         this.database = db;
         this.database.addFilter(new AvoidAmbiguousClassesFilter());
@@ -259,10 +260,24 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("----------------------------------------------------------");
 
         // ----------------------------------------------------------------------
-        // XXX Generating schemas
+        // XXX Generating catalogs
         // ----------------------------------------------------------------------
-        log.info("Generating schemata", "Total: " + database.getSchemata().size());
-        for (SchemaDefinition schema : database.getSchemata()) {
+        log.info("Generating catalogs", "Total: " + database.getCatalogs().size());
+        for (CatalogDefinition catalog : database.getCatalogs()) {
+            try {
+                generate(catalog);
+            }
+            catch (Exception e) {
+                throw new GeneratorException("Error generating code for catalog " + catalog, e);
+            }
+        }
+    }
+
+    private final void generate(CatalogDefinition catalog) {
+        generateCatalog(catalog);
+
+        log.info("Generating schemata", "Total: " + catalog.getSchemata().size());
+        for (SchemaDefinition schema : catalog.getSchemata()) {
             try {
                 generate(schema);
             }
@@ -279,7 +294,7 @@ public class JavaGenerator extends AbstractGenerator {
             log.info("No schema version is applied for schema " + schema.getInputName() + ". Regenerating.");
         }
         else {
-            schemaVersions.put(schema, newVersion);
+            catalogVersions.put(schema.getCatalog(), newVersion);
             String oldVersion = readVersion(getStrategy().getFile(schema));
 
             if (StringUtils.isBlank(oldVersion)) {
@@ -388,7 +403,8 @@ public class JavaGenerator extends AbstractGenerator {
         files.clear();
 
         // XXX [#651] Refactoring-cursor
-        watch.splitInfo("GENERATION FINISHED: " + schema.getQualifiedName());
+        watch.splitInfo("Generation finished: " + schema.getQualifiedName());
+        log.info("");
     }
 
     private class AvoidAmbiguousClassesFilter implements Database.Filter {
@@ -437,7 +453,7 @@ public class JavaGenerator extends AbstractGenerator {
         xxxxxxxxxx xxx x xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
         xxxxxxxxxxxxxxxxx xxxxxxxx
         xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx xxxxxx xx xxx xxxxxx xx x x xxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx
 
         xx xxxxxxx
         	xxxxxxxxxxxxxxxxxxx xxxxxx xxxx
@@ -474,7 +490,7 @@ public class JavaGenerator extends AbstractGenerator {
         xxxxxxxxxx xxx x xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
         xxxxxxxxxxxxxxxxx xxxxxxxx
         xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx xxxxxx xx xxx xxxxxxxx xxxxx xx x x xxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx
 
         xx xxxxxxx
             xxxxxxxxxxxxxxxxxxx xxxxx xxxx
@@ -518,7 +534,7 @@ public class JavaGenerator extends AbstractGenerator {
         printPackage(out, schema);
         printClassJavadoc(out,
             "A class modelling foreign key relationships between tables of the <code>" + schema.getOutputName() + "</code> schema");
-        printClassAnnotations(out, schema);
+        printClassAnnotations(out, schema.getCatalog());
 
         if (scala)
         	out.println("object Keys {");
@@ -821,7 +837,7 @@ public class JavaGenerator extends AbstractGenerator {
         else
             generateUDTRecordClassJavadoc((UDTDefinition) tableOrUdt, out);
 
-        printClassAnnotations(out, tableOrUdt.getSchema());
+        printClassAnnotations(out, tableOrUdt.getSchema().getCatalog());
         if (tableOrUdt instanceof TableDefinition)
             printTableJPAAnnotation(out, (TableDefinition) tableOrUdt);
 
@@ -1296,7 +1312,7 @@ public class JavaGenerator extends AbstractGenerator {
         else
             generateUDTInterfaceClassJavadoc((UDTDefinition) tableOrUDT, out);
 
-        printClassAnnotations(out, tableOrUDT.getSchema());
+        printClassAnnotations(out, tableOrUDT.getSchema().getCatalog());
 
         if (tableOrUDT instanceof TableDefinition)
             printTableJPAAnnotation(out, (TableDefinition) tableOrUDT);
@@ -1403,6 +1419,7 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generateUDT(UDTDefinition udt, JavaWriter out) {
+        final CatalogDefinition catalog = udt.getCatalog();
         final SchemaDefinition schema = udt.getSchema();
         final String className = getStrategy().getJavaClassName(udt);
         final String recordType = out.ref(getStrategy().getFullJavaClassName(udt, Mode.RECORD));
@@ -1429,7 +1446,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         generateUDTClassJavadoc(udt, out);
-        printClassAnnotations(out, schema);
+        printClassAnnotations(out, catalog);
 
         // [#799] Oracle UDTs with member procedures have similarities with packages
         if (udt.getRoutines().size() > 0) {
@@ -1646,7 +1663,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         printPackage(out, schema);
         printClassJavadoc(out, "Convenience access to all UDTs in " + schema.getOutputName());
-        printClassAnnotations(out, schema);
+        printClassAnnotations(out, schema.getCatalog());
 
         if (scala)
         	out.println("object UDTs {");
@@ -1698,6 +1715,7 @@ public class JavaGenerator extends AbstractGenerator {
     protected void generateArray(ArrayDefinition array, JavaWriter out) {
         /* [pro] xx
         xxxxx xxxxxxxxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxxxx
+        xxxxx xxxxxxxxxxxxxxxxx xxxxxxx x xxxxxxxxxxxxxxxxxxx
         xxxxx xxxxxx xxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
         xxxxx xxxxxx xxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         xxxxx xxxxxx xxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx
@@ -1711,7 +1729,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         xxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxx
         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxx
 
         xx xxxxxxx
             xxxxxxxxxxxxxxxxxx xx xxxxxxx xxxxxxxxxx xxxxxxx xxxxxxxxxxxx xxxxx xxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxx xxxx xxxxxx xxx
@@ -1845,7 +1863,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         printPackage(out, e);
         generateEnumClassJavadoc(e, out);
-        printClassAnnotations(out, e.getSchema());
+        printClassAnnotations(out, e.getSchema().getCatalog());
 
         interfaces.add(out.ref(EnumType.class));
 
@@ -1924,7 +1942,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         printPackage(out, d);
         generateDomainClassJavadoc(d, out);
-        printClassAnnotations(out, d.getSchema());
+        printClassAnnotations(out, d.getSchema().getCatalog());
 
         for (String clause : d.getCheckClauses())
             out.println("// " + clause);
@@ -1954,7 +1972,7 @@ public class JavaGenerator extends AbstractGenerator {
         JavaWriter out = newJavaWriter(new File(getStrategy().getFile(schema).getParentFile(), "Routines.java"));
         printPackage(out, schema);
         printClassJavadoc(out, "Convenience access to all stored procedures and functions in " + schema.getOutputName());
-        printClassAnnotations(out, schema);
+        printClassAnnotations(out, schema.getCatalog());
 
         if (scala)
         	 out.println("object Routines {");
@@ -2063,6 +2081,7 @@ public class JavaGenerator extends AbstractGenerator {
     xxxxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxxxx xxxx x
         xx xxxxx xx
         xxxxx xxxxxxxxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxx
+        xxxxx xxxxxxxxxxxxxxxxx xxxxxxx x xxxxxxxxxxxxxxxxx
         xxxxx xxxxxx xxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         xxxxx xxxxxx xxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         xxxxx xxxxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
@@ -2071,7 +2090,7 @@ public class JavaGenerator extends AbstractGenerator {
         xx xxxxxx xxxxxxxxxxx xxxxxxx
         xxxxxxxxxxxxxxxxx xxxxx
         xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxx
 
         xx xxxxxxx x
             xxxxxxxxxxxxxxxxxxx xx xxxxxxx xxxxxxxxxx xxxxxxxxxxxx xxxx xxxxxxxxxxxx xxxx xxxxxx xxx xxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxx
@@ -2136,7 +2155,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         printPackage(out, schema);
         printClassJavadoc(out, "Convenience access to all tables in " + schema.getOutputName());
-        printClassAnnotations(out, schema);
+        printClassAnnotations(out, schema.getCatalog());
 
         if (scala)
         	out.println("object Tables {");
@@ -2236,7 +2255,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         printPackage(out, table, Mode.DAO);
         generateDaoClassJavadoc(table, out);
-        printClassAnnotations(out, table.getSchema());
+        printClassAnnotations(out, table.getSchema().getCatalog());
 
         if (generateSpringAnnotations())
             out.println("@%s", out.ref("org.springframework.stereotype.Repository"));
@@ -2435,7 +2454,7 @@ public class JavaGenerator extends AbstractGenerator {
         else
             generateUDTPojoClassJavadoc((UDTDefinition) tableOrUDT, out);
 
-        printClassAnnotations(out, tableOrUDT.getSchema());
+        printClassAnnotations(out, tableOrUDT.getSchema().getCatalog());
 
         if (tableOrUDT instanceof TableDefinition)
             printTableJPAAnnotation(out, (TableDefinition) tableOrUDT);
@@ -2928,6 +2947,7 @@ public class JavaGenerator extends AbstractGenerator {
 
     protected void generateTable(TableDefinition table, JavaWriter out) {
         final SchemaDefinition schema = table.getSchema();
+        final CatalogDefinition catalog = table.getCatalog();
         final UniqueKeyDefinition primaryKey = table.getPrimaryKey();
 
         final boolean updatable = generateRelations() && primaryKey != null;
@@ -2956,7 +2976,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         generateTableClassJavadoc(table, out);
-        printClassAnnotations(out, schema);
+        printClassAnnotations(out, catalog);
 
         if (scala) {
             out.println("class %s(alias : String, aliased : %s[%s], parameters : Array[ %s[_] ]) extends %s[%s](alias, %s, aliased, parameters, \"%s\")[[before= with ][separator= with ][%s]] {",
@@ -3323,7 +3343,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         printPackage(out, schema);
         printClassJavadoc(out, "Convenience access to all sequences in " + schema.getOutputName());
-        printClassAnnotations(out, schema);
+        printClassAnnotations(out, schema.getCatalog());
 
         if (scala)
             out.println("object Sequences {");
@@ -3351,6 +3371,68 @@ public class JavaGenerator extends AbstractGenerator {
         watch.splitInfo("Sequences generated");
     }
 
+    protected void generateCatalog(CatalogDefinition catalog) {
+        JavaWriter out = newJavaWriter(getStrategy().getFile(catalog));
+        log.info("");
+        log.info("Generating catalog", out.file().getName());
+        log.info("==========================================================");
+        generateCatalog(catalog, out);
+        closeJavaWriter(out);
+    }
+
+    protected void generateCatalog(CatalogDefinition catalog, JavaWriter out) {
+        final String catalogName = catalog.getQualifiedOutputName();
+        final String catalogId = getStrategy().getJavaIdentifier(catalog);
+        final String className = getStrategy().getJavaClassName(catalog);
+        final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(catalog, Mode.DEFAULT));
+
+        printPackage(out, catalog);
+
+        if (scala) {
+            out.println("object %s {", className);
+            out.tab(1).javadoc("The reference instance of <code>%s</code>", catalogName);
+            out.tab(1).println("val %s = new %s", catalogId, className);
+            out.println("}");
+            out.println();
+        }
+
+        generateCatalogClassJavadoc(catalog, out);
+        printClassAnnotations(out, catalog);
+
+        if (scala) {
+            out.println("class %s extends %s(\"%s\")[[before= with ][separator= with ][%s]] {", className, CatalogImpl.class, catalog.getOutputName(), interfaces);
+        }
+        else {
+            out.println("public class %s extends %s[[before= implements ][%s]] {", className, CatalogImpl.class, interfaces);
+            out.printSerial();
+            out.tab(1).javadoc("The reference instance of <code>%s</code>", catalogName);
+            out.tab(1).println("public static final %s %s = new %s();", className, catalogId, className);
+
+            out.tab(1).javadoc(NO_FURTHER_INSTANCES_ALLOWED);
+            out.tab(1).println("private %s() {", className);
+            out.tab(2).println("super(\"%s\");", catalog.getOutputName());
+            out.tab(1).println("}");
+        }
+
+        printReferences(out, database.getSchemata(catalog), Schema.class, false);
+
+        generateCatalogClassFooter(catalog, out);
+        out.println("}");
+    }
+
+    /**
+     * Subclasses may override this method to provide catalog class footer code.
+     */
+    @SuppressWarnings("unused")
+    protected void generateCatalogClassFooter(CatalogDefinition schema, JavaWriter out) {}
+
+    /**
+     * Subclasses may override this method to provide their own Javadoc.
+     */
+    protected void generateCatalogClassJavadoc(CatalogDefinition schema, JavaWriter out) {
+        printClassJavadoc(out, schema);
+    }
+
     protected void generateSchema(SchemaDefinition schema) {
         JavaWriter out = newJavaWriter(getStrategy().getFile(schema));
         log.info("Generating schema", out.file().getName());
@@ -3360,6 +3442,7 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generateSchema(SchemaDefinition schema, JavaWriter out) {
+        final String catalogId = out.ref(getStrategy().getFullJavaIdentifier(schema.getCatalog()), 2);
         final String schemaName = schema.getQualifiedOutputName();
         final String schemaId = getStrategy().getJavaIdentifier(schema);
         final String className = getStrategy().getJavaClassName(schema);
@@ -3376,10 +3459,10 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         generateSchemaClassJavadoc(schema, out);
-        printClassAnnotations(out, schema);
+        printClassAnnotations(out, schema.getCatalog());
 
         if (scala) {
-            out.println("class %s extends %s(\"%s\")[[before= with ][separator= with ][%s]] {", className, SchemaImpl.class, schema.getOutputName(), interfaces);
+            out.println("class %s extends %s(\"%s\", %s)[[before= with ][separator= with ][%s]] {", className, SchemaImpl.class, schema.getOutputName(), catalogId, interfaces);
         }
         else {
             out.println("public class %s extends %s[[before= implements ][%s]] {", className, SchemaImpl.class, interfaces);
@@ -3389,17 +3472,17 @@ public class JavaGenerator extends AbstractGenerator {
 
             out.tab(1).javadoc(NO_FURTHER_INSTANCES_ALLOWED);
             out.tab(1).println("private %s() {", className);
-            out.tab(2).println("super(\"%s\");", schema.getOutputName());
+            out.tab(2).println("super(\"%s\", %s);", schema.getOutputName(), catalogId);
             out.tab(1).println("}");
         }
 
         // [#2255] Avoid referencing sequence literals, if they're not generated
         if (generateGlobalObjectReferences() && generateGlobalSequenceReferences()) {
-            printSchemaReferences(out, database.getSequences(schema), Sequence.class, true);
+            printReferences(out, database.getSequences(schema), Sequence.class, true);
         }
 
-        printSchemaReferences(out, database.getTables(schema), Table.class, true);
-        printSchemaReferences(out, database.getUDTs(schema), UDT.class, true);
+        printReferences(out, database.getTables(schema), Table.class, true);
+        printReferences(out, database.getUDTs(schema), UDT.class, true);
 
         generateSchemaClassFooter(schema, out);
         out.println("}");
@@ -3456,7 +3539,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
     }
 
-    protected void printSchemaReferences(JavaWriter out, List<? extends Definition> definitions, Class<?> type, boolean isGeneric) {
+    protected void printReferences(JavaWriter out, List<? extends Definition> definitions, Class<?> type, boolean isGeneric) {
         if (out != null && !definitions.isEmpty()) {
             final String generic = isGeneric ? (scala ? "[_]" : "<?>") : "";
             final List<String> references = out.ref(getStrategy().getFullJavaIdentifiers(definitions), 2);
@@ -3640,6 +3723,7 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generateRoutine(RoutineDefinition routine, JavaWriter out) {
+        final CatalogDefinition catalog = routine.getCatalog();
         final SchemaDefinition schema = routine.getSchema();
         final String className = getStrategy().getJavaClassName(routine);
         final String returnType = (routine.getReturnValue() == null)
@@ -3687,7 +3771,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         generateRoutineClassJavadoc(routine, out);
-        printClassAnnotations(out, schema);
+        printClassAnnotations(out, catalog);
 
         if (scala) {
             out.println("class %s extends %s[%s](\"%s\", %s[[before=, ][%s]][[before=, ][%s]][[before=, ][new %s()]])[[before= with ][separator= with ][%s]] {",
@@ -4301,7 +4385,7 @@ public class JavaGenerator extends AbstractGenerator {
         out.println(" */");
     }
 
-    protected void printClassAnnotations(JavaWriter out, SchemaDefinition schema) {
+    protected void printClassAnnotations(JavaWriter out, CatalogDefinition catalog) {
         if (generateGeneratedAnnotation()) {
             out.println("@%s(", out.ref("javax.annotation.Generated"));
 
@@ -4313,7 +4397,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                 out.tab(2).println("\"http://www.jooq.org\",");
                 out.tab(2).println("\"jOOQ version:%s\",", Constants.VERSION);
-                out.tab(2).println("\"schema version:%s\"", schemaVersions.get(schema).replace("\"", "\\\""));
+                out.tab(2).println("\"catalog version:%s\"", catalogVersions.get(catalog).replace("\"", "\\\""));
 
                 if (scala)
                     out.tab(1).println("),");

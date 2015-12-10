@@ -100,8 +100,6 @@ public abstract class AbstractDatabase implements Database {
     private Properties                                                       properties;
     private SQLDialect                                                       dialect;
     private Connection                                                       connection;
-    private DSLContext                                                       create;
-    private DSLContext                                                       createMuted;
     private List<RegexFlag>                                                  regexFlags;
     private List<Filter>                                                     filters;
     private String[]                                                         excludes;
@@ -125,6 +123,7 @@ public abstract class AbstractDatabase implements Database {
     // -------------------------------------------------------------------------
 
     private List<String>                                                     inputSchemata;
+    private List<CatalogDefinition>                                          catalogs;
     private List<SchemaDefinition>                                           schemata;
     private List<SequenceDefinition>                                         sequences;
     private List<IdentityDefinition>                                         identities;
@@ -292,6 +291,41 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public final List<CatalogDefinition> getCatalogs() {
+        if (catalogs == null) {
+            catalogs = new ArrayList<CatalogDefinition>();
+
+            try {
+                catalogs = getCatalogs0();
+            }
+            catch (Exception e) {
+                log.error("Could not load catalogs", e);
+            }
+
+// [#4794] Add support for schema mapping
+//            Iterator<CatalogDefinition> it = catalogs.iterator();
+//            while (it.hasNext()) {
+//                if (!getInputSchemata().contains(it.next().getName())) {
+//                    it.remove();
+//                }
+//            }
+        }
+
+        return catalogs;
+    }
+
+    @Override
+    public final CatalogDefinition getCatalog(String inputName) {
+        for (CatalogDefinition catalog : getCatalogs()) {
+            if (catalog.getName().equals(inputName)) {
+                return catalog;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
     public final List<SchemaDefinition> getSchemata() {
         if (schemata == null) {
             schemata = new ArrayList<SchemaDefinition>();
@@ -318,6 +352,17 @@ public abstract class AbstractDatabase implements Database {
         }
 
         return schemata;
+    }
+
+    @Override
+    public final List<SchemaDefinition> getSchemata(CatalogDefinition catalog) {
+        List<SchemaDefinition> result = new ArrayList<SchemaDefinition>();
+
+        for (SchemaDefinition schema : getSchemata())
+            if (catalog.equals(schema.getCatalog()))
+                result.add(schema);
+
+        return result;
     }
 
     @Override
@@ -1268,6 +1313,12 @@ public abstract class AbstractDatabase implements Database {
      * Retrieve <code>CHECK</code> constraints and store them to relations.
      */
     protected abstract void loadCheckConstraints(DefaultRelations r) throws SQLException;
+
+    /**
+     * Retrieve ALL catalogs from the database. This will be filtered in
+     * {@link #getCatalogs()}
+     */
+    protected abstract List<CatalogDefinition> getCatalogs0() throws SQLException;
 
     /**
      * Retrieve ALL schemata from the database. This will be filtered in

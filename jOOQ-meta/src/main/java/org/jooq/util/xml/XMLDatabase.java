@@ -71,6 +71,7 @@ import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
+import org.jooq.util.CatalogDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
@@ -298,6 +299,13 @@ public class XMLDatabase extends AbstractDatabase {
     }
 
     @Override
+    protected List<CatalogDefinition> getCatalogs0() throws SQLException {
+        List<CatalogDefinition> result = new ArrayList<CatalogDefinition>();
+        result.add(new CatalogDefinition(this, "", ""));
+        return result;
+    }
+
+    @Override
     protected List<SchemaDefinition> getSchemata0() {
         List<SchemaDefinition> result = new ArrayList<SchemaDefinition>();
 
@@ -307,7 +315,6 @@ public class XMLDatabase extends AbstractDatabase {
 
         return result;
     }
-
 
     @Override
     protected List<SequenceDefinition> getSequences0() {

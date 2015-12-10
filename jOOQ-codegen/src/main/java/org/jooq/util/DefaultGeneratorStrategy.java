@@ -136,43 +136,55 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
         sb.append(getTargetPackage());
 
-        // [#282] In multi-schema setups, the schema name goes into the package
-        if (definition.getDatabase().getSchemata().size() > 1) {
+        // [#2032] In multi-catalog setups, the catalog name goes into the package
+        if (definition.getDatabase().getCatalogs().size() > 1) {
             sb.append(".");
-            sb.append(getJavaIdentifier(definition.getSchema()).toLowerCase());
+            sb.append(getJavaIdentifier(definition.getCatalog()).toLowerCase());
         }
 
-        // Some definitions have their dedicated subpackages, e.g. "tables", "routines"
-        if (!StringUtils.isBlank(getSubPackage(definition))) {
-            sb.append(".");
-            sb.append(getSubPackage(definition));
-        }
+        if (!(definition instanceof CatalogDefinition)) {
 
-        // Record are yet in another subpackage
-        if (mode == Mode.RECORD) {
-            sb.append(".records");
-        }
+            // [#282] In multi-schema setups, the schema name goes into the package
+            if (definition.getDatabase().getSchemata().size() > 1) {
+                sb.append(".");
+                sb.append(getJavaIdentifier(definition.getSchema()).toLowerCase());
+            }
 
-        // POJOs too
-        else if (mode == Mode.POJO) {
-            sb.append(".pojos");
-        }
+            if (!(definition instanceof SchemaDefinition)) {
 
-        // DAOs too
-        else if (mode == Mode.DAO) {
-            sb.append(".daos");
-        }
+                // Some definitions have their dedicated subpackages, e.g. "tables", "routines"
+                if (!StringUtils.isBlank(getSubPackage(definition))) {
+                    sb.append(".");
+                    sb.append(getSubPackage(definition));
+                }
 
-        // Interfaces too
-        else if (mode == Mode.INTERFACE) {
-            sb.append(".interfaces");
-        }
+                // Record are yet in another subpackage
+                if (mode == Mode.RECORD) {
+                    sb.append(".records");
+                }
 
-        /* [pro] xx
-        xxxx xx xxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxxxxxxxxxxxxx
-        x
-        xx [/pro] */
+                // POJOs too
+                else if (mode == Mode.POJO) {
+                    sb.append(".pojos");
+                }
+
+                // DAOs too
+                else if (mode == Mode.DAO) {
+                    sb.append(".daos");
+                }
+
+                // Interfaces too
+                else if (mode == Mode.INTERFACE) {
+                    sb.append(".interfaces");
+                }
+
+                /* [pro] xx
+                xxxx xx xxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx x
+                    xxxxxxxxxxxxxxxxx
+                x
+                xx [/pro] */
+            }
+        }
 
         return sb.toString();
     }

@@ -91,9 +91,10 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     private final Deque<QueryPart>    visitParts;
 
     // [#2694] Unified RenderContext and BindContext traversal
-    ParamType                         paramType = ParamType.INDEXED;
-    boolean                           qualify   = true;
-    CastMode                          castMode  = CastMode.DEFAULT;
+    ParamType                         paramType      = ParamType.INDEXED;
+    boolean                           qualifySchema  = true;
+    boolean                           qualifyCatalog = true;
+    CastMode                          castMode       = CastMode.DEFAULT;
 
     AbstractContext(Configuration configuration, PreparedStatement stmt) {
         super(configuration);
@@ -474,12 +475,33 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public final boolean qualify() {
-        return qualify;
+        return qualifySchema();
     }
 
     @Override
     public final C qualify(boolean q) {
-        this.qualify = q;
+        return qualifySchema(q);
+    }
+
+    @Override
+    public final boolean qualifySchema() {
+        return qualifySchema;
+    }
+
+    @Override
+    public final C qualifySchema(boolean q) {
+        this.qualifySchema = q;
+        return (C) this;
+    }
+
+    @Override
+    public final boolean qualifyCatalog() {
+        return qualifyCatalog;
+    }
+
+    @Override
+    public final C qualifyCatalog(boolean q) {
+        this.qualifyCatalog = q;
         return (C) this;
     }
 

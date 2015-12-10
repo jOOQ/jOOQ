@@ -106,7 +106,7 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
         // [#4793] TODO: Support this
         // Utils.getMappedCatalog(ctx.configuration(), getCatalog());
 
-        if (mappedCatalog != null && !StringUtils.isBlank(mappedCatalog.getName())) {
+        if (ctx.qualifyCatalog() && mappedCatalog != null && !StringUtils.isBlank(mappedCatalog.getName())) {
             ctx.visit(mappedCatalog);
             ctx.sql('.');
         }

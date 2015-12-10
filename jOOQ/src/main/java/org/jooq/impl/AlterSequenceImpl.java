@@ -104,8 +104,28 @@ class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
            .keyword("alter")
            .sql(' ')
            .keyword(ctx.family() == CUBRID ? "serial" : "sequence")
-           .sql(' ').visit(sequence)
-           .end(ALTER_SEQUENCE_SEQUENCE)
+           .sql(' ');
+
+        switch (ctx.family()) {
+            /* [pro] xx
+            xxxx xxxxxxxxxx x
+                xxxxxxx xxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxx
+
+                xxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+                xxxxxx
+            x
+            xx [/pro] */
+
+            default: {
+                ctx.visit(sequence);
+                break;
+            }
+        }
+
+        ctx.end(ALTER_SEQUENCE_SEQUENCE)
            .start(ALTER_SEQUENCE_RESTART);
 
         T with = restartWith;

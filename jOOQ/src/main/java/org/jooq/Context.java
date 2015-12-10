@@ -332,9 +332,39 @@ public interface Context<C extends Context<C>> extends Scope {
     boolean qualify();
 
     /**
-     * Sett the new context value for {@link #qualify()}.
+     * Set the new context value for {@link #qualify()}.
+     * <p>
+     * This is the same as {@link #qualifySchema(boolean)}.
      */
     C qualify(boolean qualify);
+
+    /**
+     * Whether query parts should render qualified names or not.
+     * <p>
+     * This is the same as {@link #qualifySchema()}.
+     */
+    boolean qualifySchema();
+
+    /**
+     * Set the new context value for {@link #qualifySchema()}.
+     */
+    C qualifySchema(boolean qualifySchema);
+
+    /**
+     * Whether query parts should render qualified names or not.
+     * <p>
+     * The catalog can only be qualified when {@link #qualifySchema()} is
+     * <code>true</code> as well.
+     */
+    boolean qualifyCatalog();
+
+    /**
+     * Set the new context value for {@link #qualifyCatalog()}.
+     * <p>
+     * The catalog can only be qualified when {@link #qualifySchema()} is
+     * <code>true</code> as well.
+     */
+    C qualifyCatalog(boolean qualifyCatalog);
 
     /**
      * Specify, how bind values should be rendered.

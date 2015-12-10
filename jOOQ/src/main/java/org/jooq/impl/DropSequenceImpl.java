@@ -118,7 +118,24 @@ class DropSequenceImpl extends AbstractQuery implements
         if (ifExists && supportsIfExists(ctx))
             ctx.keyword("if exists").sql(' ');
 
-        ctx.visit(sequence);
+        switch (ctx.family()) {
+            /* [pro] xx
+            xxxx xxxxxxxxxx x
+                xxxxxxx xxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxx
+
+                xxxxxxxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxx
+                   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+                xxxxxx
+            x
+            xx [/pro] */
+
+            default: {
+                ctx.visit(sequence);
+                break;
+            }
+        }
 
         if (ctx.family() == DERBY)
             ctx.sql(' ').keyword("restrict");

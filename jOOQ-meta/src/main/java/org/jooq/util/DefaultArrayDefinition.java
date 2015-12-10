@@ -40,7 +40,7 @@
  */
 package org.jooq.util;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DefaultArrayDefinition extends AbstractDefinition implements ArrayDefinition {
@@ -56,7 +56,12 @@ public class DefaultArrayDefinition extends AbstractDefinition implements ArrayD
 
     @Override
     public List<Definition> getDefinitionPath() {
-        return Arrays.<Definition> asList(getSchema(), this);
+        List<Definition> result = new ArrayList<Definition>();
+
+        result.addAll(getSchema().getDefinitionPath());
+        result.add(this);
+
+        return result;
     }
 
     @Override

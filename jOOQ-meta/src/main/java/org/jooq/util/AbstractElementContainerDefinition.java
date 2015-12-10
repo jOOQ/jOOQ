@@ -46,7 +46,6 @@ import static org.jooq.util.AbstractDatabase.getDefinition;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -77,7 +76,12 @@ extends AbstractDefinition {
 
     @Override
     public final List<Definition> getDefinitionPath() {
-        return Arrays.<Definition>asList(getSchema(), this);
+        List<Definition> result = new ArrayList<Definition>();
+
+        result.addAll(getSchema().getDefinitionPath());
+        result.add(this);
+
+        return result;
     }
 
     protected final List<E> getElements() {

@@ -41,7 +41,6 @@
 package org.jooq.util;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class DefaultUniqueKeyDefinition extends AbstractDefinition implements UniqueKeyDefinition {
@@ -67,7 +66,12 @@ public class DefaultUniqueKeyDefinition extends AbstractDefinition implements Un
 
     @Override
     public List<Definition> getDefinitionPath() {
-        return Arrays.<Definition>asList(getSchema(), this);
+        List<Definition> result = new ArrayList<Definition>();
+
+        result.addAll(getSchema().getDefinitionPath());
+        result.add(this);
+
+        return result;
     }
 
     @Override

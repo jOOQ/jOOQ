@@ -40,7 +40,7 @@
  */
 package org.jooq.util;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DefaultCheckConstraintDefinition extends AbstractDefinition implements CheckConstraintDefinition {
@@ -57,7 +57,12 @@ public class DefaultCheckConstraintDefinition extends AbstractDefinition impleme
 
     @Override
     public List<Definition> getDefinitionPath() {
-        return Arrays.<Definition>asList(getSchema(), this);
+        List<Definition> result = new ArrayList<Definition>();
+
+        result.addAll(getSchema().getDefinitionPath());
+        result.add(this);
+
+        return result;
     }
 
     @Override

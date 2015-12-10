@@ -42,7 +42,6 @@ package org.jooq.util;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.tools.JooqLogger;
@@ -63,7 +62,12 @@ public abstract class AbstractPackageDefinition extends AbstractDefinition imple
 
     @Override
     public List<Definition> getDefinitionPath() {
-        return Arrays.<Definition>asList(getSchema(), this);
+        List<Definition> result = new ArrayList<Definition>();
+
+        result.addAll(getSchema().getDefinitionPath());
+        result.add(this);
+
+        return result;
     }
 
     @Override

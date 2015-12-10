@@ -9,7 +9,15 @@
 
   <complexType name="Settings">
     <all>
+      <!-- Whether any catalog name should be rendered at all.
+           Use this for single-catalog environments, or when all objects are made
+           available using synonyms -->
+      <element name="renderCatalog" type="boolean" minOccurs="0" maxOccurs="1" default="true"/>
+      
       <!-- Whether any schema name should be rendered at all.
+      
+           Setting this to false also implicitly sets "renderCatalog" to false.
+           
            Use this for single-schema environments, or when all objects are made
            available using synonyms -->
       <element name="renderSchema" type="boolean" minOccurs="0" maxOccurs="1" default="true"/>

@@ -41,7 +41,6 @@
 package org.jooq.util;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -64,7 +63,12 @@ public class DefaultForeignKeyDefinition extends AbstractDefinition implements F
 
     @Override
     public List<Definition> getDefinitionPath() {
-        return Arrays.<Definition>asList(getSchema(), this);
+        List<Definition> result = new ArrayList<Definition>();
+
+        result.addAll(getSchema().getDefinitionPath());
+        result.add(this);
+
+        return result;
     }
 
     @Override

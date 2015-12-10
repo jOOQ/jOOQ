@@ -110,6 +110,10 @@ public class SchemaMapping implements Serializable {
         return SettingsTools.getRenderMapping(configuration.settings());
     }
 
+    private final boolean renderCatalog() {
+        return Boolean.TRUE.equals(configuration.settings().isRenderCatalog());
+    }
+
     private final boolean renderSchema() {
         return Boolean.TRUE.equals(configuration.settings().isRenderSchema());
     }
@@ -260,6 +264,26 @@ public class SchemaMapping implements Serializable {
 
         // Add new mapping
         table.setOutput(outputTable);
+    }
+
+    public Catalog map(Catalog catalog) {
+
+        // [#1774] [#4795] The default Settings render schema flag takes
+        // precedence over the DefaultConfiguration's ignoreMapping flag!
+        if (!renderCatalog()) return null;
+
+        Catalog result = catalog;
+        if (result != null) {
+            String catalogName = result.getName();
+
+            // [#2089] DefaultCatalog has an empty schema name
+            if (StringUtils.isEmpty(catalogName))
+                return null;
+
+            // [#4793] TODO implement runtime catalog mapping
+        }
+
+        return result;
     }
 
     /**

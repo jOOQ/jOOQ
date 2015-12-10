@@ -65,7 +65,12 @@ public class DefaultEnumDefinition extends AbstractDefinition implements EnumDef
 
     @Override
     public List<Definition> getDefinitionPath() {
-        return Arrays.<Definition>asList(getSchema(), this);
+        List<Definition> result = new ArrayList<Definition>();
+
+        result.addAll(getSchema().getDefinitionPath());
+        result.add(this);
+
+        return result;
     }
 
     public void addLiteral(String literal) {

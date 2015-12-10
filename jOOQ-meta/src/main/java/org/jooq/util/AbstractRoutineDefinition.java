@@ -43,7 +43,6 @@ package org.jooq.util;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -84,12 +83,14 @@ public abstract class AbstractRoutineDefinition extends AbstractDefinition imple
 
     @Override
     public List<Definition> getDefinitionPath() {
-        if (pkg != null) {
-            return Arrays.<Definition>asList(getSchema(), pkg, this);
-        }
-        else {
-            return Arrays.<Definition>asList(getSchema(), this);
-        }
+        List<Definition> result = new ArrayList<Definition>();
+        result.addAll(getSchema().getDefinitionPath());
+
+        if (pkg != null)
+            result.add(pkg);
+
+        result.add(this);
+        return result;
     }
 
     private void init() {

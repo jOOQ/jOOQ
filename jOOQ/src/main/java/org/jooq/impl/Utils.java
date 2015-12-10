@@ -101,6 +101,7 @@ import javax.persistence.Id;
 import org.jooq.Attachable;
 import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
+import org.jooq.Catalog;
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -1793,6 +1794,21 @@ final class Utils {
         target.values[targetIndex] = targetType.convert(source.getValue(sourceIndex));
         target.originals[targetIndex] = targetType.convert(source.original(sourceIndex));
         target.changed.set(targetIndex, source.changed(sourceIndex));
+    }
+
+    /**
+     * Map a {@link Catalog} according to the configured {@link org.jooq.SchemaMapping}
+     */
+    @SuppressWarnings("deprecation")
+    static final Catalog getMappedCatalog(Configuration configuration, Catalog catalog) {
+        org.jooq.SchemaMapping mapping = configuration.schemaMapping();
+
+        if (mapping != null) {
+            return mapping.map(catalog);
+        }
+        else {
+            return catalog;
+        }
     }
 
     /**

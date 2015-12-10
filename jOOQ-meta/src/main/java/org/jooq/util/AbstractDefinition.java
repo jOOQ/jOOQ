@@ -141,9 +141,10 @@ public abstract class AbstractDefinition implements Definition {
 
             String separator = "";
             for (Definition part : getDefinitionPath()) {
-                if (part instanceof SchemaDefinition && ((SchemaDefinition) part).isDefaultSchema()) {
+                if (part instanceof CatalogDefinition && ((CatalogDefinition) part).isDefaultCatalog())
                     continue;
-                }
+                else if (part instanceof SchemaDefinition && ((SchemaDefinition) part).isDefaultSchema())
+                    continue;
 
                 sb.append(separator);
                 sb.append(part.getInputName());
@@ -169,9 +170,10 @@ public abstract class AbstractDefinition implements Definition {
 
             String separator = "";
             for (Definition part : getDefinitionPath()) {
-                if (part instanceof SchemaDefinition && ((SchemaDefinition) part).isDefaultSchema()) {
+                if (part instanceof CatalogDefinition && ((CatalogDefinition) part).isDefaultCatalog())
                     continue;
-                }
+                else if (part instanceof SchemaDefinition && ((SchemaDefinition) part).isDefaultSchema())
+                    continue;
 
                 sb.append(separator);
                 sb.append(part.getOutputName());

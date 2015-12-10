@@ -119,8 +119,13 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
             return "IDENTITY_" + getJavaIdentifier(((IdentityDefinition) definition).getColumn().getContainer());
         }
 
+        // [#2032] Intercept default Catalog
+        else if (definition instanceof CatalogDefinition && ((CatalogDefinition) definition).isDefaultCatalog()) {
+            return "DEFAULT_CATALOG";
+        }
+
         // [#2089] Intercept default schema
-        if (definition instanceof SchemaDefinition && ((SchemaDefinition) definition).isDefaultSchema()) {
+        else if (definition instanceof SchemaDefinition && ((SchemaDefinition) definition).isDefaultSchema()) {
             return "DEFAULT_SCHEMA";
         }
 
@@ -287,12 +292,17 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
     public String getJavaClassName(Definition definition, Mode mode) {
 
         // [#1150] Intercept Mode.RECORD calls for tables
-        if (!generator.generateRecords() && mode == Mode.RECORD && definition instanceof TableDefinition) {
+        if (definition instanceof TableDefinition && !generator.generateRecords() && mode == Mode.RECORD) {
             return Record.class.getSimpleName();
         }
 
+        // [#2032] Intercept default catalog
+        else if (definition instanceof CatalogDefinition && ((CatalogDefinition) definition).isDefaultCatalog()) {
+            return "DefaultCatalog";
+        }
+
         // [#2089] Intercept default schema
-        if (definition instanceof SchemaDefinition && ((SchemaDefinition) definition).isDefaultSchema()) {
+        else if (definition instanceof SchemaDefinition && ((SchemaDefinition) definition).isDefaultSchema()) {
             return "DefaultSchema";
         }
 

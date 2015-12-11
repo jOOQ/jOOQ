@@ -160,7 +160,7 @@ class Limit extends AbstractQueryPart {
                        .formatSeparator()
                        .keyword("limit")
                        .sql(' ').visit(offsetOrZero)
-                       .sql(", ").visit(numberOfRows)
+                       .sql(", ").visit(numberOfRowsOrMax)
                        .castMode(castMode);
 
                 break;
@@ -214,7 +214,7 @@ class Limit extends AbstractQueryPart {
                        xxxxxxxxxxxxxxxxxx
                        xxxxxx xxxxxxxxxxxxxxxxxxxxxx
                        xxxxxx xxxxxxxxxxxxxxxxx xxxxxxx
-                       xxxxxx xxxxxxxxxxxxxxxxxxxxxx
+                       xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
                        xxxxxx xxxxxxxxxxxxxxxx xxxxxx
                        xxxxxxxxxxxxxxxxxxxxxx
 
@@ -232,7 +232,7 @@ class Limit extends AbstractQueryPart {
                            xxxxxx xxx
 
                 xxxxxxxxxxxxxxxxxxxxxxxx
-                       xxxxxx xxxxxxxxxxxxxxxxxxxxxx
+                       xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
                        xxxxxxxxxxxxxxxxxxxxxx
 
                 xxxxxx
@@ -243,7 +243,7 @@ class Limit extends AbstractQueryPart {
             xxxx xxxxxxx x
                 xxxxxxxxxxxxxxxxxxxxxxxxxx
                        xxxxxxxxxxxxxxx
-                       xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
+                       xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
                 xx xxxxxxxxxxxxxxx
                     xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx
@@ -268,7 +268,7 @@ class Limit extends AbstractQueryPart {
                 xxxxxxxxxxxxxxxxxxxxxxxxxx
                        xxxxxxxxxxxxxxxxxx
                        xxxxxxxxxxxxxxx xxxxxxx
-                       xxxxxx xxxxxxxxxxxxxxxxxxxxxx
+                       xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
                        xxxxxx xxxxxxxxxxxxxxxx xxxxxx
                        xxxxxxxxxxxxxxxxxxxxxx
 

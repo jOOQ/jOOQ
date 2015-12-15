@@ -2,7 +2,7 @@
 # for the time being, we turned off Travis (on GitHub)
 # --------------------------------------------------------------------------
 language: java
-jd:
+jdk:
   - oraclejdk8
 install:
   - sh -c 'mvn install -DskipTests=true'

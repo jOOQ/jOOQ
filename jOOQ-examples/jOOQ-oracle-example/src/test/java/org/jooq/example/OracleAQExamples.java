@@ -46,6 +46,8 @@ import static org.jooq.example.db.oracle.sp.Queues.NEW_AUTHOR_AQ;
 // ...
 // ...
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -97,6 +99,22 @@ public class OracleAQExamples extends Utils {
             authors.stream().forEach(a -> {
                 assertEquals(a, DBMS_AQ.dequeue(dsl.configuration(), NEW_AUTHOR_AQ));
             });
+        });
+    }
+
+    @Test
+    public void testAQWait() throws Exception {
+        dsl.transaction(c -> {
+            long time = System.nanoTime();
+
+            try {
+                DBMS_AQ.dequeue(c, NEW_AUTHOR_AQ, new DEQUEUE_OPTIONS_T().wait(2));
+                fail();
+            }
+            catch (DataAccessException expected) {}
+
+            // "close enough"
+            assertTrue(System.nanoTime() - time > 1_900_000_000L);
         });
     }
 

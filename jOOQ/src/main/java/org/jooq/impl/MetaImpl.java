@@ -435,7 +435,7 @@ class MetaImpl implements Meta, Serializable {
             }
         }
 
-        private final Result<Record> getColumns0(String schema, String table) {
+        private final Result<Record> getColumns0(final String schema, final String table) {
             return meta(new MetaFunction() {
                 @Override
                 public Result<Record> run(DatabaseMetaData meta) throws SQLException {
@@ -505,7 +505,7 @@ class MetaImpl implements Meta, Serializable {
             x
             xx [/pro] */
 
-            String schema = getSchema() == null ? null : getSchema().getName();
+            final String schema = getSchema() == null ? null : getSchema().getName();
             Result<Record> result = meta(new MetaFunction() {
                 @Override
                 public Result<Record> run(DatabaseMetaData meta) throws SQLException {

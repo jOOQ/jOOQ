@@ -5,6 +5,7 @@ import org.jooq.DSLContext;
 import org.jooq.ExecuteListenerProvider;
 import org.jooq.SQLDialect;
 import org.jooq.TransactionProvider;
+import org.jooq.example.spring.exception.ExceptionTranslator;
 import org.jooq.impl.DataSourceConnectionProvider;
 import org.jooq.impl.DefaultConfiguration;
 import org.jooq.impl.DefaultDSLContext;

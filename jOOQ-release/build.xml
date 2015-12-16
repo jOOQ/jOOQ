@@ -50,6 +50,26 @@
         <copy todir="${dir.release}/${dir.version}/jOOQ-src" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version-prefix}-sources.jar"/>
         <copy todir="${dir.release}/${dir.version}/jOOQ-src" file="${dir.workspace}/jOOQ-codegen-maven/target/jooq-codegen-maven-${version-prefix}-sources.jar"/>
         <copy todir="${dir.release}/${dir.version}/jOOQ-src" file="${dir.workspace}/jOOQ-scala/target/jooq-scala-${version-prefix}-sources.jar"/>
+
+        <zip destfile="${dir.release}/${dir.version}/jOOQ-src/jooq-${version-prefix}-all-sources.zip">
+            <fileset dir="${dir.workspace}">
+                <exclude name="**/.*"/>
+                <exclude name="**/*.iml"/>
+                <exclude name="**/src/test/**"/>
+                <exclude name="**/target/**"/>
+
+                <include name="jOOQ/**"/>
+                <include name="jOOQ-codegen/**"/>
+                <include name="jOOQ-codegen-maven/**"/>
+                <include name="jOOQ-examples/**"/>
+                <include name="jOOQ-meta/**"/>
+                <include name="jOOQ-meta-extensions/**"/>
+                <include name="jOOQ-scala/**"/>
+                <include name="authors.txt"/>
+                <include name="LICENSE"/>
+                <include name="pom.xml"/>
+            </fileset>
+        </zip>
     </target>
 
     <target name="copy-trial">

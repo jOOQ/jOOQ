@@ -881,8 +881,8 @@ public class JavaGenerator extends AbstractGenerator {
 
             final String comment = StringUtils.defaultString(column.getComment());
             final String setterReturnType = fluentSetters() ? className : tokenVoid;
-            final String setter = getStrategy().getJavaSetterName(column, Mode.DEFAULT);
-            final String getter = getStrategy().getJavaGetterName(column, Mode.DEFAULT);
+            final String setter = getStrategy().getJavaSetterName(column, Mode.RECORD);
+            final String getter = getStrategy().getJavaGetterName(column, Mode.RECORD);
             final String type = out.ref(getJavaType(column.getType()));
             final String name = column.getQualifiedOutputName();
             final boolean isUDT = column.getType().isUDT();
@@ -1325,8 +1325,8 @@ public class JavaGenerator extends AbstractGenerator {
         for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
             final String comment = StringUtils.defaultString(column.getComment());
             final String setterReturnType = fluentSetters() ? className : "void";
-            final String setter = getStrategy().getJavaSetterName(column, Mode.DEFAULT);
-            final String getter = getStrategy().getJavaGetterName(column, Mode.DEFAULT);
+            final String setter = getStrategy().getJavaSetterName(column, Mode.INTERFACE);
+            final String getter = getStrategy().getJavaGetterName(column, Mode.INTERFACE);
             final String type = out.ref(getJavaType(column.getType(), Mode.INTERFACE));
             final String name = column.getQualifiedOutputName();
 

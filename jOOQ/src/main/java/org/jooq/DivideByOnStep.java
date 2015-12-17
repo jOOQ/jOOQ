@@ -65,7 +65,14 @@ public interface DivideByOnStep {
 
     /**
      * Add a division condition to the <code>DIVIDE BY</code> clause
+     *
+     * @deprecated - 3.8.0 - [#4763] - Use {@link #on(Condition...)} or
+     *             {@link #on(Field)} instead. Due to ambiguity between calling
+     *             this method using {@link Field#equals(Object)} argument, vs.
+     *             calling the other method via a {@link Field#equal(Object)}
+     *             argument, this method will be removed in the future.
      */
+    @Deprecated
     @Support
     DivideByOnConditionStep on(Boolean condition);
 

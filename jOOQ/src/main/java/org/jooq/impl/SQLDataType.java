@@ -272,7 +272,7 @@ public final class SQLDataType {
      */
     public static final DataType<DayToSecond> INTERVALDAYTOSECOND = new DefaultDataType<DayToSecond>(null, DayToSecond.class, "interval day to second");
 
-    /* [java-8] */
+    
     // -------------------------------------------------------------------------
     // JSR310 types
     // -------------------------------------------------------------------------
@@ -315,7 +315,7 @@ public final class SQLDataType {
      * An alias for {@link #OFFSETDATETIME}
      */
     public static final DataType<OffsetDateTime> TIMESTAMPWITHTIMEZONE = OFFSETDATETIME;
-    /* [/java-8] */
+    
 
     // -------------------------------------------------------------------------
     // Binary types

@@ -286,10 +286,10 @@ class DeleteImpl<R extends Record>
         return getDelegate().getReturnedRecord();
     }
 
-    /* [java-8] */
+    
     @Override
     public final Optional<R> fetchOptional() {
         return Optional.ofNullable(fetchOne());
     }
-    /* [/java-8] */
+    
 }

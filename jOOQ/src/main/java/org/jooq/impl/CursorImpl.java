@@ -209,7 +209,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         return iterator;
     }
 
-    /* [java-8] */
+    
     @Override
     public final Stream<R> stream() throws DataAccessException {
         return StreamSupport.stream(
@@ -221,7 +221,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
             false
         ).onClose(() -> close());
     }
-    /* [/java-8] */
+    
 
     @Override
     public final boolean hasNext() {
@@ -244,7 +244,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         return null;
     }
 
-    /* [java-8] */
+    
     @Override
     public final Optional<R> fetchOptional() throws DataAccessException {
         return Optional.ofNullable(fetchOne());
@@ -264,7 +264,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     public final <Z extends Record> Optional<Z> fetchOptionalInto(Table<Z> table) {
         return Optional.ofNullable(fetchOneInto(table));
     }
-    /* [/java-8] */
+    
 
     @Override
     public final Result<R> fetch(int number) {

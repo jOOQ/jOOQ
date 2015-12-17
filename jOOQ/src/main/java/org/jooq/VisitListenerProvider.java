@@ -55,9 +55,9 @@ import org.jooq.impl.DefaultVisitListenerProvider;
  * @see VisitListener
  * @see Configuration
  */
-/* [java-8] */
+
 @FunctionalInterface
-/* [/java-8] */
+
 public interface VisitListenerProvider {
 
     /**

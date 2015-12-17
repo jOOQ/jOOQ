@@ -2703,7 +2703,7 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
         return getDelegate().iterator();
     }
 
-    /* [java-8] */
+    
     @Override
     public final Stream<R> fetchStream() {
         return getDelegate().fetchStream();
@@ -2713,7 +2713,7 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     public final Stream<R> stream() {
         return getDelegate().stream();
     }
-    /* [/java-8] */
+    
 
     @Override
     public final Cursor<R> fetchLazy() {
@@ -2881,7 +2881,7 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
         return getDelegate().fetchOneInto(table);
     }
 
-    /* [java-8] */
+    
     @Override
     public final <T> Optional<T> fetchOptional(Field<T> field) {
         return getDelegate().fetchOptional(field);
@@ -2971,7 +2971,7 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     public final <Z extends Record> Optional<Z> fetchOptionalInto(Table<Z> table) {
         return getDelegate().fetchOptionalInto(table);
     }
-    /* [/java-8] */
+    
 
     @Override
     public final <T> T fetchAny(Field<T> field) {

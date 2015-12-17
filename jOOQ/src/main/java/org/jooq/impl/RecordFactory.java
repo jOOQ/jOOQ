@@ -46,9 +46,9 @@ import org.jooq.Record;
  * @author Lukas Eder
  * @author Arnaud Roger
  */
-/* [java-8] */
+
 @FunctionalInterface
-/* [/java-8] */
+
 interface RecordFactory<R extends Record> {
 
     /**

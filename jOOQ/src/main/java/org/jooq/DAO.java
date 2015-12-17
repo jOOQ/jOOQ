@@ -260,7 +260,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      */
     <Z> P fetchOne(Field<Z> field, Z value) throws DataAccessException;
 
-    /* [java-8] */
+    
     /**
      * Find a unique record by a given field and a value.
      *
@@ -274,7 +274,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      *             </ul>
      */
     <Z> Optional<P> fetchOptional(Field<Z> field, Z value) throws DataAccessException;
-    /* [/java-8] */
+    
 
     /**
      * Get the underlying table

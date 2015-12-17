@@ -4830,9 +4830,9 @@ public class JavaGenerator extends AbstractGenerator {
         return getJavaType(type1).equals(getJavaType(type2));
     }
 
-    /* [java-8] */
+    
     @SafeVarargs
-    /* [/java-8] */
+    
     private static final <T> List<T> list(T... objects) {
         List<T> result = new ArrayList<T>();
 

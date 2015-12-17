@@ -141,9 +141,9 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     }
 
     @Override
-    /* [java-8] */
+    
     @SafeVarargs
-    /* [/java-8] */
+    
     public final void insert(P... objects) {
         insert(asList(objects));
     }
@@ -168,9 +168,9 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     }
 
     @Override
-    /* [java-8] */
+    
     @SafeVarargs
-    /* [/java-8] */
+    
     public final void update(P... objects) {
         update(asList(objects));
     }
@@ -190,9 +190,9 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     }
 
     @Override
-    /* [java-8] */
+    
     @SafeVarargs
-    /* [/java-8] */
+    
     public final void delete(P... objects) {
         delete(asList(objects));
     }
@@ -209,9 +209,9 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     }
 
     @Override
-    /* [java-8] */
+    
     @SafeVarargs
-    /* [/java-8] */
+    
     public final void deleteById(T... ids) {
         deleteById(asList(ids));
     }
@@ -296,12 +296,12 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         return record == null ? null : mapper().map(record);
     }
 
-    /* [java-8] */
+    
     @Override
     public final <Z> Optional<P> fetchOptional(Field<Z> field, Z value) {
         return Optional.ofNullable(fetchOne(field, value));
     }
-    /* [/java-8] */
+    
 
     @Override
     public final Table<R> getTable() {

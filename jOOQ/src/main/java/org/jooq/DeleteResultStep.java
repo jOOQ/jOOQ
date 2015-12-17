@@ -103,7 +103,7 @@ public interface DeleteResultStep<R extends Record> extends Delete<R> {
     @Support({ FIREBIRD, POSTGRES })
     R fetchOne() throws DataAccessException;
 
-    /* [java-8] */
+    
     /**
      * The record holding returned values as specified by the
      * {@link UpdateReturningStep}.
@@ -115,5 +115,5 @@ public interface DeleteResultStep<R extends Record> extends Delete<R> {
      */
     @Support({ FIREBIRD, POSTGRES })
     Optional<R> fetchOptional() throws DataAccessException;
-    /* [/java-8] */
+    
 }

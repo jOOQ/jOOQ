@@ -145,7 +145,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     @Override
     Iterator<R> iterator() throws DataAccessException;
 
-    /* [java-8] */
+    
     /**
      * Stream this query.
      * <p>
@@ -179,7 +179,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      */
     Stream<R> stream() throws DataAccessException;
-    /* [/java-8] */
+    
 
     /**
      * Execute the query and "lazily" return the generated result.
@@ -665,7 +665,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      */
     <Z extends Record> Z fetchOneInto(Table<Z> table) throws DataAccessException, TooManyRowsException;
 
-    /* [java-8] */
+    
     /**
      * Execute the query and return at most one resulting value for a
      * field from the generated result.
@@ -906,7 +906,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws TooManyRowsException if the query returned more than one record
      */
     <Z extends Record> Optional<Z> fetchOptionalInto(Table<Z> table) throws DataAccessException, TooManyRowsException;
-    /* [/java-8] */
+    
 
     /**
      * Execute the query and return at most one resulting value for a

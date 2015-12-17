@@ -12767,9 +12767,9 @@ public class DSL {
      * </tr>
      * </table>
      */
-    /* [java-8] */
+    
     @SafeVarargs
-    /* [/java-8] */
+    
     @Support({ H2, HSQLDB, POSTGRES })
     public static <T> Field<T[]> array(Field<T>... fields) {
         return array(Arrays.asList(fields));
@@ -13951,7 +13951,7 @@ public class DSL {
         return value((Object) value, SQLDataType.TIMESTAMP);
     }
 
-    /* [java-8] */
+    
     /**
      * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
@@ -14001,7 +14001,7 @@ public class DSL {
     public static Param<OffsetDateTime> value(OffsetDateTime value) {
         return value((Object) value, SQLDataType.OFFSETDATETIME);
     }
-    /* [/java-8] */
+    
 
     /**
      * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
@@ -14568,7 +14568,7 @@ public class DSL {
         return inline((Object) value, SQLDataType.TIMESTAMP);
     }
 
-    /* [java-8] */
+    
     /**
      * Create a bind value that is always inlined.
      * <p>
@@ -14668,7 +14668,7 @@ public class DSL {
     public static Param<OffsetDateTime> inline(OffsetDateTime value) {
         return inline((Object) value, SQLDataType.OFFSETDATETIME);
     }
-    /* [/java-8] */
+    
 
     /**
      * Create a bind value that is always inlined.
@@ -15055,7 +15055,7 @@ public class DSL {
         return val((Object) value, SQLDataType.TIMESTAMP);
     }
 
-    /* [java-8] */
+    
     /**
      * Get a bind value.
      *
@@ -15100,7 +15100,7 @@ public class DSL {
     public static Param<OffsetDateTime> val(OffsetDateTime value) {
         return val((Object) value, SQLDataType.OFFSETDATETIME);
     }
-    /* [/java-8] */
+    
 
     /**
      * Get a bind value.

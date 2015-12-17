@@ -48,9 +48,9 @@ package org.jooq;
  * @deprecated - This API is still EXPERIMENTAL. Do not use yet
  */
 @Deprecated
-/* [java-8] */
+
 @FunctionalInterface
-/* [/java-8] */
+
 public interface ConverterProvider {
 
     /**

@@ -323,14 +323,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
         }
 
-        /* [java-8] */
+        
         if (type == OffsetTime.class || type == OffsetDateTime.class) {
             switch (ctx.family()) {
                 case POSTGRES:
                     return true;
             }
         }
-        /* [/java-8] */
+        
 
         return false;
     }
@@ -993,7 +993,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 }
             }
 
-            /* [java-8] */
+            
             else if (actualType == LocalDate.class) {
                 ctx.statement().setDate(ctx.index(), Date.valueOf((LocalDate) value));
             }
@@ -1009,7 +1009,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             else if (actualType == OffsetDateTime.class) {
                 ctx.statement().setString(ctx.index(), value.toString());
             }
-            /* [/java-8] */
+            
 
             // [#566] Interval data types are best bound as Strings
             else if (actualType == YearToMonth.class) {
@@ -1314,7 +1314,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else if (type == Integer.class) {
             result = (T) wasNull(ctx.resultSet(), Integer.valueOf(ctx.resultSet().getInt(ctx.index())));
         }
-        /* [java-8] */
+        
         else if (type == LocalDate.class) {
             result = (T) localDate(getDate(ctx.configuration().dialect(), ctx.resultSet(), ctx.index()));
         }
@@ -1324,18 +1324,18 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else if (type == LocalDateTime.class) {
             result = (T) localDateTime(getTimestamp(ctx.configuration().dialect(), ctx.resultSet(), ctx.index()));
         }
-        /* [/java-8] */
+        
         else if (type == Long.class) {
             result = (T) wasNull(ctx.resultSet(), Long.valueOf(ctx.resultSet().getLong(ctx.index())));
         }
-        /* [java-8] */
+        
         else if (type == OffsetTime.class) {
             result = (T) offsetTime(ctx.resultSet().getString(ctx.index()));
         }
         else if (type == OffsetDateTime.class) {
             result = (T) offsetDateTime(ctx.resultSet().getString(ctx.index()));
         }
-        /* [/java-8] */
+        
         else if (type == Short.class) {
             result = (T) wasNull(ctx.resultSet(), Short.valueOf(ctx.resultSet().getShort(ctx.index())));
         }
@@ -1456,7 +1456,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         ctx.value(converter.from(result));
     }
 
-    /* [java-8] */
+    
     private final LocalDate localDate(Date date) {
         return date == null ? null : date.toLocalDate();
     }
@@ -1495,7 +1495,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         return OffsetDateTime.parse(string);
     }
-    /* [/java-8] */
+    
 
     @SuppressWarnings("unchecked")
     @Override

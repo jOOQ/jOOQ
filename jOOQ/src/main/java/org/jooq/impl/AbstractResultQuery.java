@@ -319,7 +319,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         return fetch().iterator();
     }
 
-    /* [java-8] */
+    
     @Override
     public final Stream<R> fetchStream() {
         return fetchLazy().stream();
@@ -329,7 +329,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     public final Stream<R> stream() {
         return fetchLazy().stream();
     }
-    /* [/java-8] */
+    
 
     @Override
     public final Cursor<R> fetchLazy() {
@@ -531,7 +531,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         return record == null ? null : record.into(table);
     }
 
-    /* [java-8] */
+    
     @Override
     public final <T> Optional<T> fetchOptional(Field<T> field) {
         return Optional.ofNullable(fetchOne(field));
@@ -621,7 +621,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     public final <Z extends Record> Optional<Z> fetchOptionalInto(Table<Z> table) {
         return Optional.ofNullable(fetchOneInto(table));
     }
-    /* [/java-8] */
+    
 
     @Override
     public final <T> T fetchAny(Field<T> field) {

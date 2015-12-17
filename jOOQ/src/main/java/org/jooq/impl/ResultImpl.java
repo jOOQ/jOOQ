@@ -76,6 +76,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.jooq.AttachableInternal;
+import org.jooq.CSVFormat;
 import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.DSLContext;
@@ -715,6 +716,13 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
+    public final String formatCSV(CSVFormat format) {
+        StringWriter writer = new StringWriter();
+        formatCSV(writer, format);
+        return writer.toString();
+    }
+
+    @Override
     public final void formatCSV(OutputStream stream, char delimiter, String nullString) {
         formatCSV(stream, true, delimiter, nullString);
     }
@@ -725,20 +733,30 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
+    public final void formatCSV(OutputStream stream, CSVFormat format) {
+        formatCSV(new OutputStreamWriter(stream), format);
+    }
+
+    @Override
     public final void formatCSV(Writer writer, char delimiter, String nullString) {
         formatCSV(writer, true, delimiter, nullString);
     }
 
     @Override
     public final void formatCSV(Writer writer, boolean header, char delimiter, String nullString) {
+        formatCSV(writer, new CSVFormat().header(header).delimiter("" + delimiter).nullString(nullString));
+    }
+
+    @Override
+    public final void formatCSV(Writer writer, CSVFormat format) {
         try {
-            if (header) {
+            if (format.header()) {
                 String sep1 = "";
                 for (Field<?> field : fields.fields) {
                     writer.append(sep1);
                     writer.append(formatCSV0(field.getName(), ""));
 
-                    sep1 = Character.toString(delimiter);
+                    sep1 = format.delimiter();
                 }
 
                 writer.append("\n");
@@ -749,9 +767,9 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
                 for (int index = 0; index < fields.fields.length; index++) {
                     writer.append(sep2);
-                    writer.append(formatCSV0(record.getValue(index), nullString));
+                    writer.append(formatCSV0(record.getValue(index), format.nullString()));
 
-                    sep2 = Character.toString(delimiter);
+                    sep2 = format.delimiter();
                 }
 
                 writer.append("\n");

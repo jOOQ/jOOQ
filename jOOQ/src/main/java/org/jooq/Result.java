@@ -584,6 +584,13 @@ public interface Result<R extends Record> extends List<R>, Attachable {
     String formatCSV(boolean header, char delimiter, String nullString);
 
     /**
+     * Get a simple formatted representation of this result as CSV.
+     *
+     * @return The formatted result
+     */
+    String formatCSV(CSVFormat format);
+
+    /**
      * Get a simple formatted representation of this result as a JSON array of
      * array.
      * <p>
@@ -691,6 +698,13 @@ public interface Result<R extends Record> extends List<R>, Attachable {
     void formatCSV(OutputStream stream, boolean header, char delimiter, String nullString) throws IOException;
 
     /**
+     * Like {@link #formatCSV(CSVFormat)}, but the data is output onto an {@link OutputStream}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatCSV(OutputStream stream, CSVFormat format) throws IOException;
+
+    /**
      * Like {@link #formatJSON()}, but the data is output onto an {@link OutputStream}.
      *
      * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
@@ -780,6 +794,13 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
      */
     void formatCSV(Writer writer, boolean header, char delimiter, String nullString) throws IOException;
+
+    /**
+     * Like {@link #formatCSV(CSVFormat)}, but the data is output onto a {@link Writer}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatCSV(Writer writer, CSVFormat format) throws IOException;
 
     /**
      * Like {@link #formatJSON()}, but the data is output onto a {@link Writer}.

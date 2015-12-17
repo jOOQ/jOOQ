@@ -49,12 +49,14 @@ public final class CSVFormat {
 
     final String  delimiter;
     final String  nullString;
+    final String  newline;
     final boolean header;
 
     public CSVFormat() {
         this(
             ",",
             "",
+            "\n",
             true
         );
     }
@@ -62,10 +64,12 @@ public final class CSVFormat {
     private CSVFormat(
         String delimiter,
         String nullString,
+        String newline,
         boolean header
     ) {
         this.delimiter = delimiter;
         this.nullString = nullString;
+        this.newline = newline;
         this.header = header;
     }
 
@@ -88,6 +92,7 @@ public final class CSVFormat {
         return new CSVFormat(
             newDelimiter,
             nullString,
+            newline,
             header
         );
     }
@@ -134,6 +139,7 @@ public final class CSVFormat {
         return new CSVFormat(
             delimiter,
             newNullString,
+            newline,
             header
         );
     }
@@ -162,6 +168,25 @@ public final class CSVFormat {
     }
 
     /**
+     * The string to be used to separate rows, defaulting to <code>\n</code>.
+     */
+    public CSVFormat newline(String newNewline) {
+        return new CSVFormat(
+            delimiter,
+            nullString,
+            newNewline,
+            header
+        );
+    }
+
+    /**
+     * The string to be used to separate rows, defaulting to <code>\n</code>.
+     */
+    public String newline() {
+        return newline;
+    }
+
+    /**
      * Whether to emit a header row with column names, defaulting to
      * <code>true</code>.
      */
@@ -169,6 +194,7 @@ public final class CSVFormat {
         return new CSVFormat(
             delimiter,
             nullString,
+            newline,
             newHeader
         );
     }

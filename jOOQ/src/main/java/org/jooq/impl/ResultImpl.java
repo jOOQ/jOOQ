@@ -759,7 +759,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
                     sep1 = format.delimiter();
                 }
 
-                writer.append("\n");
+                writer.append(format.newline());
             }
 
             for (Record record : this) {
@@ -772,7 +772,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
                     sep2 = format.delimiter();
                 }
 
-                writer.append("\n");
+                writer.append(format.newline());
             }
         }
         catch (java.io.IOException e) {

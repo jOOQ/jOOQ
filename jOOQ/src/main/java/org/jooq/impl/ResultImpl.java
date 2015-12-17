@@ -668,7 +668,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final void formatCSV(Writer writer, boolean header) {
-        formatCSV(writer, header, ',', "");
+        formatCSV(writer, header, ',', "\"\"");
     }
 
     @Override
@@ -700,7 +700,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final void formatCSV(Writer writer, boolean header, char delimiter) {
-        formatCSV(writer, header, delimiter, "");
+        formatCSV(writer, header, delimiter, "\"\"");
     }
 
     @Override
@@ -744,7 +744,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final void formatCSV(Writer writer, boolean header, char delimiter, String nullString) {
-        formatCSV(writer, new CSVFormat().header(header).delimiter("" + delimiter).nullString(nullString));
+        formatCSV(writer, new CSVFormat().header(header).delimiter(delimiter).nullString(nullString));
     }
 
     @Override
@@ -754,7 +754,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
                 String sep1 = "";
                 for (Field<?> field : fields.fields) {
                     writer.append(sep1);
-                    writer.append(formatCSV0(field.getName(), ""));
+                    writer.append(formatCSV0(field.getName(), format));
 
                     sep1 = format.delimiter();
                 }
@@ -767,7 +767,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
                 for (int index = 0; index < fields.fields.length; index++) {
                     writer.append(sep2);
-                    writer.append(formatCSV0(record.getValue(index), format.nullString()));
+                    writer.append(formatCSV0(record.getValue(index), format));
 
                     sep2 = format.delimiter();
                 }
@@ -780,17 +780,14 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         }
     }
 
-    private final String formatCSV0(Object value, String nullString) {
+    private final String formatCSV0(Object value, CSVFormat format) {
 
-        // Escape null and empty strings
-        if (value == null || "".equals(value)) {
-            if (StringUtils.isEmpty(nullString)) {
-                return "\"\"";
-            }
-            else {
-                return nullString;
-            }
-        }
+        // [#4746] Escape null and empty strings
+        if (value == null)
+            return format.nullString();
+
+        if ("".equals(value.toString()))
+            return format.emptyString();
 
         String result = format0(value, false, false);
 

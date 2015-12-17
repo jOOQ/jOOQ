@@ -49,13 +49,15 @@ public final class CSVFormat {
 
     final String  delimiter;
     final String  nullString;
+    final String  emptyString;
     final String  newline;
     final boolean header;
 
     public CSVFormat() {
         this(
             ",",
-            "",
+            "\"\"",
+            "\"\"",
             "\n",
             true
         );
@@ -64,11 +66,13 @@ public final class CSVFormat {
     private CSVFormat(
         String delimiter,
         String nullString,
+        String emptyString,
         String newline,
         boolean header
     ) {
         this.delimiter = delimiter;
         this.nullString = nullString;
+        this.emptyString = emptyString;
         this.newline = newline;
         this.header = header;
     }
@@ -92,9 +96,29 @@ public final class CSVFormat {
         return new CSVFormat(
             newDelimiter,
             nullString,
+            emptyString,
             newline,
             header
         );
+    }
+
+    /**
+     * The delimiter to be used between CSV cells, defaulting to
+     * <code>","</code>.
+     * <p>
+     * <table border="1">
+     * <tr>
+     * <td>Using <code>","</code></td>
+     * <td><code>a,b,c</code></td>
+     * </tr>
+     * <tr>
+     * <td>Using <code>";"</code></td>
+     * <td><code>a;b;c</code></td>
+     * </tr>
+     * </table>
+     */
+    public CSVFormat delimiter(char newDelimiter) {
+        return delimiter("" + newDelimiter);
     }
 
     /**
@@ -139,6 +163,7 @@ public final class CSVFormat {
         return new CSVFormat(
             delimiter,
             newNullString,
+            emptyString,
             newline,
             header
         );
@@ -168,12 +193,65 @@ public final class CSVFormat {
     }
 
     /**
+     * The string to be used for <code>null</code> values, defaulting to the
+     * empty string.
+     * <p>
+     * <table border="1">
+     * <tr>
+     * <td>Using <code>""</code></td>
+     * <td><code>a,,c</code></td>
+     * </tr>
+     * <tr>
+     * <td>Using <code>"\"\""</code></td>
+     * <td><code>a,"",c</code></td>
+     * </tr>
+     * <tr>
+     * <td>Using <code>"{null}"</code></td>
+     * <td><code>a,{null},c</code></td>
+     * </tr>
+     * </table>
+     */
+    public CSVFormat emptyString(String newEmptyString) {
+        return new CSVFormat(
+            delimiter,
+            nullString,
+            newEmptyString,
+            newline,
+            header
+        );
+    }
+
+    /**
+     * The string to be used for <code>null</code> values, defaulting to the
+     * empty string.
+     * <p>
+     * <table border="1">
+     * <tr>
+     * <td>Using <code>""</code></td>
+     * <td><code>a,,c</code></td>
+     * </tr>
+     * <tr>
+     * <td>Using <code>"\"\""</code></td>
+     * <td><code>a,"",c</code></td>
+     * </tr>
+     * <tr>
+     * <td>Using <code>"{null}"</code></td>
+     * <td><code>a,{null},c</code></td>
+     * </tr>
+     * </table>
+     */
+    public String emptyString() {
+        return emptyString;
+    }
+
+    /**
      * The string to be used to separate rows, defaulting to <code>\n</code>.
      */
     public CSVFormat newline(String newNewline) {
         return new CSVFormat(
             delimiter,
             nullString,
+            emptyString,
             newNewline,
             header
         );
@@ -194,6 +272,7 @@ public final class CSVFormat {
         return new CSVFormat(
             delimiter,
             nullString,
+            emptyString,
             newline,
             newHeader
         );

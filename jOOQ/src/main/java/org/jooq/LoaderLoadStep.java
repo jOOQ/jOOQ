@@ -50,7 +50,7 @@ import java.io.IOException;
  *
  * @author Lukas Eder
  */
-public interface LoaderLoadStep<R extends TableRecord<R>> {
+public interface LoaderLoadStep<R extends Record> {
 
     /**
      * Execute the load. All exceptions are caught and wrapped in the resulting

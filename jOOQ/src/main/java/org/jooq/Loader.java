@@ -50,7 +50,7 @@ import java.util.List;
  *
  * @author Lukas Eder
  */
-public interface Loader<R extends TableRecord<R>> {
+public interface Loader<R extends Record> {
 
     /**
      * A list of errors that might have happened during the load.

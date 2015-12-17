@@ -534,7 +534,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     // -------------------------------------------------------------------------
 
     @Override
-    public <R extends TableRecord<R>> LoaderOptionsStep<R> loadInto(Table<R> table) {
+    public <R extends Record> LoaderOptionsStep<R> loadInto(Table<R> table) {
         return new LoaderImpl<R>(configuration(), table);
     }
 

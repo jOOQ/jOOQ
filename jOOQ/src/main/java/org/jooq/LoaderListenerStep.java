@@ -48,7 +48,7 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface LoaderListenerStep<R extends TableRecord<R>> extends LoaderLoadStep<R> {
+public interface LoaderListenerStep<R extends Record> extends LoaderLoadStep<R> {
 
     /**
      * Specify a listener that is invoked whenever a row has been processed.

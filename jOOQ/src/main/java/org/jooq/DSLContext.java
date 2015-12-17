@@ -399,7 +399,7 @@ public interface DSLContext extends Scope /* [java-8] */, AutoCloseable /* [/jav
      * source.
      */
     @Support
-    <R extends TableRecord<R>> LoaderOptionsStep<R> loadInto(Table<R> table);
+    <R extends Record> LoaderOptionsStep<R> loadInto(Table<R> table);
 
     // -------------------------------------------------------------------------
     // XXX Plain SQL API

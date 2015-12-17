@@ -50,7 +50,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface LoaderRowsStep<R extends TableRecord<R>> {
+public interface LoaderRowsStep<R extends Record> {
 
     /**
      * Specify the the fields to be loaded into the table in the correct order.

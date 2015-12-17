@@ -79,7 +79,6 @@ import org.jooq.LoaderXMLStep;
 import org.jooq.Record;
 import org.jooq.SelectQuery;
 import org.jooq.Table;
-import org.jooq.TableRecord;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.LoaderConfigurationException;
 import org.jooq.tools.StringUtils;
@@ -92,7 +91,7 @@ import org.xml.sax.InputSource;
  * @author Lukas Eder
  * @author Johannes Bühler
  */
-class LoaderImpl<R extends TableRecord<R>> implements
+class LoaderImpl<R extends Record> implements
 
     // Cascading interface implementations for Loader behaviour
     LoaderOptionsStep<R>,
@@ -144,7 +143,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
     private int                          bulk        = BULK_NONE;
     private int                          bulkAfter   = 1;
     private int                          content     = CONTENT_CSV;
-    private final InputDelay           data        = new InputDelay();
+    private final InputDelay             data        = new InputDelay();
     private Iterator<? extends Object[]> arrays;
 
     // CSV configuration data

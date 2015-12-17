@@ -48,7 +48,7 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface LoaderCSVOptionsStep<R extends TableRecord<R>> extends LoaderListenerStep<R> {
+public interface LoaderCSVOptionsStep<R extends Record> extends LoaderListenerStep<R> {
 
     /**
      * Specify that a certain number of rows should be ignored from the CSV

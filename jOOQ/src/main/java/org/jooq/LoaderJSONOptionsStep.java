@@ -49,7 +49,7 @@ package org.jooq;
  * @author Lukas Eder
  * @author Johannes Bühler
  */
-public interface LoaderJSONOptionsStep<R extends TableRecord<R>> extends LoaderListenerStep<R> {
+public interface LoaderJSONOptionsStep<R extends Record> extends LoaderListenerStep<R> {
 
     /**
      * Specify that a certain number of rows should be ignored from the JSON

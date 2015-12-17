@@ -60,7 +60,7 @@ import org.xml.sax.InputSource;
  * @author Lukas Eder
  * @author Johannes Bühler
  */
-public interface LoaderSourceStep<R extends TableRecord<R>> {
+public interface LoaderSourceStep<R extends Record> {
 
     /**
      * Load in-memory data.

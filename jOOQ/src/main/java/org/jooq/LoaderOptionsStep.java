@@ -69,7 +69,7 @@ import java.sql.Connection;
  *
  * @author Lukas Eder
  */
-public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourceStep<R> {
+public interface LoaderOptionsStep<R extends Record> extends LoaderSourceStep<R> {
 
     // -------------------------------------------------------------------------
     // Duplicate handling

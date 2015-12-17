@@ -51,7 +51,7 @@ import java.util.Collection;
  * @author Lukas Eder
  * @author Johannes Bühler
  */
-public interface LoaderJSONStep<R extends TableRecord<R>> {
+public interface LoaderJSONStep<R extends Record> {
 
     /**
      * Specify the the fields to be loaded into the table in the correct order.

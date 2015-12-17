@@ -193,7 +193,7 @@ public final class CSVFormat {
     }
 
     /**
-     * The string to be used for <code>null</code> values, defaulting to the
+     * The string to be used for <code>""</code> values, defaulting to the
      * empty string.
      * <p>
      * <table border="1">
@@ -204,10 +204,6 @@ public final class CSVFormat {
      * <tr>
      * <td>Using <code>"\"\""</code></td>
      * <td><code>a,"",c</code></td>
-     * </tr>
-     * <tr>
-     * <td>Using <code>"{null}"</code></td>
-     * <td><code>a,{null},c</code></td>
      * </tr>
      * </table>
      */
@@ -222,7 +218,7 @@ public final class CSVFormat {
     }
 
     /**
-     * The string to be used for <code>null</code> values, defaulting to the
+     * The string to be used for <code>""</code> values, defaulting to the
      * empty string.
      * <p>
      * <table border="1">
@@ -233,10 +229,6 @@ public final class CSVFormat {
      * <tr>
      * <td>Using <code>"\"\""</code></td>
      * <td><code>a,"",c</code></td>
-     * </tr>
-     * <tr>
-     * <td>Using <code>"{null}"</code></td>
-     * <td><code>a,{null},c</code></td>
      * </tr>
      * </table>
      */

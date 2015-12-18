@@ -42,6 +42,7 @@
 package org.jooq.util;
 
 import static org.jooq.impl.DSL.falseCondition;
+import static org.jooq.util.AbstractTypedElementDefinition.customType;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -587,10 +588,10 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final CustomType getConfiguredCustomType(String typeName) {
-        Iterator<CustomType> it = configuredCustomTypes.iterator();
+        Iterator<CustomType> it1 = configuredCustomTypes.iterator();
 
-        while (it.hasNext()) {
-            CustomType type = it.next();
+        while (it1.hasNext()) {
+            CustomType type = it1.next();
 
             if (type == null || (type.getName() == null && type.getType() == null)) {
                 try {
@@ -602,12 +603,42 @@ public abstract class AbstractDatabase implements Database {
                     log.warn("Invalid custom type encountered: " + type);
                 }
 
-                it.remove();
+                it1.remove();
                 continue;
             }
 
             if (StringUtils.equals(type.getType() != null ? type.getType() : type.getName(), typeName)) {
                 return type;
+            }
+        }
+
+        Iterator<ForcedType> it2 = configuredForcedTypes.iterator();
+
+        while (it2.hasNext()) {
+            ForcedType type = it2.next();
+
+            if (StringUtils.isBlank(type.getName())) {
+                if (StringUtils.isBlank(type.getUserType())) {
+                    StringWriter writer = new StringWriter();
+                    JAXB.marshal(type, writer);
+                    log.warn("Bad configuration for <forcedType/>. Either <name/> or <userType/> is required: " + writer.toString());
+
+                    it2.remove();
+                    continue;
+                }
+
+                if (StringUtils.isBlank(type.getBinding()) && StringUtils.isBlank(type.getConverter())) {
+                    StringWriter writer = new StringWriter();
+                    JAXB.marshal(type, writer);
+                    log.warn("Bad configuration for <forcedType/>. Either <binding/> or <converter/> is required: " + writer);
+
+                    it2.remove();
+                    continue;
+                }
+            }
+
+            if (StringUtils.equals(type.getUserType(), typeName)) {
+                return customType(this, type);
             }
         }
 

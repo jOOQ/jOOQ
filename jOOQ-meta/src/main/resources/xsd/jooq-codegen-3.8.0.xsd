@@ -603,8 +603,20 @@
 
   <complexType name="ForcedType">
     <all>
-      <!-- The name of the type to be forced upon various artefacts -->
+      <!-- The name of the type to be forced upon various artefacts. -->
       <element name="name" type="string" minOccurs="1" maxOccurs="1" />
+      
+      <!-- The type of the user type - e.g. java.time.LocalDateTime.
+      
+           If provided, <name/> will be ignored, and either <converter/>
+           or <binding/> is required -->
+      <element name="userType" type="string" minOccurs="0" maxOccurs="1" />
+
+      <!-- A converter implementation for the user type. -->
+      <element name="converter" type="string" minOccurs="0" maxOccurs="1" />
+
+      <!-- A binding implementation for the custom type. -->
+      <element name="binding" type="string" minOccurs="0" maxOccurs="1" />
 
       <!--
         A Java regular expression matching columns, parameters, attributes,

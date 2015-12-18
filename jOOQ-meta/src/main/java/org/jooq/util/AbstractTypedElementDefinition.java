@@ -146,7 +146,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
             String converter = null;
             String binding = result.getBinding();
 
-            CustomType customType = customType(db, forcedType.getName());
+            CustomType customType = customType(db, forcedType);
             if (customType != null) {
                 type = (!StringUtils.isBlank(customType.getType()))
                     ? customType.getType()
@@ -159,65 +159,84 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
                     binding = customType.getBinding();
             }
 
+            if (type != null) {
+                log.info("Forcing type", child + " with type " + definedType.getType() + " into " + type + (converter != null ? " using converter " + converter : ""));
+                DataType<?> forcedDataType = null;
 
-            log.info("Forcing type", child + " with type " + definedType.getType() + " into " + type + (converter != null ? " using converter " + converter : ""));
-            DataType<?> forcedDataType = null;
+                boolean n = result.isNullable();
+                boolean d = result.isDefaulted();
 
-            boolean n = result.isNullable();
-            boolean d = result.isDefaulted();
+                int l = 0;
+                int p = 0;
+                int s = 0;
 
-            int l = 0;
-            int p = 0;
-            int s = 0;
-
-            // [#2486] Allow users to override length, precision, and scale
-            Matcher matcher = LENGTH_PRECISION_SCALE_PATTERN.matcher(type);
-            if (matcher.find()) {
-                if (!isEmpty(matcher.group(1))) {
-                    l = p = convert(matcher.group(1), int.class);
+                // [#2486] Allow users to override length, precision, and scale
+                Matcher matcher = LENGTH_PRECISION_SCALE_PATTERN.matcher(type);
+                if (matcher.find()) {
+                    if (!isEmpty(matcher.group(1))) {
+                        l = p = convert(matcher.group(1), int.class);
+                    }
+                    else {
+                        p = convert(matcher.group(2), int.class);
+                        s = convert(matcher.group(3), int.class);
+                    }
                 }
+
+                try {
+                    forcedDataType = DefaultDataType.getDataType(db.getDialect(), type, p, s);
+                } catch (SQLDialectNotSupportedException ignore) {}
+
+                // [#677] SQLDataType matches are actual type-rewrites
+                if (forcedDataType != null) {
+                    result = new DefaultDataTypeDefinition(db, child.getSchema(), type, l, p, s, n, d, null, converter, binding);
+                }
+
+                // Other forced types are UDT's, enums, etc.
+                else if (customType != null) {
+                    l = result.getLength();
+                    p = result.getPrecision();
+                    s = result.getScale();
+                    String t = result.getType();
+                    result = new DefaultDataTypeDefinition(db, child.getSchema(), t, l, p, s, n, d, type, converter, binding);
+                }
+
+                // [#4597] If we don't have a type-rewrite (forcedDataType) or a
+                //         matching customType, the user probably malconfigured
+                //         their <forcedTypes/> or <customTypes/>
                 else {
-                    p = convert(matcher.group(2), int.class);
-                    s = convert(matcher.group(3), int.class);
+                    StringWriter writer = new StringWriter();
+                    JAXB.marshal(forcedType, writer);
+                    log.warn("Bad configuration for <forcedType/> " + forcedType.getName() + ". No matching <customType/> found, and no matching SQLDataType found: " + writer);
                 }
-            }
-
-            try {
-                forcedDataType = DefaultDataType.getDataType(db.getDialect(), type, p, s);
-            } catch (SQLDialectNotSupportedException ignore) {}
-
-            // [#677] SQLDataType matches are actual type-rewrites
-            if (forcedDataType != null) {
-                result = new DefaultDataTypeDefinition(db, child.getSchema(), type, l, p, s, n, d, null, converter, binding);
-            }
-
-            // Other forced types are UDT's, enums, etc.
-            else if (customType != null) {
-                l = result.getLength();
-                p = result.getPrecision();
-                s = result.getScale();
-                String t = result.getType();
-                result = new DefaultDataTypeDefinition(db, child.getSchema(), t, l, p, s, n, d, type, converter, binding);
-            }
-
-            // [#4597] If we don't have a type-rewrite (forcedDataType) or a
-            //         matching customType, the user probably malconfigured
-            //         their <forcedTypes/> or <customTypes/>
-            else {
-                StringWriter writer = new StringWriter();
-                JAXB.marshal(forcedType, writer);
-                log.warn("Bad configuration for <forcedType/> " + forcedType.getName() + ". No matching <customType/> found, and no matching SQLDataType found: " + writer);
             }
         }
 
         return result;
     }
 
-    static CustomType customType(Database db, String name) {
-        for (CustomType type : db.getConfiguredCustomTypes()) {
-            if (name.equals(type.getName())) {
-                return type;
+    static CustomType customType(Database db, ForcedType forcedType) {
+        String name = forcedType.getName();
+
+        // [#4598] Legacy use-case where a <forcedType/> referes to a <customType/>
+        //         element by name.
+        if (StringUtils.isBlank(forcedType.getUserType())) {
+            if (name != null) {
+                for (CustomType type : db.getConfiguredCustomTypes()) {
+                    if (name.equals(type.getName())) {
+                        return type;
+                    }
+                }
             }
+        }
+
+        // [#4598] New default use-case where <forcedType/> embeds <customType/>
+        //         information for convenience.
+        else {
+            return new CustomType()
+                .withBinding(forcedType.getBinding())
+                .withConverter(forcedType.getConverter())
+                .withName(name)
+                .withType(forcedType.getUserType());
         }
 
         return null;

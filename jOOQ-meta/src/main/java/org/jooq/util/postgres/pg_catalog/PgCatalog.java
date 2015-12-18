@@ -12,8 +12,10 @@ import javax.annotation.Generated;
 
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
+import org.jooq.util.postgres.pg_catalog.tables.PgAttrdef;
 import org.jooq.util.postgres.pg_catalog.tables.PgAttribute;
 import org.jooq.util.postgres.pg_catalog.tables.PgClass;
+import org.jooq.util.postgres.pg_catalog.tables.PgCollation;
 import org.jooq.util.postgres.pg_catalog.tables.PgConstraint;
 import org.jooq.util.postgres.pg_catalog.tables.PgCursor;
 import org.jooq.util.postgres.pg_catalog.tables.PgDescription;
@@ -37,7 +39,7 @@ import org.jooq.util.postgres.pg_catalog.tables.PgType;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgCatalog extends SchemaImpl {
 
-	private static final long serialVersionUID = 1107728347;
+	private static final long serialVersionUID = -1493849473;
 
 	/**
 	 * The reference instance of <code>pg_catalog</code>
@@ -48,7 +50,7 @@ public class PgCatalog extends SchemaImpl {
 	 * No further instances allowed
 	 */
 	private PgCatalog() {
-		super("pg_catalog");
+		super("pg_catalog", DefaultCatalog.DEFAULT_CATALOG);
 	}
 
 	@Override
@@ -60,8 +62,10 @@ public class PgCatalog extends SchemaImpl {
 
 	private final List<Table<?>> getTables0() {
 		return Arrays.<Table<?>>asList(
+			PgAttrdef.PG_ATTRDEF,
 			PgAttribute.PG_ATTRIBUTE,
 			PgClass.PG_CLASS,
+			PgCollation.PG_COLLATION,
 			PgConstraint.PG_CONSTRAINT,
 			PgCursor.PG_CURSOR,
 			PgDescription.PG_DESCRIPTION,

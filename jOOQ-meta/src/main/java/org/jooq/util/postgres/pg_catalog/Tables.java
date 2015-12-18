@@ -6,8 +6,10 @@ package org.jooq.util.postgres.pg_catalog;
 
 import javax.annotation.Generated;
 
+import org.jooq.util.postgres.pg_catalog.tables.PgAttrdef;
 import org.jooq.util.postgres.pg_catalog.tables.PgAttribute;
 import org.jooq.util.postgres.pg_catalog.tables.PgClass;
+import org.jooq.util.postgres.pg_catalog.tables.PgCollation;
 import org.jooq.util.postgres.pg_catalog.tables.PgConstraint;
 import org.jooq.util.postgres.pg_catalog.tables.PgCursor;
 import org.jooq.util.postgres.pg_catalog.tables.PgDescription;
@@ -32,6 +34,11 @@ import org.jooq.util.postgres.pg_catalog.tables.PgType;
 public class Tables {
 
 	/**
+	 * The table pg_catalog.pg_attrdef
+	 */
+	public static final PgAttrdef PG_ATTRDEF = org.jooq.util.postgres.pg_catalog.tables.PgAttrdef.PG_ATTRDEF;
+
+	/**
 	 * The table pg_catalog.pg_attribute
 	 */
 	public static final PgAttribute PG_ATTRIBUTE = org.jooq.util.postgres.pg_catalog.tables.PgAttribute.PG_ATTRIBUTE;
@@ -40,6 +47,11 @@ public class Tables {
 	 * The table pg_catalog.pg_class
 	 */
 	public static final PgClass PG_CLASS = org.jooq.util.postgres.pg_catalog.tables.PgClass.PG_CLASS;
+
+	/**
+	 * The table pg_catalog.pg_collation
+	 */
+	public static final PgCollation PG_COLLATION = org.jooq.util.postgres.pg_catalog.tables.PgCollation.PG_COLLATION;
 
 	/**
 	 * The table pg_catalog.pg_constraint

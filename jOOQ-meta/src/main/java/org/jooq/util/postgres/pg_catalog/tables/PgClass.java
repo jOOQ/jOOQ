@@ -27,7 +27,7 @@ import org.jooq.util.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgClass extends TableImpl<Record> {
 
-	private static final long serialVersionUID = -1795207531;
+	private static final long serialVersionUID = -1454094151;
 
 	/**
 	 * The reference instance of <code>pg_catalog.pg_class</code>
@@ -161,6 +161,11 @@ public class PgClass extends TableImpl<Record> {
 	 * The column <code>pg_catalog.pg_class.relrowsecurity</code>.
 	 */
 	public final TableField<Record, Boolean> RELROWSECURITY = createField("relrowsecurity", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+
+	/**
+	 * The column <code>pg_catalog.pg_class.relforcerowsecurity</code>.
+	 */
+	public final TableField<Record, Boolean> RELFORCEROWSECURITY = createField("relforcerowsecurity", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
 
 	/**
 	 * The column <code>pg_catalog.pg_class.relispopulated</code>.

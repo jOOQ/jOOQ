@@ -48,6 +48,7 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.upper;
@@ -263,6 +264,7 @@ public class PostgresDatabase extends AbstractDatabase {
                         TABLES.TABLE_NAME,
                         TABLES.TABLE_NAME.as("specific_name"),
                         inline(false).as("table_valued_function"),
+                        inline(false).as("materialized_view"),
                         PG_DESCRIPTION.DESCRIPTION)
                     .from(TABLES)
                     .join(PG_NAMESPACE)
@@ -275,6 +277,37 @@ public class PostgresDatabase extends AbstractDatabase {
                         .and(PG_DESCRIPTION.OBJSUBID.eq(0))
                     .where(TABLES.TABLE_SCHEMA.in(getInputSchemata()))
 
+                    // To stay on the safe side, if the INFORMATION_SCHEMA ever
+                    // includs materialised views, let's exclude them from here
+                    .and(row(TABLES.TABLE_SCHEMA, TABLES.TABLE_NAME).notIn(
+                        select(
+                            PG_NAMESPACE.NSPNAME,
+                            PG_CLASS.RELNAME)
+                        .from(PG_CLASS)
+                        .join(PG_NAMESPACE)
+                            .on(PG_CLASS.RELNAMESPACE.eq(oid(PG_NAMESPACE)))
+                        .where(PG_CLASS.RELKIND.eq(inline("m")))
+                    ))
+
+                // [#3254] Materialised views are reported only in PG_CLASS, not
+                //         in INFORMATION_SCHEMA.TABLES
+                .unionAll(
+                    select(
+                        PG_NAMESPACE.NSPNAME,
+                        PG_CLASS.RELNAME,
+                        PG_CLASS.RELNAME,
+                        inline(false).as("table_valued_function"),
+                        inline(true).as("materialized_view"),
+                        PG_DESCRIPTION.DESCRIPTION)
+                    .from(PG_CLASS)
+                    .join(PG_NAMESPACE)
+                        .on(PG_CLASS.RELNAMESPACE.eq(oid(PG_NAMESPACE)))
+                    .leftOuterJoin(PG_DESCRIPTION)
+                        .on(PG_DESCRIPTION.OBJOID.eq(oid(PG_CLASS)))
+                        .and(PG_DESCRIPTION.OBJSUBID.eq(0))
+                    .where(PG_NAMESPACE.NSPNAME.in(getInputSchemata()))
+                    .and(PG_CLASS.RELKIND.eq(inline("m"))))
+
                 // [#3375] [#3376] Include table-valued functions in the set of tables
                 .unionAll(
                     select(
@@ -282,6 +315,7 @@ public class PostgresDatabase extends AbstractDatabase {
                         ROUTINES.ROUTINE_NAME,
                         ROUTINES.SPECIFIC_NAME,
                         inline(true).as("table_valued_function"),
+                        inline(false).as("materialized_view"),
                         inline(""))
                     .from(ROUTINES)
                     .join(PG_NAMESPACE).on(ROUTINES.SPECIFIC_SCHEMA.eq(PG_NAMESPACE.NSPNAME))
@@ -296,10 +330,14 @@ public class PostgresDatabase extends AbstractDatabase {
             SchemaDefinition schema = getSchema(record.getValue(TABLES.TABLE_SCHEMA));
             String name = record.getValue(TABLES.TABLE_NAME);
             boolean tableValuedFunction = record.getValue("table_valued_function", boolean.class);
+            boolean materializedView = record.getValue("materialized_view", boolean.class);
             String comment = record.getValue(PG_DESCRIPTION.DESCRIPTION, String.class);
 
             if (tableValuedFunction) {
                 result.add(new PostgresTableValuedFunction(schema, name, record.getValue(ROUTINES.SPECIFIC_NAME), comment));
+            }
+            else if (materializedView) {
+                result.add(new PostgresMaterializedViewDefinition(schema, name, comment));
             }
             else {
                 PostgresTableDefinition t = new PostgresTableDefinition(schema, name, comment);

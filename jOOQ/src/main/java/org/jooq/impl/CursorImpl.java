@@ -41,8 +41,9 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
-import static org.jooq.impl.Utils.DataKey.DATA_LOCK_ROWS_FOR_UPDATE;
+// ...
 import static org.jooq.impl.Utils.recordFactory;
+import static org.jooq.impl.Utils.DataKey.DATA_LOCK_ROWS_FOR_UPDATE;
 
 import java.io.InputStream;
 import java.io.Reader;
@@ -63,6 +64,7 @@ import java.sql.SQLXML;
 import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.sql.Types;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
@@ -112,6 +114,10 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
     private transient CursorResultSet                      rs;
     private transient DefaultBindingGetResultSetContext<?> rsContext;
+    /* [pro] xx
+    xxxxxxx xxxxxxxxx xxxxx                                xxxxxxxxxxxx
+    xxxxxxx xxxxxxxxx xxxxx                                xxxxxxxxxxxxx
+    xx [/pro] */
     private transient Iterator<R>                          iterator;
     private transient int                                  rows;
     private transient boolean                              lockRowsForUpdate;
@@ -131,6 +137,10 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         this.keepResultSet = keepResultSet;
         this.rs = new CursorResultSet();
         this.rsContext = new DefaultBindingGetResultSetContext<Object>(ctx.configuration(), ctx.data(), rs, 0);
+        /* [pro] xx
+        xx xxxxxxxxxxxxx xx xxxxxxx
+            xxxxxxxxxxxxxxxxxxxx
+        xx [/pro] */
         this.intern = new boolean[fields.length];
         this.maxRows = maxRows;
         this.lockRowsForUpdate = TRUE.equals(ctx.data(DATA_LOCK_ROWS_FOR_UPDATE));
@@ -141,6 +151,45 @@ class CursorImpl<R extends Record> implements Cursor<R> {
             }
         }
     }
+
+    /* [pro] xx
+    xxx
+     x xxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxx xxxx xx xx xxxxxxxxx xxxx
+     x xxxxxx xxxxxxxxxx xxxxxx xxxxx xx xxx xxxxxxxx xx xxxxxxx
+     xx
+    xxxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxx xx x
+        xxx x
+            xxxxxxxxxxxxxxxxx xxxx x xxxxxxxxxxxxxxxx
+            xxx xxxx x xxxxxxxxxxxxxxxxxxxxxx
+
+            xxx xxxxxxxxx x xx
+            xxx xxxxxxxxxx x xx
+
+            xxxxx xxxxxxxxxxxxxxx x xxx xxxxxxxxxx
+            xxxxx xxxxxxxxxxxxxxxx x xxx xxxxxxxxxx
+
+            xxx xxxx x x xx x x xxxxx xxxx x
+                xxx xxxx x xxxxxxxxxxxxxxxxxxxx x xxx
+
+                xx xxxxx xx xxxxxxxxxxxxxxxxxxx xx xxxx xx xxxxxxxxxxxxxxxxxx x
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxx x xx
+                x
+                xxxx x
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xx
+                x
+            x
+
+            xxxxxxxxxxx x xxx xxxxxxxxxxxxxxx
+            xxxxxxxxxxxx x xxx xxxxxxxxxxxxxxxx
+
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxx
+        x
+        xxxxx xxxxxxxxxxxxx xx x
+            xxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxx xxxxxxxxxxxxxxxxxxx xxx
+        x
+    x
+    xx [/pro] */
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
@@ -1526,11 +1575,11 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
         private class CursorRecordInitialiser implements RecordOperation<AbstractRecord, SQLException> {
 
-            private final Field<?>[] initaliserFields;
+            private final Field<?>[] initialiserFields;
             private int              offset;
 
             CursorRecordInitialiser(Field<?>[] fields, int offset) {
-                this.initaliserFields = fields;
+                this.initialiserFields = fields;
                 this.offset = offset;
             }
 
@@ -1539,13 +1588,25 @@ class CursorImpl<R extends Record> implements Cursor<R> {
                 ctx.record(record);
                 listener.recordStart(ctx);
 
-                for (int i = 0; i < initaliserFields.length; i++) {
-                    setValue(record, initaliserFields[i], i);
+                /* [pro] xx
+                xx xxxxxxx xx xxx xxxxxxxx xx xxxx xxx xxxx xxxxxx xxx xxxxxx
+                xx         xxxx xxxxxx xxxxxxxx xxxxx xxxxx xx xx xxxxxxx xxxx
+                xx         xxx xxxxxxxxx xxxxxx xxxxxx xxx xxxxx xxxxxxx
+                xx xxxxxxxxxxxx xx xxxxx x
+                    xxx xxxx x x xx x x xxxxxxxxxxxxxxxxxxx xxxx
+                        xxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
 
-                    if (intern[i]) {
+                    xxx xxxx x x xx x x xxxxxxxxxxxxxxxxxxxx xxxx
+                        xxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx
+                x
+                xxxx
+                xx [/pro] */
+                for (int i = 0; i < initialiserFields.length; i++)
+                    setValue(record, initialiserFields[i], i);
+
+                for (int i = 0; i < initialiserFields.length; i++)
+                    if (intern[i])
                         record.intern0(i);
-                    }
-                }
 
                 ctx.record(record);
                 listener.recordEnd(ctx);

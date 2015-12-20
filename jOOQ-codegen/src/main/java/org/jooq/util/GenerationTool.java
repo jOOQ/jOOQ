@@ -330,6 +330,7 @@ public class GenerationTool {
                 database.setRegexFlags(d.getRegexFlags());
 
             SchemaVersionProvider svp = null;
+            CatalogVersionProvider cvp = null;
 
             if (!StringUtils.isBlank(d.getSchemaVersionProvider())) {
                 try {
@@ -347,10 +348,29 @@ public class GenerationTool {
                 }
             }
 
+            if (!StringUtils.isBlank(d.getCatalogVersionProvider())) {
+                try {
+                    cvp = (CatalogVersionProvider) Class.forName(d.getCatalogVersionProvider()).newInstance();
+                    log.info("Using custom catalog version provider : " + cvp);
+                }
+                catch (Exception ignore) {
+                    if (d.getCatalogVersionProvider().toLowerCase().startsWith("select")) {
+                        cvp = new SQLCatalogVersionProvider(connection, d.getCatalogVersionProvider());
+                        log.info("Using SQL catalog version provider : " + d.getCatalogVersionProvider());
+                    }
+                    else {
+                        cvp = new ConstantCatalogVersionProvider(d.getCatalogVersionProvider());
+                    }
+                }
+            }
+
             if (svp == null)
                 svp = new ConstantSchemaVersionProvider(null);
+            if (cvp == null)
+                cvp = new ConstantCatalogVersionProvider(null);
 
             database.setSchemaVersionProvider(svp);
+            database.setCatalogVersionProvider(cvp);
 
             if (d.getEnumTypes().size() > 0)
                 log.warn("DEPRECATED", "The configuration property /configuration/generator/database/enumTypes is experimental and deprecated and will be removed in the future.");
@@ -426,6 +446,8 @@ public class GenerationTool {
                 g.setDatabase(new org.jooq.util.jaxb.Database());
             if (!StringUtils.isBlank(g.getDatabase().getSchemaVersionProvider()))
                 generator.setUseSchemaVersionProvider(true);
+            if (!StringUtils.isBlank(g.getDatabase().getCatalogVersionProvider()))
+                generator.setUseCatalogVersionProvider(true);
 
             // Generator properties that should in fact be strategy properties
             strategy.setInstanceFields(generator.generateInstanceFields());

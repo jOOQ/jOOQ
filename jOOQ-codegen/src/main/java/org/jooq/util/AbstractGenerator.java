@@ -57,6 +57,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateInstanceFields           = true;
     boolean                            generateGeneratedAnnotation      = true;
     boolean                            useSchemaVersionProvider         = false;
+    boolean                            useCatalogVersionProvider        = false;
     boolean                            generateRecords                  = true;
     boolean                            generatePojos                    = false;
     boolean                            generatePojosEqualsAndHashCode   = false;
@@ -131,8 +132,9 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public boolean generateGeneratedAnnotation() {
 
-        // [#3121] The schema version is generated into @Generated annotations
-        return generateGeneratedAnnotation || useSchemaVersionProvider;
+        // [#3121] [#4827] The schema and catalog versions are generated into
+        //                 @Generated annotations
+        return generateGeneratedAnnotation || useSchemaVersionProvider || useCatalogVersionProvider;
     }
 
     @Override
@@ -148,6 +150,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setUseSchemaVersionProvider(boolean useSchemaVersionProvider) {
         this.useSchemaVersionProvider = useSchemaVersionProvider;
+    }
+
+    @Override
+    public boolean useCatalogVersionProvider() {
+        return useCatalogVersionProvider;
+    }
+
+    @Override
+    public void setUseCatalogVersionProvider(boolean useCatalogVersionProvider) {
+        this.useCatalogVersionProvider = useCatalogVersionProvider;
     }
 
     @Override

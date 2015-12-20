@@ -41,7 +41,7 @@
 package org.jooq.util;
 
 /**
- * An SPI that can be used to provide a schema version to the jOOQ code
+ * An SPI that can be used to provide a catalog version to the jOOQ code
  * generator.
  * <p>
  * If between subsequent meta data accesses, at least one
@@ -51,16 +51,16 @@ package org.jooq.util;
  * accesses, the {@link CatalogDefinition}'s version stays the same, all
  * {@link SchemaDefinition}'s versions have stayed the same as well.
  * <p>
- * A {@link SchemaDefinition} is said to be unversioned if
- * {@link #version(SchemaDefinition)} returns <code>null</code>.
+ * A {@link CatalogDefinition} is said to be unversioned if
+ * {@link #version(CatalogDefinition)} returns <code>null</code>.
  *
  * @author Lukas Eder
- * @see CatalogVersionProvider
+ * @see SchemaVersionProvider
  */
-public interface SchemaVersionProvider {
+public interface CatalogVersionProvider {
 
     /**
      * Get a custom schema version.
      */
-    String version(SchemaDefinition schema);
+    String version(CatalogDefinition catalog);
 }

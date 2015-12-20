@@ -40,27 +40,38 @@
  */
 package org.jooq.util;
 
-/**
- * An SPI that can be used to provide a schema version to the jOOQ code
- * generator.
- * <p>
- * If between subsequent meta data accesses, at least one
- * {@link SchemaDefinition}'s version changes, that schema's
- * {@link CatalogDefinition}'s version must change as well. In other words, it
- * can be safely assumed that when between two subsequent schema meta data
- * accesses, the {@link CatalogDefinition}'s version stays the same, all
- * {@link SchemaDefinition}'s versions have stayed the same as well.
- * <p>
- * A {@link SchemaDefinition} is said to be unversioned if
- * {@link #version(SchemaDefinition)} returns <code>null</code>.
- *
- * @author Lukas Eder
- * @see CatalogVersionProvider
- */
-public interface SchemaVersionProvider {
+import static org.jooq.conf.StatementType.STATIC_STATEMENT;
+import static org.jooq.impl.DSL.param;
 
-    /**
-     * Get a custom schema version.
-     */
-    String version(SchemaDefinition schema);
+import java.sql.Connection;
+
+import org.jooq.conf.Settings;
+import org.jooq.impl.DSL;
+import org.jooq.impl.DefaultConfiguration;
+
+/**
+ * @author Lukas Eder
+ */
+class SQLCatalogVersionProvider implements CatalogVersionProvider {
+
+    private Connection connection;
+    private String     sql;
+
+    SQLCatalogVersionProvider(Connection connection, String sql) {
+        this.connection = connection;
+        this.sql = sql;
+    }
+
+    @Override
+    public String version(CatalogDefinition catalog) {
+        return "" +
+            DSL.using(
+                new DefaultConfiguration()
+                    .set(connection)
+                    .set(new Settings().withStatementType(STATIC_STATEMENT))
+            ).fetchValue(
+                // [#2906] TODO Plain SQL statements do not yet support named parameters
+                sql.replace(":catalog_name", "?"), param("catalog_name", catalog.getInputName())
+            );
+    }
 }

@@ -107,6 +107,8 @@ public interface Generator {
 
     boolean useSchemaVersionProvider();
     void setUseSchemaVersionProvider(boolean useSchemaVersionProvider);
+    boolean useCatalogVersionProvider();
+    void setUseCatalogVersionProvider(boolean useCatalogVersionProvider);
 
     /**
      * Whether TableRecords should be generated in addition to tables

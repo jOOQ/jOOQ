@@ -118,6 +118,7 @@ public abstract class AbstractDatabase implements Database {
     private List<EnumType>                                                   configuredEnumTypes;
     private List<ForcedType>                                                 configuredForcedTypes;
     private SchemaVersionProvider                                            schemaVersionProvider;
+    private CatalogVersionProvider                                           catalogVersionProvider;
 
     // -------------------------------------------------------------------------
     // Loaded definitions
@@ -667,6 +668,16 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final void setSchemaVersionProvider(SchemaVersionProvider schemaVersionProvider) {
         this.schemaVersionProvider = schemaVersionProvider;
+    }
+
+    @Override
+    public final CatalogVersionProvider getCatalogVersionProvider() {
+        return catalogVersionProvider;
+    }
+
+    @Override
+    public final void setCatalogVersionProvider(CatalogVersionProvider catalogVersionProvider) {
+        this.catalogVersionProvider = catalogVersionProvider;
     }
 
     @Override

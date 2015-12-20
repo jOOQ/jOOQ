@@ -376,8 +376,25 @@ public interface Database {
      */
     void setConfiguredForcedTypes(List<ForcedType> types);
 
+    /**
+     * The database's schema version provider.
+     */
     SchemaVersionProvider getSchemaVersionProvider();
+
+    /**
+     * The database's schema version provider.
+     */
     void setSchemaVersionProvider(SchemaVersionProvider provider);
+
+    /**
+     * The database's catalog version provider.
+     */
+    CatalogVersionProvider getCatalogVersionProvider();
+
+    /**
+     * The database's catalog version provider.
+     */
+    void setCatalogVersionProvider(CatalogVersionProvider provider);
 
     /**
      * Database objects matching any of these field names will be generated as

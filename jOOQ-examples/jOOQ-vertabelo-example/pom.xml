@@ -198,7 +198,7 @@
                                     <instanceFields>true</instanceFields>
                                 </generate>
                                 <target>
-                                    <packageName>org.jooq.example.db.h2</packageName>
+                                    <packageName>org.jooq.example.vertabelo.db.h2</packageName>
                                     <directory>target/generated-sources/jooq-h2</directory>
                                 </target>
                             </generator>

@@ -79,6 +79,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     boolean                           declareFields;
     boolean                           declareTables;
+    boolean                           declareAliases;
     boolean                           declareWindows;
     boolean                           declareCTE;
     boolean                           subquery;
@@ -348,16 +349,20 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
             // We're declaring fields, but "part" does not declare fields
             if (declareFields() && !internal.declaresFields()) {
+                boolean aliases = declareAliases();
                 declareFields(false);
                 visit0(internal);
                 declareFields(true);
+                declareAliases(aliases);
             }
 
             // We're declaring tables, but "part" does not declare tables
             else if (declareTables() && !internal.declaresTables()) {
+                boolean aliases = declareAliases();
                 declareTables(false);
                 visit0(internal);
                 declareTables(true);
+                declareAliases(aliases);
             }
 
             // We're declaring windows, but "part" does not declare windows
@@ -401,6 +406,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     @Override
     public final C declareFields(boolean d) {
         this.declareFields = d;
+        declareAliases(d);
         return (C) this;
     }
 
@@ -412,6 +418,18 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     @Override
     public final C declareTables(boolean d) {
         this.declareTables = d;
+        declareAliases(d);
+        return (C) this;
+    }
+
+    @Override
+    public final boolean declareAliases() {
+        return declareAliases;
+    }
+
+    @Override
+    public final C declareAliases(boolean d) {
+        this.declareAliases = d;
         return (C) this;
     }
 
@@ -556,12 +574,21 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
         if (declareFields) {
             sb.append("fields");
+
+            if (declareAliases)
+                sb.append(" and aliases");
         }
         else if (declareTables) {
             sb.append("tables");
+
+            if (declareAliases)
+                sb.append(" and aliases");
         }
         else if (declareWindows) {
             sb.append("windows");
+        }
+        else if (declareCTE) {
+            sb.append("cte");
         }
         else {
             sb.append("-");

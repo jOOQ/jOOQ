@@ -141,10 +141,12 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
                    xxxxxxxxxx
 
                 xxxxxxxxxxxxx
+                xxxxxxxxxxxxx
 
-                xx xxxxxxx xxxx xxxxxxxx xxxxx xxxx xx xxxxxxx xx xx xx
-                xxxxxxxxxx xx
-                   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx
+                xx xxxxxxx xxxxxxxx xxxxx xxxx xx xxxxxxx xx xx xx
+                xx xxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxx xx
+                       xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx
             x
             xxxx
             xx [/pro] */

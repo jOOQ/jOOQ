@@ -121,7 +121,9 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
     @Override
     public final void accept(Context<?> context) {
-        if (context.declareFields() || context.declareTables()) {
+        if (context.declareAliases() && (context.declareFields() || context.declareTables())) {
+            context.declareAliases(false);
+
             SQLDialect family = context.family();
             boolean emulatedDerivedColumnList = false;
 
@@ -227,6 +229,8 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
                     }
                 }
             }
+
+            context.declareAliases(true);
         }
 
         /* [pro] xx

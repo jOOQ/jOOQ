@@ -107,6 +107,18 @@ public interface Context<C extends Context<C>> extends Scope {
     C declareTables(boolean declareTables);
 
     /**
+     * Whether the current context is rendering a SQL alias declarations in
+     * {@link #declareTables()} or {@link #declareFields()} sections.
+     */
+    boolean declareAliases();
+
+    /**
+     * Whether the current context is rendering a SQL alias declarations in
+     * {@link #declareTables()} or {@link #declareFields()} sections.
+     */
+    C declareAliases(boolean declareTables);
+
+    /**
      * Whether the current context is rendering a SQL window declaration (e.g. a
      * {@link WindowDefinition} in the <code>WINDOW</code> clause of the query).
      */

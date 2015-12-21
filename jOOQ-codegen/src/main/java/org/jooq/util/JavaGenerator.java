@@ -82,6 +82,7 @@ import org.jooq.Identity;
 import org.jooq.Package;
 import org.jooq.Parameter;
 import org.jooq.Record;
+import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.Schema;
 import org.jooq.Sequence;
@@ -2075,6 +2076,7 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void printTableValuedFunction(JavaWriter out, TableDefinition table, String javaMethodName) {
+        printConvenienceMethodTableValuedFunction(out, table, javaMethodName);
         printConvenienceMethodTableValuedFunctionAsField(out, table, false, javaMethodName);
         printConvenienceMethodTableValuedFunctionAsField(out, table, true, javaMethodName);
     }
@@ -4357,6 +4359,49 @@ public class JavaGenerator extends AbstractGenerator {
             	    out.tab(2).println("return %s;", localVar);
             }
         }
+
+        out.tab(1).println("}");
+    }
+
+    protected void printConvenienceMethodTableValuedFunction(JavaWriter out, TableDefinition function, String javaMethodName) {
+        // [#281] - Java can't handle more than 255 method parameters
+        if (function.getParameters().size() > 254) {
+            log.warn("Too many parameters", "Function " + function + " has more than 254 in parameters. Skipping generation of convenience method.");
+            return;
+        }
+
+        final String className = out.ref(getStrategy().getFullJavaClassName(function));
+        final String recordClassName = out.ref(getStrategy().getFullJavaClassName(function, Mode.RECORD));
+
+        // [#3456] Local variables should not collide with actual function arguments
+        final String configurationArgument = disambiguateJavaMemberName(function.getParameters(), "configuration");
+
+        out.tab(1).javadoc("Call <code>%s</code>.", function.getQualifiedOutputName());
+        out.tab(1).print("public static %s<%s> %s(%s %s", Result.class, recordClassName, javaMethodName, Configuration.class, configurationArgument);
+
+        if (!function.getParameters().isEmpty())
+            out.print(", ");
+
+        printParameterDeclarations(out, function, false);
+
+        out.println(") {");
+        out.tab(2).print("return %s.using(%s).selectFrom(%s.call(",
+            DSL.class, configurationArgument, out.ref(getStrategy().getFullJavaIdentifier(function), 2));
+
+        String separator = "";
+        for (ParameterDefinition parameter : function.getParameters()) {
+            out.print(separator);
+            out.print("%s", getStrategy().getJavaMemberName(parameter));
+
+            separator = ", ";
+        }
+
+        out.print(")).fetch()");
+
+        if (scala)
+            ;
+        else
+            out.println(";");
 
         out.tab(1).println("}");
     }

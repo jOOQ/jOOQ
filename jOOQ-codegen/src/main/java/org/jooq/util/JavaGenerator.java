@@ -3979,7 +3979,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String className = out.ref(getStrategy().getFullJavaClassName(function));
         final String localVar = disambiguateJavaMemberName(function.getInParameters(), "f");
 
-        out.tab(1).javadoc("Get <code>%s</code> as a field", function.getQualifiedOutputName());
+        out.tab(1).javadoc("Get <code>%s</code> as a field.", function.getQualifiedOutputName());
 
         if (scala)
             out.tab(1).print("def %s(",
@@ -4063,7 +4063,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         final String className = out.ref(getStrategy().getFullJavaClassName(function));
 
-        out.tab(1).javadoc("Get <code>%s</code> as a field", function.getQualifiedOutputName());
+        out.tab(1).javadoc("Get <code>%s</code> as a table.", function.getQualifiedOutputName());
         out.tab(1).print("public static %s %s(", className, javaMethodName);
 
         printParameterDeclarations(out, function, parametersAsField);

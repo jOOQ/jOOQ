@@ -1593,11 +1593,17 @@ class CursorImpl<R extends Record> implements Cursor<R> {
                 xx         xxxx xxxxxx xxxxxxxx xxxxx xxxxx xx xx xxxxxxx xxxx
                 xx         xxx xxxxxxxxx xxxxxx xxxxxx xxx xxxxx xxxxxxx
                 xx xxxxxxxxxxxx xx xxxxx x
-                    xxx xxxx x x xx x x xxxxxxxxxxxxxxxxxxx xxxx
-                        xxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
+                    xxx xxxx x x xx x x xxxxxxxxxxxxxxxxxxx xxxx x
+                        xxx xxxxx x xxxxxxxxxxxxxxx
+                        xx xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
+                    x
 
-                    xxx xxxx x x xx x x xxxxxxxxxxxxxxxxxxxx xxxx
-                        xxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx
+                    xxx xxxx x x xx x x xxxxxxxxxxxxxxxxxxxx xxxx x
+                        xxx xxxxx x xxxxxxxxxxxxxxxx
+                        xx xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxx
+                            xxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
+                    x
                 x
                 xxxx
                 xx [/pro] */

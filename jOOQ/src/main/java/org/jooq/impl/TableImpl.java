@@ -41,10 +41,12 @@
 
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 import static org.jooq.Clause.TABLE;
 import static org.jooq.Clause.TABLE_ALIAS;
 import static org.jooq.Clause.TABLE_REFERENCE;
 import static org.jooq.SQLDialect.FIREBIRD;
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 
 import java.util.Arrays;
@@ -133,27 +135,45 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
             alias.accept(ctx);
         }
         else {
-            if (ctx.qualify() && (ctx.family() != POSTGRES || parameters == null || ctx.declareTables())) {
-                Schema mappedSchema = Utils.getMappedSchema(ctx.configuration(), getSchema());
+            /* [pro] xx
+            xx xxxxxxxxxxxxx xx xxxxxx xx xxxxxxxxxx xx xxxx xx xxxxxxxxxxxxxxxxxxxx x
+                xxxxxxxxxxxxxxxxxxxx
+                   xxxxxxxxxx
 
-                if (mappedSchema != null) {
-                    ctx.visit(mappedSchema);
-                    ctx.sql('.');
-                }
+                xxxxxxxxxxxxx
+
+                xx xxxxxxx xxxx xxxxxxxx xxxxx xxxx xx xxxxxxx xx xx xx
+                xxxxxxxxxx xx
+                   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx
+            x
+            xxxx
+            xx [/pro] */
+            accept0(ctx);
+        }
+    }
+
+    private void accept0(Context<?> ctx) {
+        if (ctx.qualify() &&
+                (!asList(POSTGRES).contains(ctx.family()) || parameters == null || ctx.declareTables())) {
+            Schema mappedSchema = Utils.getMappedSchema(ctx.configuration(), getSchema());
+
+            if (mappedSchema != null) {
+                ctx.visit(mappedSchema);
+                ctx.sql('.');
             }
+        }
 
-            ctx.literal(Utils.getMappedTable(ctx.configuration(), this).getName());
+        ctx.literal(Utils.getMappedTable(ctx.configuration(), this).getName());
 
-            if (parameters != null && ctx.declareTables()) {
+        if (parameters != null && ctx.declareTables()) {
 
-                // [#2925] Some dialects don't like empty parameter lists
-                if (ctx.family() == FIREBIRD && parameters.length == 0)
-                    ctx.visit(new QueryPartList<Field<?>>(parameters));
-                else
-                    ctx.sql('(')
-                       .visit(new QueryPartList<Field<?>>(parameters))
-                       .sql(')');
-            }
+            // [#2925] Some dialects don't like empty parameter lists
+            if (ctx.family() == FIREBIRD && parameters.length == 0)
+                ctx.visit(new QueryPartList<Field<?>>(parameters));
+            else
+                ctx.sql('(')
+                   .visit(new QueryPartList<Field<?>>(parameters))
+                   .sql(')');
         }
     }
 

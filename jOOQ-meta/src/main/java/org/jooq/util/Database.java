@@ -470,6 +470,16 @@ public interface Database {
     boolean includeRelations();
 
     /**
+     * [#4838] Whether table-valued functions should be reported as tables.
+     */
+    void setTableValuedFunctions(boolean tableValuedFunctions);
+
+    /**
+     * [#4838] Whether table-valued functions should be reported as tables.
+     */
+    boolean tableValuedFunctions();
+
+    /**
      * Check for the existence of a table in the dictionary views.
      */
     boolean exists(Table<?> table);

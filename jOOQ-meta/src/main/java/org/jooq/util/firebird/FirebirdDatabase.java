@@ -42,8 +42,10 @@ package org.jooq.util.firebird;
 
 import static org.jooq.impl.DSL.choose;
 import static org.jooq.impl.DSL.decode;
+import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.util.firebird.rdb.Tables.RDB$GENERATORS;
 import static org.jooq.util.firebird.rdb.Tables.RDB$INDEX_SEGMENTS;
 import static org.jooq.util.firebird.rdb.Tables.RDB$PROCEDURES;
@@ -249,6 +251,9 @@ public class FirebirdDatabase extends AbstractDatabase {
 
                     // "selectable" procedures
                     .where(RDB$PROCEDURES.RDB$PROCEDURE_TYPE.eq((short) 1))
+                    .and(tableValuedFunctions()
+                        ? trueCondition()
+                        : falseCondition())
                 )
                 .orderBy(1)) {
 

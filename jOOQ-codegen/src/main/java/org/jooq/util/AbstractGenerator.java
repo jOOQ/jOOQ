@@ -75,6 +75,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateGlobalUDTReferences      = true;
     boolean                            fluentSetters                    = false;
     String                             fullyQualifiedTypes              = "";
+    boolean                            generateTableValuedFunctions     = true;
 
     protected GeneratorStrategyWrapper strategy;
     final Language                     language;
@@ -117,6 +118,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateRelations(boolean generateRelations) {
         this.generateRelations = generateRelations;
+    }
+
+    @Override
+    public boolean generateTableValuedFunctions() {
+        return generateTableValuedFunctions;
+    }
+
+    @Override
+    public void setGenerateTableValuedFunctions(boolean generateTableValuedFunctions) {
+        this.generateTableValuedFunctions = generateTableValuedFunctions;
     }
 
     @Override

@@ -42,15 +42,19 @@
 package org.jooq.util.postgres;
 
 import static org.jooq.impl.DSL.array;
+import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.decode;
+import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.not;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectOne;
+import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.upper;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.util.postgres.PostgresDSL.arrayAppend;
@@ -85,8 +89,10 @@ import org.jooq.Record;
 import org.jooq.Record2;
 import org.jooq.Record4;
 import org.jooq.Record5;
+import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.Select;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.tools.JooqLogger;
@@ -256,6 +262,10 @@ public class PostgresDatabase extends AbstractDatabase {
         List<TableDefinition> result = new ArrayList<TableDefinition>();
         Map<Name, PostgresTableDefinition> map = new HashMap<Name, PostgresTableDefinition>();
 
+        Select<Record6<String, String, String, Boolean, Boolean, String>> empty =
+            select(inline(""), inline(""), inline(""), inline(false), inline(false), inline(""))
+            .where(falseCondition());
+
         for (Record record : create()
                 .select()
                 .from(
@@ -310,19 +320,23 @@ public class PostgresDatabase extends AbstractDatabase {
 
                 // [#3375] [#3376] Include table-valued functions in the set of tables
                 .unionAll(
-                    select(
-                        ROUTINES.ROUTINE_SCHEMA,
-                        ROUTINES.ROUTINE_NAME,
-                        ROUTINES.SPECIFIC_NAME,
-                        inline(true).as("table_valued_function"),
-                        inline(false).as("materialized_view"),
-                        inline(""))
-                    .from(ROUTINES)
-                    .join(PG_NAMESPACE).on(ROUTINES.SPECIFIC_SCHEMA.eq(PG_NAMESPACE.NSPNAME))
-                    .join(PG_PROC).on(PG_PROC.PRONAMESPACE.eq(oid(PG_NAMESPACE)))
-                                  .and(PG_PROC.PRONAME.concat("_").concat(oid(PG_PROC)).eq(ROUTINES.SPECIFIC_NAME))
-                    .where(ROUTINES.ROUTINE_SCHEMA.in(getInputSchemata()))
-                    .and(PG_PROC.PRORETSET))
+                    tableValuedFunctions()
+
+                    ?   select(
+                            ROUTINES.ROUTINE_SCHEMA,
+                            ROUTINES.ROUTINE_NAME,
+                            ROUTINES.SPECIFIC_NAME,
+                            inline(true).as("table_valued_function"),
+                            inline(false).as("materialized_view"),
+                            inline(""))
+                        .from(ROUTINES)
+                        .join(PG_NAMESPACE).on(ROUTINES.SPECIFIC_SCHEMA.eq(PG_NAMESPACE.NSPNAME))
+                        .join(PG_PROC).on(PG_PROC.PRONAMESPACE.eq(oid(PG_NAMESPACE)))
+                                      .and(PG_PROC.PRONAME.concat("_").concat(oid(PG_PROC)).eq(ROUTINES.SPECIFIC_NAME))
+                        .where(ROUTINES.ROUTINE_SCHEMA.in(getInputSchemata()))
+                        .and(PG_PROC.PRORETSET)
+
+                    :   empty)
                 .asTable("tables"))
                 .orderBy(1, 2)
                 .fetch()) {
@@ -683,7 +697,9 @@ public class PostgresDatabase extends AbstractDatabase {
             .join(PG_PROC).on(PG_PROC.PRONAMESPACE.eq(oid(PG_NAMESPACE)))
                           .and(PG_PROC.PRONAME.concat("_").concat(oid(PG_PROC)).eq(r1.SPECIFIC_NAME))
             .where(r1.ROUTINE_SCHEMA.in(getInputSchemata()))
-            .andNot(PG_PROC.PRORETSET)
+            .and(tableValuedFunctions()
+                    ? condition(not(PG_PROC.PRORETSET))
+                    : trueCondition())
             .orderBy(
                 r1.ROUTINE_SCHEMA.asc(),
                 r1.ROUTINE_NAME.asc())

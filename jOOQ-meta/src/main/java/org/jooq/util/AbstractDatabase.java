@@ -141,6 +141,7 @@ public abstract class AbstractDatabase implements Database {
     private List<PackageDefinition>                                          packages;
     private Relations                                                        relations;
     private boolean                                                          includeRelations = true;
+    private boolean                                                          tableValuedFunctions = true;
 
     private transient Map<SchemaDefinition, List<SequenceDefinition>>        sequencesBySchema;
     private transient Map<SchemaDefinition, List<IdentityDefinition>>        identitiesBySchema;
@@ -718,6 +719,16 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final boolean includeRelations() {
         return includeRelations;
+    }
+
+    @Override
+    public final void setTableValuedFunctions(boolean tableValuedFunctions) {
+        this.tableValuedFunctions = tableValuedFunctions;
+    }
+
+    @Override
+    public final boolean tableValuedFunctions() {
+        return tableValuedFunctions;
     }
 
     @Override

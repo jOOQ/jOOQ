@@ -543,6 +543,16 @@
         artefacts (e.g. in combination with enumTypes)
         -->
       <element name="forcedTypes" type="tns:ForcedTypes" minOccurs="0" maxOccurs="1"/>
+            
+      <!--
+        Whether table valued functions should be reported as tables.
+        
+        If this is deactivated, such functions are not generated as tables, but
+        as ordinary routines. This is particularly useful for backwards-
+        compatibility between jOOQ 3.8 and previous versions, when using TABLE
+        and VARRAY types in Oracle 
+        -->
+      <element name="tableValuedFunctions" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
     </all>
   </complexType>
 

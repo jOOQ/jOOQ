@@ -200,6 +200,7 @@ public class JavaGenerator extends AbstractGenerator {
         this.database = db;
         this.database.addFilter(new AvoidAmbiguousClassesFilter());
         this.database.setIncludeRelations(generateRelations());
+        this.database.setTableValuedFunctions(generateTableValuedFunctions());
 
         String url = "";
         try {
@@ -245,6 +246,7 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("  daos", generateDaos());
         log.info("  relations", generateRelations()
             + ((!generateRelations && generateDaos) ? " (forced to true because of <daos/>)" : ""));
+        log.info("  table-valued functions", generateTableValuedFunctions());
         log.info("  global references", generateGlobalObjectReferences());
         log.info("----------------------------------------------------------");
 
@@ -4370,7 +4372,6 @@ public class JavaGenerator extends AbstractGenerator {
             return;
         }
 
-        final String className = out.ref(getStrategy().getFullJavaClassName(function));
         final String recordClassName = out.ref(getStrategy().getFullJavaClassName(function, Mode.RECORD));
 
         // [#3456] Local variables should not collide with actual function arguments

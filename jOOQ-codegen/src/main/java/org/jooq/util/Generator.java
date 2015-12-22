@@ -86,6 +86,16 @@ public interface Generator {
     void setGenerateRelations(boolean generateRelations);
 
     /**
+     * Whether table-valued functions should be generated as tables.
+     */
+    boolean generateTableValuedFunctions();
+
+    /**
+     * Whether table-valued functions should be generated as tables.
+     */
+    void setGenerateTableValuedFunctions(boolean generateTableValuedFunctions);
+
+    /**
      * Whether instance fields should be generated (as opposed to static fields)
      */
     boolean generateInstanceFields();

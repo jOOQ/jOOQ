@@ -590,6 +590,11 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final CustomType getConfiguredCustomType(String typeName) {
+
+        // The user type name that is passed here can be null.
+        if (typeName == null)
+            return null;
+
         Iterator<CustomType> it1 = configuredCustomTypes.iterator();
 
         while (it1.hasNext()) {
@@ -639,7 +644,7 @@ public abstract class AbstractDatabase implements Database {
                 }
             }
 
-            if (StringUtils.equals(type.getUserType(), typeName)) {
+            if (type.getUserType() != null && StringUtils.equals(type.getUserType(), typeName)) {
                 return customType(this, type);
             }
         }

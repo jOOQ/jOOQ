@@ -4969,7 +4969,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (scala)
             file = new File(file.getParentFile(), file.getName().replace(".java", ".scala"));
 
-        return new JavaWriter(file, fullyQualifiedTypes());
+        return new JavaWriter(file, generateFullyQualifiedTypes());
     }
 
     // [#4626] Users may need to call this method

@@ -439,7 +439,7 @@ public class GenerationTool {
             if (g.getGenerate().isPojosToString() != null)
                 generator.setGeneratePojosToString(g.getGenerate().isPojosToString());
             if (g.getGenerate().getFullyQualifiedTypes() != null)
-                generator.setFullyQualifiedTypes(g.getGenerate().getFullyQualifiedTypes());
+                generator.setGenerateFullyQualifiedTypes(g.getGenerate().getFullyQualifiedTypes());
 
             // [#3669] Optional Database element
             if (g.getDatabase() == null)

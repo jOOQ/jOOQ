@@ -291,14 +291,33 @@ public interface Generator {
     /**
      * A regular expression matching all the types in generated code that should
      * be fully qualified.
+     *
+     * @deprecated - Use {@link #generateFullyQualifiedTypes()} instead.
      */
+    @Deprecated
     String fullyQualifiedTypes();
 
     /**
      * A regular expression matching all the types in generated code that should
      * be fully qualified.
+     *
+     * @deprecated - Use {@link #setGenerateFullyQualifiedTypes(String)}
+     *             instead.
      */
+    @Deprecated
     void setFullyQualifiedTypes(String fullyQualifiedTypes);
+
+    /**
+     * A regular expression matching all the types in generated code that should
+     * be fully qualified.
+     */
+    String generateFullyQualifiedTypes();
+
+    /**
+     * A regular expression matching all the types in generated code that should
+     * be fully qualified.
+     */
+    void setGenerateFullyQualifiedTypes(String generateFullyQualifiedTypes);
 
     /**
      * The target directory

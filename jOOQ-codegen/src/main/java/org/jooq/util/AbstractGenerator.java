@@ -74,7 +74,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateGlobalTableReferences    = true;
     boolean                            generateGlobalUDTReferences      = true;
     boolean                            fluentSetters                    = false;
-    String                             fullyQualifiedTypes              = "";
+    String                             generateFullyQualifiedTypes      = "";
     boolean                            generateTableValuedFunctions     = true;
 
     protected GeneratorStrategyWrapper strategy;
@@ -339,13 +339,25 @@ abstract class AbstractGenerator implements Generator {
     }
 
     @Override
+    @Deprecated
     public String fullyQualifiedTypes() {
-        return fullyQualifiedTypes;
+        return generateFullyQualifiedTypes();
     }
 
     @Override
+    @Deprecated
     public void setFullyQualifiedTypes(String fullyQualifiedTypes) {
-        this.fullyQualifiedTypes = fullyQualifiedTypes;
+        setGenerateFullyQualifiedTypes(fullyQualifiedTypes);
+    }
+
+    @Override
+    public String generateFullyQualifiedTypes() {
+        return generateFullyQualifiedTypes;
+    }
+
+    @Override
+    public void setGenerateFullyQualifiedTypes(String generateFullyQualifiedTypes) {
+        this.generateFullyQualifiedTypes = generateFullyQualifiedTypes;
     }
 
     // ----

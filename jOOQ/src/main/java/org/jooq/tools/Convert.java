@@ -463,11 +463,11 @@ public final class Convert {
                     }
                 }
 
-                /* [java-8] */
+                
                 else if (toClass == Optional.class) {
                     return (U) Optional.empty();
                 }
-                /* [/java-8] */
+                
 
                 else {
                     return null;
@@ -504,11 +504,11 @@ public final class Convert {
                     }
                 }
 
-                /* [java-8] */
+                
                 else if (toClass == Optional.class) {
                     return (U) Optional.of(from);
                 }
-                /* [/java-8] */
+                
 
                 // All types can be converted into String
                 else if (toClass == String.class) {
@@ -581,11 +581,11 @@ public final class Convert {
                         return (U) Long.valueOf(((java.util.Date) from).getTime());
                     }
 
-                    /* [java-8] */
+                    
                     if (Temporal.class.isAssignableFrom(fromClass)) {
                         return (U) Long.valueOf(millis((Temporal) from));
                     }
-                    /* [/java-8] */
+                    
 
                     try {
                         return (U) Long.valueOf(new BigDecimal(from.toString().trim()).longValue());
@@ -653,11 +653,11 @@ public final class Convert {
                         return (U) ulong(((java.util.Date) from).getTime());
                     }
 
-                    /* [java-8] */
+                    
                     if (Temporal.class.isAssignableFrom(fromClass)) {
                         return (U) ulong(millis((Temporal) from));
                     }
-                    /* [/java-8] */
+                    
 
                     try {
                         return (U) ulong(new BigDecimal(from.toString().trim()).toBigInteger().toString());
@@ -784,22 +784,22 @@ public final class Convert {
                     return toDate(((java.util.Date) from).getTime(), toClass);
                 }
 
-                /* [java-8] */
+                
                 else if (Temporal.class.isAssignableFrom(fromClass)) {
                     return toDate(convert(from, Long.class), toClass);
                 }
-                /* [/java-8] */
+                
 
                 // Long may also be converted into a date type
                 else if ((fromClass == Long.class || fromClass == long.class) && java.util.Date.class.isAssignableFrom(toClass)) {
                     return toDate((Long) from, toClass);
                 }
 
-                /* [java-8] */
+                
                 else if ((fromClass == Long.class || fromClass == long.class) && Temporal.class.isAssignableFrom(toClass)) {
                     return toDate((Long) from, toClass);
                 }
-                /* [/java-8] */
+                
 
                 // [#1501] Strings can be converted to java.sql.Date
                 else if ((fromClass == String.class) && toClass == java.sql.Date.class) {
@@ -831,7 +831,7 @@ public final class Convert {
                     }
                 }
 
-                /* [java-8] */
+                
                 else if ((fromClass == String.class) && toClass == LocalDate.class) {
 
                     // Try "lenient" ISO date formats first
@@ -927,7 +927,7 @@ public final class Convert {
                         }
                     }
                 }
-                /* [/java-8] */
+                
 
                 // [#1448] Some users may find it useful to convert string
                 // literals to Enum values without a Converter
@@ -1041,7 +1041,7 @@ public final class Convert {
                 return (X) calendar;
             }
 
-            /* [java-8] */
+            
             else if (toClass == LocalDate.class) {
                 return (X) new Date(time).toLocalDate();
             }
@@ -1060,12 +1060,12 @@ public final class Convert {
             else if (toClass == Instant.class) {
                 return (X) new Timestamp(time).toLocalDateTime().atOffset(OffsetDateTime.now().getOffset()).toInstant();
             }
-            /* [/java-8] */
+            
 
             throw fail(time, toClass);
         }
 
-        /* [java-8] */
+        
         private static final long millis(Temporal temporal) {
 
             // java.sql.* temporal types:
@@ -1091,7 +1091,7 @@ public final class Convert {
 
             throw fail(temporal, Long.class);
         }
-        /* [/java-8] */
+        
 
         /**
          * Some databases do not implement the standard very well. Specifically,

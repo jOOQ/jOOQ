@@ -107,7 +107,15 @@ public interface SelectStartWithStep<R extends Record> extends SelectGroupByStep
     /**
      * Add an Oracle-specific <code>START WITH</code> clause to the query's
      * <code>CONNECT BY</code> clause.
+     *
+     * @deprecated - 3.8.0 - [#4763] - Use {@link #startWith(Condition)} or
+     *             {@link #startWith(Field)} instead. Due to ambiguity between
+     *             calling this method using {@link Field#equals(Object)}
+     *             argument, vs. calling the other method via a
+     *             {@link Field#equal(Object)} argument, this method will be
+     *             removed in the future.
      */
+    @Deprecated
     @Support({ CUBRID })
     SelectGroupByStep<R> startWith(Boolean condition);
 

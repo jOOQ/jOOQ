@@ -110,7 +110,7 @@ public interface InsertResultStep<R extends Record> extends Insert<R> {
     @Support
     R fetchOne() throws DataAccessException;
 
-    /* [java-8] */
+    
     /**
      * The record holding returned values as specified by the
      * {@link InsertReturningStep}.
@@ -122,5 +122,5 @@ public interface InsertResultStep<R extends Record> extends Insert<R> {
      */
     @Support
     Optional<R> fetchOptional() throws DataAccessException;
-    /* [/java-8] */
+    
 }

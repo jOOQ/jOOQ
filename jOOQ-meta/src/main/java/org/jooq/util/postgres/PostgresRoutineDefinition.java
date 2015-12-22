@@ -59,6 +59,7 @@ import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultParameterDefinition;
 import org.jooq.util.InOutDefinition;
 import org.jooq.util.ParameterDefinition;
+import org.jooq.util.SchemaDefinition;
 
 /**
  * Postgres implementation of {@link AbstractRoutineDefinition}
@@ -79,9 +80,17 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
             record.getValue(PG_PROC.PROISAGG, boolean.class));
 
         if (!Arrays.asList("void", "record").contains(record.getValue("data_type"))) {
+            SchemaDefinition typeSchema = null;
+
+            String schemaName = record.getValue(ROUTINES.TYPE_UDT_SCHEMA);
+            if (schemaName != null)
+                typeSchema = getDatabase().getSchema(schemaName);
+
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
-                database.getSchema(record.getValue(ROUTINES.ROUTINE_SCHEMA)),
+                typeSchema == null
+                    ? database.getSchema(record.getValue(ROUTINES.ROUTINE_SCHEMA))
+                    : typeSchema,
                 record.getValue("data_type", String.class),
                 record.getValue(ROUTINES.CHARACTER_MAXIMUM_LENGTH),
                 record.getValue(ROUTINES.NUMERIC_PRECISION),

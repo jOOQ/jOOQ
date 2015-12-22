@@ -507,6 +507,7 @@ public class PostgresDatabase extends AbstractDatabase {
                 r1.CHARACTER_MAXIMUM_LENGTH,
                 r1.NUMERIC_PRECISION,
                 r1.NUMERIC_SCALE,
+                r1.TYPE_UDT_SCHEMA,
                 r1.TYPE_UDT_NAME,
 
                 // Calculate overload index if applicable

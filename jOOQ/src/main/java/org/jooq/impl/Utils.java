@@ -1129,9 +1129,9 @@ final class Utils {
     /**
      * Create a new array
      */
-    /* [java-8] */
+    
     @SafeVarargs
-    /* [/java-8] */
+    
     static final <T> T[] array(T... array) {
         return array;
     }
@@ -1140,9 +1140,9 @@ final class Utils {
      * Use this rather than {@link Arrays#asList(Object...)} for
      * <code>null</code>-safety
      */
-    /* [java-8] */
+    
     @SafeVarargs
-    /* [/java-8] */
+    
     static final <T> List<T> list(T... array) {
         return array == null ? Collections.<T>emptyList() : Arrays.asList(array);
     }

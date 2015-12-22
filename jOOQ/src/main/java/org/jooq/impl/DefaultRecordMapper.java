@@ -56,6 +56,7 @@ import static org.jooq.tools.reflect.Reflect.accessible;
 import java.beans.ConstructorProperties;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
@@ -253,11 +254,6 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
     private final Configuration      configuration;
 
     /**
-     * An optional target instance to use instead of creating new instances.
-     */
-    private transient E              instance;
-
-    /**
      * A delegate mapper created from type information in <code>type</code>.
      */
     private RecordMapper<R, E>       delegate;
@@ -277,17 +273,16 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
     DefaultRecordMapper(RecordType<R> rowType, Class<? extends E> type, E instance, Configuration configuration) {
         this.fields = rowType.fields();
         this.type = type;
-        this.instance = instance;
         this.configuration = configuration;
 
-        init();
+        init(instance);
     }
 
-    private final void init() {
+    private final void init(E instance) {
 
         // Arrays can be mapped easily
         if (type.isArray()) {
-            delegate = new ArrayMapper();
+            delegate = new ArrayMapper(instance);
             return;
         }
 
@@ -311,7 +306,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
         // [#1340] Allow for using non-public default constructors
         try {
-            delegate = new MutablePOJOMapper(type.getDeclaredConstructor());
+            delegate = new MutablePOJOMapper(type.getDeclaredConstructor(), instance);
             return;
         }
         catch (NoSuchMethodException ignore) {}
@@ -377,6 +372,12 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
      */
     private class ArrayMapper implements RecordMapper<R, E> {
 
+        private final E instance;
+
+        ArrayMapper(E instance) {
+            this.instance = instance;
+        }
+
         @Override
         public final E map(R record) {
             int size = record.size();
@@ -418,23 +419,38 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
      */
     private class ProxyMapper implements RecordMapper<R, E> {
 
-        private final MutablePOJOMapper localDelegate;
-
-        ProxyMapper() {
-            this.localDelegate = new MutablePOJOMapper(null);
-        }
-
         @Override
         public final E map(R record) {
-            E previous = instance;
+            return new MutablePOJOMapper(null, proxy()).map(record);
+        }
 
-            try {
-                instance = Reflect.on(HashMap.class).create().as(type);
-                return localDelegate.map(record);
-            }
-            finally {
-                instance = previous;
-            }
+        private E proxy() {
+            final Map<String, Object> map = new HashMap<String, Object>();
+            final InvocationHandler handler = new InvocationHandler() {
+
+                @SuppressWarnings("null")
+                @Override
+                public Object invoke(Object proxy, Method method, Object[] args) {
+                    String name = method.getName();
+
+                    int length = (args == null ? 0 : args.length);
+
+                    if (length == 0 && name.startsWith("get")) {
+                        return map.get(name.substring(3));
+                    }
+                    else if (length == 0 && name.startsWith("is")) {
+                        return map.get(name.substring(2));
+                    }
+                    else if (length == 1 && name.startsWith("set")) {
+                        map.put(name.substring(3), args[0]);
+                        return null;
+                    }
+
+                    return null;
+                }
+            };
+
+            return (E) Proxy.newProxyInstance(type.getClassLoader(), new Class[] { type }, handler);
         }
     }
 
@@ -502,13 +518,15 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         private final List<java.lang.reflect.Field>[]            members;
         private final List<java.lang.reflect.Method>[]           methods;
         private final Map<String, List<RecordMapper<R, Object>>> nested;
+        private final E                                          instance;
 
-        MutablePOJOMapper(Constructor<? extends E> constructor) {
+        MutablePOJOMapper(Constructor<? extends E> constructor, E instance) {
             this.constructor = accessible(constructor);
             this.useAnnotations = hasColumnAnnotations(configuration, type);
             this.members = new List[fields.length];
             this.methods = new List[fields.length];
             this.nested = new HashMap<String, List<RecordMapper<R, Object>>>();
+            this.instance = instance;
 
             Map<String, Field<?>[]> nestedFields = new HashMap<String, Field<?>[]>();
             for (int i = 0; i < fields.length; i++) {
@@ -558,7 +576,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                         new DefaultRecordMapper<R, Object>(
                             new Fields<R>(entry.getValue()),
                             member.getType(),
-                            instance,
+                            null,
                             configuration
                         ), fields, prefix
                     ));
@@ -569,7 +587,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                         new DefaultRecordMapper<R, Object>(
                             new Fields<R>(entry.getValue()),
                             method.getParameterTypes()[0],
-                            instance,
+                            null,
                             configuration
                         ), fields, prefix
                     ));

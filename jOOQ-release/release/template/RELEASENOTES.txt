@@ -10,6 +10,31 @@ http://www.jooq.org/notes
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.7.2 - December 22, 2015
+================================================================================
+
+This is a patch release with some useful fixes for the 3.7 branch
+
+Features and Improvements
+-------------------------
+#4812 - Add source code in original form to .zip, such that users can build jOOQ right away
+#4816 - Deprecate on(Boolean), where(Boolean), having(Boolean), etc.
+
+Bug Fixes
+---------
+#4709 - Wrong enum type referenced from UDT, when the same enum type exists in different schemas in PostgreSQL
+#4713 - Cannot call standalone PostgreSQL function with enum array return type in non-public schema
+#4738 - Documentation bug: Deprecation remark on fieldByName(Class, String...) points to wrong substitute
+#4757 - Regression in AbstractParam throwing StackOverflowError when calling UDTRecord.toString()
+#4766 - org.jooq.Meta must not cache DatabaseMetaData in order not to violate the ConnectionProvider contract
+#4774 - Extremely slow mapping Record.into(ProxyableInterface.class)
+#4777 - DefaultRecordMapper is not thread safe when mapping proxyable interface
+#4786 - OracleDSL.DBMS_AQ.dequeue() does not return any MESSAGE_PROPERTIES_T values
+#4803 - Oracle views with dollar sign '$' in them are not generated
+#4808 - CREATE VIEW statement fails when it contains bind variables
+#4822 - Oracle LONG and LONG RAW columns cause "Stream has already been closed" exception when not placed in first position
+#4830 - Generated convenience methods Routines.f() have misleading Javadoc
+
 Version 3.7.1 - November 12, 2015
 ================================================================================
 

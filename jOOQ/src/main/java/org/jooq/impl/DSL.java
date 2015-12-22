@@ -5997,7 +5997,7 @@ public class DSL {
      *            name.
      * @param type The type of the returned field
      * @return A field referenced by <code>fieldName</code>
-     * @deprecated - [#3843] - 3.6.0 - use {@link #sequence(Name, Class)} instead
+     * @deprecated - [#3843] - 3.6.0 - use {@link #field(Name, Class)} instead
      */
     @Deprecated
     @Support
@@ -6035,7 +6035,7 @@ public class DSL {
      *            name.
      * @param type The type of the returned field
      * @return A field referenced by <code>fieldName</code>
-     * @deprecated - [#3843] - 3.6.0 - use {@link #sequence(Name, DataType)} instead
+     * @deprecated - [#3843] - 3.6.0 - use {@link #field(Name, DataType)} instead
      */
     @Deprecated
     @Support
@@ -7520,7 +7520,14 @@ public class DSL {
      * {@link #not(Condition)}, {@link #condition(Field)}, i.e. <code><pre>
      * field(not(condition(field)));
      * </pre></code>
+     *
+     * @deprecated - 3.8.0 - [#4763] - Use {@link #not(Condition)} instead. Due
+     *             to ambiguity between calling this method using
+     *             {@link Field#equals(Object)} argument, vs. calling the other
+     *             method via a {@link Field#equal(Object)} argument, this
+     *             method will be removed in the future.
      */
+    @Deprecated
     @Support
     public static Field<Boolean> not(Boolean value) {
         return not(Utils.field(value, Boolean.class));
@@ -11639,9 +11646,9 @@ public class DSL {
      * </tr>
      * </table>
      */
-    /* [java-8] */
+    
     @SafeVarargs
-    /* [/java-8] */
+    
     @Support({ H2, HSQLDB, POSTGRES })
     public static <T> Field<T[]> array(Field<T>... fields) {
         return array(Arrays.asList(fields));

@@ -70,7 +70,15 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator.
+     *
+     * @deprecated - 3.8.0 - [#4763] - Use {@link #and(Condition)} or
+     *             {@link #and(Field)} instead. Due to ambiguity between
+     *             calling this method using {@link Field#equals(Object)}
+     *             argument, vs. calling the other method via a
+     *             {@link Field#equal(Object)} argument, this method will be
+     *             removed in the future.
      */
+    @Deprecated
     @Support
     TableOnConditionStep<R> and(Boolean condition);
 
@@ -155,7 +163,15 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator.
+     *
+     * @deprecated - 3.8.0 - [#4763] - Use {@link #andNot(Condition)} or
+     *             {@link #andNot(Field)} instead. Due to ambiguity between
+     *             calling this method using {@link Field#equals(Object)}
+     *             argument, vs. calling the other method via a
+     *             {@link Field#equal(Object)} argument, this method will be
+     *             removed in the future.
      */
+    @Deprecated
     @Support
     TableOnConditionStep<R> andNot(Boolean condition);
 
@@ -190,7 +206,15 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator.
+     *
+     * @deprecated - 3.8.0 - [#4763] - Use {@link #or(Condition)} or
+     *             {@link #or(Field)} instead. Due to ambiguity between
+     *             calling this method using {@link Field#equals(Object)}
+     *             argument, vs. calling the other method via a
+     *             {@link Field#equal(Object)} argument, this method will be
+     *             removed in the future.
      */
+    @Deprecated
     @Support
     TableOnConditionStep<R> or(Boolean condition);
 
@@ -275,7 +299,15 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator.
+     *
+     * @deprecated - 3.8.0 - [#4763] - Use {@link #orNot(Condition)} or
+     *             {@link #orNot(Field)} instead. Due to ambiguity between
+     *             calling this method using {@link Field#equals(Object)}
+     *             argument, vs. calling the other method via a
+     *             {@link Field#equal(Object)} argument, this method will be
+     *             removed in the future.
      */
+    @Deprecated
     @Support
     TableOnConditionStep<R> orNot(Boolean condition);
 

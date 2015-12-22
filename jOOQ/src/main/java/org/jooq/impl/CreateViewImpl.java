@@ -44,6 +44,7 @@ import static org.jooq.Clause.CREATE_VIEW;
 import static org.jooq.Clause.CREATE_VIEW_AS;
 import static org.jooq.Clause.CREATE_VIEW_NAME;
 import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.table;
 
@@ -56,6 +57,7 @@ import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.Table;
+import org.jooq.conf.ParamType;
 
 /**
  * @author Lukas Eder
@@ -105,6 +107,9 @@ class CreateViewImpl<R extends Record> extends AbstractQuery implements
         boolean rename = fields != null && fields.length > 0;
         boolean renameSupported = ctx.family() != SQLITE;
 
+        // [#4806] CREATE VIEW doesn't accept parameters in most databases
+        ParamType paramType = ctx.paramType();
+
         ctx.start(CREATE_VIEW_NAME)
            .keyword("create view")
            .sql(' ')
@@ -125,10 +130,12 @@ class CreateViewImpl<R extends Record> extends AbstractQuery implements
            .keyword("as")
            .formatSeparator()
            .start(CREATE_VIEW_AS)
+           .paramType(INLINED)
            .visit(
                rename && !renameSupported
              ? selectFrom(table(select).as("t", Utils.fieldNames(fields)))
              : select)
+           .paramType(paramType)
            .end(CREATE_VIEW_AS);
     }
 

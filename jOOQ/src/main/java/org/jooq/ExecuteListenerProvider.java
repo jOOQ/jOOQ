@@ -55,9 +55,9 @@ import org.jooq.impl.DefaultExecuteListenerProvider;
  * @see ExecuteListener
  * @see Configuration
  */
-/* [java-8] */
+
 @FunctionalInterface
-/* [/java-8] */
+
 public interface ExecuteListenerProvider {
 
     /**

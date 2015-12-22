@@ -68,7 +68,7 @@ import org.jooq.impl.DefaultRecordMapper;
  * @param <R> The cursor's record type
  * @author Lukas Eder
  */
-public interface Cursor<R extends Record> extends Iterable<R> /* [java-8] */, AutoCloseable /* [/java-8] */ {
+public interface Cursor<R extends Record> extends Iterable<R> , AutoCloseable  {
 
     /**
      * Get this cursor's row type.
@@ -329,7 +329,7 @@ public interface Cursor<R extends Record> extends Iterable<R> /* [java-8] */, Au
      */
     <Z extends Record> Z fetchOneInto(Table<Z> table) throws DataAccessException, MappingException;
 
-    /* [java-8] */
+    
     /**
      * Fetch the next record from the cursor.
      * <p>
@@ -400,7 +400,7 @@ public interface Cursor<R extends Record> extends Iterable<R> /* [java-8] */, Au
      * @throws DataAccessException if something went wrong executing the query
      */
     Stream<R> stream() throws DataAccessException;
-    /* [/java-8] */
+    
 
     /**
      * Explicitly close the underlying {@link PreparedStatement} and
@@ -412,9 +412,9 @@ public interface Cursor<R extends Record> extends Iterable<R> /* [java-8] */, Au
      *
      * @throws DataAccessException if something went wrong executing the query
      */
-    /* [java-8] */
+    
     @Override
-    /* [/java-8] */
+    
     void close() throws DataAccessException;
 
     /**

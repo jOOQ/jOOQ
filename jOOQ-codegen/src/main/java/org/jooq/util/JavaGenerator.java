@@ -3816,7 +3816,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String className = out.ref(getStrategy().getFullJavaClassName(function));
         final String localVar = disambiguateJavaMemberName(function.getInParameters(), "f");
 
-        out.tab(1).javadoc("Get <code>%s</code> as a field", function.getQualifiedOutputName());
+        out.tab(1).javadoc("Get <code>%s</code> as a field.", function.getQualifiedOutputName());
 
         if (scala)
             out.tab(1).print("def %s(",
@@ -3900,7 +3900,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         final String className = out.ref(getStrategy().getFullJavaClassName(function));
 
-        out.tab(1).javadoc("Get <code>%s</code> as a field", function.getQualifiedOutputName());
+        out.tab(1).javadoc("Get <code>%s</code> as a table.", function.getQualifiedOutputName());
         out.tab(1).print("public static %s %s(", className, javaMethodName);
 
         printParameterDeclarations(out, function, parametersAsField);
@@ -4690,9 +4690,9 @@ public class JavaGenerator extends AbstractGenerator {
         return getJavaType(type1).equals(getJavaType(type2));
     }
 
-    /* [java-8] */
+    
     @SafeVarargs
-    /* [/java-8] */
+    
     private static final <T> List<T> list(T... objects) {
         List<T> result = new ArrayList<T>();
 

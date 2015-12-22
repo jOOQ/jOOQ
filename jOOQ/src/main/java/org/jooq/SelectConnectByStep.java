@@ -104,7 +104,15 @@ public interface SelectConnectByStep<R extends Record> extends SelectGroupByStep
 
     /**
      * Add an Oracle-specific <code>CONNECT BY</code> clause to the query
+     *
+     * @deprecated - 3.8.0 - [#4763] - Use {@link #connectBy(Condition)} or
+     *             {@link #connectBy(Field)} instead. Due to ambiguity between
+     *             calling this method using {@link Field#equals(Object)}
+     *             argument, vs. calling the other method via a
+     *             {@link Field#equal(Object)} argument, this method will be
+     *             removed in the future.
      */
+    @Deprecated
     @Support({ CUBRID })
     SelectConnectByConditionStep<R> connectBy(Boolean condition);
 
@@ -185,7 +193,15 @@ public interface SelectConnectByStep<R extends Record> extends SelectGroupByStep
     /**
      * Add an Oracle-specific <code>CONNECT BY NOCYCLE</code> clause to the
      * query
+     *
+     * @deprecated - 3.8.0 - [#4763] - Use {@link #connectByNoCycle(Condition)}
+     *             or {@link #connectByNoCycle(Field)} instead. Due to ambiguity
+     *             between calling this method using
+     *             {@link Field#equals(Object)} argument, vs. calling the other
+     *             method via a {@link Field#equal(Object)} argument, this
+     *             method will be removed in the future.
      */
+    @Deprecated
     @Support({ CUBRID })
     SelectConnectByConditionStep<R> connectByNoCycle(Boolean condition);
 

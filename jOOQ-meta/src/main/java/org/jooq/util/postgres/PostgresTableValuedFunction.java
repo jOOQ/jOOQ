@@ -113,6 +113,7 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
                 p.NUMERIC_SCALE,
                 inline("true").as(c.IS_NULLABLE),
                 inline(null, String.class).as(c.COLUMN_DEFAULT),
+                p.UDT_SCHEMA,
                 p.UDT_NAME
             )
             .from(r)
@@ -142,6 +143,7 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
                 nvl(c.NUMERIC_SCALE             , r.NUMERIC_SCALE             ).as(c.NUMERIC_SCALE),
                 nvl(c.IS_NULLABLE               , "true"                      ).as(c.IS_NULLABLE),
                 nvl(c.COLUMN_DEFAULT            , inline((String) null)       ).as(c.COLUMN_DEFAULT),
+                nvl(c.UDT_SCHEMA                , inline((String) null)       ).as(c.UDT_SCHEMA),
                 nvl(c.UDT_NAME                  , r.UDT_NAME                  ).as(c.UDT_NAME)
             )
             .from(r)
@@ -167,9 +169,15 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
             .orderBy(2)
         ) {
 
+            SchemaDefinition typeSchema = null;
+
+            String schemaName = record.getValue(p.UDT_SCHEMA);
+            if (schemaName != null)
+                typeSchema = getDatabase().getSchema(schemaName);
+
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
-                getSchema(),
+                typeSchema,
                 record.getValue(p.DATA_TYPE),
                 record.getValue(p.CHARACTER_MAXIMUM_LENGTH),
                 record.getValue(p.NUMERIC_PRECISION),

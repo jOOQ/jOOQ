@@ -184,6 +184,31 @@ public class DefaultConnectionProvider implements ConnectionProvider {
     }
 
     /**
+     * Convenience method to access {@link Connection#setReadOnly(boolean)}.
+     */
+    public final void setReadOnly(boolean readOnly) throws DataAccessException {
+        try {
+            log.debug("setting read only", readOnly);
+            connection.setReadOnly(readOnly);
+        }
+        catch (Exception e) {
+            throw new DataAccessException("Cannot set readOnly", e);
+        }
+    }
+
+    /**
+     * Convenience method to access {@link Connection#isReadOnly()}.
+     */
+    public final boolean isReadOnly() throws DataAccessException {
+        try {
+            return connection.isReadOnly();
+        }
+        catch (Exception e) {
+            throw new DataAccessException("Cannot get readOnly", e);
+        }
+    }
+
+    /**
      * Convenience method to access {@link Connection#setAutoCommit(boolean)}.
      */
     public final void setAutoCommit(boolean autoCommit) throws DataAccessException {

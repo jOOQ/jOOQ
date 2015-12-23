@@ -133,4 +133,73 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
     @Support({ POSTGRES })
     WindowSpecificationRowsAndStep rowsBetweenFollowing(int number);
 
+    /**
+     * Add a <code>RANGE UNBOUNDED PRECEDING</code> frame clause to the window
+     * specification.
+     */
+    @Support({ POSTGRES })
+    WindowSpecificationFinalStep rangeUnboundedPreceding();
+
+    /**
+     * Add a <code>RANGE [number] PRECEDING</code> frame clause to the window
+     * specification.
+     */
+    @Support({ POSTGRES })
+    WindowSpecificationFinalStep rangePreceding(int number);
+
+    /**
+     * Add a <code>RANGE CURRENT ROW</code> frame clause to the window
+     * specification.
+     */
+    @Support({ POSTGRES })
+    WindowSpecificationFinalStep rangeCurrentRow();
+
+    /**
+     * Add a <code>RANGE UNBOUNDED FOLLOWING</code> frame clause to the window
+     * specification.
+     */
+    @Support({ POSTGRES })
+    WindowSpecificationFinalStep rangeUnboundedFollowing();
+
+    /**
+     * Add a <code>RANGE [number] FOLLOWING</code> frame clause to the window
+     * specification.
+     */
+    @Support({ POSTGRES })
+    WindowSpecificationFinalStep rangeFollowing(int number);
+
+    /**
+     * Add a <code>RANGE BETWEEN UNBOUNDED PRECEDING ...</code> frame clause to
+     * the window specification.
+     */
+    @Support({ POSTGRES })
+    WindowSpecificationRowsAndStep rangeBetweenUnboundedPreceding();
+
+    /**
+     * Add a <code>RANGE BETWEEN [number] PRECEDING ...</code> frame clause to
+     * the window specification.
+     */
+    @Support({ POSTGRES })
+    WindowSpecificationRowsAndStep rangeBetweenPreceding(int number);
+
+    /**
+     * Add a <code>RANGE BETWEEN CURRENT ROW ...</code> frame clause to the
+     * window specification.
+     */
+    @Support({ POSTGRES })
+    WindowSpecificationRowsAndStep rangeBetweenCurrentRow();
+
+    /**
+     * Add a <code>RANGE BETWEEN UNBOUNDED FOLLOWING ...</code> frame clause to
+     * the window specification.
+     */
+    @Support({ POSTGRES })
+    WindowSpecificationRowsAndStep rangeBetweenUnboundedFollowing();
+
+    /**
+     * Add a <code>RANGE BETWEEN [number] FOLLOWING ...</code> frame clause to
+     * the window specification.
+     */
+    @Support({ POSTGRES })
+    WindowSpecificationRowsAndStep rangeBetweenFollowing(int number);
 }

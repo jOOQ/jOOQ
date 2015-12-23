@@ -134,4 +134,73 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      */
     @Support({ POSTGRES })
     WindowRowsAndStep<T> rowsBetweenFollowing(int number);
+
+    /**
+     * Add a <code>RANGE UNBOUNDED PRECEDING</code> frame clause to the window
+     * function.
+     */
+    @Support({ POSTGRES })
+    WindowFinalStep<T> rangeUnboundedPreceding();
+
+    /**
+     * Add a <code>RANGE [number] PRECEDING</code> frame clause to the window
+     * function.
+     */
+    @Support({ POSTGRES })
+    WindowFinalStep<T> rangePreceding(int number);
+
+    /**
+     * Add a <code>RANGE CURRENT ROW</code> frame clause to the window function.
+     */
+    @Support({ POSTGRES })
+    WindowFinalStep<T> rangeCurrentRow();
+
+    /**
+     * Add a <code>RANGE UNBOUNDED FOLLOWING</code> frame clause to the window
+     * function.
+     */
+    @Support({ POSTGRES })
+    WindowFinalStep<T> rangeUnboundedFollowing();
+
+    /**
+     * Add a <code>RANGE [number] FOLLOWING</code> frame clause to the window
+     * function.
+     */
+    @Support({ POSTGRES })
+    WindowFinalStep<T> rangeFollowing(int number);
+
+    /**
+     * Add a <code>RANGE BETWEEN UNBOUNDED PRECEDING ...</code> frame clause to
+     * the window function.
+     */
+    @Support({ POSTGRES })
+    WindowRowsAndStep<T> rangeBetweenUnboundedPreceding();
+
+    /**
+     * Add a <code>RANGE BETWEEN [number] PRECEDING ...</code> frame clause to
+     * the window function.
+     */
+    @Support({ POSTGRES })
+    WindowRowsAndStep<T> rangeBetweenPreceding(int number);
+
+    /**
+     * Add a <code>RANGE BETWEEN CURRENT ROW ...</code> frame clause to
+     * the window function.
+     */
+    @Support({ POSTGRES })
+    WindowRowsAndStep<T> rangeBetweenCurrentRow();
+
+    /**
+     * Add a <code>RANGE BETWEEN UNBOUNDED FOLLOWING ...</code> frame clause to
+     * the window function.
+     */
+    @Support({ POSTGRES })
+    WindowRowsAndStep<T> rangeBetweenUnboundedFollowing();
+
+    /**
+     * Add a <code>RANGE BETWEEN [number] FOLLOWING ...</code> frame clause to
+     * the window function.
+     */
+    @Support({ POSTGRES })
+    WindowRowsAndStep<T> rangeBetweenFollowing(int number);
 }

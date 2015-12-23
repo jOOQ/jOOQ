@@ -13392,6 +13392,86 @@ public class DSL {
         return new WindowSpecificationImpl().rowsBetweenFollowing(number);
     }
 
+    /**
+     * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
+     */
+    @Support({ POSTGRES })
+    public static WindowSpecificationFinalStep rangeUnboundedPreceding() {
+        return new WindowSpecificationImpl().rangeUnboundedPreceding();
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
+     */
+    @Support({ POSTGRES })
+    public static WindowSpecificationFinalStep rangePreceding(int number) {
+        return new WindowSpecificationImpl().rangePreceding(number);
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
+     */
+    @Support({ POSTGRES })
+    public static WindowSpecificationFinalStep rangeCurrentRow() {
+        return new WindowSpecificationImpl().rangeCurrentRow();
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
+     */
+    @Support({ POSTGRES })
+    public static WindowSpecificationFinalStep rangeUnboundedFollowing() {
+        return new WindowSpecificationImpl().rangeUnboundedFollowing();
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
+     */
+    @Support({ POSTGRES })
+    public static WindowSpecificationFinalStep rangeFollowing(int number) {
+        return new WindowSpecificationImpl().rangeFollowing(number);
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
+     */
+    @Support({ POSTGRES })
+    public static WindowSpecificationRowsAndStep rangeBetweenUnboundedPreceding() {
+        return new WindowSpecificationImpl().rangeBetweenUnboundedPreceding();
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
+     */
+    @Support({ POSTGRES })
+    public static WindowSpecificationRowsAndStep rangeBetweenPreceding(int number) {
+        return new WindowSpecificationImpl().rangeBetweenPreceding(number);
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
+     */
+    @Support({ POSTGRES })
+    public static WindowSpecificationRowsAndStep rangeBetweenCurrentRow() {
+        return new WindowSpecificationImpl().rangeBetweenCurrentRow();
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
+     */
+    @Support({ POSTGRES })
+    public static WindowSpecificationRowsAndStep rangeBetweenUnboundedFollowing() {
+        return new WindowSpecificationImpl().rangeBetweenUnboundedFollowing();
+    }
+
+    /**
+     * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
+     */
+    @Support({ POSTGRES })
+    public static WindowSpecificationRowsAndStep rangeBetweenFollowing(int number) {
+        return new WindowSpecificationImpl().rangeBetweenFollowing(number);
+    }
+
     // -------------------------------------------------------------------------
     // XXX Window functions
     // -------------------------------------------------------------------------

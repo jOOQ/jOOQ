@@ -45,6 +45,8 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 // ...
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.WindowSpecificationImpl.FrameUnits.RANGE;
+import static org.jooq.impl.WindowSpecificationImpl.FrameUnits.ROWS;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -75,8 +77,9 @@ class WindowSpecificationImpl extends AbstractQueryPart implements
 
     private final QueryPartList<Field<?>> partitionBy;
     private final SortFieldList           orderBy;
-    private Integer                       rowsStart;
-    private Integer                       rowsEnd;
+    private Integer                       frameStart;
+    private Integer                       frameEnd;
+    private FrameUnits                    frameUnits;
     private boolean                       partitionByOne;
 
     WindowSpecificationImpl() {
@@ -112,19 +115,19 @@ class WindowSpecificationImpl extends AbstractQueryPart implements
             glue = " ";
         }
 
-        if (rowsStart != null) {
+        if (frameStart != null) {
             ctx.sql(glue);
-            ctx.keyword("rows").sql(' ');
+            ctx.keyword(frameUnits.keyword).sql(' ');
 
-            if (rowsEnd != null) {
+            if (frameEnd != null) {
                 ctx.keyword("between").sql(' ');
-                toSQLRows(ctx, rowsStart);
+                toSQLRows(ctx, frameStart);
 
                 ctx.sql(' ').keyword("and").sql(' ');
-                toSQLRows(ctx, rowsEnd);
+                toSQLRows(ctx, frameEnd);
             }
             else {
-                toSQLRows(ctx, rowsStart);
+                toSQLRows(ctx, frameStart);
             }
 
             glue = " ";
@@ -193,31 +196,36 @@ class WindowSpecificationImpl extends AbstractQueryPart implements
 
     @Override
     public final WindowSpecificationFinalStep rowsUnboundedPreceding() {
-        rowsStart = Integer.MIN_VALUE;
+        frameUnits = ROWS;
+        frameStart = Integer.MIN_VALUE;
         return this;
     }
 
     @Override
     public final WindowSpecificationFinalStep rowsPreceding(int number) {
-        rowsStart = -number;
+        frameUnits = ROWS;
+        frameStart = -number;
         return this;
     }
 
     @Override
     public final WindowSpecificationFinalStep rowsCurrentRow() {
-        rowsStart = 0;
+        frameUnits = ROWS;
+        frameStart = 0;
         return this;
     }
 
     @Override
     public final WindowSpecificationFinalStep rowsUnboundedFollowing() {
-        rowsStart = Integer.MAX_VALUE;
+        frameUnits = ROWS;
+        frameStart = Integer.MAX_VALUE;
         return this;
     }
 
     @Override
     public final WindowSpecificationFinalStep rowsFollowing(int number) {
-        rowsStart = number;
+        frameUnits = ROWS;
+        frameStart = number;
         return this;
     }
 
@@ -252,32 +260,108 @@ class WindowSpecificationImpl extends AbstractQueryPart implements
     }
 
     @Override
+    public final WindowSpecificationFinalStep rangeUnboundedPreceding() {
+        frameUnits = RANGE;
+        frameStart = Integer.MIN_VALUE;
+        return this;
+    }
+
+    @Override
+    public final WindowSpecificationFinalStep rangePreceding(int number) {
+        frameUnits = RANGE;
+        frameStart = -number;
+        return this;
+    }
+
+    @Override
+    public final WindowSpecificationFinalStep rangeCurrentRow() {
+        frameUnits = RANGE;
+        frameStart = 0;
+        return this;
+    }
+
+    @Override
+    public final WindowSpecificationFinalStep rangeUnboundedFollowing() {
+        frameUnits = RANGE;
+        frameStart = Integer.MAX_VALUE;
+        return this;
+    }
+
+    @Override
+    public final WindowSpecificationFinalStep rangeFollowing(int number) {
+        frameUnits = RANGE;
+        frameStart = number;
+        return this;
+    }
+
+    @Override
+    public final WindowSpecificationRowsAndStep rangeBetweenUnboundedPreceding() {
+        rangeUnboundedPreceding();
+        return this;
+    }
+
+    @Override
+    public final WindowSpecificationRowsAndStep rangeBetweenPreceding(int number) {
+        rangePreceding(number);
+        return this;
+    }
+
+    @Override
+    public final WindowSpecificationRowsAndStep rangeBetweenCurrentRow() {
+        rangeCurrentRow();
+        return this;
+    }
+
+    @Override
+    public final WindowSpecificationRowsAndStep rangeBetweenUnboundedFollowing() {
+        rangeUnboundedFollowing();
+        return this;
+    }
+
+    @Override
+    public final WindowSpecificationRowsAndStep rangeBetweenFollowing(int number) {
+        rangeFollowing(number);
+        return this;
+    }
+
+    @Override
     public final WindowSpecificationFinalStep andUnboundedPreceding() {
-        rowsEnd = Integer.MIN_VALUE;
+        frameEnd = Integer.MIN_VALUE;
         return this;
     }
 
     @Override
     public final WindowSpecificationFinalStep andPreceding(int number) {
-        rowsEnd = -number;
+        frameEnd = -number;
         return this;
     }
 
     @Override
     public final WindowSpecificationFinalStep andCurrentRow() {
-        rowsEnd = 0;
+        frameEnd = 0;
         return this;
     }
 
     @Override
     public final WindowSpecificationFinalStep andUnboundedFollowing() {
-        rowsEnd = Integer.MAX_VALUE;
+        frameEnd = Integer.MAX_VALUE;
         return this;
     }
 
     @Override
     public final WindowSpecificationFinalStep andFollowing(int number) {
-        rowsEnd = number;
+        frameEnd = number;
         return this;
+    }
+
+    enum FrameUnits {
+        ROWS("rows"),
+        RANGE("range");
+
+        private final String keyword;
+
+        private FrameUnits(String keyword) {
+            this.keyword = keyword;
+        }
     }
 }

@@ -54,12 +54,22 @@ public interface LoaderRowsStep<R extends Record> {
 
     /**
      * Specify the the fields to be loaded into the table in the correct order.
+     * <p>
+     * The record column at index <code>i</code> is inserted into the table
+     * field at index <code>i</code>. If <code>fields[i] == null</code> or
+     * <code>fields.length &lt;= i</code>, then the record column is skipped.
      */
     @Support
     LoaderListenerStep<R> fields(Field<?>... fields);
 
     /**
      * Specify the the fields to be loaded into the table in the correct order.
+     * <p>
+     * The record column at index <code>i</code> is inserted into the table
+     * field at index <code>i</code>. If
+     * <code>new ArrayList(fields).get(i) == null</code> or
+     * <code>new ArrayList(fields).size() &lt;= i</code>, then the record column
+     * is skipped.
      */
     @Support
     LoaderListenerStep<R> fields(Collection<? extends Field<?>> fields);

@@ -55,8 +55,10 @@ public interface LoaderJSONStep<R extends Record> {
 
     /**
      * Specify the the fields to be loaded into the table in the correct order.
+     * <p>
      * The JSON column at index <code>i</code> is inserted into the table field
-     * at index <code>i</code>. If <code>fields[i] == null</code>, then the JSON
+     * at index <code>i</code>. If <code>fields[i] == null</code> or
+     * <code>fields.length &lt;= i</code>, then the JSON
      * column is skipped.
      */
     @Support
@@ -64,10 +66,12 @@ public interface LoaderJSONStep<R extends Record> {
 
     /**
      * Specify the the fields to be loaded into the table in the correct order.
+     * <p>
      * The JSON column at index <code>i</code> is inserted into the table field
      * at index <code>i</code>. If
-     * <code>new ArrayList(fields).get(i) == null</code>, then the JSON column is
-     * skipped.
+     * <code>new ArrayList(fields).get(i) == null</code> or
+     * <code>new ArrayList(fields).size() &lt;= i</code>, then the JSON column
+     * is skipped.
      */
     @Support
     LoaderJSONOptionsStep<R> fields(Collection<? extends Field<?>> fields);

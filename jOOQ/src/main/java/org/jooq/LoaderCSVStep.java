@@ -54,18 +54,21 @@ public interface LoaderCSVStep<R extends Record> {
 
     /**
      * Specify the the fields to be loaded into the table in the correct order.
+     * <p>
      * The CSV column at index <code>i</code> is inserted into the table field
-     * at index <code>i</code>. If <code>fields[i] == null</code>, then the CSV
-     * column is skipped.
+     * at index <code>i</code>. If <code>fields[i] == null</code> or
+     * <code>fields.length &lt;= i</code>, then the CSV column is skipped.
      */
     @Support
     LoaderCSVOptionsStep<R> fields(Field<?>... fields);
 
     /**
      * Specify the the fields to be loaded into the table in the correct order.
+     * <p>
      * The CSV column at index <code>i</code> is inserted into the table field
      * at index <code>i</code>. If
-     * <code>new ArrayList(fields).get(i) == null</code>, then the CSV column is
+     * <code>new ArrayList(fields).get(i) == null</code> or
+     * <code>new ArrayList(fields).size() &lt;= i</code>, then the CSV column is
      * skipped.
      */
     @Support

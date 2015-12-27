@@ -77,6 +77,7 @@ class Tanh extends AbstractFunction<BigDecimal> {
             xxxx xxxxxxxxx
             xxxx xxxxxxxxxx
             xxxx xxxxxxx
+            xxxx xxxxxxxx
             xx [/pro] */
             case CUBRID:
             case HSQLDB:

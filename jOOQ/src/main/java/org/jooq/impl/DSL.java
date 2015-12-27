@@ -11701,7 +11701,7 @@ public class DSL {
      * @see #power(Field, Number)
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static <T extends Number> Field<T> shl(Field<T>value1, Number value2) {
+    public static <T extends Number> Field<T> shl(Field<T> value1, Number value2) {
         return shl(nullSafe(value1), Utils.field(value2));
     }
 

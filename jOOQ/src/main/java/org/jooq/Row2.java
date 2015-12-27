@@ -55,12 +55,14 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
+// ...
+
+import org.jooq.Comparator;
+import org.jooq.impl.DSL;
 
 import java.util.Collection;
 
 import javax.annotation.Generated;
-
-import org.jooq.impl.DSL;
 
 /**
  * A model type for a row value expression with degree <code>2</code>.
@@ -91,7 +93,7 @@ public interface Row2<T1, T2> extends Row {
     // ------------------------------------------------------------------------
     // Generic comparison predicates
     // ------------------------------------------------------------------------
-
+    
     /**
      * Compare this row value expression with another row value expression
      * using a dynamic comparator.

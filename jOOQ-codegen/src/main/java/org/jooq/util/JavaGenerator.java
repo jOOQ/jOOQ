@@ -4965,7 +4965,7 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     // [#3880] Users may need to call this method
-    protected final JavaWriter newJavaWriter(File file) {
+    protected JavaWriter newJavaWriter(File file) {
         if (scala)
             file = new File(file.getParentFile(), file.getName().replace(".java", ".scala"));
 
@@ -4973,7 +4973,7 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     // [#4626] Users may need to call this method
-    protected final void closeJavaWriter(JavaWriter out) {
+    protected void closeJavaWriter(JavaWriter out) {
         if (out.close())
             files.add(out.file());
     }

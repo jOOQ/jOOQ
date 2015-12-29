@@ -52,14 +52,9 @@ package org.jooq;
 public interface LoaderJSONOptionsStep<R extends Record> extends LoaderListenerStep<R> {
 
     /**
-     * Specify that a certain number of rows should be ignored from the JSON
-     * input. This is useful for skipping processing information
-     * <p>
-     * By default, this is set to <code>1</code>, as CSV files are expected to
-     * hold a header row.
-     *
-     * @param number The number of rows to ignore.
+     * @deprecated - [#4859] - This is not supported for JSON loading.
      */
+    @Deprecated
     @Support
     LoaderJSONOptionsStep<R> ignoreRows(int number);
 }

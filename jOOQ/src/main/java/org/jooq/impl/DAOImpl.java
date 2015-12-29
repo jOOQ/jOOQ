@@ -64,7 +64,13 @@ import org.jooq.UpdatableRecord;
 import org.jooq.conf.Settings;
 
 /**
- * A common base implementation for generated DAO's.
+ * A common base implementation for generated {@link DAO}.
+ * <p>
+ * Unlike many other elements in the jOOQ API, <code>DAO</code> may be used in
+ * the context of Spring, CDI, or EJB lifecycle management. This means that no
+ * methods in the <code>DAO</code> type hierarchy must be made final. See also
+ * <a href="https://github.com/jOOQ/jOOQ/issues/4696">https://github.com/jOOQ/
+ * jOOQ/issues/4696</a> for more details.
  *
  * @author Lukas Eder
  */
@@ -96,28 +102,28 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
      * This method is maintained to be able to configure a <code>DAO</code>
      * using Spring. It is not exposed in the public API.
      */
-    public final void setConfiguration(Configuration configuration) {
+    public /* non-final */ void setConfiguration(Configuration configuration) {
         this.configuration = configuration;
         this.mapper = Utils.configuration(configuration).recordMapperProvider().provide(table.recordType(), type);
     }
 
     @Override
-    public final Configuration configuration() {
+    public /* non-final */ Configuration configuration() {
         return configuration;
     }
 
     @Override
-    public final Settings settings() {
+    public /* non-final */ Settings settings() {
         return Utils.settings(configuration());
     }
 
     @Override
-    public final SQLDialect dialect() {
+    public /* non-final */ SQLDialect dialect() {
         return Utils.configuration(configuration()).dialect();
     }
 
     @Override
-    public final SQLDialect family() {
+    public /* non-final */ SQLDialect family() {
         return dialect().family();
     }
 
@@ -136,20 +142,18 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     // -------------------------------------------------------------------------
 
     @Override
-    public final void insert(P object) {
+    public /* non-final */ void insert(P object) {
         insert(singletonList(object));
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    
-    @SafeVarargs
-    
-    public final void insert(P... objects) {
+    public /* non-final */ void insert(P... objects) {
         insert(asList(objects));
     }
 
     @Override
-    public final void insert(Collection<P> objects) {
+    public /* non-final */ void insert(Collection<P> objects) {
 
         // Execute a batch INSERT
         if (objects.size() > 1) {
@@ -163,20 +167,18 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     }
 
     @Override
-    public final void update(P object) {
+    public /* non-final */ void update(P object) {
         update(singletonList(object));
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    
-    @SafeVarargs
-    
-    public final void update(P... objects) {
+    public /* non-final */ void update(P... objects) {
         update(asList(objects));
     }
 
     @Override
-    public final void update(Collection<P> objects) {
+    public /* non-final */ void update(Collection<P> objects) {
 
         // Execute a batch UPDATE
         if (objects.size() > 1) {
@@ -189,16 +191,14 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    
-    @SafeVarargs
-    
-    public final void delete(P... objects) {
+    public /* non-final */ void delete(P... objects) {
         delete(asList(objects));
     }
 
     @Override
-    public final void delete(Collection<P> objects) {
+    public /* non-final */ void delete(Collection<P> objects) {
         List<T> ids = new ArrayList<T>();
 
         for (P object : objects) {
@@ -208,16 +208,14 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         deleteById(ids);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    
-    @SafeVarargs
-    
-    public final void deleteById(T... ids) {
+    public /* non-final */ void deleteById(T... ids) {
         deleteById(asList(ids));
     }
 
     @Override
-    public final void deleteById(Collection<T> ids) {
+    public /* non-final */ void deleteById(Collection<T> ids) {
         Field<?>[] pk = pk();
 
         if (pk != null) {
@@ -226,12 +224,12 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     }
 
     @Override
-    public final boolean exists(P object) {
+    public /* non-final */ boolean exists(P object) {
         return existsById(getId(object));
     }
 
     @Override
-    public final boolean existsById(T id) {
+    public /* non-final */ boolean existsById(T id) {
         Field<?>[] pk = pk();
 
         if (pk != null) {
@@ -247,7 +245,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     }
 
     @Override
-    public final long count() {
+    public /* non-final */ long count() {
         return using(configuration)
                  .selectCount()
                  .from(table)
@@ -255,7 +253,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     }
 
     @Override
-    public final List<P> findAll() {
+    public /* non-final */ List<P> findAll() {
         return using(configuration)
                  .selectFrom(table)
                  .fetch()
@@ -263,7 +261,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     }
 
     @Override
-    public final P findById(T id) {
+    public /* non-final */ P findById(T id) {
         Field<?>[] pk = pk();
         R record = null;
 
@@ -277,8 +275,9 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         return record == null ? null : mapper().map(record);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public final <Z> List<P> fetch(Field<Z> field, Z... values) {
+    public /* non-final */ <Z> List<P> fetch(Field<Z> field, Z... values) {
         return using(configuration)
                  .selectFrom(table)
                  .where(field.in(values))
@@ -287,7 +286,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     }
 
     @Override
-    public final <Z> P fetchOne(Field<Z> field, Z value) {
+    public /* non-final */ <Z> P fetchOne(Field<Z> field, Z value) {
         R record = using(configuration)
                      .selectFrom(table)
                      .where(field.equal(value))
@@ -298,18 +297,18 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
 
     
     @Override
-    public final <Z> Optional<P> fetchOptional(Field<Z> field, Z value) {
+    public /* non-final */ <Z> Optional<P> fetchOptional(Field<Z> field, Z value) {
         return Optional.ofNullable(fetchOne(field, value));
     }
     
 
     @Override
-    public final Table<R> getTable() {
+    public /* non-final */ Table<R> getTable() {
         return table;
     }
 
     @Override
-    public final Class<P> getType() {
+    public /* non-final */ Class<P> getType() {
         return type;
     }
 
@@ -320,7 +319,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     protected abstract T getId(P object);
 
     @SuppressWarnings("unchecked")
-    protected final T compositeKeyRecord(Object... values) {
+    protected /* non-final */ T compositeKeyRecord(Object... values) {
         UniqueKey<R> key = table.getPrimaryKey();
         if (key == null)
             return null;
@@ -341,7 +340,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     // ------------------------------------------------------------------------
 
     @SuppressWarnings("unchecked")
-    private final Condition equal(Field<?>[] pk, T id) {
+    private /* non-final */ Condition equal(Field<?>[] pk, T id) {
         if (pk.length == 1) {
             return ((Field<Object>) pk[0]).equal(pk[0].getDataType().convert(id));
         }
@@ -353,7 +352,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     }
 
     @SuppressWarnings("unchecked")
-    private final Condition equal(Field<?>[] pk, Collection<T> ids) {
+    private /* non-final */ Condition equal(Field<?>[] pk, Collection<T> ids) {
         if (pk.length == 1) {
             if (ids.size() == 1) {
                 return equal(pk, ids.iterator().next());
@@ -369,12 +368,12 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         }
     }
 
-    private final Field<?>[] pk() {
+    private /* non-final */ Field<?>[] pk() {
         UniqueKey<?> key = table.getPrimaryKey();
         return key == null ? null : key.getFieldsArray();
     }
 
-    private final List<R> records(Collection<P> objects, boolean forUpdate) {
+    private /* non-final */ List<R> records(Collection<P> objects, boolean forUpdate) {
         List<R> result = new ArrayList<R>();
         Field<?>[] pk = pk();
 

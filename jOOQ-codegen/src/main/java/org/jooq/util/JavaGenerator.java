@@ -675,7 +675,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (identityCounter > 0) {
-            out.println("\t}");
+            out.tab(1).println("}");
         }
 
         // UniqueKeys
@@ -687,7 +687,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (uniqueKeyCounter > 0) {
-            out.println("\t}");
+            out.tab(1).println("}");
         }
 
         // ForeignKeys
@@ -699,7 +699,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (foreignKeyCounter > 0) {
-            out.println("\t}");
+            out.tab(1).println("}");
         }
 
         out.println("}");

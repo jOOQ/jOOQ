@@ -120,6 +120,8 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
 
     @SuppressWarnings("unchecked")
     public W print(String string, Object... args) {
+        string = string.replaceAll("\t", tabString);
+
         if (newline && indentTabs > 0) {
             for (int i = 0; i < indentTabs; i++)
                 sb.append(tabString);

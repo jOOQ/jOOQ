@@ -82,27 +82,37 @@ public enum SQLDialect {
     // -------------------------------------------------------------------------
 
     /**
-     * The CUBRID SQL dialect family.
+     * The CUBRID dialect family.
      */
     CUBRID("CUBRID", false),
 
     /**
-     * The Apache Derby SQL dialect family.
+     * The Apache Derby dialect family.
      */
     DERBY("Derby", false),
 
     /**
-     * The Firebird SQL dialect family.
+     * The Firebird dialect family.
      */
     FIREBIRD("Firebird", false),
 
     /**
-     * The H2 SQL dialect family.
+     * The Firebird 2.5 dialect.
+     */
+    FIREBIRD_2_5("Firebird", false, FIREBIRD, null),
+
+    /**
+     * The Firebird 3.0 dialect.
+     */
+    FIREBIRD_3_0("Firebird", false, FIREBIRD, FIREBIRD_2_5),
+
+    /**
+     * The H2 dialect family.
      */
     H2("H2", false),
 
     /**
-     * The Hypersonic SQL dialect family.
+     * The Hypersonic dialect family.
      */
     HSQLDB("HSQLDB", false),
 
@@ -164,56 +174,56 @@ public enum SQLDialect {
     /* [pro] xx
 
     xxx
-     x xxx xx xxxxxx xxx xxxxxxx xxxxxxx
+     x xxx xx xxxxxx xxxxxxx xxxxxxx
      x xxx
      x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
      xx
     xxxxxxxxxxxxxxxx xxxxxx
 
     xxx
-     x xxx xx xxxxxx xxxx xxx xxxxxxxx
+     x xxx xx xxxxxx xxxx xxxxxxxx
      x xxx
      x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
      xx
     xxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxx
 
     xxx
-     x xxx xxxxxx xxxxxxxx xxxxxx xxx xxxxxxx xxxxxxx
+     x xxx xxxxxx xxxxxxxx xxxxxx xxxxxxx xxxxxxx
      x xxx
      x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
      xx
     xxxxxxxxxx xxxxxx
 
     xxx
-     x xxx xxx xxx xxx xxxxxxx xxxxxxx
+     x xxx xxx xxx xxxxxxx xxxxxxx
      x xxx
      x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
      xx
     xxxxxxxxxx xxxxxx
 
     xxx
-     x xxx xxx xxx xxx xxx xxxxxxxx
+     x xxx xxx xxx xxx xxxxxxxx
      x xxx
      x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
      xx
     xxxxxxxxxxxx xxxxx xxxxx
 
     xxx
-     x xxx xxx xxx xxxx xxx xxxxxxxx
+     x xxx xxx xxx xxxx xxxxxxxx
      x xxx
      x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
      xx
     xxxxxxxxxxxxx xxxxx xxxx xxxxxxx
 
     xxx
-     x xxx xxx xxxx xxx xxxxxxxx
+     x xxx xxx xxxx xxxxxxxx
      x xxx
      x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
      xx
     xxxxxxxxxxxx xxxxxx
 
     xxx
-     x xxx xxxxxxxx xxx xxxxxxxx
+     x xxx xxxxxxxx xxxxxxxx
      x xxx
      x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
      xx

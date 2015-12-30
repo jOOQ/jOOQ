@@ -65,7 +65,7 @@ class Substring extends AbstractFunction<String> {
     final Field<String> getFunction0(Configuration configuration) {
         String functionName = "substring";
 
-        switch (configuration.dialect().family()) {
+        switch (configuration.family()) {
 
             // [#430] Firebird has its own syntax
             case FIREBIRD: {

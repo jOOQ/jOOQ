@@ -106,7 +106,7 @@ class RowIsNull extends AbstractCondition {
 
         // CUBRID 9.0.0 and HSQLDB have buggy implementations of the NULL predicate.
         // Informix doesn't implement the RVE IS NULL predicate.
-        if (asList(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, SQLITE).contains(configuration.dialect().family())) {
+        if (asList(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, SQLITE).contains(configuration.family())) {
             List<Condition> conditions = new ArrayList<Condition>();
 
             for (Field<?> field : row.fields()) {

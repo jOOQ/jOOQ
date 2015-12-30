@@ -103,6 +103,8 @@ public class Databases {
 
             case CUBRID:        result = CUBRIDDatabase.class;    break;
             case DERBY:         result = DerbyDatabase.class;     break;
+            case FIREBIRD_2_5:
+            case FIREBIRD_3_0:
             case FIREBIRD:      result = FirebirdDatabase.class;  break;
             case H2:            result = H2Database.class;        break;
             case HSQLDB:        result = HSQLDBDatabase.class;    break;

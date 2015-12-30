@@ -113,7 +113,7 @@ class RowOverlapsCondition<T1, T2> extends AbstractCondition {
         boolean intervalOverlaps = type0.isDateTime() && (type1.isInterval() || type1.isNumeric());
 
         // The non-standard OVERLAPS predicate is always emulated
-        if (!standardOverlaps || asList(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, SQLITE).contains(configuration.dialect().family())) {
+        if (!standardOverlaps || asList(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, SQLITE).contains(configuration.family())) {
 
             // Interval OVERLAPS predicates need some additional arithmetic
             if (intervalOverlaps) {

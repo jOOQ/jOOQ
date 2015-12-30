@@ -65,7 +65,7 @@ class Ascii extends AbstractFunction<Integer> {
 
     @Override
     final Field<Integer> getFunction0(Configuration configuration) {
-        switch (configuration.dialect()) {
+        switch (configuration.family()) {
             /* [pro] xx
             xxxx xxxxxxx
                 xxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxx

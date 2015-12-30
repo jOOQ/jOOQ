@@ -104,7 +104,7 @@ class RowInCondition extends AbstractCondition {
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {
-        if (asList(DERBY, FIREBIRD, SQLITE).contains(configuration.dialect().family())) {
+        if (asList(DERBY, FIREBIRD, SQLITE).contains(configuration.family())) {
             List<Condition> conditions = new ArrayList<Condition>();
 
             for (Row row : right) {

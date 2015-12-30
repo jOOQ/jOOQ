@@ -69,7 +69,7 @@ class Degrees extends AbstractFunction<BigDecimal> {
 
     @Override
     final Field<BigDecimal> getFunction0(Configuration configuration) {
-        switch (configuration.dialect().family()) {
+        switch (configuration.family()) {
             /* [pro] xx
             xxxx xxxxxxx
                 xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

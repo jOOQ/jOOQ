@@ -168,7 +168,9 @@ class Limit extends AbstractQueryPart {
 
             // ROWS .. TO ..
             // -------------
-            case FIREBIRD: {
+            case FIREBIRD:
+            case FIREBIRD_2_5:
+            case FIREBIRD_3_0: {
                 context.castMode(NEVER)
                        .formatSeparator()
                        .keyword("rows")

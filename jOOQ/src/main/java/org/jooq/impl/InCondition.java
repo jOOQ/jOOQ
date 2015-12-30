@@ -94,7 +94,7 @@ class InCondition<T> extends AbstractCondition {
         else if (list.size() > IN_LIMIT) {
             // [#798] Oracle and some other dialects can only hold 1000 values
             // in an IN (...) clause
-            switch (ctx.configuration().dialect().family()) {
+            switch (ctx.family()) {
                 /* [pro] xx
                 xxxx xxxxxxx
                 xxxx xxxxxxx

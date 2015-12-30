@@ -75,7 +75,7 @@ class Rpad extends AbstractFunction<String> {
 
     @Override
     final Field<String> getFunction0(Configuration configuration) {
-        switch (configuration.dialect().family()) {
+        switch (configuration.family()) {
             /* [pro] xx
             xxxx xxxxxxx x
                 xxxxxx xxxxxxxxxx x xxxxxxxxxxxxxxxxx x xxxxxxxxxx x xx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxx xxxxxxxxxxx

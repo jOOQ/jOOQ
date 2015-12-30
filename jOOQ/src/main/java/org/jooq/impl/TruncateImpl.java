@@ -103,7 +103,7 @@ class TruncateImpl<R extends Record> extends AbstractQuery implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        switch (ctx.configuration().dialect().family()) {
+        switch (ctx.family()) {
 
             // These dialects don't implement the TRUNCATE statement
             /* [pro] xx

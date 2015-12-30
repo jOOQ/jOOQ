@@ -2193,6 +2193,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("public class Tables {");
 
         for (TableDefinition table : database.getTables(schema)) {
+
             final String className = out.ref(getStrategy().getFullJavaClassName(table));
             final String id = getStrategy().getJavaIdentifier(table);
             final String fullId = getStrategy().getFullJavaIdentifier(table);
@@ -2200,18 +2201,22 @@ public class JavaGenerator extends AbstractGenerator {
                 ? table.getComment()
                 : "The table <code>" + table.getQualifiedOutputName() + "</code>.";
 
-            out.tab(1).javadoc(comment);
+            // [#4883] Scala doesn't have separate namespaces for val and def
+            if (scala && table.isTableValuedFunction() && table.getParameters().isEmpty())
+                ;
+            else {
+                out.tab(1).javadoc(comment);
 
-            if (scala)
-            	out.tab(1).println("val %s = %s", id, fullId);
-            else
-            	out.tab(1).println("public static final %s %s = %s;", className, id, fullId);
+                if (scala)
+                	out.tab(1).println("val %s = %s", id, fullId);
+                else
+                	out.tab(1).println("public static final %s %s = %s;", className, id, fullId);
+            }
 
             // [#3797] Table-valued functions generate two different literals in
             // globalObjectReferences
-            if (table.isTableValuedFunction()) {
+            if (table.isTableValuedFunction())
                 printTableValuedFunction(out, table, getStrategy().getJavaIdentifier(table));
-            }
         }
 
         out.println("}");
@@ -3092,7 +3097,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (scala) {
             out.tab(1).println("private def this(alias : %s, aliased : %s[%s]) = {", String.class, Table.class, recordType);
             if (table.isTableValuedFunction())
-                out.tab(2).println("this(alias, aliased, new %s[%s])", Field.class, table.getParameters().size());
+                out.tab(2).println("this(alias, aliased, new Array[ %s[_] ](%s))", Field.class, table.getParameters().size());
             else
                 out.tab(2).println("this(alias, aliased, null)");
 
@@ -3326,27 +3331,53 @@ public class JavaGenerator extends AbstractGenerator {
                     break;
 
                 out.tab(1).javadoc("Call this table-valued function");
-                out.tab(1).print("public %s call(", className);
-                printParameterDeclarations(out, table, parametersAsField);
-                out.println(") {");
 
-                out.tab(2).print("return new %s(getName(), null, new %s[] { ", className, Field.class);
-                String separator = "";
-                for (ParameterDefinition parameter : table.getParameters()) {
-                    out.print(separator);
+                if (scala) {
+                    out.tab(1).print("def call(");
+                    printParameterDeclarations(out, table, parametersAsField);
+                    out.println(") : %s = {", className);
 
-                    if (parametersAsField) {
-                        out.print("%s", getStrategy().getJavaMemberName(parameter));
+                    out.tab(2).print("return new %s(getName(), null, Array(", className);
+                    String separator = "";
+                    for (ParameterDefinition parameter : table.getParameters()) {
+                        out.print(separator);
+
+                        if (parametersAsField) {
+                            out.print("%s", getStrategy().getJavaMemberName(parameter));
+                        }
+                        else {
+                            out.print("%s.value(%s)", DSL.class, getStrategy().getJavaMemberName(parameter));
+                        }
+
+                        separator = ", ";
                     }
-                    else {
-                        out.print("%s.val(%s)", DSL.class, getStrategy().getJavaMemberName(parameter));
-                    }
+                    out.println("));");
 
-                    separator = ", ";
+                    out.tab(1).println("}");
                 }
-                out.println(" });");
+                else {
+                    out.tab(1).print("public %s call(", className);
+                    printParameterDeclarations(out, table, parametersAsField);
+                    out.println(") {");
 
-                out.tab(1).println("}");
+                    out.tab(2).print("return new %s(getName(), null, new %s[] { ", className, Field.class);
+                    String separator = "";
+                    for (ParameterDefinition parameter : table.getParameters()) {
+                        out.print(separator);
+
+                        if (parametersAsField) {
+                            out.print("%s", getStrategy().getJavaMemberName(parameter));
+                        }
+                        else {
+                            out.print("%s.val(%s)", DSL.class, getStrategy().getJavaMemberName(parameter));
+                        }
+
+                        separator = ", ";
+                    }
+                    out.println(" });");
+
+                    out.tab(1).println("}");
+                }
             }
         }
 
@@ -4137,12 +4168,22 @@ public class JavaGenerator extends AbstractGenerator {
         final String className = out.ref(getStrategy().getFullJavaClassName(function));
 
         out.tab(1).javadoc("Get <code>%s</code> as a table.", function.getQualifiedOutputName());
-        out.tab(1).print("public static %s %s(", className, javaMethodName);
+
+        if (scala)
+            out.tab(1).print("def %s(", javaMethodName);
+        else
+            out.tab(1).print("public static %s %s(", className, javaMethodName);
 
         printParameterDeclarations(out, function, parametersAsField);
 
-        out.println(") {");
-        out.tab(2).print("return %s.call(", out.ref(getStrategy().getFullJavaIdentifier(function), 2));
+        if (scala) {
+            out.println(") : %s = {", className);
+            out.tab(2).print("%s.call(", out.ref(getStrategy().getFullJavaIdentifier(function), 2));
+        }
+        else {
+            out.println(") {");
+            out.tab(2).print("return %s.call(", out.ref(getStrategy().getFullJavaIdentifier(function), 2));
+        }
 
         String separator = "";
         for (ParameterDefinition parameter : function.getParameters()) {
@@ -4165,13 +4206,27 @@ public class JavaGenerator extends AbstractGenerator {
         for (ParameterDefinition parameter : function.getParameters()) {
             out.print(sep1);
 
-            if (parametersAsField) {
-                out.print("%s<%s>", Field.class, refExtendsNumberType(out, parameter.getType()));
-            } else {
-                out.print(refNumberType(out, parameter.getType()));
+            if (scala) {
+                out.print("%s : ", getStrategy().getJavaMemberName(parameter));
+
+                if (parametersAsField) {
+                    out.print("%s[%s]", Field.class, refExtendsNumberType(out, parameter.getType()));
+                }
+                else {
+                    out.print(refNumberType(out, parameter.getType()));
+                }
+            }
+            else {
+                if (parametersAsField) {
+                    out.print("%s<%s>", Field.class, refExtendsNumberType(out, parameter.getType()));
+                }
+                else {
+                    out.print(refNumberType(out, parameter.getType()));
+                }
+
+                out.print(" %s", getStrategy().getJavaMemberName(parameter));
             }
 
-            out.print(" %s", getStrategy().getJavaMemberName(parameter));
             sep1 = ", ";
         }
     }
@@ -4447,16 +4502,27 @@ public class JavaGenerator extends AbstractGenerator {
         final String configurationArgument = disambiguateJavaMemberName(function.getParameters(), "configuration");
 
         out.tab(1).javadoc("Call <code>%s</code>.", function.getQualifiedOutputName());
-        out.tab(1).print("public static %s<%s> %s(%s %s", Result.class, recordClassName, javaMethodName, Configuration.class, configurationArgument);
+
+        if (scala)
+            out.tab(1).print("def %s(%s : %s", javaMethodName, configurationArgument, Configuration.class);
+        else
+            out.tab(1).print("public static %s<%s> %s(%s %s", Result.class, recordClassName, javaMethodName, Configuration.class, configurationArgument);
 
         if (!function.getParameters().isEmpty())
             out.print(", ");
 
         printParameterDeclarations(out, function, false);
 
-        out.println(") {");
-        out.tab(2).print("return %s.using(%s).selectFrom(%s.call(",
-            DSL.class, configurationArgument, out.ref(getStrategy().getFullJavaIdentifier(function), 2));
+        if (scala) {
+            out.println(") : %s[%s] = {", Result.class, recordClassName);
+            out.tab(2).print("%s.using(%s).selectFrom(%s.call(",
+                DSL.class, configurationArgument, out.ref(getStrategy().getFullJavaIdentifier(function), 2));
+        }
+        else {
+            out.println(") {");
+            out.tab(2).print("return %s.using(%s).selectFrom(%s.call(",
+                DSL.class, configurationArgument, out.ref(getStrategy().getFullJavaIdentifier(function), 2));
+        }
 
         String separator = "";
         for (ParameterDefinition parameter : function.getParameters()) {
@@ -4469,7 +4535,7 @@ public class JavaGenerator extends AbstractGenerator {
         out.print(")).fetch()");
 
         if (scala)
-            ;
+            out.println();
         else
             out.println(";");
 

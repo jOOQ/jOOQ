@@ -79,10 +79,11 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
         "\\]", Pattern.DOTALL);
 
 
-    private final File          file;
-    private final StringBuilder sb;
-    private int                 indentTabs;
-    private boolean             newline = true;
+    private final File           file;
+    private final StringBuilder  sb;
+    private int                  indentTabs;
+    private String               tabString    = "\t";
+    private boolean              newline      = true;
 
     protected GeneratorWriter(File file) {
         file.getParentFile().mkdirs();
@@ -91,32 +92,38 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
         this.sb = new StringBuilder();
     }
 
-    public final File file() {
+    public void tabString(String string) {
+        this.tabString = string;
+    }
+
+    public File file() {
         return file;
     }
 
     @SuppressWarnings("unchecked")
-    public final W print(char value) {
+    public W print(char value) {
         print("" + value);
         return (W) this;
     }
 
     @SuppressWarnings("unchecked")
-    public final W print(int value) {
+    public W print(int value) {
         print("" + value);
         return (W) this;
     }
 
     @SuppressWarnings("unchecked")
-    public final W print(String string) {
+    public W print(String string) {
         print(string, new Object[0]);
         return (W) this;
     }
 
     @SuppressWarnings("unchecked")
-    public final W print(String string, Object... args) {
+    public W print(String string, Object... args) {
         if (newline && indentTabs > 0) {
-            sb.append(StringUtils.leftPad("", indentTabs, '\t'));
+            for (int i = 0; i < indentTabs; i++)
+                sb.append(tabString);
+
             newline = false;
             indentTabs = 0;
         }
@@ -188,7 +195,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
     }
 
     @SuppressWarnings("unchecked")
-    public final W println() {
+    public W println() {
 
         // Don't add empty lines at the beginning of files
         if (sb.length() > 0) {
@@ -200,7 +207,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
     }
 
     @SuppressWarnings("unchecked")
-    public final W println(int value) {
+    public W println(int value) {
         print(value);
         println();
 
@@ -208,7 +215,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
     }
 
     @SuppressWarnings("unchecked")
-    public final W println(String string) {
+    public W println(String string) {
         print(string);
         println();
 
@@ -216,7 +223,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
     }
 
     @SuppressWarnings("unchecked")
-    public final W println(String string, Object... args) {
+    public W println(String string, Object... args) {
         print(string, args);
         println();
 
@@ -224,16 +231,16 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
     }
 
     @SuppressWarnings("unchecked")
-    public final W tab(int tabs) {
+    public W tab(int tabs) {
         this.indentTabs = tabs;
         return (W) this;
     }
 
-    public final int tab() {
+    public int tab() {
         return indentTabs;
     }
 
-    public final boolean close() {
+    public boolean close() {
         String newContent = beforeClose(sb.toString());
 
         // [#4626] Don't write empty files
@@ -281,21 +288,21 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
     /**
      * Get a reference to a {@link Class}.
      */
-    protected final String ref(Class<?> clazz) {
+    protected String ref(Class<?> clazz) {
         return clazz == null ? null : ref(clazz.getName());
     }
 
     /**
      * Get a reference to a {@link Class}.
      */
-    protected final String ref(String clazzOrId) {
+    protected String ref(String clazzOrId) {
         return clazzOrId == null ? null : ref(Arrays.asList(clazzOrId), 1).get(0);
     }
 
     /**
      * Get a reference to a list of {@link Class}.
      */
-    protected final String[] ref(String[] clazzOrId) {
+    protected String[] ref(String[] clazzOrId) {
         return clazzOrId == null ? new String[0] : ref(Arrays.asList(clazzOrId), 1).toArray(new String[clazzOrId.length]);
     }
 
@@ -304,21 +311,21 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
      * <p>
      * Subtypes may override this to generate import statements.
      */
-    protected final List<String> ref(List<String> clazzOrId) {
+    protected List<String> ref(List<String> clazzOrId) {
         return clazzOrId == null ? Collections.<String>emptyList() : ref(clazzOrId, 1);
     }
 
     /**
      * Get a reference to a {@link Class}.
      */
-    protected final String ref(String clazzOrId, int keepSegments) {
+    protected String ref(String clazzOrId, int keepSegments) {
         return clazzOrId == null ? null : ref(Arrays.asList(clazzOrId), keepSegments).get(0);
     }
 
     /**
      * Get a reference to a list of {@link Class}.
      */
-    protected final String[] ref(String[] clazzOrId, int keepSegments) {
+    protected String[] ref(String[] clazzOrId, int keepSegments) {
         return clazzOrId == null ? new String[0] : ref(Arrays.asList(clazzOrId), keepSegments).toArray(new String[clazzOrId.length]);
     }
 

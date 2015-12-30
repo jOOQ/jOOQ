@@ -126,7 +126,7 @@ public enum SQLDialect {
     POSTGRES("Postgres", false),
 
     /**
-     * The PostgreSQL dialect family.
+     * The PostgreSQL 9.3 dialect.
      * <p>
      * While this family (and its dialects) have been observed to work to some
      * extent on Amazon RedShift as well, we strongly suggest you use the
@@ -135,7 +135,7 @@ public enum SQLDialect {
     POSTGRES_9_3("Postgres", false, POSTGRES, null),
 
     /**
-     * The PostgreSQL dialect family.
+     * The PostgreSQL 9.4 dialect.
      * <p>
      * While this family (and its dialects) have been observed to work to some
      * extent on Amazon RedShift as well, we strongly suggest you use the
@@ -144,7 +144,7 @@ public enum SQLDialect {
     POSTGRES_9_4("Postgres", false, POSTGRES, POSTGRES_9_3),
 
     /**
-     * The PostgreSQL dialect family.
+     * The PostgreSQL 9.5 dialect.
      * <p>
      * While this family (and its dialects) have been observed to work to some
      * extent on Amazon RedShift as well, we strongly suggest you use the

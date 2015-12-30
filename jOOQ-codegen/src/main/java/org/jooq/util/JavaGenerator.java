@@ -4607,8 +4607,8 @@ public class JavaGenerator extends AbstractGenerator {
      */
     protected void printJavadocParagraph(JavaWriter out, String comment, String indent) {
 
-        // [#3450] Must not print */ inside Javadoc
-        String escaped = comment.replace("*/", "* /");
+        // [#3450] [#4880] Must not print */ inside Javadoc
+        String escaped = comment.replace("/*", "/ *").replace("*/", "* /");
         printParagraph(out, escaped, indent + " * ");
     }
 

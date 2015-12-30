@@ -82,7 +82,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
     private final File           file;
     private final StringBuilder  sb;
     private int                  indentTabs;
-    private String               tabString    = "\t";
+    private String               tabString    = "    ";
     private boolean              newline      = true;
 
     protected GeneratorWriter(File file) {

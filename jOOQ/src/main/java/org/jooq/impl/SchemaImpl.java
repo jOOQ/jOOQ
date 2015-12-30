@@ -91,7 +91,7 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
     }
 
     @Override
-    public final Catalog getCatalog() {
+    public /* non-final */ Catalog getCatalog() {
         return catalog;
     }
 

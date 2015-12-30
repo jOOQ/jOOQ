@@ -71,6 +71,7 @@ import java.util.regex.Pattern;
 import javax.xml.bind.DatatypeConverter;
 
 import org.jooq.AggregateFunction;
+import org.jooq.Catalog;
 import org.jooq.Configuration;
 import org.jooq.Constants;
 import org.jooq.DataType;
@@ -2197,7 +2198,7 @@ public class JavaGenerator extends AbstractGenerator {
             final String fullId = getStrategy().getFullJavaIdentifier(table);
             final String comment = !StringUtils.isBlank(table.getComment())
                 ? table.getComment()
-                : "The table " + table.getQualifiedOutputName();
+                : "The table <code>" + table.getQualifiedOutputName() + "</code>.";
 
             out.tab(1).javadoc(comment);
 
@@ -3108,7 +3109,18 @@ public class JavaGenerator extends AbstractGenerator {
 
             out.println();
             out.tab(1).println("private %s(%s alias, %s<%s> aliased, %s<?>[] parameters) {", className, String.class, Table.class, recordType, Field.class);
-            out.tab(2).println("super(alias, %s, aliased, parameters, \"%s\");", schemaId, escapeString(comment));
+            out.tab(2).println("super(alias, null, aliased, parameters, \"%s\");", escapeString(comment));
+            out.tab(1).println("}");
+        }
+
+        out.println();
+        if (scala) {
+            out.tab(1).println("override def getSchema : %s = %s", Schema.class, schemaId);
+        }
+        else {
+            out.tab(1).overrideInherit();
+            out.tab(1).println("public %s getSchema() {", Schema.class);
+            out.tab(2).println("return %s;", schemaId);
             out.tab(1).println("}");
         }
 
@@ -3435,7 +3447,29 @@ public class JavaGenerator extends AbstractGenerator {
             out.printSerial();
             out.tab(1).javadoc("The reference instance of <code>%s</code>", catalogName);
             out.tab(1).println("public static final %s %s = new %s();", className, catalogId, className);
+        }
 
+        if (generateGlobalObjectReferences() /* [#4879] TODO && generateGlobalSchemaReferences() */) {
+            for (SchemaDefinition schema : catalog.getSchemata()) {
+                final String schemaClassName = out.ref(getStrategy().getFullJavaClassName(schema));
+                final String schemaId = getStrategy().getJavaIdentifier(schema);
+                final String schemaFullId = getStrategy().getFullJavaIdentifier(schema);
+                final String schemaComment = !StringUtils.isBlank(schema.getComment())
+                    ? schema.getComment()
+                    : "The schema <code>" + schema.getQualifiedOutputName() + "</code>.";
+
+                out.tab(1).javadoc(schemaComment);
+
+                if (scala)
+                    out.tab(1).println("val %s = %s", schemaId, schemaFullId);
+                else
+                    out.tab(1).println("public final %s %s = %s;", schemaClassName, schemaId, schemaFullId);
+            }
+        }
+
+        if (scala)
+            ;
+        else {
             out.tab(1).javadoc(NO_FURTHER_INSTANCES_ALLOWED);
             out.tab(1).println("private %s() {", className);
             out.tab(2).println("super(\"%s\");", catalog.getOutputName());
@@ -3498,9 +3532,44 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).javadoc("The reference instance of <code>%s</code>", schemaName);
             out.tab(1).println("public static final %s %s = new %s();", className, schemaId, className);
 
+            if (generateGlobalObjectReferences() && generateGlobalTableReferences()) {
+                for (TableDefinition table : schema.getTables()) {
+                    final String tableClassName = out.ref(getStrategy().getFullJavaClassName(table));
+                    final String tableId = getStrategy().getJavaIdentifier(table);
+                    final String tableFullId = getStrategy().getFullJavaIdentifier(table);
+                    final String tableComment = !StringUtils.isBlank(table.getComment())
+                        ? table.getComment()
+                        : "The table <code>" + table.getQualifiedOutputName() + "</code>.";
+
+                    out.tab(1).javadoc(tableComment);
+
+                    if (scala)
+                        out.tab(1).println("val %s = %s", tableId, tableFullId);
+                    else
+                        out.tab(1).println("public final %s %s = %s;", tableClassName, tableId, tableFullId);
+
+                    // [#3797] Table-valued functions generate two different literals in
+                    // globalObjectReferences
+                    if (table.isTableValuedFunction()) {
+                        printTableValuedFunction(out, table, getStrategy().getJavaIdentifier(table));
+                    }
+                }
+            }
+
             out.tab(1).javadoc(NO_FURTHER_INSTANCES_ALLOWED);
             out.tab(1).println("private %s() {", className);
-            out.tab(2).println("super(\"%s\", %s);", schema.getOutputName(), catalogId);
+            out.tab(2).println("super(\"%s\", null);", schema.getOutputName());
+            out.tab(1).println("}");
+        }
+
+        out.println();
+        if (scala) {
+            out.tab(1).println("override def getCatalog : %s = %s", Catalog.class, catalogId);
+        }
+        else {
+            out.tab(1).overrideInherit();
+            out.tab(1).println("public %s getCatalog() {", Catalog.class);
+            out.tab(2).println("return %s;", catalogId);
             out.tab(1).println("}");
         }
 

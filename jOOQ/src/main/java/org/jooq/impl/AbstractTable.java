@@ -259,7 +259,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     // ------------------------------------------------------------------------
 
     @Override
-    public final Schema getSchema() {
+    public /* non-final */ Schema getSchema() {
         return tableschema;
     }
 

@@ -282,9 +282,9 @@ public interface Query extends QueryPart, Attachable , AutoCloseable  {
      * @throws DataAccessException If something went wrong closing the statement
      * @see Statement#close()
      */
-    
+
     @Override
-    
+
     void close() throws DataAccessException;
 
     /**

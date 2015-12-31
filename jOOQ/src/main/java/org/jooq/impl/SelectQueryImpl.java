@@ -176,10 +176,10 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
     private ForUpdateMode                        forUpdateMode;
     private int                                  forUpdateWait;
     private boolean                              forShare;
-    /* [pro] xx
-    xxxxxxx xxxxxxx                              xxxxxxxxxxxxxxxx
-    xxxxxxx xxxxxxx                              xxxxxxxxxxxxx
-    xx [/pro] */
+
+
+
+
     private final TableList                      from;
     private final ConditionProviderImpl          condition;
     private final ConditionProviderImpl          connectBy;
@@ -424,81 +424,81 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
             switch (dialect) {
 
-                /* [pro] xx
-                xx xxxxxx xxxxx xxx xxxxxx xxxxxxxxxxxxxx xxxx xxxxx xxxxxx xxxxxx
-                xxxx xxxxxxx
-                xxxx xxxxxxxxxx
-                xxxx xxxxxxxxxx
-                xxxx xxxxxxxxxx
-                    xx xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxx
 
-                    xxxxxx
 
-                xx xxxx xxxx xxxxx xxx xxx xxxxxxxxxxxxx
-                xxxx xxxx
-                xxxx xxxxxx
-                xxxx xxxxxxx x
 
-                    xx xxx xxxxxxxx xxxxxxxx x xxxxxx xxxxx xxxxxxx xxxxxxx
-                    xx xxxxxx xxx xxxxxxx xxxx xxxxxx
-                    xx xxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                    xx xxxxxxxx xxx xx xx xxxxxxxx
-                    xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                    xxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxx
 
-                    xxxxxx
-                x
 
-                xx xxxxxx xxx xxx xxx xxxxxx xxxxxxx x xxx xxxxxx xxxxxxx xxxxxx
-                xx xxxxxx xxx xx xxxxxxxx xx xxx xxxxxxx xxx xx xxx
-                xxxx xxxxxxx
-                xxxx xxxxxxxxxxx
-                xxxx xxxx
-                xxxx xxxxxxxxxxxxxx x
 
-                    xx xxxxxx xxx xxxxxxxx xxxxxxx xxxxxx xxx xxxxxxx xxxx xxxxxx
-                    xx xxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxx
 
-                    xx xxxxxx xxxxxxxxx
-                    xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                    xxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxx
 
-                    xxxxxx
-                x
 
-                xx xxxxxxxx xxx xxxx xx xxxxx xxxxxxx
-                xxxx xxxxxxxxx
 
-                xx xxxxxx xxx xxx xx xxxxx xx xxxxxxx xxx xxxx xxxxxxx
-                xxxx xxxxxxx x
 
-                    xx xxxxxx xxx xxxxxxxx xxxxxxx xxxxxx xxx xxxxxxx xxxx xxxxxx
-                    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx xx xxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxx
 
-                    xx xxxxxx xxxxxxxxx
-                    xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                    xxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxx
 
-                    xxxxxx
-                x
 
-                xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 // By default, render the dialect's limit clause
                 default: {
                     toSQLReferenceLimitDefault(context);
@@ -535,13 +535,13 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
                         // Some dialects don't allow for an OF [table-names] clause
                         // It can be emulated by listing the table's fields, though
-                        /* [pro] xx
-                        xxxx xxxx
-                        xxxx xxxxx
-                        xxxx xxxxxxxxx
-                        xxxx xxxxxxx
-                        xxxx xxxxxxx
-                        xx [/pro] */
+
+
+
+
+
+
+
                         case DERBY: {
                             forUpdateOfTables.toSQLFields(context);
                             break;
@@ -588,17 +588,17 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                 }
             }
 
-            /* [pro] xx
-            xx xxxxxxx xxx xxxxxx x xxx xxxxxx xxxx xxxxx xxxxxx x xxxx xxxx xxxx xxxxxxx
-            xxxx xx xxxxxxxxxxxxxxxxx x
-                xxxxxxxxxxxxxxxxxxxxxxxxx
-                       xxxxxxxxxxxxxx xxxxx xxxxxxxxx
-            x
-            xxxx xx xxxxxxxxxxxxxx x
-                xxxxxxxxxxxxxxxxxxxxxxxxx
-                       xxxxxxxxxxxxxx xxxx xxxxxxx
-            x
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
 
             // [#1952] SQL Server OPTION() clauses as well as many other optional
             // end-of-query clauses are appended to the end of a query
@@ -614,29 +614,29 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                        .data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, true);
             }
 
-            /* [pro] xx
-            xx xxxx xxxxxxx
-            xx xxxxxxxxxxxx
-            xx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx x
-                xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                xxxxxxxx xxxxxxxxxx x xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xx xxxxxxxxxxx xx xxxxx
-                    xxxxxxxxxx x xxxxx
 
-                xx xxxxxxxxxxx xx xxxx
-                        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxx x
 
-                    xxxxxxxxxxxxxxxxxxxxxxxxx
-                           xxxxxxxxxxxxxxxx
-                           xxxxxx xx
-                           xxxxxxxxxxxxxxxxxxx
-                x
 
-                xxxxxxxxxxxxxxxxxxxxxxxxx
-            x
 
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
         finally {
             context.data(DATA_LOCALLY_SCOPED_DATA_MAP, localDataMap);
@@ -670,172 +670,172 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
             context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE, data);
     }
 
-    /* [pro] xx
-    xxx
-     x xxxxxxx xxx xxxxx x xxxxxx xxxxxx xx xxx xxxxxx xxxxxxxxxxxxxxxx
-     x xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxx
-     xx
-    xxxxxxxxxxxxxxxxxxxxxxxxxxx
-    xxxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxx x
 
-        xx xxxxxxxxxx xxxxxxxx xxxxxxxxxx
-        xxxxx xxxxxxxxxx xxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        xx xxx xxx xxxxx
-        xxxxx xxxxxxxx xxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        xx xxx xxx xx
-        xxxxx xxxxxxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        xx xxxxxxxxx xx xxx xxxxxxx xx xxx xxxxxxxxxx xx xx
-        xx xxxxxxx xxx xx xxxx x xx xx xxxx xx xxxxx xxxxx xxxxx xxxxx xxxx xxxxx xxx xxxxxx xxx xxxxxxxxx
-        xxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxx xx x
-                x xxx xxxxxxx x xxxxxxxxxxxxxx x
-                x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
 
-            xxxx
-        xx
 
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xx x
-            xxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx x
-                xxxxxxxxx
-                xxxxxx xxxx xxxxxxxxxxxxxxxxx xx x
-                    xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                    xx xxxxxxx xxxxxx xxxx xx xxxxxx xxxxxxx xxxx xxx xxxxxxxxxxx xxxxxx xxxxxx
-                    xx xxx xxxxxxxxxx xxxx xxx xxxxx xxxxxxx xxxxxxxxxx xxxxx xx xxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                    xxxxxxx xxxxxxx x xxxxxxxxxxxx
 
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxx x xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxx
-                    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxx
 
-                    xx xxxxxxx xxxx xxxxxxxx xx xxxxxxxx xx xxxxxxx xxx xxxxxxxxxxxx xxxxxxx
-                    xx xxxxx xxxxxxx xxx xxxxxxxx xxxxxxxxxx xxxxxxxx xxx xxxxxxxxxxxx xxxxxxx
-                    xx xxxxxxxx xx xxx xxxxxxxx xxxxx xx xxxxxx xxx xxx xxx xxxxxxxxxxx xxxx
-                    xx xxx xxxxxxxxxx
-                    xxxxxxxxxxxxxxxx
-                        x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xx
 
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxx
 
-                x
-            xxxxxxxxxxx
 
-        xx xx xx xxx xx xx xxx xx xx xxxxx
-        xxxxx xxxxxxxxxx xxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
 
-        xxxxxxx xxxxxxxx x xxxxxxxxxxxxxxx
 
-        xxxxxxxxxxxxxxxxxxxxxxxxxxx xx
-           xxxxxxxxxxxxxxxxxxxx
-           xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-           xxxxxxxxxxxxxxxxxxxxx
-           xxxxxxxxxxxxxxxxxx
-           xxxxxxxxxxxxxxxxxxxxxx xxx
-           xxxxxxxxxxxxxxxxxxxx
-           xxxxxxxxxxxxxxxx
-           xxxxxxxxxxxxxxxx
 
-        xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx
 
-        xxxxxxxxxxxxxxxxxxxxxx
-           xxxxxxxxxxxxxxxxxx
-           xxxxxxxxxxxxxxxx
-           xxxxxxx xx
-           xxxxxxxxxxxxxxxxx
-           xxxxxxxxxxxxxxxxxx
-           xxxxxxxxxxxxxxxxxxxxxxx xx
-           xxxxxxxxxxxxxxxxxx
-           xxxxxx x xx
-           xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        xx xxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxx
-           xxxxxxxxxxxxxxxxxxxxx xx
-           xxxxxxxxxxxxxxxxxx
-           xxxxxx xx xx
-           xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    x
 
-    xxx
-     x xxxxxxx xxx xxxxx x xxxxxx xxxxxx xx xxx xxxxxx xxxxxxxxxxxxxxxxxx
-     x xxxxxxx
-     xx
-    xxxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxx x
 
-        xx xxxxxxxxxx xxxxxxxx xxxxxxxxxx
-        xxxxxxxxxx xxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        xx xxx xxx xxxxx
-        xxxxxxxx xxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        xx xxx xxx xx
-        xxxxxxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        xx xxxxxxxxx xx xxx xxxxxxx xx xxx xxxxxxxxxx xx xx
-        xxxxxxxxxx xxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
 
-        xx xxxxx xxxxx xxxxx xxxxxx xx
-        xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxx
 
-            xx xxxxxxx xxx xx xxxx x xx xx xxxx xx xxxxx xxxxx xxxxx xxxxx xxxx xxxxx xxx xxxxxx xxx xxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxx xx x
-                x xxx xxxxxxx x xxxxxxxxxxxxxxxxxx xxxxxxxxxx x
-                x xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxx
-        xx
 
-        xx xx xx xxx xx xx xxx xx xx xxxxx
-        xxxxxxxxxx xxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
 
-        xxxxxxxxxxxxxxxxxxxxxxxxxxx xx
-           xxxxxxxxxxxxxxxxxxxx
-           xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-           xxxxxxxxxxxxxxxxxxxxx
-           xxxxxxxxxxxxxxxxxx
-           xxxxxxxxxxxxxxxxxxxxxx xxx
-           xxxxxxxxxxxxxxxxxxxx
-           xxxxxxxxxxxxxxxx
-             xxxxxxxxxxxxxxxxxxxxxxxx xx
-             xxxxxxxxxxxxxxxxxxxx
-             xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-             xxxxxxxxxxxxxxxxxxxxx
-             xxxxxxxxxxxxxxxxxx
-             xxxxxxxxxxxxxxxxxxxxxx xxx
-             xxxxxxxxxxxxxxxxxxxx
-             xxxxxxxxxxxxxxxxx
 
-        xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx
 
-        xxx  xxxxxxxxxxxxxxxxxx
-             xxxxxxxxxxxxxxxx
-             xxxxxxx xx
-             xxxxxxxxxxxxxxxxxx
 
-        xx xxxxxxxxxxxxxxxxxxxxxxxxx
-        xxx  xxxxxxxxxxxxxxxxxx
-             xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xx
-             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        xxxxxxxxxxxxxxxxxxxxx
-           xxxxxxxxxxxxxxxx
-           xxxxxxxxx
-           xxxxxxxxxxxxxxxxxx
-           xxxxxxxxxxxxxxxxxxxxxxx xx
-           xxxxxxxxxxxxxxxxxx
-           xxxxxx x xx
-           xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    x
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * This method renders the main part of a query without the LIMIT clause.
@@ -867,52 +867,52 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         boolean wrapQueryExpressionInDerivedTable = false;
         boolean wrapQueryExpressionBodyInDerivedTable = false;
 
-        /* [pro] xx
 
-        xx xxxxxxxx xxxxxxx xxxxx xxxx xx xxxxx xx xxxxxxxxxx xxxxxxxxxxx xxx xx xxx
-        xx xxxxxxxxx xxx xxxxxxxx xxxx x xxxxxxx xxxxxx xxxxx xxxx xx xxxxx xxx xxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxxx xx xxxxxxxx xx xxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
-                   xxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxxxxxx xxx
-                   xxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxx
 
-        xx xxxxxxx
-        xx xxxxxxxxxxxx        x xxx xx xxxxx xx xxxxxxx xxxxx xxxx xx x xxxxxx xxxxx xxxxxxxxxxxxx
-        xx                       xxxxx xxxxx xxxxxxxxxx xxx xx xxx xxxxx xxxxx xxxxxxxxxx xxxxx xx xxxxx
-        xx                       xx xxxxxxx xxxxx xx xxxxxx xxxxxxxxx xxxxxxxx xx xxx xxxxx xxxxxxxxxxx
-        xx                       xxx xxxxx xxxxxxxxxx xxxx xxxx xx xxxxxxx xx x xxxxxxx xxxxxx
-        xx xxxx xxxxxxxxxx xxxxx xxxxxxxxxxxx x xxxxx xxxxxxxxx xxxx xx xxxxxxx xxxxx xxxxxxxxxx xxx xxxxx
-        xx                       xxxx xxx xx xxxx xxxx xxx x xxxxxxx xxxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
 
-            xxxxxxxxxxxxxxxxxxxxxxxx
 
-            xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxx
 
-            xx xxxxxxxxxxxxxxxxxx xx xxxx xx xxxxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxxxxxxxxxxxx xx
-                       xxxxxxxxxxxxxxxxxx
-                       xxxxxxxxxxxxxxxxxxxx
-                       xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xxx
-                       xxxxxxxxxxxxxxxxxxxxxx
 
-            xxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxxxxxx xxx
-                   xxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxx
-        x
 
-        xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // [#1658] jOOQ applies left-associativity to set operators. In order to enforce that across
         // all databases, we need to wrap relevant subqueries in parentheses.
@@ -942,12 +942,12 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
             context.sql(hint).sql(' ');
         }
 
-        /* [pro] xx
-        xx xxxxxxxx xxxxxxxx xxxx xx xxxxx xx xx xx xxxxxx xxxxxx xxxxxxxx
-        xx xxxxxxx xx xxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
-        x
-        xx [/pro] */
+
+
+
+
+
+
 
         if (!distinctOn.isEmpty()) {
             context.keyword("distinct on").sql(" (").visit(distinctOn).sql(") ");
@@ -956,10 +956,10 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
             context.keyword("distinct").sql(' ');
         }
 
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxx
-        xx [/pro] */
+
+
+
+
 
         context.declareFields(true);
 
@@ -1029,9 +1029,9 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         //         jOOQ generates a "DUAL" table or something equivalent.
         //         See also org.jooq.impl.Dual for details.
         boolean hasFrom = !getFrom().isEmpty()
-            /* [pro] xx
-            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxx
-            xx [/pro] */
+
+
+
             || asList(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL).contains(family)
         ;
 
@@ -1046,17 +1046,17 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                    .sql(' ')
                    .visit(getFrom());
 
-            /* [pro] xx
-            xx xxxxxxx xxxxxxx xxxxxx xxx xxx xxxxxx xxxx x xxxxxxxxxxxx xxxxx xxxxx
-            xx xx xx xxxx xx xxxxx xx xx xxxxx xxxx
-            xx xxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxx
-                xx xxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxx xxxxxxx x xx xxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxx xx xxxxxxx xx xxxxxxxxx
-                    xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
 
             semiAntiJoinPredicates = (List<Condition>) context.data(DATA_COLLECTED_SEMI_ANTI_JOIN, previousCollected);
             context.data(DATA_COLLECT_SEMI_ANTI_JOIN, previousCollect);
@@ -1235,12 +1235,12 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
             }
         }
 
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxx
-                   xxxxxxx xxxx
-        xx [/pro] */
+
+
+
+
+
+
 
         // ORDER BY clause for UNION
         // -------------------------
@@ -1278,110 +1278,110 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
                    .keyword("by")
                    .sql(' ');
 
-            /* [pro] xx
 
-            xx xxxxxxx xxxx xxxxxxx xxx xxxxxx xxx xxxx xxxx xxxxxx xxxxxxx xxxx xxx xxxxxx xxxxxx
-            xx xxx xx xxxx xxx xxxxxxx xxxx xxxx xxxxxxxxxx xx xxxxxxx xxxxxx xxxxxxxxxxx xxx
-            xx xxxxxxxxx xxxx xxxx xxxxx xx xxx xxxxx xx xxxxxx
-            xx xxxxxxxxxxxxxxx xx xxxxx x
-                xxxxxxx xxxxxxx x xxxxxxxxxxxxxxxxxx
 
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxx x xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxx
-                xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxx
 
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxx
-            x
-            xxxx
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             {
                 context.visit(actualOrderBy);
             }
         }
 
-        /* [pro] xx
-        xx xxxxxxx xxx xxxxxx xxxxx xxxxxxxx xx xxxxx xx xxxxxxx xxxxx xxxx
-        xx xxxxxx xx xxxxx
-        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxx xxxx
-                   xxxxxx xxx
-                   xxxxxxxxxxxxxxxxxx
-                   xxxxxx xxxxx
-        x
-        xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
 
         context.end(SELECT_ORDER_BY);
 
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxx
-                   xxxxxxxxxx
-        xx [/pro] */
+
+
+
+
+
+
 
         if (context.data().containsKey(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE) && actualLimit.isApplicable())
             context.visit(actualLimit);
     }
 
-    /* [pro] xx
-    xxxxxxx xxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxx x
-        xxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxx xxxx xxxx xxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xx xxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xx xxxxxxxxxxxxxx x xxx
-    x
 
-    xxxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx x
-        xxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxxx
-        xxxxxxxxxx xxxxxxx x xxxxxxxxxxxxxxxxxx
 
-        xx xxxxxx xxx xxx xxxxxx xxxx xxxxxxx xxx xxxxxxx
-        xxxxxx xxxxxxxx x
-            xxxx xxxxxxx
-            xxxx xxxx
-            xxxx xxxxxxxxxx x
 
-                xx xx xx xxxx x xxx xxxxxxx xx xxxxx xx xx xxxxxxxx xxxx
-                xx xxxxxxxxxxxxxxx xxxxxxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xx xxxxxxxxxxxxxxxxxxxxxxxxx
-                        xx xxxxxxxxxxxxxxxxxxxxxxx
-                        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx x
 
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
-                x
 
-                xx xxxxxx xxx xxxxxx xxxxx x xxx xxxxxx xx xxxxxxx xxxxxxxxxx
-                xxxx xx xxxxxxx xx xxxxxxxxx
-                        xx xxxxxxxxxxxxxxxxxx
-                        xx xxxxxxxxxxxxxxxxxxxxxxxx x
 
-                    xx xxxxxxx xxx xxxxxx xxxx xxxx xxxxxx xx xxxxxx xx xxxxx
-                    xx xxxxxx xx xxxxx xx xx xxxxxxxxxx xxxxx
-                    xx xxxxxxxx xx xxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
-                    x
-                x
 
-                xxxxxx
-            x
 
-            xxxx xxxxxxx x
-                xx xxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
-                x
 
-                xxxxxx
-            x
 
-            xx xxxxxx xxxxxxx xxxxxxxxxx xxxxxx xx xxxxxxx xxx xxxxxx xxx xxx xx xxxx
-            xxxx xxxxxxx x
-            x
-        x
-    x
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final void unionParenthesis(Context<?> ctx, String parenthesis) {
         if (")".equals(parenthesis)) {
@@ -1392,10 +1392,10 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         // [#3579] Nested set operators aren't supported in some databases. Emulate them via derived tables...
         else if ("(".equals(parenthesis)) {
             switch (ctx.family()) {
-                /* [pro] xx
-                xxxx xxxxxxx
-                xxxx xxxx
-                xx [/pro] */
+
+
+
+
                 case DERBY:
                 case SQLITE:
                 case MARIADB:
@@ -1432,10 +1432,10 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
         else if (")".equals(parenthesis)) {
             switch (ctx.family()) {
-                /* [pro] xx
-                xxxx xxxxxxx
-                xxxx xxxx
-                xx [/pro] */
+
+
+
+
                 case DERBY:
                 case SQLITE:
                 case MARIADB:
@@ -1547,14 +1547,14 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         forUpdateOfTables.addAll(Arrays.asList(tables));
     }
 
-    /* [pro] xx
-    xxxxxxxxx
-    xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxx x
-        xxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxx x xxxxxxxx
-    x
-    xx [/pro] */
+
+
+
+
+
+
+
+
 
     @Override
     public final void setForUpdateNoWait() {
@@ -1580,19 +1580,19 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         this.forUpdateWait = 0;
     }
 
-    /* [pro] xx
-    xxxxxxxxx
-    xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxxx x
-        xxxxxxxxxxxxxxxxxxxx x xxxxx
-        xxxxxxxxxxxxxxxxx x xxxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxx x
-        xxxxxxxxxxxxxxxxxxxx x xxxxxx
-        xxxxxxxxxxxxxxxxx x xxxxx
-    x
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public final List<Field<?>> getSelect() {
@@ -1758,41 +1758,41 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         return (unionOp.size() == 0) ? limit : unionLimit;
     }
 
-    /* [pro] xx
-    xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx x
-        xx xxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxxxxxxxxx xxxxxx x xxx xxxxxxxxxxxxxxxx
 
-            xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                xxxx xxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxx
 
-                xxxx xxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxx
 
-                xxxx xxxxxxxxxx
-                xxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
-                    xxxxxx
-            x
-            xxxxxx xxxxxxx
-        x
 
-        xxxxxx xxxxxxxxxxxxx
-    x
 
-    xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx x
-        xxxxxxxxxxxxx xxxxx x xxx xxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        xxx xxxxxxxxx xxxxx x xxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxx
 
-        xxxxxx xxxxxx
-    x
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public final void addOrderBy(Collection<? extends SortField<?>> fields) {
@@ -2027,12 +2027,12 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
         addJoin0(table, type, conditions, null);
     }
 
-    /* [pro] xx
-    xxxxxxxxx
-    xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxx xxxxx xxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxx x
-        xxxxxxxxxxxxxxx xxxxx xxxxxxxxxxx xxxxxxxxxxxxx
-    x
-    xx [/pro] */
+
+
+
+
+
+
 
     private final void addJoin0(TableLike<?> table, JoinType type, Condition[] conditions, Field<?>[] partitionBy) {
 
@@ -2053,10 +2053,10 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
             case RIGHT_OUTER_JOIN: {
                 TablePartitionByStep<?> p = getFrom().get(index).join(table, type);
                 TableOnStep<?> o = p;
-                /* [pro] xx
-                xx xxxxxxxxxxxx xx xxxx xx xxxxxxxxxxxxxxxxxx x xx
-                    x x xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xx [/pro] */
+
+
+
+
                 joined = o.on(conditions);
                 break;
             }
@@ -2066,10 +2066,10 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
             case NATURAL_JOIN:
             case NATURAL_LEFT_OUTER_JOIN:
             case NATURAL_RIGHT_OUTER_JOIN:
-            /* [pro] xx
-            xxxx xxxxxxxxxxxx
-            xxxx xxxxxxxxxxxx
-            xx [/pro] */
+
+
+
+
                 joined = getFrom().get(index).join(table, type);
                 break;
         }

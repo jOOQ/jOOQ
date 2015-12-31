@@ -119,17 +119,17 @@ class DropSequenceImpl extends AbstractQuery implements
             ctx.keyword("if exists").sql(' ');
 
         switch (ctx.family()) {
-            /* [pro] xx
-            xxxx xxxxxxxxxx x
-                xxxxxxx xxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxx
 
-                xxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                xxxxxx
-            x
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
 
             default: {
                 ctx.visit(sequence);

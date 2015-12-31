@@ -66,10 +66,10 @@ class Lower extends AbstractFunction<String> {
     @Override
     final QueryPart getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxx
-            xx [/pro] */
+
+
+
+
 
             default:
                 return field("{lower}({0})", getDataType(), field);

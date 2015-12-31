@@ -519,11 +519,11 @@ public class DefaultDataType<T> implements DataType<T> {
         else if (type.isArray()) {
             return Types.ARRAY;
         }
-        /* [pro] xx
-        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxx xxxxxxxxxxxx
-        x
-        xx [/pro] */
+
+
+
+
+
         else if (EnumType.class.isAssignableFrom(type)) {
             return Types.VARCHAR;
         }
@@ -532,9 +532,9 @@ public class DefaultDataType<T> implements DataType<T> {
         }
         else if (Result.class.isAssignableFrom(type)) {
             switch (dialect.family()) {
-                /* [pro] xx
-                xxxx xxxxxxx
-                xx [/pro] */
+
+
+
                 case H2:
                     return -10; // OracleTypes.CURSOR;
 
@@ -606,13 +606,13 @@ public class DefaultDataType<T> implements DataType<T> {
         return new ArrayDataType<T>(this);
     }
 
-    /* [pro] xx
-    xxxxxxxxx
-    xxxxxx xxxxx xx xxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx x
-        xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxx xxxxxxxxxxxxxx
-    x
 
-    xx [/pro] */
+
+
+
+
+
+
     @Override
     public final <E extends EnumType> DataType<E> asEnumDataType(Class<E> enumDataType) {
         String enumTypeName = enumDataType.getEnumConstants()[0].getName();
@@ -727,9 +727,9 @@ public class DefaultDataType<T> implements DataType<T> {
                 // jOOQ data types are handled here
                 if (EnumType.class.isAssignableFrom(type)
                      || UDTRecord.class.isAssignableFrom(type)
-                     /* [pro] xx
-                     xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                     xx [/pro] */
+
+
+
                 ) {
 
                     for (SQLDialect d : SQLDialect.values()) {
@@ -775,9 +775,9 @@ public class DefaultDataType<T> implements DataType<T> {
     @Override
     public final boolean isDateTime() {
         return java.util.Date.class.isAssignableFrom(type)
-        
+
             || java.time.temporal.Temporal.class.isAssignableFrom(type)
-        
+
         ;
     }
 
@@ -808,7 +808,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final boolean isArray() {
-        return /* [pro] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xx [/pro] */
+        return
             (!isBinary() && type.isArray());
     }
 

@@ -998,14 +998,14 @@ implements
         Configuration config = ctx.configuration();
 
         switch (ctx.family()) {
-            /* [pro] xx
-            xxxx xxxx
-            xxxx xxxxxxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
+
             case CUBRID:
             case HSQLDB: {
 
@@ -1123,11 +1123,11 @@ implements
                     toPostgresInsertOnConflict(ctx);
                     break;
 
-                /* [pro] xx
-                xxxx xxxxx
-                    xxxxxxxxxxxxxxxxxxxxx
-                    xxxxxx
-                xx [/pro] */
+
+
+
+
+
 
                 default:
                     ctx.visit(getStandardMerge(ctx));
@@ -1184,47 +1184,47 @@ implements
         }
     }
 
-    /* [pro] xx
-    xxxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxx x
-        xxxxxxxxxxxxxxxxxxxxx
-           xxxxxx xx
-           xxxxxxxxxxxxxxxxxxxx
-           xxxxxxxxxxxxx
-           xxxxxxxxxxxxxxxxxxx
 
-        xxxxxxxxx xxxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        xxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxx xxxxxxxx
-        xxxxxxxxxxxxx
 
-        xx xxxxxxxxxxxxx xx xxxxx x
-            xxxxxxxxx xx
-               xxxxxxxxxxxxxxxxxxxxx
-        x
-        xxxx x
-            xxxxxxxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxxxxxxxxxx xxx
-               xxxxxxxxxxxxxxxxxxxxxxxxx
-               xxxxxxxxxx
 
-            xx xxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                xxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxx xxxxxxx xxxxxx
-            x
-            xxxx x
-                xxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxxxxxxx xxx
 
-                xxxxxxxxxxxxxxxxxxxxx x x xxx xxxxxxxxxxxxxxxxxxxxxxxx
-                xxx xxxxxxxxx xxxxx x xxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                xxxxxxxxxxxxx
-            x
-        x
-    x
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final void toSQLStandard(Context<?> ctx) {
         ctx.start(MERGE_MERGE_INTO)
@@ -1245,40 +1245,40 @@ implements
         ctx.formatIndentEnd()
            .declareTables(false);
 
-        /* [pro] xx
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxx x
-                xx xxxxxx xxxxxxxxxx xxxxxxx x
-                    xxx xxxx x xxxxxxxxxxxxxxxxxx
 
-                    xxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xx
-                       xxxxxxxxxxxxxx
-                       xxxxxxxxxx
-                       xxxxxxxxxx
 
-                    xxxxxx xxxxxxxxx x xxx
-                    xxx xxxxxxxxx xxxxx x xxxxxxxxxxxx xxxxxxxxxxxxxxxx x
 
-                        xx xxxx xxxxxx xxx xxxxxxx
-                        xx xxxxxx xxxxxxx xxxx
-                        xxxxxx xxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                            x xxxxxxxx x xxxx x xxx x xxxxxxxxxxxxxxxxx
-                            x xxxxxxxxxxxxxxxx
 
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxx x xx xx
-                    x
 
-                    xxxxxxxxxxxxx
-                x
 
-                xxxxxx
-            x
-        x
 
-        xx [/pro] */
-        boolean onParentheses = false/* [pro] xx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxx [/pro] */;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        boolean onParentheses = false                                                                           ;
         ctx.end(MERGE_USING)
            .formatSeparator()
            .start(MERGE_ON)
@@ -1347,14 +1347,14 @@ implements
 
         ctx.end(MERGE_WHERE)
            .end(MERGE_WHEN_NOT_MATCHED_THEN_INSERT);
-        /* [pro] xx
 
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxx xxxxxxxxxx
-                xxxxxxxxxxxxx
-                xxxxxx
-        x
-        xx [/pro] */
+
+
+
+
+
+
+
     }
 
     @Override

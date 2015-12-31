@@ -171,11 +171,11 @@
                                     <includes>
                                         # Generate the complete SP user
                                         SP\..*
-                                        
+
                                         # Generate only parts of the geospatial API
                                       | MDSYS\.SDO_GEOM.*?
                                     </includes>
-                                    
+
                                     <!-- Known issue with this type: https://github.com/jOOQ/jOOQ/issues/3709 -->
                                     <excludes>ST_ANNOTATIONTEXTELEMENT</excludes>
                                     <dateAsTimestamp>true</dateAsTimestamp>

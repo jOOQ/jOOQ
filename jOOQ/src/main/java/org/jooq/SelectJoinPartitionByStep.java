@@ -88,23 +88,23 @@ import java.util.Collection;
  */
 public interface SelectJoinPartitionByStep<R extends Record> extends SelectOnStep<R> {
 
-    /* [pro] xx
-    xxx
-     x xxx x xxxxxxxxxxxxxxx xxxxxxxxx xxxxxx xx xxx xxxxx xxxx xxxx xx xxx
-     x xxxxxxxxxxx xxxxxxxxxxx xxxxxxxx
-     x
-     x xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-     xx
-    xxxxxxxxxxxxxxxx
-    xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
 
-    xxx
-     x xxx x xxxxxxxxxxxxxxx xxxxxxxxx xxxxxx xx xxx xxxxx xxxx xxxx xx xxx
-     x xxxxxxxxxxx xxxxxxxxxxx xxxxxxxx
-     x
-     x xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-     xx
-    xxxxxxxxxxxxxxxx
-    xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxx xxxxxxxx
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -69,18 +69,18 @@ class BitCount extends AbstractFunction<Integer> {
             case MYSQL:
                 return function("bit_count", getDataType(), getArguments());
 
-            /* [pro] xx
-            xx xxxxxxx xxx xxxxxxxxx xxxxxx xxxx xxx xxx xxxx xxxx xxxx xxxx xx
-            xx xxxxxxx xxx xxxxxx xx xxxxxxxx xxx x x xxxxxxxx xxx xxxxxxxx xx
-            xx xxxxxxxxx xxxxxx xxxxxxxx xx xxxxxxxxx xxxx xxxxxxxxx xxxxxxx
-            xxxx xxxx
-            xxxx xxxx
-            xxxx xxxxxxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
 
             // Better solutions very welcome! See also:
             // See also http://stackoverflow.com/questions/7946349/how-to-simulate-the-mysql-bit-count-function-in-sybase-sql-anywhere

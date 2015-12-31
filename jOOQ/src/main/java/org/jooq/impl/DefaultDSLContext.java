@@ -368,9 +368,9 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
             // [#3718] Use reflection to support also JDBC 4.0
             catch (Exception suppress) {
-                
+
                 cause.addSuppressed(suppress);
-                
+
             }
 
             if (cause instanceof RuntimeException) {
@@ -602,7 +602,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return resultQuery(sql, parts).fetchLazy();
     }
 
-    
+
     @Override
     public Stream<Record> fetchStream(SQL sql) {
         return resultQuery(sql).stream();
@@ -622,7 +622,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public Stream<Record> fetchStream(String sql, QueryPart... parts) {
         return resultQuery(sql, parts).stream();
     }
-    
+
 
     @Override
     public Results fetchMany(SQL sql) {
@@ -664,7 +664,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return resultQuery(sql, parts).fetchOne();
     }
 
-    
+
     @Override
     public Optional<Record> fetchOptional(SQL sql) {
         return Optional.ofNullable(fetchOne(sql));
@@ -684,7 +684,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public Optional<Record> fetchOptional(String sql, QueryPart... parts) {
         return Optional.ofNullable(fetchOne(sql, parts));
     }
-    
+
 
     @Override
     public Object fetchValue(SQL sql) {
@@ -706,7 +706,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return fetchValue((ResultQuery) resultQuery(sql, parts));
     }
 
-    
+
     @Override
     public Optional<?> fetchOptionalValue(SQL sql) {
         return Optional.ofNullable(fetchValue(sql));
@@ -726,7 +726,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public Optional<?> fetchOptionalValue(String sql, QueryPart... parts) {
         return Optional.ofNullable(fetchValue(sql, parts));
     }
-    
+
 
     @Override
     public List<?> fetchValues(SQL sql) {
@@ -832,7 +832,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return Utils.fetchOne(fetchLazy(rs, types));
     }
 
-    
+
     @Override
     public Optional<Record> fetchOptional(ResultSet rs) {
         return Optional.ofNullable(fetchOne(rs));
@@ -852,7 +852,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public Optional<Record> fetchOptional(ResultSet rs, Class<?>... types) {
         return Optional.ofNullable(fetchOne(rs, types));
     }
-    
+
 
     @Override
     public Object fetchValue(ResultSet rs) {
@@ -874,7 +874,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return (T) value1((Record1) fetchOne(rs, type));
     }
 
-    
+
     @Override
     public Optional<?> fetchOptionalValue(ResultSet rs) {
         return Optional.ofNullable(fetchValue(rs));
@@ -894,7 +894,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public <T> Optional<T> fetchOptionalValue(ResultSet rs, Class<T> type) {
         return Optional.ofNullable(fetchValue(rs, type));
     }
-    
+
 
     @Override
     public List<?> fetchValues(ResultSet rs) {
@@ -958,7 +958,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return fetchLazy(rs, Utils.dataTypes(types));
     }
 
-    
+
     @Override
     public Stream<Record> fetchStream(ResultSet rs) {
         return fetchLazy(rs).stream();
@@ -978,7 +978,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public Stream<Record> fetchStream(ResultSet rs, Class<?>... types) {
         return fetchLazy(rs, types).stream();
     }
-    
+
 
     @Override
     public Result<Record> fetchFromTXT(String string) {
@@ -2428,9 +2428,9 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
                 return select(field).fetchOne(field);
             }
 
-            /* [pro] xx
-            xxxx xxxxxxxx
-            xx [/pro] */
+
+
+
 
             case CUBRID:
             case MARIADB:
@@ -2449,25 +2449,25 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
                 return select(field).fetchOne(field);
             }
 
-            /* [pro] xx
-            xxxx xxxxxxxxx x
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxxx xxxxx xxxxx x xxxx xxxxxxxxxxxxxxxxxx
-            x
 
-            xxxx xxxxxxx x
-                xxxxxxxxxxxxxxxxx xxxxx x xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            x
 
-            xxxx xxxxxxx
-            xxxx xxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxx x
-                xxxxxxxxxxxxxxxxx xxxxx x xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            x
 
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             default:
                 throw new SQLDialectNotSupportedException("identity functionality not supported by " + configuration().dialect());
         }
@@ -2839,7 +2839,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         }
     }
 
-    
+
     @Override
     public <R extends Record> Stream<R> fetchStream(ResultQuery<R> query) {
         final Configuration previous = Utils.getConfiguration(query);
@@ -2852,7 +2852,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
             query.attach(previous);
         }
     }
-    
+
 
     @Override
     public <R extends Record> Results fetchMany(ResultQuery<R> query) {
@@ -2880,12 +2880,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         }
     }
 
-    
+
     @Override
     public <R extends Record> Optional<R> fetchOptional(ResultQuery<R> query) {
         return Optional.ofNullable(fetchOne(query));
     }
-    
+
 
     @Override
     public <T, R extends Record1<T>> T fetchValue(ResultQuery<R> query) {
@@ -2905,7 +2905,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return fetchValue(select(field).from(field.getTable()));
     }
 
-    
+
     @Override
     public <T, R extends Record1<T>> Optional<T> fetchOptionalValue(ResultQuery<R> query) {
         return Optional.ofNullable(fetchValue(query));
@@ -2915,7 +2915,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public <T> Optional<T> fetchOptionalValue(TableField<?, T> field) {
         return Optional.ofNullable(fetchValue(field));
     }
-    
+
 
     @Override
     public <T, R extends Record1<T>> List<T> fetchValues(ResultQuery<R> query) {
@@ -3004,7 +3004,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return Utils.fetchOne(fetchLazy(table, condition));
     }
 
-    
+
     @Override
     public <R extends Record> Optional<R> fetchOptional(Table<R> table) {
         return Optional.ofNullable(fetchOne(table));
@@ -3014,7 +3014,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public <R extends Record> Optional<R> fetchOptional(Table<R> table, Condition condition) {
         return Optional.ofNullable(fetchOne(table, condition));
     }
-    
+
 
     @Override
     public <R extends Record> R fetchAny(Table<R> table) {
@@ -3036,7 +3036,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return selectFrom(table).where(condition).fetchLazy();
     }
 
-    
+
     @Override
     public <R extends Record> Stream<R> fetchStream(Table<R> table) {
         return fetchStream(table, trueCondition());
@@ -3046,7 +3046,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public <R extends Record> Stream<R> fetchStream(Table<R> table, Condition condition) {
         return selectFrom(table).where(condition).stream();
     }
-    
+
 
     @Override
     public <R extends TableRecord<R>> int executeInsert(R record) {

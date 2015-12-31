@@ -135,21 +135,21 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
             alias.accept(ctx);
         }
         else {
-            /* [pro] xx
-            xx xxxxxxxxxxxxx xx xxxxxx xx xxxxxxxxxx xx xxxx xx xxxxxxxxxxxxxxxxxxxx x
-                xxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxx
 
-                xxxxxxxxxxxxx
-                xxxxxxxxxxxxx
 
-                xx xxxxxxx xxxxxxxx xxxxx xxxx xx xxxxxxx xx xx xx
-                xx xxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxxxx xx
-                       xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx
-            x
-            xxxx
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
             accept0(ctx);
         }
     }

@@ -231,9 +231,9 @@ class GenerationUtil {
 
         // [#4388] TODO: Improve array handling
         switch (dialect.family()) {
-            /* [pro] xx
-            xxxx xxxxxxxxx
-            xx [/pro] */
+
+
+
             case POSTGRES: {
 
                 // The convention is to prepend a "_" to a type to get an array type
@@ -251,9 +251,9 @@ class GenerationUtil {
                 return H2DataType.OTHER.getTypeName();
             }
 
-            /* [pro] xx
-            xxxx xxxxx
-            xx [/pro] */
+
+
+
             case HSQLDB: {
 
                 // In HSQLDB 2.2.5, there has been an incompatible INFORMATION_SCHEMA change around the

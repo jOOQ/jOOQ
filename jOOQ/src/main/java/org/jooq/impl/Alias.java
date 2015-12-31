@@ -153,14 +153,14 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
                     switch (family) {
 
-                        /* [pro] xx
-                        xxxx xxxxxxx x
-                            xx xxxxxxxxxxx xx xxxxxx xxxxxxx xxxx xxxxx xxxxxxxxx xxxxx xx x xxxxxxx xxxxxxxxx
-                            xx xx xxx xxxxx xxxxxxxxx xxxxxxx xx xxxxx
-                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                            xxxxxx
-                        x
-                        xx [/pro] */
+
+
+
+
+
+
+
+
 
                         default: {
                             fields.add(field("null").as(fieldAlias));
@@ -233,12 +233,12 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
             context.declareAliases(true);
         }
 
-        /* [pro] xx
-        xx xxxxxxx xxxxx xxxxxx xxxxx xxxxxxx xx xxx xxxxxx xxxxx xx xxxxxxx
-        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx xxxxxxxxxx xxxxxx x
-            xxxxxxxxxxxxxxxxxxxxxx
-        x
-        xx [/pro] */
+
+
+
+
+
+
         else {
             context.literal(alias);
         }

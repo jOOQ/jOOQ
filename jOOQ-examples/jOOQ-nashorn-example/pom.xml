@@ -22,9 +22,9 @@
         <org.jooq.version>3.8.0-SNAPSHOT</org.jooq.version>
         <org.h2.version>1.4.181</org.h2.version>
     </properties>
-    
+
     <dependencies>
-    
+
         <!-- Database access -->
         <dependency>
             <groupId>org.jooq</groupId>
@@ -60,7 +60,7 @@
     </dependencies>
 
     <build>
-    
+
         <!-- The resources element will replace available properties in all matching
              resources. We use this to provide H2 connection configuration to various
              configuration elements -->
@@ -74,7 +74,7 @@
                 </includes>
             </resource>
         </resources>
-        
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -96,7 +96,7 @@
                     </compilerArgs>
                 </configuration>
             </plugin>
-        
+
             <!-- We're using the properties plugin to load external properties into Maven.
                  See this excellent blog post for an explanation:
                  http://www.petrikainulainen.net/programming/tips-and-tricks/creating-profile-specific-configuration-files-with-maven/ -->
@@ -142,7 +142,7 @@
                             <url>${db.url}</url>
                             <username>${db.username}</username>
                             <password>${db.password}</password>
- 
+
                             <autocommit>true</autocommit>
                             <srcFiles>
                                 <srcFile>src/main/resources/db-h2.sql</srcFile>
@@ -150,7 +150,7 @@
                         </configuration>
                     </execution>
                 </executions>
-                
+
                 <dependencies>
                     <dependency>
                         <groupId>com.h2database</groupId>

@@ -253,16 +253,16 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         if (ctx.family() == POSTGRES && f != 0 && ctx.connection().getAutoCommit())
             log.info("Fetch Size", "A fetch size of " + f + " was set on a auto-commit PostgreSQL connection, which is not recommended. See http://jdbc.postgresql.org/documentation/head/query.html#query-with-cursor");
 
-        /* [pro] xx
-        xx xxxx xxxxxxx xxxx xx xxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xx xxxxxxxxxx xx xxxxx xxx xxx xxxxxxx
-        xx xxxxxxxxxxxxx xx xxxx x
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        x
 
-        xx xxxxxxx xxxxx xxxxxxxxxxxxxx xx xxxxx xx xxxxxx xxxxxxx xxxx xxx
-        xx xxx xxxxxx x xxxxxxxxxx xxxx xxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
-        xxxx xx [/pro] */if (ctx.statement().execute()) {
+
+
+
+
+
+
+
+
+                         if (ctx.statement().execute()) {
             ctx.resultSet(ctx.statement().getResultSet());
         }
 
@@ -319,7 +319,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         return fetch().iterator();
     }
 
-    
+
     @Override
     public final Stream<R> fetchStream() {
         return fetchLazy().stream();
@@ -329,7 +329,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     public final Stream<R> stream() {
         return fetchLazy().stream();
     }
-    
+
 
     @Override
     public final Cursor<R> fetchLazy() {
@@ -531,7 +531,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         return record == null ? null : record.into(table);
     }
 
-    
+
     @Override
     public final <T> Optional<T> fetchOptional(Field<T> field) {
         return Optional.ofNullable(fetchOne(field));
@@ -621,7 +621,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     public final <Z extends Record> Optional<Z> fetchOptionalInto(Table<Z> table) {
         return Optional.ofNullable(fetchOneInto(table));
     }
-    
+
 
     @Override
     public final <T> T fetchAny(Field<T> field) {

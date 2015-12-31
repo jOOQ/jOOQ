@@ -300,13 +300,13 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                     }
 
                 case H2:
-                /* [pro] xx
-                xxxx xxxx
-                xxxx xxxxx
 
-                xx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxx
-                xxxx xxxxxxx
-                xx [/pro] */
+
+
+
+
+
+
                     return executeSelect();
 
                 // [#773] If JDBC escape syntax is available for functions, use
@@ -376,10 +376,10 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
             execute0(ctx, listener);
 
-            /* [pro] xx
-            xx xxxxxxx xxx xxxxx xx xxxxxxxxx xxxxxx xxxx xxx xxxx xxxxxxxxx
-            xx xxx xxxxxxxxxx xx xxxxxxxx xx xxx xxxxxx
-            xx [/pro] */
+
+
+
+
 
             // [#2925] Jaybird currently doesn't like fetching OUT parameters and consuming ResultSets
             //         http://tracker.firebirdsql.org/browse/JDBC-350
@@ -514,52 +514,52 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLEnd(RenderContext context) {
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxx xx xxxxxxx x
-            xxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxx
-        x
-        xxxx
-        xx [/pro] */
+
+
+
+
+
+
+
+
+
         {
             context.sql(" }");
         }
     }
 
     private final void toSQLBegin(RenderContext context) {
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxx xx xxxxxxx x
-            xxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxxx
-        x
-        xxxx
-        xx [/pro] */
+
+
+
+
+
+
+
+
         {
             context.sql("{ ");
         }
     }
 
     private final void toSQLAssign(RenderContext context) {
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxx xx xxxxxxx x
-            xxxxxxxxxxxxxx xx xxx
-        x
-        xxxx
-        xx [/pro] */
+
+
+
+
+
+
         {
             context.sql("? = ");
         }
     }
 
     private final void toSQLCall(RenderContext context) {
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxx xx xxxxxxx x
-        x
-        xxxx
-        xx [/pro] */
+
+
+
+
+
         {
             context.sql("call ");
         }
@@ -568,24 +568,24 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLOutParam(RenderContext context, Parameter<?> parameter) {
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxx xx xxxxxxx x
-            xxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxx xx xxx
-        x
 
-        xx [/pro] */
+
+
+
+
+
+
         context.sql('?');
     }
 
     private final void toSQLInParam(RenderContext context, Parameter<?> parameter, Field<?> value) {
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxx xx xxxxxxx x
-            xxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxx xx xxx
-        x
 
-        xx [/pro] */
+
+
+
+
+
+
         context.visit(value);
     }
 
@@ -598,14 +598,14 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                 context.sql('.');
             }
 
-            /* [pro] xx
-            xx xxxxxxx xx xxx xxxxxxx xxxxxxxx xxxxxx xxxx xx xx xxxxx xxxxxxxxx
-            xxxx xx xxxxxxxxxxxx xx xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxx x
-                xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxxxxxxxxxxxxxxx
-            x
 
-            xx [/pro] */
+
+
+
+
+
+
+
             if (getPackage() != null) {
                 context.visit(DSL.name(getPackage().getName()));
                 context.sql('.');

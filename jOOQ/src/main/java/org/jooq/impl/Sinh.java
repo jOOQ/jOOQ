@@ -70,15 +70,15 @@ class Sinh extends AbstractFunction<BigDecimal> {
     @Override
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         switch (configuration.family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-            xxxx xxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
             case CUBRID:
             case HSQLDB:
             case MARIADB:

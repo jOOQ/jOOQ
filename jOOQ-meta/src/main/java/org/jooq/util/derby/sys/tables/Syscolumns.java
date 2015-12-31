@@ -27,47 +27,47 @@ public class Syscolumns extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	}
 
 	/**
-	 * The column <code>SYS.SYSCOLUMNS.REFERENCEID</code>. 
+	 * The column <code>SYS.SYSCOLUMNS.REFERENCEID</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> REFERENCEID = createField("REFERENCEID", org.jooq.impl.SQLDataType.CHAR, SYSCOLUMNS);
 
 	/**
-	 * The column <code>SYS.SYSCOLUMNS.COLUMNNAME</code>. 
+	 * The column <code>SYS.SYSCOLUMNS.COLUMNNAME</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> COLUMNNAME = createField("COLUMNNAME", org.jooq.impl.SQLDataType.VARCHAR, SYSCOLUMNS);
 
 	/**
-	 * The column <code>SYS.SYSCOLUMNS.COLUMNNUMBER</code>. 
+	 * The column <code>SYS.SYSCOLUMNS.COLUMNNUMBER</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.Integer> COLUMNNUMBER = createField("COLUMNNUMBER", org.jooq.impl.SQLDataType.INTEGER, SYSCOLUMNS);
 
 	/**
-	 * The column <code>SYS.SYSCOLUMNS.COLUMNDATATYPE</code>. 
+	 * The column <code>SYS.SYSCOLUMNS.COLUMNDATATYPE</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> COLUMNDATATYPE = createField("COLUMNDATATYPE", org.jooq.impl.SQLDataType.CLOB, SYSCOLUMNS);
 
 	/**
-	 * The column <code>SYS.SYSCOLUMNS.COLUMNDEFAULT</code>. 
+	 * The column <code>SYS.SYSCOLUMNS.COLUMNDEFAULT</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> COLUMNDEFAULT = createField("COLUMNDEFAULT", org.jooq.impl.SQLDataType.CLOB, SYSCOLUMNS);
 
 	/**
-	 * The column <code>SYS.SYSCOLUMNS.COLUMNDEFAULTID</code>. 
+	 * The column <code>SYS.SYSCOLUMNS.COLUMNDEFAULTID</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> COLUMNDEFAULTID = createField("COLUMNDEFAULTID", org.jooq.impl.SQLDataType.CHAR, SYSCOLUMNS);
 
 	/**
-	 * The column <code>SYS.SYSCOLUMNS.AUTOINCREMENTVALUE</code>. 
+	 * The column <code>SYS.SYSCOLUMNS.AUTOINCREMENTVALUE</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.Long> AUTOINCREMENTVALUE = createField("AUTOINCREMENTVALUE", org.jooq.impl.SQLDataType.BIGINT, SYSCOLUMNS);
 
 	/**
-	 * The column <code>SYS.SYSCOLUMNS.AUTOINCREMENTSTART</code>. 
+	 * The column <code>SYS.SYSCOLUMNS.AUTOINCREMENTSTART</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.Long> AUTOINCREMENTSTART = createField("AUTOINCREMENTSTART", org.jooq.impl.SQLDataType.BIGINT, SYSCOLUMNS);
 
 	/**
-	 * The column <code>SYS.SYSCOLUMNS.AUTOINCREMENTINC</code>. 
+	 * The column <code>SYS.SYSCOLUMNS.AUTOINCREMENTINC</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.Long> AUTOINCREMENTINC = createField("AUTOINCREMENTINC", org.jooq.impl.SQLDataType.BIGINT, SYSCOLUMNS);
 

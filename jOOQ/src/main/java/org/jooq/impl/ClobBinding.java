@@ -148,16 +148,16 @@ public class ClobBinding implements Binding<String, String> {
             Clob clob = null;
 
             switch (configuration.family()) {
-                /* [pro] xx
-                xx xxxxxxxx xxx x xxx xxxx xxxxxxx xxxxx xxxxx xxxxxxxxx
-                xx xxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxx xxxxxxx x
-                    xxxx x xxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxx
-                    xxxxxx
-                x
-                    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
 
                 default: {
                     clob = c.createClob();

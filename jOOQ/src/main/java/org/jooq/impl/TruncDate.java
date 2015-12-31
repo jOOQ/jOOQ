@@ -122,10 +122,10 @@ class TruncDate<T extends java.util.Date> extends AbstractFunction<T> {
 //                }
 //            }
 
-            /* [pro] xx
-            xxxx xxxxxxxxx
-            xxxx xxxxxxxx
-            xx [/pro] */
+
+
+
+
 
             case POSTGRES: {
                 switch (part) {
@@ -155,76 +155,76 @@ class TruncDate<T extends java.util.Date> extends AbstractFunction<T> {
 //                }
 //            }
 
-            /* [pro] xx
-            xxxx xxxxxxxxx x
-                xxxxxx xxxxxx x
-                    xxxx xxxxx   xxxxxxx x xxxxxxx   xxxxxx
-                    xxxx xxxxxx  xxxxxxx x xxxxxxxx  xxxxxx
-                    xxxx xxxx    xxxxxxx x xxxxx     xxxxxx
-                    xxxx xxxxx   xxxxxxx x xxxxx     xxxxxx
-                    xxxx xxxxxxx xxxxxxx x xxxxx     xxxxxx
-                    xxxx xxxxxxx xxxxxx xxxxxxxxxxxxxxxxx xxx xxxxxxxx xxxx xx xxxxxxxxxx xxxxxx
-                    xxxxxxxx xxxxxxxxxxxxxxxxxxx
-                x
 
-                xxxxxx xxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxxxxxx
-            x
 
-            xxxx xxxx x
-                xxxxxx xxxxxx x
-                    xxxx xxxxx   xxxxxxx x xxxxxxx   xxxxxx
-                    xxxx xxxxxx  xxxxxxx x xxxxx     xxxxxx
-                    xxxx xxxx    xxxxxxx x xxxxx     xxxxxx
-                    xxxx xxxxx   xxxxxxx x xxxxx     xxxxxx
-                    xxxx xxxxxxx xxxxxxx x xxxxx     xxxxxx
-                    xxxx xxxxxxx xxxxxxx x xxxxx     xxxxxx
-                    xxxxxxxx xxxxxxxxxxxxxxxxxxx
-                x
 
-                xxxxxx xxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxxxxxx
-            x
 
-            xx xx xxxxx xxxxxxxxxx xxxx xxx xxxxx xxx xx xxxxxxxxx xx xxxxxxx xxxx xx xxxx
-            xxxx xxxxx x
-                xxxxxx xxxxxx x
-                    xxxx xxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                    xxxxxxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxx
-                x
-            x
 
-            xxxx xxxxxxx x
-                xxxxxx xxxxxx x
-                    xxxx xxxxx   xxxxxxx x xxxxxxx   xxxxxx
-                    xxxx xxxxxx  xxxxxxx x xxxxx     xxxxxx
-                    xxxx xxxx    xxxxxxx x xxxxx     xxxxxx
-                    xxxx xxxxx   xxxxxxx x xxxxx     xxxxxx
-                    xxxx xxxxxxx xxxxxxx x xxxxx     xxxxxx
-                    xxxx xxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxxx xxxxxxxxxxxxxxxxxxx
-                x
 
-                xxxxxx xxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxxxxxx
-            x
 
-xx xxxxx xxxxx xxxx xxx xxx xxxx xxxxxx xxxxxxxxxxxxxxxxxxxx
-xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xx            xxxx xxxxxxxxxx
-xx            xxxx xxxxxxx x
-xx                xxxxxx xxxxxx x
-xx                    xxxx xxxxx   xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xx xxxxx xxxx xxxxxxxxxxxxxx xxxxxx
-xx                    xxxx xxxxxx  xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xx xxxxx xxxx xxxxxxxxxxxxxx xxxxxx
-xx                    xxxx xxxx    xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xx xxxxx xxxx xxxxxxxxxxxxxx xxxxxx
-xx                    xxxx xxxxx   xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xx xxxxx xxxx xxxxxxxxxxxxxx xxxxxx
-xx                    xxxx xxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xx xxxxx xxxx xxxxxxxxxxxxxx xxxxxx
-xx                    xxxx xxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xx xxxxx xxxx xxxxxxxxxxxxxx xxxxxx
-xx                    xxxxxxxx xxxxxxxxxxxxxxxxxxx
-xx                x
-xx            x
 
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             default:
                 return field("{trunc}({0}, {1})", getDataType(), date, inline(part.name()));

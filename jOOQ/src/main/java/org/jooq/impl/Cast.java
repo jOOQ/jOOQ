@@ -85,10 +85,10 @@ class Cast<T> extends AbstractFunction<T> {
     @Override
     final QueryPart getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxx xxx xxxxxxxxxxxxx
-            xx [/pro] */
+
+
+
+
 
             case DERBY:
                 return new CastDerby();
@@ -98,55 +98,55 @@ class Cast<T> extends AbstractFunction<T> {
         }
     }
 
-    /* [pro] xx
-    xxxxxxx xxxxx xxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxx x
 
-        xxx
-         x xxxxxxxxx xxx
-         xx
-        xxxxxxx xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxx
 
-        xxxxxxxxx
-        xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxx xxxx x
 
-            xx xx xxxxxx xxxx xxx xxxx xxxx xxxxxx xxx xxxx xxxxxx xxxxxx xxxx xx x xxxxxxxxx xxxxxxx xxxxxxxx
-            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                xxxxxxxxxxxxxxxxx
-                xxxxxxx
-            x
 
-            xxxxx xxxxxxxx xxxx x xxxxxxxxxx
-            xxxxx xxxxxx xxxxxxxx x
-                  xxxxx xx xxxxxxxxxxxxx xx xxxx xx xxxxxxxxxxxxxx
-                x xxxxxxx
-                x xxxxx xx xxxxxxxxxx xx xxxx xx xxxxxxxxxxx
-                x xxxxxxx
-                x xxxxx xx xxxxxxxxxxx xx xxxx xx xxxxxxxxxxxx
-                x xxxxxx
-                x xxxxx xx xxxxxxxxxxxxx xx xxxx xx xxxxxxxxxx
-                x xxxxxx
-                x xxxxx xx xxxxxxxxxxxx xx xxxx xx xxxxxxxxxxxxx
-                x xxxxxx
-                x xxxxx xx xxxxxxxxxxx xx xxxx xx xxxxxxxxxxxx
-                x xxxxxx
-                xx xxx xxxxx xxxxxxx xxxxx xxx xxxxxxx
-                x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                x xxxxxx
-                x xxxxx xx xxxxxxxxxx xx xxxx xx xxxxxxxxxx xx xxxx xx xxxxxxxxxxxxxxxx
-                x xxxxxxx
-                xx xxx xxxxx xxxxx xxx xxxxxx
-                x xxxxxx
-                x
 
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        x
 
-        xxxxxxxxx
-        xxxxxx xxxxx xxxxxxxx xxxxxxxxxxxxxxxxxx xxxx x
-            xxxxxx xxxxx
-        x
-    x
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private class CastDerby extends Native {
 

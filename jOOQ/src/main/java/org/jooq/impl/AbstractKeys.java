@@ -66,9 +66,9 @@ public abstract class AbstractKeys {
     /**
      * Factory method for unique keys
      */
-    
+
     @SafeVarargs
-    
+
     protected static <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, TableField<R, ?>... fields) {
         return new UniqueKeyImpl<R>(table, fields);
     }
@@ -76,9 +76,9 @@ public abstract class AbstractKeys {
     /**
      * Factory method for foreign keys
      */
-    
+
     @SafeVarargs
-    
+
     protected static <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, TableField<R, ?>... fields) {
         ForeignKey<R, U> result = new ReferenceImpl<R, U>(key, table, fields);
 

@@ -137,24 +137,24 @@ class RowSubqueryCondition extends AbstractCondition {
             return new Native();
         }
 
-        /* [pro] xx
-        xx xxxxxxx xxxxx xxxxxxxx xxxx xxxxxx xxxxxxx xxx x xxx xx
-        xxxx xx x
-            xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xx
-            xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
 
-            xxxxxx xxx xxxxxxxxx
-        x
 
-        xx xxxxxxx xxxxx xxxxxxxx xxxx xxxxxx xxxxxxx xxx xx xxx xxx xx
-        xxxx xx x
-            xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xx
-            xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
 
-            xxxxxx xxx xxxxxxxxx
-        x
 
-        xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // [#2395] All other configurations have to be emulated
         else {
             String table = render == null ? "t" : render.nextAlias();

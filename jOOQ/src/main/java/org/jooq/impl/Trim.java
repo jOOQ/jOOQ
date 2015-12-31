@@ -65,15 +65,15 @@ class Trim extends AbstractFunction<String> {
 
     @Override
     final Field<String> getFunction0(Configuration configuration) {
-        /* [pro] xx
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxx xxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        x
 
-        xx [/pro] */
+
+
+
+
+
+
+
+
         return function("trim", SQLDataType.VARCHAR, argument);
     }
 }

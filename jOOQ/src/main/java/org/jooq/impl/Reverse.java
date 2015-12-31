@@ -64,14 +64,14 @@ class Reverse extends AbstractFunction<String> {
     @Override
     QueryPart getFunction0(Configuration configuration) {
         switch (configuration.family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxx
 
-            xxxx xxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
 
             case CUBRID:
             case HSQLDB:

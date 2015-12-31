@@ -54,83 +54,83 @@ import java.util.Collection;
  */
 public interface AggregateFunction<T> extends AggregateFilterStep<T> {
 
-    /* [pro] xx
-    xxx
-     x xxxxxxxx xxxx xxxxxxxxx xxxxxxxx xx xxxxxxxxxxxxxxxxxx xxxxxx
-     x xxx
-     x xx xxxxxxxx xxxxxxxxxxx
-     x xxxxxxx xxxx xxxxxxxxxxx xxxxx xxxxx xx xx
-     x xxxxxxxxxxxxx
-     x xxx
-     x xxxx xxxxxx xx xxxx xxxxxxxxx xx
-     x xxxxxxxxxx xxxx xxxx xxxx xxxxxx xxxxxxxxx xx xxxxxxxxxxxxx xxxxxxxxxx
-     xx
-    xxxxxxxxxxxxxxxx
-    xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
 
-    xxx
-     x xxxxxxxx xxxx xxxxxxxxx xxxxxxxx xx xxxxxxxxxxxxxxxxxx xxxxxx
-     x xxx
-     x xx xxxxxxxx xxxxxxxxxxx
-     x xxxxxxx xxxx xxxxxxxxxxx xxxxx xxxxx xx xx
-     x xxxxxxxxxxxxx
-     x xxx
-     x xxxx xxxxxx xx xxxx xxxxxxxxx xx
-     x xxxxxxxxxx xxxx xxxx xxxx xxxxxx xxxxxxxxx xx xxxxxxxxxxxxx xxxxxxxxxx
-     xx
-    xxxxxxxxxxxxxxxx
-    xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
 
-    xxx
-     x xxxxxxxx xxxx xxxxxxxxx xxxxxxxx xx xxxxxxxxxxxxxxxxxx xxxxxx
-     x xxx
-     x xx xxxxxxxx xxxxxxxxxxx
-     x xxxxxxx xxxx xxxxxxxxxxx xxxxx xxxxx xx xx
-     x xxxxxxxxxxxxx
-     x xxx
-     x xxxx xxxxxx xx xxxx xxxxxxxxx xx
-     x xxxxxxxxxx xxxx xxxx xxxx xxxxxx xxxxxxxxx xx xxxxxxxxxxxxx xxxxxxxxxx
-     xx
-    xxxxxxxxxxxxxxxx
-    xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxxx
 
-    xxx
-     x xxxxxxxx xxxx xxxxxxxxx xxxxxxxx xx xxxxxxxxxxxxxxxxxx xxxxxx
-     x xxx
-     x xx xxxxxxxx xxxxxxxxxxx
-     x xxxxxxx xxxx xxxxxxxxxxx xxxx xxxxx xx xx
-     x xxxxxxxxxxxxx
-     x xxx
-     x xxxx xxxxxx xx xxxx xxxxxxxxx xx
-     x xxxxxxxxxx xxxx xxxx xxxx xxxxxx xxxxxxxxx xx xxxxxxxxxxxxx xxxxxxxxxx
-     xx
-    xxxxxxxxxxxxxxxx
-    xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
 
-    xxx
-     x xxxxxxxx xxxx xxxxxxxxx xxxxxxxx xx xxxxxxxxxxxxxxxxxx xxxxxx
-     x xxx
-     x xx xxxxxxxx xxxxxxxxxxx
-     x xxxxxxx xxxx xxxxxxxxxxx xxxx xxxxx xx xx
-     x xxxxxxxxxxxxx
-     x xxx
-     x xxxx xxxxxx xx xxxx xxxxxxxxx xx
-     x xxxxxxxxxx xxxx xxxx xxxx xxxxxx xxxxxxxxx xx xxxxxxxxxxxxx xxxxxxxxxx
-     xx
-    xxxxxxxxxxxxxxxx
-    xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
 
-    xxx
-     x xxxxxxxx xxxx xxxxxxxxx xxxxxxxx xx xxxxxxxxxxxxxxxxxx xxxxxx
-     x xxx
-     x xx xxxxxxxx xxxxxxxxxxx
-     x xxxxxxx xxxx xxxxxxxxxxx xxxx xxxxx xx xx
-     x xxxxxxxxxxxxx
-     x xxx
-     x xxxx xxxxxx xx xxxx xxxxxxxxx xx
-     x xxxxxxxxxx xxxx xxxx xxxx xxxxxx xxxxxxxxx xx xxxxxxxxxxxxx xxxxxxxxxx
-     xx
-    xxxxxxxxxxxxxxxx
-    xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxxx
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

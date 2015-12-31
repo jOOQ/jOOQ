@@ -40,74 +40,74 @@
  */
 package org.jooq.impl;
 
-/* [pro] xx
 
-xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxx
 
-xxxxxx xxxxxxxxxxxxxxxxxxxxx
-xxxxxx xxxxxxxxxxxxxxxxxxxxx
-xxxxxx xxxxxxxxxxxxxxxxx
-xxxxxx xxxxxxxxxxxxxxxxxx
-xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
-xxxxxx xxxxxxxxxxxxxxxx
 
-xxx
- x xxxxxxx xxxxx xxxx
- xx
-xxxxx xxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxx x
 
-    xxxxxxx xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxx
-    xxxxxxx xxxxx x           xxxxxx
-    xxxxxxx xxxxx xxxxxxxxxxx xxxxxxxxx
 
-    xxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxx xx
-    xxxxxxxxxxxxxxx xxxxxx x
-        xxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx
 
-        xxxxxxxxxx x xxxxxx
-        xxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxx
-    x
 
-    xxxxx xxxxxxxxxxx xxxxxxxxxxxxx x
-        xxxxxx xxxxxxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxx xxxx x
-        xx xxxx xxxxxxxxxx xxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxx xxxxx
-        xxxx
-            xxxxxxxxxxxxxxxxxxx xxxxx
-    x
 
-    xxxxx xxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxx x
-        xx xxxxxxxxxxxxxxxxxxxx xx xxxxxxxx x
-            xxxxxx xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx
 
-            xx xxxxxxx xx xxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxx
 
-            xxxxxx xxxxxxxxx x xxx
-            xxx xxxxxxx xxxxxx x xxxxxx x
-                xxxxxxxxxxxxxxxxxxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                xxxxxxxxx x xx xx
-            x
 
-            xxxxxxxxxxxxxxxxx
-        x
-        xxxx x
-            xxxxxxxxxxxxxxxxx
-        x
-    x
 
-    xxxxx xxxx xxxxxxxxxxxxxxxxx xxxxxxxx x
-        xxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
-    x
-x
-xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            

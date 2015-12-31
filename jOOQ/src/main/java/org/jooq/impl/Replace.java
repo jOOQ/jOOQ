@@ -67,25 +67,25 @@ class Replace extends AbstractFunction<String> {
 
         // [#861] Most dialects don't ship with a two-argument replace function:
         switch (configuration.family()) {
-            /* [pro] xx
-            xxxx xxxx x
-                xx xxxxxxxxxxxx xx xx x
-                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxxxxxx xxxxxxx
-                x
-                xxxx x
-                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxx
-                x
-            x
 
-            xxxx xxxxxxx
-            xxxx xxxx
-            xxxx xxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             case FIREBIRD:
             case HSQLDB:
             case MARIADB:

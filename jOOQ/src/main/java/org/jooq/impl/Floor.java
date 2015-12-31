@@ -67,9 +67,9 @@ class Floor<T extends Number> extends AbstractFunction<T> {
     final Field<T> getFunction0(Configuration configuration) {
         switch (configuration.dialect()) {
 
-            /* [pro] xx
-            xxxx xxxxxxx
-            xx [/pro] */
+
+
+
 
             case SQLITE:
                 return DSL.round(argument.sub(0.499999999999999));

@@ -332,7 +332,7 @@ public interface Cursor<R extends Record> extends Iterable<R> , AutoCloseable  {
      */
     <Z extends Record> Z fetchOneInto(Table<Z> table) throws DataAccessException, MappingException;
 
-    
+
     /**
      * Fetch the next record from the cursor.
      * <p>
@@ -403,7 +403,7 @@ public interface Cursor<R extends Record> extends Iterable<R> , AutoCloseable  {
      * @throws DataAccessException if something went wrong executing the query
      */
     Stream<R> stream() throws DataAccessException;
-    
+
 
     /**
      * Explicitly close the underlying {@link PreparedStatement} and
@@ -415,9 +415,9 @@ public interface Cursor<R extends Record> extends Iterable<R> , AutoCloseable  {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
-    
+
     @Override
-    
+
     void close() throws DataAccessException;
 
     /**

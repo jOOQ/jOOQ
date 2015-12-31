@@ -106,7 +106,7 @@ public interface UpdateResultStep<R extends Record> extends Update<R> {
     @Support({ FIREBIRD, POSTGRES })
     R fetchOne() throws DataAccessException;
 
-    
+
     /**
      * The record holding returned values as specified by the
      * {@link UpdateReturningStep}.
@@ -118,5 +118,5 @@ public interface UpdateResultStep<R extends Record> extends Update<R> {
      */
     @Support({ FIREBIRD, POSTGRES })
     Optional<R> fetchOptional() throws DataAccessException;
-    
+
 }

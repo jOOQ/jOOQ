@@ -59,19 +59,19 @@ import java.util.Collection;
  */
 public interface TablePartitionByStep<R extends Record> extends TableOnStep<R> {
 
-    /* [pro] xx
-    xxx
-     x xxx x xxxxxxxxxxxxxxx xxxxxxxxx xxxxxx xx xxx xxxxx xxxx xxxx xx xxx
-     x xxxxxxxxxxx xxxxxxxxxxx xxxxxxxx
-     xx
-    xxxxxxxxxxxxxxxx
-    xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
 
-    xxx
-     x xxx x xxxxxxxxxxxxxxx xxxxxxxxx xxxxxx xx xxx xxxxx xxxx xxxx xx xxx
-     x xxxxxxxxxxx xxxxxxxxxxx xxxxxxxx
-     xx
-    xxxxxxxxxxxxxxxx
-    xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxx xxxxxxxx
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

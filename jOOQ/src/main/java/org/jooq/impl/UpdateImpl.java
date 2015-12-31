@@ -741,10 +741,10 @@ final class UpdateImpl<R extends Record>
         return getDelegate().getReturnedRecord();
     }
 
-    
+
     @Override
     public final Optional<R> fetchOptional() {
         return Optional.ofNullable(fetchOne());
     }
-    
+
 }

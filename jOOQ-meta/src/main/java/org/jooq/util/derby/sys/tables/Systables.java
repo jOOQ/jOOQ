@@ -27,27 +27,27 @@ public class Systables extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	}
 
 	/**
-	 * The column <code>SYS.SYSTABLES.TABLEID</code>. 
+	 * The column <code>SYS.SYSTABLES.TABLEID</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> TABLEID = createField("TABLEID", org.jooq.impl.SQLDataType.CHAR, SYSTABLES);
 
 	/**
-	 * The column <code>SYS.SYSTABLES.TABLENAME</code>. 
+	 * The column <code>SYS.SYSTABLES.TABLENAME</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> TABLENAME = createField("TABLENAME", org.jooq.impl.SQLDataType.VARCHAR, SYSTABLES);
 
 	/**
-	 * The column <code>SYS.SYSTABLES.TABLETYPE</code>. 
+	 * The column <code>SYS.SYSTABLES.TABLETYPE</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> TABLETYPE = createField("TABLETYPE", org.jooq.impl.SQLDataType.CHAR, SYSTABLES);
 
 	/**
-	 * The column <code>SYS.SYSTABLES.SCHEMAID</code>. 
+	 * The column <code>SYS.SYSTABLES.SCHEMAID</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> SCHEMAID = createField("SCHEMAID", org.jooq.impl.SQLDataType.CHAR, SYSTABLES);
 
 	/**
-	 * The column <code>SYS.SYSTABLES.LOCKGRANULARITY</code>. 
+	 * The column <code>SYS.SYSTABLES.LOCKGRANULARITY</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> LOCKGRANULARITY = createField("LOCKGRANULARITY", org.jooq.impl.SQLDataType.CHAR, SYSTABLES);
 

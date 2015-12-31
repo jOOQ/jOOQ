@@ -125,7 +125,7 @@
       <element name="name" type="string" minOccurs="1" maxOccurs="1" />
 
       <!--
-        All elements that are generated from your schema (A Java regular expression. 
+        All elements that are generated from your schema (A Java regular expression.
         Use the pipe to separate several expressions) Watch out for
         case-sensitivity. Depending on your database, this might be
         important! You can create case-insensitive regular expressions
@@ -135,7 +135,7 @@
       <element name="includes" type="string" default=".*" minOccurs="0" maxOccurs="1" />
 
       <!--
-        All elements that are excluded from your schema (A Java regular expression. 
+        All elements that are excluded from your schema (A Java regular expression.
         Use the pipe to separate several expressions). Excludes match before
         includes
         -->
@@ -280,7 +280,7 @@
       <element name="name" type="string" minOccurs="1" maxOccurs="1" />
 
       <!--
-        A Java regular expression matching columns, parameters, attributes, 
+        A Java regular expression matching columns, parameters, attributes,
         etc to be forced to have this type
         -->
       <element name="expressions" type="string" minOccurs="1" maxOccurs="1" />
@@ -349,14 +349,14 @@
         Annotate POJOs and Records with JSR-303 validation annotations
         -->
       <element name="validationAnnotations" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
-      
-      <!-- 
+
+      <!--
         Allow to turn off the generation of global object references, which include
-        
+
         - Tables.java
         - Sequences.java
         - UDTs.java
-        
+
         Turning off the generation of the above files may be necessary for very
         large schemas, which exceed the amount of allowed constants in a class's
         constant pool (64k) or, whose static initialiser would exceed 64k of

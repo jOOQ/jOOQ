@@ -295,12 +295,12 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         return record == null ? null : mapper().map(record);
     }
 
-    
+
     @Override
     public /* non-final */ <Z> Optional<P> fetchOptional(Field<Z> field, Z value) {
         return Optional.ofNullable(fetchOne(field, value));
     }
-    
+
 
     @Override
     public /* non-final */ Table<R> getTable() {

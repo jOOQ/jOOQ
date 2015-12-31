@@ -44,27 +44,27 @@
     xmlns:regexp="http://exslt.org/regexp">
 
     <xsl:output encoding="UTF-8" method="xml" indent="yes"/>
-    
+
     <xsl:key name="schema" match="/DatabaseModel/Tables/Table/Properties/Property[Name = 'Schema']" use="." />
-    
+
     <xsl:template match="/">
         <information_schema xmlns="http://www.jooq.org/xsd/jooq-meta-3.5.4.xsd">
             <schemata>
                 <xsl:apply-templates select="/DatabaseModel/Tables/Table/Properties/Property[Name = 'Schema'][generate-id() = generate-id(key('schema', .)[1])]" mode="schema"/>
             </schemata>
-            
+
             <tables>
                 <xsl:apply-templates select="/DatabaseModel/Tables/Table" mode="table"/>
             </tables>
-            
+
             <columns>
                 <xsl:apply-templates select="/DatabaseModel/Tables/Table/Columns/Column" mode="column"/>
             </columns>
-            
+
             <sequences>
                 <xsl:apply-templates select="/DatabaseModel/Sequences/Sequence" mode="sequence"/>
             </sequences>
-            
+
             <table_constraints>
                 <xsl:comment>Primary keys</xsl:comment>
                 <xsl:apply-templates select="/DatabaseModel/Tables/Table[Columns/Column/PK/text() = 'true']" mode="table_constraint"/>
@@ -72,7 +72,7 @@
                 <xsl:comment>Unique keys</xsl:comment>
                 <xsl:apply-templates select="/DatabaseModel/Tables/Table/AlternateKeys/AlternateKey" mode="table_constraint"/>
             </table_constraints>
-            
+
             <key_column_usages>
                 <xsl:comment>Primary keys</xsl:comment>
                 <xsl:apply-templates select="/DatabaseModel/Tables/Table/Columns/Column/PK[text() = 'true']" mode="key_column_usage"/>
@@ -83,19 +83,19 @@
                 <xsl:comment>Foreign keys</xsl:comment>
                 <xsl:apply-templates select="/DatabaseModel/References/Reference/ReferenceColumns/ReferenceColumn" mode="key_column_usage"/>
             </key_column_usages>
-            
+
             <referential_constraints>
                 <xsl:apply-templates select="/DatabaseModel/References/Reference" mode="referential_constraint"/>
             </referential_constraints>
         </information_schema>
     </xsl:template>
-    
+
     <xsl:template match="Property" mode="schema">
         <schema>
             <schema_name><xsl:value-of select="Value"/></schema_name>
         </schema>
     </xsl:template>
-    
+
     <xsl:template match="Sequence" mode="sequence">
         <sequence>
             <sequence_schema><xsl:value-of select="Properties/Property[Name = 'Schema']/Value"/></sequence_schema>
@@ -103,17 +103,17 @@
             <data_type>BIGINT</data_type>
         </sequence>
     </xsl:template>
-    
+
     <xsl:template match="Table" mode="table">
         <table>
             <table_schema><xsl:value-of select="Properties/Property[Name = 'Schema']/Value"/></table_schema>
             <table_name><xsl:value-of select="Name"/></table_name>
         </table>
     </xsl:template>
-    
+
     <xsl:template match="Column" mode="column">
         <xsl:variable name="Id" select="@Id"/>
-        
+
         <column>
             <table_schema><xsl:value-of select="ancestor::Table/Properties/Property[Name = 'Schema']/Value"/></table_schema>
             <table_name><xsl:value-of select="ancestor::Table/Name"/></table_name>
@@ -123,7 +123,7 @@
             <is_nullable><xsl:value-of select="Nullable"/></is_nullable>
         </column>
     </xsl:template>
-    
+
     <xsl:template match="Table" mode="table_constraint">
         <table_constraint>
             <constraint_schema><xsl:value-of select="Properties/Property[Name = 'Schema']/Value"/></constraint_schema>
@@ -133,7 +133,7 @@
             <table_name><xsl:value-of select="Name"/></table_name>
         </table_constraint>
     </xsl:template>
-    
+
     <xsl:template match="AlternateKey" mode="table_constraint">
         <table_constraint>
             <constraint_schema><xsl:value-of select="ancestor::Table/Properties/Property[Name = 'Schema']/Value"/></constraint_schema>
@@ -143,7 +143,7 @@
             <table_name><xsl:value-of select="ancestor::Table/Name"/></table_name>
         </table_constraint>
     </xsl:template>
-    
+
     <xsl:template match="PK" mode="key_column_usage">
         <key_column_usage>
             <constraint_schema><xsl:value-of select="ancestor::Table/Properties/Property[Name = 'Schema']/Value"/></constraint_schema>
@@ -154,10 +154,10 @@
             <ordinal_position><xsl:value-of select="1 + count(ancestor::Column/preceding-sibling::Column[PK/text() = 'true'])"/></ordinal_position>
         </key_column_usage>
     </xsl:template>
-    
+
     <xsl:template match="Column" mode="key_column_usage">
         <xsl:variable name="column" select="text()"/>
-        
+
         <key_column_usage>
             <constraint_schema><xsl:value-of select="ancestor::Table/Properties/Property[Name = 'Schema']/Value"/></constraint_schema>
             <constraint_name><xsl:value-of select="ancestor::AlternateKey/Name"/></constraint_name>
@@ -167,12 +167,12 @@
             <ordinal_position><xsl:value-of select="1 + count(preceding-sibling::Column)"/></ordinal_position>
         </key_column_usage>
     </xsl:template>
-    
+
     <xsl:template match="ReferenceColumn" mode="key_column_usage">
         <xsl:variable name="pkTable" select="ancestor::Reference/PKTable"/>
         <xsl:variable name="fkTable" select="ancestor::Reference/FKTable"/>
         <xsl:variable name="fkColumn" select="FKColumn"/>
-        
+
         <key_column_usage>
             <constraint_schema><xsl:value-of select="/DatabaseModel/Tables/Table[@Id = $fkTable]/Properties/Property[Name = 'Schema']/Value"/></constraint_schema>
             <constraint_name><xsl:value-of select="ancestor::Reference/Name"/></constraint_name>
@@ -182,11 +182,11 @@
             <ordinal_position><xsl:value-of select="1 + count(preceding-sibling::ReferenceColumn)"/></ordinal_position>
         </key_column_usage>
     </xsl:template>
-    
+
     <xsl:template match="Reference" mode="referential_constraint">
         <xsl:variable name="pkTable" select="PKTable"/>
         <xsl:variable name="fkTable" select="FKTable"/>
-        
+
         <referential_constraint>
             <constraint_schema><xsl:value-of select="/DatabaseModel/Tables/Table[@Id = $fkTable]/Properties/Property[Name = 'Schema']/Value"/></constraint_schema>
             <constraint_name><xsl:value-of select="Name"/></constraint_name>

@@ -19,13 +19,13 @@
             <url>http://www.jooq.org/inc/LICENSE.txt</url>
             <distribution>repo</distribution>
         </license>
-        <!-- [pro] xxx
-        xxxxxxxxx
-            xxxxxxxxxx xxxxxxx xxx xxxxxxxxxxx xxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxx
-        xxxx [/pro] -->
+
+
+
+
+
+
+
     </licenses>
 
     <build>
@@ -82,7 +82,7 @@
                             </plugins>
                         </configuration>
                     </execution>
-                        
+
                     <execution>
                         <id>xml</id>
                         <goals>
@@ -130,7 +130,7 @@
                             </plugins>
                         </configuration>
                     </execution>
-                        
+
                     <execution>
                         <id>vertabelo-xml</id>
                         <goals>

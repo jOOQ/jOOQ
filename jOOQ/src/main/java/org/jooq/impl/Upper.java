@@ -66,10 +66,10 @@ class Upper extends AbstractFunction<String> {
     @Override
     final QueryPart getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxx
-            xx [/pro] */
+
+
+
+
 
             default:
                 return field("{upper}({0})", getDataType(), field);

@@ -121,18 +121,18 @@ class CompareCondition extends AbstractCondition {
         ParamType previousParamType = ctx.paramType();
         ParamType forcedParamType = previousParamType;
 
-        /* [pro] xx
-        xx xxxxxxx xxxx xxxxx xxx xxxxx xxxxx xxxxxx xxxx xxxxxxx xxxx x
-        xx xxxxxxxxxxxx xxxxxx xxxxxxxxxxx xx xxx xxxxxxxxxx xx xxxx xxxx xxxx
-        xx xxxxxxxxxx xxxx
-        xx xxxxxxx xx xxx xx xxx xxxxxxxxxx xxxxxxx
-            xxxxxxx x xxxxx
 
-        xx xxxxxxxx xxx x xxx xxxx xxxx xxxxxxxxx xxx xxxx xxxx xxxxxxx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xx xxxxxxx xx xxxxxxxx xx xxxxxx xx xxxxx
-            xxxxxxxxxxxxxxx x xxxxxxxx
-        xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
 
                      ctx.keyword(op.toSQL()).sql(' ');
         if (castRhs) ctx.keyword("cast").sql('(');

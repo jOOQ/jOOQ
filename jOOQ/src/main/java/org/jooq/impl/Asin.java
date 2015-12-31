@@ -69,10 +69,10 @@ class Asin extends AbstractFunction<BigDecimal> {
     @Override
     final QueryPart getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xx [/pro] */
+
+
+
+
 
             default:
                 return field("{asin}({0})", getDataType(), arg);

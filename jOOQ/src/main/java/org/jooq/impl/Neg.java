@@ -83,13 +83,13 @@ class Neg<T> extends AbstractField<T> {
                .visit(field)
                .sql(" - 1)");
         }
-        /* [pro] xx
-        xxxx xx xxxxxxxxx xx xxxxxxx xx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxxxxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxx
-               xxxxxxxxxx
-        x
-        xx [/pro] */
+
+
+
+
+
+
+
         else if (operator == BIT_NOT && family == FIREBIRD) {
             ctx.keyword("bin_not(")
                .visit(field)

@@ -63,9 +63,9 @@ class UniqueKeyImpl<R extends Record> extends AbstractKey<R> implements UniqueKe
 
     final List<ForeignKey<?, R>> references;
 
-    
+
     @SafeVarargs
-    
+
     UniqueKeyImpl(Table<R> table, TableField<R, ?>... fields) {
         super(table, fields);
 

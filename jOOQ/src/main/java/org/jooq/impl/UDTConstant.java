@@ -73,39 +73,39 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
     final void toSQL0(RenderContext context) {
         switch (context.family()) {
 
-            /* [pro] xx
-            xx xxxxxx xxxxxxxx xxxxxxxxxxxxxxxxx xxxxx xxx xxxxxx xxx xx xxxxx
-            xx xx xxx xxxxxxxxxxxxxxxxx xxxxxxxx
-            xxxx xxxxxxx x
-                xx xxxxxxxxxxxxxxxxxxxx xx xxxxxxxx x
-                    xxxxxxxxxxxxxxxxxxxxx
-                x xxxx x
-                    xxxxxxxxxxxxxxxxx
-                x
 
-                xxxxxxx
-            x
 
-            xx xxx xxxxxxxx xxxxx xxx xxxx xx xxxx xxxxxxxxxxxx xx xxxx
-            xxxx xxxx x
 
-                xx xxx xxxxxxxxxx xxx xxxxx xxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxxxxxxxxxxxxxxxx
 
-                xxxxxx xxxxxxxxx x xxxxx
-                xxx xxxxxxxxx xxxxx x xxxxxxxxxxxxxxx x
-                    xxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxx
-                x
 
-                xxxxxxx
-            x
 
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             // Due to lack of UDT support in the Postgres JDBC drivers, all UDT's
             // have to be inlined
             case POSTGRES: {
@@ -126,10 +126,10 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
                 context.keyword("row");
                 break;
 
-            /* [pro] xx
-            xxxx xxxxxxx
-            xxxx xxxx
-            xx [/pro] */
+
+
+
+
 
             // Assume default behaviour if dialect is not available
             default: {
@@ -156,10 +156,10 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
             case POSTGRES:
                 return "ROW";
 
-            /* [pro] xx
-            xxxx xxxxxxx
-            xxxx xxxx
-            xx [/pro] */
+
+
+
+
 
             // Assume default behaviour if dialect is not available
             default:
@@ -170,17 +170,17 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
     final void bind0(BindContext context) {
         switch (context.family()) {
 
-            /* [pro] xx
-            xx xxxxxx xxxxxxxx xxxxxxxxxxxxxxxxx xxxxx xxx xxxxxx xxx xx xxxxx
-            xx xx xxx xxxxxxxxxxxxxxxxx xxxxxxxx
-            xxxx xxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
-                xxxxxx
 
-            xx xx xxx xxx xxxx xxxxxxxx xxxxxx xx xx xxxxxxx xxxx xxx xxxxxxxx xxxxx
-            xxxx xxxx
 
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
             // Postgres cannot bind a complete structured type. The type is
             // inlined instead: ROW(.., .., ..)
             case POSTGRES: {

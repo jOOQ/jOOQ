@@ -73,9 +73,9 @@ class ReferenceImpl<R extends Record, O extends Record> extends AbstractKey<R> i
 
     private final UniqueKey<O> key;
 
-    
+
     @SafeVarargs
-    
+
     ReferenceImpl(UniqueKey<O> key, Table<R> table, TableField<R, ?>... fields) {
         super(table, fields);
 
@@ -93,9 +93,9 @@ class ReferenceImpl<R extends Record, O extends Record> extends AbstractKey<R> i
     }
 
     @Override
-    
+
     @SafeVarargs
-    
+
     public final Result<O> fetchParents(R... records) {
         return fetchParents(list(records));
     }
@@ -106,9 +106,9 @@ class ReferenceImpl<R extends Record, O extends Record> extends AbstractKey<R> i
     }
 
     @Override
-    
+
     @SafeVarargs
-    
+
     public final Result<R> fetchChildren(O... records) {
         return fetchChildren(list(records));
     }

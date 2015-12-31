@@ -178,11 +178,11 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
                     sb.append(".interfaces");
                 }
 
-                /* [pro] xx
-                xxxx xx xxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx x
-                    xxxxxxxxxxxxxxxxx
-                x
-                xx [/pro] */
+
+
+
+
+
             }
         }
 

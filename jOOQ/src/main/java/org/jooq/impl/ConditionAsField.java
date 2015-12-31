@@ -70,14 +70,14 @@ class ConditionAsField extends AbstractFunction<Boolean> {
 
             // Some databases don't accept predicates where column expressions
             // are expected.
-            /* [pro] xx
-            xxxx xxxx
-            xxxx xxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
+
             case CUBRID:
             case FIREBIRD:
 
@@ -95,9 +95,9 @@ class ConditionAsField extends AbstractFunction<Boolean> {
             case POSTGRES:
             case SQLITE:
 
-            /* [pro] xx
-            xxxx xxxx
-            xx [/pro] */
+
+
+
 
             // The default, for new dialects
             default:

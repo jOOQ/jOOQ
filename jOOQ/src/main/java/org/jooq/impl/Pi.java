@@ -67,15 +67,15 @@ class Pi extends AbstractFunction<BigDecimal> {
     @Override
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [pro] xx
-            xxxx xxxx
-            xxxx xxxxx
-            xxxx xxxxxxxxx
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-            xxxx xxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
+
             case SQLITE:
                 return inline(Math.PI, BigDecimal.class);
 

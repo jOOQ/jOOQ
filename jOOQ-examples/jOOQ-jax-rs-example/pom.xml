@@ -8,7 +8,7 @@
     <artifactId>jooq-jax-rs-example</artifactId>
     <packaging>war</packaging>
     <version>1.0</version>
-    
+
     <properties>
         <org.jooq.version>3.8.0-SNAPSHOT</org.jooq.version>
     </properties>
@@ -35,7 +35,7 @@
                     <stopPort>9966</stopPort>
                 </configuration>
             </plugin>
-            
+
             <plugin>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen-maven</artifactId>
@@ -107,7 +107,7 @@
             <artifactId>servlet-api</artifactId>
             <version>2.5</version>
         </dependency>
-        
+
         <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jooq</artifactId>

@@ -89,27 +89,27 @@ class Extract extends AbstractFunction<Integer> {
                         throw new SQLDialectNotSupportedException("DatePart not supported: " + datePart);
                 }
 
-            /* [pro] xx
-            xxxx xxxxxxxxx
-                xxxxxx xxxxxxxxxx x
-                    xxxx xxxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
-                    xxxx xxxxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
-                    xxxx xxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
-                    xxxx xxxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
-                    xxxx xxxxxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
-                    xxxx xxxxxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
-                    xxxxxxxx
-                        xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxx x x xxxxxxxxxx
-                x
 
-            xxxx xxxx
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             case DERBY:
                 switch (datePart) {
                     case YEAR:
@@ -128,66 +128,66 @@ class Extract extends AbstractFunction<Integer> {
                         throw new SQLDialectNotSupportedException("DatePart not supported: " + datePart);
                 }
 
-            /* [pro] xx
 
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxx x
-                    xxxx xxxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
-                    xxxx xxxxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
-                    xxxx xxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
-                    xxxx xxxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
-                    xxxx xxxxxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
-                    xxxx xxxxxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
-                    xxxxxxxx
-                        xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxx x x xxxxxxxxxx
-                x
 
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxx x
-                    xxxx xxxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxx x x xxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
-                    xxxx xxxxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxx x x xxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
-                    xxxx xxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxx x x xxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
-                    xxxx xxxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxx x x xxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xxxx xxxxxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxx x x xxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xxxx xxxxxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxx x x xxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxxx
-                        xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxx x x xxxxxxxxxx
-                x
 
-            xxxx xxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxx x
-                    xxxx xxxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
-                    xxxx xxxxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
-                    xxxx xxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
-                    xxxx xxxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
-                    xxxx xxxxxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
-                    xxxx xxxxxxx
-                        xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx
-                    xxxxxxxx
-                        xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxx x x xxxxxxxxxx
-                x
 
-            xxxx xxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             case MARIADB:
             case MYSQL:
             case POSTGRES:

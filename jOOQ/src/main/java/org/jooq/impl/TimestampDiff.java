@@ -74,37 +74,37 @@ class TimestampDiff extends AbstractFunction<DayToSecond> {
     @Override
     final Field<DayToSecond> getFunction0(Configuration configuration) {
         switch (configuration.family()) {
-            /* [pro] xx
 
-            xx xx xxxxxx xxxx xxx xxxxxxx xxxxxxxxxxxx xx xxxxxxxxxx
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxx xxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx
 
-            xx xxxxxx xxxxx xxxxxxxx xxxxxxxxxx xxxxxxxxx xx x xxxxx xxxxx xx
-            xx xxxxxxxxxxxxx xxxxxx xxx xxx xxxx xxxx xx xx xxxxxxx xx xxxxx
-            xxxx xxxx
 
-                xx xxx xxxxxxxxxx xx xxxxxx xx xxxx
-                xxxxxxxxxxxxxx xxxx x xxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxx xxxxxxxx xxxxxxxxxxx xxxxxxxxxxxx
 
-                xx xxx xxxxxxxxx xxxxxxxxxx xx xxxxxx xx xxxxxxxxxxxx
-                xxxxxxxxxxxxxx xxxxx x xxxxxxxxxxxxxxxxxxxxx xxxx xxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
-                xxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-            xx xxx xxxx xxx xxxxxx xxxx xxxx xxxx xxxxx
-            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxx xxxx
-                xxxxxx xxxxxxx xxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxx
-                               xxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                               xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxx
-                               xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx
 
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxx xxxxxx xxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxx
 
-            xxxx xxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             case POSTGRES:
 
                 // [#4481] Parentheses are important in case this expression is
@@ -118,9 +118,9 @@ class TimestampDiff extends AbstractFunction<DayToSecond> {
             case DERBY:
                 return (Field) field("1000 * {fn {timestampdiff}({sql_tsi_second}, {0}, {1}) }", INTEGER, timestamp2, timestamp1);
 
-            /* [pro] xx
-            xxxx xxxxxxxx
-            xx [/pro] */
+
+
+
 
             case FIREBIRD:
                 return field("{datediff}(millisecond, {0}, {1})", getDataType(), timestamp2, timestamp1);
@@ -137,10 +137,10 @@ class TimestampDiff extends AbstractFunction<DayToSecond> {
             case SQLITE:
                 return field("({strftime}('%s', {0}) - {strftime}('%s', {1})) * 1000", getDataType(), timestamp1, timestamp2);
 
-            /* [pro] xx
-            xx xxxx xxxxxxx xx xxxxxxx
-            xxxx xxxxxxx
-            xx [/pro] */
+
+
+
+
         }
 
         // Default implementation for equals() and hashCode()

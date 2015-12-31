@@ -9,7 +9,7 @@
         <artifactId>jooq-parent</artifactId>
         <version>3.8.0-SNAPSHOT</version>
     </parent>
-    
+
     <groupId>org.jooq</groupId>
     <artifactId>jooq-codegen</artifactId>
     <name>jOOQ Codegen</name>
@@ -20,13 +20,13 @@
             <url>http://www.jooq.org/inc/LICENSE.txt</url>
             <distribution>repo</distribution>
         </license>
-        <!-- [pro] xxx
-        xxxxxxxxx
-            xxxxxxxxxx xxxxxxx xxx xxxxxxxxxxx xxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxx
-        xxxx [/pro] -->
+
+
+
+
+
+
+
     </licenses>
 
     <dependencies>

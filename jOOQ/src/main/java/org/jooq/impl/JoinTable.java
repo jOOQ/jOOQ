@@ -172,12 +172,12 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep<Rec
             keyword = "left outer join lateral";
         }
 
-        /* [pro] xx
-        xx xx xx xxxxxxx xxx xxxxx xxxxxxx xx xxx xxxxxxxx
-        xxxx xx xxxxxxxxxxxxxxx xx xxxx xx xxxxxxxxxxxx xx xxxxxxx x
-            xxxxxxx x xxxxxx xxxxxx
-        x
-        xx [/pro] */
+
+
+
+
+
+
 
         toSQLTable(ctx, lhs);
 
@@ -461,19 +461,19 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep<Rec
     // Join API
     // ------------------------------------------------------------------------
 
-    /* [pro] xx
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxx xxxxxxx x
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxx xxxxx
-    x
 
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public final JoinTable on(Condition... conditions) {
         condition.addConditions(conditions);

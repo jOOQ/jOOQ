@@ -64,19 +64,19 @@ package org.jooq;
  */
 public interface WindowIgnoreNullsStep<T> extends WindowOverStep<T> {
 
-    /* [pro] xx
-    xxx
-     x xxx xx xxxxxxxxxxxx xxxxxxxxxxxx xxxxxx xx xxx xxxxxx xxxxxxxxx xxxx
-     x xxxxx xxx xx xxxxxxxxx xx xxx xxxxxxxxx
-     xx
-    xxxxxxxxxx xxxx xxxxxxxxx xxxxxxx xxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx
 
-    xxx
-     x xxx x xxxxxxxxxxxxx xxxxxxxxxxxx xxxxxx xx xxx xxxxxx xxxxxxxxx xxxx
-     x xxxxx xxx xx xxxxxxxxx xx xxx xxxxxxxxx
-     xx
-    xxxxxxxxxx xxxx xxxxxxxxx xxxxxxx xxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -27,17 +27,17 @@ public class Sysschemas extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	}
 
 	/**
-	 * The column <code>SYS.SYSSCHEMAS.SCHEMAID</code>. 
+	 * The column <code>SYS.SYSSCHEMAS.SCHEMAID</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> SCHEMAID = createField("SCHEMAID", org.jooq.impl.SQLDataType.CHAR, SYSSCHEMAS);
 
 	/**
-	 * The column <code>SYS.SYSSCHEMAS.SCHEMANAME</code>. 
+	 * The column <code>SYS.SYSSCHEMAS.SCHEMANAME</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> SCHEMANAME = createField("SCHEMANAME", org.jooq.impl.SQLDataType.VARCHAR, SYSSCHEMAS);
 
 	/**
-	 * The column <code>SYS.SYSSCHEMAS.AUTHORIZATIONID</code>. 
+	 * The column <code>SYS.SYSSCHEMAS.AUTHORIZATIONID</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> AUTHORIZATIONID = createField("AUTHORIZATIONID", org.jooq.impl.SQLDataType.VARCHAR, SYSSCHEMAS);
 

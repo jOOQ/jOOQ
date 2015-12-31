@@ -65,28 +65,28 @@ class CurrentDate extends AbstractFunction<Date> {
     @Override
     final Field<Date> getFunction0(Configuration configuration) {
         switch (configuration.family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
 
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
 
-            xxxx xxxxxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
 
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxx
 
-            xxxx xxxxxxxxx
-                xxxxxx xxxxxxxxxxxxxxx xxxx xx xxxxxx xxxxxxxxxxxxxxxxxx
 
-            xxxx xxxx
-            xxxx xxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxx
-            xxxx xxxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             case DERBY:
             case FIREBIRD:

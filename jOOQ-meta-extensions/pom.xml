@@ -19,15 +19,15 @@
             <url>http://www.jooq.org/inc/LICENSE.txt</url>
             <distribution>repo</distribution>
         </license>
-        <!-- [pro] xxx
-        xxxxxxxxx
-            xxxxxxxxxx xxxxxxx xxx xxxxxxxxxxx xxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxx
-        xxxx [/pro] -->
+
+
+
+
+
+
+
     </licenses>
-    
+
     <build>
         <plugins>
             <plugin>
@@ -101,7 +101,7 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>5.0.0.Final</version>
-        </dependency> 
+        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>

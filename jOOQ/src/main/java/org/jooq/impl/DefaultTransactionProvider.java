@@ -160,9 +160,9 @@ public class DefaultTransactionProvider implements TransactionProvider {
             return IGNORED_SAVEPOINT;
 
         switch (configuration.family()) {
-            /* [pro] xx
-            xxxx xxxxx
-            xx [/pro] */
+
+
+
             case CUBRID:
                 return UNSUPPORTED_SAVEPOINT;
             default:

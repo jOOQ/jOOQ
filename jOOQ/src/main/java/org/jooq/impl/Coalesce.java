@@ -66,17 +66,17 @@ class Coalesce<T> extends AbstractField<T> {
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 
-            /* [pro] xx
-            xxxx xxxxxxxxx x
-                xxxxxxxx xxxxxxxx x xxxxxxxxxx
 
-                xxx xxxx x x xx x x xxxxxxxxxxxxxx xxxx
-                    xxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxx
 
-                xxxxxxxxxxxxxxxxxxxx
-                xxxxxx
-            x
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
 
             default: {
                 ctx.visit(DSL.function("coalesce", getDataType(), fields));

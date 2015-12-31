@@ -76,21 +76,21 @@ class FetchCount extends AbstractResultQuery<Record1<Integer>> {
     private final QueryPart delegate(Configuration configuration) {
         switch (configuration.dialect().family()) {
 
-            /* [pro] xx
-            xx xxxxxxx xxxx xxxxxxxx xxxxxx xxxx xxxxxxx xxxxxx xxxx xxxxxxx
-            xx xxxxxxx xx xxxxx xxxxx x xxxxxxx xxxxxx xxxx xxxxxxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxx x
-                xxxxxxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxxxx
-                xxxxxxxx xxxxx x xxx xxxxxxxxxxxxxxxxxxxxxx
 
-                xxx xxxx x x xx x x xxxxxxxxxxxxx xxxx
-                    xxxxxxxx x xxx x xx x xxx
 
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
-            x
 
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
             default:
                 return select(count).from(query.asTable("q"));
         }

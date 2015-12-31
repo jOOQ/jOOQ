@@ -96,30 +96,30 @@ class FieldMapsForInsert extends AbstractQueryPart {
             switch (ctx.family()) {
 
                 // Some dialects don't support multi-record inserts
-                /* [pro] xx
-                xxxx xxxxxxx
-                xxxx xxxxxxxxx x
-                    xxxxxxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxxxx
 
-                    xx xx xxxxxx xxxx xxx xxxxxxx xxxxxx xx xxxxxx xxx xx xxxxx xxxxxx xxx xx xxxxxxxxxxx xxxx
-                    xx xxx xx xxxxxxxx xxxxx xxxxxx xx xxxxxx xx x xxxx xxxxxxx xxx xx xxxxx xxxxxx xxx xxx xxxx xx
-                    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                    xxxxxxxxxxxxxxxxxxxxx
-                       xxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxx
 
-                    xxxxxx
-                x
 
-                xxxx xxxx
-                xxxx xxxxx
-                xxxx xxxxxxx
-                xxxx xxxxxxx
-                xxxx xxxxxxxx
-                xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 case FIREBIRD:
                 case SQLITE: {
                     ctx.formatSeparator()

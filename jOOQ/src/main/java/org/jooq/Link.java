@@ -40,23 +40,23 @@
  */
 package org.jooq;
 
-/* [pro] xx
 
-xxx
- x x xxxxxxxx xxxx xxxxxxxxxx
- x
- x xxxxxxx xxxxx xxxx
- xx
-xxxxxx xxxxxxxxx xxxx xxxxxxx xxxxxxxxx x
 
-    xxx
-     x xxx xxxxx xxxxxxx
-     xx
-    xxxxxx xxxxxxxxx
 
-    xxx
-     x xxx xxxxxxxx xxxx xxxxx
-     xx
-    xxxxxx xxxxxxx
-x
-xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

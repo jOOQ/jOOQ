@@ -98,7 +98,7 @@ import org.jooq.impl.DSL
 
 /**
  * jOOQ type conversions used to enhance the jOOQ Java API with Xtend operators.
- * 
+ *
  * @author Lukas Eder
  * @see <a href="http://www.eclipse.org/xtend/documentation.html#operators">http://www.eclipse.org/xtend/documentation.html#operators</a>
  */

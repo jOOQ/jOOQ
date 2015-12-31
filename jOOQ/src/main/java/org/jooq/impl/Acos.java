@@ -70,10 +70,10 @@ class Acos extends AbstractFunction<BigDecimal> {
     @Override
     final QueryPart getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xx [/pro] */
+
+
+
+
 
             default:
                 return field("{acos}({0})", getDataType(), arg);

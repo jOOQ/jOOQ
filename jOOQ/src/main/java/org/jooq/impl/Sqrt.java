@@ -68,10 +68,10 @@ class Sqrt extends AbstractFunction<BigDecimal> {
     @Override
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxx
-            xx [/pro] */
+
+
+
+
 
             case SQLITE:
                 return DSL.power(argument, 0.5);

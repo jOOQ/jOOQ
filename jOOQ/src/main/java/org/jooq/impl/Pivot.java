@@ -108,15 +108,15 @@ implements
     private Table<?> pivot(Configuration configuration) {
         switch (configuration.dialect()) {
 
-            /* [pro] xx
-            xx xxxxxx xxx xxxxxx xxxxxxx xxx xxx xxxxx xxxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxxxxx x
-                xxxxxx xxx xxxxxxxxxxxxxxxxxxx
-            x
 
-            xx [/pro] */
+
+
+
+
+
+
+
+
             // Some other dialects can emulate it. This implementation is
             // EXPERIMENTAL and not officially supported
             default: {
@@ -209,49 +209,49 @@ implements
         }
     }
 
-    /* [pro] xx
-    xxx
-     x xxx xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx
-     xx
-    xxxxxxx xxxxx xxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxx x
 
-        xxx
-         x xxxxxxxxx xxx
-         xx
-        xxxxxxx xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxx
 
-        xxxxxxxxx
-        xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxx xxxx x
 
-            xx xxxx xxxxxxxxx xxx xxx xxxxxxx xxxxxx xx xxxxx xxxxxx
-            xxxxxxxxx xxxxxxxxx x xxxxxxxxxxxxxxxx
-            xxxxxxx xxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxx
-            xxxxxxx xxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxx
 
-            xxxxxxxxxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxxxxxxxxx xxx
-               xxxxxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxxxxxxx xx
-               xxxxxxxxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxxxxxx xxx
-               xxxxxxxxxx
-               xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxxxxxxx
-               xxxxxxxxx
-               xxxxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxx
-               xxxxxxxxxx
-        x
-    x
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * A base class for dialect-specific implementations of the pivot table
@@ -320,29 +320,29 @@ implements
     // XXX: Pivot API
     // ------------------------------------------------------------------------
 
-    /* [pro] xx
-    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    xxxxxxxxx
-    xxxxxx xxxxx xxx xxxxxxxx xxxxxxxxxxx xxxxxx x
-        xx xxx xxxxxxxx xxxxx xx xxx xx xxxxxxx xxx xxxxxx xxxxxxxxxx
-        xxxxxxx x xxxxxxxxxx xxxxxx
-        xxxxxx xxxxxxxxxx xxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxx xxxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxx xx x
-        xxxxxxx x xxx xxxxxxxxxxxxxxxxxxx
-        xxxxxx xxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxx xxxxxxxxx xx x
-        xxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxxx
-    x
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -111,11 +111,11 @@ class CaseConditionStepImpl<T> extends AbstractFunction<T> implements CaseCondit
     @Override
     final QueryPart getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxx xxx xxxxxxxxx
 
-            xx [/pro] */
+
+
+
+
             default:
                 return new Native();
         }
@@ -134,42 +134,42 @@ class CaseConditionStepImpl<T> extends AbstractFunction<T> implements CaseCondit
         }
     }
 
-    /* [pro] xx
-    xxxxxxx xxxxx xxxxxx xxxxxxx xxxx x
 
-        xxx
-         x xxxxxxxxx xxx
-         xx
-        xxxxxxx xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxx
 
-        xxxxxxxxx
-        xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxx xxxx x
-            xxxxxxxxxxxxxxxxxxxxx
-               xxxxxxxxxx
 
-            xxx xxxx x xxxxxxxxxxxxxxxxxx
-            xxx xxxx x x xx x x xxxxx xxxx x
-                xx xx x xx x
-                    xxxxxxxxxx xxx
-                x
 
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxx xx
-                   xxxxxxxxxxxxxxxxxxxxxxx
-            x
 
-            xx xxxxxxxxxx xx xxxxx x
-                xxxxxxxxxx xx
-                   xxxxxxxxxxxxxxxx
-                   xxxxxxx xx
-                   xxxxxxxxxxxxxxxxxx
-            x
 
-            xxxxxxxxxxxxx
-        x
-    x
 
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private class Native extends Base {
 

@@ -75,22 +75,22 @@ class FieldCondition extends AbstractCondition {
             case CUBRID:
             case FIREBIRD:
 
-            /* [pro] xx
-            xx xxxxx xx
-            xxxx xxxx
-            xxxx xxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
                 return (QueryPartInternal) condition("{0} = {1}", field, inline(true));
 
 
-            /* [pro] xx
-            xx xxxxxxxx xxx
-            xxxx xxxx
-            xx [/pro] */
+
+
+
+
 
             // Native support
             case DERBY:

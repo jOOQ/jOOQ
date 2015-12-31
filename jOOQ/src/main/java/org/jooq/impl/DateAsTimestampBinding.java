@@ -89,21 +89,21 @@ public class DateAsTimestampBinding implements Binding<Timestamp, Timestamp> {
 
     @Override
     public final void sql(BindingSQLContext<Timestamp> ctx) throws SQLException {
-        /* [pro] xx
-        xxxxxxxxxx xxxxxx x xxxxxxxxxxxxx
-        xxxxxxxxxxxxx xxxxxx x xxxxxxxxxxxxx
 
-        xx xxxxxxx xx xxxxxxx xxxx xxxxxxxxx xxxx xxxxxxx xx xxxxxxxxxx xx xxxxxx xxxx xxxx xxxxxxxxx xxxx xxxxxx
-        xx xxxx xx xxxx xx xxxxxxx xxxxxxxx xxxxxxxxxx xx xxxx xxxxxxx xx xxxxxxxxx xxx xxxxxxxxxxxxxxxxxxxx
-        xx xxxxx xxxxx xxxxxxx xxxxx xxxxxx
-        xx xxxx xxxxxxxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xx xxxxxxx xx xxxxxxx x
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                  xxxxxxxxxxxxxxxxxxxxxxxx
-                  xxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
-        x
-        xxxx
-        xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         delegate.sql(ctx);
     }
 

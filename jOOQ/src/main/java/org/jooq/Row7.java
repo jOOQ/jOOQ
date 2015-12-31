@@ -118,7 +118,7 @@ public interface Row7<T1, T2, T3, T4, T5, T6, T7> extends Row {
     // ------------------------------------------------------------------------
     // Generic comparison predicates
     // ------------------------------------------------------------------------
-    
+
     /**
      * Compare this row value expression with another row value expression
      * using a dynamic comparator.

@@ -27,27 +27,27 @@ public class License extends org.jooq.impl.TableImpl<org.jooq.example.jaxrs.db.t
 	}
 
 	/**
-	 * The column <code>license_server.license.id</code>. 
+	 * The column <code>license_server.license.id</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.example.jaxrs.db.tables.records.LicenseRecord, java.lang.Long> ID = createField("id", org.jooq.impl.SQLDataType.BIGINT, this);
 
 	/**
-	 * The column <code>license_server.license.license_date</code>. 
+	 * The column <code>license_server.license.license_date</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.example.jaxrs.db.tables.records.LicenseRecord, java.sql.Timestamp> LICENSE_DATE = createField("license_date", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The column <code>license_server.license.licensee</code>. 
+	 * The column <code>license_server.license.licensee</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.example.jaxrs.db.tables.records.LicenseRecord, java.lang.String> LICENSEE = createField("licensee", org.jooq.impl.SQLDataType.CLOB, this);
 
 	/**
-	 * The column <code>license_server.license.license</code>. 
+	 * The column <code>license_server.license.license</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.example.jaxrs.db.tables.records.LicenseRecord, java.lang.String> LICENSE_ = createField("license", org.jooq.impl.SQLDataType.CLOB, this);
 
 	/**
-	 * The column <code>license_server.license.version</code>. 
+	 * The column <code>license_server.license.version</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.example.jaxrs.db.tables.records.LicenseRecord, java.lang.String> VERSION = createField("version", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
 

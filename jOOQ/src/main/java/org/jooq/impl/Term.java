@@ -59,14 +59,14 @@ enum Term {
     ATAN2 {
         @Override
         public String translate(SQLDialect dialect) {
-            /* [pro] xx
-            xxxxxx xxxxxxxxxxxxxxxxxx x
-                xxxx xxxx
-                xxxx xxxxxxxxxx
-                    xxxxxx xxxxxxx
-            x
 
-            xx [/pro] */
+
+
+
+
+
+
+
             return "atan2";
         }
     },
@@ -74,22 +74,22 @@ enum Term {
         @Override
         public String translate(SQLDialect dialect) {
             switch (dialect.family()) {
-                /* [pro] xx
-                xxxx xxxx
-                    xxxxxx xx x xxxxxxxxxxxx
 
-                xxxx xxxxxxx
-                xxxx xxxxxxxxxx
-                    xxxxxx xx x xxxxx
 
-                xxxx xxxxxxx
-                    xxxxxx xx x xxxxxxxxx
 
-                xxxx xxxx
-                xxxx xxxxx
-                xxxx xxxxxxx
-                xxxx xxxxxxx
-                xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
                 case DERBY:
                 case SQLITE:
                     return "8 * length";
@@ -102,17 +102,17 @@ enum Term {
         @Override
         public String translate(SQLDialect dialect) {
             switch (dialect.family()) {
-                /* [pro] xx
-                xxxx xxxxxxx
-                xxxx xxxxxxxxxx
-                    xxxxxx xxxxxx
 
-                xxxx xxxx
-                xxxx xxxxx
-                xxxx xxxxxxx
-                xxxx xxxxxxx
-                xxxx xxxxxxx
-                xx [/pro] */
+
+
+
+
+
+
+
+
+
+
                 case DERBY:
                 case SQLITE:
                     return "length";
@@ -125,19 +125,19 @@ enum Term {
         @Override
         public String translate(SQLDialect dialect) {
             switch (dialect.family()) {
-                /* [pro] xx
-                xx xxx xxxxx xx xx xxxx xxxxxx xxxxxxx xxx xxxxxxxxxxxx xx
-                xx xxxxxxx xxx xxxx xxxxxxxx xxxxxxxx xxxxxx xxxxxx xx xx
-                xxxx xxxx
-                    xxxxxx xxxxxxxxx
 
-                xxxx xxxxxxx
-                    xxxxxx xxxxxxxxxx
 
-                xxxx xxxxxxx
-                    xxxxxx xxxxxxx
 
-                xx [/pro] */
+
+
+
+
+
+
+
+
+
+
                 case CUBRID:
                 case H2:
                 case HSQLDB:
@@ -163,19 +163,19 @@ enum Term {
         @Override
         public String translate(SQLDialect dialect) {
             switch (dialect.family()) {
-                /* [pro] xx
-                xxxx xxxxxxx
-                xxxx xxxxxxxxxx
-                    xxxxxx xxxxxx
 
-                xxxx xxxxxxx
-                    xxxxxx xxxxxxxxxx
 
-                xxxx xxxx
-                xxxx xxxxx
-                xxxx xxxxxxx
-                xxxx xxxxxxx
-                xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
                 case DERBY:
                 case SQLITE:
                     return "length";
@@ -198,80 +198,80 @@ enum Term {
     STDDEV_POP {
         @Override
         public String translate(SQLDialect dialect) {
-            /* [pro] xx
-            xxxxxx xxxxxxxxxxxxxxxxxx x
-                xxxx xxxx
-                xxxx xxxxx
-                    xxxxxx xxxxxxxxx
 
-                xxxx xxxxxxxxx
-                    xxxxxx xxxxxxxx
 
-                xxxx xxxxxxxxxx
-                    xxxxxx xxxxxxxxx
-            x
 
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
             return "stddev_pop";
         }
     },
     STDDEV_SAMP {
         @Override
         public String translate(SQLDialect dialect) {
-            /* [pro] xx
-            xxxxxx xxxxxxxxxxxxxxxxxx x
-                xxxx xxxx
-                xxxx xxxxx
-                    xxxxxx xxxxxxxxx
 
-                xxxx xxxxxxxxx
-                    xxxxxx xxxxxxxx
 
-                xxxx xxxxxxxxxx
-                    xxxxxx xxxxxxxx
-            x
 
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
             return "stddev_samp";
         }
     },
     VAR_POP {
         @Override
         public String translate(SQLDialect dialect) {
-            /* [pro] xx
-            xxxxxx xxxxxxxxxxxxxxxxxx x
-                xxxx xxxx
-                xxxx xxxxxxxxx
-                    xxxxxx xxxxxxxxxxx
 
-                xxxx xxxxx
-                    xxxxxx xxxxxx
 
-                xxxx xxxxxxxxxx
-                    xxxxxx xxxxxxx
-            x
 
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
             return "var_pop";
         }
     },
     VAR_SAMP {
         @Override
         public String translate(SQLDialect dialect) {
-            /* [pro] xx
-            xxxxxx xxxxxxxxxxxxxxxxxx x
-                xxxx xxxx
-                xxxx xxxxxxxxx
-                    xxxxxx xxxxxxxxxxx
 
-                xxxx xxxxx
-                    xxxxxx xxxxxx
 
-                xxxx xxxxxxxxxx
-                    xxxxxx xxxxxx
-            x
 
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
             return "var_samp";
         }
     },

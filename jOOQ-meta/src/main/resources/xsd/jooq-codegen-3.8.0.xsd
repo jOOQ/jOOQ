@@ -44,7 +44,7 @@
         Just a synonym for "user" to be compatible with other Maven plugins
         -->
       <element name="username" type="string" minOccurs="0" maxOccurs="1" />
-      
+
 
       <!-- The JDBC connection password -->
       <element name="password" type="string" minOccurs="0" maxOccurs="1" />
@@ -448,7 +448,7 @@
         optional return values from stored procedures. This turns all procedures
         into Routine<Integer> (instead of Routine<Void>). For backwards-
         compatibility reasons, users can suppress this change in jOOQ 3.x
-        
+
         This feature is deprecated as of jOOQ 3.6.0 and will be removed again in
         jOOQ 4.0.
         -->
@@ -543,14 +543,14 @@
         artefacts (e.g. in combination with enumTypes)
         -->
       <element name="forcedTypes" type="tns:ForcedTypes" minOccurs="0" maxOccurs="1"/>
-            
+
       <!--
         Whether table valued functions should be reported as tables.
-        
+
         If this is deactivated, such functions are not generated as tables, but
         as ordinary routines. This is particularly useful for backwards-
         compatibility between jOOQ 3.8 and previous versions, when using TABLE
-        and VARRAY types in Oracle 
+        and VARRAY types in Oracle
         -->
       <element name="tableValuedFunctions" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
     </all>
@@ -632,9 +632,9 @@
     <all>
       <!-- The name of the type to be forced upon various artefacts. -->
       <element name="name" type="string" minOccurs="1" maxOccurs="1" />
-      
+
       <!-- The type of the user type - e.g. java.time.LocalDateTime.
-      
+
            If provided, <name/> will be ignored, and either <converter/>
            or <binding/> is required -->
       <element name="userType" type="string" minOccurs="0" maxOccurs="1" />
@@ -738,7 +738,7 @@
       <element name="validationAnnotations" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
 
       <!--
-        Annotate DAOs with useful spring annotations such as @Repository or @Autowired 
+        Annotate DAOs with useful spring annotations such as @Repository or @Autowired
         -->
       <element name="springAnnotations" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
 

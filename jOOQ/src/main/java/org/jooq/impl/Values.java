@@ -97,16 +97,16 @@ class Values<R extends Record> extends AbstractTable<R> {
 
             // [#915] Emulate VALUES(..) with SELECT .. UNION ALL SELECT ..
             // for those dialects that do not support a VALUES() constructor
-            /* [pro] xx
-            xxxx xxxxxxx
-            xxxx xxxxx
-            xxxx xxxxxxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
             case FIREBIRD:
             case MARIADB:
             case MYSQL:
@@ -144,12 +144,12 @@ class Values<R extends Record> extends AbstractTable<R> {
             case DERBY:
             case HSQLDB:
             case POSTGRES:
-            /* [pro] xx
-            xxxx xxxx
-            xxxx xxxx
-            xxxx xxxxxxxxxx
 
-            xx [/pro] */
+
+
+
+
+
             default: {
                 ctx.start(TABLE_VALUES)
                    .keyword("values")

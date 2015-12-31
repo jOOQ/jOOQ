@@ -398,14 +398,14 @@ public abstract class AbstractDatabase implements Database {
             }
             else {
                 for (Schema schema : configuredSchemata) {
-                    /* [pro] xx
 
-                    xx xxxxxxx xxxxxxx xxxxxx xxx xxxxxxxxxxxxxxxx xxxxxx xxxxxx
-                    xx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxx x
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    x
-                    xxxx
-                    xx [/pro] */
+
+
+
+
+
+
+
                     {
                         inputSchemata.add(schema.getInputSchema());
                     }
@@ -1290,17 +1290,17 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final boolean isArrayType(String dataType) {
         switch (getDialect().family()) {
-            /* [pro] xx
-            xxxx xxxxxxxxx
-            xx [/pro] */
+
+
+
             case POSTGRES:
             case H2:
                 return "ARRAY".equals(dataType);
 
             case HSQLDB:
-            /* [pro] xx
-            xxxx xxxxx
-            xx [/pro] */
+
+
+
                 // TODO: Is there any more robust way to recognise these?
                 // For instance, there could be a UDT that is called this way
                 return dataType.endsWith(" ARRAY");

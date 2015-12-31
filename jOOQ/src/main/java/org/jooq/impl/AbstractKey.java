@@ -63,9 +63,9 @@ abstract class AbstractKey<R extends Record> implements Key<R> {
     private final Table<R>           table;
     private final TableField<R, ?>[] fields;
 
-    
+
     @SafeVarargs
-    
+
     AbstractKey(Table<R> table, TableField<R, ?>... fields) {
         this.table = table;
         this.fields = fields;

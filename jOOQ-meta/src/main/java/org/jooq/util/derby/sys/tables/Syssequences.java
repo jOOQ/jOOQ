@@ -27,52 +27,52 @@ public class Syssequences extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	}
 
 	/**
-	 * The column <code>SYS.SYSSEQUENCES.SEQUENCEID</code>. 
+	 * The column <code>SYS.SYSSEQUENCES.SEQUENCEID</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> SEQUENCEID = createField("SEQUENCEID", org.jooq.impl.SQLDataType.CHAR, SYSSEQUENCES);
 
 	/**
-	 * The column <code>SYS.SYSSEQUENCES.SEQUENCENAME</code>. 
+	 * The column <code>SYS.SYSSEQUENCES.SEQUENCENAME</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> SEQUENCENAME = createField("SEQUENCENAME", org.jooq.impl.SQLDataType.VARCHAR, SYSSEQUENCES);
 
 	/**
-	 * The column <code>SYS.SYSSEQUENCES.SCHEMAID</code>. 
+	 * The column <code>SYS.SYSSEQUENCES.SCHEMAID</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> SCHEMAID = createField("SCHEMAID", org.jooq.impl.SQLDataType.CHAR, SYSSEQUENCES);
 
 	/**
-	 * The column <code>SYS.SYSSEQUENCES.SEQUENCEDATATYPE</code>. 
+	 * The column <code>SYS.SYSSEQUENCES.SEQUENCEDATATYPE</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> SEQUENCEDATATYPE = createField("SEQUENCEDATATYPE", org.jooq.impl.SQLDataType.CLOB, SYSSEQUENCES);
 
 	/**
-	 * The column <code>SYS.SYSSEQUENCES.CURRENTVALUE</code>. 
+	 * The column <code>SYS.SYSSEQUENCES.CURRENTVALUE</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.Long> CURRENTVALUE = createField("CURRENTVALUE", org.jooq.impl.SQLDataType.BIGINT, SYSSEQUENCES);
 
 	/**
-	 * The column <code>SYS.SYSSEQUENCES.STARTVALUE</code>. 
+	 * The column <code>SYS.SYSSEQUENCES.STARTVALUE</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.Long> STARTVALUE = createField("STARTVALUE", org.jooq.impl.SQLDataType.BIGINT, SYSSEQUENCES);
 
 	/**
-	 * The column <code>SYS.SYSSEQUENCES.MINIMUMVALUE</code>. 
+	 * The column <code>SYS.SYSSEQUENCES.MINIMUMVALUE</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.Long> MINIMUMVALUE = createField("MINIMUMVALUE", org.jooq.impl.SQLDataType.BIGINT, SYSSEQUENCES);
 
 	/**
-	 * The column <code>SYS.SYSSEQUENCES.MAXIMUMVALUE</code>. 
+	 * The column <code>SYS.SYSSEQUENCES.MAXIMUMVALUE</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.Long> MAXIMUMVALUE = createField("MAXIMUMVALUE", org.jooq.impl.SQLDataType.BIGINT, SYSSEQUENCES);
 
 	/**
-	 * The column <code>SYS.SYSSEQUENCES.INCREMENT</code>. 
+	 * The column <code>SYS.SYSSEQUENCES.INCREMENT</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.Long> INCREMENT = createField("INCREMENT", org.jooq.impl.SQLDataType.BIGINT, SYSSEQUENCES);
 
 	/**
-	 * The column <code>SYS.SYSSEQUENCES.CYCLEOPTION</code>. 
+	 * The column <code>SYS.SYSSEQUENCES.CYCLEOPTION</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> CYCLEOPTION = createField("CYCLEOPTION", org.jooq.impl.SQLDataType.CHAR, SYSSEQUENCES);
 

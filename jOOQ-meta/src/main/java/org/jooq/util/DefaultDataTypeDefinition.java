@@ -182,16 +182,16 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
 
     @Override
     public final boolean isGenericNumberType() {
-        /* [pro] xx
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxx x
-            xxxx xxxxxxx x
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xx xxxxxxxxx xx x
-                    xx xxxxx xx xxx
-            x
-        x
 
-        xx [/pro] */
+
+
+
+
+
+
+
+
+
         return false;
     }
 

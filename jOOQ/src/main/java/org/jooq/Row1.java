@@ -88,7 +88,7 @@ public interface Row1<T1> extends Row {
     // ------------------------------------------------------------------------
     // Generic comparison predicates
     // ------------------------------------------------------------------------
-    
+
     /**
      * Compare this row value expression with another row value expression
      * using a dynamic comparator.

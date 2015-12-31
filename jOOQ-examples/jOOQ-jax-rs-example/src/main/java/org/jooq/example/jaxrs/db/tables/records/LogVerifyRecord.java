@@ -16,84 +16,84 @@ public class LogVerifyRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	private static final long serialVersionUID = -675942689;
 
 	/**
-	 * Setter for <code>license_server.log_verify.id</code>. 
+	 * Setter for <code>license_server.log_verify.id</code>.
 	 */
 	public void setId(java.lang.Long value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>license_server.log_verify.id</code>. 
+	 * Getter for <code>license_server.log_verify.id</code>.
 	 */
 	public java.lang.Long getId() {
 		return (java.lang.Long) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>license_server.log_verify.licensee</code>. 
+	 * Setter for <code>license_server.log_verify.licensee</code>.
 	 */
 	public void setLicensee(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>license_server.log_verify.licensee</code>. 
+	 * Getter for <code>license_server.log_verify.licensee</code>.
 	 */
 	public java.lang.String getLicensee() {
 		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>license_server.log_verify.license</code>. 
+	 * Setter for <code>license_server.log_verify.license</code>.
 	 */
 	public void setLicense(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>license_server.log_verify.license</code>. 
+	 * Getter for <code>license_server.log_verify.license</code>.
 	 */
 	public java.lang.String getLicense() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>license_server.log_verify.request_ip</code>. 
+	 * Setter for <code>license_server.log_verify.request_ip</code>.
 	 */
 	public void setRequestIp(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>license_server.log_verify.request_ip</code>. 
+	 * Getter for <code>license_server.log_verify.request_ip</code>.
 	 */
 	public java.lang.String getRequestIp() {
 		return (java.lang.String) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>license_server.log_verify.version</code>. 
+	 * Setter for <code>license_server.log_verify.version</code>.
 	 */
 	public void setVersion(java.lang.String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>license_server.log_verify.version</code>. 
+	 * Getter for <code>license_server.log_verify.version</code>.
 	 */
 	public java.lang.String getVersion() {
 		return (java.lang.String) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>license_server.log_verify.match</code>. 
+	 * Setter for <code>license_server.log_verify.match</code>.
 	 */
 	public void setMatch(java.lang.Boolean value) {
 		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>license_server.log_verify.match</code>. 
+	 * Getter for <code>license_server.log_verify.match</code>.
 	 */
 	public java.lang.Boolean getMatch() {
 		return (java.lang.Boolean) getValue(5);

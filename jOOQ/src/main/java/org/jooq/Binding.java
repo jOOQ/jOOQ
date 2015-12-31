@@ -68,7 +68,7 @@ import org.jooq.impl.SQLDataType;
  * @author Lukas Eder
  */
 public interface Binding<T, U> extends Serializable {
-	
+
     /**
      * A converter that can convert between the database type and the custom
      * type.

@@ -70,10 +70,10 @@ class Power extends AbstractFunction<BigDecimal> {
     @Override
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxx x xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxx xxxxxx
-            xx [/pro] */
+
+
+
+
 
             case DERBY:
             case SQLITE:

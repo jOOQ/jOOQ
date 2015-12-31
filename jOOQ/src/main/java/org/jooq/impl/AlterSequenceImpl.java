@@ -107,17 +107,17 @@ class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
            .sql(' ');
 
         switch (ctx.family()) {
-            /* [pro] xx
-            xxxx xxxxxxxxxx x
-                xxxxxxx xxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxx
 
-                xxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                xxxxxx
-            x
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
 
             default: {
                 ctx.visit(sequence);
@@ -131,11 +131,11 @@ class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
         T with = restartWith;
         if (with == null) {
 
-            /* [pro] xx
-            xx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxx xxxx
-            xxxx
-            xx [/pro] */
+
+
+
+
+
                 ctx.sql(' ').keyword("restart");
         }
         else {

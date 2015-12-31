@@ -96,16 +96,16 @@ class Round<T extends Number> extends AbstractFunction<T> {
                 }
             }
 
-            /* [pro] xx
-            xx xxxxx xxxxxxxx xxxx x xxxxxxxxx xxxxxxxx xxxxxxxx
-            xxxx xxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxx x
-                xxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxx xxxxxxxxxxxxxxx
-            x
 
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
             // There's no function round(double precision, integer) in Postgres
             case POSTGRES: {
                 if (decimals == 0) {

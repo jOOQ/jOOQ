@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-   
+
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.jooq</groupId>
@@ -24,7 +24,7 @@
     </properties>
 
     <dependencies>
-    
+
         <!-- Database access -->
         <dependency>
             <groupId>org.jooq</groupId>
@@ -41,7 +41,7 @@
             <artifactId>h2</artifactId>
             <version>${org.h2.version}</version>
         </dependency>
-        
+
         <!-- Logging -->
         <dependency>
             <groupId>log4j</groupId>
@@ -53,7 +53,7 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.5</version>
         </dependency>
-        
+
         <!-- Guice dependency injection -->
         <dependency>
             <groupId>com.google.inject</groupId>
@@ -105,7 +105,7 @@
                     </compilerArgs>
                 </configuration>
             </plugin>
-        
+
             <!-- We're using the properties plugin to load external properties into Maven.
                  See this excellent blog post for an explanation:
                  http://www.petrikainulainen.net/programming/tips-and-tricks/creating-profile-specific-configuration-files-with-maven/ -->
@@ -151,7 +151,7 @@
                             <url>${db.url}</url>
                             <username>${db.username}</username>
                             <password>${db.password}</password>
- 
+
                             <autocommit>true</autocommit>
                             <srcFiles>
                                 <srcFile>src/main/resources/db-h2.sql</srcFile>
@@ -159,7 +159,7 @@
                         </configuration>
                     </execution>
                 </executions>
-                
+
                 <dependencies>
                     <dependency>
                         <groupId>com.h2database</groupId>

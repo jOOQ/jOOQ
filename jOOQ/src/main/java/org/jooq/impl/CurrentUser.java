@@ -64,22 +64,22 @@ class CurrentUser extends AbstractFunction<String> {
     @Override
     final Field<String> getFunction0(Configuration configuration) {
         switch (configuration.family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx
 
-            xxxx xxxx
-            xxxx xxxxxxxxx
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx
 
-            xxxx xxxx
-            xxxx xxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             case DERBY:
             case FIREBIRD:
             case HSQLDB:

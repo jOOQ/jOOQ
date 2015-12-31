@@ -130,9 +130,9 @@ class BatchSingle implements BatchBindStep {
     }
 
     @Override
-    
+
     @SafeVarargs
-    
+
     public final BatchSingle bind(Map<String, Object>... namedBindValues) {
         List<Object> defaultValues = query.getBindValues();
 

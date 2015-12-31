@@ -68,14 +68,14 @@ class Nvl<T> extends AbstractFunction<T> {
     @Override
     final Field<T> getFunction0(Configuration configuration) {
         switch (configuration.family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxx xx xxxxx xxxx xxxxxx xxxxxxxxxxxxxx xxxxx xxxxxx
 
-            xxxx xxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
 
             case H2:
             case HSQLDB:

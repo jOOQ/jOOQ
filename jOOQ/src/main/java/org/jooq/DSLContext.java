@@ -144,9 +144,9 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @throws DataAccessException When something went wrong closing the
      *             underlying resources.
      */
-    
+
     @Override
-    
+
     void close() throws DataAccessException;
 
     // -------------------------------------------------------------------------
@@ -770,7 +770,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     @PlainSQL
     Cursor<Record> fetchLazy(String sql, QueryPart... parts) throws DataAccessException;
 
-    
+
     /**
      * Execute a new query holding plain SQL and "lazily" return the generated
      * result.
@@ -916,7 +916,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     @Support
     @PlainSQL
     Stream<Record> fetchStream(String sql, QueryPart... parts) throws DataAccessException;
-    
+
 
     /**
      * Execute a new query holding plain SQL, possibly returning several result
@@ -1150,7 +1150,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     @PlainSQL
     Record fetchOne(String sql, QueryPart... parts) throws DataAccessException, TooManyRowsException;
 
-    
+
     /**
      * Execute a new query holding plain SQL.
      * <p>
@@ -1268,7 +1268,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     @Support
     @PlainSQL
     Optional<Record> fetchOptional(String sql, QueryPart... parts) throws DataAccessException, TooManyRowsException;
-    
+
 
     /**
      * Execute a new query holding plain SQL.
@@ -1400,7 +1400,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     @PlainSQL
     Object fetchValue(String sql, QueryPart... parts) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
-    
+
     /**
      * Execute a new query holding plain SQL.
      * <p>
@@ -1526,7 +1526,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     @Support
     @PlainSQL
     Optional<?> fetchOptionalValue(String sql, QueryPart... parts) throws DataAccessException, TooManyRowsException, InvalidResultException;
-    
+
 
     /**
      * Execute a new query holding plain SQL.
@@ -2060,7 +2060,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     @Support
     Record fetchOne(ResultSet rs, Class<?>... types) throws DataAccessException, TooManyRowsException;
 
-    
+
     /**
      * Fetch a record from a JDBC {@link ResultSet} and transform it to a jOOQ
      * {@link Record}.
@@ -2132,7 +2132,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     @Support
     Optional<Record> fetchOptional(ResultSet rs, Class<?>... types) throws DataAccessException, TooManyRowsException;
-    
+
 
     /**
      * Fetch a record from a JDBC {@link ResultSet} and return the only
@@ -2214,7 +2214,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     @Support
     <T> T fetchValue(ResultSet rs, Class<T> type) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
-    
+
     /**
      * Fetch a record from a JDBC {@link ResultSet} and return the only
      * contained value.
@@ -2294,7 +2294,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     @Support
     <T> Optional<T> fetchOptionalValue(ResultSet rs, Class<T> type) throws DataAccessException, TooManyRowsException, InvalidResultException;
-    
+
 
     /**
      * Fetch a result from a JDBC {@link ResultSet} and return the only
@@ -2416,7 +2416,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     @Support
     Cursor<Record> fetchLazy(ResultSet rs, Class<?>... types) throws DataAccessException;
 
-    
+
     /**
      * Wrap a JDBC {@link ResultSet} into a jOOQ {@link Stream}.
      * <p>
@@ -2480,7 +2480,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     @Support
     Stream<Record> fetchStream(ResultSet rs, Class<?>... types) throws DataAccessException;
-    
+
 
     /**
      * Fetch all data from a formatted string.
@@ -8199,7 +8199,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     <R extends Record> Cursor<R> fetchLazy(ResultQuery<R> query) throws DataAccessException;
 
-    
+
     /**
      * Execute a {@link ResultQuery} in the context of this <code>DSLContext</code> and return
      * a stream.
@@ -8210,7 +8210,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see ResultQuery#stream()
      */
     <R extends Record> Stream<R> fetchStream(ResultQuery<R> query) throws DataAccessException;
-    
+
 
     /**
      * Execute a {@link ResultQuery} in the context of this <code>DSLContext</code> and return
@@ -8235,7 +8235,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     <R extends Record> R fetchOne(ResultQuery<R> query) throws DataAccessException, TooManyRowsException;
 
-    
+
     /**
      * Execute a {@link ResultQuery} in the context of this <code>DSLContext</code> and return
      * a record.
@@ -8247,7 +8247,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see ResultQuery#fetchOptional()
      */
     <R extends Record> Optional<R> fetchOptional(ResultQuery<R> query) throws DataAccessException, TooManyRowsException;
-    
+
 
     /**
      * Execute a {@link ResultQuery} in the context of this
@@ -8276,7 +8276,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     <T> T fetchValue(TableField<?, T> field) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
-    
+
     /**
      * Execute a {@link ResultQuery} in the context of this
      * <code>DSLContext</code> and return a single value.
@@ -8302,7 +8302,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *             than one value
      */
     <T> Optional<T> fetchOptionalValue(TableField<?, T> field) throws DataAccessException, TooManyRowsException, InvalidResultException;
-    
+
 
     /**
      * Execute a {@link ResultQuery} in the context of this
@@ -8482,7 +8482,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     @Support
     <R extends Record> R fetchOne(Table<R> table, Condition condition) throws DataAccessException, TooManyRowsException;
 
-    
+
     /**
      * Execute and return zero or one record for
      * <code><pre>SELECT * FROM [table]</pre></code>.
@@ -8512,7 +8512,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     @Support
     <R extends Record> Optional<R> fetchOptional(Table<R> table, Condition condition) throws DataAccessException, TooManyRowsException;
-    
+
 
     /**
      * Execute and return zero or one record for
@@ -8568,7 +8568,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     @Support
     <R extends Record> Cursor<R> fetchLazy(Table<R> table, Condition condition) throws DataAccessException;
 
-    
+
     /**
      * Execute and return all records lazily for
      * <code><pre>SELECT * FROM [table]</pre></code>.
@@ -8594,7 +8594,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     @Support
     <R extends Record> Stream<R> fetchStream(Table<R> table, Condition condition) throws DataAccessException;
-    
+
 
     /**
      * Insert one record.

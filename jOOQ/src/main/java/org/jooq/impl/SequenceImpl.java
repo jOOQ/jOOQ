@@ -136,16 +136,16 @@ public class SequenceImpl<T extends Number> extends AbstractQueryPart implements
             SQLDialect family = configuration.family();
 
             switch (family) {
-                /* [pro] xx
-                xxxx xxxx
-                xxxx xxxxxxx
-                xxxx xxxxxxx
-                xxxx xxxxxxx x
-                    xxxxxx xxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xxx x xxxxxxx
-                    xxxxxx xxxxxxxxxxxx xxxxxxxxxxxxxxx
-                x
 
-                xx [/pro] */
+
+
+
+
+
+
+
+
+
                 case POSTGRES: {
                     String field = method + "('" + getQualifiedName(configuration) + "')";
                     return field(field, getDataType());
@@ -156,9 +156,9 @@ public class SequenceImpl<T extends Number> extends AbstractQueryPart implements
                     return field(field, getDataType());
                 }
 
-                /* [pro] xx
-                xxxx xxxxxxxxxx
-                xx [/pro] */
+
+
+
                 case FIREBIRD:
                 case DERBY:
                 case HSQLDB: {
@@ -169,20 +169,20 @@ public class SequenceImpl<T extends Number> extends AbstractQueryPart implements
                     else if (family == FIREBIRD) {
                         return field("gen_id(" + getQualifiedName(configuration) + ", 0)", getDataType());
                     }
-                    /* [pro] xx
-                    xxxx xx xxxxxxx xx xxxxxxxxxx x
-                        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                               xxxxxxxxxxxxxxxxxxxx xxxx
-                               xxxxxxxxxxxxxxxxxx xxxx
-                               xxxxxxxxxxxxxxxxx x xxxxxxxxxxxxxx
-                               xxxxxxxxxxxxxxx x xxx xxxxx
-                               xxxxx
-                                   xxxxxx xx xxxx x xx x xx       x xxxxxxxx x xxx
-                                   xxxxxx xx xxxx x xxx xxxxxxxxx x xxx xxxxxxxx x xxxxxxxxxxxxxxxx xx
-                               xxxxxxxxxx
-                               xxxxxxxxxxxx
-                    x
-                    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     else {
                         throw new SQLDialectNotSupportedException("The sequence's current value functionality is not supported for the " + family + " dialect.");
                     }

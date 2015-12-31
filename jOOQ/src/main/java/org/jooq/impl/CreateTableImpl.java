@@ -154,12 +154,12 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
 
         if (select != null) {
 
-            /* [pro] xx
-            xx xxxxxxxxxxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                xxxxxxxxxxxxxxxxxxxxxx
-            x
-            xxxx
-            xx [/pro] */
+
+
+
+
+
+
             {
                 acceptCreateTableAsSelect(ctx);
             }
@@ -213,14 +213,14 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
         ctx.formatSeparator()
            .keyword("as");
 
-        /* [pro] xx
-        xx xxxxxxxxxxxxx xx xxxxx x
-            xxxxxxxxx xxx
-               xxxxxxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxxx
-        x
-        xxxx
-        xx [/pro] */
+
+
+
+
+
+
+
+
         {
             ctx.formatSeparator();
         }
@@ -229,13 +229,13 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
            .visit(select)
            .end(CREATE_TABLE_AS);
 
-        /* [pro] xx
-        xx xxxxxxxxxxxxx xx xxxxx x
-            xxxxxxxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxx
-               xxxxxxxxxx
-        x
-        xx [/pro] */
+
+
+
+
+
+
+
 
         ctx.end(CREATE_TABLE);
     }

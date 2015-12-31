@@ -5,7 +5,7 @@
        xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="
             http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">     
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
 
     <!-- This is needed if you want to use the @Transactional annotation -->
     <tx:annotation-driven transaction-manager="transactionManager"/>
@@ -43,9 +43,9 @@
     <bean id="dsl" class="org.jooq.impl.DefaultDSLContext">
         <constructor-arg ref="config" />
     </bean>
-    
+
     <bean id="exceptionTranslator" class="org.jooq.example.spring.exception.ExceptionTranslator" />
-    
+
     <!-- Invoking an internal, package-private constructor for the example
          Implement your own Configuration for more reliable behaviour -->
     <bean class="org.jooq.impl.DefaultConfiguration" name="config">
@@ -60,7 +60,7 @@
             </array>
         </property>
     </bean>
-    
+
     <!-- This is the "business-logic" -->
     <bean id="books" class="org.jooq.example.spring.impl.DefaultBookService"/>
 </beans>

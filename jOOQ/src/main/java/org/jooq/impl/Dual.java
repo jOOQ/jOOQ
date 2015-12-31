@@ -57,10 +57,10 @@ class Dual extends AbstractTable<Record> {
 
     private static final long          serialVersionUID = -7492790780048090156L;
     private static final Table<Record> FORCED_DUAL      = select(new Field[] { inline("X").as("DUMMY") }).asTable("DUAL");
-    /* [pro] xx
-    xxxxxx xxxxx xxxxxx                xxxxxxxxxxx      x xxxxxxx xxxxxxxx xxxx xxxx xxxxxxxxxxxxxxx
-    xxxxxx xxxxx xxxxxx                xxxxxxxxxxxxx    x xxxxxxx x xx xxxx xxxx xxxxxxxxx xxxxx xxxxx x xxx
-    xx [/pro] */
+
+
+
+
     static final String                DUAL_HSQLDB      = "select 1 as dual from information_schema.system_users limit 1";
 
     private final boolean              force;
@@ -112,12 +112,12 @@ class Dual extends AbstractTable<Record> {
         }
         else {
             switch (ctx.family()) {
-                /* [pro] xx
-                xxxx xxxx
-                xxxx xxxxxxxxx
-                xxxx xxxxxxxxxx
-                xxxx xxxxxxxx
-                xx [/pro] */
+
+
+
+
+
+
                 case H2:
                 case POSTGRES:
                 case SQLITE:
@@ -137,33 +137,33 @@ class Dual extends AbstractTable<Record> {
 
                 // These dialects don't have a DUAL table. But emulation is needed
                 // for queries like SELECT 1 WHERE 1 = 1
-                /* [pro] xx
-                xxxx xxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx
-                    xxxxxx
 
-                xxxx xxxx
-                    xxxxxxxxxxxxxxxxxxxxx
-                       xxxxxxxxx
-                       xxxxxxxxxxxxxxxxx
-                    xxxxxx
 
-                xxxx xxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx
-                    xxxxxx
 
-                xxxx xxxxxxx
-                    xxxxxxxxxxxxxxxxxxxx x xx xxxxx xx xxxxxxx
-                    xxxxxx
 
-                xxxx xxxxx
-                xxxx xxxxxxx
-                    xxxxxxxxxxxxxxxxxx
-                       xxxxxxxxx
-                       xxxxxxxxxxxxxxxxxx
-                    xxxxxx
 
-                xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 case DERBY:
                     ctx.literal("SYSIBM")
                        .sql('.')
@@ -172,9 +172,9 @@ class Dual extends AbstractTable<Record> {
 
                 case MARIADB:
                 case MYSQL:
-                /* [pro] xx
-                xxxx xxxxxxx
-                xx [/pro] */
+
+
+
 
                 default:
                     ctx.keyword("dual");

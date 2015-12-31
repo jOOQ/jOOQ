@@ -50,14 +50,14 @@ import org.jooq.Select
 import static org.jooq.impl.DSL.*
 
 /**
- * @author Lukas Eder 
+ * @author Lukas Eder
  */
 class XtendConversionsTest {
-    
+
     def static void main(String[] args) {
         Class::forName("org.h2.Driver")
         using(DriverManager::getConnection("jdbc:h2:~/test", "sa", ""))
-        
+
         val r = row(inline(1), inline("a"))
         val s = (select(inline(2), inline("b"))) as Select<Record2<Integer, String>>
         // val c = r > s

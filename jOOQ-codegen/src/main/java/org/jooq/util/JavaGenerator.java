@@ -418,17 +418,17 @@ public class JavaGenerator extends AbstractGenerator {
             generateRoutines(schema);
         }
 
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xx x
-            xxxxxxxxxxxxxxxxxxxxxxxxx
-        x
-        xx [/pro] */
 
-        /* [pro] xx
-        xx xxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxx x
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        x
-        xx [/pro] */
+
+
+
+
+
+
+
+
+
+
 
         log.info("Removing excess files");
         empty(getStrategy().getFile(schema).getParentFile(), (scala ? ".scala" : ".java"), files);
@@ -465,89 +465,89 @@ public class JavaGenerator extends AbstractGenerator {
         }
     }
 
-    /* [pro] xx
-    xxxxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
-        xxxxxxxxxxxxxx xxxxxxxxxxxxxx x xxxxxxxxxxxxxxxx xxxxxxxxx
 
-        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xx x
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        x
 
-        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xx x
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        x
-    x
 
-    xxxxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
-        xxxxxxxxxxxxxxxxxxxx xxxxxxxxx
-        xxxxxxxxxxxxxx xxxxxxxxxxxxxx x xxxxxxxxxxxxxxxx xxxxxxxxx
 
-        xxxxxxxxxx xxx x xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxx xxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx xxxxxx xx xxx xxxxxx xx x x xxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
 
-        xx xxxxxxx
-        	xxxxxxxxxxxxxxxxxxx xxxxxx xxxx
-        xxxx
-            xxxxxxxxxxxxxxxxxxx xxxxx xxxxxx xxxx
 
-        xxx xxxxxxxxxxxxxxxxxxxxxx xxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxx xxxxxxxxxxxxx xxx x xxxxxxxxxxxxxxx
 
-            xxxxx xxxxxx xxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxx xxxxxx xxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxx
-            xxxxx xxxxxx xxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
-            xxxxx xxxxxx xxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxx xxxxxx xxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-            xxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-            xx xxxxxxx
-            	xxxxxxxxxxxxxxxxxxxxxxx xx x xxxxxx x xxx xxxxxxxxxxxxxx xxx xxxxx xxxxxxxx xxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxxxxx xxxxxxx
-            xxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxx xxxxxx xx x xxx xxxxxxxxxxxxxx xxx xxxxxx xxxxxxxxxxxx xxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxxxxx xxxxxxx
-        x
 
-        xxxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxx
 
-        xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
-    x
 
-    xxxxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
-        xxxxxxxxxxxxxxxxxxxx xxxxxxxx
-        xxxxxxxxxxxxxx xxxxxxxxxxxxxx x xxxxxxxxxxxxxxxx xxxxxxxxx
 
-        xxxxxxxxxx xxx x xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxx xxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx xxxxxx xx xxx xxxxxxxx xxxxx xx x x xxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
 
-        xx xxxxxxx
-            xxxxxxxxxxxxxxxxxxx xxxxx xxxx
-        xxxx
-            xxxxxxxxxxxxxxxxxxx xxxxx xxxxx xxxx
 
-        xxx xxxxxxxxxxxxxxxxxxxxx xxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxx xxxxxx xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxx xxxxxx xxxxxxxx x xxxxxxxxxxxxxxxxxxxxxx
-            xxxxx xxxxxx xxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-            xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-            xx xxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxx xx x xx x xxxxxxxxxxxxxxx xxxxx xxxxxxx xxxxxxxxxxx xxxxxxxxxx xxxxxxxxx xxxxxxxxxx
-            xxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxx xx xx x xxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxx xxxxxxx xxxxxxxxxx xxxxxxxxx xxxxxxxxxx
-        x
 
-        xxxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxx
 
-        xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
-    x
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private boolean hasTableValuedFunctions(SchemaDefinition schema) {
         for (TableDefinition table : database.getTables(schema)) {
@@ -1744,99 +1744,99 @@ public class JavaGenerator extends AbstractGenerator {
 
 
     protected void generateArray(ArrayDefinition array, JavaWriter out) {
-        /* [pro] xx
-        xxxxx xxxxxxxxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxxxx
-        xxxxx xxxxxx xxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
-        xxxxx xxxxxx xxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxx xxxxxx xxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxx xxxxxxxxxxxx xxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx
-        xxxxx xxxxxx xxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxx
-        xxxxx xxxxxx xxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
-        xxxxx xxxxxxxxxxxx xxxxxxxxxx x xxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxx
 
-        xxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
 
-        xx xxxxxxx
-            xxxxxxxxxxxxxxxxxx xx xxxxxxx xxxxxxxxxx xxxxxxx xxxxxxxxxxxx xxxxx xxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxx xxxx xxxxxx xxx
-                    xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx xxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxx
-        xxxx
-            xxxxxxxxxxxxxxxxxxx xxxxx xx xxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxx xxxxxx xxx
-            		xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx xxxxxxxxxxxx
 
-        xxxxxxxxxxxxxxxxxx
 
-        xx xxxxxxx x
-        x
-        xxxx xx xxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xxxxx x xxxxxxx x xxx xxx xxxxxx xxxxxx xxxxxxxxxxx xxxxxxxxx xxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxxx xxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx
 
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxx xxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxx
 
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xxxxx x xxxxxxx x xxx xxx xxxxxx xxxxxx xxxxxxxxxxx xxxxxxxxx xxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxxx xxxxx xxxxxx xxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxx
 
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xxxxx x xxxxxxx x xxx xxx xxxxxx xxxxxx xxxxxxxxxxx xxxxxxxxx xxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxxxxxx xxxx xxxxxxx xxx xxxxx xxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxx
-        x
 
-        xx xxxxxxx x
-        x
-        xxxx x
-            xxxxxxxxxxxxxxxxxxxxxxxxxx x xxx xxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxx xxxx xxx xxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxx xxxxx xxxxxxxxxx xxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxx
-        x
 
-        xxxxxxxxxxxxxxxxxxxxxxxxxx x xxx xxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        xx xxxxxxx x
-            xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx x xxxx x xxx xxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxx
-        x
-        xxxx x
-            xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxx xxx xxxxxxxxxx xxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxx
-        x
 
-        xxxxxxxxxxxxxxxxxxxxxxxxxx x xxx xxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        xx xxxxxxx x
-        	 xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx x xxxx xx xxxx xxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
-             xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-             xxxxxxxxxxxxxxxxxxxxxxxx
-        x
-        xxxx x
-            xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxx xxx xxxxxxxxxxx xxx xxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxx
-        x
 
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx
-        xxxxxxxxxxxxxxxxx
-        xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     /**
@@ -2032,30 +2032,30 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void printConstant(JavaWriter out, AttributeDefinition constant) {
-        /* [pro] xx
-        xxxxx xxxxxx xxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxx xxxxxx xxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        xx xxxxxxx x
-            xxxxxxxxxxxxxxxxxxxxxxx xx x xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxx xxxxxxxxxxxxxxx
-                xxxxxxxxxxx xxxxxxxxxx xxxxxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
-                xxxxxxxxxxxxxx
-        x
-        xxxx x
-            xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxx xxxxxx xx x xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxx xxxxxxxxxxxx
-                xxxxxxxxxxxx xxxxxxxxxxxxx xxxxxxxxxxx
-                xxxxxxxxxx xxxxxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
-                xxxxxxxxxxxxxx
-        x
-        xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     protected void printRoutine(JavaWriter out, RoutineDefinition routine) {
@@ -2085,82 +2085,82 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generatePackages(SchemaDefinition schema) {
-        /* [pro] xx
-        xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx
 
-        xxx xxxxxxxxxxxxxxxxxx xxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxx x
-                xxxxxxxxxxxxxxxxxxxxxxx xxxxx
-            x xxxxx xxxxxxxxxx xx x
-                xxxxxxxxxxxxxxxx xxxxx xxxxxxxxxx xxxxxxx x x xxxx xxx
-            x
-        x
 
-        xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
-        xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
     }
 
     @SuppressWarnings("unused")
     protected void generatePackage(SchemaDefinition schema, PackageDefinition pkg) {
-        /* [pro] xx
-        xxxxxxxxxx xxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxx
-        xxxxxxxxxxxxxxxxxxxx xxxxx
-        xxxxxxxxxxxxxxxxxxxxx
-    x
 
-    xxxxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxxxx xxxx x
-        xx xxxxx xx
-        xxxxx xxxxxxxxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxx
-        xxxxx xxxxxx xxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxx xxxxxx xxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxx xxxxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
-        xxxxx xxxxxxxxxxxx xxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
 
-        xx xxxxxx xxxxxxxxxxx xxxxxxx
-        xxxxxxxxxxxxxxxxx xxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
 
-        xx xxxxxxx x
-            xxxxxxxxxxxxxxxxxxx xx xxxxxxx xxxxxxxxxx xxxxxxxxxxxx xxxx xxxxxxxxxxxx xxxx xxxxxx xxx xxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxx
 
-            xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxxxx xx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxx xx x xxxx xxxxxxxxxxx xxxxxxxxxxx
-        x
-        xxxx x
-        	xxxxxxxxxxxxxxxxxxx xxxxx xx xxxxxxx xxxxxxxxxxx xxxxxxxxxx xxxxxx xxx xxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
 
-            xxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx
-        x
 
-        xxx xxxxxxxxxxxxxxxxxxxx xxxxxxxx x xxxxxxxxxxxxxxxxxxx x
-            xxxxxxxxxxxxxxxxxx xxxxxxxxxx
-        x
 
-        xxx xxxxxxxxxxxxxxxxxx xxxxxxx x xxxxxxxxxxxxxxxxxx x
-            xxxxxxxxxxxxxxxxx xxxxxxxxx
 
-            xxx x
-                xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxx
-            x xxxxx xxxxxxxxxx xx x
-                xxxxxxxxxxxxxxxx xxxxx xxxxxxxxxx xxxxxxx x x xxxxxxxx xxx
-            x
-        x
 
-        xx xxxxxxx x
-        x
-        xxxx x
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxx xxx xxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxx
-        x
 
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx
-        xxxxxxxxxxxxxxxxx
-        xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     /**
@@ -3013,8 +3013,8 @@ public class JavaGenerator extends AbstractGenerator {
         printClassAnnotations(out, schema);
 
         if (scala) {
-            out.println("class %s(alias : String, aliased : %s[%s], parameters : Array[ %s[_] ]) extends %s[%s](alias, %s, aliased, parameters, \"%s\")[[before= with ][separator= with ][%s]] {",
-                    className, Table.class, recordType, Field.class, TableImpl.class, recordType, schemaId, escapeString(comment), interfaces);
+            out.println("class %s(alias : String, aliased : %s[%s], parameters : Array[ %s[_] ]) extends %s[%s](alias, null, aliased, parameters, \"%s\")[[before= with ][separator= with ][%s]] {",
+                    className, Table.class, recordType, Field.class, TableImpl.class, recordType, escapeString(comment), interfaces);
         }
         else {
             out.println("public class %s extends %s<%s>[[before= implements ][%s]] {",
@@ -5042,9 +5042,9 @@ public class JavaGenerator extends AbstractGenerator {
         return getJavaType(type1).equals(getJavaType(type2));
     }
 
-    
+
     @SafeVarargs
-    
+
     private static final <T> List<T> list(T... objects) {
         List<T> result = new ArrayList<T>();
 

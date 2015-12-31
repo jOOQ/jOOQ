@@ -70,35 +70,35 @@ class Prior<T> extends AbstractField<T> {
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 
-            /* [pro] xx
-            xx xxxxxxxxxx xxxxxxxx xxxxxxx xxxxxxx xxxxxx xxxxx xxxxxxxxxxx xxxx xxx xxxxx xxxxxxx
-            xx xxxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxx xxxxxxxxx x
-                xxxxxxxxxxxxxxx xxxxxxxx x xxxxx
 
-                xxx x
-                    xx xxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx x
-                        xxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx x xxxxxx
-                    x
 
-                    xx xxxxx xxx xxxxxx xxxxxxx xx xxxxx xxxxxxxxx
-                    xxxxxxxx x x xxxxxx xxxxxxxxxx xxxxxxxxxxx
-                        x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx
-                        x xxxxxx
 
-                    xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
-                x
-                xxxxxxx x
-                    xx xxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx x
-                        xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx x xxxxxxxxx
-                    x
-                x
-                xxxxxx
-            x
 
-            xxxx xxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             case CUBRID:
             default:
                 ctx.keyword("prior").sql(' ').visit(field);

@@ -104,11 +104,11 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         VisitListenerProvider[] providers = configuration.visitListenerProviders();
         boolean userInternalVisitListener =
             false
-        /* [pro] xx
-        xx xxxxxxx xxxxxxx xxxxxxxxxx xxx xxxxxxxxxxxxxxxxxxxxx
-         xx xxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxx
-         xx xxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xx [/pro] */
+
+
+
+
+
             ;
 
         this.visitListeners = new VisitListener[providers.length + (userInternalVisitListener ? 1 : 0)];
@@ -116,10 +116,10 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         for (int i = 0; i < providers.length; i++)
             this.visitListeners[i] = providers[i].provide();
 
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxx
-        xx [/pro] */
+
+
+
+
 
         if (this.visitListeners.length > 0) {
             this.visitContext = new DefaultVisitContext();

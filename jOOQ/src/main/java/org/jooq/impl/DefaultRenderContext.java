@@ -378,27 +378,27 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                 return;
 
             switch (configuration().dialect().family()) {
-                /* [pro] xx
-                xxxx xxxxxxx
 
-                    xx xxxxxxxxxxx xxxx xxxxx xxxx xxx xxxxx xxxxx xx xx xxx xxxx xxxxxxxxx xxx xx xxxxxx
-                    xx xxxxx xxxxxxx xxxx xxxxxx xx xxxx xx xxx xxxx xxxx
-                    xxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxx
 
-                xxxx xxxx
-                    xxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxx
 
-                xxxx xxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxx
 
-                xxxx xxxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxx
 
-                xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 case SQLITE:
                     checkForceInline(999);
                     return;
@@ -631,9 +631,9 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
             message = "Thank you for using jOOQ " + Constants.FULL_VERSION;
 
-            /* [pro] xx
-            xxxxxxx x xxxxxx xxx xxx xxxxx xxx xx xxx xxxx xxxx x x xxxxxxxxxxxxxxxxxxxxxx x x xxxxx xxxxxxxxx
-            xx [/pro] */
+
+
+
 
 
             l.info("\n                                      " +

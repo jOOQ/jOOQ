@@ -25,9 +25,9 @@
         <db.url>jdbc:h2:~/flyway-test</db.url>
         <db.username>sa</db.username>
     </properties>
-    
+
     <dependencies>
-    
+
         <!-- Database access -->
         <dependency>
             <groupId>org.jooq</groupId>

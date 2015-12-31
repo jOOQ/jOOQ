@@ -71,9 +71,9 @@ class RegexpLike extends AbstractCondition {
         switch (ctx.family()) {
 
             // [#620] These databases are compatible with the MySQL syntax
-            /* [pro] xx
-            xxxx xxxxxxx
-            xx [/pro] */
+
+
+
             case CUBRID:
             case H2:
             case MARIADB:
@@ -97,9 +97,9 @@ class RegexpLike extends AbstractCondition {
             }
 
             // [#620] Postgres has its own syntax
-            /* [pro] xx
-            xxxx xxxxxxxxx
-            xx [/pro] */
+
+
+
             case POSTGRES: {
 
                 // [#1570] TODO: Replace this by SQL.condition(String, QueryPart...)
@@ -107,25 +107,25 @@ class RegexpLike extends AbstractCondition {
                 break;
             }
 
-            /* [pro] xx
-            xx xxxxxx xxxxxx xxx xxx xxx xxxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxx x
 
-                xx xxxxxxx xxxxx xxxxxxx xxxx xx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxx xxxxxxxxxx
-                xxxxxx
-            x
 
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
             // Render the SQL standard for those databases that do not support
             // regular expressions
-            /* [pro] xx
-            xxxx xxxx
-            xxxx xxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
             case DERBY:
             case FIREBIRD:
             default: {

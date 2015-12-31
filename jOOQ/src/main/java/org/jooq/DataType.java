@@ -100,13 +100,13 @@ public interface DataType<T> extends Serializable {
      */
     DataType<T[]> getArrayDataType();
 
-    /* [pro] xx
-    xxx
-     x xxxxxxxx xxx xxxx xxxx xxx xx xxxxxxxxxxxx xxxxx xx xxxx xxxx xxxxx
-     xx
-    xx xxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
 
-    xx [/pro] */
+
+
+
+
+
+
     /**
      * Retrieve the data type for a given enum data type.
      */

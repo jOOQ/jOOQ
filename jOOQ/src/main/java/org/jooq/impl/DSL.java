@@ -6233,18 +6233,18 @@ public class DSL {
         return table(val(array));
     }
 
-    /* [pro] xx
-    xxx
-     x x xxxxxxx xxx xxxxxx xxxxxxxxxxxxxxxxxxxxxx
-     x
-     x xxxx xxxxxxxxxxxxxxxxxxxx
-     xx
-    xxxxxxxxxxxxxxxx
-    xxxxxx xxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxx
-    x
 
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
     /**
      * A synonym for {@link #unnest(Field)}.
      *
@@ -6289,19 +6289,19 @@ public class DSL {
         return unnest(val(array));
     }
 
-    /* [pro] xx
-    xxx
-     x xxxxxx x xxxxx xxxx xx xxxxx xx xxxxxxx
-     x xxx
-     x xxxx xxxxx xxx xxxxxxxx xxxxx xx x xxxxxxxxxxxxxxxxxx xxxxxxxx xxx
-     x xxxxxxx xxxxxxxxxx xxxx xxxxxx xxxxx xxxxx xxxxxx
-     xx
-    xxxxxxxxxxxxxxxx
-    xxxxxx xxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxx
-    x
 
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Create a table from a field.
      * <p>
@@ -6335,18 +6335,18 @@ public class DSL {
             return new FunctionTable<Record>(cursor);
         }
 
-        /* [pro] xx
-        xx xxx xxxxx xx xx xxxxxxxxxxxx xxxxxx xxxxxxxx
-        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxx xxx xxxxxxxxxxxxxxxxxxx
-        x
 
-        xx xxx xxxxx xx xx xxxxxxxxxxxx xxxxxx xxxxx
-        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxx xxx xxxxxxxxxxxxxxxxxxx
-        x
 
-        xx [/pro] */
+
+
+
+
+
+
+
+
+
+
         // The field is a regular array
         else if (cursor.getType().isArray() && cursor.getType() != byte[].class) {
             return new ArrayTable(cursor);
@@ -7102,35 +7102,35 @@ public class DSL {
         return new QualifiedField<T>(name, type);
     }
 
-    /* [pro] xx
-    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    xx xxxx xxxxxxxx xxxxx
-    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-    xxx
-     x xxxxxx x xxxxxxxx xxxx xxxxxxxxxx
-     xx
-    xxxxxxxxxxxxxxxx
-    xxxxxx xxxxxx xxxx xxxxxxxxxxx xxxxx x
-        xxxxxx xxxxxxxxxx xxxxxx
-    x
 
-    xxx
-     x xxxxxx x xxxxxxxx xxxx xxxxxxxxxx
-     xx
-    xxxxxxxxxxxxxxxx
-    xxxxxx xxxxxx xxxx xxxxxxxxxxx xxxxx xxxxxx xxxxxxx x
-        xxxxxx xxx xxxxxxxxxxxxxx xxxxxxxx
-    x
 
-    xxx
-     x xxxxxx x xxxxxxxx xxxx xxxxxxxxxx
-     xx
-    xxxxxxxxxxxxxxxx
-    xxxxxx xxxxxx xxxx xxxxxxxxx xxxxx x
-        xxxxxx xxx xxxxxxxxxxxxxxx
-    x
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // XXX Plain SQL object factory
@@ -12767,9 +12767,9 @@ public class DSL {
      * </tr>
      * </table>
      */
-    
+
     @SafeVarargs
-    
+
     @Support({ H2, HSQLDB, POSTGRES })
     public static <T> Field<T[]> array(Field<T>... fields) {
         return array(Arrays.asList(fields));
@@ -14031,7 +14031,7 @@ public class DSL {
         return value((Object) value, SQLDataType.TIMESTAMP);
     }
 
-    
+
     /**
      * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
@@ -14081,7 +14081,7 @@ public class DSL {
     public static Param<OffsetDateTime> value(OffsetDateTime value) {
         return value((Object) value, SQLDataType.OFFSETDATETIME);
     }
-    
+
 
     /**
      * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
@@ -14648,7 +14648,7 @@ public class DSL {
         return inline((Object) value, SQLDataType.TIMESTAMP);
     }
 
-    
+
     /**
      * Create a bind value that is always inlined.
      * <p>
@@ -14748,7 +14748,7 @@ public class DSL {
     public static Param<OffsetDateTime> inline(OffsetDateTime value) {
         return inline((Object) value, SQLDataType.OFFSETDATETIME);
     }
-    
+
 
     /**
      * Create a bind value that is always inlined.
@@ -15135,7 +15135,7 @@ public class DSL {
         return val((Object) value, SQLDataType.TIMESTAMP);
     }
 
-    
+
     /**
      * Get a bind value.
      *
@@ -15180,7 +15180,7 @@ public class DSL {
     public static Param<OffsetDateTime> val(OffsetDateTime value) {
         return val((Object) value, SQLDataType.OFFSETDATETIME);
     }
-    
+
 
     /**
      * Get a bind value.
@@ -15239,12 +15239,12 @@ public class DSL {
         if (value instanceof UDTRecord) {
             return new UDTConstant((UDTRecord) value);
         }
-        /* [pro] xx
-        xxxx xx xxxxxx xxxxxxxxxx xxxxxxxxxxxx x
-            xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
-        x
 
-        xx [/pro] */
+
+
+
+
+
         // The default behaviour
         else {
             T converted = type.convert(value);

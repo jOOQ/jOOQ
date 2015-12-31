@@ -62,13 +62,13 @@ class Space extends AbstractFunction<String> {
     @Override
     final QueryPart getFunction0(Configuration configuration) {
         switch (configuration.family()) {
-            /* [pro] xx
-            xxxx xxxxx
-            xxxx xxxxxxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
 
             case DERBY:
             case FIREBIRD:
@@ -77,13 +77,13 @@ class Space extends AbstractFunction<String> {
             case SQLITE:
                 return DSL.repeat(DSL.inline(" "), count);
 
-            /* [pro] xx
-            xxxx xxxx
-            xxxx xxxxxxx
-            xxxx xxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
 
             case CUBRID:
             case MARIADB:

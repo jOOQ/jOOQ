@@ -108,19 +108,19 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
         if (nullsFirst || nullsLast) {
             switch (ctx.configuration().dialect().family()) {
 
-                /* [pro] xx
-                xx xxx xxxxxxxx xxxxx xxxxxxxxxx xxxx xx xxxx xxxxxxxx xxxxxxxxx
-                xxxx xxxx
 
-                xx xxxxx xxxxxxxxxx xxxxxxxx xxxxx xxxxxxx xxxx xxxxxx xx xxx
-                xxxx xxxxxxx
-                xxxx xxxx
-                xxxx xxxxxxx
-                xxxx xxxxxxxxx
-                xxxx xxxxxxxxxx
-                xxxx xxxxxxx
-                xxxx xxxxxxxx
-                xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
 
                 // These OSS dialects don't support this syntax at all
                 case CUBRID:

@@ -110,11 +110,11 @@ class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWhenStep
     @Override
     final QueryPart getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxx xxx xxxxxxxxx
 
-            xx [/pro] */
+
+
+
+
             default:
                 return new Native();
         }
@@ -133,43 +133,43 @@ class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWhenStep
         }
     }
 
-    /* [pro] xx
-    xxxxxxx xxxxx xxxxxx xxxxxxx xxxx x
 
-        xxx
-         x xxxxxxxxx xxx
-         xx
-        xxxxxxx xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxx
 
-        xxxxxxxxx
-        xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxx xxxx x
-            xxxxxxxxxxxxxxxxxxxxx
-               xxxxxxxxxx
 
-            xxx xxxx x x xx x x xxxxxxxxxxxxxxxxxxxxx xxxx x
-                xx xx x xx x
-                    xxxxxxxxxx xxx
-                x
 
-                xxxxxxxxxxxxxxxx
-                   xxxxxx x xx
-                   xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxx xx
-                   xxxxxxxxxxxxxxxxxxxxxxx
-            x
 
-            xx xxxxxxxxxx xx xxxxx x
-                xxxxxxxxxx xx
-                   xxxxxxxxxxxxxxxx
-                   xxxxxxx xx
-                   xxxxxxxxxxxxxxxxxx
-            x
 
-            xxxxxxxxxxxxx
-        x
-    x
 
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private class Native extends Base {
 

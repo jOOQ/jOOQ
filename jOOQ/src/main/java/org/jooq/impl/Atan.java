@@ -68,10 +68,10 @@ class Atan extends AbstractFunction<BigDecimal> {
     @Override
     final QueryPart getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxx
-            xx [/pro] */
+
+
+
+
 
             default:
                 return field("{atan}({0})", getDataType(), arg);

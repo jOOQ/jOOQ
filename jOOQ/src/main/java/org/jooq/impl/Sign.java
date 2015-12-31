@@ -70,10 +70,10 @@ class Sign extends AbstractFunction<Integer> {
     @Override
     final Field<Integer> getFunction0(Configuration configuration) {
         switch (configuration.dialect()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxxx
-            xx [/pro] */
+
+
+
+
 
             case SQLITE:
                 return DSL

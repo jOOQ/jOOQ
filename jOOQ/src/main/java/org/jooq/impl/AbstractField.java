@@ -282,9 +282,9 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    
+
     @SafeVarargs
-    
+
     public final SortField<Integer> sortAsc(T... sortList) {
         return sortAsc(Arrays.asList(sortList));
     }
@@ -302,9 +302,9 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    
+
     @SafeVarargs
-    
+
     public final SortField<Integer> sortDesc(T... sortList) {
         return sortDesc(Arrays.asList(sortList));
     }
@@ -1267,12 +1267,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         return new QuantifiedComparisonCondition(query, this, comparator);
     }
 
-    /* [pro] xx
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxx xxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxx
-    x
-    xx [/pro] */
+
+
+
+
+
+
 
     // ------------------------------------------------------------------------
     // XXX: Pre-2.0 API. This API is maintained for backwards-compatibility. It
@@ -1856,9 +1856,9 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     @Deprecated
-    
+
     @SafeVarargs
-    
+
     public final Field<T> greatest(T... others) {
         return DSL.greatest(this, Utils.fields(others).toArray(new Field[0]));
     }
@@ -1871,9 +1871,9 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     @Deprecated
-    
+
     @SafeVarargs
-    
+
     public final Field<T> least(T... others) {
         return DSL.least(this, Utils.fields(others).toArray(new Field[0]));
     }
@@ -1946,9 +1946,9 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     @Deprecated
-    
+
     @SafeVarargs
-    
+
     public final Field<T> coalesce(T option, T... options) {
         return DSL.coalesce(this, Utils.combine(Utils.field(option), Utils.fields(options).toArray(new Field[0])));
     }

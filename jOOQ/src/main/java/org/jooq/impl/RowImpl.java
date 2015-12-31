@@ -194,11 +194,11 @@ implements
     @Override
     public final void accept(Context<?> context) {
 
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxxx xx xxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
 
-        xx [/pro] */
+
+
+
+
         context.sql("(");
 
         String separator = "";

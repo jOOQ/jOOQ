@@ -92,11 +92,11 @@ public class LicenseService {
         final @QueryParam("mail") String mail
     ) {
     	return run(new CtxRunnable() {
-			
+
 			@Override
 			public String run(DSLContext ctx) {
 	    		Timestamp licenseDate = new Timestamp(System.currentTimeMillis());
-	    		
+
 	    		return
 	    		ctx.insertInto(LICENSE)
 	    		   .set(LICENSE.LICENSE_, generateKey(inline(licenseDate), inline(mail)))
@@ -108,7 +108,7 @@ public class LicenseService {
 			}
 		});
     }
-    
+
     /**
      * <code>/license/verify</code> checks if a given licensee has access to version using a license.
      *
@@ -130,7 +130,7 @@ public class LicenseService {
 			@Override
 			public String run(DSLContext ctx) {
 			    String v = (version == null || version.equals("")) ? "" : version;
-			    
+
 				return
 				ctx.insertInto(LOG_VERIFY)
 				   .set(LOG_VERIFY.LICENSE, license)
@@ -150,7 +150,7 @@ public class LicenseService {
 			}
 		});
 	}
-    
+
     // -------------------------------------------------------------------------
     // Utilities
     // -------------------------------------------------------------------------
@@ -161,7 +161,7 @@ public class LicenseService {
      */
 	private String run(CtxRunnable runnable) {
     	Connection c = null;
-    	
+
 		try {
     		Class.forName("org.postgresql.Driver");
     		c = getConnection("jdbc:postgresql:postgres", "postgres", System.getProperty("pw", "test"));
@@ -169,7 +169,7 @@ public class LicenseService {
     				.set(new DefaultConnectionProvider(c))
     				.set(SQLDialect.POSTGRES)
     				.set(new Settings().withExecuteLogging(false)));
-    		
+
     		return runnable.run(ctx);
     	}
     	catch (Exception e) {
@@ -181,7 +181,7 @@ public class LicenseService {
     		JDBCUtils.safeClose(c);
     	}
 	}
-	
+
 	private interface CtxRunnable {
 		String run(DSLContext ctx);
 	}

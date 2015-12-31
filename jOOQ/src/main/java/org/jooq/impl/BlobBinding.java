@@ -148,16 +148,16 @@ public class BlobBinding implements Binding<byte[], byte[]> {
             Blob blob = null;
 
             switch (configuration.family()) {
-                /* [pro] xx
-                xx xxxxxxxx xxx x xxx xxxx xxxxxxx xxxxx xxxxx xxxxxxxxx
-                xx xxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxx xxxxxxx x
-                    xxxx x xxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxx
-                    xxxxxx
-                x
-                    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
 
                 default: {
                     blob = c.createBlob();

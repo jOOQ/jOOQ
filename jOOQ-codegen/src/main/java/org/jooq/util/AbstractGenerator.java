@@ -69,6 +69,8 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateValidationAnnotations    = false;
     boolean                            generateSpringAnnotations        = false;
     boolean                            generateGlobalObjectReferences   = true;
+    boolean                            generateGlobalCatalogReferences  = true;
+    boolean                            generateGlobalSchemaReferences   = true;
     boolean                            generateGlobalRoutineReferences  = true;
     boolean                            generateGlobalSequenceReferences = true;
     boolean                            generateGlobalTableReferences    = true;
@@ -266,6 +268,26 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateGlobalObjectReferences(boolean generateGlobalObjectReferences) {
         this.generateGlobalObjectReferences = generateGlobalObjectReferences;
+    }
+
+    @Override
+    public boolean generateGlobalCatalogReferences() {
+        return generateGlobalCatalogReferences;
+    }
+
+    @Override
+    public void setGenerateGlobalCatalogReferences(boolean globalCatalogReferences) {
+        this.generateGlobalCatalogReferences = globalCatalogReferences;
+    }
+
+    @Override
+    public boolean generateGlobalSchemaReferences() {
+        return generateGlobalSchemaReferences;
+    }
+
+    @Override
+    public void setGenerateGlobalSchemaReferences(boolean globalSchemaReferences) {
+        this.generateGlobalSchemaReferences = globalSchemaReferences;
     }
 
     @Override

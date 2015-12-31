@@ -217,6 +217,26 @@ public interface Generator {
     void setGenerateGlobalObjectReferences(boolean generateGlobalObjectReferences);
 
     /**
+     * Whether global catalog references should be generated
+     */
+    boolean generateGlobalCatalogReferences();
+
+    /**
+     * Whether global catalog references should be generated
+     */
+    void setGenerateGlobalCatalogReferences(boolean globalCatalogReferences);
+
+    /**
+     * Whether global schema references should be generated
+     */
+    boolean generateGlobalSchemaReferences();
+
+    /**
+     * Whether global schema references should be generated
+     */
+    void setGenerateGlobalSchemaReferences(boolean globalSchemaReferences);
+
+    /**
      * Whether global routine references should be generated
      */
     boolean generateGlobalRoutineReferences();

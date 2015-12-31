@@ -765,7 +765,17 @@
       <element name="globalObjectReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
 
       <!--
-        Allow to turn off the generation of global table references in Tables.java
+        Allow to turn off the generation of global catalog references in Catalogs.java
+        -->
+      <element name="globalCatalogReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+
+      <!--
+        Allow to turn off the generation of global schema references in Schemas.java and each catalog
+        -->
+      <element name="globalSchemaReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+
+      <!--
+        Allow to turn off the generation of global table references in Tables.java and each schema
         -->
       <element name="globalTableReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
 

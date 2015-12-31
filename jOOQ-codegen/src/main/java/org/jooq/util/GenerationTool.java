@@ -424,6 +424,10 @@ public class GenerationTool {
                 generator.setGenerateSpringAnnotations(g.getGenerate().isSpringAnnotations());
             if (g.getGenerate().isGlobalObjectReferences() != null)
                 generator.setGenerateGlobalObjectReferences(g.getGenerate().isGlobalObjectReferences());
+            if (g.getGenerate().isGlobalCatalogReferences() != null)
+                generator.setGenerateGlobalCatalogReferences(g.getGenerate().isGlobalCatalogReferences());
+            if (g.getGenerate().isGlobalSchemaReferences() != null)
+                generator.setGenerateGlobalSchemaReferences(g.getGenerate().isGlobalSchemaReferences());
             if (g.getGenerate().isGlobalRoutineReferences() != null)
                 generator.setGenerateGlobalRoutineReferences(g.getGenerate().isGlobalRoutineReferences());
             if (g.getGenerate().isGlobalSequenceReferences() != null)

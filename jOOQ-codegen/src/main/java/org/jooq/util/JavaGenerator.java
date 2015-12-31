@@ -3013,8 +3013,8 @@ public class JavaGenerator extends AbstractGenerator {
         printClassAnnotations(out, schema);
 
         if (scala) {
-            out.println("class %s(alias : String, aliased : %s[%s], parameters : Array[ %s[_] ]) extends %s[%s](alias, null, aliased, parameters, \"%s\")[[before= with ][separator= with ][%s]] {",
-                    className, Table.class, recordType, Field.class, TableImpl.class, recordType, escapeString(comment), interfaces);
+            out.println("class %s(alias : String, aliased : %s[%s], parameters : Array[ %s[_] ]) extends %s[%s](alias, %s, aliased, parameters, \"%s\")[[before= with ][separator= with ][%s]] {",
+                    className, Table.class, recordType, Field.class, TableImpl.class, recordType, schemaId, escapeString(comment), interfaces);
         }
         else {
             out.println("public class %s extends %s<%s>[[before= implements ][%s]] {",
@@ -3480,7 +3480,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("public static final %s %s = new %s();", className, catalogId, className);
         }
 
-        if (generateGlobalObjectReferences() /* [#4879] TODO && generateGlobalSchemaReferences() */) {
+        if (generateGlobalObjectReferences() && generateGlobalSchemaReferences()) {
             for (SchemaDefinition schema : catalog.getSchemata()) {
                 final String schemaClassName = out.ref(getStrategy().getFullJavaClassName(schema));
                 final String schemaId = getStrategy().getJavaIdentifier(schema);

@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.FIREBIRD_3_0;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
@@ -2601,7 +2602,7 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * @see DSL#count(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     WindowPartitionByStep<Integer> countOver();
 
     /**
@@ -2612,7 +2613,7 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * @see DSL#max(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     WindowPartitionByStep<T> maxOver();
 
     /**
@@ -2623,7 +2624,7 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * @see DSL#min(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     WindowPartitionByStep<T> minOver();
 
     /**
@@ -2634,7 +2635,7 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * @see DSL#sum(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     WindowPartitionByStep<BigDecimal> sumOver();
 
     /**
@@ -2645,7 +2646,7 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * @see DSL#avg(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     WindowPartitionByStep<BigDecimal> avgOver();
 
     /**
@@ -2656,7 +2657,7 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * @see DSL#firstValue(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     WindowIgnoreNullsStep<T> firstValue();
 
     /**
@@ -2667,7 +2668,7 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * @see DSL#lastValue(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     WindowIgnoreNullsStep<T> lastValue();
 
     /**
@@ -2678,7 +2679,7 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * @see DSL#lead(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD_3_0, POSTGRES })
     WindowIgnoreNullsStep<T> lead();
 
     /**
@@ -2689,7 +2690,7 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * @see DSL#lead(Field, int)
      * @see AggregateFunction#over()
      */
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD_3_0, POSTGRES })
     WindowIgnoreNullsStep<T> lead(int offset);
 
     /**
@@ -2700,7 +2701,7 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * @see DSL#lead(Field, int, Object)
      * @see AggregateFunction#over()
      */
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD_3_0, POSTGRES })
     WindowIgnoreNullsStep<T> lead(int offset, T defaultValue);
 
     /**
@@ -2711,7 +2712,7 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * @see DSL#lead(Field, int, Field)
      * @see AggregateFunction#over()
      */
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD_3_0, POSTGRES })
     WindowIgnoreNullsStep<T> lead(int offset, Field<T> defaultValue);
 
     /**
@@ -2722,7 +2723,7 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * @see DSL#lag(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD_3_0, POSTGRES })
     WindowIgnoreNullsStep<T> lag();
 
     /**
@@ -2733,7 +2734,7 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * @see DSL#lag(Field, int)
      * @see AggregateFunction#over()
      */
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD_3_0, POSTGRES })
     WindowIgnoreNullsStep<T> lag(int offset);
 
     /**
@@ -2744,7 +2745,7 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * @see DSL#lag(Field, int, Object)
      * @see AggregateFunction#over()
      */
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD_3_0, POSTGRES })
     WindowIgnoreNullsStep<T> lag(int offset, T defaultValue);
 
     /**
@@ -2755,7 +2756,7 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * @see DSL#lag(Field, int, Field)
      * @see AggregateFunction#over()
      */
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD_3_0, POSTGRES })
     WindowIgnoreNullsStep<T> lag(int offset, Field<T> defaultValue);
 
     /**

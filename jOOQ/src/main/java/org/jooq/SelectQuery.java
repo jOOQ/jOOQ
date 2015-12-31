@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.FIREBIRD_3_0;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
@@ -313,7 +314,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param definitions The definitions
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     void addWindow(WindowDefinition... definitions);
 
     /**
@@ -321,7 +322,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param definitions The definitions
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     void addWindow(Collection<? extends WindowDefinition> definitions);
 
     /**

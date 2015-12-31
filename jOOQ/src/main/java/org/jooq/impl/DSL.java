@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.FIREBIRD_3_0;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
@@ -13275,7 +13276,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>PARTITION BY</code> clause.
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     public static WindowSpecificationOrderByStep partitionBy(Field<?>... fields) {
         return new WindowSpecificationImpl().partitionBy(fields);
     }
@@ -13283,7 +13284,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>PARTITION BY</code> clause.
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     public static WindowSpecificationOrderByStep partitionBy(Collection<? extends Field<?>> fields) {
         return new WindowSpecificationImpl().partitionBy(fields);
     }
@@ -13291,7 +13292,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with an <code>ORDER BY</code> clause.
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     public static WindowSpecificationOrderByStep orderBy(Field<?>... fields) {
         return new WindowSpecificationImpl().orderBy(fields);
     }
@@ -13299,7 +13300,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with an <code>ORDER BY</code> clause.
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     public static WindowSpecificationRowsStep orderBy(SortField<?>... fields) {
         return new WindowSpecificationImpl().orderBy(fields);
     }
@@ -13307,7 +13308,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with an <code>ORDER BY</code> clause.
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     public static WindowSpecificationRowsStep orderBy(Collection<? extends SortField<?>> fields) {
         return new WindowSpecificationImpl().orderBy(fields);
     }
@@ -13485,7 +13486,7 @@ public class DSL {
      * {@link SQLDialect#HSQLDB} can emulate this function using
      * <code>ROWNUM()</code>
      */
-    @Support({ CUBRID, DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, POSTGRES })
     public static WindowOverStep<Integer> rowNumber() {
         return new Function<Integer>(ROW_NUMBER, SQLDataType.INTEGER);
     }
@@ -13493,7 +13494,7 @@ public class DSL {
     /**
      * The <code>rank() over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     public static WindowOverStep<Integer> rank() {
         return new Function<Integer>("rank", SQLDataType.INTEGER);
     }
@@ -13501,7 +13502,7 @@ public class DSL {
     /**
      * The <code>dense_rank() over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     public static WindowOverStep<Integer> denseRank() {
         return new Function<Integer>("dense_rank", SQLDataType.INTEGER);
     }
@@ -13533,7 +13534,7 @@ public class DSL {
     /**
      * The <code>first_value(field) over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     public static <T> WindowIgnoreNullsStep<T> firstValue(Field<T> field) {
         return new Function<T>("first_value", nullSafeDataType(field), nullSafe(field));
     }
@@ -13541,7 +13542,7 @@ public class DSL {
     /**
      * The <code>last_value(field) over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     public static <T> WindowIgnoreNullsStep<T> lastValue(Field<T> field) {
         return new Function<T>("last_value", nullSafeDataType(field), nullSafe(field));
     }
@@ -13549,7 +13550,7 @@ public class DSL {
     /**
      * The <code>nth_value(field) over ([analytic clause])</code> function.
      */
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD_3_0, POSTGRES })
     public static <T> WindowIgnoreNullsStep<T> nthValue(Field<T> field, int nth) {
         return nthValue(field, val(nth));
     }
@@ -13557,7 +13558,7 @@ public class DSL {
     /**
      * The <code>nth_value(field) over ([analytic clause])</code> function.
      */
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD_3_0, POSTGRES })
     public static <T> WindowIgnoreNullsStep<T> nthValue(Field<T> field, Field<Integer> nth) {
         return new Function<T>("nth_value", nullSafeDataType(field), nullSafe(field), nullSafe(nth));
     }
@@ -13565,7 +13566,7 @@ public class DSL {
     /**
      * The <code>lead(field) over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field) {
         return new LeadLag<T>("lead", nullSafe(field));
     }
@@ -13573,7 +13574,7 @@ public class DSL {
     /**
      * The <code>lead(field, offset) over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset) {
         return new LeadLag<T>("lead", nullSafe(field), offset);
     }
@@ -13583,7 +13584,7 @@ public class DSL {
      * <code>lead(field, offset, defaultValue) over ([analytic clause])</code>
      * function.
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, T defaultValue) {
         return lead(nullSafe(field), offset, Utils.field(defaultValue));
     }
@@ -13593,7 +13594,7 @@ public class DSL {
      * <code>lead(field, offset, defaultValue) over ([analytic clause])</code>
      * function.
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, Field<T> defaultValue) {
         return new LeadLag<T>("lead", nullSafe(field), offset, nullSafe(defaultValue));
     }
@@ -13601,7 +13602,7 @@ public class DSL {
     /**
      * The <code>lag(field) over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field) {
         return new LeadLag<T>("lag", nullSafe(field));
     }
@@ -13609,7 +13610,7 @@ public class DSL {
     /**
      * The <code>lag(field, offset) over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset) {
         return new LeadLag<T>("lag", nullSafe(field), offset);
     }
@@ -13619,7 +13620,7 @@ public class DSL {
      * <code>lag(field, offset, defaultValue) over ([analytic clause])</code>
      * function.
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, T defaultValue) {
         return lag(nullSafe(field), offset, Utils.field(defaultValue));
     }
@@ -13629,7 +13630,7 @@ public class DSL {
      * <code>lag(field, offset, defaultValue) over ([analytic clause])</code>
      * function.
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, Field<T> defaultValue) {
         return new LeadLag<T>("lag", nullSafe(field), offset, nullSafe(defaultValue));
     }

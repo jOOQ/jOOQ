@@ -42,6 +42,7 @@ package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+import static org.jooq.SQLDialect.FIREBIRD_3_0;
 // ...
 // ...
 // ...
@@ -71,18 +72,18 @@ public interface WindowSpecificationOrderByStep extends WindowSpecificationRowsS
     /**
      * Add an <code>ORDER BY</code> clause to the window specification.
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     WindowSpecificationRowsStep orderBy(Field<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the window specification.
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     WindowSpecificationRowsStep orderBy(SortField<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the window specification.
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     WindowSpecificationRowsStep orderBy(Collection<? extends SortField<?>> fields);
 }

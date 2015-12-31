@@ -43,6 +43,7 @@ package org.jooq;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD_3_0;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
@@ -83,7 +84,7 @@ public interface WindowOverStep<T> {
      * </code>
      * </pre>
      */
-    @Support({ CUBRID, DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, POSTGRES })
     WindowPartitionByStep<T> over();
 
     /**
@@ -99,7 +100,7 @@ public interface WindowOverStep<T> {
      * {@link SelectWindowStep#window(WindowDefinition...)}, then referenced
      * windows will be inlined.
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     WindowFinalStep<T> over(Name name);
 
     /**
@@ -115,7 +116,7 @@ public interface WindowOverStep<T> {
      * {@link SelectWindowStep#window(WindowDefinition...)}, then referenced
      * windows will be inlined.
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     WindowFinalStep<T> over(String name);
 
     /**
@@ -126,7 +127,7 @@ public interface WindowOverStep<T> {
      * </code>
      * </pre>
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     WindowFinalStep<T> over(WindowSpecification specification);
 
     /**
@@ -142,7 +143,7 @@ public interface WindowOverStep<T> {
      * {@link SelectWindowStep#window(WindowDefinition...)}, then referenced
      * windows will be inlined.
      */
-    @Support({ CUBRID, POSTGRES })
+    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
     WindowFinalStep<T> over(WindowDefinition definition);
 
 }

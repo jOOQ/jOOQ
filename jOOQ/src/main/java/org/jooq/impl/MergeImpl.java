@@ -135,7 +135,6 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.UniqueKey;
-import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -994,118 +993,101 @@ implements
     /**
      * Return a standard MERGE statement emulating the H2-specific syntax
      */
-    private final QueryPart getStandardMerge(Context<?> ctx) {
-        Configuration config = ctx.configuration();
+    private final QueryPart getStandardMerge() {
 
-        switch (ctx.family()) {
+        // The SRC for the USING() clause:
+        // ------------------------------
+        Table<?> src;
+        if (upsertSelect != null) {
+            List<Field<?>> v = new ArrayList<Field<?>>();
+            Row row = upsertSelect.fieldsRow();
 
-
-
-
-
-
-
-
-            case CUBRID:
-            case HSQLDB: {
-
-                // The SRC for the USING() clause:
-                // ------------------------------
-                Table<?> src;
-                if (upsertSelect != null) {
-                    List<Field<?>> v = new ArrayList<Field<?>>();
-                    Row row = upsertSelect.fieldsRow();
-
-                    for (int i = 0; i < row.size(); i++) {
-                        v.add(row.field(i).as("s" + (i + 1)));
-                    }
-
-                    // [#579] TODO: Currently, this syntax may require aliasing
-                    // on the call-site
-                    src = create(config).select(v).from(upsertSelect).asTable("src");
-                }
-                else {
-                    List<Field<?>> v = new ArrayList<Field<?>>();
-
-                    for (int i = 0; i < getUpsertValues().size(); i++) {
-                        v.add(getUpsertValues().get(i).as("s" + (i + 1)));
-                    }
-
-                    src = create(config).select(v).asTable("src");
-                }
-
-                // The condition for the ON clause:
-                // --------------------------------
-                Set<Field<?>> onFields = new HashSet<Field<?>>();
-                Condition condition = null;
-                if (getUpsertKeys().isEmpty()) {
-                    UniqueKey<?> key = table.getPrimaryKey();
-
-                    if (key != null) {
-                        onFields.addAll(key.getFields());
-
-                        for (int i = 0; i < key.getFields().size(); i++) {
-                            Condition rhs = key.getFields().get(i).equal((Field) src.field(i));
-
-                            if (condition == null) {
-                                condition = rhs;
-                            }
-                            else {
-                                condition = condition.and(rhs);
-                            }
-                        }
-                    }
-
-                    // This should probably execute an INSERT statement
-                    else {
-                        throw new IllegalStateException("Cannot omit KEY() clause on a non-Updatable Table");
-                    }
-                }
-                else {
-                    for (int i = 0; i < getUpsertKeys().size(); i++) {
-                        int matchIndex = getUpsertFields().indexOf(getUpsertKeys().get(i));
-                        if (matchIndex == -1) {
-                            throw new IllegalStateException("Fields in KEY() clause must be part of the fields specified in MERGE INTO table (...)");
-                        }
-
-                        onFields.addAll(getUpsertKeys());
-                        Condition rhs = getUpsertKeys().get(i).equal((Field) src.field(matchIndex));
-
-                        if (condition == null) {
-                            condition = rhs;
-                        }
-                        else {
-                            condition = condition.and(rhs);
-                        }
-                    }
-                }
-
-                // INSERT and UPDATE clauses
-                // -------------------------
-                Map<Field<?>, Field<?>> update = new LinkedHashMap<Field<?>, Field<?>>();
-                Map<Field<?>, Field<?>> insert = new LinkedHashMap<Field<?>, Field<?>>();
-
-                for (int i = 0; i < src.fieldsRow().size(); i++) {
-
-                    // Oracle does not allow to update fields from the ON clause
-                    if (!onFields.contains(getUpsertFields().get(i))) {
-                        update.put(getUpsertFields().get(i), src.field(i));
-                    }
-
-                    insert.put(getUpsertFields().get(i), src.field(i));
-                }
-
-                return create(config).mergeInto(table)
-                                     .using(src)
-                                     .on(condition)
-                                     .whenMatchedThenUpdate()
-                                     .set(update)
-                                     .whenNotMatchedThenInsert()
-                                     .set(insert);
+            for (int i = 0; i < row.size(); i++) {
+                v.add(row.field(i).as("s" + (i + 1)));
             }
-            default:
-                throw new SQLDialectNotSupportedException("The H2-specific MERGE syntax is not supported in dialect : " + config.dialect());
+
+            // [#579] TODO: Currently, this syntax may require aliasing
+            // on the call-site
+            src = DSL.select(v).from(upsertSelect).asTable("src");
         }
+        else {
+            List<Field<?>> v = new ArrayList<Field<?>>();
+
+            for (int i = 0; i < getUpsertValues().size(); i++) {
+                v.add(getUpsertValues().get(i).as("s" + (i + 1)));
+            }
+
+            src = DSL.select(v).asTable("src");
+        }
+
+        // The condition for the ON clause:
+        // --------------------------------
+        Set<Field<?>> onFields = new HashSet<Field<?>>();
+        Condition condition = null;
+        if (getUpsertKeys().isEmpty()) {
+            UniqueKey<?> key = table.getPrimaryKey();
+
+            if (key != null) {
+                onFields.addAll(key.getFields());
+
+                for (int i = 0; i < key.getFields().size(); i++) {
+                    Condition rhs = key.getFields().get(i).equal((Field) src.field(i));
+
+                    if (condition == null) {
+                        condition = rhs;
+                    }
+                    else {
+                        condition = condition.and(rhs);
+                    }
+                }
+            }
+
+            // This should probably execute an INSERT statement
+            else {
+                throw new IllegalStateException("Cannot omit KEY() clause on a non-Updatable Table");
+            }
+        }
+        else {
+            for (int i = 0; i < getUpsertKeys().size(); i++) {
+                int matchIndex = getUpsertFields().indexOf(getUpsertKeys().get(i));
+                if (matchIndex == -1) {
+                    throw new IllegalStateException("Fields in KEY() clause must be part of the fields specified in MERGE INTO table (...)");
+                }
+
+                onFields.addAll(getUpsertKeys());
+                Condition rhs = getUpsertKeys().get(i).equal((Field) src.field(matchIndex));
+
+                if (condition == null) {
+                    condition = rhs;
+                }
+                else {
+                    condition = condition.and(rhs);
+                }
+            }
+        }
+
+        // INSERT and UPDATE clauses
+        // -------------------------
+        Map<Field<?>, Field<?>> update = new LinkedHashMap<Field<?>, Field<?>>();
+        Map<Field<?>, Field<?>> insert = new LinkedHashMap<Field<?>, Field<?>>();
+
+        for (int i = 0; i < src.fieldsRow().size(); i++) {
+
+            // Oracle does not allow to update fields from the ON clause
+            if (!onFields.contains(getUpsertFields().get(i))) {
+                update.put(getUpsertFields().get(i), src.field(i));
+            }
+
+            insert.put(getUpsertFields().get(i), src.field(i));
+        }
+
+        return DSL.mergeInto(table)
+                  .using(src)
+                  .on(condition)
+                  .whenMatchedThenUpdate()
+                  .set(update)
+                  .whenNotMatchedThenInsert()
+                  .set(insert);
     }
 
     @Override
@@ -1130,7 +1112,7 @@ implements
 
 
                 default:
-                    ctx.visit(getStandardMerge(ctx));
+                    ctx.visit(getStandardMerge());
                     break;
             }
         }

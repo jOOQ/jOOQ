@@ -42,6 +42,7 @@ package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+import static org.jooq.SQLDialect.FIREBIRD_3_0;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
@@ -73,19 +74,19 @@ public interface MergeValuesStep1<R extends Record, T1> {
     /**
      * Specify a <code>VALUES</code> clause
      */
-    @Support({ CUBRID, H2, HSQLDB, POSTGRES_9_5 })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
     Merge<R> values(T1 value1);
 
     /**
      * Specify a <code>VALUES</code> clause
      */
-    @Support({ CUBRID, H2, HSQLDB, POSTGRES_9_5 })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
     Merge<R> values(Field<T1> value1);
 
     /**
      * Specify a <code>VALUES</code> clause
      */
-    @Support({ CUBRID, H2, HSQLDB, POSTGRES_9_5 })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
     Merge<R> values(Collection<?> values);
 
     /**
@@ -97,6 +98,6 @@ public interface MergeValuesStep1<R extends Record, T1> {
      * <code>INTO</code> clause:
      * {@link DSLContext#mergeInto(Table, Field)}
      */
-    @Support({ CUBRID, H2, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB })
     Merge<R> select(Select<? extends Record1<T1>> select);
 }

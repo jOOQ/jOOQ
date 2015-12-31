@@ -42,6 +42,7 @@ package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+import static org.jooq.SQLDialect.FIREBIRD_3_0;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
@@ -74,13 +75,13 @@ public interface MergeOnStep<R extends Record> {
      * Provide join conditions and proceed to the next step, connecting them
      * with each other with {@link Operator#AND}.
      */
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     MergeOnConditionStep<R> on(Condition... conditions);
 
     /**
      * Provide join conditions and proceed to the next step
      */
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     MergeOnConditionStep<R> on(Field<Boolean> condition);
 
     /**
@@ -94,7 +95,7 @@ public interface MergeOnStep<R extends Record> {
      *             removed in the future.
      */
     @Deprecated
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     MergeOnConditionStep<R> on(Boolean condition);
 
     /**
@@ -108,7 +109,7 @@ public interface MergeOnStep<R extends Record> {
      * @see DSL#condition(SQL)
      * @see SQL
      */
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     @PlainSQL
     MergeOnConditionStep<R> on(SQL sql);
 
@@ -123,7 +124,7 @@ public interface MergeOnStep<R extends Record> {
      * @see DSL#condition(String)
      * @see SQL
      */
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     @PlainSQL
     MergeOnConditionStep<R> on(String sql);
 
@@ -138,7 +139,7 @@ public interface MergeOnStep<R extends Record> {
      * @see DSL#condition(String, Object...)
      * @see SQL
      */
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     @PlainSQL
     MergeOnConditionStep<R> on(String sql, Object... bindings);
 
@@ -153,7 +154,7 @@ public interface MergeOnStep<R extends Record> {
      * @see DSL#condition(String, QueryPart...)
      * @see SQL
      */
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     @PlainSQL
     MergeOnConditionStep<R> on(String sql, QueryPart... parts);
 }

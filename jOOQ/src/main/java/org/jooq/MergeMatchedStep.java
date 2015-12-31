@@ -42,6 +42,7 @@ package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+import static org.jooq.SQLDialect.FIREBIRD_3_0;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
@@ -72,6 +73,6 @@ public interface MergeMatchedStep<R extends Record> extends MergeNotMatchedStep<
      * Add the <code>WHEN MATCHED THEN UPDATE</code> clause to the
      * <code>MERGE</code> statement
      */
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     MergeMatchedSetStep<R> whenMatchedThenUpdate();
 }

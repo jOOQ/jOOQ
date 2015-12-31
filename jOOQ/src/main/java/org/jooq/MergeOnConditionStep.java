@@ -42,6 +42,7 @@ package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+import static org.jooq.SQLDialect.FIREBIRD_3_0;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
@@ -74,14 +75,14 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator and proceed to the next step.
      */
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     MergeOnConditionStep<R> and(Condition condition);
 
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator and proceed to the next step.
      */
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     MergeOnConditionStep<R> and(Field<Boolean> condition);
 
     /**
@@ -96,7 +97,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      *             removed in the future.
      */
     @Deprecated
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     MergeOnConditionStep<R> and(Boolean condition);
 
     /**
@@ -111,7 +112,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * @see DSL#condition(SQL)
      * @see SQL
      */
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     @PlainSQL
     MergeOnConditionStep<R> and(SQL sql);
 
@@ -127,7 +128,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * @see DSL#condition(String)
      * @see SQL
      */
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     @PlainSQL
     MergeOnConditionStep<R> and(String sql);
 
@@ -143,7 +144,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * @see DSL#condition(String, Object...)
      * @see SQL
      */
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     @PlainSQL
     MergeOnConditionStep<R> and(String sql, Object... bindings);
 
@@ -159,7 +160,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * @see DSL#condition(String, QueryPart...)
      * @see SQL
      */
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     @PlainSQL
     MergeOnConditionStep<R> and(String sql, QueryPart... parts);
 
@@ -167,14 +168,14 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     MergeOnConditionStep<R> andNot(Condition condition);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     MergeOnConditionStep<R> andNot(Field<Boolean> condition);
 
     /**
@@ -189,35 +190,35 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      *             removed in the future.
      */
     @Deprecated
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     MergeOnConditionStep<R> andNot(Boolean condition);
 
     /**
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     MergeOnConditionStep<R> andExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     MergeOnConditionStep<R> andNotExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator and proceed to the next step.
      */
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     MergeOnConditionStep<R> or(Condition condition);
 
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator and proceed to the next step.
      */
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     MergeOnConditionStep<R> or(Field<Boolean> condition);
 
     /**
@@ -232,7 +233,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      *             removed in the future.
      */
     @Deprecated
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     MergeOnConditionStep<R> or(Boolean condition);
 
     /**
@@ -247,7 +248,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * @see DSL#condition(SQL)
      * @see SQL
      */
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     @PlainSQL
     MergeOnConditionStep<R> or(SQL sql);
 
@@ -263,7 +264,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * @see DSL#condition(String)
      * @see SQL
      */
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     @PlainSQL
     MergeOnConditionStep<R> or(String sql);
 
@@ -279,7 +280,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * @see DSL#condition(String, Object...)
      * @see SQL
      */
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     @PlainSQL
     MergeOnConditionStep<R> or(String sql, Object... bindings);
 
@@ -295,7 +296,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * @see DSL#condition(String, QueryPart...)
      * @see SQL
      */
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     @PlainSQL
     MergeOnConditionStep<R> or(String sql, QueryPart... parts);
 
@@ -303,14 +304,14 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     MergeOnConditionStep<R> orNot(Condition condition);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     MergeOnConditionStep<R> orNot(Field<Boolean> condition);
 
     /**
@@ -325,20 +326,20 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      *             removed in the future.
      */
     @Deprecated
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     MergeOnConditionStep<R> orNot(Boolean condition);
 
     /**
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     MergeOnConditionStep<R> orExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
-    @Support({ CUBRID, HSQLDB })
+    @Support({ CUBRID, FIREBIRD_3_0, HSQLDB })
     MergeOnConditionStep<R> orNotExists(Select<?> select);
 }

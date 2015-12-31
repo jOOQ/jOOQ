@@ -43,6 +43,11 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
         this.isJava = file.getName().endsWith(".java");
         this.isScala = file.getName().endsWith(".scala");
         this.fullyQualifiedTypes = fullyQualifiedTypes == null ? null : Pattern.compile(fullyQualifiedTypes);
+
+        if (isJava)
+            tabString("    ");
+        else if (isScala)
+            tabString("  ");
     }
 
     public JavaWriter print(Class<?> clazz) {

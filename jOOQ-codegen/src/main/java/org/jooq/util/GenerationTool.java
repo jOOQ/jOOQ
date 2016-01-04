@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -59,6 +59,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
 
+import javax.sql.DataSource;
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
@@ -97,6 +98,7 @@ public class GenerationTool {
     private static final JooqLogger log = JooqLogger.getLogger(GenerationTool.class);
 
     private ClassLoader             loader;
+    private DataSource              dataSource;
     private Connection              connection;
     private boolean                 close;
 
@@ -117,6 +119,16 @@ public class GenerationTool {
      */
     public void setConnection(Connection connection) {
         this.connection = connection;
+    }
+
+    /**
+     * The JDBC data source to use with this generation tool.
+     * <p>
+     * If set, the configuration XML's <code>&lt;jdbc/></code> configuration is
+     * ignored, and this connection is used for meta data inspection, instead.
+     */
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     public static void main(String[] args) throws Exception {
@@ -196,21 +208,26 @@ public class GenerationTool {
 
             // Initialise connection
             // ---------------------
-            if (connection == null && j != null) {
-                Class<? extends Driver> driver = (Class<? extends Driver>) loadClass(driverClass(j));
-
-                Properties properties = properties(j.getProperties());
-                if (!properties.containsKey("user"))
-                    properties.put("user", defaultString(defaultString(j.getUser(), j.getUsername())));
-                if (!properties.containsKey("password"))
-                    properties.put("password", defaultString(j.getPassword()));
-
-                connection = driver.newInstance().connect(defaultString(j.getUrl()), properties);
+            if (connection == null) {
                 close = true;
+
+                if (dataSource != null) {
+                    connection = dataSource.getConnection();
+                }
+                else if (j != null) {
+                    Class<? extends Driver> driver = (Class<? extends Driver>) loadClass(driverClass(j));
+
+                    Properties properties = properties(j.getProperties());
+                    if (!properties.containsKey("user"))
+                        properties.put("user", defaultString(defaultString(j.getUser(), j.getUsername())));
+                    if (!properties.containsKey("password"))
+                        properties.put("password", defaultString(j.getPassword()));
+
+                    connection = driver.newInstance().connect(defaultString(j.getUrl()), properties);
+                }
             }
-            else {
-                j = defaultIfNull(j, new Jdbc());
-            }
+
+            j = defaultIfNull(j, new Jdbc());
 
 
             // Initialise generator

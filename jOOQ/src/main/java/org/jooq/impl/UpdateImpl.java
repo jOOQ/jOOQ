@@ -555,6 +555,7 @@ final class UpdateImpl<R extends Record>
     }
 
     @Override
+    @Deprecated
     public final UpdateImpl<R> where(Boolean condition) {
         return where(condition(condition));
     }
@@ -601,6 +602,7 @@ final class UpdateImpl<R extends Record>
     }
 
     @Override
+    @Deprecated
     public final UpdateImpl<R> and(Boolean condition) {
         return and(condition(condition));
     }
@@ -636,6 +638,7 @@ final class UpdateImpl<R extends Record>
     }
 
     @Override
+    @Deprecated
     public final UpdateImpl<R> andNot(Boolean condition) {
         return andNot(condition(condition));
     }
@@ -662,6 +665,7 @@ final class UpdateImpl<R extends Record>
     }
 
     @Override
+    @Deprecated
     public final UpdateImpl<R> or(Boolean condition) {
         return or(condition(condition));
     }
@@ -697,6 +701,7 @@ final class UpdateImpl<R extends Record>
     }
 
     @Override
+    @Deprecated
     public final UpdateImpl<R> orNot(Boolean condition) {
         return orNot(condition(condition));
     }

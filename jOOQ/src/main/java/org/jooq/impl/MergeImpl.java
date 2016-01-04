@@ -588,6 +588,7 @@ implements
     }
 
     @Override
+    @Deprecated
     public final MergeOnConditionStep<R> on(Boolean condition) {
         return on(condition(condition));
     }
@@ -624,6 +625,7 @@ implements
     }
 
     @Override
+    @Deprecated
     public final MergeImpl and(Boolean condition) {
         return and(condition(condition));
     }
@@ -659,6 +661,7 @@ implements
     }
 
     @Override
+    @Deprecated
     public final MergeImpl andNot(Boolean condition) {
         return andNot(condition(condition));
     }
@@ -685,6 +688,7 @@ implements
     }
 
     @Override
+    @Deprecated
     public final MergeImpl or(Boolean condition) {
         return and(condition(condition));
     }
@@ -720,6 +724,7 @@ implements
     }
 
     @Override
+    @Deprecated
     public final MergeImpl orNot(Boolean condition) {
         return orNot(condition(condition));
     }
@@ -966,6 +971,7 @@ implements
     }
 
     @Override
+    @Deprecated
     public final MergeMatchedDeleteStep<R> where(Boolean condition) {
         return where(condition(condition));
     }
@@ -982,6 +988,7 @@ implements
     }
 
     @Override
+    @Deprecated
     public final MergeImpl deleteWhere(Boolean condition) {
         return deleteWhere(condition(condition));
     }

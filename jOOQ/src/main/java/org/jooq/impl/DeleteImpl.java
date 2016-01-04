@@ -100,6 +100,7 @@ class DeleteImpl<R extends Record>
     }
 
     @Override
+    @Deprecated
     public final DeleteImpl<R> where(Boolean condition) {
         return where(condition(condition));
     }
@@ -146,6 +147,7 @@ class DeleteImpl<R extends Record>
     }
 
     @Override
+    @Deprecated
     public final DeleteImpl<R> and(Boolean condition) {
         return and(condition(condition));
     }
@@ -181,6 +183,7 @@ class DeleteImpl<R extends Record>
     }
 
     @Override
+    @Deprecated
     public final DeleteImpl<R> andNot(Boolean condition) {
         return andNot(condition(condition));
     }
@@ -207,6 +210,7 @@ class DeleteImpl<R extends Record>
     }
 
     @Override
+    @Deprecated
     public final DeleteImpl<R> or(Boolean condition) {
         return or(condition(condition));
     }
@@ -242,6 +246,7 @@ class DeleteImpl<R extends Record>
     }
 
     @Override
+    @Deprecated
     public final DeleteImpl<R> orNot(Boolean condition) {
         return orNot(condition(condition));
     }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+  * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
   * All rights reserved.
   *
   * This work is dual-licensed

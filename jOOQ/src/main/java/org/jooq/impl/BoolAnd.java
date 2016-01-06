@@ -75,15 +75,15 @@ class BoolAnd extends Function<Boolean> {
                 break;
 
             default:
-                final Field<Integer> count = DSL.field("{0}", Integer.class, new CustomQueryPart() {
+                final Field<Integer> max = DSL.field("{0}", Integer.class, new CustomQueryPart() {
                     @Override
                     public void accept(Context<?> c) {
-                        c.visit(DSL.count(DSL.when(condition.not(), one())));
+                        c.visit(DSL.max(DSL.when(condition, zero()).otherwise(one())));
                         toSQLOverClause(c);
                     }
                 });
 
-                ctx.visit(DSL.when(count.eq(zero()), inline(true)).otherwise(inline(false)));
+                ctx.visit(DSL.when(max.eq(zero()), inline(true)).otherwise(inline(false)));
                 break;
         }
     }

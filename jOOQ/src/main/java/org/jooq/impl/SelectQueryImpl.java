@@ -998,7 +998,9 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
 
         // INTO clauses
         // ------------
-        if (!asList().contains(family)) {
+        // [#4910] This clause (and the Clause.SELECT_INTO signal) must be emitted
+        //         only in top level SELECTs
+        if (!context.subquery() && !asList().contains(family)) {
             context.start(SELECT_INTO);
 
             Table<?> actualInto = (Table<?>) context.data(DATA_SELECT_INTO_TABLE);

@@ -40,6 +40,7 @@
  */
 package org.jooq.exception;
 
+import java.sql.SQLException;
 
 /**
  * The <code>DataAccessException</code> is a generic {@link RuntimeException}
@@ -75,5 +76,44 @@ public class DataAccessException extends RuntimeException {
      */
     public DataAccessException(String message, Throwable cause) {
         super(message, cause);
+    }
+
+    /**
+     * Retrieve the {@link SQLException#getSQLState()} from {@link #getCause()},
+     * if this <code>DataAccessException</code> was caused by a
+     * {@link SQLException}.
+     */
+    public String sqlState() {
+        Throwable t = getCause();
+        if (t instanceof SQLException)
+            return ((SQLException) t).getSQLState();
+
+        return "00000";
+    }
+
+    /**
+     * Decode the {@link SQLException#getSQLState()} from {@link #getCause()}
+     * into {@link SQLStateClass}, if this <code>DataAccessException</code> was
+     * caused by a {@link SQLException}.
+     */
+    public SQLStateClass sqlStateClass() {
+        Throwable t = getCause();
+        if (t instanceof SQLException)
+            return SQLStateClass.fromCode(((SQLException) t).getSQLState());
+
+        return SQLStateClass.NONE;
+    }
+
+    /**
+     * Decode the {@link SQLException#getSQLState()} from {@link #getCause()}
+     * into {@link SQLStateSubclass}, if this <code>DataAccessException</code> was
+     * caused by a {@link SQLException}.
+     */
+    public SQLStateSubclass sqlStateSubclass() {
+        Throwable t= getCause();
+        if (t instanceof SQLException)
+            return SQLStateSubclass.fromCode(((SQLException) t).getSQLState());
+
+        return SQLStateSubclass.NONE;
     }
 }

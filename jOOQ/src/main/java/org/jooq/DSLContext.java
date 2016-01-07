@@ -2561,6 +2561,47 @@ public interface DSLContext extends Scope , AutoCloseable  {
     Result<Record> fetchFromTXT(String string, String nullLiteral) throws DataAccessException;
 
     /**
+     * Convert an HTML table into a jOOQ {@link Result}.
+     * <p>
+     * This is the inverse operation of {@link Result#formatHTML()}. It works
+     * according to the following parsing rules:
+     * <ul>
+     * <li>The input is expected to be well-formed XML. XHTML conformance is not
+     * required - i.e. unknown elements / attributes, or elements / attributes
+     * not specified here, such as <code>&lt;caption></code>,
+     * <code>&lt;thead></code>, <code>&lt;tbody></code> are simply ignored.</li>
+     * <li>The surrounding <code>&lt;table></code> element is optional, but it
+     * may appear only once</li>
+     * <li>A single row containing table headings <code>&lt;th></code> is
+     * allowed. Further rows containing table headings are ignored. Table
+     * headings define field names. In the absence of table headings, field
+     * names are generated.</li>
+     * <li>The first row <code>&lt;tr></code> specifies the number of columns in
+     * the table (regardless if it contains table headings or not). Subsequent
+     * rows containing less columns will be padded. Subsequent rows containing
+     * more columns will be truncated.</li>
+     * <li>Comments are ignored</li>
+     * <li>Nested tables are not supported</li>
+     * </ul>
+     * <p>
+     * Ideal input looks like this: <code><pre>
+     * &lt;table>
+     * &lt;tr>&lt;th>COL1&lt;/th>&lt;th>COL2&lt;/th>&lt;/tr>
+     * &lt;tr>&lt;td>1&lt;/td>&lt;td>a&lt;/td>&lt;/tr>
+     * &lt;tr>&lt;td>2&lt;/td>&lt;td>b&lt;/td>&lt;/tr>
+     * &lt;/table>
+     * </code>
+     * </pre>
+     *
+     * @param string The HTML-formatted string.
+     * @return The transformed result
+     * @throws DataAccessException If the supplied string does not adhere to the
+     *             above format rules.
+     */
+    @Support
+    Result<Record> fetchFromHTML(String string) throws DataAccessException;
+
+    /**
      * Fetch all data from a CSV string.
      * <p>
      * This is the same as calling <code>fetchFromCSV(string, ',')</code> and

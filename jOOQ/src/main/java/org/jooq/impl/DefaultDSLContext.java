@@ -991,6 +991,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public Result<Record> fetchFromHTML(String string) {
+        return fetchFromStringData(Utils.parseHTML(string));
+    }
+
+    @Override
     public Result<Record> fetchFromCSV(String string) {
         return fetchFromCSV(string, true, ',');
     }

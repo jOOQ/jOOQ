@@ -2734,6 +2734,45 @@ final class Utils {
         }
     }
 
+    private static final Pattern P_PARSE_HTML_ROW      = Pattern.compile("<tr>(.*?)</tr>");
+    private static final Pattern P_PARSE_HTML_COL_HEAD = Pattern.compile("<th>(.*?)</th>");
+    private static final Pattern P_PARSE_HTML_COL_BODY = Pattern.compile("<td>(.*?)</td>");
+
+    static List<String[]> parseHTML(String string) {
+
+        List<String[]> result = new ArrayList<String[]>();
+
+        Matcher mRow = P_PARSE_HTML_ROW.matcher(string);
+        while (mRow.find()) {
+            String row = mRow.group(1);
+            List<String> col = new ArrayList<String>();
+
+            // Header was not yet emitted
+            if (result.isEmpty()) {
+                Matcher mColHead = P_PARSE_HTML_COL_HEAD.matcher(row);
+
+                while (mColHead.find()) {
+                    col.add(mColHead.group(1));
+                }
+            }
+
+            if (col.isEmpty()) {
+                Matcher mColBody = P_PARSE_HTML_COL_BODY.matcher(row);
+
+                while (mColBody.find()) {
+                    col.add(mColBody.group(1));
+                }
+
+                if (result.isEmpty())
+                    result.add(fieldNames(col.size()));
+            }
+
+            result.add(col.toArray(new String[col.size()]));
+        }
+
+        return result;
+    }
+
     /**
      * Wrap a <code>DROP .. IF EXISTS</code> statement with
      * <code>BEGIN EXECUTE IMMEDIATE '...' EXCEPTION WHEN ... END;</code>, if

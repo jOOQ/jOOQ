@@ -60,7 +60,7 @@
 
         <plugins>
 
-            <!-- We're using the org.jooq.example.kotlin.getProperties plugin to load external org.jooq.example.kotlin.getProperties into Maven.
+            <!-- We're using the properties plugin to load external properties into Maven.
                  See this excellent blog post for an explanation:
                  http://www.petrikainulainen.net/programming/tips-and-tricks/creating-profile-specific-configuration-files-with-maven/ -->
             <plugin>
@@ -75,7 +75,7 @@
                         </goals>
                         <configuration>
                             <files>
-                                <file>src/main/resources/config.org.jooq.example.kotlin.getProperties</file>
+                                <file>src/main/resources/config.properties</file>
                             </files>
                         </configuration>
                     </execution>

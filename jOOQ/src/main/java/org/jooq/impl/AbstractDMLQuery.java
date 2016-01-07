@@ -48,7 +48,6 @@ import static java.util.Arrays.asList;
 import static org.jooq.conf.RenderNameStyle.LOWER;
 import static org.jooq.conf.RenderNameStyle.UPPER;
 import static org.jooq.impl.DSL.select;
-// ...
 import static org.jooq.impl.Utils.fieldArray;
 import static org.jooq.impl.Utils.unqualify;
 import static org.jooq.util.sqlite.SQLiteDSL.rowid;
@@ -74,6 +73,7 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.conf.RenderNameStyle;
+import org.jooq.impl.Utils.DataKey;
 import org.jooq.tools.jdbc.JDBCUtils;
 
 /**

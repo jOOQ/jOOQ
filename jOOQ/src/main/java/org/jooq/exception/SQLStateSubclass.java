@@ -85,8 +85,8 @@ import static org.jooq.exception.SQLStateClass.C3C_AMBIGUOUS_CURSOR_NAME;
 import static org.jooq.exception.SQLStateClass.C3D_INVALID_CATALOG_NAME;
 import static org.jooq.exception.SQLStateClass.C3F_INVALID_SCHEMA_NAME;
 import static org.jooq.exception.SQLStateClass.C40_TRANSACTION_ROLLBACK;
-// ...
-// ...
+import static org.jooq.exception.SQLStateClass.C42_SYNTAX_ERROR_OR_ACCESS_RULE_VIOLATION;
+import static org.jooq.exception.SQLStateClass.CHZ_REMOTE_DATABASE_ACCESS;
 
 import java.util.HashMap;
 import java.util.Map;

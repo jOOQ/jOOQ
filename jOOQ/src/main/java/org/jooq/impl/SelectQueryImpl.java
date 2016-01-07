@@ -96,15 +96,12 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.orderBy;
 import static org.jooq.impl.DSL.row;
-// ...
-// ...
 import static org.jooq.impl.Utils.fieldArray;
 import static org.jooq.impl.Utils.DataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Utils.DataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Utils.DataKey.DATA_LOCALLY_SCOPED_DATA_MAP;
 import static org.jooq.impl.Utils.DataKey.DATA_OMIT_INTO_CLAUSE;
 import static org.jooq.impl.Utils.DataKey.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
-// ...
 import static org.jooq.impl.Utils.DataKey.DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE;
 import static org.jooq.impl.Utils.DataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 import static org.jooq.impl.Utils.DataKey.DATA_SELECT_INTO_TABLE;
@@ -146,6 +143,7 @@ import org.jooq.TableOnStep;
 import org.jooq.TablePartitionByStep;
 import org.jooq.WindowDefinition;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.Utils.DataKey;
 import org.jooq.tools.StringUtils;
 
 /**

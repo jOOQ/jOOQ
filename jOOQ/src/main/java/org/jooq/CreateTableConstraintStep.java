@@ -40,22 +40,24 @@
  */
 package org.jooq;
 
+import java.util.Collection;
+
 /**
  * A {@link Query} that can create tables.
  *
  * @author Lukas Eder
  */
-public interface CreateTableColumnStep extends CreateTableConstraintStep {
+public interface CreateTableConstraintStep extends CreateTableOnCommitStep {
 
     /**
-     * Add a column to the column list of the <code>CREATE TABLE</code> statement.
+     * Add constraints to the table.
      */
     @Support
-    <T> CreateTableColumnStep column(Field<T> field, DataType<T> type);
+    CreateTableConstraintStep constraint(Constraint... constraints);
 
     /**
-     * Add a column to the column list of the <code>CREATE TABLE</code> statement.
+     * Add constraints to the table.
      */
     @Support
-    CreateTableColumnStep column(String field, DataType<?> type);
+    CreateTableConstraintStep constraint(Collection<? extends Constraint> constraints);
 }

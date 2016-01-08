@@ -854,11 +854,20 @@ public enum Clause {
      * <p>
      * This clause surrounds
      * <ul>
-     * <li>The parentheses</li>
      * <li>The column list</li>
      * </ul>
      */
     CREATE_TABLE_COLUMNS,
+
+    /**
+     * A constraint list within a {@link #CREATE_TABLE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>The constraint list</li>
+     * </ul>
+     */
+    CREATE_TABLE_CONSTRAINTS,
 
     /**
      * A complete <code>CREATE VIEW</code> statement.

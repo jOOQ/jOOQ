@@ -44,6 +44,7 @@ import static java.util.Arrays.asList;
 import static org.jooq.Clause.CREATE_TABLE;
 import static org.jooq.Clause.CREATE_TABLE_AS;
 import static org.jooq.Clause.CREATE_TABLE_COLUMNS;
+import static org.jooq.Clause.CREATE_TABLE_CONSTRAINTS;
 import static org.jooq.Clause.CREATE_TABLE_NAME;
 // ...
 // ...
@@ -58,13 +59,17 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Utils.DataKey.DATA_SELECT_INTO_TABLE;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
+import org.jooq.Constraint;
 import org.jooq.Context;
 import org.jooq.CreateTableAsStep;
 import org.jooq.CreateTableColumnStep;
+import org.jooq.CreateTableConstraintStep;
 import org.jooq.CreateTableFinalStep;
 import org.jooq.CreateTableOnCommitStep;
 import org.jooq.DataType;
@@ -91,6 +96,7 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
     private Select<?>               select;
     private final List<Field<?>>    columnFields;
     private final List<DataType<?>> columnTypes;
+    private final List<Constraint>  constraints;
     private final boolean           temporary;
     private OnCommit                onCommit;
 
@@ -101,6 +107,7 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
         this.temporary = temporary;
         this.columnFields = new ArrayList<Field<?>>();
         this.columnTypes = new ArrayList<DataType<?>>();
+        this.constraints = new ArrayList<Constraint>();
     }
 
     // ------------------------------------------------------------------------
@@ -124,6 +131,17 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
     public final CreateTableColumnStep column(String field, DataType<?> type) {
         columnFields.add(field(name(field), type));
         columnTypes.add(type);
+        return this;
+    }
+
+    @Override
+    public final CreateTableConstraintStep constraint(Constraint... c) {
+        return constraint(Arrays.asList(c));
+    }
+
+    @Override
+    public final CreateTableConstraintStep constraint(Collection<? extends Constraint> c) {
+        constraints.addAll(c);
         return this;
     }
 
@@ -167,8 +185,8 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
         else {
             ctx.start(CREATE_TABLE);
             toSQLCreateTableName(ctx);
-            ctx.start(CREATE_TABLE_COLUMNS)
-               .sql('(')
+            ctx.sql('(')
+               .start(CREATE_TABLE_COLUMNS)
                .formatIndentStart()
                .formatNewLine();
 
@@ -197,10 +215,20 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
             }
 
             ctx.qualify(qualify);
-            ctx.formatIndentEnd()
+            ctx.end(CREATE_TABLE_COLUMNS)
+               .start(CREATE_TABLE_CONSTRAINTS);
+
+            if (!constraints.isEmpty())
+                for (Constraint constraint : constraints)
+                    ctx.sql(',')
+                       .formatSeparator()
+                       .visit(constraint);
+
+            ctx.end(CREATE_TABLE_CONSTRAINTS)
+               .formatIndentEnd()
                .formatNewLine()
-               .sql(')')
-               .end(CREATE_TABLE_COLUMNS);
+               .sql(')');
+
             toSQLOnCommit(ctx);
             ctx.end(CREATE_TABLE);
         }

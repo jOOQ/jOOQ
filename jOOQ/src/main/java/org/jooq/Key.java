@@ -74,4 +74,9 @@ public interface Key<R extends Record> extends Serializable {
      * @see #getFields()
      */
     TableField<R, ?>[] getFieldsArray();
+
+    /**
+     * Get this <code>KEY</code> as a formal {@link Constraint} specification.
+     */
+    Constraint constraint();
 }

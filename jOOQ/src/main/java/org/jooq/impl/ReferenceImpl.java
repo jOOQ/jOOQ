@@ -50,6 +50,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.jooq.AttachableInternal;
+import org.jooq.Constraint;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -215,36 +216,10 @@ class ReferenceImpl<R extends Record, O extends Record> extends AbstractKey<R> i
         }
     }
 
-    // -------------------------------------------------------------------------
-    // XXX: Object API
-    // -------------------------------------------------------------------------
-
     @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("FOREIGN KEY (");
-
-        String s1 = "";
-        for (Field<?> field : getFields()) {
-            sb.append(s1);
-            sb.append(DSL.name(field.getName()));
-
-            s1 = ", ";
-        }
-
-        sb.append(") REFERENCES ");
-        sb.append(key.getTable());
-        sb.append("(");
-
-        String s2 = "";
-        for (Field<?> field : key.getFields()) {
-            sb.append(s2);
-            sb.append(DSL.name(field.getName()));
-
-            s2 = ", ";
-        }
-
-        sb.append(")");
-        return sb.toString();
+    public Constraint constraint() {
+        return DSL.constraint(getName())
+                  .foreignKey(getFieldsArray())
+                  .references(key.getTable(), key.getFieldsArray());
     }
 }

@@ -132,4 +132,9 @@ abstract class AbstractKey<R extends Record> implements Key<R> {
             return false;
         return true;
     }
+
+    @Override
+    public String toString() {
+        return constraint().toString();
+    }
 }

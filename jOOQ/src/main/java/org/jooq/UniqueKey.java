@@ -57,4 +57,9 @@ public interface UniqueKey<R extends Record> extends Key<R> {
      */
     List<ForeignKey<?, R>> getReferences();
 
+    /**
+     * Whether this is the table's primary key.
+     */
+    boolean isPrimary();
+
 }

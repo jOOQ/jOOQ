@@ -595,7 +595,7 @@ class MetaImpl implements Meta, Serializable {
                     fkFields[i] = (TableField<Record, ?>)         field(record.getValue(7, String.class));
                 }
 
-                references.add(new ReferenceImpl<Record, Record>(new MetaUniqueKey(pkTable, pkName, pkFields), this, fkFields));
+                references.add(new ReferenceImpl<Record, Record>(new MetaPrimaryKey(pkTable, pkName, pkFields), this, fkFields));
             }
 
             return references;
@@ -653,7 +653,7 @@ class MetaImpl implements Meta, Serializable {
                     f[i] = (TableField<Record, ?>) field(result.get(i).getValue(columnName, String.class));
 
                 String indexName = result.get(0).getValue(5, String.class);
-                return new MetaUniqueKey(this, indexName, f);
+                return new MetaPrimaryKey(this, indexName, f);
             }
             else {
                 return null;
@@ -689,7 +689,7 @@ class MetaImpl implements Meta, Serializable {
         }
     }
 
-    private class MetaUniqueKey implements UniqueKey<Record> {
+    private class MetaPrimaryKey implements UniqueKey<Record> {
 
         /**
          * Generated UID
@@ -700,7 +700,7 @@ class MetaImpl implements Meta, Serializable {
         private final Table<Record>           pkTable;
         private final TableField<Record, ?>[] pkFields;
 
-        MetaUniqueKey(Table<Record> table, String pkName, TableField<Record, ?>[] fields) {
+        MetaPrimaryKey(Table<Record> table, String pkName, TableField<Record, ?>[] fields) {
             this.pkName = pkName;
             this.pkTable = table;
             this.pkFields = fields;
@@ -724,6 +724,11 @@ class MetaImpl implements Meta, Serializable {
         @Override
         public final TableField<Record, ?>[] getFieldsArray() {
             return pkFields.clone();
+        }
+
+        @Override
+        public final boolean isPrimary() {
+            return true;
         }
 
         @Override

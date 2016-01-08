@@ -80,6 +80,11 @@ class UniqueKeyImpl<R extends Record> extends AbstractKey<R> implements UniqueKe
     }
 
     @Override
+    public final boolean isPrimary() {
+        return equals(getTable().getPrimaryKey());
+    }
+
+    @Override
     public final List<ForeignKey<?, R>> getReferences() {
         return Collections.unmodifiableList(references);
     }

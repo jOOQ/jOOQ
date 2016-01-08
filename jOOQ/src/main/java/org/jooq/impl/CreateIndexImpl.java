@@ -71,13 +71,19 @@ class CreateIndexImpl extends AbstractQuery implements
     private static final Clause[] CLAUSES          = { CREATE_INDEX };
 
     private final Name            index;
+    private final boolean         unique;
     private Table<?>              table;
     private Field<?>[]            fields;
 
     CreateIndexImpl(Configuration configuration, Name index) {
+        this(configuration, index, false);
+    }
+
+    CreateIndexImpl(Configuration configuration, Name index, boolean unique) {
         super(configuration);
 
         this.index = index;
+        this.unique = unique;
     }
 
     // ------------------------------------------------------------------------
@@ -108,7 +114,14 @@ class CreateIndexImpl extends AbstractQuery implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.keyword("create index")
+        ctx.keyword("create");
+
+        if (unique)
+            ctx.sql(' ')
+               .keyword("unique");
+
+        ctx.sql(' ')
+           .keyword("index")
            .sql(' ')
            .visit(index)
            .sql(' ')

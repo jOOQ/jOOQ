@@ -5606,6 +5606,26 @@ public class DSL {
     }
 
     /**
+     * Create a new DSL <code>CREATE UNIQUE INDEX</code> statement.
+     *
+     * @see DSLContext#createUniqueIndex(String)
+     */
+    @Support
+    public static CreateIndexStep createUniqueIndex(String index) {
+        return using(new DefaultConfiguration()).createUniqueIndex(index);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE UNIQUE INDEX</code> statement.
+     *
+     * @see DSLContext#createUniqueIndex(Name)
+     */
+    @Support
+    public static CreateIndexStep createUniqueIndex(Name index) {
+        return using(new DefaultConfiguration()).createUniqueIndex(index);
+    }
+
+    /**
      * Create a new DSL <code>CREATE SEQUENCE</code> statement.
      *
      * @see DSLContext#createSequence(String)

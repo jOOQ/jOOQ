@@ -7114,6 +7114,22 @@ public interface DSLContext extends Scope , AutoCloseable  {
     CreateIndexStep createIndex(Name index);
 
     /**
+     * Create a new DSL <code>CREATE UNIQUE INDEX</code> statement.
+     *
+     * @see DSL#createIndex(String)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    CreateIndexStep createUniqueIndex(String index);
+
+    /**
+     * Create a new DSL <code>CREATE UNIQUE INDEX</code> statement.
+     *
+     * @see DSL#createIndex(Name)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    CreateIndexStep createUniqueIndex(Name index);
+
+    /**
      * Create a new DSL <code>CREATE SEQUENCE</code> statement.
      *
      * @see DSL#createSequence(String)

@@ -7,7 +7,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.jooq.DSLContext;
-import org.jooq.example.spring.config.SpringTransactionProvider;
+import org.jooq.TransactionProvider;
 import org.jooq.example.spring.service.BookService;
 import org.junit.After;
 import org.junit.Assert;
@@ -31,15 +31,11 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
-@TransactionConfiguration(transactionManager = "transactionManager")
 public class TransactionTest {
 
 	@Autowired DSLContext dsl;
 	@Autowired DataSourceTransactionManager txMgr;
-	@Autowired
-	SpringTransactionProvider txProvider;
-	@Autowired
-	BookService books;
+	@Autowired BookService books;
 
 	@After
 	public void teardown() {

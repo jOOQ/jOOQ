@@ -762,19 +762,21 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (scala)
-            out.tab(2).println("val %s : %s[%s] = %s.createUniqueKey(%s, [[%s]])",
+            out.tab(2).println("val %s : %s[%s] = %s.createUniqueKey(%s, \"%s\", [[%s]])",
                     getStrategy().getJavaIdentifier(uniqueKey),
                     UniqueKey.class,
                     out.ref(getStrategy().getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD)),
                     AbstractKeys.class,
                     out.ref(getStrategy().getFullJavaIdentifier(uniqueKey.getTable()), 2),
+                    escapeString(uniqueKey.getOutputName()),
                     out.ref(getStrategy().getFullJavaIdentifiers(uniqueKey.getKeyColumns()), colRefSegments(null)));
         else
-            out.tab(2).println("public static final %s<%s> %s = createUniqueKey(%s, [[%s]]);",
+            out.tab(2).println("public static final %s<%s> %s = createUniqueKey(%s, \"%s\", [[%s]]);",
                 UniqueKey.class,
                 out.ref(getStrategy().getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD)),
                 getStrategy().getJavaIdentifier(uniqueKey),
                 out.ref(getStrategy().getFullJavaIdentifier(uniqueKey.getTable()), 2),
+                escapeString(uniqueKey.getOutputName()),
                 out.ref(getStrategy().getFullJavaIdentifiers(uniqueKey.getKeyColumns()), colRefSegments(null)));
     }
 
@@ -796,7 +798,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (scala)
-        	out.tab(2).println("val %s : %s[%s, %s] = %s.createForeignKey(%s, %s, [[%s]])",
+        	out.tab(2).println("val %s : %s[%s, %s] = %s.createForeignKey(%s, %s, \"%s\", [[%s]])",
                     getStrategy().getJavaIdentifier(foreignKey),
                     ForeignKey.class,
                     out.ref(getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD)),
@@ -804,15 +806,17 @@ public class JavaGenerator extends AbstractGenerator {
                     AbstractKeys.class,
                     out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getReferencedKey()), 2),
                     out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getKeyTable()), 2),
+                    escapeString(foreignKey.getOutputName()),
                     out.ref(getStrategy().getFullJavaIdentifiers(foreignKey.getKeyColumns()), colRefSegments(null)));
         else
-            out.tab(2).println("public static final %s<%s, %s> %s = createForeignKey(%s, %s, [[%s]]);",
+            out.tab(2).println("public static final %s<%s, %s> %s = createForeignKey(%s, %s, \"%s\", [[%s]]);",
                 ForeignKey.class,
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD)),
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD)),
                 getStrategy().getJavaIdentifier(foreignKey),
                 out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getReferencedKey()), 2),
                 out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getKeyTable()), 2),
+                escapeString(foreignKey.getOutputName()),
                 out.ref(getStrategy().getFullJavaIdentifiers(foreignKey.getKeyColumns()), colRefSegments(null)));
     }
 

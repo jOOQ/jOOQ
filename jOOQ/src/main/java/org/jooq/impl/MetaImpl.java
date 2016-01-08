@@ -584,6 +584,7 @@ class MetaImpl implements Meta, Serializable {
             for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
                 Schema schema = schemas.get(entry.getKey().getValue(1));
 
+                String pkName = entry.getKey().getValue(12, String.class);
                 Table<Record> pkTable = (Table<Record>) schema.getTable(entry.getKey().getValue(2, String.class));
                 TableField<Record, ?>[] pkFields = new TableField[entry.getValue().size()];
                 TableField<Record, ?>[] fkFields = new TableField[entry.getValue().size()];
@@ -594,7 +595,7 @@ class MetaImpl implements Meta, Serializable {
                     fkFields[i] = (TableField<Record, ?>)         field(record.getValue(7, String.class));
                 }
 
-                references.add(new ReferenceImpl<Record, Record>(new MetaUniqueKey(pkTable, pkFields), this, fkFields));
+                references.add(new ReferenceImpl<Record, Record>(new MetaUniqueKey(pkTable, pkName, pkFields), this, fkFields));
             }
 
             return references;
@@ -647,11 +648,12 @@ class MetaImpl implements Meta, Serializable {
         private final UniqueKey<Record> createPrimaryKey(Result<Record> result, int columnName) {
             if (result.size() > 0) {
                 TableField<Record, ?>[] f = new TableField[result.size()];
-                for (int i = 0; i < f.length; i++) {
-                    f[i] = (TableField<Record, ?>) field(result.get(i).getValue(columnName, String.class));
-                }
 
-                return new MetaUniqueKey(this, f);
+                for (int i = 0; i < f.length; i++)
+                    f[i] = (TableField<Record, ?>) field(result.get(i).getValue(columnName, String.class));
+
+                String indexName = result.get(0).getValue(5, String.class);
+                return new MetaUniqueKey(this, indexName, f);
             }
             else {
                 return null;
@@ -694,12 +696,19 @@ class MetaImpl implements Meta, Serializable {
          */
         private static final long             serialVersionUID = 6997258619475953490L;
 
+        private final String                  pkName;
         private final Table<Record>           pkTable;
         private final TableField<Record, ?>[] pkFields;
 
-        MetaUniqueKey(Table<Record> table, TableField<Record, ?>[] fields) {
+        MetaUniqueKey(Table<Record> table, String pkName, TableField<Record, ?>[] fields) {
+            this.pkName = pkName;
             this.pkTable = table;
             this.pkFields = fields;
+        }
+
+        @Override
+        public final String getName() {
+            return pkName;
         }
 
         @Override

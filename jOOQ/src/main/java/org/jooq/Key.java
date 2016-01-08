@@ -54,6 +54,11 @@ import java.util.List;
 public interface Key<R extends Record> extends Serializable {
 
     /**
+     * The <code>Key</code>'s name.
+     */
+    String getName();
+
+    /**
      * The <code>Key</code>'s owner table
      */
     Table<R> getTable();

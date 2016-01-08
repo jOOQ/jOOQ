@@ -59,7 +59,7 @@ class UniqueKeyImpl<R extends Record> extends AbstractKey<R> implements UniqueKe
     /**
      * Generated UID
      */
-    private static final long   serialVersionUID = 162853300137140844L;
+    private static final long    serialVersionUID = 162853300137140844L;
 
     final List<ForeignKey<?, R>> references;
 
@@ -67,7 +67,14 @@ class UniqueKeyImpl<R extends Record> extends AbstractKey<R> implements UniqueKe
     @SafeVarargs
 
     UniqueKeyImpl(Table<R> table, TableField<R, ?>... fields) {
-        super(table, fields);
+        this(table, null, fields);
+    }
+
+
+    @SafeVarargs
+
+    UniqueKeyImpl(Table<R> table, String name, TableField<R, ?>... fields) {
+        super(table, name, fields);
 
         this.references = new ArrayList<ForeignKey<?, R>>();
     }

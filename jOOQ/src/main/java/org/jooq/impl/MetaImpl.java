@@ -106,6 +106,7 @@ import java.util.Map.Entry;
 import org.jooq.Catalog;
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
+import org.jooq.Constraint;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -789,6 +790,14 @@ class MetaImpl implements Meta, Serializable {
             }
 
             return references;
+        }
+
+        @Override
+        public final Constraint constraint() {
+            if (isPrimary())
+                return DSL.constraint(getName()).primaryKey(getFieldsArray());
+            else
+                return DSL.constraint(getName()).unique(getFieldsArray());
         }
     }
 }

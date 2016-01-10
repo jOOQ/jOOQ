@@ -51,10 +51,23 @@ public enum Operator {
     /**
      * The and operator
      */
-    AND,
+    AND("and"),
 
     /**
      * The or operator
      */
-    OR;
+    OR("or");
+
+    private final String sql;
+
+    private Operator(String sql) {
+        this.sql = sql;
+    }
+
+    /**
+     * A SQL rendition of this operator.
+     */
+    public String toSQL() {
+        return sql;
+    }
 }

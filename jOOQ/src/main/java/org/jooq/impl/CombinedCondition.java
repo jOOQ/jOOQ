@@ -70,20 +70,16 @@ class CombinedCondition extends AbstractCondition {
     private final List<Condition> conditions;
 
     CombinedCondition(Operator operator, Collection<? extends Condition> conditions) {
-        if (operator == null) {
+        if (operator == null)
             throw new IllegalArgumentException("The argument 'operator' must not be null");
-        }
-        if (conditions == null) {
+        if (conditions == null)
             throw new IllegalArgumentException("The argument 'conditions' must not be null");
-        }
-        for (Condition condition : conditions) {
-            if (condition == null) {
+        for (Condition condition : conditions)
+            if (condition == null)
                 throw new IllegalArgumentException("The argument 'conditions' must not contain null");
-            }
-        }
 
         this.operator = operator;
-        this.conditions = new ArrayList<Condition>();
+        this.conditions = new ArrayList<Condition>(conditions.size());
 
         init(operator, conditions);
     }
@@ -92,12 +88,11 @@ class CombinedCondition extends AbstractCondition {
         for (Condition condition : cond) {
             if (condition instanceof CombinedCondition) {
                 CombinedCondition combinedCondition = (CombinedCondition) condition;
-                if (combinedCondition.operator == op) {
+
+                if (combinedCondition.operator == op)
                     this.conditions.addAll(combinedCondition.conditions);
-                }
-                else {
+                else
                     this.conditions.add(condition);
-                }
             }
             else {
                 this.conditions.add(condition);
@@ -126,15 +121,15 @@ class CombinedCondition extends AbstractCondition {
                .formatIndentStart()
                .formatNewLine();
 
-            String operatorName = operator.name().toLowerCase() + " ";
-            String separator = "";
+            String operatorName = operator == AND ? "and" : "or";
+            String separator = null;
 
             for (int i = 0; i < conditions.size(); i++) {
-                if (i > 0) {
+                if (i > 0)
                     ctx.formatSeparator();
-                }
+                if (separator != null)
+                    ctx.keyword(separator).sql(' ');
 
-                ctx.keyword(separator);
                 ctx.visit(conditions.get(i));
                 separator = operatorName;
             }

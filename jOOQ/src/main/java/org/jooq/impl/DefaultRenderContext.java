@@ -349,9 +349,20 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         else {
             String[][] quotes = QUOTES.get(family);
 
-            sql(quotes[QUOTE_START_DELIMITER][0]);
-            sql(StringUtils.replace(literal, quotes[QUOTE_END_DELIMITER][0], quotes[QUOTE_END_DELIMITER_ESCAPED][0]));
-            sql(quotes[QUOTE_END_DELIMITER][0]);
+            char start = quotes[QUOTE_START_DELIMITER][0].charAt(0);
+            char end = quotes[QUOTE_END_DELIMITER][0].charAt(0);
+
+            sql(start);
+
+            // [#4922] This micro optimisation does seem to have a significant
+            //         effect as the replace call can be avoided in almost all
+            //         situations
+            if (literal.indexOf(end) > -1)
+                sql(StringUtils.replace(literal, quotes[QUOTE_END_DELIMITER][0], quotes[QUOTE_END_DELIMITER_ESCAPED][0]));
+            else
+                sql(literal);
+
+            sql(end);
         }
 
         return this;

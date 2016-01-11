@@ -1,0 +1,441 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:complexType name="Counter">
+        <xsd:sequence>
+            <xsd:element name="Name" type="xsd:string"/>
+            <xsd:element name="Value" type="xsd:integer"/>
+            <xsd:element name="Prefix" type="xsd:string"/> 
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Counters">
+        <xsd:sequence>
+            <xsd:element name="Counter" type="Counter" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Property">
+        <xsd:sequence>
+            <xsd:element name="Name" type="xsd:string"/>
+            <xsd:element name="Value" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="Properties">
+        <xsd:sequence>
+            <xsd:element name="Property" type="Property" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Point">
+        <xsd:sequence>
+            <xsd:element name="X" type="xsd:double"/>
+            <xsd:element name="Y" type="xsd:double"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Column">
+        <xsd:sequence>
+            <xsd:element name="Name" type="xsd:string"/>
+            <xsd:element name="Type" type="xsd:string"/>
+            <xsd:element name="Description" type="xsd:string"/>
+            <xsd:element name="Nullable" type="xsd:boolean"/>
+            <xsd:element name="PK" type="xsd:boolean"/>
+            <xsd:element name="DefaultValue" type="xsd:string"/>
+            <xsd:element name="CheckExpression" type="xsd:string"/>        
+            <xsd:element name="Properties" type="Properties"/>
+        </xsd:sequence>
+        <xsd:attribute name="Id" type="xsd:ID"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="Columns">
+        <xsd:sequence>
+            <xsd:element name="Column" type="Column" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ViewColumn">
+        <xsd:sequence>
+            <xsd:element name="Name" type="xsd:string"/>
+            <xsd:element name="Type" type="xsd:string"/>
+            <xsd:element name="Description" type="xsd:string"/>
+            <xsd:element name="Properties" type="Properties"/>
+        </xsd:sequence>
+        <xsd:attribute name="Id" type="xsd:ID"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="ViewColumns">
+        <xsd:sequence>
+            <xsd:element name="ViewColumn" type="ViewColumn" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AlternateKeyColumn">
+        <xsd:sequence>
+            <xsd:element name="Column" type="xsd:IDREF" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AlternateKey">
+        <xsd:sequence>
+            <xsd:element name="Name" type="xsd:string"/>
+            <xsd:element name="Description" type="xsd:string"/>
+            <xsd:element name="Columns" type="AlternateKeyColumn" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="Properties" type="Properties"/>
+        </xsd:sequence>
+        <xsd:attribute name="Id" type="xsd:ID"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="AlternateKeys">
+        <xsd:sequence>
+            <xsd:element name="AlternateKey" type="AlternateKey" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="IndexColumn">
+        <xsd:sequence>
+            <xsd:element name="Column" type="xsd:IDREF" />
+            <xsd:element name="Ascending" type="xsd:boolean"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Index">
+        <xsd:sequence>
+            <xsd:element name="Name" type="xsd:string"/>
+            <xsd:element name="Description" type="xsd:string"/>
+            <xsd:element name="Columns" type="IndexColumn" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="Properties" type="Properties"/>     
+        </xsd:sequence>
+        <xsd:attribute name="Id" type="xsd:ID"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="Indexes">
+        <xsd:sequence>
+            <xsd:element name="Index" type="Index" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TableCheck">
+        <xsd:sequence>
+            <xsd:element name="Name" type="xsd:string"/>
+            <xsd:element name="Description" type="xsd:string"/>
+            <xsd:element name="CheckExpression" type="xsd:string"/>
+            <xsd:element name="Properties" type="Properties"/>
+        </xsd:sequence>
+        <xsd:attribute name="Id" type="xsd:ID"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="TableChecks">
+        <xsd:sequence>
+            <xsd:element name="TableCheck" type="TableCheck" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+  
+    <xsd:complexType name="TableDisplayInfo">
+        <xsd:sequence>
+            <xsd:element name="X" type="xsd:double"/>
+            <xsd:element name="Y" type="xsd:double"/>
+            <xsd:element name="Width" type="xsd:double"/>
+            <xsd:element name="Height" type="xsd:double"/>
+            <xsd:element name="LineColor" type="xsd:string"/>
+            <xsd:element name="FillColor" type="xsd:string"/>
+			<xsd:element name="Table" type="xsd:IDREF" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="FixedSize" type="xsd:boolean"/>
+        </xsd:sequence>
+		<xsd:attribute name="Id" type="xsd:ID"/>
+    </xsd:complexType>
+  
+    <xsd:complexType name="Table">
+        <xsd:sequence>
+            <xsd:element name="Name" type="xsd:string"/>
+            <xsd:element name="Description" type="xsd:string"/>
+            <xsd:element name="Columns" type="Columns"/>
+            <xsd:element name="AlternateKeys" type="AlternateKeys"/>    
+            <xsd:element name="Indexes" type="Indexes"/>    
+            <xsd:element name="TableChecks" type="TableChecks"/>            
+            <xsd:element name="AdditionalSQLBefore" type="xsd:string"/>
+            <xsd:element name="AdditionalSQLAfter" type="xsd:string"/>
+            <xsd:element name="Properties" type="Properties"/>
+        </xsd:sequence>
+        <xsd:attribute name="Id" type="xsd:ID"/>
+    </xsd:complexType>
+    
+    <xsd:complexType name="Tables">
+        <xsd:sequence>
+            <xsd:element name="Table" type="Table" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+	
+	<xsd:complexType name="TableDisplays">
+		<xsd:sequence>
+            <xsd:element name="TableDisplay" type="TableDisplayInfo" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+	</xsd:complexType>
+    
+    <xsd:complexType name="ViewDisplayInfo">
+        <xsd:sequence>
+            <xsd:element name="X" type="xsd:double"/>
+            <xsd:element name="Y" type="xsd:double"/>
+            <xsd:element name="Width" type="xsd:double"/>
+            <xsd:element name="Height" type="xsd:double"/>
+            <xsd:element name="LineColor" type="xsd:string"/>
+            <xsd:element name="FillColor" type="xsd:string"/>
+			<xsd:element name="FixedSize" type="xsd:boolean"/>
+			<xsd:element name="View" type="xsd:IDREF"/>
+        </xsd:sequence>
+       <xsd:attribute name="Id" type="xsd:ID"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="ViewDependency">
+        <xsd:sequence>
+            <xsd:element name="View" type="xsd:IDREF" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+  
+    <xsd:complexType name="View">
+        <xsd:sequence>
+            <xsd:element name="Name" type="xsd:string"/>
+            <xsd:element name="Description" type="xsd:string"/>
+            <xsd:element name="SQLQuery" type="xsd:string"/>
+            <xsd:element name="ViewColumns" type="ViewColumns"/>
+            <xsd:element name="AdditionalSQLBefore" type="xsd:string"/>
+            <xsd:element name="AdditionalSQLAfter" type="xsd:string"/>
+            <xsd:element name="Dependencies" type="ViewDependency" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="Properties" type="Properties"/>
+        </xsd:sequence>
+        <xsd:attribute name="Id" type="xsd:ID"/>
+    </xsd:complexType>
+    
+    <xsd:complexType name="Views">
+        <xsd:sequence>
+            <xsd:element name="View" type="View" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+	
+	<xsd:complexType name="ViewDisplays">
+        <xsd:sequence>
+            <xsd:element name="ViewDisplay" type="ViewDisplayInfo" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+	<xsd:simpleType name="Cardinality">
+	    <xsd:restriction base="xsd:string">
+	        <xsd:enumeration value="0..*"/>
+	        <xsd:enumeration value="1..*"/>
+	        <xsd:enumeration value="0..1"/>
+	        <xsd:enumeration value="1..1"/>
+	    </xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="ConstraintAction">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="None"/>
+            <xsd:enumeration value="Restrict"/>
+            <xsd:enumeration value="Cascade"/>
+            <xsd:enumeration value="SetNull"/>
+            <xsd:enumeration value="SetDefault"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="ControlPointsType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Vertical_2CP"/>
+            <xsd:enumeration value="Horizontal_2CP"/>
+            <xsd:enumeration value="Vertical_4CP"/>
+            <xsd:enumeration value="Horizontal_4CP"/>
+            <xsd:enumeration value="Cross_3CP"/>
+            <xsd:enumeration value="Self_4CP"/>
+            <xsd:enumeration value="Self_5CP"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="ReferenceColumn">
+        <xsd:sequence>
+            <xsd:element name="PKColumn" type="xsd:IDREF" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="FKColumn" type="xsd:IDREF" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+        <xsd:attribute name="Id" type="xsd:string"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="ReferenceColumns">
+        <xsd:sequence>
+            <xsd:element name="ReferenceColumn" type="ReferenceColumn" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ReferenceDisplayInfo">
+        <xsd:sequence>
+            <xsd:element name="Color" type="xsd:string"/>
+            <xsd:element name="ControlPointsType" type="ControlPointsType"/>
+            <xsd:element name="ControlPoint" type="Point" minOccurs="2" maxOccurs="unbounded"/>
+			<xsd:element name="PkTableDisplay" type="xsd:IDREF"/>
+			<xsd:element name="FkTableDisplay" type="xsd:IDREF"/>
+			<xsd:element name="Reference" type="xsd:IDREF"/>
+        </xsd:sequence>
+		<xsd:attribute name="Id" type="xsd:ID"/>
+    </xsd:complexType>
+    
+    <xsd:complexType name="Reference">
+        <xsd:sequence>
+            <xsd:element name="Name" type="xsd:string"/>
+            <xsd:element name="Description" type="xsd:string"/>            
+            <xsd:element name="PKTable" type="xsd:IDREF"/>
+            <xsd:element name="FKTable" type="xsd:IDREF"/>
+            <xsd:element name="PKRole" type="xsd:string"/>
+            <xsd:element name="FKRole" type="xsd:string"/>
+            <xsd:element name="ReferenceColumns" type="ReferenceColumns"/>
+            <xsd:element name="Cardinality" type="Cardinality"/>
+            <xsd:element name="Mandatory" type="xsd:boolean"/>        
+            <xsd:element name="OnUpdateAction" type="ConstraintAction"/>
+            <xsd:element name="OnDeleteAction" type="ConstraintAction"/>
+            <xsd:element name="Properties" type="Properties"/>
+        </xsd:sequence>
+        <xsd:attribute name="Id" type="xsd:ID"/>
+    </xsd:complexType>
+    
+    <xsd:complexType name="References">
+        <xsd:sequence>
+            <xsd:element name="Reference" type="Reference" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+	
+	<xsd:complexType name="ReferenceDisplays">
+        <xsd:sequence>
+            <xsd:element name="ReferenceDisplay" type="ReferenceDisplayInfo" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Sequence">
+        <xsd:sequence>
+            <xsd:element name="Name" type="xsd:string"/>
+            <xsd:element name="Description" type="xsd:string"/>            
+            <xsd:element name="StartWith" type="xsd:string"/>            
+            <xsd:element name="IncrementBy" type="xsd:string"/>            
+            <xsd:element name="MinValue" type="xsd:string"/>            
+            <xsd:element name="HasMinValue" type="xsd:boolean"/>            
+            <xsd:element name="MaxValue" type="xsd:string"/>            
+            <xsd:element name="HasMaxValue" type="xsd:boolean"/>            
+            <xsd:element name="Cycle" type="xsd:boolean"/>            
+            <xsd:element name="Cache" type="xsd:string"/>            
+            <xsd:element name="HasCache" type="xsd:boolean"/>            
+            <xsd:element name="AdditionalSQLBefore" type="xsd:string"/>
+            <xsd:element name="AdditionalSQLAfter" type="xsd:string"/>
+            <xsd:element name="Properties" type="Properties"/>
+        </xsd:sequence>
+        <xsd:attribute name="Id" type="xsd:ID"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="Sequences">
+        <xsd:sequence>
+            <xsd:element name="Sequence" type="Sequence" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NoteDisplayInfo">
+        <xsd:sequence>
+            <xsd:element name="X" type="xsd:double"/>
+            <xsd:element name="Y" type="xsd:double"/>
+            <xsd:element name="Width" type="xsd:double"/>
+            <xsd:element name="Height" type="xsd:double"/>
+            <xsd:element name="LineColor" type="xsd:string"/>
+            <xsd:element name="FillColor" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Note">
+        <xsd:sequence>
+            <xsd:element name="Name" type="xsd:string"/>
+            <xsd:element name="Content" type="xsd:string"/>
+            <xsd:element name="DisplayInfo" type="NoteDisplayInfo"/>
+        </xsd:sequence>
+        <xsd:attribute name="Id" type="xsd:ID"/>
+    </xsd:complexType>
+    
+    <xsd:complexType name="Notes">
+        <xsd:sequence>
+            <xsd:element name="Note" type="Note" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="AreaDisplayInfo">
+        <xsd:sequence>
+            <xsd:element name="X" type="xsd:double"/>
+            <xsd:element name="Y" type="xsd:double"/>
+            <xsd:element name="Width" type="xsd:double"/>
+            <xsd:element name="Height" type="xsd:double"/>
+            <xsd:element name="LineColor" type="xsd:string"/>
+            <xsd:element name="FillColor" type="xsd:string"/>
+			<xsd:element name="DashArray" type="xsd:string"/>
+			<xsd:element name="NameX" type="xsd:double"/>
+			<xsd:element name="NameY" type="xsd:double"/>
+			<xsd:element name="NameColor" type="xsd:string"/>
+			<xsd:element name="ZIndex" type="xsd:integer"/>
+        </xsd:sequence>
+    </xsd:complexType>
+	
+    <xsd:complexType name="Area">
+        <xsd:sequence>
+            <xsd:element name="Name" type="xsd:string"/>
+            <xsd:element name="DisplayInfo" type="AreaDisplayInfo"/>
+        </xsd:sequence>
+        <xsd:attribute name="Id" type="xsd:ID"/>
+    </xsd:complexType>
+    
+    <xsd:complexType name="Areas">
+        <xsd:sequence>
+            <xsd:element name="Area" type="Area" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="TextDisplayInfo">
+        <xsd:sequence>
+            <xsd:element name="X" type="xsd:double"/>
+            <xsd:element name="Y" type="xsd:double"/>
+            <xsd:element name="Width" type="xsd:double"/>
+            <xsd:element name="Height" type="xsd:double"/>
+            <xsd:element name="Color" type="xsd:string"/>
+            <xsd:element name="Font" type="xsd:string"/>
+            <xsd:element name="Align" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Text">
+        <xsd:sequence>
+            <xsd:element name="Name" type="xsd:string"/>
+            <xsd:element name="Content" type="xsd:string"/>
+            <xsd:element name="DisplayInfo" type="TextDisplayInfo"/>
+        </xsd:sequence>
+        <xsd:attribute name="Id" type="xsd:ID"/>
+    </xsd:complexType>
+    
+    <xsd:complexType name="Texts">
+        <xsd:sequence>
+            <xsd:element name="Text" type="Text" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:element name="DatabaseModel">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="ModelGid" type="xsd:string"/>
+                <xsd:element name="ModelVersionGid" type="xsd:string"/>        
+                <xsd:element name="Counters" type="Counters"/>
+				<xsd:element name="AdditionalSQLBeforeCreate" type="xsd:string"/>
+				<xsd:element name="AdditionalSQLAfterCreate" type="xsd:string"/>
+				<xsd:element name="AdditionalSQLBeforeDrop" type="xsd:string"/>
+				<xsd:element name="AdditionalSQLAfterDrop" type="xsd:string"/>
+                <xsd:element name="Tables" type="Tables"/>
+                <xsd:element name="Views" type="Views"/>
+                <xsd:element name="References" type="References"/>
+                <xsd:element name="Sequences" type="Sequences"/>
+                <xsd:element name="Notes" type="Notes"/>
+                <xsd:element name="Areas" type="Areas"/>
+                <xsd:element name="Texts" type="Texts"/>
+				<xsd:element name="TableDisplays" type="TableDisplays"/>
+				<xsd:element name="ViewDisplays" type="ViewDisplays"/>
+				<xsd:element name="ReferenceDisplays" type="ReferenceDisplays"/>
+				<xsd:element name="Properties" type="Properties" minOccurs="0" maxOccurs="1"/>
+            </xsd:sequence>
+		<xsd:attribute name="VersionId" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

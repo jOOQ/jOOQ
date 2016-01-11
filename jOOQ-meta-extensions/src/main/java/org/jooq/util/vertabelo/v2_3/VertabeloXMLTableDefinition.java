@@ -38,7 +38,7 @@
  *
  *
  */
-package org.jooq.util.vertabelo;
+package org.jooq.util.vertabelo.v2_3;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -53,11 +53,11 @@ import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.SchemaDefinition;
-import org.jooq.util.vertabelo.jaxb.Column;
-import org.jooq.util.vertabelo.jaxb.Property;
-import org.jooq.util.vertabelo.jaxb.Table;
-import org.jooq.util.vertabelo.jaxb.View;
-import org.jooq.util.vertabelo.jaxb.ViewColumn;
+import org.jooq.util.vertabelo.jaxb.v2_3.Column;
+import org.jooq.util.vertabelo.jaxb.v2_3.Property;
+import org.jooq.util.vertabelo.jaxb.v2_3.Table;
+import org.jooq.util.vertabelo.jaxb.v2_3.View;
+import org.jooq.util.vertabelo.jaxb.v2_3.ViewColumn;
 
 /**
  * Definition of the Vertabelo XML Table
@@ -102,7 +102,7 @@ public class VertabeloXMLTableDefinition extends AbstractTableDefinition {
         SchemaDefinition schema = getDatabase().getSchema(schemaName);
 
         int position = 0;
-        for(Column column : table.getColumns()) {
+        for(Column column : table.getColumns().getColumn()) {
             ++position;
 
             // convert data type
@@ -140,7 +140,7 @@ public class VertabeloXMLTableDefinition extends AbstractTableDefinition {
         SchemaDefinition schema = getDatabase().getSchema(schemaName);
 
         int position = 0;
-        for(ViewColumn column : view.getViewColumns()) {
+        for(ViewColumn column : view.getViewColumns().getViewColumn()) {
             ++position;
 
             // convert data type
@@ -174,11 +174,11 @@ public class VertabeloXMLTableDefinition extends AbstractTableDefinition {
         Property additionalProperty;
 
         if(table != null) {
-            additionalProperty = VertabeloXMLDatabase.findAdditionalProperty("Schema", table.getProperties());
+            additionalProperty = VertabeloDatabase_v2_3.findAdditionalProperty(VertabeloDatabase_v2_3.SCHEMA_ADDITIONAL_PROPERTY_NAME, table.getProperties().getProperty());
         } else {
-            additionalProperty = VertabeloXMLDatabase.findAdditionalProperty("Schema", view.getProperties());
+            additionalProperty = VertabeloDatabase_v2_3.findAdditionalProperty(VertabeloDatabase_v2_3.SCHEMA_ADDITIONAL_PROPERTY_NAME, view.getProperties().getProperty());
         }
 
-        return VertabeloXMLDatabase.getAdditionalPropertyValueOrEmpty(additionalProperty);
+        return VertabeloDatabase_v2_3.getAdditionalPropertyValueOrEmpty(additionalProperty);
     }
 }

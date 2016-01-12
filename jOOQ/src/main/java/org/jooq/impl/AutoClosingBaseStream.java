@@ -104,7 +104,7 @@ abstract class AutoClosingBaseStream<T, S extends BaseStream<T, S>, U extends Au
         }
         catch (Throwable e) {
             close();
-            Utils.sneakyThrow(e);
+            throw e;
         }
 
         return result;

@@ -91,8 +91,11 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>3.3</version>
                 <configuration>
+                    <!-- When compilers say false, they mean true ...
+                         https://issues.apache.org/jira/browse/MCOMPILER-209 -->
+                    <useIncrementalCompilation>false</useIncrementalCompilation>
                     <fork>true</fork>
                     <maxmem>512m</maxmem>
                     <meminitial>256m</meminitial>

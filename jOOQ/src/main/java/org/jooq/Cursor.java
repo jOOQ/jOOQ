@@ -399,6 +399,22 @@ public interface Cursor<R extends Record> extends Iterable<R> , AutoCloseable  {
 
     /**
      * Turn this <code>Cursor</code> into a {@link Stream}.
+     * <p>
+     * The resulting stream is auto-closing upon:
+     * <ul>
+     * <li>Complete consumption</li>
+     * <li>Any exception that is thrown by a stream sink</li>
+     * <li>Any exception that is thrown by the underlying {@link ResultSet}, or
+     * jOOQ</li>
+     * </ul>
+     * <p>
+     * Clients who extract {@link Stream#iterator()} or
+     * {@link Stream#spliterator()} cannot rely on this auto-closing behaviour
+     * in the event of:
+     * <ul>
+     * <li>Incomplete consumption</li>
+     * <li>Exceptions (which result in incomplete consumption)</li>
+     * </ul>
      *
      * @throws DataAccessException if something went wrong executing the query
      */

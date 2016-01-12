@@ -53,8 +53,6 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.stream.Stream;
 
-import javax.sql.DataSource;
-
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
@@ -149,6 +147,22 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     /**
      * Stream this query.
      * <p>
+     * The resulting stream is auto-closing upon:
+     * <ul>
+     * <li>Complete consumption</li>
+     * <li>Any exception that is thrown by a stream sink</li>
+     * <li>Any exception that is thrown by the underlying {@link ResultSet}, or
+     * jOOQ</li>
+     * </ul>
+     * <p>
+     * Clients who extract {@link Stream#iterator()} or
+     * {@link Stream#spliterator()} cannot rely on this auto-closing behaviour
+     * in the event of:
+     * <ul>
+     * <li>Incomplete consumption</li>
+     * <li>Exceptions (which result in incomplete consumption)</li>
+     * </ul>
+     * <p>
      * This is just a synonym for {@link #stream()}.
      *
      * @return The result.
@@ -160,20 +174,21 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     /**
      * Stream this query.
      * <p>
-     * This is essentially the same as {@link #fetchLazy()} but instead of
-     * returning a {@link Cursor}, a Java 8 {@link Stream} is returned. Clients
-     * should ensure the {@link Stream} is properly closed, e.g. in a
-     * try-with-resources statement:
+     * The resulting stream is auto-closing upon:
+     * <ul>
+     * <li>Complete consumption</li>
+     * <li>Any exception that is thrown by a stream sink</li>
+     * <li>Any exception that is thrown by the underlying {@link ResultSet}, or
+     * jOOQ</li>
+     * </ul>
      * <p>
-     * <code><pre>
-     * try (Stream&lt;R> stream = query.stream()) {
-     *     // Do things with stream
-     * }
-     * </pre></code>
-     * <p>
-     * If users prefer more fluent style streaming of queries, {@link ResultSet}
-     * can be registered and closed via {@link ExecuteListener}, or via "smart"
-     * third-party {@link DataSource}s.
+     * Clients who extract {@link Stream#iterator()} or
+     * {@link Stream#spliterator()} cannot rely on this auto-closing behaviour
+     * in the event of:
+     * <ul>
+     * <li>Incomplete consumption</li>
+     * <li>Exceptions (which result in incomplete consumption)</li>
+     * </ul>
      *
      * @return The result.
      * @throws DataAccessException if something went wrong executing the query

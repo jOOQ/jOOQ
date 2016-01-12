@@ -261,14 +261,20 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
     @Override
     public final Stream<R> stream() throws DataAccessException {
-        return StreamSupport.stream(
-            Spliterators.spliterator(
-                iterator(),
-                0,
-                Spliterator.ORDERED | Spliterator.NONNULL
-            ),
-            false
-        ).onClose(() -> close());
+        return new AutoClosingStream<R>(
+            StreamSupport.stream(
+                Spliterators.spliterator(
+                    iterator(),
+                    0,
+                    Spliterator.ORDERED | Spliterator.NONNULL
+                ),
+                false
+            ).onClose(() -> close()),
+            o -> {
+                close();
+                o.ifPresent(e -> Utils.sneakyThrow(e));
+            }
+        );
     }
 
 

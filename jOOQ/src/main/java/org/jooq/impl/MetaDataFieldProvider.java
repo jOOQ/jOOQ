@@ -46,6 +46,7 @@ import static org.jooq.impl.DSL.name;
 import java.io.Serializable;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,10 +109,15 @@ class MetaDataFieldProvider implements Serializable {
                 String columnName = meta.getColumnName(i);
 
                 if (columnName.equals(columnLabel)) {
-                    String columnSchema = meta.getSchemaName(i);
-                    String columnTable = meta.getTableName(i);
-
-                    name = name(columnSchema, columnTable, columnName);
+                    try {
+                        String columnSchema = meta.getSchemaName(i);
+                        String columnTable = meta.getTableName(i);
+                        name = name(columnSchema, columnTable, columnName);
+                    } catch (SQLFeatureNotSupportedException e) {
+                        // Some JDBC drivers such as Teradata and Cassandra don't implement
+                        // ResultSetMetaData.getSchemaName and/or ResultSetMetaData.getTableName methods
+                        name = name(columnLabel);
+                    }
                 }
                 else {
                     name = name(columnLabel);

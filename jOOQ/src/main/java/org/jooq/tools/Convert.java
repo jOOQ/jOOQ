@@ -1058,7 +1058,7 @@ public final class Convert {
                 return (X) new Timestamp(time).toLocalDateTime().atOffset(OffsetDateTime.now().getOffset());
             }
             else if (toClass == Instant.class) {
-                return (X) new Timestamp(time).toLocalDateTime().atOffset(OffsetDateTime.now().getOffset()).toInstant();
+                return (X) Instant.ofEpochMilli(time);
             }
 
 

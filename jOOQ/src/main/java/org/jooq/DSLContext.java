@@ -2423,22 +2423,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * <p>
      * Use {@link #fetch(ResultSet)}, to load the entire <code>ResultSet</code>
      * into a jOOQ <code>Result</code> at once.
-     * <p>
-     * The resulting stream is auto-closing upon:
-     * <ul>
-     * <li>Complete consumption</li>
-     * <li>Any exception that is thrown by a stream sink</li>
-     * <li>Any exception that is thrown by the underlying {@link ResultSet}, or
-     * jOOQ</li>
-     * </ul>
-     * <p>
-     * Clients who extract {@link Stream#iterator()} or
-     * {@link Stream#spliterator()} cannot rely on this auto-closing behaviour
-     * in the event of:
-     * <ul>
-     * <li>Incomplete consumption</li>
-     * <li>Exceptions (which result in incomplete consumption)</li>
-     * </ul>
      *
      * @param rs The JDBC ResultSet to fetch data from
      * @return The resulting stream
@@ -2454,23 +2438,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * into a jOOQ <code>Result</code> at once.
      * <p>
      * The additional <code>fields</code> argument is used by jOOQ to coerce
-     * field names and data types to the desired output.
-     * <p>
-     * The resulting stream is auto-closing upon:
-     * <ul>
-     * <li>Complete consumption</li>
-     * <li>Any exception that is thrown by a stream sink</li>
-     * <li>Any exception that is thrown by the underlying {@link ResultSet}, or
-     * jOOQ</li>
-     * </ul>
-     * <p>
-     * Clients who extract {@link Stream#iterator()} or
-     * {@link Stream#spliterator()} cannot rely on this auto-closing behaviour
-     * in the event of:
-     * <ul>
-     * <li>Incomplete consumption</li>
-     * <li>Exceptions (which result in incomplete consumption)</li>
-     * </ul>
+     * field names and data types to the desired output
      *
      * @param rs The JDBC ResultSet to fetch data from
      * @param fields The fields to use in the desired output
@@ -2487,23 +2455,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * into a jOOQ <code>Result</code> at once.
      * <p>
      * The additional <code>types</code> argument is used by jOOQ to coerce data
-     * types to the desired output.
-     * <p>
-     * The resulting stream is auto-closing upon:
-     * <ul>
-     * <li>Complete consumption</li>
-     * <li>Any exception that is thrown by a stream sink</li>
-     * <li>Any exception that is thrown by the underlying {@link ResultSet}, or
-     * jOOQ</li>
-     * </ul>
-     * <p>
-     * Clients who extract {@link Stream#iterator()} or
-     * {@link Stream#spliterator()} cannot rely on this auto-closing behaviour
-     * in the event of:
-     * <ul>
-     * <li>Incomplete consumption</li>
-     * <li>Exceptions (which result in incomplete consumption)</li>
-     * </ul>
+     * types to the desired output
      *
      * @param rs The JDBC ResultSet to fetch data from
      * @param types The data types to use in the desired output
@@ -2520,23 +2472,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * into a jOOQ <code>Result</code> at once.
      * <p>
      * The additional <code>types</code> argument is used by jOOQ to coerce data
-     * types to the desired output.
-     * <p>
-     * The resulting stream is auto-closing upon:
-     * <ul>
-     * <li>Complete consumption</li>
-     * <li>Any exception that is thrown by a stream sink</li>
-     * <li>Any exception that is thrown by the underlying {@link ResultSet}, or
-     * jOOQ</li>
-     * </ul>
-     * <p>
-     * Clients who extract {@link Stream#iterator()} or
-     * {@link Stream#spliterator()} cannot rely on this auto-closing behaviour
-     * in the event of:
-     * <ul>
-     * <li>Incomplete consumption</li>
-     * <li>Exceptions (which result in incomplete consumption)</li>
-     * </ul>
+     * types to the desired output
      *
      * @param rs The JDBC ResultSet to fetch data from
      * @param types The data types to use in the desired output

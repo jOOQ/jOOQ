@@ -2935,19 +2935,4 @@ final class Utils {
             ctx.keyword(typeName);
         }
     }
-
-    /**
-     * Sneaky throw any type of Throwable.
-     */
-    static void sneakyThrow(Throwable throwable) {
-        Utils.<RuntimeException>sneakyThrow0(throwable);
-    }
-
-    /**
-     * Sneaky throw any type of Throwable.
-     */
-    @SuppressWarnings("unchecked")
-    static <E extends Throwable> void sneakyThrow0(Throwable throwable) throws E {
-        throw (E) throwable;
-    }
 }

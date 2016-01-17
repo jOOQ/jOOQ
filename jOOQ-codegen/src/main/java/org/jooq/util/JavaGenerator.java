@@ -199,7 +199,7 @@ public class JavaGenerator extends AbstractGenerator {
         this.catalogVersions = new LinkedHashMap<CatalogDefinition, String>();
 
         this.database = db;
-        this.database.addFilter(new AvoidAmbiguousClassesFilter());
+        applyDatabaseFilters(db);
         this.database.setIncludeRelations(generateRelations());
         this.database.setTableValuedFunctions(generateTableValuedFunctions());
 
@@ -437,6 +437,10 @@ public class JavaGenerator extends AbstractGenerator {
         // XXX [#651] Refactoring-cursor
         watch.splitInfo("Generation finished: " + schema.getQualifiedName());
         log.info("");
+    }
+
+    protected void applyDatabaseFilters(Database database) {
+        database.addFilter(new AvoidAmbiguousClassesFilter());
     }
 
     private class AvoidAmbiguousClassesFilter implements Database.Filter {

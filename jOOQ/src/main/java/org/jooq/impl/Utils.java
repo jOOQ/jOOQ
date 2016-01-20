@@ -1801,14 +1801,14 @@ final class Utils {
      */
     @SuppressWarnings("deprecation")
     static final Catalog getMappedCatalog(Configuration configuration, Catalog catalog) {
-        org.jooq.SchemaMapping mapping = configuration.schemaMapping();
+        if (configuration != null) {
+            org.jooq.SchemaMapping mapping = configuration.schemaMapping();
 
-        if (mapping != null) {
-            return mapping.map(catalog);
+            if (mapping != null)
+                return mapping.map(catalog);
         }
-        else {
-            return catalog;
-        }
+
+        return catalog;
     }
 
     /**
@@ -1816,14 +1816,14 @@ final class Utils {
      */
     @SuppressWarnings("deprecation")
     static final Schema getMappedSchema(Configuration configuration, Schema schema) {
-        org.jooq.SchemaMapping mapping = configuration.schemaMapping();
+        if (configuration != null) {
+            org.jooq.SchemaMapping mapping = configuration.schemaMapping();
 
-        if (mapping != null) {
-            return mapping.map(schema);
+            if (mapping != null)
+                return mapping.map(schema);
         }
-        else {
-            return schema;
-        }
+
+        return schema;
     }
 
     /**
@@ -1831,14 +1831,14 @@ final class Utils {
      */
     @SuppressWarnings("deprecation")
     static final <R extends Record> Table<R> getMappedTable(Configuration configuration, Table<R> table) {
-        org.jooq.SchemaMapping mapping = configuration.schemaMapping();
+        if (configuration != null) {
+            org.jooq.SchemaMapping mapping = configuration.schemaMapping();
 
-        if (mapping != null) {
-            return mapping.map(table);
+            if (mapping != null)
+                return mapping.map(table);
         }
-        else {
-            return table;
-        }
+
+        return table;
     }
 
     /**

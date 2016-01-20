@@ -71,13 +71,16 @@ import org.jooq.Constants;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
+import org.jooq.util.jaxb.Configuration;
 import org.jooq.util.jaxb.Generate;
 import org.jooq.util.jaxb.Jdbc;
 import org.jooq.util.jaxb.Matchers;
+import org.jooq.util.jaxb.Property;
+import org.jooq.util.jaxb.Schema;
 import org.jooq.util.jaxb.Strategy;
+import org.jooq.util.jaxb.Target;
 // ...
 
-import sun.rmi.transport.Target;
 
 /**
  * The GenerationTool takes care of generating Java code from a database schema.

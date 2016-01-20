@@ -277,6 +277,46 @@ public interface Generator {
     void setGenerateGlobalUDTReferences(boolean globalUDTReferences);
 
     /**
+     * Whether global queue references should be generated
+     */
+    boolean generateGlobalQueueReferences();
+
+    /**
+     * Whether global queue references should be generated
+     */
+    void setGenerateGlobalQueueReferences(boolean globalQueueReferences);
+
+    /**
+     * Whether global link references should be generated
+     */
+    boolean generateGlobalLinkReferences();
+
+    /**
+     * Whether global link references should be generated
+     */
+    void setGenerateGlobalLinkReferences(boolean globalLinkReferences);
+
+    /**
+     * Whether queue related code should be generated
+     */
+    boolean generateQueues();
+
+    /**
+     * Whether queue related code should be generated
+     */
+    void setGenerateQueues(boolean queues);
+
+    /**
+     * Whether link related code should be generated
+     */
+    boolean generateLinks();
+
+    /**
+     * Whether link related code should be generated
+     */
+    void setGenerateLinks(boolean links);
+
+    /**
      * Whether fluent setters should be generated
      */
     boolean fluentSetters();

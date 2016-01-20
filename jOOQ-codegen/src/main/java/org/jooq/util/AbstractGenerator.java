@@ -68,6 +68,8 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateJPAAnnotations           = false;
     boolean                            generateValidationAnnotations    = false;
     boolean                            generateSpringAnnotations        = false;
+    boolean                            generateQueues                   = true;
+    boolean                            generateLinks                    = true;
     boolean                            generateGlobalObjectReferences   = true;
     boolean                            generateGlobalCatalogReferences  = true;
     boolean                            generateGlobalSchemaReferences   = true;
@@ -75,6 +77,8 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateGlobalSequenceReferences = true;
     boolean                            generateGlobalTableReferences    = true;
     boolean                            generateGlobalUDTReferences      = true;
+    boolean                            generateGlobalQueueReferences    = true;
+    boolean                            generateGlobalLinkReferences     = true;
     boolean                            fluentSetters                    = false;
     String                             generateFullyQualifiedTypes      = "";
     boolean                            generateTableValuedFunctions     = true;
@@ -328,6 +332,46 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateGlobalUDTReferences(boolean generateGlobalUDTReferences) {
         this.generateGlobalUDTReferences = generateGlobalUDTReferences;
+    }
+
+    @Override
+    public boolean generateGlobalQueueReferences() {
+        return generateQueues && generateGlobalQueueReferences;
+    }
+
+    @Override
+    public void setGenerateGlobalQueueReferences(boolean globalQueueReferences) {
+        this.generateGlobalQueueReferences = globalQueueReferences;
+    }
+
+    @Override
+    public boolean generateGlobalLinkReferences() {
+        return generateLinks && generateGlobalLinkReferences;
+    }
+
+    @Override
+    public void setGenerateGlobalLinkReferences(boolean globalLinkReferences) {
+        this.generateGlobalLinkReferences = globalLinkReferences;
+    }
+
+    @Override
+    public boolean generateQueues() {
+        return generateQueues;
+    }
+
+    @Override
+    public void setGenerateQueues(boolean queues) {
+        this.generateQueues = queues;
+    }
+
+    @Override
+    public boolean generateLinks() {
+        return generateLinks;
+    }
+
+    @Override
+    public void setGenerateLinks(boolean links) {
+        this.generateLinks = links;
     }
 
     @Override

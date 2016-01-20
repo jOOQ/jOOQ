@@ -71,15 +71,13 @@ import org.jooq.Constants;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
-import org.jooq.util.jaxb.Configuration;
 import org.jooq.util.jaxb.Generate;
 import org.jooq.util.jaxb.Jdbc;
 import org.jooq.util.jaxb.Matchers;
-import org.jooq.util.jaxb.Property;
-import org.jooq.util.jaxb.Schema;
 import org.jooq.util.jaxb.Strategy;
-import org.jooq.util.jaxb.Target;
 // ...
+
+import sun.rmi.transport.Target;
 
 /**
  * The GenerationTool takes care of generating Java code from a database schema.
@@ -439,6 +437,12 @@ public class GenerationTool {
                 generator.setGenerateValidationAnnotations(g.getGenerate().isValidationAnnotations());
             if (g.getGenerate().isSpringAnnotations() != null)
                 generator.setGenerateSpringAnnotations(g.getGenerate().isSpringAnnotations());
+            if (g.getGenerate().isQueues() != null)
+                generator.setGenerateQueues(g.getGenerate().isQueues());
+            if (g.getGenerate().isLinks() != null)
+                generator.setGenerateLinks(g.getGenerate().isLinks());
+            if (g.getGenerate().isGlobalLinkReferences() != null)
+                generator.setGenerateGlobalLinkReferences(g.getGenerate().isGlobalLinkReferences());
             if (g.getGenerate().isGlobalObjectReferences() != null)
                 generator.setGenerateGlobalObjectReferences(g.getGenerate().isGlobalObjectReferences());
             if (g.getGenerate().isGlobalCatalogReferences() != null)
@@ -453,6 +457,10 @@ public class GenerationTool {
                 generator.setGenerateGlobalTableReferences(g.getGenerate().isGlobalTableReferences());
             if (g.getGenerate().isGlobalUDTReferences() != null)
                 generator.setGenerateGlobalUDTReferences(g.getGenerate().isGlobalUDTReferences());
+            if (g.getGenerate().isGlobalQueueReferences() != null)
+                generator.setGenerateGlobalQueueReferences(g.getGenerate().isGlobalQueueReferences());
+            if (g.getGenerate().isGlobalLinkReferences() != null)
+                generator.setGenerateGlobalLinkReferences(g.getGenerate().isGlobalLinkReferences());
             if (g.getGenerate().isFluentSetters() != null)
                 generator.setFluentSetters(g.getGenerate().isFluentSetters());
             if (g.getGenerate().isPojosEqualsAndHashCode() != null)

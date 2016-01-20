@@ -795,6 +795,26 @@
       <element name="globalRoutineReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
 
       <!--
+        Allow to turn off the generation of global queue references in Queues.java
+        -->
+      <element name="globalQueueReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+
+      <!--
+        Allow to turn off the generation of global link references in Links.java
+        -->
+      <element name="globalLinkReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+
+      <!--
+        Allow to turn off the generation of queue related code
+        -->
+      <element name="queues" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+
+      <!--
+        Allow to turn off the generation of link related code
+        -->
+      <element name="links" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+
+      <!--
         Generate fluent setters in
 
         - records

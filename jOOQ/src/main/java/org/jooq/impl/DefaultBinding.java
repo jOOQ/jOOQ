@@ -68,6 +68,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.impl.Utils.attachRecords;
+import static org.jooq.impl.Utils.getMappedUDTName;
 import static org.jooq.impl.Utils.needsBackslashEscaping;
 import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
 import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
@@ -96,7 +97,9 @@ import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 // ...
@@ -125,6 +128,7 @@ import org.jooq.Schema;
 import org.jooq.Scope;
 import org.jooq.UDTRecord;
 import org.jooq.exception.DataTypeException;
+import org.jooq.exception.MappingException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
@@ -1437,7 +1441,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     break;
 
                 default:
-                    result = (T) ctx.resultSet().getObject(ctx.index(), DataTypes.udtRecords());
+                    result = (T) ctx.resultSet().getObject(ctx.index(), typeMap(type, ctx.configuration()));
                     break;
             }
         }
@@ -1633,7 +1637,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     break;
 
                 default:
-                    result = (T) ctx.statement().getObject(ctx.index(), DataTypes.udtRecords());
+                    result = (T) ctx.statement().getObject(ctx.index(), typeMap(type, ctx.configuration()));
                     break;
             }
         }
@@ -1650,6 +1654,35 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             ((Attachable) result).attach(ctx.configuration());
 
         ctx.value(converter.from(result));
+    }
+
+    static final Map<String, Class<?>> typeMap(Class<?> type, Configuration configuration) {
+        return typeMap(type, configuration, new HashMap<String, Class<?>>());
+    }
+
+    @SuppressWarnings("unchecked")
+    static final Map<String, Class<?>> typeMap(Class<?> type, Configuration configuration, Map<String, Class<?>> result) {
+        try {
+            if (UDTRecord.class.isAssignableFrom(type)) {
+                Class<UDTRecord<?>> t = (Class<UDTRecord<?>>) type;
+                result.put(getMappedUDTName(configuration, t), t);
+                UDTRecord<?> r = t.newInstance();
+                for (Field<?> field : r.getUDT().fields())
+                    typeMap(field.getType(), configuration, result);
+            }
+            else if (ArrayRecord.class.isAssignableFrom(type)) {
+                Class<ArrayRecord<?>> t = (Class<ArrayRecord<?>>) type;
+                result.put(Utils.getMappedArrayName(configuration, t), t);
+                ArrayRecord<?> r = t.newInstance();
+                Class<?> e = r.getDataType().getType();
+                typeMap(e, configuration, result);
+            }
+        }
+        catch (Exception e) {
+            throw new MappingException("Error while collecting type map", e);
+        }
+
+        return result;
     }
 
     @SuppressWarnings("unchecked")

@@ -56,8 +56,6 @@ class UDTDataType<R extends UDTRecord<R>> extends DefaultDataType<R> {
 
     UDTDataType(UDT<R> udt) {
         super(SQLDialect.DEFAULT, udt.getRecordType(), getQualifiedName(udt));
-
-        DataTypes.registerUDTRecord(getQualifiedName(udt), udt.getRecordType());
     }
 
     private static String getQualifiedName(UDT<?> udt) {

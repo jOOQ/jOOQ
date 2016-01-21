@@ -1670,13 +1670,15 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 for (Field<?> field : r.getUDT().fields())
                     typeMap(field.getType(), configuration, result);
             }
-            else if (ArrayRecord.class.isAssignableFrom(type)) {
-                Class<ArrayRecord<?>> t = (Class<ArrayRecord<?>>) type;
-                result.put(Utils.getMappedArrayName(configuration, t), t);
-                ArrayRecord<?> r = t.newInstance();
-                Class<?> e = r.getDataType().getType();
-                typeMap(e, configuration, result);
-            }
+
+
+
+
+
+
+
+
+
         }
         catch (Exception e) {
             throw new MappingException("Error while collecting type map", e);

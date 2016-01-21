@@ -5496,6 +5496,36 @@ public class DSL {
     }
 
     /**
+     * Create a new DSL <code>CREATE TABLE</code> statement.
+     *
+     * @see DSLContext#createTableIfNotExists(String)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static CreateTableAsStep<Record> createTableIfNotExists(String table) {
+        return using(new DefaultConfiguration()).createTableIfNotExists(table);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE TABLE</code> statement.
+     *
+     * @see DSLContext#createTableIfNotExists(Name)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static CreateTableAsStep<Record> createTableIfNotExists(Name table) {
+        return using(new DefaultConfiguration()).createTableIfNotExists(table);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE TABLE</code> statement.
+     *
+     * @see DSLContext#createTableIfNotExists(Table)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static CreateTableAsStep<Record> createTableIfNotExists(Table<?> table) {
+        return using(new DefaultConfiguration()).createTableIfNotExists(table);
+    }
+
+    /**
      * Create a new DSL <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
      *
      * @see DSLContext#createTemporaryTable(String)

@@ -535,7 +535,7 @@ final class Utils {
      * [#2700] [#3582] If a POJO attribute is NULL, but the column is NOT NULL
      * then we should let the database apply DEFAULT values
      */
-    static void resetChangedOnNotNull(Record record) {
+    static final void resetChangedOnNotNull(Record record) {
         int size = record.size();
 
         for (int i = 0; i < size; i++)
@@ -559,7 +559,7 @@ final class Utils {
      * Get an attachable's configuration or a new {@link DefaultConfiguration}
      * if <code>null</code>.
      */
-    static Configuration configuration(Attachable attachable) {
+    static final Configuration configuration(Attachable attachable) {
         return configuration(attachable instanceof AttachableInternal
             ? ((AttachableInternal) attachable).configuration()
             : null);
@@ -569,7 +569,7 @@ final class Utils {
      * Get a configuration or a new {@link DefaultConfiguration} if
      * <code>null</code>.
      */
-    static Configuration configuration(Configuration configuration) {
+    static final Configuration configuration(Configuration configuration) {
         return configuration != null ? configuration : new DefaultConfiguration();
     }
 
@@ -577,7 +577,7 @@ final class Utils {
      * Get a configuration's settings or default settings if the configuration
      * is <code>null</code>.
      */
-    static Settings settings(Attachable attachable) {
+    static final Settings settings(Attachable attachable) {
         return configuration(attachable).settings();
     }
 
@@ -585,7 +585,7 @@ final class Utils {
      * Get a configuration's settings or default settings if the configuration
      * is <code>null</code>.
      */
-    static Settings settings(Configuration configuration) {
+    static final Settings settings(Configuration configuration) {
         return configuration(configuration).settings();
     }
 
@@ -785,7 +785,7 @@ final class Utils {
         return result;
     }
 
-    private static IllegalArgumentException fieldExpected(Object value) {
+    private static final IllegalArgumentException fieldExpected(Object value) {
         return new IllegalArgumentException("Cannot interpret argument of type " + value.getClass() + " as a Field: " + value);
     }
 
@@ -2615,7 +2615,7 @@ final class Utils {
     /**
      * [#3681] Consume all {@link ResultSet}s from a JDBC {@link Statement}.
      */
-    static void consumeResultSets(ExecuteContext ctx, ExecuteListener listener, Results results, Intern intern) throws SQLException {
+    static final void consumeResultSets(ExecuteContext ctx, ExecuteListener listener, Results results, Intern intern) throws SQLException {
         boolean anyResults = false;
         int i = 0;
         int rows = (ctx.resultSet() == null) ? ctx.statement().getUpdateCount() : 0;
@@ -2652,7 +2652,7 @@ final class Utils {
             ctx.statement().getMoreResults(Statement.CLOSE_ALL_RESULTS);
     }
 
-    static List<String[]> parseTXT(String string, String nullLiteral) {
+    static final List<String[]> parseTXT(String string, String nullLiteral) {
         String[] strings = string.split("[\\r\\n]+");
 
         if (strings.length < 2) {
@@ -2687,7 +2687,7 @@ final class Utils {
         }
     }
 
-    private static List<String[]> parseTXTLines(
+    private static final List<String[]> parseTXTLines(
             String nullLiteral,
             String[] strings,
             Pattern pattern,
@@ -2713,7 +2713,7 @@ final class Utils {
         return result;
     }
 
-    private static void parseTXTLine(List<int[]> positions, List<String[]> result, String string, String nullLiteral) {
+    private static final void parseTXTLine(List<int[]> positions, List<String[]> result, String string, String nullLiteral) {
         String[] fields = new String[positions.size()];
         result.add(fields);
         int length = string.length();
@@ -2738,7 +2738,7 @@ final class Utils {
     private static final Pattern P_PARSE_HTML_COL_HEAD = Pattern.compile("<th>(.*?)</th>");
     private static final Pattern P_PARSE_HTML_COL_BODY = Pattern.compile("<td>(.*?)</td>");
 
-    static List<String[]> parseHTML(String string) {
+    static final List<String[]> parseHTML(String string) {
 
         List<String[]> result = new ArrayList<String[]>();
 
@@ -2779,7 +2779,7 @@ final class Utils {
      * <code>IF EXISTS</code> is not supported.
      */
     @SuppressWarnings("unused")
-    static void executeImmediateBegin(Context<?> ctx, DropStatementType type) {
+    static final void executeImmediateBegin(Context<?> ctx, DropStatementType type) {
         switch (ctx.family()) {
 
 
@@ -2840,7 +2840,7 @@ final class Utils {
      * <code>BEGIN EXECUTE IMMEDIATE '...' EXCEPTION WHEN ... END;</code>, if
      * <code>IF EXISTS</code> is not supported.
      */
-    static void executeImmediateEnd(Context<?> ctx, DropStatementType type) {
+    static final void executeImmediateEnd(Context<?> ctx, DropStatementType type) {
         switch (ctx.family()) {
 
 
@@ -2904,7 +2904,7 @@ final class Utils {
         }
     }
 
-    static void toSQLDDLTypeDeclaration(Context<?> ctx, DataType<?> type) {
+    static final void toSQLDDLTypeDeclaration(Context<?> ctx, DataType<?> type) {
         String typeName = type.getTypeName(ctx.configuration());
 
         if (type.hasLength()) {

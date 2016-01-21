@@ -7018,12 +7018,36 @@ public interface DSLContext extends Scope , AutoCloseable  {
     CreateTableAsStep<Record> createTable(Name table);
 
     /**
-     * Create a new DSL <code>CREATE  TABLE</code> statement.
+     * Create a new DSL <code>CREATE TABLE</code> statement.
      *
      * @see DSL#createTable(Table)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateTableAsStep<Record> createTable(Table<?> table);
+
+    /**
+     * Create a new DSL <code>CREATE TABLE</code> statement.
+     *
+     * @see DSL#createTableIfNotExists(String)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    CreateTableAsStep<Record> createTableIfNotExists(String table);
+
+    /**
+     * Create a new DSL <code>CREATE TABLE</code> statement.
+     *
+     * @see DSL#createTableIfNotExists(Name)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    CreateTableAsStep<Record> createTableIfNotExists(Name table);
+
+    /**
+     * Create a new DSL <code>CREATE TABLE</code> statement.
+     *
+     * @see DSL#createTableIfNotExists(Table)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    CreateTableAsStep<Record> createTableIfNotExists(Table<?> table);
 
     /**
      * Create a new DSL <code>CREATE TEMPORARY TABLE</code> statement.

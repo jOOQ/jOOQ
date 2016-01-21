@@ -48,14 +48,17 @@ import static org.jooq.Clause.CREATE_TABLE_CONSTRAINTS;
 import static org.jooq.Clause.CREATE_TABLE_NAME;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
+// ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DropStatementType.VIEW;
 import static org.jooq.impl.Utils.DataKey.DATA_SELECT_INTO_TABLE;
 
 import java.util.ArrayList;
@@ -98,13 +101,16 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
     private final List<DataType<?>> columnTypes;
     private final List<Constraint>  constraints;
     private final boolean           temporary;
+    private final boolean           ifNotExists;
     private OnCommit                onCommit;
 
-    CreateTableImpl(Configuration configuration, Table<?> table, boolean temporary) {
+
+    CreateTableImpl(Configuration configuration, Table<?> table, boolean temporary, boolean ifNotExists) {
         super(configuration);
 
         this.table = table;
         this.temporary = temporary;
+        this.ifNotExists = ifNotExists;
         this.columnFields = new ArrayList<Field<?>>();
         this.columnTypes = new ArrayList<DataType<?>>();
         this.constraints = new ArrayList<Constraint>();
@@ -167,9 +173,24 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
     // XXX: QueryPart API
     // ------------------------------------------------------------------------
 
+    private final boolean supportsIfNotExists(Context<?> ctx) {
+        return !asList(DERBY, FIREBIRD).contains(ctx.family());
+    }
+
     @Override
     public final void accept(Context<?> ctx) {
+        if (ifNotExists && !supportsIfNotExists(ctx)) {
+            Utils.executeImmediateBegin(ctx, VIEW);
+            accept0(ctx);
+            Utils.executeImmediateEnd(ctx, VIEW);
+        }
+        else {
+            accept0(ctx);
+        }
+    }
 
+
+    private final void accept0(Context<?> ctx) {
         if (select != null) {
 
 
@@ -280,8 +301,13 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
                 ctx.keyword("global temporary").sql(' ');
 
         ctx.keyword("table")
-           .sql(' ')
-           .visit(table)
+           .sql(' ');
+
+        if (ifNotExists)
+            ctx.keyword("if not exists")
+               .sql(' ');
+
+        ctx.visit(table)
            .end(CREATE_TABLE_NAME);
     }
 

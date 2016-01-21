@@ -40,13 +40,23 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 import static org.jooq.Clause.CREATE_VIEW;
 import static org.jooq.Clause.CREATE_VIEW_AS;
 import static org.jooq.Clause.CREATE_VIEW_NAME;
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+// ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
+// ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.DropStatementType.VIEW;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -75,15 +85,17 @@ class CreateViewImpl<R extends Record> extends AbstractQuery implements
     private static final long     serialVersionUID = 8904572826501186329L;
     private static final Clause[] CLAUSES          = { CREATE_VIEW };
 
+    private final boolean         ifNotExists;
     private final Table<?>        view;
     private final Field<?>[]      fields;
     private Select<?>             select;
 
-    CreateViewImpl(Configuration configuration, Table<?> view, Field<?>[] fields) {
+    CreateViewImpl(Configuration configuration, Table<?> view, Field<?>[] fields, boolean ifNotExists) {
         super(configuration);
 
         this.view = view;
         this.fields = fields;
+        this.ifNotExists = ifNotExists;
     }
 
     // ------------------------------------------------------------------------
@@ -100,8 +112,23 @@ class CreateViewImpl<R extends Record> extends AbstractQuery implements
     // XXX: QueryPart API
     // ------------------------------------------------------------------------
 
+    private final boolean supportsIfNotExists(Context<?> ctx) {
+        return !asList(DERBY, FIREBIRD).contains(ctx.family());
+    }
+
     @Override
     public final void accept(Context<?> ctx) {
+        if (ifNotExists && !supportsIfNotExists(ctx)) {
+            Utils.executeImmediateBegin(ctx, VIEW);
+            accept0(ctx);
+            Utils.executeImmediateEnd(ctx, VIEW);
+        }
+        else {
+            accept0(ctx);
+        }
+    }
+
+    private final void accept0(Context<?> ctx) {
 
         // [#3835] SQLite doesn't like renaming columns at the view level
         boolean rename = fields != null && fields.length > 0;
@@ -112,8 +139,13 @@ class CreateViewImpl<R extends Record> extends AbstractQuery implements
 
         ctx.start(CREATE_VIEW_NAME)
            .keyword("create view")
-           .sql(' ')
-           .visit(view);
+           .sql(' ');
+
+        if (ifNotExists)
+            ctx.keyword("if not exists")
+               .sql(' ');
+
+        ctx.visit(view);
 
         if (rename && renameSupported) {
             boolean qualify = ctx.qualify();

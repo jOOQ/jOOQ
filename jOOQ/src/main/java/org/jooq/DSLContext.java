@@ -7122,6 +7122,30 @@ public interface DSLContext extends Scope , AutoCloseable  {
     CreateViewAsStep<Record> createView(Table<?> view, Field<?>... fields);
 
     /**
+     * Create a new DSL <code>CREATE VIEW</code> statement.
+     *
+     * @see DSL#createViewIfNotExists(String, String...)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    CreateViewAsStep<Record> createViewIfNotExists(String view, String... fields);
+
+    /**
+     * Create a new DSL <code>CREATE VIEW</code> statement.
+     *
+     * @see DSL#createViewIfNotExists(Name, Name...)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    CreateViewAsStep<Record> createViewIfNotExists(Name view, Name... fields);
+
+    /**
+     * Create a new DSL <code>CREATE VIEW</code> statement.
+     *
+     * @see DSL#createViewIfNotExists(Table, Field...)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Field<?>... fields);
+
+    /**
      * Create a new DSL <code>CREATE INDEX</code> statement.
      *
      * @see DSL#createIndex(String)

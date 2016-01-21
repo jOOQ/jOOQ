@@ -5616,6 +5616,36 @@ public class DSL {
     }
 
     /**
+     * Create a new DSL <code>CREATE VIEW IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createViewIfNotExists(String, String...)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static CreateViewAsStep createViewIfNotExists(String view, String... fields) {
+        return using(new DefaultConfiguration()).createViewIfNotExists(view, fields);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE VIEW IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createViewIfNotExists(Name, Name...)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static CreateViewAsStep createViewIfNotExists(Name view, Name... fields) {
+        return using(new DefaultConfiguration()).createViewIfNotExists(view, fields);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE VIEW IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createViewIfNotExists(Table, Field...)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static CreateViewAsStep createViewIfNotExists(Table<?> view, Field<?>... fields) {
+        return using(new DefaultConfiguration()).createViewIfNotExists(view, fields);
+    }
+
+    /**
      * Create a new DSL <code>CREATE INDEX</code> statement.
      *
      * @see DSLContext#createIndex(String)

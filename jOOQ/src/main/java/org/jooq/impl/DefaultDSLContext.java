@@ -2187,7 +2187,22 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateViewAsStep<Record> createView(Table<?> view, Field<?>... fields) {
-        return new CreateViewImpl<Record>(configuration(), view, fields);
+        return new CreateViewImpl<Record>(configuration(), view, fields, false);
+    }
+
+    @Override
+    public CreateViewAsStep<Record> createViewIfNotExists(String view, String... fields) {
+        return createViewIfNotExists(table(name(view)), Utils.fieldsByName(view, fields));
+    }
+
+    @Override
+    public CreateViewAsStep<Record> createViewIfNotExists(Name view, Name... fields) {
+        return createViewIfNotExists(table(view), Utils.fieldsByName(fields));
+    }
+
+    @Override
+    public CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Field<?>... fields) {
+        return new CreateViewImpl<Record>(configuration(), view, fields, true);
     }
 
     @Override

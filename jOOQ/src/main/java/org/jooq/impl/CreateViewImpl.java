@@ -56,7 +56,6 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.table;
-import static org.jooq.impl.DropStatementType.VIEW;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -119,9 +118,9 @@ class CreateViewImpl<R extends Record> extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         if (ifNotExists && !supportsIfNotExists(ctx)) {
-            Utils.executeImmediateBegin(ctx, VIEW);
+            Utils.executeImmediateBegin(ctx, DDLStatementType.CREATE_VIEW);
             accept0(ctx);
-            Utils.executeImmediateEnd(ctx, VIEW);
+            Utils.executeImmediateEnd(ctx, DDLStatementType.CREATE_VIEW);
         }
         else {
             accept0(ctx);
@@ -141,7 +140,7 @@ class CreateViewImpl<R extends Record> extends AbstractQuery implements
            .keyword("create view")
            .sql(' ');
 
-        if (ifNotExists)
+        if (ifNotExists && supportsIfNotExists(ctx))
             ctx.keyword("if not exists")
                .sql(' ');
 

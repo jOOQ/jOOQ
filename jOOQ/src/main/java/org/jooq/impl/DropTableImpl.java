@@ -50,7 +50,6 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
-import static org.jooq.impl.DropStatementType.TABLE;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -115,9 +114,9 @@ class DropTableImpl extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         if (ifExists && !supportsIfExists(ctx)) {
-            Utils.executeImmediateBegin(ctx, TABLE);
+            Utils.executeImmediateBegin(ctx, DDLStatementType.DROP_TABLE);
             accept0(ctx);
-            Utils.executeImmediateEnd(ctx, TABLE);
+            Utils.executeImmediateEnd(ctx, DDLStatementType.DROP_TABLE);
         }
         else {
             accept0(ctx);

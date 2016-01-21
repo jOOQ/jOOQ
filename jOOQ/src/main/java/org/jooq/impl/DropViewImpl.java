@@ -51,7 +51,6 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
 // ...
-import static org.jooq.impl.DropStatementType.VIEW;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -99,9 +98,9 @@ class DropViewImpl extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         if (ifExists && !supportsIfExists(ctx)) {
-            Utils.executeImmediateBegin(ctx, VIEW);
+            Utils.executeImmediateBegin(ctx, DDLStatementType.DROP_VIEW);
             accept0(ctx);
-            Utils.executeImmediateEnd(ctx, VIEW);
+            Utils.executeImmediateEnd(ctx, DDLStatementType.DROP_VIEW);
         }
         else {
             accept0(ctx);

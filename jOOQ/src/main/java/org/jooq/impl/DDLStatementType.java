@@ -43,6 +43,14 @@ package org.jooq.impl;
 /**
  * @author Lukas Eder
  */
-enum DropStatementType {
-    INDEX, SEQUENCE, TABLE, VIEW
+enum DDLStatementType {
+    CREATE_INDEX,
+    CREATE_SEQUENCE,
+    CREATE_TABLE,
+    CREATE_VIEW,
+
+    DROP_INDEX,
+    DROP_SEQUENCE,
+    DROP_TABLE,
+    DROP_VIEW
 }

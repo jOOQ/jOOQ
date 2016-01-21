@@ -52,7 +52,6 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
-import static org.jooq.impl.DropStatementType.INDEX;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -122,9 +121,9 @@ class DropIndexImpl extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         if (ifExists && !supportsIfExists(ctx)) {
-            Utils.executeImmediateBegin(ctx, INDEX);
+            Utils.executeImmediateBegin(ctx, DDLStatementType.DROP_INDEX);
             accept0(ctx);
-            Utils.executeImmediateEnd(ctx, INDEX);
+            Utils.executeImmediateEnd(ctx, DDLStatementType.DROP_INDEX);
         }
         else {
             accept0(ctx);

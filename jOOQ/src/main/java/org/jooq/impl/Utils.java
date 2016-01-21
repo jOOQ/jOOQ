@@ -54,6 +54,14 @@ import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
 import static org.jooq.conf.SettingsTools.getBackslashEscaping;
 import static org.jooq.conf.SettingsTools.reflectionCaching;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
+import static org.jooq.impl.DDLStatementType.CREATE_INDEX;
+import static org.jooq.impl.DDLStatementType.CREATE_SEQUENCE;
+import static org.jooq.impl.DDLStatementType.CREATE_TABLE;
+import static org.jooq.impl.DDLStatementType.CREATE_VIEW;
+import static org.jooq.impl.DDLStatementType.DROP_INDEX;
+import static org.jooq.impl.DDLStatementType.DROP_SEQUENCE;
+import static org.jooq.impl.DDLStatementType.DROP_TABLE;
+import static org.jooq.impl.DDLStatementType.DROP_VIEW;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.escape;
 import static org.jooq.impl.DSL.getDataType;
@@ -61,10 +69,6 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.nullSafe;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
-import static org.jooq.impl.DropStatementType.INDEX;
-import static org.jooq.impl.DropStatementType.SEQUENCE;
-import static org.jooq.impl.DropStatementType.TABLE;
-import static org.jooq.impl.DropStatementType.VIEW;
 import static org.jooq.impl.Identifiers.QUOTES;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
@@ -2779,7 +2783,7 @@ final class Utils {
      * <code>IF EXISTS</code> is not supported.
      */
     @SuppressWarnings("unused")
-    static final void executeImmediateBegin(Context<?> ctx, DropStatementType type) {
+    static final void executeImmediateBegin(Context<?> ctx, DDLStatementType type) {
         switch (ctx.family()) {
 
 
@@ -2840,8 +2844,12 @@ final class Utils {
      * <code>BEGIN EXECUTE IMMEDIATE '...' EXCEPTION WHEN ... END;</code>, if
      * <code>IF EXISTS</code> is not supported.
      */
-    static final void executeImmediateEnd(Context<?> ctx, DropStatementType type) {
+    static final void executeImmediateEnd(Context<?> ctx, DDLStatementType type) {
         switch (ctx.family()) {
+
+
+
+
 
 
 

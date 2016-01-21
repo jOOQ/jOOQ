@@ -52,7 +52,6 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
 // ...
-import static org.jooq.impl.DropStatementType.SEQUENCE;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -99,9 +98,9 @@ class DropSequenceImpl extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         if (ifExists && !supportsIfExists(ctx)) {
-            Utils.executeImmediateBegin(ctx, SEQUENCE);
+            Utils.executeImmediateBegin(ctx, DDLStatementType.DROP_SEQUENCE);
             accept0(ctx);
-            Utils.executeImmediateEnd(ctx, SEQUENCE);
+            Utils.executeImmediateEnd(ctx, DDLStatementType.DROP_SEQUENCE);
         }
         else {
             accept0(ctx);

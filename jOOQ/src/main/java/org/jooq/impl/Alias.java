@@ -68,6 +68,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Utils.list;
 import static org.jooq.impl.Utils.DataKey.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
 
@@ -196,7 +197,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
             toSQLAs(context);
 
             context.sql(' ');
-            context.literal(alias);
+            context.visit(name(alias));
 
             // [#1801] Add field aliases to the table alias, if applicable
             if (fieldAliases != null && !emulatedDerivedColumnList) {
@@ -240,7 +241,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
 
         else {
-            context.literal(alias);
+            context.visit(name(alias));
         }
     }
 

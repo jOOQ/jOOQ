@@ -7202,6 +7202,30 @@ public interface DSLContext extends Scope , AutoCloseable  {
     CreateSequenceFinalStep createSequence(Sequence<?> sequence);
 
     /**
+     * Create a new DSL <code>CREATE SEQUENCE</code> statement.
+     *
+     * @see DSL#createSequenceIfNotExists(String)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    CreateSequenceFinalStep createSequenceIfNotExists(String sequence);
+
+    /**
+     * Create a new DSL <code>CREATE SEQUENCE</code> statement.
+     *
+     * @see DSL#createSequenceIfNotExists(Name)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    CreateSequenceFinalStep createSequenceIfNotExists(Name sequence);
+
+    /**
+     * Create a new DSL <code>CREATE SEQUENCE</code> statement.
+     *
+     * @see DSL#createSequenceIfNotExists(String)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    CreateSequenceFinalStep createSequenceIfNotExists(Sequence<?> sequence);
+
+    /**
      * Create a new DSL <code>ALTER SEQUENCE</code> statement.
      *
      * @see DSL#alterSequence(String)

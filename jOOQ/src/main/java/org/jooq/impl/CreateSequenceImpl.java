@@ -43,8 +43,14 @@ package org.jooq.impl;
 import static java.util.Arrays.asList;
 import static org.jooq.Clause.CREATE_SEQUENCE;
 import static org.jooq.Clause.CREATE_SEQUENCE_SEQUENCE;
+// ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
+// ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+// ...
+// ...
 // ...
 
 import org.jooq.Clause;
@@ -68,25 +74,47 @@ class CreateSequenceImpl extends AbstractQuery implements
     private static final Clause[] CLAUSES          = { CREATE_SEQUENCE };
 
     private final Sequence<?>     sequence;
+    private final boolean         ifNotExists;
 
-    CreateSequenceImpl(Configuration configuration, Sequence<?> sequence) {
+    CreateSequenceImpl(Configuration configuration, Sequence<?> sequence, boolean ifNotExists) {
         super(configuration);
 
         this.sequence = sequence;
+        this.ifNotExists = ifNotExists;
     }
 
     // ------------------------------------------------------------------------
     // XXX: QueryPart API
     // ------------------------------------------------------------------------
 
+    private final boolean supportsIfNotExists(Context<?> ctx) {
+        return !asList(DERBY, FIREBIRD).contains(ctx.family());
+    }
+
     @Override
     public final void accept(Context<?> ctx) {
+        if (ifNotExists && !supportsIfNotExists(ctx)) {
+            Utils.executeImmediateBegin(ctx, DDLStatementType.CREATE_SEQUENCE);
+            accept0(ctx);
+            Utils.executeImmediateEnd(ctx, DDLStatementType.CREATE_SEQUENCE);
+        }
+        else {
+            accept0(ctx);
+        }
+    }
+
+    private final void accept0(Context<?> ctx) {
         ctx.start(CREATE_SEQUENCE_SEQUENCE)
            .keyword("create")
            .sql(' ')
            .keyword(ctx.family() == CUBRID ? "serial" : "sequence")
-           .sql(' ')
-           .visit(sequence);
+           .sql(' ');
+
+        if (ifNotExists && supportsIfNotExists(ctx))
+            ctx.keyword("if not exists")
+               .sql(' ');
+
+        ctx.visit(sequence);
 
         // Some databases default to sequences starting with MIN_VALUE
         if (asList(DERBY).contains(ctx.family()))

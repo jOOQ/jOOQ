@@ -2297,7 +2297,22 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateSequenceFinalStep createSequence(Sequence<?> sequence) {
-        return new CreateSequenceImpl(configuration(), sequence);
+        return new CreateSequenceImpl(configuration(), sequence, false);
+    }
+
+    @Override
+    public CreateSequenceFinalStep createSequenceIfNotExists(String sequence) {
+        return createSequenceIfNotExists(name(sequence));
+    }
+
+    @Override
+    public CreateSequenceFinalStep createSequenceIfNotExists(Name sequence) {
+        return createSequenceIfNotExists(sequence(sequence));
+    }
+
+    @Override
+    public CreateSequenceFinalStep createSequenceIfNotExists(Sequence<?> sequence) {
+        return new CreateSequenceImpl(configuration(), sequence, true);
     }
 
     @Override

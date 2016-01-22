@@ -5716,6 +5716,36 @@ public class DSL {
     }
 
     /**
+     * Create a new DSL <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createSequenceIfNotExists(String)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static CreateSequenceFinalStep createSequenceIfNotExists(String sequence) {
+        return using(new DefaultConfiguration()).createSequenceIfNotExists(sequence);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createSequenceIfNotExists(Name)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static CreateSequenceFinalStep createSequenceIfNotExists(Name sequence) {
+        return using(new DefaultConfiguration()).createSequenceIfNotExists(sequence);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createSequenceIfNotExists(Sequence)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    public static CreateSequenceFinalStep createSequenceIfNotExists(Sequence<?> sequence) {
+        return using(new DefaultConfiguration()).createSequenceIfNotExists(sequence);
+    }
+
+    /**
      * Create a new DSL <code>ALTER SEQUENCE</code> statement.
      *
      * @see DSLContext#alterSequence(String)

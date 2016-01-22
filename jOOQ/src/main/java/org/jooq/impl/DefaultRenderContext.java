@@ -118,9 +118,13 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         qualifyCatalog(context.qualifyCatalog());
         qualifySchema(context.qualifySchema());
         castMode(context.castMode());
-        declareFields(context.declareFields());
-        declareTables(context.declareTables());
         data().putAll(context.data());
+
+        declareCTE = context.declareCTE();
+        declareWindows = context.declareWindows();
+        declareFields = context.declareFields();
+        declareTables = context.declareTables();
+        declareAliases = context.declareAliases();
     }
 
     // ------------------------------------------------------------------------

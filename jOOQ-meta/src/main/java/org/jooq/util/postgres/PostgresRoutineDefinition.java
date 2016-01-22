@@ -52,6 +52,7 @@ import java.util.Arrays;
 
 import org.jooq.Record;
 import org.jooq.exception.DataAccessException;
+import org.jooq.tools.StringUtils;
 import org.jooq.util.AbstractRoutineDefinition;
 import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.Database;
@@ -152,7 +153,8 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
                 record.getValue(PARAMETERS.PARAMETER_NAME),
                 record.getValue(PARAMETERS.ORDINAL_POSITION),
                 type,
-                record.getValue(PARAMETERS.PARAMETER_DEFAULT) != null
+                record.getValue(PARAMETERS.PARAMETER_DEFAULT) != null,
+                StringUtils.isBlank(record.getValue(PARAMETERS.PARAMETER_NAME))
             );
 
             addParameter(InOutDefinition.getFromString(inOut), parameter);

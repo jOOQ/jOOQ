@@ -57,17 +57,19 @@ import org.jooq.tools.StringUtils;
  */
 class ParameterImpl<T> extends AbstractQueryPart implements Parameter<T> {
 
-    private static final long     serialVersionUID = -5277225593751085577L;
+    private static final long serialVersionUID = -5277225593751085577L;
 
-    private final String          name;
-    private final DataType<T>     type;
-    private final boolean         isDefaulted;
+    private final String      name;
+    private final DataType<T> type;
+    private final boolean     isDefaulted;
+    private final boolean     isUnnamed;
 
     @SuppressWarnings("unchecked")
-    ParameterImpl(String name, DataType<T> type, boolean isDefaulted, Binding<?, T> binding) {
+    ParameterImpl(String name, DataType<T> type, Binding<?, T> binding, boolean isDefaulted, boolean isUnnamed) {
         this.name = name;
-        this.isDefaulted = isDefaulted;
         this.type = type.asConvertedDataType((Binding<T, T>) binding);
+        this.isDefaulted = isDefaulted;
+        this.isUnnamed = isUnnamed;
     }
 
     @Override
@@ -113,6 +115,11 @@ class ParameterImpl<T> extends AbstractQueryPart implements Parameter<T> {
     @Override
     public final boolean isDefaulted() {
         return isDefaulted;
+    }
+
+    @Override
+    public final boolean isUnnamed() {
+        return isUnnamed;
     }
 
     // ------------------------------------------------------------------------

@@ -55,4 +55,11 @@ public interface ParameterDefinition extends TypedElementDefinition<RoutineDefin
      * @see Parameter#isDefaulted()
      */
     boolean isDefaulted();
+
+    /**
+     * Whether the parameter has a name.
+     * <p>
+     * @see Parameter#isUnnamed()
+     */
+    boolean isUnnamed();
 }

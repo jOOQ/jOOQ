@@ -3886,6 +3886,7 @@ public class JavaGenerator extends AbstractGenerator {
                 final String paramName = parameter.getName();
                 final String paramComment = StringUtils.defaultString(parameter.getComment());
                 final String isDefaulted = parameter.isDefaulted() ? "true" : "false";
+                final String isUnnamed = parameter.isUnnamed() ? "true" : "false";
                 final List<String> converters = out.ref(list(
                         parameter.getType().getConverter(),
                         parameter.getType().getBinding()
@@ -3893,8 +3894,8 @@ public class JavaGenerator extends AbstractGenerator {
 
                 out.tab(1).javadoc("The parameter <code>%s</code>.%s", parameter.getQualifiedOutputName(), defaultIfBlank(" " + paramComment, ""));
 
-                out.tab(1).println("val %s : %s[%s] = %s.createParameter(\"%s\", %s, %s[[before=, ][new %s]])",
-                        paramId, Parameter.class, paramType, AbstractRoutine.class, paramName, paramTypeRef, isDefaulted, converters);
+                out.tab(1).println("val %s : %s[%s] = %s.createParameter(\"%s\", %s, %s, %s[[before=, ][new %s]])",
+                        paramId, Parameter.class, paramType, AbstractRoutine.class, paramName, paramTypeRef, isDefaulted, isUnnamed, converters);
             }
 
             out.println("}");
@@ -3920,6 +3921,7 @@ public class JavaGenerator extends AbstractGenerator {
                 final String paramName = parameter.getName();
                 final String paramComment = StringUtils.defaultString(parameter.getComment());
                 final String isDefaulted = parameter.isDefaulted() ? "true" : "false";
+                final String isUnnamed = parameter.isUnnamed() ? "true" : "false";
                 final List<String> converters = out.ref(list(
                         parameter.getType().getConverter(),
                         parameter.getType().getBinding()
@@ -3927,8 +3929,8 @@ public class JavaGenerator extends AbstractGenerator {
 
                 out.tab(1).javadoc("The parameter <code>%s</code>.%s", parameter.getQualifiedOutputName(), defaultIfBlank(" " + paramComment, ""));
 
-                out.tab(1).println("public static final %s<%s> %s = createParameter(\"%s\", %s, %s[[before=, ][new %s()]]);",
-                        Parameter.class, paramType, paramId, paramName, paramTypeRef, isDefaulted, converters);
+                out.tab(1).println("public static final %s<%s> %s = createParameter(\"%s\", %s, %s, %s[[before=, ][new %s()]]);",
+                        Parameter.class, paramType, paramId, paramName, paramTypeRef, isDefaulted, isUnnamed, converters);
             }
         }
 

@@ -114,4 +114,13 @@ public interface Parameter<T> extends QueryPart {
      * Currently, this is only supported for Oracle 11g
      */
     boolean isDefaulted();
+
+    /**
+     * Whether this parameter has a name or not.
+     * <p>
+     * Some databases (e.g. {@link SQLDialect#POSTGRES}) allow for using unnamed
+     * parameters. In this case, {@link #getName()} will return a synthetic name
+     * created from the parameter index.
+     */
+    boolean isUnnamed();
 }

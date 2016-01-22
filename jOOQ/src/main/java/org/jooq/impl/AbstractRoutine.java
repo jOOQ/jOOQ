@@ -122,6 +122,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     private ResultsImpl                       results;
     private boolean                           overloaded;
     private boolean                           hasDefaultedParameters;
+    private boolean                           hasUnnamedParameters;
 
     // ------------------------------------------------------------------------
     // Call-data attributes (call-specific)
@@ -736,9 +737,14 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         return hasDefaultedParameters && !inValuesDefaulted.isEmpty();
     }
 
+    private final boolean hasUnnamedParameters() {
+        return hasUnnamedParameters;
+    }
+
     private final void addParameter(Parameter<?> parameter) {
         allParameters.add(parameter);
         hasDefaultedParameters |= parameter.isDefaulted();
+        hasUnnamedParameters |= parameter.isUnnamed();
     }
 
     protected final void addInParameter(Parameter<?> parameter) {
@@ -811,7 +817,10 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
      *
      * @param name The name of the field (case-sensitive!)
      * @param type The data type of the field
+     *
+     * @deprecated - Please, re-generate your routine code.
      */
+    @Deprecated
     protected static final <T> Parameter<T> createParameter(String name, DataType<T> type) {
         return createParameter(name, type, false, null, null);
     }
@@ -824,7 +833,10 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
      * @param type The data type of the field
      * @param isDefaulted Whether the parameter is defaulted (see
      *            {@link Parameter#isDefaulted()}
+     *
+     * @deprecated - Please, re-generate your routine code.
      */
+    @Deprecated
     protected static final <T> Parameter<T> createParameter(String name, DataType<T> type, boolean isDefaulted) {
         return createParameter(name, type, isDefaulted, null, null);
     }
@@ -837,7 +849,10 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
      * @param type The data type of the field
      * @param isDefaulted Whether the parameter is defaulted (see
      *            {@link Parameter#isDefaulted()}
+     *
+     * @deprecated - Please, re-generate your routine code.
      */
+    @Deprecated
     protected static final <T, U> Parameter<U> createParameter(String name, DataType<T> type, boolean isDefaulted, Converter<T, U> converter) {
         return createParameter(name, type, isDefaulted, converter, null);
     }
@@ -850,7 +865,10 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
      * @param type The data type of the field
      * @param isDefaulted Whether the parameter is defaulted (see
      *            {@link Parameter#isDefaulted()}
+     *
+     * @deprecated - Please, re-generate your routine code.
      */
+    @Deprecated
     protected static final <T, U> Parameter<U> createParameter(String name, DataType<T> type, boolean isDefaulted, Binding<T, U> binding) {
         return createParameter(name, type, isDefaulted, null, binding);
     }
@@ -863,15 +881,78 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
      * @param type The data type of the field
      * @param isDefaulted Whether the parameter is defaulted (see
      *            {@link Parameter#isDefaulted()}
+     *
+     * @deprecated - Please, re-generate your routine code.
+     */
+    @Deprecated
+    protected static final <T, X, U> Parameter<U> createParameter(String name, DataType<T> type, boolean isDefaulted, Converter<X, U> converter, Binding<T, X> binding) {
+        return createParameter(name, type, isDefaulted, false, converter, binding);
+    }
+
+    /**
+     * Subclasses may call this method to create {@link UDTField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     * @param isDefaulted Whether the parameter is defaulted (see
+     *            {@link Parameter#isDefaulted()}
+     * @param isUnnamed Whether the parameter is unnamed (see
+     *            {@link Parameter#isUnnamed()}.
+     */
+    protected static final <T> Parameter<T> createParameter(String name, DataType<T> type, boolean isDefaulted, boolean isUnnamed) {
+        return createParameter(name, type, isDefaulted, isUnnamed, null, null);
+    }
+
+    /**
+     * Subclasses may call this method to create {@link UDTField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     * @param isDefaulted Whether the parameter is defaulted (see
+     *            {@link Parameter#isDefaulted()}
+     * @param isUnnamed Whether the parameter is unnamed (see
+     *            {@link Parameter#isUnnamed()}.
+     */
+    protected static final <T, U> Parameter<U> createParameter(String name, DataType<T> type, boolean isDefaulted, boolean isUnnamed, Converter<T, U> converter) {
+        return createParameter(name, type, isDefaulted, isUnnamed, converter, null);
+    }
+
+    /**
+     * Subclasses may call this method to create {@link UDTField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     * @param isDefaulted Whether the parameter is defaulted (see
+     *            {@link Parameter#isDefaulted()}
+     * @param isUnnamed Whether the parameter is unnamed (see
+     *            {@link Parameter#isUnnamed()}.
+     */
+    protected static final <T, U> Parameter<U> createParameter(String name, DataType<T> type, boolean isDefaulted, boolean isUnnamed, Binding<T, U> binding) {
+        return createParameter(name, type, isDefaulted, isUnnamed, null, binding);
+    }
+
+    /**
+     * Subclasses may call this method to create {@link UDTField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     * @param isDefaulted Whether the parameter is defaulted (see
+     *            {@link Parameter#isDefaulted()}
+     * @param isUnnamed Whether the parameter is unnamed (see
+     *            {@link Parameter#isUnnamed()}.
      */
     @SuppressWarnings("unchecked")
-    protected static final <T, X, U> Parameter<U> createParameter(String name, DataType<T> type, boolean isDefaulted, Converter<X, U> converter, Binding<T, X> binding) {
+    protected static final <T, X, U> Parameter<U> createParameter(String name, DataType<T> type, boolean isDefaulted, boolean isUnnamed, Converter<X, U> converter, Binding<T, X> binding) {
         final Binding<T, U> actualBinding = DefaultBinding.newBinding(converter, type, binding);
         final DataType<U> actualType = converter == null && binding == null
             ? (DataType<U>) type
             : type.asConvertedDataType(actualBinding);
 
-        return new ParameterImpl<U>(name, actualType, isDefaulted, actualBinding);
+        return new ParameterImpl<U>(name, actualType, actualBinding, isDefaulted, isUnnamed);
     }
 
     /**
@@ -909,11 +990,22 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                     continue;
 
                 // Disambiguate overloaded function signatures
-                if (ctx.family() == POSTGRES)
-                    if (isOverloaded())
-                        fields.add(field("{0} := {1}", name(parameter.getName()), getInValues().get(parameter).cast(parameter.getType())));
-                    else
-                        fields.add(field("{0} := {1}", name(parameter.getName()), getInValues().get(parameter)));
+                if (ctx.family() == POSTGRES) {
+
+                    // [#4920] In case there are any unnamed parameters, we mustn't
+                    if (hasUnnamedParameters()) {
+                        if (isOverloaded())
+                            fields.add(getInValues().get(parameter).cast(parameter.getType()));
+                        else
+                            fields.add(getInValues().get(parameter));
+                    }
+                    else {
+                        if (isOverloaded())
+                            fields.add(field("{0} := {1}", name(parameter.getName()), getInValues().get(parameter).cast(parameter.getType())));
+                        else
+                            fields.add(field("{0} := {1}", name(parameter.getName()), getInValues().get(parameter)));
+                    }
+                }
                 else
                     fields.add(getInValues().get(parameter));
             }

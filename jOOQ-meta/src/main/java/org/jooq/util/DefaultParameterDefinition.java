@@ -52,19 +52,30 @@ public class DefaultParameterDefinition
     implements ParameterDefinition {
 
     private final boolean isDefaulted;
+    private final boolean isUnnamed;
 
     public DefaultParameterDefinition(RoutineDefinition routine, String name, int position, DataTypeDefinition type) {
-        this(routine, name, position, type, false);
+        this(routine, name, position, type, false, false);
     }
 
     public DefaultParameterDefinition(RoutineDefinition routine, String name, int position, DataTypeDefinition type, boolean isDefaulted) {
+        this(routine, name, position, type, isDefaulted, false);
+    }
+
+    public DefaultParameterDefinition(RoutineDefinition routine, String name, int position, DataTypeDefinition type, boolean isDefaulted, boolean isUnnamed) {
         super(routine, name, position, type, null);
 
         this.isDefaulted = isDefaulted;
+        this.isUnnamed = isUnnamed;
     }
 
     @Override
     public boolean isDefaulted() {
         return isDefaulted;
+    }
+
+    @Override
+    public boolean isUnnamed() {
+        return isUnnamed;
     }
 }

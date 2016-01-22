@@ -702,7 +702,8 @@ public class PostgresDatabase extends AbstractDatabase {
                     : trueCondition())
             .orderBy(
                 r1.ROUTINE_SCHEMA.asc(),
-                r1.ROUTINE_NAME.asc())
+                r1.ROUTINE_NAME.asc(),
+                field(name("overload")).asc())
             .fetch()) {
 
             result.add(new PostgresRoutineDefinition(this, record));

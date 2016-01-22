@@ -7162,6 +7162,22 @@ public interface DSLContext extends Scope , AutoCloseable  {
     CreateIndexStep createIndex(Name index);
 
     /**
+     * Create a new DSL <code>CREATE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createIndexIfNotExists(String)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    CreateIndexStep createIndexIfNotExists(String index);
+
+    /**
+     * Create a new DSL <code>CREATE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createIndexIfNotExists(Name)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    CreateIndexStep createIndexIfNotExists(Name index);
+
+    /**
      * Create a new DSL <code>CREATE UNIQUE INDEX</code> statement.
      *
      * @see DSL#createIndex(String)
@@ -7176,6 +7192,22 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateIndexStep createUniqueIndex(Name index);
+
+    /**
+     * Create a new DSL <code>CREATE UNIQUE INDEX</code> statement.
+     *
+     * @see DSL#createIndex(String)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    CreateIndexStep createUniqueIndexIfNotExists(String index);
+
+    /**
+     * Create a new DSL <code>CREATE UNIQUE INDEX</code> statement.
+     *
+     * @see DSL#createIndex(Name)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    CreateIndexStep createUniqueIndexIfNotExists(Name index);
 
     /**
      * Create a new DSL <code>CREATE SEQUENCE</code> statement.

@@ -40,7 +40,16 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 import static org.jooq.Clause.CREATE_INDEX;
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+// ...
+// ...
+// ...
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
@@ -72,18 +81,16 @@ class CreateIndexImpl extends AbstractQuery implements
 
     private final Name            index;
     private final boolean         unique;
+    private final boolean         ifNotExists;
     private Table<?>              table;
     private Field<?>[]            fields;
 
-    CreateIndexImpl(Configuration configuration, Name index) {
-        this(configuration, index, false);
-    }
-
-    CreateIndexImpl(Configuration configuration, Name index, boolean unique) {
+    CreateIndexImpl(Configuration configuration, Name index, boolean unique, boolean ifNotExists) {
         super(configuration);
 
         this.index = index;
         this.unique = unique;
+        this.ifNotExists = ifNotExists;
     }
 
     // ------------------------------------------------------------------------
@@ -112,8 +119,23 @@ class CreateIndexImpl extends AbstractQuery implements
     // XXX: QueryPart API
     // ------------------------------------------------------------------------
 
+    private final boolean supportsIfNotExists(Context<?> ctx) {
+        return !asList(DERBY, FIREBIRD).contains(ctx.family());
+    }
+
     @Override
     public final void accept(Context<?> ctx) {
+        if (ifNotExists && !supportsIfNotExists(ctx)) {
+            Utils.executeImmediateBegin(ctx, DDLStatementType.CREATE_INDEX);
+            accept0(ctx);
+            Utils.executeImmediateEnd(ctx, DDLStatementType.CREATE_INDEX);
+        }
+        else {
+            accept0(ctx);
+        }
+    }
+
+    private final void accept0(Context<?> ctx) {
         ctx.keyword("create");
 
         if (unique)
@@ -122,8 +144,13 @@ class CreateIndexImpl extends AbstractQuery implements
 
         ctx.sql(' ')
            .keyword("index")
-           .sql(' ')
-           .visit(index)
+           .sql(' ');
+
+        if (ifNotExists && supportsIfNotExists(ctx))
+            ctx.keyword("if not exists")
+               .sql(' ');
+
+        ctx.visit(index)
            .sql(' ')
            .keyword("on")
            .sql(' ')

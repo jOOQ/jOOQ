@@ -2272,7 +2272,17 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateIndexStep createIndex(Name index) {
-        return new CreateIndexImpl(configuration(), index);
+        return new CreateIndexImpl(configuration(), index, false, false);
+    }
+
+    @Override
+    public CreateIndexStep createIndexIfNotExists(String index) {
+        return createIndexIfNotExists(name(index));
+    }
+
+    @Override
+    public CreateIndexStep createIndexIfNotExists(Name index) {
+        return new CreateIndexImpl(configuration(), index, false, true);
     }
 
     @Override
@@ -2282,7 +2292,17 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateIndexStep createUniqueIndex(Name index) {
-        return new CreateIndexImpl(configuration(), index, true);
+        return new CreateIndexImpl(configuration(), index, true, false);
+    }
+
+    @Override
+    public CreateIndexStep createUniqueIndexIfNotExists(String index) {
+        return createUniqueIndexIfNotExists(name(index));
+    }
+
+    @Override
+    public CreateIndexStep createUniqueIndexIfNotExists(Name index) {
+        return new CreateIndexImpl(configuration(), index, true, true);
     }
 
     @Override

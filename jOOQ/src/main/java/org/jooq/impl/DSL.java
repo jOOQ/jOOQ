@@ -5650,7 +5650,7 @@ public class DSL {
      *
      * @see DSLContext#createIndex(String)
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateIndexStep createIndex(String index) {
         return using(new DefaultConfiguration()).createIndex(index);
     }
@@ -5660,9 +5660,29 @@ public class DSL {
      *
      * @see DSLContext#createIndex(Name)
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateIndexStep createIndex(Name index) {
         return using(new DefaultConfiguration()).createIndex(index);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createIndexIfNotExists(String)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static CreateIndexStep createIndexIfNotExists(String index) {
+        return using(new DefaultConfiguration()).createIndexIfNotExists(index);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createIndexIfNotExists(Name)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static CreateIndexStep createIndexIfNotExists(Name index) {
+        return using(new DefaultConfiguration()).createIndexIfNotExists(index);
     }
 
     /**
@@ -5670,7 +5690,7 @@ public class DSL {
      *
      * @see DSLContext#createUniqueIndex(String)
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateIndexStep createUniqueIndex(String index) {
         return using(new DefaultConfiguration()).createUniqueIndex(index);
     }
@@ -5680,9 +5700,29 @@ public class DSL {
      *
      * @see DSLContext#createUniqueIndex(Name)
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateIndexStep createUniqueIndex(Name index) {
         return using(new DefaultConfiguration()).createUniqueIndex(index);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createUniqueIndexIfNotExists(String)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static CreateIndexStep createUniqueIndexIfNotExists(String index) {
+        return using(new DefaultConfiguration()).createUniqueIndexIfNotExists(index);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE UNIQUE INDEX IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createUniqueIndexIfNotExists(Name)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static CreateIndexStep createUniqueIndexIfNotExists(Name index) {
+        return using(new DefaultConfiguration()).createUniqueIndexIfNotExists(index);
     }
 
     /**

@@ -52,6 +52,7 @@ import static org.jooq.Clause.CREATE_TABLE_NAME;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
+import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
@@ -261,15 +262,12 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
         ctx.formatSeparator()
            .keyword("as");
 
-
-
-
-
-
-
-
-
-        {
+        if (asList(HSQLDB).contains(ctx.family())) {
+            ctx.sql(" (")
+               .formatIndentStart()
+               .formatNewLine();
+        }
+        else {
             ctx.formatSeparator();
         }
 
@@ -277,13 +275,15 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
            .visit(select)
            .end(CREATE_TABLE_AS);
 
+        if (asList(HSQLDB).contains(ctx.family())) {
+            ctx.formatIndentEnd()
+               .formatNewLine()
+               .sql(')');
 
-
-
-
-
-
-
+            if (ctx.family() == HSQLDB)
+                ctx.sql(' ')
+                   .keyword("with data");
+        }
 
         ctx.end(CREATE_TABLE);
     }

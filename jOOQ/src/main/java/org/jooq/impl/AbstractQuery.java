@@ -46,6 +46,7 @@ import static org.jooq.Constants.FULL_VERSION;
 import static org.jooq.ExecuteType.DDL;
 // ...
 // ...
+import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
 import static org.jooq.conf.ParamType.INDEXED;
@@ -453,17 +454,12 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
     private final Rendered getSQL0(ExecuteContext ctx) {
         Rendered result;
 
-
-
-
-
-
-
-
-
-
-
-        if (executePreparedStatements(configuration().settings())) {
+        // [#3542] Some dialects do not support bind values in DDL statements
+        if (ctx.type() == DDL && asList(HSQLDB).contains(ctx.family())) {
+            ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
+            result = new Rendered(getSQL(INLINED));
+        }
+        else if (executePreparedStatements(configuration().settings())) {
             try {
                 DefaultRenderContext render = new DefaultRenderContext(configuration);
                 render.data(DATA_COUNT_BIND_VALUES, true);

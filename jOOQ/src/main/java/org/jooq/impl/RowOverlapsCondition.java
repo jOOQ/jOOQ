@@ -89,12 +89,12 @@ class RowOverlapsCondition<T1, T2> extends AbstractCondition {
 
     @Override
     public final void accept(Context<?> ctx) {
-        delegate(ctx.configuration()).accept(ctx);
+        ctx.visit(delegate(ctx.configuration()));
     }
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
-        return delegate(ctx.configuration()).clauses(ctx);
+        return null;
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {

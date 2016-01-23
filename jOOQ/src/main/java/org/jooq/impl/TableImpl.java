@@ -132,7 +132,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     @Override
     public final void accept(Context<?> ctx) {
         if (alias != null) {
-            alias.accept(ctx);
+            ctx.visit(alias);
         }
         else {
 

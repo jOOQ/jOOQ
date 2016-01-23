@@ -252,6 +252,7 @@ abstract class AbstractBindContext extends AbstractContext<BindContext> implemen
     /**
      * Subclasses may override this method to achieve different behaviour
      */
+    @SuppressWarnings("deprecation")
     protected void bindInternal(QueryPartInternal internal) {
         internal.accept(this);
     }

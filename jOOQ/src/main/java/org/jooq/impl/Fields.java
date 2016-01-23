@@ -369,7 +369,7 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
 
     @Override
     public final void accept(Context<?> ctx) {
-        new QueryPartList<Field<?>>(fields).accept(ctx);
+        ctx.visit(new QueryPartList<Field<?>>(fields));
     }
 
     @Override

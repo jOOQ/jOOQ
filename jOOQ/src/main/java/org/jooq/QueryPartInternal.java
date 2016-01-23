@@ -55,7 +55,12 @@ public interface QueryPartInternal extends QueryPart {
     /**
      * This {@link QueryPart} can <code>accept</code> a {@link Context} object
      * in order to render a SQL string or to bind its variables.
+     *
+     * @deprecated - Calling {@link #accept(Context)} directly on a
+     *             {@link QueryPart} is almost always a mistake. Instead,
+     *             {@link Context#visit(QueryPart)} should be called.
      */
+    @Deprecated
     void accept(Context<?> ctx);
 
     /**

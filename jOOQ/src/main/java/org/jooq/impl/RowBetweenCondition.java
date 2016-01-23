@@ -699,12 +699,12 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        delegate(ctx.configuration()).accept(ctx);
+        ctx.visit(delegate(ctx.configuration()));
     }
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
-        return delegate(ctx.configuration()).clauses(ctx);
+        return null;
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {
@@ -744,7 +744,7 @@ implements
         private static final long serialVersionUID = 2915703568738921575L;
 
         @Override
-        public final void toSQL(RenderContext context) {
+        public final void accept(Context<?> context) {
                            context.visit(row);
             if (not)       context.sql(" ").keyword("not");
                            context.sql(" ").keyword("between");
@@ -752,11 +752,6 @@ implements
                            context.sql(" ").visit(minValue);
                            context.sql(" ").keyword("and");
                            context.sql(" ").visit(maxValue);
-        }
-
-        @Override
-        public final void bind(BindContext context) {
-            context.visit(row).visit(minValue).visit(maxValue);
         }
 
         @Override

@@ -42,6 +42,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.field;
 
+import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.FieldOrRow;
@@ -69,8 +70,13 @@ class Rollup extends AbstractField<Object> {
         ctx.visit(delegate(ctx.configuration()));
     }
 
+    @Override
+    public final Clause[] clauses(Context<?> ctx) {
+        return null;
+    }
+
     private final QueryPart delegate(Configuration configuration) {
-        switch (configuration.dialect()) {
+        switch (configuration.family()) {
             case CUBRID:
             case MARIADB:
             case MYSQL:

@@ -42,6 +42,7 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.Constants.FULL_VERSION;
 import static org.jooq.ExecuteType.DDL;
 // ...
 // ...
@@ -64,11 +65,11 @@ import java.util.Map;
 
 import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
-import org.jooq.Constants;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Param;
 import org.jooq.Query;
+import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.conf.ParamType;
@@ -90,7 +91,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
     private int                         timeout;
     private boolean                     keepStatement;
     private transient PreparedStatement statement;
-    private transient String            sql;
+    private transient Rendered          rendered;
 
     AbstractQuery(Configuration configuration) {
         this.configuration = configuration;
@@ -255,7 +256,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
                 statement = null;
             }
             catch (SQLException e) {
-                throw Utils.translate(sql, e);
+                throw Utils.translate(rendered.sql, e);
             }
         }
     }
@@ -267,7 +268,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
                 statement.cancel();
             }
             catch (SQLException e) {
-                throw Utils.translate(sql, e);
+                throw Utils.translate(rendered.sql, e);
             }
         }
     }
@@ -291,7 +292,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
 
                 // [#385] If a statement was previously kept open
                 if (keepStatement() && statement != null) {
-                    ctx.sql(sql);
+                    ctx.sql(rendered.sql);
                     ctx.statement(statement);
 
                     // [#3191] Pre-initialise the ExecuteContext with a previous connection, if available.
@@ -301,10 +302,10 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
                 // [#385] First time statement preparing
                 else {
                     listener.renderStart(ctx);
-                    ctx.sql(getSQL0(ctx));
+                    rendered = getSQL0(ctx);
+                    ctx.sql(rendered.sql);
                     listener.renderEnd(ctx);
-
-                    sql = ctx.sql();
+                    rendered.sql = ctx.sql();
 
                     // [#3234] Defer initialising of a connection until the prepare step
                     // This optimises unnecessary ConnectionProvider.acquire() calls when
@@ -337,7 +338,8 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
                     !Boolean.TRUE.equals(ctx.data(DATA_FORCE_STATIC_STATEMENT))) {
 
                     listener.bindStart(ctx);
-                    using(c).bindContext(ctx.statement()).visit(this);
+                    if (rendered.bindValues != null)
+                        using(c).bindContext(ctx.statement()).visit(rendered.bindValues);
                     listener.bindEnd(ctx);
                 }
 
@@ -368,7 +370,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
 
                 if (!keepStatement()) {
                     statement = null;
-                    sql = null;
+                    rendered = null;
                 }
             }
         }
@@ -434,8 +436,22 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
         return true;
     }
 
-    private final String getSQL0(ExecuteContext ctx) {
-        String result;
+    private static class Rendered {
+        String sql;
+        QueryPart bindValues;
+
+        Rendered(String sql) {
+            this(sql, null);
+        }
+
+        Rendered(String sql, QueryPart bindValues) {
+            this.sql = sql;
+            this.bindValues = bindValues;
+        }
+    }
+
+    private final Rendered getSQL0(ExecuteContext ctx) {
+        Rendered result;
 
 
 
@@ -449,17 +465,18 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
 
         if (executePreparedStatements(configuration().settings())) {
             try {
-                RenderContext render = new DefaultRenderContext(configuration);
+                DefaultRenderContext render = new DefaultRenderContext(configuration);
                 render.data(DATA_COUNT_BIND_VALUES, true);
-                result = render.visit(this).render();
+                render.visit(this);
+                result = new Rendered(render.render(), render.bindValues());
             }
             catch (DefaultRenderContext.ForceInlineSignal e) {
                 ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
-                result = getSQL(INLINED);
+                result = new Rendered(getSQL(INLINED));
             }
         }
         else {
-            result = getSQL(INLINED);
+            result = new Rendered(getSQL(INLINED));
         }
 
 

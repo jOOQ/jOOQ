@@ -122,6 +122,7 @@ import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RecordType;
 import org.jooq.RenderContext;
+import org.jooq.RenderContext.CastMode;
 import org.jooq.Result;
 import org.jooq.Results;
 import org.jooq.Row;
@@ -1437,7 +1438,10 @@ final class Utils {
                     render.visit(substitute);
                 }
                 else {
-                    render.sql(sqlChars[i]);
+                    CastMode previous = render.castMode();
+                    render.castMode(CastMode.NEVER)
+                          .visit(substitute)
+                          .castMode(previous);
                 }
 
                 if (bind != null) {

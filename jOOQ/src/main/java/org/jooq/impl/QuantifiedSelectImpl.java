@@ -116,7 +116,7 @@ class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart implement
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
-        return delegate(ctx.configuration()).clauses(ctx);
+        return null;
     }
 
     private final QueryPartInternal delegate(Configuration ctx) {

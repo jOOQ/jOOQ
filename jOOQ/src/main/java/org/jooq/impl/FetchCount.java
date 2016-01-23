@@ -74,7 +74,7 @@ class FetchCount extends AbstractResultQuery<Record1<Integer>> {
     }
 
     private final QueryPart delegate(Configuration configuration) {
-        switch (configuration.dialect().family()) {
+        switch (configuration.family()) {
 
 
 

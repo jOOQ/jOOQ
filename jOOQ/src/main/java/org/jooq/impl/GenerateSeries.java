@@ -45,6 +45,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.table;
 
+import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
@@ -75,6 +76,11 @@ class GenerateSeries extends AbstractTable<Record1<Integer>> {
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(delegate(ctx.configuration()));
+    }
+
+    @Override
+    public final Clause[] clauses(Context<?> ctx) {
+        return null;
     }
 
     private final QueryPart delegate(Configuration configuration) {

@@ -82,23 +82,24 @@ import org.jooq.tools.StringUtils;
  */
 class DefaultRenderContext extends AbstractContext<RenderContext> implements RenderContext {
 
-    private static final JooqLogger  log                = JooqLogger.getLogger(DefaultRenderContext.class);
+    private static final JooqLogger       log                = JooqLogger.getLogger(DefaultRenderContext.class);
 
-    private static final Pattern     IDENTIFIER_PATTERN = Pattern.compile("[A-Za-z][A-Za-z0-9_]*");
-    private static final Pattern     NEWLINE            = Pattern.compile("[\\n\\r]");
-    private static final Set<String> SQLITE_KEYWORDS;
+    private static final Pattern          IDENTIFIER_PATTERN = Pattern.compile("[A-Za-z][A-Za-z0-9_]*");
+    private static final Pattern          NEWLINE            = Pattern.compile("[\\n\\r]");
+    private static final Set<String>      SQLITE_KEYWORDS;
 
-    private final StringBuilder      sql;
-    private int                      params;
-    private int                      alias;
-    private int                      indent;
-    private Deque<Integer>           indentLock;
-    private int                      printMargin = 80;
+    private final StringBuilder           sql;
+    private final QueryPartList<Param<?>> bindValues;
+    private int                           params;
+    private int                           alias;
+    private int                           indent;
+    private Deque<Integer>                indentLock;
+    private int                           printMargin        = 80;
 
     // [#1632] Cached values from Settings
-    RenderKeywordStyle               cachedRenderKeywordStyle;
-    RenderNameStyle                  cachedRenderNameStyle;
-    boolean                          cachedRenderFormatted;
+    RenderKeywordStyle                    cachedRenderKeywordStyle;
+    RenderNameStyle                       cachedRenderNameStyle;
+    boolean                               cachedRenderFormatted;
 
     DefaultRenderContext(Configuration configuration) {
         super(configuration, null);
@@ -106,6 +107,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         Settings settings = configuration.settings();
 
         this.sql = new StringBuilder();
+        this.bindValues = new QueryPartList<Param<?>>();
         this.cachedRenderKeywordStyle = settings.getRenderKeywordStyle();
         this.cachedRenderFormatted = Boolean.TRUE.equals(settings.isRenderFormatted());
         this.cachedRenderNameStyle = settings.getRenderNameStyle();
@@ -134,6 +136,10 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     @Override
     public final BindContext bindValue(Object value, Field<?> field) throws DataAccessException {
         throw new UnsupportedOperationException();
+    }
+
+    final QueryPart bindValues() {
+        return bindValues;
     }
 
     // ------------------------------------------------------------------------
@@ -379,21 +385,24 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         return visit(part);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected final void visit0(QueryPartInternal internal) {
-        checkForceInline(internal);
+        collectBindVariable(internal);
         internal.accept(this);
     }
 
-    private final void checkForceInline(QueryPart part) throws ForceInlineSignal {
+    private final void collectBindVariable(QueryPart part) throws ForceInlineSignal {
         if (paramType == INLINED)
             return;
 
         if (part instanceof Param) {
-            if (((Param<?>) part).isInline())
+            Param<?> param = (Param<?>) part;
+            if (param.isInline())
                 return;
 
-            switch (configuration().dialect().family()) {
+            bindValues.add(param);
+            switch (configuration().family()) {
 
 
 
@@ -426,8 +435,8 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     }
 
     private final void checkForceInline(int max) throws ForceInlineSignal {
-        if (Boolean.TRUE.equals(data(DATA_COUNT_BIND_VALUES)))
-            if (++params > max)
+        if (bindValues.size() > max)
+            if (Boolean.TRUE.equals(data(DATA_COUNT_BIND_VALUES)))
                 throw new ForceInlineSignal();
     }
 

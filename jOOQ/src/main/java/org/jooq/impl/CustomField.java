@@ -42,25 +42,21 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.CUSTOM;
 
-import org.jooq.BindContext;
 import org.jooq.Clause;
+import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.RenderContext;
-import org.jooq.exception.DataAccessException;
 
 /**
  * A base class for custom {@link Field} implementations in client code.
  * <p>
- * Client code may provide proper {@link Field} implementations extending this
- * useful base class. All necessary parts of the {@link Field} interface are
- * already implemented. Only these two methods need further implementation:
- * <ul>
- * <li>{@link #toSQL(org.jooq.RenderContext)}</li>
- * <li>{@link #bind(org.jooq.BindContext)}</li>
- * </ul>
- * Refer to those methods' Javadoc for further details about their expected
+ * Client code may provide proper {@link Condition} implementations extending
+ * this useful base class. All necessary parts of the {@link Condition}
+ * interface are already implemented. Only this method needs further
+ * implementation: {@link #accept(Context)}.
+ * <p>
+ * Refer to that methods' Javadoc for further details about their expected
  * behaviour.
  *
  * @author Lukas Eder
@@ -85,39 +81,9 @@ public abstract class CustomField<T> extends AbstractField<T> {
      * Subclasses must implement this method.
      * <hr/>
      * {@inheritDoc}
-     * @deprecated - 3.4.0 - [#2694] - Use {@link #accept(Context)} instead.
-     */
-    @Deprecated
-    @Override
-    public void toSQL(RenderContext context) {}
-
-    // -------------------------------------------------------------------------
-    // Implementation optional
-    // -------------------------------------------------------------------------
-
-    /**
-     * Subclasses may implement this method.
-     * <hr/>
-     * {@inheritDoc}
      */
     @Override
-    public void accept(Context<?> ctx) {
-        if (ctx instanceof RenderContext)
-            toSQL((RenderContext) ctx);
-        else
-            bind((BindContext) ctx);
-    }
-
-    /**
-     * Subclasses may implement this method.
-     * <hr/>
-     * {@inheritDoc}
-     * @deprecated - 3.4.0 - [#2694] - Use {@link #accept(Context)} instead.
-     */
-    @Deprecated
-    @Override
-    public void bind(BindContext context) throws DataAccessException {
-    }
+    public abstract void accept(Context<?> ctx);
 
     // -------------------------------------------------------------------------
     // No further overrides allowed

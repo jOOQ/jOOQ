@@ -112,12 +112,12 @@ class RowSubqueryCondition extends AbstractCondition {
 
     @Override
     public final void accept(Context<?> ctx) {
-        delegate(ctx).accept(ctx);
+        ctx.visit(delegate(ctx));
     }
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
-        return delegate(ctx).clauses(ctx);
+        return null;
     }
 
     private final QueryPartInternal delegate(Context<?> ctx) {

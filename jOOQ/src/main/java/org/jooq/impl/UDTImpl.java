@@ -77,7 +77,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
     }
 
     @Override
-    public final Schema getSchema() {
+    public /* non-final */ Schema getSchema() {
         return schema;
     }
 

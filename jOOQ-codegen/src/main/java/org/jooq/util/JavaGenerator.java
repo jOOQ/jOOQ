@@ -1489,7 +1489,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (scala) {
-            out.println("class %s extends %s[%s](\"%s\", %s)[[before= with ][separator= with ][%s]] {", className, UDTImpl.class, recordType, udt.getOutputName(), schemaId, interfaces);
+            out.println("class %s extends %s[%s](\"%s\", null)[[before= with ][separator= with ][%s]] {", className, UDTImpl.class, recordType, udt.getOutputName(), interfaces);
         }
         else {
             out.println("public class %s extends %s<%s>[[before= implements ][%s]] {", className, UDTImpl.class, recordType, interfaces);
@@ -1547,20 +1547,22 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (scala) {
-            out.println();
-            out.tab(1).println("{", className);
-            out.tab(2).println("// Initialise data type");
-            out.tab(2).println("getDataType");
-            out.tab(1).println("}");
         }
         else {
             out.tab(1).javadoc(NO_FURTHER_INSTANCES_ALLOWED);
             out.tab(1).println("private %s() {", className);
-            out.tab(2).println("super(\"%s\", %s);", udt.getOutputName(), schemaId);
+            out.tab(2).println("super(\"%s\", null);", udt.getOutputName());
+            out.tab(1).println("}");
+        }
 
+        if (scala) {
             out.println();
-            out.tab(2).println("// Initialise data type");
-            out.tab(2).println("getDataType();");
+            out.tab(1).println("override def getSchema : %s = %s", Schema.class, schemaId);
+        }
+        else {
+            out.tab(1).overrideInherit();
+            out.tab(1).println("public %s getSchema() {", Schema.class);
+            out.tab(2).println("return %s;", schemaId);
             out.tab(1).println("}");
         }
 
@@ -3122,8 +3124,8 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("}");
         }
 
-        out.println();
         if (scala) {
+            out.println();
             out.tab(1).println("override def getSchema : %s = %s", Schema.class, schemaId);
         }
         else {

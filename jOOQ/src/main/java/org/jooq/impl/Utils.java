@@ -2786,9 +2786,12 @@ final class Utils {
      * <code>BEGIN EXECUTE IMMEDIATE '...' EXCEPTION WHEN ... END;</code>, if
      * <code>IF EXISTS</code> is not supported.
      */
-    @SuppressWarnings("unused")
     static final void executeImmediateBegin(Context<?> ctx, DDLStatementType type) {
         switch (ctx.family()) {
+
+
+
+
 
 
 
@@ -2833,7 +2836,7 @@ final class Utils {
                 ctx.keyword("execute block").formatSeparator()
                    .keyword("as").formatSeparator()
                    .keyword("begin").formatIndentStart().formatSeparator()
-                   .keyword("execute statement").sql(" '");
+                   .keyword("execute statement").sql(" '").stringLiteral(true).formatIndentStart().formatSeparator();
 
                 break;
             }
@@ -2849,6 +2852,8 @@ final class Utils {
      * <code>IF EXISTS</code> is not supported.
      */
     static final void executeImmediateEnd(Context<?> ctx, DDLStatementType type) {
+        boolean drop = asList(DROP_INDEX, DROP_SEQUENCE, DROP_TABLE, DROP_VIEW).contains(type);
+
         switch (ctx.family()) {
 
 
@@ -2902,8 +2907,13 @@ final class Utils {
 
 
 
+
+
+
+
+
             case FIREBIRD: {
-                ctx.sql("';").formatSeparator()
+                ctx.formatIndentEnd().formatSeparator().stringLiteral(false).sql("';").formatSeparator()
                    .keyword("when").sql(" sqlcode -607 ").keyword("do").formatIndentStart().formatSeparator()
                    .keyword("begin end").formatIndentEnd().formatIndentEnd().formatSeparator()
                    .keyword("end");

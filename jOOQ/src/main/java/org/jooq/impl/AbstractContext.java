@@ -83,6 +83,8 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     boolean                           declareWindows;
     boolean                           declareCTE;
     boolean                           subquery;
+    int                               stringLiteral;
+    String                            stringLiteralEscapedApos = "'";
     int                               index;
 
     // [#2665] VisitListener API
@@ -463,6 +465,25 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     @Override
     public final C subquery(boolean s) {
         this.subquery = s;
+        return (C) this;
+    }
+
+    @Override
+    public final boolean stringLiteral() {
+        return stringLiteral > 0;
+    }
+
+    @Override
+    public final C stringLiteral(boolean s) {
+        if (s) {
+            stringLiteral++;
+            stringLiteralEscapedApos = stringLiteralEscapedApos + stringLiteralEscapedApos;
+        }
+        else {
+            stringLiteral--;
+            stringLiteralEscapedApos = stringLiteralEscapedApos.substring(0, stringLiteralEscapedApos.length() / 2);
+        }
+
         return (C) this;
     }
 

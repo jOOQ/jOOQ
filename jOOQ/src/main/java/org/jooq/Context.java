@@ -58,7 +58,7 @@ import org.jooq.exception.DataAccessException;
 public interface Context<C extends Context<C>> extends Scope {
 
     // ------------------------------------------------------------------------
-    // General methods
+    // Methods specifying the scope of the SQL being rendered
     // ------------------------------------------------------------------------
 
     /**
@@ -90,7 +90,7 @@ public interface Context<C extends Context<C>> extends Scope {
     boolean declareFields();
 
     /**
-     * Set the new context value for {@link #declareFields()}
+     * Set the new context value for {@link #declareFields()}.
      */
     C declareFields(boolean declareFields);
 
@@ -102,7 +102,7 @@ public interface Context<C extends Context<C>> extends Scope {
     boolean declareTables();
 
     /**
-     * Set the new context value for {@link #declareTables()}
+     * Set the new context value for {@link #declareTables()}.
      */
     C declareTables(boolean declareTables);
 
@@ -125,7 +125,7 @@ public interface Context<C extends Context<C>> extends Scope {
     boolean declareWindows();
 
     /**
-     * Set the new context value for {@link #declareWindows()}
+     * Set the new context value for {@link #declareWindows()}.
      */
     C declareWindows(boolean declareWindows);
 
@@ -137,19 +137,29 @@ public interface Context<C extends Context<C>> extends Scope {
     boolean declareCTE();
 
     /**
-     * Set the new context value for {@link #declareCTE()}
+     * Set the new context value for {@link #declareCTE()}.
      */
     C declareCTE(boolean declareCTE);
 
     /**
-     * Whether the current context is rendering a sub-query (nested query)
+     * Whether the current context is rendering a sub-query (nested query).
      */
     boolean subquery();
 
     /**
-     * Set the new context value for {@link #subquery()}
+     * Set the new context value for {@link #subquery()}.
      */
     C subquery(boolean subquery);
+
+    /**
+     * whether the current context is rendering a string literal.
+     */
+    boolean stringLiteral();
+
+    /**
+     * Set the new context value for {@link #stringLiteral()}.
+     */
+    C stringLiteral(boolean stringLiteral);
 
     /**
      * Get the next bind index. This increments an internal counter. This is
@@ -166,7 +176,7 @@ public interface Context<C extends Context<C>> extends Scope {
 
     /**
      * Peek the next bind index. This won't increment the internal counter,
-     * unlike {@link #nextIndex()}
+     * unlike {@link #nextIndex()}.
      */
     int peekIndex();
 

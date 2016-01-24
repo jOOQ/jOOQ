@@ -186,13 +186,13 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext sql(String s, boolean literal) {
-        if (literal) {
-            sql.append(s);
-        }
-        else {
-            sql.append(NEWLINE.matcher(s).replaceAll("$0" + indentation()));
-        }
+        if (!literal)
+            s = NEWLINE.matcher(s).replaceAll("$0" + indentation());
 
+        if (stringLiteral())
+            s = StringUtils.replace(s, "'", stringLiteralEscapedApos);
+
+        sql.append(s);
         return this;
 
     }
@@ -200,6 +200,10 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     @Override
     public final RenderContext sql(char c) {
         sql.append(c);
+
+        if (c == '\'' && stringLiteral())
+            sql.append(c);
+
         return this;
     }
 
@@ -285,7 +289,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         return this;
     }
 
-    private Deque<Integer> indentLock() {
+    private final Deque<Integer> indentLock() {
         if (indentLock == null) {
             indentLock = new ArrayDeque<Integer>();
         }

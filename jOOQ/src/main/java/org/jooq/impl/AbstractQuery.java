@@ -150,6 +150,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
      * <p>
      * {@inheritDoc}
      */
+    @SuppressWarnings("deprecation")
     @Override
     public Query bind(String param, Object value) {
         try {
@@ -178,6 +179,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
      * <p>
      * {@inheritDoc}
      */
+    @SuppressWarnings("deprecation")
     @Override
     public Query bind(int index, Object value) {
         Param<?>[] params = getParams().values().toArray(new Param[0]);

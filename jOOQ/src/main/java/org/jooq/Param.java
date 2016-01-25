@@ -83,7 +83,11 @@ public interface Param<T> extends Field<T> {
      * {@link #setConverted(Object)}, but ensures generic type-safety.
      *
      * @see #setConverted(Object)
+     * @deprecated - 3.8.0 - [#4991] In jOOQ 4.0, {@link Param} will be made
+     *             immutable. Modifying {@link Param} values is strongly
+     *             discouraged.
      */
+    @Deprecated
     void setValue(T value);
 
     /**
@@ -94,12 +98,21 @@ public interface Param<T> extends Field<T> {
      * @see Convert#convert(Object, Class)
      * @throws DataTypeException If <code>value</code> cannot be converted into
      *             this parameter's data type.
+     * @deprecated - 3.8.0 - [#4991] In jOOQ 4.0, {@link Param} will be made
+     *             immutable. Modifying {@link Param} values is strongly
+     *             discouraged.
      */
+    @Deprecated
     void setConverted(Object value) throws DataTypeException;
 
     /**
      * A flag on the bind value to force it to be inlined in rendered SQL
+     *
+     * @deprecated - 3.8.0 - [#4991] In jOOQ 4.0, {@link Param} will be made
+     *             immutable. Modifying {@link Param} values is strongly
+     *             discouraged.
      */
+    @Deprecated
     void setInline(boolean inline);
 
     /**

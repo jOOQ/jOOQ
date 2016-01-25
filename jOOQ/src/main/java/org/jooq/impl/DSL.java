@@ -14292,6 +14292,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @SuppressWarnings("deprecation")
     @Support
     public static <T> Param<T> inline(T value) {
         Param<T> val = val(value);
@@ -14980,6 +14981,7 @@ public class DSL {
      *
      * @see #val(Object, Class)
      */
+    @SuppressWarnings("deprecation")
     @Support
     public static <T> Param<T> inline(Object value, Class<T> type) {
         Param<T> val = val(value, type);
@@ -15002,6 +15004,7 @@ public class DSL {
      *
      * @see #val(Object, Field)
      */
+    @SuppressWarnings("deprecation")
     @Support
     public static <T> Param<T> inline(Object value, Field<T> field) {
         Param<T> val = val(value, field);
@@ -15024,6 +15027,7 @@ public class DSL {
      *
      * @see #val(Object, DataType)
      */
+    @SuppressWarnings("deprecation")
     @Support
     public static <T> Param<T> inline(Object value, DataType<T> type) {
         Param<T> val = val(value, type);
@@ -15417,6 +15421,7 @@ public class DSL {
      * @param dataType The coercion data type
      * @return The most specific data type
      */
+    @SuppressWarnings("deprecation")
     private static <T> DataType<T> mostSpecific(T value, DataType<T> dataType) {
 
         // [#3888] With custom data type conversion, users may wish to

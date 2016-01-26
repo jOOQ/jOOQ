@@ -251,11 +251,13 @@ class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implement
     @SuppressWarnings("unchecked")
     @Override
     public final <T> Field<T> asField() {
-        if (getSelect().size() != 1) {
+        List<Field<?>> s = getSelect();
+
+        if (s.size() != 1) {
             throw new IllegalStateException("Can only use single-column ResultProviderQuery as a field");
         }
 
-        return new ScalarSubquery<T>(this, (DataType<T>) getSelect().get(0).getDataType());
+        return new ScalarSubquery<T>(this, (DataType<T>) s.get(0).getDataType());
     }
 
     @Override

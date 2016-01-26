@@ -66,6 +66,7 @@ import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListenerProvider;
+import org.jooq.Query;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.conf.Settings;
@@ -76,6 +77,7 @@ import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.impl.DefaultExecuteListenerProvider;
 import org.jooq.impl.SQLDataType;
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.StopWatch;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.csv.CSVReader;
 import org.jooq.util.jaxb.CustomType;
@@ -205,6 +207,30 @@ public abstract class AbstractDatabase implements Database {
             final ExecuteListenerProvider[] newProviders = new ExecuteListenerProvider[oldProviders.length + 1];
             System.arraycopy(oldProviders, 0, newProviders, 0, oldProviders.length);
             newProviders[oldProviders.length] = new DefaultExecuteListenerProvider(new DefaultExecuteListener() {
+
+                StopWatch watch;
+
+                class SQLPerformanceWarning extends Exception {}
+
+                @Override
+                public void executeStart(ExecuteContext ctx) {
+                    super.executeStart(ctx);
+                    watch = new StopWatch();
+                }
+
+                @Override
+                public void executeEnd(ExecuteContext ctx) {
+                    super.executeEnd(ctx);
+                    if (watch.split() > 5 * 1000 * 1000 * 1000)
+                        log.warn(
+                            "Slow SQL",
+                            "jOOQ Meta executed a slow query (slower than 5 seconds)"
+                          + "\n\n"
+                          + "Please report this bug here: https://github.com/jOOQ/jOOQ/issues/new\n\n"
+                          + formatted(ctx.query()),
+                            new SQLPerformanceWarning());
+                }
+
                 @Override
                 public void exception(ExecuteContext ctx) {
                     log.warn(
@@ -217,7 +243,11 @@ public abstract class AbstractDatabase implements Database {
                       : "No exception available")
                       + "\n\n"
                       + "Please report this bug here: https://github.com/jOOQ/jOOQ/issues/new\n\n"
-                      + DSL.using(configuration.derive(newSettings)).renderInlined(ctx.query()));
+                      + formatted(ctx.query()));
+                }
+
+                private String formatted(Query query) {
+                    return DSL.using(configuration.derive(newSettings)).renderInlined(query);
                 }
             });
             return DSL.using(configuration.derive(newProviders));

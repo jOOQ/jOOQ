@@ -110,11 +110,7 @@ class Values<R extends Record> extends AbstractTable<R> {
             case FIREBIRD:
             case MARIADB:
             case MYSQL:
-            case SQLITE:
-
-            // [#1801] H2 knows a native VALUES(..) constructor, but doesn't
-            // have any means to rename it using derived column lists
-            case H2: {
+            case SQLITE: {
                 Select<Record> selects = null;
                 boolean subquery = ctx.subquery();
 
@@ -142,6 +138,7 @@ class Values<R extends Record> extends AbstractTable<R> {
             // [#915] Native support of VALUES(..)
             case CUBRID:
             case DERBY:
+            case H2:
             case HSQLDB:
             case POSTGRES:
 

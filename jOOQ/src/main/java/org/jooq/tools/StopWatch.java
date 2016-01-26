@@ -62,11 +62,23 @@ public final class StopWatch {
     }
 
     /**
-     * Split the time and trace log a message, if trace logging is enabled
+     * Split the time and trace log a message, if trace logging is enabled.
      */
     public void splitTrace(String message) {
+        if (log.isTraceEnabled())
+            log.trace(message, splitMessage(0));
+    }
+
+    /**
+     * Split the time and trace log a message if the split time exceeds a
+     * certain threshold and if trace logging is enabled.
+     */
+    public void splitTrace(String message, long thresholdNano) {
         if (log.isTraceEnabled()) {
-            log.trace(message, splitMessage());
+            String splitMessage = splitMessage(thresholdNano);
+
+            if (splitMessage != null)
+                log.trace(message, splitMessage);
         }
     }
 
@@ -74,8 +86,20 @@ public final class StopWatch {
      * Split the time and debug log a message, if trace logging is enabled
      */
     public void splitDebug(String message) {
+        if (log.isDebugEnabled())
+            log.debug(message, splitMessage(0));
+    }
+
+    /**
+     * Split the time and debug log a message if the split time exceeds a
+     * certain threshold and if  trace logging is enabled
+     */
+    public void splitDebug(String message, long thresholdNano) {
         if (log.isDebugEnabled()) {
-            log.debug(message, splitMessage());
+            String splitMessage = splitMessage(thresholdNano);
+
+            if (splitMessage != null)
+                log.debug(message, splitMessage);
         }
     }
 
@@ -83,8 +107,20 @@ public final class StopWatch {
      * Split the time and info log a message, if trace logging is enabled
      */
     public void splitInfo(String message) {
+        if (log.isInfoEnabled())
+            log.info(message, splitMessage(0));
+    }
+
+    /**
+     * Split the time and info log a message if the split time exceeds a
+     * certain threshold and if  trace logging is enabled
+     */
+    public void splitInfo(String message, long thresholdNano) {
         if (log.isInfoEnabled()) {
-            log.info(message, splitMessage());
+            String splitMessage = splitMessage(thresholdNano);
+
+            if (splitMessage != null)
+                log.info(message, splitMessage);
         }
     }
 
@@ -92,16 +128,18 @@ public final class StopWatch {
         return System.nanoTime() - start;
     }
 
-    private String splitMessage() {
+    private String splitMessage(long thresholdNano) {
         final long temp = split;
         split = System.nanoTime();
+        final long inc = split - temp;
 
-        if (temp == start) {
+        if (thresholdNano > 0 && inc < thresholdNano)
+            return null;
+
+        if (temp == start)
             return "Total: " + format(split - start);
-        }
-        else {
-            return "Total: " + format(split - start) + ", +" + format(split - temp);
-        }
+        else
+            return "Total: " + format(split - start) + ", +" + format(inc);
     }
 
     public static String format(long nanoTime) {

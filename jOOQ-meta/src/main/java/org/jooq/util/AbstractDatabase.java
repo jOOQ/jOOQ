@@ -214,21 +214,11 @@ public abstract class AbstractDatabase implements Database {
 
                 @Override
                 public void executeStart(ExecuteContext ctx) {
-<<<<<<< HEAD
                     watch = new StopWatch();
                 }
 
                 @Override
                 public void executeEnd(ExecuteContext ctx) {
-=======
-                    super.executeStart(ctx);
-                    watch = new StopWatch();
-                }
-
-                @Override
-                public void executeEnd(ExecuteContext ctx) {
-                    super.executeEnd(ctx);
->>>>>>> branch 'master' of https://lukaseder@bitbucket.org/lukaseder/jooq.git
                     if (watch.split() > 5 * 1000 * 1000 * 1000)
                         log.warn(
                             "Slow SQL",

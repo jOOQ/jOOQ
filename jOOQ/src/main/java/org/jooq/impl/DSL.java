@@ -79,7 +79,6 @@ import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -7736,11 +7735,6 @@ public class DSL {
      * String sql = "SELECT * FROM USER_TABLES WHERE OWNER = 'MY_SCHEMA'";
      * </pre></code>
      * <p>
-     * The provided SQL must evaluate as a table whose type can be dynamically
-     * discovered using JDBC's {@link ResultSetMetaData} methods. That way, you
-     * can be sure that calling methods, such as {@link Table#fieldsRow()} will
-     * list the actual fields returned from your result set.
-     * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
@@ -7768,11 +7762,6 @@ public class DSL {
      * <code><pre>
      * String sql = "SELECT * FROM USER_TABLES WHERE OWNER = 'MY_SCHEMA'";
      * </pre></code>
-     * <p>
-     * The provided SQL must evaluate as a table whose type can be dynamically
-     * discovered using JDBC's {@link ResultSetMetaData} methods. That way, you
-     * can be sure that calling methods, such as {@link Table#fieldsRow()} will
-     * list the actual fields returned from your result set.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -7805,11 +7794,6 @@ public class DSL {
      * Object[] bindings = new Object[] { "MY_SCHEMA" };
      * </pre></code>
      * <p>
-     * The provided SQL must evaluate as a table whose type can be dynamically
-     * discovered using JDBC's {@link ResultSetMetaData} methods. That way, you
-     * can be sure that calling methods, such as {@link Table#fieldsRow()} will
-     * list the actual fields returned from your result set.
-     * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
@@ -7838,11 +7822,6 @@ public class DSL {
      * String sql = "SELECT * FROM USER_TABLES WHERE {0}";
      * QueryPart[] parts = new QueryPart[] { USER_TABLES.OWNER.equal("MY_SCHEMA") };
      * </pre></code>
-     * <p>
-     * The provided SQL must evaluate as a table whose type can be dynamically
-     * discovered using JDBC's {@link ResultSetMetaData} methods. That way, you
-     * can be sure that calling methods, such as {@link Table#fieldsRow()} will
-     * list the actual fields returned from your result set.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of

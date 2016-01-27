@@ -81,7 +81,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateGlobalLinkReferences     = true;
     boolean                            fluentSetters                    = false;
     String                             generateFullyQualifiedTypes      = "";
-    boolean                            generateTableValuedFunctions     = true;
+    boolean                            generateTableValuedFunctions     = false;
 
     protected GeneratorStrategyWrapper strategy;
     final Language                     language;

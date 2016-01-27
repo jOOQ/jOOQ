@@ -552,7 +552,7 @@
         compatibility between jOOQ 3.8 and previous versions, when using TABLE
         and VARRAY types in Oracle
         -->
-      <element name="tableValuedFunctions" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      <element name="tableValuedFunctions" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
     </all>
   </complexType>
 

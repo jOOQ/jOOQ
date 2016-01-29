@@ -4425,41 +4425,10 @@ public class DSL {
     // [jooq-tools] START [merge]
 
     /**
-     * Create a new DSL merge statement (H2-specific syntax).
-     * <p>
-     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
-     * creates an unattached, and thus not directly renderable or executable
-     * <code>MERGE</code> statement.
-     * <p>
-     * This statement is available from DSL syntax only. It is known to be
-     * supported in some way by any of these dialects:
-     * <table border="1">
-     * <tr>
-     * <td>H2</td>
-     * <td>H2 natively supports this special syntax</td>
-     * <td><a href= "www.h2database.com/html/grammar.html#merge"
-     * >www.h2database.com/html/grammar.html#merge</a></td>
-     * </tr>
-     * <tr>
-     * <td>HANA</td>
-     * <td>HANA natively supports this syntax</td>
-     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
-     * </tr>
-     * <tr>
-     * <td>PostgreSQL</td>
-     * <td>This database can emulate the H2-specific MERGE statement via
-     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
-     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
-     * </tr>
-     * <tr>
-     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulate the H2-specific MERGE statement using a
-     * standard SQL MERGE statement, without restrictions</td>
-     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
-     * </tr>
-     * </table>
+     * Create a new DSL UPSERT statement ({@link SQLDialect#H2}
+     * <code>MERGE</code>) or {@link SQLDialect#HANA} <code>UPSERT</code>).
      *
-     * @see DSLContext#mergeInto(Table, Field)
+     * @see DSLContext#mergeInto(Table, Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
@@ -4468,41 +4437,10 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL merge statement (H2-specific syntax).
-     * <p>
-     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
-     * creates an unattached, and thus not directly renderable or executable
-     * <code>MERGE</code> statement.
-     * <p>
-     * This statement is available from DSL syntax only. It is known to be
-     * supported in some way by any of these dialects:
-     * <table border="1">
-     * <tr>
-     * <td>H2</td>
-     * <td>H2 natively supports this special syntax</td>
-     * <td><a href= "www.h2database.com/html/grammar.html#merge"
-     * >www.h2database.com/html/grammar.html#merge</a></td>
-     * </tr>
-     * <tr>
-     * <td>HANA</td>
-     * <td>HANA natively supports this syntax</td>
-     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
-     * </tr>
-     * <tr>
-     * <td>PostgreSQL</td>
-     * <td>This database can emulate the H2-specific MERGE statement via
-     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
-     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
-     * </tr>
-     * <tr>
-     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulate the H2-specific MERGE statement using a
-     * standard SQL MERGE statement, without restrictions</td>
-     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
-     * </tr>
-     * </table>
+     * Create a new DSL UPSERT statement ({@link SQLDialect#H2}
+     * <code>MERGE</code>) or {@link SQLDialect#HANA} <code>UPSERT</code>).
      *
-     * @see DSLContext#mergeInto(Table, Field, Field)
+     * @see DSLContext#mergeInto(Table, Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
@@ -4511,41 +4449,10 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL merge statement (H2-specific syntax).
-     * <p>
-     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
-     * creates an unattached, and thus not directly renderable or executable
-     * <code>MERGE</code> statement.
-     * <p>
-     * This statement is available from DSL syntax only. It is known to be
-     * supported in some way by any of these dialects:
-     * <table border="1">
-     * <tr>
-     * <td>H2</td>
-     * <td>H2 natively supports this special syntax</td>
-     * <td><a href= "www.h2database.com/html/grammar.html#merge"
-     * >www.h2database.com/html/grammar.html#merge</a></td>
-     * </tr>
-     * <tr>
-     * <td>HANA</td>
-     * <td>HANA natively supports this syntax</td>
-     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
-     * </tr>
-     * <tr>
-     * <td>PostgreSQL</td>
-     * <td>This database can emulate the H2-specific MERGE statement via
-     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
-     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
-     * </tr>
-     * <tr>
-     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulate the H2-specific MERGE statement using a
-     * standard SQL MERGE statement, without restrictions</td>
-     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
-     * </tr>
-     * </table>
+     * Create a new DSL UPSERT statement ({@link SQLDialect#H2}
+     * <code>MERGE</code>) or {@link SQLDialect#HANA} <code>UPSERT</code>).
      *
-     * @see DSLContext#mergeInto(Table, Field, Field, Field)
+     * @see DSLContext#mergeInto(Table, Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
@@ -4554,41 +4461,10 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL merge statement (H2-specific syntax).
-     * <p>
-     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
-     * creates an unattached, and thus not directly renderable or executable
-     * <code>MERGE</code> statement.
-     * <p>
-     * This statement is available from DSL syntax only. It is known to be
-     * supported in some way by any of these dialects:
-     * <table border="1">
-     * <tr>
-     * <td>H2</td>
-     * <td>H2 natively supports this special syntax</td>
-     * <td><a href= "www.h2database.com/html/grammar.html#merge"
-     * >www.h2database.com/html/grammar.html#merge</a></td>
-     * </tr>
-     * <tr>
-     * <td>HANA</td>
-     * <td>HANA natively supports this syntax</td>
-     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
-     * </tr>
-     * <tr>
-     * <td>PostgreSQL</td>
-     * <td>This database can emulate the H2-specific MERGE statement via
-     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
-     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
-     * </tr>
-     * <tr>
-     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulate the H2-specific MERGE statement using a
-     * standard SQL MERGE statement, without restrictions</td>
-     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
-     * </tr>
-     * </table>
+     * Create a new DSL UPSERT statement ({@link SQLDialect#H2}
+     * <code>MERGE</code>) or {@link SQLDialect#HANA} <code>UPSERT</code>).
      *
-     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field)
+     * @see DSLContext#mergeInto(Table, Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
@@ -4597,41 +4473,10 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL merge statement (H2-specific syntax).
-     * <p>
-     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
-     * creates an unattached, and thus not directly renderable or executable
-     * <code>MERGE</code> statement.
-     * <p>
-     * This statement is available from DSL syntax only. It is known to be
-     * supported in some way by any of these dialects:
-     * <table border="1">
-     * <tr>
-     * <td>H2</td>
-     * <td>H2 natively supports this special syntax</td>
-     * <td><a href= "www.h2database.com/html/grammar.html#merge"
-     * >www.h2database.com/html/grammar.html#merge</a></td>
-     * </tr>
-     * <tr>
-     * <td>HANA</td>
-     * <td>HANA natively supports this syntax</td>
-     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
-     * </tr>
-     * <tr>
-     * <td>PostgreSQL</td>
-     * <td>This database can emulate the H2-specific MERGE statement via
-     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
-     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
-     * </tr>
-     * <tr>
-     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulate the H2-specific MERGE statement using a
-     * standard SQL MERGE statement, without restrictions</td>
-     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
-     * </tr>
-     * </table>
+     * Create a new DSL UPSERT statement ({@link SQLDialect#H2}
+     * <code>MERGE</code>) or {@link SQLDialect#HANA} <code>UPSERT</code>).
      *
-     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field)
+     * @see DSLContext#mergeInto(Table, Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
@@ -4640,41 +4485,10 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL merge statement (H2-specific syntax).
-     * <p>
-     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
-     * creates an unattached, and thus not directly renderable or executable
-     * <code>MERGE</code> statement.
-     * <p>
-     * This statement is available from DSL syntax only. It is known to be
-     * supported in some way by any of these dialects:
-     * <table border="1">
-     * <tr>
-     * <td>H2</td>
-     * <td>H2 natively supports this special syntax</td>
-     * <td><a href= "www.h2database.com/html/grammar.html#merge"
-     * >www.h2database.com/html/grammar.html#merge</a></td>
-     * </tr>
-     * <tr>
-     * <td>HANA</td>
-     * <td>HANA natively supports this syntax</td>
-     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
-     * </tr>
-     * <tr>
-     * <td>PostgreSQL</td>
-     * <td>This database can emulate the H2-specific MERGE statement via
-     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
-     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
-     * </tr>
-     * <tr>
-     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulate the H2-specific MERGE statement using a
-     * standard SQL MERGE statement, without restrictions</td>
-     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
-     * </tr>
-     * </table>
+     * Create a new DSL UPSERT statement ({@link SQLDialect#H2}
+     * <code>MERGE</code>) or {@link SQLDialect#HANA} <code>UPSERT</code>).
      *
-     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field)
+     * @see DSLContext#mergeInto(Table, Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
@@ -4683,41 +4497,10 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL merge statement (H2-specific syntax).
-     * <p>
-     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
-     * creates an unattached, and thus not directly renderable or executable
-     * <code>MERGE</code> statement.
-     * <p>
-     * This statement is available from DSL syntax only. It is known to be
-     * supported in some way by any of these dialects:
-     * <table border="1">
-     * <tr>
-     * <td>H2</td>
-     * <td>H2 natively supports this special syntax</td>
-     * <td><a href= "www.h2database.com/html/grammar.html#merge"
-     * >www.h2database.com/html/grammar.html#merge</a></td>
-     * </tr>
-     * <tr>
-     * <td>HANA</td>
-     * <td>HANA natively supports this syntax</td>
-     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
-     * </tr>
-     * <tr>
-     * <td>PostgreSQL</td>
-     * <td>This database can emulate the H2-specific MERGE statement via
-     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
-     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
-     * </tr>
-     * <tr>
-     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulate the H2-specific MERGE statement using a
-     * standard SQL MERGE statement, without restrictions</td>
-     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
-     * </tr>
-     * </table>
+     * Create a new DSL UPSERT statement ({@link SQLDialect#H2}
+     * <code>MERGE</code>) or {@link SQLDialect#HANA} <code>UPSERT</code>).
      *
-     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field)
+     * @see DSLContext#mergeInto(Table, Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
@@ -4726,41 +4509,10 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL merge statement (H2-specific syntax).
-     * <p>
-     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
-     * creates an unattached, and thus not directly renderable or executable
-     * <code>MERGE</code> statement.
-     * <p>
-     * This statement is available from DSL syntax only. It is known to be
-     * supported in some way by any of these dialects:
-     * <table border="1">
-     * <tr>
-     * <td>H2</td>
-     * <td>H2 natively supports this special syntax</td>
-     * <td><a href= "www.h2database.com/html/grammar.html#merge"
-     * >www.h2database.com/html/grammar.html#merge</a></td>
-     * </tr>
-     * <tr>
-     * <td>HANA</td>
-     * <td>HANA natively supports this syntax</td>
-     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
-     * </tr>
-     * <tr>
-     * <td>PostgreSQL</td>
-     * <td>This database can emulate the H2-specific MERGE statement via
-     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
-     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
-     * </tr>
-     * <tr>
-     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulate the H2-specific MERGE statement using a
-     * standard SQL MERGE statement, without restrictions</td>
-     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
-     * </tr>
-     * </table>
+     * Create a new DSL UPSERT statement ({@link SQLDialect#H2}
+     * <code>MERGE</code>) or {@link SQLDialect#HANA} <code>UPSERT</code>).
      *
-     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field)
+     * @see DSLContext#mergeInto(Table, Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
@@ -4769,41 +4521,10 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL merge statement (H2-specific syntax).
-     * <p>
-     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
-     * creates an unattached, and thus not directly renderable or executable
-     * <code>MERGE</code> statement.
-     * <p>
-     * This statement is available from DSL syntax only. It is known to be
-     * supported in some way by any of these dialects:
-     * <table border="1">
-     * <tr>
-     * <td>H2</td>
-     * <td>H2 natively supports this special syntax</td>
-     * <td><a href= "www.h2database.com/html/grammar.html#merge"
-     * >www.h2database.com/html/grammar.html#merge</a></td>
-     * </tr>
-     * <tr>
-     * <td>HANA</td>
-     * <td>HANA natively supports this syntax</td>
-     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
-     * </tr>
-     * <tr>
-     * <td>PostgreSQL</td>
-     * <td>This database can emulate the H2-specific MERGE statement via
-     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
-     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
-     * </tr>
-     * <tr>
-     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulate the H2-specific MERGE statement using a
-     * standard SQL MERGE statement, without restrictions</td>
-     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
-     * </tr>
-     * </table>
+     * Create a new DSL UPSERT statement ({@link SQLDialect#H2}
+     * <code>MERGE</code>) or {@link SQLDialect#HANA} <code>UPSERT</code>).
      *
-     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     * @see DSLContext#mergeInto(Table, Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
@@ -4812,41 +4533,10 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL merge statement (H2-specific syntax).
-     * <p>
-     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
-     * creates an unattached, and thus not directly renderable or executable
-     * <code>MERGE</code> statement.
-     * <p>
-     * This statement is available from DSL syntax only. It is known to be
-     * supported in some way by any of these dialects:
-     * <table border="1">
-     * <tr>
-     * <td>H2</td>
-     * <td>H2 natively supports this special syntax</td>
-     * <td><a href= "www.h2database.com/html/grammar.html#merge"
-     * >www.h2database.com/html/grammar.html#merge</a></td>
-     * </tr>
-     * <tr>
-     * <td>HANA</td>
-     * <td>HANA natively supports this syntax</td>
-     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
-     * </tr>
-     * <tr>
-     * <td>PostgreSQL</td>
-     * <td>This database can emulate the H2-specific MERGE statement via
-     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
-     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
-     * </tr>
-     * <tr>
-     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulate the H2-specific MERGE statement using a
-     * standard SQL MERGE statement, without restrictions</td>
-     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
-     * </tr>
-     * </table>
+     * Create a new DSL UPSERT statement ({@link SQLDialect#H2}
+     * <code>MERGE</code>) or {@link SQLDialect#HANA} <code>UPSERT</code>).
      *
-     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     * @see DSLContext#mergeInto(Table, Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
@@ -4855,41 +4545,10 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL merge statement (H2-specific syntax).
-     * <p>
-     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
-     * creates an unattached, and thus not directly renderable or executable
-     * <code>MERGE</code> statement.
-     * <p>
-     * This statement is available from DSL syntax only. It is known to be
-     * supported in some way by any of these dialects:
-     * <table border="1">
-     * <tr>
-     * <td>H2</td>
-     * <td>H2 natively supports this special syntax</td>
-     * <td><a href= "www.h2database.com/html/grammar.html#merge"
-     * >www.h2database.com/html/grammar.html#merge</a></td>
-     * </tr>
-     * <tr>
-     * <td>HANA</td>
-     * <td>HANA natively supports this syntax</td>
-     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
-     * </tr>
-     * <tr>
-     * <td>PostgreSQL</td>
-     * <td>This database can emulate the H2-specific MERGE statement via
-     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
-     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
-     * </tr>
-     * <tr>
-     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulate the H2-specific MERGE statement using a
-     * standard SQL MERGE statement, without restrictions</td>
-     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
-     * </tr>
-     * </table>
+     * Create a new DSL UPSERT statement ({@link SQLDialect#H2}
+     * <code>MERGE</code>) or {@link SQLDialect#HANA} <code>UPSERT</code>).
      *
-     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     * @see DSLContext#mergeInto(Table, Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
@@ -4898,41 +4557,10 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL merge statement (H2-specific syntax).
-     * <p>
-     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
-     * creates an unattached, and thus not directly renderable or executable
-     * <code>MERGE</code> statement.
-     * <p>
-     * This statement is available from DSL syntax only. It is known to be
-     * supported in some way by any of these dialects:
-     * <table border="1">
-     * <tr>
-     * <td>H2</td>
-     * <td>H2 natively supports this special syntax</td>
-     * <td><a href= "www.h2database.com/html/grammar.html#merge"
-     * >www.h2database.com/html/grammar.html#merge</a></td>
-     * </tr>
-     * <tr>
-     * <td>HANA</td>
-     * <td>HANA natively supports this syntax</td>
-     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
-     * </tr>
-     * <tr>
-     * <td>PostgreSQL</td>
-     * <td>This database can emulate the H2-specific MERGE statement via
-     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
-     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
-     * </tr>
-     * <tr>
-     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulate the H2-specific MERGE statement using a
-     * standard SQL MERGE statement, without restrictions</td>
-     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
-     * </tr>
-     * </table>
+     * Create a new DSL UPSERT statement ({@link SQLDialect#H2}
+     * <code>MERGE</code>) or {@link SQLDialect#HANA} <code>UPSERT</code>).
      *
-     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     * @see DSLContext#mergeInto(Table, Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
@@ -4941,41 +4569,10 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL merge statement (H2-specific syntax).
-     * <p>
-     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
-     * creates an unattached, and thus not directly renderable or executable
-     * <code>MERGE</code> statement.
-     * <p>
-     * This statement is available from DSL syntax only. It is known to be
-     * supported in some way by any of these dialects:
-     * <table border="1">
-     * <tr>
-     * <td>H2</td>
-     * <td>H2 natively supports this special syntax</td>
-     * <td><a href= "www.h2database.com/html/grammar.html#merge"
-     * >www.h2database.com/html/grammar.html#merge</a></td>
-     * </tr>
-     * <tr>
-     * <td>HANA</td>
-     * <td>HANA natively supports this syntax</td>
-     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
-     * </tr>
-     * <tr>
-     * <td>PostgreSQL</td>
-     * <td>This database can emulate the H2-specific MERGE statement via
-     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
-     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
-     * </tr>
-     * <tr>
-     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulate the H2-specific MERGE statement using a
-     * standard SQL MERGE statement, without restrictions</td>
-     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
-     * </tr>
-     * </table>
+     * Create a new DSL UPSERT statement ({@link SQLDialect#H2}
+     * <code>MERGE</code>) or {@link SQLDialect#HANA} <code>UPSERT</code>).
      *
-     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     * @see DSLContext#mergeInto(Table, Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
@@ -4984,41 +4581,10 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL merge statement (H2-specific syntax).
-     * <p>
-     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
-     * creates an unattached, and thus not directly renderable or executable
-     * <code>MERGE</code> statement.
-     * <p>
-     * This statement is available from DSL syntax only. It is known to be
-     * supported in some way by any of these dialects:
-     * <table border="1">
-     * <tr>
-     * <td>H2</td>
-     * <td>H2 natively supports this special syntax</td>
-     * <td><a href= "www.h2database.com/html/grammar.html#merge"
-     * >www.h2database.com/html/grammar.html#merge</a></td>
-     * </tr>
-     * <tr>
-     * <td>HANA</td>
-     * <td>HANA natively supports this syntax</td>
-     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
-     * </tr>
-     * <tr>
-     * <td>PostgreSQL</td>
-     * <td>This database can emulate the H2-specific MERGE statement via
-     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
-     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
-     * </tr>
-     * <tr>
-     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulate the H2-specific MERGE statement using a
-     * standard SQL MERGE statement, without restrictions</td>
-     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
-     * </tr>
-     * </table>
+     * Create a new DSL UPSERT statement ({@link SQLDialect#H2}
+     * <code>MERGE</code>) or {@link SQLDialect#HANA} <code>UPSERT</code>).
      *
-     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     * @see DSLContext#mergeInto(Table, Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
@@ -5027,41 +4593,10 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL merge statement (H2-specific syntax).
-     * <p>
-     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
-     * creates an unattached, and thus not directly renderable or executable
-     * <code>MERGE</code> statement.
-     * <p>
-     * This statement is available from DSL syntax only. It is known to be
-     * supported in some way by any of these dialects:
-     * <table border="1">
-     * <tr>
-     * <td>H2</td>
-     * <td>H2 natively supports this special syntax</td>
-     * <td><a href= "www.h2database.com/html/grammar.html#merge"
-     * >www.h2database.com/html/grammar.html#merge</a></td>
-     * </tr>
-     * <tr>
-     * <td>HANA</td>
-     * <td>HANA natively supports this syntax</td>
-     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
-     * </tr>
-     * <tr>
-     * <td>PostgreSQL</td>
-     * <td>This database can emulate the H2-specific MERGE statement via
-     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
-     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
-     * </tr>
-     * <tr>
-     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulate the H2-specific MERGE statement using a
-     * standard SQL MERGE statement, without restrictions</td>
-     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
-     * </tr>
-     * </table>
+     * Create a new DSL UPSERT statement ({@link SQLDialect#H2}
+     * <code>MERGE</code>) or {@link SQLDialect#HANA} <code>UPSERT</code>).
      *
-     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     * @see DSLContext#mergeInto(Table, Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
@@ -5070,41 +4605,10 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL merge statement (H2-specific syntax).
-     * <p>
-     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
-     * creates an unattached, and thus not directly renderable or executable
-     * <code>MERGE</code> statement.
-     * <p>
-     * This statement is available from DSL syntax only. It is known to be
-     * supported in some way by any of these dialects:
-     * <table border="1">
-     * <tr>
-     * <td>H2</td>
-     * <td>H2 natively supports this special syntax</td>
-     * <td><a href= "www.h2database.com/html/grammar.html#merge"
-     * >www.h2database.com/html/grammar.html#merge</a></td>
-     * </tr>
-     * <tr>
-     * <td>HANA</td>
-     * <td>HANA natively supports this syntax</td>
-     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
-     * </tr>
-     * <tr>
-     * <td>PostgreSQL</td>
-     * <td>This database can emulate the H2-specific MERGE statement via
-     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
-     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
-     * </tr>
-     * <tr>
-     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulate the H2-specific MERGE statement using a
-     * standard SQL MERGE statement, without restrictions</td>
-     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
-     * </tr>
-     * </table>
+     * Create a new DSL UPSERT statement ({@link SQLDialect#H2}
+     * <code>MERGE</code>) or {@link SQLDialect#HANA} <code>UPSERT</code>).
      *
-     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     * @see DSLContext#mergeInto(Table, Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
@@ -5113,41 +4617,10 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL merge statement (H2-specific syntax).
-     * <p>
-     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
-     * creates an unattached, and thus not directly renderable or executable
-     * <code>MERGE</code> statement.
-     * <p>
-     * This statement is available from DSL syntax only. It is known to be
-     * supported in some way by any of these dialects:
-     * <table border="1">
-     * <tr>
-     * <td>H2</td>
-     * <td>H2 natively supports this special syntax</td>
-     * <td><a href= "www.h2database.com/html/grammar.html#merge"
-     * >www.h2database.com/html/grammar.html#merge</a></td>
-     * </tr>
-     * <tr>
-     * <td>HANA</td>
-     * <td>HANA natively supports this syntax</td>
-     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
-     * </tr>
-     * <tr>
-     * <td>PostgreSQL</td>
-     * <td>This database can emulate the H2-specific MERGE statement via
-     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
-     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
-     * </tr>
-     * <tr>
-     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulate the H2-specific MERGE statement using a
-     * standard SQL MERGE statement, without restrictions</td>
-     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
-     * </tr>
-     * </table>
+     * Create a new DSL UPSERT statement ({@link SQLDialect#H2}
+     * <code>MERGE</code>) or {@link SQLDialect#HANA} <code>UPSERT</code>).
      *
-     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     * @see DSLContext#mergeInto(Table, Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
@@ -5156,41 +4629,10 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL merge statement (H2-specific syntax).
-     * <p>
-     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
-     * creates an unattached, and thus not directly renderable or executable
-     * <code>MERGE</code> statement.
-     * <p>
-     * This statement is available from DSL syntax only. It is known to be
-     * supported in some way by any of these dialects:
-     * <table border="1">
-     * <tr>
-     * <td>H2</td>
-     * <td>H2 natively supports this special syntax</td>
-     * <td><a href= "www.h2database.com/html/grammar.html#merge"
-     * >www.h2database.com/html/grammar.html#merge</a></td>
-     * </tr>
-     * <tr>
-     * <td>HANA</td>
-     * <td>HANA natively supports this syntax</td>
-     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
-     * </tr>
-     * <tr>
-     * <td>PostgreSQL</td>
-     * <td>This database can emulate the H2-specific MERGE statement via
-     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
-     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
-     * </tr>
-     * <tr>
-     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulate the H2-specific MERGE statement using a
-     * standard SQL MERGE statement, without restrictions</td>
-     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
-     * </tr>
-     * </table>
+     * Create a new DSL UPSERT statement ({@link SQLDialect#H2}
+     * <code>MERGE</code>) or {@link SQLDialect#HANA} <code>UPSERT</code>).
      *
-     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     * @see DSLContext#mergeInto(Table, Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
@@ -5199,41 +4641,10 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL merge statement (H2-specific syntax).
-     * <p>
-     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
-     * creates an unattached, and thus not directly renderable or executable
-     * <code>MERGE</code> statement.
-     * <p>
-     * This statement is available from DSL syntax only. It is known to be
-     * supported in some way by any of these dialects:
-     * <table border="1">
-     * <tr>
-     * <td>H2</td>
-     * <td>H2 natively supports this special syntax</td>
-     * <td><a href= "www.h2database.com/html/grammar.html#merge"
-     * >www.h2database.com/html/grammar.html#merge</a></td>
-     * </tr>
-     * <tr>
-     * <td>HANA</td>
-     * <td>HANA natively supports this syntax</td>
-     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
-     * </tr>
-     * <tr>
-     * <td>PostgreSQL</td>
-     * <td>This database can emulate the H2-specific MERGE statement via
-     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
-     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
-     * </tr>
-     * <tr>
-     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulate the H2-specific MERGE statement using a
-     * standard SQL MERGE statement, without restrictions</td>
-     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
-     * </tr>
-     * </table>
+     * Create a new DSL UPSERT statement ({@link SQLDialect#H2}
+     * <code>MERGE</code>) or {@link SQLDialect#HANA} <code>UPSERT</code>).
      *
-     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     * @see DSLContext#mergeInto(Table, Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
@@ -5242,41 +4653,10 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL merge statement (H2-specific syntax).
-     * <p>
-     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
-     * creates an unattached, and thus not directly renderable or executable
-     * <code>MERGE</code> statement.
-     * <p>
-     * This statement is available from DSL syntax only. It is known to be
-     * supported in some way by any of these dialects:
-     * <table border="1">
-     * <tr>
-     * <td>H2</td>
-     * <td>H2 natively supports this special syntax</td>
-     * <td><a href= "www.h2database.com/html/grammar.html#merge"
-     * >www.h2database.com/html/grammar.html#merge</a></td>
-     * </tr>
-     * <tr>
-     * <td>HANA</td>
-     * <td>HANA natively supports this syntax</td>
-     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
-     * </tr>
-     * <tr>
-     * <td>PostgreSQL</td>
-     * <td>This database can emulate the H2-specific MERGE statement via
-     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
-     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
-     * </tr>
-     * <tr>
-     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulate the H2-specific MERGE statement using a
-     * standard SQL MERGE statement, without restrictions</td>
-     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
-     * </tr>
-     * </table>
+     * Create a new DSL UPSERT statement ({@link SQLDialect#H2}
+     * <code>MERGE</code>) or {@link SQLDialect#HANA} <code>UPSERT</code>).
      *
-     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     * @see DSLContext#mergeInto(Table, Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
@@ -5285,41 +4665,10 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL merge statement (H2-specific syntax).
-     * <p>
-     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
-     * creates an unattached, and thus not directly renderable or executable
-     * <code>MERGE</code> statement.
-     * <p>
-     * This statement is available from DSL syntax only. It is known to be
-     * supported in some way by any of these dialects:
-     * <table border="1">
-     * <tr>
-     * <td>H2</td>
-     * <td>H2 natively supports this special syntax</td>
-     * <td><a href= "www.h2database.com/html/grammar.html#merge"
-     * >www.h2database.com/html/grammar.html#merge</a></td>
-     * </tr>
-     * <tr>
-     * <td>HANA</td>
-     * <td>HANA natively supports this syntax</td>
-     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
-     * </tr>
-     * <tr>
-     * <td>PostgreSQL</td>
-     * <td>This database can emulate the H2-specific MERGE statement via
-     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
-     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
-     * </tr>
-     * <tr>
-     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulate the H2-specific MERGE statement using a
-     * standard SQL MERGE statement, without restrictions</td>
-     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
-     * </tr>
-     * </table>
+     * Create a new DSL UPSERT statement ({@link SQLDialect#H2}
+     * <code>MERGE</code>) or {@link SQLDialect#HANA} <code>UPSERT</code>).
      *
-     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     * @see DSLContext#mergeInto(Table, Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
@@ -5328,41 +4677,10 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL merge statement (H2-specific syntax).
-     * <p>
-     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
-     * creates an unattached, and thus not directly renderable or executable
-     * <code>MERGE</code> statement.
-     * <p>
-     * This statement is available from DSL syntax only. It is known to be
-     * supported in some way by any of these dialects:
-     * <table border="1">
-     * <tr>
-     * <td>H2</td>
-     * <td>H2 natively supports this special syntax</td>
-     * <td><a href= "www.h2database.com/html/grammar.html#merge"
-     * >www.h2database.com/html/grammar.html#merge</a></td>
-     * </tr>
-     * <tr>
-     * <td>HANA</td>
-     * <td>HANA natively supports this syntax</td>
-     * <td><a href="http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm">http://help.sap.com/saphelp_hanaplatform/helpdata/en/20/fc06a7751910149892c0d09be21a38/content.htm</a></td>
-     * </tr>
-     * <tr>
-     * <td>PostgreSQL</td>
-     * <td>This database can emulate the H2-specific MERGE statement via
-     * <code>INSERT .. ON CONFLICT DO UPDATE</code></td>
-     * <td><a href="http://www.postgresql.org/docs/9.5/static/sql-insert.html">http://www.postgresql.org/docs/9.5/static/sql-insert.html</a></td>
-     * </tr>
-     * <tr>
-     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
-     * <td>These databases can emulate the H2-specific MERGE statement using a
-     * standard SQL MERGE statement, without restrictions</td>
-     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
-     * </tr>
-     * </table>
+     * Create a new DSL UPSERT statement ({@link SQLDialect#H2}
+     * <code>MERGE</code>) or {@link SQLDialect#HANA} <code>UPSERT</code>).
      *
-     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     * @see DSLContext#mergeInto(Table, Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })

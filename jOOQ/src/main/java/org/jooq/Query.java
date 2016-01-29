@@ -45,6 +45,9 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletionStage;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ForkJoinPool;
 
 import org.jooq.conf.ParamType;
 import org.jooq.conf.Settings;
@@ -76,6 +79,44 @@ public interface Query extends QueryPart, Attachable , AutoCloseable  {
      * @throws DataAccessException If anything goes wrong in the database
      */
     int execute() throws DataAccessException;
+
+
+
+    /**
+     * Execute the query in a new {@link CompletionStage} that is asynchronously
+     * completed by a task running in the {@link ForkJoinPool#commonPool()}.
+     *
+     * @return A result value, depending on the concrete implementation of
+     *         {@link Query}:
+     *         <ul>
+     *         <li> {@link Delete} : the number of deleted records</li>
+     *         <li> {@link Insert} : the number of inserted records</li>
+     *         <li> {@link Merge} : the result may have no meaning</li>
+     *         <li> {@link Select} : the number of resulting records</li>
+     *         <li> {@link Truncate} : the result may have no meaning</li>
+     *         <li> {@link Update} : the number of updated records</li>
+     *         </ul>
+     */
+    CompletionStage<Integer> executeAsync();
+
+    /**
+     * Execute the query in a new {@link CompletionStage} that is asynchronously
+     * completed by a task running in the given executor.
+     *
+     * @return A result value, depending on the concrete implementation of
+     *         {@link Query}:
+     *         <ul>
+     *         <li> {@link Delete} : the number of deleted records</li>
+     *         <li> {@link Insert} : the number of inserted records</li>
+     *         <li> {@link Merge} : the result may have no meaning</li>
+     *         <li> {@link Select} : the number of resulting records</li>
+     *         <li> {@link Truncate} : the result may have no meaning</li>
+     *         <li> {@link Update} : the number of updated records</li>
+     *         </ul>
+     */
+    CompletionStage<Integer> executeAsync(Executor executor);
+
+
 
     /**
      * Whether this query is executable in its current state.

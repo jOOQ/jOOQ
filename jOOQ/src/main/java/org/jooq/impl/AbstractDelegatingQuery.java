@@ -42,6 +42,8 @@ package org.jooq.impl;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletionStage;
+import java.util.concurrent.Executor;
 
 import org.jooq.AttachableInternal;
 import org.jooq.Clause;
@@ -131,6 +133,16 @@ abstract class AbstractDelegatingQuery<Q extends Query> extends AbstractQueryPar
     @Override
     public final int execute() {
         return delegate.execute();
+    }
+
+    @Override
+    public final CompletionStage<Integer> executeAsync() {
+        return delegate.executeAsync();
+    }
+
+    @Override
+    public final CompletionStage<Integer> executeAsync(Executor executor) {
+        return delegate.executeAsync(executor);
     }
 
     @Override

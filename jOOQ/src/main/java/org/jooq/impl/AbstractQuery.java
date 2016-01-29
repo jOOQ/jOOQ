@@ -60,6 +60,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
+import java.util.concurrent.Executor;
 
 import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
@@ -381,6 +384,20 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
             return 0;
         }
     }
+
+
+
+    @Override
+    public final CompletionStage<Integer> executeAsync() {
+        return CompletableFuture.supplyAsync(this::execute);
+    }
+
+    @Override
+    public final CompletionStage<Integer> executeAsync(Executor executor) {
+        return CompletableFuture.supplyAsync(this::execute, executor);
+    }
+
+
 
     /**
      * Default implementation to indicate whether this query should close the

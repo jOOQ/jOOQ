@@ -177,7 +177,7 @@
                                     </includes>
 
                                     <!-- Known issue with this type: https://github.com/jOOQ/jOOQ/issues/3709 -->
-                                    <excludes>ST_ANNOTATIONTEXTELEMENT</excludes>
+                                    <excludes>ST_ANNOTATIONTEXTELEMENT|.*\$.*</excludes>
                                     <dateAsTimestamp>true</dateAsTimestamp>
                                     <schemata>
                                         <schema>

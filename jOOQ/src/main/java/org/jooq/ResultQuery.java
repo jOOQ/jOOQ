@@ -50,7 +50,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.CompletionStage;
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ForkJoinPool;
 import java.util.stream.Stream;
 
 import javax.sql.DataSource;
@@ -2988,6 +2991,20 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      */
     <E> List<E> fetch(RecordMapper<? super R, E> mapper) throws DataAccessException;
+
+
+    /**
+     * Fetch results in a new {@link CompletionStage} that is asynchronously
+     * completed by a task running in the {@link ForkJoinPool#commonPool()}.
+     */
+    CompletionStage<Result<R>> fetchAsync();
+
+    /**
+     * Fetch results in a new {@link CompletionStage} that is asynchronously
+     * completed by a task running in the given executor.
+     */
+    CompletionStage<Result<R>> fetchAsync(Executor executor);
+
 
     /**
      * Fetch results asynchronously.

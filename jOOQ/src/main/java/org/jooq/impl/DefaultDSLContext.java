@@ -70,6 +70,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
+import java.util.concurrent.Executor;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
@@ -603,6 +606,47 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
 
+
+    @Override
+    public CompletionStage<Result<Record>> fetchAsync(SQL sql) {
+        return resultQuery(sql).fetchAsync();
+    }
+
+    @Override
+    public CompletionStage<Result<Record>> fetchAsync(String sql) {
+        return resultQuery(sql).fetchAsync();
+    }
+
+    @Override
+    public CompletionStage<Result<Record>> fetchAsync(String sql, Object... bindings) {
+        return resultQuery(sql, bindings).fetchAsync();
+    }
+
+    @Override
+    public CompletionStage<Result<Record>> fetchAsync(String sql, QueryPart... parts) {
+        return resultQuery(sql, parts).fetchAsync();
+    }
+
+    @Override
+    public CompletionStage<Result<Record>> fetchAsync(Executor executor, SQL sql) {
+        return resultQuery(sql).fetchAsync(executor);
+    }
+
+    @Override
+    public CompletionStage<Result<Record>> fetchAsync(Executor executor, String sql) {
+        return resultQuery(sql).fetchAsync(executor);
+    }
+
+    @Override
+    public CompletionStage<Result<Record>> fetchAsync(Executor executor, String sql, Object... bindings) {
+        return resultQuery(sql, bindings).fetchAsync(executor);
+    }
+
+    @Override
+    public CompletionStage<Result<Record>> fetchAsync(Executor executor, String sql, QueryPart... parts) {
+        return resultQuery(sql, parts).fetchAsync(executor);
+    }
+
     @Override
     public Stream<Record> fetchStream(SQL sql) {
         return resultQuery(sql).stream();
@@ -958,6 +1002,47 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return fetchLazy(rs, Utils.dataTypes(types));
     }
 
+
+
+    @Override
+    public CompletionStage<Result<Record>> fetchAsync(ResultSet rs) {
+        return CompletableFuture.supplyAsync(() -> fetch(rs));
+    }
+
+    @Override
+    public CompletionStage<Result<Record>> fetchAsync(ResultSet rs, Field<?>... fields) {
+        return CompletableFuture.supplyAsync(() -> fetch(rs, fields));
+    }
+
+    @Override
+    public CompletionStage<Result<Record>> fetchAsync(ResultSet rs, DataType<?>... types) {
+        return CompletableFuture.supplyAsync(() -> fetch(rs, types));
+    }
+
+    @Override
+    public CompletionStage<Result<Record>> fetchAsync(ResultSet rs, Class<?>... types) {
+        return CompletableFuture.supplyAsync(() -> fetch(rs, types));
+    }
+
+    @Override
+    public CompletionStage<Result<Record>> fetchAsync(Executor executor, ResultSet rs) {
+        return CompletableFuture.supplyAsync(() -> fetch(rs), executor);
+    }
+
+    @Override
+    public CompletionStage<Result<Record>> fetchAsync(Executor executor, ResultSet rs, Field<?>... fields) {
+        return CompletableFuture.supplyAsync(() -> fetch(rs, fields), executor);
+    }
+
+    @Override
+    public CompletionStage<Result<Record>> fetchAsync(Executor executor, ResultSet rs, DataType<?>... types) {
+        return CompletableFuture.supplyAsync(() -> fetch(rs, types), executor);
+    }
+
+    @Override
+    public CompletionStage<Result<Record>> fetchAsync(Executor executor, ResultSet rs, Class<?>... types) {
+        return CompletableFuture.supplyAsync(() -> fetch(rs, types), executor);
+    }
 
     @Override
     public Stream<Record> fetchStream(ResultSet rs) {
@@ -2920,6 +3005,33 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
 
+
+    @Override
+    public <R extends Record> CompletionStage<Result<R>> fetchAsync(ResultQuery<R> query) {
+        final Configuration previous = Utils.getConfiguration(query);
+
+        try {
+            query.attach(configuration());
+            return query.fetchAsync();
+        }
+        finally {
+            query.attach(previous);
+        }
+    }
+
+    @Override
+    public <R extends Record> CompletionStage<Result<R>> fetchAsync(Executor executor, ResultQuery<R> query) {
+        final Configuration previous = Utils.getConfiguration(query);
+
+        try {
+            query.attach(configuration());
+            return query.fetchAsync(executor);
+        }
+        finally {
+            query.attach(previous);
+        }
+    }
+
     @Override
     public <R extends Record> Stream<R> fetchStream(ResultQuery<R> query) {
         final Configuration previous = Utils.getConfiguration(query);
@@ -2932,6 +3044,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
             query.attach(previous);
         }
     }
+
 
 
     @Override
@@ -3117,6 +3230,27 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
 
+
+    @Override
+    public <R extends Record> CompletionStage<Result<R>> fetchAsync(Table<R> table) {
+        return selectFrom(table).fetchAsync();
+    }
+
+    @Override
+    public <R extends Record> CompletionStage<Result<R>> fetchAsync(Table<R> table, Condition condition) {
+        return selectFrom(table).where(condition).fetchAsync();
+    }
+
+    @Override
+    public <R extends Record> CompletionStage<Result<R>> fetchAsync(Executor executor, Table<R> table) {
+        return selectFrom(table).fetchAsync(executor);
+    }
+
+    @Override
+    public <R extends Record> CompletionStage<Result<R>> fetchAsync(Executor executor, Table<R> table, Condition condition) {
+        return selectFrom(table).where(condition).fetchAsync(executor);
+    }
+
     @Override
     public <R extends Record> Stream<R> fetchStream(Table<R> table) {
         return fetchStream(table, trueCondition());
@@ -3126,6 +3260,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public <R extends Record> Stream<R> fetchStream(Table<R> table, Condition condition) {
         return selectFrom(table).where(condition).stream();
     }
+
 
 
     @Override

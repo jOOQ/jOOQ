@@ -61,6 +61,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.stream.Stream;
@@ -320,6 +323,17 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
 
+
+    @Override
+    public final CompletionStage<Result<R>> fetchAsync() {
+        return CompletableFuture.supplyAsync(this::fetch);
+    }
+
+    @Override
+    public final CompletionStage<Result<R>> fetchAsync(Executor executor) {
+        return CompletableFuture.supplyAsync(this::fetch, executor);
+    }
+
     @Override
     public final Stream<R> fetchStream() {
         return fetchLazy().stream();
@@ -329,6 +343,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     public final Stream<R> stream() {
         return fetchLazy().stream();
     }
+
 
 
     @Override

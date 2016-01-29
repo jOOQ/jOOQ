@@ -75,6 +75,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
+import java.util.concurrent.CompletionStage;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ForkJoinPool;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
@@ -771,6 +774,253 @@ public interface DSLContext extends Scope , AutoCloseable  {
     @PlainSQL
     Cursor<Record> fetchLazy(String sql, QueryPart... parts) throws DataAccessException;
 
+
+
+    /**
+     * Fetch results in a new {@link CompletionStage} that is asynchronously
+     * completed by a task running in the {@link ForkJoinPool#commonPool()}.
+     * <p>
+     * Example (Postgres):
+     * <p>
+     * <code><pre>
+     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * (SQLite):
+     * <p>
+     * <code><pre>
+     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return The results from the executed query. This is never
+     *         <code>null</code>, even if the database returns no
+     *         {@link ResultSet}
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    CompletionStage<Result<Record>> fetchAsync(SQL sql);
+
+    /**
+     * Fetch results in a new {@link CompletionStage} that is asynchronously
+     * completed by a task running in the {@link ForkJoinPool#commonPool()}.
+     * <p>
+     * Example (Postgres):
+     * <p>
+     * <code><pre>
+     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * (SQLite):
+     * <p>
+     * <code><pre>
+     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return The results from the executed query. This is never
+     *         <code>null</code>, even if the database returns no
+     *         {@link ResultSet}
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    CompletionStage<Result<Record>> fetchAsync(String sql);
+
+    /**
+     * Fetch results in a new {@link CompletionStage} that is asynchronously
+     * completed by a task running in the {@link ForkJoinPool#commonPool()}.
+     * <p>
+     * There must be as many bind variables contained in the SQL, as passed in
+     * the bindings parameter
+     * <p>
+     * Example (Postgres):
+     * <p>
+     * <code><pre>
+     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * (SQLite):
+     * <p>
+     * <code><pre>
+     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @param bindings The bindings
+     * @return The results from the executed query. This is never
+     *         <code>null</code>, even if the database returns no
+     *         {@link ResultSet}
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    CompletionStage<Result<Record>> fetchAsync(String sql, Object... bindings);
+
+    /**
+     * Fetch results in a new {@link CompletionStage} that is asynchronously
+     * completed by a task running in the {@link ForkJoinPool#commonPool()}.
+     * <p>
+     * Unlike {@link #fetchLazy(String, Object...)}, the SQL passed to this
+     * method should not contain any bind variables. Instead, you can pass
+     * {@link QueryPart} objects to the method which will be rendered at indexed
+     * locations of your SQL string as such: <code><pre>
+     * // The following query
+     * fetchLazy("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
+     *
+     * // Will execute this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * select ?, 'test' from "DUAL"
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses! One way to escape
+     * literals is to use {@link DSL#name(String...)} and similar methods
+     *
+     * @param sql The SQL clause, containing {numbered placeholders} where query
+     *            parts can be injected
+     * @param parts The {@link QueryPart} objects that are rendered at the
+     *            {numbered placeholder} locations
+     * @return The results from the executed query. This is never
+     *         <code>null</code>, even if the database returns no
+     *         {@link ResultSet}
+     * @throws DataAccessException if something went wrong executing the query
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    CompletionStage<Result<Record>> fetchAsync(String sql, QueryPart... parts);
+
+    /**
+     * Fetch results in a new {@link CompletionStage} that is asynchronously
+     * completed by a task running in the given executor.
+     * <p>
+     * Example (Postgres):
+     * <p>
+     * <code><pre>
+     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * (SQLite):
+     * <p>
+     * <code><pre>
+     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return The results from the executed query. This is never
+     *         <code>null</code>, even if the database returns no
+     *         {@link ResultSet}
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    CompletionStage<Result<Record>> fetchAsync(Executor executor, SQL sql);
+
+    /**
+     * Fetch results in a new {@link CompletionStage} that is asynchronously
+     * completed by a task running in the given executor.
+     * <p>
+     * Example (Postgres):
+     * <p>
+     * <code><pre>
+     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * (SQLite):
+     * <p>
+     * <code><pre>
+     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return The results from the executed query. This is never
+     *         <code>null</code>, even if the database returns no
+     *         {@link ResultSet}
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    CompletionStage<Result<Record>> fetchAsync(Executor executor, String sql);
+
+    /**
+     * Fetch results in a new {@link CompletionStage} that is asynchronously
+     * completed by a task running in the given executor.
+     * <p>
+     * There must be as many bind variables contained in the SQL, as passed in
+     * the bindings parameter
+     * <p>
+     * Example (Postgres):
+     * <p>
+     * <code><pre>
+     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * (SQLite):
+     * <p>
+     * <code><pre>
+     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @param bindings The bindings
+     * @return The results from the executed query. This is never
+     *         <code>null</code>, even if the database returns no
+     *         {@link ResultSet}
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    CompletionStage<Result<Record>> fetchAsync(Executor executor, String sql, Object... bindings);
+
+    /**
+     * Fetch results in a new {@link CompletionStage} that is asynchronously
+     * completed by a task running in the given executor.
+     * <p>
+     * Unlike {@link #fetchLazy(String, Object...)}, the SQL passed to this
+     * method should not contain any bind variables. Instead, you can pass
+     * {@link QueryPart} objects to the method which will be rendered at indexed
+     * locations of your SQL string as such: <code><pre>
+     * // The following query
+     * fetchLazy("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
+     *
+     * // Will execute this SQL on an Oracle database with RenderNameStyle.QUOTED:
+     * select ?, 'test' from "DUAL"
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses! One way to escape
+     * literals is to use {@link DSL#name(String...)} and similar methods
+     *
+     * @param sql The SQL clause, containing {numbered placeholders} where query
+     *            parts can be injected
+     * @param parts The {@link QueryPart} objects that are rendered at the
+     *            {numbered placeholder} locations
+     * @return The results from the executed query. This is never
+     *         <code>null</code>, even if the database returns no
+     *         {@link ResultSet}
+     * @throws DataAccessException if something went wrong executing the query
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    CompletionStage<Result<Record>> fetchAsync(Executor executor, String sql, QueryPart... parts);
 
     /**
      * Execute a new query holding plain SQL and "lazily" return the generated
@@ -2417,6 +2667,117 @@ public interface DSLContext extends Scope , AutoCloseable  {
     @Support
     Cursor<Record> fetchLazy(ResultSet rs, Class<?>... types) throws DataAccessException;
 
+
+
+    /**
+     * Fetch results in a new {@link CompletionStage} that is asynchronously
+     * completed by a task running in the {@link ForkJoinPool#commonPool()}.
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @return The resulting jOOQ Result
+     */
+    @Support
+    CompletionStage<Result<Record>> fetchAsync(ResultSet rs);
+
+    /**
+     * Fetch results in a new {@link CompletionStage} that is asynchronously
+     * completed by a task running in the {@link ForkJoinPool#commonPool()}.
+     * <p>
+     * The additional <code>fields</code> argument is used by jOOQ to coerce
+     * field names and data types to the desired output
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @param fields The fields to use in the desired output
+     * @return The resulting jOOQ Result
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    CompletionStage<Result<Record>> fetchAsync(ResultSet rs, Field<?>... fields);
+
+    /**
+     * Fetch results in a new {@link CompletionStage} that is asynchronously
+     * completed by a task running in the {@link ForkJoinPool#commonPool()}.
+     * <p>
+     * The additional <code>types</code> argument is used by jOOQ to coerce data
+     * types to the desired output
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @param types The data types to use in the desired output
+     * @return The resulting jOOQ Result
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    CompletionStage<Result<Record>> fetchAsync(ResultSet rs, DataType<?>... types);
+
+    /**
+     * Fetch results in a new {@link CompletionStage} that is asynchronously
+     * completed by a task running in the {@link ForkJoinPool#commonPool()}.
+     * <p>
+     * The additional <code>types</code> argument is used by jOOQ to coerce data
+     * types to the desired output
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @param types The data types to use in the desired output
+     * @return The resulting jOOQ Result
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    CompletionStage<Result<Record>> fetchAsync(ResultSet rs, Class<?>... types);
+
+    /**
+     * Fetch results in a new {@link CompletionStage} that is asynchronously
+     * completed by a task running in the given executor.
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @return The resulting jOOQ Result
+     */
+    @Support
+    CompletionStage<Result<Record>> fetchAsync(Executor executor, ResultSet rs);
+
+    /**
+     * Fetch results in a new {@link CompletionStage} that is asynchronously
+     * completed by a task running in the given executor.
+     * <p>
+     * The additional <code>fields</code> argument is used by jOOQ to coerce
+     * field names and data types to the desired output
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @param fields The fields to use in the desired output
+     * @return The resulting jOOQ Result
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    CompletionStage<Result<Record>> fetchAsync(Executor executor, ResultSet rs, Field<?>... fields);
+
+    /**
+     * Fetch results in a new {@link CompletionStage} that is asynchronously
+     * completed by a task running in the given executor.
+     * <p>
+     * The additional <code>types</code> argument is used by jOOQ to coerce data
+     * types to the desired output
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @param types The data types to use in the desired output
+     * @return The resulting jOOQ Result
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    CompletionStage<Result<Record>> fetchAsync(Executor executor, ResultSet rs, DataType<?>... types);
+
+    /**
+     * Fetch results in a new {@link CompletionStage} that is asynchronously
+     * completed by a task running in the given executor.
+     * <p>
+     * The additional <code>types</code> argument is used by jOOQ to coerce data
+     * types to the desired output
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @param types The data types to use in the desired output
+     * @return The resulting jOOQ Result
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    CompletionStage<Result<Record>> fetchAsync(Executor executor, ResultSet rs, Class<?>... types);
 
     /**
      * Wrap a JDBC {@link ResultSet} into a jOOQ {@link Stream}.
@@ -7801,6 +8162,27 @@ public interface DSLContext extends Scope , AutoCloseable  {
     <R extends Record> Cursor<R> fetchLazy(ResultQuery<R> query) throws DataAccessException;
 
 
+
+    /**
+     * Fetch results in a new {@link CompletionStage} that is asynchronously
+     * completed by a task running in the {@link ForkJoinPool#commonPool()}.
+     *
+     * @param query The query to execute
+     * @return The result
+     * @see ResultQuery#fetchAsync()
+     */
+    <R extends Record> CompletionStage<Result<R>> fetchAsync(ResultQuery<R> query);
+
+    /**
+     * Fetch results in a new {@link CompletionStage} that is asynchronously
+     * completed by a task running in the given executor.
+     *
+     * @param query The query to execute
+     * @return The result
+     * @see ResultQuery#fetchAsync()
+     */
+    <R extends Record> CompletionStage<Result<R>> fetchAsync(Executor executor, ResultQuery<R> query);
+
     /**
      * Execute a {@link ResultQuery} in the context of this <code>DSLContext</code> and return
      * a stream.
@@ -8169,6 +8551,51 @@ public interface DSLContext extends Scope , AutoCloseable  {
     @Support
     <R extends Record> Cursor<R> fetchLazy(Table<R> table, Condition condition) throws DataAccessException;
 
+
+
+    /**
+     * Execute and return all records asynchronously for
+     * <code><pre>SELECT * FROM [table]</pre></code>.
+     * <p>
+     * The result and its contained records are attached to this
+     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
+     * to override this behaviour.
+     */
+    @Support
+    <R extends Record> CompletionStage<Result<R>> fetchAsync(Table<R> table);
+
+    /**
+     * Execute and return all records asynchronously for
+     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <p>
+     * The result and its contained records are attached to this
+     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
+     * to override this behaviour.
+     */
+    @Support
+    <R extends Record> CompletionStage<Result<R>> fetchAsync(Table<R> table, Condition condition);
+
+    /**
+     * Execute and return all records asynchronously for
+     * <code><pre>SELECT * FROM [table]</pre></code>.
+     * <p>
+     * The result and its contained records are attached to this
+     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
+     * to override this behaviour.
+     */
+    @Support
+    <R extends Record> CompletionStage<Result<R>> fetchAsync(Executor executor, Table<R> table);
+
+    /**
+     * Execute and return all records asynchronously for
+     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <p>
+     * The result and its contained records are attached to this
+     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
+     * to override this behaviour.
+     */
+    @Support
+    <R extends Record> CompletionStage<Result<R>> fetchAsync(Executor executor, Table<R> table, Condition condition);
 
     /**
      * Execute and return all records lazily for

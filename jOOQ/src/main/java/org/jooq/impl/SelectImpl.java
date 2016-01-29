@@ -53,6 +53,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.CompletionStage;
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.stream.Stream;
 
@@ -3597,6 +3599,18 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     public final <E> List<E> fetch(RecordMapper<? super R, E> mapper) {
         return getDelegate().fetch(mapper);
     }
+
+
+    @Override
+    public final CompletionStage<Result<R>> fetchAsync() {
+        return getDelegate().fetchAsync();
+    }
+
+    @Override
+    public final CompletionStage<Result<R>> fetchAsync(Executor executor) {
+        return getDelegate().fetchAsync(executor);
+    }
+
 
     @Override
     @Deprecated

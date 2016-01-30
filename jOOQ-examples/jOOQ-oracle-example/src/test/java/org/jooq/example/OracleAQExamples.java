@@ -111,6 +111,33 @@ public class OracleAQExamples extends Utils {
     }
 
     @Test
+    public void testAQStream() throws Exception {
+        dsl.transaction(c -> {
+
+            // Enqueue all authors
+            authors.stream().forEach(a -> {
+                DBMS_AQ.enqueue(dsl.configuration(), NEW_AUTHOR_AQ, a);
+            });
+
+            // Dequeue some of them again
+            List<AuthorTRecord> l1 =
+            DBMS_AQ.dequeueStream(dsl.configuration(), NEW_AUTHOR_AQ)
+                   .limit(2)
+                   .collect(toList());
+
+            assertEquals(authors.subList(0, 2), l1);
+
+
+            List<AuthorTRecord> l2 =
+            DBMS_AQ.dequeueStream(dsl.configuration(), NEW_AUTHOR_AQ)
+                   .limit(authors.size() - 2)
+                   .collect(toList());
+
+            assertEquals(authors.subList(2, authors.size()), l2);
+        });
+    }
+
+    @Test
     public void testAQWait() throws Exception {
         dsl.transaction(c -> {
             long time = System.nanoTime();

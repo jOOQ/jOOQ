@@ -53,6 +53,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import org.jooq.example.db.oracle.sp.udt.records.AuthorTRecord;
+import org.jooq.example.db.oracle.sp.udt.records.BookTRecord;
+import org.jooq.example.db.oracle.sp.udt.records.BooksTRecord;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 // ...
@@ -70,7 +72,13 @@ public class OracleAQExamples extends Utils {
 
     // Generate 10 authors
     static final List<AuthorTRecord> authors =
-        range(0, 10).mapToObj(i -> new AuthorTRecord(i, "F" + i, "L1" + i, null)).collect(toList());
+        range(0, 10).mapToObj(i -> new AuthorTRecord(i, "F" + i, "L1" + i,
+                        i == 0 ? null : range(1, i).mapToObj(j -> new BookTRecord(j, "T" + j, "DE")).collect(
+                            () -> new BooksTRecord(),
+                            (l, b) -> l.add(b),
+                            (l1, l2) -> l1.addAll(l2)
+                        )))
+                    .collect(toList());
 
     @Before
     public void setup() throws Exception {

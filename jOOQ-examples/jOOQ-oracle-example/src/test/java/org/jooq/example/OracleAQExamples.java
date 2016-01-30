@@ -138,6 +138,26 @@ public class OracleAQExamples extends Utils {
     }
 
     @Test
+    public void testAQIterable() throws Exception {
+        dsl.transaction(c -> {
+
+            // Enqueue all authors
+            authors.stream().forEach(a -> {
+                DBMS_AQ.enqueue(dsl.configuration(), NEW_AUTHOR_AQ, a);
+            });
+
+            // Dequeue them again
+            int i = 0;
+            for (AuthorTRecord author : DBMS_AQ.dequeueIterable(dsl.configuration(), NEW_AUTHOR_AQ)) {
+                assertEquals(authors.get(i++), author);
+
+                if (i == authors.size())
+                    break;
+            }
+        });
+    }
+
+    @Test
     public void testAQWait() throws Exception {
         dsl.transaction(c -> {
             long time = System.nanoTime();

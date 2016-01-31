@@ -235,13 +235,13 @@ public class MockConnection extends JDBC41Connection implements Connection {
     @Override
     public Savepoint setSavepoint() throws SQLException {
         checkNotClosed();
-        return null;
+        return new MockSavepoint();
     }
 
     @Override
     public Savepoint setSavepoint(String name) throws SQLException {
         checkNotClosed();
-        return null;
+        return new MockSavepoint(name);
     }
 
     @Override

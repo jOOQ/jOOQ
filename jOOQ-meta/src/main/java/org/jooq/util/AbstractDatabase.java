@@ -156,6 +156,7 @@ public abstract class AbstractDatabase implements Database {
     private transient Map<SchemaDefinition, List<ArrayDefinition>>           arraysBySchema;
     private transient Map<SchemaDefinition, List<RoutineDefinition>>         routinesBySchema;
     private transient Map<SchemaDefinition, List<PackageDefinition>>         packagesBySchema;
+    private transient boolean                                                initialised;
 
     // Other caches
     private final Map<Table<?>, Boolean>                                     exists;
@@ -195,8 +196,15 @@ public abstract class AbstractDatabase implements Database {
     protected final DSLContext create(boolean muteExceptions) {
 
         // [#3800] Make sure that faulty queries are logged in a formatted
-        // way to help users provide us with bug reports
+        //         way to help users provide us with bug reports
         final Configuration configuration = create0().configuration();
+
+        // [#4974] Prevent any class loading effects from impacting below
+        //         SQLPerformanceWarning.
+        if (!initialised) {
+            DSL.using(configuration).selectOne().fetch();
+            initialised = true;
+        }
 
         if (muteExceptions) {
             return DSL.using(configuration);

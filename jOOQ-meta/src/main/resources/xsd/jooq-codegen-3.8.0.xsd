@@ -555,7 +555,7 @@
         While this flag defaults to true for most databases, it defaults to false
         for Oracle.
         -->
-      <element name="tableValuedFunctions" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      <element name="tableValuedFunctions" type="boolean" minOccurs="0" maxOccurs="1" />
     </all>
   </complexType>
 

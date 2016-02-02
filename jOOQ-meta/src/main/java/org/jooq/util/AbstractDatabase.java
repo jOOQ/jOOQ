@@ -199,13 +199,6 @@ public abstract class AbstractDatabase implements Database {
         //         way to help users provide us with bug reports
         final Configuration configuration = create0().configuration();
 
-        // [#4974] Prevent any class loading effects from impacting below
-        //         SQLPerformanceWarning.
-        if (!initialised) {
-            DSL.using(configuration).selectOne().fetch();
-            initialised = true;
-        }
-
         if (muteExceptions) {
             return DSL.using(configuration);
         }
@@ -219,6 +212,17 @@ public abstract class AbstractDatabase implements Database {
                 StopWatch watch;
 
                 class SQLPerformanceWarning extends Exception {}
+
+                @Override
+                public void start(ExecuteContext ctx) {
+
+                    // [#4974] Prevent any class loading effects from impacting below
+                    //         SQLPerformanceWarning.
+                    if (!initialised) {
+                        DSL.using(configuration).selectOne().fetch();
+                        initialised = true;
+                    }
+                }
 
                 @Override
                 public void executeStart(ExecuteContext ctx) {

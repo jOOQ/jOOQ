@@ -68,6 +68,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.jooq.AggregateFunction;
+// ...
 import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
 import org.jooq.Binding;
@@ -82,6 +83,7 @@ import org.jooq.ExecuteListener;
 import org.jooq.Field;
 import org.jooq.Package;
 import org.jooq.Parameter;
+import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.Results;
@@ -89,7 +91,9 @@ import org.jooq.Routine;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.UDTField;
+import org.jooq.UDTRecord;
 import org.jooq.exception.ControlFlowSignal;
+import org.jooq.exception.MappingException;
 import org.jooq.tools.Convert;
 
 /**
@@ -283,6 +287,13 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         else if (type == null) {
             return executeCallableStatement();
         }
+
+
+
+
+
+
+
         else {
             switch (family) {
 
@@ -318,6 +329,35 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final int executeSelectFromHSQLDB() {
         DSLContext create = create(configuration);

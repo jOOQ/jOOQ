@@ -483,6 +483,13 @@ public class GenerationTool {
             if (g.getDatabase().isTableValuedFunctions() != null)
                 generator.setGenerateTableValuedFunctions(g.getDatabase().isTableValuedFunctions());
 
+
+
+
+
+
+
+
             // Generator properties that should in fact be strategy properties
             strategy.setInstanceFields(generator.generateInstanceFields());
 

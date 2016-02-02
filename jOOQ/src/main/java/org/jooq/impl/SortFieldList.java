@@ -95,7 +95,7 @@ class SortFieldList extends QueryPartList<SortField<?>> {
     final boolean nulls() {
         for (SortField<?> field : this)
             if (((SortFieldImpl<?>) field).getNullsFirst() ||
-                ((SortFieldImpl<?>) field).getNullsFirst())
+                ((SortFieldImpl<?>) field).getNullsLast())
                 return true;
 
         return false;

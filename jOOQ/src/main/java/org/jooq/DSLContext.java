@@ -217,6 +217,58 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     void transaction(TransactionalRunnable transactional);
 
+
+
+    /**
+     * Run a {@link TransactionalCallable} in the context of this
+     * <code>DSLContext</code>'s underlying {@link #configuration()}'s
+     * {@link Configuration#transactionProvider()}, and return the
+     * <code>transactional</code>'s outcome in a new {@link CompletionStage}
+     * that is asynchronously completed by a task running in the
+     * {@link ForkJoinPool#commonPool()}.
+     *
+     * @param transactional The transactional code
+     * @return The transactional outcome
+     */
+    <T> CompletionStage<T> transactionResultAsync(TransactionalCallable<T> transactional);
+
+    /**
+     * Run a {@link TransactionalRunnable} in the context of this
+     * <code>DSLContext</code>'s underlying {@link #configuration()}'s
+     * {@link Configuration#transactionProvider()}, and return the
+     * <code>transactional</code>'s outcome in a new {@link CompletionStage}
+     * that is asynchronously completed by a task running in the
+     * {@link ForkJoinPool#commonPool()}.
+     *
+     * @param transactional The transactional code
+     */
+    CompletionStage<Void> transactionAsync(TransactionalRunnable transactional);
+
+    /**
+     * Run a {@link TransactionalCallable} in the context of this
+     * <code>DSLContext</code>'s underlying {@link #configuration()}'s
+     * {@link Configuration#transactionProvider()}, and return the
+     * <code>transactional</code>'s outcome in a new {@link CompletionStage}
+     * that is asynchronously completed by a task running in the given executor.
+     *
+     * @param transactional The transactional code
+     * @return The transactional outcome
+     */
+    <T> CompletionStage<T> transactionResultAsync(Executor executor, TransactionalCallable<T> transactional);
+
+    /**
+     * Run a {@link TransactionalRunnable} in the context of this
+     * <code>DSLContext</code>'s underlying {@link #configuration()}'s
+     * {@link Configuration#transactionProvider()}, and return the
+     * <code>transactional</code>'s outcome in a new {@link CompletionStage}
+     * that is asynchronously completed by a task running in the given executor.
+     *
+     * @param transactional The transactional code
+     */
+    CompletionStage<Void> transactionAsync(Executor executor, TransactionalRunnable transactional);
+
+
+
     /**
      * Run a {@link ConnectionCallable} in the context of this
      * <code>DSLContext</code>'s underlying {@link #configuration()}'s

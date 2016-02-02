@@ -398,6 +398,30 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         });
     }
 
+
+
+    @Override
+    public CompletionStage<Void> transactionAsync(TransactionalRunnable transactional) {
+        return CompletableFuture.runAsync(() -> transaction(transactional));
+    }
+
+    @Override
+    public CompletionStage<Void> transactionAsync(Executor executor, TransactionalRunnable transactional) {
+        return CompletableFuture.runAsync(() -> transaction(transactional), executor);
+    }
+
+    @Override
+    public <T> CompletionStage<T> transactionResultAsync(TransactionalCallable<T> transactional) {
+        return CompletableFuture.supplyAsync(() -> transactionResult(transactional));
+    }
+
+    @Override
+    public <T> CompletionStage<T> transactionResultAsync(Executor executor, TransactionalCallable<T> transactional) {
+        return CompletableFuture.supplyAsync(() -> transactionResult(transactional), executor);
+    }
+
+
+
     @Override
     public <T> T connectionResult(ConnectionCallable<T> callable) {
         final Connection connection = configuration().connectionProvider().acquire();

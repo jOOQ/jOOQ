@@ -3778,7 +3778,12 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (pk != null) {
                 if (pk.getKeyColumns().size() == 1) {
-                    out.println("\t@%s", out.ref("javax.persistence.Id"));
+                    out.tab(1).println("@%s", out.ref("javax.persistence.Id"));
+
+                    if (pk.getKeyColumns().get(0).isIdentity())
+                        out.tab(1).println("@%s(strategy = %s.IDENTITY)",
+                            out.ref("javax.persistence.GeneratedValue"),
+                            out.ref("javax.persistence.GenerationType"));
                 }
             }
 

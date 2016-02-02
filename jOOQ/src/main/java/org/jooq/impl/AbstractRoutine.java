@@ -128,6 +128,10 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     private boolean                           hasDefaultedParameters;
     private boolean                           hasUnnamedParameters;
 
+
+
+
+
     // ------------------------------------------------------------------------
     // Call-data attributes (call-specific)
     // ------------------------------------------------------------------------
@@ -287,6 +291,9 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         else if (type == null) {
             return executeCallableStatement();
         }
+
+
+
 
 
 
@@ -772,6 +779,16 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     protected final boolean isOverloaded() {
         return overloaded;
     }
+
+
+
+
+
+
+
+
+
+
 
     private final boolean hasDefaultedParameters() {
         return hasDefaultedParameters && !inValuesDefaulted.isEmpty();

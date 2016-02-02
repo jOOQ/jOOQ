@@ -120,6 +120,7 @@ import org.jooq.util.GeneratorStrategy.Mode;
 // ...
 // ...
 // ...
+// ...
 import org.jooq.util.postgres.PostgresDatabase;
 
 
@@ -3993,6 +3994,15 @@ public class JavaGenerator extends AbstractGenerator {
             else
                 out.tab(2).println("setOverloaded(true);");
         }
+
+
+
+
+
+
+
+
+
 
         out.tab(1).println("}");
 

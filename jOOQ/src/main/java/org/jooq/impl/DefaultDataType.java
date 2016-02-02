@@ -71,6 +71,7 @@ import org.jooq.EnumType;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.UDTRecord;
+import org.jooq.exception.MappingException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.Convert;
 import org.jooq.types.Interval;
@@ -725,20 +726,23 @@ public class DefaultDataType<T> implements DataType<T> {
             if (result == null) {
 
                 // jOOQ data types are handled here
-                if (EnumType.class.isAssignableFrom(type)
-                     || UDTRecord.class.isAssignableFrom(type)
-
-
-
-                ) {
-
-                    for (SQLDialect d : SQLDialect.values()) {
-                        result = TYPES_BY_TYPE[d.ordinal()].get(type);
-
-                        if (result != null) {
-                            break;
-                        }
+                try {
+                    if (UDTRecord.class.isAssignableFrom(type)) {
+                        return (DataType<T>) ((UDTRecord<?>) type.newInstance()).getUDT().getDataType();
                     }
+
+
+
+
+
+
+
+                    else if (EnumType.class.isAssignableFrom(type)) {
+                        return (DataType<T>) SQLDataType.VARCHAR.asEnumDataType((Class<EnumType>) type);
+                    }
+                }
+                catch (Exception e) {
+                    throw new MappingException("Cannot create instance of " + type, e);
                 }
             }
 

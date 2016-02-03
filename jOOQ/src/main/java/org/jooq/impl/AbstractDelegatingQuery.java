@@ -135,6 +135,8 @@ abstract class AbstractDelegatingQuery<Q extends Query> extends AbstractQueryPar
         return delegate.execute();
     }
 
+
+
     @Override
     public final CompletionStage<Integer> executeAsync() {
         return delegate.executeAsync();
@@ -144,6 +146,8 @@ abstract class AbstractDelegatingQuery<Q extends Query> extends AbstractQueryPar
     public final CompletionStage<Integer> executeAsync(Executor executor) {
         return delegate.executeAsync(executor);
     }
+
+
 
     @Override
     public final boolean isExecutable() {

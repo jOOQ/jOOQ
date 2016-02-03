@@ -209,8 +209,6 @@ public abstract class AbstractDatabase implements Database {
             System.arraycopy(oldProviders, 0, newProviders, 0, oldProviders.length);
             newProviders[oldProviders.length] = new DefaultExecuteListenerProvider(new DefaultExecuteListener() {
 
-                StopWatch watch;
-
                 class SQLPerformanceWarning extends Exception {}
 
                 @Override
@@ -226,12 +224,12 @@ public abstract class AbstractDatabase implements Database {
 
                 @Override
                 public void executeStart(ExecuteContext ctx) {
-                    watch = new StopWatch();
+                    ctx.data("org.jooq.util.AbstractDatabase.watch", new StopWatch());
                 }
 
                 @Override
                 public void executeEnd(ExecuteContext ctx) {
-                    if (watch.split() > 5 * 1000 * 1000 * 1000)
+                    if (((StopWatch) ctx.data("org.jooq.util.AbstractDatabase.watch")).split() > 5 * 1000 * 1000 * 1000)
                         log.warn(
                             "Slow SQL",
                             "jOOQ Meta executed a slow query (slower than 5 seconds)"

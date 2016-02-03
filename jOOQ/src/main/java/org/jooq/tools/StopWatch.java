@@ -124,6 +124,24 @@ public final class StopWatch {
         }
     }
 
+    /**
+     * Split the time and warn log a message, if trace logging is enabled
+     */
+    public void splitWarn(String message) {
+        log.warn(message, splitMessage(0));
+    }
+
+    /**
+     * Split the time and warn log a message if the split time exceeds a
+     * certain threshold and if  trace logging is enabled
+     */
+    public void splitWarn(String message, long thresholdNano) {
+        String splitMessage = splitMessage(thresholdNano);
+
+        if (splitMessage != null)
+            log.warn(message, splitMessage);
+    }
+
     public long split() {
         return System.nanoTime() - start;
     }

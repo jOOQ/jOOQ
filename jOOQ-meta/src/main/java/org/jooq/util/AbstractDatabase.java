@@ -229,7 +229,11 @@ public abstract class AbstractDatabase implements Database {
 
                 @Override
                 public void executeEnd(ExecuteContext ctx) {
-                    if (((StopWatch) ctx.data("org.jooq.util.AbstractDatabase.watch")).split() > 5 * 1000 * 1000 * 1000)
+                    StopWatch watch = (StopWatch) ctx.data("org.jooq.util.AbstractDatabase.watch");
+
+                    if (watch.split() > 5L * 1000 * 1000 * 1000) {
+                        watch.splitWarn("Slow SQL");
+
                         log.warn(
                             "Slow SQL",
                             "jOOQ Meta executed a slow query (slower than 5 seconds)"
@@ -237,6 +241,7 @@ public abstract class AbstractDatabase implements Database {
                           + "Please report this bug here: https://github.com/jOOQ/jOOQ/issues/new\n\n"
                           + formatted(ctx.query()),
                             new SQLPerformanceWarning());
+                    }
                 }
 
                 @Override

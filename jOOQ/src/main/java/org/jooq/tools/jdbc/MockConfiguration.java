@@ -49,6 +49,7 @@ import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
 import org.jooq.ConverterProvider;
 import org.jooq.ExecuteListenerProvider;
+import org.jooq.ExecutorProvider;
 import org.jooq.RecordListenerProvider;
 import org.jooq.RecordMapperProvider;
 import org.jooq.SQLDialect;
@@ -99,6 +100,11 @@ public class MockConfiguration implements Configuration {
     @Override
     public ConnectionProvider connectionProvider() {
         return new MockConnectionProvider(delegate.connectionProvider(), provider);
+    }
+
+    @Override
+    public ExecutorProvider executorProvider() {
+        return delegate.executorProvider();
     }
 
     @Override
@@ -167,6 +173,11 @@ public class MockConfiguration implements Configuration {
     }
 
     @Override
+    public Configuration set(ExecutorProvider newExecutorProvider) {
+        return delegate.set(newExecutorProvider);
+    }
+
+    @Override
     public Configuration set(TransactionProvider newTransactionProvider) {
         return delegate.set(newTransactionProvider);
     }
@@ -214,6 +225,11 @@ public class MockConfiguration implements Configuration {
     @Override
     public Configuration derive(ConnectionProvider newConnectionProvider) {
         return delegate.derive(newConnectionProvider);
+    }
+
+    @Override
+    public Configuration derive(ExecutorProvider newExecutorProvider) {
+        return delegate.derive(newExecutorProvider);
     }
 
     @Override

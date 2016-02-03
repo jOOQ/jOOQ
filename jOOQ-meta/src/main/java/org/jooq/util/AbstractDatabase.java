@@ -58,6 +58,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 import javax.xml.bind.JAXB;
@@ -231,7 +232,7 @@ public abstract class AbstractDatabase implements Database {
                 public void executeEnd(ExecuteContext ctx) {
                     StopWatch watch = (StopWatch) ctx.data("org.jooq.util.AbstractDatabase.watch");
 
-                    if (watch.split() > 5L * 1000 * 1000 * 1000) {
+                    if (watch.split() > TimeUnit.SECONDS.toNanos(5L)) {
                         watch.splitWarn("Slow SQL");
 
                         log.warn(

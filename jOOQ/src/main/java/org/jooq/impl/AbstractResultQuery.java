@@ -326,7 +326,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final CompletionStage<Result<R>> fetchAsync() {
-        return CompletableFuture.supplyAsync(this::fetch);
+        return fetchAsync(Utils.configuration(this).executorProvider().provide());
     }
 
     @Override

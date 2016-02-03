@@ -60,6 +60,7 @@ import org.jooq.ConnectionProvider;
 import org.jooq.ConverterProvider;
 import org.jooq.DSLContext;
 import org.jooq.ExecuteListenerProvider;
+import org.jooq.ExecutorProvider;
 import org.jooq.RecordListenerProvider;
 import org.jooq.RecordMapperProvider;
 import org.jooq.SQLDialect;
@@ -91,6 +92,7 @@ public class DefaultConfiguration implements Configuration {
 
     // Non-serializable Configuration objects
     private transient ConnectionProvider        connectionProvider;
+    private transient ExecutorProvider          executorProvider;
     private transient TransactionProvider       transactionProvider;
     private transient RecordMapperProvider      recordMapperProvider;
     private transient RecordListenerProvider[]  recordListenerProviders;
@@ -134,6 +136,7 @@ public class DefaultConfiguration implements Configuration {
             null,
             null,
             null,
+            null,
             dialect,
             SettingsTools.defaultSettings(),
             null
@@ -151,6 +154,7 @@ public class DefaultConfiguration implements Configuration {
     DefaultConfiguration(Configuration configuration) {
         this(
             configuration.connectionProvider(),
+            configuration.executorProvider(),
             configuration.transactionProvider(),
             configuration.recordMapperProvider(),
             configuration.recordListenerProviders(),
@@ -169,8 +173,10 @@ public class DefaultConfiguration implements Configuration {
      * through reflection.
      *
      * @deprecated Use
-     *             {@link #DefaultConfiguration(ConnectionProvider, TransactionProvider, RecordMapperProvider, RecordListenerProvider[], ExecuteListenerProvider[], VisitListenerProvider[], SQLDialect, Settings, Map)}
-     *             instead. This constructor is maintained to provide jOOQ 3.0 backwards-compatibility if called with reflection from Spring configurations.
+     *             {@link #DefaultConfiguration(ConnectionProvider, ExecutorProvider, TransactionProvider, RecordMapperProvider, RecordListenerProvider[], ExecuteListenerProvider[], VisitListenerProvider[], ConverterProvider, SQLDialect, Settings, Map)}
+     *             instead. This constructor is maintained to provide jOOQ 3.2,
+     *             3.3, 3.7 backwards-compatibility if called with reflection
+     *             from Spring configurations.
      */
     @Deprecated
     DefaultConfiguration(
@@ -182,6 +188,7 @@ public class DefaultConfiguration implements Configuration {
     {
         this(
             connectionProvider,
+            null,
             null,
             null,
             null,
@@ -200,8 +207,10 @@ public class DefaultConfiguration implements Configuration {
      * through reflection.
      *
      * @deprecated Use
-     *             {@link #DefaultConfiguration(ConnectionProvider, TransactionProvider, RecordMapperProvider, RecordListenerProvider[], ExecuteListenerProvider[], VisitListenerProvider[], SQLDialect, Settings, Map)}
-     *             instead. This constructor is maintained to provide jOOQ 3.1 backwards-compatibility if called with reflection from Spring configurations.
+     *             {@link #DefaultConfiguration(ConnectionProvider, ExecutorProvider, TransactionProvider, RecordMapperProvider, RecordListenerProvider[], ExecuteListenerProvider[], VisitListenerProvider[], ConverterProvider, SQLDialect, Settings, Map)}
+     *             instead. This constructor is maintained to provide jOOQ 3.2,
+     *             3.3, 3.7 backwards-compatibility if called with reflection
+     *             from Spring configurations.
      */
     @Deprecated
     DefaultConfiguration(
@@ -214,6 +223,7 @@ public class DefaultConfiguration implements Configuration {
     {
         this(
             connectionProvider,
+            null,
             null,
             recordMapperProvider,
             null,
@@ -232,8 +242,10 @@ public class DefaultConfiguration implements Configuration {
      * through reflection.
      *
      * @deprecated Use
-     *             {@link #DefaultConfiguration(ConnectionProvider, TransactionProvider, RecordMapperProvider, RecordListenerProvider[], ExecuteListenerProvider[], VisitListenerProvider[], SQLDialect, Settings, Map)}
-     *             instead. This constructor is maintained to provide jOOQ 3.2, 3.3 backwards-compatibility if called with reflection from Spring configurations.
+     *             {@link #DefaultConfiguration(ConnectionProvider, ExecutorProvider, TransactionProvider, RecordMapperProvider, RecordListenerProvider[], ExecuteListenerProvider[], VisitListenerProvider[], ConverterProvider, SQLDialect, Settings, Map)}
+     *             instead. This constructor is maintained to provide jOOQ 3.2,
+     *             3.3, 3.7 backwards-compatibility if called with reflection
+     *             from Spring configurations.
      */
     @Deprecated
     DefaultConfiguration(
@@ -248,6 +260,7 @@ public class DefaultConfiguration implements Configuration {
     {
         this(
             connectionProvider,
+            null,
             null,
             recordMapperProvider,
             recordListenerProviders,
@@ -266,8 +279,10 @@ public class DefaultConfiguration implements Configuration {
      * through reflection.
      *
      * @deprecated Use
-     *             {@link #DefaultConfiguration(ConnectionProvider, TransactionProvider, RecordMapperProvider, RecordListenerProvider[], ExecuteListenerProvider[], VisitListenerProvider[], ConverterProvider, SQLDialect, Settings, Map)}
-     *             instead. This constructor is maintained to provide jOOQ 3.2, 3.3 backwards-compatibility if called with reflection from Spring configurations.
+     *             {@link #DefaultConfiguration(ConnectionProvider, ExecutorProvider, TransactionProvider, RecordMapperProvider, RecordListenerProvider[], ExecuteListenerProvider[], VisitListenerProvider[], ConverterProvider, SQLDialect, Settings, Map)}
+     *             instead. This constructor is maintained to provide jOOQ 3.2,
+     *             3.3, 3.7 backwards-compatibility if called with reflection
+     *             from Spring configurations.
      */
     @Deprecated
     DefaultConfiguration(
@@ -283,12 +298,52 @@ public class DefaultConfiguration implements Configuration {
     {
         this(
             connectionProvider,
+            null,
             transactionProvider,
             recordMapperProvider,
             recordListenerProviders,
             executeListenerProviders,
             visitListenerProviders,
             null,
+            dialect,
+            settings,
+            data
+        );
+    }
+
+    /**
+     * This constructor is maintained for backwards-compatibility reasons.
+     * Spring users tend to construct this <code>DefaultConfiguration</code>
+     * through reflection.
+     *
+     * @deprecated Use
+     *             {@link #DefaultConfiguration(ConnectionProvider, ExecutorProvider, TransactionProvider, RecordMapperProvider, RecordListenerProvider[], ExecuteListenerProvider[], VisitListenerProvider[], ConverterProvider, SQLDialect, Settings, Map)}
+     *             instead. This constructor is maintained to provide jOOQ 3.2,
+     *             3.3, 3.7 backwards-compatibility if called with reflection
+     *             from Spring configurations.
+     */
+    @Deprecated
+    DefaultConfiguration(
+        ConnectionProvider connectionProvider,
+        TransactionProvider transactionProvider,
+        RecordMapperProvider recordMapperProvider,
+        RecordListenerProvider[] recordListenerProviders,
+        ExecuteListenerProvider[] executeListenerProviders,
+        VisitListenerProvider[] visitListenerProviders,
+        ConverterProvider converterProvider,
+        SQLDialect dialect,
+        Settings settings,
+        Map<Object, Object> data)
+    {
+        this(
+            connectionProvider,
+            null,
+            transactionProvider,
+            recordMapperProvider,
+            recordListenerProviders,
+            executeListenerProviders,
+            visitListenerProviders,
+            converterProvider,
             dialect,
             settings,
             data
@@ -305,6 +360,7 @@ public class DefaultConfiguration implements Configuration {
      */
     DefaultConfiguration(
         ConnectionProvider connectionProvider,
+        ExecutorProvider executorProvider,
         TransactionProvider transactionProvider,
         RecordMapperProvider recordMapperProvider,
         RecordListenerProvider[] recordListenerProviders,
@@ -316,6 +372,7 @@ public class DefaultConfiguration implements Configuration {
         Map<Object, Object> data)
     {
         set(connectionProvider);
+        set(executorProvider);
         set(transactionProvider);
         set(recordMapperProvider);
         set(recordListenerProviders);
@@ -365,6 +422,27 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(ConnectionProvider newConnectionProvider) {
         return new DefaultConfiguration(
             newConnectionProvider,
+            executorProvider,
+            transactionProvider,
+            recordMapperProvider,
+            recordListenerProviders,
+            executeListenerProviders,
+            visitListenerProviders,
+            converterProvider,
+            dialect,
+            settings,
+            data
+        );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Configuration derive(ExecutorProvider newExecutorProvider) {
+        return new DefaultConfiguration(
+            connectionProvider,
+            newExecutorProvider,
             transactionProvider,
             recordMapperProvider,
             recordListenerProviders,
@@ -384,6 +462,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(TransactionProvider newTransactionProvider) {
         return new DefaultConfiguration(
             connectionProvider,
+            executorProvider,
             newTransactionProvider,
             recordMapperProvider,
             recordListenerProviders,
@@ -403,6 +482,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(RecordMapperProvider newRecordMapperProvider) {
         return new DefaultConfiguration(
             connectionProvider,
+            executorProvider,
             transactionProvider,
             newRecordMapperProvider,
             recordListenerProviders,
@@ -422,6 +502,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(RecordListenerProvider... newRecordListenerProviders) {
         return new DefaultConfiguration(
             connectionProvider,
+            executorProvider,
             transactionProvider,
             recordMapperProvider,
             newRecordListenerProviders,
@@ -441,6 +522,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(ExecuteListenerProvider... newExecuteListenerProviders) {
         return new DefaultConfiguration(
             connectionProvider,
+            executorProvider,
             transactionProvider,
             recordMapperProvider,
             recordListenerProviders,
@@ -460,6 +542,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(VisitListenerProvider... newVisitListenerProviders) {
         return new DefaultConfiguration(
             connectionProvider,
+            executorProvider,
             transactionProvider,
             recordMapperProvider,
             recordListenerProviders,
@@ -479,6 +562,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(ConverterProvider newConverterProvider) {
         return new DefaultConfiguration(
             connectionProvider,
+            executorProvider,
             transactionProvider,
             recordMapperProvider,
             recordListenerProviders,
@@ -498,6 +582,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(SQLDialect newDialect) {
         return new DefaultConfiguration(
             connectionProvider,
+            executorProvider,
             transactionProvider,
             recordMapperProvider,
             recordListenerProviders,
@@ -517,6 +602,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(Settings newSettings) {
         return new DefaultConfiguration(
             connectionProvider,
+            executorProvider,
             transactionProvider,
             recordMapperProvider,
             recordListenerProviders,
@@ -558,6 +644,15 @@ public class DefaultConfiguration implements Configuration {
             ? newConnectionProvider
             : new NoConnectionProvider();
 
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Configuration set(ExecutorProvider newExecutorProvider) {
+        this.executorProvider = newExecutorProvider;
         return this;
     }
 
@@ -675,6 +770,13 @@ public class DefaultConfiguration implements Configuration {
     }
 
     /**
+     * @see #set(ExecutorProvider)
+     */
+    public final void setExecutorProvider(ExecutorProvider newExecutorProvider) {
+        set(newExecutorProvider);
+    }
+
+    /**
      * @see #set(TransactionProvider)
      */
     public final void setTransactionProvider(TransactionProvider newTransactionProvider) {
@@ -737,6 +839,16 @@ public class DefaultConfiguration implements Configuration {
         // local DefaultConnectionProvider, not the one from this configuration
         ConnectionProvider transactional = (ConnectionProvider) data(DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION);
         return transactional == null ? connectionProvider : transactional;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final ExecutorProvider executorProvider() {
+        return executorProvider != null
+             ? executorProvider
+             : new DefaultExecutorProvider();
     }
 
     /**

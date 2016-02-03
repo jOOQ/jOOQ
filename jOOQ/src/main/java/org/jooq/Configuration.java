@@ -44,6 +44,8 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.Savepoint;
 import java.util.Map;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ForkJoinPool;
 
 import javax.sql.DataSource;
 
@@ -227,6 +229,31 @@ public interface Configuration extends Serializable {
     ConnectionProvider connectionProvider();
 
     /**
+     * Get this configuration's underlying executor provider.
+     * <p>
+     * Asynchronous operations will call back to this SPI to obtain an executor.
+     * This applies, for example, to {@link ResultQuery#fetchAsync()}.
+     * <p>
+     * The following logic is applied when resolving the appropriate
+     * <code>executor</code>:
+     * <ol>
+     * <li>If {@link Configuration#executorProvider()} does not return
+     * <code>null</code>, then {@link ExecutorProvider#provide()} is called to
+     * obtain an <code>Executor</code> for the asynchronous task.</li>
+     * <li>In the jOOQ Java 8 distribution, {@link ForkJoinPool#commonPool()} is
+     * used if <code>{@link ForkJoinPool#getCommonPoolParallelism()} > 1</code>
+     * </li>
+     * <li>A new "one thread per call" <code>Executor</code> is used in any
+     * other case.</li>
+     * </ol>
+     * <p>
+     * The SPI will not be called if an asynchronous operation explicitly
+     * overrides the {@link Executor}, e.g. as is the case for
+     * {@link ResultQuery#fetchAsync(Executor)}.
+     */
+    ExecutorProvider executorProvider();
+
+    /**
      * Get this configuration's underlying transaction provider.
      * <p>
      * If no explicit transaction provider was specified, and if
@@ -346,6 +373,18 @@ public interface Configuration extends Serializable {
      * @return The changed configuration.
      */
     Configuration set(ConnectionProvider newConnectionProvider);
+
+    /**
+     * Change this configuration to hold a new executor provider.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newExecutorProvider The new executor provider to be contained in
+     *            the changed configuration.
+     * @return The changed configuration.
+     */
+    Configuration set(ExecutorProvider newExecutorProvider);
 
     /**
      * Change this configuration to hold a new connection wrapped in a
@@ -492,6 +531,16 @@ public interface Configuration extends Serializable {
      * @return The derived configuration.
      */
     Configuration derive(ConnectionProvider newConnectionProvider);
+
+    /**
+     * Create a derived configuration from this one, with a new executor
+     * provider.
+     *
+     * @param newExecutorProvider The new executor provider to be contained in
+     *            the derived configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(ExecutorProvider newExecutorProvider);
 
     /**
      * Create a derived configuration from this one, with a new connection

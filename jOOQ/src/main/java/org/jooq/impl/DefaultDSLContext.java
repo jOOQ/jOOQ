@@ -402,7 +402,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CompletionStage<Void> transactionAsync(TransactionalRunnable transactional) {
-        return CompletableFuture.runAsync(() -> transaction(transactional));
+        return transactionAsync(Utils.configuration(configuration()).executorProvider().provide(), transactional);
     }
 
     @Override
@@ -412,7 +412,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <T> CompletionStage<T> transactionResultAsync(TransactionalCallable<T> transactional) {
-        return CompletableFuture.supplyAsync(() -> transactionResult(transactional));
+        return transactionResultAsync(Utils.configuration(configuration()).executorProvider().provide(), transactional);
     }
 
     @Override
@@ -1030,22 +1030,22 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CompletionStage<Result<Record>> fetchAsync(ResultSet rs) {
-        return CompletableFuture.supplyAsync(() -> fetch(rs));
+        return fetchAsync(Utils.configuration(configuration()).executorProvider().provide(), rs);
     }
 
     @Override
     public CompletionStage<Result<Record>> fetchAsync(ResultSet rs, Field<?>... fields) {
-        return CompletableFuture.supplyAsync(() -> fetch(rs, fields));
+        return fetchAsync(Utils.configuration(configuration()).executorProvider().provide(), rs, fields);
     }
 
     @Override
     public CompletionStage<Result<Record>> fetchAsync(ResultSet rs, DataType<?>... types) {
-        return CompletableFuture.supplyAsync(() -> fetch(rs, types));
+        return fetchAsync(Utils.configuration(configuration()).executorProvider().provide(), rs, types);
     }
 
     @Override
     public CompletionStage<Result<Record>> fetchAsync(ResultSet rs, Class<?>... types) {
-        return CompletableFuture.supplyAsync(() -> fetch(rs, types));
+        return fetchAsync(Utils.configuration(configuration()).executorProvider().provide(), rs, types);
     }
 
     @Override

@@ -111,7 +111,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * In order to keep open {@link ResultSet}s and fetch records lazily, use
      * {@link #fetchLazy()} instead and then operate on {@link Cursor}.
      *
-     * @return The result.
+     * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
     Result<R> fetch() throws DataAccessException;
@@ -131,7 +131,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * but not for result fetching. The returned <code>ResultSet</code> can also
      * be used with {@link DSLContext#fetch(ResultSet)}.
      *
-     * @return The result.
+     * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
     ResultSet fetchResultSet() throws DataAccessException;
@@ -199,7 +199,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * <p>
      * Client code is responsible for closing the cursor after use.
      *
-     * @return The resulting cursor.
+     * @return The resulting cursor. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see #fetchLazy(int)
      */
@@ -241,7 +241,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
      * to override this behaviour.
      *
-     * @return The resulting records
+     * @return The resulting records. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
     Results fetchMany() throws DataAccessException;
@@ -253,7 +253,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * This is the same as calling {@link #fetch()} and then
      * {@link Result#getValues(Field)}
      *
-     * @return The resulting values.
+     * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
     <T> List<T> fetch(Field<T> field) throws DataAccessException;
@@ -265,7 +265,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * This is the same as calling {@link #fetch()} and then
      * {@link Result#getValues(Field, Class)}
      *
-     * @return The resulting values.
+     * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Record#getValue(Field, Class)
      */
@@ -278,7 +278,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * This is the same as calling {@link #fetch()} and then
      * {@link Result#getValues(Field, Converter)}
      *
-     * @return The resulting values.
+     * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Record#getValue(Field, Converter)
      */
@@ -291,7 +291,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * This is the same as calling {@link #fetch()} and then
      * {@link Result#getValues(int)}
      *
-     * @return The resulting values.
+     * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
     List<?> fetch(int fieldIndex) throws DataAccessException;
@@ -303,7 +303,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * This is the same as calling {@link #fetch()} and then
      * {@link Result#getValues(int, Class)}
      *
-     * @return The resulting values.
+     * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Record#getValue(int, Class)
      */
@@ -316,7 +316,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * This is the same as calling {@link #fetch()} and then
      * {@link Result#getValues(int, Converter)}
      *
-     * @return The resulting values.
+     * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Record#getValue(int, Converter)
      */
@@ -329,7 +329,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * This is the same as calling {@link #fetch()} and then
      * {@link Result#getValues(String)}
      *
-     * @return The resulting values.
+     * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
     List<?> fetch(String fieldName) throws DataAccessException;
@@ -341,7 +341,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * This is the same as calling {@link #fetch()} and then
      * {@link Result#getValues(String, Class)}
      *
-     * @return The resulting values.
+     * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Record#getValue(String, Class)
      */
@@ -354,7 +354,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * This is the same as calling {@link #fetch()} and then
      * {@link Result#getValues(String, Converter)}
      *
-     * @return The resulting values.
+     * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Record#getValue(String, Converter)
      */
@@ -367,7 +367,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * This is the same as calling {@link #fetch()} and then
      * {@link Result#getValues(Name)}
      *
-     * @return The resulting values.
+     * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
     List<?> fetch(Name fieldName) throws DataAccessException;
@@ -379,7 +379,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * This is the same as calling {@link #fetch()} and then
      * {@link Result#getValues(Name, Class)}
      *
-     * @return The resulting values.
+     * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Record#getValue(Name, Class)
      */
@@ -392,7 +392,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * This is the same as calling {@link #fetch()} and then
      * {@link Result#getValues(Name, Converter)}
      *
-     * @return The resulting values.
+     * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Record#getValue(Name, Converter)
      */
@@ -1170,7 +1170,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * Execute the query and return the generated result as a list of name/value
      * maps.
      *
-     * @return The result.
+     * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the key field returned two or more
      *             equal values from the result set.
@@ -1194,7 +1194,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param <K> The key's generic field type
      * @param key The key field. Client code must assure that this field is
      *            unique in the result set.
-     * @return A Map containing the results
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the key field returned two or more
      *             equal values from the result set.
@@ -1216,7 +1217,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @param keyFieldIndex The key field. Client code must assure that this
      *            field is unique in the result set.
-     * @return A Map containing the results
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the key field returned two or more
      *             equal values from the result set.
@@ -1238,7 +1240,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @param keyFieldName The key field. Client code must assure that this
      *            field is unique in the result set.
-     * @return A Map containing the results
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the key field returned two or more
      *             equal values from the result set.
@@ -1260,7 +1263,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @param keyFieldName The key field. Client code must assure that this
      *            field is unique in the result set.
-     * @return A Map containing the results
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the key field returned two or more
      *             equal values from the result set.
@@ -1281,7 +1285,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param key The key field. Client code must assure that this field is
      *            unique in the result set.
      * @param value The value field
-     * @return A Map containing the results
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the key field returned two or more
      *             equal values from the result set.
@@ -1300,7 +1305,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param keyFieldIndex The key field. Client code must assure that this
      *            field is unique in the result set.
      * @param valueFieldIndex The value field
-     * @return A Map containing the results
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the key field returned two or more
      *             equal values from the result set.
@@ -1319,7 +1325,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param keyFieldName The key field. Client code must assure that this
      *            field is unique in the result set.
      * @param valueFieldName The value field
-     * @return A Map containing the results
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the key field returned two or more
      *             equal values from the result set.
@@ -1338,7 +1345,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param keyFieldName The key field. Client code must assure that this
      *            field is unique in the result set.
      * @param valueFieldName The value field
-     * @return A Map containing the results
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the key field returned two or more
      *             equal values from the result set.
@@ -1356,7 +1364,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @param keys The keys. Client code must assure that keys are unique in the
      *            result set.
-     * @return A Map containing the results.
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the key list is non-unique in the
      *             result set.
@@ -1374,7 +1383,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @param keyFieldIndexes The keys. Client code must assure that keys are
      *            unique in the result set.
-     * @return A Map containing the results.
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the key list is non-unique in the
      *             result set.
@@ -1392,7 +1402,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @param keyFieldNames The keys. Client code must assure that keys are
      *            unique in the result set.
-     * @return A Map containing the results.
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the key list is non-unique in the
      *             result set.
@@ -1410,7 +1421,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @param keyFieldNames The keys. Client code must assure that keys are
      *            unique in the result set.
-     * @return A Map containing the results.
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the key list is non-unique in the
      *             result set.
@@ -1430,7 +1442,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *            result set. If this is <code>null</code> or an empty array,
      *            the resulting map will contain at most one entry.
      * @param type The entity type.
-     * @return A Map containing the results.
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the keys are non-unique in the result
      *             set.
@@ -1453,7 +1466,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *            unique in the result set. If this is <code>null</code> or an
      *            empty array, the resulting map will contain at most one entry.
      * @param type The entity type.
-     * @return A Map containing the results.
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the keys are non-unique in the result
      *             set.
@@ -1477,7 +1491,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *            unique in the result set. If this is <code>null</code> or an
      *            empty array, the resulting map will contain at most one entry.
      * @param type The entity type.
-     * @return A Map containing the results.
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the keys are non-unique in the result
      *             set.
@@ -1501,7 +1516,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *            unique in the result set. If this is <code>null</code> or an
      *            empty array, the resulting map will contain at most one entry.
      * @param type The entity type.
-     * @return A Map containing the results.
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the keys are non-unique in the result
      *             set.
@@ -1525,7 +1541,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *            result set. If this is <code>null</code> or an empty array,
      *            the resulting map will contain at most one entry.
      * @param mapper The mapper callback.
-     * @return A Map containing the results.
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the keys are non-unique in the result
      *             set.
@@ -1549,7 +1566,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *            unique in the result set. If this is <code>null</code> or an
      *            empty array, the resulting map will contain at most one entry.
      * @param mapper The mapper callback.
-     * @return A Map containing the results.
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the keys are non-unique in the result
      *             set.
@@ -1573,7 +1591,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *            unique in the result set. If this is <code>null</code> or an
      *            empty array, the resulting map will contain at most one entry.
      * @param mapper The mapper callback.
-     * @return A Map containing the results.
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the keys are non-unique in the result
      *             set.
@@ -1597,7 +1616,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *            unique in the result set. If this is <code>null</code> or an
      *            empty array, the resulting map will contain at most one entry.
      * @param mapper The mapper callback.
-     * @return A Map containing the results.
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the keys are non-unique in the result
      *             set.
@@ -1623,7 +1643,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @param keyType The key type. If this is <code>null</code>, the resulting
      *            map will contain at most one entry.
-     * @return A Map containing grouped results
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      * @throws InvalidResultException if the key list is non-unique in the
@@ -1649,7 +1670,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param keyType The key type. If this is <code>null</code>, the resulting
      *            map will contain at most one entry.
      * @param valueType The value type.
-     * @return A Map containing grouped results
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      * @throws InvalidResultException if the key list is non-unique in the
@@ -1675,7 +1697,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param keyType The key type. If this is <code>null</code>, the resulting
      *            map will contain at most one entry.
      * @param valueMapper The value mapper.
-     * @return A Map containing grouped results
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      * @throws InvalidResultException if the key list is non-unique in the
@@ -1699,7 +1722,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * your keys are non-unique.
      *
      * @param keyMapper The key mapper.
-     * @return A Map containing grouped results
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      * @throws InvalidResultException if the key list is non-unique in the
@@ -1724,7 +1748,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @param keyMapper The key mapper.
      * @param valueType The value type.
-     * @return A Map containing grouped results
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      * @throws InvalidResultException if the key list is non-unique in the
@@ -1749,7 +1774,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @param keyMapper The key mapper.
      * @param valueMapper The value mapper.
-     * @return A Map containing grouped results
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      * @throws InvalidResultException if the key list is non-unique in the
@@ -1770,7 +1796,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @param table The key table. Client code must assure that keys are unique
      *            in the result set. May not be <code>null</code>.
-     * @return A Map containing the results.
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the key list is non-unique in the
      *             result set.
@@ -1789,7 +1816,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param table The key table. Client code must assure that keys are unique
      *            in the result set. May not be <code>null</code>.
      * @param type The entity type.
-     * @return A Map containing the results.
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the keys are non-unique in the result
      *             set.
@@ -1812,7 +1840,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param table The key table. Client code must assure that keys are unique
      *            in the result set. May not be <code>null</code>.
      * @param mapper The mapper callback.
-     * @return A Map containing the results.
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the keys are non-unique in the result
      *             set.
@@ -1835,7 +1864,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param key The key. Client code must assure that key is unique in the
      *            result set.
      * @param type The entity type.
-     * @return A Map containing the result.
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the key is non-unique in the result
      *             set.
@@ -1854,7 +1884,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param keyFieldIndex The key. Client code must assure that key is unique
      *            in the result set.
      * @param type The entity type.
-     * @return A Map containing the result.
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the key is non-unique in the result
      *             set.
@@ -1873,7 +1904,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param keyFieldName The key. Client code must assure that key is unique
      *            in the result set.
      * @param type The entity type.
-     * @return A Map containing the result.
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the key is non-unique in the result
      *             set.
@@ -1892,7 +1924,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param keyFieldName The key. Client code must assure that key is unique
      *            in the result set.
      * @param type The entity type.
-     * @return A Map containing the result.
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the key is non-unique in the result
      *             set.
@@ -1911,7 +1944,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param key The key. Client code must assure that key is unique in the
      *            result set.
      * @param mapper The mapper callback.
-     * @return A Map containing the result.
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the key is non-unique in the result
      *             set.
@@ -1930,7 +1964,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param keyFieldIndex The key. Client code must assure that key is unique
      *            in the result set.
      * @param mapper The mapper callback.
-     * @return A Map containing the result.
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the key is non-unique in the result
      *             set.
@@ -1949,7 +1984,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param keyFieldName The key. Client code must assure that key is unique
      *            in the result set.
      * @param mapper The mapper callback.
-     * @return A Map containing the result.
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the key is non-unique in the result
      *             set.
@@ -1968,7 +2004,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param keyFieldName The key. Client code must assure that key is unique
      *            in the result set.
      * @param mapper The mapper callback.
-     * @return A Map containing the result.
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws InvalidResultException if the key is non-unique in the result
      *             set.
@@ -1989,7 +2026,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @param <K> The key's generic field type
      * @param key The key field.
-     * @return A Map containing the results
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(Field)
      */
@@ -2007,7 +2045,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * behaviour.
      *
      * @param keyFieldIndex The key field index.
-     * @return A Map containing the results
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(int)
      */
@@ -2025,7 +2064,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * behaviour.
      *
      * @param keyFieldName The key field name.
-     * @return A Map containing the results
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(String)
      */
@@ -2043,7 +2083,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * behaviour.
      *
      * @param keyFieldName The key field name.
-     * @return A Map containing the results
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(Name)
      */
@@ -2060,7 +2101,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param <V> The value's generic field type
      * @param key The key field.
      * @param value The value field
-     * @return A Map containing the results
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(Field, Field)
      */
@@ -2075,7 +2117,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @param keyFieldIndex The key field index.
      * @param valueFieldIndex The value field index.
-     * @return A Map containing the results
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(int, int)
      */
@@ -2090,7 +2133,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @param keyFieldName The key field name.
      * @param valueFieldName The value field name.
-     * @return A Map containing the results
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(String, String)
      */
@@ -2105,7 +2149,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @param keyFieldName The key field name.
      * @param valueFieldName The value field name.
-     * @return A Map containing the results
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(Name, Name)
      */
@@ -2121,7 +2166,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param keys The keys used for result grouping. If this is
      *            <code>null</code> or an empty array, the resulting map will
      *            contain at most one entry.
-     * @return A Map containing grouped results
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(Field[])
      */
@@ -2137,7 +2183,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param keyFieldIndexes The keys used for result grouping. If this is
      *            <code>null</code> or an empty array, the resulting map will
      *            contain at most one entry.
-     * @return A Map containing grouped results
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(int[])
      */
@@ -2153,7 +2200,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param keyFieldNames The keys used for result grouping. If this is
      *            <code>null</code> or an empty array, the resulting map will
      *            contain at most one entry.
-     * @return A Map containing grouped results
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(String[])
      */
@@ -2169,7 +2217,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param keyFieldNames The keys used for result grouping. If this is
      *            <code>null</code> or an empty array, the resulting map will
      *            contain at most one entry.
-     * @return A Map containing grouped results
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(Name[])
      */
@@ -2185,7 +2234,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param keys The keys. If this is <code>null</code> or an empty array, the
      *            resulting map will contain at most one entry.
      * @param type The entity type.
-     * @return A Map containing grouped results
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
@@ -2204,7 +2254,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param keyFieldIndexes The keys. If this is <code>null</code> or an empty
      *            array, the resulting map will contain at most one entry.
      * @param type The entity type.
-     * @return A Map containing grouped results
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
@@ -2223,7 +2274,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param keyFieldNames The keys. If this is <code>null</code> or an empty
      *            array, the resulting map will contain at most one entry.
      * @param type The entity type.
-     * @return A Map containing grouped results
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
@@ -2242,7 +2294,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param keyFieldNames The keys. If this is <code>null</code> or an empty
      *            array, the resulting map will contain at most one entry.
      * @param type The entity type.
-     * @return A Map containing grouped results
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
@@ -2261,7 +2314,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param keys The keys. If this is <code>null</code> or an empty array, the
      *            resulting map will contain at most one entry.
      * @param mapper The mapper callback.
-     * @return A Map containing grouped results
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
@@ -2280,7 +2334,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param keyFieldIndexes The keys. If this is <code>null</code> or an empty
      *            array, the resulting map will contain at most one entry.
      * @param mapper The mapper callback.
-     * @return A Map containing grouped results
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
@@ -2300,7 +2355,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param keyFieldNames The keys. If this is <code>null</code> or an empty
      *            array, the resulting map will contain at most one entry.
      * @param mapper The mapper callback.
-     * @return A Map containing grouped results
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
@@ -2320,7 +2376,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param keyFieldNames The keys. If this is <code>null</code> or an empty
      *            array, the resulting map will contain at most one entry.
      * @param mapper The mapper callback.
-     * @return A Map containing grouped results
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
@@ -2343,7 +2400,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @param keyType The key type. If this is <code>null</code>, the resulting
      *            map will contain at most one entry.
-     * @return A Map containing grouped results
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
@@ -2364,7 +2422,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param keyType The key type. If this is <code>null</code>, the resulting
      *            map will contain at most one entry.
      * @param valueType The value type.
-     * @return A Map containing grouped results
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
@@ -2386,7 +2445,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param keyType The key type. If this is <code>null</code>, the resulting
      *            map will contain at most one entry.
      * @param valueMapper The value mapper.
-     * @return A Map containing grouped results
+     * @return A Map containing grouped results. This will never be
+     *         <code>null</code>.
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
@@ -2406,7 +2466,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * for non-unique keys in the result set.
      *
      * @param keyMapper The key mapper.
-     * @return A Map containing grouped results
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
@@ -2426,7 +2487,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @param keyMapper The key mapper.
      * @param valueType The value type.
-     * @return A Map containing grouped results
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
@@ -2447,7 +2509,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @param keyMapper The key mapper.
      * @param valueMapper The value mapper.
-     * @return A Map containing grouped results
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
@@ -2463,7 +2526,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * in the result set.
      *
      * @param table The key table. May not be <code>null</code>.
-     * @return A Map containing grouped results
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(Field[])
      */
@@ -2478,7 +2542,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @param table The key table. May not be <code>null</code>.
      * @param type The entity type.
-     * @return A Map containing grouped results
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
@@ -2497,7 +2562,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @param table The key table. May not be <code>null</code>.
      * @param mapper The mapper callback.
-     * @return A Map containing grouped results
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
@@ -2515,6 +2581,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param <E> The generic entity type.
      * @param key The key field.
      * @param type The entity type.
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
@@ -2530,6 +2598,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @param keyFieldIndex The key field index.
      * @param type The entity type.
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
@@ -2545,6 +2615,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @param keyFieldName The key field name.
      * @param type The entity type.
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
@@ -2560,6 +2632,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @param keyFieldName The key field name.
      * @param type The entity type.
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
@@ -2577,6 +2651,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param <E> The generic entity type.
      * @param key The key field.
      * @param mapper The mapper callback.
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
@@ -2592,6 +2668,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @param keyFieldIndex The key field index.
      * @param mapper The mapper callback.
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
@@ -2607,6 +2685,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @param keyFieldName The key field name.
      * @param mapper The mapper callback.
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
@@ -2622,6 +2702,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @param keyFieldName The key field name.
      * @param mapper The mapper callback.
+     * @return A Map containing the results. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
@@ -2637,7 +2719,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * You can access data like this
      * <code><pre>query.fetchArray()[recordIndex][fieldIndex]</pre></code>
      *
-     * @return The result.
+     * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArrays()
      */
@@ -2647,7 +2729,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * Execute the query and return the generated result as an array of records.
      * <p>
      *
-     * @return The result.
+     * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#toArray(Object[])
      */
@@ -2662,7 +2744,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @return The resulting values. This may be an array type more concrete
      *         than <code>Object[]</code>, depending on whether jOOQ has any
-     *         knowledge about <code>fieldIndex</code>'s actual type.
+     *         knowledge about <code>fieldIndex</code>'s actual type. This will
+     *         never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(int)
      */
@@ -2675,7 +2758,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * You can access data like this
      * <code><pre>query.fetchArray(fieldIndex)[recordIndex]</pre></code>
      *
-     * @return The resulting values.
+     * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(int, Class)
      */
@@ -2688,7 +2771,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * You can access data like this
      * <code><pre>query.fetchArray(fieldIndex)[recordIndex]</pre></code>
      *
-     * @return The resulting values.
+     * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(int, Converter)
      */
@@ -2703,7 +2786,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @return The resulting values. This may be an array type more concrete
      *         than <code>Object[]</code>, depending on whether jOOQ has any
-     *         knowledge about <code>fieldName</code>'s actual type.
+     *         knowledge about <code>fieldName</code>'s actual type. This will
+     *         never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(String)
      */
@@ -2716,7 +2800,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * You can access data like this
      * <code><pre>query.fetchArray(fieldName)[recordIndex]</pre></code>
      *
-     * @return The resulting values.
+     * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(String, Converter)
      */
@@ -2729,7 +2813,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * You can access data like this
      * <code><pre>query.fetchArray(fieldName)[recordIndex]</pre></code>
      *
-     * @return The resulting values.
+     * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(String, Class)
      */
@@ -2744,7 +2828,8 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @return The resulting values. This may be an array type more concrete
      *         than <code>Object[]</code>, depending on whether jOOQ has any
-     *         knowledge about <code>fieldName</code>'s actual type.
+     *         knowledge about <code>fieldName</code>'s actual type. This will
+     *         never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Name)
      */
@@ -2757,7 +2842,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * You can access data like this
      * <code><pre>query.fetchArray(fieldName)[recordIndex]</pre></code>
      *
-     * @return The resulting values.
+     * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Name, Converter)
      */
@@ -2770,7 +2855,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * You can access data like this
      * <code><pre>query.fetchArray(fieldName)[recordIndex]</pre></code>
      *
-     * @return The resulting values.
+     * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Name, Class)
      */
@@ -2783,7 +2868,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * You can access data like this
      * <code><pre>query.fetchArray(field)[recordIndex]</pre></code>
      *
-     * @return The resulting values.
+     * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Field)
      */
@@ -2796,7 +2881,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * You can access data like this
      * <code><pre>query.fetchArray(field)[recordIndex]</pre></code>
      *
-     * @return The resulting values.
+     * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Field, Class)
      */
@@ -2809,7 +2894,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * You can access data like this
      * <code><pre>query.fetchArray(field)[recordIndex]</pre></code>
      *
-     * @return The resulting values.
+     * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Field, Converter)
      */
@@ -2819,7 +2904,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * Execute the query and return all values for a field index from the
      * generated result.
      *
-     * @return The resulting values.
+     * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(int)
      */
@@ -2829,7 +2914,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * Execute the query and return all values for a field index from the
      * generated result.
      *
-     * @return The resulting values.
+     * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(int, Class)
      */
@@ -2839,7 +2924,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * Execute the query and return all values for a field index from the
      * generated result.
      *
-     * @return The resulting values.
+     * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(int, Converter)
      */
@@ -2849,7 +2934,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * Execute the query and return all values for a field name from the
      * generated result.
      *
-     * @return The resulting values.
+     * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(String)
      */
@@ -2859,7 +2944,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * Execute the query and return all values for a field name from the
      * generated result.
      *
-     * @return The resulting values.
+     * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(String, Converter)
      */
@@ -2869,7 +2954,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * Execute the query and return all values for a field name from the
      * generated result.
      *
-     * @return The resulting values.
+     * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(String, Class)
      */
@@ -2879,7 +2964,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * Execute the query and return all values for a field name from the
      * generated result.
      *
-     * @return The resulting values.
+     * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Name)
      */
@@ -2889,7 +2974,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * Execute the query and return all values for a field name from the
      * generated result.
      *
-     * @return The resulting values.
+     * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Name, Converter)
      */
@@ -2899,7 +2984,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * Execute the query and return all values for a field name from the
      * generated result.
      *
-     * @return The resulting values.
+     * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Name, Class)
      */
@@ -2909,7 +2994,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * Execute the query and return all values for a field from the generated
      * result.
      *
-     * @return The resulting values.
+     * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Field)
      */
@@ -2919,7 +3004,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * Execute the query and return all values for a field from the generated
      * result.
      *
-     * @return The resulting values.
+     * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Field, Class)
      */
@@ -2929,7 +3014,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * Execute the query and return all values for a field from the generated
      * result.
      *
-     * @return The resulting values.
+     * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Field, Converter)
      */
@@ -2945,6 +3030,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @param type The entity type.
      * @see Record#into(Class)
      * @see Result#into(Class)
+     * @return The results. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
@@ -2964,6 +3050,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @param <Z> The generic table record type.
      * @param table The table type.
+     * @return The results. This will never be <code>null</code>.
      * @see Record#into(Table)
      * @see Result#into(Table)
      * @throws DataAccessException if something went wrong executing the query
@@ -2987,7 +3074,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * Fetch results into a custom mapper callback.
      *
      * @param mapper The mapper callback
-     * @return The custom mapped records
+     * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
     <E> List<E> fetch(RecordMapper<? super R, E> mapper) throws DataAccessException;
@@ -2996,12 +3083,18 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     /**
      * Fetch results in a new {@link CompletionStage} that is asynchronously
      * completed by a task running in the {@link ForkJoinPool#commonPool()}.
+     *
+     * @return The completion stage. The completed result will never be
+     *         <code>null</code>.
      */
     CompletionStage<Result<R>> fetchAsync();
 
     /**
      * Fetch results in a new {@link CompletionStage} that is asynchronously
      * completed by a task running in the given executor.
+     *
+     * @return The completion stage. The completed result will never be
+     *         <code>null</code>.
      */
     CompletionStage<Result<R>> fetchAsync(Executor executor);
 

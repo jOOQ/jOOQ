@@ -578,9 +578,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * escape literals when concatenated into SQL clauses!
      *
      * @param sql The SQL
-     * @return The results from the executed query. This is never
-     *         <code>null</code>, even if the database returns no
-     *         {@link ResultSet}
+     * @return The results from the executed query. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see SQL
      */
@@ -606,9 +605,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * escape literals when concatenated into SQL clauses!
      *
      * @param sql The SQL
-     * @return The results from the executed query. This is never
-     *         <code>null</code>, even if the database returns no
-     *         {@link ResultSet}
+     * @return The results from the executed query. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see SQL
      */
@@ -638,9 +636,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param sql The SQL
      * @param bindings The bindings
-     * @return The results from the executed query. This is never
-     *         <code>null</code>, even if the database returns no
-     *         {@link ResultSet}
+     * @return The results from the executed query. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see SQL
      */
@@ -672,7 +668,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *            parts can be injected
      * @param parts The {@link QueryPart} objects that are rendered at the
      *            {numbered placeholder} locations
-     * @return The results from the executed query
+     * @return The results from the executed query. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see SQL
      */
@@ -704,9 +701,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * escape literals when concatenated into SQL clauses!
      *
      * @param sql The SQL
-     * @return The results from the executed query. This is never
-     *         <code>null</code>, even if the database returns no
-     *         {@link ResultSet}
+     * @return The cursor. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see SQL
      */
@@ -738,9 +733,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * escape literals when concatenated into SQL clauses!
      *
      * @param sql The SQL
-     * @return The results from the executed query. This is never
-     *         <code>null</code>, even if the database returns no
-     *         {@link ResultSet}
+     * @return The cursor. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see SQL
      */
@@ -776,9 +769,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param sql The SQL
      * @param bindings The bindings
-     * @return The results from the executed query. This is never
-     *         <code>null</code>, even if the database returns no
-     *         {@link ResultSet}
+     * @return The cursor. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see SQL
      */
@@ -816,9 +807,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *            parts can be injected
      * @param parts The {@link QueryPart} objects that are rendered at the
      *            {numbered placeholder} locations
-     * @return The results from the executed query. This is never
-     *         <code>null</code>, even if the database returns no
-     *         {@link ResultSet}
+     * @return The cursor. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see SQL
      */
@@ -847,9 +836,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * escape literals when concatenated into SQL clauses!
      *
      * @param sql The SQL
-     * @return The results from the executed query. This is never
-     *         <code>null</code>, even if the database returns no
-     *         {@link ResultSet}
+     * @return The completion stage. The completed result will never be
+     *         <code>null</code>.
      * @see SQL
      */
     @Support
@@ -875,9 +863,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * escape literals when concatenated into SQL clauses!
      *
      * @param sql The SQL
-     * @return The results from the executed query. This is never
-     *         <code>null</code>, even if the database returns no
-     *         {@link ResultSet}
+     * @return The completion stage. The completed result will never be
+     *         <code>null</code>.
      * @see SQL
      */
     @Support
@@ -907,9 +894,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param sql The SQL
      * @param bindings The bindings
-     * @return The results from the executed query. This is never
-     *         <code>null</code>, even if the database returns no
-     *         {@link ResultSet}
+     * @return The completion stage. The completed result will never be
+     *         <code>null</code>.
      * @see SQL
      */
     @Support
@@ -941,10 +927,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *            parts can be injected
      * @param parts The {@link QueryPart} objects that are rendered at the
      *            {numbered placeholder} locations
-     * @return The results from the executed query. This is never
-     *         <code>null</code>, even if the database returns no
-     *         {@link ResultSet}
-     * @throws DataAccessException if something went wrong executing the query
+     * @return The completion stage. The completed result will never be
+     *         <code>null</code>.
      * @see SQL
      */
     @Support
@@ -970,9 +954,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * escape literals when concatenated into SQL clauses!
      *
      * @param sql The SQL
-     * @return The results from the executed query. This is never
-     *         <code>null</code>, even if the database returns no
-     *         {@link ResultSet}
+     * @return The completion stage. The completed result will never be
+     *         <code>null</code>.
      * @see SQL
      */
     @Support
@@ -998,9 +981,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * escape literals when concatenated into SQL clauses!
      *
      * @param sql The SQL
-     * @return The results from the executed query. This is never
-     *         <code>null</code>, even if the database returns no
-     *         {@link ResultSet}
+     * @return The completion stage. The completed result will never be
+     *         <code>null</code>.
      * @see SQL
      */
     @Support
@@ -1030,9 +1012,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param sql The SQL
      * @param bindings The bindings
-     * @return The results from the executed query. This is never
-     *         <code>null</code>, even if the database returns no
-     *         {@link ResultSet}
+     * @return The completion stage. The completed result will never be
+     *         <code>null</code>.
      * @see SQL
      */
     @Support
@@ -1064,10 +1045,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *            parts can be injected
      * @param parts The {@link QueryPart} objects that are rendered at the
      *            {numbered placeholder} locations
-     * @return The results from the executed query. This is never
-     *         <code>null</code>, even if the database returns no
-     *         {@link ResultSet}
-     * @throws DataAccessException if something went wrong executing the query
+     * @return The completion stage. The completed result will never be
+     *         <code>null</code>.
      * @see SQL
      */
     @Support
@@ -1236,9 +1215,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * escape literals when concatenated into SQL clauses!
      *
      * @param sql The SQL
-     * @return The results from the executed query. This is never
-     *         <code>null</code>, even if the database returns no
-     *         {@link ResultSet}
+     * @return The results. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see SQL
      */
@@ -1261,9 +1238,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * escape literals when concatenated into SQL clauses!
      *
      * @param sql The SQL
-     * @return The results from the executed query. This is never
-     *         <code>null</code>, even if the database returns no
-     *         {@link ResultSet}
+     * @return The results. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see SQL
      */
@@ -1290,9 +1265,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param sql The SQL
      * @param bindings The bindings
-     * @return The results from the executed query. This is never
-     *         <code>null</code>, even if the database returns no
-     *         {@link ResultSet}
+     * @return The results. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see SQL
      */
@@ -1325,7 +1298,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *            parts can be injected
      * @param parts The {@link QueryPart} objects that are rendered at the
      *            {numbered placeholder} locations
-     * @return The results from the executed query
+     * @return The results. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see SQL
      */
@@ -1351,7 +1324,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * escape literals when concatenated into SQL clauses!
      *
      * @param sql The SQL
-     * @return The results from the executed query.
+     * @return The record or <code>null</code>, if no record was found.
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      * @see SQL
@@ -1378,7 +1351,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * escape literals when concatenated into SQL clauses!
      *
      * @param sql The SQL
-     * @return The results from the executed query.
+     * @return The record or <code>null</code>, if no record was found.
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      * @see SQL
@@ -1409,8 +1382,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param sql The SQL
      * @param bindings The bindings
-     * @return The results from the executed query. This may be
-     *         <code>null</code> if the database returned no records
+     * @return The record or <code>null</code>, if no record was found.
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      * @see SQL
@@ -1443,8 +1415,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *            parts can be injected
      * @param parts The {@link QueryPart} objects that are rendered at the
      *            {numbered placeholder} locations
-     * @return The results from the executed query. This may be
-     *         <code>null</code> if the database returned no records
+     * @return The record or <code>null</code>, if no record was found.
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      * @see SQL
@@ -1591,8 +1562,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * escape literals when concatenated into SQL clauses!
      *
      * @param sql The SQL
-     * @return The result value from the executed query. This may be
-     *         <code>null</code> if the database returned no records
+     * @return The value or <code>null</code>, if no record was found.
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      * @throws InvalidResultException if the query returned a record with more
@@ -1621,8 +1591,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * escape literals when concatenated into SQL clauses!
      *
      * @param sql The SQL
-     * @return The result value from the executed query. This may be
-     *         <code>null</code> if the database returned no records
+     * @return The value or <code>null</code>, if no record was found.
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      * @throws InvalidResultException if the query returned a record with more
@@ -1655,8 +1624,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param sql The SQL
      * @param bindings The bindings
-     * @return The results from the executed query. This may be
-     *         <code>null</code> if the database returned no records
+     * @return The value or <code>null</code>, if no record was found.
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      * @throws InvalidResultException if the query returned a record with more
@@ -1691,8 +1659,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *            parts can be injected
      * @param parts The {@link QueryPart} objects that are rendered at the
      *            {numbered placeholder} locations
-     * @return The results from the executed query. This may be
-     *         <code>null</code> if the database returned no records
+     * @return The value or <code>null</code>, if no record was found.
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      * @throws InvalidResultException if the query returned a record with more
@@ -1849,8 +1816,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * escape literals when concatenated into SQL clauses!
      *
      * @param sql The SQL
-     * @return The result values from the executed query. This is never
-     *         <code>null</code>.
+     * @return The values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see SQL
      */
@@ -1876,8 +1842,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * escape literals when concatenated into SQL clauses!
      *
      * @param sql The SQL
-     * @return The result values from the executed query. This is never
-     *         <code>null</code>.
+     * @return The values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see SQL
      */
@@ -1907,8 +1872,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param sql The SQL
      * @param bindings The bindings
-     * @return The results from the executed query. This is never
-     *         <code>null</code>.
+     * @return The values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see SQL
      */
@@ -1940,8 +1904,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *            parts can be injected
      * @param parts The {@link QueryPart} objects that are rendered at the
      *            {numbered placeholder} locations
-     * @return The results from the executed query. This is never
-     *         <code>null</code>.
+     * @return The values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see SQL
      */
@@ -2222,7 +2185,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * <code>Result</code> at once.
      *
      * @param rs The JDBC ResultSet to fetch data from
-     * @return The resulting jOOQ Result
+     * @return The resulting jOOQ Result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
@@ -2243,7 +2206,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param rs The JDBC ResultSet to fetch data from
      * @param fields The fields to use in the desired output
-     * @return The resulting jOOQ Result
+     * @return The resulting jOOQ Result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
@@ -2264,7 +2227,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param rs The JDBC ResultSet to fetch data from
      * @param types The data types to use in the desired output
-     * @return The resulting jOOQ Result
+     * @return The resulting jOOQ Result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
@@ -2285,7 +2248,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param rs The JDBC ResultSet to fetch data from
      * @param types The data types to use in the desired output
-     * @return The resulting jOOQ Result
+     * @return The resulting jOOQ Result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
@@ -2299,7 +2262,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * was more than one resulting record.
      *
      * @param rs The JDBC ResultSet to fetch data from
-     * @return The resulting jOOQ record
+     * @return The record or <code>null</code>, if no record was found.
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
@@ -2318,7 +2281,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param rs The JDBC ResultSet to fetch data from
      * @param fields The fields to use in the desired output
-     * @return The resulting jOOQ record
+     * @return The record or <code>null</code>, if no record was found.
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
@@ -2337,7 +2300,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param rs The JDBC ResultSet to fetch data from
      * @param types The data types to use in the desired output
-     * @return The resulting jOOQ record
+     * @return The record or <code>null</code>, if no record was found.
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
@@ -2356,7 +2319,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param rs The JDBC ResultSet to fetch data from
      * @param types The data types to use in the desired output
-     * @return The resulting jOOQ record
+     * @return The record or <code>null</code>, if no record was found.
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
@@ -2445,7 +2408,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * was more than one resulting record.
      *
      * @param rs The JDBC ResultSet to fetch data from
-     * @return The resulting value
+     * @return The value or <code>null</code>, if no record was found.
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      * @throws InvalidResultException if the query returned a record with more
@@ -2466,7 +2429,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param rs The JDBC ResultSet to fetch data from
      * @param field The field to use in the desired output
-     * @return The resulting value
+     * @return The value or <code>null</code>, if no record was found.
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      * @throws InvalidResultException if the query returned a record with more
@@ -2487,7 +2450,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param rs The JDBC ResultSet to fetch data from
      * @param type The data type to use in the desired output
-     * @return The resulting value
+     * @return The value or <code>null</code>, if no record was found.
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      * @throws InvalidResultException if the query returned a record with more
@@ -2508,7 +2471,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param rs The JDBC ResultSet to fetch data from
      * @param type The data types to use in the desired output
-     * @return The resulting value
+     * @return The value or <code>null</code>, if no record was found.
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      * @throws InvalidResultException if the query returned a record with more
@@ -2604,7 +2567,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * contained column's values.
      *
      * @param rs The JDBC ResultSet to fetch data from
-     * @return The resulting values
+     * @return The values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
@@ -2619,7 +2582,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param rs The JDBC ResultSet to fetch data from
      * @param field The field to use in the desired output
-     * @return The resulting values
+     * @return The values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
@@ -2634,7 +2597,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param rs The JDBC ResultSet to fetch data from
      * @param type The data type to use in the desired output
-     * @return The resulting values
+     * @return The values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
@@ -2649,7 +2612,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param rs The JDBC ResultSet to fetch data from
      * @param type The data types to use in the desired output
-     * @return The resulting values
+     * @return The values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
@@ -2662,7 +2625,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * into a jOOQ <code>Result</code> at once.
      *
      * @param rs The JDBC ResultSet to fetch data from
-     * @return The resulting jOOQ Result
+     * @return The cursor. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
@@ -2679,7 +2642,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param rs The JDBC ResultSet to fetch data from
      * @param fields The fields to use in the desired output
-     * @return The resulting jOOQ Result
+     * @return The cursor. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
@@ -2696,7 +2659,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param rs The JDBC ResultSet to fetch data from
      * @param types The data types to use in the desired output
-     * @return The resulting jOOQ Result
+     * @return The cursor. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
@@ -2713,7 +2676,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param rs The JDBC ResultSet to fetch data from
      * @param types The data types to use in the desired output
-     * @return The resulting jOOQ Result
+     * @return The cursor. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
@@ -2726,7 +2689,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * completed by a task running in the {@link ForkJoinPool#commonPool()}.
      *
      * @param rs The JDBC ResultSet to fetch data from
-     * @return The resulting jOOQ Result
+     * @return The completion stage. The completed result will never be
+     *         <code>null</code>.
      */
     @Support
     CompletionStage<Result<Record>> fetchAsync(ResultSet rs);
@@ -2740,8 +2704,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param rs The JDBC ResultSet to fetch data from
      * @param fields The fields to use in the desired output
-     * @return The resulting jOOQ Result
-     * @throws DataAccessException if something went wrong executing the query
+     * @return The completion stage. The completed result will never be
+     *         <code>null</code>.
      */
     @Support
     CompletionStage<Result<Record>> fetchAsync(ResultSet rs, Field<?>... fields);
@@ -2755,8 +2719,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param rs The JDBC ResultSet to fetch data from
      * @param types The data types to use in the desired output
-     * @return The resulting jOOQ Result
-     * @throws DataAccessException if something went wrong executing the query
+     * @return The completion stage. The completed result will never be
+     *         <code>null</code>.
      */
     @Support
     CompletionStage<Result<Record>> fetchAsync(ResultSet rs, DataType<?>... types);
@@ -2770,8 +2734,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param rs The JDBC ResultSet to fetch data from
      * @param types The data types to use in the desired output
-     * @return The resulting jOOQ Result
-     * @throws DataAccessException if something went wrong executing the query
+     * @return The completion stage. The completed result will never be
+     *         <code>null</code>.
      */
     @Support
     CompletionStage<Result<Record>> fetchAsync(ResultSet rs, Class<?>... types);
@@ -2781,7 +2745,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * completed by a task running in the given executor.
      *
      * @param rs The JDBC ResultSet to fetch data from
-     * @return The resulting jOOQ Result
+     * @return The completion stage. The completed result will never be
+     *         <code>null</code>.
      */
     @Support
     CompletionStage<Result<Record>> fetchAsync(Executor executor, ResultSet rs);
@@ -2795,8 +2760,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param rs The JDBC ResultSet to fetch data from
      * @param fields The fields to use in the desired output
-     * @return The resulting jOOQ Result
-     * @throws DataAccessException if something went wrong executing the query
+     * @return The completion stage. The completed result will never be
+     *         <code>null</code>.
      */
     @Support
     CompletionStage<Result<Record>> fetchAsync(Executor executor, ResultSet rs, Field<?>... fields);
@@ -2810,8 +2775,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param rs The JDBC ResultSet to fetch data from
      * @param types The data types to use in the desired output
-     * @return The resulting jOOQ Result
-     * @throws DataAccessException if something went wrong executing the query
+     * @return The completion stage. The completed result will never be
+     *         <code>null</code>.
      */
     @Support
     CompletionStage<Result<Record>> fetchAsync(Executor executor, ResultSet rs, DataType<?>... types);
@@ -2825,8 +2790,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param rs The JDBC ResultSet to fetch data from
      * @param types The data types to use in the desired output
-     * @return The resulting jOOQ Result
-     * @throws DataAccessException if something went wrong executing the query
+     * @return The completion stage. The completed result will never be
+     *         <code>null</code>.
      */
     @Support
     CompletionStage<Result<Record>> fetchAsync(Executor executor, ResultSet rs, Class<?>... types);
@@ -2903,7 +2868,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * This is the same as calling <code>fetchFromTXT(string, "{null}")</code>
      *
      * @param string The formatted string
-     * @return The transformed result
+     * @return The transformed result. This will never be <code>null</code>.
      * @see #fetchFromTXT(String, String)
      * @throws DataAccessException If the supplied string does not adhere to the
      *             above format rules.
@@ -2966,7 +2931,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @param string The formatted string
      * @param nullLiteral The string literal to be used as <code>null</code>
      *            value.
-     * @return The transformed result
+     * @return The transformed result. This will never be <code>null</code>.
      * @throws DataAccessException If the supplied string does not adhere to the
      *             above format rules.
      */
@@ -3007,7 +2972,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * </pre>
      *
      * @param string The HTML-formatted string.
-     * @return The transformed result
+     * @return The transformed result. This will never be <code>null</code>.
      * @throws DataAccessException If the supplied string does not adhere to the
      *             above format rules.
      */
@@ -3036,7 +3001,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * <code>Strings</code>
      *
      * @param string The CSV string
-     * @return The transformed result
+     * @return The transformed result. This will never be <code>null</code>.
      * @throws DataAccessException If anything went wrong parsing the CSV file
      * @see #fetchFromCSV(String, char)
      */
@@ -3065,7 +3030,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param string The CSV string
      * @param delimiter The delimiter to expect between records
-     * @return The transformed result
+     * @return The transformed result. This will never be <code>null</code>.
      * @throws DataAccessException If anything went wrong parsing the CSV file
      * @see #fetchFromCSV(String)
      * @see #fetchFromStringData(List)
@@ -3095,7 +3060,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param string The CSV string
      * @param header Whether to parse the first line as a CSV header line
-     * @return The transformed result
+     * @return The transformed result. This will never be <code>null</code>.
      * @throws DataAccessException If anything went wrong parsing the CSV file
      * @see #fetchFromCSV(String, char)
      */
@@ -3124,7 +3089,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @param string The CSV string
      * @param header Whether to parse the first line as a CSV header line
      * @param delimiter The delimiter to expect between records
-     * @return The transformed result
+     * @return The transformed result. This will never be <code>null</code>.
      * @throws DataAccessException If anything went wrong parsing the CSV file
      * @see #fetchFromCSV(String)
      * @see #fetchFromStringData(List)
@@ -3151,7 +3116,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * <code>Strings</code>
      *
      * @param string The JSON string
-     * @return The transformed result
+     * @return The transformed result. This will never be <code>null</code>.
      * @throws DataAccessException If anything went wrong parsing the JSON file
      */
     @Support
@@ -3172,7 +3137,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * <code>null</code>.
      *
      * @param data The data to be transformed into a <code>Result</code>
-     * @return The transformed result
+     * @return The transformed result. This will never be <code>null</code>.
      * @see #fetchFromStringData(List)
      */
     Result<Record> fetchFromStringData(String[]... data);
@@ -3192,7 +3157,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * <code>null</code>.
      *
      * @param data The data to be transformed into a <code>Result</code>
-     * @return The transformed result
+     * @return The transformed result. This will never be <code>null</code>.
      */
     Result<Record> fetchFromStringData(List<String[]> data);
 
@@ -3211,7 +3176,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @param data The data to be transformed into a <code>Result</code>
      * @param header Whether to interpret the first line as a set of column
      *            names.
-     * @return The transformed result
+     * @return The transformed result. This will never be <code>null</code>.
      */
     Result<Record> fetchFromStringData(List<String[]> data, boolean header);
 
@@ -8196,7 +8161,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * results.
      *
      * @param query The query to execute
-     * @return The result
+     * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see ResultQuery#fetch()
      */
@@ -8207,7 +8172,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * a cursor.
      *
      * @param query The query to execute
-     * @return The cursor
+     * @return The cursor. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see ResultQuery#fetchLazy()
      */
@@ -8220,7 +8185,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * completed by a task running in the {@link ForkJoinPool#commonPool()}.
      *
      * @param query The query to execute
-     * @return The result
+     * @return The completion stage. The completed result will never be
+     *         <code>null</code>.
      * @see ResultQuery#fetchAsync()
      */
     <R extends Record> CompletionStage<Result<R>> fetchAsync(ResultQuery<R> query);
@@ -8230,7 +8196,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * completed by a task running in the given executor.
      *
      * @param query The query to execute
-     * @return The result
+     * @return The completion stage. The completed result will never be
+     *         <code>null</code>.
      * @see ResultQuery#fetchAsync()
      */
     <R extends Record> CompletionStage<Result<R>> fetchAsync(Executor executor, ResultQuery<R> query);
@@ -8252,7 +8219,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * a cursor.
      *
      * @param query The query to execute
-     * @return The results
+     * @return The results. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see ResultQuery#fetchMany()
      */
@@ -8263,7 +8230,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * a record.
      *
      * @param query The query to execute
-     * @return The record
+     * @return The record or <code>null</code>, if no record was found.
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      * @see ResultQuery#fetchOne()
@@ -8289,7 +8256,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * <code>DSLContext</code> and return a single value.
      *
      * @param query The query to execute
-     * @return The value.
+     * @return The value or <code>null</code>, if no record was found.
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      * @throws InvalidResultException if the query returned a record with more
@@ -8303,7 +8270,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * <code>DSLContext</code> and return a single value.
      *
      * @param field The field for which to fetch a single value.
-     * @return The value.
+     * @return The value or <code>null</code>, if no record was found.
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      * @throws InvalidResultException if the query returned a record with more
@@ -8344,7 +8311,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * <code>DSLContext</code> and return all values for the only column.
      *
      * @param query The query to execute
-     * @return The values.
+     * @return The values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
     <T, R extends Record1<T>> List<T> fetchValues(ResultQuery<R> query) throws DataAccessException;
@@ -8353,7 +8320,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Fetch all values in a given {@link Table}'s {@link TableField}
      *
      * @param field The field for which to fetch all values.
-     * @return The values.
+     * @return The values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
     <T> List<T> fetchValues(TableField<?, T> field) throws DataAccessException;
@@ -8469,6 +8436,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
      * to override this behaviour.
      *
+     * @return The results from the executed query. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
@@ -8482,6 +8451,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
      * to override this behaviour.
      *
+     * @return The results from the executed query. This will never be
+     *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
@@ -8495,7 +8466,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * default. Use {@link Settings#isAttachRecords()} to override this
      * behaviour.
      *
-     * @return The record or <code>null</code> if no record was returned
+     * @return The record or <code>null</code>, if no record was found.
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
@@ -8510,7 +8481,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * default. Use {@link Settings#isAttachRecords()} to override this
      * behaviour.
      *
-     * @return The record or <code>null</code> if no record was returned
+     * @return The record or <code>null</code>, if no record was found.
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
@@ -8585,6 +8556,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
      * to override this behaviour.
      *
+     * @return The cursor. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
@@ -8598,6 +8570,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
      * to override this behaviour.
      *
+     * @return The cursor. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
     @Support
@@ -8612,6 +8585,9 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
      * to override this behaviour.
+     *
+     * @return The completion stage. The completed result will never be
+     *         <code>null</code>.
      */
     @Support
     <R extends Record> CompletionStage<Result<R>> fetchAsync(Table<R> table);
@@ -8623,6 +8599,9 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
      * to override this behaviour.
+     *
+     * @return The completion stage. The completed result will never be
+     *         <code>null</code>.
      */
     @Support
     <R extends Record> CompletionStage<Result<R>> fetchAsync(Table<R> table, Condition condition);
@@ -8634,6 +8613,9 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
      * to override this behaviour.
+     *
+     * @return The completion stage. The completed result will never be
+     *         <code>null</code>.
      */
     @Support
     <R extends Record> CompletionStage<Result<R>> fetchAsync(Executor executor, Table<R> table);
@@ -8645,6 +8627,9 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
      * to override this behaviour.
+     *
+     * @return The completion stage. The completed result will never be
+     *         <code>null</code>.
      */
     @Support
     <R extends Record> CompletionStage<Result<R>> fetchAsync(Executor executor, Table<R> table, Condition condition);

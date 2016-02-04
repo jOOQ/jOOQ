@@ -189,6 +189,7 @@ import org.jooq.OrderedAggregateFunctionOfDeferredType;
 import org.jooq.Param;
 import org.jooq.PlainSQL;
 import org.jooq.QuantifiedSelect;
+import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -6569,6 +6570,26 @@ public class DSL {
     @Support
     public static <T> Field<T> field(Name name, DataType<T> type) {
         return new QualifiedField<T>(name, type);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Queries
+    // -------------------------------------------------------------------------
+
+    /**
+     * Wrap a collection of queries.
+     */
+    @Support
+    public static Queries queries(Query... queries) {
+        return queries(Arrays.asList(queries));
+    }
+
+    /**
+     * Wrap a collection of queries.
+     */
+    @Support
+    public static Queries queries(Collection<? extends Query> queries) {
+        return new QueriesImpl(queries);
     }
 
 

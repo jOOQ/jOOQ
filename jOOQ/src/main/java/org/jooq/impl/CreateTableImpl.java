@@ -128,6 +128,12 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
         return this;
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final CreateTableColumnStep column(Field<?> field) {
+        return column((Field) field, field.getDataType());
+    }
+
     @Override
     public final <T> CreateTableColumnStep column(Field<T> field, DataType<T> type) {
         columnFields.add(field);

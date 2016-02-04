@@ -48,6 +48,16 @@ package org.jooq;
 public interface CreateTableColumnStep extends CreateTableConstraintStep {
 
     /**
+     * Add a column to the column list of the <code>CREATE TABLE</code>
+     * statement.
+     * <p>
+     * This is the same as calling {@link #column(Field, DataType)} with
+     * {@link Field#getDataType()} as the argument data type.
+     */
+    @Support
+    CreateTableColumnStep column(Field<?> field);
+
+    /**
      * Add a column to the column list of the <code>CREATE TABLE</code> statement.
      */
     @Support

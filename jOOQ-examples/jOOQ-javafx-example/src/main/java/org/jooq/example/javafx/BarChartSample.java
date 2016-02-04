@@ -45,52 +45,189 @@ import static java.util.stream.Collectors.toList;
 import static javafx.collections.FXCollections.observableArrayList;
 import static org.jooq.example.db.h2.Tables.COUNTRIES;
 import static org.jooq.impl.DSL.avg;
-import static org.jooq.impl.DSL.fieldByName;
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.DSL.table;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
+import java.util.stream.Stream;
 
+import org.jooq.DSLContext;
+import org.jooq.Field;
+import org.jooq.Record;
+import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.conf.Settings;
 import org.jooq.example.db.h2.tables.records.CountriesRecord;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.tools.jdbc.JDBCUtils;
 
 import javafx.application.Application;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.ListChangeListener.Change;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 
 @SuppressWarnings("restriction")
 public class BarChartSample extends Application {
 
-    Connection connection;
+    Connection      connection;
+    CountriesRecord selected;
 
     @Override
     public void start(Stage stage) {
         stage.setTitle("Country statistics with jOOQ and JavaFX");
+        Label error = new Label("");
+        error.setPadding(new Insets(10.0));
 
         // Create two charts, plotting a specific metric, each.
         BarChart<String, Number> chart1 = chart(COUNTRIES.GDP_PER_CAPITA, "GDP per Capita", "USD");
         BarChart<String, Number> chart2 = chart(COUNTRIES.GOVT_DEBT, "Government Debt", "% of GDP");
 
-        GridPane pane = new GridPane();
-        pane.addColumn(0, chart1, chart2);
+        TableView<CountriesRecord> table = table(COUNTRIES);
 
-        Scene scene = new Scene(pane, 500, 800);
+        Runnable refresh = () -> {
+            table.getItems().clear();
+            table.getItems().addAll(ctx().fetch(COUNTRIES).sortAsc(COUNTRIES.YEAR).sortAsc(COUNTRIES.CODE));
+
+            chartRefresh(chart1);
+            chartRefresh(chart2);
+
+            error.setText("");
+            selected = ctx().newRecord(COUNTRIES);
+        };
+
+        refresh.run();
+
+        table.getSelectionModel().getSelectedItems().addListener((Change<? extends CountriesRecord> c) -> {
+            if (c.getList().isEmpty())
+                selected = ctx().newRecord(COUNTRIES);
+            else
+                for (CountriesRecord record : c.getList())
+                    selected = record;
+        });
+
+        GridPane editPane = new GridPane();
+        int i = 0;
+        for (Field<?> field : COUNTRIES.fields()) {
+            Label label = new Label(field.getName());
+            TextField textField = new TextField();
+
+            textField.textProperty().addListener((o, oldV, newV) -> {
+                selected.setValue((Field) field, newV);
+            });
+
+            table.getSelectionModel().getSelectedItems().addListener((Change<? extends CountriesRecord> c) -> {
+                if (c.getList().isEmpty())
+                    textField.setText("");
+                else
+                    for (CountriesRecord record : c.getList())
+                        textField.setText(record.getValue(field, String.class));
+            });
+
+            editPane.addRow(i++, label, textField);
+        }
+
+        Button saveButton = new Button("Save");
+        saveButton.setOnAction(event -> {
+            try {
+                if (selected.store() > 0)
+                    refresh.run();
+            }
+            catch (DataAccessException e) {
+                e.printStackTrace();
+                error.setText(e.sqlStateClass() + ": " + e.getCause().getMessage());
+            }
+        });
+
+        Button deleteButton = new Button("Delete");
+        deleteButton.setOnAction(event -> {
+            try {
+                if (selected.delete() > 0)
+                    refresh.run();
+            }
+            catch (DataAccessException e) {
+                e.printStackTrace();
+                error.setText(e.sqlStateClass() + ": " + e.getCause().getMessage());
+            }
+        });
+
+        GridPane buttonPane = new GridPane();
+        buttonPane.addRow(0, saveButton, deleteButton);
+
+        editPane.addRow(i++, new Label(""), buttonPane);
+
+        GridPane chartPane = new GridPane();
+        chartPane.addColumn(0, chart1, chart2);
+        grow(chartPane);
+
+        GridPane display = new GridPane();
+        display.addRow(0, chartPane, table, editPane);
+        grow(display);
+
+        GridPane displayAndStatus = new GridPane();
+        displayAndStatus.addColumn(0, display, error);
+        displayAndStatus.setGridLinesVisible(true);
+        grow(displayAndStatus);
+
+
+        Scene scene = new Scene(displayAndStatus, 1000, 800);
         stage.setScene(scene);
         stage.show();
     }
 
-    private BarChart<String, Number> chart(TableField<CountriesRecord, BigDecimal> field, String title, String yAxisLabel) {
+    private DSLContext ctx() {
+        return DSL.using(connection, new Settings().withUpdatablePrimaryKeys(true));
+    }
+
+    private void grow(GridPane pane) {
+        ColumnConstraints col = new ColumnConstraints();
+        col.setFillWidth(true);
+        col.setHgrow(Priority.ALWAYS);
+        pane.getColumnConstraints().add(col);
+
+        RowConstraints row = new RowConstraints();
+        row.setFillHeight(true);
+        row.setVgrow(Priority.ALWAYS);
+        pane.getRowConstraints().add(row);
+    }
+
+    private <R extends Record> TableView<R> table(Table<R> table) {
+        TableView<R> view = new TableView<>();
+
+        view.setEditable(true);
+        view.getColumns().addAll(
+            Stream.of(table.fields())
+                  .map(f -> {
+                      TableColumn<R, Object> column = new TableColumn<>(f.getName());
+                      column.setCellValueFactory(d -> new SimpleObjectProperty<>(d.getValue().getValue(f)));
+                      return column;
+                  })
+                  .collect(toList())
+        );
+
+        return view;
+    }
+
+    private BarChart<String, Number> chart(TableField<CountriesRecord, ? extends Number> field, String title, String yAxisLabel) {
         CategoryAxis xAxis = new CategoryAxis();
         NumberAxis yAxis = new NumberAxis();
         xAxis.setLabel("Country");
@@ -98,28 +235,37 @@ public class BarChartSample extends Application {
 
         BarChart<String, Number> bc = new BarChart<>(xAxis, yAxis);
         bc.setTitle(title);
+        bc.setUserData(field);
+
+        return bc;
+    }
+
+    private BarChart<String, Number> chartRefresh(BarChart<String, Number> bc) {
+        TableField<CountriesRecord, Number> field = (TableField<CountriesRecord, Number>) bc.getUserData();
+
+        bc.getData().clear();
         bc.getData().addAll(
 
             // SQL data transformation, executed in the database
             // -------------------------------------------------
-            DSL.using(connection)
+            ctx()
                .select(
                    COUNTRIES.YEAR,
                    COUNTRIES.CODE,
                    field)
                .from(COUNTRIES)
                .join(
-                   table(
+                   DSL.table(
                        select(COUNTRIES.CODE, avg(field).as("avg"))
                        .from(COUNTRIES)
                        .groupBy(COUNTRIES.CODE)
                    ).as("c1")
                )
-               .on(COUNTRIES.CODE.eq(fieldByName(String.class, "c1", COUNTRIES.CODE.getName())))
+               .on(COUNTRIES.CODE.eq(field(name("c1", COUNTRIES.CODE.getName()), String.class)))
 
                // order countries by their average projected value
                .orderBy(
-                   fieldByName("avg"),
+                   field(name("avg")),
                    COUNTRIES.CODE,
                    COUNTRIES.YEAR)
 
@@ -163,7 +309,7 @@ public class BarChartSample extends Application {
         // If you're using PostgreSQL any commercial database, you could have
         // also taken advantage of window functions, which would have greatly
         // simplified the above SQL query:
-        DSL.using(connection)
+        ctx()
            .select(
                COUNTRIES.YEAR,
                COUNTRIES.CODE,

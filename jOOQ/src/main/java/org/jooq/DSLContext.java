@@ -6872,7 +6872,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createTemporaryTable(String)
      */
-    @Support({ POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     CreateTableAsStep<Record> createTemporaryTable(String table);
 
     /**
@@ -6880,7 +6880,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createTemporaryTable(Name)
      */
-    @Support({ POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     CreateTableAsStep<Record> createTemporaryTable(Name table);
 
     /**
@@ -6888,7 +6888,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createTemporaryTable(Table)
      */
-    @Support({ POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     CreateTableAsStep<Record> createTemporaryTable(Table<?> table);
 
     /**
@@ -6896,7 +6896,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createGlobalTemporaryTable(String)
      */
-    @Support({ POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     CreateTableAsStep<Record> createGlobalTemporaryTable(String table);
 
     /**
@@ -6904,7 +6904,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createGlobalTemporaryTable(Name)
      */
-    @Support({ POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     CreateTableAsStep<Record> createGlobalTemporaryTable(Name table);
 
     /**
@@ -6912,7 +6912,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createGlobalTemporaryTable(Table)
      */
-    @Support({ POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     CreateTableAsStep<Record> createGlobalTemporaryTable(Table<?> table);
 
     /**

@@ -53,6 +53,8 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
@@ -294,7 +296,7 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
            .sql(' ');
 
         if (temporary)
-            if (asList(POSTGRES).contains(ctx.family()))
+            if (asList(MARIADB, MYSQL, POSTGRES).contains(ctx.family()))
                 ctx.keyword("temporary").sql(' ');
             else
                 ctx.keyword("global temporary").sql(' ');

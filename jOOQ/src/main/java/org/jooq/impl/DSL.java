@@ -4848,7 +4848,7 @@ public class DSL {
      *
      * @see DSLContext#createTemporaryTable(String)
      */
-    @Support({ POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static CreateTableAsStep<Record> createTemporaryTable(String table) {
         return using(new DefaultConfiguration()).createTemporaryTable(table);
     }
@@ -4858,7 +4858,7 @@ public class DSL {
      *
      * @see DSLContext#createTemporaryTable(Name)
      */
-    @Support({ POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static CreateTableAsStep<Record> createTemporaryTable(Name table) {
         return using(new DefaultConfiguration()).createTemporaryTable(table);
     }
@@ -4868,7 +4868,7 @@ public class DSL {
      *
      * @see DSLContext#createTemporaryTable(Table)
      */
-    @Support({ POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static CreateTableAsStep<Record> createTemporaryTable(Table<?> table) {
         return using(new DefaultConfiguration()).createTemporaryTable(table);
     }
@@ -4878,7 +4878,7 @@ public class DSL {
      *
      * @see DSLContext#createGlobalTemporaryTable(String)
      */
-    @Support({ POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static CreateTableAsStep<Record> createGlobalTemporaryTable(String table) {
         return using(new DefaultConfiguration()).createGlobalTemporaryTable(table);
     }
@@ -4888,7 +4888,7 @@ public class DSL {
      *
      * @see DSLContext#createGlobalTemporaryTable(Name)
      */
-    @Support({ POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static CreateTableAsStep<Record> createGlobalTemporaryTable(Name table) {
         return using(new DefaultConfiguration()).createGlobalTemporaryTable(table);
     }
@@ -4898,7 +4898,7 @@ public class DSL {
      *
      * @see DSLContext#createGlobalTemporaryTable(Table)
      */
-    @Support({ POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static CreateTableAsStep<Record> createGlobalTemporaryTable(Table<?> table) {
         return using(new DefaultConfiguration()).createGlobalTemporaryTable(table);
     }

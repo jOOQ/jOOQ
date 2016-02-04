@@ -57,6 +57,8 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 
+import java.util.Collection;
+
 /**
  * A {@link Query} that can create tables.
  *
@@ -91,4 +93,24 @@ public interface CreateTableAsStep<R extends Record> {
      */
     @Support
     CreateTableColumnStep column(String field, DataType<?> type);
+
+    /**
+     * Add several columns to the column list of the <code>CREATE TABLE</code>
+     * statement.
+     * <p>
+     * This is the same as calling {@link #column(Field, DataType)} for each
+     * column, with {@link Field#getDataType()} as the argument data type.
+     */
+    @Support
+    CreateTableColumnStep columns(Field<?>... fields);
+
+    /**
+     * Add several columns to the column list of the <code>CREATE TABLE</code>
+     * statement.
+     * <p>
+     * This is the same as calling {@link #column(Field, DataType)} for each
+     * column, with {@link Field#getDataType()} as the argument data type.
+     */
+    @Support
+    CreateTableColumnStep columns(Collection<? extends Field<?>> fields);
 }

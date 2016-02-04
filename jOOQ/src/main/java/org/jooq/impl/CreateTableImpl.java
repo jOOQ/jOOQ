@@ -135,6 +135,19 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
     }
 
     @Override
+    public final CreateTableColumnStep columns(Field<?>... fields) {
+        return columns(Arrays.asList(fields));
+    }
+
+    @Override
+    public final CreateTableColumnStep columns(Collection<? extends Field<?>> fields) {
+        for (Field<?> field : fields)
+            column(field);
+
+        return this;
+    }
+
+    @Override
     public final <T> CreateTableColumnStep column(Field<T> field, DataType<T> type) {
         columnFields.add(field);
         columnTypes.add(type);

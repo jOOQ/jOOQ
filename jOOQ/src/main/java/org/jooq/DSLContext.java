@@ -6559,6 +6559,25 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Create a batch statement to execute a set of queries in batch mode
      * (without bind values).
      * <p>
+     * This essentially runs the following logic: <code><pre>
+     * Statement s = connection.createStatement();
+     *
+     * for (Query query : queries) {
+     *     s.addBatch(query.getSQL(true));
+     * }
+     *
+     * s.execute();
+     * </pre></code>
+     *
+     * @see Statement#executeBatch()
+     */
+    @Support
+    Batch batch(Queries queries);
+
+    /**
+     * Create a batch statement to execute a set of queries in batch mode
+     * (without bind values).
+     * <p>
      * This is a convenience method for calling
      * <code><pre>batch(query(queries[0]), query(queries[1]), ...)</pre></code>.
      *

@@ -49,8 +49,8 @@ import static org.jooq.impl.DSL.sequence;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.trueCondition;
-import static org.jooq.impl.Utils.list;
 import static org.jooq.impl.Utils.blocking;
+import static org.jooq.impl.Utils.list;
 import static org.jooq.tools.Convert.convert;
 
 import java.io.IOException;
@@ -160,6 +160,7 @@ import org.jooq.MergeUsingStep;
 import org.jooq.Meta;
 import org.jooq.Name;
 import org.jooq.Param;
+import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -2203,6 +2204,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public Batch batch(Query... queries) {
         return new BatchMultiple(configuration(), queries);
+    }
+
+    @Override
+    public Batch batch(Queries queries) {
+        return batch(queries.queries());
     }
 
     @Override

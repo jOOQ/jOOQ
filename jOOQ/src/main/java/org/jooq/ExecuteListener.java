@@ -285,6 +285,7 @@ import org.jooq.tools.StopWatchListener;
  * {@link InsertResultStep#fetch()}</li>
  * <li>Used with {@link DSLContext#batch(Query)}</li>
  * <li>Used with {@link DSLContext#batch(Query[])}</li>
+ * <li>Used with {@link DSLContext#batch(Queries)}</li>
  * <li>Used with a {@link Routine} standalone call</li>
  * </ol>
  * <p>

@@ -94,6 +94,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ForkJoinPool.ManagedBlocker;
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -2957,4 +2960,41 @@ final class Utils {
             ctx.keyword(typeName);
         }
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: ForkJoinPool ManagedBlock implementation
+    // -------------------------------------------------------------------------
+
+
+
+    @SuppressWarnings("unchecked")
+    static <T, S extends Supplier<T>> S blocking(S supplier) {
+        return (S) new Supplier<T>() {
+            volatile T asyncResult;
+
+            @Override
+            public T get() {
+                try {
+                    ForkJoinPool.managedBlock(new ManagedBlocker() {
+                        @Override
+                        public boolean block() throws InterruptedException {
+                            asyncResult = supplier.get();
+                            return true;
+                        }
+
+                        @Override
+                        public boolean isReleasable() {
+                            return asyncResult != null;
+                        }
+                    });
+                }
+                catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
+                return asyncResult;
+            }
+        };
+    }
+
 }

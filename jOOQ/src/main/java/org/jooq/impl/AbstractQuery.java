@@ -52,6 +52,7 @@ import static org.jooq.conf.SettingsTools.executePreparedStatements;
 import static org.jooq.conf.SettingsTools.getParamType;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.Utils.consumeExceptions;
+import static org.jooq.impl.Utils.blocking;
 import static org.jooq.impl.Utils.DataKey.DATA_COUNT_BIND_VALUES;
 import static org.jooq.impl.Utils.DataKey.DATA_FORCE_STATIC_STATEMENT;
 
@@ -394,7 +395,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
 
     @Override
     public final CompletionStage<Integer> executeAsync(Executor executor) {
-        return CompletableFuture.supplyAsync(this::execute, executor);
+        return CompletableFuture.supplyAsync(blocking(this::execute), executor);
     }
 
 

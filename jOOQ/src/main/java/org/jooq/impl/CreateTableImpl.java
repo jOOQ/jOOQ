@@ -162,12 +162,17 @@ class CreateTableImpl<R extends Record> extends AbstractQuery implements
     }
 
     @Override
-    public final CreateTableConstraintStep constraint(Constraint... c) {
-        return constraint(Arrays.asList(c));
+    public final CreateTableConstraintStep constraint(Constraint c) {
+        return constraints(Arrays.asList(c));
     }
 
     @Override
-    public final CreateTableConstraintStep constraint(Collection<? extends Constraint> c) {
+    public final CreateTableConstraintStep constraints(Constraint... c) {
+        return constraints(Arrays.asList(c));
+    }
+
+    @Override
+    public final CreateTableConstraintStep constraints(Collection<? extends Constraint> c) {
         constraints.addAll(c);
         return this;
     }

@@ -50,14 +50,20 @@ import java.util.Collection;
 public interface CreateTableConstraintStep extends CreateTableOnCommitStep {
 
     /**
-     * Add constraints to the table.
+     * Add a constraint to the table.
      */
     @Support
-    CreateTableConstraintStep constraint(Constraint... constraints);
+    CreateTableConstraintStep constraint(Constraint constraint);
 
     /**
      * Add constraints to the table.
      */
     @Support
-    CreateTableConstraintStep constraint(Collection<? extends Constraint> constraints);
+    CreateTableConstraintStep constraints(Constraint... constraints);
+
+    /**
+     * Add constraints to the table.
+     */
+    @Support
+    CreateTableConstraintStep constraints(Collection<? extends Constraint> constraints);
 }

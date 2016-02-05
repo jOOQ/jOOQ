@@ -2967,9 +2967,8 @@ final class Utils {
 
 
 
-    @SuppressWarnings("unchecked")
-    static <T, S extends Supplier<T>> S blocking(S supplier) {
-        return (S) new Supplier<T>() {
+    static <T> Supplier<T> blocking(Supplier<T> supplier) {
+        return new Supplier<T>() {
             volatile T asyncResult;
 
             @Override

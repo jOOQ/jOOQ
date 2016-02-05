@@ -55,8 +55,8 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.sql;
-import static org.jooq.impl.Utils.DataKey.DATA_DROP_CONSTRAINT;
 import static org.jooq.impl.Utils.toSQLDDLTypeDeclaration;
+import static org.jooq.impl.Utils.DataKey.DATA_DROP_CONSTRAINT;
 
 import org.jooq.AlterTableAlterStep;
 import org.jooq.AlterTableDropStep;
@@ -245,11 +245,13 @@ class AlterTableImpl extends AbstractQuery implements
 
         ctx.start(ALTER_TABLE_TABLE)
            .keyword("alter table").sql(' ').visit(table)
-           .end(ALTER_TABLE_TABLE);
+           .end(ALTER_TABLE_TABLE)
+           .formatIndentStart()
+           .formatSeparator();
 
         if (addColumn != null) {
             ctx.start(ALTER_TABLE_ADD)
-               .sql(' ').keyword("add").sql(' ');
+               .keyword("add").sql(' ');
 
 
 
@@ -282,8 +284,7 @@ class AlterTableImpl extends AbstractQuery implements
         else if (addConstraint != null) {
             ctx.start(ALTER_TABLE_ADD);
 
-            ctx.sql(' ')
-               .keyword("add")
+            ctx.keyword("add")
                .sql(' ')
                .visit(addConstraint);
 
@@ -311,18 +312,18 @@ class AlterTableImpl extends AbstractQuery implements
 
                     if (alterColumnDefault == null) {
                         // MySQL's CHANGE COLUMN clause has a mandatory RENAMING syntax...
-                        ctx.sql(' ').keyword("change column")
+                        ctx.keyword("change column")
                            .sql(' ').qualify(false).visit(alterColumn).qualify(true);
                     }
                     else {
-                        ctx.sql(' ').keyword("alter column");
+                        ctx.keyword("alter column");
                     }
 
                     break;
                 }
 
                 default:
-                    ctx.sql(' ').keyword("alter");
+                    ctx.keyword("alter");
                     break;
             }
 
@@ -365,7 +366,7 @@ class AlterTableImpl extends AbstractQuery implements
 
 
                     default:
-                        ctx.sql(' ').keyword("set default");
+                        ctx.keyword("set default");
                         break;
                 }
 
@@ -391,7 +392,7 @@ class AlterTableImpl extends AbstractQuery implements
 
 
                 default:
-                    ctx.sql(' ').keyword("drop");
+                    ctx.keyword("drop");
                     break;
             }
 
@@ -421,14 +422,15 @@ class AlterTableImpl extends AbstractQuery implements
             ctx.start(ALTER_TABLE_DROP);
             ctx.data(DATA_DROP_CONSTRAINT, true);
 
-            ctx.sql(' ')
-               .keyword("drop")
+            ctx.keyword("drop")
                .sql(' ')
                .visit(dropConstraint);
 
             ctx.data().remove(DATA_DROP_CONSTRAINT);
             ctx.end(ALTER_TABLE_DROP);
         }
+
+        ctx.formatIndentEnd();
     }
 
 

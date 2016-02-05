@@ -48,8 +48,8 @@ import static org.jooq.impl.ConstraintImpl.Action.SET_DEFAULT;
 import static org.jooq.impl.ConstraintImpl.Action.SET_NULL;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
-import static org.jooq.impl.Utils.DataKey.DATA_DROP_CONSTRAINT;
 import static org.jooq.impl.Utils.fieldsByName;
+import static org.jooq.impl.Utils.DataKey.DATA_DROP_CONSTRAINT;
 
 import javax.annotation.Generated;
 
@@ -152,14 +152,15 @@ implements
     public final void accept(Context<?> ctx) {
         ctx.keyword("constraint")
            .sql(' ')
-           .visit(name);
+           .visit(name)
+           .formatIndentStart()
+           .formatSeparator();
 
         if (ctx.data(DATA_DROP_CONSTRAINT) == null) {
             boolean qualify = ctx.qualify();
 
             if (unique != null) {
-                ctx.sql(' ')
-                   .keyword("unique")
+                ctx.keyword("unique")
                    .sql(" (")
                    .qualify(false)
                    .visit(new QueryPartList<Field<?>>(unique))
@@ -167,8 +168,7 @@ implements
                    .sql(')');
             }
             else if (primaryKey != null) {
-                ctx.sql(' ')
-                   .keyword("primary key")
+                ctx.keyword("primary key")
                    .sql(" (")
                    .qualify(false)
                    .visit(new QueryPartList<Field<?>>(primaryKey))
@@ -176,13 +176,13 @@ implements
                    .sql(')');
             }
             else if (foreignKey != null) {
-                ctx.sql(' ')
-                   .keyword("foreign key")
+                ctx.keyword("foreign key")
                    .sql(" (")
                    .qualify(false)
                    .visit(new QueryPartList<Field<?>>(foreignKey))
                    .qualify(qualify)
-                   .sql(") ")
+                   .sql(')')
+                   .formatSeparator()
                    .keyword("references")
                    .sql(' ')
                    .visit(referencesTable)
@@ -201,8 +201,7 @@ implements
                        .sql(' ').keyword(onUpdate.sql);
             }
             else if (check != null) {
-                ctx.sql(' ')
-                   .keyword("check")
+                ctx.keyword("check")
                    .sql(" (")
                    .qualify(false)
                    .visit(check)
@@ -210,6 +209,8 @@ implements
                    .sql(')');
             }
         }
+
+        ctx.formatIndentEnd();
     }
 
     @Override

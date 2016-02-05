@@ -95,6 +95,8 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     private int                           indent;
     private Deque<Integer>                indentLock;
     private int                           printMargin        = 80;
+    private boolean                       separator;
+    private boolean                       newline;
 
     // [#1632] Cached values from Settings
     RenderKeywordStyle                    cachedRenderKeywordStyle;
@@ -168,15 +170,12 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext keyword(String keyword) {
-        if (RenderKeywordStyle.UPPER == cachedRenderKeywordStyle) {
-            return sql(keyword.toUpperCase());
-        }
-        else if (RenderKeywordStyle.LOWER == cachedRenderKeywordStyle) {
-            return sql(keyword.toLowerCase());
-        }
-        else {
-            return sql(keyword);
-        }
+        if (RenderKeywordStyle.UPPER == cachedRenderKeywordStyle)
+            return sql(keyword.toUpperCase(), true);
+        else if (RenderKeywordStyle.LOWER == cachedRenderKeywordStyle)
+            return sql(keyword.toLowerCase(), true);
+        else
+            return sql(keyword, true);
     }
 
     @Override
@@ -193,6 +192,8 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             s = StringUtils.replace(s, "'", stringLiteralEscapedApos);
 
         sql.append(s);
+        separator = false;
+        newline = false;
         return this;
 
     }
@@ -204,20 +205,26 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         if (c == '\'' && stringLiteral())
             sql.append(c);
 
+        separator = false;
+        newline = false;
         return this;
     }
 
     @Override
     public final RenderContext sql(int i) {
         sql.append(i);
+        separator = false;
+        newline = false;
         return this;
     }
 
     @Override
     public final RenderContext formatNewLine() {
         if (cachedRenderFormatted) {
-            sql.append("\n");
-            sql.append(indentation());
+            sql("\n", true);
+            sql(indentation(), true);
+
+            newline = true;
         }
 
         return this;
@@ -225,11 +232,9 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext formatNewLineAfterPrintMargin() {
-        if (cachedRenderFormatted && printMargin > 0) {
-            if (sql.length() - sql.lastIndexOf("\n") > printMargin) {
+        if (cachedRenderFormatted && printMargin > 0)
+            if (sql.length() - sql.lastIndexOf("\n") > printMargin)
                 formatNewLine();
-            }
-        }
 
         return this;
     }
@@ -251,11 +256,13 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext formatSeparator() {
-        if (cachedRenderFormatted) {
-            formatNewLine();
-        }
-        else {
-            sql.append(" ");
+        if (!separator && !newline) {
+            if (cachedRenderFormatted)
+                formatNewLine();
+            else
+                sql(" ", true);
+
+            separator = true;
         }
 
         return this;
@@ -273,26 +280,23 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext formatIndentStart(int i) {
-        if (cachedRenderFormatted) {
+        if (cachedRenderFormatted)
             indent += i;
-        }
 
         return this;
     }
 
     @Override
     public final RenderContext formatIndentEnd(int i) {
-        if (cachedRenderFormatted) {
+        if (cachedRenderFormatted)
             indent -= i;
-        }
 
         return this;
     }
 
     private final Deque<Integer> indentLock() {
-        if (indentLock == null) {
+        if (indentLock == null)
             indentLock = new ArrayDeque<Integer>();
-        }
 
         return indentLock;
     }
@@ -310,9 +314,8 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext formatIndentLockEnd() {
-        if (cachedRenderFormatted) {
+        if (cachedRenderFormatted)
             indent = indentLock().pop();
-        }
 
         return this;
     }
@@ -327,9 +330,8 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     public final RenderContext literal(String literal) {
         // Literal usually originates from NamedQueryPart.getName(). This could
         // be null for CustomTable et al.
-        if (literal == null) {
+        if (literal == null)
             return this;
-        }
 
         SQLDialect family = family();
 
@@ -352,14 +354,12 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             (family == SQLITE && !IDENTIFIER_PATTERN.matcher(literal).matches());
 
         if (!needsQuote) {
-            if (LOWER == cachedRenderNameStyle) {
+            if (LOWER == cachedRenderNameStyle)
                 literal = literal.toLowerCase();
-            }
-            else if (UPPER == cachedRenderNameStyle) {
+            else if (UPPER == cachedRenderNameStyle)
                 literal = literal.toUpperCase();
-            }
 
-            sql(literal);
+            sql(literal, true);
         }
         else {
             String[][] quotes = QUOTES.get(family);
@@ -373,9 +373,9 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             //         effect as the replace call can be avoided in almost all
             //         situations
             if (literal.indexOf(end) > -1)
-                sql(StringUtils.replace(literal, quotes[QUOTE_END_DELIMITER][0], quotes[QUOTE_END_DELIMITER_ESCAPED][0]));
+                sql(StringUtils.replace(literal, quotes[QUOTE_END_DELIMITER][0], quotes[QUOTE_END_DELIMITER_ESCAPED][0]), true);
             else
-                sql(literal);
+                sql(literal, true);
 
             sql(end);
         }

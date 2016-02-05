@@ -106,7 +106,7 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
             }
 
             if (indent)
-                ctx.formatIndentEnd();
+                ctx.formatIndentEnd().formatNewLine();
         }
     }
 

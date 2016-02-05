@@ -6835,6 +6835,62 @@ public interface DSLContext extends Scope , AutoCloseable  {
     Batch batchDelete(Collection<? extends UpdatableRecord<?>> records);
 
     // -------------------------------------------------------------------------
+    // XXX DDL Statements from existing meta data
+    // -------------------------------------------------------------------------
+
+    /**
+     * Generate the complete creation script for the entire schema.
+     *
+     * @see #ddl(Schema, DDLFlag...)
+     */
+    Queries ddl(Schema schema);
+
+    /**
+     * Generate a partial creation script for the entire schema.
+     * <p>
+     * The following {@link DDLFlag} can be set:
+     * <ul>
+     * <li>{@link DDLFlag#TABLE}: If set, the schema's <code>TABLE</code>
+     * specification will be generated.</li>
+     * <li>{@link DDLFlag#PRIMARY_KEY}: If set, a potential
+     * <code>PRIMARY KEY</code> constraint is specified inline with the table.
+     * </li>
+     * <li>{@link DDLFlag#UNIQUE}: If set, any potential <code>UNIQUE</code>
+     * constraint is specified inline with the table.</li>
+     * <li>{@link DDLFlag#FOREIGN_KEY}: If set, any potential
+     * <code>FOREIGN KEY</code> constraint is specified after all the tables, as
+     * a separate <code>ALTER TABLE .. ADD CONSTRAINT</code> statement.</li>
+     * </ul>
+     */
+    Queries ddl(Schema schema, DDLFlag... flags);
+
+    /**
+     * Generate the complete creation script for a table.
+     *
+     * @see #ddl(Table, DDLFlag...)
+     */
+    Queries ddl(Table<?> table);
+
+    /**
+     * Generate a partial creation script for a table.
+     * <p>
+     * The following {@link DDLFlag} can be set:
+     * <ul>
+     * <li>{@link DDLFlag#TABLE}: If not set, this will generate nothing at all.
+     * </li>
+     * <li>{@link DDLFlag#PRIMARY_KEY}: If set, a potential
+     * <code>PRIMARY KEY</code> constraint is specified inline with the table.
+     * </li>
+     * <li>{@link DDLFlag#UNIQUE}: If set, any potential <code>UNIQUE</code>
+     * constraint is specified inline with the table.</li>
+     * <li>{@link DDLFlag#FOREIGN_KEY}: If set, any potential
+     * <code>FOREIGN KEY</code> constraint is specified inline with the table.
+     * </li>
+     * </ul>
+     */
+    Queries ddl(Table<?> table, DDLFlag... flags);
+
+    // -------------------------------------------------------------------------
     // XXX DDL Statements
     // -------------------------------------------------------------------------
 

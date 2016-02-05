@@ -40,12 +40,18 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.DDLFlag.FOREIGN_KEY;
+import static org.jooq.DDLFlag.PRIMARY_KEY;
+import static org.jooq.DDLFlag.TABLE;
+import static org.jooq.DDLFlag.UNIQUE;
 import static org.jooq.impl.DSL.constraint;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
 import org.jooq.Constraint;
+import org.jooq.DDLFlag;
 import org.jooq.DSLContext;
 import org.jooq.ForeignKey;
 import org.jooq.Queries;
@@ -57,25 +63,37 @@ import org.jooq.UniqueKey;
 /**
  * @author Lukas Eder
  */
-public class DDL {
+class DDL {
 
-    private final DSLContext ctx;
+    private final DSLContext       ctx;
+    private final EnumSet<DDLFlag> flags;
 
-    public DDL(DSLContext ctx) {
+    DDL(DSLContext ctx, DDLFlag... flags) {
         this.ctx = ctx;
+        this.flags = EnumSet.noneOf(DDLFlag.class);
+
+        for (DDLFlag flag : flags)
+            this.flags.add(flag);
     }
 
-    public Queries queries(Table<?> table) {
+    final Queries queries(Table<?> table) {
         List<Constraint> constraints = new ArrayList<Constraint>();
 
-        for (UniqueKey<?> key : table.getKeys())
-            if (key.isPrimary())
-                constraints.add(constraint(key.getName()).primaryKey(key.getFieldsArray()));
-            else
-                constraints.add(constraint(key.getName()).unique(key.getFieldsArray()));
+        if (flags.contains(TABLE)) {
+            if (flags.contains(PRIMARY_KEY))
+                for (UniqueKey<?> key : table.getKeys())
+                    if (key.isPrimary())
+                        constraints.add(constraint(key.getName()).primaryKey(key.getFieldsArray()));
 
-        for (ForeignKey<?, ?> key : table.getReferences())
-            constraints.add(constraint(key.getName()).foreignKey(key.getFieldsArray()).references(key.getKey().getTable(), key.getKey().getFieldsArray()));
+            if (flags.contains(UNIQUE))
+                for (UniqueKey<?> key : table.getKeys())
+                    if (!key.isPrimary())
+                        constraints.add(constraint(key.getName()).unique(key.getFieldsArray()));
+
+            if (flags.contains(FOREIGN_KEY))
+                for (ForeignKey<?, ?> key : table.getReferences())
+                    constraints.add(constraint(key.getName()).foreignKey(key.getFieldsArray()).references(key.getKey().getTable(), key.getKey().getFieldsArray()));
+        }
 
         return DSL.queries(
             ctx.createTable(table)
@@ -84,28 +102,35 @@ public class DDL {
         );
     }
 
-    public Queries queries(Schema schema) {
+    final Queries queries(Schema schema) {
         List<Query> queries = new ArrayList<Query>();
 
-        for (Table<?> table : schema.getTables()) {
-            List<Constraint> constraints = new ArrayList<Constraint>();
+        if (flags.contains(TABLE)) {
+            for (Table<?> table : schema.getTables()) {
+                List<Constraint> constraints = new ArrayList<Constraint>();
 
-            for (UniqueKey<?> key : table.getKeys())
-                if (key.isPrimary())
-                    constraints.add(constraint(key.getName()).primaryKey(key.getFieldsArray()));
-                else
-                    constraints.add(constraint(key.getName()).unique(key.getFieldsArray()));
+                if (flags.contains(PRIMARY_KEY))
+                    for (UniqueKey<?> key : table.getKeys())
+                        if (key.isPrimary())
+                            constraints.add(constraint(key.getName()).primaryKey(key.getFieldsArray()));
 
-            queries.add(
-                ctx.createTable(table)
-                   .columns(table.fields())
-                   .constraints(constraints)
-            );
+                if (flags.contains(UNIQUE))
+                    for (UniqueKey<?> key : table.getKeys())
+                        if (!key.isPrimary())
+                            constraints.add(constraint(key.getName()).unique(key.getFieldsArray()));
+
+                queries.add(
+                    ctx.createTable(table)
+                       .columns(table.fields())
+                       .constraints(constraints)
+                );
+            }
+
+            if (flags.contains(FOREIGN_KEY))
+                for (Table<?> table : schema.getTables())
+                    for (ForeignKey<?, ?> key : table.getReferences())
+                        queries.add(ctx.alterTable(table).add(constraint(key.getName()).foreignKey(key.getFieldsArray()).references(key.getKey().getTable(), key.getKey().getFieldsArray())));
         }
-
-        for (Table<?> table : schema.getTables())
-            for (ForeignKey<?, ?> key : table.getReferences())
-                queries.add(ctx.alterTable(table).add(constraint(key.getName()).foreignKey(key.getFieldsArray()).references(key.getKey().getTable(), key.getKey().getFieldsArray())));
 
         return DSL.queries(queries);
     }

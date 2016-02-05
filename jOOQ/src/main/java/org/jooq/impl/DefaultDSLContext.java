@@ -96,6 +96,7 @@ import org.jooq.CreateSequenceFinalStep;
 import org.jooq.CreateTableAsStep;
 import org.jooq.CreateViewAsStep;
 import org.jooq.Cursor;
+import org.jooq.DDLFlag;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.DeleteQuery;
@@ -2285,6 +2286,30 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public Batch batchDelete(Collection<? extends UpdatableRecord<?>> records) {
         return batchDelete(records.toArray(new UpdatableRecord[records.size()]));
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX DDL Statements from existing meta data
+    // -------------------------------------------------------------------------
+
+    @Override
+    public Queries ddl(Schema schema) {
+        return ddl(schema, DDLFlag.values());
+    }
+
+    @Override
+    public Queries ddl(Schema schema, DDLFlag... flags) {
+        return new DDL(this, flags).queries(schema);
+    }
+
+    @Override
+    public Queries ddl(Table<?> table) {
+        return ddl(table, DDLFlag.values());
+    }
+
+    @Override
+    public Queries ddl(Table<?> table, DDLFlag... flags) {
+        return new DDL(this, flags).queries(table);
     }
 
     // -------------------------------------------------------------------------

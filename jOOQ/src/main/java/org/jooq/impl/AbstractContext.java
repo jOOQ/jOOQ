@@ -293,7 +293,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
         @Override
         public final Clause[] clauses() {
-            return visitClauses.toArray(new Clause[visitClauses.size()]);
+            return visitClauses.toArray(new Clause[0]);
         }
 
         @Override
@@ -314,7 +314,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
         @Override
         public final QueryPart[] queryParts() {
-            return visitParts.toArray(new QueryPart[visitParts.size()]);
+            return visitParts.toArray(new QueryPart[0]);
         }
 
         @Override

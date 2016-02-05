@@ -341,7 +341,7 @@ public enum SQLDialect {
             set.add(dialect.family());
         }
 
-        FAMILIES = set.toArray(new SQLDialect[set.size()]);
+        FAMILIES = set.toArray(new SQLDialect[0]);
     }
 
     private final String              name;

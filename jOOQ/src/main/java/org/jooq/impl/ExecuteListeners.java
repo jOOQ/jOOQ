@@ -85,20 +85,18 @@ class ExecuteListeners implements ExecuteListener {
     private static ExecuteListener[] listeners(ExecuteContext ctx) {
         List<ExecuteListener> result = new ArrayList<ExecuteListener>();
 
-        for (ExecuteListenerProvider provider : ctx.configuration().executeListenerProviders()) {
+        for (ExecuteListenerProvider provider : ctx.configuration().executeListenerProviders())
 
             // Could be null after deserialisation
-            if (provider != null) {
+            if (provider != null)
                 result.add(provider.provide());
-            }
-        }
 
         if (!FALSE.equals(ctx.configuration().settings().isExecuteLogging())) {
             result.add(new LoggerListener());
             result.add(new StopWatchListener());
         }
 
-        return result.toArray(new ExecuteListener[result.size()]);
+        return result.toArray(new ExecuteListener[0]);
     }
 
     @Override

@@ -51,8 +51,8 @@ import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
 import static org.jooq.conf.SettingsTools.getParamType;
 import static org.jooq.impl.DSL.using;
-import static org.jooq.impl.Utils.consumeExceptions;
 import static org.jooq.impl.Utils.blocking;
+import static org.jooq.impl.Utils.consumeExceptions;
 import static org.jooq.impl.Utils.DataKey.DATA_COUNT_BIND_VALUES;
 import static org.jooq.impl.Utils.DataKey.DATA_FORCE_STATIC_STATEMENT;
 
@@ -188,9 +188,8 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
     public Query bind(int index, Object value) {
         Param<?>[] params = getParams().values().toArray(new Param[0]);
 
-        if (index < 1 || index > params.length) {
+        if (index < 1 || index > params.length)
             throw new IllegalArgumentException("Index out of range for Query parameters : " + index);
-        }
 
         Param<?> param = params[index - 1];
         param.setConverted(value);

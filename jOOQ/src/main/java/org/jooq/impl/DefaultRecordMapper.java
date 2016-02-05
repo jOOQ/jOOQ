@@ -549,7 +549,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
                         Field<?>[] f = nestedFields.get(prefix);
                         if (f == null) {
-                            f = nCopies(fields.length, field("")).toArray(new Field[fields.length]);
+                            f = nCopies(fields.length, field("")).toArray(new Field[0]);
                             nestedFields.put(prefix, f);
                         }
 

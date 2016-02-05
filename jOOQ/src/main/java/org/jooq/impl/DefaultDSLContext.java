@@ -2225,7 +2225,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Batch batch(Collection<? extends Query> queries) {
-        return batch(queries.toArray(new Query[queries.size()]));
+        return batch(queries.toArray(new Query[0]));
     }
 
     @Override
@@ -2255,7 +2255,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Batch batchStore(Collection<? extends UpdatableRecord<?>> records) {
-        return batchStore(records.toArray(new UpdatableRecord[records.size()]));
+        return batchStore(records.toArray(new UpdatableRecord[0]));
     }
 
     @Override
@@ -2265,7 +2265,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Batch batchInsert(Collection<? extends TableRecord<?>> records) {
-        return batchInsert(records.toArray(new TableRecord[records.size()]));
+        return batchInsert(records.toArray(new TableRecord[0]));
     }
 
     @Override
@@ -2275,7 +2275,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Batch batchUpdate(Collection<? extends UpdatableRecord<?>> records) {
-        return batchUpdate(records.toArray(new UpdatableRecord[records.size()]));
+        return batchUpdate(records.toArray(new UpdatableRecord[0]));
     }
 
     @Override
@@ -2285,7 +2285,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Batch batchDelete(Collection<? extends UpdatableRecord<?>> records) {
-        return batchDelete(records.toArray(new UpdatableRecord[records.size()]));
+        return batchDelete(records.toArray(new UpdatableRecord[0]));
     }
 
     // -------------------------------------------------------------------------

@@ -108,7 +108,7 @@ class JSONReader implements Closeable {
                 String asString = value == null ? null : String.valueOf(value);
                 v.add(asString);
             }
-            records.add(v.toArray(new String[v.size()]));
+            records.add(v.toArray(new String[0]));
         }
 
         return records;

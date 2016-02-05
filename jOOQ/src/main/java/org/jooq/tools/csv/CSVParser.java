@@ -281,7 +281,7 @@ public class CSVParser {
         if (sb != null) {
             tokensOnThisLine.add(sb.toString());
         }
-        return tokensOnThisLine.toArray(new String[tokensOnThisLine.size()]);
+        return tokensOnThisLine.toArray(new String[0]);
 
     }
 

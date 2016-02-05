@@ -326,16 +326,14 @@ public class MockStatement extends JDBC41Statement implements CallableStatement 
         checkNotClosed();
 
         Object[][] matrix = new Object[bindings.size() - 1][];
-        for (int i = 0; i < bindings.size() - 1; i++) {
+        for (int i = 0; i < bindings.size() - 1; i++)
             matrix[i] = bindings.get(i).toArray();
-        }
 
-        result = data.execute(new MockExecuteContext(sql.toArray(new String[sql.size()]), matrix));
+        result = data.execute(new MockExecuteContext(sql.toArray(new String[0]), matrix));
 
         int[] rows = new int[result.length];
-        for (int i = 0; i < result.length; i++) {
+        for (int i = 0; i < result.length; i++)
             rows[i] = result[i].rows;
-        }
 
         return rows;
     }
@@ -349,9 +347,8 @@ public class MockStatement extends JDBC41Statement implements CallableStatement 
         checkNotClosed();
         List<Object> b = bindings();
 
-        for (int i = 0; i < b.size(); i++) {
+        for (int i = 0; i < b.size(); i++)
             b.set(i, null);
-        }
     }
 
     @Override

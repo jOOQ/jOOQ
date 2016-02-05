@@ -364,7 +364,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
 
         // [#2573] Composite key T types are of type Record[N]
         else {
-            return row(pk).in(ids.toArray(new Record[ids.size()]));
+            return row(pk).in(ids.toArray(new Record[0]));
         }
     }
 

@@ -518,7 +518,7 @@ class LoaderImpl<R extends Record> implements
 
     @Override
     public final LoaderImpl<R> fields(Collection<? extends Field<?>> f) {
-        return fields(f.toArray(new Field[f.size()]));
+        return fields(f.toArray(new Field[0]));
     }
 
     @Override

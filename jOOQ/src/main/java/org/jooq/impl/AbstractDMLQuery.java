@@ -271,7 +271,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                             names.add(field.getName());
                     }
 
-                    ctx.statement(connection.prepareStatement(ctx.sql(), names.toArray(new String[names.size()])));
+                    ctx.statement(connection.prepareStatement(ctx.sql(), names.toArray(new String[0])));
                     return;
                 }
             }

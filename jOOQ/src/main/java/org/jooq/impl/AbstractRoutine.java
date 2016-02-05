@@ -865,7 +865,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             names.add(pkg.getName());
         }
         names.add(name);
-        return (AggregateFunction<T>) function(DSL.name(names.toArray(new String[names.size()])), type, array);
+        return (AggregateFunction<T>) function(DSL.name(names.toArray(new String[0])), type, array);
     }
 
     /**
@@ -1067,7 +1067,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                     fields.add(getInValues().get(parameter));
             }
 
-            Field<T> result = function(local.render(), getDataType(), fields.toArray(new Field[fields.size()]));
+            Field<T> result = function(local.render(), getDataType(), fields.toArray(new Field[0]));
 
 
             // [#3592] Decrease SQL -> PL/SQL context switches with Oracle Scalar Subquery Caching

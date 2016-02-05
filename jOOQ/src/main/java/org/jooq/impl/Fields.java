@@ -74,7 +74,7 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
     }
 
     Fields(Collection<? extends Field<?>> fields) {
-        this.fields = fields.toArray(new Field[fields.size()]);
+        this.fields = fields.toArray(new Field[0]);
     }
 
     @Override

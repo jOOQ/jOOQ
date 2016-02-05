@@ -191,7 +191,7 @@ public class LoggerListener extends DefaultExecuteListener {
         for (Parameter<?> param : routine.getOutParameters())
             fields.add(field(name(param.getName()), param.getDataType()));
 
-        result = DSL.using(configuration).newRecord(fields.toArray(new Field[fields.size()]));
+        result = DSL.using(configuration).newRecord(fields.toArray(new Field[0]));
 
         int i = 0;
         if (returnParam != null)

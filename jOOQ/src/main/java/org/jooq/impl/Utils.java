@@ -610,7 +610,7 @@ final class Utils {
     }
 
     static final Field<?>[] fieldArray(Collection<? extends Field<?>> fields) {
-        return fields == null ? null : fields.toArray(new Field[fields.size()]);
+        return fields == null ? null : fields.toArray(new Field[0]);
     }
 
     // ------------------------------------------------------------------------
@@ -2750,7 +2750,6 @@ final class Utils {
     private static final Pattern P_PARSE_HTML_COL_BODY = Pattern.compile("<td>(.*?)</td>");
 
     static final List<String[]> parseHTML(String string) {
-
         List<String[]> result = new ArrayList<String[]>();
 
         Matcher mRow = P_PARSE_HTML_ROW.matcher(string);
@@ -2762,23 +2761,21 @@ final class Utils {
             if (result.isEmpty()) {
                 Matcher mColHead = P_PARSE_HTML_COL_HEAD.matcher(row);
 
-                while (mColHead.find()) {
+                while (mColHead.find())
                     col.add(mColHead.group(1));
-                }
             }
 
             if (col.isEmpty()) {
                 Matcher mColBody = P_PARSE_HTML_COL_BODY.matcher(row);
 
-                while (mColBody.find()) {
+                while (mColBody.find())
                     col.add(mColBody.group(1));
-                }
 
                 if (result.isEmpty())
                     result.add(fieldNames(col.size()));
             }
 
-            result.add(col.toArray(new String[col.size()]));
+            result.add(col.toArray(new String[0]));
         }
 
         return result;

@@ -643,18 +643,14 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     public final Condition isTrue() {
         Class<?> type = getType();
 
-        if (type == String.class) {
-            return ((Field<String>) this).in(Utils.inline(TRUE_VALUES.toArray(new String[TRUE_VALUES.size()])));
-        }
-        else if (Number.class.isAssignableFrom(type)) {
+        if (type == String.class)
+            return ((Field<String>) this).in(Utils.inline(TRUE_VALUES.toArray(new String[0])));
+        else if (Number.class.isAssignableFrom(type))
             return ((Field<Number>) this).equal(inline((Number) getDataType().convert(1)));
-        }
-        else if (Boolean.class.isAssignableFrom(type)) {
+        else if (Boolean.class.isAssignableFrom(type))
             return ((Field<Boolean>) this).equal(inline(true));
-        }
-        else {
+        else
             return cast(String.class).in(TRUE_VALUES);
-        }
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -662,18 +658,14 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     public final Condition isFalse() {
         Class<?> type = getType();
 
-        if (type == String.class) {
-            return ((Field<String>) this).in(Utils.inline(FALSE_VALUES.toArray(new String[FALSE_VALUES.size()])));
-        }
-        else if (Number.class.isAssignableFrom(type)) {
+        if (type == String.class)
+            return ((Field<String>) this).in(Utils.inline(FALSE_VALUES.toArray(new String[0])));
+        else if (Number.class.isAssignableFrom(type))
             return ((Field<Number>) this).equal(inline((Number) getDataType().convert(0)));
-        }
-        else if (Boolean.class.isAssignableFrom(type)) {
+        else if (Boolean.class.isAssignableFrom(type))
             return ((Field<Boolean>) this).equal(inline(false));
-        }
-        else {
-            return cast(String.class).in(Utils.inline(FALSE_VALUES.toArray(new String[FALSE_VALUES.size()])));
-        }
+        else
+            return cast(String.class).in(Utils.inline(FALSE_VALUES.toArray(new String[0])));
     }
 
     @Override
@@ -842,9 +834,8 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     public final Condition in(Collection<?> values) {
         List<Field<?>> fields = new ArrayList<Field<?>>();
 
-        for (Object value : values) {
+        for (Object value : values)
             fields.add(Utils.field(value, this));
-        }
 
         return in(fields.toArray(new Field<?>[0]));
     }
@@ -883,9 +874,8 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     public final Condition notIn(Collection<?> values) {
         List<Field<?>> fields = new ArrayList<Field<?>>();
 
-        for (Object value : values) {
+        for (Object value : values)
             fields.add(Utils.field(value, this));
-        }
 
         return notIn(fields.toArray(new Field<?>[0]));
     }

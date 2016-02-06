@@ -48,8 +48,8 @@ import static java.util.concurrent.Executors.newSingleThreadExecutor;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
-import static org.jooq.impl.Utils.consumeResultSets;
 import static org.jooq.impl.Utils.blocking;
+import static org.jooq.impl.Utils.consumeResultSets;
 import static org.jooq.impl.Utils.DataKey.DATA_LOCK_ROWS_FOR_UPDATE;
 
 import java.lang.reflect.Array;
@@ -332,7 +332,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final CompletionStage<Result<R>> fetchAsync(Executor executor) {
-        return CompletableFuture.supplyAsync(blocking(this::fetch), executor);
+        return ExecutorProviderCompletionStage.of(CompletableFuture.supplyAsync(blocking(this::fetch), executor), () -> executor);
     }
 
     @Override

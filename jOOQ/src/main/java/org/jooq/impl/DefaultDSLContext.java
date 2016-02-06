@@ -410,7 +410,16 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CompletionStage<Void> transactionAsync(Executor executor, TransactionalRunnable transactional) {
-        return CompletableFuture.supplyAsync(blocking(() -> { transaction(transactional); return null; }), executor);
+        return ExecutorProviderCompletionStage.of(CompletableFuture.supplyAsync(
+            blocking(
+                () -> {
+                    transaction(transactional);
+                    return null;
+                }),
+                executor
+            ),
+            () -> executor
+        );
     }
 
     @Override
@@ -420,7 +429,10 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <T> CompletionStage<T> transactionResultAsync(Executor executor, TransactionalCallable<T> transactional) {
-        return CompletableFuture.supplyAsync(blocking(() -> transactionResult(transactional)), executor);
+        return ExecutorProviderCompletionStage.of(CompletableFuture.supplyAsync(
+            blocking(() -> transactionResult(transactional)), executor),
+            () -> executor
+        );
     }
 
 
@@ -1053,22 +1065,34 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CompletionStage<Result<Record>> fetchAsync(Executor executor, ResultSet rs) {
-        return CompletableFuture.supplyAsync(blocking(() -> fetch(rs)), executor);
+        return ExecutorProviderCompletionStage.of(
+            CompletableFuture.supplyAsync(blocking(() -> fetch(rs)), executor),
+            () -> executor
+        );
     }
 
     @Override
     public CompletionStage<Result<Record>> fetchAsync(Executor executor, ResultSet rs, Field<?>... fields) {
-        return CompletableFuture.supplyAsync(blocking(() -> fetch(rs, fields)), executor);
+        return ExecutorProviderCompletionStage.of(
+            CompletableFuture.supplyAsync(blocking(() -> fetch(rs, fields)), executor),
+            () -> executor
+        );
     }
 
     @Override
     public CompletionStage<Result<Record>> fetchAsync(Executor executor, ResultSet rs, DataType<?>... types) {
-        return CompletableFuture.supplyAsync(blocking(() -> fetch(rs, types)), executor);
+        return ExecutorProviderCompletionStage.of(
+            CompletableFuture.supplyAsync(blocking(() -> fetch(rs, types)), executor),
+            () -> executor
+        );
     }
 
     @Override
     public CompletionStage<Result<Record>> fetchAsync(Executor executor, ResultSet rs, Class<?>... types) {
-        return CompletableFuture.supplyAsync(blocking(() -> fetch(rs, types)), executor);
+        return ExecutorProviderCompletionStage.of(
+            CompletableFuture.supplyAsync(blocking(() -> fetch(rs, types)), executor),
+            () -> executor
+        );
     }
 
     @Override

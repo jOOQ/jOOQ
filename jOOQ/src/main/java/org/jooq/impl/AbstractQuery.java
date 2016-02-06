@@ -394,7 +394,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
 
     @Override
     public final CompletionStage<Integer> executeAsync(Executor executor) {
-        return CompletableFuture.supplyAsync(blocking(this::execute), executor);
+        return ExecutorProviderCompletionStage.of(CompletableFuture.supplyAsync(blocking(this::execute), executor), () -> executor);
     }
 
 

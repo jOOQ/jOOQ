@@ -77,7 +77,6 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
-import java.util.concurrent.ForkJoinPool;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
@@ -220,12 +219,15 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
 
     /**
-     * Run a {@link TransactionalCallable} in the context of this
+     * Run a {@link TransactionalCallable} asynchronously.
+     * <p>
+     * The <code>TransactionCallable</code> is run in the context of this
      * <code>DSLContext</code>'s underlying {@link #configuration()}'s
-     * {@link Configuration#transactionProvider()}, and return the
+     * {@link Configuration#transactionProvider()}, and returns the
      * <code>transactional</code>'s outcome in a new {@link CompletionStage}
-     * that is asynchronously completed by a task running in the
-     * {@link ForkJoinPool#commonPool()}.
+     * that is asynchronously completed by a task run by an {@link Executor}
+     * provided by the underlying {@link #configuration()}'s
+     * {@link Configuration#executorProvider()}.
      *
      * @param transactional The transactional code
      * @return The transactional outcome
@@ -233,23 +235,29 @@ public interface DSLContext extends Scope , AutoCloseable  {
     <T> CompletionStage<T> transactionResultAsync(TransactionalCallable<T> transactional);
 
     /**
-     * Run a {@link TransactionalRunnable} in the context of this
+     * Run a {@link TransactionalRunnable} asynchronously.
+     * <p>
+     * The <code>TransactionRunnable</code> is run in the context of this
      * <code>DSLContext</code>'s underlying {@link #configuration()}'s
-     * {@link Configuration#transactionProvider()}, and return the
+     * {@link Configuration#transactionProvider()}, and returns the
      * <code>transactional</code>'s outcome in a new {@link CompletionStage}
-     * that is asynchronously completed by a task running in the
-     * {@link ForkJoinPool#commonPool()}.
+     * that is asynchronously completed by a task run by an {@link Executor}
+     * provided by the underlying {@link #configuration()}'s
+     * {@link Configuration#executorProvider()}.
      *
      * @param transactional The transactional code
      */
     CompletionStage<Void> transactionAsync(TransactionalRunnable transactional);
 
     /**
-     * Run a {@link TransactionalCallable} in the context of this
+     * Run a {@link TransactionalCallable} asynchronously.
+     * <p>
+     * The <code>TransactionCallable</code> is run in the context of this
      * <code>DSLContext</code>'s underlying {@link #configuration()}'s
-     * {@link Configuration#transactionProvider()}, and return the
+     * {@link Configuration#transactionProvider()}, and returns the
      * <code>transactional</code>'s outcome in a new {@link CompletionStage}
-     * that is asynchronously completed by a task running in the given executor.
+     * that is asynchronously completed by a task run by a given
+     * {@link Executor}.
      *
      * @param transactional The transactional code
      * @return The transactional outcome
@@ -257,11 +265,14 @@ public interface DSLContext extends Scope , AutoCloseable  {
     <T> CompletionStage<T> transactionResultAsync(Executor executor, TransactionalCallable<T> transactional);
 
     /**
-     * Run a {@link TransactionalRunnable} in the context of this
+     * Run a {@link TransactionalRunnable} asynchronously.
+     * <p>
+     * The <code>TransactionRunnable</code> is run in the context of this
      * <code>DSLContext</code>'s underlying {@link #configuration()}'s
-     * {@link Configuration#transactionProvider()}, and return the
+     * {@link Configuration#transactionProvider()}, and returns the
      * <code>transactional</code>'s outcome in a new {@link CompletionStage}
-     * that is asynchronously completed by a task running in the given executor.
+     * that is asynchronously completed by a task run by a given
+     * {@link Executor}.
      *
      * @param transactional The transactional code
      */
@@ -818,8 +829,11 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
 
     /**
-     * Fetch results in a new {@link CompletionStage} that is asynchronously
-     * completed by a task running in the {@link ForkJoinPool#commonPool()}.
+     * Fetch results in a new {@link CompletionStage}.
+     * <p>
+     * The result is asynchronously completed by a task running in an
+     * {@link Executor} provided by the {@link #configuration()}'s
+     * {@link Configuration#executorProvider()}.
      * <p>
      * Example (Postgres):
      * <p>
@@ -845,8 +859,11 @@ public interface DSLContext extends Scope , AutoCloseable  {
     CompletionStage<Result<Record>> fetchAsync(SQL sql);
 
     /**
-     * Fetch results in a new {@link CompletionStage} that is asynchronously
-     * completed by a task running in the {@link ForkJoinPool#commonPool()}.
+     * Fetch results in a new {@link CompletionStage}.
+     * <p>
+     * The result is asynchronously completed by a task running in an
+     * {@link Executor} provided by the {@link #configuration()}'s
+     * {@link Configuration#executorProvider()}.
      * <p>
      * Example (Postgres):
      * <p>
@@ -872,8 +889,11 @@ public interface DSLContext extends Scope , AutoCloseable  {
     CompletionStage<Result<Record>> fetchAsync(String sql);
 
     /**
-     * Fetch results in a new {@link CompletionStage} that is asynchronously
-     * completed by a task running in the {@link ForkJoinPool#commonPool()}.
+     * Fetch results in a new {@link CompletionStage}.
+     * <p>
+     * The result is asynchronously completed by a task running in an
+     * {@link Executor} provided by the {@link #configuration()}'s
+     * {@link Configuration#executorProvider()}.
      * <p>
      * There must be as many bind variables contained in the SQL, as passed in
      * the bindings parameter
@@ -903,8 +923,11 @@ public interface DSLContext extends Scope , AutoCloseable  {
     CompletionStage<Result<Record>> fetchAsync(String sql, Object... bindings);
 
     /**
-     * Fetch results in a new {@link CompletionStage} that is asynchronously
-     * completed by a task running in the {@link ForkJoinPool#commonPool()}.
+     * Fetch results in a new {@link CompletionStage}.
+     * <p>
+     * The result is asynchronously completed by a task running in an
+     * {@link Executor} provided by the {@link #configuration()}'s
+     * {@link Configuration#executorProvider()}.
      * <p>
      * Unlike {@link #fetchLazy(String, Object...)}, the SQL passed to this
      * method should not contain any bind variables. Instead, you can pass
@@ -2685,8 +2708,11 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
 
     /**
-     * Fetch results in a new {@link CompletionStage} that is asynchronously
-     * completed by a task running in the {@link ForkJoinPool#commonPool()}.
+     * Fetch results in a new {@link CompletionStage}.
+     * <p>
+     * The result is asynchronously completed by a task running in an
+     * {@link Executor} provided by the {@link #configuration()}'s
+     * {@link Configuration#executorProvider()}.
      *
      * @param rs The JDBC ResultSet to fetch data from
      * @return The completion stage. The completed result will never be
@@ -2696,8 +2722,11 @@ public interface DSLContext extends Scope , AutoCloseable  {
     CompletionStage<Result<Record>> fetchAsync(ResultSet rs);
 
     /**
-     * Fetch results in a new {@link CompletionStage} that is asynchronously
-     * completed by a task running in the {@link ForkJoinPool#commonPool()}.
+     * Fetch results in a new {@link CompletionStage}.
+     * <p>
+     * The result is asynchronously completed by a task running in an
+     * {@link Executor} provided by the {@link #configuration()}'s
+     * {@link Configuration#executorProvider()}.
      * <p>
      * The additional <code>fields</code> argument is used by jOOQ to coerce
      * field names and data types to the desired output
@@ -2711,8 +2740,11 @@ public interface DSLContext extends Scope , AutoCloseable  {
     CompletionStage<Result<Record>> fetchAsync(ResultSet rs, Field<?>... fields);
 
     /**
-     * Fetch results in a new {@link CompletionStage} that is asynchronously
-     * completed by a task running in the {@link ForkJoinPool#commonPool()}.
+     * Fetch results in a new {@link CompletionStage}.
+     * <p>
+     * The result is asynchronously completed by a task running in an
+     * {@link Executor} provided by the {@link #configuration()}'s
+     * {@link Configuration#executorProvider()}.
      * <p>
      * The additional <code>types</code> argument is used by jOOQ to coerce data
      * types to the desired output
@@ -2726,8 +2758,11 @@ public interface DSLContext extends Scope , AutoCloseable  {
     CompletionStage<Result<Record>> fetchAsync(ResultSet rs, DataType<?>... types);
 
     /**
-     * Fetch results in a new {@link CompletionStage} that is asynchronously
-     * completed by a task running in the {@link ForkJoinPool#commonPool()}.
+     * Fetch results in a new {@link CompletionStage}.
+     * <p>
+     * The result is asynchronously completed by a task running in an
+     * {@link Executor} provided by the {@link #configuration()}'s
+     * {@link Configuration#executorProvider()}.
      * <p>
      * The additional <code>types</code> argument is used by jOOQ to coerce data
      * types to the desired output
@@ -8256,8 +8291,11 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
 
     /**
-     * Fetch results in a new {@link CompletionStage} that is asynchronously
-     * completed by a task running in the {@link ForkJoinPool#commonPool()}.
+     * Fetch results in a new {@link CompletionStage}.
+     * <p>
+     * The result is asynchronously completed by a task running in an
+     * {@link Executor} provided by the {@link #configuration()}'s
+     * {@link Configuration#executorProvider()}.
      *
      * @param query The query to execute
      * @return The completion stage. The completed result will never be

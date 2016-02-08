@@ -1279,6 +1279,11 @@ implements
                     toSQLH2Merge(ctx);
                     break;
 
+                case MARIADB:
+                case MYSQL:
+                    toSQLMySQLOnDuplicateKeyUpdate(ctx);
+                    break;
+
                 case POSTGRES:
                     toPostgresInsertOnConflict(ctx);
                     break;
@@ -1296,6 +1301,23 @@ implements
         }
         else {
             toSQLStandard(ctx);
+        }
+    }
+
+    private final void toSQLMySQLOnDuplicateKeyUpdate(Context<?> ctx) {
+        Fields<?> fields = new Fields<Record>(getUpsertFields());
+        Map<Field<?>, Field<?>> map = new LinkedHashMap<Field<?>, Field<?>>();
+        for (Field<?> field : fields.fields)
+            map.put(field, getUpsertValues().get(fields.indexOf(field)));
+
+        if (upsertSelect != null) {
+            ctx.sql("[ merge with select is not supported in MySQL / MariaDB ]");
+        }
+        else {
+            ctx.visit(insertInto(table, getUpsertFields())
+               .values(getUpsertValues())
+               .onDuplicateKeyUpdate()
+               .set(map));
         }
     }
 

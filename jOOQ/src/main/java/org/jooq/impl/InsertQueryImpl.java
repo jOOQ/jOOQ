@@ -169,8 +169,10 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                     ctx.formatSeparator()
                        .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
                        .keyword("on duplicate key update")
-                       .sql(' ')
+                       .formatIndentStart()
+                       .formatSeparator()
                        .visit(updateMap)
+                       .formatIndentEnd()
                        .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
 
                     break;

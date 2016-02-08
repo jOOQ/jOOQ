@@ -40,6 +40,8 @@
  */
 package org.jooq.impl;
 
+
+
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
@@ -266,3 +268,5 @@ final class ExecutorProviderCompletionStage<T> implements CompletionStage<T> {
         return delegate.toCompletableFuture();
     }
 }
+
+

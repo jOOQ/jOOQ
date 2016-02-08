@@ -69,6 +69,7 @@ import org.jooq.Context;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 
@@ -116,13 +117,23 @@ final class AlterTableImpl extends AbstractQuery implements
     }
 
     @Override
+    public final AlterTableImpl add(Name field, DataType<?> type) {
+        return addColumn(field, type);
+    }
+
+    @Override
     public final AlterTableImpl add(String field, DataType<?> type) {
         return addColumn(field, type);
     }
 
     @Override
     public final AlterTableImpl addColumn(String field, DataType<?> type) {
-        return addColumn((Field) field(name(field), type), type);
+        return addColumn(name(field), type);
+    }
+
+    @Override
+    public final AlterTableImpl addColumn(Name field, DataType<?> type) {
+        return addColumn((Field) field(field, type), type);
     }
 
     @Override
@@ -144,13 +155,23 @@ final class AlterTableImpl extends AbstractQuery implements
     }
 
     @Override
+    public final AlterTableImpl alter(Name field) {
+        return alterColumn(field);
+    }
+
+    @Override
     public final AlterTableImpl alter(String field) {
         return alterColumn(field);
     }
 
     @Override
+    public final AlterTableImpl alterColumn(Name field) {
+        return alterColumn(field(field));
+    }
+
+    @Override
     public final AlterTableImpl alterColumn(String field) {
-        return alterColumn(field(name(field)));
+        return alterColumn(name(field));
     }
 
     @Override
@@ -182,13 +203,23 @@ final class AlterTableImpl extends AbstractQuery implements
     }
 
     @Override
+    public final AlterTableImpl drop(Name field) {
+        return dropColumn(field);
+    }
+
+    @Override
     public final AlterTableImpl drop(String field) {
         return dropColumn(field);
     }
 
     @Override
+    public final AlterTableImpl dropColumn(Name field) {
+        return dropColumn(field(field));
+    }
+
+    @Override
     public final AlterTableImpl dropColumn(String field) {
-        return dropColumn(field(name(field)));
+        return dropColumn(name(field));
     }
 
     @Override
@@ -201,6 +232,11 @@ final class AlterTableImpl extends AbstractQuery implements
     public final AlterTableImpl drop(Constraint constraint) {
         dropConstraint = constraint;
         return this;
+    }
+
+    @Override
+    public final AlterTableImpl dropConstraint(Name constraint) {
+        return drop(DSL.constraint(constraint));
     }
 
     @Override

@@ -139,8 +139,8 @@ implements
     private Action                onUpdate;
     private Condition             check;
 
-    ConstraintImpl(String name) {
-        this.name = name(name);
+    ConstraintImpl(Name name) {
+        this.name = name;
     }
 
     @Override

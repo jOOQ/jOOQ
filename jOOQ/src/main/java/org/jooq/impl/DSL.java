@@ -4775,9 +4775,20 @@ public class DSL {
     // XXX DDL Clauses
     // -------------------------------------------------------------------------
 
+    /**
+     * Create a <code>CONSTRAINT</code> specification.
+     */
+    @Support
+    public static ConstraintTypeStep constraint(Name name) {
+        return new ConstraintImpl(name);
+    }
+
+    /**
+     * Create a <code>CONSTRAINT</code> specification.
+     */
     @Support
     public static ConstraintTypeStep constraint(String name) {
-        return new ConstraintImpl(name);
+        return constraint(name(name));
     }
 
     // -------------------------------------------------------------------------

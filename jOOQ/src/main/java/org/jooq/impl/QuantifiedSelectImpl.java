@@ -61,7 +61,7 @@ import org.jooq.Select;
 /**
  * @author Lukas Eder
  */
-class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart implements QuantifiedSelect<R> {
+final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart implements QuantifiedSelect<R> {
 
     /**
      * Generated UID

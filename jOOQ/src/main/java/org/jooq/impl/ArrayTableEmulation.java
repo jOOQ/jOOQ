@@ -58,7 +58,7 @@ import org.jooq.Table;
  *
  * @author Lukas Eder
  */
-class ArrayTableEmulation extends AbstractTable<Record> {
+final class ArrayTableEmulation extends AbstractTable<Record> {
 
     /**
      * Generated UID

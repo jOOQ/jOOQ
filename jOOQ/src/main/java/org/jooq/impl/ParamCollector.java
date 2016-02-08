@@ -62,7 +62,7 @@ import org.jooq.tools.StringUtils;
  *
  * @author Lukas Eder
  */
-class ParamCollector extends AbstractBindContext {
+final class ParamCollector extends AbstractBindContext {
 
     final Map<String, Param<?>>         resultFlat = new LinkedHashMap<String, Param<?>>();
     final Map<String, List<Param<?>>>   result     = new LinkedHashMap<String, List<Param<?>>>();

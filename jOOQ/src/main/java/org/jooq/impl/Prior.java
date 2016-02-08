@@ -52,7 +52,7 @@ import org.jooq.conf.RenderNameStyle;
 /**
  * @author Lukas Eder
  */
-class Prior<T> extends AbstractField<T> {
+final class Prior<T> extends AbstractField<T> {
 
     /**
      * Generated UID

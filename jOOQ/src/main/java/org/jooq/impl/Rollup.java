@@ -51,7 +51,7 @@ import org.jooq.QueryPart;
 /**
  * @author Lukas Eder
  */
-class Rollup extends AbstractField<Object> {
+final class Rollup extends AbstractField<Object> {
 
     /**
      * Generated UID

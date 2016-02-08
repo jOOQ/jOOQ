@@ -48,7 +48,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class MD5 extends AbstractFunction<String> {
+final class MD5 extends AbstractFunction<String> {
 
     /**
      * Generated UID

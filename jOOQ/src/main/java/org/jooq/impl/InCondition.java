@@ -59,7 +59,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class InCondition<T> extends AbstractCondition {
+final class InCondition<T> extends AbstractCondition {
 
     private static final long     serialVersionUID = -1653924248576930761L;
     private static final int      IN_LIMIT         = 1000;

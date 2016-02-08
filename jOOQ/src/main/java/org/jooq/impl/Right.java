@@ -50,7 +50,7 @@ import org.jooq.QueryPart;
 /**
  * @author Lukas Eder
  */
-class Right extends AbstractFunction<String> {
+final class Right extends AbstractFunction<String> {
 
     /**
      * Generated UID

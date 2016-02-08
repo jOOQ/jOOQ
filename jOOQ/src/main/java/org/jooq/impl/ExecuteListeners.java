@@ -58,7 +58,7 @@ import org.jooq.tools.StopWatchListener;
  *
  * @author Lukas Eder
  */
-class ExecuteListeners implements ExecuteListener {
+final class ExecuteListeners implements ExecuteListener {
 
     /**
      * Generated UID

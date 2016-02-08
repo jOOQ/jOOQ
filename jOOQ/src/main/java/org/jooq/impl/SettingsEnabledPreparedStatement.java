@@ -71,7 +71,7 @@ import org.jooq.tools.jdbc.DefaultStatement;
  *
  * @author Lukas Eder
  */
-class SettingsEnabledPreparedStatement extends DefaultStatement implements PreparedStatement {
+final class SettingsEnabledPreparedStatement extends DefaultStatement implements PreparedStatement {
 
     private final Connection connection;
     private final MethodType methodType;

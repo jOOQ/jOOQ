@@ -58,7 +58,7 @@ import org.jooq.exception.DataAccessException;
 /**
  * @author Lukas Eder
  */
-class Limit extends AbstractQueryPart {
+final class Limit extends AbstractQueryPart {
 
     /**
      * Generated UID

@@ -49,7 +49,7 @@ import org.jooq.Context;
 import org.jooq.QueryPart;
 import org.jooq.SQL;
 
-class SQLImpl extends AbstractQueryPart implements SQL {
+final class SQLImpl extends AbstractQueryPart implements SQL {
 
     /**
      * Generated UID

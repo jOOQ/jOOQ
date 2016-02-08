@@ -56,7 +56,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-class GenerateSeries extends AbstractTable<Record1<Integer>> {
+final class GenerateSeries extends AbstractTable<Record1<Integer>> {
 
     /**
      * Generated UID

@@ -54,7 +54,7 @@ import org.jooq.Results;
 /**
  * @author Lukas Eder
  */
-class ResultsImpl extends AbstractList<Result<Record>> implements Results, AttachableInternal {
+final class ResultsImpl extends AbstractList<Result<Record>> implements Results, AttachableInternal {
 
     /**
      * Generated UID

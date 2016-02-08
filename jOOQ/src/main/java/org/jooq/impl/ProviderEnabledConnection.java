@@ -60,7 +60,7 @@ import org.jooq.tools.jdbc.DefaultConnection;
  *
  * @author Lukas Eder
  */
-class ProviderEnabledConnection extends DefaultConnection {
+final class ProviderEnabledConnection extends DefaultConnection {
 
     private final ConnectionProvider connectionProvider;
 

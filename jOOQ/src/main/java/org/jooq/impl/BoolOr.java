@@ -51,7 +51,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class BoolOr extends Function<Boolean> {
+final class BoolOr extends Function<Boolean> {
 
     /**
      * Generated UID

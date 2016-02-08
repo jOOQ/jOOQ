@@ -52,7 +52,7 @@ import org.jooq.QueryPart;
 /**
  * @author Lukas Eder
  */
-class Asin extends AbstractFunction<BigDecimal> {
+final class Asin extends AbstractFunction<BigDecimal> {
 
     /**
      * Generated UID

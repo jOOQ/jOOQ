@@ -74,7 +74,7 @@ import org.jooq.Row;
 /**
  * @author Lukas Eder
  */
-class RowInCondition extends AbstractCondition {
+final class RowInCondition extends AbstractCondition {
 
     /**
      * Generated UID

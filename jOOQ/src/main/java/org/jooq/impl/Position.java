@@ -49,7 +49,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Position extends AbstractFunction<Integer> {
+final class Position extends AbstractFunction<Integer> {
 
     private static final long   serialVersionUID = 3544690069533526544L;
 

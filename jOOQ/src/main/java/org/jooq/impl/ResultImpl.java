@@ -137,7 +137,7 @@ import org.xml.sax.helpers.AttributesImpl;
  * @author Ivan Dugic
  */
 @SuppressWarnings({"rawtypes", "unchecked" })
-class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
+final class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     /**
      * Generated UID

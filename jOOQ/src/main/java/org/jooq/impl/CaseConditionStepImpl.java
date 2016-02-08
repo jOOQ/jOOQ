@@ -53,7 +53,10 @@ import org.jooq.QueryPart;
 import org.jooq.Record1;
 import org.jooq.Select;
 
-class CaseConditionStepImpl<T> extends AbstractFunction<T> implements CaseConditionStep<T> {
+/**
+ * @author Lukas Eder
+ */
+final class CaseConditionStepImpl<T> extends AbstractFunction<T> implements CaseConditionStep<T> {
 
     /**
      * Generated UID

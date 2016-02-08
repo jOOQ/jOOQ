@@ -52,7 +52,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Cosh extends AbstractFunction<BigDecimal> {
+final class Cosh extends AbstractFunction<BigDecimal> {
 
     /**
      * Generated UID

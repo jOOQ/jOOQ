@@ -49,7 +49,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Least<T> extends AbstractFunction<T> {
+final class Least<T> extends AbstractFunction<T> {
 
     /**
      * Generated UID

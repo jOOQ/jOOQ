@@ -57,7 +57,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Trunc<T> extends AbstractFunction<T> {
+final class Trunc<T> extends AbstractFunction<T> {
 
     /**
      * Generated UID

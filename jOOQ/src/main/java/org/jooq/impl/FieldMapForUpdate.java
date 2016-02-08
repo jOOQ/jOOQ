@@ -55,7 +55,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
+final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
 
     /**
      * Generated UID

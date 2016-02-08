@@ -51,7 +51,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class DateDiff extends AbstractFunction<Integer> {
+final class DateDiff extends AbstractFunction<Integer> {
 
     /**
      * Generated UID

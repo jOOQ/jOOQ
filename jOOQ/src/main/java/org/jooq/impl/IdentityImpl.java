@@ -48,7 +48,7 @@ import org.jooq.TableField;
 /**
  * @author Lukas Eder
  */
-class IdentityImpl<R extends Record, T> implements Identity<R, T> {
+final class IdentityImpl<R extends Record, T> implements Identity<R, T> {
 
     /**
      * Generated UID

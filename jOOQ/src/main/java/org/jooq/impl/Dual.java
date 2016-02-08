@@ -53,7 +53,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-class Dual extends AbstractTable<Record> {
+final class Dual extends AbstractTable<Record> {
 
     private static final long          serialVersionUID = -7492790780048090156L;
     private static final Table<Record> FORCED_DUAL      = select(new Field[] { inline("X").as("DUMMY") }).asTable("DUAL");

@@ -48,7 +48,7 @@ import org.jooq.DataType;
  *
  * @author Lukas Eder
  */
-class ArrayDataType<T> extends DefaultDataType<T[]> {
+final class ArrayDataType<T> extends DefaultDataType<T[]> {
 
     /**
      * Generated UID

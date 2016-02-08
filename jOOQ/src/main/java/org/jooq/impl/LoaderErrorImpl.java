@@ -47,7 +47,7 @@ import org.jooq.exception.DataAccessException;
 /**
  * @author Lukas Eder
  */
-class LoaderErrorImpl implements LoaderError {
+final class LoaderErrorImpl implements LoaderError {
 
     private final DataAccessException exception;
     private final int                 rowIndex;

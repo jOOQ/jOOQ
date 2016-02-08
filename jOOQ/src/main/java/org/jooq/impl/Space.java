@@ -44,7 +44,7 @@ import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.QueryPart;
 
-class Space extends AbstractFunction<String> {
+final class Space extends AbstractFunction<String> {
 
     /**
      * Generated UID

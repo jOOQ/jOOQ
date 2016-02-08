@@ -52,7 +52,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Sinh extends AbstractFunction<BigDecimal> {
+final class Sinh extends AbstractFunction<BigDecimal> {
 
     /**
      * Generated UID

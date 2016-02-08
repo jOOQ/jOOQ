@@ -55,7 +55,7 @@ import org.jooq.tools.StringUtils;
 /**
  * @author Lukas Eder
  */
-class Val<T> extends AbstractParam<T> {
+final class Val<T> extends AbstractParam<T> {
 
     private static final long   serialVersionUID = 6807729087019209084L;
 

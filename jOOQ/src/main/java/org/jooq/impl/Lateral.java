@@ -47,7 +47,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-class Lateral<R extends Record> extends AbstractTable<R> {
+final class Lateral<R extends Record> extends AbstractTable<R> {
 
     /**
      * Generated UID

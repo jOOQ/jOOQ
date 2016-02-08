@@ -52,7 +52,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Tanh extends AbstractFunction<BigDecimal> {
+final class Tanh extends AbstractFunction<BigDecimal> {
 
     /**
      * Generated UID

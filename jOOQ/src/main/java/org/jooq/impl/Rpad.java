@@ -50,7 +50,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Rpad extends AbstractFunction<String> {
+final class Rpad extends AbstractFunction<String> {
 
     /**
      * Generated UID

@@ -61,7 +61,7 @@ import org.jooq.util.h2.H2DataType;
  *
  * @author Lukas Eder
  */
-class ArrayTable extends AbstractTable<Record> {
+final class ArrayTable extends AbstractTable<Record> {
 
     /**
      * Generated UID

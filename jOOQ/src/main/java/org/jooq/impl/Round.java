@@ -51,7 +51,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Round<T extends Number> extends AbstractFunction<T> {
+final class Round<T extends Number> extends AbstractFunction<T> {
 
     /**
      * Generated UID

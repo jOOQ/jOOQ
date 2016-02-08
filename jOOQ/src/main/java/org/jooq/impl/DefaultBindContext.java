@@ -50,7 +50,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class DefaultBindContext extends AbstractBindContext {
+final class DefaultBindContext extends AbstractBindContext {
 
     DefaultBindContext(Configuration configuration, PreparedStatement stmt) {
         super(configuration, stmt);

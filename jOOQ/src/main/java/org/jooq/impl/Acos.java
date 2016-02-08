@@ -53,7 +53,7 @@ import org.jooq.QueryPart;
 /**
  * @author Lukas Eder
  */
-class Acos extends AbstractFunction<BigDecimal> {
+final class Acos extends AbstractFunction<BigDecimal> {
 
     /**
      * Generated UID

@@ -49,7 +49,7 @@ import org.jooq.SQLDialect;
  *
  * @author Lukas Eder
  */
-class Identifiers {
+final class Identifiers {
 
     /**
      * The structure is:

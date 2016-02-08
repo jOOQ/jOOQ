@@ -47,7 +47,7 @@ import org.jooq.WindowDefinition;
  *
  * @author Lukas Eder
  */
-class WindowList extends QueryPartList<WindowDefinition> {
+final class WindowList extends QueryPartList<WindowDefinition> {
 
     /**
      * Generated UID

@@ -89,7 +89,7 @@ import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
 
-class Expression<T> extends AbstractFunction<T> {
+final class Expression<T> extends AbstractFunction<T> {
 
     /**
      * Generated UID

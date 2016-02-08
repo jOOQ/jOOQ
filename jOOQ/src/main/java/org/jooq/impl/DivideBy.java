@@ -65,7 +65,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-class DivideBy
+final class DivideBy
 implements
     DivideByOnStep,
     DivideByOnConditionStep {

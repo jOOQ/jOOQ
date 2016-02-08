@@ -47,7 +47,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Coalesce<T> extends AbstractField<T> {
+final class Coalesce<T> extends AbstractField<T> {
 
     /**
      * Generated UID

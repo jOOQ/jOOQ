@@ -60,7 +60,7 @@ import org.jooq.Operator;
 /**
  * @author Lukas Eder
  */
-class CombinedCondition extends AbstractCondition {
+final class CombinedCondition extends AbstractCondition {
 
     private static final long     serialVersionUID = -7373293246207052549L;
     private static final Clause[] CLAUSES_AND      = { CONDITION, CONDITION_AND };

@@ -53,7 +53,7 @@ import org.jooq.Table;
  *
  * @author Lukas Eder
  */
-class Values<R extends Record> extends AbstractTable<R> {
+final class Values<R extends Record> extends AbstractTable<R> {
 
     /**
      * Generated UID

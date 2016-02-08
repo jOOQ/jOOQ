@@ -55,7 +55,7 @@ import org.jooq.Record;
  *
  * @author Lukas Eder
  */
-class SQLResultQuery extends AbstractResultQuery<Record> {
+final class SQLResultQuery extends AbstractResultQuery<Record> {
 
     /**
      * Generated UID

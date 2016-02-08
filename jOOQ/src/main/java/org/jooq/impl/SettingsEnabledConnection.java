@@ -56,7 +56,7 @@ import org.jooq.tools.jdbc.DefaultConnection;
  *
  * @author Lukas Eder
  */
-class SettingsEnabledConnection extends DefaultConnection {
+final class SettingsEnabledConnection extends DefaultConnection {
 
     private final Settings settings;
 

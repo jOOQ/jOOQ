@@ -153,7 +153,7 @@ import org.jooq.tools.StringUtils;
  *
  * @author Lukas Eder
  */
-class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implements SelectQuery<R> {
+final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implements SelectQuery<R> {
 
     /**
      * Generated UID

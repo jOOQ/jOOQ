@@ -71,7 +71,7 @@ import org.jooq.conf.ParamType;
 /**
  * @author Lukas Eder
  */
-class CreateViewImpl<R extends Record> extends AbstractQuery implements
+final class CreateViewImpl<R extends Record> extends AbstractQuery implements
 
     // Cascading interface implementations for CREATE VIEW behaviour
     CreateViewAsStep<R>,

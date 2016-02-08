@@ -59,7 +59,7 @@ import org.jooq.exception.ControlFlowSignal;
  *
  * @author Lukas Eder
  */
-class RecordDelegate<R extends Record> {
+final class RecordDelegate<R extends Record> {
 
     private final Configuration       configuration;
     private final R                   record;

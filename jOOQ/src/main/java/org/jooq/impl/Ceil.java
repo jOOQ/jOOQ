@@ -48,7 +48,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Ceil<T extends Number> extends AbstractFunction<T> {
+final class Ceil<T extends Number> extends AbstractFunction<T> {
 
     /**
      * Generated UID

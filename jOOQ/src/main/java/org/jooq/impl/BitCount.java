@@ -49,7 +49,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class BitCount extends AbstractFunction<Integer> {
+final class BitCount extends AbstractFunction<Integer> {
 
     /**
      * Generated UID

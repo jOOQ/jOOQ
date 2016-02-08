@@ -63,7 +63,7 @@ import org.jooq.UniqueKey;
 /**
  * @author Lukas Eder
  */
-class DDL {
+final class DDL {
 
     private final DSLContext       ctx;
     private final EnumSet<DDLFlag> flags;

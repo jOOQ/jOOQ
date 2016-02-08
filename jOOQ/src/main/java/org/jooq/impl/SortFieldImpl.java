@@ -50,7 +50,7 @@ import org.jooq.Field;
 import org.jooq.SortField;
 import org.jooq.SortOrder;
 
-class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
+final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
 
     /**
      * Generated UID

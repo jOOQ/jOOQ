@@ -46,7 +46,7 @@ import org.jooq.Context;
 /**
  * @author Lukas Eder
  */
-class WrappedList extends AbstractQueryPart {
+final class WrappedList extends AbstractQueryPart {
 
     /**
      * Generated UID

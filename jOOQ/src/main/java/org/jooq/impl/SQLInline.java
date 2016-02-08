@@ -52,7 +52,7 @@ import org.jooq.conf.ParamType;
 /**
  * @author Lukas Eder
  */
-class SQLInline extends AbstractQueryPart implements SQL {
+final class SQLInline extends AbstractQueryPart implements SQL {
 
     /**
      * Generated UID

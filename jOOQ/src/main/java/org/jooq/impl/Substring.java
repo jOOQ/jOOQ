@@ -50,7 +50,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Substring extends AbstractFunction<String> {
+final class Substring extends AbstractFunction<String> {
 
     /**
      * Generated UID

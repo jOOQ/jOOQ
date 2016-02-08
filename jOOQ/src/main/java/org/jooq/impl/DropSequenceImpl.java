@@ -62,7 +62,7 @@ import org.jooq.Sequence;
 /**
  * @author Lukas Eder
  */
-class DropSequenceImpl extends AbstractQuery implements
+final class DropSequenceImpl extends AbstractQuery implements
 
     // Cascading interface implementations for DROP SEQUENCE behaviour
     DropSequenceFinalStep {

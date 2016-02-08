@@ -63,7 +63,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implements DeleteQuery<R> {
+final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implements DeleteQuery<R> {
 
     private static final long           serialVersionUID = -1943687511774150929L;
     private static final Clause[]       CLAUSES          = { DELETE };

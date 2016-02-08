@@ -72,7 +72,7 @@ import org.jooq.tools.JooqLogger;
  *
  * @author Lukas Eder
  */
-class MetaDataFieldProvider implements Serializable {
+final class MetaDataFieldProvider implements Serializable {
 
     /**
      * Generated UID

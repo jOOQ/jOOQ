@@ -48,7 +48,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Repeat extends AbstractFunction<String> {
+final class Repeat extends AbstractFunction<String> {
 
     /**
      * Generated UID

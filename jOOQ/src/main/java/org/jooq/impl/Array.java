@@ -52,7 +52,7 @@ import org.jooq.Record;
 /**
  * @author Lukas Eder
  */
-class Array<T> extends AbstractField<T[]> {
+final class Array<T> extends AbstractField<T[]> {
 
     /**
      * Generated UID

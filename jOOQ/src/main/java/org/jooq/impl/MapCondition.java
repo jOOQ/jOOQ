@@ -49,7 +49,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class MapCondition extends AbstractCondition {
+final class MapCondition extends AbstractCondition {
 
     /**
      * Generated UID

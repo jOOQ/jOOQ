@@ -51,7 +51,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Sign extends AbstractFunction<Integer> {
+final class Sign extends AbstractFunction<Integer> {
 
     /**
      * Generated UID

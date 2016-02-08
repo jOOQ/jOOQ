@@ -50,7 +50,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Sqrt extends AbstractFunction<BigDecimal> {
+final class Sqrt extends AbstractFunction<BigDecimal> {
 
     /**
      * Generated UID

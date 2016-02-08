@@ -47,7 +47,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-class WithTable<R extends Record> extends AbstractTable<R> {
+final class WithTable<R extends Record> extends AbstractTable<R> {
 
     /**
      * Generated UID

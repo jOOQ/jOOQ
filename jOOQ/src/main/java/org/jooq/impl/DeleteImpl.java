@@ -64,7 +64,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-class DeleteImpl<R extends Record>
+final class DeleteImpl<R extends Record>
     extends AbstractDelegatingQuery<DeleteQueryImpl<R>>
     implements
 

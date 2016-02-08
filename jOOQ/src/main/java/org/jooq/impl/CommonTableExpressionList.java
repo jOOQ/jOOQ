@@ -47,7 +47,7 @@ import org.jooq.CommonTableExpression;
  *
  * @author Lukas Eder
  */
-class CommonTableExpressionList extends QueryPartList<CommonTableExpression<?>> {
+final class CommonTableExpressionList extends QueryPartList<CommonTableExpression<?>> {
 
     /**
      * Generated UID

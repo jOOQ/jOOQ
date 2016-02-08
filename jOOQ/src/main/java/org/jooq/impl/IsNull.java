@@ -52,7 +52,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class IsNull extends AbstractCondition {
+final class IsNull extends AbstractCondition {
 
     private static final long     serialVersionUID = -747240442279619486L;
     private static final Clause[] CLAUSES_NULL     = { CONDITION, CONDITION_IS_NULL };

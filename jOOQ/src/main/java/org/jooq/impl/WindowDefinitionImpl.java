@@ -52,7 +52,7 @@ import org.jooq.WindowSpecification;
 /**
  * @author Lukas Eder
  */
-class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefinition {
+final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefinition {
 
     /**
      * Generated UID

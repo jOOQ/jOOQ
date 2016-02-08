@@ -51,7 +51,7 @@ import org.jooq.tools.jdbc.DefaultPreparedStatement;
  *
  * @author Lukas Eder
  */
-class ProviderEnabledPreparedStatement extends DefaultPreparedStatement {
+final class ProviderEnabledPreparedStatement extends DefaultPreparedStatement {
 
     private final ProviderEnabledConnection connection;
 

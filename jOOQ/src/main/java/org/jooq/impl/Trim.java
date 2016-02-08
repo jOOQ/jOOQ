@@ -48,7 +48,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Trim extends AbstractFunction<String> {
+final class Trim extends AbstractFunction<String> {
 
     /**
      * Generated UID

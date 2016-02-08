@@ -83,7 +83,7 @@ import org.jooq.Select;
 /**
  * @author Lukas Eder
  */
-class RowSubqueryCondition extends AbstractCondition {
+final class RowSubqueryCondition extends AbstractCondition {
 
     /**
      * Generated UID

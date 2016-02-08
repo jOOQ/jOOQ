@@ -68,7 +68,7 @@ import org.jooq.conf.ParamType;
  *
  * @author Lukas Eder
  */
-class Pivot<T>
+final class Pivot<T>
 extends AbstractTable<Record>
 implements
     PivotForStep,

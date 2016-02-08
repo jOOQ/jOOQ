@@ -49,7 +49,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class LeadLag<T> extends Function<T> {
+final class LeadLag<T> extends Function<T> {
 
     /**
      * Generated UID

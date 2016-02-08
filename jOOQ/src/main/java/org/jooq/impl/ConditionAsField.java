@@ -50,7 +50,7 @@ import org.jooq.QueryPart;
 /**
  * @author Lukas Eder
  */
-class ConditionAsField extends AbstractFunction<Boolean> {
+final class ConditionAsField extends AbstractFunction<Boolean> {
 
     /**
      * Generated UID

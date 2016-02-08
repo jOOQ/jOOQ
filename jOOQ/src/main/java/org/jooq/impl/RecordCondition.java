@@ -47,7 +47,7 @@ import org.jooq.Record;
 /**
  * @author Lukas Eder
  */
-class RecordCondition extends AbstractCondition {
+final class RecordCondition extends AbstractCondition {
 
     /**
      * Generated UID

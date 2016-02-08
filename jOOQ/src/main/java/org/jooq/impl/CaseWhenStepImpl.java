@@ -50,7 +50,7 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.QueryPart;
 
-class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWhenStep<V, T> {
+final class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWhenStep<V, T> {
 
     /**
      * Generated UID

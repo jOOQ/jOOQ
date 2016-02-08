@@ -52,7 +52,7 @@ import org.jooq.UniqueKey;
 /**
  * @author Lukas Eder
  */
-class TableComparison<R extends Record> extends AbstractCondition {
+final class TableComparison<R extends Record> extends AbstractCondition {
 
     /**
      * Generated UID

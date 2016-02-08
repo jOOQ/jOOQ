@@ -63,7 +63,7 @@ import org.jooq.RenderContext.CastMode;
 /**
  * @author Lukas Eder
  */
-class Cast<T> extends AbstractFunction<T> {
+final class Cast<T> extends AbstractFunction<T> {
 
     /**
      * Generated UID

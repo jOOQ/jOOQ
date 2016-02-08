@@ -45,7 +45,7 @@ import java.util.Iterator;
 /**
  * @author Lukas Eder
  */
-class MappingIterator<T, U> implements Iterator<U> {
+final class MappingIterator<T, U> implements Iterator<U> {
 
     final Iterator<? extends T>            delegate;
     final Function<? super T, ? extends U> mapper;

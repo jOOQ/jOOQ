@@ -49,7 +49,7 @@ import org.jooq.Select;
 /**
  * @author Lukas Eder
  */
-class ScalarSubquery<T> extends AbstractField<T> {
+final class ScalarSubquery<T> extends AbstractField<T> {
 
     private static final long serialVersionUID = 3463144434073231750L;
 

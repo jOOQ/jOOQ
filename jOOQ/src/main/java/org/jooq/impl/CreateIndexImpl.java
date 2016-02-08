@@ -67,7 +67,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-class CreateIndexImpl extends AbstractQuery implements
+final class CreateIndexImpl extends AbstractQuery implements
 
     // Cascading interface implementations for CREATE INDEX behaviour
     CreateIndexStep,

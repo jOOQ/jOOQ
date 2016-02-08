@@ -55,7 +55,7 @@ import org.jooq.QueryPart;
 /**
  * @author Lukas Eder
  */
-class DateAdd<T extends java.util.Date> extends AbstractFunction<T> {
+final class DateAdd<T extends java.util.Date> extends AbstractFunction<T> {
 
     /**
      * Generated UID

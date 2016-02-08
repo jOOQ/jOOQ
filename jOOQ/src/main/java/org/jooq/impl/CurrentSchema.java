@@ -50,7 +50,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class CurrentSchema extends AbstractFunction<String> {
+final class CurrentSchema extends AbstractFunction<String> {
 
     /**
      * Generated UID

@@ -49,7 +49,7 @@ import org.jooq.Select;
 /**
  * @author Lukas Eder
  */
-class CaseValueStepImpl<V> implements CaseValueStep<V> {
+final class CaseValueStepImpl<V> implements CaseValueStep<V> {
 
     private final Field<V> value;
 

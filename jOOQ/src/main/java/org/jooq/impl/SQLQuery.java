@@ -49,7 +49,7 @@ import org.jooq.QueryPartInternal;
 /**
  * @author Lukas Eder
  */
-class SQLQuery extends AbstractQuery {
+final class SQLQuery extends AbstractQuery {
 
     /**
      * Generated UID

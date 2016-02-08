@@ -55,7 +55,7 @@ import org.jooq.tools.StringUtils;
  *
  * @author Lukas Eder
  */
-class ParameterImpl<T> extends AbstractQueryPart implements Parameter<T> {
+final class ParameterImpl<T> extends AbstractQueryPart implements Parameter<T> {
 
     private static final long serialVersionUID = -5277225593751085577L;
 

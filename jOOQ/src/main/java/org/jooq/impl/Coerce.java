@@ -47,7 +47,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Coerce<T> extends AbstractField<T> {
+final class Coerce<T> extends AbstractField<T> {
 
     /**
      * Generated UID

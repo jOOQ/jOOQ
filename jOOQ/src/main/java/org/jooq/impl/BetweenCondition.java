@@ -77,7 +77,7 @@ import org.jooq.QueryPartInternal;
 /**
  * @author Lukas Eder
  */
-class BetweenCondition<T> extends AbstractCondition implements BetweenAndStep<T> {
+final class BetweenCondition<T> extends AbstractCondition implements BetweenAndStep<T> {
 
     private static final long     serialVersionUID              = -4666251100802237878L;
     private static final Clause[] CLAUSES_BETWEEN               = { CONDITION, CONDITION_BETWEEN };

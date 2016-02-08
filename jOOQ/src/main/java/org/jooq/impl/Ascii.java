@@ -48,7 +48,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Ascii extends AbstractFunction<Integer> {
+final class Ascii extends AbstractFunction<Integer> {
 
     /**
      * Generated UID

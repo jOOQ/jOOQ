@@ -53,7 +53,7 @@ import org.jooq.DataType;
  *             longer
  */
 @Deprecated
-class ConvertedDataType<T, U> extends DefaultDataType<U> {
+final class ConvertedDataType<T, U> extends DefaultDataType<U> {
 
     /**
      * Generated UID

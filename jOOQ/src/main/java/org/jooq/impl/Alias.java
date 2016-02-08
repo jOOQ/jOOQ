@@ -83,7 +83,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-class Alias<Q extends QueryPart> extends AbstractQueryPart {
+final class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
     private static final long     serialVersionUID        = -2456848365524191614L;
     private static final Clause[] CLAUSES_TABLE_REFERENCE = { TABLE, TABLE_REFERENCE };

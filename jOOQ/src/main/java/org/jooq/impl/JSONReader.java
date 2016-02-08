@@ -59,7 +59,7 @@ import org.jooq.tools.json.ParseException;
  * @author Johannes Bühler
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-class JSONReader implements Closeable {
+final class JSONReader implements Closeable {
 
     private final BufferedReader br;
     private final JSONParser     parser;

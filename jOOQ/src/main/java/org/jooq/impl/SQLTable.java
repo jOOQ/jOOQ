@@ -48,7 +48,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-class SQLTable extends AbstractTable<Record> {
+final class SQLTable extends AbstractTable<Record> {
 
     private static final long serialVersionUID = -5122023013463718796L;
 

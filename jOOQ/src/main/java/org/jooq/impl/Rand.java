@@ -51,7 +51,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Rand extends AbstractFunction<BigDecimal> {
+final class Rand extends AbstractFunction<BigDecimal> {
 
     /**
      * Generated UID

@@ -66,7 +66,7 @@ import org.jooq.VisitListener;
  *
  * @author Lukas Eder
  */
-class InternalVisitListener extends DefaultVisitListener {
+final class InternalVisitListener extends DefaultVisitListener {
 
 
 

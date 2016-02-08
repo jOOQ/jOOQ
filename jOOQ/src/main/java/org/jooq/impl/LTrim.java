@@ -49,7 +49,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class LTrim extends AbstractFunction<String> {
+final class LTrim extends AbstractFunction<String> {
 
     /**
      * Generated UID

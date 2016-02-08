@@ -69,7 +69,7 @@ import org.jooq.tools.JooqLogger;
 /**
  * @author Lukas Eder
  */
-class BatchSingle implements BatchBindStep {
+final class BatchSingle implements BatchBindStep {
 
     /**
      * Generated UID

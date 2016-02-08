@@ -53,7 +53,7 @@ import org.jooq.types.DayToSecond;
 /**
  * @author Lukas Eder
  */
-class TimestampDiff extends AbstractFunction<DayToSecond> {
+final class TimestampDiff extends AbstractFunction<DayToSecond> {
 
     /**
      * Generated UID

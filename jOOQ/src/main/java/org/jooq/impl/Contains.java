@@ -56,7 +56,7 @@ import org.jooq.Field;
  *
  * @author Lukas Eder
  */
-class Contains<T> extends AbstractCondition {
+final class Contains<T> extends AbstractCondition {
 
     /**
      * Generated UID

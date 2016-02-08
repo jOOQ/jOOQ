@@ -49,7 +49,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Decode<T, Z> extends AbstractFunction<Z> {
+final class Decode<T, Z> extends AbstractFunction<Z> {
 
     /**
      * Generated UID

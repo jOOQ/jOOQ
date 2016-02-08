@@ -49,7 +49,7 @@ import org.jooq.Record;
 /**
  * @author Lukas Eder
  */
-class Intern implements Serializable {
+final class Intern implements Serializable {
 
     /**
      * Generated UID

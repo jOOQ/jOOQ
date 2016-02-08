@@ -62,7 +62,7 @@ import org.jooq.Sequence;
 /**
  * @author Lukas Eder
  */
-class CreateSequenceImpl extends AbstractQuery implements
+final class CreateSequenceImpl extends AbstractQuery implements
 
     // Cascading interface implementations for CREATE SEQUENCE behaviour
     CreateSequenceFinalStep {

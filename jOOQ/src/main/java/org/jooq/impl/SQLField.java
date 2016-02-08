@@ -44,7 +44,7 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.QueryPart;
 
-class SQLField<T> extends AbstractField<T> {
+final class SQLField<T> extends AbstractField<T> {
 
     /**
      * Generated UID

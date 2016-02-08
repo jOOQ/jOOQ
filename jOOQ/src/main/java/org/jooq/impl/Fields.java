@@ -63,7 +63,7 @@ import org.jooq.tools.JooqLogger;
  *
  * @author Lukas Eder
  */
-class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R> {
+final class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R> {
 
     private static final long       serialVersionUID = -6911012275707591576L;
     private static final JooqLogger log              = JooqLogger.getLogger(Fields.class);

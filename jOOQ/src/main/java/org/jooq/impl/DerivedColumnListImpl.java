@@ -73,7 +73,7 @@ import org.jooq.Select;
 /**
  * @author Lukas Eder
  */
-class DerivedColumnListImpl extends AbstractQueryPart
+final class DerivedColumnListImpl extends AbstractQueryPart
 implements
 
     // [jooq-tools] START [implements-derived-column-list]

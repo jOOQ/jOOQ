@@ -57,7 +57,7 @@ import org.jooq.SQLDialect;
 /**
  * @author Lukas Eder
  */
-class Neg<T> extends AbstractField<T> {
+final class Neg<T> extends AbstractField<T> {
 
     /**
      * Generated UID

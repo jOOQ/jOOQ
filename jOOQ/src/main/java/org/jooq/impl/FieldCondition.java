@@ -52,7 +52,7 @@ import org.jooq.QueryPartInternal;
 /**
  * @author Lukas Eder
  */
-class FieldCondition extends AbstractCondition {
+final class FieldCondition extends AbstractCondition {
 
     /**
      * Generated UID

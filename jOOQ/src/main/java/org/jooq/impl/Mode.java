@@ -48,7 +48,7 @@ import org.jooq.SortField;
 /**
  * @author Lukas Eder
  */
-class Mode implements OrderedAggregateFunctionOfDeferredType {
+final class Mode implements OrderedAggregateFunctionOfDeferredType {
 
     @Override
     public final <T> AggregateFilterStep<T> withinGroupOrderBy(Field<T> field) {

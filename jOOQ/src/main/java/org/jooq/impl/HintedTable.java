@@ -48,7 +48,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-class HintedTable<R extends Record> extends AbstractTable<R> {
+final class HintedTable<R extends Record> extends AbstractTable<R> {
 
     /**
      * Generated UID

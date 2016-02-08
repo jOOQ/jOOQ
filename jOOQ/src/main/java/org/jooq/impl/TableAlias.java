@@ -59,7 +59,7 @@ import org.jooq.UniqueKey;
 /**
  * @author Lukas Eder
  */
-class TableAlias<R extends Record> extends AbstractTable<R> {
+final class TableAlias<R extends Record> extends AbstractTable<R> {
 
     private static final long serialVersionUID = -8417114874567698325L;
 

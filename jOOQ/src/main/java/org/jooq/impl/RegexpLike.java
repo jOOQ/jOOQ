@@ -50,7 +50,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class RegexpLike extends AbstractCondition {
+final class RegexpLike extends AbstractCondition {
 
     /**
      * Generated UID

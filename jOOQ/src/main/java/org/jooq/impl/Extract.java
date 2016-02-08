@@ -54,7 +54,7 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 /**
  * @author Lukas Eder
  */
-class Extract extends AbstractFunction<Integer> {
+final class Extract extends AbstractFunction<Integer> {
 
     private static final long serialVersionUID = 3748640920856031034L;
 

@@ -53,7 +53,7 @@ import org.jooq.SortOrder;
 /**
  * @author Lukas Eder
  */
-class SortFieldList extends QueryPartList<SortField<?>> {
+final class SortFieldList extends QueryPartList<SortField<?>> {
 
     private static final long serialVersionUID = -1825164005148183725L;
 

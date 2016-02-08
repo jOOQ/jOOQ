@@ -51,7 +51,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class CurrentTimestamp extends AbstractFunction<Timestamp> {
+final class CurrentTimestamp extends AbstractFunction<Timestamp> {
 
     /**
      * Generated UID

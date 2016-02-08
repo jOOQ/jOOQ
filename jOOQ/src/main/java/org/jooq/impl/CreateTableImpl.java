@@ -86,7 +86,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-class CreateTableImpl<R extends Record> extends AbstractQuery implements
+final class CreateTableImpl<R extends Record> extends AbstractQuery implements
 
     // Cascading interface implementations for CREATE TABLE behaviour
     CreateTableAsStep<R>,

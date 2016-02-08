@@ -57,7 +57,7 @@ import org.jooq.impl.Utils.DataKey;
  *
  * @author Lukas Eder
  */
-class DataMap extends AbstractMap<Object, Object> {
+final class DataMap extends AbstractMap<Object, Object> {
 
     final EnumMap<DataKey, Object>   internal;
     Map<Object, Object>              external;

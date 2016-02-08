@@ -53,7 +53,7 @@ import org.jooq.QueryPart;
 /**
  * @author Lukas Eder
  */
-class TruncDate<T extends java.util.Date> extends AbstractFunction<T> {
+final class TruncDate<T extends java.util.Date> extends AbstractFunction<T> {
 
     /**
      * Generated UID

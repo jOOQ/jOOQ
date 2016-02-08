@@ -59,7 +59,7 @@ import org.jooq.tools.StringUtils;
  *
  * @author Lukas Eder
  */
-class NameImpl extends AbstractQueryPart implements Name {
+final class NameImpl extends AbstractQueryPart implements Name {
 
     /**
      * Generated UID

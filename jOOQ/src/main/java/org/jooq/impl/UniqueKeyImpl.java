@@ -54,7 +54,7 @@ import org.jooq.UniqueKey;
 /**
  * @author Lukas Eder
  */
-class UniqueKeyImpl<R extends Record> extends AbstractKey<R> implements UniqueKey<R> {
+final class UniqueKeyImpl<R extends Record> extends AbstractKey<R> implements UniqueKey<R> {
 
     /**
      * Generated UID

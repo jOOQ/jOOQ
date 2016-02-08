@@ -51,7 +51,7 @@ import org.jooq.QueryPart;
 /**
  * @author Lukas Eder
  */
-class Atan extends AbstractFunction<BigDecimal> {
+final class Atan extends AbstractFunction<BigDecimal> {
 
     /**
      * Generated UID

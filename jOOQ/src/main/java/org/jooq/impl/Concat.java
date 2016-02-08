@@ -52,7 +52,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Concat extends AbstractFunction<String> {
+final class Concat extends AbstractFunction<String> {
 
     /**
      * Generated UID

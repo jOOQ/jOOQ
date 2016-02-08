@@ -52,7 +52,7 @@ import org.jooq.Select;
 /**
  * @author Lukas Eder
  */
-class FetchCount extends AbstractResultQuery<Record1<Integer>> {
+final class FetchCount extends AbstractResultQuery<Record1<Integer>> {
 
     /**
      * Generated UID

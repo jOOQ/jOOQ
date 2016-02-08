@@ -64,7 +64,7 @@ import org.jooq.WindowSpecification;
 /**
  * @author Lukas Eder
  */
-class GroupConcat extends AbstractFunction<String> implements GroupConcatOrderByStep {
+final class GroupConcat extends AbstractFunction<String> implements GroupConcatOrderByStep {
 
     /**
      * Generated UID

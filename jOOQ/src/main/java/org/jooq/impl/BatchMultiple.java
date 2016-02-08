@@ -53,7 +53,7 @@ import org.jooq.exception.ControlFlowSignal;
 /**
  * @author Lukas Eder
  */
-class BatchMultiple implements Batch {
+final class BatchMultiple implements Batch {
 
     /**
      * Generated UID

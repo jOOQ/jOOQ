@@ -47,7 +47,7 @@ import org.jooq.QueryPart;
 /**
  * @author Lukas Eder
  */
-class Reverse extends AbstractFunction<String> {
+final class Reverse extends AbstractFunction<String> {
 
     /**
      * Generated UID

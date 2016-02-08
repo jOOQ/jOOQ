@@ -53,7 +53,7 @@ import org.jooq.UDTRecord;
  *
  * @author Lukas Eder
  */
-class UDTFieldImpl<R extends UDTRecord<R>, T> extends AbstractField<T> implements UDTField<R, T> {
+final class UDTFieldImpl<R extends UDTRecord<R>, T> extends AbstractField<T> implements UDTField<R, T> {
 
     private static final long serialVersionUID = -2211214195583539735L;
 

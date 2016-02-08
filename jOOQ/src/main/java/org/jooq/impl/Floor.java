@@ -48,7 +48,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Floor<T extends Number> extends AbstractFunction<T> {
+final class Floor<T extends Number> extends AbstractFunction<T> {
 
     /**
      * Generated UID

@@ -56,7 +56,7 @@ import org.jooq.TruncateIdentityStep;
 /**
  * @author Lukas Eder
  */
-class TruncateImpl<R extends Record> extends AbstractQuery implements
+final class TruncateImpl<R extends Record> extends AbstractQuery implements
 
     // Cascading interface implementations for Truncate behaviour
     TruncateIdentityStep<R> {

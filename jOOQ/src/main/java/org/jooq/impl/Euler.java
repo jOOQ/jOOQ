@@ -52,7 +52,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Euler extends AbstractFunction<BigDecimal> {
+final class Euler extends AbstractFunction<BigDecimal> {
 
     /**
      * Generated UID

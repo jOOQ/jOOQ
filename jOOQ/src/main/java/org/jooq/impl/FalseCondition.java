@@ -50,7 +50,7 @@ import org.jooq.Context;
 /**
  * @author Lukas Eder
  */
-class FalseCondition extends AbstractCondition {
+final class FalseCondition extends AbstractCondition {
 
     private static final long     serialVersionUID = -3972466479081463547L;
     private static final Clause[] CLAUSES          = { CONDITION, CONDITION_COMPARISON };

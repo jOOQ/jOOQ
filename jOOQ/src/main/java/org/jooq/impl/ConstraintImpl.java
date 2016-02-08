@@ -89,7 +89,7 @@ import org.jooq.Table;
  * @author Lukas Eder
  */
 @SuppressWarnings("rawtypes")
-class ConstraintImpl extends AbstractQueryPart
+final class ConstraintImpl extends AbstractQueryPart
 implements
     ConstraintTypeStep
   , ConstraintForeignKeyOnStep

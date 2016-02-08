@@ -75,7 +75,7 @@ import org.jooq.Row;
 /**
  * @author Lukas Eder
  */
-class RowIsNull extends AbstractCondition {
+final class RowIsNull extends AbstractCondition {
 
     /**
      * Generated UID

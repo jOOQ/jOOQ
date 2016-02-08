@@ -131,7 +131,7 @@ import org.jooq.exception.SQLDialectNotSupportedException;
  *
  * @author Lukas Eder
  */
-class MetaImpl implements Meta, Serializable {
+final class MetaImpl implements Meta, Serializable {
 
     /**
      * Generated UID

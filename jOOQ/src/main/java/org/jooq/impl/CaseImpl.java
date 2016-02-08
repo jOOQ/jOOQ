@@ -51,7 +51,7 @@ import org.jooq.Select;
 /**
  * @author Lukas Eder
  */
-class CaseImpl implements Case {
+final class CaseImpl implements Case {
 
     CaseImpl() {
     }

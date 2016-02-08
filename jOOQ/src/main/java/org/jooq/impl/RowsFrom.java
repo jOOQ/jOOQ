@@ -52,7 +52,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-class RowsFrom extends AbstractTable<Record> {
+final class RowsFrom extends AbstractTable<Record> {
 
     /**
      * Generated UID

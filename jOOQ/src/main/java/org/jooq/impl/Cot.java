@@ -50,7 +50,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Cot extends AbstractFunction<BigDecimal> {
+final class Cot extends AbstractFunction<BigDecimal> {
 
     /**
      * Generated UID

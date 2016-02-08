@@ -52,7 +52,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R> implements CommonTableExpression<R> {
+final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R> implements CommonTableExpression<R> {
 
     /**
      * Generated UID

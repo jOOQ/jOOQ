@@ -51,7 +51,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class CurrentDate extends AbstractFunction<Date> {
+final class CurrentDate extends AbstractFunction<Date> {
 
     /**
      * Generated UID

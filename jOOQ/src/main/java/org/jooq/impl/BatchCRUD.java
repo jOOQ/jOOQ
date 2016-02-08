@@ -64,7 +64,7 @@ import org.jooq.exception.DataAccessException;
 /**
  * @author Lukas Eder
  */
-class BatchCRUD implements Batch {
+final class BatchCRUD implements Batch {
 
     /**
      * Generated UID

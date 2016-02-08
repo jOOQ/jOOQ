@@ -63,7 +63,7 @@ import org.jooq.WindowSpecificationRowsAndStep;
 /**
  * @author Lukas Eder
  */
-class WindowSpecificationImpl extends AbstractQueryPart implements
+final class WindowSpecificationImpl extends AbstractQueryPart implements
 
     // Cascading interface implementations for window specification behaviour
     WindowSpecificationPartitionByStep,

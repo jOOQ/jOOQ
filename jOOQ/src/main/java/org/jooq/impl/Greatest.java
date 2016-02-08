@@ -49,7 +49,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Greatest<T> extends AbstractFunction<T> {
+final class Greatest<T> extends AbstractFunction<T> {
 
     /**
      * Generated UID

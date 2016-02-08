@@ -49,7 +49,7 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 /**
  * @author Lukas Eder
  */
-class FunctionTable<R extends Record> extends AbstractTable<R> {
+final class FunctionTable<R extends Record> extends AbstractTable<R> {
 
     /**
      * Generated UID

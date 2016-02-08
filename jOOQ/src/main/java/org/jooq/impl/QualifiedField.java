@@ -57,7 +57,7 @@ import org.jooq.TableField;
  *
  * @author Lukas Eder
  */
-class QualifiedField<T> extends AbstractField<T> implements TableField<Record, T> {
+final class QualifiedField<T> extends AbstractField<T> implements TableField<Record, T> {
 
     /**
      * Generated UID

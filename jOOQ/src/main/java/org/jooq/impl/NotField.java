@@ -50,7 +50,7 @@ import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
 
-class NotField extends AbstractField<Boolean> {
+final class NotField extends AbstractField<Boolean> {
 
     private static final long     serialVersionUID = 2921001862882237932L;
     private static final Clause[] CLAUSES          = { CONDITION, CONDITION_NOT };

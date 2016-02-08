@@ -52,7 +52,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Degrees extends AbstractFunction<BigDecimal> {
+final class Degrees extends AbstractFunction<BigDecimal> {
 
     /**
      * Generated UID

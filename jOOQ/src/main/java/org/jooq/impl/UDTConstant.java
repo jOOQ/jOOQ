@@ -54,7 +54,7 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 /**
  * @author Lukas Eder
  */
-class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
+final class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
 
     private static final long serialVersionUID = 6807729087019209084L;
 

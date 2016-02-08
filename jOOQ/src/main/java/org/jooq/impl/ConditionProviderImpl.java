@@ -60,7 +60,7 @@ import org.jooq.Select;
  * @author Lukas Eder
  */
 @SuppressWarnings("deprecation")
-class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvider, Condition {
+final class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvider, Condition {
 
     private static final long serialVersionUID = 6073328960551062973L;
 

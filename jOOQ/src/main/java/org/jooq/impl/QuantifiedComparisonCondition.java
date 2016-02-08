@@ -54,7 +54,7 @@ import org.jooq.QuantifiedSelect;
 /**
  * @author Lukas Eder
  */
-class QuantifiedComparisonCondition extends AbstractCondition {
+final class QuantifiedComparisonCondition extends AbstractCondition {
 
     private static final long         serialVersionUID = -402776705884329740L;
     private static final Clause[]     CLAUSES          = { CONDITION, CONDITION_BETWEEN };

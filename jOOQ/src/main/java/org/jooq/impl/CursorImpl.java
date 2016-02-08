@@ -98,7 +98,7 @@ import org.jooq.tools.jdbc.JDBCUtils;
 /**
  * @author Lukas Eder
  */
-class CursorImpl<R extends Record> implements Cursor<R> {
+final class CursorImpl<R extends Record> implements Cursor<R> {
 
     private static final JooqLogger                        log = JooqLogger.getLogger(CursorImpl.class);
 

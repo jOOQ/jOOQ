@@ -49,7 +49,7 @@ import org.jooq.QueryPart;
 /**
  * @author Lukas Eder
  */
-class Upper extends AbstractFunction<String> {
+final class Upper extends AbstractFunction<String> {
 
     /**
      * Generated UID

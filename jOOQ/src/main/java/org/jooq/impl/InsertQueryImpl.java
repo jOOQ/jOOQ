@@ -75,7 +75,7 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 /**
  * @author Lukas Eder
  */
-class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements InsertQuery<R> {
+final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements InsertQuery<R> {
 
     private static final long        serialVersionUID = 4466005417945353842L;
     private static final Clause[]    CLAUSES          = { INSERT };

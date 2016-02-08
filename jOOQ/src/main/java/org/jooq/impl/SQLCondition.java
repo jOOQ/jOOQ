@@ -43,7 +43,7 @@ package org.jooq.impl;
 import org.jooq.Context;
 import org.jooq.QueryPart;
 
-class SQLCondition extends AbstractCondition {
+final class SQLCondition extends AbstractCondition {
 
     /**
      * Generated UID

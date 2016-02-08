@@ -56,7 +56,7 @@ import org.jooq.Table;
  *
  * @author Lukas Eder
  */
-class QualifiedTable extends AbstractTable<Record> {
+final class QualifiedTable extends AbstractTable<Record> {
 
     /**
      * Generated UID

@@ -91,7 +91,7 @@ import org.xml.sax.InputSource;
  * @author Lukas Eder
  * @author Johannes Bühler
  */
-class LoaderImpl<R extends Record> implements
+final class LoaderImpl<R extends Record> implements
 
     // Cascading interface implementations for Loader behaviour
     LoaderOptionsStep<R>,

@@ -115,7 +115,7 @@ import org.jooq.exception.DataAccessException;
  *
  * @author Lukas Eder
  */
-class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep<Record>, TableOnConditionStep<Record> {
+final class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep<Record>, TableOnConditionStep<Record> {
 
     /**
      * Generated UID

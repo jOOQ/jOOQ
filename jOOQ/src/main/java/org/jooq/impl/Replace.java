@@ -50,7 +50,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Replace extends AbstractFunction<String> {
+final class Replace extends AbstractFunction<String> {
 
     /**
      * Generated UID

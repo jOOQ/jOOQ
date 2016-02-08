@@ -54,7 +54,7 @@ import org.jooq.Result;
  * @author Lukas Eder
  */
 @Deprecated
-class FutureResultImpl<R extends Record> implements FutureResult<R> {
+final class FutureResultImpl<R extends Record> implements FutureResult<R> {
 
     private final Future<Result<R>> future;
     private final ExecutorService executor;

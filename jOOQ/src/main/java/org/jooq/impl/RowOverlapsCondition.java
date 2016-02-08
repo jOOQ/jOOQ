@@ -71,7 +71,7 @@ import org.jooq.Row2;
 /**
  * @author Lukas Eder
  */
-class RowOverlapsCondition<T1, T2> extends AbstractCondition {
+final class RowOverlapsCondition<T1, T2> extends AbstractCondition {
 
     /**
      * Generated UID

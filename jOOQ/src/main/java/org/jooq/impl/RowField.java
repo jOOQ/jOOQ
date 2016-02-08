@@ -52,7 +52,7 @@ import org.jooq.Row;
 /**
  * @author Lukas Eder
  */
-class RowField<ROW extends Row, REC extends Record> extends AbstractField<REC> {
+final class RowField<ROW extends Row, REC extends Record> extends AbstractField<REC> {
 
     /**
      * Generated UID

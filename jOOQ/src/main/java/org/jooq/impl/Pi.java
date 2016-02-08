@@ -53,7 +53,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Pi extends AbstractFunction<BigDecimal> {
+final class Pi extends AbstractFunction<BigDecimal> {
 
     /**
      * Generated UID

@@ -81,7 +81,7 @@ import org.jooq.SQLDialect;
  * @author Lukas Eder
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })
-class RowCondition extends AbstractCondition {
+final class RowCondition extends AbstractCondition {
 
     /**
      * Generated UID

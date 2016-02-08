@@ -122,7 +122,7 @@ import org.jooq.WithStep;
  * @author Lukas Eder
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-class WithImpl extends AbstractQueryPart
+final class WithImpl extends AbstractQueryPart
 implements
     WithAsStep,
 

@@ -47,7 +47,7 @@ import org.jooq.UniqueKey;
 /**
  * @author Lukas Eder
  */
-class CountTable extends Function<Integer> {
+final class CountTable extends Function<Integer> {
 
     /**
      * Generated UID

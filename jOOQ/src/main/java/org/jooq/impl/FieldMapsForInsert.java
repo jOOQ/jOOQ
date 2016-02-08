@@ -54,7 +54,7 @@ import org.jooq.Select;
 /**
  * @author Lukas Eder
  */
-class FieldMapsForInsert extends AbstractQueryPart {
+final class FieldMapsForInsert extends AbstractQueryPart {
 
     /**
      * Generated UID

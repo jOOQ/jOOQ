@@ -48,7 +48,7 @@ import org.jooq.Query;
 /**
  * @author Lukas Eder
  */
-class QueriesImpl implements Queries {
+final class QueriesImpl implements Queries {
 
     private final Collection<? extends Query> queries;
 

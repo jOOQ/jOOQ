@@ -65,7 +65,7 @@ import org.jooq.exception.DetachedException;
 /**
  * @author Lukas Eder
  */
-class ReferenceImpl<R extends Record, O extends Record> extends AbstractKey<R> implements ForeignKey<R, O> {
+final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKey<R> implements ForeignKey<R, O> {
 
     /**
      * Generated UID

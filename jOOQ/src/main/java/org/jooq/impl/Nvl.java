@@ -48,7 +48,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Nvl<T> extends AbstractFunction<T> {
+final class Nvl<T> extends AbstractFunction<T> {
 
     /**
      * Generated UID

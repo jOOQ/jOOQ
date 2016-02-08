@@ -50,7 +50,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Mod<T> extends AbstractFunction<T> {
+final class Mod<T> extends AbstractFunction<T> {
 
     /**
      * Generated UID

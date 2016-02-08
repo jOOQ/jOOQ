@@ -51,7 +51,7 @@ import org.jooq.tools.jdbc.DefaultCallableStatement;
  *
  * @author Lukas Eder
  */
-class ProviderEnabledCallableStatement extends DefaultCallableStatement {
+final class ProviderEnabledCallableStatement extends DefaultCallableStatement {
 
     private final ProviderEnabledConnection connection;
 

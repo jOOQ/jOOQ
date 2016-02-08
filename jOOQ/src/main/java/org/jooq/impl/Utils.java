@@ -2973,7 +2973,7 @@ final class Utils {
                 try {
                     ForkJoinPool.managedBlock(new ManagedBlocker() {
                         @Override
-                        public boolean block() throws InterruptedException {
+                        public boolean block() {
                             asyncResult = supplier.get();
                             return true;
                         }

@@ -92,6 +92,12 @@ public interface CreateTableAsStep<R extends Record> {
      * Add a column to the column list of the <code>CREATE TABLE</code> statement.
      */
     @Support
+    CreateTableColumnStep column(Name field, DataType<?> type);
+
+    /**
+     * Add a column to the column list of the <code>CREATE TABLE</code> statement.
+     */
+    @Support
     CreateTableColumnStep column(String field, DataType<?> type);
 
     /**

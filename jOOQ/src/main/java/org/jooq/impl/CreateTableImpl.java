@@ -79,6 +79,7 @@ import org.jooq.CreateTableFinalStep;
 import org.jooq.CreateTableOnCommitStep;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.Table;
@@ -155,10 +156,15 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
     }
 
     @Override
-    public final CreateTableColumnStep column(String field, DataType<?> type) {
-        columnFields.add(field(name(field), type));
+    public final CreateTableColumnStep column(Name field, DataType<?> type) {
+        columnFields.add(field(field, type));
         columnTypes.add(type);
         return this;
+    }
+
+    @Override
+    public final CreateTableColumnStep column(String field, DataType<?> type) {
+        return column(name(field), type);
     }
 
     @Override

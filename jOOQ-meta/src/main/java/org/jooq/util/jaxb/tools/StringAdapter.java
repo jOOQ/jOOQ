@@ -40,16 +40,46 @@
  */
 package org.jooq.util.jaxb.tools;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
- * [#2401] A string-trimming {@link XmlAdapter} that takes out whitespace from
- * JAXB-bound XML content.
+ * An {@link XmlAdapter} that implements useful features after parsing XML
+ * strings with JAXB.
+ * <p>
+ * Supported features are:
+ * <ul>
+ * <li>[#2401] String-trimming, taking out whitespace from JAXB-bound XML
+ * content.</li>
+ * <li>[#4550] Property expression resolution</li>
+ * </ul>
  *
  * @author Lukas Eder
- * @deprecated - 3.8.0 - [#4550] Do not reference this type directly.
  */
-@Deprecated
-public class TrimAdapter extends StringAdapter {
+public class StringAdapter extends XmlAdapter<String, String> {
 
+    private static final Pattern PROPERTY_PATTERN = Pattern.compile("\\$\\{(.*?)\\}");
+
+    @Override
+    public final String unmarshal(String v) throws Exception {
+        if (v == null)
+            return null;
+
+        String result = v.trim();
+
+        Matcher matcher = PROPERTY_PATTERN.matcher(result);
+        while (matcher.find())
+            result = result.replace(matcher.group(0), System.getProperty(matcher.group(1), matcher.group(0)));
+
+        return result;
+    }
+
+    @Override
+    public final String marshal(String v) throws Exception {
+        if (v == null)
+            return null;
+        return v.trim();
+    }
 }

@@ -837,6 +837,24 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * This method renders the main part of a query without the LIMIT clause.
      * This part is common to any type of limited query

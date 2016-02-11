@@ -51,7 +51,7 @@ import org.jooq.example.db.h2.Tables.*
 fun main(args: Array<String>) {
 
     val properties = Properties();
-    properties.load(javaClass<Properties>().getResourceAsStream("/config.properties"));
+    properties.load(Properties::class.java.getResourceAsStream("/config.properties"));
 
     DSL.using(
         properties.getProperty("db.url"),

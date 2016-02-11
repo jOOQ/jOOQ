@@ -110,6 +110,12 @@ public interface Table<R extends Record> extends TableLike<R> {
     Class<? extends R> getRecordType();
 
     /**
+     * The table's record type as a UDT data type, in case the underlying
+     * database supports table records as UDT records.
+     */
+    DataType<R> getDataType();
+
+    /**
      * Create a new {@link Record} of this table's type.
      *
      * @see DSLContext#newRecord(Table)

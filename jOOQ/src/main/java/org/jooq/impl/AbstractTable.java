@@ -110,6 +110,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     private final Schema          tableschema;
     private final String          tablename;
     private final String          tablecomment;
+    private transient DataType<R> type;
 
     AbstractTable(String name) {
         this(name, null, null);
@@ -147,6 +148,15 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
      * <code>AliasProvider</code> table.
      */
     abstract Fields<R> fields0();
+
+    @Override
+    public final DataType<R> getDataType() {
+        if (type == null) {
+            type = new TableDataType<R>(this);
+        }
+
+        return type;
+    }
 
     @Override
     public final RecordType<R> recordType() {

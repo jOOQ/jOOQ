@@ -4895,6 +4895,11 @@ public class JavaGenerator extends AbstractGenerator {
             type = getStrategy().getFullJavaClassName(db.getUDT(schema, u), udtMode);
         }
 
+        // [#3942] PostgreSQL treats UDTs and table types in similar ways
+        else if (db.getTable(schema, u) != null) {
+            type = getStrategy().getFullJavaClassName(db.getTable(schema, u), udtMode);
+        }
+
         // Check for custom types
         else if (db.getConfiguredCustomType(u) != null) {
             type = u;
@@ -4944,9 +4949,12 @@ public class JavaGenerator extends AbstractGenerator {
             sb.append(")");
         }
         else if (db.getUDT(schema, u) != null) {
-            UDTDefinition udt = db.getUDT(schema, u);
-
-            sb.append(getStrategy().getFullJavaIdentifier(udt));
+            sb.append(getStrategy().getFullJavaIdentifier(db.getUDT(schema, u)));
+            sb.append(".getDataType()");
+        }
+        // [#3942] PostgreSQL treats UDTs and table types in similar ways
+        else if (db.getTable(schema, u) != null) {
+            sb.append(getStrategy().getFullJavaIdentifier(db.getTable(schema, u)));
             sb.append(".getDataType()");
         }
         else if (db.getEnum(schema, u) != null) {

@@ -211,7 +211,7 @@ final class ArrayTable extends AbstractTable<Record> {
 
 
                 else {
-                    return emulate();
+                    return DSL.table("{0}", array).as(alias);
                 }
             }
         }

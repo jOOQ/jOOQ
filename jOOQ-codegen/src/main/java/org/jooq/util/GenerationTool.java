@@ -409,9 +409,12 @@ public class GenerationTool {
                 g.getTarget().setPackageName("org.jooq.generated");
             if (StringUtils.isBlank(g.getTarget().getDirectory()))
                 g.getTarget().setDirectory("target/generated-sources/jooq");
+            if (StringUtils.isBlank(g.getTarget().getEncoding()))
+                g.getTarget().setEncoding("UTF-8");
 
             generator.setTargetPackage(g.getTarget().getPackageName());
             generator.setTargetDirectory(g.getTarget().getDirectory());
+            generator.setTargetEncoding(g.getTarget().getEncoding());
 
             // [#1394] The <generate/> element should be optional
             if (g.getGenerate() == null)

@@ -80,15 +80,21 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
 
 
     private final File           file;
+    private final String         encoding;
     private final StringBuilder  sb;
     private int                  indentTabs;
     private String               tabString    = "    ";
     private boolean              newline      = true;
 
     protected GeneratorWriter(File file) {
+        this(file, null);
+    }
+
+    protected GeneratorWriter(File file, String encoding) {
         file.getParentFile().mkdirs();
 
         this.file = file;
+        this.encoding = encoding;
         this.sb = new StringBuilder();
     }
 
@@ -259,7 +265,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
                     old = new RandomAccessFile(file, "r");
                     byte[] oldBytes = new byte[(int) old.length()];
                     old.readFully(oldBytes);
-                    oldContent = new String(oldBytes, "UTF-8");
+                    oldContent = new String(oldBytes, encoding());
                 }
                 finally {
                     if (old != null)
@@ -268,7 +274,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
             }
 
             if (oldContent == null || !oldContent.equals(newContent)) {
-                PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
+                PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(file), encoding()));
 
                 writer.append(newContent);
                 writer.flush();
@@ -281,6 +287,10 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
         catch (IOException e) {
             throw new GeneratorException("Error writing " + file.getAbsolutePath());
         }
+    }
+
+    protected String encoding() {
+        return encoding != null ? encoding : "UTF-8";
     }
 
     protected String beforeClose(String string) {

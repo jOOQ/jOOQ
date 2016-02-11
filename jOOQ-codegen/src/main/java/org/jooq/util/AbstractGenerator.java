@@ -84,6 +84,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateTableValuedFunctions     = false;
 
     protected GeneratorStrategyWrapper strategy;
+    protected String                   targetEncoding                   = "UTF-8";
     final Language                     language;
 
     AbstractGenerator(Language language) {
@@ -446,6 +447,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public String getTargetPackage() {
         return strategy.getTargetPackage();
+    }
+
+    @Override
+    public String getTargetEncoding() {
+        return targetEncoding;
+    }
+
+    @Override
+    public void setTargetEncoding(String encoding) {
+        this.targetEncoding = encoding;
     }
 
     /**

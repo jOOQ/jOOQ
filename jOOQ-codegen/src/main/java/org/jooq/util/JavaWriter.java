@@ -37,7 +37,11 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     private final Pattern             PLAIN_GENERIC_TYPE_PATTERN = Pattern.compile("[<\\[]((?:[\\p{L}_$][\\p{L}\\p{N}_$]*\\.)*[\\p{L}_$][\\p{L}\\p{N}_$]*)[>\\]]");
 
     public JavaWriter(File file, String fullyQualifiedTypes) {
-        super(file);
+        this(file, fullyQualifiedTypes, null);
+    }
+
+    public JavaWriter(File file, String fullyQualifiedTypes, String encoding) {
+        super(file, encoding);
 
         this.className = file.getName().replaceAll("\\.(java|scala)$", "");
         this.isJava = file.getName().endsWith(".java");

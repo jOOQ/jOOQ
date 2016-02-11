@@ -855,6 +855,9 @@
 
       <!-- The destination directory of your generated classes -->
       <element name="directory" type="string" default="target/generated-sources/jooq" />
+
+      <!-- The file encoding to be used with all output files. -->
+      <element name="encoding" type="string" default="UTF-8"/>
     </all>
   </complexType>
 

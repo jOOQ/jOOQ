@@ -390,6 +390,16 @@ public interface Generator {
     void setTargetDirectory(String directory);
 
     /**
+     * The target encoding
+     */
+    String getTargetEncoding();
+
+    /**
+     * Initialise the target encoding
+     */
+    void setTargetEncoding(String encoding);
+
+    /**
      * @return Get the target package for the current configuration
      */
     String getTargetPackage();

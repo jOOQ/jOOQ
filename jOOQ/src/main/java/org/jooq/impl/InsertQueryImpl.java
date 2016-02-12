@@ -345,7 +345,6 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
         // [#1506] with DEFAULT VALUES, we might not have any columns to render
         if (insertMaps.isExecutable()) {
-            ctx.sql(' ');
             insertMaps.insertMaps.get(0).toSQLReferenceKeys(ctx);
         }
 

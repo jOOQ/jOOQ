@@ -1509,7 +1509,7 @@ implements
         // [#999] WHEN NOT MATCHED clause is optional
         if (notMatchedInsert != null) {
             ctx.formatSeparator()
-               .keyword("when not matched then insert").sql(' ');
+               .keyword("when not matched then insert");
             notMatchedInsert.toSQLReferenceKeys(ctx);
             ctx.formatSeparator()
                .start(MERGE_VALUES)

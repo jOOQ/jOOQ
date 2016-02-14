@@ -311,9 +311,10 @@ final class Utils {
         DATA_LIST_ALREADY_INDENTED,
 
         /**
-         * [#3338] Whether a constraint is being dropped.
+         * [#3338] [#5086] Whether a constraint is being referenced (rather than
+         * declared).
          */
-        DATA_DROP_CONSTRAINT,
+        DATA_CONSTRAINT_REFERENCE,
 
         /**
          * [#1206] Whether to collect Semi / Anti JOIN.

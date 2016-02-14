@@ -48,22 +48,25 @@ import static org.jooq.Clause.ALTER_TABLE_ALTER_DEFAULT;
 import static org.jooq.Clause.ALTER_TABLE_DROP;
 import static org.jooq.Clause.ALTER_TABLE_RENAME;
 import static org.jooq.Clause.ALTER_TABLE_RENAME_COLUMN;
+import static org.jooq.Clause.ALTER_TABLE_RENAME_CONSTRAINT;
 import static org.jooq.Clause.ALTER_TABLE_TABLE;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
+import static org.jooq.impl.DSL.constraint;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.Utils.toSQLDDLTypeDeclaration;
-import static org.jooq.impl.Utils.DataKey.DATA_DROP_CONSTRAINT;
+import static org.jooq.impl.Utils.DataKey.DATA_CONSTRAINT_REFERENCE;
 
 import org.jooq.AlterTableAlterStep;
 import org.jooq.AlterTableDropStep;
 import org.jooq.AlterTableFinalStep;
 import org.jooq.AlterTableRenameColumnToStep;
+import org.jooq.AlterTableRenameConstraintToStep;
 import org.jooq.AlterTableStep;
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -86,7 +89,8 @@ final class AlterTableImpl extends AbstractQuery implements
     AlterTableStep,
     AlterTableDropStep,
     AlterTableAlterStep,
-    AlterTableRenameColumnToStep {
+    AlterTableRenameColumnToStep,
+    AlterTableRenameConstraintToStep {
 
     /**
      * Generated UID
@@ -98,6 +102,8 @@ final class AlterTableImpl extends AbstractQuery implements
     private Table<?>              renameTo;
     private Field<?>              renameColumn;
     private Field<?>              renameColumnTo;
+    private Constraint            renameConstraint;
+    private Constraint            renameConstraintTo;
     private Field<?>              addColumn;
     private DataType<?>           addColumnType;
     private Constraint            addConstraint;
@@ -151,6 +157,22 @@ final class AlterTableImpl extends AbstractQuery implements
     }
 
     @Override
+    public final AlterTableImpl renameConstraint(Constraint oldName) {
+        renameConstraint = oldName;
+        return this;
+    }
+
+    @Override
+    public final AlterTableImpl renameConstraint(Name oldName) {
+        return renameConstraint(constraint(oldName));
+    }
+
+    @Override
+    public final AlterTableImpl renameConstraint(String oldName) {
+        return renameConstraint(name(oldName));
+    }
+
+    @Override
     public final AlterTableImpl to(Field<?> newName) {
         if (renameColumn != null)
             renameColumnTo = newName;
@@ -161,8 +183,23 @@ final class AlterTableImpl extends AbstractQuery implements
     }
 
     @Override
+    public final AlterTableImpl to(Constraint newName) {
+        if (renameConstraint != null)
+            renameConstraintTo = newName;
+        else
+            throw new IllegalStateException();
+
+        return this;
+    }
+
+    @Override
     public final AlterTableImpl to(Name newName) {
-        return to(field(newName));
+        if (renameColumn != null)
+            return to(field(newName));
+        else if (renameConstraint != null)
+            return to(constraint(newName));
+        else
+            throw new IllegalStateException();
     }
 
     @Override
@@ -381,7 +418,26 @@ final class AlterTableImpl extends AbstractQuery implements
             ctx.qualify(qualify)
                .end(ALTER_TABLE_RENAME_COLUMN);
         }
+        else if (renameConstraint != null) {
+            boolean qualify = ctx.qualify();
+
+            ctx.start(ALTER_TABLE_RENAME_CONSTRAINT);
+            ctx.data(DATA_CONSTRAINT_REFERENCE, true);
+
+            ctx.qualify(false)
+               .keyword("rename constraint").sql(' ')
+               .visit(renameConstraint)
+               .formatSeparator()
+               .keyword("to").sql(' ')
+               .visit(renameConstraintTo)
+               .qualify(qualify);
+
+            ctx.data().remove(DATA_CONSTRAINT_REFERENCE);
+            ctx.end(ALTER_TABLE_RENAME_CONSTRAINT);
+        }
         else if (addColumn != null) {
+            boolean qualify = ctx.qualify();
+
             ctx.start(ALTER_TABLE_ADD)
                .keyword("add").sql(' ');
 
@@ -392,7 +448,7 @@ final class AlterTableImpl extends AbstractQuery implements
 
             ctx.qualify(false)
                .visit(addColumn).sql(' ')
-               .qualify(true);
+               .qualify(qualify);
 
             toSQLDDLTypeDeclaration(ctx, addColumnType);
 
@@ -414,11 +470,15 @@ final class AlterTableImpl extends AbstractQuery implements
             ctx.end(ALTER_TABLE_ADD);
         }
         else if (addConstraint != null) {
+            boolean qualify = ctx.qualify();
+
             ctx.start(ALTER_TABLE_ADD);
 
             ctx.keyword("add")
                .sql(' ')
-               .visit(addConstraint);
+               .qualify(false)
+               .visit(addConstraint)
+               .qualify(qualify);
 
             ctx.end(ALTER_TABLE_ADD);
         }
@@ -552,13 +612,13 @@ final class AlterTableImpl extends AbstractQuery implements
         }
         else if (dropConstraint != null) {
             ctx.start(ALTER_TABLE_DROP);
-            ctx.data(DATA_DROP_CONSTRAINT, true);
+            ctx.data(DATA_CONSTRAINT_REFERENCE, true);
 
-            ctx.keyword("drop")
+            ctx.keyword("drop constraint")
                .sql(' ')
                .visit(dropConstraint);
 
-            ctx.data().remove(DATA_DROP_CONSTRAINT);
+            ctx.data().remove(DATA_CONSTRAINT_REFERENCE);
             ctx.end(ALTER_TABLE_DROP);
         }
 

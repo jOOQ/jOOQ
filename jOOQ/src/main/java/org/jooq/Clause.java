@@ -986,6 +986,20 @@ public enum Clause {
     ALTER_TABLE_RENAME_COLUMN,
 
     /**
+     * A <code>RENAME CONSTRAINT</code> clause within an {@link #ALTER_TABLE}
+     * statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>RENAME CONSTRAINT</code> keywords</li>
+     * <li>the old column name</li>
+     * <li>the <code>TO</code> keyword</li>
+     * <li>the new column name</li>
+     * </ul>
+     */
+    ALTER_TABLE_RENAME_CONSTRAINT,
+
+    /**
      * A <code>ADD</code> clause within an {@link #ALTER_TABLE} statement.
      * <p>
      * This clause surrounds

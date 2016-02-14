@@ -113,6 +113,27 @@ public interface AlterTableStep {
     AlterTableRenameColumnToStep renameColumn(String oldName);
 
     /**
+     * Add a <code>RENAME CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support
+    AlterTableRenameConstraintToStep renameConstraint(Constraint oldName);
+
+    /**
+     * Add a <code>RENAME CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support
+    AlterTableRenameConstraintToStep renameConstraint(Name oldName);
+
+    /**
+     * Add a <code>RENAME CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support
+    AlterTableRenameConstraintToStep renameConstraint(String oldName);
+
+    /**
      * Add an <code>ALTER COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      * <p>

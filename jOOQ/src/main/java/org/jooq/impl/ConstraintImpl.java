@@ -49,7 +49,7 @@ import static org.jooq.impl.ConstraintImpl.Action.SET_NULL;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Utils.fieldsByName;
-import static org.jooq.impl.Utils.DataKey.DATA_DROP_CONSTRAINT;
+import static org.jooq.impl.Utils.DataKey.DATA_CONSTRAINT_REFERENCE;
 
 import javax.annotation.Generated;
 
@@ -150,14 +150,17 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.keyword("constraint")
-           .sql(' ')
-           .visit(name)
-           .formatIndentStart()
-           .formatSeparator();
-
-        if (ctx.data(DATA_DROP_CONSTRAINT) == null) {
+        if (ctx.data(DATA_CONSTRAINT_REFERENCE) != null) {
+            ctx.visit(name);
+        }
+        else {
             boolean qualify = ctx.qualify();
+
+            ctx.keyword("constraint")
+               .sql(' ')
+               .visit(name)
+               .formatIndentStart()
+               .formatSeparator();
 
             if (unique != null) {
                 ctx.keyword("unique")
@@ -208,9 +211,9 @@ implements
                    .qualify(qualify)
                    .sql(')');
             }
-        }
 
-        ctx.formatIndentEnd();
+            ctx.formatIndentEnd();
+        }
     }
 
     @Override

@@ -92,6 +92,27 @@ public interface AlterTableStep {
     AlterTableFinalStep renameTo(String newName);
 
     /**
+     * Add a <code>RENAME COLUMN</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support
+    AlterTableRenameColumnToStep renameColumn(Field<?> oldName);
+
+    /**
+     * Add a <code>RENAME COLUMN</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support
+    AlterTableRenameColumnToStep renameColumn(Name oldName);
+
+    /**
+     * Add a <code>RENAME COLUMN</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support
+    AlterTableRenameColumnToStep renameColumn(String oldName);
+
+    /**
      * Add an <code>ALTER COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      * <p>

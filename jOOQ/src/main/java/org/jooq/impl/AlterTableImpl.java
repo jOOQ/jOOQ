@@ -46,7 +46,8 @@ import static org.jooq.Clause.ALTER_TABLE_ADD;
 import static org.jooq.Clause.ALTER_TABLE_ALTER;
 import static org.jooq.Clause.ALTER_TABLE_ALTER_DEFAULT;
 import static org.jooq.Clause.ALTER_TABLE_DROP;
-import static org.jooq.Clause.ALTER_TABLE_RENAME_TO;
+import static org.jooq.Clause.ALTER_TABLE_RENAME;
+import static org.jooq.Clause.ALTER_TABLE_RENAME_COLUMN;
 import static org.jooq.Clause.ALTER_TABLE_TABLE;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -62,6 +63,7 @@ import static org.jooq.impl.Utils.DataKey.DATA_DROP_CONSTRAINT;
 import org.jooq.AlterTableAlterStep;
 import org.jooq.AlterTableDropStep;
 import org.jooq.AlterTableFinalStep;
+import org.jooq.AlterTableRenameColumnToStep;
 import org.jooq.AlterTableStep;
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -83,7 +85,8 @@ final class AlterTableImpl extends AbstractQuery implements
     // Cascading interface implementations for ALTER TABLE behaviour
     AlterTableStep,
     AlterTableDropStep,
-    AlterTableAlterStep {
+    AlterTableAlterStep,
+    AlterTableRenameColumnToStep {
 
     /**
      * Generated UID
@@ -93,6 +96,8 @@ final class AlterTableImpl extends AbstractQuery implements
 
     private final Table<?>        table;
     private Table<?>              renameTo;
+    private Field<?>              renameColumn;
+    private Field<?>              renameColumnTo;
     private Field<?>              addColumn;
     private DataType<?>           addColumnType;
     private Constraint            addConstraint;
@@ -127,6 +132,42 @@ final class AlterTableImpl extends AbstractQuery implements
     @Override
     public final AlterTableImpl renameTo(String newName) {
         return renameTo(name(newName));
+    }
+
+    @Override
+    public final AlterTableImpl renameColumn(Field<?> oldName) {
+        renameColumn = oldName;
+        return this;
+    }
+
+    @Override
+    public final AlterTableImpl renameColumn(Name oldName) {
+        return renameColumn(field(oldName));
+    }
+
+    @Override
+    public final AlterTableImpl renameColumn(String oldName) {
+        return renameColumn(name(oldName));
+    }
+
+    @Override
+    public final AlterTableImpl to(Field<?> newName) {
+        if (renameColumn != null)
+            renameColumnTo = newName;
+        else
+            throw new IllegalStateException();
+
+        return this;
+    }
+
+    @Override
+    public final AlterTableImpl to(Name newName) {
+        return to(field(newName));
+    }
+
+    @Override
+    public final AlterTableImpl to(String newName) {
+        return to(name(newName));
     }
 
     @Override
@@ -304,10 +345,41 @@ final class AlterTableImpl extends AbstractQuery implements
            .formatSeparator();
 
         if (renameTo != null) {
-            ctx.start(ALTER_TABLE_RENAME_TO)
+            boolean qualify = ctx.qualify();
+
+            ctx.start(ALTER_TABLE_RENAME)
+               .qualify(false)
                .keyword("rename to").sql(' ')
                .visit(renameTo)
-               .end(ALTER_TABLE_RENAME_TO);
+               .qualify(qualify)
+               .end(ALTER_TABLE_RENAME);
+        }
+        else if (renameColumn != null) {
+            boolean qualify = ctx.qualify();
+
+            ctx.start(ALTER_TABLE_RENAME_COLUMN)
+               .qualify(false);
+
+            switch (ctx.family()) {
+                case H2:
+                    ctx.keyword("alter column").sql(' ')
+                       .visit(renameColumn)
+                       .formatSeparator()
+                       .keyword("rename to").sql(' ')
+                       .visit(renameColumnTo);
+                    break;
+
+                default:
+                    ctx.keyword("rename column").sql(' ')
+                       .visit(renameColumn)
+                       .formatSeparator()
+                       .keyword("to").sql(' ')
+                       .visit(renameColumnTo);
+                    break;
+            }
+
+            ctx.qualify(qualify)
+               .end(ALTER_TABLE_RENAME_COLUMN);
         }
         else if (addColumn != null) {
             ctx.start(ALTER_TABLE_ADD)

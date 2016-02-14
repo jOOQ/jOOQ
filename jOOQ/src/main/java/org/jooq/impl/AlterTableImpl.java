@@ -46,6 +46,7 @@ import static org.jooq.Clause.ALTER_TABLE_ADD;
 import static org.jooq.Clause.ALTER_TABLE_ALTER;
 import static org.jooq.Clause.ALTER_TABLE_ALTER_DEFAULT;
 import static org.jooq.Clause.ALTER_TABLE_DROP;
+import static org.jooq.Clause.ALTER_TABLE_RENAME_TO;
 import static org.jooq.Clause.ALTER_TABLE_TABLE;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -91,6 +92,7 @@ final class AlterTableImpl extends AbstractQuery implements
     private static final Clause[] CLAUSES          = { ALTER_TABLE };
 
     private final Table<?>        table;
+    private Table<?>              renameTo;
     private Field<?>              addColumn;
     private DataType<?>           addColumnType;
     private Constraint            addConstraint;
@@ -110,6 +112,22 @@ final class AlterTableImpl extends AbstractQuery implements
     // ------------------------------------------------------------------------
     // XXX: DSL API
     // ------------------------------------------------------------------------
+
+    @Override
+    public final AlterTableImpl renameTo(Table<?> newName) {
+        this.renameTo = newName;
+        return this;
+    }
+
+    @Override
+    public final AlterTableImpl renameTo(Name newName) {
+        return renameTo(DSL.table(newName));
+    }
+
+    @Override
+    public final AlterTableImpl renameTo(String newName) {
+        return renameTo(name(newName));
+    }
 
     @Override
     public final <T> AlterTableImpl add(Field<T> field, DataType<T> type) {
@@ -285,7 +303,13 @@ final class AlterTableImpl extends AbstractQuery implements
            .formatIndentStart()
            .formatSeparator();
 
-        if (addColumn != null) {
+        if (renameTo != null) {
+            ctx.start(ALTER_TABLE_RENAME_TO)
+               .keyword("rename to").sql(' ')
+               .visit(renameTo)
+               .end(ALTER_TABLE_RENAME_TO);
+        }
+        else if (addColumn != null) {
             ctx.start(ALTER_TABLE_ADD)
                .keyword("add").sql(' ');
 

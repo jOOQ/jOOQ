@@ -961,6 +961,17 @@ public enum Clause {
     ALTER_TABLE_TABLE,
 
     /**
+     * A <code>RENAME TO</code> clause within an {@link #ALTER_TABLE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>RENAME TO</code> keywords</li>
+     * <li>the new table name</li>
+     * </ul>
+     */
+    ALTER_TABLE_RENAME_TO,
+
+    /**
      * A <code>ADD</code> clause within an {@link #ALTER_TABLE} statement.
      * <p>
      * This clause surrounds

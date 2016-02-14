@@ -71,6 +71,27 @@ import org.jooq.impl.DSL;
 public interface AlterTableStep {
 
     /**
+     * Add a <code>RENAME TO</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support
+    AlterTableFinalStep renameTo(Table<?> newName);
+
+    /**
+     * Add a <code>RENAME TO</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support
+    AlterTableFinalStep renameTo(Name newName);
+
+    /**
+     * Add a <code>RENAME TO</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support
+    AlterTableFinalStep renameTo(String newName);
+
+    /**
      * Add an <code>ALTER COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      * <p>

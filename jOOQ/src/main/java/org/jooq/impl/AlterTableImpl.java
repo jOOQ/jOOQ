@@ -367,13 +367,24 @@ final class AlterTableImpl extends AbstractQuery implements
 
 
 
-        {
-            accept0(ctx);
-        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        accept0(ctx);
     }
 
     private final void accept0(Context<?> ctx) {
-        SQLDialect family = ctx.configuration().dialect().family();
+        SQLDialect family = ctx.family();
 
         ctx.start(ALTER_TABLE_TABLE)
            .keyword("alter table").sql(' ').visit(table)
@@ -624,6 +635,32 @@ final class AlterTableImpl extends AbstractQuery implements
 
         ctx.formatIndentEnd();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

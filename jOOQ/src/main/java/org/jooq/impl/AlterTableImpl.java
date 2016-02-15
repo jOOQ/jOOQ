@@ -53,6 +53,7 @@ import static org.jooq.Clause.ALTER_TABLE_TABLE;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
+import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.impl.DSL.constraint;
 import static org.jooq.impl.DSL.field;
@@ -386,11 +387,15 @@ final class AlterTableImpl extends AbstractQuery implements
     private final void accept0(Context<?> ctx) {
         SQLDialect family = ctx.family();
 
-        ctx.start(ALTER_TABLE_TABLE)
-           .keyword("alter table").sql(' ').visit(table)
-           .end(ALTER_TABLE_TABLE)
-           .formatIndentStart()
-           .formatSeparator();
+        boolean omitAlterTable =
+            family == HSQLDB && renameConstraint != null;
+
+        if (!omitAlterTable)
+            ctx.start(ALTER_TABLE_TABLE)
+               .keyword("alter table").sql(' ').visit(table)
+               .end(ALTER_TABLE_TABLE)
+               .formatIndentStart()
+               .formatSeparator();
 
         if (renameTo != null) {
             boolean qualify = ctx.qualify();
@@ -410,6 +415,7 @@ final class AlterTableImpl extends AbstractQuery implements
 
             switch (ctx.family()) {
                 case H2:
+                case HSQLDB:
                     ctx.keyword("alter column").sql(' ')
                        .visit(renameColumn)
                        .formatSeparator()
@@ -435,13 +441,24 @@ final class AlterTableImpl extends AbstractQuery implements
             ctx.start(ALTER_TABLE_RENAME_CONSTRAINT);
             ctx.data(DATA_CONSTRAINT_REFERENCE, true);
 
-            ctx.qualify(false)
-               .keyword("rename constraint").sql(' ')
-               .visit(renameConstraint)
-               .formatSeparator()
-               .keyword("to").sql(' ')
-               .visit(renameConstraintTo)
-               .qualify(qualify);
+            if (family == HSQLDB) {
+                ctx.qualify(false)
+                   .keyword("alter constraint").sql(' ')
+                   .visit(renameConstraint)
+                   .formatSeparator()
+                   .keyword("rename to").sql(' ')
+                   .visit(renameConstraintTo)
+                   .qualify(qualify);
+            }
+            else {
+                ctx.qualify(false)
+                   .keyword("rename constraint").sql(' ')
+                   .visit(renameConstraint)
+                   .formatSeparator()
+                   .keyword("to").sql(' ')
+                   .visit(renameConstraintTo)
+                   .qualify(qualify);
+            }
 
             ctx.data().remove(DATA_CONSTRAINT_REFERENCE);
             ctx.end(ALTER_TABLE_RENAME_CONSTRAINT);
@@ -633,7 +650,8 @@ final class AlterTableImpl extends AbstractQuery implements
             ctx.end(ALTER_TABLE_DROP);
         }
 
-        ctx.formatIndentEnd();
+        if (!omitAlterTable)
+            ctx.formatIndentEnd();
     }
 
 

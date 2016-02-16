@@ -40,6 +40,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
@@ -400,7 +401,9 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         if (paramType == INLINED)
             return;
 
-        if (part instanceof Param) {
+        // [#4650] In PostgreSQL, UDTConstants are always inlined as ROW(?, ?)
+        //         as the PostgreSQL JDBC driver doesn't support SQLData
+        if (part instanceof Param && (!(part instanceof UDTConstant) || family() != POSTGRES)) {
             Param<?> param = (Param<?>) part;
             if (param.isInline())
                 return;

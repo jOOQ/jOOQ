@@ -2007,7 +2007,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // Not supported
         }
         else if (type == Boolean.class) {
-            return (T) Boolean.valueOf(string);
+            return (T) Convert.convert(string, Boolean.class);
         }
         else if (type == BigInteger.class) {
             return (T) new BigInteger(string);

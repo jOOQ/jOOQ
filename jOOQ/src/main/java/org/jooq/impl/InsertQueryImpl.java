@@ -247,7 +247,8 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                     break;
                 }
 
-                case POSTGRES_9_5: {
+                case POSTGRES_9_5:
+                case POSTGRES: {
                     toSQLInsert(ctx);
                     ctx.formatSeparator()
                        .start(INSERT_ON_DUPLICATE_KEY_UPDATE)

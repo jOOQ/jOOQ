@@ -51,7 +51,11 @@ import static org.jooq.Clause.INSERT_SELECT;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.selectOne;
+import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.Utils.aliasedFields;
+import static org.jooq.impl.Utils.fieldNames;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -397,17 +401,34 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
     private final QueryPart toInsertSelect(Configuration configuration) {
         if (table.getPrimaryKey() != null) {
-            return create(configuration)
-                .insertInto(table)
-                .columns(insertMaps.getMap().keySet())
-                .select(
-                    select(insertMaps.getMap().values())
+
+            // [#5089] Multi-row inserts need to explicitly generate UNION ALL
+            //         here. TODO: Refactor this logic to be more generally
+            //         reusable - i.e. ordinary UNION ALL emulation should be
+            //         re-used.
+
+            Select<Record> rows = null;
+            String[] aliases = fieldNames(insertMaps.getMap().keySet().toArray(new Field[0]));
+
+            for (FieldMapForInsert map : insertMaps.insertMaps) {
+                Select<Record> row =
+                    select(aliasedFields(map.values().toArray(new Field[0]), aliases))
                     .whereNotExists(
                         selectOne()
                         .from(table)
-                        .where(matchByPrimaryKey())
-                    )
-                );
+                        .where(matchByPrimaryKey(map))
+                    );
+
+                if (rows == null)
+                    rows = row;
+                else
+                    rows = rows.unionAll(row);
+            }
+
+            return create(configuration)
+                .insertInto(table)
+                .columns(insertMaps.getMap().keySet())
+                .select(selectFrom(table(rows).as("t")));
         }
         else {
             throw new IllegalStateException("The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be emulated when inserting into non-updatable tables : " + table);
@@ -419,7 +440,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             MergeOnConditionStep<R> on =
             create(configuration).mergeInto(table)
                                  .usingDual()
-                                 .on(matchByPrimaryKey());
+                                 .on(matchByPrimaryKey(insertMaps.getMap()));
 
             // [#1295] Use UPDATE clause only when with ON DUPLICATE KEY UPDATE,
             // not with ON DUPLICATE KEY IGNORE
@@ -442,21 +463,15 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
      * updated primary key values.
      */
     @SuppressWarnings("unchecked")
-    private final Condition matchByPrimaryKey() {
+    private final Condition matchByPrimaryKey(FieldMapForInsert map) {
         Condition condition = null;
 
         for (Field<?> f : table.getPrimaryKey().getFields()) {
             Field<Object> field = (Field<Object>) f;
-            Field<Object> value = (Field<Object>) insertMaps.getMap().get(field);
+            Field<Object> value = (Field<Object>) map.get(field);
 
             Condition other = field.equal(value);
-
-            if (condition == null) {
-                condition = other;
-            }
-            else {
-                condition = condition.and(other);
-            }
+            condition = (condition == null) ? other : condition.and(other);
         }
 
         return condition;

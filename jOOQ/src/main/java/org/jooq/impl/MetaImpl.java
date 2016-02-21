@@ -650,8 +650,19 @@ final class MetaImpl implements Meta, Serializable {
             if (result.size() > 0) {
                 TableField<Record, ?>[] f = new TableField[result.size()];
 
-                for (int i = 0; i < f.length; i++)
-                    f[i] = (TableField<Record, ?>) field(result.get(i).getValue(columnName, String.class));
+                for (int i = 0; i < f.length; i++) {
+                    String name = result.get(i).getValue(columnName, String.class);
+                    f[i] = (TableField<Record, ?>) field(name);
+
+                    // [#5097] Work around a bug in the Xerial JDBC driver for SQLite
+                    if (f[i] == null && configuration.family() == SQLITE)
+
+                        // [#2656] Use native support for case-insensitive column
+                        //         lookup, once this is implemented
+                        for (Field<?> field : fields())
+                            if (field.getName().equalsIgnoreCase(name))
+                                f[i] = (TableField<Record, ?>) field;
+                }
 
                 String indexName = result.get(0).getValue(5, String.class);
                 return new MetaPrimaryKey(this, indexName, f);

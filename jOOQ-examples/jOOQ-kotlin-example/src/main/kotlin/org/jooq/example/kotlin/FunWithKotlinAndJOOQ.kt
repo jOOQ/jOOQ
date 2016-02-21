@@ -59,13 +59,15 @@ fun main(args: Array<String>) {
         properties.getProperty("db.password")
     ).use {
         val ctx = it
+        val a = AUTHOR
+        val b = BOOK
 
-        ctx.select(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME, BOOK.TITLE)
-           .from(AUTHOR)
-           .join(BOOK).on(AUTHOR.ID.eq(BOOK.AUTHOR_ID))
+        ctx.select(a.FIRST_NAME, a.LAST_NAME, b.TITLE)
+           .from(a)
+           .join(b).on(a.ID.eq(b.AUTHOR_ID))
            .orderBy(1, 2, 3)
            .forEach {
-               println("${it.value3()} by ${it.value1()} ${it.value2()}")
+               println("${it[b.TITLE]} by ${it[a.FIRST_NAME]} ${it[a.LAST_NAME]}")
            }
     }
 }

@@ -86,8 +86,8 @@ public class OracleProcedureExamples extends Utils {
            .forEach(author -> {
 
             System.out.println();
-            System.out.println("Author " + author.getValue(AUTHORS.FIRST_NAME) + " " + author.getValue(AUTHORS.LAST_NAME) + " wrote: ");
-            author.value3().getList().forEach(book -> {
+            System.out.println("Author " + author.get(AUTHORS.FIRST_NAME) + " " + author.get(AUTHORS.LAST_NAME) + " wrote: ");
+            author.value3().forEach(book -> {
                 System.out.println(book.getTitle());
             });
         });

@@ -115,15 +115,15 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
                 .orderBy(Parameters.ORDINAL_POSITION.asc())
                 .fetch()) {
 
-            String inOut = record.getValue(Parameters.PARAMETER_MODE);
+            String inOut = record.get(Parameters.PARAMETER_MODE);
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 getSchema(),
-                record.getValue(Parameters.DATA_TYPE),
-                record.getValue(Parameters.CHARACTER_MAXIMUM_LENGTH),
-                record.getValue(Parameters.NUMERIC_PRECISION),
-                record.getValue(Parameters.NUMERIC_SCALE),
+                record.get(Parameters.DATA_TYPE),
+                record.get(Parameters.CHARACTER_MAXIMUM_LENGTH),
+                record.get(Parameters.NUMERIC_PRECISION),
+                record.get(Parameters.NUMERIC_SCALE),
                 null,
                 null
             );
@@ -134,8 +134,8 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
             else {
                 ParameterDefinition parameter = new DefaultParameterDefinition(
                     this,
-                    record.getValue(Parameters.PARAMETER_NAME).replaceAll("@", ""),
-                    record.getValue(Parameters.ORDINAL_POSITION, int.class),
+                    record.get(Parameters.PARAMETER_NAME).replaceAll("@", ""),
+                    record.get(Parameters.ORDINAL_POSITION, int.class),
                     type);
 
                 addParameter(InOutDefinition.getFromString(inOut), parameter);

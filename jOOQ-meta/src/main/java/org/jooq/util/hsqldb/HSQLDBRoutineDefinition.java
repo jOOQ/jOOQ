@@ -122,23 +122,23 @@ public class HSQLDBRoutineDefinition extends AbstractRoutineDefinition {
             .orderBy(PARAMETERS.ORDINAL_POSITION.asc()).fetch();
 
         for (Record record : result) {
-            String inOut = record.getValue(PARAMETERS.PARAMETER_MODE);
+            String inOut = record.get(PARAMETERS.PARAMETER_MODE);
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 getSchema(),
-                record.getValue("datatype", String.class),
-                record.getValue(PARAMETERS.CHARACTER_MAXIMUM_LENGTH),
-                record.getValue(PARAMETERS.NUMERIC_PRECISION),
-                record.getValue(PARAMETERS.NUMERIC_SCALE),
+                record.get("datatype", String.class),
+                record.get(PARAMETERS.CHARACTER_MAXIMUM_LENGTH),
+                record.get(PARAMETERS.NUMERIC_PRECISION),
+                record.get(PARAMETERS.NUMERIC_SCALE),
                 null,
                 null
             );
 
             ParameterDefinition parameter = new DefaultParameterDefinition(
                 this,
-                record.getValue(PARAMETERS.PARAMETER_NAME).replaceAll("@", ""),
-                record.getValue(PARAMETERS.ORDINAL_POSITION, int.class),
+                record.get(PARAMETERS.PARAMETER_NAME).replaceAll("@", ""),
+                record.get(PARAMETERS.ORDINAL_POSITION, int.class),
                 type
             );
 

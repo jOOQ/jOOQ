@@ -546,153 +546,153 @@ public class MockStatement extends JDBC41Statement implements CallableStatement 
 
     @Override
     public String getString(int parameterIndex) throws SQLException {
-        String value = outParameters().getValue(translate(parameterIndex), String.class);
+        String value = outParameters().get(translate(parameterIndex), String.class);
         resultWasNull = value == null;
         return value;
     }
 
     @Override
     public String getNString(int parameterIndex) throws SQLException {
-        String value = outParameters().getValue(translate(parameterIndex), String.class);
+        String value = outParameters().get(translate(parameterIndex), String.class);
         resultWasNull = value == null;
         return value;
     }
 
     @Override
     public boolean getBoolean(int parameterIndex) throws SQLException {
-        Boolean value = outParameters().getValue(translate(parameterIndex), Boolean.class);
+        Boolean value = outParameters().get(translate(parameterIndex), Boolean.class);
         resultWasNull = value == null;
         return value == null ? false : value;
     }
 
     @Override
     public byte getByte(int parameterIndex) throws SQLException {
-        Byte value = outParameters().getValue(translate(parameterIndex), Byte.class);
+        Byte value = outParameters().get(translate(parameterIndex), Byte.class);
         resultWasNull = value == null;
         return value == null ? (byte) 0 : value;
     }
 
     @Override
     public short getShort(int parameterIndex) throws SQLException {
-        Short value = outParameters().getValue(translate(parameterIndex), Short.class);
+        Short value = outParameters().get(translate(parameterIndex), Short.class);
         resultWasNull = value == null;
         return value == null ? (short) 0 : value;
     }
 
     @Override
     public int getInt(int parameterIndex) throws SQLException {
-        Integer value = outParameters().getValue(translate(parameterIndex), Integer.class);
+        Integer value = outParameters().get(translate(parameterIndex), Integer.class);
         resultWasNull = value == null;
         return value == null ? 0 : value;
     }
 
     @Override
     public long getLong(int parameterIndex) throws SQLException {
-        Long value = outParameters().getValue(translate(parameterIndex), Long.class);
+        Long value = outParameters().get(translate(parameterIndex), Long.class);
         resultWasNull = value == null;
         return value == null ? 0L : value;
     }
 
     @Override
     public float getFloat(int parameterIndex) throws SQLException {
-        Float value = outParameters().getValue(translate(parameterIndex), Float.class);
+        Float value = outParameters().get(translate(parameterIndex), Float.class);
         resultWasNull = value == null;
         return value == null ? 0.0f : value;
     }
 
     @Override
     public double getDouble(int parameterIndex) throws SQLException {
-        Double value = outParameters().getValue(translate(parameterIndex), Double.class);
+        Double value = outParameters().get(translate(parameterIndex), Double.class);
         resultWasNull = value == null;
         return value == null ? 0.0 : value;
     }
 
     @Override
     public BigDecimal getBigDecimal(int parameterIndex, int scale) throws SQLException {
-        BigDecimal value = outParameters().getValue(translate(parameterIndex), BigDecimal.class);
+        BigDecimal value = outParameters().get(translate(parameterIndex), BigDecimal.class);
         resultWasNull = value == null;
         return value;
     }
 
     @Override
     public BigDecimal getBigDecimal(int parameterIndex) throws SQLException {
-        BigDecimal value = outParameters().getValue(translate(parameterIndex), BigDecimal.class);
+        BigDecimal value = outParameters().get(translate(parameterIndex), BigDecimal.class);
         resultWasNull = value == null;
         return value;
     }
     @Override
     public byte[] getBytes(int parameterIndex) throws SQLException {
-        byte[] value = outParameters().getValue(translate(parameterIndex), byte[].class);
+        byte[] value = outParameters().get(translate(parameterIndex), byte[].class);
         resultWasNull = value == null;
         return value;
     }
 
     @Override
     public Date getDate(int parameterIndex) throws SQLException {
-        Date value = outParameters().getValue(translate(parameterIndex), Date.class);
+        Date value = outParameters().get(translate(parameterIndex), Date.class);
         resultWasNull = value == null;
         return value;
     }
 
     @Override
     public Date getDate(int parameterIndex, Calendar cal) throws SQLException {
-        Date value = outParameters().getValue(translate(parameterIndex), Date.class);
+        Date value = outParameters().get(translate(parameterIndex), Date.class);
         resultWasNull = value == null;
         return value;
     }
 
     @Override
     public Time getTime(int parameterIndex) throws SQLException {
-        Time value = outParameters().getValue(translate(parameterIndex), Time.class);
+        Time value = outParameters().get(translate(parameterIndex), Time.class);
         resultWasNull = value == null;
         return value;
     }
 
     @Override
     public Time getTime(int parameterIndex, Calendar cal) throws SQLException {
-        Time value = outParameters().getValue(translate(parameterIndex), Time.class);
+        Time value = outParameters().get(translate(parameterIndex), Time.class);
         resultWasNull = value == null;
         return value;
     }
 
     @Override
     public Timestamp getTimestamp(int parameterIndex) throws SQLException {
-        Timestamp value = outParameters().getValue(translate(parameterIndex), Timestamp.class);
+        Timestamp value = outParameters().get(translate(parameterIndex), Timestamp.class);
         resultWasNull = value == null;
         return value;
     }
 
     @Override
     public Timestamp getTimestamp(int parameterIndex, Calendar cal) throws SQLException {
-        Timestamp value = outParameters().getValue(translate(parameterIndex), Timestamp.class);
+        Timestamp value = outParameters().get(translate(parameterIndex), Timestamp.class);
         resultWasNull = value == null;
         return value;
     }
 
     @Override
     public Object getObject(int parameterIndex) throws SQLException {
-        Object value = outParameters().getValue(translate(parameterIndex));
+        Object value = outParameters().get(translate(parameterIndex));
         resultWasNull = value == null;
         return value;
     }
 
     @Override
     public Object getObject(int parameterIndex, Map<String, Class<?>> map) throws SQLException {
-        Object value = outParameters().getValue(translate(parameterIndex));
+        Object value = outParameters().get(translate(parameterIndex));
         resultWasNull = value == null;
         return value;
     }
 
     @Override
     public Array getArray(int parameterIndex) throws SQLException {
-        Array value = outParameters().getValue(translate(parameterIndex), Array.class);
+        Array value = outParameters().get(translate(parameterIndex), Array.class);
         resultWasNull = value == null;
         return value;
     }
 
     @Override
     public URL getURL(int parameterIndex) throws SQLException {
-        URL value = outParameters().getValue(translate(parameterIndex), URL.class);
+        URL value = outParameters().get(translate(parameterIndex), URL.class);
         resultWasNull = value == null;
         return value;
     }

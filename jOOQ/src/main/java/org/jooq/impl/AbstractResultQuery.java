@@ -451,7 +451,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final <T> T fetchOne(Field<T> field) {
         R record = fetchOne();
-        return record == null ? null : record.getValue(field);
+        return record == null ? null : record.get(field);
     }
 
     @Override
@@ -467,7 +467,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final Object fetchOne(int fieldIndex) {
         R record = fetchOne();
-        return record == null ? null : record.getValue(fieldIndex);
+        return record == null ? null : record.get(fieldIndex);
     }
 
     @Override
@@ -483,7 +483,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final Object fetchOne(String fieldName) {
         R record = fetchOne();
-        return record == null ? null : record.getValue(fieldName);
+        return record == null ? null : record.get(fieldName);
     }
 
     @Override
@@ -499,7 +499,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final Object fetchOne(Name fieldName) {
         R record = fetchOne();
-        return record == null ? null : record.getValue(fieldName);
+        return record == null ? null : record.get(fieldName);
     }
 
     @Override
@@ -642,7 +642,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final <T> T fetchAny(Field<T> field) {
         R record = fetchAny();
-        return record == null ? null : record.getValue(field);
+        return record == null ? null : record.get(field);
     }
 
     @Override
@@ -658,7 +658,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final Object fetchAny(int fieldIndex) {
         R record = fetchAny();
-        return record == null ? null : record.getValue(fieldIndex);
+        return record == null ? null : record.get(fieldIndex);
     }
 
     @Override
@@ -674,7 +674,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final Object fetchAny(String fieldName) {
         R record = fetchAny();
-        return record == null ? null : record.getValue(fieldName);
+        return record == null ? null : record.get(fieldName);
     }
 
     @Override
@@ -690,7 +690,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final Object fetchAny(Name fieldName) {
         R record = fetchAny();
-        return record == null ? null : record.getValue(fieldName);
+        return record == null ? null : record.get(fieldName);
     }
 
     @Override

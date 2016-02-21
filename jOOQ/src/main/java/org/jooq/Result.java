@@ -305,7 +305,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @param field The values' field
      * @param type The type used for type conversion
      * @return The values
-     * @see Record#getValue(Field, Class)
+     * @see Record#get(Field, Class)
      * @see Convert#convert(Object, Class)
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
@@ -319,7 +319,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @param field The values' field
      * @param converter The data type converter used for type conversion
      * @return The values
-     * @see Record#getValue(Field, Converter)
+     * @see Record#get(Field, Converter)
      * @see Convert#convert(Object, Converter)
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
@@ -344,7 +344,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @param fieldIndex The values' field index
      * @param type The type used for type conversion
      * @return The values
-     * @see Record#getValue(int, Class)
+     * @see Record#get(int, Class)
      * @see Convert#convert(Object, Class)
      * @throws IllegalArgumentException If the argument fieldIndex is not
      *             contained in {@link #fieldsRow()}
@@ -360,7 +360,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @param fieldIndex The values' field index
      * @param converter The data type converter used for type conversion
      * @return The values
-     * @see Record#getValue(int, Converter)
+     * @see Record#get(int, Converter)
      * @see Convert#convert(Object, Converter)
      * @throws IllegalArgumentException If the argument fieldIndex is not
      *             contained in {@link #fieldsRow()}
@@ -387,7 +387,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @param fieldName The values' field name
      * @param type The type used for type conversion
      * @return The values
-     * @see Record#getValue(String, Class)
+     * @see Record#get(String, Class)
      * @see Convert#convert(Object, Class)
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in {@link #fieldsRow()}
@@ -403,7 +403,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @param fieldName The values' field name
      * @param converter The data type converter used for type conversion
      * @return The values
-     * @see Record#getValue(String, Converter)
+     * @see Record#get(String, Converter)
      * @see Convert#convert(Object, Converter)
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in {@link #fieldsRow()}
@@ -431,7 +431,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @param fieldName The values' field name
      * @param type The type used for type conversion
      * @return The values
-     * @see Record#getValue(Name, Class)
+     * @see Record#get(Name, Class)
      * @see Convert#convert(Object, Class)
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in {@link #fieldsRow()}
@@ -447,7 +447,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @param fieldName The values' field name
      * @param converter The data type converter used for type conversion
      * @return The values
-     * @see Record#getValue(Name, Converter)
+     * @see Record#get(Name, Converter)
      * @see Convert#convert(Object, Converter)
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in {@link #fieldsRow()}

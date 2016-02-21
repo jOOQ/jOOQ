@@ -90,9 +90,9 @@ public class CUBRIDDatabase extends AbstractDatabase {
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys(DB_INDEX.IS_UNIQUE.isTrue().and(DB_INDEX.IS_PRIMARY_KEY.isFalse()))) {
-            String key = record.getValue("constraint_name", String.class);
-            String tableName = record.getValue(DB_CLASS.CLASS_NAME);
-            String columnName = record.getValue(DB_INDEX_KEY.KEY_ATTR_NAME);
+            String key = record.get("constraint_name", String.class);
+            String tableName = record.get(DB_CLASS.CLASS_NAME);
+            String columnName = record.get(DB_INDEX_KEY.KEY_ATTR_NAME);
 
             TableDefinition table = getTable(getSchemata().get(0), tableName);
             if (table != null) {
@@ -104,9 +104,9 @@ public class CUBRIDDatabase extends AbstractDatabase {
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys(DB_INDEX.IS_PRIMARY_KEY.isTrue())) {
-            String key = record.getValue("constraint_name", String.class);
-            String tableName = record.getValue(DB_CLASS.CLASS_NAME);
-            String columnName = record.getValue(DB_INDEX_KEY.KEY_ATTR_NAME);
+            String key = record.get("constraint_name", String.class);
+            String tableName = record.get(DB_CLASS.CLASS_NAME);
+            String columnName = record.get(DB_INDEX_KEY.KEY_ATTR_NAME);
 
             TableDefinition table = getTable(getSchemata().get(0), tableName);
             if (table != null) {
@@ -149,15 +149,15 @@ public class CUBRIDDatabase extends AbstractDatabase {
 
                 for (Record record : create().fetch(meta.getImportedKeys(null, null, table))) {
                     String foreignKeyName =
-                        record.getValue("FKTABLE_NAME", String.class) +
+                        record.get("FKTABLE_NAME", String.class) +
                         "__" +
-                        record.getValue("FK_NAME", String.class);
-                    String foreignKeyTableName = record.getValue("FKTABLE_NAME", String.class);
-                    String foreignKeyColumnName = record.getValue("FKCOLUMN_NAME", String.class);
+                        record.get("FK_NAME", String.class);
+                    String foreignKeyTableName = record.get("FKTABLE_NAME", String.class);
+                    String foreignKeyColumnName = record.get("FKCOLUMN_NAME", String.class);
                     String uniqueKeyName =
-                        record.getValue("PKTABLE_NAME", String.class) +
+                        record.get("PKTABLE_NAME", String.class) +
                         "__" +
-                        record.getValue("PK_NAME", String.class);
+                        record.get("PK_NAME", String.class);
 
                     TableDefinition referencingTable = getTable(getSchemata().get(0), foreignKeyTableName);
                     if (referencingTable != null) {
@@ -204,12 +204,12 @@ public class CUBRIDDatabase extends AbstractDatabase {
                 .from(DB_SERIAL)
                 .fetch()) {
 
-            BigInteger value = defaultIfNull(record.getValue(DB_SERIAL.MAX_VAL, BigInteger.class), BigInteger.valueOf(Long.MAX_VALUE));
+            BigInteger value = defaultIfNull(record.get(DB_SERIAL.MAX_VAL, BigInteger.class), BigInteger.valueOf(Long.MAX_VALUE));
             DataTypeDefinition type = getDataTypeForMAX_VAL(getSchemata().get(0), value);
 
             result.add(new DefaultSequenceDefinition(
                 getSchemata().get(0),
-                record.getValue(DB_SERIAL.NAME),
+                record.get(DB_SERIAL.NAME),
                 type));
         }
 
@@ -228,7 +228,7 @@ public class CUBRIDDatabase extends AbstractDatabase {
                     DB_CLASS.CLASS_NAME.asc())
                 .fetch()) {
 
-            String name = record.getValue(DB_CLASS.CLASS_NAME);
+            String name = record.get(DB_CLASS.CLASS_NAME);
 
             CUBRIDTableDefinition table = new CUBRIDTableDefinition(getSchemata().get(0), name, null);
             result.add(table);
@@ -244,8 +244,8 @@ public class CUBRIDDatabase extends AbstractDatabase {
         for (TableDefinition tableDefinition : getTables(getSchemata().get(0))) {
             for (Record record : create().fetch("SHOW COLUMNS FROM {0} WHERE TYPE LIKE 'ENUM(%)'", fieldByName(tableDefinition.getInputName()))) {
                 String table = tableDefinition.getInputName();
-                String column = record.getValue("Field", String.class);
-                String columnType = record.getValue("Type", String.class);
+                String column = record.get("Field", String.class);
+                String columnType = record.get("Type", String.class);
                 String name = table + "_" + column;
 
                 ColumnDefinition columnDefinition = tableDefinition.getColumn(column);

@@ -166,7 +166,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
                 if (changed(field) ||
 
                 // [#3237] or if a NOT NULL primary key value is null, then execute an INSERT
-                   (field.getDataType().nullable() == false && getValue(field) == null)) {
+                   (field.getDataType().nullable() == false && get(field) == null)) {
                     executeUpdate = false;
                     break;
                 }
@@ -355,7 +355,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
              * Extracted method to ensure generic type safety.
              */
             private final <T> void setValue(Record record, Field<T> field) {
-                record.setValue(field, getValue(field));
+                record.set(field, get(field));
             }
         });
     }

@@ -198,22 +198,7 @@ public interface Record extends Attachable, Comparable<Record> {
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
      */
-    <T> T getValue(Field<T> field) throws IllegalArgumentException;
-
-    /**
-     * Get a value from this record, providing a field.
-     *
-     * @param <T> The generic field parameter
-     * @param field The field
-     * @param defaultValue The default value instead of <code>null</code>
-     * @return The value of a field contained in this record, or defaultValue,
-     *         if <code>null</code>
-     * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #fieldsRow()}
-     * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
-     */
-    @Deprecated
-    <T> T getValue(Field<T> field, T defaultValue) throws IllegalArgumentException;
+    <T> T get(Field<T> field) throws IllegalArgumentException;
 
     /**
      * Get a converted value from this Record, providing a field.
@@ -233,27 +218,7 @@ public interface Record extends Attachable, Comparable<Record> {
      *             that might have occurred
      * @see Convert#convert(Object, Class)
      */
-    <T> T getValue(Field<?> field, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
-
-    /**
-     * Get a converted value from this record, providing a field.
-     *
-     * @param <T> The conversion type parameter
-     * @param field The field
-     * @param type The conversion type
-     * @param defaultValue The default value instead of <code>null</code>
-     * @return The value of a field contained in this record, or defaultValue,
-     *         if <code>null</code>
-     * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #fieldsRow()}
-     * @throws DataTypeException wrapping any data type conversion exception
-     *             that might have occurred
-     * @see Convert#convert(Object, Class)
-     * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
-     */
-    @Deprecated
-    <T> T getValue(Field<?> field, Class<? extends T> type, T defaultValue) throws IllegalArgumentException,
-        DataTypeException;
+    <T> T get(Field<?> field, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a converted value from this Record, providing a field.
@@ -272,29 +237,8 @@ public interface Record extends Attachable, Comparable<Record> {
      *             that might have occurred
      * @see Convert#convert(Object, Converter)
      */
-    <T, U> U getValue(Field<T> field, Converter<? super T, U> converter) throws IllegalArgumentException,
+    <T, U> U get(Field<T> field, Converter<? super T, ? extends U> converter) throws IllegalArgumentException,
         DataTypeException;
-
-    /**
-     * Get a converted value from this record, providing a field.
-     *
-     * @param <T> The database type parameter
-     * @param <U> The conversion type parameter
-     * @param field The field
-     * @param converter The data type converter
-     * @param defaultValue The default value instead of <code>null</code>
-     * @return The value of a field contained in this record, or defaultValue,
-     *         if <code>null</code>
-     * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #fieldsRow()}
-     * @throws DataTypeException wrapping any data type conversion exception
-     *             that might have occurred
-     * @see Convert#convert(Object, Converter)
-     * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
-     */
-    @Deprecated
-    <T, U> U getValue(Field<T> field, Converter<? super T, U> converter, U defaultValue)
-        throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Record, providing a field name.
@@ -304,21 +248,7 @@ public interface Record extends Attachable, Comparable<Record> {
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
      */
-    Object getValue(String fieldName) throws IllegalArgumentException;
-
-    /**
-     * Get a value from this record, providing a field name.
-     *
-     * @param fieldName The field's name
-     * @param defaultValue The default value instead of <code>null</code>
-     * @return The value of a field's name contained in this record, or
-     *         defaultValue, if <code>null</code>
-     * @throws IllegalArgumentException If the argument fieldName is not
-     *             contained in the record
-     * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
-     */
-    @Deprecated
-    Object getValue(String fieldName, Object defaultValue) throws IllegalArgumentException;
+    Object get(String fieldName) throws IllegalArgumentException;
 
     /**
      * Get a converted value from this Record, providing a field name.
@@ -333,27 +263,7 @@ public interface Record extends Attachable, Comparable<Record> {
      *             that might have occurred
      * @see Convert#convert(Object, Class)
      */
-    <T> T getValue(String fieldName, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
-
-    /**
-     * Get a converted value from this record, providing a field name.
-     *
-     * @param <T> The conversion type parameter
-     * @param fieldName The field's name
-     * @param type The conversion type
-     * @param defaultValue The default value instead of <code>null</code>
-     * @return The value of a field's name contained in this record, or
-     *         defaultValue, if <code>null</code>
-     * @throws IllegalArgumentException If the argument fieldName is not
-     *             contained in the record
-     * @throws DataTypeException wrapping any data type conversion exception
-     *             that might have occurred
-     * @see Convert#convert(Object, Class)
-     * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
-     */
-    @Deprecated
-    <T> T getValue(String fieldName, Class<? extends T> type, T defaultValue) throws IllegalArgumentException,
-        DataTypeException;
+    <T> T get(String fieldName, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a converted value from this Record, providing a field name.
@@ -368,28 +278,7 @@ public interface Record extends Attachable, Comparable<Record> {
      *             that might have occurred
      * @see Convert#convert(Object, Converter)
      */
-    <U> U getValue(String fieldName, Converter<?, U> converter) throws IllegalArgumentException, DataTypeException;
-
-    /**
-     * Get a converted value from this record, providing a field name.
-     *
-     * @param <U> The conversion type parameter
-     * @param fieldName The field's name
-     * @param converter The data type converter
-     * @param defaultValue The default value instead of <code>null</code>
-     * @return The value of a field's name contained in this record, or
-     *         defaultValue, if <code>null</code>
-     * @throws IllegalArgumentException If the argument fieldName is not
-     *             contained in the record
-     * @throws DataTypeException wrapping any data type conversion exception
-     *             that might have occurred
-     * @see Convert#convert(Object, Converter)
-     * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
-     */
-    @Deprecated
-    <U> U getValue(String fieldName, Converter<?, U> converter, U defaultValue) throws IllegalArgumentException,
-        DataTypeException;
-
+    <U> U get(String fieldName, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Record, providing a field name.
@@ -399,7 +288,7 @@ public interface Record extends Attachable, Comparable<Record> {
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
      */
-    Object getValue(Name fieldName) throws IllegalArgumentException;
+    Object get(Name fieldName) throws IllegalArgumentException;
 
     /**
      * Get a converted value from this Record, providing a field name.
@@ -414,7 +303,7 @@ public interface Record extends Attachable, Comparable<Record> {
      *             that might have occurred
      * @see Convert#convert(Object, Class)
      */
-    <T> T getValue(Name fieldName, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
+    <T> T get(Name fieldName, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a converted value from this Record, providing a field name.
@@ -429,7 +318,7 @@ public interface Record extends Attachable, Comparable<Record> {
      *             that might have occurred
      * @see Convert#convert(Object, Converter)
      */
-    <U> U getValue(Name fieldName, Converter<?, U> converter) throws IllegalArgumentException, DataTypeException;
+    <U> U get(Name fieldName, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this record, providing a field index.
@@ -439,21 +328,7 @@ public interface Record extends Attachable, Comparable<Record> {
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
      */
-    Object getValue(int index) throws IllegalArgumentException;
-
-    /**
-     * Get a value from this record, providing a field index.
-     *
-     * @param index The field's index
-     * @param defaultValue The default value instead of <code>null</code>
-     * @return The value of a field's index contained in this record, or
-     *         defaultValue, if <code>null</code>
-     * @throws IllegalArgumentException If the argument index is not contained
-     *             in the record
-     * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
-     */
-    @Deprecated
-    Object getValue(int index, Object defaultValue) throws IllegalArgumentException;
+    Object get(int index) throws IllegalArgumentException;
 
     /**
      * Get a converted value from this record, providing a field index.
@@ -468,27 +343,7 @@ public interface Record extends Attachable, Comparable<Record> {
      *             might have occurred
      * @see Convert#convert(Object, Class)
      */
-    <T> T getValue(int index, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
-
-    /**
-     * Get a converted value from this record, providing a field index.
-     *
-     * @param <T> The conversion type parameter
-     * @param index The field's index
-     * @param type The conversion type
-     * @param defaultValue The default value instead of <code>null</code>
-     * @return The value of a field's index contained in this record, or
-     *         defaultValue, if <code>null</code>
-     * @throws IllegalArgumentException If the argument index is not contained
-     *             in the record
-     * @throws DataTypeException wrapping data type conversion exception that
-     *             might have occurred
-     * @see Convert#convert(Object, Class)
-     * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
-     */
-    @Deprecated
-    <T> T getValue(int index, Class<? extends T> type, T defaultValue) throws IllegalArgumentException,
-        DataTypeException;
+    <T> T get(int index, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a converted value from this record, providing a field index.
@@ -503,27 +358,7 @@ public interface Record extends Attachable, Comparable<Record> {
      *             might have occurred
      * @see Convert#convert(Object, Converter)
      */
-    <U> U getValue(int index, Converter<?, U> converter) throws IllegalArgumentException, DataTypeException;
-
-    /**
-     * Get a converted value from this record, providing a field index.
-     *
-     * @param <U> The conversion type parameter
-     * @param index The field's index
-     * @param converter The data type converter
-     * @param defaultValue The default value instead of <code>null</code>
-     * @return The value of a field's index contained in this record, or
-     *         defaultValue, if <code>null</code>
-     * @throws IllegalArgumentException If the argument index is not contained
-     *             in the record
-     * @throws DataTypeException wrapping data type conversion exception that
-     *             might have occurred
-     * @see Convert#convert(Object, Converter)
-     * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
-     */
-    @Deprecated
-    <U> U getValue(int index, Converter<?, U> converter, U defaultValue) throws IllegalArgumentException,
-        DataTypeException;
+    <U> U get(int index, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Set a value into this record.
@@ -541,7 +376,7 @@ public interface Record extends Attachable, Comparable<Record> {
      * @param field The field
      * @param value The value
      */
-    <T> void setValue(Field<T> field, T value);
+    <T> void set(Field<T> field, T value);
 
     /**
      * Set a value into this record.
@@ -562,7 +397,7 @@ public interface Record extends Attachable, Comparable<Record> {
      * @param converter The converter used to convert <code>value</code> into an
      *            appropriate type
      */
-    <T, U> void setValue(Field<T> field, U value, Converter<T, ? super U> converter);
+    <T, U> void set(Field<T> field, U value, Converter<? extends T, ? super U> converter);
 
     /**
      * Get the number of fields of this record.
@@ -826,7 +661,6 @@ public interface Record extends Attachable, Comparable<Record> {
     Record into(Field<?>... fields);
 
     // [jooq-tools] START [into-fields]
-
     /**
      * Copy this record into a new record holding only a subset of the previous
      * fields.
@@ -1576,4 +1410,322 @@ public interface Record extends Attachable, Comparable<Record> {
     @Override
     int compareTo(Record record);
 
+    // -------------------------------------------------------------------------
+    // XXX: Deprecated and discouraged methods
+    // -------------------------------------------------------------------------
+
+    /**
+     * Get a value from this Record, providing a field.
+     * <p>
+     * [#2211] Future versions of jOOQ might remove the {@link #getValue(Field)}
+     * method. It is recommended to use {@link #get(Field)} instead.
+     *
+     * @see #get(Field)
+     */
+    <T> T getValue(Field<T> field) throws IllegalArgumentException;
+
+    /**
+     * Get a value from this record, providing a field.
+     *
+     * @param <T> The generic field parameter
+     * @param field The field
+     * @param defaultValue The default value instead of <code>null</code>
+     * @return The value of a field contained in this record, or defaultValue,
+     *         if <code>null</code>
+     * @throws IllegalArgumentException If the argument field is not contained
+     *             in {@link #fieldsRow()}
+     * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
+     */
+    @Deprecated
+    <T> T getValue(Field<T> field, T defaultValue) throws IllegalArgumentException;
+
+    /**
+     * Get a converted value from this Record, providing a field.
+     * <p>
+     * [#2211] Future versions of jOOQ might remove the
+     * {@link #getValue(Field, Class)} method. It is recommended to use
+     * {@link #get(Field, Class)} instead.
+     *
+     * @see #get(Field, Class)
+     */
+    <T> T getValue(Field<?> field, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
+
+    /**
+     * Get a converted value from this record, providing a field.
+     *
+     * @param <T> The conversion type parameter
+     * @param field The field
+     * @param type The conversion type
+     * @param defaultValue The default value instead of <code>null</code>
+     * @return The value of a field contained in this record, or defaultValue,
+     *         if <code>null</code>
+     * @throws IllegalArgumentException If the argument field is not contained
+     *             in {@link #fieldsRow()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
+     * @see Convert#convert(Object, Class)
+     * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
+     */
+    @Deprecated
+    <T> T getValue(Field<?> field, Class<? extends T> type, T defaultValue) throws IllegalArgumentException,
+        DataTypeException;
+
+    /**
+     * Get a converted value from this Record, providing a field.
+     * <p>
+     * [#2211] Future versions of jOOQ might remove the
+     * {@link #getValue(Field, Converter)} method. It is recommended to use
+     * {@link #get(Field, Converter)} instead.
+     *
+     * @see #get(Field, Converter)
+     */
+    <T, U> U getValue(Field<T> field, Converter<? super T, U> converter) throws IllegalArgumentException,
+        DataTypeException;
+
+    /**
+     * Get a converted value from this record, providing a field.
+     *
+     * @param <T> The database type parameter
+     * @param <U> The conversion type parameter
+     * @param field The field
+     * @param converter The data type converter
+     * @param defaultValue The default value instead of <code>null</code>
+     * @return The value of a field contained in this record, or defaultValue,
+     *         if <code>null</code>
+     * @throws IllegalArgumentException If the argument field is not contained
+     *             in {@link #fieldsRow()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
+     * @see Convert#convert(Object, Converter)
+     * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
+     */
+    @Deprecated
+    <T, U> U getValue(Field<T> field, Converter<? super T, U> converter, U defaultValue)
+        throws IllegalArgumentException, DataTypeException;
+
+    /**
+     * Get a value from this Record, providing a field name.
+     * <p>
+     * [#2211] Future versions of jOOQ might remove the {@link #getValue(String)}
+     * method. It is recommended to use {@link #get(String)} instead.
+     *
+     * @see #get(String)
+     */
+    Object getValue(String fieldName) throws IllegalArgumentException;
+
+    /**
+     * Get a value from this record, providing a field name.
+     *
+     * @param fieldName The field's name
+     * @param defaultValue The default value instead of <code>null</code>
+     * @return The value of a field's name contained in this record, or
+     *         defaultValue, if <code>null</code>
+     * @throws IllegalArgumentException If the argument fieldName is not
+     *             contained in the record
+     * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
+     */
+    @Deprecated
+    Object getValue(String fieldName, Object defaultValue) throws IllegalArgumentException;
+
+    /**
+     * Get a converted value from this Record, providing a field name.
+     * <p>
+     * [#2211] Future versions of jOOQ might remove the
+     * {@link #getValue(String, Class)} method. It is recommended to use
+     * {@link #get(String, Class)} instead.
+     *
+     * @see #get(String, Class)
+     */
+    <T> T getValue(String fieldName, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
+
+    /**
+     * Get a converted value from this record, providing a field name.
+     *
+     * @param <T> The conversion type parameter
+     * @param fieldName The field's name
+     * @param type The conversion type
+     * @param defaultValue The default value instead of <code>null</code>
+     * @return The value of a field's name contained in this record, or
+     *         defaultValue, if <code>null</code>
+     * @throws IllegalArgumentException If the argument fieldName is not
+     *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
+     * @see Convert#convert(Object, Class)
+     * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
+     */
+    @Deprecated
+    <T> T getValue(String fieldName, Class<? extends T> type, T defaultValue) throws IllegalArgumentException,
+        DataTypeException;
+
+    /**
+     * Get a converted value from this Record, providing a field name.
+     * <p>
+     * [#2211] Future versions of jOOQ might remove the
+     * {@link #getValue(String, Converter)} method. It is recommended to use
+     * {@link #get(String, Converter)} instead.
+     *
+     * @see {@link #get(String, Converter)}
+     */
+    <U> U getValue(String fieldName, Converter<?, U> converter) throws IllegalArgumentException, DataTypeException;
+
+    /**
+     * Get a converted value from this record, providing a field name.
+     *
+     * @param <U> The conversion type parameter
+     * @param fieldName The field's name
+     * @param converter The data type converter
+     * @param defaultValue The default value instead of <code>null</code>
+     * @return The value of a field's name contained in this record, or
+     *         defaultValue, if <code>null</code>
+     * @throws IllegalArgumentException If the argument fieldName is not
+     *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
+     * @see Convert#convert(Object, Converter)
+     * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
+     */
+    @Deprecated
+    <U> U getValue(String fieldName, Converter<?, U> converter, U defaultValue) throws IllegalArgumentException,
+        DataTypeException;
+
+    /**
+     * Get a value from this Record, providing a field name.
+     * <p>
+     * [#2211] Future versions of jOOQ might remove the {@link #getValue(Name)}
+     * method. It is recommended to use {@link #get(Name)} instead.
+     *
+     * @see #get(Name)
+     */
+    Object getValue(Name fieldName) throws IllegalArgumentException;
+
+    /**
+     * Get a converted value from this Record, providing a field name.
+     * <p>
+     * [#2211] Future versions of jOOQ might remove the
+     * {@link #getValue(Name, Class)} method. It is recommended to use
+     * {@link #get(Name, Class)} instead.
+     *
+     * @see #get(Name, Class)
+     */
+    <T> T getValue(Name fieldName, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
+
+    /**
+     * Get a converted value from this Record, providing a field name.
+     * <p>
+     * [#2211] Future versions of jOOQ might remove the
+     * {@link #getValue(Name, Converter)} method. It is recommended to use
+     * {@link #get(Name, Converter)} instead.
+     *
+     * @see #get(Name, Converter)
+     */
+    <U> U getValue(Name fieldName, Converter<?, U> converter) throws IllegalArgumentException, DataTypeException;
+
+    /**
+     * Get a value from this record, providing a field index.
+     * <p>
+     * [#2211] Future versions of jOOQ might remove the {@link #getValue(int)}
+     * method. It is recommended to use {@link #get(int)} instead.
+     *
+     * @see #get(int)
+     */
+    Object getValue(int index) throws IllegalArgumentException;
+
+    /**
+     * Get a value from this record, providing a field index.
+     *
+     * @param index The field's index
+     * @param defaultValue The default value instead of <code>null</code>
+     * @return The value of a field's index contained in this record, or
+     *         defaultValue, if <code>null</code>
+     * @throws IllegalArgumentException If the argument index is not contained
+     *             in the record
+     * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
+     */
+    @Deprecated
+    Object getValue(int index, Object defaultValue) throws IllegalArgumentException;
+
+    /**
+     * Get a converted value from this record, providing a field index.
+     * <p>
+     * [#2211] Future versions of jOOQ might remove the
+     * {@link #getValue(int, Class)} method. It is recommended to use
+     * {@link #get(int, Class)} instead.
+     *
+     * @see #get(int, Class)
+     */
+    <T> T getValue(int index, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
+
+    /**
+     * Get a converted value from this record, providing a field index.
+     *
+     * @param <T> The conversion type parameter
+     * @param index The field's index
+     * @param type The conversion type
+     * @param defaultValue The default value instead of <code>null</code>
+     * @return The value of a field's index contained in this record, or
+     *         defaultValue, if <code>null</code>
+     * @throws IllegalArgumentException If the argument index is not contained
+     *             in the record
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
+     * @see Convert#convert(Object, Class)
+     * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
+     */
+    @Deprecated
+    <T> T getValue(int index, Class<? extends T> type, T defaultValue) throws IllegalArgumentException,
+        DataTypeException;
+
+    /**
+     * Get a converted value from this record, providing a field index.
+     * <p>
+     * [#2211] Future versions of jOOQ might remove the
+     * {@link #getValue(int, Converter)} method. It is recommended to use
+     * {@link #get(int, Converter)} instead.
+     *
+     * @see #get(int, Converter)
+     */
+    <U> U getValue(int index, Converter<?, U> converter) throws IllegalArgumentException, DataTypeException;
+
+    /**
+     * Get a converted value from this record, providing a field index.
+     *
+     * @param <U> The conversion type parameter
+     * @param index The field's index
+     * @param converter The data type converter
+     * @param defaultValue The default value instead of <code>null</code>
+     * @return The value of a field's index contained in this record, or
+     *         defaultValue, if <code>null</code>
+     * @throws IllegalArgumentException If the argument index is not contained
+     *             in the record
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
+     * @see Convert#convert(Object, Converter)
+     * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
+     */
+    @Deprecated
+    <U> U getValue(int index, Converter<?, U> converter, U defaultValue) throws IllegalArgumentException,
+        DataTypeException;
+
+    /**
+     * Set a value into this record.
+     * <p>
+     * [#2211] Future versions of jOOQ might remove the
+     * {@link #set(Field, Object)} method. It is recommended to use
+     * {@link #set(Field, Object)} instead.
+     *
+     * @see #set(Field, Object)
+     */
+    <T> void setValue(Field<T> field, T value);
+
+    /**
+     * Set a value into this record.
+     * <p>
+     * [#2211] Future versions of jOOQ might remove the
+     * {@link #set(Field, Object, Converter)} method. It is recommended to use
+     * {@link #set(Field, Object, Converter)} instead.
+     *
+     * @see #set(Field, Object, Converter)
+     */
+    <T, U> void setValue(Field<T> field, U value, Converter<T, ? super U> converter);
 }

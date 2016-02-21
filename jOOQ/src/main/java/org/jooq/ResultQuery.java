@@ -266,7 +266,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
-     * @see Record#getValue(Field, Class)
+     * @see Record#get(Field, Class)
      */
     <T> List<T> fetch(Field<?> field, Class<? extends T> type) throws DataAccessException;
 
@@ -279,7 +279,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
-     * @see Record#getValue(Field, Converter)
+     * @see Record#get(Field, Converter)
      */
     <T, U> List<U> fetch(Field<T> field, Converter<? super T, U> converter) throws DataAccessException;
 
@@ -304,7 +304,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
-     * @see Record#getValue(int, Class)
+     * @see Record#get(int, Class)
      */
     <T> List<T> fetch(int fieldIndex, Class<? extends T> type) throws DataAccessException;
 
@@ -317,7 +317,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
-     * @see Record#getValue(int, Converter)
+     * @see Record#get(int, Converter)
      */
     <U> List<U> fetch(int fieldIndex, Converter<?, U> converter) throws DataAccessException;
 
@@ -342,7 +342,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
-     * @see Record#getValue(String, Class)
+     * @see Record#get(String, Class)
      */
     <T> List<T> fetch(String fieldName, Class<? extends T> type) throws DataAccessException;
 
@@ -355,7 +355,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
-     * @see Record#getValue(String, Converter)
+     * @see Record#get(String, Converter)
      */
     <U> List<U> fetch(String fieldName, Converter<?, U> converter) throws DataAccessException;
 
@@ -380,7 +380,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
-     * @see Record#getValue(Name, Class)
+     * @see Record#get(Name, Class)
      */
     <T> List<T> fetch(Name fieldName, Class<? extends T> type) throws DataAccessException;
 
@@ -393,7 +393,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
-     * @see Record#getValue(Name, Converter)
+     * @see Record#get(Name, Converter)
      */
     <U> List<U> fetch(Name fieldName, Converter<?, U> converter) throws DataAccessException;
 
@@ -402,7 +402,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#getValue(Field)}
+     * {@link Record#get(Field)}
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -416,7 +416,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#getValue(Field, Class)}
+     * {@link Record#get(Field, Class)}
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -430,7 +430,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#getValue(Field, Converter)}
+     * {@link Record#get(Field, Converter)}
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -444,7 +444,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#getValue(int)}
+     * {@link Record#get(int)}
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -458,7 +458,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#getValue(int, Class)}
+     * {@link Record#get(int, Class)}
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -472,7 +472,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#getValue(int, Converter)}
+     * {@link Record#get(int, Converter)}
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -486,7 +486,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#getValue(String)}
+     * {@link Record#get(String)}
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -500,7 +500,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#getValue(String, Class)}
+     * {@link Record#get(String, Class)}
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -514,7 +514,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#getValue(String, Converter)}
+     * {@link Record#get(String, Converter)}
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -528,7 +528,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#getValue(Name)}
+     * {@link Record#get(Name)}
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -542,7 +542,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#getValue(Name, Class)}
+     * {@link Record#get(Name, Class)}
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -556,7 +556,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#getValue(Name, Converter)}
+     * {@link Record#get(Name, Converter)}
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -673,7 +673,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
-     * {@link Record#getValue(Field)}
+     * {@link Record#get(Field)}
      *
      * @return The resulting value
      * @throws DataAccessException if something went wrong executing the query
@@ -686,7 +686,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
-     * {@link Record#getValue(Field, Class)}
+     * {@link Record#get(Field, Class)}
      *
      * @return The resulting value
      * @throws DataAccessException if something went wrong executing the query
@@ -699,7 +699,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
-     * {@link Record#getValue(Field, Converter)}
+     * {@link Record#get(Field, Converter)}
      *
      * @return The resulting value
      * @throws DataAccessException if something went wrong executing the query
@@ -712,7 +712,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
-     * {@link Record#getValue(int)}
+     * {@link Record#get(int)}
      *
      * @return The resulting value
      * @throws DataAccessException if something went wrong executing the query
@@ -725,7 +725,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
-     * {@link Record#getValue(int, Class)}
+     * {@link Record#get(int, Class)}
      *
      * @return The resulting value
      * @throws DataAccessException if something went wrong executing the query
@@ -738,7 +738,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
-     * {@link Record#getValue(int, Converter)}
+     * {@link Record#get(int, Converter)}
      *
      * @return The resulting value
      * @throws DataAccessException if something went wrong executing the query
@@ -751,7 +751,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
-     * {@link Record#getValue(String)}
+     * {@link Record#get(String)}
      *
      * @return The resulting value
      * @throws DataAccessException if something went wrong executing the query
@@ -764,7 +764,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
-     * {@link Record#getValue(String, Class)}
+     * {@link Record#get(String, Class)}
      *
      * @return The resulting value
      * @throws DataAccessException if something went wrong executing the query
@@ -777,7 +777,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
-     * {@link Record#getValue(String, Converter)}
+     * {@link Record#get(String, Converter)}
      *
      * @return The resulting value
      * @throws DataAccessException if something went wrong executing the query
@@ -790,7 +790,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
-     * {@link Record#getValue(Name)}
+     * {@link Record#get(Name)}
      *
      * @return The resulting value
      * @throws DataAccessException if something went wrong executing the query
@@ -803,7 +803,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
-     * {@link Record#getValue(Name, Class)}
+     * {@link Record#get(Name, Class)}
      *
      * @return The resulting value
      * @throws DataAccessException if something went wrong executing the query
@@ -816,7 +816,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
-     * {@link Record#getValue(Name, Converter)}
+     * {@link Record#get(Name, Converter)}
      *
      * @return The resulting value
      * @throws DataAccessException if something went wrong executing the query
@@ -915,7 +915,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#getValue(Field)}
+     * {@link Record#get(Field)}
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -928,7 +928,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#getValue(Field, Class)}
+     * {@link Record#get(Field, Class)}
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -941,7 +941,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#getValue(Field, Converter)}
+     * {@link Record#get(Field, Converter)}
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -954,7 +954,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#getValue(int)}
+     * {@link Record#get(int)}
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -967,7 +967,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#getValue(int, Class)}
+     * {@link Record#get(int, Class)}
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -980,7 +980,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#getValue(int, Converter)}
+     * {@link Record#get(int, Converter)}
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -993,7 +993,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#getValue(String)}
+     * {@link Record#get(String)}
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -1006,7 +1006,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#getValue(String, Class)}
+     * {@link Record#get(String, Class)}
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -1019,7 +1019,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#getValue(String, Converter)}
+     * {@link Record#get(String, Converter)}
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -1032,7 +1032,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#getValue(Name)}
+     * {@link Record#get(Name)}
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -1045,7 +1045,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#getValue(Name, Class)}
+     * {@link Record#get(Name, Class)}
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
@@ -1058,7 +1058,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
-     * {@link Record#getValue(Name, Converter)}
+     * {@link Record#get(Name, Converter)}
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.

@@ -132,7 +132,7 @@ public class BarChartSample extends Application {
             TextField textField = new TextField();
 
             textField.textProperty().addListener((o, oldV, newV) -> {
-                selected.setValue((Field) field, newV);
+                selected.set((Field) field, newV);
             });
 
             table.getSelectionModel().getSelectedItems().addListener((Change<? extends CountriesRecord> c) -> {
@@ -140,7 +140,7 @@ public class BarChartSample extends Application {
                     textField.setText("");
                 else
                     for (CountriesRecord record : c.getList())
-                        textField.setText(record.getValue(field, String.class));
+                        textField.setText(record.get(field, String.class));
             });
 
             editPane.addRow(i++, label, textField);
@@ -218,7 +218,7 @@ public class BarChartSample extends Application {
             Stream.of(table.fields())
                   .map(f -> {
                       TableColumn<R, Object> column = new TableColumn<>(f.getName());
-                      column.setCellValueFactory(d -> new SimpleObjectProperty<>(d.getValue().getValue(f)));
+                      column.setCellValueFactory(d -> new SimpleObjectProperty<>(d.getValue().get(f)));
                       return column;
                   })
                   .collect(toList())
@@ -298,8 +298,8 @@ public class BarChartSample extends Application {
                        // Map each country record into a chart Data object
                        entry.getValue()
                             .map(country -> new XYChart.Data<String, Number>(
-                                 country.getValue(COUNTRIES.CODE),
-                                 country.getValue(field)
+                                 country.get(COUNTRIES.CODE),
+                                 country.get(field)
                             ))
                    )
                ))

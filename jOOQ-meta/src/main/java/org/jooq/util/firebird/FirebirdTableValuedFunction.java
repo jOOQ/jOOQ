@@ -107,18 +107,18 @@ public class FirebirdTableValuedFunction extends AbstractTableDefinition {
             DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(
                     getDatabase(),
                     getSchema(),
-                    record.getValue("FIELD_TYPE", String.class),
-                    record.getValue("CHARACTER_LENGTH", short.class),
-                    record.getValue(f.RDB$FIELD_PRECISION),
-                    record.getValue("FIELD_SCALE", Integer.class),
-                    record.getValue(p.RDB$NULL_FLAG) == 0,
-                    record.getValue(p.RDB$DEFAULT_SOURCE) != null
+                    record.get("FIELD_TYPE", String.class),
+                    record.get("CHARACTER_LENGTH", short.class),
+                    record.get(f.RDB$FIELD_PRECISION),
+                    record.get("FIELD_SCALE", Integer.class),
+                    record.get(p.RDB$NULL_FLAG) == 0,
+                    record.get(p.RDB$DEFAULT_SOURCE) != null
             );
 
             ColumnDefinition column = new DefaultColumnDefinition(
                     getDatabase().getTable(getSchema(), getName()),
-                    record.getValue(p.RDB$PARAMETER_NAME.trim()),
-                    record.getValue(p.RDB$PARAMETER_NUMBER),
+                    record.get(p.RDB$PARAMETER_NAME.trim()),
+                    record.get(p.RDB$PARAMETER_NUMBER),
                     type,
                     false,
                     null

@@ -142,10 +142,10 @@ public class PostgresDatabase extends AbstractDatabase {
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("PRIMARY KEY")) {
-            SchemaDefinition schema = getSchema(record.getValue(KEY_COLUMN_USAGE.TABLE_SCHEMA));
-            String key = record.getValue(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
-            String tableName = record.getValue(KEY_COLUMN_USAGE.TABLE_NAME);
-            String columnName = record.getValue(KEY_COLUMN_USAGE.COLUMN_NAME);
+            SchemaDefinition schema = getSchema(record.get(KEY_COLUMN_USAGE.TABLE_SCHEMA));
+            String key = record.get(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
+            String tableName = record.get(KEY_COLUMN_USAGE.TABLE_NAME);
+            String columnName = record.get(KEY_COLUMN_USAGE.COLUMN_NAME);
 
             TableDefinition table = getTable(schema, tableName);
             if (table != null) {
@@ -157,10 +157,10 @@ public class PostgresDatabase extends AbstractDatabase {
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("UNIQUE")) {
-            SchemaDefinition schema = getSchema(record.getValue(KEY_COLUMN_USAGE.TABLE_SCHEMA));
-            String key = record.getValue(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
-            String tableName = record.getValue(KEY_COLUMN_USAGE.TABLE_NAME);
-            String columnName = record.getValue(KEY_COLUMN_USAGE.COLUMN_NAME);
+            SchemaDefinition schema = getSchema(record.get(KEY_COLUMN_USAGE.TABLE_SCHEMA));
+            String key = record.get(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
+            String tableName = record.get(KEY_COLUMN_USAGE.TABLE_NAME);
+            String columnName = record.get(KEY_COLUMN_USAGE.COLUMN_NAME);
 
             TableDefinition table = getTable(schema, tableName);
             if (table != null) {
@@ -205,13 +205,13 @@ public class PostgresDatabase extends AbstractDatabase {
             .sortAsc("fktable_schem");
 
         for (Record record : result) {
-            SchemaDefinition foreignKeySchema = getSchema(record.getValue("fktable_schem", String.class));
-            SchemaDefinition uniqueKeySchema = getSchema(record.getValue("pktable_schem", String.class));
+            SchemaDefinition foreignKeySchema = getSchema(record.get("fktable_schem", String.class));
+            SchemaDefinition uniqueKeySchema = getSchema(record.get("pktable_schem", String.class));
 
-            String foreignKey = record.getValue("fk_name", String.class);
-            String foreignKeyTable = record.getValue("fktable_name", String.class);
-            String foreignKeyColumn = record.getValue("fkcolumn_name", String.class);
-            String uniqueKey = record.getValue("pk_name", String.class);
+            String foreignKey = record.get("fk_name", String.class);
+            String foreignKeyTable = record.get("fktable_name", String.class);
+            String foreignKeyColumn = record.get("fkcolumn_name", String.class);
+            String uniqueKey = record.get("pk_name", String.class);
 
             TableDefinition referencingTable = getTable(foreignKeySchema, foreignKeyTable);
 
@@ -243,15 +243,15 @@ public class PostgresDatabase extends AbstractDatabase {
                 .where(tc.TABLE_SCHEMA.in(getInputSchemata()))
                 .fetch()) {
 
-            SchemaDefinition schema = getSchema(record.getValue(tc.TABLE_SCHEMA));
-            TableDefinition table = getTable(schema, record.getValue(tc.TABLE_NAME));
+            SchemaDefinition schema = getSchema(record.get(tc.TABLE_SCHEMA));
+            TableDefinition table = getTable(schema, record.get(tc.TABLE_NAME));
 
             if (table != null) {
                 relations.addCheckConstraint(table, new DefaultCheckConstraintDefinition(
                     schema,
                     table,
-                    record.getValue(cc.CONSTRAINT_NAME),
-                    record.getValue(cc.CHECK_CLAUSE)
+                    record.get(cc.CONSTRAINT_NAME),
+                    record.get(cc.CHECK_CLAUSE)
                 ));
             }
         }
@@ -341,14 +341,14 @@ public class PostgresDatabase extends AbstractDatabase {
                 .orderBy(1, 2)
                 .fetch()) {
 
-            SchemaDefinition schema = getSchema(record.getValue(TABLES.TABLE_SCHEMA));
-            String name = record.getValue(TABLES.TABLE_NAME);
-            boolean tableValuedFunction = record.getValue("table_valued_function", boolean.class);
-            boolean materializedView = record.getValue("materialized_view", boolean.class);
-            String comment = record.getValue(PG_DESCRIPTION.DESCRIPTION, String.class);
+            SchemaDefinition schema = getSchema(record.get(TABLES.TABLE_SCHEMA));
+            String name = record.get(TABLES.TABLE_NAME);
+            boolean tableValuedFunction = record.get("table_valued_function", boolean.class);
+            boolean materializedView = record.get("materialized_view", boolean.class);
+            String comment = record.get(PG_DESCRIPTION.DESCRIPTION, String.class);
 
             if (tableValuedFunction) {
-                result.add(new PostgresTableValuedFunction(schema, name, record.getValue(ROUTINES.SPECIFIC_NAME), comment));
+                result.add(new PostgresTableValuedFunction(schema, name, record.get(ROUTINES.SPECIFIC_NAME), comment));
             }
             else if (materializedView) {
                 result.add(new PostgresMaterializedViewDefinition(schema, name, comment));
@@ -453,19 +453,19 @@ public class PostgresDatabase extends AbstractDatabase {
                     SEQUENCES.SEQUENCE_NAME)
                 .fetch()) {
 
-            SchemaDefinition schema = getSchema(record.getValue(SEQUENCES.SEQUENCE_SCHEMA));
+            SchemaDefinition schema = getSchema(record.get(SEQUENCES.SEQUENCE_SCHEMA));
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 this, schema,
-                record.getValue(SEQUENCES.DATA_TYPE),
+                record.get(SEQUENCES.DATA_TYPE),
                 0,
-                record.getValue(SEQUENCES.NUMERIC_PRECISION),
-                record.getValue(SEQUENCES.NUMERIC_SCALE),
+                record.get(SEQUENCES.NUMERIC_PRECISION),
+                record.get(SEQUENCES.NUMERIC_SCALE),
                 false,
                 false
             );
 
-            result.add(new DefaultSequenceDefinition(schema, record.getValue(SEQUENCES.SEQUENCE_NAME), type));
+            result.add(new DefaultSequenceDefinition(schema, record.get(SEQUENCES.SEQUENCE_NAME), type));
         }
 
         return result;
@@ -495,8 +495,8 @@ public class PostgresDatabase extends AbstractDatabase {
                 .fetch();
 
             for (Record2<String, String> type : types) {
-                String nspname = type.getValue(PG_NAMESPACE.NSPNAME);
-                String typname = type.getValue(PG_TYPE.TYPNAME);
+                String nspname = type.get(PG_NAMESPACE.NSPNAME);
+                String typname = type.get(PG_TYPE.TYPNAME);
 
                 DefaultEnumDefinition definition = null;
                 for (String label : enumLabels(nspname, typname)) {
@@ -584,27 +584,27 @@ public class PostgresDatabase extends AbstractDatabase {
                     .where(d.TYPTYPE.eq("d"))
                     .and(n.NSPNAME.in(getInputSchemata()))) {
 
-                SchemaDefinition schema = getSchema(record.getValue(n.NSPNAME));
+                SchemaDefinition schema = getSchema(record.get(n.NSPNAME));
 
                 DataTypeDefinition baseType = new DefaultDataTypeDefinition(
                     this,
                     schema,
-                    record.getValue(b.TYPNAME),
-                    record.getValue(b.TYPLEN),
-                    record.getValue(b.TYPLEN),
+                    record.get(b.TYPNAME),
+                    record.get(b.TYPLEN),
+                    record.get(b.TYPLEN),
                     0, // ?
-                   !record.getValue(d.TYPNOTNULL, boolean.class),
-                    record.getValue(d.TYPDEFAULT) != null,
-                    record.getValue(b.TYPNAME, String.class)
+                   !record.get(d.TYPNOTNULL, boolean.class),
+                    record.get(d.TYPDEFAULT) != null,
+                    record.get(b.TYPNAME, String.class)
                 );
 
                 DefaultDomainDefinition domain = new DefaultDomainDefinition(
                     schema,
-                    record.getValue(d.TYPNAME),
+                    record.get(d.TYPNAME),
                     baseType
                 );
 
-                domain.addCheckClause(record.getValue(src));
+                domain.addCheckClause(record.get(src));
                 result.add(domain);
             }
         }
@@ -629,8 +629,8 @@ public class PostgresDatabase extends AbstractDatabase {
                         ATTRIBUTES.UDT_NAME)
                     .fetch()) {
 
-                SchemaDefinition schema = getSchema(record.getValue(ATTRIBUTES.UDT_SCHEMA));
-                String name = record.getValue(ATTRIBUTES.UDT_NAME);
+                SchemaDefinition schema = getSchema(record.get(ATTRIBUTES.UDT_SCHEMA));
+                String name = record.get(ATTRIBUTES.UDT_NAME);
 
                 result.add(new PostgresUDTDefinition(schema, name, null));
             }

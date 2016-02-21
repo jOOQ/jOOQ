@@ -103,10 +103,10 @@ public class MySQLDatabase extends AbstractDatabase {
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys(true)) {
-            SchemaDefinition schema = getSchema(record.getValue(Statistics.TABLE_SCHEMA));
-            String constraintName = record.getValue(Statistics.INDEX_NAME);
-            String tableName = record.getValue(Statistics.TABLE_NAME);
-            String columnName = record.getValue(Statistics.COLUMN_NAME);
+            SchemaDefinition schema = getSchema(record.get(Statistics.TABLE_SCHEMA));
+            String constraintName = record.get(Statistics.INDEX_NAME);
+            String tableName = record.get(Statistics.TABLE_NAME);
+            String columnName = record.get(Statistics.COLUMN_NAME);
 
             String key = getKeyName(tableName, constraintName);
             TableDefinition table = getTable(schema, tableName);
@@ -120,10 +120,10 @@ public class MySQLDatabase extends AbstractDatabase {
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys(false)) {
-            SchemaDefinition schema = getSchema(record.getValue(Statistics.TABLE_SCHEMA));
-            String constraintName = record.getValue(Statistics.INDEX_NAME);
-            String tableName = record.getValue(Statistics.TABLE_NAME);
-            String columnName = record.getValue(Statistics.COLUMN_NAME);
+            SchemaDefinition schema = getSchema(record.get(Statistics.TABLE_SCHEMA));
+            String constraintName = record.get(Statistics.INDEX_NAME);
+            String tableName = record.get(Statistics.TABLE_NAME);
+            String columnName = record.get(Statistics.COLUMN_NAME);
 
             String key = getKeyName(tableName, constraintName);
             TableDefinition table = getTable(schema, tableName);
@@ -181,14 +181,14 @@ public class MySQLDatabase extends AbstractDatabase {
                     KeyColumnUsage.ORDINAL_POSITION.asc())
                 .fetch()) {
 
-            SchemaDefinition foreignKeySchema = getSchema(record.getValue(ReferentialConstraints.CONSTRAINT_SCHEMA));
-            SchemaDefinition uniqueKeySchema = getSchema(record.getValue(ReferentialConstraints.UNIQUE_CONSTRAINT_SCHEMA));
+            SchemaDefinition foreignKeySchema = getSchema(record.get(ReferentialConstraints.CONSTRAINT_SCHEMA));
+            SchemaDefinition uniqueKeySchema = getSchema(record.get(ReferentialConstraints.UNIQUE_CONSTRAINT_SCHEMA));
 
-            String foreignKey = record.getValue(ReferentialConstraints.CONSTRAINT_NAME);
-            String foreignKeyColumn = record.getValue(KeyColumnUsage.COLUMN_NAME);
-            String foreignKeyTableName = record.getValue(ReferentialConstraints.TABLE_NAME);
-            String referencedKey = record.getValue(ReferentialConstraints.UNIQUE_CONSTRAINT_NAME);
-            String referencedTableName = record.getValue(ReferentialConstraints.REFERENCED_TABLE_NAME);
+            String foreignKey = record.get(ReferentialConstraints.CONSTRAINT_NAME);
+            String foreignKeyColumn = record.get(KeyColumnUsage.COLUMN_NAME);
+            String foreignKeyTableName = record.get(ReferentialConstraints.TABLE_NAME);
+            String referencedKey = record.get(ReferentialConstraints.UNIQUE_CONSTRAINT_NAME);
+            String referencedTableName = record.get(ReferentialConstraints.REFERENCED_TABLE_NAME);
 
             TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
 
@@ -249,9 +249,9 @@ public class MySQLDatabase extends AbstractDatabase {
                 Tables.TABLE_NAME)
             .fetch()) {
 
-            SchemaDefinition schema = getSchema(record.getValue(Tables.TABLE_SCHEMA));
-            String name = record.getValue(Tables.TABLE_NAME);
-            String comment = record.getValue(Tables.TABLE_COMMENT);
+            SchemaDefinition schema = getSchema(record.get(Tables.TABLE_SCHEMA));
+            String name = record.get(Tables.TABLE_NAME);
+            String comment = record.get(Tables.TABLE_COMMENT);
 
             MySQLTableDefinition table = new MySQLTableDefinition(schema, name, comment);
             result.add(table);
@@ -282,13 +282,13 @@ public class MySQLDatabase extends AbstractDatabase {
             .fetch();
 
         for (Record record : records) {
-            SchemaDefinition schema = getSchema(record.getValue(Columns.TABLE_SCHEMA));
+            SchemaDefinition schema = getSchema(record.get(Columns.TABLE_SCHEMA));
 
-            String comment = record.getValue(Columns.COLUMN_COMMENT);
-            String table = record.getValue(Columns.TABLE_NAME);
-            String column = record.getValue(Columns.COLUMN_NAME);
+            String comment = record.get(Columns.COLUMN_COMMENT);
+            String table = record.get(Columns.TABLE_NAME);
+            String column = record.get(Columns.COLUMN_NAME);
             String name = table + "_" + column;
-            String columnType = record.getValue(Columns.COLUMN_TYPE);
+            String columnType = record.get(Columns.COLUMN_TYPE);
 
             // [#1237] Don't generate enum classes for columns in MySQL tables
             // that are excluded from code generation
@@ -379,12 +379,12 @@ public class MySQLDatabase extends AbstractDatabase {
             for (int i = 0; i < overloads.size(); i++) {
                 Record record = overloads.get(i);
 
-                SchemaDefinition schema = getSchema(record.getValue(DB));
-                String name = record.getValue(Proc.NAME);
-                String comment = record.getValue(Proc.COMMENT);
-                String params = new String(record.getValue(Proc.PARAM_LIST));
-                String returns = new String(record.getValue(Proc.RETURNS));
-                ProcType type = record.getValue(Proc.TYPE);
+                SchemaDefinition schema = getSchema(record.get(DB));
+                String name = record.get(Proc.NAME);
+                String comment = record.get(Proc.COMMENT);
+                String params = new String(record.get(Proc.PARAM_LIST));
+                String returns = new String(record.get(Proc.RETURNS));
+                ProcType type = record.get(Proc.TYPE);
 
                 if (overloads.size() > 1) {
                     result.add(new MySQLRoutineDefinition(schema, name, comment, params, returns, type, "_" + type.name()));

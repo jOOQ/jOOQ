@@ -78,6 +78,6 @@ public class Example_3_1_CheckedExceptions {
            .select(AUTHOR.FIRST_NAME)
            .from(AUTHOR)
            .fetch()
-           .forEach(record -> System.out.println(record.getValue(AUTHOR.FIRST_NAME)));
+           .forEach(record -> System.out.println(record.get(AUTHOR.FIRST_NAME)));
     }
 }

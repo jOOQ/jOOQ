@@ -101,10 +101,10 @@ public class HSQLDBDatabase extends AbstractDatabase {
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("PRIMARY KEY")) {
-            SchemaDefinition schema = getSchema(record.getValue(KEY_COLUMN_USAGE.TABLE_SCHEMA));
-            String key = record.getValue(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
-            String tableName = record.getValue(KEY_COLUMN_USAGE.TABLE_NAME);
-            String columnName = record.getValue(KEY_COLUMN_USAGE.COLUMN_NAME);
+            SchemaDefinition schema = getSchema(record.get(KEY_COLUMN_USAGE.TABLE_SCHEMA));
+            String key = record.get(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
+            String tableName = record.get(KEY_COLUMN_USAGE.TABLE_NAME);
+            String columnName = record.get(KEY_COLUMN_USAGE.COLUMN_NAME);
 
             TableDefinition table = getTable(schema, tableName);
             if (table != null) {
@@ -116,10 +116,10 @@ public class HSQLDBDatabase extends AbstractDatabase {
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("UNIQUE")) {
-            SchemaDefinition schema = getSchema(record.getValue(KEY_COLUMN_USAGE.TABLE_SCHEMA));
-            String key = record.getValue(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
-            String tableName = record.getValue(KEY_COLUMN_USAGE.TABLE_NAME);
-            String columnName = record.getValue(KEY_COLUMN_USAGE.COLUMN_NAME);
+            SchemaDefinition schema = getSchema(record.get(KEY_COLUMN_USAGE.TABLE_SCHEMA));
+            String key = record.get(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
+            String tableName = record.get(KEY_COLUMN_USAGE.TABLE_NAME);
+            String columnName = record.get(KEY_COLUMN_USAGE.COLUMN_NAME);
 
             TableDefinition table = getTable(schema, tableName);
             if (table != null) {
@@ -172,13 +172,13 @@ public class HSQLDBDatabase extends AbstractDatabase {
             .fetch();
 
         for (Record record : result) {
-            SchemaDefinition foreignKeySchema = getSchema(record.getValue(KEY_COLUMN_USAGE.TABLE_SCHEMA));
-            SchemaDefinition uniqueKeySchema = getSchema(record.getValue(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA));
+            SchemaDefinition foreignKeySchema = getSchema(record.get(KEY_COLUMN_USAGE.TABLE_SCHEMA));
+            SchemaDefinition uniqueKeySchema = getSchema(record.get(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA));
 
-            String foreignKey = record.getValue(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
-            String foreignKeyTable = record.getValue(KEY_COLUMN_USAGE.TABLE_NAME);
-            String foreignKeyColumn = record.getValue(KEY_COLUMN_USAGE.COLUMN_NAME);
-            String uniqueKey = record.getValue(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME);
+            String foreignKey = record.get(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
+            String foreignKeyTable = record.get(KEY_COLUMN_USAGE.TABLE_NAME);
+            String foreignKeyColumn = record.get(KEY_COLUMN_USAGE.COLUMN_NAME);
+            String uniqueKey = record.get(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME);
 
             TableDefinition referencingTable = getTable(foreignKeySchema, foreignKeyTable);
 
@@ -210,15 +210,15 @@ public class HSQLDBDatabase extends AbstractDatabase {
                 .where(tc.TABLE_SCHEMA.in(getInputSchemata()))
                 .fetch()) {
 
-            SchemaDefinition schema = getSchema(record.getValue(tc.TABLE_SCHEMA));
-            TableDefinition table = getTable(schema, record.getValue(tc.TABLE_NAME));
+            SchemaDefinition schema = getSchema(record.get(tc.TABLE_SCHEMA));
+            TableDefinition table = getTable(schema, record.get(tc.TABLE_NAME));
 
             if (table != null) {
                 relations.addCheckConstraint(table, new DefaultCheckConstraintDefinition(
                     schema,
                     table,
-                    record.getValue(constraintName),
-                    record.getValue(cc.CHECK_CLAUSE)
+                    record.get(constraintName),
+                    record.get(cc.CHECK_CLAUSE)
                 ));
             }
         }
@@ -262,16 +262,16 @@ public class HSQLDBDatabase extends AbstractDatabase {
                     SEQUENCES.SEQUENCE_NAME)
                 .fetch()) {
 
-            SchemaDefinition schema = getSchema(record.getValue(SEQUENCES.SEQUENCE_SCHEMA));
+            SchemaDefinition schema = getSchema(record.get(SEQUENCES.SEQUENCE_SCHEMA));
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 this,
                 schema,
-                record.getValue(SEQUENCES.DATA_TYPE)
+                record.get(SEQUENCES.DATA_TYPE)
             );
 
             result.add(new DefaultSequenceDefinition(
-                schema, record.getValue(SEQUENCES.SEQUENCE_NAME), type));
+                schema, record.get(SEQUENCES.SEQUENCE_NAME), type));
         }
 
         return result;
@@ -292,8 +292,8 @@ public class HSQLDBDatabase extends AbstractDatabase {
                     TABLES.TABLE_NAME)
                 .fetch()) {
 
-            SchemaDefinition schema = getSchema(record.getValue(TABLES.TABLE_SCHEMA));
-            String name = record.getValue(TABLES.TABLE_NAME);
+            SchemaDefinition schema = getSchema(record.get(TABLES.TABLE_SCHEMA));
+            String name = record.get(TABLES.TABLE_NAME);
             String comment = "";
 
             result.add(new HSQLDBTableDefinition(schema, name, comment));
@@ -350,7 +350,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
                     ROUTINES.ROUTINE_NAME)
                 .fetch()) {
 
-            String datatype = record.getValue("datatype", String.class);
+            String datatype = record.get("datatype", String.class);
 
             // [#3285] We currently do not recognise HSQLDB table-valued functions as such.
             if (datatype != null && datatype.toUpperCase().startsWith("ROW")) {
@@ -359,13 +359,13 @@ public class HSQLDBDatabase extends AbstractDatabase {
             }
 
             result.add(new HSQLDBRoutineDefinition(
-                getSchema(record.getValue(ROUTINES.ROUTINE_SCHEMA)),
-                record.getValue(ROUTINES.ROUTINE_NAME),
-                record.getValue(ROUTINES.SPECIFIC_NAME),
+                getSchema(record.get(ROUTINES.ROUTINE_SCHEMA)),
+                record.get(ROUTINES.ROUTINE_NAME),
+                record.get(ROUTINES.SPECIFIC_NAME),
                 datatype,
-                record.getValue(ROUTINES.NUMERIC_PRECISION),
-                record.getValue(ROUTINES.NUMERIC_SCALE),
-                record.getValue("aggregate", boolean.class)));
+                record.get(ROUTINES.NUMERIC_PRECISION),
+                record.get(ROUTINES.NUMERIC_SCALE),
+                record.get("aggregate", boolean.class)));
         }
 
         return result;

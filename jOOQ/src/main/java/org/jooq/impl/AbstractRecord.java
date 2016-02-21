@@ -219,141 +219,86 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
-    public final <T> T getValue(Field<T> field) {
-        return (T) getValue(indexOrFail(fieldsRow(), field));
+    public final <T> T get(Field<T> field) {
+        return (T) get(indexOrFail(fieldsRow(), field));
     }
 
     @Override
-    @Deprecated
-    public final <T> T getValue(Field<T> field, T defaultValue) {
-        T result = getValue(field);
-        return result != null ? result : defaultValue;
+    public final <T> T get(Field<?> field, Class<? extends T> type) {
+        return Convert.convert(get(field), type);
     }
 
     @Override
-    public final <T> T getValue(Field<?> field, Class<? extends T> type) {
-        return Convert.convert(getValue(field), type);
+    public final <T, U> U get(Field<T> field, Converter<? super T, ? extends U> converter) {
+        return converter.from(get(field));
     }
 
     @Override
-    @Deprecated
-    public final <T> T getValue(Field<?> field, Class<? extends T> type, T defaultValue) {
-        final T result = getValue(field, type);
-        return result == null ? defaultValue : result;
-    }
-
-    @Override
-    public final <T, U> U getValue(Field<T> field, Converter<? super T, U> converter) {
-        return converter.from(getValue(field));
-    }
-
-    @Override
-    @Deprecated
-    public final <T, U> U getValue(Field<T> field, Converter<? super T, U> converter, U defaultValue) {
-        final U result = getValue(field, converter);
-        return result == null ? defaultValue : result;
-    }
-
-    @Override
-    public final Object getValue(int index) {
+    public final Object get(int index) {
         return values[safeIndex(index)];
     }
 
     @Override
-    @Deprecated
-    public final Object getValue(int index, Object defaultValue) {
-        final Object result = getValue(index);
-        return result == null ? defaultValue : result;
+    public final <T> T get(int index, Class<? extends T> type) {
+        return Convert.convert(get(index), type);
     }
 
     @Override
-    public final <T> T getValue(int index, Class<? extends T> type) {
-        return Convert.convert(getValue(index), type);
+    public final <U> U get(int index, Converter<?, ? extends U> converter) {
+        return Convert.convert(get(index), converter);
     }
 
     @Override
-    @Deprecated
-    public final <T> T getValue(int index, Class<? extends T> type, T defaultValue) {
-        final T result = getValue(index, type);
-        return result == null ? defaultValue : result;
+    public final Object get(String fieldName) {
+        return get(indexOrFail(fieldsRow(), fieldName));
     }
 
     @Override
-    public final <U> U getValue(int index, Converter<?, U> converter) {
-        return Convert.convert(getValue(index), converter);
+    public final <T> T get(String fieldName, Class<? extends T> type) {
+        return Convert.convert(get(fieldName), type);
     }
 
     @Override
-    @Deprecated
-    public final <U> U getValue(int index, Converter<?, U> converter, U defaultValue) {
-        final U result = getValue(index, converter);
-        return result == null ? defaultValue : result;
+    public final <U> U get(String fieldName, Converter<?, ? extends U> converter) {
+        return Convert.convert(get(fieldName), converter);
     }
 
     @Override
-    public final Object getValue(String fieldName) {
-        return getValue(indexOrFail(fieldsRow(), fieldName));
+    public final Object get(Name fieldName) {
+        return get(indexOrFail(fieldsRow(), fieldName));
     }
 
     @Override
-    @Deprecated
-    public final Object getValue(String fieldName, Object defaultValue) {
-        return getValue(indexOrFail(fieldsRow(), fieldName), defaultValue);
+    public final <T> T get(Name fieldName, Class<? extends T> type) {
+        return Convert.convert(get(fieldName), type);
     }
 
     @Override
-    public final <T> T getValue(String fieldName, Class<? extends T> type) {
-        return Convert.convert(getValue(fieldName), type);
-    }
-
-    @Override
-    @Deprecated
-    public final <T> T getValue(String fieldName, Class<? extends T> type, T defaultValue) {
-        final T result = getValue(fieldName, type);
-        return result == null ? defaultValue : result;
-    }
-
-    @Override
-    public final <U> U getValue(String fieldName, Converter<?, U> converter) {
-        return Convert.convert(getValue(fieldName), converter);
-    }
-
-    @Override
-    @Deprecated
-    public final <U> U getValue(String fieldName, Converter<?, U> converter, U defaultValue) {
-        final U result = getValue(fieldName, converter);
-        return result == null ? defaultValue : result;
-    }
-
-    @Override
-    public final Object getValue(Name fieldName) {
-        return getValue(indexOrFail(fieldsRow(), fieldName));
-    }
-
-    @Override
-    public final <T> T getValue(Name fieldName, Class<? extends T> type) {
-        return Convert.convert(getValue(fieldName), type);
-    }
-
-    @Override
-    public final <U> U getValue(Name fieldName, Converter<?, U> converter) {
-        return Convert.convert(getValue(fieldName), converter);
+    public final <U> U get(Name fieldName, Converter<?, ? extends U> converter) {
+        return Convert.convert(get(fieldName), converter);
     }
 
     /**
      * Subclasses may type-unsafely set a value to a record index. This method
      * takes care of converting the value to the appropriate type.
+     *
+     * @deprecated - Use {@link AbstractRecord#set(int, Object)} instead
      */
+    @Deprecated
     protected final void setValue(int index, Object value) {
-        setValue(index, (Field) field(index), value);
+        set(index, value);
+    }
+
+    protected final void set(int index, Object value) {
+        set(index, (Field) field(index), value);
     }
 
     @Override
-    public final <T> void setValue(Field<T> field, T value) {
-        setValue(indexOrFail(fields, field), field, value);
+    public final <T> void set(Field<T> field, T value) {
+        set(indexOrFail(fields, field), field, value);
     }
 
-    private final <T> void setValue(int index, Field<T> field, T value) {
+    private final <T> void set(int index, Field<T> field, T value) {
         // Relevant issues documenting this method's behaviour:
         // [#945] Avoid bugs resulting from setting the same value twice
         // [#948] To allow for controlling the number of hard-parses
@@ -399,8 +344,8 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
-    public final <T, U> void setValue(Field<T> field, U value, Converter<T, ? super U> converter) {
-        setValue(field, converter.to(value));
+    public final <T, U> void set(Field<T> field, U value, Converter<? extends T, ? super U> converter) {
+        set(field, converter.to(value));
     }
 
     final void setValues(Field<?>[] fields, AbstractRecord record) {
@@ -410,7 +355,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
             int targetIndex = indexOrFail(fieldsRow(), field);
             int sourceIndex = indexOrFail(record.fieldsRow(), field);
 
-            values[targetIndex] = record.getValue(sourceIndex);
+            values[targetIndex] = record.get(sourceIndex);
             originals[targetIndex] = record.original(sourceIndex);
             changed.set(targetIndex, record.changed(sourceIndex));
         }
@@ -590,7 +535,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         for (int i = 0; i < size; i++) {
             Field<?> field = fields.field(i);
 
-            if (map.put(field.getName(), getValue(i)) != null) {
+            if (map.put(field.getName(), get(i)) != null) {
                 throw new InvalidResultException("Field " + field.getName() + " is not unique in Record : " + this);
             }
         }
@@ -1072,8 +1017,8 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         }
 
         for (int i = 0; i < size(); i++) {
-            final Object thisValue = getValue(i);
-            final Object thatValue = that.getValue(i);
+            final Object thisValue = get(i);
+            final Object thatValue = that.get(i);
 
             // [#1850] Only return -1/+1 early. In all other cases,
             // continue checking the remaining fields
@@ -1162,4 +1107,141 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
         return array1.length - array2.length;
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: Deprecated and discouraged methods
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final <T> T getValue(Field<T> field) {
+        return get(field);
+    }
+
+    @Override
+    @Deprecated
+    public final <T> T getValue(Field<T> field, T defaultValue) {
+        T result = getValue(field);
+        return result != null ? result : defaultValue;
+    }
+
+    @Override
+    public final <T> T getValue(Field<?> field, Class<? extends T> type) {
+        return get(field, type);
+    }
+
+    @Override
+    @Deprecated
+    public final <T> T getValue(Field<?> field, Class<? extends T> type, T defaultValue) {
+        final T result = get(field, type);
+        return result == null ? defaultValue : result;
+    }
+
+    @Override
+    public final <T, U> U getValue(Field<T> field, Converter<? super T, U> converter) {
+        return get(field, converter);
+    }
+
+    @Override
+    @Deprecated
+    public final <T, U> U getValue(Field<T> field, Converter<? super T, U> converter, U defaultValue) {
+        final U result = get(field, converter);
+        return result == null ? defaultValue : result;
+    }
+
+    @Override
+    public final Object getValue(int index) {
+        return get(index);
+    }
+
+    @Override
+    @Deprecated
+    public final Object getValue(int index, Object defaultValue) {
+        final Object result = get(index);
+        return result == null ? defaultValue : result;
+    }
+
+    @Override
+    public final <T> T getValue(int index, Class<? extends T> type) {
+        return get(index, type);
+    }
+
+    @Override
+    @Deprecated
+    public final <T> T getValue(int index, Class<? extends T> type, T defaultValue) {
+        final T result = get(index, type);
+        return result == null ? defaultValue : result;
+    }
+
+    @Override
+    public final <U> U getValue(int index, Converter<?, U> converter) {
+        return get(index, converter);
+    }
+
+    @Override
+    @Deprecated
+    public final <U> U getValue(int index, Converter<?, U> converter, U defaultValue) {
+        final U result = get(index, converter);
+        return result == null ? defaultValue : result;
+    }
+
+    @Override
+    public final Object getValue(String fieldName) {
+        return get(fieldName);
+    }
+
+    @Override
+    @Deprecated
+    public final Object getValue(String fieldName, Object defaultValue) {
+        return getValue(indexOrFail(fieldsRow(), fieldName), defaultValue);
+    }
+
+    @Override
+    public final <T> T getValue(String fieldName, Class<? extends T> type) {
+        return get(fieldName, type);
+    }
+
+    @Override
+    @Deprecated
+    public final <T> T getValue(String fieldName, Class<? extends T> type, T defaultValue) {
+        final T result = get(fieldName, type);
+        return result == null ? defaultValue : result;
+    }
+
+    @Override
+    public final <U> U getValue(String fieldName, Converter<?, U> converter) {
+        return get(fieldName, converter);
+    }
+
+    @Override
+    @Deprecated
+    public final <U> U getValue(String fieldName, Converter<?, U> converter, U defaultValue) {
+        final U result = get(fieldName, converter);
+        return result == null ? defaultValue : result;
+    }
+
+    @Override
+    public final Object getValue(Name fieldName) {
+        return get(fieldName);
+    }
+
+    @Override
+    public final <T> T getValue(Name fieldName, Class<? extends T> type) {
+        return get(fieldName, type);
+    }
+
+    @Override
+    public final <U> U getValue(Name fieldName, Converter<?, U> converter) {
+        return get(fieldName, converter);
+    }
+
+    @Override
+    public final <T> void setValue(Field<T> field, T value) {
+        set(field, value);
+    }
+
+    @Override
+    public final <T, U> void setValue(Field<T> field, U value, Converter<T, ? super U> converter) {
+        set(field, value, converter);
+    }
+
 }

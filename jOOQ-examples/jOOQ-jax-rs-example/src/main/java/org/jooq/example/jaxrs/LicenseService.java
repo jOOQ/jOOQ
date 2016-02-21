@@ -146,7 +146,7 @@ public class LicenseService {
 				   .set(LOG_VERIFY.VERSION, v)
 				   .returning(LOG_VERIFY.MATCH)
 				   .fetchOne()
-				   .getValue(LOG_VERIFY.MATCH, String.class);
+				   .get(LOG_VERIFY.MATCH, String.class);
 			}
 		});
 	}

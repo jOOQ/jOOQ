@@ -85,26 +85,26 @@ public class PostgresUDTDefinition extends AbstractUDTDefinition {
 
             SchemaDefinition typeSchema = null;
 
-            String schemaName = record.getValue(ATTRIBUTES.ATTRIBUTE_UDT_SCHEMA);
+            String schemaName = record.get(ATTRIBUTES.ATTRIBUTE_UDT_SCHEMA);
             if (schemaName != null)
                 typeSchema = getDatabase().getSchema(schemaName);
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 typeSchema == null ? getSchema() : typeSchema,
-                record.getValue(ATTRIBUTES.DATA_TYPE),
-                record.getValue(ATTRIBUTES.CHARACTER_MAXIMUM_LENGTH),
-                record.getValue(ATTRIBUTES.NUMERIC_PRECISION),
-                record.getValue(ATTRIBUTES.NUMERIC_SCALE),
-                record.getValue(ATTRIBUTES.IS_NULLABLE, boolean.class),
-                record.getValue(ATTRIBUTES.ATTRIBUTE_DEFAULT) != null,
-                record.getValue(ATTRIBUTES.ATTRIBUTE_UDT_NAME)
+                record.get(ATTRIBUTES.DATA_TYPE),
+                record.get(ATTRIBUTES.CHARACTER_MAXIMUM_LENGTH),
+                record.get(ATTRIBUTES.NUMERIC_PRECISION),
+                record.get(ATTRIBUTES.NUMERIC_SCALE),
+                record.get(ATTRIBUTES.IS_NULLABLE, boolean.class),
+                record.get(ATTRIBUTES.ATTRIBUTE_DEFAULT) != null,
+                record.get(ATTRIBUTES.ATTRIBUTE_UDT_NAME)
             );
 
             AttributeDefinition column = new DefaultAttributeDefinition(
                 this,
-                record.getValue(ATTRIBUTES.ATTRIBUTE_NAME),
-                record.getValue(ATTRIBUTES.ORDINAL_POSITION),
+                record.get(ATTRIBUTES.ATTRIBUTE_NAME),
+                record.get(ATTRIBUTES.ORDINAL_POSITION),
                 type);
 
             result.add(column);

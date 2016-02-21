@@ -143,7 +143,7 @@ final class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
         String separator = "";
         for (Field<?> field : value.fields()) {
             context.sql(separator);
-            context.visit(val(value.getValue(field), field));
+            context.visit(val(value.get(field), field));
             separator = ", ";
         }
 
@@ -184,9 +184,8 @@ final class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
             // Postgres cannot bind a complete structured type. The type is
             // inlined instead: ROW(.., .., ..)
             case POSTGRES: {
-                for (Field<?> field : value.fields()) {
-                    context.visit(val(value.getValue(field)));
-                }
+                for (Field<?> field : value.fields())
+                    context.visit(val(value.get(field)));
 
                 break;
             }

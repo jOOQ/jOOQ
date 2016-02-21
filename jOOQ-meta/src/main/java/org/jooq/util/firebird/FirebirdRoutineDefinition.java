@@ -96,22 +96,22 @@ public class FirebirdRoutineDefinition extends AbstractRoutineDefinition {
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 getSchema(),
-                record.getValue("FIELD_TYPE", String.class),
-                record.getValue("CHARACTER_LENGTH", short.class),
-                record.getValue(f.RDB$FIELD_PRECISION),
-                record.getValue("FIELD_SCALE", Integer.class),
-                record.getValue(p.RDB$NULL_FLAG) == 0,
-                record.getValue(p.RDB$DEFAULT_SOURCE) != null
+                record.get("FIELD_TYPE", String.class),
+                record.get("CHARACTER_LENGTH", short.class),
+                record.get(f.RDB$FIELD_PRECISION),
+                record.get("FIELD_SCALE", Integer.class),
+                record.get(p.RDB$NULL_FLAG) == 0,
+                record.get(p.RDB$DEFAULT_SOURCE) != null
             );
 
             ParameterDefinition parameter = new DefaultParameterDefinition(
                 this,
-                record.getValue(p.RDB$PARAMETER_NAME),
+                record.get(p.RDB$PARAMETER_NAME),
                 i++,
                 type
             );
 
-            addParameter(record.getValue(p.RDB$PARAMETER_TYPE, int.class).equals(0) ? InOutDefinition.IN : InOutDefinition.OUT, parameter);
+            addParameter(record.get(p.RDB$PARAMETER_TYPE, int.class).equals(0) ? InOutDefinition.IN : InOutDefinition.OUT, parameter);
         }
 
     }

@@ -2229,7 +2229,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final <T> void pgSetValue(Record record, Field<T> field, String value) {
-        record.setValue(field, pgFromString(field.getType(), value));
+        record.set(field, pgFromString(field.getType(), value));
     }
 
     private static final void pgRenderEnumCast(RenderContext render, Class<?> type) {

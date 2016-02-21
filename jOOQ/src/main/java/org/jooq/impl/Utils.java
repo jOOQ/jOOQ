@@ -548,7 +548,7 @@ final class Utils {
         int size = record.size();
 
         for (int i = 0; i < size; i++)
-            if (record.getValue(i) == null)
+            if (record.get(i) == null)
                 if (!record.field(i).getDataType().nullable())
                     record.changed(i, false);
     }
@@ -1190,7 +1190,7 @@ final class Utils {
 
         for (int i = 0; i < size; i++)
             if (record.changed(i))
-                result.put(record.field(i), record.getValue(i));
+                result.put(record.field(i), record.get(i));
 
         return result;
     }
@@ -1784,14 +1784,14 @@ final class Utils {
      * Type-safely copy a value from one record to another
      */
     static final <T> void setValue(Record target, Field<T> targetField, Record source, Field<?> sourceField) {
-        setValue(target, targetField, source.getValue(sourceField));
+        setValue(target, targetField, source.get(sourceField));
     }
 
     /**
      * Type-safely set a value to a record
      */
     static final <T> void setValue(Record target, Field<T> targetField, Object value) {
-        target.setValue(targetField, targetField.getDataType().convert(value));
+        target.set(targetField, targetField.getDataType().convert(value));
     }
 
     /**
@@ -1803,7 +1803,7 @@ final class Utils {
         int targetIndex = indexOrFail(target.fieldsRow(), targetField);
         int sourceIndex = indexOrFail(source.fieldsRow(), sourceField);
 
-        target.values[targetIndex] = targetType.convert(source.getValue(sourceIndex));
+        target.values[targetIndex] = targetType.convert(source.get(sourceIndex));
         target.originals[targetIndex] = targetType.convert(source.original(sourceIndex));
         target.changed.set(targetIndex, source.changed(sourceIndex));
     }
@@ -2005,7 +2005,7 @@ final class Utils {
             provider.addConditions(condition(field, record.original(field)));
         }
         else {
-            provider.addConditions(condition(field, record.getValue(field)));
+            provider.addConditions(condition(field, record.get(field)));
         }
     }
 

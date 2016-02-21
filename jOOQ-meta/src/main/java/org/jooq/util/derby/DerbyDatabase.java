@@ -93,10 +93,10 @@ public class DerbyDatabase extends AbstractDatabase {
 	@Override
 	protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
 	    for (Record record : fetchKeys("P")) {
-	        SchemaDefinition schema = getSchema(record.getValue(Sysschemas.SCHEMANAME));
-	        String key = record.getValue(Sysconstraints.CONSTRAINTNAME);
-            String tableName = record.getValue(Systables.TABLENAME);
-            String descriptor = record.getValue(Sysconglomerates.DESCRIPTOR, String.class);
+	        SchemaDefinition schema = getSchema(record.get(Sysschemas.SCHEMANAME));
+	        String key = record.get(Sysconstraints.CONSTRAINTNAME);
+            String tableName = record.get(Systables.TABLENAME);
+            String descriptor = record.get(Sysconglomerates.DESCRIPTOR, String.class);
 
             TableDefinition table = getTable(schema, tableName);
             if (table != null) {
@@ -113,10 +113,10 @@ public class DerbyDatabase extends AbstractDatabase {
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("U")) {
-            SchemaDefinition schema = getSchema(record.getValue(Sysschemas.SCHEMANAME));
-            String key = record.getValue(Sysconstraints.CONSTRAINTNAME);
-            String tableName = record.getValue(Systables.TABLENAME);
-            String descriptor = record.getValue(Sysconglomerates.DESCRIPTOR, String.class);
+            SchemaDefinition schema = getSchema(record.get(Sysschemas.SCHEMANAME));
+            String key = record.get(Sysconstraints.CONSTRAINTNAME);
+            String tableName = record.get(Systables.TABLENAME);
+            String descriptor = record.get(Sysconglomerates.DESCRIPTOR, String.class);
 
             TableDefinition table = getTable(schema, tableName);
             if (table != null) {
@@ -178,13 +178,13 @@ public class DerbyDatabase extends AbstractDatabase {
 	        .where("fc.type = 'F'")
 	        .fetch()) {
 
-	        SchemaDefinition foreignKeySchema = getSchema(record.getValue(fkSchema));
-	        SchemaDefinition uniqueKeySchema = getSchema(record.getValue(ukSchema));
+	        SchemaDefinition foreignKeySchema = getSchema(record.get(fkSchema));
+	        SchemaDefinition uniqueKeySchema = getSchema(record.get(ukSchema));
 
-	        String foreignKeyName = record.getValue(fkName);
-            String foreignKeyTableName = record.getValue(fkTable);
-            List<Integer> foreignKeyIndexes = decode(record.getValue(fkDescriptor, String.class));
-            String uniqueKeyName = record.getValue(ukName);
+	        String foreignKeyName = record.get(fkName);
+            String foreignKeyTableName = record.get(fkTable);
+            List<Integer> foreignKeyIndexes = decode(record.get(fkDescriptor, String.class));
+            String uniqueKeyName = record.get(ukName);
 
 	        TableDefinition referencingTable = getTable(foreignKeySchema, foreignKeyTableName);
             if (referencingTable != null) {
@@ -265,17 +265,17 @@ public class DerbyDatabase extends AbstractDatabase {
                     Syssequences.SEQUENCENAME)
                 .fetch()) {
 
-            SchemaDefinition schema = getSchema(record.getValue(Sysschemas.SCHEMANAME));
+            SchemaDefinition schema = getSchema(record.get(Sysschemas.SCHEMANAME));
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 this,
                 schema,
-                record.getValue(Syssequences.SEQUENCEDATATYPE)
+                record.get(Syssequences.SEQUENCEDATATYPE)
             );
 
             result.add(new DefaultSequenceDefinition(
                 schema,
-                record.getValue(Syssequences.SEQUENCENAME, String.class),
+                record.get(Syssequences.SEQUENCENAME, String.class),
                 type));
         }
 
@@ -299,9 +299,9 @@ public class DerbyDatabase extends AbstractDatabase {
                     Systables.TABLENAME)
     	        .fetch()) {
 
-		    SchemaDefinition schema = getSchema(record.getValue(Sysschemas.SCHEMANAME));
-		    String name = record.getValue(Systables.TABLENAME);
-		    String id = record.getValue(Systables.TABLEID);
+		    SchemaDefinition schema = getSchema(record.get(Sysschemas.SCHEMANAME));
+		    String name = record.get(Systables.TABLENAME);
+		    String id = record.get(Systables.TABLEID);
 
 		    DerbyTableDefinition table = new DerbyTableDefinition(schema, name, id);
             result.add(table);

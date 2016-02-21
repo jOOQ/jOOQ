@@ -67,7 +67,7 @@ final class RecordCondition extends AbstractCondition {
 
         int size = record.size();
         for (int i = 0; i < size; i++) {
-            Object value = record.getValue(i);
+            Object value = record.get(i);
 
             if (value != null) {
                 Field f1 = record.field(i);

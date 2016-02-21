@@ -87,26 +87,26 @@ public class CUBRIDTableDefinition extends AbstractTableDefinition {
 		        .orderBy(DB_ATTRIBUTE.DEF_ORDER)
 		        .fetch()) {
 
-		    String dataType = record.getValue(DB_ATTRIBUTE.DATA_TYPE);
+		    String dataType = record.get(DB_ATTRIBUTE.DATA_TYPE);
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 getSchema(),
                 dataType,
-                record.getValue(DB_ATTRIBUTE.PREC),
-                record.getValue(DB_ATTRIBUTE.PREC),
-                record.getValue(DB_ATTRIBUTE.SCALE),
-                record.getValue(DB_ATTRIBUTE.IS_NULLABLE, boolean.class),
-                record.getValue(DB_ATTRIBUTE.DEFAULT_VALUE) != null,
-                getName() + "_" + record.getValue(DB_ATTRIBUTE.ATTR_NAME)
+                record.get(DB_ATTRIBUTE.PREC),
+                record.get(DB_ATTRIBUTE.PREC),
+                record.get(DB_ATTRIBUTE.SCALE),
+                record.get(DB_ATTRIBUTE.IS_NULLABLE, boolean.class),
+                record.get(DB_ATTRIBUTE.DEFAULT_VALUE) != null,
+                getName() + "_" + record.get(DB_ATTRIBUTE.ATTR_NAME)
             );
 
 			ColumnDefinition column = new DefaultColumnDefinition(
 				getDatabase().getTable(getSchema(), getName()),
-			    record.getValue(DB_ATTRIBUTE.ATTR_NAME),
-			    record.getValue(DB_ATTRIBUTE.DEF_ORDER),
+			    record.get(DB_ATTRIBUTE.ATTR_NAME),
+			    record.get(DB_ATTRIBUTE.DEF_ORDER),
 			    type,
-			    record.getValue(DB_SERIAL.NAME) != null,
+			    record.get(DB_SERIAL.NAME) != null,
 			    null
 		    );
 

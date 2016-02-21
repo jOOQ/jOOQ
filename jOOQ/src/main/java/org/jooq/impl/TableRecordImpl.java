@@ -186,7 +186,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
                 if (insert.getReturnedRecord() != null) {
                     for (Field<?> field : key) {
                         int index = indexOrFail(fieldsRow(), field);
-                        Object value = insert.getReturnedRecord().getValue(field);
+                        Object value = insert.getReturnedRecord().get(field);
 
                         values[index] = value;
                         originals[index] = value;
@@ -252,7 +252,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
      * Extracted method to ensure generic type safety.
      */
     final <T> void addValue(StoreQuery<?> store, Field<T> field) {
-        addValue(store, field, getValue(field));
+        addValue(store, field, get(field));
     }
 
     /**
@@ -285,7 +285,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
             TableField<R, ? extends Number> version = getTable().getRecordVersion();
 
             if (version != null) {
-                Number value = getValue(version);
+                Number value = get(version);
 
                 // Use BigInteger locally to avoid arithmetic overflows
                 if (value == null) {

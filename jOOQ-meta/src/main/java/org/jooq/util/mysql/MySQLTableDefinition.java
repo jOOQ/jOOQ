@@ -91,12 +91,12 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
     		    .orderBy(ORDINAL_POSITION)
     		    .fetch()) {
 
-		    String dataType = record.getValue(Columns.DATA_TYPE);
+		    String dataType = record.get(Columns.DATA_TYPE);
 
 		    // [#519] Some types have unsigned versions
 		    if (getDatabase().supportsUnsignedTypes()) {
     		    if (asList("tinyint", "smallint", "mediumint", "int", "bigint").contains(dataType.toLowerCase())) {
-    	            if (record.getValue(Columns.COLUMN_TYPE).toLowerCase().contains("unsigned")) {
+    	            if (record.get(Columns.COLUMN_TYPE).toLowerCase().contains("unsigned")) {
     	                dataType += "unsigned";
     	            }
     		    }
@@ -106,21 +106,21 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
                 getDatabase(),
                 getSchema(),
                 dataType,
-                record.getValue(Columns.CHARACTER_MAXIMUM_LENGTH),
-                record.getValue(Columns.NUMERIC_PRECISION),
-                record.getValue(Columns.NUMERIC_SCALE),
-                record.getValue(Columns.IS_NULLABLE, boolean.class),
-                record.getValue(Columns.COLUMN_DEFAULT) != null,
-                getName() + "_" + record.getValue(Columns.COLUMN_NAME)
+                record.get(Columns.CHARACTER_MAXIMUM_LENGTH),
+                record.get(Columns.NUMERIC_PRECISION),
+                record.get(Columns.NUMERIC_SCALE),
+                record.get(Columns.IS_NULLABLE, boolean.class),
+                record.get(Columns.COLUMN_DEFAULT) != null,
+                getName() + "_" + record.get(Columns.COLUMN_NAME)
             );
 
 			ColumnDefinition column = new DefaultColumnDefinition(
 				getDatabase().getTable(getSchema(), getName()),
-			    record.getValue(Columns.COLUMN_NAME),
-			    record.getValue(Columns.ORDINAL_POSITION, int.class),
+			    record.get(Columns.COLUMN_NAME),
+			    record.get(Columns.ORDINAL_POSITION, int.class),
 			    type,
-			    "auto_increment".equalsIgnoreCase(record.getValue(Columns.EXTRA)),
-			    record.getValue(Columns.COLUMN_COMMENT)
+			    "auto_increment".equalsIgnoreCase(record.get(Columns.EXTRA)),
+			    record.get(Columns.COLUMN_COMMENT)
 		    );
 
 			result.add(column);

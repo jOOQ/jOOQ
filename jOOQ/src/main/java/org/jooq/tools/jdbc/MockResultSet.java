@@ -367,32 +367,32 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
         return null;
     }
 
-    private <T> T getValue(String columnLabel, Class<T> type) throws SQLException {
+    private <T> T get(String columnLabel, Class<T> type) throws SQLException {
         checkInRange();
         checkField(columnLabel);
 
-        T value = result.get(index - 1).getValue(columnLabel, type);
+        T value = result.get(index - 1).get(columnLabel, type);
         wasNull = (value == null);
         return value;
     }
 
-    private <T> T getValue(int columnIndex, Class<T> type) throws SQLException {
+    private <T> T get(int columnIndex, Class<T> type) throws SQLException {
         checkInRange();
         checkField(columnIndex);
 
-        T value = result.get(index - 1).getValue(columnIndex - 1, type);
+        T value = result.get(index - 1).get(columnIndex - 1, type);
         wasNull = (value == null);
         return value;
     }
 
     @Override
     public String getString(int columnIndex) throws SQLException {
-        return getValue(columnIndex, String.class);
+        return get(columnIndex, String.class);
     }
 
     @Override
     public String getString(String columnLabel) throws SQLException {
-        return getValue(columnLabel, String.class);
+        return get(columnLabel, String.class);
     }
 
     @Override
@@ -407,178 +407,178 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
 
     @Override
     public boolean getBoolean(int columnIndex) throws SQLException {
-        Boolean value = getValue(columnIndex, Boolean.class);
+        Boolean value = get(columnIndex, Boolean.class);
         return wasNull ? false : value;
     }
 
     @Override
     public boolean getBoolean(String columnLabel) throws SQLException {
-        Boolean value = getValue(columnLabel, Boolean.class);
+        Boolean value = get(columnLabel, Boolean.class);
         return wasNull ? false : value;
     }
 
     @Override
     public byte getByte(int columnIndex) throws SQLException {
-        Byte value = getValue(columnIndex, Byte.class);
+        Byte value = get(columnIndex, Byte.class);
         return wasNull ? (byte) 0 : value;
     }
 
     @Override
     public byte getByte(String columnLabel) throws SQLException {
-        Byte value = getValue(columnLabel, Byte.class);
+        Byte value = get(columnLabel, Byte.class);
         return wasNull ? (byte) 0 : value;
     }
 
     @Override
     public short getShort(int columnIndex) throws SQLException {
-        Short value = getValue(columnIndex, Short.class);
+        Short value = get(columnIndex, Short.class);
         return wasNull ? (short) 0 : value;
     }
 
     @Override
     public short getShort(String columnLabel) throws SQLException {
-        Short value = getValue(columnLabel, Short.class);
+        Short value = get(columnLabel, Short.class);
         return wasNull ? (short) 0 : value;
     }
 
     @Override
     public int getInt(int columnIndex) throws SQLException {
-        Integer value = getValue(columnIndex, Integer.class);
+        Integer value = get(columnIndex, Integer.class);
         return wasNull ? 0 : value;
     }
 
     @Override
     public int getInt(String columnLabel) throws SQLException {
-        Integer value = getValue(columnLabel, Integer.class);
+        Integer value = get(columnLabel, Integer.class);
         return wasNull ? 0 : value;
     }
 
     @Override
     public long getLong(int columnIndex) throws SQLException {
-        Long value = getValue(columnIndex, Long.class);
+        Long value = get(columnIndex, Long.class);
         return wasNull ? 0L : value;
     }
 
     @Override
     public long getLong(String columnLabel) throws SQLException {
-        Long value = getValue(columnLabel, Long.class);
+        Long value = get(columnLabel, Long.class);
         return wasNull ? 0L : value;
     }
 
     @Override
     public float getFloat(int columnIndex) throws SQLException {
-        Float value = getValue(columnIndex, Float.class);
+        Float value = get(columnIndex, Float.class);
         return wasNull ? 0.0f : value;
     }
 
     @Override
     public float getFloat(String columnLabel) throws SQLException {
-        Float value = getValue(columnLabel, Float.class);
+        Float value = get(columnLabel, Float.class);
         return wasNull ? 0.0f : value;
     }
 
     @Override
     public double getDouble(int columnIndex) throws SQLException {
-        Double value = getValue(columnIndex, Double.class);
+        Double value = get(columnIndex, Double.class);
         return wasNull ? 0.0 : value;
     }
 
     @Override
     public double getDouble(String columnLabel) throws SQLException {
-        Double value = getValue(columnLabel, Double.class);
+        Double value = get(columnLabel, Double.class);
         return wasNull ? 0.0 : value;
     }
 
     @Override
     public BigDecimal getBigDecimal(int columnIndex) throws SQLException {
-        return getValue(columnIndex, BigDecimal.class);
+        return get(columnIndex, BigDecimal.class);
     }
 
     @Override
     @Deprecated
     public BigDecimal getBigDecimal(int columnIndex, int scale) throws SQLException {
-        return getValue(columnIndex, BigDecimal.class);
+        return get(columnIndex, BigDecimal.class);
     }
 
     @Override
     public BigDecimal getBigDecimal(String columnLabel) throws SQLException {
-        return getValue(columnLabel, BigDecimal.class);
+        return get(columnLabel, BigDecimal.class);
     }
 
     @Override
     @Deprecated
     public BigDecimal getBigDecimal(String columnLabel, int scale) throws SQLException {
-        return getValue(columnLabel, BigDecimal.class);
+        return get(columnLabel, BigDecimal.class);
     }
 
     @Override
     public byte[] getBytes(int columnIndex) throws SQLException {
-        return getValue(columnIndex, byte[].class);
+        return get(columnIndex, byte[].class);
     }
 
     @Override
     public byte[] getBytes(String columnLabel) throws SQLException {
-        return getValue(columnLabel, byte[].class);
+        return get(columnLabel, byte[].class);
     }
 
     @Override
     public Date getDate(int columnIndex) throws SQLException {
-        return getValue(columnIndex, Date.class);
+        return get(columnIndex, Date.class);
     }
 
     @Override
     public Date getDate(int columnIndex, Calendar cal) throws SQLException {
-        return getValue(columnIndex, Date.class);
+        return get(columnIndex, Date.class);
     }
 
     @Override
     public Date getDate(String columnLabel) throws SQLException {
-        return getValue(columnLabel, Date.class);
+        return get(columnLabel, Date.class);
     }
 
     @Override
     public Date getDate(String columnLabel, Calendar cal) throws SQLException {
-        return getValue(columnLabel, Date.class);
+        return get(columnLabel, Date.class);
     }
 
     @Override
     public Time getTime(int columnIndex) throws SQLException {
-        return getValue(columnIndex, Time.class);
+        return get(columnIndex, Time.class);
     }
 
     @Override
     public Time getTime(int columnIndex, Calendar cal) throws SQLException {
-        return getValue(columnIndex, Time.class);
+        return get(columnIndex, Time.class);
     }
 
     @Override
     public Time getTime(String columnLabel) throws SQLException {
-        return getValue(columnLabel, Time.class);
+        return get(columnLabel, Time.class);
     }
 
     @Override
     public Time getTime(String columnLabel, Calendar cal) throws SQLException {
-        return getValue(columnLabel, Time.class);
+        return get(columnLabel, Time.class);
     }
 
     @Override
     public Timestamp getTimestamp(int columnIndex) throws SQLException {
-        return getValue(columnIndex, Timestamp.class);
+        return get(columnIndex, Timestamp.class);
     }
 
     @Override
     public Timestamp getTimestamp(int columnIndex, Calendar cal) throws SQLException {
-        return getValue(columnIndex, Timestamp.class);
+        return get(columnIndex, Timestamp.class);
     }
 
     @Override
     public Timestamp getTimestamp(String columnLabel) throws SQLException {
-        return getValue(columnLabel, Timestamp.class);
+        return get(columnLabel, Timestamp.class);
     }
 
     @Override
     public Timestamp getTimestamp(String columnLabel, Calendar cal) throws SQLException {
-        return getValue(columnLabel, Timestamp.class);
+        return get(columnLabel, Timestamp.class);
     }
 
     @Override
@@ -703,42 +703,42 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
 
     @Override
     public Array getArray(int columnIndex) throws SQLException {
-        return getValue(columnIndex, Array.class);
+        return get(columnIndex, Array.class);
     }
 
     @Override
     public Array getArray(String columnLabel) throws SQLException {
-        return getValue(columnLabel, Array.class);
+        return get(columnLabel, Array.class);
     }
 
     @Override
     public URL getURL(int columnIndex) throws SQLException {
-        return getValue(columnIndex, URL.class);
+        return get(columnIndex, URL.class);
     }
 
     @Override
     public URL getURL(String columnLabel) throws SQLException {
-        return getValue(columnLabel, URL.class);
+        return get(columnLabel, URL.class);
     }
 
     @Override
     public Object getObject(int columnIndex) throws SQLException {
-        return getValue(columnIndex, Object.class);
+        return get(columnIndex, Object.class);
     }
 
     @Override
     public Object getObject(int columnIndex, Map<String, Class<?>> map) throws SQLException {
-        return getValue(columnIndex, Object.class);
+        return get(columnIndex, Object.class);
     }
 
     @Override
     public Object getObject(String columnLabel) throws SQLException {
-        return getValue(columnLabel, Object.class);
+        return get(columnLabel, Object.class);
     }
 
     @Override
     public Object getObject(String columnLabel, Map<String, Class<?>> map) throws SQLException {
-        return getValue(columnLabel, Object.class);
+        return get(columnLabel, Object.class);
     }
 
     // -------------------------------------------------------------------------

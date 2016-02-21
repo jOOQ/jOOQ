@@ -381,9 +381,9 @@ final class MetaImpl implements Meta, Serializable {
 
             List<Table<?>> result = new ArrayList<Table<?>>();
             for (Record table : tables) {
-                String catalog = table.getValue(0, String.class);
-                String schema = table.getValue(1, String.class);
-                String name = table.getValue(2, String.class);
+                String catalog = table.get(0, String.class);
+                String schema = table.get(1, String.class);
+                String name = table.get(2, String.class);
 
                 // [#2760] MySQL JDBC confuses "catalog" and "schema"
                 result.add(new MetaTable(name, this, getColumns(
@@ -424,7 +424,7 @@ final class MetaImpl implements Meta, Serializable {
                 for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
                     Record key = entry.getKey();
                     Result<Record> value = entry.getValue();
-                    columnCache.put(name(key.getValue(inverseSchemaCatalog ? tableCat : tableSchem), key.getValue(tableName)), value);
+                    columnCache.put(name(key.get(inverseSchemaCatalog ? tableCat : tableSchem), key.get(tableName)), value);
                 }
             }
 
@@ -583,17 +583,17 @@ final class MetaImpl implements Meta, Serializable {
             }
 
             for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
-                Schema schema = schemas.get(entry.getKey().getValue(1));
+                Schema schema = schemas.get(entry.getKey().get(1));
 
-                String pkName = entry.getKey().getValue(12, String.class);
-                Table<Record> pkTable = (Table<Record>) schema.getTable(entry.getKey().getValue(2, String.class));
+                String pkName = entry.getKey().get(12, String.class);
+                Table<Record> pkTable = (Table<Record>) schema.getTable(entry.getKey().get(2, String.class));
                 TableField<Record, ?>[] pkFields = new TableField[entry.getValue().size()];
                 TableField<Record, ?>[] fkFields = new TableField[entry.getValue().size()];
 
                 for (int i = 0; i < entry.getValue().size(); i++) {
                     Record record = entry.getValue().get(i);
-                    pkFields[i] = (TableField<Record, ?>) pkTable.field(record.getValue(3, String.class));
-                    fkFields[i] = (TableField<Record, ?>)         field(record.getValue(7, String.class));
+                    pkFields[i] = (TableField<Record, ?>) pkTable.field(record.get(3, String.class));
+                    fkFields[i] = (TableField<Record, ?>)         field(record.get(7, String.class));
                 }
 
                 references.add(new ReferenceImpl<Record, Record>(new MetaPrimaryKey(pkTable, pkName, pkFields), this, fkFields));
@@ -651,7 +651,7 @@ final class MetaImpl implements Meta, Serializable {
                 TableField<Record, ?>[] f = new TableField[result.size()];
 
                 for (int i = 0; i < f.length; i++) {
-                    String name = result.get(i).getValue(columnName, String.class);
+                    String name = result.get(i).get(columnName, String.class);
                     f[i] = (TableField<Record, ?>) field(name);
 
                     // [#5097] Work around a bug in the Xerial JDBC driver for SQLite
@@ -664,7 +664,7 @@ final class MetaImpl implements Meta, Serializable {
                                 f[i] = (TableField<Record, ?>) field;
                 }
 
-                String indexName = result.get(0).getValue(5, String.class);
+                String indexName = result.get(0).get(5, String.class);
                 return new MetaPrimaryKey(this, indexName, f);
             }
             else {
@@ -787,14 +787,14 @@ final class MetaImpl implements Meta, Serializable {
             }
 
             for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
-                Schema schema = schemas.get(entry.getKey().getValue(1));
+                Schema schema = schemas.get(entry.getKey().get(1));
 
-                Table<Record> fkTable = (Table<Record>) schema.getTable(entry.getKey().getValue(2, String.class));
+                Table<Record> fkTable = (Table<Record>) schema.getTable(entry.getKey().get(2, String.class));
                 TableField<Record, ?>[] fkFields = new TableField[entry.getValue().size()];
 
                 for (int i = 0; i < entry.getValue().size(); i++) {
                     Record record = entry.getValue().get(i);
-                    fkFields[i] = (TableField<Record, ?>) fkTable.field(record.getValue(7, String.class));
+                    fkFields[i] = (TableField<Record, ?>) fkTable.field(record.get(7, String.class));
                 }
 
                 references.add(new ReferenceImpl<Record, Record>(this, fkTable, fkFields));

@@ -393,7 +393,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             }
 
             for (int i = 0; i < size; i++) {
-                result[i] = Convert.convert(record.getValue(i), componentType);
+                result[i] = Convert.convert(record.get(i), componentType);
             }
 
             return (E) result;
@@ -408,7 +408,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             if (size != 1)
                 throw new MappingException("Cannot map multi-column record of degree " + size + " to value type " + type);
 
-            return record.getValue(0, type);
+            return record.get(0, type);
         }
     }
 
@@ -499,7 +499,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
             for (int i = 0; i < f.length; i++)
                 if (f[i] != null)
-                    copy.setValue(i, record.getValue(i));
+                    copy.set(i, record.get(i));
 
             return d.map(record);
         }
@@ -614,7 +614,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
                     for (java.lang.reflect.Method method : methods[i]) {
                         Class<?> mType = method.getParameterTypes()[0];
-                        Object value = record.getValue(i, mType);
+                        Object value = record.get(i, mType);
 
                         // [#3082] Map nested collection types
                         if (value instanceof Collection && List.class.isAssignableFrom(mType)) {
@@ -624,7 +624,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
                         // Default reference types (including arrays)
                         else {
-                            method.invoke(result, record.getValue(i, mType));
+                            method.invoke(result, record.get(i, mType));
                         }
                     }
                 }
@@ -662,33 +662,33 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
             if (mType.isPrimitive()) {
                 if (mType == byte.class) {
-                    map(record.getValue(index, byte.class), result, member);
+                    map(record.get(index, byte.class), result, member);
                 }
                 else if (mType == short.class) {
-                    map(record.getValue(index, short.class), result, member);
+                    map(record.get(index, short.class), result, member);
                 }
                 else if (mType == int.class) {
-                    map(record.getValue(index, int.class), result, member);
+                    map(record.get(index, int.class), result, member);
                 }
                 else if (mType == long.class) {
-                    map(record.getValue(index, long.class), result, member);
+                    map(record.get(index, long.class), result, member);
                 }
                 else if (mType == float.class) {
-                    map(record.getValue(index, float.class), result, member);
+                    map(record.get(index, float.class), result, member);
                 }
                 else if (mType == double.class) {
-                    map(record.getValue(index, double.class), result, member);
+                    map(record.get(index, double.class), result, member);
                 }
                 else if (mType == boolean.class) {
-                    map(record.getValue(index, boolean.class), result, member);
+                    map(record.get(index, boolean.class), result, member);
                 }
                 else if (mType == char.class) {
-                    map(record.getValue(index, char.class), result, member);
+                    map(record.get(index, char.class), result, member);
                 }
             }
 
             else {
-                Object value = record.getValue(index, mType);
+                Object value = record.get(index, mType);
 
                 // [#3082] Map nested collection types
                 if (value instanceof Collection && List.class.isAssignableFrom(mType)) {
@@ -823,14 +823,14 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             try {
                 for (int i = 0; i < fields.length; i++) {
                     if (propertyIndexes[i] != null) {
-                        parameterValues[propertyIndexes[i]] = record.getValue(i);
+                        parameterValues[propertyIndexes[i]] = record.get(i);
                     }
                     else {
                         for (java.lang.reflect.Field member : members[i]) {
                             int index = propertyNames.indexOf(member.getName());
 
                             if (index >= 0) {
-                                parameterValues[index] = record.getValue(i);
+                                parameterValues[index] = record.get(i);
                             }
                         }
 
@@ -839,7 +839,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                             int index = propertyNames.indexOf(name);
 
                             if (index >= 0) {
-                                parameterValues[index] = record.getValue(i);
+                                parameterValues[index] = record.get(i);
                             }
                         }
                     }

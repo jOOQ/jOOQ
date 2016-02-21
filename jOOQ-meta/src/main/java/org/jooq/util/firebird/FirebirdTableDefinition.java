@@ -102,18 +102,18 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
             DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(
                     getDatabase(),
                     getSchema(),
-                    record.getValue("FIELD_TYPE", String.class),
-                    record.getValue("CHARACTER_LENGTH", short.class),
-                    record.getValue(f.RDB$FIELD_PRECISION),
-                    record.getValue("FIELD_SCALE", Integer.class),
-                    record.getValue(r.RDB$NULL_FLAG) == 0,
-                    record.getValue(r.RDB$DEFAULT_SOURCE) != null
+                    record.get("FIELD_TYPE", String.class),
+                    record.get("CHARACTER_LENGTH", short.class),
+                    record.get(f.RDB$FIELD_PRECISION),
+                    record.get("FIELD_SCALE", Integer.class),
+                    record.get(r.RDB$NULL_FLAG) == 0,
+                    record.get(r.RDB$DEFAULT_SOURCE) != null
             );
 
             ColumnDefinition column = new DefaultColumnDefinition(
                     getDatabase().getTable(getSchema(), getName()),
-                    record.getValue(r.RDB$FIELD_NAME.trim()),
-                    record.getValue(r.RDB$FIELD_POSITION),
+                    record.get(r.RDB$FIELD_NAME.trim()),
+                    record.get(r.RDB$FIELD_POSITION),
                     type,
                     false,
                     null

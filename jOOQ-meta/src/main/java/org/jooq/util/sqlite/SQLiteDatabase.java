@@ -103,8 +103,8 @@ public class SQLiteDatabase extends AbstractDatabase {
                 .fetch(SQLiteMaster.NAME)) {
 
             for (Record record : create().fetch("pragma table_info('" + tableName + "')")) {
-                if (record.getValue("pk", int.class) > 0) {
-                    String columnName = record.getValue("name", String.class);
+                if (record.get("pk", int.class) > 0) {
+                    String columnName = record.get("name", String.class);
 
                     // Generate a primary key name
                     String key = "pk_" + tableName;
@@ -132,14 +132,14 @@ public class SQLiteDatabase extends AbstractDatabase {
             for (Record record : create().fetch("pragma foreign_key_list(" + table.getName() + ")")) {
                 String foreignKeyPrefix =
                     "fk_" + table.getName() +
-                    "_" + record.getValue("table");
+                    "_" + record.get("table");
 
                 Integer sequence = map.get(foreignKeyPrefix);
                 if (sequence == null) {
                     sequence = 0;
                 }
 
-                if (0 == record.getValue("seq", Integer.class)) {
+                if (0 == record.get("seq", Integer.class)) {
                     sequence = sequence + 1;
                 }
 
@@ -147,18 +147,18 @@ public class SQLiteDatabase extends AbstractDatabase {
 
                 String foreignKey =
                     "fk_" + table.getName() +
-                    "_" + record.getValue("table") +
+                    "_" + record.get("table") +
                     "_" + sequence;
 
                 String foreignKeyTable = table.getName();
-                String foreignKeyColumn = record.getValue("from", String.class);
+                String foreignKeyColumn = record.get("from", String.class);
 
                 // SQLite mixes up cases from the actual declaration and the
                 // reference definition! It's possible that a table is declared
                 // in lower case, and the foreign key in upper case. Hence,
                 // correct the foreign key
                 TableDefinition referencingTable = getTable(getSchemata().get(0), foreignKeyTable);
-                TableDefinition referencedTable = getTable(getSchemata().get(0), record.getValue("table", String.class), true);
+                TableDefinition referencedTable = getTable(getSchemata().get(0), record.get("table", String.class), true);
 
                 if (referencedTable != null) {
                     String uniqueKey =

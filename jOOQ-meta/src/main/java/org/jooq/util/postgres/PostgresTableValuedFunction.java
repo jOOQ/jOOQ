@@ -171,28 +171,28 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
 
             SchemaDefinition typeSchema = null;
 
-            String schemaName = record.getValue(p.UDT_SCHEMA);
+            String schemaName = record.get(p.UDT_SCHEMA);
             if (schemaName != null)
                 typeSchema = getDatabase().getSchema(schemaName);
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 typeSchema,
-                record.getValue(p.DATA_TYPE),
-                record.getValue(p.CHARACTER_MAXIMUM_LENGTH),
-                record.getValue(p.NUMERIC_PRECISION),
-                record.getValue(p.NUMERIC_SCALE),
-                record.getValue(c.IS_NULLABLE, boolean.class),
-                record.getValue(c.COLUMN_DEFAULT) != null,
-                record.getValue(p.UDT_NAME)
+                record.get(p.DATA_TYPE),
+                record.get(p.CHARACTER_MAXIMUM_LENGTH),
+                record.get(p.NUMERIC_PRECISION),
+                record.get(p.NUMERIC_SCALE),
+                record.get(c.IS_NULLABLE, boolean.class),
+                record.get(c.COLUMN_DEFAULT) != null,
+                record.get(p.UDT_NAME)
             );
 
 			ColumnDefinition column = new DefaultColumnDefinition(
 			    getDatabase().getTable(getSchema(), getName()),
-			    record.getValue(p.PARAMETER_NAME),
-			    record.getValue(p.ORDINAL_POSITION, int.class),
+			    record.get(p.PARAMETER_NAME),
+			    record.get(p.ORDINAL_POSITION, int.class),
 			    type,
-                defaultString(record.getValue(c.COLUMN_DEFAULT)).startsWith("nextval"),
+                defaultString(record.get(c.COLUMN_DEFAULT)).startsWith("nextval"),
 			    null
 		    );
 

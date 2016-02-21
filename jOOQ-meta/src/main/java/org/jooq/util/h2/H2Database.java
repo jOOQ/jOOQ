@@ -102,10 +102,10 @@ public class H2Database extends AbstractDatabase {
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("PRIMARY KEY")) {
-            SchemaDefinition schema = getSchema(record.getValue(Constraints.TABLE_SCHEMA));
-            String tableName = record.getValue(Constraints.TABLE_NAME);
-            String primaryKey = record.getValue(Constraints.CONSTRAINT_NAME);
-            String columnName = record.getValue(Indexes.COLUMN_NAME);
+            SchemaDefinition schema = getSchema(record.get(Constraints.TABLE_SCHEMA));
+            String tableName = record.get(Constraints.TABLE_NAME);
+            String primaryKey = record.get(Constraints.CONSTRAINT_NAME);
+            String columnName = record.get(Indexes.COLUMN_NAME);
 
             TableDefinition table = getTable(schema, tableName);
             if (table != null) {
@@ -117,10 +117,10 @@ public class H2Database extends AbstractDatabase {
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("UNIQUE")) {
-            SchemaDefinition schema = getSchema(record.getValue(Constraints.TABLE_SCHEMA));
-            String tableName = record.getValue(Constraints.TABLE_NAME);
-            String primaryKey = record.getValue(Constraints.CONSTRAINT_NAME);
-            String columnName = record.getValue(Indexes.COLUMN_NAME);
+            SchemaDefinition schema = getSchema(record.get(Constraints.TABLE_SCHEMA));
+            String tableName = record.get(Constraints.TABLE_NAME);
+            String primaryKey = record.get(Constraints.CONSTRAINT_NAME);
+            String columnName = record.get(Indexes.COLUMN_NAME);
 
             TableDefinition table = getTable(schema, tableName);
             if (table != null) {
@@ -171,13 +171,13 @@ public class H2Database extends AbstractDatabase {
                     CrossReferences.ORDINAL_POSITION.asc())
                 .fetch()) {
 
-            SchemaDefinition foreignKeySchema = getSchema(record.getValue(CrossReferences.FKTABLE_SCHEMA));
-            SchemaDefinition uniqueKeySchema = getSchema(record.getValue(Constraints.CONSTRAINT_SCHEMA));
+            SchemaDefinition foreignKeySchema = getSchema(record.get(CrossReferences.FKTABLE_SCHEMA));
+            SchemaDefinition uniqueKeySchema = getSchema(record.get(Constraints.CONSTRAINT_SCHEMA));
 
-            String foreignKeyTableName = record.getValue(CrossReferences.FKTABLE_NAME);
-            String foreignKeyColumn = record.getValue(CrossReferences.FKCOLUMN_NAME);
-            String foreignKey = record.getValue(CrossReferences.FK_NAME);
-            String uniqueKey = record.getValue(Constraints.CONSTRAINT_NAME);
+            String foreignKeyTableName = record.get(CrossReferences.FKTABLE_NAME);
+            String foreignKeyColumn = record.get(CrossReferences.FKCOLUMN_NAME);
+            String foreignKey = record.get(CrossReferences.FK_NAME);
+            String uniqueKey = record.get(Constraints.CONSTRAINT_NAME);
 
             TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
             if (foreignKeyTable != null) {
@@ -214,15 +214,15 @@ public class H2Database extends AbstractDatabase {
             .and(Columns.TABLE_SCHEMA.in(getInputSchemata())))
             .fetch()) {
 
-            SchemaDefinition schema = getSchema(record.getValue(Constraints.TABLE_SCHEMA));
-            TableDefinition table = getTable(schema, record.getValue(Constraints.TABLE_NAME));
+            SchemaDefinition schema = getSchema(record.get(Constraints.TABLE_SCHEMA));
+            TableDefinition table = getTable(schema, record.get(Constraints.TABLE_NAME));
 
             if (table != null) {
                 relations.addCheckConstraint(table, new DefaultCheckConstraintDefinition(
                     schema,
                     table,
-                    record.getValue(Constraints.CONSTRAINT_NAME),
-                    record.getValue(Constraints.CHECK_EXPRESSION)
+                    record.get(Constraints.CONSTRAINT_NAME),
+                    record.get(Constraints.CHECK_EXPRESSION)
                 ));
             }
         }
@@ -246,8 +246,8 @@ public class H2Database extends AbstractDatabase {
                 .fetch()) {
 
             result.add(new SchemaDefinition(this,
-                record.getValue(Schemata.SCHEMA_NAME),
-                record.getValue(Schemata.REMARKS)));
+                record.get(Schemata.SCHEMA_NAME),
+                record.get(Schemata.REMARKS)));
         }
 
         return result;
@@ -267,8 +267,8 @@ public class H2Database extends AbstractDatabase {
                     Sequences.SEQUENCE_NAME)
                 .fetch()) {
 
-            SchemaDefinition schema = getSchema(record.getValue(Sequences.SEQUENCE_SCHEMA));
-            String name = record.getValue(Sequences.SEQUENCE_NAME);
+            SchemaDefinition schema = getSchema(record.get(Sequences.SEQUENCE_SCHEMA));
+            String name = record.get(Sequences.SEQUENCE_NAME);
 
             DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(
                 this,
@@ -297,9 +297,9 @@ public class H2Database extends AbstractDatabase {
                     Tables.ID)
                 .fetch()) {
 
-            SchemaDefinition schema = getSchema(record.getValue(Tables.TABLE_SCHEMA));
-            String name = record.getValue(Tables.TABLE_NAME);
-            String comment = record.getValue(Tables.REMARKS);
+            SchemaDefinition schema = getSchema(record.get(Tables.TABLE_SCHEMA));
+            String name = record.get(Tables.TABLE_NAME);
+            String comment = record.get(Tables.REMARKS);
 
             H2TableDefinition table = new H2TableDefinition(schema, name, comment);
             result.add(table);
@@ -332,12 +332,12 @@ public class H2Database extends AbstractDatabase {
                 .and(FunctionAliases.RETURNS_RESULT.in((short) 1, (short) 2))
                 .orderBy(FunctionAliases.ALIAS_NAME).fetch()) {
 
-            SchemaDefinition schema = getSchema(record.getValue(FunctionAliases.ALIAS_SCHEMA));
-            String name = record.getValue(FunctionAliases.ALIAS_NAME);
-            String comment = record.getValue(FunctionAliases.REMARKS);
-            String typeName = record.getValue(TypeInfo.TYPE_NAME);
-            Integer precision = record.getValue(TypeInfo.PRECISION);
-            Short scale = record.getValue(TypeInfo.MAXIMUM_SCALE);
+            SchemaDefinition schema = getSchema(record.get(FunctionAliases.ALIAS_SCHEMA));
+            String name = record.get(FunctionAliases.ALIAS_NAME);
+            String comment = record.get(FunctionAliases.REMARKS);
+            String typeName = record.get(TypeInfo.TYPE_NAME);
+            Integer precision = record.get(TypeInfo.PRECISION);
+            Short scale = record.get(TypeInfo.MAXIMUM_SCALE);
 
             result.add(new H2RoutineDefinition(schema, name, comment, typeName, precision, scale));
         }

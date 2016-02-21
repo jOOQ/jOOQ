@@ -69,15 +69,13 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractDMLQuery<R> 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final void setRecord(R record) {
-        for (int i = 0; i < record.size(); i++) {
-            if (record.changed(i)) {
-                addValue((Field) record.field(i), record.getValue(i));
-            }
-        }
+        for (int i = 0; i < record.size(); i++)
+            if (record.changed(i))
+                addValue((Field) record.field(i), record.get(i));
     }
 
     final <T> void addValue(R record, Field<T> field) {
-        addValue(field, record.getValue(field));
+        addValue(field, record.get(field));
     }
 
     @Override

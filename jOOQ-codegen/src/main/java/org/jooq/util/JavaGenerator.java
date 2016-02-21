@@ -933,7 +933,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                 if (scala) {
                     out.tab(1).println("def %s(value : %s) : %s = {", setter, type, setterReturnType);
-                    out.tab(2).println("setValue(%s, value)", i);
+                    out.tab(2).println("set(%s, value)", i);
                     if (fluentSetters())
                         out.tab(2).println("this");
                     out.tab(1).println("}");
@@ -941,7 +941,7 @@ public class JavaGenerator extends AbstractGenerator {
                 else {
                     out.tab(1).overrideIf(generateInterfaces() && !generateImmutablePojos() && !isUDT);
                     out.tab(1).println("public %s %s(%s value) {", setterReturnType, setter, type);
-                    out.tab(2).println("setValue(%s, value);", i);
+                    out.tab(2).println("set(%s, value);", i);
                     if (fluentSetters())
                         out.tab(2).println("return this;");
                     out.tab(1).println("}");
@@ -961,9 +961,9 @@ public class JavaGenerator extends AbstractGenerator {
 
                     out.tab(1).println("def %s(value : %s) : %s = {", setter, columnTypeInterface, setterReturnType);
                     out.tab(2).println("if (value == null)");
-                    out.tab(3).println("setValue(%s, null)", i);
+                    out.tab(3).println("set(%s, null)", i);
                     out.tab(2).println("else");
-                    out.tab(3).println("setValue(%s, value.into(new %s()))", i, type);
+                    out.tab(3).println("set(%s, value.into(new %s()))", i, type);
                     if (fluentSetters())
                         out.tab(2).println("this");
                     out.tab(1).println("}");
@@ -971,11 +971,11 @@ public class JavaGenerator extends AbstractGenerator {
                 else {
                     out.tab(1).println("public %s %s(%s value) {", setterReturnType, setter, columnTypeInterface);
                     out.tab(2).println("if (value == null)");
-                    out.tab(3).println("setValue(%s, null);", i);
+                    out.tab(3).println("set(%s, null);", i);
 
                     if (isUDT) {
                         out.tab(2).println("else");
-                        out.tab(3).println("setValue(%s, value.into(new %s()));", i, type);
+                        out.tab(3).println("set(%s, value.into(new %s()));", i, type);
                     }
                     else if (isArray) {
                         final ArrayDefinition array = database.getArray(column.getType().getSchema(), column.getType().getUserType());
@@ -993,7 +993,7 @@ public class JavaGenerator extends AbstractGenerator {
                             out.tab(4).println("a.add(i);", componentType);
 
                         out.println();
-                        out.tab(3).println("setValue(1, a);");
+                        out.tab(3).println("set(1, a);");
                         out.tab(2).println("}");
                     }
 
@@ -1011,14 +1011,14 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (scala) {
                 out.tab(1).println("def %s : %s = {", getter, type);
-                out.tab(2).println("val r = getValue(%s)", i);
+                out.tab(2).println("val r = get(%s)", i);
                 out.tab(2).println("if (r == null) null else r.asInstanceOf[%s]", type);
                 out.tab(1).println("}");
             }
             else {
                 out.tab(1).overrideIf(generateInterfaces());
                 out.tab(1).println("public %s %s() {", type, getter);
-                out.tab(2).println("return (%s) getValue(%s);", type, i);
+                out.tab(2).println("return (%s) get(%s);", type, i);
                 out.tab(1).println("}");
             }
         }
@@ -1250,9 +1250,9 @@ public class JavaGenerator extends AbstractGenerator {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.DEFAULT);
 
                 if (scala)
-                	out.tab(2).println("setValue(%s, %s)", i, columnMember);
+                	out.tab(2).println("set(%s, %s)", i, columnMember);
                 else
-                    out.tab(2).println("setValue(%s, %s);", i, columnMember);
+                    out.tab(2).println("set(%s, %s);", i, columnMember);
             }
 
             out.tab(1).println("}");
@@ -4061,12 +4061,12 @@ public class JavaGenerator extends AbstractGenerator {
 
                 if (scala) {
                     out.tab(1).println("def %s : %s = {", paramGetter, paramType);
-                    out.tab(2).println("getValue(%s.%s)", className, paramId);
+                    out.tab(2).println("get(%s.%s)", className, paramId);
                     out.tab(1).println("}");
                 }
                 else {
                     out.tab(1).println("public %s %s() {", paramType, paramGetter);
-                    out.tab(2).println("return getValue(%s);", paramId);
+                    out.tab(2).println("return get(%s);", paramId);
                     out.tab(1).println("}");
                 }
             }

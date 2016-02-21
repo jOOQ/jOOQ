@@ -73,38 +73,38 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
     private final String   specificName;
 
     public PostgresRoutineDefinition(Database database, Record record) {
-        super(database.getSchema(record.getValue(ROUTINES.ROUTINE_SCHEMA)),
+        super(database.getSchema(record.get(ROUTINES.ROUTINE_SCHEMA)),
             null,
-            record.getValue(ROUTINES.ROUTINE_NAME),
+            record.get(ROUTINES.ROUTINE_NAME),
             null,
-            record.getValue("overload", String.class),
-            record.getValue(PG_PROC.PROISAGG, boolean.class));
+            record.get("overload", String.class),
+            record.get(PG_PROC.PROISAGG, boolean.class));
 
-        if (!Arrays.asList("void", "record").contains(record.getValue("data_type"))) {
+        if (!Arrays.asList("void", "record").contains(record.get("data_type"))) {
             SchemaDefinition typeSchema = null;
 
-            String schemaName = record.getValue(ROUTINES.TYPE_UDT_SCHEMA);
+            String schemaName = record.get(ROUTINES.TYPE_UDT_SCHEMA);
             if (schemaName != null)
                 typeSchema = getDatabase().getSchema(schemaName);
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 typeSchema == null
-                    ? database.getSchema(record.getValue(ROUTINES.ROUTINE_SCHEMA))
+                    ? database.getSchema(record.get(ROUTINES.ROUTINE_SCHEMA))
                     : typeSchema,
-                record.getValue("data_type", String.class),
-                record.getValue(ROUTINES.CHARACTER_MAXIMUM_LENGTH),
-                record.getValue(ROUTINES.NUMERIC_PRECISION),
-                record.getValue(ROUTINES.NUMERIC_SCALE),
+                record.get("data_type", String.class),
+                record.get(ROUTINES.CHARACTER_MAXIMUM_LENGTH),
+                record.get(ROUTINES.NUMERIC_PRECISION),
+                record.get(ROUTINES.NUMERIC_SCALE),
                 null,
                 null,
-                record.getValue(ROUTINES.TYPE_UDT_NAME)
+                record.get(ROUTINES.TYPE_UDT_NAME)
             );
 
             returnValue = new DefaultParameterDefinition(this, "RETURN_VALUE", -1, type);
         }
 
-        specificName = record.getValue(ROUTINES.SPECIFIC_NAME);
+        specificName = record.get(ROUTINES.SPECIFIC_NAME);
     }
 
     // [#3375] This internal constructor is used for table-valued functions. It should not be used otherwise
@@ -134,27 +134,27 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
             .orderBy(PARAMETERS.ORDINAL_POSITION.asc())
             .fetch()) {
 
-            String inOut = record.getValue(PARAMETERS.PARAMETER_MODE);
+            String inOut = record.get(PARAMETERS.PARAMETER_MODE);
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 getSchema(),
-                record.getValue(PARAMETERS.DATA_TYPE),
-                record.getValue(PARAMETERS.CHARACTER_MAXIMUM_LENGTH),
-                record.getValue(PARAMETERS.NUMERIC_PRECISION),
-                record.getValue(PARAMETERS.NUMERIC_SCALE),
+                record.get(PARAMETERS.DATA_TYPE),
+                record.get(PARAMETERS.CHARACTER_MAXIMUM_LENGTH),
+                record.get(PARAMETERS.NUMERIC_PRECISION),
+                record.get(PARAMETERS.NUMERIC_SCALE),
                 null,
-                record.getValue(PARAMETERS.PARAMETER_DEFAULT) != null,
-                record.getValue(PARAMETERS.UDT_NAME)
+                record.get(PARAMETERS.PARAMETER_DEFAULT) != null,
+                record.get(PARAMETERS.UDT_NAME)
             );
 
             ParameterDefinition parameter = new DefaultParameterDefinition(
                 this,
-                record.getValue(PARAMETERS.PARAMETER_NAME),
-                record.getValue(PARAMETERS.ORDINAL_POSITION),
+                record.get(PARAMETERS.PARAMETER_NAME),
+                record.get(PARAMETERS.ORDINAL_POSITION),
                 type,
-                record.getValue(PARAMETERS.PARAMETER_DEFAULT) != null,
-                StringUtils.isBlank(record.getValue(PARAMETERS.PARAMETER_NAME))
+                record.get(PARAMETERS.PARAMETER_DEFAULT) != null,
+                StringUtils.isBlank(record.get(PARAMETERS.PARAMETER_NAME))
             );
 
             addParameter(InOutDefinition.getFromString(inOut), parameter);

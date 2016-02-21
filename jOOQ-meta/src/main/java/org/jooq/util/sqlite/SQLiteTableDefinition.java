@@ -75,18 +75,18 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
         for (Record record : create().fetch("pragma table_info('" + getName() + "')")) {
             position++;
 
-            String name = record.getValue("name", String.class);
-            String dataType = record.getValue("type", String.class)
+            String name = record.get("name", String.class);
+            String dataType = record.get("type", String.class)
                                     .replaceAll("\\(\\d+(\\s*,\\s*\\d+)?\\)", "");
-            Number precision = parsePrecision(record.getValue("type", String.class));
-            Number scale = parseScale(record.getValue("type", String.class));
+            Number precision = parsePrecision(record.get("type", String.class));
+            Number scale = parseScale(record.get("type", String.class));
 
             // SQLite identities are primary keys whose tables are mentioned in
             // sqlite_sequence
-            int pk = record.getValue("pk", int.class);
+            int pk = record.get("pk", int.class);
             boolean identity = pk > 0 && existsSqliteSequence() && create()
                 .fetchOne("select count(*) from sqlite_sequence where name = ?", getName())
-                .getValue(0, Boolean.class);
+                .get(0, Boolean.class);
 
             DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
@@ -95,8 +95,8 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
                 precision,
                 precision,
                 scale,
-                !record.getValue("notnull", boolean.class),
-                record.getValue("dflt_value") != null
+                !record.get("notnull", boolean.class),
+                record.get("dflt_value") != null
             );
 
             ColumnDefinition column = new DefaultColumnDefinition(

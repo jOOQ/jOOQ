@@ -108,9 +108,9 @@ public class FirebirdDatabase extends AbstractDatabase {
     @Override
     protected void loadPrimaryKeys(DefaultRelations r) throws SQLException {
         for (Record record : fetchKeys("PRIMARY KEY")) {
-            String tableName = record.getValue(RDB$RELATION_CONSTRAINTS.RDB$RELATION_NAME.trim());
-            String fieldName = record.getValue(RDB$INDEX_SEGMENTS.RDB$FIELD_NAME.trim());
-            String key = record.getValue(RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_NAME.trim());
+            String tableName = record.get(RDB$RELATION_CONSTRAINTS.RDB$RELATION_NAME.trim());
+            String fieldName = record.get(RDB$INDEX_SEGMENTS.RDB$FIELD_NAME.trim());
+            String key = record.get(RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_NAME.trim());
 
             TableDefinition td = getTable(this.getSchemata().get(0), tableName);
             if (td != null) {
@@ -123,9 +123,9 @@ public class FirebirdDatabase extends AbstractDatabase {
     @Override
     protected void loadUniqueKeys(DefaultRelations r) throws SQLException {
         for (Record record : fetchKeys("UNIQUE")) {
-            String tableName = record.getValue(RDB$RELATION_CONSTRAINTS.RDB$RELATION_NAME.trim());
-            String fieldName = record.getValue(RDB$INDEX_SEGMENTS.RDB$FIELD_NAME.trim());
-            String key = record.getValue(RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_NAME.trim());
+            String tableName = record.get(RDB$RELATION_CONSTRAINTS.RDB$RELATION_NAME.trim());
+            String fieldName = record.get(RDB$INDEX_SEGMENTS.RDB$FIELD_NAME.trim());
+            String key = record.get(RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_NAME.trim());
 
             TableDefinition td = getTable(this.getSchemata().get(0), tableName);
             if (td != null) {
@@ -177,12 +177,12 @@ public class FirebirdDatabase extends AbstractDatabase {
                     isf.RDB$FIELD_POSITION.asc())
                 .fetch()) {
 
-            String pkName = record.getValue("pk", String.class);
-            String pkTable = record.getValue("pkTable", String.class);
+            String pkName = record.get("pk", String.class);
+            String pkTable = record.get("pkTable", String.class);
 
-            String fkName = record.getValue("fk", String.class);
-            String fkTable = record.getValue("fkTable", String.class);
-            String fkField = record.getValue("fkField", String.class);
+            String fkName = record.get("fk", String.class);
+            String fkTable = record.get("fkTable", String.class);
+            String fkField = record.get("fkField", String.class);
 
             TableDefinition tdReferencing = getTable(getSchemata().get(0), fkTable, true);
             TableDefinition tdReferenced = getTable(getSchemata().get(0), pkTable, true);

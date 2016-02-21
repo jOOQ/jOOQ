@@ -91,20 +91,20 @@ public class H2TableDefinition extends AbstractTableDefinition {
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 getSchema(),
-                record.getValue(Columns.TYPE_NAME),
-                record.getValue(Columns.CHARACTER_MAXIMUM_LENGTH),
-                record.getValue(Columns.NUMERIC_PRECISION),
-                record.getValue(Columns.NUMERIC_SCALE),
-                record.getValue(Columns.IS_NULLABLE, boolean.class),
-                record.getValue("default", boolean.class));
+                record.get(Columns.TYPE_NAME),
+                record.get(Columns.CHARACTER_MAXIMUM_LENGTH),
+                record.get(Columns.NUMERIC_PRECISION),
+                record.get(Columns.NUMERIC_SCALE),
+                record.get(Columns.IS_NULLABLE, boolean.class),
+                record.get("default", boolean.class));
 
             ColumnDefinition column = new DefaultColumnDefinition(
             	getDatabase().getTable(getSchema(), getName()),
-                record.getValue(Columns.COLUMN_NAME),
-                record.getValue(Columns.ORDINAL_POSITION),
+                record.get(Columns.COLUMN_NAME),
+                record.get(Columns.ORDINAL_POSITION),
                 type,
-                null != record.getValue(Columns.SEQUENCE_NAME),
-                record.getValue(Columns.REMARKS));
+                null != record.get(Columns.SEQUENCE_NAME),
+                record.get(Columns.REMARKS));
 
             result.add(column);
         }

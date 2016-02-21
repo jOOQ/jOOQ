@@ -286,7 +286,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
     @Override
     public final <T> T getValue(int index, Field<T> field) {
-        return get(index).getValue(field);
+        return get(index).get(field);
     }
 
     @Override
@@ -297,7 +297,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
     @Override
     public final Object getValue(int index, int fieldIndex) {
-        return get(index).getValue(fieldIndex);
+        return get(index).get(fieldIndex);
     }
 
     @Override
@@ -308,7 +308,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
     @Override
     public final Object getValue(int index, String fieldName) {
-        return get(index).getValue(fieldName);
+        return get(index).get(fieldName);
     }
 
     @Override
@@ -337,7 +337,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
         List<Object> result = new ArrayList<Object>(size());
 
         for (R record : this) {
-            result.add(record.getValue(fieldIndex));
+            result.add(record.get(fieldIndex));
         }
 
         return result;
@@ -882,7 +882,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
                 List<Object> list = new ArrayList<Object>();
 
                 for (int index = 0; index < fields.fields.length; index++) {
-                    list.add(formatJSON0(record.getValue(index)));
+                    list.add(formatJSON0(record.get(index)));
                 }
 
                 r.add(list);
@@ -954,7 +954,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
                 writer.append("<record>");
 
                 for (int index = 0; index < fields.fields.length; index++) {
-                    Object value = record.getValue(index);
+                    Object value = record.get(index);
 
                     writer.append("<value field=\"");
                     writer.append(escapeXML(fields.fields[index].getName()));
@@ -1078,7 +1078,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
                 for (int index = 0; index < fields.fields.length; index++) {
                     Field<?> field = fields.fields[index];
-                    Object value = record.getValue(index);
+                    Object value = record.get(index);
 
                     Element eValue = document.createElement("value");
                     eValue.setAttribute("field", field.getName());
@@ -1138,7 +1138,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
             for (int index = 0; index < fields.fields.length; index++) {
                 Field<?> field = fields.fields[index];
-                Object value = record.getValue(index);
+                Object value = record.get(index);
 
                 AttributesImpl attrs = new AttributesImpl();
                 attrs.addAttribute("", "", "field", "CDATA", field.getName());
@@ -1203,7 +1203,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
         Map<K, R> map = new LinkedHashMap<K, R>();
 
         for (R record : this)
-            if (map.put((K) record.getValue(keyFieldIndex), record) != null)
+            if (map.put((K) record.get(keyFieldIndex), record) != null)
                 throw new InvalidResultException("Key " + keyFieldIndex + " is not unique in Result for " + this);
 
         return map;
@@ -1236,7 +1236,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
         Map<K, V> map = new LinkedHashMap<K, V>();
 
         for (R record : this)
-            if (map.put((K) record.getValue(kIndex), (V) record.getValue(vIndex)) != null)
+            if (map.put((K) record.get(kIndex), (V) record.get(vIndex)) != null)
                 throw new InvalidResultException("Key " + kIndex + " is not unique in Result for " + this);
 
         return map;
@@ -1325,7 +1325,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
         for (R record : this) {
             List<Object> keyValueList = new ArrayList<Object>();
             for (Field<?> key : keys) {
-                keyValueList.add(record.getValue(key));
+                keyValueList.add(record.get(key));
             }
 
             if (map.put(keyValueList, mapper.map(record)) != null) {
@@ -1465,7 +1465,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
         Map<K, E> map = new LinkedHashMap<K, E>();
 
         for (R record : this)
-            if (map.put((K) record.getValue(keyFieldIndex), mapper.map(record)) != null)
+            if (map.put((K) record.get(keyFieldIndex), mapper.map(record)) != null)
                 throw new InvalidResultException("Key " + keyFieldIndex + " is not unique in Result for " + this);
 
         return map;
@@ -1495,7 +1495,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
         Map<K, Result<R>> map = new LinkedHashMap<K, Result<R>>();
 
         for (R record : this) {
-            K val = (K) record.getValue(keyFieldIndex);
+            K val = (K) record.get(keyFieldIndex);
             Result<R> result = map.get(val);
 
             if (result == null) {
@@ -1536,8 +1536,8 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
         Map<K, List<V>> map = new LinkedHashMap<K, List<V>>();
 
         for (R record : this) {
-            K k = (K) record.getValue(kIndex);
-            V v = (V) record.getValue(vIndex);
+            K k = (K) record.get(kIndex);
+            V v = (V) record.get(vIndex);
             List<V> result = map.get(k);
 
             if (result == null) {
@@ -1595,7 +1595,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
         Map<K, List<E>> map = new LinkedHashMap<K, List<E>>();
 
         for (R record : this) {
-            K keyVal = (K) record.getValue(keyFieldIndex);
+            K keyVal = (K) record.get(keyFieldIndex);
 
             List<E> list = map.get(keyVal);
             if (list == null) {
@@ -2264,7 +2264,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
         @Override
         public int compare(R record1, R record2) {
-            return comparator.compare((T) record1.getValue(fieldIndex), (T) record2.getValue(fieldIndex));
+            return comparator.compare((T) record1.get(fieldIndex), (T) record2.get(fieldIndex));
         }
     }
 

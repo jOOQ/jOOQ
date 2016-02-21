@@ -175,9 +175,8 @@ final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKe
     private static <R extends Record> List<Object> extractValues(Collection<? extends R> records, TableField<R, ?> field2) {
         List<Object> result = new ArrayList<Object>();
 
-        for (R record : records) {
-            result.add(record.getValue(field2));
-        }
+        for (R record : records)
+            result.add(record.get(field2));
 
         return result;
     }
@@ -191,9 +190,8 @@ final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKe
         for (R record : records) {
             Object[] values = new Object[fields.length];
 
-            for (int i = 0; i < fields.length; i++) {
-                values[i] = record.getValue(fields[i]);
-            }
+            for (int i = 0; i < fields.length; i++)
+                values[i] = record.get(fields[i]);
 
             rows.add(row(values));
         }
@@ -208,12 +206,10 @@ final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKe
         throws DetachedException {
         R first = first(records);
 
-        if (first instanceof AttachableInternal) {
+        if (first instanceof AttachableInternal)
             return DSL.using(((AttachableInternal) first).configuration());
-        }
-        else {
+        else
             throw new DetachedException("Supply at least one attachable record");
-        }
     }
 
     @Override

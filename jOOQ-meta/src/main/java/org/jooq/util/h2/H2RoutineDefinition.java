@@ -103,13 +103,13 @@ public class H2RoutineDefinition extends AbstractRoutineDefinition {
                 .and(FunctionColumns.POS.gt(0))
                 .orderBy(FunctionColumns.POS.asc()).fetch()) {
 
-            String paramName = record.getValue(FunctionColumns.COLUMN_NAME);
-            String typeName = record.getValue(FunctionColumns.TYPE_NAME);
-            Integer precision = record.getValue(FunctionColumns.PRECISION);
-            Short scale = record.getValue(FunctionColumns.SCALE);
-            int position = record.getValue(FunctionColumns.POS);
-            boolean nullable = record.getValue(FunctionColumns.NULLABLE, boolean.class);
-            boolean defaulted = record.getValue("default", boolean.class);
+            String paramName = record.get(FunctionColumns.COLUMN_NAME);
+            String typeName = record.get(FunctionColumns.TYPE_NAME);
+            Integer precision = record.get(FunctionColumns.PRECISION);
+            Short scale = record.get(FunctionColumns.SCALE);
+            int position = record.get(FunctionColumns.POS);
+            boolean nullable = record.get(FunctionColumns.NULLABLE, boolean.class);
+            boolean defaulted = record.get("default", boolean.class);
 
             // VERY special case for H2 alias/function parameters. The first parameter
             // may be a java.sql.Connection object and in such cases it should NEVER be used.

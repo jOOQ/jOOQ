@@ -119,7 +119,7 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
     private final <T> void setValue(Configuration configuration, Map<Object, Object> data, SQLInput stream, Field<T> field) throws SQLException {
         DefaultBindingGetSQLInputContext<T> out = new DefaultBindingGetSQLInputContext<T>(configuration, data, stream);
         field.getBinding().get(out);
-        setValue(field, out.value());
+        set(field, out.value());
     }
 
     @Override
@@ -127,13 +127,12 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
         Configuration configuration = localConfiguration();
         Map<Object, Object> data = localData();
 
-        for (Field<?> field : getUDT().fields()) {
-            setValue(configuration, data, stream, field);
-        }
+        for (Field<?> field : getUDT().fields())
+            set(configuration, data, stream, field);
     }
 
-    private final <T> void setValue(Configuration configuration, Map<Object, Object> data, SQLOutput stream, Field<T> field) throws SQLException {
-        field.getBinding().set(new DefaultBindingSetSQLOutputContext<T>(configuration, data, stream, getValue(field)));
+    private final <T> void set(Configuration configuration, Map<Object, Object> data, SQLOutput stream, Field<T> field) throws SQLException {
+        field.getBinding().set(new DefaultBindingSetSQLOutputContext<T>(configuration, data, stream, get(field)));
     }
 
     @Override

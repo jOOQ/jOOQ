@@ -80,7 +80,7 @@ import org.jooq.Record22;
  */
 @Generated("This class was generated using jOOQ-tools")
 @SuppressWarnings({ "unchecked", "rawtypes" })
-final class RecordImpl<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> extends AbstractRecord
+class RecordImpl<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> extends AbstractRecord
 implements
 
     // This record implementation implements all record types. Type-safety is
@@ -260,243 +260,243 @@ implements
 
     @Override
     public final T1 value1() {
-        return (T1) getValue(0);
+        return (T1) get(0);
     }
 
     @Override
     public final T2 value2() {
-        return (T2) getValue(1);
+        return (T2) get(1);
     }
 
     @Override
     public final T3 value3() {
-        return (T3) getValue(2);
+        return (T3) get(2);
     }
 
     @Override
     public final T4 value4() {
-        return (T4) getValue(3);
+        return (T4) get(3);
     }
 
     @Override
     public final T5 value5() {
-        return (T5) getValue(4);
+        return (T5) get(4);
     }
 
     @Override
     public final T6 value6() {
-        return (T6) getValue(5);
+        return (T6) get(5);
     }
 
     @Override
     public final T7 value7() {
-        return (T7) getValue(6);
+        return (T7) get(6);
     }
 
     @Override
     public final T8 value8() {
-        return (T8) getValue(7);
+        return (T8) get(7);
     }
 
     @Override
     public final T9 value9() {
-        return (T9) getValue(8);
+        return (T9) get(8);
     }
 
     @Override
     public final T10 value10() {
-        return (T10) getValue(9);
+        return (T10) get(9);
     }
 
     @Override
     public final T11 value11() {
-        return (T11) getValue(10);
+        return (T11) get(10);
     }
 
     @Override
     public final T12 value12() {
-        return (T12) getValue(11);
+        return (T12) get(11);
     }
 
     @Override
     public final T13 value13() {
-        return (T13) getValue(12);
+        return (T13) get(12);
     }
 
     @Override
     public final T14 value14() {
-        return (T14) getValue(13);
+        return (T14) get(13);
     }
 
     @Override
     public final T15 value15() {
-        return (T15) getValue(14);
+        return (T15) get(14);
     }
 
     @Override
     public final T16 value16() {
-        return (T16) getValue(15);
+        return (T16) get(15);
     }
 
     @Override
     public final T17 value17() {
-        return (T17) getValue(16);
+        return (T17) get(16);
     }
 
     @Override
     public final T18 value18() {
-        return (T18) getValue(17);
+        return (T18) get(17);
     }
 
     @Override
     public final T19 value19() {
-        return (T19) getValue(18);
+        return (T19) get(18);
     }
 
     @Override
     public final T20 value20() {
-        return (T20) getValue(19);
+        return (T20) get(19);
     }
 
     @Override
     public final T21 value21() {
-        return (T21) getValue(20);
+        return (T21) get(20);
     }
 
     @Override
     public final T22 value22() {
-        return (T22) getValue(21);
+        return (T22) get(21);
     }
 
     @Override
     public final RecordImpl value1(T1 value) {
-        setValue(0, value);
+        set(0, value);
         return this;
     }
 
     @Override
     public final RecordImpl value2(T2 value) {
-        setValue(1, value);
+        set(1, value);
         return this;
     }
 
     @Override
     public final RecordImpl value3(T3 value) {
-        setValue(2, value);
+        set(2, value);
         return this;
     }
 
     @Override
     public final RecordImpl value4(T4 value) {
-        setValue(3, value);
+        set(3, value);
         return this;
     }
 
     @Override
     public final RecordImpl value5(T5 value) {
-        setValue(4, value);
+        set(4, value);
         return this;
     }
 
     @Override
     public final RecordImpl value6(T6 value) {
-        setValue(5, value);
+        set(5, value);
         return this;
     }
 
     @Override
     public final RecordImpl value7(T7 value) {
-        setValue(6, value);
+        set(6, value);
         return this;
     }
 
     @Override
     public final RecordImpl value8(T8 value) {
-        setValue(7, value);
+        set(7, value);
         return this;
     }
 
     @Override
     public final RecordImpl value9(T9 value) {
-        setValue(8, value);
+        set(8, value);
         return this;
     }
 
     @Override
     public final RecordImpl value10(T10 value) {
-        setValue(9, value);
+        set(9, value);
         return this;
     }
 
     @Override
     public final RecordImpl value11(T11 value) {
-        setValue(10, value);
+        set(10, value);
         return this;
     }
 
     @Override
     public final RecordImpl value12(T12 value) {
-        setValue(11, value);
+        set(11, value);
         return this;
     }
 
     @Override
     public final RecordImpl value13(T13 value) {
-        setValue(12, value);
+        set(12, value);
         return this;
     }
 
     @Override
     public final RecordImpl value14(T14 value) {
-        setValue(13, value);
+        set(13, value);
         return this;
     }
 
     @Override
     public final RecordImpl value15(T15 value) {
-        setValue(14, value);
+        set(14, value);
         return this;
     }
 
     @Override
     public final RecordImpl value16(T16 value) {
-        setValue(15, value);
+        set(15, value);
         return this;
     }
 
     @Override
     public final RecordImpl value17(T17 value) {
-        setValue(16, value);
+        set(16, value);
         return this;
     }
 
     @Override
     public final RecordImpl value18(T18 value) {
-        setValue(17, value);
+        set(17, value);
         return this;
     }
 
     @Override
     public final RecordImpl value19(T19 value) {
-        setValue(18, value);
+        set(18, value);
         return this;
     }
 
     @Override
     public final RecordImpl value20(T20 value) {
-        setValue(19, value);
+        set(19, value);
         return this;
     }
 
     @Override
     public final RecordImpl value21(T21 value) {
-        setValue(20, value);
+        set(20, value);
         return this;
     }
 
     @Override
     public final RecordImpl value22(T22 value) {
-        setValue(21, value);
+        set(21, value);
         return this;
     }
 

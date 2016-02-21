@@ -86,7 +86,7 @@ public class DerbyTableDefinition extends AbstractTableDefinition {
             .orderBy(Syscolumns.COLUMNNUMBER)
             .fetch()) {
 
-            String typeName = record.getValue(Syscolumns.COLUMNDATATYPE, String.class);
+            String typeName = record.get(Syscolumns.COLUMNDATATYPE, String.class);
             Number precision = parsePrecision(typeName);
             Number scale = parseScale(typeName);
 
@@ -98,15 +98,15 @@ public class DerbyTableDefinition extends AbstractTableDefinition {
                 precision,
                 scale,
                 !parseNotNull(typeName),
-                record.getValue(Syscolumns.COLUMNDEFAULT) != null
+                record.get(Syscolumns.COLUMNDEFAULT) != null
             );
 
 			ColumnDefinition column = new DefaultColumnDefinition(
 				getDatabase().getTable(getSchema(), getName()),
-			    record.getValue(Syscolumns.COLUMNNAME),
-			    record.getValue(Syscolumns.COLUMNNUMBER),
+			    record.get(Syscolumns.COLUMNNAME),
+			    record.get(Syscolumns.COLUMNNUMBER),
 			    type,
-                null != record.getValue(Syscolumns.AUTOINCREMENTINC),
+                null != record.get(Syscolumns.AUTOINCREMENTINC),
                 null
             );
 

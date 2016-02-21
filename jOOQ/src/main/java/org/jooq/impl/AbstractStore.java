@@ -124,17 +124,17 @@ abstract class AbstractStore implements AttachableInternal {
     abstract int size();
 
     /**
-     * This method coincides with {@link Record#getValue(int)} and
+     * This method coincides with {@link Record#get(int)} and
      * <code>ArrayRecordImpl.getValue(int)</code>
      */
-    abstract Object getValue(int index);
+    abstract Object get(int index);
 
     @Override
     public int hashCode() {
         int hashCode = 1;
 
         for (int i = 0; i < size(); i++) {
-            final Object obj = getValue(i);
+            final Object obj = get(i);
 
             if (obj == null) {
                 hashCode = 31 * hashCode;
@@ -165,8 +165,8 @@ abstract class AbstractStore implements AttachableInternal {
 
             if (size() == that.size()) {
                 for (int i = 0; i < size(); i++) {
-                    final Object thisValue = getValue(i);
-                    final Object thatValue = that.getValue(i);
+                    final Object thisValue = get(i);
+                    final Object thatValue = that.get(i);
 
                     // [#1850] Only return false early. In all other cases,
                     // continue checking the remaining fields

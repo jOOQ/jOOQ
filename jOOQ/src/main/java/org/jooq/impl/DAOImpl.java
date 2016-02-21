@@ -328,9 +328,8 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         Record result = DSL.using(configuration)
                            .newRecord(fields);
 
-        for (int i = 0; i < values.length; i++) {
-            result.setValue(fields[i], fields[i].getDataType().convert(values[i]));
-        }
+        for (int i = 0; i < values.length; i++)
+            result.set(fields[i], fields[i].getDataType().convert(values[i]));
 
         return (T) result;
     }

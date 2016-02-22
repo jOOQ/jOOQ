@@ -4912,9 +4912,9 @@ public class JavaGenerator extends AbstractGenerator {
             String baseType = GenerationUtil.getArrayBaseType(db.getDialect(), t, u);
 
             if (scala)
-                type = "scala.Array[" + getType(db, schema, baseType, p, s, baseType, defaultType) + "]";
+                type = "scala.Array[" + getType(db, schema, baseType, p, s, baseType, defaultType, udtMode) + "]";
             else
-                type = getType(db, schema, baseType, p, s, baseType, defaultType) + "[]";
+                type = getType(db, schema, baseType, p, s, baseType, defaultType, udtMode) + "[]";
         }
 
         // Check for Oracle-style VARRAY types

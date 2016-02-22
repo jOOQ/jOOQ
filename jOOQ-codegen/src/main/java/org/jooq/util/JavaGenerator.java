@@ -2889,7 +2889,7 @@ public class JavaGenerator extends AbstractGenerator {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
                 final String columnType = getJavaType(column.getType());
 
-                if (columnType.equals("Array[scala.Byte]")) {
+                if (columnType.equals("scala.Array[scala.Byte]")) {
                     out.tab(2).println("sb%s.append(\"[binary...]\")", separator);
                 }
                 else {
@@ -3020,8 +3020,8 @@ public class JavaGenerator extends AbstractGenerator {
         printClassAnnotations(out, schema);
 
         if (scala) {
-            out.println("class %s(alias : String, aliased : %s[%s], parameters : Array[ %s[_] ]) extends %s[%s](alias, %s, aliased, parameters, \"%s\")[[before= with ][separator= with ][%s]] {",
-                    className, Table.class, recordType, Field.class, TableImpl.class, recordType, schemaId, escapeString(comment), interfaces);
+            out.println("class %s(alias : String, aliased : %s[%s], parameters : %s[ %s[_] ]) extends %s[%s](alias, %s, aliased, parameters, \"%s\")[[before= with ][separator= with ][%s]] {",
+                    className, Table.class, recordType, out.ref("scala.Array"), Field.class, TableImpl.class, recordType, schemaId, escapeString(comment), interfaces);
         }
         else {
             out.println("public class %s extends %s<%s>[[before= implements ][%s]] {",
@@ -3104,7 +3104,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (scala) {
             out.tab(1).println("private def this(alias : %s, aliased : %s[%s]) = {", String.class, Table.class, recordType);
             if (table.isTableValuedFunction())
-                out.tab(2).println("this(alias, aliased, new Array[ %s[_] ](%s))", Field.class, table.getParameters().size());
+                out.tab(2).println("this(alias, aliased, new %s[ %s[_] ](%s))", out.ref("scala.Array"), Field.class, table.getParameters().size());
             else
                 out.tab(2).println("this(alias, aliased, null)");
 
@@ -3344,7 +3344,7 @@ public class JavaGenerator extends AbstractGenerator {
                     printParameterDeclarations(out, table, parametersAsField);
                     out.println(") : %s = {", className);
 
-                    out.tab(2).print("return new %s(getName(), null, Array(", className);
+                    out.tab(2).print("return new %s(getName(), null, %s(", className, out.ref("scala.Array"));
                     String separator = "";
                     for (ParameterDefinition parameter : table.getParameters()) {
                         out.print(separator);
@@ -4622,7 +4622,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (useSchemaVersionProvider() || useCatalogVersionProvider()) {
             	if (scala)
-                    out.tab(1).println("value = Array(");
+                    out.tab(1).println("value = %s(", out.ref("scala.Array"));
             	else
             	    out.tab(1).println("value = {");
 
@@ -4644,7 +4644,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else {
             	if (scala)
-                    out.tab(1).println("value = Array(");
+                    out.tab(1).println("value = %s(", out.ref("scala.Array"));
             	else
             	    out.tab(1).println("value = {");
 
@@ -4859,7 +4859,7 @@ public class JavaGenerator extends AbstractGenerator {
             String baseType = GenerationUtil.getArrayBaseType(db.getDialect(), t, u);
 
             if (scala)
-                type = "Array[" + getType(db, schema, baseType, p, s, baseType, defaultType) + "]";
+                type = "scala.Array[" + getType(db, schema, baseType, p, s, baseType, defaultType) + "]";
             else
                 type = getType(db, schema, baseType, p, s, baseType, defaultType) + "[]";
         }

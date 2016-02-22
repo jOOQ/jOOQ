@@ -175,9 +175,19 @@ public interface Routine<T> extends QueryPart {
     <Z> void setValue(Parameter<Z> parameter, Z value);
 
     /**
+     * Set the routine's IN value for an IN parameter.
+     */
+    <Z> void set(Parameter<Z> parameter, Z value);
+
+    /**
      * @return The routine's OUT value for an OUT parameter.
      */
     <Z> Z getValue(Parameter<Z> parameter);
+
+    /**
+     * @return The routine's OUT value for an OUT parameter.
+     */
+    <Z> Z get(Parameter<Z> parameter);
 
     /**
      * @return The routine's return value (if it is a function)

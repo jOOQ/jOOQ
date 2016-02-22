@@ -220,6 +220,11 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
     @Override
     public final <Z> void setValue(Parameter<Z> parameter, Z value) {
+        set(parameter, value);
+    }
+
+    @Override
+    public final <Z> void set(Parameter<Z> parameter, Z value) {
         setField(parameter, val(value, parameter.getDataType()));
     }
 
@@ -724,8 +729,13 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public final <Z> Z getValue(Parameter<Z> parameter) {
+        return get(parameter);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public final <Z> Z get(Parameter<Z> parameter) {
         return (Z) outValues.get(parameter);
     }
 

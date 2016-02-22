@@ -1897,59 +1897,108 @@ public class JavaGenerator extends AbstractGenerator {
     protected void generateEnum(EnumDefinition e, JavaWriter out) {
         final String className = getStrategy().getJavaClassName(e, Mode.ENUM);
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(e, Mode.ENUM));
+        final List<String> literals = e.getLiterals();
+        final List<String> identifiers = new ArrayList<String>();
+
+        for (int i = 0; i < literals.size(); i++) {
+            String identifier = convertToIdentifier(literals.get(i), language);
+
+            // [#2781] Disambiguate collisions with the leading package name
+            if (identifier.equals(getStrategy().getJavaPackageName(e).replaceAll("\\..*", "")))
+                identifier += "_";
+
+            identifiers.add(identifier);
+        }
 
         printPackage(out, e);
         generateEnumClassJavadoc(e, out);
         printClassAnnotations(out, e.getSchema());
 
-        interfaces.add(out.ref(EnumType.class));
 
-        out.println("public enum %s[[before= implements ][%s]] {", className, interfaces);
+        if (scala) {
+            out.println("object %s {", className);
+            out.tab(1).println("def values() : %s = %s(",
+                out.ref("scala.Array"), out.ref("scala.Array"));
 
-        List<String> literals = e.getLiterals();
-        for (int i = 0; i < literals.size(); i++) {
-            String literal = literals.get(i);
-            String terminator = (i == literals.size() - 1) ? ";" : ",";
+            for (int i = 0; i < identifiers.size(); i++) {
+                out.tab(2).print((i > 0 ? ", " : "  "));
+                out.println(identifiers.get(i));
+            }
 
-            String identifier = convertToIdentifier(literal, language);
+            out.tab(1).println(")");
+            out.println();
 
-            // [#2781] Disambiguate collisions with the leading package name
-            if (identifier.equals(getStrategy().getJavaPackageName(e).replaceAll("\\..*", ""))) {
-                identifier += "_";
+            out.tab(1).println("def valueOf(s : %s) : %s = s match {", String.class, className);
+            for (int i = 0; i < identifiers.size(); i++) {
+                out.tab(2).println("case \"%s\" => %s", literals.get(i), identifiers.get(i));
+            }
+            out.tab(2).println("case _ => throw new %s()", IllegalArgumentException.class);
+            out.tab(1).println("}");
+            out.println("}");
+
+            out.println();
+            out.println("sealed trait %s extends %s[[before= with ][%s]] {", className, EnumType.class, interfaces);
+
+            // [#2135] Only the PostgreSQL database supports schema-scoped enum types
+            out.tab(1).println("override def getSchema() : %s = %s",
+                Schema.class,
+                (e.isSynthetic() || !(e.getDatabase() instanceof PostgresDatabase))
+                    ? "null"
+                    : out.ref(getStrategy().getFullJavaIdentifier(e.getSchema()), 2));
+
+            generateEnumClassFooter(e, out);
+            out.println("}");
+
+            for (int i = 0; i < literals.size(); i++) {
+                out.println();
+                out.println("case object %s extends %s {", identifiers.get(i), className);
+                out.tab(1).println("override def getName() : %s = %s",
+                    String.class,
+                    e.isSynthetic() ? "null" : "\"" + e.getName().replace("\"", "\\\"") + "\"");
+                out.tab(1).println("override def getLiteral() : %s = \"%s\"",
+                    String.class,
+                    literals.get(i));
+                out.println("}");
+            }
+        }
+        else {
+            interfaces.add(out.ref(EnumType.class));
+            out.println("public enum %s[[before= implements ][%s]] {", className, interfaces);
+
+            for (int i = 0; i < literals.size(); i++) {
+                out.println();
+                out.tab(1).println("%s(\"%s\")%s", identifiers.get(i), literals.get(i), (i == literals.size() - 1) ? ";" : ",");
             }
 
             out.println();
-            out.tab(1).println("%s(\"%s\")%s", identifier, literal, terminator);
+            out.tab(1).println("private final %s literal;", String.class);
+            out.println();
+            out.tab(1).println("private %s(%s literal) {", className, String.class);
+            out.tab(2).println("this.literal = literal;");
+            out.tab(1).println("}");
+
+            // [#2135] Only the PostgreSQL database supports schema-scoped enum types
+            out.tab(1).overrideInherit();
+            out.tab(1).println("public %s getSchema() {", Schema.class);
+            out.tab(2).println("return %s;",
+                (e.isSynthetic() || !(e.getDatabase() instanceof PostgresDatabase))
+                    ? "null"
+                    : out.ref(getStrategy().getFullJavaIdentifier(e.getSchema()), 2));
+            out.tab(1).println("}");
+
+            out.tab(1).overrideInherit();
+            out.tab(1).println("public %s getName() {", String.class);
+            out.tab(2).println("return %s;", e.isSynthetic() ? "null" : "\"" + e.getName().replace("\"", "\\\"") + "\"");
+            out.tab(1).println("}");
+
+            out.tab(1).overrideInherit();
+            out.tab(1).println("public %s getLiteral() {", String.class);
+            out.tab(2).println("return literal;");
+            out.tab(1).println("}");
+
+            generateEnumClassFooter(e, out);
+            out.println("}");
         }
-
-        out.println();
-        out.tab(1).println("private final %s literal;", String.class);
-        out.println();
-        out.tab(1).println("private %s(%s literal) {", className, String.class);
-        out.tab(2).println("this.literal = literal;");
-        out.tab(1).println("}");
-
-        // [#2135] Only the PostgreSQL database supports schema-scoped enum types
-        out.tab(1).overrideInherit();
-        out.tab(1).println("public %s getSchema() {", Schema.class);
-        out.tab(2).println("return %s;",
-            (e.isSynthetic() || !(e.getDatabase() instanceof PostgresDatabase))
-                ? "null"
-                : out.ref(getStrategy().getFullJavaIdentifier(e.getSchema()), 2));
-        out.tab(1).println("}");
-
-        out.tab(1).overrideInherit();
-        out.tab(1).println("public %s getName() {", String.class);
-        out.tab(2).println("return %s;", e.isSynthetic() ? "null" : "\"" + e.getName().replace("\"", "\\\"") + "\"");
-        out.tab(1).println("}");
-
-        out.tab(1).overrideInherit();
-        out.tab(1).println("public %s getLiteral() {", String.class);
-        out.tab(2).println("return literal;");
-        out.tab(1).println("}");
-
-        generateEnumClassFooter(e, out);
-        out.println("}");
     }
 
     /**
@@ -1976,6 +2025,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String className = getStrategy().getJavaClassName(d, Mode.DOMAIN);
         final String superName = out.ref(getStrategy().getJavaClassExtends(d, Mode.DOMAIN));
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(d, Mode.DOMAIN));
+        final List<String> superTypes = list(superName, interfaces);
 
         printPackage(out, d);
         generateDomainClassJavadoc(d, out);
@@ -1984,7 +2034,10 @@ public class JavaGenerator extends AbstractGenerator {
         for (String clause : d.getCheckClauses())
             out.println("// " + clause);
 
-        out.println("public class %s[[before= extends ][%s]][[before= implements ][%s]] {", className, list(superName), interfaces);
+        if (scala)
+            out.println("class %s[[before= extends ][%s]][[before= with ][separator= with ][%s]] {", className, first(superTypes), remaining(superTypes));
+        else
+            out.println("public class %s[[before= extends ][%s]][[before= implements ][%s]] {", className, list(superName), interfaces);
 
         generateDomainClassFooter(d, out);
         out.println("}");

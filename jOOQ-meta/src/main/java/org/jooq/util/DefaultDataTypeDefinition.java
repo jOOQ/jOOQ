@@ -54,8 +54,9 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
 
     private final Database         database;
     private final SchemaDefinition schema;
-    private final String           typeName;
-    private final String           udtName;
+    private final String           type;
+    private final String           userType;
+    private final String           javaType;
     private final String           converter;
     private final String           binding;
     private final boolean          nullable;
@@ -72,21 +73,26 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         this(database, schema, typeName, length, precision, scale, nullable, defaultable, typeName, null);
     }
 
-    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, Boolean defaultable, String udtName) {
-        this(database, schema, typeName, length, precision, scale, nullable, defaultable, udtName, null);
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, Boolean defaultable, String userType) {
+        this(database, schema, typeName, length, precision, scale, nullable, defaultable, userType, null);
     }
 
-    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, Boolean defaultable, String udtName, String converter) {
-        this(database, schema, typeName, length, precision, scale, nullable, defaultable, udtName, converter, null);
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, Boolean defaultable, String userType, String converter) {
+        this(database, schema, typeName, length, precision, scale, nullable, defaultable, userType, converter, null);
     }
 
-    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, Boolean defaultable, String udtName, String converter, String binding) {
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, Boolean defaultable, String userType, String converter, String binding) {
+        this(database, schema, typeName, length, precision, scale, nullable, defaultable, userType, converter, binding, null);
+    }
+
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, Boolean defaultable, String userType, String converter, String binding, String javaType) {
         this.database = database;
         this.schema = schema;
 
         // [#3420] Some databases report NULL as a data type, e.g. Oracle for (some) AQ tables
-        this.typeName = typeName == null ? "OTHER" : typeName;
-        this.udtName = udtName;
+        this.type = typeName == null ? "OTHER" : typeName;
+        this.userType = userType;
+        this.javaType = javaType;
         this.converter = converter;
         this.binding = binding;
 
@@ -95,7 +101,7 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
 
             // [#650] TODO Use the central type registry to find the right
             // data type instead of pattern matching
-            if (this.typeName.toLowerCase().matches(".*?(char|text|lob|xml|graphic|string).*?")) {
+            if (this.type.toLowerCase().matches(".*?(char|text|lob|xml|graphic|string).*?")) {
                 precision = null;
                 scale = null;
             }
@@ -137,17 +143,17 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
 
     @Override
     public final boolean isUDT() {
-        return getDatabase().getUDT(schema, udtName) != null;
+        return getDatabase().getUDT(schema, userType) != null;
     }
 
     @Override
     public final boolean isArray() {
-        return getDatabase().getArray(schema, udtName) != null;
+        return getDatabase().getArray(schema, userType) != null;
     }
 
     @Override
     public final String getType() {
-        return typeName;
+        return type;
     }
 
     @Override
@@ -177,7 +183,12 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
 
     @Override
     public final String getUserType() {
-        return udtName;
+        return userType;
+    }
+
+    @Override
+    public final String getJavaType() {
+        return javaType;
     }
 
     @Override
@@ -199,8 +210,8 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((typeName == null) ? 0 : typeName.hashCode());
-        result = prime * result + ((udtName == null) ? 0 : udtName.hashCode());
+        result = prime * result + ((type == null) ? 0 : type.hashCode());
+        result = prime * result + ((userType == null) ? 0 : userType.hashCode());
         return result;
     }
 
@@ -212,8 +223,8 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         if (obj instanceof DefaultDataTypeDefinition) {
             DefaultDataTypeDefinition other = (DefaultDataTypeDefinition) obj;
 
-            if (normalise(typeName).equals(normalise(other.typeName)) &&
-                normalise(udtName).equals(normalise(other.udtName))) {
+            if (normalise(type).equals(normalise(other.type)) &&
+                normalise(userType).equals(normalise(other.userType))) {
                 return true;
             }
         }
@@ -226,13 +237,15 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         StringBuilder sb = new StringBuilder();
 
         sb.append("DataType [ t=");
-        sb.append(typeName);
+        sb.append(type);
         sb.append("; p=");
         sb.append(precision);
         sb.append("; s=");
         sb.append(scale);
         sb.append("; u=");
-        sb.append(udtName);
+        sb.append(userType);
+        sb.append("; j=");
+        sb.append(javaType);
         sb.append(" ]");
 
         return sb.toString();

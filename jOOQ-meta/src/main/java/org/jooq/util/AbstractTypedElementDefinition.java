@@ -197,7 +197,8 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
                     p = result.getPrecision();
                     s = result.getScale();
                     String t = result.getType();
-                    result = new DefaultDataTypeDefinition(db, child.getSchema(), t, l, p, s, n, d, type, converter, binding);
+                    String u = result.getUserType();
+                    result = new DefaultDataTypeDefinition(db, child.getSchema(), t, l, p, s, n, d, u, converter, binding, type);
                 }
 
                 // [#4597] If we don't have a type-rewrite (forcedDataType) or a

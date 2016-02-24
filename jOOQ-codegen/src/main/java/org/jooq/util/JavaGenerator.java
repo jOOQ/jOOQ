@@ -4894,27 +4894,33 @@ public class JavaGenerator extends AbstractGenerator {
             type.getPrecision(),
             type.getScale(),
             type.getUserType(),
+            type.getJavaType(),
             Object.class.getName(),
             udtMode);
     }
 
-    protected String getType(Database db, SchemaDefinition schema, String t, int p, int s, String u, String defaultType) {
-        return getType(db, schema, t, p, s, u, defaultType, Mode.RECORD);
+    protected String getType(Database db, SchemaDefinition schema, String t, int p, int s, String u, String javaType, String defaultType) {
+        return getType(db, schema, t, p, s, u, javaType, defaultType, Mode.RECORD);
     }
 
-    protected String getType(Database db, SchemaDefinition schema, String t, int p, int s, String u, String defaultType, Mode udtMode) {
+    protected String getType(Database db, SchemaDefinition schema, String t, int p, int s, String u, String javaType, String defaultType, Mode udtMode) {
         String type = defaultType;
 
+        // Custom types
+        if (javaType != null) {
+            type = javaType;
+        }
+
         // Array types
-        if (db.isArrayType(t)) {
+        else if (db.isArrayType(t)) {
 
             // [#4388] TODO: Improve array handling
             String baseType = GenerationUtil.getArrayBaseType(db.getDialect(), t, u);
 
             if (scala)
-                type = "scala.Array[" + getType(db, schema, baseType, p, s, baseType, defaultType, udtMode) + "]";
+                type = "scala.Array[" + getType(db, schema, baseType, p, s, baseType, javaType, defaultType, udtMode) + "]";
             else
-                type = getType(db, schema, baseType, p, s, baseType, defaultType, udtMode) + "[]";
+                type = getType(db, schema, baseType, p, s, baseType, javaType, defaultType, udtMode) + "[]";
         }
 
         // Check for Oracle-style VARRAY types
@@ -5080,8 +5086,8 @@ public class JavaGenerator extends AbstractGenerator {
                     sb.append(typeClass);
                     sb.append(".");
 
-                    String type1 = getType(db, schema, t, p, s, u, null);
-                    String type2 = getType(db, schema, t, 0, 0, u, null);
+                    String type1 = getType(db, schema, t, p, s, u, null, null);
+                    String type2 = getType(db, schema, t, 0, 0, u, null, null);
                     String typeName = DefaultDataType.normalise(t);
 
                     // [#1298] Prevent compilation errors for missing types

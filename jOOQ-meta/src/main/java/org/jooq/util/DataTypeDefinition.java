@@ -86,6 +86,11 @@ public interface DataTypeDefinition {
     String getUserType();
 
     /**
+     * The custom Java type to represent this data type, if applicable.
+     */
+    String getJavaType();
+
+    /**
      * Whether this data type is nullable.
      */
     boolean isNullable();

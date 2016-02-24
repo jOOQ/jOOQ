@@ -556,6 +556,8 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
                 writer.append("" + (size() - maxRecords));
                 writer.append(" record(s) truncated...");
             }
+
+            writer.flush();
         }
         catch (java.io.IOException e) {
             throw new IOException("Exception while writing TEXT", e);
@@ -633,6 +635,8 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
             writer.append("</tbody>");
             writer.append("</table>");
+
+            writer.flush();
         }
         catch (java.io.IOException e) {
             throw new IOException("Exception while writing HTML", e);
@@ -774,6 +778,8 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
                 writer.append(format.newline());
             }
+
+            writer.flush();
         }
         catch (java.io.IOException e) {
             throw new IOException("Exception while writing CSV", e);
@@ -894,6 +900,8 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
             map.put("records", r);
 
             writer.append(JSONObject.toJSONString(map));
+
+            writer.flush();
         }
         catch (java.io.IOException e) {
             throw new IOException("Exception while writing JSON", e);
@@ -975,6 +983,8 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
             writer.append("</records>");
             writer.append("</result>");
+
+            writer.flush();
         }
         catch (java.io.IOException e) {
             throw new IOException("Exception while writing XML", e);
@@ -1027,6 +1037,8 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
                 writer.append(ctx.renderInlined(insertInto(table, f).values(record.intoArray())));
                 writer.append(";\n");
             }
+
+            writer.flush();
         }
         catch (java.io.IOException e) {
             throw new IOException("Exception while writing INSERTs", e);

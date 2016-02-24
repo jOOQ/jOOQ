@@ -639,7 +639,6 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <li> {@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
      * emitted by the database or <code>null</code> if no warning was emitted.</li>
      * </ul>
-     * </ul>
      * <p>
      * Note that this method is called only when executing standalone routine
      * calls.

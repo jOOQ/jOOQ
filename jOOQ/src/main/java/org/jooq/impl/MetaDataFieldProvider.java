@@ -47,8 +47,6 @@ import java.io.Serializable;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.jooq.Configuration;
 import org.jooq.DataType;
@@ -87,18 +85,19 @@ final class MetaDataFieldProvider implements Serializable {
     }
 
     private Fields<Record> init(Configuration configuration, ResultSetMetaData meta) {
-        List<Field<?>> fieldList = new ArrayList<Field<?>>();
+        Field<?>[] fields;
         int columnCount = 0;
 
         try {
             columnCount = meta.getColumnCount();
+            fields = new Field[columnCount];
         }
 
         // This happens in Oracle for empty cursors returned from stored
         // procedures / functions
         catch (SQLException e) {
             log.info("Cannot fetch column count for cursor : " + e.getMessage());
-            fieldList.add(field("dummy"));
+            fields = new Field[] { field("dummy") };
         }
 
         try {
@@ -131,7 +130,7 @@ final class MetaDataFieldProvider implements Serializable {
                 String type = meta.getColumnTypeName(i);
 
                 try {
-                    dataType = DefaultDataType.getDataType(configuration.dialect().family(), type, precision, scale);
+                    dataType = DefaultDataType.getDataType(configuration.family(), type, precision, scale);
 
                     if (dataType.hasPrecision()) {
                         dataType = dataType.precision(precision);
@@ -153,14 +152,14 @@ final class MetaDataFieldProvider implements Serializable {
                     log.debug("Not supported by dialect", ignore.getMessage());
                 }
 
-                fieldList.add(field(name, dataType));
+                fields[i - 1] = field(name, dataType);
             }
         }
         catch (SQLException e) {
             throw Utils.translate(null, e);
         }
 
-        return new Fields<Record>(fieldList);
+        return new Fields<Record>(fields);
     }
 
     final Field<?>[] getFields() {

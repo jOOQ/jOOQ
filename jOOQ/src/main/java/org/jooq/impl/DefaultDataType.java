@@ -272,24 +272,9 @@ public class DefaultDataType<T> implements DataType<T> {
         this.castTypeBase = TYPE_NAME_PATTERN.matcher(castTypeName).replaceAll("").trim();
         this.arrayType = (Class<T[]>) Array.newInstance(type, 0).getClass();
 
-        if (precision == 0) {
-            if (type == Long.class || type == ULong.class) {
-                precision = LONG_PRECISION;
-            }
-            else if (type == Integer.class  || type == UInteger.class) {
-                precision = INTEGER_PRECISION;
-            }
-            else if (type == Short.class || type == UShort.class) {
-                precision = SHORT_PRECISION;
-            }
-            else if (type == Byte.class || type == UByte.class) {
-                precision = BYTE_PRECISION;
-            }
-        }
-
         this.nullable = nullable;
         this.defaulted = defaulted;
-        this.precision = precision;
+        this.precision = precision0(type, precision);
         this.scale = scale;
         this.length = length;
 
@@ -328,9 +313,49 @@ public class DefaultDataType<T> implements DataType<T> {
             : new DefaultBinding<T, T>(Converters.identity(type), this.isLob());
     }
 
+    /**
+     * [#3225] Performant constructor for creating derived types.
+     */
+    private DefaultDataType(DefaultDataType<T> t, int precision, int scale, int length, boolean nullable, boolean defaulted) {
+        this.dialect = t.dialect;
+        this.sqlDataType = t.sqlDataType;
+        this.type = t.type;
+        this.typeName = t.typeName;
+        this.castTypeName = t.castTypeName;
+        this.castTypeBase = t.castTypeBase;
+        this.arrayType = t.arrayType;
+
+        this.nullable = nullable;
+        this.defaulted = defaulted;
+        this.precision = precision0(type, precision);
+        this.scale = scale;
+        this.length = length;
+
+        this.binding = t.binding;
+    }
+
+    private static final int precision0(Class<?> type, int precision) {
+        if (precision == 0) {
+            if (type == Long.class || type == ULong.class) {
+                precision = LONG_PRECISION;
+            }
+            else if (type == Integer.class  || type == UInteger.class) {
+                precision = INTEGER_PRECISION;
+            }
+            else if (type == Short.class || type == UShort.class) {
+                precision = SHORT_PRECISION;
+            }
+            else if (type == Byte.class || type == UByte.class) {
+                precision = BYTE_PRECISION;
+            }
+        }
+
+        return precision;
+    }
+
     @Override
     public final DataType<T> nullable(boolean n) {
-        return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, precision, scale, length, n, defaulted);
+        return new DefaultDataType<T>(this, precision, scale, length, n, defaulted);
     }
 
     @Override
@@ -340,7 +365,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final DataType<T> defaulted(boolean d) {
-        return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, precision, scale, length, nullable, d);
+        return new DefaultDataType<T>(this, precision, scale, length, nullable, d);
     }
 
     @Override
@@ -362,7 +387,7 @@ public class DefaultDataType<T> implements DataType<T> {
         else if (isLob())
             return this;
         else
-            return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, p, s, length, nullable, defaulted);
+            return new DefaultDataType<T>(this, p, s, length, nullable, defaulted);
     }
 
     @Override
@@ -384,7 +409,7 @@ public class DefaultDataType<T> implements DataType<T> {
         if (isLob())
             return this;
         else
-            return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, precision, s, length, nullable, defaulted);
+            return new DefaultDataType<T>(this, precision, s, length, nullable, defaulted);
     }
 
     @Override
@@ -406,7 +431,7 @@ public class DefaultDataType<T> implements DataType<T> {
         if (isLob())
             return this;
         else
-            return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, precision, scale, l, nullable, defaulted);
+            return new DefaultDataType<T>(this, precision, scale, l, nullable, defaulted);
     }
 
     @Override

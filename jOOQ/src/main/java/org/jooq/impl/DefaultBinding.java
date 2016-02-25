@@ -780,7 +780,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         Configuration configuration = ctx.configuration();
         int sqlType = DefaultDataType.getDataType(ctx.dialect(), type).getSQLType();
 
-        switch (configuration.dialect().family()) {
+        switch (configuration.family()) {
+
+
+
+
+
+
 
 
 
@@ -913,6 +919,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 ctx.statement().setBlob(ctx.index(), (Blob) value);
             }
             else if (actualType == Boolean.class) {
+
+
 
 
 

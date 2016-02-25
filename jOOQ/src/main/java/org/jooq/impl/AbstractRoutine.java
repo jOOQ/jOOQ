@@ -125,8 +125,9 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     private Parameter<T>                      returnParameter;
     private ResultsImpl                       results;
     private boolean                           overloaded;
-    private boolean                           hasDefaultedParameters;
     private boolean                           hasUnnamedParameters;
+
+
 
 
 
@@ -143,7 +144,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
     private Configuration                     configuration;
     private final Map<Parameter<?>, Object>   outValues;
-    private final Map<Parameter<?>, Integer>  parameterIndexes;
+    private final Map<Parameter<?>, Integer>  resultIndexes;
 
     // ------------------------------------------------------------------------
     // Constructors
@@ -188,7 +189,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     protected <X, Y> AbstractRoutine(String name, Schema schema, Package pkg, DataType<X> type, Converter<Y, T> converter, Binding<X, Y> binding) {
-        this.parameterIndexes = new HashMap<Parameter<?>, Integer>();
+        this.resultIndexes = new HashMap<Parameter<?>, Integer>();
 
         this.schema = schema;
         this.pkg = pkg;
@@ -496,56 +497,101 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     final void bind0(BindContext context) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         for (Parameter<?> parameter : getParameters()) {
 
             // [#1183] [#3533] Skip defaulted parameters
-            if (getInParameters().contains(parameter) && inValuesDefaulted.contains(parameter)) {
+            if (getInParameters().contains(parameter) && inValuesDefaulted.contains(parameter))
                 continue;
-            }
 
-            int index = context.peekIndex();
-            parameterIndexes.put(parameter, index);
+            bind1(context, parameter, getInValues().get(parameter) != null, resultParameter(parameter));
+        }
+    }
 
-            if (getInValues().get(parameter) != null) {
-                context.visit(getInValues().get(parameter));
+    private final void bind1(BindContext context, Parameter<?> parameter, boolean bindAsIn, boolean bindAsOut) {
+        int index = context.peekIndex();
 
-                // [#391] This happens when null literals are used as IN/OUT
-                // parameters. They're not bound as in value, but they need to
-                // be registered as OUT parameter
-                if (index == context.peekIndex() && getOutParameters().contains(parameter)) {
-                    context.nextIndex();
-                }
-            }
+        if (bindAsOut)
+            resultIndexes.put(parameter, index);
 
-            // Skip one index for OUT parameters
-            else {
+        if (bindAsIn) {
+            context.visit(getInValues().get(parameter));
+
+            // [#391] This happens when null literals are used as IN/OUT
+            // parameters. They're not bound as in value, but they need to
+            // be registered as OUT parameter
+            if (index == context.peekIndex() && bindAsOut)
                 context.nextIndex();
-            }
+        }
+
+        // Skip one index for OUT parameters
+        else {
+            context.nextIndex();
         }
     }
 
     final void toSQL0(RenderContext context) {
+        toSQLDeclare(context);
         toSQLBegin(context);
 
-        if (getReturnParameter() != null) {
+        if (getReturnParameter() != null)
             toSQLAssign(context);
-        }
 
         toSQLCall(context);
         context.sql('(');
 
         String separator = "";
-        for (Parameter<?> parameter : getParameters()) {
+        List<Parameter<?>> parameters = getParameters();
+        for (int i = 0; i < parameters.size(); i++) {
+            Parameter<?> parameter = parameters.get(i);
 
             // The return value has already been written
-            if (parameter.equals(getReturnParameter())) {
+            if (parameter.equals(getReturnParameter()))
                 continue;
-            }
 
             // OUT and IN OUT parameters are always written as a '?' bind variable
-            else if (getOutParameters().contains(parameter)) {
+            if (getOutParameters().contains(parameter)) {
                 context.sql(separator);
-                toSQLOutParam(context, parameter);
+                toSQLOutParam(context, parameter, i);
             }
 
             // [#1183] [#3533] Omit defaulted parameters
@@ -556,7 +602,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             // IN parameters are rendered normally
             else {
                 context.sql(separator);
-                toSQLInParam(context, parameter, getInValues().get(parameter));
+                toSQLInParam(context, parameter, i, getInValues().get(parameter));
             }
 
             separator = ", ";
@@ -576,9 +622,52 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
 
 
+
+
+
+
+
+
+
+
+
+
+
         {
             context.sql(" }");
         }
+    }
+
+    private final void toSQLDeclare(RenderContext context) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     private final void toSQLBegin(RenderContext context) {
@@ -596,6 +685,9 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLAssign(RenderContext context) {
+
+
+
 
 
 
@@ -620,7 +712,10 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         toSQLQualifiedName(context);
     }
 
-    private final void toSQLOutParam(RenderContext context, Parameter<?> parameter) {
+    private final void toSQLOutParam(RenderContext context, Parameter<?> parameter, int index) {
+
+
+
 
 
 
@@ -631,7 +726,10 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         context.sql('?');
     }
 
-    private final void toSQLInParam(RenderContext context, Parameter<?> parameter, Field<?> value) {
+    private final void toSQLInParam(RenderContext context, Parameter<?> parameter, int index, Field<?> value) {
+
+
+
 
 
 
@@ -669,13 +767,9 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void fetchOutParameters(ExecuteContext ctx) throws SQLException {
-        for (Parameter<?> parameter : getParameters()) {
-            if (parameter.equals(getReturnParameter()) ||
-                getOutParameters().contains(parameter)) {
-
+        for (Parameter<?> parameter : getParameters())
+            if (resultParameter(parameter))
                 fetchOutParameter(ctx, parameter);
-            }
-        }
     }
 
     private final <U> void fetchOutParameter(ExecuteContext ctx, Parameter<U> parameter) throws SQLException {
@@ -683,7 +777,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             ctx.configuration(),
             ctx.data(),
             (CallableStatement) ctx.statement(),
-            parameterIndexes.get(parameter)
+            resultIndexes.get(parameter)
         );
 
         parameter.getBinding().get(out);
@@ -697,17 +791,13 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
         // Register all out / inout parameters according to their position
         // Note that some RDBMS do not support binding by name very well
-        for (Parameter<?> parameter : getParameters()) {
-            if (parameter.equals(getReturnParameter()) ||
-                getOutParameters().contains(parameter)) {
-
+        for (Parameter<?> parameter : getParameters())
+            if (resultParameter(parameter))
                 registerOutParameter(c, data, statement, parameter);
-            }
-        }
     }
 
     private final <U> void registerOutParameter(Configuration c, Map<Object, Object> data, CallableStatement statement, Parameter<U> parameter) throws SQLException {
-        parameter.getBinding().register(new DefaultBindingRegisterContext<U>(c, data, statement, parameterIndexes.get(parameter)));
+        parameter.getBinding().register(new DefaultBindingRegisterContext<U>(c, data, statement, resultIndexes.get(parameter)));
     }
 
     // ------------------------------------------------------------------------
@@ -716,9 +806,8 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
     @Override
     public final T getReturnValue() {
-        if (returnParameter != null) {
+        if (returnParameter != null)
             return getValue(returnParameter);
-        }
 
         return null;
     }
@@ -800,9 +889,18 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
 
 
-    private final boolean hasDefaultedParameters() {
-        return hasDefaultedParameters && !inValuesDefaulted.isEmpty();
-    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final boolean hasUnnamedParameters() {
         return hasUnnamedParameters;
@@ -810,8 +908,16 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
     private final void addParameter(Parameter<?> parameter) {
         allParameters.add(parameter);
-        hasDefaultedParameters |= parameter.isDefaulted();
         hasUnnamedParameters |= parameter.isUnnamed();
+
+
+
+
+
+    }
+
+    private final boolean resultParameter(Parameter<?> parameter) {
+        return parameter.equals(getReturnParameter()) || getOutParameters().contains(parameter);
     }
 
     protected final void addInParameter(Parameter<?> parameter) {

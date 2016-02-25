@@ -36,7 +36,7 @@
                 <version>0.8.1</version>
                 <executions>
                     <execution>
-                        <id>vertabelo-xml</id>
+                        <id>vertabelo-xml-v2_2</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>
@@ -45,11 +45,11 @@
                             <extension>true</extension>
                             <strict>false</strict>
                             <schemaDirectory>src/main/resources/xsd</schemaDirectory>
-                            <bindingDirectory>src/main/resources/xjb/vertabelo</bindingDirectory>
+                            <bindingDirectory>src/main/resources/xjb/vertabelo/v2_2</bindingDirectory>
                             <schemaIncludes>
-                                <include>vertabelo-2.1.xsd</include>
+                                <include>vertabelo-2.2.xsd</include>
                             </schemaIncludes>
-                            <generatePackage>org.jooq.util.vertabelo.jaxb</generatePackage>
+                            <generatePackage>org.jooq.util.vertabelo.jaxb.v2_2</generatePackage>
                             <args>
                                 <arg>-Xxew</arg>
                                 <arg>-Xxew:instantiate lazy</arg>
@@ -64,6 +64,65 @@
                                     <artifactId>jaxb-xew-plugin</artifactId>
                                     <version>1.0</version>
                                </plugin>
+                                <plugin>
+                                    <groupId>org.jvnet.jaxb2_commons</groupId>
+                                    <artifactId>jaxb2-fluent-api</artifactId>
+                                    <version>3.0</version>
+                                </plugin>
+                                <plugin>
+                                    <groupId>org.jvnet.jaxb2_commons</groupId>
+                                    <artifactId>jaxb2-default-value</artifactId>
+                                    <version>1.1</version>
+                                </plugin>
+                                <plugin>
+                                    <groupId>org.jvnet.jaxb2_commons</groupId>
+                                    <artifactId>jaxb2-basics-annotate</artifactId>
+                                    <version>0.6.2</version>
+                                </plugin>
+                            </plugins>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>vertabelo-xml-v2_3</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <forceRegenerate>true</forceRegenerate>
+                            <extension>true</extension>
+                            <strict>false</strict>
+                            <schemaDirectory>src/main/resources/xsd</schemaDirectory>
+                            <bindingDirectory>src/main/resources/xjb/vertabelo/v2_3</bindingDirectory>
+                            <schemaIncludes>
+                                <include>vertabelo-2.3.xsd</include>
+                            </schemaIncludes>
+                            <generatePackage>org.jooq.util.vertabelo.jaxb.v2_3</generatePackage>
+                            <args>
+                                <!--
+                                    see comment below
+
+                                   <arg>-Xxew</arg>
+                                   <arg>-Xxew:instantiate lazy</arg>
+                                   <arg>-Xxew:delete</arg> 
+                                -->
+                                <arg>-Xfluent-api</arg>
+                                <arg>-Xdefault-value</arg>
+                                <arg>-Xannotate</arg>
+                            </args>
+                            <plugins>
+                                <!--
+
+                                    This plugin is problematic. When called with -Xxew:delete generated code wouldn't compile.
+                                    When -Xxew:delete is commented code wouldn't run as expected. 
+                                    Question: do we really need fancy JAXB here?
+
+                                <plugin>
+                                    <groupId>com.github.jaxb-xew-plugin</groupId>
+                                    <artifactId>jaxb-xew-plugin</artifactId>
+                                    <version>1.0</version>
+                                </plugin>
+                                -->
                                 <plugin>
                                     <groupId>org.jvnet.jaxb2_commons</groupId>
                                     <artifactId>jaxb2-fluent-api</artifactId>

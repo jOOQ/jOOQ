@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:annox="http://annox.dev.java.net"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
+    version="2.1">
+
+    <jaxb:globalBindings>
+
+        <!-- Force all classes implements Serializable -->
+        <xjc:serializable uid="350" />
+
+        <!-- [#2401] Trim unnecessary whitespace from configuration -->
+        <xjc:javaType name="java.lang.String" xmlType="xs:string" adapter="org.jooq.util.jaxb.tools.TrimAdapter"/>
+    </jaxb:globalBindings>
+
+
+    <!-- Annotate the following classes with @SuppressWarnings -->
+    <jaxb:bindings schemaLocation="../../../xsd/vertabelo-2.3.xsd" multiple="true" node="//xs:complexType">
+        <annox:annotate>
+        	<annox:annotate annox:class="java.lang.SuppressWarnings" value="all" />
+        </annox:annotate>
+    </jaxb:bindings>
+</jaxb:bindings>

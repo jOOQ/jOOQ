@@ -19,7 +19,7 @@
 
 
     <!-- Annotate the following classes with @SuppressWarnings -->
-    <jaxb:bindings schemaLocation="../../xsd/vertabelo-2.1.xsd" multiple="true" node="//xs:complexType">
+    <jaxb:bindings schemaLocation="../../../xsd/vertabelo-2.2.xsd" multiple="true" node="//xs:complexType">
         <annox:annotate>
         	<annox:annotate annox:class="java.lang.SuppressWarnings" value="all" />
         </annox:annotate>

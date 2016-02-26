@@ -41,7 +41,7 @@
 package org.jooq.impl;
 
 import static org.jooq.conf.SettingsTools.executeStaticStatements;
-import static org.jooq.impl.Utils.DataKey.DATA_OMIT_RETURNING_CLAUSE;
+import static org.jooq.impl.Tools.DataKey.DATA_OMIT_RETURNING_CLAUSE;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -106,7 +106,7 @@ final class BatchCRUD implements Batch {
         QueryCollector collector = new QueryCollector();
 
         // Add the QueryCollector to intercept query execution after rendering
-        Configuration local = configuration.derive(Utils.combine(
+        Configuration local = configuration.derive(Tools.combine(
             configuration.executeListenerProviders(),
             new DefaultExecuteListenerProvider(collector)
         ));
@@ -175,7 +175,7 @@ final class BatchCRUD implements Batch {
         List<Query> queries = new ArrayList<Query>();
         QueryCollector collector = new QueryCollector();
 
-        Configuration local = configuration.derive(Utils.combine(
+        Configuration local = configuration.derive(Tools.combine(
             configuration.executeListenerProviders(),
             new DefaultExecuteListenerProvider(collector)
         ));

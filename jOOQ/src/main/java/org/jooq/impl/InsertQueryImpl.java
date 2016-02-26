@@ -54,8 +54,8 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.table;
-import static org.jooq.impl.Utils.aliasedFields;
-import static org.jooq.impl.Utils.fieldNames;
+import static org.jooq.impl.Tools.aliasedFields;
+import static org.jooq.impl.Tools.fieldNames;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -128,12 +128,12 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
     @Override
     public final <T> void addValueForUpdate(Field<T> field, T value) {
-        updateMap.put(field, Utils.field(value, field));
+        updateMap.put(field, Tools.field(value, field));
     }
 
     @Override
     public final <T> void addValueForUpdate(Field<T> field, Field<T> value) {
-        updateMap.put(field, Utils.field(value, field));
+        updateMap.put(field, Tools.field(value, field));
     }
 
     @Override

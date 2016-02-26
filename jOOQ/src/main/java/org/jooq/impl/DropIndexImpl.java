@@ -121,9 +121,9 @@ final class DropIndexImpl extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         if (ifExists && !supportsIfExists(ctx)) {
-            Utils.executeImmediateBegin(ctx, DDLStatementType.DROP_INDEX);
+            Tools.executeImmediateBegin(ctx, DDLStatementType.DROP_INDEX);
             accept0(ctx);
-            Utils.executeImmediateEnd(ctx, DDLStatementType.DROP_INDEX);
+            Tools.executeImmediateEnd(ctx, DDLStatementType.DROP_INDEX);
         }
         else {
             accept0(ctx);

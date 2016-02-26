@@ -43,8 +43,8 @@ package org.jooq.impl;
 import static java.lang.Boolean.TRUE;
 import static org.jooq.impl.RecordDelegate.delegate;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.INSERT;
-import static org.jooq.impl.Utils.indexOrFail;
-import static org.jooq.impl.Utils.DataKey.DATA_OMIT_RETURNING_CLAUSE;
+import static org.jooq.impl.Tools.indexOrFail;
+import static org.jooq.impl.Tools.DataKey.DATA_OMIT_RETURNING_CLAUSE;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
@@ -107,7 +107,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public Row valuesRow() {
-        return new RowImpl(Utils.fields(intoArray(), fields.fields.fields()));
+        return new RowImpl(Tools.fields(intoArray(), fields.fields.fields()));
     }
 
     @SuppressWarnings("unchecked")
@@ -245,7 +245,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
      * Extracted method to ensure generic type safety.
      */
     final <T> void addValue(StoreQuery<?> store, Field<T> field, Object value) {
-        store.addValue(field, Utils.field(value, field));
+        store.addValue(field, Tools.field(value, field));
     }
 
     /**

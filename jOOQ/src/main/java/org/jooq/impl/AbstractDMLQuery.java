@@ -48,8 +48,8 @@ import static java.util.Arrays.asList;
 import static org.jooq.conf.RenderNameStyle.LOWER;
 import static org.jooq.conf.RenderNameStyle.UPPER;
 import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.Utils.fieldArray;
-import static org.jooq.impl.Utils.unqualify;
+import static org.jooq.impl.Tools.fieldArray;
+import static org.jooq.impl.Tools.unqualify;
 import static org.jooq.util.sqlite.SQLiteDSL.rowid;
 
 import java.sql.Connection;
@@ -73,7 +73,7 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.conf.RenderNameStyle;
-import org.jooq.impl.Utils.DataKey;
+import org.jooq.impl.Tools.DataKey;
 import org.jooq.tools.jdbc.JDBCUtils;
 
 /**
@@ -439,7 +439,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                 if (returning.size() == 1 && new Fields<Record>(returning).field(field) != null) {
                     for (final Object id : ids) {
                         getReturnedRecords().add(
-                        Utils.newRecord(true, table, configuration)
+                        Tools.newRecord(true, table, configuration)
                              .operate(new RecordOperation<R, RuntimeException>() {
 
                                 @Override

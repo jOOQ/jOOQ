@@ -230,7 +230,7 @@ public class SequenceImpl<T extends Number> extends AbstractQueryPart implements
     }
 
     private final void accept0(Context<?> ctx, boolean asStringLiterals) {
-        Schema mappedSchema = Utils.getMappedSchema(ctx.configuration(), schema);
+        Schema mappedSchema = Tools.getMappedSchema(ctx.configuration(), schema);
 
         if (mappedSchema != null && ctx.family() != CUBRID) {
             if (asStringLiterals) {

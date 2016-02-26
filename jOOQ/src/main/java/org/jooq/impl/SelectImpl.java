@@ -1795,7 +1795,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 
     @Override
     public final SelectSeekLimitStep<R> seek(Object... values) {
-        getQuery().addSeekAfter(Utils.fields(values));
+        getQuery().addSeekAfter(Tools.fields(values));
         return this;
     }
 
@@ -1807,7 +1807,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 
     @Override
     public SelectSeekLimitStep<R> seekAfter(Object... values) {
-        getQuery().addSeekAfter(Utils.fields(values));
+        getQuery().addSeekAfter(Tools.fields(values));
         return this;
     }
 
@@ -1819,7 +1819,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 
     @Override
     public SelectSeekLimitStep<R> seekBefore(Object... values) {
-        getQuery().addSeekBefore(Utils.fields(values));
+        getQuery().addSeekBefore(Tools.fields(values));
         return this;
     }
 

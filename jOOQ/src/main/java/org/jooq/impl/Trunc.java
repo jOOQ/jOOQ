@@ -46,7 +46,7 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.zero;
-import static org.jooq.impl.Utils.extractVal;
+import static org.jooq.impl.Tools.extractVal;
 
 import java.math.BigDecimal;
 import java.math.MathContext;

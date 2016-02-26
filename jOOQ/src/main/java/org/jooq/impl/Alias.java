@@ -68,8 +68,8 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.Utils.list;
-import static org.jooq.impl.Utils.DataKey.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
+import static org.jooq.impl.Tools.list;
+import static org.jooq.impl.Tools.DataKey.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
 
 import org.jooq.Clause;
 import org.jooq.Context;
@@ -221,7 +221,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
                             ArrayTable table = (ArrayTable) o;
 
                             context.sql('(');
-                            Utils.fieldNames(context, table.fields());
+                            Tools.fieldNames(context, table.fields());
                             context.sql(')');
                         }
 

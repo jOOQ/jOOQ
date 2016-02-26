@@ -157,7 +157,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     private void accept0(Context<?> ctx) {
         if (ctx.qualify() &&
                 (!asList(POSTGRES).contains(ctx.family()) || parameters == null || ctx.declareTables())) {
-            Schema mappedSchema = Utils.getMappedSchema(ctx.configuration(), getSchema());
+            Schema mappedSchema = Tools.getMappedSchema(ctx.configuration(), getSchema());
 
             if (mappedSchema != null) {
                 ctx.visit(mappedSchema);
@@ -165,7 +165,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
             }
         }
 
-        ctx.literal(Utils.getMappedTable(ctx.configuration(), this).getName());
+        ctx.literal(Tools.getMappedTable(ctx.configuration(), this).getName());
 
         if (parameters != null && ctx.declareTables()) {
 

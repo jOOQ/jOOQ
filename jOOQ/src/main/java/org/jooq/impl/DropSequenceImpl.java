@@ -98,9 +98,9 @@ final class DropSequenceImpl extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         if (ifExists && !supportsIfExists(ctx)) {
-            Utils.executeImmediateBegin(ctx, DDLStatementType.DROP_SEQUENCE);
+            Tools.executeImmediateBegin(ctx, DDLStatementType.DROP_SEQUENCE);
             accept0(ctx);
-            Utils.executeImmediateEnd(ctx, DDLStatementType.DROP_SEQUENCE);
+            Tools.executeImmediateEnd(ctx, DDLStatementType.DROP_SEQUENCE);
         }
         else {
             accept0(ctx);

@@ -48,8 +48,8 @@ import static org.jooq.impl.ConstraintImpl.Action.SET_DEFAULT;
 import static org.jooq.impl.ConstraintImpl.Action.SET_NULL;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
-import static org.jooq.impl.Utils.fieldsByName;
-import static org.jooq.impl.Utils.DataKey.DATA_CONSTRAINT_REFERENCE;
+import static org.jooq.impl.Tools.fieldsByName;
+import static org.jooq.impl.Tools.DataKey.DATA_CONSTRAINT_REFERENCE;
 
 import javax.annotation.Generated;
 

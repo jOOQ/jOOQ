@@ -59,11 +59,11 @@ final class SelectFieldList extends QueryPartList<Field<?>> {
     }
 
     SelectFieldList(Collection<? extends SelectField<?>> wrappedList) {
-        super(Utils.fields(wrappedList));
+        super(Tools.fields(wrappedList));
     }
 
     SelectFieldList(SelectField<?>... wrappedList) {
-        super(Utils.fields(wrappedList));
+        super(Tools.fields(wrappedList));
     }
 
     @Override

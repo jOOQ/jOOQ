@@ -46,7 +46,7 @@ import static java.lang.Math.min;
 import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
-import static org.jooq.impl.Utils.indexOrFail;
+import static org.jooq.impl.Tools.indexOrFail;
 import static org.jooq.tools.StringUtils.abbreviate;
 import static org.jooq.tools.StringUtils.leftPad;
 import static org.jooq.tools.StringUtils.rightPad;
@@ -1280,7 +1280,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
             RecordImpl key = new RecordImpl(keys);
 
             for (Field<?> field : keys) {
-                Utils.copyValue(key, field, record, field);
+                Tools.copyValue(key, field, record, field);
             }
 
             if (map.put(key, record) != null) {
@@ -1308,7 +1308,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
     @Override
     public final <E> Map<List<?>, E> intoMap(Field<?>[] keys, Class<? extends E> type) {
-        return intoMap(keys, Utils.configuration(this).recordMapperProvider().provide(fields, type));
+        return intoMap(keys, Tools.configuration(this).recordMapperProvider().provide(fields, type));
     }
 
     @Override
@@ -1350,20 +1350,20 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
     @Override
     public final <K> Map<K, R> intoMap(Class<? extends K> keyType) {
-        return intoMap(Utils.configuration(this).recordMapperProvider().provide(fields, keyType));
+        return intoMap(Tools.configuration(this).recordMapperProvider().provide(fields, keyType));
     }
 
     @Override
     public final <K, V> Map<K, V> intoMap(Class<? extends K> keyType, Class<? extends V> valueType) {
         return intoMap(
-            Utils.configuration(this).recordMapperProvider().provide(fields, keyType),
-            Utils.configuration(this).recordMapperProvider().provide(fields, valueType)
+            Tools.configuration(this).recordMapperProvider().provide(fields, keyType),
+            Tools.configuration(this).recordMapperProvider().provide(fields, valueType)
         );
     }
 
     @Override
     public final <K, V> Map<K, V> intoMap(Class<? extends K> keyType, RecordMapper<? super R, V> valueMapper) {
-        return intoMap(Utils.configuration(this).recordMapperProvider().provide(fields, keyType), valueMapper);
+        return intoMap(Tools.configuration(this).recordMapperProvider().provide(fields, keyType), valueMapper);
     }
 
     @Override
@@ -1382,7 +1382,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
     @Override
     public final <K, V> Map<K, V> intoMap(RecordMapper<? super R, K> keyMapper, Class<V> valueType) {
-        return intoMap(keyMapper, Utils.configuration(this).recordMapperProvider().provide(fields, valueType));
+        return intoMap(keyMapper, Tools.configuration(this).recordMapperProvider().provide(fields, valueType));
     }
 
     @Override
@@ -1416,7 +1416,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
     @Override
     public final <E, S extends Record> Map<S, E> intoMap(Table<S> table, Class<? extends E> type) {
-        return intoMap(table, Utils.configuration(this).recordMapperProvider().provide(fields, type));
+        return intoMap(table, Tools.configuration(this).recordMapperProvider().provide(fields, type));
     }
 
     @Override
@@ -1435,22 +1435,22 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
     @Override
     public final <E> Map<?, E> intoMap(int keyFieldIndex, Class<? extends E> type) {
-        return intoMap(keyFieldIndex, Utils.configuration(this).recordMapperProvider().provide(fields, type));
+        return intoMap(keyFieldIndex, Tools.configuration(this).recordMapperProvider().provide(fields, type));
     }
 
     @Override
     public final <E> Map<?, E> intoMap(String keyFieldName, Class<? extends E> type) {
-        return intoMap(keyFieldName, Utils.configuration(this).recordMapperProvider().provide(fields, type));
+        return intoMap(keyFieldName, Tools.configuration(this).recordMapperProvider().provide(fields, type));
     }
 
     @Override
     public final <E> Map<?, E> intoMap(Name keyFieldName, Class<? extends E> type) {
-        return intoMap(keyFieldName, Utils.configuration(this).recordMapperProvider().provide(fields, type));
+        return intoMap(keyFieldName, Tools.configuration(this).recordMapperProvider().provide(fields, type));
     }
 
     @Override
     public final <K, E> Map<K, E> intoMap(Field<K> key, Class<? extends E> type) {
-        return intoMap(key, Utils.configuration(this).recordMapperProvider().provide(fields, type));
+        return intoMap(key, Tools.configuration(this).recordMapperProvider().provide(fields, type));
     }
 
     @Override
@@ -1565,22 +1565,22 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
     @Override
     public final <E> Map<?, List<E>> intoGroups(int keyFieldIndex, Class<? extends E> type) {
-        return intoGroups(keyFieldIndex, Utils.configuration(this).recordMapperProvider().provide(fields, type));
+        return intoGroups(keyFieldIndex, Tools.configuration(this).recordMapperProvider().provide(fields, type));
     }
 
     @Override
     public final <E> Map<?, List<E>> intoGroups(String keyFieldName, Class<? extends E> type) {
-        return intoGroups(keyFieldName, Utils.configuration(this).recordMapperProvider().provide(fields, type));
+        return intoGroups(keyFieldName, Tools.configuration(this).recordMapperProvider().provide(fields, type));
     }
 
     @Override
     public final <E> Map<?, List<E>> intoGroups(Name keyFieldName, Class<? extends E> type) {
-        return intoGroups(keyFieldName, Utils.configuration(this).recordMapperProvider().provide(fields, type));
+        return intoGroups(keyFieldName, Tools.configuration(this).recordMapperProvider().provide(fields, type));
     }
 
     @Override
     public final <K, E> Map<K, List<E>> intoGroups(Field<K> key, Class<? extends E> type) {
-        return intoGroups(key, Utils.configuration(this).recordMapperProvider().provide(fields, type));
+        return intoGroups(key, Tools.configuration(this).recordMapperProvider().provide(fields, type));
     }
 
     @Override
@@ -1647,7 +1647,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
             RecordImpl key = new RecordImpl(keys);
 
             for (Field<?> field : keys) {
-                Utils.copyValue(key, field, record, field);
+                Tools.copyValue(key, field, record, field);
             }
 
             Result<R> result = map.get(key);
@@ -1664,22 +1664,22 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
     @Override
     public final <E> Map<Record, List<E>> intoGroups(int[] keyFieldIndexes, Class<? extends E> type) {
-        return intoGroups(keyFieldIndexes, Utils.configuration(this).recordMapperProvider().provide(fields, type));
+        return intoGroups(keyFieldIndexes, Tools.configuration(this).recordMapperProvider().provide(fields, type));
     }
 
     @Override
     public final <E> Map<Record, List<E>> intoGroups(String[] keyFieldNames, Class<? extends E> type) {
-        return intoGroups(keyFieldNames, Utils.configuration(this).recordMapperProvider().provide(fields, type));
+        return intoGroups(keyFieldNames, Tools.configuration(this).recordMapperProvider().provide(fields, type));
     }
 
     @Override
     public final <E> Map<Record, List<E>> intoGroups(Name[] keyFieldNames, Class<? extends E> type) {
-        return intoGroups(keyFieldNames, Utils.configuration(this).recordMapperProvider().provide(fields, type));
+        return intoGroups(keyFieldNames, Tools.configuration(this).recordMapperProvider().provide(fields, type));
     }
 
     @Override
     public final <E> Map<Record, List<E>> intoGroups(Field<?>[] keys, Class<? extends E> type) {
-        return intoGroups(keys, Utils.configuration(this).recordMapperProvider().provide(fields, type));
+        return intoGroups(keys, Tools.configuration(this).recordMapperProvider().provide(fields, type));
     }
 
     @Override
@@ -1708,7 +1708,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
             RecordImpl key = new RecordImpl(keys);
 
             for (Field<?> field : keys) {
-                Utils.copyValue(key, field, record, field);
+                Tools.copyValue(key, field, record, field);
             }
 
             List<E> list = map.get(key);
@@ -1725,20 +1725,20 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
     @Override
     public final <K> Map<K, Result<R>> intoGroups(Class<? extends K> keyType) {
-        return intoGroups(Utils.configuration(this).recordMapperProvider().provide(fields, keyType));
+        return intoGroups(Tools.configuration(this).recordMapperProvider().provide(fields, keyType));
     }
 
     @Override
     public final <K, V> Map<K, List<V>> intoGroups(Class<? extends K> keyType, Class<? extends V> valueType) {
         return intoGroups(
-            Utils.configuration(this).recordMapperProvider().provide(fields, keyType),
-            Utils.configuration(this).recordMapperProvider().provide(fields, valueType)
+            Tools.configuration(this).recordMapperProvider().provide(fields, keyType),
+            Tools.configuration(this).recordMapperProvider().provide(fields, valueType)
         );
     }
 
     @Override
     public final <K, V> Map<K, List<V>> intoGroups(Class<? extends K> keyType, RecordMapper<? super R, V> valueMapper) {
-        return intoGroups(Utils.configuration(this).recordMapperProvider().provide(fields, keyType), valueMapper);
+        return intoGroups(Tools.configuration(this).recordMapperProvider().provide(fields, keyType), valueMapper);
     }
 
     @Override
@@ -1762,7 +1762,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
     @Override
     public final <K, V> Map<K, List<V>> intoGroups(RecordMapper<? super R, K> keyMapper, Class<V> valueType) {
-        return intoGroups(keyMapper, Utils.configuration(this).recordMapperProvider().provide(fields, valueType));
+        return intoGroups(keyMapper, Tools.configuration(this).recordMapperProvider().provide(fields, valueType));
     }
 
     @Override
@@ -1805,7 +1805,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
     @Override
     public final <E, S extends Record> Map<S, List<E>> intoGroups(Table<S> table, Class<? extends E> type) {
-        return intoGroups(table, Utils.configuration(this).recordMapperProvider().provide(fields, type));
+        return intoGroups(table, Tools.configuration(this).recordMapperProvider().provide(fields, type));
     }
 
     @Override
@@ -1973,7 +1973,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
     @Override
     public final Result<Record> into(Field<?>... f) {
-        Result<Record> result = new ResultImpl<Record>(Utils.configuration(this), f);
+        Result<Record> result = new ResultImpl<Record>(Tools.configuration(this), f);
 
         for (Record record : this)
             result.add(record.into(f));
@@ -2097,7 +2097,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
     @Override
     public final <E> List<E> into(Class<? extends E> type) {
         List<E> list = new ArrayList<E>(size());
-        RecordMapper<R, E> mapper = Utils.configuration(this).recordMapperProvider().provide(fields, type);
+        RecordMapper<R, E> mapper = Tools.configuration(this).recordMapperProvider().provide(fields, type);
 
         for (R record : this) {
             list.add(mapper.map(record));

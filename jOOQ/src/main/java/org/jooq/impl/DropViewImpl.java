@@ -98,9 +98,9 @@ final class DropViewImpl extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         if (ifExists && !supportsIfExists(ctx)) {
-            Utils.executeImmediateBegin(ctx, DDLStatementType.DROP_VIEW);
+            Tools.executeImmediateBegin(ctx, DDLStatementType.DROP_VIEW);
             accept0(ctx);
-            Utils.executeImmediateEnd(ctx, DDLStatementType.DROP_VIEW);
+            Tools.executeImmediateEnd(ctx, DDLStatementType.DROP_VIEW);
         }
         else {
             accept0(ctx);

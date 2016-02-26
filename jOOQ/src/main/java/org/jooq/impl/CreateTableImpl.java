@@ -61,7 +61,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.Utils.DataKey.DATA_SELECT_INTO_TABLE;
+import static org.jooq.impl.Tools.DataKey.DATA_SELECT_INTO_TABLE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -212,9 +212,9 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         if (ifNotExists && !supportsIfNotExists(ctx)) {
-            Utils.executeImmediateBegin(ctx, DDLStatementType.CREATE_TABLE);
+            Tools.executeImmediateBegin(ctx, DDLStatementType.CREATE_TABLE);
             accept0(ctx);
-            Utils.executeImmediateEnd(ctx, DDLStatementType.CREATE_TABLE);
+            Tools.executeImmediateEnd(ctx, DDLStatementType.CREATE_TABLE);
         }
         else {
             accept0(ctx);
@@ -251,7 +251,7 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
 
                 ctx.visit(columnFields.get(i))
                    .sql(' ');
-                Utils.toSQLDDLTypeDeclaration(ctx, type);
+                Tools.toSQLDDLTypeDeclaration(ctx, type);
 
                 if (type.nullable()) {
 

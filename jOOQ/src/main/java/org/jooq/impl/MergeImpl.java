@@ -57,7 +57,7 @@ import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.nullSafe;
-import static org.jooq.impl.Utils.DataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
+import static org.jooq.impl.Tools.DataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -711,11 +711,11 @@ implements
         // syntax, in case of which, the USING() was not added
         if (using == null) {
             upsertStyle = true;
-            getUpsertValues().addAll(Utils.fields(values, getUpsertFields().toArray(new Field[0])));
+            getUpsertValues().addAll(Tools.fields(values, getUpsertFields().toArray(new Field[0])));
         }
         else {
             Field<?>[] fields = notMatchedInsert.keySet().toArray(new Field[0]);
-            notMatchedInsert.putValues(Utils.fields(values, fields));
+            notMatchedInsert.putValues(Tools.fields(values, fields));
         }
 
         return this;
@@ -921,7 +921,7 @@ implements
 
     @Override
     public final <T> MergeImpl set(Field<T> field, T value) {
-        return set(field, Utils.field(value, field));
+        return set(field, Tools.field(value, field));
     }
 
     @Override
@@ -961,7 +961,7 @@ implements
 
     @Override
     public final MergeImpl set(Record record) {
-        return set(Utils.mapOfChangedValues(record));
+        return set(Tools.mapOfChangedValues(record));
     }
 
     @Override
@@ -1346,12 +1346,12 @@ implements
            .formatSeparator();
 
         ctx.sql('(');
-        Utils.fieldNames(ctx, getUpsertFields());
+        Tools.fieldNames(ctx, getUpsertFields());
         ctx.sql(')');
 
         if (!getUpsertKeys().isEmpty()) {
             ctx.sql(' ').keyword("key").sql(" (");
-            Utils.fieldNames(ctx, getUpsertKeys());
+            Tools.fieldNames(ctx, getUpsertKeys());
             ctx.sql(')');
         }
 

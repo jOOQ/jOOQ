@@ -59,22 +59,22 @@ final class CaseValueStepImpl<V> implements CaseValueStep<V> {
 
     @Override
     public final <T> CaseWhenStep<V, T> when(V compareValue, T result) {
-        return when(Utils.field(compareValue), Utils.field(result));
+        return when(Tools.field(compareValue), Tools.field(result));
     }
 
     @Override
     public final <T> CaseWhenStep<V, T> when(V compareValue, Field<T> result) {
-        return when(Utils.field(compareValue), result);
+        return when(Tools.field(compareValue), result);
     }
 
     @Override
     public final <T> CaseWhenStep<V, T> when(V compareValue, Select<? extends Record1<T>> result) {
-        return when(Utils.field(compareValue), DSL.field(result));
+        return when(Tools.field(compareValue), DSL.field(result));
     }
 
     @Override
     public final <T> CaseWhenStep<V, T> when(Field<V> compareValue, T result) {
-        return when(compareValue, Utils.field(result));
+        return when(compareValue, Tools.field(result));
     }
 
     @Override

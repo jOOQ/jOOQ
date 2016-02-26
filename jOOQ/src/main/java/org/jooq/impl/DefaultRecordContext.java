@@ -92,12 +92,12 @@ class DefaultRecordContext implements RecordContext {
 
     @Override
     public final Settings settings() {
-        return Utils.settings(configuration());
+        return Tools.settings(configuration());
     }
 
     @Override
     public final SQLDialect dialect() {
-        return Utils.configuration(configuration()).dialect();
+        return Tools.configuration(configuration()).dialect();
     }
 
     @Override

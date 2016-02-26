@@ -40,7 +40,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Utils.visitAll;
+import static org.jooq.impl.Tools.visitAll;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -117,7 +117,7 @@ abstract class AbstractBindContext extends AbstractContext<BindContext> implemen
             return bindValue0(value, DSL.val(value, type));
         }
         catch (SQLException e) {
-            throw Utils.translate(null, e);
+            throw Tools.translate(null, e);
         }
     }
 
@@ -127,7 +127,7 @@ abstract class AbstractBindContext extends AbstractContext<BindContext> implemen
             return bindValue0(value, field);
         }
         catch (SQLException e) {
-            throw Utils.translate(null, e);
+            throw Tools.translate(null, e);
         }
     }
 

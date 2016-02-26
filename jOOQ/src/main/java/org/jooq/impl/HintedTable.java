@@ -60,7 +60,7 @@ final class HintedTable<R extends Record> extends AbstractTable<R> {
     private final QueryPartList<Name> arguments;
 
     HintedTable(AbstractTable<R> delegate, String keywords, String... arguments) {
-        this(delegate, keywords, new QueryPartList<Name>(Utils.names(arguments)));
+        this(delegate, keywords, new QueryPartList<Name>(Tools.names(arguments)));
     }
 
     HintedTable(AbstractTable<R> delegate, String keywords, QueryPartList<Name> arguments) {

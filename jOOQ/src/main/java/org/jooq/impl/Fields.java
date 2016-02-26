@@ -41,7 +41,7 @@
 
 package org.jooq.impl;
 
-import static org.jooq.impl.Utils.indexOrFail;
+import static org.jooq.impl.Tools.indexOrFail;
 
 import java.sql.SQLWarning;
 import java.util.Collection;

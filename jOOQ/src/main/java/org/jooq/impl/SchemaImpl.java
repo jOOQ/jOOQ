@@ -102,7 +102,7 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
 
     @Override
     public final void accept(Context<?> ctx) {
-        Catalog mappedCatalog = Utils.getMappedCatalog(ctx.configuration(), getCatalog());
+        Catalog mappedCatalog = Tools.getMappedCatalog(ctx.configuration(), getCatalog());
 
         if (ctx.qualifyCatalog() && mappedCatalog != null) {
             ctx.visit(mappedCatalog);

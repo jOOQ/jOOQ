@@ -42,8 +42,8 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
 // ...
-import static org.jooq.impl.Utils.recordFactory;
-import static org.jooq.impl.Utils.DataKey.DATA_LOCK_ROWS_FOR_UPDATE;
+import static org.jooq.impl.Tools.recordFactory;
+import static org.jooq.impl.Tools.DataKey.DATA_LOCK_ROWS_FOR_UPDATE;
 
 import java.io.InputStream;
 import java.io.Reader;
@@ -575,7 +575,7 @@ final class CursorImpl<R extends Record> implements Cursor<R> {
             // [#1868] If this Result / Cursor was "kept" through a lazy
             // execution, we must assure that the ExecuteListener lifecycle is
             // correctly terminated.
-            Utils.safeClose(listener, ctx, keepStatement, keepResultSet);
+            Tools.safeClose(listener, ctx, keepStatement, keepResultSet);
         }
 
         @Override
@@ -1536,7 +1536,7 @@ final class CursorImpl<R extends Record> implements Cursor<R> {
                         rs.updateRow();
                     }
 
-                    record = Utils.newRecord(true, (RecordFactory<AbstractRecord>) factory, ctx.configuration())
+                    record = Tools.newRecord(true, (RecordFactory<AbstractRecord>) factory, ctx.configuration())
                                   .operate(new CursorRecordInitialiser(cursorFields, 0));
 
                     rows++;
@@ -1630,7 +1630,7 @@ final class CursorImpl<R extends Record> implements Cursor<R> {
                 if (field instanceof RowField) {
                     Field<?>[] emulatedFields = ((RowField<?, ?>) field).emulatedFields();
 
-                    value = (T) Utils.newRecord(true, RecordImpl.class, emulatedFields, ctx.configuration())
+                    value = (T) Tools.newRecord(true, RecordImpl.class, emulatedFields, ctx.configuration())
                                      .operate(new CursorRecordInitialiser(emulatedFields, offset + index));
 
                     offset += emulatedFields.length - 1;

@@ -44,7 +44,7 @@ import static org.jooq.ExecuteType.READ;
 import static org.jooq.ExecuteType.WRITE;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.LOAD;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.REFRESH;
-import static org.jooq.impl.Utils.attachRecords;
+import static org.jooq.impl.Tools.attachRecords;
 
 import org.jooq.Configuration;
 import org.jooq.ExecuteType;

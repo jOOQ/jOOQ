@@ -48,9 +48,9 @@ import static java.util.concurrent.Executors.newSingleThreadExecutor;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
-import static org.jooq.impl.Utils.blocking;
-import static org.jooq.impl.Utils.consumeResultSets;
-import static org.jooq.impl.Utils.DataKey.DATA_LOCK_ROWS_FOR_UPDATE;
+import static org.jooq.impl.Tools.blocking;
+import static org.jooq.impl.Tools.consumeResultSets;
+import static org.jooq.impl.Tools.DataKey.DATA_LOCK_ROWS_FOR_UPDATE;
 
 import java.lang.reflect.Array;
 import java.sql.ResultSet;
@@ -327,7 +327,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final CompletionStage<Result<R>> fetchAsync() {
-        return fetchAsync(Utils.configuration(this).executorProvider().provide());
+        return fetchAsync(Tools.configuration(this).executorProvider().provide());
     }
 
     @Override
@@ -514,7 +514,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final R fetchOne() {
-        return Utils.fetchOne(fetchLazy());
+        return Tools.fetchOne(fetchLazy());
     }
 
     @Override

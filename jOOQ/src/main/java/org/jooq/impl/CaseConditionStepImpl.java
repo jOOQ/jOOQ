@@ -78,7 +78,7 @@ final class CaseConditionStepImpl<T> extends AbstractFunction<T> implements Case
 
     @Override
     public final CaseConditionStep<T> when(Condition condition, T result) {
-        return when(condition, Utils.field(result));
+        return when(condition, Tools.field(result));
     }
 
     @Override
@@ -96,7 +96,7 @@ final class CaseConditionStepImpl<T> extends AbstractFunction<T> implements Case
 
     @Override
     public final Field<T> otherwise(T result) {
-        return otherwise(Utils.field(result));
+        return otherwise(Tools.field(result));
     }
 
     @Override

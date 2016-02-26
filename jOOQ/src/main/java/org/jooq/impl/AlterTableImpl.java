@@ -60,8 +60,8 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.sql;
-import static org.jooq.impl.Utils.toSQLDDLTypeDeclaration;
-import static org.jooq.impl.Utils.DataKey.DATA_CONSTRAINT_REFERENCE;
+import static org.jooq.impl.Tools.toSQLDDLTypeDeclaration;
+import static org.jooq.impl.Tools.DataKey.DATA_CONSTRAINT_REFERENCE;
 
 import org.jooq.AlterTableAlterStep;
 import org.jooq.AlterTableDropStep;

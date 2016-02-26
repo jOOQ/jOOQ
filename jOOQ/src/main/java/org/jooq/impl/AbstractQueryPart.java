@@ -202,6 +202,6 @@ abstract class AbstractQueryPart implements QueryPartInternal {
      * Internal convenience method
      */
     protected final DataAccessException translate(String sql, SQLException e) {
-        return Utils.translate(sql, e);
+        return Tools.translate(sql, e);
     }
 }

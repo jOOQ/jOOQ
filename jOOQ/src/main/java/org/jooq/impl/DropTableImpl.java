@@ -114,9 +114,9 @@ final class DropTableImpl extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         if (ifExists && !supportsIfExists(ctx)) {
-            Utils.executeImmediateBegin(ctx, DDLStatementType.DROP_TABLE);
+            Tools.executeImmediateBegin(ctx, DDLStatementType.DROP_TABLE);
             accept0(ctx);
-            Utils.executeImmediateEnd(ctx, DDLStatementType.DROP_TABLE);
+            Tools.executeImmediateEnd(ctx, DDLStatementType.DROP_TABLE);
         }
         else {
             accept0(ctx);

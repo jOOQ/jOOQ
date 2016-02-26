@@ -96,18 +96,18 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.orderBy;
 import static org.jooq.impl.DSL.row;
-import static org.jooq.impl.Utils.fieldArray;
-import static org.jooq.impl.Utils.DataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
-import static org.jooq.impl.Utils.DataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
-import static org.jooq.impl.Utils.DataKey.DATA_LOCALLY_SCOPED_DATA_MAP;
-import static org.jooq.impl.Utils.DataKey.DATA_OMIT_INTO_CLAUSE;
-import static org.jooq.impl.Utils.DataKey.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
-import static org.jooq.impl.Utils.DataKey.DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE;
-import static org.jooq.impl.Utils.DataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
-import static org.jooq.impl.Utils.DataKey.DATA_SELECT_INTO_TABLE;
-import static org.jooq.impl.Utils.DataKey.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
-import static org.jooq.impl.Utils.DataKey.DATA_WINDOW_DEFINITIONS;
-import static org.jooq.impl.Utils.DataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
+import static org.jooq.impl.Tools.fieldArray;
+import static org.jooq.impl.Tools.DataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
+import static org.jooq.impl.Tools.DataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
+import static org.jooq.impl.Tools.DataKey.DATA_LOCALLY_SCOPED_DATA_MAP;
+import static org.jooq.impl.Tools.DataKey.DATA_OMIT_INTO_CLAUSE;
+import static org.jooq.impl.Tools.DataKey.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
+import static org.jooq.impl.Tools.DataKey.DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE;
+import static org.jooq.impl.Tools.DataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
+import static org.jooq.impl.Tools.DataKey.DATA_SELECT_INTO_TABLE;
+import static org.jooq.impl.Tools.DataKey.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
+import static org.jooq.impl.Tools.DataKey.DATA_WINDOW_DEFINITIONS;
+import static org.jooq.impl.Tools.DataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 
 import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
@@ -143,7 +143,7 @@ import org.jooq.TableOnStep;
 import org.jooq.TablePartitionByStep;
 import org.jooq.WindowDefinition;
 import org.jooq.exception.DataAccessException;
-import org.jooq.impl.Utils.DataKey;
+import org.jooq.impl.Tools.DataKey;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -349,7 +349,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     public final Table<R> asTable() {
         // Its usually better to alias nested selects that are used in
         // the FROM clause of a query
-        return new DerivedTable<R>(this).as("alias_" + Utils.hash(this));
+        return new DerivedTable<R>(this).as("alias_" + Tools.hash(this));
     }
 
     @Override
@@ -549,7 +549,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
                         // Render the OF [table-names] clause
                         default:
-                            Utils.tableNames(context, forUpdateOfTables);
+                            Tools.tableNames(context, forUpdateOfTables);
                             break;
                     }
                 }
@@ -1468,7 +1468,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final void addSelect(Collection<? extends SelectField<?>> fields) {
-        getSelect0().addAll(Utils.fields(fields));
+        getSelect0().addAll(Tools.fields(fields));
     }
 
     @Override

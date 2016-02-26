@@ -611,7 +611,7 @@ final class LoaderImpl<R extends Record> implements
         // SQLExceptions originating from rollbacks or commits are always fatal
         // They are propagated, and not swallowed
         catch (SQLException e) {
-            throw Utils.translate(null, e);
+            throw Tools.translate(null, e);
         }
         finally {
             if (reader != null)
@@ -630,7 +630,7 @@ final class LoaderImpl<R extends Record> implements
         // SQLExceptions originating from rollbacks or commits are always fatal
         // They are propagated, and not swallowed
         catch (SQLException e) {
-            throw Utils.translate(null, e);
+            throw Tools.translate(null, e);
         }
         finally {
             if (reader != null)
@@ -646,7 +646,7 @@ final class LoaderImpl<R extends Record> implements
         // SQLExceptions originating from rollbacks or commits are always fatal
         // They are propagated, and not swallowed
         catch (SQLException e) {
-            throw Utils.translate(null, e);
+            throw Tools.translate(null, e);
         }
     }
 

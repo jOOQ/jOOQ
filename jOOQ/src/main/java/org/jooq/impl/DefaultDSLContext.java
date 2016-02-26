@@ -49,8 +49,8 @@ import static org.jooq.impl.DSL.sequence;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.trueCondition;
-import static org.jooq.impl.Utils.blocking;
-import static org.jooq.impl.Utils.list;
+import static org.jooq.impl.Tools.blocking;
+import static org.jooq.impl.Tools.list;
 import static org.jooq.tools.Convert.convert;
 
 import java.io.IOException;
@@ -334,12 +334,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Schema map(Schema schema) {
-        return Utils.getMappedSchema(configuration(), schema);
+        return Tools.getMappedSchema(configuration(), schema);
     }
 
     @Override
     public <R extends Record> Table<R> map(Table<R> table) {
-        return Utils.getMappedTable(configuration(), table);
+        return Tools.getMappedTable(configuration(), table);
     }
 
     // -------------------------------------------------------------------------
@@ -420,7 +420,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CompletionStage<Void> transactionAsync(TransactionalRunnable transactional) {
-        return transactionAsync(Utils.configuration(configuration()).executorProvider().provide(), transactional);
+        return transactionAsync(Tools.configuration(configuration()).executorProvider().provide(), transactional);
     }
 
     @Override
@@ -433,7 +433,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <T> CompletionStage<T> transactionResultAsync(TransactionalCallable<T> transactional) {
-        return transactionResultAsync(Utils.configuration(configuration()).executorProvider().provide(), transactional);
+        return transactionResultAsync(Tools.configuration(configuration()).executorProvider().provide(), transactional);
     }
 
     @Override
@@ -906,22 +906,22 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Record fetchOne(ResultSet rs) {
-        return Utils.fetchOne(fetchLazy(rs));
+        return Tools.fetchOne(fetchLazy(rs));
     }
 
     @Override
     public Record fetchOne(ResultSet rs, Field<?>... fields) {
-        return Utils.fetchOne(fetchLazy(rs, fields));
+        return Tools.fetchOne(fetchLazy(rs, fields));
     }
 
     @Override
     public Record fetchOne(ResultSet rs, DataType<?>... types) {
-        return Utils.fetchOne(fetchLazy(rs, types));
+        return Tools.fetchOne(fetchLazy(rs, types));
     }
 
     @Override
     public Record fetchOne(ResultSet rs, Class<?>... types) {
-        return Utils.fetchOne(fetchLazy(rs, types));
+        return Tools.fetchOne(fetchLazy(rs, types));
     }
 
 
@@ -1047,29 +1047,29 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Cursor<Record> fetchLazy(ResultSet rs, Class<?>... types) {
-        return fetchLazy(rs, Utils.dataTypes(types));
+        return fetchLazy(rs, Tools.dataTypes(types));
     }
 
 
 
     @Override
     public CompletionStage<Result<Record>> fetchAsync(ResultSet rs) {
-        return fetchAsync(Utils.configuration(configuration()).executorProvider().provide(), rs);
+        return fetchAsync(Tools.configuration(configuration()).executorProvider().provide(), rs);
     }
 
     @Override
     public CompletionStage<Result<Record>> fetchAsync(ResultSet rs, Field<?>... fields) {
-        return fetchAsync(Utils.configuration(configuration()).executorProvider().provide(), rs, fields);
+        return fetchAsync(Tools.configuration(configuration()).executorProvider().provide(), rs, fields);
     }
 
     @Override
     public CompletionStage<Result<Record>> fetchAsync(ResultSet rs, DataType<?>... types) {
-        return fetchAsync(Utils.configuration(configuration()).executorProvider().provide(), rs, types);
+        return fetchAsync(Tools.configuration(configuration()).executorProvider().provide(), rs, types);
     }
 
     @Override
     public CompletionStage<Result<Record>> fetchAsync(ResultSet rs, Class<?>... types) {
-        return fetchAsync(Utils.configuration(configuration()).executorProvider().provide(), rs, types);
+        return fetchAsync(Tools.configuration(configuration()).executorProvider().provide(), rs, types);
     }
 
     @Override
@@ -1132,12 +1132,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Result<Record> fetchFromTXT(String string, String nullLiteral) {
-        return fetchFromStringData(Utils.parseTXT(string, nullLiteral));
+        return fetchFromStringData(Tools.parseTXT(string, nullLiteral));
     }
 
     @Override
     public Result<Record> fetchFromHTML(String string) {
-        return fetchFromStringData(Utils.parseHTML(string));
+        return fetchFromStringData(Tools.parseHTML(string));
     }
 
     @Override
@@ -2351,12 +2351,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateViewAsStep<Record> createView(String view, String... fields) {
-        return createView(table(name(view)), Utils.fieldsByName(view, fields));
+        return createView(table(name(view)), Tools.fieldsByName(view, fields));
     }
 
     @Override
     public CreateViewAsStep<Record> createView(Name view, Name... fields) {
-        return createView(table(view), Utils.fieldsByName(fields));
+        return createView(table(view), Tools.fieldsByName(fields));
     }
 
     @Override
@@ -2366,12 +2366,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateViewAsStep<Record> createViewIfNotExists(String view, String... fields) {
-        return createViewIfNotExists(table(name(view)), Utils.fieldsByName(view, fields));
+        return createViewIfNotExists(table(name(view)), Tools.fieldsByName(view, fields));
     }
 
     @Override
     public CreateViewAsStep<Record> createViewIfNotExists(Name view, Name... fields) {
-        return createViewIfNotExists(table(view), Utils.fieldsByName(fields));
+        return createViewIfNotExists(table(view), Tools.fieldsByName(fields));
     }
 
     @Override
@@ -2755,7 +2755,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Record newRecord(Field<?>... fields) {
-        return Utils.newRecord(false, RecordImpl.class, fields, configuration()).<RuntimeException>operate(null);
+        return Tools.newRecord(false, RecordImpl.class, fields, configuration()).<RuntimeException>operate(null);
     }
 
     // [jooq-tools] START [newRecord]
@@ -2895,17 +2895,17 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends UDTRecord<R>> R newRecord(UDT<R> type) {
-        return Utils.newRecord(false, type, configuration()).<RuntimeException>operate(null);
+        return Tools.newRecord(false, type, configuration()).<RuntimeException>operate(null);
     }
 
     @Override
     public <R extends Record> R newRecord(Table<R> table) {
-        return Utils.newRecord(false, table, configuration()).<RuntimeException>operate(null);
+        return Tools.newRecord(false, table, configuration()).<RuntimeException>operate(null);
     }
 
     @Override
     public <R extends Record> R newRecord(Table<R> table, final Object source) {
-        return Utils.newRecord(false, table, configuration())
+        return Tools.newRecord(false, table, configuration())
                     .operate(new RecordOperation<R, RuntimeException>() {
 
             @Override
@@ -3068,7 +3068,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> Result<R> fetch(ResultQuery<R> query) {
-        final Configuration previous = Utils.getConfiguration(query);
+        final Configuration previous = Tools.getConfiguration(query);
 
         try {
             query.attach(configuration());
@@ -3081,7 +3081,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> Cursor<R> fetchLazy(ResultQuery<R> query) {
-        final Configuration previous = Utils.getConfiguration(query);
+        final Configuration previous = Tools.getConfiguration(query);
 
         try {
             query.attach(configuration());
@@ -3096,7 +3096,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> CompletionStage<Result<R>> fetchAsync(ResultQuery<R> query) {
-        final Configuration previous = Utils.getConfiguration(query);
+        final Configuration previous = Tools.getConfiguration(query);
 
         try {
             query.attach(configuration());
@@ -3109,7 +3109,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> CompletionStage<Result<R>> fetchAsync(Executor executor, ResultQuery<R> query) {
-        final Configuration previous = Utils.getConfiguration(query);
+        final Configuration previous = Tools.getConfiguration(query);
 
         try {
             query.attach(configuration());
@@ -3122,7 +3122,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> Stream<R> fetchStream(ResultQuery<R> query) {
-        final Configuration previous = Utils.getConfiguration(query);
+        final Configuration previous = Tools.getConfiguration(query);
 
         try {
             query.attach(configuration());
@@ -3137,7 +3137,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> Results fetchMany(ResultQuery<R> query) {
-        final Configuration previous = Utils.getConfiguration(query);
+        final Configuration previous = Tools.getConfiguration(query);
 
         try {
             query.attach(configuration());
@@ -3150,7 +3150,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> R fetchOne(ResultQuery<R> query) {
-        final Configuration previous = Utils.getConfiguration(query);
+        final Configuration previous = Tools.getConfiguration(query);
 
         try {
             query.attach(configuration());
@@ -3170,7 +3170,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <T, R extends Record1<T>> T fetchValue(ResultQuery<R> query) {
-        final Configuration previous = Utils.getConfiguration(query);
+        final Configuration previous = Tools.getConfiguration(query);
 
         try {
             query.attach(configuration());
@@ -3250,7 +3250,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public int execute(Query query) {
-        final Configuration previous = Utils.getConfiguration(query);
+        final Configuration previous = Tools.getConfiguration(query);
 
         try {
             query.attach(configuration());
@@ -3277,12 +3277,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> R fetchOne(Table<R> table) {
-        return Utils.fetchOne(fetchLazy(table));
+        return Tools.fetchOne(fetchLazy(table));
     }
 
     @Override
     public <R extends Record> R fetchOne(Table<R> table, Condition condition) {
-        return Utils.fetchOne(fetchLazy(table, condition));
+        return Tools.fetchOne(fetchLazy(table, condition));
     }
 
 
@@ -3299,12 +3299,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> R fetchAny(Table<R> table) {
-        return Utils.filterOne(selectFrom(table).limit(1).fetch());
+        return Tools.filterOne(selectFrom(table).limit(1).fetch());
     }
 
     @Override
     public <R extends Record> R fetchAny(Table<R> table, Condition condition) {
-        return Utils.filterOne(selectFrom(table).where(condition).limit(1).fetch());
+        return Tools.filterOne(selectFrom(table).where(condition).limit(1).fetch());
     }
 
     @Override
@@ -3361,7 +3361,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public <R extends UpdatableRecord<R>> int executeUpdate(R record) {
         UpdateQuery<R> update = updateQuery(record.getTable());
-        Utils.addConditions(update, record, record.getTable().getPrimaryKey().getFieldsArray());
+        Tools.addConditions(update, record, record.getTable().getPrimaryKey().getFieldsArray());
         update.setRecord(record);
         return update.execute();
     }
@@ -3377,7 +3377,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public <R extends UpdatableRecord<R>> int executeDelete(R record) {
         DeleteQuery<R> delete = deleteQuery(record.getTable());
-        Utils.addConditions(delete, record, record.getTable().getPrimaryKey().getFieldsArray());
+        Tools.addConditions(delete, record, record.getTable().getPrimaryKey().getFieldsArray());
         return delete.execute();
     }
 

@@ -552,12 +552,12 @@ class DefaultExecuteContext implements ExecuteContext {
 
     @Override
     public final Settings settings() {
-        return Utils.settings(configuration());
+        return Tools.settings(configuration());
     }
 
     @Override
     public final SQLDialect dialect() {
-        return Utils.configuration(configuration()).dialect();
+        return Tools.configuration(configuration()).dialect();
     }
 
     @Override
@@ -657,7 +657,7 @@ class DefaultExecuteContext implements ExecuteContext {
     @Override
     public final void sqlException(SQLException e) {
         this.sqlException = e;
-        exception(Utils.translate(sql(), e));
+        exception(Tools.translate(sql(), e));
     }
 
     @Override

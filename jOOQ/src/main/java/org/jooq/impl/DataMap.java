@@ -50,7 +50,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.jooq.Scope;
-import org.jooq.impl.Utils.DataKey;
+import org.jooq.impl.Tools.DataKey;
 
 /**
  * The {@link Map} implementation for use with {@link Scope#data()}.

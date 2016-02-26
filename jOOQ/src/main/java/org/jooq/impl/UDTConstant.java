@@ -163,7 +163,7 @@ final class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
 
             // Assume default behaviour if dialect is not available
             default:
-                return Utils.getMappedUDTName(context.configuration(), value);
+                return Tools.getMappedUDTName(context.configuration(), value);
         }
     }
 

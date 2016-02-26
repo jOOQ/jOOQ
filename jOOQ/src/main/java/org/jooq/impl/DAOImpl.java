@@ -104,7 +104,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
      */
     public /* non-final */ void setConfiguration(Configuration configuration) {
         this.configuration = configuration;
-        this.mapper = Utils.configuration(configuration).recordMapperProvider().provide(table.recordType(), type);
+        this.mapper = Tools.configuration(configuration).recordMapperProvider().provide(table.recordType(), type);
     }
 
     @Override
@@ -114,12 +114,12 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
 
     @Override
     public /* non-final */ Settings settings() {
-        return Utils.settings(configuration());
+        return Tools.settings(configuration());
     }
 
     @Override
     public /* non-final */ SQLDialect dialect() {
-        return Utils.configuration(configuration()).dialect();
+        return Tools.configuration(configuration()).dialect();
     }
 
     @Override
@@ -383,7 +383,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
                 for (Field<?> field : pk)
                     record.changed(field, false);
 
-            Utils.resetChangedOnNotNull(record);
+            Tools.resetChangedOnNotNull(record);
             result.add(record);
         }
 

@@ -43,14 +43,14 @@ package org.jooq.impl;
 import static java.util.Collections.nCopies;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.Utils.getAnnotatedGetter;
-import static org.jooq.impl.Utils.getAnnotatedMembers;
-import static org.jooq.impl.Utils.getAnnotatedSetters;
-import static org.jooq.impl.Utils.getMatchingGetter;
-import static org.jooq.impl.Utils.getMatchingMembers;
-import static org.jooq.impl.Utils.getMatchingSetters;
-import static org.jooq.impl.Utils.getPropertyName;
-import static org.jooq.impl.Utils.hasColumnAnnotations;
+import static org.jooq.impl.Tools.getAnnotatedGetter;
+import static org.jooq.impl.Tools.getAnnotatedMembers;
+import static org.jooq.impl.Tools.getAnnotatedSetters;
+import static org.jooq.impl.Tools.getMatchingGetter;
+import static org.jooq.impl.Tools.getMatchingMembers;
+import static org.jooq.impl.Tools.getMatchingSetters;
+import static org.jooq.impl.Tools.getPropertyName;
+import static org.jooq.impl.Tools.hasColumnAnnotations;
 import static org.jooq.tools.reflect.Reflect.accessible;
 
 import java.beans.ConstructorProperties;
@@ -861,7 +861,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             Attachable a = (Attachable) attachable;
             AttachableInternal r = (AttachableInternal) record;
 
-            if (Utils.attachRecords(r.configuration())) {
+            if (Tools.attachRecords(r.configuration())) {
                 a.attach(r.configuration());
             }
         }

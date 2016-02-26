@@ -166,7 +166,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
 
     @Override
     public final void accept(Context<?> ctx) {
-        Schema mappedSchema = Utils.getMappedSchema(ctx.configuration(), getSchema());
+        Schema mappedSchema = Tools.getMappedSchema(ctx.configuration(), getSchema());
 
         if (mappedSchema != null) {
             ctx.visit(mappedSchema);

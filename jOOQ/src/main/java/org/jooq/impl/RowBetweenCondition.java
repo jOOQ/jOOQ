@@ -689,7 +689,7 @@ implements
 
     @Override
     public final Condition and(Record record) {
-        RowN r = new RowImpl(Utils.fields(record.intoArray(), record.fields()));
+        RowN r = new RowImpl(Tools.fields(record.intoArray(), record.fields()));
         return and(r);
     }
 

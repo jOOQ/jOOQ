@@ -115,7 +115,7 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
             Field<?> field = entry.getKey();
             Object value = entry.getValue();
 
-            put(entry.getKey(), Utils.field(value, field));
+            put(entry.getKey(), Tools.field(value, field));
         }
     }
 }

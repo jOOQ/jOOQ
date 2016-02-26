@@ -43,15 +43,15 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
-import static org.jooq.impl.Utils.getAnnotatedGetter;
-import static org.jooq.impl.Utils.getAnnotatedMembers;
-import static org.jooq.impl.Utils.getMatchingGetter;
-import static org.jooq.impl.Utils.getMatchingMembers;
-import static org.jooq.impl.Utils.hasColumnAnnotations;
-import static org.jooq.impl.Utils.indexOrFail;
-import static org.jooq.impl.Utils.resetChangedOnNotNull;
-import static org.jooq.impl.Utils.settings;
-import static org.jooq.impl.Utils.ThreadGuard.Guard.RECORD_TOSTRING;
+import static org.jooq.impl.Tools.getAnnotatedGetter;
+import static org.jooq.impl.Tools.getAnnotatedMembers;
+import static org.jooq.impl.Tools.getMatchingGetter;
+import static org.jooq.impl.Tools.getMatchingMembers;
+import static org.jooq.impl.Tools.hasColumnAnnotations;
+import static org.jooq.impl.Tools.indexOrFail;
+import static org.jooq.impl.Tools.resetChangedOnNotNull;
+import static org.jooq.impl.Tools.settings;
+import static org.jooq.impl.Tools.ThreadGuard.Guard.RECORD_TOSTRING;
 
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
@@ -98,8 +98,8 @@ import org.jooq.Table;
 import org.jooq.UniqueKey;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
-import org.jooq.impl.Utils.ThreadGuard;
-import org.jooq.impl.Utils.ThreadGuard.GuardedOperation;
+import org.jooq.impl.Tools.ThreadGuard;
+import org.jooq.impl.Tools.ThreadGuard.GuardedOperation;
 import org.jooq.tools.Convert;
 import org.jooq.tools.StringUtils;
 
@@ -389,7 +389,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
      */
     @Override
     public Record original() {
-        return Utils.newRecord(fetched, (Class<AbstractRecord>) getClass(), fields.fields.fields, configuration())
+        return Tools.newRecord(fetched, (Class<AbstractRecord>) getClass(), fields.fields.fields, configuration())
                     .operate(new RecordOperation<AbstractRecord, RuntimeException>() {
 
             @Override
@@ -545,7 +545,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final Record into(Field<?>... f) {
-        return Utils.newRecord(fetched, Record.class, f, configuration()).operate(new TransferRecordState<Record>(f));
+        return Tools.newRecord(fetched, Record.class, f, configuration()).operate(new TransferRecordState<Record>(f));
     }
 
     // [jooq-tools] START [into-fields]
@@ -663,7 +663,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <E> E into(Class<? extends E> type) {
-        return (E) Utils.configuration(this).recordMapperProvider().provide(fields.fields, type).map(this);
+        return (E) Tools.configuration(this).recordMapperProvider().provide(fields.fields, type).map(this);
     }
 
     @Override
@@ -691,11 +691,11 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <R extends Record> R into(Table<R> table) {
-        return Utils.newRecord(fetched, table, configuration()).operate(new TransferRecordState<R>(table.fields()));
+        return Tools.newRecord(fetched, table, configuration()).operate(new TransferRecordState<R>(table.fields()));
     }
 
     final <R extends Record> R intoRecord(Class<R> type) {
-        return Utils.newRecord(fetched, type, fields(), configuration()).operate(new TransferRecordState<R>(null));
+        return Tools.newRecord(fetched, type, fields(), configuration()).operate(new TransferRecordState<R>(null));
     }
 
     private class TransferRecordState<R extends Record> implements RecordOperation<R, MappingException> {
@@ -738,7 +738,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
                         Field<?> sourceField = field(targetField);
 
                         if (sourceField != null) {
-                            Utils.setValue(target, targetField, source, sourceField);
+                            Tools.setValue(target, targetField, source, sourceField);
                         }
                     }
                 }
@@ -826,7 +826,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
                     // Use only the first applicable method or member
                     if (method != null) {
-                        Utils.setValue(this, field, method.invoke(source));
+                        Tools.setValue(this, field, method.invoke(source));
                     }
                     else if (members.size() > 0) {
                         from(source, members.get(0), field);
@@ -872,7 +872,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
             // Set only those values contained in the map
             if (map.containsKey(name)) {
-                Utils.setValue(this, f[i], map.get(name));
+                Tools.setValue(this, f[i], map.get(name));
             }
         }
     }
@@ -906,7 +906,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
             Field field = fields.field(i);
 
             if (accept.field(field) != null) {
-                Utils.setValue(this, field, array[i]);
+                Tools.setValue(this, field, array[i]);
             }
         }
     }
@@ -935,7 +935,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
             Field<?> sourceField = source.field(field);
 
             if (sourceField != null) {
-                Utils.setValue(this, field, source, sourceField);
+                Tools.setValue(this, field, source, sourceField);
             }
         }
     }
@@ -947,32 +947,32 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
         if (mType.isPrimitive()) {
             if (mType == byte.class) {
-                Utils.setValue(this, field, member.getByte(source));
+                Tools.setValue(this, field, member.getByte(source));
             }
             else if (mType == short.class) {
-                Utils.setValue(this, field, member.getShort(source));
+                Tools.setValue(this, field, member.getShort(source));
             }
             else if (mType == int.class) {
-                Utils.setValue(this, field, member.getInt(source));
+                Tools.setValue(this, field, member.getInt(source));
             }
             else if (mType == long.class) {
-                Utils.setValue(this, field, member.getLong(source));
+                Tools.setValue(this, field, member.getLong(source));
             }
             else if (mType == float.class) {
-                Utils.setValue(this, field, member.getFloat(source));
+                Tools.setValue(this, field, member.getFloat(source));
             }
             else if (mType == double.class) {
-                Utils.setValue(this, field, member.getDouble(source));
+                Tools.setValue(this, field, member.getDouble(source));
             }
             else if (mType == boolean.class) {
-                Utils.setValue(this, field, member.getBoolean(source));
+                Tools.setValue(this, field, member.getBoolean(source));
             }
             else if (mType == char.class) {
-                Utils.setValue(this, field, member.getChar(source));
+                Tools.setValue(this, field, member.getChar(source));
             }
         }
         else {
-            Utils.setValue(this, field, member.get(source));
+            Tools.setValue(this, field, member.get(source));
         }
     }
 

@@ -67,9 +67,9 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
-import static org.jooq.impl.Utils.attachRecords;
-import static org.jooq.impl.Utils.getMappedUDTName;
-import static org.jooq.impl.Utils.needsBackslashEscaping;
+import static org.jooq.impl.Tools.attachRecords;
+import static org.jooq.impl.Tools.getMappedUDTName;
+import static org.jooq.impl.Tools.needsBackslashEscaping;
 import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
 import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
 import static org.jooq.tools.jdbc.JDBCUtils.wasNull;
@@ -848,7 +848,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // [#1126] Oracle's UDTs need to be bound with their type name
             if (UDTRecord.class.isAssignableFrom(type)) {
-                ctx.statement().setNull(ctx.index(), sqlType, Utils.getMappedUDTName(configuration, (Class<UDTRecord<?>>) type));
+                ctx.statement().setNull(ctx.index(), sqlType, Tools.getMappedUDTName(configuration, (Class<UDTRecord<?>>) type));
             }
 
             // [#1225] [#1227] TODO Put this logic into DataType
@@ -2121,7 +2121,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return null;
         }
 
-        return Utils.newRecord(true, (Class<Record>) type, fields)
+        return Tools.newRecord(true, (Class<Record>) type, fields)
                     .operate(new RecordOperation<Record, RuntimeException>() {
 
                 @Override

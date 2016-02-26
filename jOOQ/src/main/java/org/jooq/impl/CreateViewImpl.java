@@ -118,9 +118,9 @@ final class CreateViewImpl<R extends Record> extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         if (ifNotExists && !supportsIfNotExists(ctx)) {
-            Utils.executeImmediateBegin(ctx, DDLStatementType.CREATE_VIEW);
+            Tools.executeImmediateBegin(ctx, DDLStatementType.CREATE_VIEW);
             accept0(ctx);
-            Utils.executeImmediateEnd(ctx, DDLStatementType.CREATE_VIEW);
+            Tools.executeImmediateEnd(ctx, DDLStatementType.CREATE_VIEW);
         }
         else {
             accept0(ctx);
@@ -164,7 +164,7 @@ final class CreateViewImpl<R extends Record> extends AbstractQuery implements
            .paramType(INLINED)
            .visit(
                rename && !renameSupported
-             ? selectFrom(table(select).as("t", Utils.fieldNames(fields)))
+             ? selectFrom(table(select).as("t", Tools.fieldNames(fields)))
              : select)
            .paramType(paramType)
            .end(CREATE_VIEW_AS);

@@ -69,7 +69,7 @@ final class MapCondition extends AbstractCondition {
 
         for (Entry<Field<?>, ?> entry : map.entrySet()) {
             Field f1 = entry.getKey();
-            Field f2 = Utils.field(entry.getValue(), f1);
+            Field f2 = Tools.field(entry.getValue(), f1);
 
             condition.addConditions(f1.eq(f2));
         }

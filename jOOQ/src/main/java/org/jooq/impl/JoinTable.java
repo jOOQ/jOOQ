@@ -84,8 +84,8 @@ import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.selectOne;
-import static org.jooq.impl.Utils.DataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
-import static org.jooq.impl.Utils.DataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
+import static org.jooq.impl.Tools.DataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
+import static org.jooq.impl.Tools.DataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -365,7 +365,7 @@ final class JoinTable extends AbstractTable<Record> implements TableOptionalOnSt
                        .start(TABLE_JOIN_USING)
                        .keyword("using")
                        .sql('(');
-                Utils.fieldNames(context, using);
+                Tools.fieldNames(context, using);
                 context.sql(')')
                        .end(TABLE_JOIN_USING);
             }

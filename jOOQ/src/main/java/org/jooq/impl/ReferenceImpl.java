@@ -41,9 +41,9 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.row;
-import static org.jooq.impl.Utils.filterOne;
-import static org.jooq.impl.Utils.first;
-import static org.jooq.impl.Utils.list;
+import static org.jooq.impl.Tools.filterOne;
+import static org.jooq.impl.Tools.first;
+import static org.jooq.impl.Tools.list;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -127,7 +127,7 @@ final class BatchMultiple implements Batch {
             throw ctx.exception();
         }
         finally {
-            Utils.safeClose(listener, ctx);
+            Tools.safeClose(listener, ctx);
         }
     }
 }

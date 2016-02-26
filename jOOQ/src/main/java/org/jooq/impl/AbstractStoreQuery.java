@@ -80,11 +80,11 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractDMLQuery<R> 
 
     @Override
     public final <T> void addValue(Field<T> field, T value) {
-        getValues().put(field, Utils.field(value, field));
+        getValues().put(field, Tools.field(value, field));
     }
 
     @Override
     public final <T> void addValue(Field<T> field, Field<T> value) {
-        getValues().put(field, Utils.field(value, field));
+        getValues().put(field, Tools.field(value, field));
     }
 }

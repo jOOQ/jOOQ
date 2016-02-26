@@ -126,9 +126,9 @@ final class CreateIndexImpl extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         if (ifNotExists && !supportsIfNotExists(ctx)) {
-            Utils.executeImmediateBegin(ctx, DDLStatementType.CREATE_INDEX);
+            Tools.executeImmediateBegin(ctx, DDLStatementType.CREATE_INDEX);
             accept0(ctx);
-            Utils.executeImmediateEnd(ctx, DDLStatementType.CREATE_INDEX);
+            Tools.executeImmediateEnd(ctx, DDLStatementType.CREATE_INDEX);
         }
         else {
             accept0(ctx);

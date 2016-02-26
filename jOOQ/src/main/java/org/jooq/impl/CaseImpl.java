@@ -58,7 +58,7 @@ final class CaseImpl implements Case {
 
     @Override
     public final <V> CaseValueStep<V> value(V value) {
-        return value(Utils.field(value));
+        return value(Tools.field(value));
     }
 
     @Override
@@ -68,7 +68,7 @@ final class CaseImpl implements Case {
 
     @Override
     public final <T> CaseConditionStep<T> when(Condition condition, T result) {
-        return when(condition, Utils.field(result));
+        return when(condition, Tools.field(result));
     }
 
     @Override

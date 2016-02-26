@@ -342,7 +342,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Field<T> add(Number value) {
-        return add(Utils.field(value));
+        return add(Tools.field(value));
     }
 
     /*
@@ -356,7 +356,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Field<T> sub(Number value) {
-        return sub(Utils.field(value));
+        return sub(Tools.field(value));
     }
 
     @Override
@@ -366,7 +366,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Field<T> mul(Number value) {
-        return mul(Utils.field(value));
+        return mul(Tools.field(value));
     }
 
     /**
@@ -380,7 +380,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Field<T> div(Number value) {
-        return div(Utils.field(value));
+        return div(Tools.field(value));
     }
 
     @Override
@@ -390,7 +390,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Field<T> mod(Number value) {
-        return mod(Utils.field(value));
+        return mod(Tools.field(value));
     }
 
     @Override
@@ -576,7 +576,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     @Override
     public final Field<T> shl(Number value) {
         // Workaround assignment for https://bugs.eclipse.org/bugs/show_bug.cgi?id=473657
-        final Field result = DSL.shl((Field) this, (Field) Utils.field(value));
+        final Field result = DSL.shl((Field) this, (Field) Tools.field(value));
         return result;
     }
 
@@ -592,7 +592,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     @Override
     public final Field<T> shr(Number value) {
         // Workaround assignment for https://bugs.eclipse.org/bugs/show_bug.cgi?id=473657
-        final Field result = DSL.shr((Field) this, (Field) Utils.field(value));
+        final Field result = DSL.shr((Field) this, (Field) Tools.field(value));
         return result;
     }
 
@@ -620,7 +620,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition isDistinctFrom(T value) {
-        return isDistinctFrom(Utils.field(value, this));
+        return isDistinctFrom(Tools.field(value, this));
     }
 
     @Override
@@ -630,7 +630,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition isNotDistinctFrom(T value) {
-        return isNotDistinctFrom(Utils.field(value, this));
+        return isNotDistinctFrom(Tools.field(value, this));
     }
 
     @Override
@@ -644,7 +644,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         Class<?> type = getType();
 
         if (type == String.class)
-            return ((Field<String>) this).in(Utils.inline(TRUE_VALUES.toArray(new String[0])));
+            return ((Field<String>) this).in(Tools.inline(TRUE_VALUES.toArray(new String[0])));
         else if (Number.class.isAssignableFrom(type))
             return ((Field<Number>) this).equal(inline((Number) getDataType().convert(1)));
         else if (Boolean.class.isAssignableFrom(type))
@@ -659,23 +659,23 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         Class<?> type = getType();
 
         if (type == String.class)
-            return ((Field<String>) this).in(Utils.inline(FALSE_VALUES.toArray(new String[0])));
+            return ((Field<String>) this).in(Tools.inline(FALSE_VALUES.toArray(new String[0])));
         else if (Number.class.isAssignableFrom(type))
             return ((Field<Number>) this).equal(inline((Number) getDataType().convert(0)));
         else if (Boolean.class.isAssignableFrom(type))
             return ((Field<Boolean>) this).equal(inline(false));
         else
-            return cast(String.class).in(Utils.inline(FALSE_VALUES.toArray(new String[0])));
+            return cast(String.class).in(Tools.inline(FALSE_VALUES.toArray(new String[0])));
     }
 
     @Override
     public final Condition like(String value) {
-        return like(Utils.field(value, String.class));
+        return like(Tools.field(value, String.class));
     }
 
     @Override
     public final Condition like(String value, char escape) {
-        return like(Utils.field(value, String.class), escape);
+        return like(Tools.field(value, String.class), escape);
     }
 
     @Override
@@ -690,12 +690,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition likeIgnoreCase(String value) {
-        return likeIgnoreCase(Utils.field(value, String.class));
+        return likeIgnoreCase(Tools.field(value, String.class));
     }
 
     @Override
     public final Condition likeIgnoreCase(String value, char escape) {
-        return likeIgnoreCase(Utils.field(value, String.class), escape);
+        return likeIgnoreCase(Tools.field(value, String.class), escape);
     }
 
     @Override
@@ -710,7 +710,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition likeRegex(String pattern) {
-        return likeRegex(Utils.field(pattern, String.class));
+        return likeRegex(Tools.field(pattern, String.class));
     }
 
     @Override
@@ -720,12 +720,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition notLike(String value) {
-        return notLike(Utils.field(value, String.class));
+        return notLike(Tools.field(value, String.class));
     }
 
     @Override
     public final Condition notLike(String value, char escape) {
-        return notLike(Utils.field(value, String.class), escape);
+        return notLike(Tools.field(value, String.class), escape);
     }
 
     @Override
@@ -740,12 +740,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition notLikeIgnoreCase(String value) {
-        return notLikeIgnoreCase(Utils.field(value, String.class));
+        return notLikeIgnoreCase(Tools.field(value, String.class));
     }
 
     @Override
     public final Condition notLikeIgnoreCase(String value, char escape) {
-        return notLikeIgnoreCase(Utils.field(value, String.class), escape);
+        return notLikeIgnoreCase(Tools.field(value, String.class), escape);
     }
 
     @Override
@@ -780,26 +780,26 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition startsWith(T value) {
-        Field<String> concat = DSL.concat(Utils.escapeForLike(value), inline("%"));
-        return like(concat, Utils.ESCAPE);
+        Field<String> concat = DSL.concat(Tools.escapeForLike(value), inline("%"));
+        return like(concat, Tools.ESCAPE);
     }
 
     @Override
     public final Condition startsWith(Field<T> value) {
-        Field<String> concat = DSL.concat(Utils.escapeForLike(value), inline("%"));
-        return like(concat, Utils.ESCAPE);
+        Field<String> concat = DSL.concat(Tools.escapeForLike(value), inline("%"));
+        return like(concat, Tools.ESCAPE);
     }
 
     @Override
     public final Condition endsWith(T value) {
-        Field<String> concat = DSL.concat(inline("%"), Utils.escapeForLike(value));
-        return like(concat, Utils.ESCAPE);
+        Field<String> concat = DSL.concat(inline("%"), Tools.escapeForLike(value));
+        return like(concat, Tools.ESCAPE);
     }
 
     @Override
     public final Condition endsWith(Field<T> value) {
-        Field<String> concat = DSL.concat(inline("%"), Utils.escapeForLike(value));
-        return like(concat, Utils.ESCAPE);
+        Field<String> concat = DSL.concat(inline("%"), Tools.escapeForLike(value));
+        return like(concat, Tools.ESCAPE);
     }
 
     private final boolean isAccidentalSelect(T[] values) {
@@ -822,7 +822,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         if (isAccidentalCollection(values))
             return in((Collection<?>) values[0]);
 
-        return in(Utils.fields(values, this).toArray(new Field<?>[0]));
+        return in(Tools.fields(values, this).toArray(new Field<?>[0]));
     }
 
     @Override
@@ -835,7 +835,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         List<Field<?>> fields = new ArrayList<Field<?>>();
 
         for (Object value : values)
-            fields.add(Utils.field(value, this));
+            fields.add(Tools.field(value, this));
 
         return in(fields.toArray(new Field<?>[0]));
     }
@@ -862,7 +862,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         if (isAccidentalCollection(values))
             return notIn((Collection<?>) values[0]);
 
-        return notIn(Utils.fields(values, this).toArray(new Field<?>[0]));
+        return notIn(Tools.fields(values, this).toArray(new Field<?>[0]));
     }
 
     @Override
@@ -875,7 +875,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         List<Field<?>> fields = new ArrayList<Field<?>>();
 
         for (Object value : values)
-            fields.add(Utils.field(value, this));
+            fields.add(Tools.field(value, this));
 
         return notIn(fields.toArray(new Field<?>[0]));
     }
@@ -892,7 +892,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition between(T minValue, T maxValue) {
-        return between(Utils.field(minValue, this), Utils.field(maxValue, this));
+        return between(Tools.field(minValue, this), Tools.field(maxValue, this));
     }
 
     @Override
@@ -902,7 +902,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition betweenSymmetric(T minValue, T maxValue) {
-        return betweenSymmetric(Utils.field(minValue, this), Utils.field(maxValue, this));
+        return betweenSymmetric(Tools.field(minValue, this), Tools.field(maxValue, this));
     }
 
     @Override
@@ -912,7 +912,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition notBetween(T minValue, T maxValue) {
-        return notBetween(Utils.field(minValue, this), Utils.field(maxValue, this));
+        return notBetween(Tools.field(minValue, this), Tools.field(maxValue, this));
     }
 
     @Override
@@ -922,7 +922,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition notBetweenSymmetric(T minValue, T maxValue) {
-        return notBetweenSymmetric(Utils.field(minValue, this), Utils.field(maxValue, this));
+        return notBetweenSymmetric(Tools.field(minValue, this), Tools.field(maxValue, this));
     }
 
     @Override
@@ -932,7 +932,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final BetweenAndStep<T> between(T minValue) {
-        return between(Utils.field(minValue, this));
+        return between(Tools.field(minValue, this));
     }
 
     @Override
@@ -942,7 +942,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final BetweenAndStep<T> betweenSymmetric(T minValue) {
-        return betweenSymmetric(Utils.field(minValue, this));
+        return betweenSymmetric(Tools.field(minValue, this));
     }
 
     @Override
@@ -952,7 +952,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final BetweenAndStep<T> notBetween(T minValue) {
-        return notBetween(Utils.field(minValue, this));
+        return notBetween(Tools.field(minValue, this));
     }
 
     @Override
@@ -962,7 +962,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final BetweenAndStep<T> notBetweenSymmetric(T minValue) {
-        return notBetweenSymmetric(Utils.field(minValue, this));
+        return notBetweenSymmetric(Tools.field(minValue, this));
     }
 
     @Override
@@ -1092,7 +1092,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition equal(T value) {
-        return equal(Utils.field(value, this));
+        return equal(Tools.field(value, this));
     }
 
     @Override
@@ -1102,7 +1102,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition equalIgnoreCase(String value) {
-        return equalIgnoreCase(Utils.field(value, String.class));
+        return equalIgnoreCase(Tools.field(value, String.class));
     }
 
     @Override
@@ -1122,7 +1122,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition notEqual(T value) {
-        return notEqual(Utils.field(value, this));
+        return notEqual(Tools.field(value, this));
     }
 
     @Override
@@ -1132,7 +1132,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition notEqualIgnoreCase(String value) {
-        return notEqualIgnoreCase(Utils.field(value, String.class));
+        return notEqualIgnoreCase(Tools.field(value, String.class));
     }
 
     @Override
@@ -1152,7 +1152,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition lessThan(T value) {
-        return lessThan(Utils.field(value, this));
+        return lessThan(Tools.field(value, this));
     }
 
     @Override
@@ -1172,7 +1172,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition lessOrEqual(T value) {
-        return lessOrEqual(Utils.field(value, this));
+        return lessOrEqual(Tools.field(value, this));
     }
 
     @Override
@@ -1192,7 +1192,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition greaterThan(T value) {
-        return greaterThan(Utils.field(value, this));
+        return greaterThan(Tools.field(value, this));
     }
 
     @Override
@@ -1212,7 +1212,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition greaterOrEqual(T value) {
-        return greaterOrEqual(Utils.field(value, this));
+        return greaterOrEqual(Tools.field(value, this));
     }
 
     @Override
@@ -1232,7 +1232,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition compare(Comparator comparator, T value) {
-        return compare(comparator, Utils.field(value, this));
+        return compare(comparator, Tools.field(value, this));
     }
 
     @Override
@@ -1781,13 +1781,13 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     @Override
     @Deprecated
     public final Field<String> concat(Field<?>... fields) {
-        return DSL.concat(Utils.combine(this, fields));
+        return DSL.concat(Tools.combine(this, fields));
     }
 
     @Override
     @Deprecated
     public final Field<String> concat(String... values) {
-        return DSL.concat(Utils.combine(this, Utils.fields(values).toArray(new Field[0])));
+        return DSL.concat(Tools.combine(this, Tools.fields(values).toArray(new Field[0])));
     }
 
     @Override
@@ -1850,7 +1850,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     @SafeVarargs
 
     public final Field<T> greatest(T... others) {
-        return DSL.greatest(this, Utils.fields(others).toArray(new Field[0]));
+        return DSL.greatest(this, Tools.fields(others).toArray(new Field[0]));
     }
 
     @Override
@@ -1865,7 +1865,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     @SafeVarargs
 
     public final Field<T> least(T... others) {
-        return DSL.least(this, Utils.fields(others).toArray(new Field[0]));
+        return DSL.least(this, Tools.fields(others).toArray(new Field[0]));
     }
 
     @Override
@@ -1940,13 +1940,13 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     @SafeVarargs
 
     public final Field<T> coalesce(T option, T... options) {
-        return DSL.coalesce(this, Utils.combine(Utils.field(option), Utils.fields(options).toArray(new Field[0])));
+        return DSL.coalesce(this, Tools.combine(Tools.field(option), Tools.fields(options).toArray(new Field[0])));
     }
 
     @Override
     @Deprecated
     public final Field<T> coalesce(Field<T> option, Field<?>... options) {
-        return DSL.coalesce(this, Utils.combine(option, options));
+        return DSL.coalesce(this, Tools.combine(option, options));
     }
 
     // ------------------------------------------------------------------------

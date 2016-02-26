@@ -51,10 +51,10 @@ import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
 import static org.jooq.conf.SettingsTools.getParamType;
 import static org.jooq.impl.DSL.using;
-import static org.jooq.impl.Utils.blocking;
-import static org.jooq.impl.Utils.consumeExceptions;
-import static org.jooq.impl.Utils.DataKey.DATA_COUNT_BIND_VALUES;
-import static org.jooq.impl.Utils.DataKey.DATA_FORCE_STATIC_STATEMENT;
+import static org.jooq.impl.Tools.blocking;
+import static org.jooq.impl.Tools.consumeExceptions;
+import static org.jooq.impl.Tools.DataKey.DATA_COUNT_BIND_VALUES;
+import static org.jooq.impl.Tools.DataKey.DATA_FORCE_STATIC_STATEMENT;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -259,7 +259,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
                 statement = null;
             }
             catch (SQLException e) {
-                throw Utils.translate(rendered.sql, e);
+                throw Tools.translate(rendered.sql, e);
             }
         }
     }
@@ -271,7 +271,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
                 statement.cancel();
             }
             catch (SQLException e) {
-                throw Utils.translate(rendered.sql, e);
+                throw Tools.translate(rendered.sql, e);
             }
         }
     }
@@ -368,7 +368,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
 
                 // [#2385] Successful fetchLazy() needs to keep open resources
                 if (!keepResultSet() || ctx.exception() != null) {
-                    Utils.safeClose(listener, ctx, keepStatement());
+                    Tools.safeClose(listener, ctx, keepStatement());
                 }
 
                 if (!keepStatement()) {
@@ -389,7 +389,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
 
     @Override
     public final CompletionStage<Integer> executeAsync() {
-        return executeAsync(Utils.configuration(this).executorProvider().provide());
+        return executeAsync(Tools.configuration(this).executorProvider().provide());
     }
 
     @Override

@@ -94,9 +94,9 @@ final class CreateSequenceImpl extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         if (ifNotExists && !supportsIfNotExists(ctx)) {
-            Utils.executeImmediateBegin(ctx, DDLStatementType.CREATE_SEQUENCE);
+            Tools.executeImmediateBegin(ctx, DDLStatementType.CREATE_SEQUENCE);
             accept0(ctx);
-            Utils.executeImmediateEnd(ctx, DDLStatementType.CREATE_SEQUENCE);
+            Tools.executeImmediateEnd(ctx, DDLStatementType.CREATE_SEQUENCE);
         }
         else {
             accept0(ctx);

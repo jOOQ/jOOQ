@@ -101,7 +101,7 @@ final class Expression<T> extends AbstractFunction<T> {
     private final ExpressionOperator      operator;
 
     Expression(ExpressionOperator operator, Field<T> lhs, Field<?>... rhs) {
-        super(operator.toSQL(), lhs.getDataType(), Utils.combine(lhs, rhs));
+        super(operator.toSQL(), lhs.getDataType(), Tools.combine(lhs, rhs));
 
         this.operator = operator;
         this.lhs = lhs;
@@ -310,14 +310,14 @@ final class Expression<T> extends AbstractFunction<T> {
                     }
 
                     if (rhs.get(0).getType() == YearToMonth.class) {
-                        return field("{date_add}({0}, {interval} {1} {year_month})", getDataType(), lhs, Utils.field(interval, String.class));
+                        return field("{date_add}({0}, {interval} {1} {year_month})", getDataType(), lhs, Tools.field(interval, String.class));
                     }
                     else {
                         if (dialect == CUBRID) {
-                            return field("{date_add}({0}, {interval} {1} {day_millisecond})", getDataType(), lhs, Utils.field(interval, String.class));
+                            return field("{date_add}({0}, {interval} {1} {day_millisecond})", getDataType(), lhs, Tools.field(interval, String.class));
                         }
                         else {
-                            return field("{date_add}({0}, {interval} {1} {day_microsecond})", getDataType(), lhs, Utils.field(interval, String.class));
+                            return field("{date_add}({0}, {interval} {1} {day_microsecond})", getDataType(), lhs, Tools.field(interval, String.class));
                         }
                     }
                 }

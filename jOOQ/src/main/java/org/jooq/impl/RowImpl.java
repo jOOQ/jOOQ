@@ -9998,7 +9998,7 @@ implements
 
     @Override
     public final Condition in(Result result) {
-        QueryPartList<Row> list = new QueryPartList<Row>(Utils.rows(result));
+        QueryPartList<Row> list = new QueryPartList<Row>(Tools.rows(result));
         return new RowInCondition(this, list, Comparator.IN);
     }
 
@@ -10010,7 +10010,7 @@ implements
 
     @Override
     public final Condition notIn(Result result) {
-        QueryPartList<Row> list = new QueryPartList<Row>(Utils.rows(result));
+        QueryPartList<Row> list = new QueryPartList<Row>(Tools.rows(result));
         return new RowInCondition(this, list, Comparator.NOT_IN);
     }
 

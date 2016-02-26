@@ -53,8 +53,8 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DSL.val;
-import static org.jooq.impl.Utils.consumeExceptions;
-import static org.jooq.impl.Utils.settings;
+import static org.jooq.impl.Tools.consumeExceptions;
+import static org.jooq.impl.Tools.settings;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -438,7 +438,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             // [#2925] Jaybird currently doesn't like fetching OUT parameters and consuming ResultSets
             //         http://tracker.firebirdsql.org/browse/JDBC-350
             if (ctx.family() != FIREBIRD)
-                Utils.consumeResultSets(ctx, listener, results, null);
+                Tools.consumeResultSets(ctx, listener, results, null);
 
             listener.outStart(ctx);
             fetchOutParameters(ctx);
@@ -462,7 +462,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             throw ctx.exception();
         }
         finally {
-            Utils.safeClose(listener, ctx);
+            Tools.safeClose(listener, ctx);
         }
     }
 
@@ -741,7 +741,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLQualifiedName(RenderContext context) {
-        Schema mappedSchema = Utils.getMappedSchema(context.configuration(), getSchema());
+        Schema mappedSchema = Tools.getMappedSchema(context.configuration(), getSchema());
 
         if (context.qualify()) {
             if (mappedSchema != null) {

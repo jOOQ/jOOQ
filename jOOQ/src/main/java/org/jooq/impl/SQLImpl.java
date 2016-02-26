@@ -61,12 +61,12 @@ final class SQLImpl extends AbstractQueryPart implements SQL {
 
     SQLImpl(String sql, Object... input) {
         this.sql = sql;
-        this.substitutes = Utils.queryParts(input);
+        this.substitutes = Tools.queryParts(input);
     }
 
     @Override
     public final void accept(Context<?> ctx) {
-        Utils.renderAndBind(ctx, sql, substitutes);
+        Tools.renderAndBind(ctx, sql, substitutes);
     }
 
     @Override

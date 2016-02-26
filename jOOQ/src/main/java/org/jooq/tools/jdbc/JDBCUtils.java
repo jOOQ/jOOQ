@@ -75,6 +75,7 @@ import java.sql.SQLXML;
 import java.sql.Statement;
 
 import org.jooq.SQLDialect;
+import org.jooq.tools.JooqLogger;
 
 /**
  * JDBC-related utility methods.
@@ -82,6 +83,8 @@ import org.jooq.SQLDialect;
  * @author Lukas Eder
  */
 public class JDBCUtils {
+
+    private static final JooqLogger log = JooqLogger.getLogger(JDBCUtils.class);
 
     /**
      * "Guess" the {@link SQLDialect} from a {@link Connection} instance.
@@ -333,7 +336,9 @@ public class JDBCUtils {
             try {
                 blob.free();
             }
-            catch (Exception ignore) {}
+            catch (Exception ignore) {
+                log.warn("Error while freeing resource", ignore);
+            }
 
             // [#3069] The free() method was added only in JDBC 4.0 / Java 1.6
             catch (AbstractMethodError ignore) {}
@@ -351,7 +356,9 @@ public class JDBCUtils {
             try {
                 clob.free();
             }
-            catch (Exception ignore) {}
+            catch (Exception ignore) {
+                log.warn("Error while freeing resource", ignore);
+            }
 
             // [#3069] The free() method was added only in JDBC 4.0 / Java 1.6
             catch (AbstractMethodError ignore) {}
@@ -369,7 +376,9 @@ public class JDBCUtils {
             try {
                 xml.free();
             }
-            catch (Exception ignore) {}
+            catch (Exception ignore) {
+                log.warn("Error while freeing resource", ignore);
+            }
 
             // [#3069] The free() method was added only in JDBC 4.0 / Java 1.6
             catch (AbstractMethodError ignore) {}
@@ -387,7 +396,9 @@ public class JDBCUtils {
             try {
                 array.free();
             }
-            catch (Exception ignore) {}
+            catch (Exception ignore) {
+                log.warn("Error while freeing resource", ignore);
+            }
 
             // [#3069] The free() method was added only in JDBC 4.0 / Java 1.6
             catch (AbstractMethodError ignore) {}

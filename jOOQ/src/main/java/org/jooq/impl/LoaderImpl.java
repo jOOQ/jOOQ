@@ -58,6 +58,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.jooq.BatchBindStep;
 import org.jooq.Condition;
@@ -317,6 +318,20 @@ final class LoaderImpl<R extends Record> implements
             }
         }));
     }
+
+
+
+    @Override
+    public final LoaderRowsStep<R> loadArrays(Stream<? extends Object[]> a) {
+        return loadArrays(a.iterator());
+    }
+
+    @Override
+    public final LoaderRowsStep<R> loadRecords(Stream<? extends Record> records) {
+        return loadRecords(records.iterator());
+    }
+
+
 
     @Override
     public final LoaderImpl<R> loadCSV(File file) {

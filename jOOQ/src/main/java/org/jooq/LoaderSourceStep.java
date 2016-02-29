@@ -48,6 +48,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.util.Iterator;
+import java.util.stream.Stream;
 
 import org.xml.sax.InputSource;
 
@@ -77,6 +78,15 @@ public interface LoaderSourceStep<R extends Record> {
      */
     LoaderRowsStep<R> loadArrays(Iterator<? extends Object[]> arrays);
 
+
+
+    /**
+     * Load in-memory data.
+     */
+    LoaderRowsStep<R> loadArrays(Stream<? extends Object[]> arrays);
+
+
+
     /**
      * Load in-memory data.
      */
@@ -91,6 +101,15 @@ public interface LoaderSourceStep<R extends Record> {
      * Load in-memory data.
      */
     LoaderRowsStep<R> loadRecords(Iterator<? extends Record> records);
+
+
+
+    /**
+     * Load in-memory data.
+     */
+    LoaderRowsStep<R> loadRecords(Stream<? extends Record> records);
+
+
 
     /**
      * Load CSV data.

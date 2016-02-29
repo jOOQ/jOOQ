@@ -65,16 +65,35 @@ public interface LoaderSourceStep<R extends Record> {
 
     /**
      * Load in-memory data.
+     * <p>
+     * Feed a set of array representations of records to the loader API. Each
+     * array's elements are matched with the subsequent
+     * {@link LoaderRowsStep#fields(Field...)} specification, by index. The
+     * values in each array are converted to the matching field's
+     * {@link DataType} via {@link DataType#convert(Object)}. The matching is
+     * similar to that of {@link Record#fromArray(Object[], Field...)}.
      */
     LoaderRowsStep<R> loadArrays(Object[]... arrays);
 
     /**
      * Load in-memory data.
+     * <p>
+     * Like {@link #loadArrays(Object[][])}, providing the possibility of lazy
+     * materialisation of the input arrays.
+     *
+     * @see #loadArrays(Object[][])
+     * @see Record#fromArray(Object[], Field...)
      */
     LoaderRowsStep<R> loadArrays(Iterable<? extends Object[]> arrays);
 
     /**
      * Load in-memory data.
+     * <p>
+     * Like {@link #loadArrays(Object[][])}, providing the possibility of lazy
+     * materialisation of the input arrays.
+     *
+     * @see #loadArrays(Object[][])
+     * @see Record#fromArray(Object[], Field...)
      */
     LoaderRowsStep<R> loadArrays(Iterator<? extends Object[]> arrays);
 
@@ -82,6 +101,12 @@ public interface LoaderSourceStep<R extends Record> {
 
     /**
      * Load in-memory data.
+     * <p>
+     * Like {@link #loadArrays(Object[][])}, providing the possibility of lazy
+     * materialisation of the input arrays.
+     *
+     * @see #loadArrays(Object[][])
+     * @see Record#fromArray(Object[], Field...)
      */
     LoaderRowsStep<R> loadArrays(Stream<? extends Object[]> arrays);
 
@@ -94,11 +119,15 @@ public interface LoaderSourceStep<R extends Record> {
 
     /**
      * Load in-memory data.
+     *
+     * @see #loadRecords(Record...)
      */
     LoaderRowsStep<R> loadRecords(Iterable<? extends Record> records);
 
     /**
      * Load in-memory data.
+     *
+     * @see #loadRecords(Record...)
      */
     LoaderRowsStep<R> loadRecords(Iterator<? extends Record> records);
 
@@ -106,6 +135,8 @@ public interface LoaderSourceStep<R extends Record> {
 
     /**
      * Load in-memory data.
+     *
+     * @see #loadRecords(Record...)
      */
     LoaderRowsStep<R> loadRecords(Stream<? extends Record> records);
 

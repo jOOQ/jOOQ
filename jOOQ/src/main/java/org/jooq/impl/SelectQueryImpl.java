@@ -883,10 +883,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         //
         // Depending on the dialect and on various syntax elements, parts of the above must be wrapped in
         // synthetic parentheses
-        boolean wrapQueryExpressionInDerivedTable = false;
+        boolean wrapQueryExpressionInDerivedTable;
         boolean wrapQueryExpressionBodyInDerivedTable = false;
 
 
+        wrapQueryExpressionInDerivedTable = false
 
 
 
@@ -894,15 +895,17 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+        // [#2995] Prevent the generation of wrapping parentheses around the
+        //         INSERT .. SELECT statement's SELECT because they would be
+        //         interpreted as the (missing) INSERT column list's parens.
+         || (context.data(DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST) != null && unionOpSize > 0);
 
-
-
-
-
-
-
-
-
+        if (wrapQueryExpressionInDerivedTable)
+            context.keyword("select").sql(" *")
+                   .formatSeparator()
+                   .keyword("from").sql(" (")
+                   .formatIndentStart()
+                   .formatNewLine();
 
 
 
@@ -1342,12 +1345,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         context.end(SELECT_ORDER_BY);
 
-
-
-
-
-
-
+        if (wrapQueryExpressionInDerivedTable)
+            context.formatIndentEnd()
+                   .formatNewLine()
+                   .sql(')');
 
         if (context.data().containsKey(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE) && actualLimit.isApplicable())
             context.visit(actualLimit);

@@ -56,6 +56,7 @@ import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Tools.aliasedFields;
 import static org.jooq.impl.Tools.fieldNames;
+import static org.jooq.impl.Tools.DataKey.DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -349,17 +350,25 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
            .declareTables(declareTables);
 
         // [#1506] with DEFAULT VALUES, we might not have any columns to render
-        if (insertMaps.isExecutable()) {
+        if (insertMaps.isExecutable())
             insertMaps.insertMaps.get(0).toSQLReferenceKeys(ctx);
-        }
 
         ctx.end(INSERT_INSERT_INTO);
 
         if (select != null) {
+
+            // [#2995] Prevent the generation of wrapping parentheses around the
+            //         INSERT .. SELECT statement's SELECT because they would be
+            //         interpreted as the (missing) INSERT column list's parens.
+            if (insertMaps.insertMaps.get(0).size() == 0)
+                ctx.data(DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST, true);
+
             ctx.formatSeparator()
                .start(INSERT_SELECT)
                .visit(select)
                .end(INSERT_SELECT);
+
+            ctx.data().remove(DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST);
         }
         else if (defaultValues) {
             switch (ctx.family()) {

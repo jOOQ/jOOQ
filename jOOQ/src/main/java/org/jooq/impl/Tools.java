@@ -340,6 +340,14 @@ final class Tools {
          * [#1206] The collected Semi / Anti JOIN predicates.
          */
         DATA_COLLECTED_SEMI_ANTI_JOIN,
+
+        /**
+         * [#2995] An <code>INSERT INTO t SELECT</code> statement. Without any
+         * explicit column list, the <code>SELECT</code> statement must not be
+         * wrapped in parentheses (which would be interpreted as the column
+         * list's parentheses).
+         */
+        DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST,
     }
 
     /**

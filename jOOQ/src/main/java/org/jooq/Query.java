@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -282,9 +282,9 @@ public interface Query extends QueryPart, Attachable , AutoCloseable  {
      * @throws DataAccessException If something went wrong closing the statement
      * @see Statement#close()
      */
-    
+
     @Override
-    
+
     void close() throws DataAccessException;
 
     /**

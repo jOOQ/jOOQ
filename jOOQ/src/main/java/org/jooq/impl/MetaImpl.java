@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -39,7 +39,7 @@
  *
  */
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -249,14 +249,14 @@ class MetaImpl implements Meta, Serializable {
         public final List<Schema> getSchemas() {
             List<Schema> result = new ArrayList<Schema>();
 
-            /* [pro] xx
-            xx xxxxxxxxxxx xxxxxxxxx xxxx xxx xxxxxxx xxxxxxx xxxxxxx xxxx xxxxxx
-            xx xx xxxxx xxx xxx xx xxxxxx
-            xx xxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxx x
-            x
 
-            xxxx
-            xx [/pro] */
+
+
+
+
+
+
+
 
             if (!inverseSchemaCatalog) {
                 Result<Record> schemas = meta(new MetaFunction() {
@@ -335,27 +335,27 @@ class MetaImpl implements Meta, Serializable {
                             types = new String[] { "TABLE", "VIEW" };
                             break;
 
-                        /* [pro] xx
-                        xx xxxxxxx xxxxx xxxxxxxxx xxxxxx xxxxx xxxxxxxxx
-                        xx xxxxx xxxxxxxxxxxxx xxxxx xx xxx xxxxxxxxx xx xxxx xxx xxxx
-                        xx xxxxxxxx xx xxxxxxx xx xxxxxx xxxx
-                        xxxx xxxxxxx
-                            xxxxx x xxx xxxxxxxx x xxxxxxxx xxxxxx xx
-                            xxxxxx
-                        xx [/pro] */
+
+
+
+
+
+
+
+
                     }
 
                     ResultSet rs;
 
-                    /* [pro] xx
-                    xx xxxxxxxx xxx xxxxxxxxx xxxxxx xxxxxxx xxx xxxxxxxx xxxx xx xxx xx xxxxxx
-                    xx xxxxxxxx xxxx xxxxxxxxxxx xxxxxx xx xxxxxx xx xxx xxxxxxxxxxx xxxxxx
-                    xx xxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxx x
-                        xx x xxxxxxxxxxxxxxxxxxxx xxxxx xxxx xxxxxxx
-                    x
-                    xxxx
 
-                    xx [/pro] */
+
+
+
+
+
+
+
+
 
                     if (!inverseSchemaCatalog) {
                         rs = meta.getTables(null, getName(), "%", types);
@@ -499,11 +499,11 @@ class MetaImpl implements Meta, Serializable {
         public final UniqueKey<Record> getPrimaryKey() {
             SQLDialect family = configuration.family();
 
-            /* [pro] xx
-            xx xxxxxxx xx xxxxxxx x
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
-            x
-            xx [/pro] */
+
+
+
+
+
 
             final String schema = getSchema() == null ? null : getSchema().getName();
             Result<Record> result = meta(new MetaFunction() {
@@ -600,55 +600,66 @@ class MetaImpl implements Meta, Serializable {
             return references;
         }
 
-        /* [pro] xx
-        xxxxxxx xxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx x
 
-            xx xxx xxxxxxxxx xxxxxx xxxx xxx xxxxxxxxx xxxxxx xxxxxxx xxxx xxx xx xxxxxxx
-            xx xxxxxx xxxx xxx xxxxxxxxx xxxxxxx xxx xxxx xxxxx xxxx xxxx xxxxx xxxxxx
-            xxxxxxxxxxxxxx xxxxxx x xxxxxxxx xxxxxxxxxxxxxx x
-                xxxxxxxxx
-                xxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxx xxxxxx xxxxxxxxxxxx x
-                    xxxxxxxxx xx x xxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxx xxxxx xxxxxx
 
-                    xxxxxx xxxxxxxxxxxxx
-                        xxx
-                        xxxxxxxxxxxxx  xx xxxxxxxxx
-                        xxxxxxxxxxxxx  xx xxxxxxxxxxx
-                        xxxxxxxxxxxxx  xx xxxxxxxxxx
-                        xxxxxxxxxxxxxx xx xxxxxxxxxx
-                        xxxxxxxxxxxxx  xx xxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxx  xx xxxxxxxxxx
-                        xxxxxxxxxxxxx  xx xxxx
-                        xxxxxxxxxxxxx  xx xxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxx   xx xxxxxxxxxxx
-                    xx
-                x
-            xxx
 
-            xx xxxxxx xxxx xxxxxx xxxxxxxx xxxx xxxxxxxxxx x xxxxx
-            xxxxxxxxxxxxxxxx xx x xxxxxxxxxxxxxxxxxx
-            xxxxx xxxxxxxxxxxxxx
-                xx xxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxx
-                    xxxxxxxxxxxx
 
-            xx xxxxxx xxxx xxx xxxxx xxxxxx xxxxxx xxxx xxxxx xx xxxxxxxxxx
-            xx xxxxxxxxxxxxxxxxxxxxx
-                xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-            xx xxxx xx xxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxx
 
-            xx xxxx xxx xxxxxxxxxxx
-            xxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxx
-        x
-        xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         @SuppressWarnings("unchecked")
         private final UniqueKey<Record> createPrimaryKey(Result<Record> result, int columnName) {
             if (result.size() > 0) {
                 TableField<Record, ?>[] f = new TableField[result.size()];
+
                 for (int i = 0; i < f.length; i++) {
-                    f[i] = (TableField<Record, ?>) field(result.get(i).getValue(columnName, String.class));
+                    String name = result.get(i).getValue(columnName, String.class);
+                    f[i] = (TableField<Record, ?>) field(name);
+
+                    // [#5097] Work around a bug in the Xerial JDBC driver for SQLite
+                    if (f[i] == null && configuration.family() == SQLITE)
+
+                        // [#2656] Use native support for case-insensitive column
+                        //         lookup, once this is implemented
+                        for (Field<?> field : fields())
+                            if (field.getName().equalsIgnoreCase(name))
+                                f[i] = (TableField<Record, ?>) field;
                 }
 
                 return new MetaUniqueKey(this, f);

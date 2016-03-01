@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -127,7 +127,7 @@ class BatchMultiple implements Batch {
             throw ctx.exception();
         }
         finally {
-            Utils.safeClose(listener, ctx);
+            Tools.safeClose(listener, ctx);
         }
     }
 }

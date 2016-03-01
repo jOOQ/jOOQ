@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -166,7 +166,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
 
     @Override
     public final void accept(Context<?> ctx) {
-        Schema mappedSchema = Utils.getMappedSchema(ctx.configuration(), getSchema());
+        Schema mappedSchema = Tools.getMappedSchema(ctx.configuration(), getSchema());
 
         if (mappedSchema != null) {
             ctx.visit(mappedSchema);

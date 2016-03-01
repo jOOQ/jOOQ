@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -133,7 +133,7 @@ class CreateViewImpl<R extends Record> extends AbstractQuery implements
            .paramType(INLINED)
            .visit(
                rename && !renameSupported
-             ? selectFrom(table(select).as("t", Utils.fieldNames(fields)))
+             ? selectFrom(table(select).as("t", Tools.fieldNames(fields)))
              : select)
            .paramType(paramType)
            .end(CREATE_VIEW_AS);

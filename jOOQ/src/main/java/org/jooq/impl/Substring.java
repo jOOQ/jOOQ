@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -77,45 +77,45 @@ class Substring extends AbstractFunction<String> {
                 }
             }
 
-            /* [pro] xx
-            xx xxxxxx xxx xxx xxx xxxxxx xxxxxxxx x xxxxxxxxx
-            xxxx xxxx
-            xxxx xxxxxxxxxx x
-                xx xxxxxxxxxxxxxxxxxxxxxx xx xx x
-                    xxxxxx xxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                x
 
-                xx xxxxxxx xxxxxxxxx
-                xxxx x
-                    xxxxxx
-                x
-            x
 
-            xx xxxxxx xxx xxxxxxxxxxxx xxxxxxxx xxxxxx xxxxx xxxxxxxx xxxxxxx
-            xxxx xxxxxxx x
-                xx xxxxxxxxxxxxxxxxxxxxxx xx xx x
-                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx xxx xxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxx
-                x
-                xxxx x
-                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx xxx xxxxxxxxxx xxxxxxxxxx xxx xxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxx
-                x
-            x
 
-            xxxx xxxxxxx
-                xxxxxxxxxxxx x xxxxxx
-                xxxxxx
 
-            xxxx xxxx
-            xxxx xxxxxxxxx
-            xxxx xxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             case DERBY:
             case SQLITE:
                 functionName = "substr";

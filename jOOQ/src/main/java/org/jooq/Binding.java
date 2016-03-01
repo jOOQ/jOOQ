@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -68,7 +68,7 @@ import org.jooq.impl.SQLDataType;
  * @author Lukas Eder
  */
 public interface Binding<T, U> extends Serializable {
-	
+
     /**
      * A converter that can convert between the database type and the custom
      * type.

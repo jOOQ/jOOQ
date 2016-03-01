@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -124,12 +124,12 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
     @Override
     public final <T> void addValueForUpdate(Field<T> field, T value) {
-        updateMap.put(field, Utils.field(value, field));
+        updateMap.put(field, Tools.field(value, field));
     }
 
     @Override
     public final <T> void addValueForUpdate(Field<T> field, Field<T> value) {
-        updateMap.put(field, Utils.field(value, field));
+        updateMap.put(field, Tools.field(value, field));
     }
 
     @Override
@@ -213,13 +213,13 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 }
 
                 // Some databases allow for emulating this clause using a MERGE statement
-                /* [pro] xx
-                xxxx xxxx
-                xxxx xxxxxxxxx
-                xxxx xxxxxxx
-                xxxx xxxxxxxxxx
-                xxxx xxxxxxx
-                xx [/pro] */
+
+
+
+
+
+
+
                 case HSQLDB: {
                     ctx.visit(toMerge(ctx.configuration()));
                     break;
@@ -272,25 +272,25 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 }
 
                 // Some databases allow for emulating this clause using a MERGE statement
-                /* [pro] xx
-                xxxx xxxx
-                xxxx xxxxxx
-                xxxx xxxxxxx
 
-                xxxx xxxxxxxxx
 
-                xxxx xxxxxxx
-                xxxx xxxxxxxxxx
-                xxxx xxxxxxxxxx
-                xxxx xxxxxxxxxx
 
-                xxxx xxxxxxxxxx
-                xxxx xxxxxxxxxxxxxx
-                xxxx xxxxxxxxxxxxxx
-                xxxx xxxxxxxxxxxxxx
 
-                xxxx xxxxxxx
-                xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 case HSQLDB: {
                     ctx.visit(toMerge(ctx.configuration()));
                     break;
@@ -357,11 +357,11 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         }
         else if (defaultValues) {
             switch (ctx.family()) {
-                /* [pro] xx
-                xxxx xxxxxxx
-                xxxx xxxx
-                xxxx xxxxxxx
-                xx [/pro] */
+
+
+
+
+
 
                 case DERBY:
                 case MARIADB:

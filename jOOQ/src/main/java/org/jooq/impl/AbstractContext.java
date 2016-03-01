@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -46,7 +46,7 @@ import static java.util.Arrays.asList;
 // ...
 // ...
 import static org.jooq.conf.ParamType.INDEXED;
-import static org.jooq.impl.Utils.DataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION;
+import static org.jooq.impl.Tools.DataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION;
 
 import java.sql.PreparedStatement;
 import java.util.ArrayDeque;
@@ -102,11 +102,11 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         VisitListenerProvider[] providers = configuration.visitListenerProviders();
         boolean userInternalVisitListener =
             false
-        /* [pro] xx
-        xx xxxxxxx xxxxxxx xxxxxxxxxx xxx xxxxxxxxxxxxxxxxxxxxx
-         xx xxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxx
-         xx xxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xx [/pro] */
+
+
+
+
+
             ;
 
         this.visitListeners = new VisitListener[providers.length + (userInternalVisitListener ? 1 : 0)];
@@ -114,10 +114,10 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         for (int i = 0; i < providers.length; i++)
             this.visitListeners[i] = providers[i].provide();
 
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxx
-        xx [/pro] */
+
+
+
+
 
         if (this.visitListeners.length > 0) {
             this.visitContext = new DefaultVisitContext();
@@ -269,12 +269,12 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
         @Override
         public final Settings settings() {
-            return Utils.settings(configuration());
+            return Tools.settings(configuration());
         }
 
         @Override
         public final SQLDialect dialect() {
-            return Utils.configuration(configuration()).dialect();
+            return Tools.configuration(configuration()).dialect();
         }
 
         @Override

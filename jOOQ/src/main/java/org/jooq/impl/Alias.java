@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -68,8 +68,8 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.Utils.DataKey.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
-import static org.jooq.impl.Utils.list;
+import static org.jooq.impl.Tools.DataKey.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
+import static org.jooq.impl.Tools.list;
 
 import org.jooq.Clause;
 import org.jooq.Context;
@@ -152,14 +152,14 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
                     switch (family) {
 
-                        /* [pro] xx
-                        xxxx xxxxxxx x
-                            xx xxxxxxxxxxx xx xxxxxx xxxxxxx xxxx xxxxx xxxxxxxxx xxxxx xx x xxxxxxx xxxxxxxxx
-                            xx xx xxx xxxxx xxxxxxxxx xxxxxxx xx xxxxx
-                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                            xxxxxx
-                        x
-                        xx [/pro] */
+
+
+
+
+
+
+
+
 
                         default: {
                             fields.add(field("null").as(fieldAlias));
@@ -220,7 +220,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
                             ArrayTable table = (ArrayTable) o;
 
                             context.sql('(');
-                            Utils.fieldNames(context, table.fields());
+                            Tools.fieldNames(context, table.fields());
                             context.sql(')');
                         }
 
@@ -230,12 +230,12 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
             }
         }
 
-        /* [pro] xx
-        xx xxxxxxx xxxxx xxxxxx xxxxx xxxxxxx xx xxx xxxxxx xxxxx xx xxxxxxx
-        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx xxxxxxxxxx xxxxxx x
-            xxxxxxxxxxxxxxxxxxxxxx
-        x
-        xx [/pro] */
+
+
+
+
+
+
         else {
             context.literal(alias);
         }

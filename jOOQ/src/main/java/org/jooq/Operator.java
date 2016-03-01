@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -51,10 +51,23 @@ public enum Operator {
     /**
      * The and operator
      */
-    AND,
+    AND("and"),
 
     /**
      * The or operator
      */
-    OR;
+    OR("or");
+
+    private final String sql;
+
+    private Operator(String sql) {
+        this.sql = sql;
+    }
+
+    /**
+     * A SQL rendition of this operator.
+     */
+    public String toSQL() {
+        return sql;
+    }
 }

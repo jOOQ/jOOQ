@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -64,20 +64,20 @@ class CurrentSchema extends AbstractFunction<String> {
     @Override
     final Field<String> getFunction0(Configuration configuration) {
         switch (configuration.family()) {
-            /* [pro] xx
-            xxxx xxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx
 
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxxxxx
 
-            xxxx xxxxxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx
 
-            xxxx xxxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx
 
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
             case CUBRID:
             case FIREBIRD:
             case SQLITE:

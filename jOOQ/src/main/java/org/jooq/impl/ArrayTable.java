@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -87,21 +87,21 @@ class ArrayTable extends AbstractTable<Record> {
             arrayType = array.getDataType().getType().getComponentType();
         }
 
-        /* [pro] xx
-        xx xxxxxxx xxxx xxxxx xx xxxxxxx xxxx xxxxxxxxxxx xx xxxxxx xxxxxx x xxxxx xxxxx
-        xxxx xx xxxxxx xxxxxxxxxx xxxxxxxxxxxxxx x
-            xxxxxxxxx x xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        x
 
-        xx xxxxxxx xxxx xxxxx xx xxxxxxx xxxx xxxxxxxxxxx xx xxxxxx
-        xx xxxxxx x xxxxx xxxxx xxxxxxxx xxxx xxxxxxxxx
-        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xx xxxx xxxxxx xxxx xxxxxxxxxxx xxxxxx xx xxxxxxxxx xx xxxxx xxxxxxxxx
-            xxxxxxxxxxxxxx xxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        x
 
-        xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
         // Is this case possible?
         else {
             arrayType = Object.class;
@@ -174,17 +174,17 @@ class ArrayTable extends AbstractTable<Record> {
 
     private final Table<Record> table(Configuration configuration) {
         switch (configuration.family()) {
-            /* [pro] xx
-            xxxx xxxxxxx x
-                xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                    xxxxxx xxxxxxxxxxxxxxxxxxxx
-                x
-                xxxx x
-                    xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                x
-            x
 
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
             case H2: {
                 return new H2ArrayTable().as(alias);
             }
@@ -202,16 +202,16 @@ class ArrayTable extends AbstractTable<Record> {
                     return emulate();
                 }
 
-                /* [pro] xx
-                xx xxxxxxx xxxxxxxxxx xxx xxxxxxxxxx xx xxxxxxx xxxxxx xxxx
-                xx xxxxxxx xxxxxx xxxxxxx xxxxxxxxxxx
-                xxxx xx xxxxxx xxxxxxxxxx xxxxxxxxxxxxxx x
-                    xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                x
-                xx [/pro] */
+
+
+
+
+
+
+
 
                 else {
-                    return emulate();
+                    return DSL.table("{0}", array).as(alias);
                 }
             }
         }
@@ -258,21 +258,21 @@ class ArrayTable extends AbstractTable<Record> {
         }
     }
 
-    /* [pro] xx
-    xxxxxxx xxxxx xxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxx x
 
-        xxx
-         x xxxxxxxxx xxx
-         xx
-        xxxxxxx xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxx
 
-        xxxxxxxxx
-        xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxx xxxx x
-            xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx
-        x
-    x
 
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
     private abstract class DialectArrayTable extends AbstractTable<Record> {
 
         /**

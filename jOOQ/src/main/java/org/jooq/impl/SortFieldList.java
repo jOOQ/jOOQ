@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -94,7 +94,7 @@ class SortFieldList extends QueryPartList<SortField<?>> {
     final boolean nulls() {
         for (SortField<?> field : this)
             if (((SortFieldImpl<?>) field).getNullsFirst() ||
-                ((SortFieldImpl<?>) field).getNullsFirst())
+                ((SortFieldImpl<?>) field).getNullsLast())
                 return true;
 
         return false;

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -272,7 +272,7 @@ public final class SQLDataType {
      */
     public static final DataType<DayToSecond> INTERVALDAYTOSECOND = new DefaultDataType<DayToSecond>(null, DayToSecond.class, "interval day to second");
 
-    
+
     // -------------------------------------------------------------------------
     // JSR310 types
     // -------------------------------------------------------------------------
@@ -315,7 +315,7 @@ public final class SQLDataType {
      * An alias for {@link #OFFSETDATETIME}
      */
     public static final DataType<OffsetDateTime> TIMESTAMPWITHTIMEZONE = OFFSETDATETIME;
-    
+
 
     // -------------------------------------------------------------------------
     // Binary types
@@ -381,19 +381,19 @@ public final class SQLDataType {
         // TODO [#650] Make this more reliable using a data type registry
 
         try {
-            /* [pro] xx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
             Class.forName(CUBRIDDataType.class.getName());
             Class.forName(DerbyDataType.class.getName());
             Class.forName(FirebirdDataType.class.getName());

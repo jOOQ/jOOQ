@@ -17,7 +17,7 @@ DSL.using(sql.connection)
    .select(a.FIRST_NAME, a.LAST_NAME, b.TITLE)
    .from(a)
    .join(b).on(a.ID.eq(b.AUTHOR_ID))
-   .fetchInto ({ 
+   .fetchInto ({
        r -> println(
            "${r.getValue(a.FIRST_NAME)} " +
            "${r.getValue(a.LAST_NAME)} " +
@@ -25,5 +25,5 @@ DSL.using(sql.connection)
        )
    } as RecordHandler)
 
-   
+
    

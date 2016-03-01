@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -165,24 +165,24 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     @Support
     void addJoin(TableLike<?> table, JoinType type, Condition... conditions);
 
-    /* [pro] xx
-    xxx
-     x xxxxx xxx xxxxxxxx xxxxx xxxxxxx xx x xxx xxxxx xxxxx xxxxxxxxxxx
-     x xxxxxxxxxx xxxx xxxx xxxx xxxxx xxxx xxxxxx xxxxxxxxxxxxxx
-     x xxx
-     x xxxx xxxx x xxxxxxxxxxxxxxx xxxxxxxxx xxxxxx xx xxx xxxxx xxxx xxxx xx x
-     x xxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxx
-     x
-     x xxxxxx xxxxx xxx xxxxxx xxxxx
-     x xxxxxx xxxx xxx xxxx xx xxxx
-     x xxxxxx xxxxxxxxxx xxx xxxxxxx xxxxxxxxxx
-     x xxxxxx xxxxxxxxxxx xxx xxxxxxxxxxxxxxx xxxxxxxxx xxxxxxxxxx
-     x xxxx xxxxxxxxxxxxxxxxxxxx
-     xx
-    xxxxxxxxxxxxxxxx
-    xxxx xxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxx xxxxx xxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxx
 
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Joins the existing table product to a new table with a <code>USING</code>
      * clause.
@@ -753,27 +753,27 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     void setForUpdateOf(Table<?>... tables);
 
-    /* [pro] xx
-    xxx
-     x xxxx xxxxx xxxxx xxx xxxxxxxxxx xxx xxxxxxx xxxx xxx xxx xxxxxxx
-     x xxxxxxxxx xxxxxxxxxxxxx xxxxxxx xx xxxx xxxxx xxx xxxxxxx xxxx xxxx xxx
-     x xxxx xxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxx xxx xxxx xxxxxxxxxxx xx xxx
-     x xxxx xx xxx xxxxxxxxxx
-     x xxx
-     x xxxx xxxxxxxxxxxxx xxxx xxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxx xxx
-     x xxxxxx xxx xxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxx xx xx xxx xxxxxxxxxx xxxx
-     x xxx
-     x xxxx xxx xxxx xxxxxxxx xx xx xxxxxxxxx xx xxx xx xxxxx xxxxxxxxx
-     x xxxx
-     x xxxxxxxxxxxxxxx
-     x xxxxx
-     x
-     x xxxxxx xxxxxxx xxx xxxxxx xx xxxxxxx xx xxxx xxx x xxxx
-     xx
-    xxxxxxxxxxxxxxxx
-    xxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxx
 
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Some RDBMS allow for specifying the locking mode for the applied
      * <code>FOR UPDATE</code> clause. In this case, the session will not wait
@@ -830,18 +830,18 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     @Support({ MARIADB, MYSQL, POSTGRES })
     void setForShare(boolean forShare);
 
-    /* [pro] xx
-    xxx
-     x xxx x xxxxxxxxxx xxxxx xxxxxxxxxxxxx xxxxxx xx xxx xxx xx xxx xxxxxxxxx
-     xx
-    xxxxxxxxxx xxxxxx xx
-    xxxx xxxxxxxxxxxxxxxxxxxxx
 
-    xxx
-     x xxx x xxxxxxxxxx xxxx xxxxxxxxxxx xxxxxx xx xxx xxx xx xxx xxxxxxxxx
-     xx
-    xxxxxxxxxx xxxxxx xx
-    xxxx xxxxxxxxxxxxxxxxxx
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

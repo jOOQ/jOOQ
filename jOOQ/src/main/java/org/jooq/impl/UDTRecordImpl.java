@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -94,7 +94,7 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public Row valuesRow() {
-        return new RowImpl(Utils.fields(intoArray(), fields.fields.fields()));
+        return new RowImpl(Tools.fields(intoArray(), fields.fields.fields()));
     }
 
     @Override
@@ -103,7 +103,7 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
         // [#1693] This needs to return the fully qualified SQL type name, in
         // case the connected user is not the owner of the UDT
         Configuration configuration = localConfiguration();
-        return Utils.getMappedUDTName(configuration, this);
+        return Tools.getMappedUDTName(configuration, this);
     }
 
     @Override

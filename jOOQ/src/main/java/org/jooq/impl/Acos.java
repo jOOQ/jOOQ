@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -70,10 +70,10 @@ class Acos extends AbstractFunction<BigDecimal> {
     @Override
     final QueryPart getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xx [/pro] */
+
+
+
+
 
             default:
                 return field("{acos}({0})", getDataType(), arg);

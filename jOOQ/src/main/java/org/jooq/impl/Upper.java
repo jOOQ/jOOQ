@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -66,10 +66,10 @@ class Upper extends AbstractFunction<String> {
     @Override
     final QueryPart getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxx
-            xx [/pro] */
+
+
+
+
 
             default:
                 return field("{upper}({0})", getDataType(), field);

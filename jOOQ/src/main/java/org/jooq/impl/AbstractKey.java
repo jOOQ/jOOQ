@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -63,9 +63,9 @@ abstract class AbstractKey<R extends Record> implements Key<R> {
     private final Table<R>           table;
     private final TableField<R, ?>[] fields;
 
-    
+
     @SafeVarargs
-    
+
     AbstractKey(Table<R> table, TableField<R, ?>... fields) {
         this.table = table;
         this.fields = fields;

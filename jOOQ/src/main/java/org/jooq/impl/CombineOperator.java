@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -97,14 +97,14 @@ enum CombineOperator {
     }
 
     public String toSQL(SQLDialect dialect) {
-        /* [pro] xx
-        xx xxxxx xx xxxxxxx x
-            xx xxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxx x
-                xxxxxx xxxxxxxx
-            x
-        x
 
-        xx [/pro] */
+
+
+
+
+
+
+
         return sql;
     }
 }

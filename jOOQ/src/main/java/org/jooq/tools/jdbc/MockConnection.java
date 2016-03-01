@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -235,13 +235,13 @@ public class MockConnection extends JDBC41Connection implements Connection {
     @Override
     public Savepoint setSavepoint() throws SQLException {
         checkNotClosed();
-        return null;
+        return new MockSavepoint();
     }
 
     @Override
     public Savepoint setSavepoint(String name) throws SQLException {
         checkNotClosed();
-        return null;
+        return new MockSavepoint(name);
     }
 
     @Override

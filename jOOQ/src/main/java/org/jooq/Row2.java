@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -55,12 +55,14 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
+// ...
+
+import org.jooq.Comparator;
+import org.jooq.impl.DSL;
 
 import java.util.Collection;
 
 import javax.annotation.Generated;
-
-import org.jooq.impl.DSL;
 
 /**
  * A model type for a row value expression with degree <code>2</code>.

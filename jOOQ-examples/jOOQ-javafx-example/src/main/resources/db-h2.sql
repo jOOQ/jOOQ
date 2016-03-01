@@ -8,7 +8,7 @@ CREATE TABLE world.countries (
   gdp_per_capita DECIMAL(10, 2) NOT NULL,
   govt_debt DECIMAL(10, 2) NOT NULL
 );
- 
+
 INSERT INTO world.countries
 VALUES ('CA', 2009, 40764, 51.3),
        ('CA', 2010, 47465, 51.4),

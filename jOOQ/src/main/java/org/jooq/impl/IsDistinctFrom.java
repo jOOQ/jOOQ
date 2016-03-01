@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -170,19 +170,19 @@ class IsDistinctFrom<T> extends AbstractCondition {
             return sqliteCondition;
         }
 
-        /* [pro] xx
-        xx xxxxxxxx xxxxx xx xxxxxxxx xxxx xxx xxxxxxx xxxx xx xxx xxxxxxxx xxxx
-        xxxx xx xxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxx x
-            xx xxxxxxxxxxxxxxxxx xx xxxxx
-                xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxx
-                    x xxx xxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxx
-                    x xxx xxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxxx
 
 
-            xxxxxx xxxxxxxxxxxxxxxxx
-        x
 
-        xx [/pro] */
+
+
+
+
+
+
+
+
+
+
 
         // These dialects natively support the IS DISTINCT FROM predicate:
         // H2, Postgres

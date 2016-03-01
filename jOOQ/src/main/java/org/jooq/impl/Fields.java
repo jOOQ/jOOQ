@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -41,8 +41,9 @@
 
 package org.jooq.impl;
 
-import static org.jooq.impl.Utils.indexOrFail;
+import static org.jooq.impl.Tools.indexOrFail;
 
+import java.sql.SQLWarning;
 import java.util.Collection;
 
 import org.jooq.Clause;
@@ -118,7 +119,7 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
                 else
                     // [#4476] [#4477] This might be unintentional from a user
                     // perspective, e.g. when ambiguous ID columns are present.
-                    log.info("Ambiguous match found for " + fieldName + ". Both " + columnMatch + " and " + f + " match.");
+                    log.info("Ambiguous match found for " + fieldName + ". Both " + columnMatch + " and " + f + " match.", new SQLWarning());
             }
         }
 
@@ -138,18 +139,22 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
     }
 
     @Override
-    public final Field<?> field(String name) {
-        if (name == null) {
+    public final Field<?> field(String fieldName) {
+        if (fieldName == null)
             return null;
-        }
 
-        for (Field<?> f : fields) {
-            if (f.getName().equals(name)) {
-                return f;
-            }
-        }
+        Field<?> columnMatch = null;
 
-        return null;
+        for (Field<?> f : fields)
+            if (f.getName().equals(fieldName))
+                if (columnMatch == null)
+                    columnMatch = f;
+                else
+                    // [#4476] [#4477] [#5046] This might be unintentional from a user
+                    // perspective, e.g. when ambiguous ID columns are present.
+                    log.info("Ambiguous match found for " + fieldName + ". Both " + columnMatch + " and " + f + " match.", new SQLWarning());
+
+        return columnMatch;
     }
 
     @Override

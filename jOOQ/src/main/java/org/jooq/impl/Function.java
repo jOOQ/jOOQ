@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -59,8 +59,8 @@ import static org.jooq.impl.Term.ARRAY_AGG;
 import static org.jooq.impl.Term.LIST_AGG;
 import static org.jooq.impl.Term.MEDIAN;
 import static org.jooq.impl.Term.ROW_NUMBER;
-import static org.jooq.impl.Utils.DataKey.DATA_LOCALLY_SCOPED_DATA_MAP;
-import static org.jooq.impl.Utils.DataKey.DATA_WINDOW_DEFINITIONS;
+import static org.jooq.impl.Tools.DataKey.DATA_LOCALLY_SCOPED_DATA_MAP;
+import static org.jooq.impl.Tools.DataKey.DATA_WINDOW_DEFINITIONS;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -207,11 +207,11 @@ class Function<T> extends AbstractField<T> implements
             toSQLFilterClause(ctx);
             toSQLOverClause(ctx);
         }
-        /* [pro] xx
-        xxxx xx xxxxx xx xxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxxxxxxxxxxxxx
-        x
-        xx [/pro] */
+
+
+
+
+
         else if (term == MEDIAN && asList(POSTGRES).contains(ctx.family())) {
             Field<?>[] fields = new Field[arguments.size()];
             for (int i = 0; i < fields.length; i++)
@@ -228,55 +228,55 @@ class Function<T> extends AbstractField<T> implements
         }
     }
 
-    /* [pro] xx
-    xxx
-     x xxxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxx xxx xxx
-     xx
-    xxxxx xxxx xxxxxxxxxxxxxxxxxxxxxx xxxx x
 
-        xx xxxx xx x xxxxxxxx xxxx xx xxxx xxx xxxxx xxx xxxx xxxxxx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx xxxxx xx xxx xx xxxxxxxxxxxxxxx xx
-        xx xxxxxxxxxxxxxxxxx x xx x
-            xxxxxxxxxxxxxxxxxxxxxxx
-        x
 
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        xx xxxxxxxxxxxxxxxxx x xx x
-            xxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxx xxx
-        x
 
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        xx xxxxxxxxxxxxxxxxx x xx x
-            xxxxxxxxxxxxx xx xxxxxx
-        x
 
-        xxxxxxxxxxxxx xx xxxxxxx
 
-        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxx xx
-                   xxxxxxxxxxxxxxxxxxxxxxxxxxx
-        x
 
-        xxxxxxxxxxxxx xx xxxxxx
-        xxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxx xx xxxxxxxxxxxx
 
-        xx xxxxxxxxxxxxxxxxx x xx x
-            xxxxxxxxxx xxx
 
-            xx xxx xxxxxxxxx xx xx xxxx xxxxx xxx xxx
-            xx xxx xxxxxxx xxx xxxxxx x
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xxx
-            xxxxxxxxxxxxx xx xxxxxx
-        x
-    x
 
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * [#1275] <code>LIST_AGG</code> emulation for Postgres, Sybase
      */
@@ -470,23 +470,23 @@ class Function<T> extends AbstractField<T> implements
         }
 
         if (ignoreNulls) {
-            /* [pro] xx
-            xx xxxxxxxxxxxxx xx xxxxxxxxxxxxxxx x
-                xxxxxxxxxx xxxxxxx xxxxxxxxx
-            x
-            xxxx
-            xx [/pro] */
+
+
+
+
+
+
             {
                 ctx.sql(' ').keyword("ignore nulls");
             }
         }
         else if (respectNulls) {
-            /* [pro] xx
-            xx xxxxxxxxxxxxx xx xxxxxxxxxxxxxxx x
-                xxxxxxxxxx xxxxxxxx xxxxxxxxx
-            x
-            xxxx
-            xx [/pro] */
+
+
+
+
+
+
             {
                 ctx.sql(' ').keyword("respect nulls");
             }
@@ -533,58 +533,58 @@ class Function<T> extends AbstractField<T> implements
         return this;
     }
 
-    /* [pro] xx
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
-        xxxxx x xxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxx xxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxx x
-        xxxxx x xxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxx xxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxx xxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxx xxxxxxx x
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxx xxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxx x
-        xxxxxxxxxxx x xxxxx
-        xxxxxxxxxxxx x xxxxxx
-        xxxxxx xxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx x
-        xxxxxxxxxxx x xxxxxx
-        xxxxxxxxxxxx x xxxxx
-        xxxxxx xxxxx
-    x
 
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public final WindowBeforeOverStep<T> filterWhere(Condition... conditions) {
         return filterWhere(Arrays.asList(conditions));

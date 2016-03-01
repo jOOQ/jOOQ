@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -148,16 +148,16 @@ public class BlobBinding implements Binding<byte[], byte[]> {
             Blob blob = null;
 
             switch (configuration.family()) {
-                /* [pro] xx
-                xx xxxxxxxx xxx x xxx xxxx xxxxxxx xxxxx xxxxx xxxxxxxxx
-                xx xxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxx xxxxxxx x
-                    xxxx x xxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxx
-                    xxxxxx
-                x
-                    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
 
                 default: {
                     blob = c.createBlob();

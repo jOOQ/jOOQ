@@ -88,7 +88,7 @@ INSERT INTO book_to_book_store VALUES
 
 DROP ALIAS IF EXISTS count_books
 ;
-	
+
 CREATE OR REPLACE ALIAS count_books AS $$
 int countBooks(Connection c, int authorID) throws SQLException {
     try (PreparedStatement s = c.prepareStatement("SELECT COUNT(*) FROM book WHERE author_id = ?")) {

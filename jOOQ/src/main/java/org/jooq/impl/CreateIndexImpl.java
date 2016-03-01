@@ -1,6 +1,6 @@
 /**
  * All rights reserved.
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  *
  * This work is dual-licensed
  * - under the Apache Software License 2.0 (the "ASL")

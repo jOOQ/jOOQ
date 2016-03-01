@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -50,7 +50,7 @@ import static org.jooq.impl.RecordDelegate.RecordLifecycleType.DELETE;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.REFRESH;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.STORE;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.UPDATE;
-import static org.jooq.impl.Utils.settings;
+import static org.jooq.impl.Tools.settings;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
@@ -104,7 +104,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
     @Override
     public final <O extends TableRecord<O>> O fetchChild(ForeignKey<O, R> key) {
-        return Utils.filterOne(fetchChildren(key));
+        return Tools.filterOne(fetchChildren(key));
     }
 
     @SuppressWarnings("unchecked")
@@ -208,7 +208,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     private final int storeUpdate0(Field<?>[] storeFields, TableField<R, ?>[] keys) {
         UpdateQuery<R> update = create().updateQuery(getTable());
         addChangedValues(storeFields, update);
-        Utils.addConditions(update, this, keys);
+        Tools.addConditions(update, this, keys);
 
         // Don't store records if no value was set by client code
         if (!update.isExecutable()) {
@@ -270,7 +270,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
         try {
             DeleteQuery<R> delete1 = create().deleteQuery(getTable());
-            Utils.addConditions(delete1, this, keys);
+            Tools.addConditions(delete1, this, keys);
 
             if (isExecuteWithOptimisticLocking()) {
 
@@ -309,7 +309,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         SelectQuery<Record> select = create().selectQuery();
         select.addSelect(refreshFields);
         select.addFrom(getTable());
-        Utils.addConditions(select, this, getPrimaryKey().getFieldsArray());
+        Tools.addConditions(select, this, getPrimaryKey().getFieldsArray());
 
         if (select.execute() == 1) {
             final AbstractRecord source = (AbstractRecord) select.getResult().get(0);
@@ -333,7 +333,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
         // [#3359] The "fetched" flag must be set to false to enforce INSERT statements on
         // subsequent store() calls - when Settings.updatablePrimaryKeys is set.
-        return Utils.newRecord(false, getTable(), configuration())
+        return Tools.newRecord(false, getTable(), configuration())
                     .operate(new RecordOperation<R, RuntimeException>() {
 
         	@Override
@@ -376,8 +376,8 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         TableField<R, ?> v = getTable().getRecordVersion();
         TableField<R, ?> t = getTable().getRecordTimestamp();
 
-        if (v != null) Utils.addCondition(query, this, v);
-        if (t != null) Utils.addCondition(query, this, t);
+        if (v != null) Tools.addCondition(query, this, v);
+        if (t != null) Tools.addCondition(query, this, t);
     }
 
     /**
@@ -386,7 +386,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
      */
     private final void checkIfChanged(TableField<R, ?>[] keys) {
         SelectQuery<R> select = create().selectQuery(getTable());
-        Utils.addConditions(select, this, keys);
+        Tools.addConditions(select, this, keys);
 
         // [#1547] MS Access and SQLite doesn't support FOR UPDATE. CUBRID and SQL Server
         // can emulate it, though!

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -43,8 +43,8 @@ package org.jooq.impl;
 import static java.lang.Boolean.TRUE;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.Utils.DataKey.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
-import static org.jooq.impl.Utils.DataKey.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
+import static org.jooq.impl.Tools.DataKey.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
+import static org.jooq.impl.Tools.DataKey.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
 
 import org.jooq.Field;
 import org.jooq.QueryPart;
@@ -68,30 +68,30 @@ import org.jooq.VisitListener;
  */
 class InternalVisitListener extends DefaultVisitListener {
 
-    /* [pro] xx
-    xxxxxxxxx
-    xxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxx xxxx x
-        xxxxxxxxx xxxx x xxxxxxxxxxxxxxxx
 
-        xx xxxxx xxxx xxxxxxxxxxxxxx xxxx xx xxxxxx xxxx xxx xxx xxxxx xxxxxxxx xx xxx xxxxxx xxxxxx
-        xx xxxxx xxxxxxxxxx xxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
 
-            xx xxxxxxx xxxxxxxx xxx xxxxxx xxxxx xx xxxx x xxxxxxxxx xxxxx xx xxxxxxxxx
-            xx xx xxx xxxxxx xxxxxx
-            xxxxxxxx xxxxxx x xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-            xx xxxxx xxxxxxx xxx xxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xx xxxxxxx xx xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                xxxxxxxxxx xxxxxxxxxxxxxx x xxxxxxxxxxxx xxxxxxxxxx
-                xxxxxxxxxx xxxxxxxxxxxxx x xxxxxxxxxxxx xxxxxxxxxx
 
-                xxx xxxx x x xx x x xxxxxxxxxxxxxxxxxxxxxx xxxx x
-                    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    x
-                x
-            x
-        x
-    x
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

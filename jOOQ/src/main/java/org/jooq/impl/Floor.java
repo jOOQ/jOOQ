@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -67,9 +67,9 @@ class Floor<T extends Number> extends AbstractFunction<T> {
     final Field<T> getFunction0(Configuration configuration) {
         switch (configuration.dialect()) {
 
-            /* [pro] xx
-            xxxx xxxxxxx
-            xx [/pro] */
+
+
+
 
             case SQLITE:
                 return DSL.round(argument.sub(0.499999999999999));

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -68,12 +68,12 @@ class Repeat extends AbstractFunction<String> {
     @Override
     final Field<String> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [pro] xx
-            xxxx xxxxx
-            xxxx xxxxxxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
             case FIREBIRD:
                 return DSL.rpad(string, DSL.length(string).mul(count), string);
 
@@ -84,12 +84,12 @@ class Repeat extends AbstractFunction<String> {
             case SQLITE:
                 return DSL.field("replace(substr(quote(zeroblob(({0} + 1) / 2)), 3, {0}), '0', {1})", String.class, count, string);
 
-            /* [pro] xx
-            xxxx xxxx
-            xxxx xxxxxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxx
 
-            xx [/pro] */
+
+
+
+
+
             default:
                 return function("repeat", SQLDataType.VARCHAR, string, count);
         }

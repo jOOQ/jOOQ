@@ -3,14 +3,14 @@ Sophisticated GitHub issue export script
 - "Export" from GitHub via copy paste
 - Apply regexes:
   o search   ^\s*\d+$\n
-    replace  
-    
+    replace
+
   o search   ^#\d+.*?$\n
-    replace  
-    
+    replace
+
   o search   ^\s*(.*?) - Merge \[(.*?)\].*?$
     replace  $2 - $1
-  
-  
+
+
 -------------------------------------
 

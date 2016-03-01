@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -41,21 +41,21 @@
 
 package org.jooq.util.postgres;
 
+import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.count;
-import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.partitionBy;
+import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.DSL.selectOne;
-import static org.jooq.impl.DSL.upper;
-import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.DSL.when;
 import static org.jooq.util.postgres.PostgresDSL.oid;
 import static org.jooq.util.postgres.information_schema.Tables.ATTRIBUTES;
 import static org.jooq.util.postgres.information_schema.Tables.CHECK_CONSTRAINTS;
 import static org.jooq.util.postgres.information_schema.Tables.KEY_COLUMN_USAGE;
-import static org.jooq.util.postgres.information_schema.Tables.PARAMETERS;
 import static org.jooq.util.postgres.information_schema.Tables.ROUTINES;
 import static org.jooq.util.postgres.information_schema.Tables.SEQUENCES;
 import static org.jooq.util.postgres.information_schema.Tables.TABLES;
@@ -487,7 +487,6 @@ public class PostgresDatabase extends AbstractDatabase {
         List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
 
         Routines r1 = ROUTINES.as("r1");
-        Routines r2 = ROUTINES.as("r2");
 
         for (Record record : create().select(
                 r1.ROUTINE_SCHEMA,
@@ -495,15 +494,9 @@ public class PostgresDatabase extends AbstractDatabase {
                 r1.SPECIFIC_NAME,
 
                 // Ignore the data type when there is at least one out parameter
-                decode()
-                    .when(DSL.exists(
-                        selectOne()
-                        .from(PARAMETERS)
-                        .where(PARAMETERS.SPECIFIC_SCHEMA.eq(r1.SPECIFIC_SCHEMA))
-                        .and(PARAMETERS.SPECIFIC_NAME.eq(r1.SPECIFIC_NAME))
-                        .and(upper(PARAMETERS.PARAMETER_MODE).ne("IN"))),
-                            val("void"))
+                when(condition("{0} && ARRAY['o','b']::\"char\"[]", PG_PROC.PROARGMODES), inline("void"))
                     .otherwise(r1.DATA_TYPE).as("data_type"),
+
                 r1.CHARACTER_MAXIMUM_LENGTH,
                 r1.NUMERIC_PRECISION,
                 r1.NUMERIC_SCALE,
@@ -511,21 +504,11 @@ public class PostgresDatabase extends AbstractDatabase {
                 r1.TYPE_UDT_NAME,
 
                 // Calculate overload index if applicable
-                decode().when(
-                DSL.exists(
-                    selectOne()
-                    .from(r2)
-                    .where(r2.ROUTINE_SCHEMA.in(getInputSchemata()))
-                    .and(r2.ROUTINE_SCHEMA.eq(r1.ROUTINE_SCHEMA))
-                    .and(r2.ROUTINE_NAME.eq(r1.ROUTINE_NAME))
-                    .and(r2.SPECIFIC_NAME.ne(r1.SPECIFIC_NAME))),
-                    select(count())
-                    .from(r2)
-                    .where(r2.ROUTINE_SCHEMA.in(getInputSchemata()))
-                    .and(r2.ROUTINE_SCHEMA.eq(r1.ROUTINE_SCHEMA))
-                    .and(r2.ROUTINE_NAME.eq(r1.ROUTINE_NAME))
-                    .and(r2.SPECIFIC_NAME.le(r1.SPECIFIC_NAME)).asField())
-                .as("overload"),
+                when(
+                    count().over(partitionBy(r1.ROUTINE_SCHEMA, r1.ROUTINE_NAME)).gt(one()),
+                    rowNumber().over(partitionBy(r1.ROUTINE_SCHEMA, r1.ROUTINE_NAME).orderBy(r1.SPECIFIC_NAME))
+                ).as("overload"),
+
                 PG_PROC.PROISAGG)
             .from(r1)
 
@@ -537,7 +520,8 @@ public class PostgresDatabase extends AbstractDatabase {
             .andNot(PG_PROC.PRORETSET)
             .orderBy(
                 r1.ROUTINE_SCHEMA.asc(),
-                r1.ROUTINE_NAME.asc())
+                r1.ROUTINE_NAME.asc(),
+                field(name("overload")).asc())
             .fetch()) {
 
             result.add(new PostgresRoutineDefinition(this, record));

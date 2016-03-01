@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -612,7 +612,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
         // SQLExceptions originating from rollbacks or commits are always fatal
         // They are propagated, and not swallowed
         catch (SQLException e) {
-            throw Utils.translate(null, e);
+            throw Tools.translate(null, e);
         }
         finally {
             if (reader != null)
@@ -631,7 +631,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
         // SQLExceptions originating from rollbacks or commits are always fatal
         // They are propagated, and not swallowed
         catch (SQLException e) {
-            throw Utils.translate(null, e);
+            throw Tools.translate(null, e);
         }
         finally {
             if (reader != null)
@@ -647,7 +647,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
         // SQLExceptions originating from rollbacks or commits are always fatal
         // They are propagated, and not swallowed
         catch (SQLException e) {
-            throw Utils.translate(null, e);
+            throw Tools.translate(null, e);
         }
     }
 

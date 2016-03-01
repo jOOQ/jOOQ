@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -122,9 +122,9 @@ class DropIndexImpl extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         if (ifExists && !supportsIfExists(ctx)) {
-            Utils.executeImmediateBegin(ctx, INDEX);
+            Tools.executeImmediateBegin(ctx, INDEX);
             accept0(ctx);
-            Utils.executeImmediateEnd(ctx, INDEX);
+            Tools.executeImmediateEnd(ctx, INDEX);
         }
         else {
             accept0(ctx);

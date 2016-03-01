@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -57,7 +57,7 @@ import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.nullSafe;
-import static org.jooq.impl.Utils.DataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
+import static org.jooq.impl.Tools.DataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -541,11 +541,11 @@ implements
         // syntax, in case of which, the USING() was not added
         if (using == null) {
             upsertStyle = true;
-            getUpsertValues().addAll(Utils.fields(values, getUpsertFields().toArray(new Field[0])));
+            getUpsertValues().addAll(Tools.fields(values, getUpsertFields().toArray(new Field[0])));
         }
         else {
             Field<?>[] fields = notMatchedInsert.keySet().toArray(new Field[0]);
-            notMatchedInsert.putValues(Utils.fields(values, fields));
+            notMatchedInsert.putValues(Tools.fields(values, fields));
         }
 
         return this;
@@ -746,7 +746,7 @@ implements
 
     @Override
     public final <T> MergeImpl set(Field<T> field, T value) {
-        return set(field, Utils.field(value, field));
+        return set(field, Tools.field(value, field));
     }
 
     @Override
@@ -786,7 +786,7 @@ implements
 
     @Override
     public final MergeImpl set(Record record) {
-        return set(Utils.mapOfChangedValues(record));
+        return set(Tools.mapOfChangedValues(record));
     }
 
     @Override
@@ -998,14 +998,14 @@ implements
         Configuration config = ctx.configuration();
 
         switch (ctx.family()) {
-            /* [pro] xx
-            xxxx xxxx
-            xxxx xxxxxxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
+
             case CUBRID:
             case HSQLDB: {
 
@@ -1123,11 +1123,11 @@ implements
                     toPostgresInsertOnConflict(ctx);
                     break;
 
-                /* [pro] xx
-                xxxx xxxxx
-                    xxxxxxxxxxxxxxxxxxxxx
-                    xxxxxx
-                xx [/pro] */
+
+
+
+
+
 
                 default:
                     ctx.visit(getStandardMerge(ctx));
@@ -1164,12 +1164,12 @@ implements
            .formatSeparator();
 
         ctx.sql('(');
-        Utils.fieldNames(ctx, getUpsertFields());
+        Tools.fieldNames(ctx, getUpsertFields());
         ctx.sql(')');
 
         if (!getUpsertKeys().isEmpty()) {
             ctx.sql(' ').keyword("key").sql(" (");
-            Utils.fieldNames(ctx, getUpsertKeys());
+            Tools.fieldNames(ctx, getUpsertKeys());
             ctx.sql(')');
         }
 
@@ -1184,47 +1184,47 @@ implements
         }
     }
 
-    /* [pro] xx
-    xxxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxx x
-        xxxxxxxxxxxxxxxxxxxxx
-           xxxxxx xx
-           xxxxxxxxxxxxxxxxxxxx
-           xxxxxxxxxxxxx
-           xxxxxxxxxxxxxxxxxxx
 
-        xxxxxxxxx xxxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        xxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxx xxxxxxxx
-        xxxxxxxxxxxxx
 
-        xx xxxxxxxxxxxxx xx xxxxx x
-            xxxxxxxxx xx
-               xxxxxxxxxxxxxxxxxxxxx
-        x
-        xxxx x
-            xxxxxxxxxxxxxxxxxxxxx
-               xxxxxxxxxxxxxxxxxxxxxxxx xxx
-               xxxxxxxxxxxxxxxxxxxxxxxxx
-               xxxxxxxxxx
 
-            xx xxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                xxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxx xxxxxxx xxxxxx
-            x
-            xxxx x
-                xxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxxxxxxx xxx
 
-                xxxxxxxxxxxxxxxxxxxxx x x xxx xxxxxxxxxxxxxxxxxxxxxxxx
-                xxx xxxxxxxxx xxxxx x xxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                xxxxxxxxxxxxx
-            x
-        x
-    x
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final void toSQLStandard(Context<?> ctx) {
         ctx.start(MERGE_MERGE_INTO)
@@ -1245,40 +1245,40 @@ implements
         ctx.formatIndentEnd()
            .declareTables(false);
 
-        /* [pro] xx
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxx x
-                xx xxxxxx xxxxxxxxxx xxxxxxx x
-                    xxx xxxx x xxxxxxxxxxxxxxxxxx
 
-                    xxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx xx
-                       xxxxxxxxxxxxxx
-                       xxxxxxxxxx
-                       xxxxxxxxxx
 
-                    xxxxxx xxxxxxxxx x xxx
-                    xxx xxxxxxxxx xxxxx x xxxxxxxxxxxx xxxxxxxxxxxxxxxx x
 
-                        xx xxxx xxxxxx xxx xxxxxxx
-                        xx xxxxxx xxxxxxx xxxx
-                        xxxxxx xxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                            x xxxxxxxx x xxxx x xxx x xxxxxxxxxxxxxxxxx
-                            x xxxxxxxxxxxxxxxx
 
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxx x xx xx
-                    x
 
-                    xxxxxxxxxxxxx
-                x
 
-                xxxxxx
-            x
-        x
 
-        xx [/pro] */
-        boolean onParentheses = false/* [pro] xx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxx [/pro] */;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        boolean onParentheses = false                                                                           ;
         ctx.end(MERGE_USING)
            .formatSeparator()
            .start(MERGE_ON)
@@ -1347,14 +1347,14 @@ implements
 
         ctx.end(MERGE_WHERE)
            .end(MERGE_WHEN_NOT_MATCHED_THEN_INSERT);
-        /* [pro] xx
 
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxx xxxxxxxxxx
-                xxxxxxxxxxxxx
-                xxxxxx
-        x
-        xx [/pro] */
+
+
+
+
+
+
+
     }
 
     @Override

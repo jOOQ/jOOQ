@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -96,16 +96,16 @@ class Round<T extends Number> extends AbstractFunction<T> {
                 }
             }
 
-            /* [pro] xx
-            xx xxxxx xxxxxxxx xxxx x xxxxxxxxx xxxxxxxx xxxxxxxx
-            xxxx xxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxx x
-                xxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxx xxxxxxxxxxxxxxx
-            x
 
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
             // There's no function round(double precision, integer) in Postgres
             case POSTGRES: {
                 if (decimals == 0) {

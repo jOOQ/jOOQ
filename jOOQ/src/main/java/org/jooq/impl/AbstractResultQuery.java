@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -48,8 +48,8 @@ import static java.util.concurrent.Executors.newSingleThreadExecutor;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
-import static org.jooq.impl.Utils.DataKey.DATA_LOCK_ROWS_FOR_UPDATE;
-import static org.jooq.impl.Utils.consumeResultSets;
+import static org.jooq.impl.Tools.DataKey.DATA_LOCK_ROWS_FOR_UPDATE;
+import static org.jooq.impl.Tools.consumeResultSets;
 
 import java.lang.reflect.Array;
 import java.sql.ResultSet;
@@ -250,16 +250,16 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         if (ctx.family() == POSTGRES && fetchSize != 0 && ctx.connection().getAutoCommit())
             log.info("Fetch Size", "A fetch size of " + fetchSize + " was set on a auto-commit PostgreSQL connection, which is not recommended. See http://jdbc.postgresql.org/documentation/head/query.html#query-with-cursor");
 
-        /* [pro] xx
-        xx xxxx xxxxxxx xxxx xx xxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xx xxxxxxxxxx xx xxxxx xxx xxx xxxxxxx
-        xx xxxxxxxxxxxxx xx xxxx x
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        x
 
-        xx xxxxxxx xxxxx xxxxxxxxxxxxxx xx xxxxx xx xxxxxx xxxxxxx xxxx xxx
-        xx xxx xxxxxx x xxxxxxxxxx xxxx xxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
-        xxxx xx [/pro] */if (ctx.statement().execute()) {
+
+
+
+
+
+
+
+
+                         if (ctx.statement().execute()) {
             ctx.resultSet(ctx.statement().getResultSet());
         }
 
@@ -316,12 +316,12 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         return fetch().iterator();
     }
 
-    
+
     @Override
     public final Stream<R> stream() throws DataAccessException {
         return fetchLazy().stream();
     }
-    
+
 
     @Override
     public final Cursor<R> fetchLazy() {
@@ -490,7 +490,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final R fetchOne() {
-        return Utils.fetchOne(fetchLazy());
+        return Tools.fetchOne(fetchLazy());
     }
 
     @Override
@@ -523,7 +523,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         return record == null ? null : record.into(table);
     }
 
-    
+
     @Override
     public final <T> Optional<T> fetchOptional(Field<T> field) {
         return Optional.ofNullable(fetchOne(field));
@@ -613,7 +613,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     public final <Z extends Record> Optional<Z> fetchOptionalInto(Table<Z> table) {
         return Optional.ofNullable(fetchOneInto(table));
     }
-    
+
 
     @Override
     public final <T> T fetchAny(Field<T> field) {

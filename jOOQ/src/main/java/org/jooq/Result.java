@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -2634,7 +2634,6 @@ public interface Result<R extends Record> extends List<R>, Attachable {
     Result<Record> into(Field<?>... fields);
 
     // [jooq-tools] START [into-fields]
-
     /**
      * Copy all records from this result into a new result with new records
      * holding only a subset of the previous fields.

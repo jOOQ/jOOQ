@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -268,26 +268,26 @@ class DefaultExecuteContext implements ExecuteContext {
      */
     private static int            maxUnwrappedConnections = 256;
 
-    /* [pro] xx
-    xxx
-     x xxxxxxx xx xxxxxx xxxx xxxx xxxx xxxxxxxxxx xxxxx xxxx xxxxxxxxxx
-     x xxxxxxxxxxxx
-     xx
-    xxxxxxx xxxxxx xxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx
 
-    xxxxxx x
-        xxxxxxxx xx
 
-        xxx x
-            x x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        x
-        xxxxx xxxxxxxxxx xx x
-            x x xxxxx
-        x
 
-        xxxxxxxxxxxxxxxxxxxxxxx x xx
-    x
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Get the registered connection's "target connection" if applicable.
@@ -309,17 +309,17 @@ class DefaultExecuteContext implements ExecuteContext {
 
         for (int i = 0; i < maxUnwrappedConnections; i++) {
 
-            /* [pro] xx
-            xx xxxxxxx xx xx xxx xxxxx xx xxx xxxxxx xx xxxxxxxxxxxxxxxxx xxxxx xxxxx
-            xxx x
-                xxxxxxxxxx x x xxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xx xxxxxxx xx x xx x xx xxxxx x
-                    xxxxxx x xx
-                    xxxxxx
-                x
-            x
-            xxxxx xxxxxxxxxxxxx xxxxxxx xx
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
 
             // Unwrap nested Spring org.springframework.jdbc.datasource.ConnectionProxy objects
             try {
@@ -552,12 +552,12 @@ class DefaultExecuteContext implements ExecuteContext {
 
     @Override
     public final Settings settings() {
-        return Utils.settings(configuration());
+        return Tools.settings(configuration());
     }
 
     @Override
     public final SQLDialect dialect() {
-        return Utils.configuration(configuration()).dialect();
+        return Tools.configuration(configuration()).dialect();
     }
 
     @Override
@@ -657,7 +657,7 @@ class DefaultExecuteContext implements ExecuteContext {
     @Override
     public final void sqlException(SQLException e) {
         this.sqlException = e;
-        exception(Utils.translate(sql(), e));
+        exception(Tools.translate(sql(), e));
     }
 
     @Override

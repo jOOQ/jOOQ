@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -50,7 +50,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.jooq.Scope;
-import org.jooq.impl.Utils.DataKey;
+import org.jooq.impl.Tools.DataKey;
 
 /**
  * The {@link Map} implementation for use with {@link Scope#data()}.

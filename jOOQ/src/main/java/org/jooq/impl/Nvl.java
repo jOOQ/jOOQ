@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -68,14 +68,14 @@ class Nvl<T> extends AbstractFunction<T> {
     @Override
     final Field<T> getFunction0(Configuration configuration) {
         switch (configuration.family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxx xx xxxxx xxxx xxxxxx xxxxxxxxxxxxxx xxxxx xxxxxx
 
-            xxxx xxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
 
             case H2:
             case HSQLDB:

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -49,7 +49,7 @@ repositories {
 }
 
 dependencies {
-    compile 'org.jooq:jooq:3.7.2'
+    compile 'org.jooq:jooq:3.7.3'
 
     runtime 'com.h2database:h2:1.4.177'
     testCompile 'junit:junit:4.11'
@@ -62,7 +62,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'org.jooq:jooq-codegen:3.7.2'
+        classpath 'org.jooq:jooq-codegen:3.7.3'
         classpath 'com.h2database:h2:1.4.177'
     }
 }

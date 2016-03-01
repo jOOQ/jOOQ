@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -44,7 +44,7 @@ import static org.jooq.ExecuteType.READ;
 import static org.jooq.ExecuteType.WRITE;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.LOAD;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.REFRESH;
-import static org.jooq.impl.Utils.attachRecords;
+import static org.jooq.impl.Tools.attachRecords;
 
 import org.jooq.Configuration;
 import org.jooq.ExecuteType;

@@ -18,7 +18,7 @@ No transfer of rights is needed for the following:
 - Feature requests and discussions
 - Example code to reproduce bugs
 
-If your contribution requires a transfer of rights, please sign the following document before proceeding: 
+If your contribution requires a transfer of rights, please sign the following document before proceeding:
 http://www.jooq.org/legal/contributions
 
 Thank you again very much for your contribution

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -99,9 +99,9 @@ class DropSequenceImpl extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         if (ifExists && !supportsIfExists(ctx)) {
-            Utils.executeImmediateBegin(ctx, SEQUENCE);
+            Tools.executeImmediateBegin(ctx, SEQUENCE);
             accept0(ctx);
-            Utils.executeImmediateEnd(ctx, SEQUENCE);
+            Tools.executeImmediateEnd(ctx, SEQUENCE);
         }
         else {
             accept0(ctx);

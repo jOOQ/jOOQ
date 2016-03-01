@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -58,7 +58,7 @@ class CaseImpl implements Case {
 
     @Override
     public final <V> CaseValueStep<V> value(V value) {
-        return value(Utils.field(value));
+        return value(Tools.field(value));
     }
 
     @Override
@@ -68,7 +68,7 @@ class CaseImpl implements Case {
 
     @Override
     public final <T> CaseConditionStep<T> when(Condition condition, T result) {
-        return when(condition, Utils.field(result));
+        return when(condition, Tools.field(result));
     }
 
     @Override

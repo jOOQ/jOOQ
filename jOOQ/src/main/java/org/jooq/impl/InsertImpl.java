@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -630,7 +630,7 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
 
     @Override
     public final InsertImpl set(Record record) {
-        return set(Utils.mapOfChangedValues(record));
+        return set(Tools.mapOfChangedValues(record));
     }
 
     @Override
@@ -669,10 +669,10 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
         return getDelegate().getReturnedRecord();
     }
 
-    
+
     @Override
     public final Optional<R> fetchOptional() {
         return Optional.ofNullable(fetchOne());
     }
-    
+
 }

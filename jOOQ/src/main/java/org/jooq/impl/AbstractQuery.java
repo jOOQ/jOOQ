@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -45,16 +45,14 @@ import static java.util.Arrays.asList;
 import static org.jooq.ExecuteType.DDL;
 // ...
 // ...
-// ...
-// ...
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
 import static org.jooq.conf.SettingsTools.getParamType;
 import static org.jooq.impl.DSL.using;
-import static org.jooq.impl.Utils.consumeExceptions;
-import static org.jooq.impl.Utils.DataKey.DATA_COUNT_BIND_VALUES;
-import static org.jooq.impl.Utils.DataKey.DATA_FORCE_STATIC_STATEMENT;
+import static org.jooq.impl.Tools.consumeExceptions;
+import static org.jooq.impl.Tools.DataKey.DATA_COUNT_BIND_VALUES;
+import static org.jooq.impl.Tools.DataKey.DATA_FORCE_STATIC_STATEMENT;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -119,11 +117,11 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
     // -------------------------------------------------------------------------
 
     final void toSQLSemiColon(RenderContext ctx) {
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx x
-            xxxxxxxxxxxxx
-        x
-        xx [/pro] */
+
+
+
+
+
     }
 
     // -------------------------------------------------------------------------
@@ -254,7 +252,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
                 statement = null;
             }
             catch (SQLException e) {
-                throw Utils.translate(sql, e);
+                throw Tools.translate(sql, e);
             }
         }
     }
@@ -266,7 +264,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
                 statement.cancel();
             }
             catch (SQLException e) {
-                throw Utils.translate(sql, e);
+                throw Tools.translate(sql, e);
             }
         }
     }
@@ -361,7 +359,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
 
                 // [#2385] Successful fetchLazy() needs to keep open resources
                 if (!keepResultSet() || ctx.exception() != null) {
-                    Utils.safeClose(listener, ctx, keepStatement());
+                    Tools.safeClose(listener, ctx, keepStatement());
                 }
 
                 if (!keepStatement()) {
@@ -435,17 +433,12 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
     private final String getSQL0(ExecuteContext ctx) {
         String result;
 
-        /* [pro] xx
-
-        xx xxxxxxx xxxxxx xxx xxxxxxxxxx xx xxx xxxxxxx xxxx xxxxxx
-        xx xxxxxxxxxxx xx xxx xx xxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
-            xxxxxx x xxxxxxxxxxxxxxxx
-        x
-        xxxx
-        xx [/pro] */
-
-        if (executePreparedStatements(configuration().settings())) {
+        // [#3542] [#4977] Some dialects do not support bind values in DDL statements
+        if (ctx.type() == DDL) {
+            ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
+            result = getSQL(INLINED);
+        }
+        else if (executePreparedStatements(configuration().settings())) {
             try {
                 RenderContext render = new DefaultRenderContext(configuration);
                 render.data(DATA_COUNT_BIND_VALUES, true);
@@ -460,50 +453,50 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
             result = getSQL(INLINED);
         }
 
-        /* [pro] xx xx xxxxxxx xx
 
-        xx xxxxxx xx xxx xxxxxx xx xxxxxxxxxx xxx xxxxx xxxxx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xx xxxx xxxxxxxxx xxx xxxxxxx xx x xxxxxxxx xxxxxxxx xxxx xxx xxx xxxxx
-        xx x xxxxxxxxxx xxxxxxx xx xxxx xxxx x xxxx xx xxxx xxxxx xxxxxxxx xx xx
-        xx xxx xxxx xx xxxxxx xxx xxxxxx xxxxxxxxx xxxx xxxxxxxx xxxxxxx
-        xx xxxxxxxxxxxxx xxx xx xxx xxxx xx xxxxxx xxx xxxxx xxxxxxx xxxxxxxx
-        xx xxxxxxxxxx x xxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        xx xxxxx xxxxxxxxxx xxxxxxx x
 
-            xx xx xxxxx xx xxxxxx xx xxxxxx xxxxxx xxxxxx xxx xxx xxxxxxxx
-            xx xxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            x
-            xxxx xx xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                xxxxxx xx x xx xxx xxxxxxxx xxxx x xxxx xxxxx xxxxxxx xx xxxx x x xxxxxxxxxxxxxxxxxxxxxx x x xxxx
-            x
-            xxxx x
-                xxxxxx xx x xx xxx xxxxxxxx xxxx x xxxx xxxxx xxxxxxx xx xxxx x x xxxxxxxxxxxxxxxxxxxxxxx
-            x
-        x
 
-        xx xxxxxxxxxxxxxxxxxxxxxx x xxxxxxxx x
-            xxxxx xxx xxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxx x xxxxxxx xxxxxxx xxxx xxx xxxx xxxxx xxxxxxxx xxxxxx xxxxxxxx xxxxxxxxx xx x xxxxxxxxxx xxxxxxx xx xxxxxxx xxxxxxxxxxxxxxxxxxxxxx xx xxx xxxx xx xxx xxxx xxxxxxx xxxx xxxx xxxx xxxxxxxxx
-        x
 
-        xx xxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxx xxx xxxxxxxxxxxxxxxxxxxxxx xx xxx xxxxx xxxxxx xxx xxxxx xxxx xxxx xxxx xxxxxx xxxxxxxx xxxxxxxxx xx x xxxxxxxxxx xxxxxxx xx xxxxxxx xxxxxxxxxxxxxxxxxxxxxx xx xxx xxxx xx xxxxxx xxxx xxxx xxxxxxxxx
-        x
 
-        xx xxxxxxxx xx xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         return result;
     }
 
-    /* [pro] xx xx xxxxxxx xx
-    xxxxxxx xxxxxx xxxxx xxxx xxxx
-    xxxxxxx xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxx
 
-    xxxxxx x
-        xxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    x
-    xx xxxxxxxx xx xx [/pro] */
+
+
+
+
+
+
+
+
 
     /**
      * {@inheritDoc}

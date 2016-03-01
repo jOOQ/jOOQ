@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -70,14 +70,15 @@ class Tanh extends AbstractFunction<BigDecimal> {
     @Override
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         switch (configuration.family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-            xxxx xxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
             case CUBRID:
             case HSQLDB:
             case MARIADB:

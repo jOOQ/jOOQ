@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -1776,7 +1776,7 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
 
     @Override
     public final SelectSeekLimitStep<R> seek(Object... values) {
-        getQuery().addSeekAfter(Utils.fields(values));
+        getQuery().addSeekAfter(Tools.fields(values));
         return this;
     }
 
@@ -1788,7 +1788,7 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
 
     @Override
     public SelectSeekLimitStep<R> seekAfter(Object... values) {
-        getQuery().addSeekAfter(Utils.fields(values));
+        getQuery().addSeekAfter(Tools.fields(values));
         return this;
     }
 
@@ -1800,7 +1800,7 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
 
     @Override
     public SelectSeekLimitStep<R> seekBefore(Object... values) {
-        getQuery().addSeekBefore(Utils.fields(values));
+        getQuery().addSeekBefore(Tools.fields(values));
         return this;
     }
 
@@ -1898,14 +1898,14 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
         return this;
     }
 
-    /* [pro] xx
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxx xxxxxxxx xxxxxxxx x
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxx xxxxx
-    x
 
-    xx [/pro] */
+
+
+
+
+
+
+
     @Override
     public final SelectImpl noWait() {
         getQuery().setForUpdateNoWait();
@@ -1924,19 +1924,19 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
         return this;
     }
 
-    /* [pro] xx
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx x
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxx xxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx x
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxx xxxxx
-    x
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public final SelectImpl union(Select<? extends R> select) {
@@ -2030,11 +2030,11 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
         joinConditions = new ConditionProviderImpl();
         joinConditions.addConditions(conditions);
 
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxx xx xxxx xx xxxxxxxxxxxxxxxxxxxxxx x xx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxx xxx xxxxxxxxxxx x xxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxx
-        xxxx
-        xx [/pro] */
+
+
+
+
+
             getQuery().addJoin(joinTable, joinType, new Condition[] { joinConditions });
 
         joinTable = null;
@@ -2487,20 +2487,20 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
         return outerApply(table(sql, parts));
     }
 
-    /* [pro] xx
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
-        xxxxxxxxxxxxxxx x xxxxxxx
-        xxxxxx xxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxx xxxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx
-    x
 
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public final SelectImpl straightJoin(String sql, Object... bindings) {
@@ -2587,12 +2587,12 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
         return getDelegate().iterator();
     }
 
-    
+
     @Override
     public final Stream<R> stream() {
         return getDelegate().stream();
     }
-    
+
 
     @Override
     public final Cursor<R> fetchLazy() {
@@ -2760,7 +2760,7 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
         return getDelegate().fetchOneInto(table);
     }
 
-    
+
     @Override
     public final <T> Optional<T> fetchOptional(Field<T> field) {
         return getDelegate().fetchOptional(field);
@@ -2850,7 +2850,7 @@ class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     public final <Z extends Record> Optional<Z> fetchOptionalInto(Table<Z> table) {
         return getDelegate().fetchOptionalInto(table);
     }
-    
+
 
     @Override
     public final <T> T fetchAny(Field<T> field) {

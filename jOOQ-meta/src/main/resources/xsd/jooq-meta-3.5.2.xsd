@@ -17,26 +17,26 @@
             </all>
         </complexType>
     </element>
-    
+
     <complexType name="Schemata">
         <sequence>
             <element name="schema" type="tns:Schema" minOccurs="0" maxOccurs="unbounded" />
         </sequence>
     </complexType>
-    
+
     <complexType name="Schema">
         <all>
             <element name="catalog_name" type="string" minOccurs="0" maxOccurs="1" />
             <element name="schema_name" type="string" minOccurs="1" maxOccurs="1" />
         </all>
     </complexType>
-    
+
     <complexType name="Sequences">
         <sequence>
             <element name="sequence" type="tns:Sequence" minOccurs="0" maxOccurs="unbounded" />
         </sequence>
     </complexType>
-    
+
     <complexType name="Sequence">
         <all>
             <element name="sequence_catalog" type="string" minOccurs="0" maxOccurs="1" />
@@ -48,13 +48,13 @@
             <element name="numeric_scale" type="int" minOccurs="0" maxOccurs="1" />
         </all>
     </complexType>
-    
+
     <complexType name="Tables">
         <sequence>
             <element name="table" type="tns:Table" minOccurs="0" maxOccurs="unbounded" />
         </sequence>
     </complexType>
-    
+
     <complexType name="Table">
         <all>
             <element name="table_catalog" type="string" minOccurs="0" maxOccurs="1" />
@@ -62,13 +62,13 @@
             <element name="table_name" type="string" minOccurs="1" maxOccurs="1" />
         </all>
     </complexType>
-    
+
     <complexType name="Columns">
         <sequence>
             <element name="column" type="tns:Column" minOccurs="0" maxOccurs="unbounded" />
         </sequence>
     </complexType>
-    
+
     <complexType name="Column">
         <all>
             <element name="table_catalog" type="string" minOccurs="0" maxOccurs="1" />
@@ -85,7 +85,7 @@
             <element name="column_default" type="string" minOccurs="0" maxOccurs="1" />
         </all>
     </complexType>
-    
+
     <complexType name="TableConstraints">
         <sequence>
             <element name="table_constraint" type="tns:TableConstraint" minOccurs="0" maxOccurs="unbounded" />
@@ -103,7 +103,7 @@
             <element name="table_name" type="string" minOccurs="1" maxOccurs="1" />
         </all>
     </complexType>
-    
+
     <simpleType name="TableConstraintType">
         <restriction base="string">
             <enumeration value="PRIMARY KEY"/>
@@ -112,13 +112,13 @@
             <enumeration value="FOREIGN KEY"/>
         </restriction>
     </simpleType>
-    
+
     <complexType name="KeyColumnUsages">
         <sequence>
             <element name="key_column_usage" type="tns:KeyColumnUsage" minOccurs="0" maxOccurs="unbounded" />
         </sequence>
     </complexType>
-    
+
     <complexType name="KeyColumnUsage">
         <all>
             <element name="column_name" type="string" minOccurs="1" maxOccurs="1" />
@@ -131,13 +131,13 @@
             <element name="table_name" type="string" minOccurs="1" maxOccurs="1" />
         </all>
     </complexType>
-    
+
     <complexType name="ReferentialConstraints">
         <sequence>
             <element name="referential_constraint" type="tns:ReferentialConstraint" minOccurs="0" maxOccurs="unbounded" />
         </sequence>
     </complexType>
-    
+
     <complexType name="ReferentialConstraint">
         <all>
             <element name="constraint_catalog" type="string" minOccurs="0" maxOccurs="1" />

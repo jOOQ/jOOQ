@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -60,7 +60,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.Utils.DataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
+import static org.jooq.impl.Tools.DataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -137,24 +137,24 @@ class RowSubqueryCondition extends AbstractCondition {
             return new Native();
         }
 
-        /* [pro] xx
-        xx xxxxxxx xxxxx xxxxxxxx xxxx xxxxxx xxxxxxx xxx x xxx xx
-        xxxx xx x
-            xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xx
-            xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
 
-            xxxxxx xxx xxxxxxxxx
-        x
 
-        xx xxxxxxx xxxxx xxxxxxxx xxxx xxxxxx xxxxxxx xxx xx xxx xxx xx
-        xxxx xx x
-            xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xx
-            xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
 
-            xxxxxx xxx xxxxxxxxx
-        x
 
-        xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // [#2395] All other configurations have to be emulated
         else {
             String table = render == null ? "t" : render.nextAlias();

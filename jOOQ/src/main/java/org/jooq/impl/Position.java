@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -66,25 +66,25 @@ class Position extends AbstractFunction<Integer> {
     @Override
     final Field<Integer> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [pro] xx
-            xxxx xxxx
-            xx [/pro] */
+
+
+
             case DERBY:
                 return field("{locate}({0}, {1})", SQLDataType.INTEGER, search, in);
 
-            /* [pro] xx
-            xxxx xxxx
-            xxxx xxxxxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxx xxxx
 
-            xxxx xxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxx xxxxxxxx
 
-            xxxx xxxxxxx
-            xxxx xxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
             case SQLITE:
                 return field("{instr}({0}, {1})", SQLDataType.INTEGER, in, search);
 

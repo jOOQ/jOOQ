@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -126,7 +126,7 @@ public enum SQLDialect {
     POSTGRES("Postgres", false),
 
     /**
-     * The PostgreSQL dialect family.
+     * The PostgreSQL 9.3 dialect.
      * <p>
      * While this family (and its dialects) have been observed to work to some
      * extent on Amazon RedShift as well, we strongly suggest you use the
@@ -135,7 +135,7 @@ public enum SQLDialect {
     POSTGRES_9_3("Postgres", false, POSTGRES, null),
 
     /**
-     * The PostgreSQL dialect family.
+     * The PostgreSQL 9.4 dialect.
      * <p>
      * While this family (and its dialects) have been observed to work to some
      * extent on Amazon RedShift as well, we strongly suggest you use the
@@ -144,7 +144,7 @@ public enum SQLDialect {
     POSTGRES_9_4("Postgres", false, POSTGRES, POSTGRES_9_3),
 
     /**
-     * The PostgreSQL dialect family.
+     * The PostgreSQL 9.5 dialect.
      * <p>
      * While this family (and its dialects) have been observed to work to some
      * extent on Amazon RedShift as well, we strongly suggest you use the
@@ -161,157 +161,157 @@ public enum SQLDialect {
     // SQL dialects for commercial usage
     // -------------------------------------------------------------------------
 
-    /* [pro] xx
 
-    xxx
-     x xxx xx xxxxxx xxx xxxxxxx xxxxxxx
-     x xxx
-     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
-     xx
-    xxxxxxxxxxxxxxxx xxxxxx
 
-    xxx
-     x xxx xx xxxxxx xxxx xxx xxxxxxxx
-     x xxx
-     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
-     xx
-    xxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxx
 
-    xxx
-     x xxx xxxxxx xxxxxxxx xxxxxx xxx xxxxxxx xxxxxxx
-     x xxx
-     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
-     xx
-    xxxxxxxxxx xxxxxx
 
-    xxx
-     x xxx xxx xxx xxx xxxxxxx xxxxxxx
-     x xxx
-     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
-     xx
-    xxxxxxxxxx xxxxxx
 
-    xxx
-     x xxx xxx xxx xxx xxx xxxxxxxx
-     x xxx
-     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
-     xx
-    xxxxxxxxxxxx xxxxx xxxxx
 
-    xxx
-     x xxx xxx xxx xxxx xxx xxxxxxxx
-     x xxx
-     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
-     xx
-    xxxxxxxxxxxxx xxxxx xxxx xxxxxxx
 
-    xxx
-     x xxx xxx xxxx xxx xxxxxxxx
-     x xxx
-     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
-     xx
-    xxxxxxxxxxxx xxxxxx
 
-    xxx
-     x xxx xxxxxxxx xxx xxxxxxxx
-     x xxx
-     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
-     xx
-    xxxxxxxxxxxxxxxxxxxx xxxxxx
 
-    xxx
-     x xxx xxxxxx xxxxxxx xxxxxxx
-     x xxx
-     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
-     xx
-    xxxxxxxxxxxxxxxx xxxxxx
 
-    xxx
-     x xxx xxxxxx xxxxxxx xxxxxxx
-     x xxx
-     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
-     xx
-    xxxxxxxxxxxxxxxx xxxxxx
 
-    xxx
-     x xxx xxxxxx xxx xxxxxxxx
-     x xxx
-     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
-     xx
-    xxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxx
 
-    xxx
-     x xxx xxxxxx xxx xxxxxxxx
-     x xxx
-     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
-     xx
-    xxxxxxxxxxxxxxxxxxx xxxxx xxxxxxx xxxxxxxxxxx
 
-    xxx
-     x xxx xxxxxx xxx xxxxxxxx
-     x xxx
-     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
-     xx
-    xxxxxxxxxxxxxxxxxxx xxxxx xxxxxxx xxxxxxxxxxx
 
-    xxx
-     x xxx xxxxxx xxxxxxxx xxxxxxxx
-     x xxx
-     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
-     xx
-    xxxxxxxxxxxxxxxxxxxx xxxxxx
 
-    xxx
-     x xxx xxx xxxxxx xxxxxxx xxxxxxx
-     x xxx
-     x xxx xxxx xxxxxx xxx xxx xxxxxxxxx xxx xxx xxxxxx xx xxx xxxxxx
-     x xxx
-     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
-     xx
-    xxxxxxxxxxxxxxxxxxxxxx xxxxxx
 
-    xxx
-     x xxx xxx xxxxxx xxxx xxxxxxxx
-     x xxx
-     x xxx xxxx xxxxxx xxx xxx xxxxxxxxx xxx xxx xxxxxx xx xxx xxxxxx
-     x xxx
-     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
-     xx
-    xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxxx
 
-    xxx
-     x xxx xxx xxxxxx xxxx xxxxxxxx
-     x xxx
-     x xxx xxxx xxxxxx xxx xxx xxxxxxxxx xxx xxx xxxxxx xx xxx xxxxxx
-     x xxx
-     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
-     xx
-    xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxx
 
-    xxx
-     x xxx xxx xxxxxx xxxx xxxxxxxx
-     x xxx
-     x xxx xxxx xxxxxx xxx xxx xxxxxxxxx xxx xxx xxxxxx xx xxx xxxxxx
-     x xxx
-     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
-     xx
-    xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxx
 
-    xxx
-     x xxx xxxxxx xxx xxxxxxxx xxxxxxx xxxxxxx
-     x xxx
-     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
-     xx
-    xxxxxxxxxxxxxxxx xxxxxx
 
-    xxx
-     x xxx xxxxxxx xxxxxxx xxxxxxx
-     x xxx
-     x xxxx xxxxxxx xx xxxxxxxxx xx xxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxx
-     xx
-    xxxxxxxxxxxxxxxxxx xxxxxx
 
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     ;
 
@@ -485,14 +485,14 @@ public enum SQLDialect {
          */
         public final String springDbName() {
             switch (SQLDialect.this.family) {
-                /* [pro] xx
-                xxxx xxxx       xxxxxx xxxxxxxxx
-                xxxx xxxx       xxxxxx xxxxxx
-                xxxx xxxxx      xxxxxx xxxxxxx
-                xxxx xxxxxxxxx  xxxxxx xxxxxxxxxxx
-                xxxx xxxxxxx    xxxxxx xxxxxxxxx
-                xxxx xxxxxxxxxx xxxxxx xxxxxxxxx
-                xx [/pro] */
+
+
+
+
+
+
+
+
 
                 case DERBY:     return "Derby";
                 case H2:        return "H2";
@@ -517,28 +517,28 @@ public enum SQLDialect {
          */
         public final String hibernateDialect() {
             switch (SQLDialect.this) {
-                /* [pro] xx
-                xxxx xxxxxxx
-                xxxx xxxxxxxxxxx    xxxxxx xxxxx
-                xxxx xxxx           xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxx xxxxxx
-                xxxx xxxxxxx
-                xxxx xxxx           xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxx xxxxx          xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxx xxxxxxxxx      xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxx xxxxxxx        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxx xxxxxxxxxx
-                xxxx xxxxxxxxxx     xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxx xxxxxxxxxx
-                xxxx xxxxxxx        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxx xxxxxxxxx      xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxx xxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxx xxxxxxxxxxxxxx
-                xxxx xxxxxxxxxxxxxx
-                xxxx xxxxxxxxxx     xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxx xxxxxxx        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxx xxxxxxxx       xxxxxx xxxxx
-                xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 case CUBRID:        return "org.hibernate.dialect.CUBRIDDialect";
                 case DERBY:         return "org.hibernate.dialect.DerbyTenSevenDialect";

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -58,7 +58,7 @@ public final class Constants {
      * This is the same as {@link #MINOR_VERSION}, but it may include patch
      * version suffixes.
      */
-    public static final String VERSION        = "3.7.2";
+    public static final String VERSION        = "3.7.3";
 
     /**
      * The latest jOOQ full version.
@@ -66,7 +66,7 @@ public final class Constants {
      * This is the same as {@link #VERSION}, but it may include release
      * candidate and other suffixes.
      */
-    public static final String FULL_VERSION   = "3.7.2";
+    public static final String FULL_VERSION   = "3.7.3";
 
     /**
      * The current jooq-runtime XSD file name.

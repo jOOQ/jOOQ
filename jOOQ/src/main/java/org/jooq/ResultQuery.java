@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -145,7 +145,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     @Override
     Iterator<R> iterator() throws DataAccessException;
 
-    
+
     /**
      * Stream this query.
      * <p>
@@ -168,7 +168,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      */
     Stream<R> stream() throws DataAccessException;
-    
+
 
     /**
      * Execute the query and "lazily" return the generated result.
@@ -654,7 +654,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      */
     <Z extends Record> Z fetchOneInto(Table<Z> table) throws DataAccessException, TooManyRowsException;
 
-    
+
     /**
      * Execute the query and return at most one resulting value for a
      * field from the generated result.
@@ -895,7 +895,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws TooManyRowsException if the query returned more than one record
      */
     <Z extends Record> Optional<Z> fetchOptionalInto(Table<Z> table) throws DataAccessException, TooManyRowsException;
-    
+
 
     /**
      * Execute the query and return at most one resulting value for a

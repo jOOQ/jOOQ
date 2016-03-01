@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
+<!--
   In this example project, we're not using a managed data source to make sure
   the example runs out of the box.
-  
+
   In a production environment, we obviously wouldn't use an unmanaged data
   source that connects to a single-connection embedded H2 database
   -->

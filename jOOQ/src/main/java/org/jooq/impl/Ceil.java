@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -67,19 +67,19 @@ class Ceil<T extends Number> extends AbstractFunction<T> {
     final Field<T> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
 
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxx x xxxx x xxxxxxxxx x xxxxx xxxxxxxxxxxxxx xxxxxxxxxx
-            xx [/pro] */
+
+
+
+
 
             // evaluate "ceil" if unavailable
             case SQLITE:
                 return DSL.round(argument.add(0.499999999999999));
 
-            /* [pro] xx
-            xxxx xxxx
-            xxxx xxxxxxxxxx
-            xx [/pro] */
+
+
+
+
             case H2:
                 return field("{ceiling}({0})", getDataType(), argument);
 

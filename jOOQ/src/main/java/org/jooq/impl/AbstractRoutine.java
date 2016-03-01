@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -53,8 +53,8 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DSL.val;
-import static org.jooq.impl.Utils.consumeExceptions;
-import static org.jooq.impl.Utils.settings;
+import static org.jooq.impl.Tools.consumeExceptions;
+import static org.jooq.impl.Tools.settings;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -68,6 +68,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.jooq.AggregateFunction;
+// ...
 import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
 import org.jooq.Binding;
@@ -82,6 +83,7 @@ import org.jooq.ExecuteListener;
 import org.jooq.Field;
 import org.jooq.Package;
 import org.jooq.Parameter;
+import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.Results;
@@ -89,7 +91,9 @@ import org.jooq.Routine;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.UDTField;
+import org.jooq.UDTRecord;
 import org.jooq.exception.ControlFlowSignal;
+import org.jooq.exception.MappingException;
 import org.jooq.tools.Convert;
 
 /**
@@ -122,6 +126,10 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     private ResultsImpl                       results;
     private boolean                           overloaded;
     private boolean                           hasDefaultedParameters;
+
+
+
+
 
     // ------------------------------------------------------------------------
     // Call-data attributes (call-specific)
@@ -282,6 +290,16 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         else if (type == null) {
             return executeCallableStatement();
         }
+
+
+
+
+
+
+
+
+
+
         else {
             switch (family) {
 
@@ -300,13 +318,13 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                     }
 
                 case H2:
-                /* [pro] xx
-                xxxx xxxx
-                xxxx xxxxx
 
-                xx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxx
-                xxxx xxxxxxx
-                xx [/pro] */
+
+
+
+
+
+
                     return executeSelect();
 
                 // [#773] If JDBC escape syntax is available for functions, use
@@ -317,6 +335,35 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final int executeSelectFromHSQLDB() {
         DSLContext create = create(configuration);
@@ -376,15 +423,15 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
             execute0(ctx, listener);
 
-            /* [pro] xx
-            xx xxxxxxx xxx xxxxx xx xxxxxxxxx xxxxxx xxxx xxx xxxx xxxxxxxxx
-            xx xxx xxxxxxxxxx xx xxxxxxxx xx xxx xxxxxx
-            xx [/pro] */
+
+
+
+
 
             // [#2925] Jaybird currently doesn't like fetching OUT parameters and consuming ResultSets
             //         http://tracker.firebirdsql.org/browse/JDBC-350
             if (ctx.family() != FIREBIRD)
-                Utils.consumeResultSets(ctx, listener, results, null);
+                Tools.consumeResultSets(ctx, listener, results, null);
 
             listener.outStart(ctx);
             fetchOutParameters(ctx);
@@ -408,7 +455,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             throw ctx.exception();
         }
         finally {
-            Utils.safeClose(listener, ctx);
+            Tools.safeClose(listener, ctx);
         }
     }
 
@@ -514,52 +561,52 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLEnd(RenderContext context) {
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxx xx xxxxxxx x
-            xxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxx
-        x
-        xxxx
-        xx [/pro] */
+
+
+
+
+
+
+
+
+
         {
             context.sql(" }");
         }
     }
 
     private final void toSQLBegin(RenderContext context) {
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxx xx xxxxxxx x
-            xxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxxx
-        x
-        xxxx
-        xx [/pro] */
+
+
+
+
+
+
+
+
         {
             context.sql("{ ");
         }
     }
 
     private final void toSQLAssign(RenderContext context) {
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxx xx xxxxxxx x
-            xxxxxxxxxxxxxx xx xxx
-        x
-        xxxx
-        xx [/pro] */
+
+
+
+
+
+
         {
             context.sql("? = ");
         }
     }
 
     private final void toSQLCall(RenderContext context) {
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxx xx xxxxxxx x
-        x
-        xxxx
-        xx [/pro] */
+
+
+
+
+
         {
             context.sql("call ");
         }
@@ -568,29 +615,29 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLOutParam(RenderContext context, Parameter<?> parameter) {
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxx xx xxxxxxx x
-            xxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxx xx xxx
-        x
 
-        xx [/pro] */
+
+
+
+
+
+
         context.sql('?');
     }
 
     private final void toSQLInParam(RenderContext context, Parameter<?> parameter, Field<?> value) {
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxx xx xxxxxxx x
-            xxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxx xx xxx
-        x
 
-        xx [/pro] */
+
+
+
+
+
+
         context.visit(value);
     }
 
     private final void toSQLQualifiedName(RenderContext context) {
-        Schema mappedSchema = Utils.getMappedSchema(context.configuration(), getSchema());
+        Schema mappedSchema = Tools.getMappedSchema(context.configuration(), getSchema());
 
         if (context.qualify()) {
             if (mappedSchema != null) {
@@ -598,14 +645,14 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                 context.sql('.');
             }
 
-            /* [pro] xx
-            xx xxxxxxx xx xxx xxxxxxx xxxxxxxx xxxxxx xxxx xx xx xxxxx xxxxxxxxx
-            xxxx xx xxxxxxxxxxxx xx xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxx x
-                xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxxxxxxxxxxxxxxx
-            x
 
-            xx [/pro] */
+
+
+
+
+
+
+
             if (getPackage() != null) {
                 context.visit(DSL.name(getPackage().getName()));
                 context.sql('.');
@@ -731,6 +778,16 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     protected final boolean isOverloaded() {
         return overloaded;
     }
+
+
+
+
+
+
+
+
+
+
 
     private final boolean hasDefaultedParameters() {
         return hasDefaultedParameters && !inValuesDefaulted.isEmpty();

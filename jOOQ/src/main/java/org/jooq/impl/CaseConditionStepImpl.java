@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -75,7 +75,7 @@ class CaseConditionStepImpl<T> extends AbstractFunction<T> implements CaseCondit
 
     @Override
     public final CaseConditionStep<T> when(Condition condition, T result) {
-        return when(condition, Utils.field(result));
+        return when(condition, Tools.field(result));
     }
 
     @Override
@@ -93,7 +93,7 @@ class CaseConditionStepImpl<T> extends AbstractFunction<T> implements CaseCondit
 
     @Override
     public final Field<T> otherwise(T result) {
-        return otherwise(Utils.field(result));
+        return otherwise(Tools.field(result));
     }
 
     @Override
@@ -111,11 +111,11 @@ class CaseConditionStepImpl<T> extends AbstractFunction<T> implements CaseCondit
     @Override
     final QueryPart getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxx xxx xxxxxxxxx
 
-            xx [/pro] */
+
+
+
+
             default:
                 return new Native();
         }
@@ -134,42 +134,42 @@ class CaseConditionStepImpl<T> extends AbstractFunction<T> implements CaseCondit
         }
     }
 
-    /* [pro] xx
-    xxxxxxx xxxxx xxxxxx xxxxxxx xxxx x
 
-        xxx
-         x xxxxxxxxx xxx
-         xx
-        xxxxxxx xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxx
 
-        xxxxxxxxx
-        xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxx xxxx x
-            xxxxxxxxxxxxxxxxxxxxx
-               xxxxxxxxxx
 
-            xxx xxxx x xxxxxxxxxxxxxxxxxx
-            xxx xxxx x x xx x x xxxxx xxxx x
-                xx xx x xx x
-                    xxxxxxxxxx xxx
-                x
 
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxx xx
-                   xxxxxxxxxxxxxxxxxxxxxxx
-            x
 
-            xx xxxxxxxxxx xx xxxxx x
-                xxxxxxxxxx xx
-                   xxxxxxxxxxxxxxxx
-                   xxxxxxx xx
-                   xxxxxxxxxxxxxxxxxx
-            x
 
-            xxxxxxxxxxxxx
-        x
-    x
 
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private class Native extends Base {
 

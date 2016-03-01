@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -463,11 +463,11 @@ public final class Convert {
                     }
                 }
 
-                
+
                 else if (toClass == Optional.class) {
                     return (U) Optional.empty();
                 }
-                
+
 
                 else {
                     return null;
@@ -504,11 +504,11 @@ public final class Convert {
                     }
                 }
 
-                
+
                 else if (toClass == Optional.class) {
                     return (U) Optional.of(from);
                 }
-                
+
 
                 // All types can be converted into String
                 else if (toClass == String.class) {
@@ -581,11 +581,11 @@ public final class Convert {
                         return (U) Long.valueOf(((java.util.Date) from).getTime());
                     }
 
-                    
+
                     if (Temporal.class.isAssignableFrom(fromClass)) {
                         return (U) Long.valueOf(millis((Temporal) from));
                     }
-                    
+
 
                     try {
                         return (U) Long.valueOf(new BigDecimal(from.toString().trim()).longValue());
@@ -653,11 +653,11 @@ public final class Convert {
                         return (U) ulong(((java.util.Date) from).getTime());
                     }
 
-                    
+
                     if (Temporal.class.isAssignableFrom(fromClass)) {
                         return (U) ulong(millis((Temporal) from));
                     }
-                    
+
 
                     try {
                         return (U) ulong(new BigDecimal(from.toString().trim()).toBigInteger().toString());
@@ -784,22 +784,22 @@ public final class Convert {
                     return toDate(((java.util.Date) from).getTime(), toClass);
                 }
 
-                
+
                 else if (Temporal.class.isAssignableFrom(fromClass)) {
                     return toDate(convert(from, Long.class), toClass);
                 }
-                
+
 
                 // Long may also be converted into a date type
                 else if ((fromClass == Long.class || fromClass == long.class) && java.util.Date.class.isAssignableFrom(toClass)) {
                     return toDate((Long) from, toClass);
                 }
 
-                
+
                 else if ((fromClass == Long.class || fromClass == long.class) && Temporal.class.isAssignableFrom(toClass)) {
                     return toDate((Long) from, toClass);
                 }
-                
+
 
                 // [#1501] Strings can be converted to java.sql.Date
                 else if ((fromClass == String.class) && toClass == java.sql.Date.class) {
@@ -831,7 +831,7 @@ public final class Convert {
                     }
                 }
 
-                
+
                 else if ((fromClass == String.class) && toClass == LocalDate.class) {
 
                     // Try "lenient" ISO date formats first
@@ -927,7 +927,7 @@ public final class Convert {
                         }
                     }
                 }
-                
+
 
                 // [#1448] Some users may find it useful to convert string
                 // literals to Enum values without a Converter
@@ -957,44 +957,44 @@ public final class Convert {
                     return record.into(toClass);
                 }
 
-                /* [pro] xx
-                xx xxxxxxx xxxxxx xxxxxx x xxxxx xxxxx xxxxxx xx xxxxxxxxxxx xxxx xxxxxx xxx xxxxxxxxxxx
-                xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                    xxxxxxxxxxxxxx xxxxxx x xxxxxxxxxxxxxxxx xxxxx
 
-                    xx xxxxxxx xxxxx xxxx xxxxxxxxxx xxxxxxxxxx xxxx xxxxxxxxx xxx xxxxxxxxx
-                    xx xxxx xxx xxxxx xxxxx xxxx xxxxxx xxxxxx x xxxxx xxxxx
-                    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                        xxx x
-                            xxxxxxxxxxxxxxxxxx xx
 
-                            xx xxxxxxxxxxxxxxxxxxxxxxxx x
-                                x x xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx
-                            x
-                            xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                                x x xxx xxxxxxxxxxxxxxxxxxxxxxxx
-                            x
-                            xxxx x
-                                x x xxx xxxxxxxxxxxxxxxxxxxx
-                            x
 
-                            xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                            xxxxxx xxx xx
-                        x
-                        xxxxx xxxxxxxxxx xx x
-                            xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxx x x xxxxxxxxx x x xx x x xxxxxxxx xxx
-                        x
-                    x
 
-                    xx xxxxxxx xxxxxxxxxx xx xxxxxxxxxxx xx xxxx xxxxx
-                    xxxx xx xxxxxxxx xx xxxxxxxxxxxxxxxxxxxxx x
-                        xxxxxx xxx xxx xxxxxxxxxxxxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    x
-                    xxxx x
-                        xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxx
-                    x
-                x
-                xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 // TODO [#2520] When RecordUnmappers are supported, they should also be considered here
             }
@@ -1041,7 +1041,7 @@ public final class Convert {
                 return (X) calendar;
             }
 
-            
+
             else if (toClass == LocalDate.class) {
                 return (X) new Date(time).toLocalDate();
             }
@@ -1058,14 +1058,14 @@ public final class Convert {
                 return (X) new Timestamp(time).toLocalDateTime().atOffset(OffsetDateTime.now().getOffset());
             }
             else if (toClass == Instant.class) {
-                return (X) new Timestamp(time).toLocalDateTime().atOffset(OffsetDateTime.now().getOffset()).toInstant();
+                return (X) Instant.ofEpochMilli(time);
             }
-            
+
 
             throw fail(time, toClass);
         }
 
-        
+
         private static final long millis(Temporal temporal) {
 
             // java.sql.* temporal types:
@@ -1091,7 +1091,7 @@ public final class Convert {
 
             throw fail(temporal, Long.class);
         }
-        
+
 
         /**
          * Some databases do not implement the standard very well. Specifically,

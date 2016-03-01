@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -42,9 +42,9 @@ package org.jooq.impl;
 
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executeStaticStatements;
-import static org.jooq.impl.Utils.dataTypes;
-import static org.jooq.impl.Utils.fields;
-import static org.jooq.impl.Utils.visitAll;
+import static org.jooq.impl.Tools.dataTypes;
+import static org.jooq.impl.Tools.fields;
+import static org.jooq.impl.Tools.visitAll;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -130,9 +130,9 @@ class BatchSingle implements BatchBindStep {
     }
 
     @Override
-    
+
     @SafeVarargs
-    
+
     public final BatchSingle bind(Map<String, Object>... namedBindValues) {
         List<Object> defaultValues = query.getBindValues();
 
@@ -257,7 +257,7 @@ class BatchSingle implements BatchBindStep {
             throw ctx.exception();
         }
         finally {
-            Utils.safeClose(listener, ctx);
+            Tools.safeClose(listener, ctx);
         }
     }
 

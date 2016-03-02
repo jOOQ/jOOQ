@@ -3893,16 +3893,15 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateValidationAnnotations()) {
             DataTypeDefinition type = column.getType();
 
-            if (!column.getType().isNullable()) {
+            // [#5128] defaulted columns are nullable in Java
+            if (!column.getType().isNullable() && !column.getType().isDefaulted())
                 out.tab(1).println("@%s", out.ref("javax.validation.constraints.NotNull"));
-            }
 
             if ("java.lang.String".equals(getJavaType(type))) {
                 int length = type.getLength();
 
-                if (length > 0) {
+                if (length > 0)
                     out.tab(1).println("@%s(max = %s)", out.ref("javax.validation.constraints.Size"), length);
-                }
             }
         }
     }

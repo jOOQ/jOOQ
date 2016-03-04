@@ -122,11 +122,18 @@
 
   <complexType name="MappedSchema">
     <all>
-      <!-- The input schema as defined in org.jooq.Schema.getName() -->
-      <element name="input" type="string" minOccurs="1" maxOccurs="1"/>
+      <!-- The input schema name as defined in org.jooq.Schema.getName()
+           Either <input/> or <inputExpression/> must be provided -->
+      <element name="input" type="string" minOccurs="0" maxOccurs="1"/>
 
-      <!-- The output schema as it will be rendered in SQL
-           When this is omitted, you can still apply table mapping -->
+      <!-- A regular expression matching the input schema name as defined in org.jooq.Schema.getName()
+           Either <input/> or <inputExpression/> must be provided -->
+      <element name="inputExpression" type="string" minOccurs="0" maxOccurs="1"/>
+
+      <!-- The output schema as it will be rendered in SQL.
+           * When this is omitted, you can still apply table mapping.
+           * When <input/> is provided, <output/> is a constant value
+           * When <inputExpression/> is provided, <output/> is a replacement expression -->
       <element name="output" type="string" minOccurs="0" maxOccurs="1"/>
 
       <!-- Configure table mapping for runtime table rewriting in
@@ -143,10 +150,18 @@
 
   <complexType name="MappedTable">
     <all>
-      <!-- The input schema as defined in org.jooq.Table.getName() -->
-      <element name="input" type="string" minOccurs="1" maxOccurs="1"/>
 
-      <!-- The output schema as it will be rendered in SQL -->
+      <!-- The input table as defined in org.jooq.Table.getName()
+           Either <input/> or <inputExpression/> must be provided -->
+      <element name="input" type="string" minOccurs="0" maxOccurs="1"/>
+
+      <!-- A regular expression matching the input table name as defined in org.jooq.Table.getName()
+           Either <input/> or <inputExpression/> must be provided -->
+      <element name="inputExpression" type="string" minOccurs="0" maxOccurs="1"/>
+
+      <!-- The output table as it will be rendered in SQL
+           * When <input/> is provided, <output/> is a constant value
+           * When <inputExpression/> is provided, <output/> is a replacement expression -->
       <element name="output" type="string" minOccurs="1" maxOccurs="1"/>
     </all>
   </complexType>

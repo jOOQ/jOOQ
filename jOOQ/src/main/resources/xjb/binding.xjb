@@ -15,6 +15,10 @@
         <xjc:serializable uid="380" />
     </jaxb:globalBindings>
 
+    <!-- [#2928] Regular expressions -->
+    <jaxb:bindings schemaLocation="../xsd/jooq-runtime-3.8.0.xsd" multiple="true" node="//xs:element[@name='inputExpression']">
+        <xjc:javaType name="java.util.regex.Pattern" adapter="org.jooq.conf.RegexAdapter"/>
+    </jaxb:bindings>
 
     <!-- Annotate the following classes with @SuppressWarnings -->
     <jaxb:bindings schemaLocation="../xsd/jooq-runtime-3.8.0.xsd" multiple="true" node="//xs:complexType">

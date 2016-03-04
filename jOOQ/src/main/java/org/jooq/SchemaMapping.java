@@ -319,12 +319,14 @@ public class SchemaMapping implements Serializable {
                             for (MappedSchema s : mapping().getSchemata()) {
 
                                 // A configured mapping was found, add a renamed schema
-                                if (schemaName.equals(s.getInput())) {
+                                if (matches(s, schemaName)) {
 
                                     // Ignore self-mappings and void-mappings
-                                    if (!isBlank(s.getOutput()) && !s.getOutput().equals(s.getInput())) {
-                                        result = new RenamedSchema(result, s.getOutput());
-                                    }
+                                    if (!isBlank(s.getOutput()))
+                                        if (s.getInput() != null && !s.getOutput().equals(schemaName))
+                                            result = new RenamedSchema(result, s.getOutput());
+                                        else if (s.getInputExpression() != null)
+                                            result = new RenamedSchema(result, s.getInputExpression().matcher(schemaName).replaceAll(s.getOutput()));
 
                                     break;
                                 }
@@ -380,16 +382,18 @@ public class SchemaMapping implements Serializable {
 
                         schemaLoop:
                         for (MappedSchema s : mapping().getSchemata()) {
-                            if (schemaName.equals(s.getInput())) {
+                            if (matches(s, schemaName)) {
                                 for (MappedTable t : s.getTables()) {
 
                                     // A configured mapping was found, add a renamed table
-                                    if (tableName.equals(t.getInput())) {
+                                    if (matches(t, tableName)) {
 
                                         // Ignore self-mappings and void-mappings
-                                        if (!isBlank(t.getOutput()) && !t.getOutput().equals(t.getInput())) {
-                                            result = new RenamedTable<R>(result, t.getOutput());
-                                        }
+                                        if (!isBlank(t.getOutput()))
+                                            if (t.getInput() != null && !t.getOutput().equals(tableName))
+                                                result = new RenamedTable<R>(result, t.getOutput());
+                                            else if (t.getInputExpression() != null)
+                                                result = new RenamedTable<R>(result, t.getInputExpression().matcher(tableName).replaceAll(t.getOutput()));
 
                                         break schemaLoop;
                                     }
@@ -407,6 +411,16 @@ public class SchemaMapping implements Serializable {
         }
 
         return result;
+    }
+
+    private final boolean matches(MappedSchema s, String schemaName) {
+        return (s.getInput() != null && schemaName.equals(s.getInput()))
+            || (s.getInputExpression() != null && s.getInputExpression().matcher(schemaName).matches());
+    }
+
+    private final boolean matches(MappedTable t, String tableName) {
+        return (t.getInput() != null && tableName.equals(t.getInput()))
+            || (t.getInputExpression() != null && t.getInputExpression().matcher(tableName).matches());
     }
 
     /**

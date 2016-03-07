@@ -1917,8 +1917,10 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (scala) {
             out.println("object %s {", className);
-            out.tab(1).println("def values() : %s = %s(",
-                out.ref("scala.Array"), out.ref("scala.Array"));
+            out.tab(1).println("def values() : %s[%s] = %s(",
+                out.ref("scala.Array"),
+                className,
+                out.ref("scala.Array"));
 
             for (int i = 0; i < identifiers.size(); i++) {
                 out.tab(2).print((i > 0 ? ", " : "  "));

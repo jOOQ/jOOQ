@@ -40,6 +40,8 @@
  */
 package org.jooq;
 
+import static org.jooq.CSVFormat.Quote.SPECIAL_CHARACTERS;
+
 /**
  * A CSV formatting type, which can be used to configure CSV imports / exports.
  *
@@ -51,6 +53,8 @@ public final class CSVFormat {
     final String  nullString;
     final String  emptyString;
     final String  newline;
+    final String  quoteString;
+    final Quote   quote;
     final boolean header;
 
     public CSVFormat() {
@@ -59,6 +63,8 @@ public final class CSVFormat {
             "\"\"",
             "\"\"",
             "\n",
+            "\"",
+            SPECIAL_CHARACTERS,
             true
         );
     }
@@ -68,12 +74,16 @@ public final class CSVFormat {
         String nullString,
         String emptyString,
         String newline,
+        String quoteString,
+        Quote quote,
         boolean header
     ) {
         this.delimiter = delimiter;
         this.nullString = nullString;
         this.emptyString = emptyString;
         this.newline = newline;
+        this.quoteString = quoteString;
+        this.quote = quote;
         this.header = header;
     }
 
@@ -98,6 +108,8 @@ public final class CSVFormat {
             nullString,
             emptyString,
             newline,
+            quoteString,
+            quote,
             header
         );
     }
@@ -165,6 +177,8 @@ public final class CSVFormat {
             newNullString,
             emptyString,
             newline,
+            quoteString,
+            quote,
             header
         );
     }
@@ -213,6 +227,8 @@ public final class CSVFormat {
             nullString,
             newEmptyString,
             newline,
+            quoteString,
+            quote,
             header
         );
     }
@@ -245,6 +261,8 @@ public final class CSVFormat {
             nullString,
             emptyString,
             newNewline,
+            quoteString,
+            quote,
             header
         );
     }
@@ -257,6 +275,52 @@ public final class CSVFormat {
     }
 
     /**
+     * The string used to quote values according to the rules specified in
+     * {@link #quote()}.
+     */
+    public CSVFormat quoteString(String newQuoteString) {
+        return new CSVFormat(
+            delimiter,
+            nullString,
+            emptyString,
+            newline,
+            newQuoteString,
+            quote,
+            header
+        );
+    }
+
+    /**
+     * The string used to quote values according to the rules specified in
+     * {@link #quote()}.
+     */
+    public String quoteString() {
+        return quoteString;
+    }
+
+    /**
+     * When to quote CSV content.
+     */
+    public CSVFormat quote(Quote newQuote) {
+        return new CSVFormat(
+            delimiter,
+            nullString,
+            emptyString,
+            newline,
+            quoteString,
+            newQuote,
+            header
+        );
+    }
+
+    /**
+     * When to quote CSV content.
+     */
+    public Quote quote() {
+        return quote;
+    }
+
+    /**
      * Whether to emit a header row with column names, defaulting to
      * <code>true</code>.
      */
@@ -266,6 +330,8 @@ public final class CSVFormat {
             nullString,
             emptyString,
             newline,
+            quoteString,
+            quote,
             newHeader
         );
     }
@@ -276,5 +342,38 @@ public final class CSVFormat {
      */
     public boolean header() {
         return header;
+    }
+
+    /**
+     * When to apply the quote
+     */
+    public enum Quote {
+
+        /**
+         * Each content element is quoted.
+         */
+        ALWAYS,
+
+        /**
+         * Only content elements are quoted containing special characters.
+         * <p>
+         * Special characters consist of:
+         * <ul>
+         * <li><code>,</code>: The comma</li>
+         * <li><code>;</code>: The semi colon</li>
+         * <li><code>"</code>: The double quote</li>
+         * <li><code>'</code>: The apostrophe</li>
+         * <li><code>\</code>: The backslash</li>
+         * <li><code>\t</code>: The tab character</li>
+         * <li><code>\n</code>: The line feed character</li>
+         * <li><code>\r</code>: The carriage return character</li>
+         * </ul>
+         */
+        SPECIAL_CHARACTERS,
+
+        /**
+         * Content is never quoted.
+         */
+        NEVER
     }
 }

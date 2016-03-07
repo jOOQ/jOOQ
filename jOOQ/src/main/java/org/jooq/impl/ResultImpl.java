@@ -796,12 +796,21 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
             return format.emptyString();
 
         String result = format0(value, false, false);
+        switch (format.quote()) {
+            case NEVER:
+                return result;
 
-        if (StringUtils.containsAny(result, ',', ';', '\t', '"', '\n', '\r', '\'', '\\')) {
-            return "\"" + result.replace("\\", "\\\\").replace("\"", "\"\"") + "\"";
-        }
-        else {
-            return result;
+            case SPECIAL_CHARACTERS:
+                if (!StringUtils.containsAny(result, ',', ';', '\t', '"', '\n', '\r', '\'', '\\'))
+                    return result;
+
+                // no break
+            case ALWAYS:
+            default:
+                return format.quoteString()
+                     + result.replace("\\", "\\\\")
+                             .replace(format.quoteString(), format.quoteString() + format.quoteString())
+                     + format.quoteString();
         }
     }
 

@@ -70,6 +70,7 @@ import org.jooq.Routine;
 import org.jooq.SQLDialect;
 import org.jooq.Update;
 import org.jooq.conf.Settings;
+import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.tools.reflect.ReflectException;
@@ -80,6 +81,8 @@ import org.jooq.tools.reflect.ReflectException;
  * @author Lukas Eder
  */
 class DefaultExecuteContext implements ExecuteContext {
+
+    private static final JooqLogger                log     = JooqLogger.getLogger(DefaultExecuteContext.class);
 
     // Persistent attributes (repeatable)
     private final Configuration                    configuration;
@@ -268,27 +271,6 @@ class DefaultExecuteContext implements ExecuteContext {
      */
     private static int            maxUnwrappedConnections = 256;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * Get the registered connection's "target connection" if applicable.
      * <p>
@@ -308,6 +290,15 @@ class DefaultExecuteContext implements ExecuteContext {
         Connection result = localConnection();
 
         for (int i = 0; i < maxUnwrappedConnections; i++) {
+
+
+
+
+
+
+
+
+
 
 
 

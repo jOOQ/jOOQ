@@ -40,6 +40,7 @@
  */
 package org.jooq;
 
+import org.jooq.conf.ParamType;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.DSL;
 import org.jooq.tools.Convert;
@@ -119,4 +120,9 @@ public interface Param<T> extends Field<T> {
      * A flag on the bind value to force it to be inlined in rendered SQL
      */
     boolean isInline();
+
+    /**
+     * The parameter type.
+     */
+    ParamType getParamType();
 }

@@ -10,7 +10,6 @@ install:
   - sh -c 'cd jOOQ-examples/jOOQ-spring-boot-example && mvn install -DskipTests=true'
   - sh -c 'cd jOOQ-examples/jOOQ-flyway-example && mvn install -DskipTests=true'
   - sh -c 'cd jOOQ-examples/jOOQ-nashorn-example && mvn install -DskipTests=true'
-  - sh -c 'cd jOOQ-examples/jOOQ-vertabelo-example && mvn install -DskipTests=true'
   - sh -c 'cd jOOQ-examples/jOOQ-spring-guice-example && mvn install -DskipTests=true'
   - sh -c 'cd jOOQ-examples/jOOQ-codegen-gradle && gradle build'
 script:
@@ -19,5 +18,4 @@ script:
   - sh -c 'cd jOOQ-examples/jOOQ-spring-boot-example && mvn test'
   - sh -c 'cd jOOQ-examples/jOOQ-flyway-example && mvn test'
   - sh -c 'cd jOOQ-examples/jOOQ-nashorn-example && mvn test'
-  - sh -c 'cd jOOQ-examples/jOOQ-vertabelo-example && mvn test'
   - sh -c 'cd jOOQ-examples/jOOQ-spring-guice-example && mvn test'

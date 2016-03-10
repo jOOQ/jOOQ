@@ -43,6 +43,8 @@ package org.jooq.impl;
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 // ...
+import static org.jooq.SQLDialect.H2;
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.impl.RecordDelegate.delegate;
@@ -238,18 +240,24 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         }
 
         // [#1596] Check if the record was really changed in the database
-        // [#1859]
-        Collection<Field<?>> key = setReturningIfNeeded(configuration(), update);
+        // [#1859] Specify the returning clause if needed
+        Collection<Field<?>> key = setReturningIfNeeded(update);
         int result = update.execute();
         checkIfChanged(result, version, timestamp);
 
         if (result > 0) {
 
-            // [#1859] If an update was successful try fetching the generated values
-            getReturningIfNeeded(update, key);
+            // [#1859] If an update was successful try fetching the generated
+            //         values. In some databases, this cannot be done via getGeneratedKeys()
+            if (asList(H2).contains(configuration().family())) {
+                refresh();
+            }
+            else {
+                getReturningIfNeeded(update, key);
 
-            for (Field<?> storeField : storeFields)
-                changed(storeField, false);
+                for (Field<?> storeField : storeFields)
+                    changed(storeField, false);
+            }
         }
 
         return result;

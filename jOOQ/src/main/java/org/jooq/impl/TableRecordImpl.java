@@ -41,6 +41,9 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
+import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.H2;
+// ...
 import static org.jooq.impl.RecordDelegate.delegate;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.INSERT;
 import static org.jooq.impl.Tools.indexOrFail;
@@ -52,7 +55,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 
-import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -170,7 +172,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         // [#814] Refresh identity and/or main unique key values
         // [#1002] Consider also identity columns of non-updatable records
         // [#1537] Avoid refreshing identity columns on batch inserts
-        Collection<Field<?>> key = setReturningIfNeeded(create.configuration(), insert);
+        Collection<Field<?>> key = setReturningIfNeeded(insert);
         int result = insert.execute();
 
         if (result > 0) {
@@ -178,11 +180,17 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
             // [#1596] If insert was successful, update timestamp and/or version columns
             setRecordVersionAndTimestamp(version, timestamp);
 
-            // [#1859] If an insert was successful try fetching the generated values
-            getReturningIfNeeded(insert, key);
+            // [#1859] If an insert was successful try fetching the generated
+            //         values. In some databases, this cannot be done via getGeneratedKeys()
+            if (asList(H2).contains(configuration().family()) && this instanceof UpdatableRecord) {
+                ((UpdatableRecord<?>) this).refresh();
+            }
+            else {
+                getReturningIfNeeded(insert, key);
 
-            for (Field<?> storeField : storeFields)
-                changed(storeField, false);
+                for (Field<?> storeField : storeFields)
+                    changed(storeField, false);
+            }
 
             fetched = true;
         }
@@ -206,18 +214,20 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         }
     }
 
-    final Collection<Field<?>> setReturningIfNeeded(Configuration configuration, StoreQuery<R> query) {
+    final Collection<Field<?>> setReturningIfNeeded(StoreQuery<R> query) {
         Collection<Field<?>> key = null;
 
-        if (!TRUE.equals(configuration.data(DATA_OMIT_RETURNING_CLAUSE))) {
+        if (!TRUE.equals(configuration().data(DATA_OMIT_RETURNING_CLAUSE))) {
 
             // [#1859] Return also non-key columns
-            if (TRUE.equals(configuration.settings().isReturnAllOnUpdatableRecord()))
+            if (TRUE.equals(configuration().settings().isReturnAllOnUpdatableRecord()))
                 key = Arrays.asList(fields());
             else
                 key = getReturning();
 
-            query.setReturning(key);
+            // [#1859] Not all databases support RETURNING clauses on UPDATE
+            if (query instanceof InsertQuery || !asList().contains(configuration().family()))
+                query.setReturning(key);
         }
 
         return key;

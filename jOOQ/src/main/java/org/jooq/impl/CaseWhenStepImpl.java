@@ -41,12 +41,16 @@
 package org.jooq.impl;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.jooq.CaseWhenStep;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.QueryPart;
 
@@ -63,13 +67,33 @@ final class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWh
     private Field<T>             otherwise;
 
     CaseWhenStepImpl(Field<V> value, Field<V> compareValue, Field<T> result) {
-        super("case", result.getDataType());
+        this(value, result.getDataType());
+
+        when(compareValue, result);
+    }
+
+    CaseWhenStepImpl(Field<V> value, Map<? extends Field<V>, ? extends Field<T>> map) {
+        this(value, dataType(map));
+
+        for (Entry<? extends Field<V>, ? extends Field<T>> entry : map.entrySet())
+            when(entry.getKey(), entry.getValue());
+    }
+
+    private CaseWhenStepImpl(Field<V> value, DataType<T> type) {
+        super("case", type);
 
         this.value = value;
         this.compareValues = new ArrayList<Field<V>>();
         this.results = new ArrayList<Field<T>>();
+    }
 
-        when(compareValue, result);
+
+    @SuppressWarnings("unchecked")
+    private static final <T> DataType<T> dataType(Map<? extends Field<?>, ? extends Field<T>> map) {
+        if (map.isEmpty())
+            return (DataType<T>) SQLDataType.OTHER;
+        else
+            return map.entrySet().iterator().next().getValue().getDataType();
     }
 
     @Override
@@ -105,6 +129,21 @@ final class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWh
         results.add(result);
 
         return this;
+    }
+
+    @Override
+    public final CaseWhenStep<V, T> mapValues(Map<V, T> values) {
+        Map<Field<V>, Field<T>> fields = new LinkedHashMap<Field<V>, Field<T>>();
+
+        for (Entry<V, T> entry : values.entrySet())
+            fields.put(Tools.field(entry.getKey()), Tools.field(entry.getValue()));
+
+        return mapFields(fields);
+    }
+
+    @Override
+    public final CaseWhenStep<V, T> mapFields(Map<? extends Field<V>, ? extends Field<T>> fields) {
+        return null;
     }
 
     @Override

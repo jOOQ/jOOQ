@@ -40,6 +40,10 @@
  */
 package org.jooq.impl;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.jooq.CaseValueStep;
 import org.jooq.CaseWhenStep;
 import org.jooq.Field;
@@ -85,5 +89,20 @@ final class CaseValueStepImpl<V> implements CaseValueStep<V> {
     @Override
     public final <T> CaseWhenStep<V, T> when(Field<V> compareValue, Select<? extends Record1<T>> result) {
         return when(compareValue, DSL.field(result));
+    }
+
+    @Override
+    public final <T> CaseWhenStep<V, T> mapValues(Map<V, T> values) {
+        Map<Field<V>, Field<T>> fields = new LinkedHashMap<Field<V>, Field<T>>();
+
+        for (Entry<V, T> entry : values.entrySet())
+            fields.put(Tools.field(entry.getKey()), Tools.field(entry.getValue()));
+
+        return mapFields(fields);
+    }
+
+    @Override
+    public final <T> CaseWhenStep<V, T> mapFields(Map<? extends Field<V>, ? extends Field<T>> fields) {
+        return new CaseWhenStepImpl<V, T>(value, fields);
     }
 }

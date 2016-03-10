@@ -54,6 +54,7 @@ import static org.jooq.impl.Tools.settings;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.List;
 
 import org.jooq.Configuration;
@@ -237,10 +238,16 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         }
 
         // [#1596] Check if the record was really changed in the database
+        // [#1859]
+        Collection<Field<?>> key = setReturningIfNeeded(configuration(), update);
         int result = update.execute();
         checkIfChanged(result, version, timestamp);
 
         if (result > 0) {
+
+            // [#1859] If an update was successful try fetching the generated values
+            getReturningIfNeeded(update, key);
+
             for (Field<?> storeField : storeFields)
                 changed(storeField, false);
         }

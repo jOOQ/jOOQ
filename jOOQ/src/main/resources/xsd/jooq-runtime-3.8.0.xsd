@@ -82,6 +82,11 @@
       <!-- Whether warnings should be fetched after each query execution -->
       <element name="fetchWarnings" type="boolean" minOccurs="0" maxOccurs="1" default="true"/>
 
+      <!-- Whether calls to store(), insert() and update() should return all columns, not just identity columns.
+           Do note that only few databases support this feature. It is supported only in case the INSERT's or UPDATE's
+           RETURNING clause is fully supported, also for non-IDENTITY columns -->
+      <element name="returnAllOnUpdatableRecord" type="boolean" minOccurs="0" maxOccurs="1" default="false"/>
+
       <!-- Whether JPA annotations should be considered by the DefaultRecordMapper.
 
            This flag defaults to true in jOOQ 3.7 (emitting a warning when being used)

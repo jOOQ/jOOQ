@@ -48,9 +48,11 @@ import static org.jooq.impl.Tools.DataKey.DATA_OMIT_RETURNING_CLAUSE;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 
+import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -168,12 +170,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         // [#814] Refresh identity and/or main unique key values
         // [#1002] Consider also identity columns of non-updatable records
         // [#1537] Avoid refreshing identity columns on batch inserts
-        Collection<Field<?>> key = null;
-        if (!TRUE.equals(create.configuration().data(DATA_OMIT_RETURNING_CLAUSE))) {
-            key = getReturning();
-            insert.setReturning(key);
-        }
-
+        Collection<Field<?>> key = setReturningIfNeeded(create.configuration(), insert);
         int result = insert.execute();
 
         if (result > 0) {
@@ -181,18 +178,8 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
             // [#1596] If insert was successful, update timestamp and/or version columns
             setRecordVersionAndTimestamp(version, timestamp);
 
-            // If an insert was successful try fetching the generated IDENTITY value
-            if (key != null && !key.isEmpty()) {
-                if (insert.getReturnedRecord() != null) {
-                    for (Field<?> field : key) {
-                        int index = indexOrFail(fieldsRow(), field);
-                        Object value = insert.getReturnedRecord().get(field);
-
-                        values[index] = value;
-                        originals[index] = value;
-                    }
-                }
-            }
+            // [#1859] If an insert was successful try fetching the generated values
+            getReturningIfNeeded(insert, key);
 
             for (Field<?> storeField : storeFields)
                 changed(storeField, false);
@@ -201,6 +188,39 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         }
 
         return result;
+    }
+
+    final void getReturningIfNeeded(StoreQuery<R> query, Collection<Field<?>> key) {
+        if (key != null && !key.isEmpty()) {
+            R record = query.getReturnedRecord();
+
+            if (record != null) {
+                for (Field<?> field : key) {
+                    int index = indexOrFail(fieldsRow(), field);
+                    Object value = record.get(field);
+
+                    values[index] = value;
+                    originals[index] = value;
+                }
+            }
+        }
+    }
+
+    final Collection<Field<?>> setReturningIfNeeded(Configuration configuration, StoreQuery<R> query) {
+        Collection<Field<?>> key = null;
+
+        if (!TRUE.equals(configuration.data(DATA_OMIT_RETURNING_CLAUSE))) {
+
+            // [#1859] Return also non-key columns
+            if (TRUE.equals(configuration.settings().isReturnAllOnUpdatableRecord()))
+                key = Arrays.asList(fields());
+            else
+                key = getReturning();
+
+            query.setReturning(key);
+        }
+
+        return key;
     }
 
     /**

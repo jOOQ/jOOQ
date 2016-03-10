@@ -147,6 +147,21 @@ final class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWh
     }
 
     @Override
+    public final CaseWhenStep<V, T> mapValues(Map<V, T> values) {
+        Map<Field<V>, Field<T>> fields = new LinkedHashMap<Field<V>, Field<T>>();
+
+        for (Entry<V, T> entry : values.entrySet())
+            fields.put(Tools.field(entry.getKey()), Tools.field(entry.getValue()));
+
+        return mapFields(fields);
+    }
+
+    @Override
+    public final CaseWhenStep<V, T> mapFields(Map<? extends Field<V>, ? extends Field<T>> fields) {
+        return null;
+    }
+
+    @Override
     final QueryPart getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
 
@@ -230,9 +245,8 @@ final class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWh
                     ctx.formatIndentLockStart();
 
                     for (int i = 0; i < size; i++) {
-                        if (i > 0) {
+                        if (i > 0)
                             ctx.formatNewLine();
-                        }
 
                         ctx.sql(' ').keyword("when").sql(' ');
                         ctx.visit(value.equal(compareValues.get(i)));
@@ -246,36 +260,30 @@ final class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWh
                 default: {
                     ctx.sql(' ')
                        .visit(value)
-                       .formatIndentLockStart();
+                       .formatIndentStart();
 
-                    for (int i = 0; i < size; i++) {
-                        if (i > 0) {
-                            ctx.formatNewLine();
-                        }
-
-                        ctx.sql(' ').keyword("when").sql(' ');
-                        ctx.visit(compareValues.get(i));
-                        ctx.sql(' ').keyword("then").sql(' ');
-                        ctx.visit(results.get(i));
-                    }
+                    for (int i = 0; i < size; i++)
+                        ctx.formatSeparator()
+                           .keyword("when").sql(' ')
+                           .visit(compareValues.get(i)).sql(' ')
+                           .keyword("then").sql(' ')
+                           .visit(results.get(i));
 
                     break;
                 }
             }
 
-            if (otherwise != null) {
-                ctx.formatNewLine()
-                   .sql(' ').keyword("else").sql(' ').visit(otherwise);
-            }
+            if (otherwise != null)
+                ctx.formatSeparator()
+                   .keyword("else").sql(' ')
+                   .visit(otherwise);
 
-            ctx.formatIndentLockEnd();
+            ctx.formatIndentEnd();
 
-            if (size > 1 || otherwise != null) {
+            if (size > 1 || otherwise != null)
                 ctx.formatSeparator();
-            }
-            else {
+            else
                 ctx.sql(' ');
-            }
 
             ctx.keyword("end")
                .formatIndentLockEnd();

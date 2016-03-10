@@ -10,6 +10,84 @@ http://www.jooq.org/notes
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.7.3 - March 01, 2016
+================================================================================
+
+This is a patch release with some useful fixes for the 3.7 branch
+
+Features and Improvements
+-------------------------
+#4864 - Relax API contracts on DAOImpl by removing final keyword on methods
+#4894 - Update copyright to 2016
+#5047 - Issue a warning when Record.field(String) runs into ambiguous columns
+#5048 - Add support for CREATE TEMPORARY TABLE also in MySQL / MariaDB
+#5119 - Log error in JDBCUtils.safeFree() methods, in case of ignored exception
+#5125 - Improve Javadoc for Loader.loadArrays()
+
+Deprecation
+-----------
+#4860 - Deprecate LoaderJSONOptionsStep.ignoreRows()
+
+Bug Fixes
+---------
+#4844 - Missing @Support annotations for Vertica and window functions
+#4850 - Wrong emulation of SINH() and other hyperbolic functions for Vertica
+#4852 - Wrong emulation of bitwise XOR for Vertica
+#4871 - SQLDialect.POSTGRES_x_x Javadoc is wrong
+#4881 - Escaped block comment inside of Scaladoc causes compilation error
+#4911 - Bad SQL generated for CREATE TABLE AS SELECT .. FROM (SELECT ..) in SQL Server
+#4923 - A negligible amount of CPU is spent in String.indexOf() because of identifier escaping
+#4927 - A small amount of CPU time is wasted on Operator.name().toLowerCase()
+#4942 - Convert.convert(long, Instant.class) shouldn't pass by LocalDateTime
+#4948 - SQLFeatureNotSupportedException thrown in some (unsupported) SQLDialects when initalizing MetaDataFieldProvider
+#4958 - ClassCastException when applying schema mapping on procedures and types in Oracle
+#4961 - NullPointerException in ArrayRecord.toString() when ArrayRecord is not attached
+#4971 - PostgreSQL code generation does not stably order overloaded routines
+#4975 - Generated functions without parameter names produce malformed SQL
+#4978 - HSQLDB does not support bind variables in DDL statements
+#4982 - Wrong SQL generated for CREATE TABLE .. AS SELECT in HSQLDB
+#4986 - Utils.executeImmediate() doesn't work when inlined SQL contains apostrophes
+#4993 - Support for emulating VALUES clauses in H2 is inefficient
+#5005 - Misleading Javadoc on DSL.table(String)
+#5018 - NullPointerException when using MockConnection with DSLContext.transaction()
+#5025 - Wrong implementation of internal SortFieldList.nulls()
+#5029 - Slow routine overload index calculation in PostgreSQL's code generator
+#5035 - Standalone calls to Oracle pipelined functions aren't possible
+#5043 - Record[N].values(T1, T2, ..., TN) is not implemented
+#5052 - TableAlias does not delegate getIdentity(), getPrimaryKey(), getKeys(), getRecordVersion(), getRecordTimestamp() calls to aliased table
+#5071 - SQL Server 2008 SELECT DISTINCT .. LIMIT .. OFFSET emulation does not keep ORDER BY semantics in complex queries
+#5074 - ClassCastException when using DSL.any() in a Condition Field
+#5090 - Bad deserialisation of PostgreSQL UDTs that contain boolean attributes
+#5098 - Table.getPrimaryKey() does not work with SQLite's Xerial JDBC driver, when primary key column contains upper-case characters
+#5101 - ScalaGenerator produces an invalid import expression for SQL array types
+#5107 - Result.formatXXX() methods should flush Writers to prevent data loss
+#5114 - Performance bottleneck in MetaFieldProvider when fetching unknown plain SQL fields
+
+Version 3.7.2 - December 22, 2015
+================================================================================
+
+This is a patch release with some useful fixes for the 3.7 branch
+
+Features and Improvements
+-------------------------
+#4812 - Add source code in original form to .zip, such that users can build jOOQ right away
+#4816 - Deprecate on(Boolean), where(Boolean), having(Boolean), etc.
+
+Bug Fixes
+---------
+#4709 - Wrong enum type referenced from UDT, when the same enum type exists in different schemas in PostgreSQL
+#4713 - Cannot call standalone PostgreSQL function with enum array return type in non-public schema
+#4738 - Documentation bug: Deprecation remark on fieldByName(Class, String...) points to wrong substitute
+#4757 - Regression in AbstractParam throwing StackOverflowError when calling UDTRecord.toString()
+#4766 - org.jooq.Meta must not cache DatabaseMetaData in order not to violate the ConnectionProvider contract
+#4774 - Extremely slow mapping Record.into(ProxyableInterface.class)
+#4777 - DefaultRecordMapper is not thread safe when mapping proxyable interface
+#4786 - OracleDSL.DBMS_AQ.dequeue() does not return any MESSAGE_PROPERTIES_T values
+#4803 - Oracle views with dollar sign '$' in them are not generated
+#4808 - CREATE VIEW statement fails when it contains bind variables
+#4822 - Oracle LONG and LONG RAW columns cause "Stream has already been closed" exception when not placed in first position
+#4830 - Generated convenience methods Routines.f() have misleading Javadoc
+
 Version 3.7.1 - November 12, 2015
 ================================================================================
 
@@ -173,7 +251,7 @@ Features and Improvements
 #4508 - Add DSL.condition(Map<Field<?>, ?>) to construct a predicate from a field=>value map
 #4511 - Log a warning when a user accidentally sets the fetchSize with autoCommit == true in PostgreSQL
 #4515 - Emulate POSITION() with INSTR() in SQLite
-#4523 - Add the @SafeVarargs annotation to all methods taking Field<T>... and similar arguments
+#4523 - Add the @SafeVarargs annotation to all methods taking Field<T>... and similar arguments
 #4524 - Add missing DSL.field(String, DataType, QueryPart...) method
 #4530 - Add support for boolAnd(Condition), boolAnd(Field<Boolean>), boolOr(Condition), boolOr(Field<Boolean>)
 #4535 - Make existing join() a synonym for a new innerJoin() method
@@ -308,13 +386,13 @@ integration where jOOQ really shines thanks to some advanced Scala language
 features. In order to help you integrate even better, we've now added the new
 ScalaGenerator that generates jOOQ meta data classes in Scala, instead of Java
 
-Integrate your code generation with JPA or Vertabelo
-----------------------------------------------------
+Integrate your code generation with JPA
+---------------------------------------
 
 In the previous release, we've implemented a new XMLDatabase that can load
 arbitrary XML schema metadata formats (via XSLT). We've taken this a step
 further using our new jOOQ-meta-extensions artefact, which hosts alternative
-meta data sources, such as your JPA-annotated classes, or Vertabelo exports.
+meta data sources, such as your JPA-annotated classes, or ERD exports.
 
 Speaking of XML
 ---------------
@@ -492,7 +570,6 @@ Features and improvements
 #4198 - Improve manual section about SQL injection
 #4206 - Add Converter<T, T> Converters.identity(Class) to produce an identity converter
 #4207 - Upgrade Spring Boot version in example to 1.2.3.
-#4214 - Add jOOQ-meta-extensions artefact to group JPADatabase, Vertabelo Database and others
 #4215 - Remove Gudu Software's SQL 2 jOOQ Parser from deliverable
 #4216 - Remove obsolete "release" profile from pom.xml files
 #4219 - Implement an instance toString() method on JSONObject
@@ -667,7 +744,7 @@ Code generation improvements
 
 We've added support for the new XMLDatabase, a code generation configuration
 that allows to read meta information from XML formats, e.g. from a standard
-INFORMATION_SCHEMA.xml, or from Vertabelo's XML export format:
+INFORMATION_SCHEMA.xml, or from an ERD's XML export format:
 http://blog.jooq.org/2014/09/05/importing-your-erd-export-into-jooq/
 
 Future versions of jOOQ will include built-in support for a variety of XML

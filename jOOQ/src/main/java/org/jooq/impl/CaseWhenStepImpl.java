@@ -41,7 +41,6 @@
 package org.jooq.impl;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -133,32 +132,18 @@ final class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWh
 
     @Override
     public final CaseWhenStep<V, T> mapValues(Map<V, T> values) {
-        Map<Field<V>, Field<T>> fields = new LinkedHashMap<Field<V>, Field<T>>();
-
         for (Entry<V, T> entry : values.entrySet())
-            fields.put(Tools.field(entry.getKey()), Tools.field(entry.getValue()));
+            when(entry.getKey(), entry.getValue());
 
-        return mapFields(fields);
+        return this;
     }
 
     @Override
     public final CaseWhenStep<V, T> mapFields(Map<? extends Field<V>, ? extends Field<T>> fields) {
-        return null;
-    }
+        for (Entry<? extends Field<V>, ? extends Field<T>> entry : fields.entrySet())
+            when(entry.getKey(), entry.getValue());
 
-    @Override
-    public final CaseWhenStep<V, T> mapValues(Map<V, T> values) {
-        Map<Field<V>, Field<T>> fields = new LinkedHashMap<Field<V>, Field<T>>();
-
-        for (Entry<V, T> entry : values.entrySet())
-            fields.put(Tools.field(entry.getKey()), Tools.field(entry.getValue()));
-
-        return mapFields(fields);
-    }
-
-    @Override
-    public final CaseWhenStep<V, T> mapFields(Map<? extends Field<V>, ? extends Field<T>> fields) {
-        return null;
+        return this;
     }
 
     @Override

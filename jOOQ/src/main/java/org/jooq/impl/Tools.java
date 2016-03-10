@@ -41,6 +41,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
+import static java.lang.Character.isJavaIdentifierPart;
 import static java.util.Arrays.asList;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
@@ -1587,7 +1588,16 @@ final class Tools {
             }
 
             // Inline bind variables only outside of string literals
-            else if (sqlChars[i] == '?' && substituteIndex < substitutes.size()) {
+            else if (substituteIndex < substitutes.size() &&
+                    ((sqlChars[i] == '?')
+
+                  // [#4131] Named bind variables of the form :identifier
+                  || (sqlChars[i] == ':' && i + 1 < sqlChars.length && isJavaIdentifierPart(sqlChars[i + 1])))) {
+
+                // [#4131] Consume the named bind variable
+                if (sqlChars[i] == ':')
+                    while (++i < sqlChars.length && isJavaIdentifierPart(sqlChars[i]));
+
                 QueryPart substitute = substitutes.get(substituteIndex++);
 
                 if (render.paramType() == INLINED || render.paramType() == NAMED || render.paramType() == NAMED_OR_INLINED) {

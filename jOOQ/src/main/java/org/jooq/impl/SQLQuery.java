@@ -58,7 +58,7 @@ final class SQLQuery extends AbstractQuery {
 
     private final QueryPart   delegate;
 
-    public SQLQuery(Configuration configuration, QueryPart delegate) {
+    SQLQuery(Configuration configuration, QueryPart delegate) {
         super(configuration);
 
         this.delegate = delegate;

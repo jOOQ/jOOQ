@@ -64,7 +64,7 @@ final class SQLResultQuery extends AbstractResultQuery<Record> {
 
     private final QueryPart   delegate;
 
-    public SQLResultQuery(Configuration configuration, QueryPart delegate) {
+    SQLResultQuery(Configuration configuration, QueryPart delegate) {
         super(configuration);
 
         this.delegate = delegate;

@@ -42,7 +42,11 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
+// ...
 // ...
 import static org.jooq.impl.RecordDelegate.delegate;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.INSERT;
@@ -182,7 +186,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
 
             // [#1859] If an insert was successful try fetching the generated
             //         values. In some databases, this cannot be done via getGeneratedKeys()
-            if (asList(H2).contains(configuration().family()) && this instanceof UpdatableRecord) {
+            if (asList(DERBY, H2, MARIADB, MYSQL).contains(configuration().family()) && this instanceof UpdatableRecord) {
                 ((UpdatableRecord<?>) this).refresh();
             }
             else {

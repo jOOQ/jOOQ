@@ -44,6 +44,7 @@ import org.jooq.Binding;
 import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.DataType;
+import org.jooq.Field;
 
 /**
  * A <code>DataType</code> used for converted types using {@link Converter}
@@ -62,6 +63,7 @@ final class ConvertedDataType<T, U> extends DefaultDataType<U> {
 
     private final DataType<T>           delegate;
 
+    @SuppressWarnings("unchecked")
     ConvertedDataType(DataType<T> delegate, Binding<? super T, U> binding) {
         super(
             null,
@@ -73,7 +75,7 @@ final class ConvertedDataType<T, U> extends DefaultDataType<U> {
             delegate.scale(),
             delegate.length(),
             delegate.nullable(),
-            delegate.defaulted()
+            (Field<U>) delegate.defaultValue()
         );
 
         this.delegate = delegate;

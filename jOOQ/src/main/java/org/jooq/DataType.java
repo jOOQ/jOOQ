@@ -206,11 +206,48 @@ public interface DataType<T> extends Serializable {
     boolean nullable();
 
     /**
+     * Specify an expression to be applied as the <code>DEFAULT</code> value for
+     * this data type.
+     *
+     * @see #defaultValue(Field)
+     */
+    DataType<T> defaultValue(T defaultValue);
+
+    /**
+     * Specify an expression to be applied as the <code>DEFAULT</code> value for
+     * this data type.
+     * <p>
+     * A default value of a data type applies to DDL statements, such as
+     * <ul>
+     * <li><code>CREATE TABLE</code></li>
+     * <li><code>ALTER TABLE</code></li>
+     * </ul>
+     * <p>
+     * The distinct types of possible <code>DEFAULT</code> expressions is
+     * defined by the underlying database. Please refer to your database manual
+     * to learn what expressions are possible.
+     */
+    DataType<T> defaultValue(Field<T> defaultValue);
+
+    /**
+     * The expression to be applied as the <code>DEFAULT</code> value for this
+     * data type.
+     *
+     * @return The default value if present, or <code>null</code> if no default
+     *         value is specified for this data type.
+     * @see #defaultValue(Field)
+     */
+    Field<T> defaultValue();
+
+    /**
      * Return a new data type like this, with a new defaultability.
      *
      * @param defaulted The new defaultability
      * @return The new data type
+     *
+     * @deprecated - [#3852] - 3.8.0 - Use {@link #defaultValue(Field)} instead.
      */
+    @Deprecated
     DataType<T> defaulted(boolean defaulted);
 
     /**

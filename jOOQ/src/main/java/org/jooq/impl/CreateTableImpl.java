@@ -263,6 +263,9 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
                     ctx.sql(' ').keyword("not null");
                 }
 
+                if (type.defaulted())
+                    ctx.sql(' ').keyword("default").sql(' ').visit(type.defaultValue());
+
                 if (i < columnFields.size() - 1)
                     ctx.sql(',').formatSeparator();
             }

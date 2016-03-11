@@ -1592,7 +1592,10 @@ final class Tools {
                     ((sqlChars[i] == '?')
 
                   // [#4131] Named bind variables of the form :identifier
-                  || (sqlChars[i] == ':' && i + 1 < sqlChars.length && isJavaIdentifierPart(sqlChars[i + 1])))) {
+                  //         Watch out for the PostgreSQL cast operator ::
+                  || (sqlChars[i] == ':'
+                          && i + 1 < sqlChars.length && isJavaIdentifierPart(sqlChars[i + 1])
+                          &&(i - 1 < 0               || sqlChars[i - 1] != ':')))) {
 
                 // [#4131] Consume the named bind variable
                 if (sqlChars[i] == ':')

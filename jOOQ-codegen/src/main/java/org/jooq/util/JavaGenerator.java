@@ -4864,7 +4864,7 @@ public class JavaGenerator extends AbstractGenerator {
                 0,
                 0,
                 true,
-                false,
+                null,
                 baseType
             ) + ".getArrayDataType()";
         }
@@ -4877,7 +4877,7 @@ public class JavaGenerator extends AbstractGenerator {
                 type.getScale(),
                 type.getLength(),
                 type.isNullable(),
-                type.isDefaulted(),
+                type.getDefaultValue(),
                 type.getUserType()
             );
         }
@@ -4998,7 +4998,7 @@ public class JavaGenerator extends AbstractGenerator {
         return type;
     }
 
-    protected String getTypeReference(Database db, SchemaDefinition schema, String t, int p, int s, int l, boolean n, boolean d, String u) {
+    protected String getTypeReference(Database db, SchemaDefinition schema, String t, int p, int s, int l, boolean n, String d, String u) {
         StringBuilder sb = new StringBuilder();
         if (db.getArray(schema, u) != null) {
             ArrayDefinition array = database.getArray(schema, u);
@@ -5032,7 +5032,10 @@ public class JavaGenerator extends AbstractGenerator {
             DataType<?> dataType = null;
 
             try {
-                dataType = DefaultDataType.getDataType(db.getDialect(), t, p, s).nullable(n).defaulted(d);
+                dataType = DefaultDataType.getDataType(db.getDialect(), t, p, s).nullable(n);
+
+                if (d != null)
+                    dataType = dataType.defaultValue((Field) DSL.field(d, dataType));
             }
 
             // Mostly because of unsupported data types. Will be handled later.
@@ -5043,32 +5046,34 @@ public class JavaGenerator extends AbstractGenerator {
             // specific DataType t, then reference that one.
             if (dataType != null && dataType.getSQLDataType() != null) {
                 DataType<?> sqlDataType = dataType.getSQLDataType();
+                String sqlDataTypeRef =
+                    SQLDataType.class.getCanonicalName()
+                  + '.'
+                  + DefaultDataType.normalise(sqlDataType.getTypeName());
 
-                sb.append(SQLDataType.class.getCanonicalName());
-                sb.append(".");
-                sb.append(DefaultDataType.normalise(sqlDataType.getTypeName()));
+                sb.append(sqlDataTypeRef);
 
                 if (dataType.hasPrecision() && p > 0) {
                     sb.append(".precision(").append(p);
 
-                    if (dataType.hasScale() && s > 0) {
+                    if (dataType.hasScale() && s > 0)
                         sb.append(", ").append(s);
-                    }
 
                     sb.append(")");
                 }
 
-                if (dataType.hasLength() && l > 0) {
+                if (dataType.hasLength() && l > 0)
                     sb.append(".length(").append(l).append(")");
-                }
 
-                if (!dataType.nullable()) {
+                if (!dataType.nullable())
                     sb.append(".nullable(false)");
-                }
 
-                if (dataType.defaulted()) {
-                    sb.append(".defaulted(true)");
-                }
+                if (dataType.defaulted())
+                    sb.append(".defaultValue(org.jooq.impl.DSL.field(\"")
+                      .append(escapeString(d))
+                      .append("\", ")
+                      .append(sqlDataTypeRef)
+                      .append("))");
             }
 
             // Otherwise, reference the dialect-specific DataType itself.

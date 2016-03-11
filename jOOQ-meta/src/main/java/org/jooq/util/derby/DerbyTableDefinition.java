@@ -98,7 +98,7 @@ public class DerbyTableDefinition extends AbstractTableDefinition {
                 precision,
                 scale,
                 !parseNotNull(typeName),
-                record.get(Syscolumns.COLUMNDEFAULT) != null
+                record.get(Syscolumns.COLUMNDEFAULT)
             );
 
 			ColumnDefinition column = new DefaultColumnDefinition(

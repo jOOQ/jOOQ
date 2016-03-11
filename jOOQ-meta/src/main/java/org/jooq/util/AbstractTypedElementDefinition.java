@@ -134,7 +134,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
             if (dataType != null) {
                 if (dataType.getSQLType() == Types.DATE) {
                     DataType<?> forcedDataType = DefaultDataType.getDataType(db.getDialect(), SQLDataType.TIMESTAMP.getTypeName(), 0, 0);
-                    result = new DefaultDataTypeDefinition(db, child.getSchema(), forcedDataType.getTypeName(), 0, 0, 0, result.isNullable(), result.isDefaulted(), null, null, DateAsTimestampBinding.class.getName());
+                    result = new DefaultDataTypeDefinition(db, child.getSchema(), forcedDataType.getTypeName(), 0, 0, 0, result.isNullable(), result.getDefaultValue(), null, null, DateAsTimestampBinding.class.getName());
                 }
             }
         }
@@ -164,7 +164,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
                 DataType<?> forcedDataType = null;
 
                 boolean n = result.isNullable();
-                boolean d = result.isDefaulted();
+                String d = result.getDefaultValue();
 
                 int l = 0;
                 int p = 0;

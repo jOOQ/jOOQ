@@ -97,7 +97,7 @@ public class CUBRIDTableDefinition extends AbstractTableDefinition {
                 record.get(DB_ATTRIBUTE.PREC),
                 record.get(DB_ATTRIBUTE.SCALE),
                 record.get(DB_ATTRIBUTE.IS_NULLABLE, boolean.class),
-                record.get(DB_ATTRIBUTE.DEFAULT_VALUE) != null,
+                record.get(DB_ATTRIBUTE.DEFAULT_VALUE),
                 getName() + "_" + record.get(DB_ATTRIBUTE.ATTR_NAME)
             );
 

@@ -41,7 +41,6 @@
 package org.jooq.util.postgres;
 
 
-import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.util.postgres.information_schema.Tables.PARAMETERS;
 import static org.jooq.util.postgres.information_schema.Tables.ROUTINES;
@@ -51,7 +50,6 @@ import java.sql.SQLException;
 import java.util.Arrays;
 
 import org.jooq.Record;
-import org.jooq.exception.DataAccessException;
 import org.jooq.tools.StringUtils;
 import org.jooq.util.AbstractRoutineDefinition;
 import org.jooq.util.DataTypeDefinition;
@@ -69,7 +67,6 @@ import org.jooq.util.SchemaDefinition;
  */
 public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
 
-    private static Boolean is94;
     private final String   specificName;
 
     public PostgresRoutineDefinition(Database database, Record record) {
@@ -97,7 +94,7 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
                 record.get(ROUTINES.NUMERIC_PRECISION),
                 record.get(ROUTINES.NUMERIC_SCALE),
                 null,
-                null,
+                (String) null,
                 record.get(ROUTINES.TYPE_UDT_NAME)
             );
 
@@ -125,7 +122,7 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
                 PARAMETERS.UDT_NAME,
                 PARAMETERS.ORDINAL_POSITION,
                 PARAMETERS.PARAMETER_MODE,
-                is94()
+                ((PostgresDatabase) getDatabase()).is94()
                     ? PARAMETERS.PARAMETER_DEFAULT
                     : inline((String) null).as(PARAMETERS.PARAMETER_DEFAULT))
             .from(PARAMETERS)
@@ -144,7 +141,7 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
                 record.get(PARAMETERS.NUMERIC_PRECISION),
                 record.get(PARAMETERS.NUMERIC_SCALE),
                 null,
-                record.get(PARAMETERS.PARAMETER_DEFAULT) != null,
+                record.get(PARAMETERS.PARAMETER_DEFAULT),
                 record.get(PARAMETERS.UDT_NAME)
             );
 
@@ -159,27 +156,5 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
 
             addParameter(InOutDefinition.getFromString(inOut), parameter);
         }
-    }
-
-    private boolean is94() {
-        if (is94 == null) {
-
-            // [#4254] INFORMATION_SCHEMA.PARAMETERS.PARAMETER_DEFAULT was added
-            // in PostgreSQL 9.4 only
-            try {
-                create(true)
-                    .select(PARAMETERS.PARAMETER_DEFAULT)
-                    .from(PARAMETERS)
-                    .where(falseCondition())
-                    .fetch();
-
-                is94 = true;
-            }
-            catch (DataAccessException e) {
-                is94 = false;
-            }
-        }
-
-        return is94;
     }
 }

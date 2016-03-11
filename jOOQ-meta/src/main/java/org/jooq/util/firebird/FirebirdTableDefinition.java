@@ -107,7 +107,7 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                     record.get(f.RDB$FIELD_PRECISION),
                     record.get("FIELD_SCALE", Integer.class),
                     record.get(r.RDB$NULL_FLAG) == 0,
-                    record.get(r.RDB$DEFAULT_SOURCE) != null
+                    record.get(r.RDB$DEFAULT_SOURCE)
             );
 
             ColumnDefinition column = new DefaultColumnDefinition(

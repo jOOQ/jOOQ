@@ -42,7 +42,7 @@
 package org.jooq.util.hsqldb;
 
 import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.fieldByName;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.nvl;
 import static org.jooq.util.hsqldb.information_schema.Tables.CHECK_CONSTRAINTS;
 import static org.jooq.util.hsqldb.information_schema.Tables.ELEMENT_TYPES;
@@ -195,7 +195,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
         CheckConstraints cc = CHECK_CONSTRAINTS.as("cc");
 
         // [#2808] [#3019] Workaround for bad handling of JOIN .. USING
-        Field<String> constraintName = fieldByName(String.class, cc.CONSTRAINT_NAME.getName());
+        Field<String> constraintName = field(name(cc.CONSTRAINT_NAME.getName()), String.class);
 
         for (Record record : create()
                 .select(

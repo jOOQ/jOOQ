@@ -88,8 +88,7 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
     		    .from(COLUMNS)
     		    .where(TABLE_SCHEMA.equal(getSchema().getName()))
     		    .and(TABLE_NAME.equal(getName()))
-    		    .orderBy(ORDINAL_POSITION)
-    		    .fetch()) {
+    		    .orderBy(ORDINAL_POSITION)) {
 
 		    String dataType = record.get(Columns.DATA_TYPE);
 
@@ -110,7 +109,7 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
                 record.get(Columns.NUMERIC_PRECISION),
                 record.get(Columns.NUMERIC_SCALE),
                 record.get(Columns.IS_NULLABLE, boolean.class),
-                record.get(Columns.COLUMN_DEFAULT) != null,
+                record.get(Columns.COLUMN_DEFAULT),
                 getName() + "_" + record.get(Columns.COLUMN_NAME)
             );
 

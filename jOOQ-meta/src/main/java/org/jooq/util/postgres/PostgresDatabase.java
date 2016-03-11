@@ -63,6 +63,7 @@ import static org.jooq.util.postgres.PostgresDSL.oid;
 import static org.jooq.util.postgres.information_schema.Tables.ATTRIBUTES;
 import static org.jooq.util.postgres.information_schema.Tables.CHECK_CONSTRAINTS;
 import static org.jooq.util.postgres.information_schema.Tables.KEY_COLUMN_USAGE;
+import static org.jooq.util.postgres.information_schema.Tables.PARAMETERS;
 import static org.jooq.util.postgres.information_schema.Tables.ROUTINES;
 import static org.jooq.util.postgres.information_schema.Tables.SEQUENCES;
 import static org.jooq.util.postgres.information_schema.Tables.TABLES;
@@ -137,6 +138,7 @@ public class PostgresDatabase extends AbstractDatabase {
     private static final JooqLogger log = JooqLogger.getLogger(PostgresDatabase.class);
 
     private static Boolean is84;
+    private static Boolean is94;
     private static Boolean canCastToEnumType;
 
     @Override
@@ -462,7 +464,7 @@ public class PostgresDatabase extends AbstractDatabase {
                 record.get(SEQUENCES.NUMERIC_PRECISION),
                 record.get(SEQUENCES.NUMERIC_SCALE),
                 false,
-                false
+                (String) null
             );
 
             result.add(new DefaultSequenceDefinition(schema, record.get(SEQUENCES.SEQUENCE_NAME), type));
@@ -594,7 +596,7 @@ public class PostgresDatabase extends AbstractDatabase {
                     record.get(b.TYPLEN),
                     0, // ?
                    !record.get(d.TYPNOTNULL, boolean.class),
-                    record.get(d.TYPDEFAULT) != null,
+                    record.get(d.TYPDEFAULT),
                     record.get(b.TYPNAME, String.class)
                 );
 
@@ -706,7 +708,7 @@ public class PostgresDatabase extends AbstractDatabase {
         return DSL.using(getConnection(), SQLDialect.POSTGRES);
     }
 
-    private boolean is84() {
+    boolean is84() {
         if (is84 == null) {
 
             // [#2916] Window functions were introduced with PostgreSQL 9.0
@@ -723,6 +725,28 @@ public class PostgresDatabase extends AbstractDatabase {
         }
 
         return is84;
+    }
+
+    boolean is94() {
+        if (is94 == null) {
+
+            // [#4254] INFORMATION_SCHEMA.PARAMETERS.PARAMETER_DEFAULT was added
+            // in PostgreSQL 9.4 only
+            try {
+                create(true)
+                    .select(PARAMETERS.PARAMETER_DEFAULT)
+                    .from(PARAMETERS)
+                    .where(falseCondition())
+                    .fetch();
+
+                is94 = true;
+            }
+            catch (DataAccessException e) {
+                is94 = false;
+            }
+        }
+
+        return is94;
     }
 
     private List<String> enumLabels(String nspname, String typname) {

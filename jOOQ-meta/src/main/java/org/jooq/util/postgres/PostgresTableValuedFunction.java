@@ -112,7 +112,9 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
                 p.NUMERIC_PRECISION,
                 p.NUMERIC_SCALE,
                 inline("true").as(c.IS_NULLABLE),
-                inline(null, String.class).as(c.COLUMN_DEFAULT),
+               (((PostgresDatabase) getDatabase()).is94()
+                    ? PARAMETERS.PARAMETER_DEFAULT
+                    : inline((String) null)).as(c.COLUMN_DEFAULT),
                 p.UDT_SCHEMA,
                 p.UDT_NAME
             )
@@ -183,7 +185,7 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
                 record.get(p.NUMERIC_PRECISION),
                 record.get(p.NUMERIC_SCALE),
                 record.get(c.IS_NULLABLE, boolean.class),
-                record.get(c.COLUMN_DEFAULT) != null,
+                record.get(c.COLUMN_DEFAULT),
                 record.get(p.UDT_NAME)
             );
 

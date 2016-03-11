@@ -332,7 +332,7 @@ public class XMLDatabase extends AbstractDatabase {
                     sequence.getNumericPrecision(),
                     sequence.getNumericScale(),
                     false,
-                    false
+                    (String) null
                 );
 
                 result.add(new DefaultSequenceDefinition(schema, sequence.getSequenceName(), type));

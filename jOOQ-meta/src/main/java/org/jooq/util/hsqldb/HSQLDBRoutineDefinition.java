@@ -86,7 +86,7 @@ public class HSQLDBRoutineDefinition extends AbstractRoutineDefinition {
                 precision,
                 scale,
                 null,
-                null
+                (String) null
             );
 
             this.returnValue = new DefaultParameterDefinition(this, "RETURN_VALUE", -1, type);
@@ -132,7 +132,7 @@ public class HSQLDBRoutineDefinition extends AbstractRoutineDefinition {
                 record.get(PARAMETERS.NUMERIC_PRECISION),
                 record.get(PARAMETERS.NUMERIC_SCALE),
                 null,
-                null
+                (String) null
             );
 
             ParameterDefinition parameter = new DefaultParameterDefinition(

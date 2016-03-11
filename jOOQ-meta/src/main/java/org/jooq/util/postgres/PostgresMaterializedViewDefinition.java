@@ -174,7 +174,7 @@ public class PostgresMaterializedViewDefinition extends AbstractTableDefinition 
                 record.get(COLUMNS.NUMERIC_PRECISION),
                 record.get(COLUMNS.NUMERIC_SCALE),
                 record.get(COLUMNS.IS_NULLABLE, boolean.class),
-                record.get(COLUMNS.COLUMN_DEFAULT) != null,
+                record.get(COLUMNS.COLUMN_DEFAULT),
                 record.get(COLUMNS.UDT_NAME)
             );
 

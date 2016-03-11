@@ -42,7 +42,8 @@
 package org.jooq.util.cubrid;
 
 import static org.jooq.impl.DSL.concat;
-import static org.jooq.impl.DSL.fieldByName;
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.util.cubrid.dba.Tables.DB_CLASS;
@@ -242,7 +243,7 @@ public class CUBRIDDatabase extends AbstractDatabase {
         List<EnumDefinition> result = new ArrayList<EnumDefinition>();
 
         for (TableDefinition tableDefinition : getTables(getSchemata().get(0))) {
-            for (Record record : create().fetch("SHOW COLUMNS FROM {0} WHERE TYPE LIKE 'ENUM(%)'", fieldByName(tableDefinition.getInputName()))) {
+            for (Record record : create().fetch("SHOW COLUMNS FROM {0} WHERE TYPE LIKE 'ENUM(%)'", field(name(tableDefinition.getInputName())))) {
                 String table = tableDefinition.getInputName();
                 String column = record.get("Field", String.class);
                 String columnType = record.get("Type", String.class);

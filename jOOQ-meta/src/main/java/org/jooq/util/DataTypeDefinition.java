@@ -101,6 +101,11 @@ public interface DataTypeDefinition {
     boolean isDefaulted();
 
     /**
+     * The default value expression.
+     */
+    String getDefaultValue();
+
+    /**
      * Whether this data type represents a udt.
      */
     boolean isUDT();

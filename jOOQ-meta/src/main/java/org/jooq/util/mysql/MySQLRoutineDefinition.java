@@ -125,7 +125,7 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
                 record.get(Parameters.NUMERIC_PRECISION),
                 record.get(Parameters.NUMERIC_SCALE),
                 null,
-                null
+                (String) null
             );
 
             if (inOut == null) {
@@ -196,7 +196,7 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
             precision,
             scale,
             null,
-            null
+            (String) null
         );
 
         return new DefaultParameterDefinition(this, paramName, columnIndex, type);

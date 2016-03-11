@@ -60,32 +60,76 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     private final String           converter;
     private final String           binding;
     private final boolean          nullable;
-    private final boolean          defaulted;
+    private final String           defaultValue;
     private final int              length;
     private final int              precision;
     private final int              scale;
 
-    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName) {
-        this(database, schema, typeName, null, null, null, null, null, null);
+    private static final String defaultValue(Boolean defaultable) {
+        return defaultable != null && defaultable ? "NULL" : null;
     }
 
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName) {
+        this(database, schema, typeName, null, null, null, null, (String) null, null);
+    }
+
+    /**
+     * @deprecated - [#4841] - 3.8.0 - Use {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, Number, Number, Boolean, String)} instead.
+     */
+    @Deprecated
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, Boolean defaultable) {
         this(database, schema, typeName, length, precision, scale, nullable, defaultable, typeName, null);
     }
 
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue) {
+        this(database, schema, typeName, length, precision, scale, nullable, defaultValue, typeName, null);
+    }
+
+    /**
+     * @deprecated - [#4841] - 3.8.0 - Use {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, Number, Number, Boolean, String, String)} instead.
+     */
+    @Deprecated
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, Boolean defaultable, String userType) {
         this(database, schema, typeName, length, precision, scale, nullable, defaultable, userType, null);
     }
 
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, String userType) {
+        this(database, schema, typeName, length, precision, scale, nullable, defaultValue, userType, null);
+    }
+
+    /**
+     * @deprecated - [#4841] - 3.8.0 - Use {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, Number, Number, Boolean, String, String, String)} instead.
+     */
+    @Deprecated
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, Boolean defaultable, String userType, String converter) {
         this(database, schema, typeName, length, precision, scale, nullable, defaultable, userType, converter, null);
     }
 
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, String userType, String converter) {
+        this(database, schema, typeName, length, precision, scale, nullable, defaultValue, userType, converter, null);
+    }
+
+    /**
+     * @deprecated - [#4841] - 3.8.0 - Use {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, Number, Number, Boolean, String, String, String, String)} instead.
+     */
+    @Deprecated
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, Boolean defaultable, String userType, String converter, String binding) {
         this(database, schema, typeName, length, precision, scale, nullable, defaultable, userType, converter, binding, null);
     }
 
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, String userType, String converter, String binding) {
+        this(database, schema, typeName, length, precision, scale, nullable, defaultValue, userType, converter, binding, null);
+    }
+
+    /**
+     * @deprecated - [#4841] - 3.8.0 - Use {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, Number, Number, Boolean, String, String, String, String, String)} instead.
+     */
+    @Deprecated
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, Boolean defaultable, String userType, String converter, String binding, String javaType) {
+        this(database, schema, typeName, length, precision, scale, nullable, defaultValue(defaultable), userType, converter, binding, javaType);
+    }
+
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, String userType, String converter, String binding, String javaType) {
         this.database = database;
         this.schema = schema;
 
@@ -114,7 +158,7 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         this.precision = precision == null ? 0 : precision.intValue();
         this.scale = scale == null ? 0 : scale.intValue();
         this.nullable = nullable == null ? true : nullable.booleanValue();
-        this.defaulted = defaultable == null ? false : defaultable.booleanValue();
+        this.defaultValue = defaultValue;
     }
 
     @Override
@@ -138,7 +182,12 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
 
     @Override
     public final boolean isDefaulted() {
-        return defaulted;
+        return getDefaultValue() != null;
+    }
+
+    @Override
+    public final String getDefaultValue() {
+        return defaultValue;
     }
 
     @Override

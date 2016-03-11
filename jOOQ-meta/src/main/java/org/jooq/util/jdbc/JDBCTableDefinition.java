@@ -81,7 +81,7 @@ public class JDBCTableDefinition extends AbstractTableDefinition {
                 field.getDataType().precision(),
                 field.getDataType().scale(),
                 field.getDataType().nullable(),
-                field.getDataType().defaulted(),
+                create().renderInlined(field.getDataType().defaultValue()),
                 null
             );
 

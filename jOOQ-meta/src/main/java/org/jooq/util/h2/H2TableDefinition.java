@@ -79,7 +79,7 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 Columns.NUMERIC_PRECISION,
                 Columns.NUMERIC_SCALE,
                 Columns.IS_NULLABLE,
-                Columns.COLUMN_DEFAULT.nvl2(true, false).as("default"),
+                Columns.COLUMN_DEFAULT,
                 Columns.REMARKS,
                 Columns.SEQUENCE_NAME)
             .from(COLUMNS)
@@ -96,7 +96,7 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 record.get(Columns.NUMERIC_PRECISION),
                 record.get(Columns.NUMERIC_SCALE),
                 record.get(Columns.IS_NULLABLE, boolean.class),
-                record.get("default", boolean.class));
+                record.get(Columns.COLUMN_DEFAULT));
 
             ColumnDefinition column = new DefaultColumnDefinition(
             	getDatabase().getTable(getSchema(), getName()),

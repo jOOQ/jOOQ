@@ -96,7 +96,7 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
                 precision,
                 scale,
                 !record.get("notnull", boolean.class),
-                record.get("dflt_value") != null
+                record.get("dflt_value", String.class)
             );
 
             ColumnDefinition column = new DefaultColumnDefinition(

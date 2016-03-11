@@ -91,7 +91,7 @@ public class XMLTableDefinition extends AbstractTableDefinition {
                     unbox(column.getNumericPrecision()),
                     unbox(column.getNumericScale()),
                     column.isIsNullable(),
-                    column.getColumnDefault() != null
+                    column.getColumnDefault()
                 );
 
                 result.add(new DefaultColumnDefinition(

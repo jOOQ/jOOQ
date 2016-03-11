@@ -97,7 +97,7 @@ public class PostgresUDTDefinition extends AbstractUDTDefinition {
                 record.get(ATTRIBUTES.NUMERIC_PRECISION),
                 record.get(ATTRIBUTES.NUMERIC_SCALE),
                 record.get(ATTRIBUTES.IS_NULLABLE, boolean.class),
-                record.get(ATTRIBUTES.ATTRIBUTE_DEFAULT) != null,
+                record.get(ATTRIBUTES.ATTRIBUTE_DEFAULT),
                 record.get(ATTRIBUTES.ATTRIBUTE_UDT_NAME)
             );
 

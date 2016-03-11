@@ -112,7 +112,7 @@ public class FirebirdTableValuedFunction extends AbstractTableDefinition {
                     record.get(f.RDB$FIELD_PRECISION),
                     record.get("FIELD_SCALE", Integer.class),
                     record.get(p.RDB$NULL_FLAG) == 0,
-                    record.get(p.RDB$DEFAULT_SOURCE) != null
+                    record.get(p.RDB$DEFAULT_SOURCE)
             );
 
             ColumnDefinition column = new DefaultColumnDefinition(

@@ -2006,8 +2006,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     // interfaces. Instead, a string representation of a UDT has to be parsed
     // -------------------------------------------------------------------------
 
-    @SuppressWarnings("unchecked")
     private static final <T> T pgFromString(Class<T> type, String string) {
+        return pgFromString(Converters.identity(type), string);
+    }
+
+    @SuppressWarnings("unchecked")
+    private static final <T> T pgFromString(Converter<?, T> converter, String string) {
+        Class<T> type = converter.toType();
+
         if (string == null) {
             return null;
         }
@@ -2090,6 +2096,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
         else if (Record.class.isAssignableFrom(type)) {
             return (T) pgNewRecord(type, null, string);
+        }
+        else {
+            Converter<Object, T> c = (Converter<Object, T>) converter;
+            return c.from(pgFromString(c.fromType(), string));
         }
 
         throw new UnsupportedOperationException("Class " + type + " is not supported");
@@ -2237,7 +2247,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final <T> void pgSetValue(Record record, Field<T> field, String value) {
-        record.set(field, pgFromString(field.getType(), value));
+        record.set(field, pgFromString(field.getConverter(), value));
     }
 
     private static final void pgRenderEnumCast(RenderContext render, Class<?> type) {

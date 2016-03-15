@@ -55,6 +55,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.impl.DSL.inline;
 
 import org.jooq.Clause;
 import org.jooq.Comparator;
@@ -142,9 +143,8 @@ final class CompareCondition extends AbstractCondition {
         if (castRhs) ctx.sql(' ').keyword("as").sql(' ').keyword("varchar").sql("(4000))");
 
         if (escape != null) {
-            ctx.sql(' ').keyword("escape").sql(" '")
-               .sql(escape)
-               .sql('\'');
+            ctx.sql(' ').keyword("escape").sql(' ')
+               .visit(inline(escape));
         }
     }
 

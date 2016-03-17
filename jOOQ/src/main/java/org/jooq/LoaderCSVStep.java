@@ -42,6 +42,8 @@ package org.jooq;
 
 import java.util.Collection;
 
+import org.jooq.LoaderFieldMapper.LoaderFieldContext;
+
 /**
  * The <code>Loader</code> API is used for configuring data loads.
  * <p>
@@ -74,4 +76,15 @@ public interface LoaderCSVStep<R extends Record> {
     @Support
     LoaderCSVOptionsStep<R> fields(Collection<? extends Field<?>> fields);
 
+    /**
+     * Specify a function to apply on each input field to receive the target
+     * table's field.
+     * <p>
+     * The input field obtained from {@link LoaderFieldContext#field()} wraps
+     * the CSV header column name if any, or an unspecified field enumeration is
+     * used. The {@link LoaderFieldContext#index()} property corresponds to the
+     * CSV column index.
+     */
+    @Support
+    LoaderListenerStep<R> fields(LoaderFieldMapper mapper);
 }

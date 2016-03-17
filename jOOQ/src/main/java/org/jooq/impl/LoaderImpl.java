@@ -71,8 +71,11 @@ import org.jooq.LoaderCSVOptionsStep;
 import org.jooq.LoaderCSVStep;
 import org.jooq.LoaderContext;
 import org.jooq.LoaderError;
+import org.jooq.LoaderFieldMapper;
+import org.jooq.LoaderFieldMapper.LoaderFieldContext;
 import org.jooq.LoaderJSONOptionsStep;
 import org.jooq.LoaderJSONStep;
+import org.jooq.LoaderListenerStep;
 import org.jooq.LoaderOptionsStep;
 import org.jooq.LoaderRowListener;
 import org.jooq.LoaderRowsStep;
@@ -106,66 +109,68 @@ final class LoaderImpl<R extends Record> implements
 
     // Configuration constants
     // -----------------------
-    private static final int ON_DUPLICATE_KEY_ERROR  = 0;
-    private static final int ON_DUPLICATE_KEY_IGNORE = 1;
-    private static final int ON_DUPLICATE_KEY_UPDATE = 2;
+    private static final int             ON_DUPLICATE_KEY_ERROR  = 0;
+    private static final int             ON_DUPLICATE_KEY_IGNORE = 1;
+    private static final int             ON_DUPLICATE_KEY_UPDATE = 2;
 
-    private static final int ON_ERROR_ABORT  = 0;
-    private static final int ON_ERROR_IGNORE = 1;
+    private static final int             ON_ERROR_ABORT          = 0;
+    private static final int             ON_ERROR_IGNORE         = 1;
 
-    private static final int COMMIT_NONE  = 0;
-    private static final int COMMIT_AFTER = 1;
-    private static final int COMMIT_ALL   = 2;
+    private static final int             COMMIT_NONE             = 0;
+    private static final int             COMMIT_AFTER            = 1;
+    private static final int             COMMIT_ALL              = 2;
 
-    private static final int BATCH_NONE  = 0;
-    private static final int BATCH_AFTER = 1;
-    private static final int BATCH_ALL   = 2;
+    private static final int             BATCH_NONE              = 0;
+    private static final int             BATCH_AFTER             = 1;
+    private static final int             BATCH_ALL               = 2;
 
-    private static final int BULK_NONE  = 0;
-    private static final int BULK_AFTER = 1;
-    private static final int BULK_ALL   = 2;
+    private static final int             BULK_NONE               = 0;
+    private static final int             BULK_AFTER              = 1;
+    private static final int             BULK_ALL                = 2;
 
-    private static final int CONTENT_CSV    = 0;
-    private static final int CONTENT_XML    = 1;
-    private static final int CONTENT_JSON   = 2;
-    private static final int CONTENT_ARRAYS = 3;
+    private static final int             CONTENT_CSV             = 0;
+    private static final int             CONTENT_XML             = 1;
+    private static final int             CONTENT_JSON            = 2;
+    private static final int             CONTENT_ARRAYS          = 3;
 
     // Configuration data
     // ------------------
     private final DSLContext             create;
     private final Configuration          configuration;
     private final Table<R>               table;
-    private int                          onDuplicate = ON_DUPLICATE_KEY_ERROR;
-    private int                          onError     = ON_ERROR_ABORT;
-    private int                          commit      = COMMIT_NONE;
-    private int                          commitAfter = 1;
-    private int                          batch       = BATCH_NONE;
-    private int                          batchAfter  = 1;
-    private int                          bulk        = BULK_NONE;
-    private int                          bulkAfter   = 1;
-    private int                          content     = CONTENT_CSV;
-    private final InputDelay             data        = new InputDelay();
+    private int                          onDuplicate             = ON_DUPLICATE_KEY_ERROR;
+    private int                          onError                 = ON_ERROR_ABORT;
+    private int                          commit                  = COMMIT_NONE;
+    private int                          commitAfter             = 1;
+    private int                          batch                   = BATCH_NONE;
+    private int                          batchAfter              = 1;
+    private int                          bulk                    = BULK_NONE;
+    private int                          bulkAfter               = 1;
+    private int                          content                 = CONTENT_CSV;
+    private final InputDelay             data                    = new InputDelay();
     private Iterator<? extends Object[]> arrays;
 
     // CSV configuration data
     // ----------------------
-    private int        ignoreRows = 1;
-    private char       quote      = CSVParser.DEFAULT_QUOTE_CHARACTER;
-    private char       separator  = CSVParser.DEFAULT_SEPARATOR;
-    private String     nullString = null;
-    private Field<?>[] fields;
-    private boolean[]  primaryKey;
+    private int                          ignoreRows              = 1;
+    private char                         quote                   = CSVParser.DEFAULT_QUOTE_CHARACTER;
+    private char                         separator               = CSVParser.DEFAULT_SEPARATOR;
+    private String                       nullString              = null;
+    private Field<?>[]                   source;
+    private Field<?>[]                   fields;
+    private LoaderFieldMapper            fieldMapper;
+    private boolean[]                    primaryKey;
 
     // Result data
     // -----------
-    private LoaderRowListener       listener;
-    private LoaderContext           result = new DefaultLoaderContext();
-    private int                     ignored;
-    private int                     processed;
-    private int                     stored;
-    private int                     executed;
-    private int                     buffered;
-    private final List<LoaderError> errors;
+    private LoaderRowListener            listener;
+    private LoaderContext                result                  = new DefaultLoaderContext();
+    private int                          ignored;
+    private int                          processed;
+    private int                          stored;
+    private int                          executed;
+    private int                          buffered;
+    private final List<LoaderError>      errors;
 
     LoaderImpl(Configuration configuration, Table<R> table) {
         this.create = DSL.using(configuration);
@@ -313,6 +318,9 @@ final class LoaderImpl<R extends Record> implements
             public final Object[] map(Record value) {
                 if (value == null)
                     return null;
+
+                if (source == null)
+                    source = value.fields();
 
                 return value.intoArray();
             }
@@ -537,6 +545,39 @@ final class LoaderImpl<R extends Record> implements
     }
 
     @Override
+    public final LoaderListenerStep<R> fields(LoaderFieldMapper mapper) {
+        fieldMapper = mapper;
+        return this;
+    }
+
+    private final void fields0(Object[] row) {
+        Field<?>[] f = new Field[row.length];
+
+        // [#5145] When loading arrays, or when CSV headers are ignored,
+        // the source is still null at this stage.
+        if (source == null)
+            source = Tools.fields(row.length);
+
+        for (int i = 0; i < row.length; i++) {
+            final int index = i;
+
+            f[i] = fieldMapper.map(new LoaderFieldContext() {
+                @Override
+                public int index() {
+                    return index;
+                }
+
+                @Override
+                public Field<?> field() {
+                    return source[index];
+                }
+            });
+        }
+
+        fields(f);
+    }
+
+    @Override
     public final LoaderImpl<R> ignoreRows(int number) {
         ignoreRows = number;
         return this;
@@ -616,6 +657,7 @@ final class LoaderImpl<R extends Record> implements
 
         try {
             reader = new JSONReader(data.reader());
+            source = Tools.fieldsByName(reader.getFields());
 
             // The current json format is not designed for streaming. Thats why
             // all records are loaded at once.
@@ -638,7 +680,14 @@ final class LoaderImpl<R extends Record> implements
         CSVReader reader = null;
 
         try {
-            reader = new CSVReader(data.reader(), separator, quote, ignoreRows);
+            if (ignoreRows == 1) {
+                reader = new CSVReader(data.reader(), separator, quote, 0);
+                source = Tools.fieldsByName(reader.next());
+            }
+            else {
+                reader = new CSVReader(data.reader(), separator, quote, ignoreRows);
+            }
+
             executeSQL(reader);
         }
 
@@ -673,6 +722,11 @@ final class LoaderImpl<R extends Record> implements
         execution: {
             rows: while (iterator.hasNext() && ((row = iterator.next()) != null)) {
                 try {
+
+                	// [#5145] Lazy initialisation of fields off the first row
+                	//         in case LoaderFieldMapper was used.
+                    if (fields == null)
+                        fields0(row);
 
                     // [#1627] Handle NULL values
                     for (int i = 0; i < row.length; i++)

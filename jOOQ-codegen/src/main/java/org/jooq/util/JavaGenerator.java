@@ -1917,6 +1917,13 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (scala) {
             out.println("object %s {", className);
+            out.println();
+
+            for (int i = 0; i < identifiers.size(); i++) {
+                out.tab(1).println("val %s : %s = %s.%s", identifiers.get(i), className, getStrategy().getJavaPackageName(e), identifiers.get(i));
+            }
+
+            out.println();
             out.tab(1).println("def values() : %s[%s] = %s(",
                 out.ref("scala.Array"),
                 className,
@@ -1942,11 +1949,14 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("sealed trait %s extends %s[[before= with ][%s]] {", className, EnumType.class, interfaces);
 
             // [#2135] Only the PostgreSQL database supports schema-scoped enum types
-            out.tab(1).println("override def getSchema() : %s = %s",
+            out.tab(1).println("override def getSchema : %s = %s",
                 Schema.class,
                 (e.isSynthetic() || !(e.getDatabase() instanceof PostgresDatabase))
                     ? "null"
                     : out.ref(getStrategy().getFullJavaIdentifier(e.getSchema()), 2));
+            out.tab(1).println("override def getName : %s = %s",
+                String.class,
+                e.isSynthetic() ? "null" : "\"" + e.getName().replace("\"", "\\\"") + "\"");
 
             generateEnumClassFooter(e, out);
             out.println("}");
@@ -1954,10 +1964,7 @@ public class JavaGenerator extends AbstractGenerator {
             for (int i = 0; i < literals.size(); i++) {
                 out.println();
                 out.println("case object %s extends %s {", identifiers.get(i), className);
-                out.tab(1).println("override def getName() : %s = %s",
-                    String.class,
-                    e.isSynthetic() ? "null" : "\"" + e.getName().replace("\"", "\\\"") + "\"");
-                out.tab(1).println("override def getLiteral() : %s = \"%s\"",
+                out.tab(1).println("override def getLiteral : %s = \"%s\"",
                     String.class,
                     literals.get(i));
                 out.println("}");

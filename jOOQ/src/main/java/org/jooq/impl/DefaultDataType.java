@@ -658,7 +658,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final <E extends EnumType> DataType<E> asEnumDataType(Class<E> enumDataType) {
-        String enumTypeName = enumDataType.getEnumConstants()[0].getName();
+        String enumTypeName = Tools.enums(enumDataType)[0].getName();
         return new DefaultDataType<E>(dialect, enumDataType, enumTypeName, enumTypeName);
     }
 

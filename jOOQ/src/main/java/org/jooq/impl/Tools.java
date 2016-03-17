@@ -128,6 +128,7 @@ import org.jooq.Context;
 import org.jooq.Cursor;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
+import org.jooq.EnumType;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
@@ -151,6 +152,7 @@ import org.jooq.UpdatableRecord;
 import org.jooq.conf.BackslashEscaping;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.MappingException;
 import org.jooq.exception.TooManyRowsException;
 import org.jooq.impl.Tools.Cache.CachedOperation;
 import org.jooq.tools.JooqLogger;
@@ -3159,4 +3161,28 @@ final class Tools {
         };
     }
 
+
+    static <E extends EnumType> EnumType[] enums(Class<? extends E> type) {
+
+        // Java implementation
+        if (Enum.class.isAssignableFrom(type)) {
+            return type.getEnumConstants();
+        }
+
+        // [#4427] Scala implementation
+        else {
+            try {
+
+                // There's probably a better way to do this:
+                // http://stackoverflow.com/q/36068089/521799
+                Class<?> companionClass = Thread.currentThread().getContextClassLoader().loadClass(type.getName() + "$");
+                java.lang.reflect.Field module = companionClass.getField("MODULE$");
+                Object companion = module.get(companionClass);
+                return (EnumType[]) companionClass.getMethod("values").invoke(companion);
+            }
+            catch (Exception e) {
+                throw new MappingException("Error while looking up Scala enum", e);
+            }
+        }
+    }
 }

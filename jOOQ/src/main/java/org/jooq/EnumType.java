@@ -49,6 +49,11 @@ package org.jooq;
  * <li>In all other dialects, this can be an enum type as defined in the code
  * generation configuration [#968]</li>
  * </ul>
+ * <p>
+ * Client code should not assume that the actual enum reference is a Java
+ * {@link Enum}. In Scala, for instance, enums are not idiomatic, and jOOQ
+ * implements them differently. In any case, this {@link EnumType} API is
+ * implemented by generated database enums.
  *
  * @author Lukas Eder
  */

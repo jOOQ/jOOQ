@@ -1440,7 +1440,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
         else if (EnumType.class.isAssignableFrom(type)) {
-            result = getEnumType(type, ctx.resultSet().getString(ctx.index()));
+            result = (T) getEnumType((Class<EnumType>) type, ctx.resultSet().getString(ctx.index()));
         }
         else if (Record.class.isAssignableFrom(type)) {
             switch (ctx.family()) {
@@ -1636,7 +1636,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
         else if (EnumType.class.isAssignableFrom(type)) {
-            result = getEnumType(type, ctx.statement().getString(ctx.index()));
+            result = (T) getEnumType((Class<EnumType>) type, ctx.statement().getString(ctx.index()));
         }
         else if (Record.class.isAssignableFrom(type)) {
             switch (ctx.family()) {
@@ -1802,7 +1802,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
         else if (EnumType.class.isAssignableFrom(type)) {
-            result = getEnumType(type, ctx.input().readString());
+            result = (T) getEnumType((Class<EnumType>) type, ctx.input().readString());
         }
         else if (UDTRecord.class.isAssignableFrom(type)) {
             result = (T) ctx.input().readObject();
@@ -1886,16 +1886,18 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     @SuppressWarnings("unchecked")
-    private static final <T> T getEnumType(Class<T> type, String literal) {
+    private static final <E extends EnumType> E getEnumType(Class<? extends E> type, String literal) {
         try {
-            Object[] list = (Object[]) type.getMethod("values").invoke(type);
+            EnumType[] list = Tools.enums(type);
 
-            for (Object e : list) {
-                String l = ((EnumType) e).getLiteral();
+            for (EnumType e : list) {
+                String l = e.getLiteral();
 
-                if (l.equals(literal)) {
-                    return (T) e;
-                }
+                if (literal == null)
+                    return (E) e;
+
+                if (l.equals(literal))
+                    return (E) e;
             }
         }
         catch (Exception e) {
@@ -2092,7 +2094,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
         else if (EnumType.class.isAssignableFrom(type)) {
-            return getEnumType(type, string);
+            return (T) getEnumType((Class<EnumType>) type, string);
         }
         else if (Record.class.isAssignableFrom(type)) {
             return (T) pgNewRecord(type, null, string);
@@ -2254,7 +2256,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         Class<?> enumType = type.isArray() ? type.getComponentType() : type;
 
         // [#968] Don't cast "synthetic" enum types (note, val can be null!)
-        EnumType e = (EnumType) enumType.getEnumConstants()[0];
+        // [#4427] Java Enum agnostic implementation will work for Scala also
+        EnumType e = getEnumType((Class<EnumType>) enumType, null);
         Schema schema = e.getSchema();
 
         if (schema != null) {

@@ -286,8 +286,11 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             return;
         }
 
-        // [#3212] "Value types" can be mapped from single-field Record1 types for convenience
-        if (type.isPrimitive() || DefaultDataType.types().contains(type)) {
+        // [#3212] [#5154] "Value types" can be mapped from single-field Record1
+        //                 types for convenience
+        if (type.isPrimitive()
+                || DefaultDataType.types().contains(type)
+                || Enum.class.isAssignableFrom(type)) {
             delegate = new ValueTypeMapper();
             return;
         }

@@ -109,6 +109,14 @@ public abstract class AbstractDatabase implements Database {
     private String[]                                                         excludes;
     private String[]                                                         includes;
     private boolean                                                          includeExcludeColumns;
+    private boolean                                                          includeTables            = true;
+    private boolean                                                          includeRoutines          = true;
+    private boolean                                                          includePackages          = true;
+    private boolean                                                          includeUDTs              = true;
+    private boolean                                                          includeSequences         = true;
+    private boolean                                                          includePrimaryKeys       = true;
+    private boolean                                                          includeUniqueKeys        = true;
+    private boolean                                                          includeForeignKeys       = true;
     private String[]                                                         recordVersionFields;
     private String[]                                                         recordTimestampFields;
     private String[]                                                         syntheticPrimaryKeys;
@@ -539,6 +547,86 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public final boolean getIncludeTables() {
+        return includeTables;
+    }
+
+    @Override
+    public final void setIncludeTables(boolean includeTables) {
+        this.includeTables = includeTables;
+    }
+
+    @Override
+    public final boolean getIncludeRoutines() {
+        return includeRoutines;
+    }
+
+    @Override
+    public final void setIncludeRoutines(boolean includeRoutines) {
+        this.includeRoutines = includeRoutines;
+    }
+
+    @Override
+    public final boolean getIncludePackages() {
+        return includePackages;
+    }
+
+    @Override
+    public final void setIncludePackages(boolean includePackages) {
+        this.includePackages = includePackages;
+    }
+
+    @Override
+    public final boolean getIncludeUDTs() {
+        return includeUDTs;
+    }
+
+    @Override
+    public final void setIncludeUDTs(boolean includeUDTs) {
+        this.includeUDTs = includeUDTs;
+    }
+
+    @Override
+    public final boolean getIncludeSequences() {
+        return includeSequences;
+    }
+
+    @Override
+    public final void setIncludeSequences(boolean includeSequences) {
+        this.includeSequences = includeSequences;
+    }
+
+    @Override
+    public final boolean getIncludePrimaryKeys() {
+        return includePrimaryKeys;
+    }
+
+    @Override
+    public final void setIncludePrimaryKeys(boolean includePrimaryKeys) {
+        this.includePrimaryKeys = includePrimaryKeys;
+    }
+
+    @Override
+    public final boolean getIncludeUniqueKeys() {
+        return includeUniqueKeys;
+    }
+
+    @Override
+    public final void setIncludeUniqueKeys(boolean includeUniqueKeys) {
+        this.includeUniqueKeys = includeUniqueKeys;
+    }
+
+    @Override
+    public final boolean getIncludeForeignKeys() {
+        return includeForeignKeys;
+    }
+
+    @Override
+    public final void setIncludeForeignKeys(boolean includeForeignKeys) {
+        this.includeForeignKeys = includeForeignKeys;
+    }
+
+    @Override
     public final void setRegexFlags(List<RegexFlag> regexFlags) {
         this.regexFlags = regexFlags;
     }
@@ -785,19 +873,23 @@ public abstract class AbstractDatabase implements Database {
         if (sequences == null) {
             sequences = new ArrayList<SequenceDefinition>();
 
-            try {
-                List<SequenceDefinition> s = getSequences0();
+            if (getIncludeSequences()) {
+                try {
+                    List<SequenceDefinition> s = getSequences0();
 
-                sequences = filterExcludeInclude(s);
-                log.info("Sequences fetched", fetchedSize(s, sequences));
-            } catch (Exception e) {
-                log.error("Error while fetching sequences", e);
+                    sequences = filterExcludeInclude(s);
+                    log.info("Sequences fetched", fetchedSize(s, sequences));
+                }
+                catch (Exception e) {
+                    log.error("Error while fetching sequences", e);
+                }
             }
+            else
+                log.info("Sequences excluded");
         }
 
-        if (sequencesBySchema == null) {
+        if (sequencesBySchema == null)
             sequencesBySchema = new LinkedHashMap<SchemaDefinition, List<SequenceDefinition>>();
-        }
 
         return filterSchema(sequences, schema, sequencesBySchema);
     }
@@ -811,16 +903,14 @@ public abstract class AbstractDatabase implements Database {
                 for (TableDefinition table : getTables(s)) {
                     IdentityDefinition identity = table.getIdentity();
 
-                    if (identity != null) {
+                    if (identity != null)
                         identities.add(identity);
-                    }
                 }
             }
         }
 
-        if (identitiesBySchema == null) {
+        if (identitiesBySchema == null)
             identitiesBySchema = new LinkedHashMap<SchemaDefinition, List<IdentityDefinition>>();
-        }
 
         return filterSchema(identities, schema, identitiesBySchema);
     }
@@ -832,18 +922,15 @@ public abstract class AbstractDatabase implements Database {
         if (uniqueKeys == null) {
             uniqueKeys = new ArrayList<UniqueKeyDefinition>();
 
-            for (SchemaDefinition s : getSchemata()) {
-                for (TableDefinition table : getTables(s)) {
-                    for (UniqueKeyDefinition uniqueKey : table.getUniqueKeys()) {
-                        uniqueKeys.add(uniqueKey);
-                    }
-                }
-            }
+            if (getIncludeUniqueKeys())
+                for (SchemaDefinition s : getSchemata())
+                    for (TableDefinition table : getTables(s))
+                        for (UniqueKeyDefinition uniqueKey : table.getUniqueKeys())
+                            uniqueKeys.add(uniqueKey);
         }
 
-        if (uniqueKeysBySchema == null) {
+        if (uniqueKeysBySchema == null)
             uniqueKeysBySchema = new LinkedHashMap<SchemaDefinition, List<UniqueKeyDefinition>>();
-        }
 
         return filterSchema(uniqueKeys, schema, uniqueKeysBySchema);
     }
@@ -853,18 +940,15 @@ public abstract class AbstractDatabase implements Database {
         if (foreignKeys == null) {
             foreignKeys = new ArrayList<ForeignKeyDefinition>();
 
-            for (SchemaDefinition s : getSchemata()) {
-                for (TableDefinition table : getTables(s)) {
-                    for (ForeignKeyDefinition foreignKey : table.getForeignKeys()) {
-                        foreignKeys.add(foreignKey);
-                    }
-                }
-            }
+            if (getIncludeForeignKeys())
+                for (SchemaDefinition s : getSchemata())
+                    for (TableDefinition table : getTables(s))
+                        for (ForeignKeyDefinition foreignKey : table.getForeignKeys())
+                            foreignKeys.add(foreignKey);
         }
 
-        if (foreignKeysBySchema == null) {
+        if (foreignKeysBySchema == null)
             foreignKeysBySchema = new LinkedHashMap<SchemaDefinition, List<ForeignKeyDefinition>>();
-        }
 
         return filterSchema(foreignKeys, schema, foreignKeysBySchema);
     }
@@ -874,18 +958,14 @@ public abstract class AbstractDatabase implements Database {
         if (checkConstraints == null) {
             checkConstraints = new ArrayList<CheckConstraintDefinition>();
 
-            for (SchemaDefinition s : getSchemata()) {
-                for (TableDefinition table : getTables(s)) {
-                    for (CheckConstraintDefinition checkConstraint : table.getCheckConstraints()) {
+            for (SchemaDefinition s : getSchemata())
+                for (TableDefinition table : getTables(s))
+                    for (CheckConstraintDefinition checkConstraint : table.getCheckConstraints())
                         checkConstraints.add(checkConstraint);
-                    }
-                }
-            }
         }
 
-        if (checkConstraintsBySchema == null) {
+        if (checkConstraintsBySchema == null)
             checkConstraintsBySchema = new LinkedHashMap<SchemaDefinition, List<CheckConstraintDefinition>>();
-        }
 
         return filterSchema(checkConstraints, schema, checkConstraintsBySchema);
     }
@@ -895,19 +975,23 @@ public abstract class AbstractDatabase implements Database {
         if (tables == null) {
             tables = new ArrayList<TableDefinition>();
 
-            try {
-                List<TableDefinition> t = getTables0();
+            if (getIncludeTables()) {
+                try {
+                    List<TableDefinition> t = getTables0();
 
-                tables = filterExcludeInclude(t);
-                log.info("Tables fetched", fetchedSize(t, tables));
-            } catch (Exception e) {
-                log.error("Error while fetching tables", e);
+                    tables = filterExcludeInclude(t);
+                    log.info("Tables fetched", fetchedSize(t, tables));
+                }
+                catch (Exception e) {
+                    log.error("Error while fetching tables", e);
+                }
             }
+            else
+                log.info("Tables excluded");
         }
 
-        if (tablesBySchema == null) {
+        if (tablesBySchema == null)
             tablesBySchema = new LinkedHashMap<SchemaDefinition, List<TableDefinition>>();
-        }
 
         return filterSchema(tables, schema, tablesBySchema);
     }
@@ -934,14 +1018,14 @@ public abstract class AbstractDatabase implements Database {
                 enums.addAll(getConfiguredEnums());
 
                 log.info("Enums fetched", fetchedSize(e, enums));
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 log.error("Error while fetching enums", e);
             }
         }
 
-        if (enumsBySchema == null) {
+        if (enumsBySchema == null)
             enumsBySchema = new LinkedHashMap<SchemaDefinition, List<EnumDefinition>>();
-        }
 
         return filterSchema(enums, schema, enumsBySchema);
     }
@@ -1034,7 +1118,8 @@ public abstract class AbstractDatabase implements Database {
 
                 domains = filterExcludeInclude(e);
                 log.info("Domains fetched", fetchedSize(e, domains));
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 log.error("Error while fetching domains", e);
             }
         }
@@ -1057,19 +1142,23 @@ public abstract class AbstractDatabase implements Database {
         if (arrays == null) {
             arrays = new ArrayList<ArrayDefinition>();
 
-            try {
-                List<ArrayDefinition> a = getArrays0();
+            if (getIncludeUDTs()) {
+                try {
+                    List<ArrayDefinition> a = getArrays0();
 
-                arrays = filterExcludeInclude(a);
-                log.info("ARRAYs fetched", fetchedSize(a, arrays));
-            } catch (Exception e) {
-                log.error("Error while fetching ARRAYS", e);
+                    arrays = filterExcludeInclude(a);
+                    log.info("ARRAYs fetched", fetchedSize(a, arrays));
+                }
+                catch (Exception e) {
+                    log.error("Error while fetching ARRAYS", e);
+                }
             }
+            else
+                log.info("ARRAYs excluded");
         }
 
-        if (arraysBySchema == null) {
+        if (arraysBySchema == null)
             arraysBySchema = new LinkedHashMap<SchemaDefinition, List<ArrayDefinition>>();
-        }
 
         return filterSchema(arrays, schema, arraysBySchema);
     }
@@ -1089,19 +1178,23 @@ public abstract class AbstractDatabase implements Database {
         if (udts == null) {
             udts = new ArrayList<UDTDefinition>();
 
-            try {
-                List<UDTDefinition> u = getUDTs0();
+            if (getIncludeUDTs()) {
+                try {
+                    List<UDTDefinition> u = getUDTs0();
 
-                udts = filterExcludeInclude(u);
-                log.info("UDTs fetched", fetchedSize(u, udts));
-            } catch (Exception e) {
-                log.error("Error while fetching udts", e);
+                    udts = filterExcludeInclude(u);
+                    log.info("UDTs fetched", fetchedSize(u, udts));
+                }
+                catch (Exception e) {
+                    log.error("Error while fetching udts", e);
+                }
             }
+            else
+                log.info("UDTs excluded");
         }
 
-        if (udtsBySchema == null) {
+        if (udtsBySchema == null)
             udtsBySchema = new LinkedHashMap<SchemaDefinition, List<UDTDefinition>>();
-        }
 
         return filterSchema(udts, schema, udtsBySchema);
     }
@@ -1141,19 +1234,23 @@ public abstract class AbstractDatabase implements Database {
         if (routines == null) {
             routines = new ArrayList<RoutineDefinition>();
 
-            try {
-                List<RoutineDefinition> r = getRoutines0();
+            if (getIncludeRoutines()) {
+                try {
+                    List<RoutineDefinition> r = getRoutines0();
 
-                routines = filterExcludeInclude(r);
-                log.info("Routines fetched", fetchedSize(r, routines));
-            } catch (Exception e) {
-                log.error("Error while fetching functions", e);
+                    routines = filterExcludeInclude(r);
+                    log.info("Routines fetched", fetchedSize(r, routines));
+                }
+                catch (Exception e) {
+                    log.error("Error while fetching functions", e);
+                }
             }
+            else
+                log.info("Routines excluded");
         }
 
-        if (routinesBySchema == null) {
+        if (routinesBySchema == null)
             routinesBySchema = new LinkedHashMap<SchemaDefinition, List<RoutineDefinition>>();
-        }
 
         return filterSchema(routines, schema, routinesBySchema);
     }
@@ -1163,19 +1260,23 @@ public abstract class AbstractDatabase implements Database {
         if (packages == null) {
             packages = new ArrayList<PackageDefinition>();
 
-            try {
-                List<PackageDefinition> p = getPackages0();
+            if (getIncludePackages()) {
+                try {
+                    List<PackageDefinition> p = getPackages0();
 
-                packages = filterExcludeInclude(p);
-                log.info("Packages fetched", fetchedSize(p, packages));
-            } catch (Exception e) {
-                log.error("Error while fetching packages", e);
+                    packages = filterExcludeInclude(p);
+                    log.info("Packages fetched", fetchedSize(p, packages));
+                }
+                catch (Exception e) {
+                    log.error("Error while fetching packages", e);
+                }
             }
+            else
+                log.info("Packages excluded");
         }
 
-        if (packagesBySchema == null) {
+        if (packagesBySchema == null)
             packagesBySchema = new LinkedHashMap<SchemaDefinition, List<PackageDefinition>>();
-        }
 
         return filterSchema(packages, schema, packagesBySchema);
     }

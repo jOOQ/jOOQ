@@ -395,6 +395,15 @@
         -->
       <element name="includeExcludeColumns" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
 
+      <element name="includeTables" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      <element name="includeRoutines" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      <element name="includePackages" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      <element name="includeUDTs" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      <element name="includeSequences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      <element name="includePrimaryKeys" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      <element name="includeUniqueKeys" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+      <element name="includeForeignKeys" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+
       <!--
         All table and view columns that are used as "version" fields for
         optimistic locking (A Java regular expression. Use the pipe to separate several expressions).

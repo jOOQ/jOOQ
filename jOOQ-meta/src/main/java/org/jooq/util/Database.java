@@ -268,6 +268,86 @@ public interface Database {
     boolean getIncludeExcludeColumns();
 
     /**
+     * whether foreign key relationships should be included.
+     */
+    void setIncludeForeignKeys(boolean includeForeignKeys);
+
+    /**
+     * whether foreign key relationships should be included.
+     */
+    boolean getIncludeForeignKeys();
+
+    /**
+     * whether unique keys should be included.
+     */
+    void setIncludeUniqueKeys(boolean includeUniqueKeys);
+
+    /**
+     * whether unique keys should be included.
+     */
+    boolean getIncludeUniqueKeys();
+
+    /**
+     * whether primary keys should be included.
+     */
+    void setIncludePrimaryKeys(boolean includePrimaryKeys);
+
+    /**
+     * whether primary keys should be included.
+     */
+    boolean getIncludePrimaryKeys();
+
+    /**
+     * whether sequences should be included.
+     */
+    void setIncludeSequences(boolean includeSequences);
+
+    /**
+     * whether sequences should be included.
+     */
+    boolean getIncludeSequences();
+
+    /**
+     * whether user defined types should be included.
+     */
+    void setIncludeUDTs(boolean includeUDTs);
+
+    /**
+     * whether user defined types should be included.
+     */
+    boolean getIncludeUDTs();
+
+    /**
+     * whether packages should be included.
+     */
+    void setIncludePackages(boolean includePackages);
+
+    /**
+     * whether packages should be included.
+     */
+    boolean getIncludePackages();
+
+    /**
+     * whether routines should be included.
+     */
+    void setIncludeRoutines(boolean includeRoutines);
+
+    /**
+     * whether routines should be included.
+     */
+    boolean getIncludeRoutines();
+
+    /**
+     * Whether tables (and views) should be included.
+     */
+    void setIncludeTables(boolean includeTables);
+
+    /**
+     * Whether tables (and views) should be included.
+     */
+    boolean getIncludeTables();
+
+    /**
      * [#3488] Add an additional filter to the database that is applied in
      * addition to include / exclude.
      */

@@ -40,6 +40,7 @@
  */
 package org.jooq.util;
 
+import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.StringUtils.defaultString;
@@ -336,6 +337,14 @@ public class GenerationTool {
             database.setIncludes(new String[] { defaultString(d.getIncludes()) });
             database.setExcludes(new String[] { defaultString(d.getExcludes()) });
             database.setIncludeExcludeColumns(TRUE.equals(d.isIncludeExcludeColumns()));
+            database.setIncludeForeignKeys(!FALSE.equals(d.isIncludeForeignKeys()));
+            database.setIncludePackages(!FALSE.equals(d.isIncludePackages()));
+            database.setIncludePrimaryKeys(!FALSE.equals(d.isIncludePrimaryKeys()));
+            database.setIncludeRoutines(!FALSE.equals(d.isIncludeRoutines()));
+            database.setIncludeSequences(!FALSE.equals(d.isIncludeSequences()));
+            database.setIncludeTables(!FALSE.equals(d.isIncludeTables()));
+            database.setIncludeUDTs(!FALSE.equals(d.isIncludeUDTs()));
+            database.setIncludeUniqueKeys(!FALSE.equals(d.isIncludeUniqueKeys()));
             database.setRecordVersionFields(new String[] { defaultString(d.getRecordVersionFields()) });
             database.setRecordTimestampFields(new String[] { defaultString(d.getRecordTimestampFields()) });
             database.setSyntheticPrimaryKeys(new String[] { defaultString(d.getSyntheticPrimaryKeys()) });

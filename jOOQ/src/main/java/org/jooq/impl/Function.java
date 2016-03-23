@@ -198,6 +198,8 @@ class Function<T> extends AbstractField<T> implements
     public /* final */ void accept(Context<?> ctx) {
         if (term == ARRAY_AGG && asList(HSQLDB, POSTGRES).contains(ctx.family())) {
             toSQLGroupConcat(ctx);
+            toSQLFilterClause(ctx);
+            toSQLOverClause(ctx);
         }
         else if (term == LIST_AGG && asList(CUBRID, H2, HSQLDB, MARIADB, MYSQL).contains(ctx.family())) {
             toSQLGroupConcat(ctx);

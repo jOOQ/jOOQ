@@ -726,14 +726,11 @@ final class Tools {
 
         DataType<?>[] result = new DataType<?>[types.length];
 
-        for (int i = 0; i < types.length; i++) {
-            if (types[i] != null) {
+        for (int i = 0; i < types.length; i++)
+            if (types[i] != null)
                 result[i] = getDataType(types[i]);
-            }
-            else {
+            else
                 result[i] = getDataType(Object.class);
-            }
-        }
 
         return result;
     }
@@ -759,6 +756,9 @@ final class Tools {
     }
 
     static final String[] fieldNames(Field<?>[] fields) {
+        if (fields == null)
+            return null;
+
         String[] result = new String[fields.length];
 
         for (int i = 0; i < fields.length; i++)
@@ -778,6 +778,9 @@ final class Tools {
     }
 
     static final Field<?>[] aliasedFields(Field<?>[] fields, String[] aliases) {
+        if (fields == null)
+            return null;
+
         Field<?>[] result = new Field[fields.length];
 
         for (int i = 0; i < fields.length; i++)
@@ -791,18 +794,25 @@ final class Tools {
     }
 
     static final Field<?>[] fieldsByName(String tableName, String[] fieldNames) {
+        if (fieldNames == null)
+            return null;
+
         Field<?>[] result = new Field[fieldNames.length];
 
-        for (int i = 0; i < fieldNames.length; i++)
-            if (tableName == null)
+        if (tableName == null)
+            for (int i = 0; i < fieldNames.length; i++)
                 result[i] = DSL.field(name(fieldNames[i]));
-            else
+        else
+            for (int i = 0; i < fieldNames.length; i++)
                 result[i] = DSL.field(name(tableName, fieldNames[i]));
 
         return result;
     }
 
     static final Field<?>[] fieldsByName(Name[] names) {
+        if (names == null)
+            return null;
+
         Field<?>[] result = new Field[names.length];
 
         for (int i = 0; i < names.length; i++)
@@ -812,6 +822,9 @@ final class Tools {
     }
 
     static final Name[] names(String[] names) {
+        if (names == null)
+            return null;
+
         Name[] result = new Name[names.length];
 
         for (int i = 0; i < names.length; i++)

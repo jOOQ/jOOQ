@@ -87,4 +87,9 @@ class DefaultBindingSQLContext<U> extends AbstractScope implements BindingSQLCon
     public <T> BindingSQLContext<T> convert(Converter<T, U> converter) {
         return new DefaultBindingSQLContext<T>(configuration, data, render, converter.to(value), variable);
     }
+
+    @Override
+    public String toString() {
+        return "DefaultBindingSQLContext [value=" + value + ", variable=" + variable + "]";
+    }
 }

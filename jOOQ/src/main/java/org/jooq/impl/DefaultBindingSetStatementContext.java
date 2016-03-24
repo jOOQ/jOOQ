@@ -83,4 +83,9 @@ class DefaultBindingSetStatementContext<U> extends AbstractScope implements Bind
     public final <T> BindingSetStatementContext<T> convert(Converter<T, U> converter) {
         return new DefaultBindingSetStatementContext<T>(configuration, data, statement, index, converter.to(value));
     }
+
+    @Override
+    public String toString() {
+        return "DefaultBindingSetStatementContext [index=" + index + ", value=" + value + "]";
+    }
 }

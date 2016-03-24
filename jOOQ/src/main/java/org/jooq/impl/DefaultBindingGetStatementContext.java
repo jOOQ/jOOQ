@@ -91,4 +91,9 @@ class DefaultBindingGetStatementContext<U> extends AbstractScope implements Bind
             }
         };
     }
+
+    @Override
+    public String toString() {
+        return "DefaultBindingGetStatementContext [index=" + index + ", value=" + value + "]";
+    }
 }

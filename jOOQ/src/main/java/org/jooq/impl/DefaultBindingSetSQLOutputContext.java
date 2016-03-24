@@ -76,4 +76,9 @@ class DefaultBindingSetSQLOutputContext<U> extends AbstractScope implements Bind
     public final <T> BindingSetSQLOutputContext<T> convert(Converter<T, U> converter) {
         return new DefaultBindingSetSQLOutputContext<T>(configuration, data, output, converter.to(value));
     }
+
+    @Override
+    public String toString() {
+        return "DefaultBindingSetSQLOutputContext [value=" + value + "]";
+    }
 }

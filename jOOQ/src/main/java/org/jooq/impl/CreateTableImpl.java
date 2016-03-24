@@ -253,6 +253,9 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
                    .sql(' ');
                 Tools.toSQLDDLTypeDeclaration(ctx, type);
 
+                if (asList().contains(ctx.family()))
+                    acceptDefault(ctx, type);
+
                 if (type.nullable()) {
 
                     // [#4321] Not all dialects support explicit NULL type declarations
@@ -263,8 +266,8 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
                     ctx.sql(' ').keyword("not null");
                 }
 
-                if (type.defaulted())
-                    ctx.sql(' ').keyword("default").sql(' ').visit(type.defaultValue());
+                if (!asList().contains(ctx.family()))
+                    acceptDefault(ctx, type);
 
                 if (i < columnFields.size() - 1)
                     ctx.sql(',').formatSeparator();
@@ -288,6 +291,11 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
             toSQLOnCommit(ctx);
             ctx.end(CREATE_TABLE);
         }
+    }
+
+    private void acceptDefault(Context<?> ctx, DataType<?> type) {
+        if (type.defaulted())
+            ctx.sql(' ').keyword("default").sql(' ').visit(type.defaultValue());
     }
 
     private final void acceptCreateTableAsSelect(Context<?> ctx) {

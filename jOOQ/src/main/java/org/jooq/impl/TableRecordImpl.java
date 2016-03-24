@@ -184,17 +184,15 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
             // [#1596] If insert was successful, update timestamp and/or version columns
             setRecordVersionAndTimestamp(version, timestamp);
 
-            // [#1859] If an insert was successful try fetching the generated
-            //         values. In some databases, this cannot be done via getGeneratedKeys()
-            if (asList(DERBY, H2, MARIADB, MYSQL).contains(configuration().family()) && this instanceof UpdatableRecord) {
-                ((UpdatableRecord<?>) this).refresh();
-            }
-            else {
-                getReturningIfNeeded(insert, key);
+            // [#1859] If an insert was successful try fetching the generated values.
+            getReturningIfNeeded(insert, key);
 
+            // In some databases, not all fields can be fetched via getGeneratedKeys()
+            if (asList(DERBY, H2, MARIADB, MYSQL).contains(configuration().family()) && this instanceof UpdatableRecord)
+                ((UpdatableRecord<?>) this).refresh();
+            else
                 for (Field<?> storeField : storeFields)
                     changed(storeField, false);
-            }
 
             fetched = true;
         }

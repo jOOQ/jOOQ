@@ -40,7 +40,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
@@ -393,29 +392,23 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     @SuppressWarnings("deprecation")
     @Override
     protected final void visit0(QueryPartInternal internal) {
-        collectBindVariable(internal);
+        int before = bindValues.size();
         internal.accept(this);
-    }
-
-    private final void collectBindVariable(QueryPart part) throws ForceInlineSignal {
-        if (paramType == INLINED)
-            return;
+        int after = bindValues.size();
 
         // [#4650] In PostgreSQL, UDTConstants are always inlined as ROW(?, ?)
-        //         as the PostgreSQL JDBC driver doesn't support SQLData
-        if (part instanceof Param && (!(part instanceof UDTConstant) || family() != POSTGRES)) {
-            Param<?> param = (Param<?>) part;
-            if (param.isInline())
-                return;
+        //         as the PostgreSQL JDBC driver doesn't support SQLData. This
+        //         means that the above internal.accept(this) call has already
+        //         collected the bind variable. The same is true if custom data
+        //         type bindings use Context.visit(Param), in case of which we
+        //         must not collect the current Param
+        if (after == before && paramType != INLINED && internal instanceof Param) {
+            Param<?> param = (Param<?>) internal;
 
-            bindValues.add(param);
-            switch (configuration().family()) {
+            if (!param.isInline()) {
+                bindValues.add(param);
 
-
-
-
-
-
+                switch (family()) {
 
 
 
@@ -431,12 +424,19 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
 
 
-                case SQLITE:
-                    checkForceInline(999);
-                    return;
 
-                default:
-                    return;
+
+
+
+
+
+                    case SQLITE:
+                        checkForceInline(999);
+                        break;
+
+                    default:
+                        break;
+                }
             }
         }
     }

@@ -42,6 +42,7 @@ package org.jooq;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Collection;
 
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
@@ -240,6 +241,20 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
     int store(Field<?>... fields) throws DataAccessException, DataChangedException;
 
     /**
+     * Store parts of this record to the database.
+     *
+     * @return <code>1</code> if the record was stored to the database. <code>0
+     *         </code> if storing was not necessary.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws DataChangedException If optimistic locking is enabled and the
+     *             record has already been changed/deleted in the database
+     * @see #store()
+     * @see #insert(Field...)
+     * @see #update(Field...)
+     */
+    int store(Collection<? extends Field<?>> fields) throws DataAccessException, DataChangedException;
+
+    /**
      * Store this record back to the database using an <code>INSERT</code>
      * statement.
      * <p>
@@ -272,6 +287,18 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      */
     @Override
     int insert(Field<?>... fields) throws DataAccessException;
+
+    /**
+     * Store parts of this record to the database using an <code>INSERT</code>
+     * statement.
+     *
+     * @return <code>1</code> if the record was stored to the database. <code>0
+     *         </code> if storing was not necessary.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see #insert()
+     */
+    @Override
+    int insert(Collection<? extends Field<?>> fields) throws DataAccessException;
 
     /**
      * Store this record back to the database using an <code>UPDATE</code>
@@ -308,6 +335,19 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @see #update()
      */
     int update(Field<?>... fields) throws DataAccessException, DataChangedException;
+
+    /**
+     * Store parts of this record to the database using an <code>UPDATE</code>
+     * statement.
+     *
+     * @return <code>1</code> if the record was stored to the database. <code>0
+     *         </code> if storing was not necessary.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws DataChangedException If optimistic locking is enabled and the
+     *             record has already been changed/deleted in the database
+     * @see #update()
+     */
+    int update(Collection<? extends Field<?>> fields) throws DataAccessException, DataChangedException;
 
     /**
      * Deletes this record from the database, based on the value of the primary
@@ -419,6 +459,33 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      *             database
      */
     void refresh(Field<?>... fields) throws DataAccessException, NoDataFoundException;
+
+    /**
+     * Refresh parts of this record from the database.
+     * <p>
+     * A successful refresh results in the following:
+     * <ul>
+     * <li>{@link #valuesRow()} will have been restored to the respective values
+     * from the database</li>
+     * <li>{@link #original()} will match this record</li>
+     * <li>{@link #changed()} will be <code>false</code></li>
+     * </ul>
+     * <p>
+     * Refreshing can trigger any of the following actions:
+     * <ul>
+     * <li>Executing a new <code>SELECT</code> statement, if this is an
+     * {@link UpdatableRecord}.</li>
+     * <li>Failing, otherwise</li>
+     * </ul>
+     * <p>
+     * This is the same as calling <code>record.refresh(record.fields())</code>
+     *
+     * @throws DataAccessException This exception is thrown if something went
+     *             wrong executing the refresh <code>SELECT</code> statement
+     * @throws NoDataFoundException If the record does not exist anymore in the
+     *             database
+     */
+    void refresh(Collection<? extends Field<?>> fields) throws DataAccessException, NoDataFoundException;
 
     /**
      * Duplicate this record (in memory) and reset all fields from the primary

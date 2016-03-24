@@ -70,7 +70,6 @@ import org.jooq.TableRecord;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdateQuery;
-import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataChangedException;
 import org.jooq.exception.NoDataFoundException;
 import org.jooq.tools.JooqLogger;
@@ -125,7 +124,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     }
 
     @Override
-    public final int store(final Field<?>... storeFields) throws DataAccessException, DataChangedException {
+    public final int store(final Field<?>... storeFields) {
         final int[] result = new int[1];
 
         delegate(configuration(), (Record) this, STORE)
@@ -142,13 +141,23 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     }
 
     @Override
+    public final int store(Collection<? extends Field<?>> storeFields) {
+        return store(storeFields.toArray(new Field[0]));
+    }
+
+    @Override
     public final int update() {
         return update(fields.fields.fields);
     }
 
     @Override
-    public int update(Field<?>... storeFields) throws DataAccessException, DataChangedException {
+    public int update(Field<?>... storeFields) {
         return storeUpdate(storeFields, getPrimaryKey().getFieldsArray());
+    }
+
+    @Override
+    public final int update(Collection<? extends Field<?>> storeFields) {
+        return update(storeFields.toArray(new Field[0]));
     }
 
     private final int store0(Field<?>[] storeFields) {
@@ -332,6 +341,11 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         else {
             throw new NoDataFoundException("Exactly one row expected for refresh. Record does not exist in database.");
         }
+    }
+
+    @Override
+    public final void refresh(Collection<? extends Field<?>> refreshFields) {
+        refresh(refreshFields.toArray(new Field[0]));
     }
 
     @Override

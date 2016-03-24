@@ -72,6 +72,7 @@ import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
+import org.jooq.exception.DataAccessException;
 import org.jooq.tools.JooqLogger;
 
 /**
@@ -138,6 +139,11 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
     @Override
     public final int insert(Field<?>... storeFields) {
         return storeInsert(storeFields);
+    }
+
+    @Override
+    public final int insert(Collection<? extends Field<?>> storeFields) {
+        return insert(storeFields.toArray(new Field[0]));
     }
 
     final int storeInsert(final Field<?>[] storeFields) {

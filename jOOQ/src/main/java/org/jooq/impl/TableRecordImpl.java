@@ -180,19 +180,14 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         int result = insert.execute();
 
         if (result > 0) {
+            for (Field<?> storeField : storeFields)
+                changed(storeField, false);
 
             // [#1596] If insert was successful, update timestamp and/or version columns
             setRecordVersionAndTimestamp(version, timestamp);
 
             // [#1859] If an insert was successful try fetching the generated values.
             getReturningIfNeeded(insert, key);
-
-            // In some databases, not all fields can be fetched via getGeneratedKeys()
-            if (asList(DERBY, H2, MARIADB, MYSQL).contains(configuration().family()) && this instanceof UpdatableRecord)
-                ((UpdatableRecord<?>) this).refresh();
-            else
-                for (Field<?> storeField : storeFields)
-                    changed(storeField, false);
 
             fetched = true;
         }
@@ -213,23 +208,29 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
                     originals[index] = value;
                 }
             }
+
+            // [#1859] In some databases, not all fields can be fetched via getGeneratedKeys()
+            if (asList(DERBY, H2, MARIADB, MYSQL).contains(configuration().family()) && this instanceof UpdatableRecord)
+                ((UpdatableRecord<?>) this).refresh(key.toArray(new Field[0]));
         }
     }
 
     final Collection<Field<?>> setReturningIfNeeded(StoreQuery<R> query) {
         Collection<Field<?>> key = null;
 
-        if (!TRUE.equals(configuration().data(DATA_OMIT_RETURNING_CLAUSE))) {
+        if (configuration() != null) {
+            if (!TRUE.equals(configuration().data(DATA_OMIT_RETURNING_CLAUSE))) {
 
-            // [#1859] Return also non-key columns
-            if (TRUE.equals(configuration().settings().isReturnAllOnUpdatableRecord()))
-                key = Arrays.asList(fields());
-            else
-                key = getReturning();
+                // [#1859] Return also non-key columns
+                if (TRUE.equals(configuration().settings().isReturnAllOnUpdatableRecord()))
+                    key = Arrays.asList(fields());
+                else
+                    key = getReturning();
 
-            // [#1859] Not all databases support RETURNING clauses on UPDATE
-            if (query instanceof InsertQuery || !asList().contains(configuration().family()))
-                query.setReturning(key);
+                // [#1859] Not all databases support RETURNING clauses on UPDATE
+                if (query instanceof InsertQuery || !asList().contains(configuration().family()))
+                    query.setReturning(key);
+            }
         }
 
         return key;

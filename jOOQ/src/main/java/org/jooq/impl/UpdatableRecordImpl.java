@@ -43,14 +43,7 @@ package org.jooq.impl;
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 // ...
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.MYSQL;
-// ...
 import static org.jooq.SQLDialect.SQLITE;
-// ...
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.impl.RecordDelegate.delegate;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.DELETE;
@@ -251,18 +244,11 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         checkIfChanged(result, version, timestamp);
 
         if (result > 0) {
+            for (Field<?> storeField : storeFields)
+                changed(storeField, false);
 
             // [#1859] If an update was successful try fetching the generated
-            //         values. In some databases, this cannot be done via getGeneratedKeys()
-            if (asList(DERBY, H2, HSQLDB, MARIADB, MYSQL).contains(configuration().family())) {
-                refresh();
-            }
-            else {
-                getReturningIfNeeded(update, key);
-
-                for (Field<?> storeField : storeFields)
-                    changed(storeField, false);
-            }
+            getReturningIfNeeded(update, key);
         }
 
         return result;

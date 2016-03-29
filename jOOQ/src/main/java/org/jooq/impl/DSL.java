@@ -8327,7 +8327,10 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> field(Select<? extends Record1<T>> select) {
-        return select.<T>asField();
+        if (select == null)
+            return (Field) NULL();
+        else
+            return select.<T>asField();
     }
 
     /**

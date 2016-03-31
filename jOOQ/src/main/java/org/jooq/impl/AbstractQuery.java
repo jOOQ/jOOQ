@@ -541,7 +541,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
      */
     @Override
     public final String getSQL() {
-        return getSQL(getParamType(configuration().settings()));
+        return getSQL(getParamType(Tools.settings(configuration())));
     }
 
     /**

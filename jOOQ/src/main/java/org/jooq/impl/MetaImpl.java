@@ -81,7 +81,8 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
-import static java.util.Collections.unmodifiableList;
+import static java.util.Collections.emptyList;
+import static java.util.Collections.singletonList;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -493,7 +494,8 @@ final class MetaImpl implements Meta, Serializable {
 
         @Override
         public final List<UniqueKey<Record>> getKeys() {
-            return unmodifiableList(asList(getPrimaryKey()));
+            UniqueKey<Record> pk = getPrimaryKey();
+            return pk == null ? emptyList() : singletonList(pk);
         }
 
         @Override

@@ -1486,7 +1486,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return null;
 
         // [#4338] PostgreSQL is more lenient regarding the offset format
-        if (string.lastIndexOf('+') == string.length() - 3)
+        if (string.lastIndexOf('+') == string.length() - 3 || string.lastIndexOf('-') == string.length() - 3)
             string = string + ":00";
 
         return OffsetTime.parse(string);
@@ -1497,7 +1497,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return null;
 
         // [#4338] PostgreSQL is more lenient regarding the offset format
-        if (string.lastIndexOf('+') == string.length() - 3)
+        if (string.lastIndexOf('+') == string.length() - 3 || string.lastIndexOf('-') == string.length() - 3)
             string = string + ":00";
 
         // [#4338] SQL supports the alternative ISO 8601 date format, where a

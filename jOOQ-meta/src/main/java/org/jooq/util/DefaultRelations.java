@@ -160,7 +160,7 @@ public class DefaultRelations implements Relations {
         // [#1134] Prevent NPE's when a foreign key references a unique key
         // from another schema
         if (uniqueKeySchema == null) {
-            log.warn("Ignoring foreign key", foreignKeyName + " (" + foreignKeyColumn + ") referencing " + uniqueKeyName + " references a schema out of scope for jooq-meta: " + uniqueKeySchema);
+            log.info("Ignoring foreign key", foreignKeyName + " (" + foreignKeyColumn + ") referencing " + uniqueKeyName + " references a schema out of scope for jooq-meta: " + uniqueKeySchema);
             return;
         }
 

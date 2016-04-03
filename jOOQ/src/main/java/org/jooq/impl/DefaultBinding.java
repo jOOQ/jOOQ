@@ -1485,7 +1485,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         if (string == null)
             return null;
 
-        // [#4338] PostgreSQL is more lenient regarding the offset format
+        // [#4338] [#5180] PostgreSQL is more lenient regarding the offset format
         if (string.lastIndexOf('+') == string.length() - 3 || string.lastIndexOf('-') == string.length() - 3)
             string = string + ":00";
 
@@ -1496,7 +1496,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         if (string == null)
             return null;
 
-        // [#4338] PostgreSQL is more lenient regarding the offset format
+        // [#4338] [#5180] PostgreSQL is more lenient regarding the offset format
         if (string.lastIndexOf('+') == string.length() - 3 || string.lastIndexOf('-') == string.length() - 3)
             string = string + ":00";
 

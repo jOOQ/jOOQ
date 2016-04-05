@@ -140,7 +140,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         throw new UnsupportedOperationException();
     }
 
-    final QueryPart bindValues() {
+    final QueryPartList<Param<?>> bindValues() {
         return bindValues;
     }
 

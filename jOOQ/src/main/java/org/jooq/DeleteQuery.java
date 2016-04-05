@@ -43,6 +43,7 @@ package org.jooq;
 
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 
 import java.util.Collection;

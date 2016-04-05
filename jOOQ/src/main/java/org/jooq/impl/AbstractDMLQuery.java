@@ -45,6 +45,7 @@ import static java.util.Arrays.asList;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.conf.RenderNameStyle.LOWER;
 import static org.jooq.conf.RenderNameStyle.UPPER;
 import static org.jooq.impl.DSL.select;
@@ -52,6 +53,7 @@ import static org.jooq.impl.Tools.fieldArray;
 import static org.jooq.impl.Tools.unqualify;
 import static org.jooq.util.sqlite.SQLiteDSL.rowid;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -64,6 +66,7 @@ import java.util.List;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DSLContext;
+import org.jooq.DeleteQuery;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
@@ -72,6 +75,7 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
+import org.jooq.UpdateQuery;
 import org.jooq.conf.RenderNameStyle;
 import org.jooq.impl.Tools.DataKey;
 import org.jooq.tools.jdbc.JDBCUtils;
@@ -155,10 +159,38 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         {
             accept0(ctx);
         }
     }
+
+
+
+
+
+
 
     abstract void accept0(Context<?> ctx);
 
@@ -251,6 +283,15 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
 
 
 
+
+
+
+
+
+
+
+
+
                 case HSQLDB:
                 default: {
                     List<String> names = new ArrayList<String>();
@@ -278,6 +319,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
         }
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     protected final int execute(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
         if (returning.isEmpty()) {
@@ -357,11 +399,9 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
 
                         // Some JDBC drivers seem to illegally return null
                         // from getGeneratedKeys() sometimes
-                        if (rs != null) {
-                            while (rs.next()) {
+                        if (rs != null)
+                            while (rs.next())
                                 list.add(rs.getObject(1));
-                            }
-                        }
 
                         selectReturning(ctx.configuration(), list.toArray());
                         return result;
@@ -388,6 +428,35 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                 }
 
                 // These dialects have full JDBC support
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

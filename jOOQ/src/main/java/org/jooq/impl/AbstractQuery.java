@@ -71,7 +71,6 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Param;
 import org.jooq.Query;
-import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.conf.ParamType;
@@ -86,14 +85,14 @@ import org.jooq.tools.JooqLogger;
  */
 abstract class AbstractQuery extends AbstractQueryPart implements Query, AttachableInternal {
 
-    private static final long           serialVersionUID = -8046199737354507547L;
-    private static final JooqLogger     log              = JooqLogger.getLogger(AbstractQuery.class);
+    private static final long       serialVersionUID = -8046199737354507547L;
+    private static final JooqLogger log              = JooqLogger.getLogger(AbstractQuery.class);
 
-    private Configuration               configuration;
-    private int                         timeout;
-    private boolean                     keepStatement;
-    private transient PreparedStatement statement;
-    private transient Rendered          rendered;
+    private Configuration           configuration;
+    private int                     timeout;
+    private boolean                 keepStatement;
+    transient PreparedStatement     statement;
+    transient Rendered              rendered;
 
     AbstractQuery(Configuration configuration) {
         this.configuration = configuration;
@@ -453,15 +452,15 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
         return true;
     }
 
-    private static class Rendered {
-        String sql;
-        QueryPart bindValues;
+    static class Rendered {
+        String                  sql;
+        QueryPartList<Param<?>> bindValues;
 
         Rendered(String sql) {
             this(sql, null);
         }
 
-        Rendered(String sql, QueryPart bindValues) {
+        Rendered(String sql, QueryPartList<Param<?>> bindValues) {
             this.sql = sql;
             this.bindValues = bindValues;
         }

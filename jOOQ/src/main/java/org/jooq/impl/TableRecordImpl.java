@@ -47,7 +47,6 @@ import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
-// ...
 import static org.jooq.impl.RecordDelegate.delegate;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.INSERT;
 import static org.jooq.impl.Tools.indexOrFail;
@@ -72,7 +71,6 @@ import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
-import org.jooq.exception.DataAccessException;
 import org.jooq.tools.JooqLogger;
 
 /**
@@ -233,9 +231,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
                 else
                     key = getReturning();
 
-                // [#1859] Not all databases support RETURNING clauses on UPDATE
-                if (query instanceof InsertQuery || !asList().contains(configuration().family()))
-                    query.setReturning(key);
+                query.setReturning(key);
             }
         }
 

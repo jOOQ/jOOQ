@@ -88,7 +88,6 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -2041,8 +2040,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // Not supported
         }
         else if (type == Date.class) {
-            SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-            return (T) new Date(pgParseDate(string, f).getTime());
+            return (T) Date.valueOf(string);
         }
         else if (type == Double.class) {
             return (T) Double.valueOf(string);
@@ -2063,12 +2061,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return (T) string;
         }
         else if (type == Time.class) {
-            SimpleDateFormat f = new SimpleDateFormat("HH:mm:ss");
-            return (T) new Time(pgParseDate(string, f).getTime());
+            return (T) Time.valueOf(string);
         }
         else if (type == Timestamp.class) {
-            SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            return (T) new Timestamp(pgParseDate(string, f).getTime());
+            return (T) Timestamp.valueOf(string);
         }
         else if (type == UByte.class) {
             return (T) UByte.valueOf(string);
@@ -2105,15 +2101,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         throw new UnsupportedOperationException("Class " + type + " is not supported");
-    }
-
-    private static final java.util.Date pgParseDate(String string, SimpleDateFormat f) {
-        try {
-            return f.parse(string);
-        }
-        catch (ParseException e) {
-            throw new DataTypeException("Error while converting date", e);
-        }
     }
 
     /**

@@ -289,7 +289,17 @@ class DefaultExecuteContext implements ExecuteContext {
     static final Connection localTargetConnection() {
         Connection result = localConnection();
 
+        unwrappingLoop:
         for (int i = 0; i < maxUnwrappedConnections; i++) {
+
+
+
+
+
+
+
+
+
 
 
 
@@ -317,7 +327,7 @@ class DefaultExecuteContext implements ExecuteContext {
                 Connection r = Reflect.on(result).call("getTargetConnection").get();
                 if (result != r && r != null) {
                     result = r;
-                    continue;
+                    continue unwrappingLoop;
                 }
             }
             catch (ReflectException ignore) {}
@@ -327,7 +337,7 @@ class DefaultExecuteContext implements ExecuteContext {
                 Connection r = Reflect.on(result).call("getDelegate").get();
                 if (result != r && r != null) {
                     result = r;
-                    continue;
+                    continue unwrappingLoop;
                 }
             }
             catch (ReflectException ignore) {}

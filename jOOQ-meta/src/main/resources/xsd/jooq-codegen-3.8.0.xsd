@@ -324,6 +324,7 @@
             org.jooq.util.derby.DerbyDatabase
             org.jooq.util.firebird.FirebirdDatabase
             org.jooq.util.h2.H2Database
+            org.jooq.util.hana.HanaDatabse
             org.jooq.util.hsqldb.HSQLDBDatabase
             org.jooq.util.informix.InformixDatabase
             org.jooq.util.ingres.IngresDatabase
@@ -331,9 +332,11 @@
             org.jooq.util.mysql.MySQLDatabase
             org.jooq.util.oracle.OracleDatabase
             org.jooq.util.postgres.PostgresDatabase
+            org.jooq.util.redshift.RedshiftDatabase
             org.jooq.util.sqlite.SQLiteDatabaes
             org.jooq.util.sqlserver.SQLServerDatabase
             org.jooq.util.sybase.SybaseDatabase
+            org.jooq.util.vertica.VerticaDatabase
 
         This value can be used to reverse-engineer generic JDBC DatabaseMetaData (e.g. for MS Access)
 

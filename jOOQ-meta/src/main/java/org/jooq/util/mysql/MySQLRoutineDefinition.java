@@ -41,6 +41,7 @@
 
 package org.jooq.util.mysql;
 
+import static java.util.Arrays.asList;
 import static org.jooq.util.hsqldb.information_schema.Tables.PARAMETERS;
 
 import java.util.regex.Matcher;
@@ -104,6 +105,7 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
                     Parameters.PARAMETER_NAME,
                     Parameters.PARAMETER_MODE,
                     Parameters.DATA_TYPE,
+                    Parameters.DTD_IDENTIFIER,
                     Parameters.CHARACTER_MAXIMUM_LENGTH,
                     Parameters.NUMERIC_PRECISION,
                     Parameters.NUMERIC_SCALE
@@ -116,11 +118,21 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
                 .fetch()) {
 
             String inOut = record.get(Parameters.PARAMETER_MODE);
+            String dataType = record.get(Parameters.DATA_TYPE);
+
+            // [#519] Some types have unsigned versions
+            if (getDatabase().supportsUnsignedTypes()) {
+                if (asList("tinyint", "smallint", "mediumint", "int", "bigint").contains(dataType.toLowerCase())) {
+                    if (record.get(Parameters.DTD_IDENTIFIER).toLowerCase().contains("unsigned")) {
+                        dataType += "unsigned";
+                    }
+                }
+            }
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 getSchema(),
-                record.get(Parameters.DATA_TYPE),
+                dataType,
                 record.get(Parameters.CHARACTER_MAXIMUM_LENGTH),
                 record.get(Parameters.NUMERIC_PRECISION),
                 record.get(Parameters.NUMERIC_SCALE),

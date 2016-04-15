@@ -320,8 +320,6 @@ class DefaultExecuteContext implements ExecuteContext {
 
 
 
-
-
             // Unwrap nested Spring org.springframework.jdbc.datasource.ConnectionProxy objects
             try {
                 Connection r = Reflect.on(result).call("getTargetConnection").get();

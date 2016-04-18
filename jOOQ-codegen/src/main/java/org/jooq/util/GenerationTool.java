@@ -70,6 +70,7 @@ import javax.xml.validation.SchemaFactory;
 
 import org.jooq.Constants;
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.JooqLogger.Level;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.util.jaxb.Configuration;
@@ -196,6 +197,29 @@ public class GenerationTool {
 
     @SuppressWarnings("unchecked")
     public void run(Configuration configuration) throws Exception {
+        if (configuration.getLogging() != null) {
+            switch (configuration.getLogging()) {
+                case TRACE:
+                    JooqLogger.globalThreshold(Level.TRACE);
+                    break;
+                case DEBUG:
+                    JooqLogger.globalThreshold(Level.DEBUG);
+                    break;
+                case INFO:
+                    JooqLogger.globalThreshold(Level.INFO);
+                    break;
+                case WARN:
+                    JooqLogger.globalThreshold(Level.WARN);
+                    break;
+                case ERROR:
+                    JooqLogger.globalThreshold(Level.ERROR);
+                    break;
+                case FATAL:
+                    JooqLogger.globalThreshold(Level.FATAL);
+                    break;
+            }
+        }
+
         Jdbc j = configuration.getJdbc();
         org.jooq.util.jaxb.Generator g = configuration.getGenerator();
         errorIfNull(g, "The <generator/> tag is mandatory.");

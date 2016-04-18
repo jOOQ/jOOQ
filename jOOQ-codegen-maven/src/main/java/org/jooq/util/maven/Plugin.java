@@ -90,6 +90,12 @@ public class Plugin extends AbstractMojo {
     private boolean                      skip;
 
     /**
+     * The logging threshold.
+     */
+    @Parameter
+    private org.jooq.util.jaxb.Logging   logging;
+
+    /**
      * The jdbc settings.
      */
     @Parameter
@@ -121,6 +127,7 @@ public class Plugin extends AbstractMojo {
             }
 
             Configuration configuration = new Configuration();
+            configuration.setLogging(logging);
             configuration.setJdbc(jdbc);
             configuration.setGenerator(generator);
 

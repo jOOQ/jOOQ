@@ -9,19 +9,36 @@
       <all>
 
         <!--
+          The logging configuration element specifies the code generation
+          logging threshold.
+          -->
+        <element name="logging" type="tns:Logging" minOccurs="0" maxOccurs="1" />
+
+        <!--
           The JDBC configuration element contains information about how
-          to set up the database connection used for source code generation
+          to set up the database connection used for source code generation.
           -->
         <element name="jdbc" type="tns:Jdbc" minOccurs="0"  maxOccurs="1" />
 
         <!--
           The GENERATOR configuration element contains information about
-          source code generation itself
+          source code generation itself.
           -->
         <element name="generator" type="tns:Generator" minOccurs="1" maxOccurs="1" />
       </all>
     </complexType>
   </element>
+
+  <simpleType name="Logging">
+    <restriction base="string">
+      <enumeration value="TRACE"/>
+      <enumeration value="DEBUG"/>
+      <enumeration value="INFO"/>
+      <enumeration value="WARN"/>
+      <enumeration value="ERROR"/>
+      <enumeration value="FATAL"/>
+    </restriction>
+  </simpleType>
 
   <complexType name="Jdbc">
     <all>

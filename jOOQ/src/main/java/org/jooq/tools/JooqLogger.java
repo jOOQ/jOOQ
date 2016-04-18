@@ -40,8 +40,6 @@
  */
 package org.jooq.tools;
 
-import java.util.logging.Level;
-
 /**
  * The jOOQ logger abstraction.
  * <p>
@@ -59,6 +57,11 @@ import java.util.logging.Level;
  * @author Lukas Eder
  */
 public final class JooqLogger {
+
+    /**
+     * The global logger threshold.
+     */
+    private static volatile Level    globalThreshold = Level.TRACE;
 
     /**
      * The SLF4j Logger instance, if available.
@@ -145,18 +148,16 @@ public final class JooqLogger {
      * Check if <code>TRACE</code> level logging is enabled.
      */
     public boolean isTraceEnabled() {
-        if (!supportsTrace) {
+        if (!globalThreshold.supports(Level.TRACE))
             return false;
-        }
-        else if (slf4j != null) {
+        else if (!supportsTrace)
+            return false;
+        else if (slf4j != null)
             return slf4j.isTraceEnabled();
-        }
-        else if (log4j != null) {
+        else if (log4j != null)
             return log4j.isTraceEnabled();
-        }
-        else {
-            return util.isLoggable(Level.FINER);
-        }
+        else
+            return util.isLoggable(java.util.logging.Level.FINER);
     }
 
     /**
@@ -175,15 +176,14 @@ public final class JooqLogger {
      * @param details The message details (padded to a constant-width message)
      */
     public void trace(Object message, Object details) {
-        if (slf4j != null) {
+        if (!globalThreshold.supports(Level.TRACE))
+            return;
+        else if (slf4j != null)
             slf4j.trace(getMessage(message, details));
-        }
-        else if (log4j != null) {
+        else if (log4j != null)
             log4j.trace(getMessage(message, details));
-        }
-        else {
+        else
             util.finer("" + getMessage(message, details));
-        }
     }
 
     /**
@@ -206,33 +206,30 @@ public final class JooqLogger {
      *            message
      */
     public void trace(Object message, Object details, Throwable throwable) {
-        if (slf4j != null) {
+        if (!globalThreshold.supports(Level.TRACE))
+            return;
+        else if (slf4j != null)
             slf4j.trace(getMessage(message, details), throwable);
-        }
-        else if (log4j != null) {
+        else if (log4j != null)
             log4j.trace(getMessage(message, details), throwable);
-        }
-        else {
-            util.log(Level.FINER, "" + getMessage(message, details), throwable);
-        }
+        else
+            util.log(java.util.logging.Level.FINER, "" + getMessage(message, details), throwable);
     }
 
     /**
      * Check if <code>DEBUG</code> level logging is enabled.
      */
     public boolean isDebugEnabled() {
-        if (!supportsDebug) {
+        if (!globalThreshold.supports(Level.DEBUG))
             return false;
-        }
-        else if (slf4j != null) {
+        else if (!supportsDebug)
+            return false;
+        else if (slf4j != null)
             return slf4j.isDebugEnabled();
-        }
-        else if (log4j != null) {
+        else if (log4j != null)
             return log4j.isDebugEnabled();
-        }
-        else {
-            return util.isLoggable(Level.FINE);
-        }
+        else
+            return util.isLoggable(java.util.logging.Level.FINE);
     }
 
     /**
@@ -251,15 +248,14 @@ public final class JooqLogger {
      * @param details The message details (padded to a constant-width message)
      */
     public void debug(Object message, Object details) {
-        if (slf4j != null) {
+        if (!globalThreshold.supports(Level.DEBUG))
+            return;
+        else if (slf4j != null)
             slf4j.debug(getMessage(message, details));
-        }
-        else if (log4j != null) {
+        else if (log4j != null)
             log4j.debug(getMessage(message, details));
-        }
-        else {
+        else
             util.fine("" + getMessage(message, details));
-        }
     }
 
     /**
@@ -282,33 +278,30 @@ public final class JooqLogger {
      *            message
      */
     public void debug(Object message, Object details, Throwable throwable) {
-        if (slf4j != null) {
+        if (!globalThreshold.supports(Level.DEBUG))
+            return;
+        else if (slf4j != null)
             slf4j.debug(getMessage(message, details), throwable);
-        }
-        else if (log4j != null) {
+        else if (log4j != null)
             log4j.debug(getMessage(message, details), throwable);
-        }
-        else {
-            util.log(Level.FINE, "" + getMessage(message, details), throwable);
-        }
+        else
+            util.log(java.util.logging.Level.FINE, "" + getMessage(message, details), throwable);
     }
 
     /**
      * Check if <code>INFO</code> level logging is enabled.
      */
     public boolean isInfoEnabled() {
-        if (!supportsInfo) {
+        if (!globalThreshold.supports(Level.INFO))
             return false;
-        }
-        else if (slf4j != null) {
+        if (!supportsInfo)
+            return false;
+        else if (slf4j != null)
             return slf4j.isInfoEnabled();
-        }
-        else if (log4j != null) {
+        else if (log4j != null)
             return log4j.isInfoEnabled();
-        }
-        else {
-            return util.isLoggable(Level.INFO);
-        }
+        else
+            return util.isLoggable(java.util.logging.Level.INFO);
     }
 
     /**
@@ -327,15 +320,14 @@ public final class JooqLogger {
      * @param details The message details (padded to a constant-width message)
      */
     public void info(Object message, Object details) {
-        if (slf4j != null) {
+        if (!globalThreshold.supports(Level.INFO))
+            return;
+        else if (slf4j != null)
             slf4j.info(getMessage(message, details));
-        }
-        else if (log4j != null) {
+        else if (log4j != null)
             log4j.info(getMessage(message, details));
-        }
-        else {
+        else
             util.info("" + getMessage(message, details));
-        }
     }
 
     /**
@@ -358,15 +350,14 @@ public final class JooqLogger {
      *            message
      */
     public void info(Object message, Object details, Throwable throwable) {
-        if (slf4j != null) {
+        if (!globalThreshold.supports(Level.INFO))
+            return;
+        else if (slf4j != null)
             slf4j.info(getMessage(message, details), throwable);
-        }
-        else if (log4j != null) {
+        else if (log4j != null)
             log4j.info(getMessage(message, details), throwable);
-        }
-        else {
-            util.log(Level.INFO, "" + getMessage(message, details), throwable);
-        }
+        else
+            util.log(java.util.logging.Level.INFO, "" + getMessage(message, details), throwable);
     }
 
     /**
@@ -385,15 +376,14 @@ public final class JooqLogger {
      * @param details The message details (padded to a constant-width message)
      */
     public void warn(Object message, Object details) {
-        if (slf4j != null) {
+        if (!globalThreshold.supports(Level.WARN))
+            return;
+        else if (slf4j != null)
             slf4j.warn(getMessage(message, details));
-        }
-        else if (log4j != null) {
+        else if (log4j != null)
             log4j.warn(getMessage(message, details));
-        }
-        else {
+        else
             util.warning("" + getMessage(message, details));
-        }
     }
 
     /**
@@ -416,15 +406,14 @@ public final class JooqLogger {
      *            message
      */
     public void warn(Object message, Object details, Throwable throwable) {
-        if (slf4j != null) {
+        if (!globalThreshold.supports(Level.WARN))
+            return;
+        else if (slf4j != null)
             slf4j.warn(getMessage(message, details), throwable);
-        }
-        else if (log4j != null) {
+        else if (log4j != null)
             log4j.warn(getMessage(message, details), throwable);
-        }
-        else {
-            util.log(Level.WARNING, "" + getMessage(message, details), throwable);
-        }
+        else
+            util.log(java.util.logging.Level.WARNING, "" + getMessage(message, details), throwable);
     }
 
     /**
@@ -443,15 +432,14 @@ public final class JooqLogger {
      * @param details The message details (padded to a constant-width message)
      */
     public void error(Object message, Object details) {
-        if (slf4j != null) {
+        if (!globalThreshold.supports(Level.ERROR))
+            return;
+        else if (slf4j != null)
             slf4j.error(getMessage(message, details));
-        }
-        else if (log4j != null) {
+        else if (log4j != null)
             log4j.error(getMessage(message, details));
-        }
-        else {
+        else
             util.severe("" + getMessage(message, details));
-        }
     }
 
     /**
@@ -474,15 +462,14 @@ public final class JooqLogger {
      *            message
      */
     public void error(Object message, Object details, Throwable throwable) {
-        if (slf4j != null) {
+        if (!globalThreshold.supports(Level.ERROR))
+            return;
+        else if (slf4j != null)
             slf4j.error(getMessage(message, details), throwable);
-        }
-        else if (log4j != null) {
+        else if (log4j != null)
             log4j.error(getMessage(message, details), throwable);
-        }
-        else {
-            util.log(Level.SEVERE, "" + getMessage(message, details), throwable);
-        }
+        else
+            util.log(java.util.logging.Level.SEVERE, "" + getMessage(message, details), throwable);
     }
 
     /**
@@ -499,5 +486,29 @@ public final class JooqLogger {
         }
 
         return sb.toString();
+    }
+
+    /**
+     * Set a global level threshold to all JooqLoggers.
+     */
+    public static void globalThreshold(Level level) {
+        globalThreshold = level;
+    }
+
+    /**
+     * The log level.
+     */
+    public static enum Level {
+
+        TRACE,
+        DEBUG,
+        INFO,
+        WARN,
+        ERROR,
+        FATAL;
+
+        public boolean supports(Level level) {
+            return ordinal() <= level.ordinal();
+        }
     }
 }

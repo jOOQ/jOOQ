@@ -46,7 +46,6 @@ import static org.jooq.impl.DSL.name;
 import java.io.Serializable;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.SQLFeatureNotSupportedException;
 
 import org.jooq.Configuration;
 import org.jooq.DataType;
@@ -116,7 +115,7 @@ final class MetaDataFieldProvider implements Serializable {
 
                     // [#4939] Some JDBC drivers such as Teradata and Cassandra don't implement
                     // ResultSetMetaData.getSchemaName and/or ResultSetMetaData.getTableName methods
-                    catch (SQLFeatureNotSupportedException e) {
+                    catch (SQLException e) {
                         name = name(columnLabel);
                     }
                 }

@@ -170,6 +170,11 @@ final class ResultsImpl extends AbstractList<Result<Record>> implements Results,
         return results.remove(translatedIndex(index)).result();
     }
 
+    @Override
+    public void clear() {
+        results.clear();
+    }
+
     private final List<Result<Record>> list() {
         List<Result<Record>> list = new ArrayList<Result<Record>>();
 

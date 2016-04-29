@@ -1087,7 +1087,9 @@ public abstract class AbstractDatabase implements Database {
                      && (     definedType.getScale() != 0
                      ||   !p.matcher(definedType.getType() + "(" + definedType.getPrecision() + ")").matches())
                      && ( !p.matcher(definedType.getType() + "(" + definedType.getPrecision() + "," + definedType.getScale() + ")").matches() )
-                     && ( !p.matcher(definedType.getType() + "(" + definedType.getPrecision() + ", " + definedType.getScale() + ")").matches() )) {
+                     && ( !p.matcher(definedType.getType() + "(" + definedType.getPrecision() + ", " + definedType.getScale() + ")").matches() )
+                     && ( !isArrayType(definedType.getType())
+                     ||   !p.matcher(definedType.getType() + "[" + definedType.getUserType() + "]").matches() )) {
                     continue forcedTypeLoop;
                 }
             }

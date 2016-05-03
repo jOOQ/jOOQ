@@ -47,7 +47,6 @@ import org.jooq.Comparator;
 import org.jooq.Context;
 import org.jooq.Record;
 import org.jooq.Table;
-import org.jooq.UniqueKey;
 
 /**
  * @author Lukas Eder
@@ -77,16 +76,7 @@ final class TableComparison<R extends Record> extends AbstractCondition {
             }
 
             default: {
-                UniqueKey<R> lhsPK = lhs.getPrimaryKey();
-                UniqueKey<R> rhsPK = rhs.getPrimaryKey();
-
-                if (lhsPK != null && rhsPK != null && lhsPK.getTable().equals(rhsPK.getTable())) {
-                    ctx.visit(row(lhs.fields(lhsPK.getFieldsArray())).compare(comparator, row(rhs.fields(rhsPK.getFieldsArray()))));
-                }
-                else {
-                    ctx.visit(row(lhs.fields()).compare(comparator, row(rhs.fields())));
-                }
-
+                ctx.visit(row(lhs.fields()).compare(comparator, row(rhs.fields())));
                 break;
             }
         }

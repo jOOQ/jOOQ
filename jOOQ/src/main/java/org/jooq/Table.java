@@ -1596,13 +1596,10 @@ public interface Table<R extends Record> extends TableLike<R> {
     /**
      * Create a predicate comparing records from self-joined tables.
      * <p>
-     * This is a convenience method for self-joins, comparing either:
-     * <ul>
-     * <li>Primary key values, if {@link #getPrimaryKey()} is available</li>
-     * <li>Complete records, otherwise</li>
-     * </ul>
-     * For example:
-     * <code><pre>
+     * This is a convenience method for self-joins, comparing complete records
+     * between tables.
+     * <p>
+     * For example: <code><pre>
      * MyTable a = MY_TABLE.as("a");
      * MyTable b = MY_TABLE.as("b");
      *
@@ -1620,11 +1617,9 @@ public interface Table<R extends Record> extends TableLike<R> {
     /**
      * Create a predicate comparing records from self-joined tables.
      * <p>
-     * This is a convenience method for self-joins, comparing either:
-     * <ul>
-     * <li>Primary key values, if {@link #getPrimaryKey()} is available</li>
-     * <li>Complete records, otherwise</li>
-     * </ul>
+     * This is a convenience method for self-joins, comparing complete records
+     * between tables.
+     * <p>
      * For example:
      * <code><pre>
      * MyTable a = MY_TABLE.as("a");
@@ -1650,12 +1645,9 @@ public interface Table<R extends Record> extends TableLike<R> {
 
     /**
      * Create a predicate comparing records from self-non-equi-joined tables.
+     * This is a convenience method for self-joins, comparing complete records
+     * between tables.
      * <p>
-     * This is a convenience method for self-non-equi-joins, comparing either:
-     * <ul>
-     * <li>Primary key values, if {@link #getPrimaryKey()} is available</li>
-     * <li>Complete records, otherwise</li>
-     * </ul>
      * For example:
      * <code><pre>
      * MyTable a = MY_TABLE.as("a");
@@ -1675,11 +1667,9 @@ public interface Table<R extends Record> extends TableLike<R> {
     /**
      * Create a predicate comparing records from self-non-equi-joined tables.
      * <p>
-     * This is a convenience method for self-non-equi-joins, comparing either:
-     * <ul>
-     * <li>Primary key values, if {@link #getPrimaryKey()} is available</li>
-     * <li>Complete records, otherwise</li>
-     * </ul>
+     * This is a convenience method for self-joins, comparing complete records
+     * between tables.
+     * <p>
      * For example:
      * <code><pre>
      * MyTable a = MY_TABLE.as("a");

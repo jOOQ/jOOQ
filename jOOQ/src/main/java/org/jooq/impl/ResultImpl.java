@@ -56,7 +56,9 @@ import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Array;
+import java.sql.Date;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -843,6 +845,16 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
         }
         else if (value instanceof Record) {
             formatted += ((Record) value).valuesRow().toString();
+        }
+
+        // [#5238] Oracle DATE is really a TIMESTAMP(0)...
+        else if (value instanceof Date) {
+            String date = value.toString();
+
+            if (Date.valueOf(date).equals(value))
+                formatted += date;
+            else
+                formatted += new Timestamp(((Date) value).getTime());
         }
         else {
             formatted += value.toString();

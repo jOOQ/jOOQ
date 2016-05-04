@@ -545,6 +545,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
                 // [#1253] Derby doesn't support the standard literal
                 else if (family == DERBY) {
                     render.keyword("date('").sql(escape(val, render)).sql("')");
@@ -728,6 +729,19 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
         else {
             render.sql(ctx.variable());
         }
@@ -780,6 +794,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         int sqlType = DefaultDataType.getDataType(ctx.dialect(), type).getSQLType();
 
         switch (configuration.family()) {
+
+
+
+
+
 
 
 
@@ -980,27 +999,41 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // There is potential for trouble when binding date time as such
             // -------------------------------------------------------------
             else if (actualType == Date.class) {
+                Date date = (Date) value;
+
                 if (dialect == SQLITE) {
-                    ctx.statement().setString(ctx.index(), ((Date) value).toString());
+                    ctx.statement().setString(ctx.index(), date.toString());
                 }
+
+
+
+
+
+
+
+
                 else {
-                    ctx.statement().setDate(ctx.index(), (Date) value);
+                    ctx.statement().setDate(ctx.index(), date);
                 }
             }
             else if (actualType == Time.class) {
+                Time time = (Time) value;
+
                 if (dialect == SQLITE) {
-                    ctx.statement().setString(ctx.index(), ((Time) value).toString());
+                    ctx.statement().setString(ctx.index(), time.toString());
                 }
                 else {
-                    ctx.statement().setTime(ctx.index(), (Time) value);
+                    ctx.statement().setTime(ctx.index(), time);
                 }
             }
             else if (actualType == Timestamp.class) {
+                Timestamp timestamp = (Timestamp) value;
+
                 if (dialect == SQLITE) {
-                    ctx.statement().setString(ctx.index(), ((Timestamp) value).toString());
+                    ctx.statement().setString(ctx.index(), timestamp.toString());
                 }
                 else {
-                    ctx.statement().setTimestamp(ctx.index(), (Timestamp) value);
+                    ctx.statement().setTimestamp(ctx.index(), timestamp);
                 }
             }
 
@@ -1185,7 +1218,17 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             ctx.output().writeClob((Clob) value);
         }
         else if (type == Date.class) {
-            ctx.output().writeDate((Date) value);
+            Date date = (Date) value;
+
+
+
+
+
+
+
+
+
+            ctx.output().writeDate(date);
         }
         else if (type == Double.class) {
             ctx.output().writeDouble((Double) value);
@@ -1314,7 +1357,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             result = (T) ctx.resultSet().getClob(ctx.index());
         }
         else if (type == Date.class) {
-            result = (T) getDate(ctx.configuration().dialect(), ctx.resultSet(), ctx.index());
+            result = (T) getDate(ctx.family(), ctx.resultSet(), ctx.index());
         }
         else if (type == Double.class) {
             result = (T) wasNull(ctx.resultSet(), Double.valueOf(ctx.resultSet().getDouble(ctx.index())));
@@ -1327,13 +1370,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         else if (type == LocalDate.class) {
-            result = (T) localDate(getDate(ctx.configuration().dialect(), ctx.resultSet(), ctx.index()));
+            result = (T) localDate(getDate(ctx.family(), ctx.resultSet(), ctx.index()));
         }
         else if (type == LocalTime.class) {
-            result = (T) localTime(getTime(ctx.configuration().dialect(), ctx.resultSet(), ctx.index()));
+            result = (T) localTime(getTime(ctx.family(), ctx.resultSet(), ctx.index()));
         }
         else if (type == LocalDateTime.class) {
-            result = (T) localDateTime(getTimestamp(ctx.configuration().dialect(), ctx.resultSet(), ctx.index()));
+            result = (T) localDateTime(getTimestamp(ctx.family(), ctx.resultSet(), ctx.index()));
         }
 
         else if (type == Long.class) {
@@ -1354,10 +1397,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             result = (T) ctx.resultSet().getString(ctx.index());
         }
         else if (type == Time.class) {
-            result = (T) getTime(ctx.configuration().dialect(), ctx.resultSet(), ctx.index());
+            result = (T) getTime(ctx.family(), ctx.resultSet(), ctx.index());
         }
         else if (type == Timestamp.class) {
-            result = (T) getTimestamp(ctx.configuration().dialect(), ctx.resultSet(), ctx.index());
+            result = (T) getTimestamp(ctx.family(), ctx.resultSet(), ctx.index());
         }
         else if (type == YearToMonth.class) {
             if (ctx.family() == POSTGRES) {
@@ -1536,6 +1579,15 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             result = (T) ctx.statement().getClob(ctx.index());
         }
         else if (type == Date.class) {
+
+
+
+
+
+
+
+
+
             result = (T) ctx.statement().getDate(ctx.index());
         }
         else if (type == Double.class) {
@@ -1736,6 +1788,15 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             result = (T) ctx.input().readClob();
         }
         else if (type == Date.class) {
+
+
+
+
+
+
+
+
+
             result = (T) ctx.input().readDate();
         }
         else if (type == Double.class) {
@@ -1919,35 +1980,33 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         return null;
     }
 
-    private static final Date getDate(SQLDialect dialect, ResultSet rs, int index) throws SQLException {
+    private static final Date getDate(SQLDialect family, ResultSet rs, int index) throws SQLException {
 
         // SQLite's type affinity needs special care...
-        if (dialect == SQLDialect.SQLITE) {
+        if (family == SQLDialect.SQLITE) {
             String date = rs.getString(index);
-
-            if (date != null) {
-                return new Date(parse(Date.class, date));
-            }
-
-            return null;
+            return date == null ? null : new Date(parse(Date.class, date));
         }
+
+
+
+
+
+
+
+
 
         else {
             return rs.getDate(index);
         }
     }
 
-    private static final Time getTime(SQLDialect dialect, ResultSet rs, int index) throws SQLException {
+    private static final Time getTime(SQLDialect family, ResultSet rs, int index) throws SQLException {
 
         // SQLite's type affinity needs special care...
-        if (dialect == SQLDialect.SQLITE) {
+        if (family == SQLDialect.SQLITE) {
             String time = rs.getString(index);
-
-            if (time != null) {
-                return new Time(parse(Time.class, time));
-            }
-
-            return null;
+            return time == null ? null : new Time(parse(Time.class, time));
         }
 
         else {
@@ -1955,18 +2014,15 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    private static final Timestamp getTimestamp(SQLDialect dialect, ResultSet rs, int index) throws SQLException {
+    private static final Timestamp getTimestamp(SQLDialect family, ResultSet rs, int index) throws SQLException {
 
         // SQLite's type affinity needs special care...
-        if (dialect == SQLDialect.SQLITE) {
+        if (family == SQLDialect.SQLITE) {
             String timestamp = rs.getString(index);
+            return timestamp == null ? null : new Timestamp(parse(Timestamp.class, timestamp));
+        }
 
-            if (timestamp != null) {
-                return new Timestamp(parse(Timestamp.class, timestamp));
-            }
-
-            return null;
-        } else {
+        else {
             return rs.getTimestamp(index);
         }
     }

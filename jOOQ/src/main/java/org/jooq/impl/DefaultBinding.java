@@ -1889,15 +1889,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         try {
             EnumType[] list = Tools.enums(type);
 
-            for (EnumType e : list) {
-                String l = e.getLiteral();
-
-                if (literal == null)
+            for (EnumType e : list)
+                if (e.getLiteral().equals(literal))
                     return (E) e;
-
-                if (l.equals(literal))
-                    return (E) e;
-            }
         }
         catch (Exception e) {
             throw new DataTypeException("Unknown enum literal found : " + literal);
@@ -2240,13 +2234,19 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     private static final void pgRenderEnumCast(RenderContext render, Class<?> type) {
-        Class<?> enumType = type.isArray() ? type.getComponentType() : type;
+
+        @SuppressWarnings("unchecked")
+        Class<? extends EnumType> enumType = (Class<? extends EnumType>) (
+            type.isArray() ? type.getComponentType() : type);
 
         // [#968] Don't cast "synthetic" enum types (note, val can be null!)
         // [#4427] Java Enum agnostic implementation will work for Scala also
-        EnumType e = getEnumType((Class<EnumType>) enumType, null);
-        Schema schema = e.getSchema();
+        EnumType[] enums = Tools.enums(enumType);
 
+        if (enums == null || enums.length == 0)
+            throw new IllegalArgumentException("Not a valid EnumType : " + type);
+
+        Schema schema = enums[0].getSchema();
         if (schema != null) {
             render.sql("::");
 
@@ -2256,7 +2256,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 render.sql('.');
             }
 
-            render.visit(name(e.getName()));
+            render.visit(name(enums[0].getName()));
         }
 
         if (type.isArray())

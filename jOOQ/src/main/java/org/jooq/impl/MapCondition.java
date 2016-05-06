@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -69,7 +69,7 @@ class MapCondition extends AbstractCondition {
 
         for (Entry<Field<?>, ?> entry : map.entrySet()) {
             Field f1 = entry.getKey();
-            Field f2 = Utils.field(entry.getValue(), f1);
+            Field f2 = Tools.field(entry.getValue(), f1);
 
             condition.addConditions(f1.eq(f2));
         }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -41,7 +41,7 @@
 package org.jooq.impl;
 
 import static org.jooq.SQLDialect.DEFAULT;
-import static org.jooq.impl.Utils.DataKey.DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION;
+import static org.jooq.impl.Tools.DataKey.DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

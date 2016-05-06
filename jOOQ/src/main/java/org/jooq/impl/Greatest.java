@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -74,13 +74,13 @@ class Greatest<T> extends AbstractFunction<T> {
             // are very welcome
             // [#1049] TODO Fix this!
 
-            /* [pro] xx
-            xxxx xxxxxxx
-            xxxx xxxx
-            xxxx xxxxxxxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
             case DERBY: {
                 Field<T> first = (Field<T>) getArguments()[0];
                 Field<T> other = (Field<T>) getArguments()[1];

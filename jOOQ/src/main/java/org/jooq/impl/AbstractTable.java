@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -563,96 +563,96 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
         return new HintedTable<R>(this, "force index for group by", indexes);
     }
 
-    /* [pro] xx
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxx xxxxxxxxxxx xxxxx x
-        xxxxxx xxx xxxxxxxxxxxxxxxxxx xxxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxx xxxxxxxxx xxxxx x
-        xxxxxx xxxxxxxxxxxxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxx xxxxxxx xxxxx x
-        xxxxxx xxxxxxxxxxxxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxx xxxxxxx xxxxx x
-        xxxxxx xxx xxxxxxxxxxxxxxxxxxxx xxxxxx
-    x
 
-    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    xx xxxx xxxxx xxx
-    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx x
-        xxxxxx xxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxx xxxxxxxxxxxxxxxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx
-    x
 
-    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    xx xxxx xxxxxxxxx xxxxx xxx
-    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxx xxxx x
-        xxxxxx xxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-        xxxxxx xxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxx xxxxx xxxxx xxxxxxxxxxxxxxxxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx x
-        xxxxxx xxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-        xxxxxx xxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxx xxxxxxxxxxxxxx xxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxx xxxxxxxxxxxxxxx xxxxxxx xxxxxxx xxxx x
-        xxxxxx xxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxx xxxx xxxxx xxxxxxxxxxxxxxxxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx x
-        xxxxxx xxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
-    x
 
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // ------------------------------------------------------------------------
     // XXX: DIVISION API
     // ------------------------------------------------------------------------

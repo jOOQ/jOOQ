@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -60,6 +60,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.POSTGRES_9_3;
 import static org.jooq.SQLDialect.SQLITE;
+// ...
 // ...
 // ...
 
@@ -233,34 +234,34 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     <O extends Record> List<ForeignKey<R, O>> getReferencesTo(Table<O> other);
 
-    /* [pro] xx
-    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    xx xxxx xxxxxxxx xxxxx
-    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-    xxx
-     x x xxxxx xxxxxxxxx xx xxxx xxxxx xx x xxxxx xxxxxx xxxxxx
-     x
-     x xxxx xxxxxxxxxxxxxxxx
-     xx
-    xxxxxxxxxxxxxxxx
-    xxxxxxxx xxxxxxxxx xxxxxx
 
-    xxx
-     x x xxxxx xxxxxxxxx xx xxxx xxxxx xx x xxxxx xxxxxx xxxxxx
-     x
-     x xxxx xxxxxxxxxxxxxx
-     xx
-    xxxxxxxxxxxxxxxx
-    xxxxxxxx xxxxxxx xxxxxx
 
-    xxx
-     x x xxxxx xxxxxxxxx xx xxxx xxxxx xx x xxxxx xxxxxx xxxxxx
-     xx
-    xxxxxxxxxxxxxxxx
-    xxxxxxxx xxxxxxx xxxxxx
 
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // XXX: Aliasing clauses
@@ -1643,64 +1644,64 @@ public interface Table<R extends Record> extends TableLike<R> {
     @Support({ MARIADB, MYSQL })
     Table<R> forceIndexForGroupBy(String... indexes);
 
-    /* [pro] xx
-    xxx
-     x xxxxxxx x xxx xxxxxx xxxxx xxxxx xxxx xxx xxxxx xxxxxxxxxxxxx
-     x xxx
-     x xxxx xxxxx xxxxx xxxx xx xx xxxxxx xxxxxxxx xxxxx xx xxxxx xxx xx xxxxx
-     x xxxxxxxx xxxxx xxxxxxxx
-     x xxx
-     x xxxxxxxx
-     x xxx
-     x xxxxxxxxxxx
-     x xxxxxxxxxxxxxxx
-     x       xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-     x       xxxxxxxxx
-     x xxxxxxxxxxxxx
-     x xxx
-     x xxx xxxxxx xxxxxxxxxxxxxxxxxx xxxxx xxxxxx xxx
-     x xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-     x
-     x xxxx xx
-     x      xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-     x xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
-     x xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
-     xx
-    xxxxxxxxxx xxxxxxxxxx xxxxxx xx
-    xxxxxxxx xxxxxxxxxxx xxxxxx
 
-    xxx
-     x xxxxxx x xxx xxxxxxxxxxxxxxxxxx xxxxxxxxx xxxx xxxx xxxxxx xxxxxxxx xx
-     x xxxx xxxxxxx xxxxx
-     x xxx
-     x xxxx xxx xxxx xxxxxxxx xx xxxx xxxx
-     x xxxx
-     x xxxx xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx
-     x xxxx xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxx xxx xxxxxxxxxx xxxxxxxxxxxxxxx
-     x xxxxxxxxx xxxxxxxx xx xxxxx xxxx xxxxx xx xxxxxxxxx xxxx xxx xxxxxxxxxx
-     x xxxxxxxxxxxxxxx
-     x xxxxx
-     x
-     x xxxxxx xxxxxxxxxxxxxxxxxx xxx xxxxxxxxx xxxxxxxxx xxxx xxx xxxxxxxxx
-     x xxxxxxx x xxx xxxxxx xx xxxxxx xxx xxxxxxxxxxxxxxxxxx xxxxxxxxxx
-     xx
-    xxxxxxxxxx xxxxxxxxxx xxxxxxxxx xx
-    xxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx
 
-    xxx
-     x xxxxxx x xxx xxxxxxxxxxxxxxxxxx xxxxxxxxx xxxx xxxx xxxxxx xxxxxxxx xx
-     x xxxx xxxxxxx xxxxx
-     x xxx
-     x xxx xxxx xxxxxxxx xxx xxxxxx xxxxxxxxxxxxxxxxx
-     x
-     x xxxxxx xxxxxxxxxxxxxxxxxx xxx xxxxxxxxx xxxxxxxxx xxxx xxx xxxxxxxxx
-     x xxxxxxx x xxx xxxxxx xx xxxxxx xxx xxxxxxxxxxxxxxxxxx xxxxxxxxxx
-     x xxxx xxxxxxxxxxxxxxxx
-     xx
-    xxxxxxxxxx xxxxxxxxxx xxxxxxxxx xx
-    xxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxx xxxxxxxxxxxxxxxxxxxx
 
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Create a new <code>TABLE</code> reference from this table, applying
      * relational division.
@@ -1798,75 +1799,75 @@ public interface Table<R extends Record> extends TableLike<R> {
     @Support
     TableOnStep<R> leftAntiJoin(TableLike<?> table);
 
-    /* [pro] xx
-    xxx
-     x xxxxxx xx xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxxxx xxxxx xxxxxx xxxx
-     x xxxx xxxxxx
-     xx
-    xxxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xxxxx
 
-    xxx
-     x xxxxxx xx xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxxxx xxxxx xxxxxx xxxx
-     x xxxx xxxxxx
-     xx
-    xxxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxx xxxxx
 
-    xxx
-     x xxxxxx xx xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxxxx xxxxx xxxxxx xxxx
-     x xxxx xxxxxx
-     xx
-    xxxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-    xxx
-     x xxxxxx xx xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxxxx xxxxx xxxxxx xxxx
-     x xxxx xxxxxx
-     xx
-    xxxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx
 
-    xxx
-     x xxxxxx xx xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxxxx xxxxx xxxxxx xxxx
-     x xxxx xxxxxx
-     xx
-    xxxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx
 
-    xxx
-     x xxxxxx xx xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxxxx xxxxx xxxxxx xxxx
-     x xxxx xxxxxx
-     xx
-    xxxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-    xxx
-     x xxxxxx xx xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxx xxxxxx xxxx xxxx
-     x xxxxxx
-     xx
-    xxxxxxxxxx xxxxxx xx
-    xxxxxxxx xxxxxxxxxxxxxx xxxxx
 
-    xxx
-     x xxxxxx xx xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxx xxxxxx xxxx xxxx
-     x xxxxxx
-     xx
-    xxxxxxxxxx xxxxxx xx
-    xxxxxxxx xxxxxxxxxxxxxxx xxxxxxx xxxxxxx xxxxx
 
-    xxx
-     x xxxxxx xx xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxx xxxxxx xxxx xxxx
-     x xxxxxx
-     xx
-    xxxxxxxxxx xxxxxx xx
-    xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx
 
-    xxx
-     x xxxxxx xx xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxx xxxxxx xxxx xxxx
-     x xxxxxx
-     xx
-    xxxxxxxxxx xxxxxx xx
-    xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

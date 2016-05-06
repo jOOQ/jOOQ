@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -76,18 +76,18 @@ class Rpad extends AbstractFunction<String> {
     @Override
     final Field<String> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [pro] xx
-            xxxx xxxxxxx x
-                xxxxxx xxxxxxxxxx x xxxxxxxxxxxxxxxxx x xxxxxxxxxx x xx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxx xxxxxxxxxxx
-            x
 
-            xxxx xxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxx x
-                xxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            x
 
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
             // This beautiful expression was contributed by "Ludo", here:
             // http://stackoverflow.com/questions/6576343/how-to-simulate-lpad-rpad-with-sqlite
             case SQLITE: {

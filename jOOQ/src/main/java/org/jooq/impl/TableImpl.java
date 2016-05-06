@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -134,7 +134,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
         }
         else {
             if (ctx.qualify() && (ctx.family() != POSTGRES || parameters == null || ctx.declareTables())) {
-                Schema mappedSchema = Utils.getMappedSchema(ctx.configuration(), getSchema());
+                Schema mappedSchema = Tools.getMappedSchema(ctx.configuration(), getSchema());
 
                 if (mappedSchema != null) {
                     ctx.visit(mappedSchema);
@@ -142,7 +142,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
                 }
             }
 
-            ctx.literal(Utils.getMappedTable(ctx.configuration(), this).getName());
+            ctx.literal(Tools.getMappedTable(ctx.configuration(), this).getName());
 
             if (parameters != null && ctx.declareTables()) {
 

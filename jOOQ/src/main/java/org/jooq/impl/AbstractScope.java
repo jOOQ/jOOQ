@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -86,12 +86,12 @@ abstract class AbstractScope implements Scope {
 
     @Override
     public final Settings settings() {
-        return Utils.settings(configuration());
+        return Tools.settings(configuration());
     }
 
     @Override
     public final SQLDialect dialect() {
-        return Utils.configuration(configuration()).dialect();
+        return Tools.configuration(configuration()).dialect();
     }
 
     @Override

@@ -27,32 +27,32 @@ public class LogVerify extends org.jooq.impl.TableImpl<org.jooq.example.jaxrs.db
 	}
 
 	/**
-	 * The column <code>license_server.log_verify.id</code>. 
+	 * The column <code>license_server.log_verify.id</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.example.jaxrs.db.tables.records.LogVerifyRecord, java.lang.Long> ID = createField("id", org.jooq.impl.SQLDataType.BIGINT, this);
 
 	/**
-	 * The column <code>license_server.log_verify.licensee</code>. 
+	 * The column <code>license_server.log_verify.licensee</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.example.jaxrs.db.tables.records.LogVerifyRecord, java.lang.String> LICENSEE = createField("licensee", org.jooq.impl.SQLDataType.CLOB, this);
 
 	/**
-	 * The column <code>license_server.log_verify.license</code>. 
+	 * The column <code>license_server.log_verify.license</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.example.jaxrs.db.tables.records.LogVerifyRecord, java.lang.String> LICENSE = createField("license", org.jooq.impl.SQLDataType.CLOB, this);
 
 	/**
-	 * The column <code>license_server.log_verify.request_ip</code>. 
+	 * The column <code>license_server.log_verify.request_ip</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.example.jaxrs.db.tables.records.LogVerifyRecord, java.lang.String> REQUEST_IP = createField("request_ip", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
 
 	/**
-	 * The column <code>license_server.log_verify.version</code>. 
+	 * The column <code>license_server.log_verify.version</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.example.jaxrs.db.tables.records.LogVerifyRecord, java.lang.String> VERSION = createField("version", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
 
 	/**
-	 * The column <code>license_server.log_verify.match</code>. 
+	 * The column <code>license_server.log_verify.match</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.example.jaxrs.db.tables.records.LogVerifyRecord, java.lang.Boolean> MATCH = createField("match", org.jooq.impl.SQLDataType.BOOLEAN, this);
 

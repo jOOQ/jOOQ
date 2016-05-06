@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -496,22 +496,22 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
            .declareTables(declareTables)
            .end(UPDATE_UPDATE);
 
-        /* [pro] xx
-        xx xxxxxxx xxxxxx xxx x xxxxxxx xxxxxxxxxxxxx xx xxx xxxxxx xx xxxx xxxxxx
-        xx xxxxxxxxxxxxx xx xxxxxxx x
-            xxxxxxxxxxxxxxxxxxxxxxx
 
-            xx xxxxxxxxxxxxxxxxx x
-                xxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxxxxxx xx
-                   xxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxxxxxx
-            x
 
-            xxxxxxxxxxxxxxxxxxxxx
-        x
-        xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         ctx.formatSeparator()
            .start(UPDATE_SET)
@@ -567,11 +567,11 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
         switch (ctx.family()) {
 
-            /* [pro] xx
-            xx xxxxxxx xxxxxx xxx x xxxxxxx xxxxxxxxxxxxx xx xxx xxxxxx xx xxxx xxxxxx
-            xxxx xxxxxxx
-                xxxxxx
-            xx [/pro] */
+
+
+
+
+
 
             default:
                 ctx.start(UPDATE_FROM);

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -42,15 +42,19 @@
 package org.jooq.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.UniqueKey;
 
 /**
  * @author Lukas Eder
@@ -116,8 +120,33 @@ class TableAlias<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
+    public final Identity<R, ?> getIdentity() {
+        return alias.wrapped().getIdentity();
+    }
+
+    @Override
+    public final UniqueKey<R> getPrimaryKey() {
+        return alias.wrapped().getPrimaryKey();
+    }
+
+    @Override
+    public final List<UniqueKey<R>> getKeys() {
+        return alias.wrapped().getKeys();
+    }
+
+    @Override
     public final List<ForeignKey<R, ?>> getReferences() {
         return alias.wrapped().getReferences();
+    }
+
+    @Override
+    public final TableField<R, ? extends Number> getRecordVersion() {
+        return alias.wrapped().getRecordVersion();
+    }
+
+    @Override
+    public final TableField<R, ? extends Date> getRecordTimestamp() {
+        return alias.wrapped().getRecordTimestamp();
     }
 
     @Override

@@ -14,17 +14,17 @@ public class GenerateKey extends org.jooq.impl.AbstractRoutine<java.lang.String>
 	private static final long serialVersionUID = -2093593663;
 
 	/**
-	 * The parameter <code>license_server.generate_key.RETURN_VALUE</code>. 
+	 * The parameter <code>license_server.generate_key.RETURN_VALUE</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.String> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * The parameter <code>license_server.generate_key.license_date</code>. 
+	 * The parameter <code>license_server.generate_key.license_date</code>.
 	 */
 	public static final org.jooq.Parameter<java.sql.Timestamp> LICENSE_DATE = createParameter("license_date", org.jooq.impl.SQLDataType.TIMESTAMP);
 
 	/**
-	 * The parameter <code>license_server.generate_key.email</code>. 
+	 * The parameter <code>license_server.generate_key.email</code>.
 	 */
 	public static final org.jooq.Parameter<java.lang.String> EMAIL = createParameter("email", org.jooq.impl.SQLDataType.CLOB);
 

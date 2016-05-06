@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -40,9 +40,9 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Utils.DataKey.DATA_DEFAULT_TRANSACTION_PROVIDER_AUTOCOMMIT;
-import static org.jooq.impl.Utils.DataKey.DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION;
-import static org.jooq.impl.Utils.DataKey.DATA_DEFAULT_TRANSACTION_PROVIDER_SAVEPOINTS;
+import static org.jooq.impl.Tools.DataKey.DATA_DEFAULT_TRANSACTION_PROVIDER_AUTOCOMMIT;
+import static org.jooq.impl.Tools.DataKey.DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION;
+import static org.jooq.impl.Tools.DataKey.DATA_DEFAULT_TRANSACTION_PROVIDER_SAVEPOINTS;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -160,9 +160,9 @@ public class DefaultTransactionProvider implements TransactionProvider {
             return IGNORED_SAVEPOINT;
 
         switch (configuration.family()) {
-            /* [pro] xx
-            xxxx xxxxx
-            xx [/pro] */
+
+
+
             case CUBRID:
                 return UNSUPPORTED_SAVEPOINT;
             default:

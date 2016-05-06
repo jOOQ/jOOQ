@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -49,7 +49,7 @@ import static org.jooq.impl.DSL.sequence;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.trueCondition;
-import static org.jooq.impl.Utils.list;
+import static org.jooq.impl.Tools.list;
 import static org.jooq.tools.Convert.convert;
 
 import java.io.IOException;
@@ -306,12 +306,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Schema map(Schema schema) {
-        return Utils.getMappedSchema(configuration(), schema);
+        return Tools.getMappedSchema(configuration(), schema);
     }
 
     @Override
     public <R extends Record> Table<R> map(Table<R> table) {
-        return Utils.getMappedTable(configuration(), table);
+        return Tools.getMappedTable(configuration(), table);
     }
 
     // -------------------------------------------------------------------------
@@ -346,9 +346,9 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
             // [#3718] Use reflection to support also JDBC 4.0
             catch (Exception suppress) {
-                
+
                 cause.addSuppressed(suppress);
-                
+
             }
 
             if (cause instanceof RuntimeException) {
@@ -580,7 +580,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return resultQuery(sql, parts).fetchLazy();
     }
 
-    
+
     @Override
     public Stream<Record> fetchStream(SQL sql) {
         return resultQuery(sql).stream();
@@ -600,7 +600,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public Stream<Record> fetchStream(String sql, QueryPart... parts) {
         return resultQuery(sql, parts).stream();
     }
-    
+
 
     @Override
     public Results fetchMany(SQL sql) {
@@ -642,7 +642,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return resultQuery(sql, parts).fetchOne();
     }
 
-    
+
     @Override
     public Optional<Record> fetchOptional(SQL sql) {
         return Optional.ofNullable(fetchOne(sql));
@@ -662,7 +662,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public Optional<Record> fetchOptional(String sql, QueryPart... parts) {
         return Optional.ofNullable(fetchOne(sql, parts));
     }
-    
+
 
     @Override
     public Object fetchValue(SQL sql) {
@@ -684,7 +684,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return fetchValue((ResultQuery) resultQuery(sql, parts));
     }
 
-    
+
     @Override
     public Optional<?> fetchOptionalValue(SQL sql) {
         return Optional.ofNullable(fetchValue(sql));
@@ -704,7 +704,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public Optional<?> fetchOptionalValue(String sql, QueryPart... parts) {
         return Optional.ofNullable(fetchValue(sql, parts));
     }
-    
+
 
     @Override
     public List<?> fetchValues(SQL sql) {
@@ -792,25 +792,25 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Record fetchOne(ResultSet rs) {
-        return Utils.fetchOne(fetchLazy(rs));
+        return Tools.fetchOne(fetchLazy(rs));
     }
 
     @Override
     public Record fetchOne(ResultSet rs, Field<?>... fields) {
-        return Utils.fetchOne(fetchLazy(rs, fields));
+        return Tools.fetchOne(fetchLazy(rs, fields));
     }
 
     @Override
     public Record fetchOne(ResultSet rs, DataType<?>... types) {
-        return Utils.fetchOne(fetchLazy(rs, types));
+        return Tools.fetchOne(fetchLazy(rs, types));
     }
 
     @Override
     public Record fetchOne(ResultSet rs, Class<?>... types) {
-        return Utils.fetchOne(fetchLazy(rs, types));
+        return Tools.fetchOne(fetchLazy(rs, types));
     }
 
-    
+
     @Override
     public Optional<Record> fetchOptional(ResultSet rs) {
         return Optional.ofNullable(fetchOne(rs));
@@ -830,7 +830,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public Optional<Record> fetchOptional(ResultSet rs, Class<?>... types) {
         return Optional.ofNullable(fetchOne(rs, types));
     }
-    
+
 
     @Override
     public Object fetchValue(ResultSet rs) {
@@ -852,7 +852,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return (T) value1((Record1) fetchOne(rs, type));
     }
 
-    
+
     @Override
     public Optional<?> fetchOptionalValue(ResultSet rs) {
         return Optional.ofNullable(fetchValue(rs));
@@ -872,7 +872,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public <T> Optional<T> fetchOptionalValue(ResultSet rs, Class<T> type) {
         return Optional.ofNullable(fetchValue(rs, type));
     }
-    
+
 
     @Override
     public List<?> fetchValues(ResultSet rs) {
@@ -933,10 +933,10 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Cursor<Record> fetchLazy(ResultSet rs, Class<?>... types) {
-        return fetchLazy(rs, Utils.dataTypes(types));
+        return fetchLazy(rs, Tools.dataTypes(types));
     }
 
-    
+
     @Override
     public Stream<Record> fetchStream(ResultSet rs) {
         return fetchLazy(rs).stream();
@@ -956,7 +956,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public Stream<Record> fetchStream(ResultSet rs, Class<?>... types) {
         return fetchLazy(rs, types).stream();
     }
-    
+
 
     @Override
     public Result<Record> fetchFromTXT(String string) {
@@ -965,7 +965,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Result<Record> fetchFromTXT(String string, String nullLiteral) {
-        return fetchFromStringData(Utils.parseTXT(string, nullLiteral));
+        return fetchFromStringData(Tools.parseTXT(string, nullLiteral));
     }
 
     @Override
@@ -1878,12 +1878,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateViewAsStep<Record> createView(String view, String... fields) {
-        return createView(table(name(view)), Utils.fieldsByName(view, fields));
+        return createView(table(name(view)), Tools.fieldsByName(view, fields));
     }
 
     @Override
     public CreateViewAsStep<Record> createView(Name view, Name... fields) {
-        return createView(table(view), Utils.fieldsByName(fields));
+        return createView(table(view), Tools.fieldsByName(fields));
     }
 
     @Override
@@ -2134,9 +2134,9 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
                 return select(field).fetchOne(field);
             }
 
-            /* [pro] xx
-            xxxx xxxxxxxx
-            xx [/pro] */
+
+
+
 
             case CUBRID:
             case MARIADB:
@@ -2155,25 +2155,25 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
                 return select(field).fetchOne(field);
             }
 
-            /* [pro] xx
-            xxxx xxxxxxxxx x
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxxx xxxxx xxxxx x xxxx xxxxxxxxxxxxxxxxxx
-            x
 
-            xxxx xxxxxxx x
-                xxxxxxxxxxxxxxxxx xxxxx x xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            x
 
-            xxxx xxxxxxx
-            xxxx xxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxx x
-                xxxxxxxxxxxxxxxxx xxxxx x xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            x
 
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             default:
                 throw new SQLDialectNotSupportedException("identity functionality not supported by " + configuration().dialect());
         }
@@ -2207,7 +2207,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Record newRecord(Field<?>... fields) {
-        return Utils.newRecord(false, RecordImpl.class, fields, configuration()).<RuntimeException>operate(null);
+        return Tools.newRecord(false, RecordImpl.class, fields, configuration()).<RuntimeException>operate(null);
     }
 
     // [jooq-tools] START [newRecord]
@@ -2348,17 +2348,17 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends UDTRecord<R>> R newRecord(UDT<R> type) {
-        return Utils.newRecord(false, type, configuration()).<RuntimeException>operate(null);
+        return Tools.newRecord(false, type, configuration()).<RuntimeException>operate(null);
     }
 
     @Override
     public <R extends Record> R newRecord(Table<R> table) {
-        return Utils.newRecord(false, table, configuration()).<RuntimeException>operate(null);
+        return Tools.newRecord(false, table, configuration()).<RuntimeException>operate(null);
     }
 
     @Override
     public <R extends Record> R newRecord(Table<R> table, final Object source) {
-        return Utils.newRecord(false, table, configuration())
+        return Tools.newRecord(false, table, configuration())
                     .operate(new RecordOperation<R, RuntimeException>() {
 
             @Override
@@ -2521,7 +2521,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> Result<R> fetch(ResultQuery<R> query) {
-        final Configuration previous = Utils.getConfiguration(query);
+        final Configuration previous = Tools.getConfiguration(query);
 
         try {
             query.attach(configuration());
@@ -2534,7 +2534,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> Cursor<R> fetchLazy(ResultQuery<R> query) {
-        final Configuration previous = Utils.getConfiguration(query);
+        final Configuration previous = Tools.getConfiguration(query);
 
         try {
             query.attach(configuration());
@@ -2545,10 +2545,10 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         }
     }
 
-    
+
     @Override
     public <R extends Record> Stream<R> fetchStream(ResultQuery<R> query) {
-        final Configuration previous = Utils.getConfiguration(query);
+        final Configuration previous = Tools.getConfiguration(query);
 
         try {
             query.attach(configuration());
@@ -2558,11 +2558,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
             query.attach(previous);
         }
     }
-    
+
 
     @Override
     public <R extends Record> Results fetchMany(ResultQuery<R> query) {
-        final Configuration previous = Utils.getConfiguration(query);
+        final Configuration previous = Tools.getConfiguration(query);
 
         try {
             query.attach(configuration());
@@ -2575,7 +2575,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> R fetchOne(ResultQuery<R> query) {
-        final Configuration previous = Utils.getConfiguration(query);
+        final Configuration previous = Tools.getConfiguration(query);
 
         try {
             query.attach(configuration());
@@ -2586,16 +2586,16 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         }
     }
 
-    
+
     @Override
     public <R extends Record> Optional<R> fetchOptional(ResultQuery<R> query) {
         return Optional.ofNullable(fetchOne(query));
     }
-    
+
 
     @Override
     public <T, R extends Record1<T>> T fetchValue(ResultQuery<R> query) {
-        final Configuration previous = Utils.getConfiguration(query);
+        final Configuration previous = Tools.getConfiguration(query);
 
         try {
             query.attach(configuration());
@@ -2611,7 +2611,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return fetchValue(select(field).from(field.getTable()));
     }
 
-    
+
     @Override
     public <T, R extends Record1<T>> Optional<T> fetchOptionalValue(ResultQuery<R> query) {
         return Optional.ofNullable(fetchValue(query));
@@ -2621,7 +2621,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public <T> Optional<T> fetchOptionalValue(TableField<?, T> field) {
         return Optional.ofNullable(fetchValue(field));
     }
-    
+
 
     @Override
     public <T, R extends Record1<T>> List<T> fetchValues(ResultQuery<R> query) {
@@ -2675,7 +2675,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public int execute(Query query) {
-        final Configuration previous = Utils.getConfiguration(query);
+        final Configuration previous = Tools.getConfiguration(query);
 
         try {
             query.attach(configuration());
@@ -2702,15 +2702,15 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> R fetchOne(Table<R> table) {
-        return Utils.fetchOne(fetchLazy(table));
+        return Tools.fetchOne(fetchLazy(table));
     }
 
     @Override
     public <R extends Record> R fetchOne(Table<R> table, Condition condition) {
-        return Utils.fetchOne(fetchLazy(table, condition));
+        return Tools.fetchOne(fetchLazy(table, condition));
     }
 
-    
+
     @Override
     public <R extends Record> Optional<R> fetchOptional(Table<R> table) {
         return Optional.ofNullable(fetchOne(table));
@@ -2720,16 +2720,16 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public <R extends Record> Optional<R> fetchOptional(Table<R> table, Condition condition) {
         return Optional.ofNullable(fetchOne(table, condition));
     }
-    
+
 
     @Override
     public <R extends Record> R fetchAny(Table<R> table) {
-        return Utils.filterOne(selectFrom(table).limit(1).fetch());
+        return Tools.filterOne(selectFrom(table).limit(1).fetch());
     }
 
     @Override
     public <R extends Record> R fetchAny(Table<R> table, Condition condition) {
-        return Utils.filterOne(selectFrom(table).where(condition).limit(1).fetch());
+        return Tools.filterOne(selectFrom(table).where(condition).limit(1).fetch());
     }
 
     @Override
@@ -2742,7 +2742,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return selectFrom(table).where(condition).fetchLazy();
     }
 
-    
+
     @Override
     public <R extends Record> Stream<R> fetchStream(Table<R> table) {
         return fetchStream(table, trueCondition());
@@ -2752,7 +2752,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public <R extends Record> Stream<R> fetchStream(Table<R> table, Condition condition) {
         return selectFrom(table).where(condition).stream();
     }
-    
+
 
     @Override
     public <R extends TableRecord<R>> int executeInsert(R record) {
@@ -2764,7 +2764,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public <R extends UpdatableRecord<R>> int executeUpdate(R record) {
         UpdateQuery<R> update = updateQuery(record.getTable());
-        Utils.addConditions(update, record, record.getTable().getPrimaryKey().getFieldsArray());
+        Tools.addConditions(update, record, record.getTable().getPrimaryKey().getFieldsArray());
         update.setRecord(record);
         return update.execute();
     }
@@ -2780,7 +2780,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public <R extends UpdatableRecord<R>> int executeDelete(R record) {
         DeleteQuery<R> delete = deleteQuery(record.getTable());
-        Utils.addConditions(delete, record, record.getTable().getPrimaryKey().getFieldsArray());
+        Tools.addConditions(delete, record, record.getTable().getPrimaryKey().getFieldsArray());
         return delete.execute();
     }
 

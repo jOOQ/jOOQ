@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -84,8 +84,8 @@ import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.selectOne;
-import static org.jooq.impl.Utils.DataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
-import static org.jooq.impl.Utils.DataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
+import static org.jooq.impl.Tools.DataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
+import static org.jooq.impl.Tools.DataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -172,12 +172,12 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep<Rec
             keyword = "left outer join lateral";
         }
 
-        /* [pro] xx
-        xx xx xx xxxxxxx xxx xxxxx xxxxxxx xx xxx xxxxxxxx
-        xxxx xx xxxxxxxxxxxxxxx xx xxxx xx xxxxxxxxxxxx xx xxxxxxx x
-            xxxxxxx x xxxxxx xxxxxx
-        x
-        xx [/pro] */
+
+
+
+
+
+
 
         toSQLTable(ctx, lhs);
 
@@ -365,7 +365,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep<Rec
                        .start(TABLE_JOIN_USING)
                        .keyword("using")
                        .sql('(');
-                Utils.fieldNames(context, using);
+                Tools.fieldNames(context, using);
                 context.sql(')')
                        .end(TABLE_JOIN_USING);
             }
@@ -461,19 +461,19 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep<Rec
     // Join API
     // ------------------------------------------------------------------------
 
-    /* [pro] xx
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxx xxxxxxx x
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxx xxxxx
-    x
 
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public final JoinTable on(Condition... conditions) {
         condition.addConditions(conditions);

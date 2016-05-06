@@ -27,12 +27,12 @@ public class Syskeys extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	}
 
 	/**
-	 * The column <code>SYS.SYSKEYS.CONSTRAINTID</code>. 
+	 * The column <code>SYS.SYSKEYS.CONSTRAINTID</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> CONSTRAINTID = createField("CONSTRAINTID", org.jooq.impl.SQLDataType.CHAR, SYSKEYS);
 
 	/**
-	 * The column <code>SYS.SYSKEYS.CONGLOMERATEID</code>. 
+	 * The column <code>SYS.SYSKEYS.CONGLOMERATEID</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> CONGLOMERATEID = createField("CONGLOMERATEID", org.jooq.impl.SQLDataType.CHAR, SYSKEYS);
 

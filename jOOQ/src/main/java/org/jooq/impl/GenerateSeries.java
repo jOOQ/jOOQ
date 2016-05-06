@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -80,9 +80,9 @@ class GenerateSeries extends AbstractTable<Record1<Integer>> {
     private final QueryPart delegate(Configuration configuration) {
         switch (configuration.family()) {
             case CUBRID:
-            /* [pro] xx
-            xxxx xxxxxxx
-            xx [/pro] */
+
+
+
 
                 // There is a bug in CUBRID preventing reuse of "level" in the
                 // predicate http://jira.cubrid.org/browse/ENGINE-119

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -78,28 +78,28 @@ public class Databases {
         Class<? extends Database> result = JDBCDatabase.class;
 
         switch (dialect) {
-            /* [pro] xx
-            xxxx xxxxxxxxxxx
-            xxxx xxxxxxx        xxxxxx x xxxxxxxxxxxxxxxxxxx      xxxxxx
-            xxxx xxxx           xxxxxx x xxxxxxxxxxxxxxxxxx       xxxxxx
-            xxxx xxxxxx
-            xxxx xxxxxxx
-            xxxx xxxx           xxxxxx x xxxxxxxxxxxxxxxxxx       xxxxxx
-            xxxx xxxxx          xxxxxx x xxxxxxxxxxxxxxxxxxx      xxxxxx
-            xxxx xxxxxxxxx      xxxxxx x xxxxxxxxxxxxxxxxxxxxxxx  xxxxxx
-            xxxx xxxxxxx        xxxxxx x xxxxxxxxxxxxxxxxxxxxx    xxxxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxx        xxxxxx x xxxxxxxxxxxxxxxxxxxxx    xxxxxx
-            xxxx xxxxxxxxx      xxxxxx x xxxxxxxxxxxxxxxxxxxxxxx  xxxxxx
-            xxxx xxxxxxxxxxxxxx
-            xxxx xxxxxxxxxxxxxx
-            xxxx xxxxxxxxxxxxxx
-            xxxx xxxxxxxxxx     xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
-            xxxx xxxxxxx        xxxxxx x xxxxxxxxxxxxxxxxxxxxx    xxxxxx
-            xxxx xxxxxxxx       xxxxxx x xxxxxxxxxxxxxxxxxxxxxx   xxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             case CUBRID:        result = CUBRIDDatabase.class;    break;
             case DERBY:         result = DerbyDatabase.class;     break;

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -125,18 +125,18 @@ public interface SelectForUpdateStep<R extends Record> extends SelectOptionStep<
     @Support({ MARIADB, MYSQL, POSTGRES })
     SelectOptionStep<R> forShare();
 
-    /* [pro] xx
-    xxx
-     x xxx x xxxxxxxxxx xxxxx xxxxxxxxxxxxx xxxxxx xx xxx xxx xx xxx xxxxxxxxx
-     xx
-    xxxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
 
-    xxx
-     x xxx x xxxxxxxxxx xxxx xxxxxxxxxxx xxxxxx xx xxx xxx xx xxx xxxxxxxxx
-     xx
-    xxxxxxxxxx xxxxxx xx
-    xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

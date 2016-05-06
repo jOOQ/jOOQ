@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -73,13 +73,13 @@ class Least<T> extends AbstractFunction<T> {
             // This implementation has O(2^n) complexity. Better implementations
             // are very welcome
 
-            /* [pro] xx
-            xxxx xxxxxxx
-            xxxx xxxx
-            xxxx xxxxxxxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
             case DERBY: {
                 Field<T> first = (Field<T>) getArguments()[0];
                 Field<T> other = (Field<T>) getArguments()[1];

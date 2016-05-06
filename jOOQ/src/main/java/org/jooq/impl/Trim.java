@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -65,15 +65,15 @@ class Trim extends AbstractFunction<String> {
 
     @Override
     final Field<String> getFunction0(Configuration configuration) {
-        /* [pro] xx
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxx xxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        x
 
-        xx [/pro] */
+
+
+
+
+
+
+
+
         return function("trim", SQLDataType.VARCHAR, argument);
     }
 }

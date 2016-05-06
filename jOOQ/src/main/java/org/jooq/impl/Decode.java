@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -62,7 +62,7 @@ class Decode<T, Z> extends AbstractFunction<Z> {
     private final Field<?>[]  more;
 
     public Decode(Field<T> field, Field<T> search, Field<Z> result, Field<?>[] more) {
-        super("decode", result.getDataType(), Utils.combine(field, search, result, more));
+        super("decode", result.getDataType(), Tools.combine(field, search, result, more));
 
         this.field = field;
         this.search = search;
@@ -75,17 +75,17 @@ class Decode<T, Z> extends AbstractFunction<Z> {
     final Field<Z> getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
 
-            /* [pro] xx
-            xx xxxx xxx xxxxxx xxxxxxxx xxxx xxxx xxxxxxxx
-            xxxx xxxxx x
-                xxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
-            x
 
-            xxxx xxxxxxx x
-                xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
-            x
 
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
             // Other dialects emulate it with a CASE ... WHEN expression
             default: {
                 CaseConditionStep<Z> when = DSL

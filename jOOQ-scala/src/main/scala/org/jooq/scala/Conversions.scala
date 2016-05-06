@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -130,7 +130,7 @@ object Conversions {
   implicit class ScalaDSLContext (val ctx : DSLContext) {
     def fetchAnyOption[R <: Record]          (table : Table[R])                        : Option[R]      = Option(ctx.fetchAny(table))
     def fetchAnyOption[R <: Record]          (table : Table[R], condition : Condition) : Option[R]      = Option(ctx.fetchAny(table, condition))
-                                             
+
     def fetchOneOption[R <: Record]          (query : ResultQuery[R])                  : Option[R]      = Option(ctx.fetchOne(query))
     def fetchOneOption                       (rs : ResultSet)                          : Option[Record] = Option(ctx.fetchOne(rs))
 
@@ -250,9 +250,9 @@ object Conversions {
     def <=>(value : T)                                 : Condition = field.isNotDistinctFrom(value)
     def <=>(value : Field[T])                          : Condition = field.isNotDistinctFrom(value)
 
-    /* [pro] xx
-    xxx xxx                                            x xxxxxxxx  x xxxxxxxxxx
-    xx [/pro] */
+
+
+
   }
 
   /**
@@ -281,7 +281,7 @@ object Conversions {
 
     def %(value : Number)             = field.mod(value)
     def %(value : Field[_ <: Number]) = field.mod(value)
-    
+
     // -------------------------------------------------------------------------
     // Bitwise operations
     // -------------------------------------------------------------------------

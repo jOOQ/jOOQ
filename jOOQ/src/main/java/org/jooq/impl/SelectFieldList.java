@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -59,11 +59,11 @@ class SelectFieldList extends QueryPartList<Field<?>> {
     }
 
     SelectFieldList(Collection<? extends SelectField<?>> wrappedList) {
-        super(Utils.fields(wrappedList));
+        super(Tools.fields(wrappedList));
     }
 
     SelectFieldList(SelectField<?>... wrappedList) {
-        super(Utils.fields(wrappedList));
+        super(Tools.fields(wrappedList));
     }
 
     @Override

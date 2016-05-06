@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -55,6 +55,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.impl.DSL.inline;
 
 import org.jooq.Clause;
 import org.jooq.Comparator;
@@ -121,18 +122,18 @@ class CompareCondition extends AbstractCondition {
         ParamType previousParamType = ctx.paramType();
         ParamType forcedParamType = previousParamType;
 
-        /* [pro] xx
-        xx xxxxxxx xxxx xxxxx xxx xxxxx xxxxx xxxxxx xxxx xxxxxxx xxxx x
-        xx xxxxxxxxxxxx xxxxxx xxxxxxxxxxx xx xxx xxxxxxxxxx xx xxxx xxxx xxxx
-        xx xxxxxxxxxx xxxx
-        xx xxxxxxx xx xxx xx xxx xxxxxxxxxx xxxxxxx
-            xxxxxxx x xxxxx
 
-        xx xxxxxxxx xxx x xxx xxxx xxxx xxxxxxxxx xxx xxxx xxxx xxxxxxx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xx xxxxxxx xx xxxxxxxx xx xxxxxx xx xxxxx
-            xxxxxxxxxxxxxxx x xxxxxxxx
-        xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
 
                      ctx.keyword(op.toSQL()).sql(' ');
         if (castRhs) ctx.keyword("cast").sql('(');
@@ -142,9 +143,8 @@ class CompareCondition extends AbstractCondition {
         if (castRhs) ctx.sql(' ').keyword("as").sql(' ').keyword("varchar").sql("(4000))");
 
         if (escape != null) {
-            ctx.sql(' ').keyword("escape").sql(" '")
-               .sql(escape)
-               .sql('\'');
+            ctx.sql(' ').keyword("escape").sql(' ')
+               .visit(inline(escape));
         }
     }
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -76,14 +76,14 @@ class Ln extends AbstractFunction<BigDecimal> {
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         if (base == null) {
             switch (configuration.dialect().family()) {
-                /* [pro] xx
-                xxxx xxxxxxxxx
-                    xxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxx
 
-                xxxx xxxxxxx
-                xxxx xxxx
-                xxxx xxxxxxxxxx
-                xx [/pro] */
+
+
+
+
+
+
+
                 case H2:
                     return function("log", SQLDataType.NUMERIC, argument);
 
@@ -93,15 +93,15 @@ class Ln extends AbstractFunction<BigDecimal> {
         }
         else {
             switch (configuration.dialect().family()) {
-                /* [pro] xx
-                xxxx xxxxxxx
-                xxxx xxxx
-                xxxx xxxx
-                xxxx xxxxxxxxx
-                xxxx xxxxxxx
-                xxxx xxxxxxxxxx
-                xxxx xxxxxxx
-                xx [/pro] */
+
+
+
+
+
+
+
+
+
                 case DERBY:
                 case H2:
                 case HSQLDB:

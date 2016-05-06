@@ -6,9 +6,9 @@
     <parent>
         <groupId>org.jooq</groupId>
         <artifactId>jooq-parent</artifactId>
-        <version>3.7.2</version>
+        <version>3.7.4</version>
     </parent>
-    
+
     <groupId>org.jooq</groupId>
     <artifactId>jooq-codegen-maven</artifactId>
     <name>jOOQ Codegen Maven</name>
@@ -20,28 +20,28 @@
             <url>http://www.jooq.org/inc/LICENSE.txt</url>
             <distribution>repo</distribution>
         </license>
-        <!-- [pro] xxx
-        xxxxxxxxx
-            xxxxxxxxxx xxxxxxx xxx xxxxxxxxxxx xxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxx
-        xxxx [/pro] -->
+
+
+
+
+
+
+
     </licenses>
 
     <build>
         <plugins>
-        
+
             <!-- More details about this plugin can be found here:
                  http://maven.apache.org/plugin-tools/maven-plugin-plugin/examples/using-annotations.html
               -->
-              
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-plugin-plugin</artifactId>
                 <version>3.3</version>
                 <configuration>
-                
+
                     <!-- see http://jira.codehaus.org/browse/MNG-5346 -->
                     <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
                 </configuration>
@@ -52,7 +52,7 @@
                             <goal>descriptor</goal>
                         </goals>
                     </execution>
-                    
+
                     <!-- if you want to generate help goal -->
                     <execution>
                         <id>help-goal</id>
@@ -76,7 +76,7 @@
             <version>3.8.1</version>
             <scope>test</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-plugin-api</artifactId>

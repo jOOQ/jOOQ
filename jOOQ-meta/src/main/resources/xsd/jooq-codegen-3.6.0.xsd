@@ -442,7 +442,7 @@
         optional return values from stored procedures. This turns all procedures
         into Routine<Integer> (instead of Routine<Void>). For backwards-
         compatibility reasons, users can suppress this change in jOOQ 3.x
-        
+
         This feature is deprecated as of jOOQ 3.6.0 and will be removed again in
         jOOQ 4.0.
         -->

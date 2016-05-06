@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -58,6 +58,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
+// ...
 // ...
 // ...
 
@@ -3291,27 +3292,27 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
     @Support
     Field<T> coalesce(Field<T> option, Field<?>... options);
 
-    /* [pro] xx
-    xxx
-     x xxxx xxxx xxxxx xxxx xx xxxxxxxxxxxxxxx xxxxx xxx xxx xx xxxxxxxxxx
-     x xxxxxxxxxxx
-     x xxx
-     x xxxxxxxx
-     x xxx
-     x xxxxxxxxxxx
-     x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-     x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-     x xxxxxxxxxxxxx
-     x xxx
-     x xxx xxxxx xxxx xxxxxxxx
-     x xxx
-     x xxxxxxxxxxx
-     x xxxxxxxxxxxxx x xxxxxxxxxx
-     x xxxxxxxxxx x xxxxxxxxxxxxx
-     x xxxxxxxxxxxxx
-     xx
-    xxxxxxxxxxxxxxxx
-    xxxxxxxx xxxxxxx
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

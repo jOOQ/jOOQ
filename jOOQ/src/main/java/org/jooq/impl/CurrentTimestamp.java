@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -65,29 +65,29 @@ class CurrentTimestamp extends AbstractFunction<Timestamp> {
     @Override
     final Field<Timestamp> getFunction0(Configuration configuration) {
         switch (configuration.family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx
 
-            xxxx xxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx
 
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx
 
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx
 
-            xxxx xxxxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx
 
-            xxxx xxxx
-            xxxx xxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             case DERBY:
             case FIREBIRD:
             case HSQLDB:

@@ -18,70 +18,70 @@ public class LicenseRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	private static final long serialVersionUID = 1616832387;
 
 	/**
-	 * Setter for <code>license_server.license.id</code>. 
+	 * Setter for <code>license_server.license.id</code>.
 	 */
 	public void setId(java.lang.Long value) {
 		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>license_server.license.id</code>. 
+	 * Getter for <code>license_server.license.id</code>.
 	 */
 	public java.lang.Long getId() {
 		return (java.lang.Long) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>license_server.license.license_date</code>. 
+	 * Setter for <code>license_server.license.license_date</code>.
 	 */
 	public void setLicenseDate(java.sql.Timestamp value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>license_server.license.license_date</code>. 
+	 * Getter for <code>license_server.license.license_date</code>.
 	 */
 	public java.sql.Timestamp getLicenseDate() {
 		return (java.sql.Timestamp) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>license_server.license.licensee</code>. 
+	 * Setter for <code>license_server.license.licensee</code>.
 	 */
 	public void setLicensee(java.lang.String value) {
 		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>license_server.license.licensee</code>. 
+	 * Getter for <code>license_server.license.licensee</code>.
 	 */
 	public java.lang.String getLicensee() {
 		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>license_server.license.license</code>. 
+	 * Setter for <code>license_server.license.license</code>.
 	 */
 	public void setLicense(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>license_server.license.license</code>. 
+	 * Getter for <code>license_server.license.license</code>.
 	 */
 	public java.lang.String getLicense() {
 		return (java.lang.String) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>license_server.license.version</code>. 
+	 * Setter for <code>license_server.license.version</code>.
 	 */
 	public void setVersion(java.lang.String value) {
 		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>license_server.license.version</code>. 
+	 * Getter for <code>license_server.license.version</code>.
 	 */
 	public java.lang.String getVersion() {
 		return (java.lang.String) getValue(4);

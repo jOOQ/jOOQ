@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -194,11 +194,11 @@ implements
     @Override
     public final void accept(Context<?> context) {
 
-        /* [pro] xx
-        xx xxxxxxxxxxxxxxxxx xx xxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
 
-        xx [/pro] */
+
+
+
+
         context.sql("(");
 
         String separator = "";
@@ -9998,7 +9998,7 @@ implements
 
     @Override
     public final Condition in(Result result) {
-        QueryPartList<Row> list = new QueryPartList<Row>(Utils.rows(result));
+        QueryPartList<Row> list = new QueryPartList<Row>(Tools.rows(result));
         return new RowInCondition(this, list, Comparator.IN);
     }
 
@@ -10010,7 +10010,7 @@ implements
 
     @Override
     public final Condition notIn(Result result) {
-        QueryPartList<Row> list = new QueryPartList<Row>(Utils.rows(result));
+        QueryPartList<Row> list = new QueryPartList<Row>(Tools.rows(result));
         return new RowInCondition(this, list, Comparator.NOT_IN);
     }
 

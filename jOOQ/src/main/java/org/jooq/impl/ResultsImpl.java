@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -168,6 +168,11 @@ class ResultsImpl extends AbstractList<Result<Record>> implements Results, Attac
     @Override
     public Result<Record> remove(int index) {
         return results.remove(translatedIndex(index)).result();
+    }
+
+    @Override
+    public void clear() {
+        results.clear();
     }
 
     private final List<Result<Record>> list() {

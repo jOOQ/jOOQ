@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -53,40 +53,40 @@ import java.util.Collection;
  */
 public interface PivotInStep<T> {
 
-    /* [pro] xx
-    xxx
-     x xxxxxxx xxx xxxxxxxxxx xxxxxx xxx xxxxxxxx
-     x
-     x xxxxxx xxxxxx xxx xxxxxxxx xxxxxx
-     x xxxxxxx x xxx xxxxxxx xxxxx
-     xx
-    xxxxxxxxxx xxxxxxxxxx xxxxxxxxx xx
-    xxxxxxxxxxxxx xxxxxxx xxxxxxxx
 
-    xxx
-     x xxxxxxx xxx xxxxxxxxxx xxxxxx xxx xxxxxxxx
-     x xxx
-     x xxxx xxxxxx xx xxxxxxxxx xxxx xxxxxxxxx xx xxxxxx xxxxxxxxxxxxxxxxxxx
-     x xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxx xxxxxxxxx xxx
-     x xxxxxx xxxxxxxxxxxxxxx xxxxxxxx
-     x
-     x xxxxxx xxxxxx xxx xxxxxxxx xxxxxx
-     x xxxxxxx x xxx xxxxxxx xxxxx
-     xx
-    xxxxxxxxxx xxxxxxxxxx xxxxxxxxx xx
-    xxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxx
 
-    xxx
-     x xxxxxxx xxx xxxxxxxxxx xxxxxx xxx xxxxxxxx
-     x xxx
-     x xxxx xxxxxx xx xxxxxxxxx xxxx xxxxxxxxx xx xxxxxx xxxxxxxxxxxxxxxxxxx
-     x xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxx xxxxxxxxx xxx
-     x xxxxxx xxxxxxxxxxxxxxx xxxxxxxx
-     x
-     x xxxxxx xxxxxx xxx xxxxxxxx xxxxxx
-     x xxxxxxx x xxx xxxxxxx xxxxx
-     xx
-    xxxxxxxxxx xxxxxxxxxx xxxxxxxxx xx
-    xxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxx xxxxxxxxx xxxxxxxx
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

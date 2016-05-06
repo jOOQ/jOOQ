@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -61,12 +61,12 @@ class SQLImpl extends AbstractQueryPart implements SQL {
 
     SQLImpl(String sql, Object... input) {
         this.sql = sql;
-        this.substitutes = Utils.queryParts(input);
+        this.substitutes = Tools.queryParts(input);
     }
 
     @Override
     public final void accept(Context<?> ctx) {
-        Utils.renderAndBind(ctx, sql, substitutes);
+        Tools.renderAndBind(ctx, sql, substitutes);
     }
 
     @Override

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -160,7 +160,7 @@ public class DefaultRelations implements Relations {
         // [#1134] Prevent NPE's when a foreign key references a unique key
         // from another schema
         if (uniqueKeySchema == null) {
-            log.warn("Ignoring foreign key", foreignKeyName + " (" + foreignKeyColumn + ") referencing " + uniqueKeyName + " references a schema out of scope for jooq-meta: " + uniqueKeySchema);
+            log.info("Ignoring foreign key", foreignKeyName + " (" + foreignKeyColumn + ") referencing " + uniqueKeyName + " references a schema out of scope for jooq-meta: " + uniqueKeySchema);
             return;
         }
 

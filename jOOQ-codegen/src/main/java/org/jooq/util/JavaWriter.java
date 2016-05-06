@@ -74,7 +74,9 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     }
 
     private String escapeJavadoc(String string) {
-        return string.replace("*/", "* /");
+
+        // [#3450] [#4880] Must not print */ inside Javadoc
+        return string.replace("/*", "/ *").replace("*/", "* /");
     }
 
     public JavaWriter header(String header, Object... args) {

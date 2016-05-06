@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -67,8 +67,9 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
-import static org.jooq.impl.Utils.attachRecords;
-import static org.jooq.impl.Utils.needsBackslashEscaping;
+import static org.jooq.impl.Tools.attachRecords;
+import static org.jooq.impl.Tools.getMappedUDTName;
+import static org.jooq.impl.Tools.needsBackslashEscaping;
 import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
 import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
 import static org.jooq.tools.jdbc.JDBCUtils.wasNull;
@@ -87,7 +88,6 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -96,7 +96,9 @@ import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 // ...
@@ -125,6 +127,7 @@ import org.jooq.Schema;
 import org.jooq.Scope;
 import org.jooq.UDTRecord;
 import org.jooq.exception.DataTypeException;
+import org.jooq.exception.MappingException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
@@ -281,10 +284,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 switch (ctx.family()) {
 
                     // These dialects can hardly detect the type of a bound constant.
-                    /* [pro] xx
-                    xxxx xxxx
-                    xxxx xxxxxxxxx
-                    xx [/pro] */
+
+
+
+
                     case DERBY:
                     case FIREBIRD:
 
@@ -298,11 +301,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                     // [#1029] Postgres and [#632] Sybase need explicit casting
                     // in very rare cases.
-                    /* [pro] xx
-                    xxxx xxxxxxxxx
-                    xxxx xxxxxxx
-                    xxxx xxxxxxxx
-                    xx [/pro] */
+
+
+
+
+
                     case POSTGRES: {
                         return true;
                     }
@@ -315,22 +318,22 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         // them
         if (Interval.class.isAssignableFrom(type)) {
             switch (ctx.family()) {
-                /* [pro] xx
-                xxxx xxxxxxx
-                xx [/pro] */
+
+
+
                 case POSTGRES:
                     return true;
             }
         }
 
-        
+
         if (type == OffsetTime.class || type == OffsetDateTime.class) {
             switch (ctx.family()) {
                 case POSTGRES:
                     return true;
             }
         }
-        
+
 
         return false;
     }
@@ -394,12 +397,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             toSQLCast(ctx, converted, dataType, getValueLength(converted), 0, 0);
         }
 
-        /* [pro] xx
-        xx xxxxxxx xxxx xxxx xxxxx xxxxxx xxx xx xxxx xx xxx xxxxxx xx xxxx xxxxxxxx
-        xxxx xx xxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxxxxxxxxxx xxxxxxxxxx xxxxxxxxx xx xx xxx
-        x
-        xx [/pro] */
+
+
+
+
+
+
 
         // In all other cases, the bind variable can be cast normally
         else {
@@ -460,11 +463,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 if (asList(FIREBIRD, SQLITE).contains(family)) {
                     render.sql(((Boolean) val) ? "1" : "0");
                 }
-                /* [pro] xx
-                xxxx xx xxxxxxx xx xxxxxxxxx x
-                    xxxxxxxxxxxxxxxxxxxxx xxxx x xxxxx x xxxxxxx
-                x
-                xx [/pro] */
+
+
+
+
+
                 else {
                     render.keyword(((Boolean) val).toString());
                 }
@@ -478,14 +481,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     render.sql("0x")
                           .sql(convertBytesToHex(binary));
                 }
-                /* [pro] xx
-                xxxx xx xxxxxxx xx xxxx x
-                    xxxxxxxxxxxxxxxxxxxxxx
-                          xxxxxxxxxxx
-                          xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                          xxxxxxxxxxx
-                x
-                xx [/pro] */
+
+
+
+
+
+
+
+
                 else if (asList(DERBY, H2, HSQLDB, MARIADB, MYSQL, SQLITE).contains(family)) {
                     render.sql("X'")
                           .sql(convertBytesToHex(binary))
@@ -532,15 +535,15 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     render.sql('\'').sql(escape(val, render)).sql('\'');
                 }
 
-                /* [pro] xx
-                xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                    xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
-                x
 
-                xxxx xx xxxxxxx xx xxxxxxxxx x
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xx xxxxxx
-                x
-                xx [/pro] */
+
+
+
+
+
+
+
+
 
                 // [#1253] Derby doesn't support the standard literal
                 else if (family == DERBY) {
@@ -565,15 +568,15 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     render.sql('\'').sql(escape(val, render)).sql('\'');
                 }
 
-                /* [pro] xx
-                xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                    xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
-                x
 
-                xxxx xx xxxxxxx xx xxxxxxxxx x
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xx xxxxxxxxxxx
-                x
-                xx [/pro] */
+
+
+
+
+
+
+
+
 
                 // [#1253] Derby doesn't support the standard literal
                 else if (family == DERBY) {
@@ -603,15 +606,15 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     render.sql('\'').sql(new SimpleDateFormat("HH:mm:ss").format((Time) val)).sql('\'');
                 }
 
-                /* [pro] xx
-                xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                    xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx
-                x
 
-                xxxx xx xxxxxxx xx xxxxxxxxx x
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xx xxxxxxxxx
-                x
-                xx [/pro] */
+
+
+
+
+
+
+
+
 
                 // [#1253] Derby doesn't support the standard literal
                 else if (family == DERBY) {
@@ -622,13 +625,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 else if (family == MYSQL) {
                     render.keyword("{t '").sql(escape(val, render)).sql("'}");
                 }
-                /* [pro] xx
-                xx xxxxxxx xxxxxx xxxxxxx xxxx xxxx xxxxxxxx
-                xxxx xx xxxxxxx xx xxxxxxx x
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx
-                x
 
-                xx [/pro] */
+
+
+
+
+
+
                 // Most dialects implement SQL standard time literals
                 else {
                     render.keyword("time").sql(" '").sql(escape(val, render)).sql('\'');
@@ -673,11 +676,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     }
                 }
             }
-            /* [pro] xx
-            xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                xxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxx
-            x
-            xx [/pro] */
+
+
+
+
+
             else if (EnumType.class.isAssignableFrom(type)) {
                 String literal = ((EnumType) val).getLiteral();
 
@@ -777,29 +780,29 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         int sqlType = DefaultDataType.getDataType(ctx.dialect(), type).getSQLType();
 
         switch (configuration.dialect().family()) {
-            /* [pro] xx
 
-            xx xxx xxxx xxxx xxxxxxx xxxxx xxxxxx xxxxx xx xxxx
-            xx xxxx xxx xxxx xxxx
-            xxxx xxxxxxx x
-                xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxxx
-                x
 
-                xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
-                x
 
-                xx xxx xxxxxxx xxxxxxxxx xx xxx xx xxxxxxxx x xxxx
-                xx xxxxxxx
-                xxxx x
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxx
-                x
 
-                xxxxxx
-            x
 
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             default: {
                 ctx.statement().registerOutParameter(ctx.index(), sqlType);
                 break;
@@ -828,17 +831,17 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         if (value == null) {
             int sqlType = DefaultDataType.getDataType(dialect, type).getSQLType();
 
-            /* [pro] xx
-            xx xxxxxxxxxxxx xxxxx xxxxx xxxx xx xx xxxxx xxxx xxxxx xxxx xxxx
-            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
-            x
 
-            xxxx
-            xx [/pro] */
+
+
+
+
+
+
+
             // [#1126] Oracle's UDTs need to be bound with their type name
             if (UDTRecord.class.isAssignableFrom(type)) {
-                ctx.statement().setNull(ctx.index(), sqlType, Utils.getMappedUDTName(configuration, (Class<UDTRecord<?>>) type));
+                ctx.statement().setNull(ctx.index(), sqlType, Tools.getMappedUDTName(configuration, (Class<UDTRecord<?>>) type));
             }
 
             // [#1225] [#1227] TODO Put this logic into DataType
@@ -847,51 +850,51 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 ctx.statement().setNull(ctx.index(), Types.BINARY);
             }
 
-            /* [pro] xx
-            xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx x
 
-                xx xxxx xx xxxx xxxxxx xxxx xxx xxx xxxxxxxxx xxxxxx
-                xx xxxxxxxxxxx xxxxx xxxxxxx xxx xxxxxxx
-                xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxxxx xxxxxxxxx x
-                    xxxx xxxxxxxxxxxxx
-                    xxxx xxxxxxxxxxxxxxxx
-                    xxxx xxxxxxxxxxxxxxxxxxxx
-                    xxxx xxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
-                        xxxxxx
 
-                    xxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
-                        xxxxxx
-                x
-            x
 
-            xx xxxxxxx xxxxxxx xxx xxx xxxxxx xxxxxx xxxx xxx xxxx xxxxxxxx xxx xxx xxxx xxxxxx
-            xx xxxxxx xxx xxx xxxxxxx xxxxx
-            xxxx xx xxxxxxxx xx xxxxxxxxxxxxx xx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx
-            x
 
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             // All other types can be set to null if the JDBC type is known
             else if (sqlType != Types.OTHER) {
                 ctx.statement().setNull(ctx.index(), sqlType);
             }
 
-            /* [pro] xx
-            xx xxxxxx xxx xxx xxxxxxx xxxxxxx xxxxx xxxxxx xx xxx xx xxxx
-            xx xxxxxxxxxxx xxx
-            xxxx xx xxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxx x
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxx
-            x
 
-            xx xxxxxx xxx xxxxxxx xxxxxxx xxxxx xxx xx xxx xx xxxx xxxxx xxxxxxx
-            xxxx xx xxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx x
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx
-            x
 
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
             // [#729] In the absence of the correct JDBC type, try setObject
             else {
                 ctx.statement().setObject(ctx.index(), null);
@@ -909,12 +912,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 ctx.statement().setBlob(ctx.index(), (Blob) value);
             }
             else if (actualType == Boolean.class) {
-                /* [pro] xx
-                xx xx xxxxxx xxxxxx xxxxxx xx xxxxx xxxxx xxxxx xx xxxxxxxxx xx xxxxxxxxxx xx xxxxxxx xxxxxxx
-                xx xxxxxxxxxxxxxxxxx xx xxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxx xxxxx x x x xxx
-                xxxx
-                xx [/pro] */
+
+
+
+
+
+
                     ctx.statement().setBoolean(ctx.index(), (Boolean) value);
             }
             else if (actualType == BigDecimal.class) {
@@ -952,11 +955,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 ctx.statement().setInt(ctx.index(), (Integer) value);
             }
             else if (actualType == Long.class) {
-                /* [pro] xx
-                xx xxxxxxxxxxxxxxxxx xx xxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
-                xxxx
-                xx [/pro] */
+
+
+
+
+
                 ctx.statement().setLong(ctx.index(), (Long) value);
             }
             else if (actualType == Short.class) {
@@ -993,7 +996,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 }
             }
 
-            
+
             else if (actualType == LocalDate.class) {
                 ctx.statement().setDate(ctx.index(), Date.valueOf((LocalDate) value));
             }
@@ -1009,7 +1012,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             else if (actualType == OffsetDateTime.class) {
                 ctx.statement().setString(ctx.index(), value.toString());
             }
-            
+
 
             // [#566] Interval data types are best bound as Strings
             else if (actualType == YearToMonth.class) {
@@ -1035,19 +1038,19 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 ctx.statement().setInt(ctx.index(), ((UShort) value).intValue());
             }
             else if (actualType == UInteger.class) {
-                /* [pro] xx
-                xx xxxxxxxxxxxxxxxxx xx xxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
-                xxxx
-                xx [/pro] */
+
+
+
+
+
                 ctx.statement().setLong(ctx.index(), ((UInteger) value).longValue());
             }
             else if (actualType == ULong.class) {
-                /* [pro] xx
-                xx xxxxxxxxxxxxxxxxx xx xxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
-                xxxx
-                xx [/pro] */
+
+
+
+
+
                 ctx.statement().setBigDecimal(ctx.index(), new BigDecimal(value.toString()));
             }
             else if (actualType == UUID.class) {
@@ -1061,13 +1064,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                         break;
                     }
 
-                    /* [pro] xx
-                    xx xxxxx xxx xxxxxxxx xxxx xxxx xxxxx xx xx xxxx xxxx xxxxxxxx
-                    xx xxxx xx xxxx xxxxxxxxxx xxxxxxx xxxx xxxxxxxxxxxxxxxxxx
-                    xxxx xxxxxxxxxx
-                    xxxx xxxxxxx
 
-                    xx [/pro] */
+
+
+
+
+
+
                     // Most databases don't have such a type. In this case, jOOQ
                     // emulates the type
                     default: {
@@ -1106,12 +1109,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                         throw new SQLDialectNotSupportedException("Cannot bind ARRAY types in dialect " + dialect);
                 }
             }
-            /* [pro] xx
-            xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-                xxxxxxxxxxxxxx xxxxx x xxxxxxxxxxxxxxxx xxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx
-            x
-            xx [/pro] */
+
+
+
+
+
+
             else if (EnumType.class.isAssignableFrom(actualType)) {
                 ctx.statement().setString(ctx.index(), ((EnumType) value).getLiteral());
             }
@@ -1237,21 +1240,21 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else if (type == UUID.class) {
             ctx.output().writeString(value.toString());
         }
-        /* [pro] xx
-        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
 
-            xx xxxxxxx xx xxx xxxxxx xxxxxx xxxx xxxxxxxxxxxxxxxxxx xxx xxxx
-            xx xxx xx xxxxxxxxxxxxxxxxxxx xxxxx xx xxxxxxxxxxx xxxxxx xx xxxxxxxxx
-            xxxxxxxxxxxxxx xxxxx x xxxxxxxxxxxxxxxx xxxxxx
-            xxxxxxxx x x xxxxxxxxxxxxxxxx
-            xxxxxxxx xxxxxxxxx x xxx xxxxxxxxxxxxxxxxx
 
-            xxx xxxx x x xx x x xxxxxxxxxxxxxxxxx xxxx
-                xxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
-        x
-        xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
         else if (EnumType.class.isAssignableFrom(type)) {
             ctx.output().writeString(((EnumType) value).getLiteral());
         }
@@ -1314,7 +1317,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else if (type == Integer.class) {
             result = (T) wasNull(ctx.resultSet(), Integer.valueOf(ctx.resultSet().getInt(ctx.index())));
         }
-        
+
         else if (type == LocalDate.class) {
             result = (T) localDate(getDate(ctx.configuration().dialect(), ctx.resultSet(), ctx.index()));
         }
@@ -1324,18 +1327,18 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else if (type == LocalDateTime.class) {
             result = (T) localDateTime(getTimestamp(ctx.configuration().dialect(), ctx.resultSet(), ctx.index()));
         }
-        
+
         else if (type == Long.class) {
             result = (T) wasNull(ctx.resultSet(), Long.valueOf(ctx.resultSet().getLong(ctx.index())));
         }
-        
+
         else if (type == OffsetTime.class) {
             result = (T) offsetTime(ctx.resultSet().getString(ctx.index()));
         }
         else if (type == OffsetDateTime.class) {
             result = (T) offsetDateTime(ctx.resultSet().getString(ctx.index()));
         }
-        
+
         else if (type == Short.class) {
             result = (T) wasNull(ctx.resultSet(), Short.valueOf(ctx.resultSet().getShort(ctx.index())));
         }
@@ -1391,13 +1394,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     break;
                 }
 
-                /* [pro] xx
-                xx xxxxx xxx xxxxxxxx xxxx xxxx xxxxx xx xx xxxx xxxx xxxxxxxx
-                xx xxxx xx xxxx xxxxxxxxxx xxxxxxx xxxx xxxxxxxxxxxxxxxxxx
-                xxxx xxxxxxxxxx
-                xxxx xxxxxxx
 
-                xx [/pro] */
+
+
+
+
+
+
                 // Most databases don't have such a type. In this case, jOOQ
                 // emulates the type
                 default: {
@@ -1422,11 +1425,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     break;
             }
         }
-        /* [pro] xx
-        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxx xxxxxxxxxxxxxxxx xxxxxx
-        x
-        xx [/pro] */
+
+
+
+
+
         else if (EnumType.class.isAssignableFrom(type)) {
             result = getEnumType(type, ctx.resultSet().getString(ctx.index()));
         }
@@ -1437,7 +1440,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     break;
 
                 default:
-                    result = (T) ctx.resultSet().getObject(ctx.index(), DataTypes.udtRecords());
+                    result = (T) ctx.resultSet().getObject(ctx.index(), typeMap(type, ctx.configuration()));
                     break;
             }
         }
@@ -1456,7 +1459,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         ctx.value(converter.from(result));
     }
 
-    
+
     private final LocalDate localDate(Date date) {
         return date == null ? null : date.toLocalDate();
     }
@@ -1473,8 +1476,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         if (string == null)
             return null;
 
-        // [#4338] PostgreSQL is more lenient regarding the offset format
-        if (string.lastIndexOf('+') == string.length() - 3)
+        // [#4338] [#5180] PostgreSQL is more lenient regarding the offset format
+        if (string.lastIndexOf('+') == string.length() - 3 || string.lastIndexOf('-') == string.length() - 3)
             string = string + ":00";
 
         return OffsetTime.parse(string);
@@ -1484,8 +1487,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         if (string == null)
             return null;
 
-        // [#4338] PostgreSQL is more lenient regarding the offset format
-        if (string.lastIndexOf('+') == string.length() - 3)
+        // [#4338] [#5180] PostgreSQL is more lenient regarding the offset format
+        if (string.lastIndexOf('+') == string.length() - 3 || string.lastIndexOf('-') == string.length() - 3)
             string = string + ":00";
 
         // [#4338] SQL supports the alternative ISO 8601 date format, where a
@@ -1495,7 +1498,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         return OffsetDateTime.parse(string);
     }
-    
+
 
     @SuppressWarnings("unchecked")
     @Override
@@ -1598,13 +1601,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     break;
                 }
 
-                /* [pro] xx
-                xx xxxxx xxx xxxxxxxx xxxx xxxx xxxxx xx xx xxxx xxxx xxxxxxxx
-                xx xxxx xx xxxx xxxxxxxxxx xxxxxxx xxxx xxxxxxxxxxxxxxxxxx
-                xxxx xxxxxxxxxx
-                xxxx xxxxxxx
 
-                xx [/pro] */
+
+
+
+
+
+
                 // Most databases don't have such a type. In this case, jOOQ
                 // emulates the type
                 default: {
@@ -1618,11 +1621,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else if (type.isArray()) {
             result = (T) convertArray(ctx.statement().getObject(ctx.index()), (Class<? extends Object[]>)type);
         }
-        /* [pro] xx
-        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxx xxxxxxxxxxxxxxxx xxxxxx
-        x
-        xx [/pro] */
+
+
+
+
+
         else if (EnumType.class.isAssignableFrom(type)) {
             result = getEnumType(type, ctx.statement().getString(ctx.index()));
         }
@@ -1633,7 +1636,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     break;
 
                 default:
-                    result = (T) ctx.statement().getObject(ctx.index(), DataTypes.udtRecords());
+                    result = (T) ctx.statement().getObject(ctx.index(), typeMap(type, ctx.configuration()));
                     break;
             }
         }
@@ -1650,6 +1653,37 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             ((Attachable) result).attach(ctx.configuration());
 
         ctx.value(converter.from(result));
+    }
+
+    static final Map<String, Class<?>> typeMap(Class<?> type, Configuration configuration) {
+        return typeMap(type, configuration, new HashMap<String, Class<?>>());
+    }
+
+    @SuppressWarnings("unchecked")
+    static final Map<String, Class<?>> typeMap(Class<?> type, Configuration configuration, Map<String, Class<?>> result) {
+        try {
+            if (UDTRecord.class.isAssignableFrom(type)) {
+                Class<UDTRecord<?>> t = (Class<UDTRecord<?>>) type;
+                result.put(getMappedUDTName(configuration, t), t);
+                UDTRecord<?> r = t.newInstance();
+                for (Field<?> field : r.getUDT().fields())
+                    typeMap(field.getType(), configuration, result);
+            }
+
+
+
+
+
+
+
+
+
+        }
+        catch (Exception e) {
+            throw new MappingException("Error while collecting type map", e);
+        }
+
+        return result;
     }
 
     @SuppressWarnings("unchecked")
@@ -1753,11 +1787,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             Array array = ctx.input().readArray();
             result = (T) (array == null ? null : array.getArray());
         }
-        /* [pro] xx
-        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxx x xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxx xxxxxxxxxxxxxxxx xxxxxx
-        x
-        xx [/pro] */
+
+
+
+
+
         else if (EnumType.class.isAssignableFrom(type)) {
             result = getEnumType(type, ctx.input().readString());
         }
@@ -1774,45 +1808,45 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-    /* [pro] xx
-    xxxxxxx xxxxxx xxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxx xxxxxx xxxxxxx xxxxxxx xxxxxxxxxxxxxxx xxxxx xxxxxx xxxxxxxxxxxx x
-        xx xxxxxx xx xxxxx x
-            xxxxxx xxxxx
-        x
-        xxxx x
-            xx xxxxx xxxxxx xxx xxxxx xxxxxx xxxx xxxx xxxxxxx
-            xx xxx xxxxxxx xxxx xxxxxxxxx xx xxxx x xxx xxxxxxxx xxxxxxxxx xx
-            xx xxx xxxx xxx xxx
-            xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
-        x
-    x
 
-    xxxxxx xxxxx xxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxx xxxxx xxxxxxx xxxxxx xxxxxxxxxxxx x
-        xx xxxxxxx xx xxxxx x
-            xxxxxxxxxxxxxxxx xxxxxx
-        x
-        xxxx x
-            xx xxxxxx xxxxx xxxxxx xxxx xx xxxxxx xx xxxx xxxxx xx xxxxxx
-            xx xxxxxx xxxxx xxxx xxxx xx xxxx xx xxxxxxx xxxx xx xxxxxx xx
-            xx xxxxxxxxx xxxxxxx xxx xxxxxx xxxxxxx
-            xxxxxxxx xxxxx x xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxx xxxxxxxxx x xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx
 
-            xxx xxxx x x xx x x xxxxxxxxxxxxx xxxx
-                xxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-            xxxxxxxxxxxxxxxxxxxxxx
-            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        x
 
-        xx xxxxxxx xxxxxx xxxxxxx xx xxxxxxxx x xxxxxxxx
-        xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        xxxxxx xxxxxxx
-    x
 
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * [#2534] Extract <code>byte[]</code> or <code>String</code> data from a
      * LOB, if the argument is a lob.
@@ -1963,8 +1997,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     // interfaces. Instead, a string representation of a UDT has to be parsed
     // -------------------------------------------------------------------------
 
-    @SuppressWarnings("unchecked")
     private static final <T> T pgFromString(Class<T> type, String string) {
+        return pgFromString(Converters.identity(type), string);
+    }
+
+    @SuppressWarnings("unchecked")
+    private static final <T> T pgFromString(Converter<?, T> converter, String string) {
+        Class<T> type = converter.toType();
+
         if (string == null) {
             return null;
         }
@@ -1972,7 +2012,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // Not supported
         }
         else if (type == Boolean.class) {
-            return (T) Boolean.valueOf(string);
+            return (T) Convert.convert(string, Boolean.class);
         }
         else if (type == BigInteger.class) {
             return (T) new BigInteger(string);
@@ -1990,8 +2030,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // Not supported
         }
         else if (type == Date.class) {
-            SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-            return (T) new Date(pgParseDate(string, f).getTime());
+            return (T) Date.valueOf(string);
         }
         else if (type == Double.class) {
             return (T) Double.valueOf(string);
@@ -2012,12 +2051,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return (T) string;
         }
         else if (type == Time.class) {
-            SimpleDateFormat f = new SimpleDateFormat("HH:mm:ss");
-            return (T) new Time(pgParseDate(string, f).getTime());
+            return (T) Time.valueOf(string);
         }
         else if (type == Timestamp.class) {
-            SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            return (T) new Timestamp(pgParseDate(string, f).getTime());
+            return (T) Timestamp.valueOf(string);
         }
         else if (type == UByte.class) {
             return (T) UByte.valueOf(string);
@@ -2037,28 +2074,23 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else if (type.isArray()) {
             return (T) pgNewArray(type, string);
         }
-        /* [pro] xx
-        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xx xxx xxxxxxxxx
-        x
-        xx [/pro] */
+
+
+
+
+
         else if (EnumType.class.isAssignableFrom(type)) {
             return getEnumType(type, string);
         }
         else if (Record.class.isAssignableFrom(type)) {
             return (T) pgNewRecord(type, null, string);
         }
+        else {
+            Converter<Object, T> c = (Converter<Object, T>) converter;
+            return c.from(pgFromString(c.fromType(), string));
+        }
 
         throw new UnsupportedOperationException("Class " + type + " is not supported");
-    }
-
-    private static final java.util.Date pgParseDate(String string, SimpleDateFormat f) {
-        try {
-            return f.parse(string);
-        }
-        catch (ParseException e) {
-            throw new DataTypeException("Error while converting date", e);
-        }
     }
 
     /**
@@ -2078,7 +2110,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return null;
         }
 
-        return Utils.newRecord(true, (Class<Record>) type, fields)
+        return Tools.newRecord(true, (Class<Record>) type, fields)
                     .operate(new RecordOperation<Record, RuntimeException>() {
 
                 @Override
@@ -2194,7 +2226,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final <T> void pgSetValue(Record record, Field<T> field, String value) {
-        record.setValue(field, pgFromString(field.getType(), value));
+        record.setValue(field, pgFromString(field.getConverter(), value));
     }
 
     private static final void pgRenderEnumCast(RenderContext render, Class<?> type) {

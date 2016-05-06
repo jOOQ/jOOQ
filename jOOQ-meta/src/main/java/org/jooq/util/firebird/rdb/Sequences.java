@@ -4,7 +4,7 @@
 package org.jooq.util.firebird.rdb;
 
 /**
- * Convenience access to all sequences in 
+ * Convenience access to all sequences in
  */
 @javax.annotation.Generated(
 	value = {

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -41,9 +41,9 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.row;
-import static org.jooq.impl.Utils.filterOne;
-import static org.jooq.impl.Utils.first;
-import static org.jooq.impl.Utils.list;
+import static org.jooq.impl.Tools.filterOne;
+import static org.jooq.impl.Tools.first;
+import static org.jooq.impl.Tools.list;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -73,9 +73,9 @@ class ReferenceImpl<R extends Record, O extends Record> extends AbstractKey<R> i
 
     private final UniqueKey<O> key;
 
-    
+
     @SafeVarargs
-    
+
     ReferenceImpl(UniqueKey<O> key, Table<R> table, TableField<R, ?>... fields) {
         super(table, fields);
 
@@ -93,9 +93,9 @@ class ReferenceImpl<R extends Record, O extends Record> extends AbstractKey<R> i
     }
 
     @Override
-    
+
     @SafeVarargs
-    
+
     public final Result<O> fetchParents(R... records) {
         return fetchParents(list(records));
     }
@@ -106,9 +106,9 @@ class ReferenceImpl<R extends Record, O extends Record> extends AbstractKey<R> i
     }
 
     @Override
-    
+
     @SafeVarargs
-    
+
     public final Result<R> fetchChildren(O... records) {
         return fetchChildren(list(records));
     }

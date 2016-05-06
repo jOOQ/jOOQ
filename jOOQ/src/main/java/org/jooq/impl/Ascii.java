@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -66,18 +66,18 @@ class Ascii extends AbstractFunction<Integer> {
     @Override
     final Field<Integer> getFunction0(Configuration configuration) {
         switch (configuration.dialect()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxx
 
-            xx [/pro] */
+
+
+
+
             case FIREBIRD:
                 return field("{ascii_val}({0})", SQLDataType.INTEGER, string);
 
             // TODO [#862] [#864] emulate this for some dialects
-            /* [pro] xx
-            xxxx xxxxxxx
-            xx [/pro] */
+
+
+
             case DERBY:
             case SQLITE:
 

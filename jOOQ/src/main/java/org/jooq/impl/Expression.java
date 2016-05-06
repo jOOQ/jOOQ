@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -57,6 +57,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
+// ...
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
@@ -100,7 +101,7 @@ class Expression<T> extends AbstractFunction<T> {
     private final ExpressionOperator      operator;
 
     Expression(ExpressionOperator operator, Field<T> lhs, Field<?>... rhs) {
-        super(operator.toSQL(), lhs.getDataType(), Utils.combine(lhs, rhs));
+        super(operator.toSQL(), lhs.getDataType(), Tools.combine(lhs, rhs));
 
         this.operator = operator;
         this.lhs = lhs;
@@ -156,13 +157,13 @@ class Expression<T> extends AbstractFunction<T> {
             return function("bin_or", getDataType(), getArguments());
         }
 
-        /* [pro] xx
-        xx xxxxxx xxx xx xxxxxxx xxxxxx
-        xxxx xx xxxxxxx xx xxxxxxxx xx xxxxxx xx xxxxxxx x
-            xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        x
 
-        xx [/pro] */
+
+
+
+
+
+
         // ~(a & b) & (a | b)
         else if (BIT_XOR == operator && asList(SQLITE).contains(family)) {
             return (Field<T>) DSL.bitAnd(
@@ -309,14 +310,14 @@ class Expression<T> extends AbstractFunction<T> {
                     }
 
                     if (rhs.get(0).getType() == YearToMonth.class) {
-                        return field("{date_add}({0}, {interval} {1} {year_month})", getDataType(), lhs, Utils.field(interval, String.class));
+                        return field("{date_add}({0}, {interval} {1} {year_month})", getDataType(), lhs, Tools.field(interval, String.class));
                     }
                     else {
                         if (dialect == CUBRID) {
-                            return field("{date_add}({0}, {interval} {1} {day_millisecond})", getDataType(), lhs, Utils.field(interval, String.class));
+                            return field("{date_add}({0}, {interval} {1} {day_millisecond})", getDataType(), lhs, Tools.field(interval, String.class));
                         }
                         else {
-                            return field("{date_add}({0}, {interval} {1} {day_microsecond})", getDataType(), lhs, Utils.field(interval, String.class));
+                            return field("{date_add}({0}, {interval} {1} {day_microsecond})", getDataType(), lhs, Tools.field(interval, String.class));
                         }
                     }
                 }
@@ -369,124 +370,124 @@ class Expression<T> extends AbstractFunction<T> {
                     return field("{datetime}({0}, {1})", getDataType(), lhs, interval);
                 }
 
-                /* [pro] xx
-                xxxx xxxxxxx x
-                    xx xxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxx x
-                        xxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
-                    x
-                    xxxx x
-                        xxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx
-                    x
-                x
 
-                xxxx xxxx
-                xxxx xxxxxxx
-                xxxx xxxxxxxxxx x
-                    xx xxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxx x
-                        xxxxxx xxxxxxxxxxxxxxxxxxxx xxxx xxxxxx xxxxxxxxxxxxxx xxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxx xxxxx
-                    x
-                    xxxx x
-                        xx xxx xxxxxx xxxxx xxxx xxxxx
-                        xxxxxxxxxxxxxxxx xxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxx xxxxxxxx x xxxxxxxxxxx
 
-                        xx xx xxxxxxx xxxx xxxxxx xxx xxxxxxxxxxx xxxxxx xxx
-                        xx xxx xxxxxxx xxxxxxxx xxxx xxxxx xxxxxxxxxxxx xxxxxxxxx
-                        xx xxxxxxxxxxxxxxxxxxx xx xx x
-                            xxxxxx xxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxxx xxxx xxxxxxx xxxxxxxxxxxxxx
-                                xxxxxxxx x xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                                xxxxxxxx x xxxxxxxxxxxxxxxxxxxxx
-                                xxxxxxxxx
-                        x
-                        xxxx x
-                            xxxxxx xxxxxxxxxxxxxxxxxxxx xxxx xxxxxx xxxxxxxxxxxxxx xxxxxxxx x xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxx
-                        x
-                    x
-                x
 
-                xxxx xxxxxxxxx x
-                    xx xxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxx x
-                        xx xxxxxxxxx xx xxxx x
-                            xxxxxx xxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        x
-                        xxxx x
-                            xxxxxx xxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        x
-                    x
-                    xxxx x
-                        xx xxxxxxxx xxxxx xxxx xxxx xx xxx xx xx xxxx xxxxx
-                        xxxxxxxxxxx xxxx x xxxxxxxxxxxxxxxxxx
 
-                        xx xxxxxxxxx xx xxxx x
-                            xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
-                                xxxxxxxxxxxxxxx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xxxxxxxxx
-                                xxxxxxxxxxxx
-                        x
-                        xxxx x
-                            xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
-                                xxxxxxxxxxxxxxx xxxxx xxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x xxxxxxxxx
-                                xxxxxxxxxxxx
-                        x
-                    x
-                x
 
-                xxxx xxxx x
-                    xx xxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxx x
-                        xx xxxxxxxxx xx xxxx x
-                            xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        x
-                        xxxx x
-                            xxxxxx xxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        x
-                    x
-                    xxxx x
-                        xx xxx xxxxx xxxx xxxx xx xxx xx xx xxxx xxxxx
-                        xxxxxxxxxxx xxxx x xxxxxxxxxxxxxxxxxx
 
-                        xx xxxxxxxxx xx xxxx x
-                            xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
-                                xxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                                xxxxxxxxxxxx
-                        x
-                        xxxx x
-                            xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
-                                xxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                                xxxxxxxxxxxx
-                        x
-                    x
-                x
 
-                xxxx xxxxxxx x
-                    xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxx xx xxx xxx xxxxxxxxxxxxxx
-                x
 
-                xxxx xxxxxxxxx x
-                    xx xxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxx x
-                        xx xxxxxxxxx xx xxxx x
-                            xxxxxx xxxxxxxxxxxxxxxxxxx xx x xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        x
-                        xxxx x
-                            xxxxxx xxxxxxxxxxxxxxxxxxx xx x xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        x
-                    x
-                    xxxx x
-                        xxxxxxxxxxx xxxx x xxxxxxxxxxxxxxxxxx
 
-                        xx xxxxxxxxx xx xxxx x
-                            xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
-                                xxxxxxxxxxxxxxxx xx x xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                                xxxxxxxxxxxx
-                        x
-                        xxxx x
-                            xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
-                                xxxxxxxxxxxxxxxx xx x xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                                xxxxxxxxxxxx
-                        x
-                    x
-                x
 
-                xxxx xxxxxxx
-                xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 case POSTGRES:
                 default:
                     return new DefaultExpression();
@@ -511,29 +512,29 @@ class Expression<T> extends AbstractFunction<T> {
         @SuppressWarnings({ "unchecked", "rawtypes" })
         private final Field<T> getNumberExpression(Configuration configuration) {
             switch (configuration.family()) {
-                /* [pro] xx
-                xxxx xxxxxxx x
-                    xx xxxxxxxxx xx xxxx x
-                        xxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxx
-                    x
-                    xxxx x
-                        xxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx
-                    x
-                x
 
-                xxxx xxxxx x
-                    xx xxxxxxxxx xx xxxx x
-                        xxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxx xxxx xxxxxxxxxxxxxxx
-                    x
-                    xxxx x
-                        xxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxx xxxx xxxxxxxxxxxxxxxxxxxxx
-                    x
-                x
 
-                xxxx xxxx
-                xxxx xxxxxxxxxx
-                xxxx xxxxxxx
-                xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 case FIREBIRD: {
                     if (operator == ADD) {
                         return field("{dateadd}(day, {0}, {1})", getDataType(), rhsAsNumber(), lhs);
@@ -543,9 +544,9 @@ class Expression<T> extends AbstractFunction<T> {
                     }
                 }
 
-                /* [pro] xx
-                xxxx xxxx
-                xx [/pro] */
+
+
+
                 case HSQLDB: {
                     if (operator == ADD) {
                         return lhs.add(field("{0} day", rhsAsNumber()));
@@ -581,28 +582,28 @@ class Expression<T> extends AbstractFunction<T> {
                     }
                 }
 
-                /* [pro] xx
-                xxxx xxxxxxxxx x
-                    xx xxxxxxxxx xx xxxx x
-                        xxxxxx xxxxxxxxxxx x xxx xxxxxx xxxxxxx xxxxxxxxxxxxxx xxxx xxxxxxxxxxxxxxx
-                    x
-                    xxxx x
-                        xxxxxx xxxxxxxxxxx x xxx xxxxxx xxxxxxx xxxxxxxxxxxxxx xxxx xxxxxxxxxxxxxxx
-                    x
-                x
 
-                xx xxxxxx xx xxx xxxxxxx xxx
-                xxxx xxxxxxx x
-                    xx xxxxxxxxx xx xxxx x
-                        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xx x xxxxxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxx
-                    x
-                    xxxx x
-                        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx xx x xxxxxxxx xxxxxxxxxxxxx xxxxxxxxxxxxxxxx
-                    x
-                x
 
-                xxxx xxxxxxxxx
-                xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 case POSTGRES: {
 
                     // This seems to be the most reliable way to avoid issues
@@ -625,9 +626,9 @@ class Expression<T> extends AbstractFunction<T> {
                     }
 
                 // These dialects can add / subtract days using +/- operators
-                /* [pro] xx
-                xxxx xxxxxxx
-                xx [/pro] */
+
+
+
                 case H2:
                 default:
                     return new DefaultExpression();

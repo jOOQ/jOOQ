@@ -12,7 +12,7 @@ var a = Tables.AUTHOR;
 
 // Unfortunately, there is a Nashorn / Java interoperablility issue documented here:
 // http://stackoverflow.com/q/25603191/521799
-// 
+//
 // To work around this issue, tables should probably be supplied in JavaScript arrays,
 // in order to explicitly invoke the method accepting varargs, instead of the overloaded method
 

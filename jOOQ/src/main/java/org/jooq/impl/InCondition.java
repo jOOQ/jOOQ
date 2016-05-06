@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -95,11 +95,11 @@ class InCondition<T> extends AbstractCondition {
             // [#798] Oracle and some other dialects can only hold 1000 values
             // in an IN (...) clause
             switch (ctx.configuration().dialect().family()) {
-                /* [pro] xx
-                xxxx xxxxxxx
-                xxxx xxxxxxx
-                xxxx xxxxxxxxxx
-                xx [/pro] */
+
+
+
+
+
                 case FIREBIRD: {
                     ctx.sql('(')
                        .formatIndentStart()

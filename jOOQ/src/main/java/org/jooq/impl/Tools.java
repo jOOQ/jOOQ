@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -131,7 +131,7 @@ import org.jooq.conf.BackslashEscaping;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.TooManyRowsException;
-import org.jooq.impl.Utils.Cache.CachedOperation;
+import org.jooq.impl.Tools.Cache.CachedOperation;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
@@ -142,9 +142,9 @@ import org.jooq.tools.reflect.Reflect;
  *
  * @author Lukas Eder
  */
-final class Utils {
+final class Tools {
 
-    static final JooqLogger       log                                          = JooqLogger.getLogger(Utils.class);
+    static final JooqLogger       log                                          = JooqLogger.getLogger(Tools.class);
 
     // ------------------------------------------------------------------------
     // Some constants for use with Context.data()
@@ -237,15 +237,15 @@ final class Utils {
          */
         DATA_WINDOW_DEFINITIONS,
 
-        /* [pro] xx
-        xxx
-         x xxxxxxx xxxxxxxxx xxxxxxxxx xxx xxx xxxxx xxxxx xxxxxxx
-         x xxx
-         x xx xxxx x xxxxxxxxxxx xxxxx xxxxxxx xxxxxxxxxxx xxxxxx xxxxxxx xxxxx
-         x xxxxxxxxxxx xx xxx xxxxxxxxxx xxxxxxxxxxxx xx xxxxxxxxxxxxxxxx xxxxxxx
-         xx
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xx [/pro] */
+
+
+
+
+
+
+
+
+
 
         /**
          * [#1629] The {@link Connection#getAutoCommit()} flag value before starting
@@ -402,23 +402,23 @@ final class Utils {
         return rows;
     }
 
-    /* [pro] xx
-    xxx
-     x xxxxxx x xxx xxxxxxxxxxxx xxxxxx xxxxxx xxxxxxxxxxxx
-     xx
-    xxxxxx xxxxx xx xxxxxxx xxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxx xxxxx x
-        xxx x
-            xxxxxx xxxxxxxxxxxxxxxxxxx
-        x
-        xxxxx xxxxxxxxxx xx x
-            xxxxx xxx xxxxxxxxxxxxxxxxxxxxxx
-                xxxxxxxxxxxx xxxx xxxx xxx xxxxxxx x xxxxxxxxxxx xxxx xxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx x x x xxxx
-                    x xx xxxxxxxxx x x x xxxxxxxxxxxxxxxx
 
-        x
-    x
 
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Create a new record
      */
@@ -1129,9 +1129,9 @@ final class Utils {
     /**
      * Create a new array
      */
-    
+
     @SafeVarargs
-    
+
     static final <T> T[] array(T... array) {
         return array;
     }
@@ -1140,9 +1140,9 @@ final class Utils {
      * Use this rather than {@link Arrays#asList(Object...)} for
      * <code>null</code>-safety
      */
-    
+
     @SafeVarargs
-    
+
     static final <T> List<T> list(T... array) {
         return array == null ? Collections.<T>emptyList() : Arrays.asList(array);
     }
@@ -1776,14 +1776,14 @@ final class Utils {
      */
     @SuppressWarnings("deprecation")
     static final Schema getMappedSchema(Configuration configuration, Schema schema) {
-        org.jooq.SchemaMapping mapping = configuration.schemaMapping();
+        if (configuration != null) {
+            org.jooq.SchemaMapping mapping = configuration.schemaMapping();
 
-        if (mapping != null) {
-            return mapping.map(schema);
+            if (mapping != null)
+                return mapping.map(schema);
         }
-        else {
-            return schema;
-        }
+
+        return schema;
     }
 
     /**
@@ -1791,14 +1791,14 @@ final class Utils {
      */
     @SuppressWarnings("deprecation")
     static final <R extends Record> Table<R> getMappedTable(Configuration configuration, Table<R> table) {
-        org.jooq.SchemaMapping mapping = configuration.schemaMapping();
+        if (configuration != null) {
+            org.jooq.SchemaMapping mapping = configuration.schemaMapping();
 
-        if (mapping != null) {
-            return mapping.map(table);
+            if (mapping != null)
+                return mapping.map(table);
         }
-        else {
-            return table;
-        }
+
+        return table;
     }
 
     /**
@@ -1806,7 +1806,7 @@ final class Utils {
      */
     @SuppressWarnings("unchecked")
     static final String getMappedUDTName(Configuration configuration, Class<? extends UDTRecord<?>> type) {
-        return getMappedUDTName(configuration, Utils.newRecord(false, (Class<UDTRecord<?>>) type).<RuntimeException>operate(null));
+        return getMappedUDTName(configuration, Tools.newRecord(false, (Class<UDTRecord<?>>) type).<RuntimeException>operate(null));
     }
 
     /**
@@ -1824,29 +1824,29 @@ final class Utils {
         return sb.toString();
     }
 
-    /* [pro] xx
-    xxx
-     x xxx xx xxxxxx xxxxxxxxxxxx xxxxxxxxx xx xxx xxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
-     xx
-    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    xxxxxx xxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxx xxxxxxx xxxxxxxxxxxxxxx xxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
-    x
 
-    xxx
-     x xxx xx xxxxxx xxxxxxxxxxxx xxxxxxxxx xx xxx xxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
-     xx
-    xxxxxx xxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxx x
-        xxxxxx xxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxx xx x xxx xxxxxxxxxxxxxxxx
 
-        xx xxxxxxx xx xxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        xxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxx xxxxxxxxxxxxxx
-    x
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Return a non-negative hash code for a {@link QueryPart}, taking into
@@ -1869,12 +1869,12 @@ final class Utils {
     static final Field<String> escapeForLike(Object value, Configuration configuration) {
         if (value != null && value.getClass() == String.class) {
 
-            /* [pro] xx
-            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx x
-                xxxxxx xxxxxxx x xxxxx x xxxxx
-            x
-            xxxx
-            xx [/pro] */
+
+
+
+
+
+
             {
                 return val(escape("" + value, ESCAPE));
             }
@@ -1898,12 +1898,12 @@ final class Utils {
     static final Field<String> escapeForLike(Field<?> field, Configuration configuration) {
         if (nullSafe(field).getDataType().isString()) {
 
-            /* [pro] xx
-            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxx x
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxx
-            x
-            xxxx
-            xx [/pro] */
+
+
+
+
+
+
             {
                 return escape((Field<String>) field, ESCAPE);
             }
@@ -2526,27 +2526,27 @@ final class Utils {
      * {@link SQLException#getNextException()} list.
      */
     static final void consumeExceptions(Configuration configuration, PreparedStatement stmt, SQLException previous) {
-        /* [pro] xx
-        xxx x x xx
 
-        xx xx xxxx xxxx xxxxx xxx xxxx xxxxxxxx xxxx xxxx xxx xxxxxx
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxx xxxxxxxxxx
-                xxxxxxxxxxxx xxx xx x xx x x xxxxxxxxxxxxxxxxxxxxxx xxxx
-                    xxx x
-                        xx xxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxx xx xxx
-                            xxxxx xxxxxxxxxxxx
-                    x
-                    xxxxx xxxxxxxxxxxxx xx x
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxx x xx
-                    x
-        x
 
-        xx xx xx xxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxx xxxxxxxx x x xxxxxxxxxxxxxxxxxxxxx x xx xxxx xx xxxxxxxx x xxxx xxxxxx xxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     /**
@@ -2702,45 +2702,45 @@ final class Utils {
     @SuppressWarnings("unused")
     static void executeImmediateBegin(Context<?> ctx, DropStatementType type) {
         switch (ctx.family()) {
-            /* [pro] xx
-            xxxx xxxx x
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxx xxx xxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx
 
-                xxxxxx
-            x
 
-            xxxx xxxxxxx x
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx
 
-                xxxxxx
-            x
 
-            xxxx xxxxxxxxxx x
-                xxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxxxx
-            x
 
-            xxxx xxxxxxx x
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxxxx
-            x
 
-            xx
-                xxxxxxxx xxxxxxx xxxxx xx xxxxxxxxxxx xx xxxxx
 
-                xxxxxx xxxxxxxxx xxxxxxxx
-                    xx xxxxxxxxx xx xxxxx xx xxxxx xxxxxx xxxxxx xxxxx xxxxx xxxxxx xxxxx xxxxxxxxx xxxxx
-                    xxx xxxxxxxxx xxxx xxxxxx
-                    xxxx xxxx
-                xxx xxxxxxxxxx
-                xxxxxxx xxxxxxxxx xxxxxxxxx
-                xxxx xxxxxxxxx xxxxxxx
-             xx
 
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             case FIREBIRD: {
                 ctx.keyword("execute block").formatSeparator()
@@ -2763,53 +2763,53 @@ final class Utils {
      */
     static void executeImmediateEnd(Context<?> ctx, DropStatementType type) {
         switch (ctx.family()) {
-            /* [pro] xx
-            xxxx xxxx x
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxx
 
-                xxxxxx
-            x
 
-            xxxx xxxxxxx x
-                xxxxxx xxx x
-                      xxxx xx xxxxx    x xxxxxxxxxxx
-                    x xxxx xx xxxxxxxx x xxxxxxxxxxx
-                    x xxxx xx xxxxx    x xxxxxxxxxxx
-                    x xxxx xx xxxx     x xxxxxxxxxxx
-                    x xxxxxxxxxxxx
 
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xx x xxx x xxx xxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxxxxxxxxx
 
-                xxxxxx
-            x
 
-            xxxx xxxxxxxxxx x
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xx xxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxx xxxxxxxx
 
-                xxxxxx
-            x
 
-            xxxx xxxxxxx x
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxxxxxxxxxxxxxxxxxxxx
 
-                xxxxxx
-            x
 
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             case FIREBIRD: {
                 ctx.sql("';").formatSeparator()

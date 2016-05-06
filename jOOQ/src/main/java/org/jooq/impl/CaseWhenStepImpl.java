@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -74,7 +74,7 @@ class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWhenStep
 
     @Override
     public final Field<T> otherwise(T result) {
-        return otherwise(Utils.field(result));
+        return otherwise(Tools.field(result));
     }
 
     @Override
@@ -86,17 +86,17 @@ class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWhenStep
 
     @Override
     public final CaseWhenStep<V, T> when(V compareValue, T result) {
-        return when(Utils.field(compareValue), Utils.field(result));
+        return when(Tools.field(compareValue), Tools.field(result));
     }
 
     @Override
     public final CaseWhenStep<V, T> when(V compareValue, Field<T> result) {
-        return when(Utils.field(compareValue), result);
+        return when(Tools.field(compareValue), result);
     }
 
     @Override
     public final CaseWhenStep<V, T> when(Field<V> compareValue, T result) {
-        return when(compareValue, Utils.field(result));
+        return when(compareValue, Tools.field(result));
     }
 
     @Override
@@ -110,11 +110,11 @@ class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWhenStep
     @Override
     final QueryPart getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxx xxx xxxxxxxxx
 
-            xx [/pro] */
+
+
+
+
             default:
                 return new Native();
         }
@@ -133,43 +133,43 @@ class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWhenStep
         }
     }
 
-    /* [pro] xx
-    xxxxxxx xxxxx xxxxxx xxxxxxx xxxx x
 
-        xxx
-         x xxxxxxxxx xxx
-         xx
-        xxxxxxx xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxx
 
-        xxxxxxxxx
-        xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxx xxxx x
-            xxxxxxxxxxxxxxxxxxxxx
-               xxxxxxxxxx
 
-            xxx xxxx x x xx x x xxxxxxxxxxxxxxxxxxxxx xxxx x
-                xx xx x xx x
-                    xxxxxxxxxx xxx
-                x
 
-                xxxxxxxxxxxxxxxx
-                   xxxxxx x xx
-                   xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                   xxxxxxx xx
-                   xxxxxxxxxxxxxxxxxxxxxxx
-            x
 
-            xx xxxxxxxxxx xx xxxxx x
-                xxxxxxxxxx xx
-                   xxxxxxxxxxxxxxxx
-                   xxxxxxx xx
-                   xxxxxxxxxxxxxxxxxx
-            x
 
-            xxxxxxxxxxxxx
-        x
-    x
 
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private class Native extends Base {
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -106,10 +106,10 @@ class TruncateImpl<R extends Record> extends AbstractQuery implements
         switch (ctx.configuration().dialect().family()) {
 
             // These dialects don't implement the TRUNCATE statement
-            /* [pro] xx
-            xxxx xxxxxxx
-            xxxx xxxxxxx
-            xx [/pro] */
+
+
+
+
             case FIREBIRD:
             case SQLITE: {
                 ctx.visit(create(ctx).delete(table));
@@ -122,12 +122,12 @@ class TruncateImpl<R extends Record> extends AbstractQuery implements
                    .keyword("truncate table").sql(' ')
                    .visit(table);
 
-                /* [pro] xx
-                xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxxxxxxxxxxxx x
-                    xxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx
-                x
 
-                xx [/pro] */
+
+
+
+
+
                 if (restartIdentity != null) {
                     ctx.formatSeparator()
                        .keyword(restartIdentity ? "restart identity" : "continue identity");

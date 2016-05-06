@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -153,7 +153,10 @@ final class UpdateImpl<R extends Record>
 
     @Override
     public final <T> UpdateImpl<R> set(Field<T> field, Select<? extends Record1<T>> value) {
-        return set(field, value.<T>asField());
+        if (value == null)
+            return set(field, (T) null);
+        else
+            return set(field, value.<T>asField());
     }
 
     @Override
@@ -164,7 +167,7 @@ final class UpdateImpl<R extends Record>
 
     @Override
     public final UpdateImpl<R> set(Record record) {
-        return set(Utils.mapOfChangedValues(record));
+        return set(Tools.mapOfChangedValues(record));
     }
 
 // [jooq-tools] START [set]
@@ -735,10 +738,10 @@ final class UpdateImpl<R extends Record>
         return getDelegate().getReturnedRecord();
     }
 
-    
+
     @Override
     public final Optional<R> fetchOptional() {
         return Optional.ofNullable(fetchOne());
     }
-    
+
 }

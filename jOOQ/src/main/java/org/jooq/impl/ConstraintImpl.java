@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -48,8 +48,8 @@ import static org.jooq.impl.ConstraintImpl.Action.SET_DEFAULT;
 import static org.jooq.impl.ConstraintImpl.Action.SET_NULL;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
-import static org.jooq.impl.Utils.DataKey.DATA_DROP_CONSTRAINT;
-import static org.jooq.impl.Utils.fieldsByName;
+import static org.jooq.impl.Tools.DataKey.DATA_DROP_CONSTRAINT;
+import static org.jooq.impl.Tools.fieldsByName;
 
 import javax.annotation.Generated;
 

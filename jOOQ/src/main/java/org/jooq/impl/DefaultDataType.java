@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -71,6 +71,7 @@ import org.jooq.EnumType;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.UDTRecord;
+import org.jooq.exception.MappingException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.Convert;
 import org.jooq.types.Interval;
@@ -271,24 +272,9 @@ public class DefaultDataType<T> implements DataType<T> {
         this.castTypeBase = TYPE_NAME_PATTERN.matcher(castTypeName).replaceAll("").trim();
         this.arrayType = (Class<T[]>) Array.newInstance(type, 0).getClass();
 
-        if (precision == 0) {
-            if (type == Long.class || type == ULong.class) {
-                precision = LONG_PRECISION;
-            }
-            else if (type == Integer.class  || type == UInteger.class) {
-                precision = INTEGER_PRECISION;
-            }
-            else if (type == Short.class || type == UShort.class) {
-                precision = SHORT_PRECISION;
-            }
-            else if (type == Byte.class || type == UByte.class) {
-                precision = BYTE_PRECISION;
-            }
-        }
-
         this.nullable = nullable;
         this.defaulted = defaulted;
-        this.precision = precision;
+        this.precision = precision0(type, precision);
         this.scale = scale;
         this.length = length;
 
@@ -327,9 +313,49 @@ public class DefaultDataType<T> implements DataType<T> {
             : new DefaultBinding<T, T>(Converters.identity(type), this.isLob());
     }
 
+    /**
+     * [#3225] Performant constructor for creating derived types.
+     */
+    private DefaultDataType(DefaultDataType<T> t, int precision, int scale, int length, boolean nullable, boolean defaulted) {
+        this.dialect = t.dialect;
+        this.sqlDataType = t.sqlDataType;
+        this.type = t.type;
+        this.typeName = t.typeName;
+        this.castTypeName = t.castTypeName;
+        this.castTypeBase = t.castTypeBase;
+        this.arrayType = t.arrayType;
+
+        this.nullable = nullable;
+        this.defaulted = defaulted;
+        this.precision = precision0(type, precision);
+        this.scale = scale;
+        this.length = length;
+
+        this.binding = t.binding;
+    }
+
+    private static final int precision0(Class<?> type, int precision) {
+        if (precision == 0) {
+            if (type == Long.class || type == ULong.class) {
+                precision = LONG_PRECISION;
+            }
+            else if (type == Integer.class  || type == UInteger.class) {
+                precision = INTEGER_PRECISION;
+            }
+            else if (type == Short.class || type == UShort.class) {
+                precision = SHORT_PRECISION;
+            }
+            else if (type == Byte.class || type == UByte.class) {
+                precision = BYTE_PRECISION;
+            }
+        }
+
+        return precision;
+    }
+
     @Override
     public final DataType<T> nullable(boolean n) {
-        return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, precision, scale, length, n, defaulted);
+        return new DefaultDataType<T>(this, precision, scale, length, n, defaulted);
     }
 
     @Override
@@ -339,7 +365,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final DataType<T> defaulted(boolean d) {
-        return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, precision, scale, length, nullable, d);
+        return new DefaultDataType<T>(this, precision, scale, length, nullable, d);
     }
 
     @Override
@@ -361,7 +387,7 @@ public class DefaultDataType<T> implements DataType<T> {
         else if (isLob())
             return this;
         else
-            return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, p, s, length, nullable, defaulted);
+            return new DefaultDataType<T>(this, p, s, length, nullable, defaulted);
     }
 
     @Override
@@ -383,7 +409,7 @@ public class DefaultDataType<T> implements DataType<T> {
         if (isLob())
             return this;
         else
-            return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, precision, s, length, nullable, defaulted);
+            return new DefaultDataType<T>(this, precision, s, length, nullable, defaulted);
     }
 
     @Override
@@ -405,7 +431,7 @@ public class DefaultDataType<T> implements DataType<T> {
         if (isLob())
             return this;
         else
-            return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, precision, scale, l, nullable, defaulted);
+            return new DefaultDataType<T>(this, precision, scale, l, nullable, defaulted);
     }
 
     @Override
@@ -519,11 +545,11 @@ public class DefaultDataType<T> implements DataType<T> {
         else if (type.isArray()) {
             return Types.ARRAY;
         }
-        /* [pro] xx
-        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxx xxxxxxxxxxxx
-        x
-        xx [/pro] */
+
+
+
+
+
         else if (EnumType.class.isAssignableFrom(type)) {
             return Types.VARCHAR;
         }
@@ -532,9 +558,9 @@ public class DefaultDataType<T> implements DataType<T> {
         }
         else if (Result.class.isAssignableFrom(type)) {
             switch (dialect.family()) {
-                /* [pro] xx
-                xxxx xxxxxxx
-                xx [/pro] */
+
+
+
                 case H2:
                     return -10; // OracleTypes.CURSOR;
 
@@ -606,13 +632,13 @@ public class DefaultDataType<T> implements DataType<T> {
         return new ArrayDataType<T>(this);
     }
 
-    /* [pro] xx
-    xxxxxxxxx
-    xxxxxx xxxxx xx xxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx x
-        xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxx xxxxxxxxxxxxxx
-    x
 
-    xx [/pro] */
+
+
+
+
+
+
     @Override
     public final <E extends EnumType> DataType<E> asEnumDataType(Class<E> enumDataType) {
         String enumTypeName = enumDataType.getEnumConstants()[0].getName();
@@ -725,20 +751,23 @@ public class DefaultDataType<T> implements DataType<T> {
             if (result == null) {
 
                 // jOOQ data types are handled here
-                if (EnumType.class.isAssignableFrom(type)
-                     || UDTRecord.class.isAssignableFrom(type)
-                     /* [pro] xx
-                     xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                     xx [/pro] */
-                ) {
-
-                    for (SQLDialect d : SQLDialect.values()) {
-                        result = TYPES_BY_TYPE[d.ordinal()].get(type);
-
-                        if (result != null) {
-                            break;
-                        }
+                try {
+                    if (UDTRecord.class.isAssignableFrom(type)) {
+                        return (DataType<T>) ((UDTRecord<?>) type.newInstance()).getUDT().getDataType();
                     }
+
+
+
+
+
+
+
+                    else if (EnumType.class.isAssignableFrom(type)) {
+                        return (DataType<T>) SQLDataType.VARCHAR.asEnumDataType((Class<EnumType>) type);
+                    }
+                }
+                catch (Exception e) {
+                    throw new MappingException("Cannot create instance of " + type, e);
                 }
             }
 
@@ -775,9 +804,9 @@ public class DefaultDataType<T> implements DataType<T> {
     @Override
     public final boolean isDateTime() {
         return java.util.Date.class.isAssignableFrom(type)
-        
+
             || java.time.temporal.Temporal.class.isAssignableFrom(type)
-        
+
         ;
     }
 
@@ -808,7 +837,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final boolean isArray() {
-        return /* [pro] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xx [/pro] */
+        return
             (!isBinary() && type.isArray());
     }
 

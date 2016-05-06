@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -83,17 +83,17 @@ class DateDiff extends AbstractFunction<Integer> {
 
             case H2:
             case HSQLDB:
-            /* [pro] xx
-            xxxx xxxxxxxxx
-            xx [/pro] */
+
+
+
                 return field("{datediff}('day', {0}, {1})", getDataType(), date2, date1);
 
             case SQLITE:
                 return field("({strftime}('%s', {0}) - {strftime}('%s', {1})) / 86400", getDataType(), date1, date2);
 
-            /* [pro] xx
-            xxxx xxxxxxx
-            xx [/pro] */
+
+
+
             case CUBRID:
             case POSTGRES:
 
@@ -101,26 +101,26 @@ class DateDiff extends AbstractFunction<Integer> {
                 //         placed in the context of other arithmetic
                 return field("({0} - {1})", getDataType(), date1, date2);
 
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxx xxxxxxxxxxxxxx xxxxxx xxxxxxx
 
-            xxxx xxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxx xxxxxxxxxxxxxx xxxxxx xxxxxxx
 
-            xxxx xxxx
-                xxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxxxx
-                       xxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxx
 
-            xxxx xxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxx xxxxxx xxxxxxx
 
-            xx xxxx xxxxxxx xx xxxxxxx
-            xxxx xxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
 
         // Default implementation for equals() and hashCode()

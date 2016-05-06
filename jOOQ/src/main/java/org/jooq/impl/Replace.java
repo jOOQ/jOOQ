@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -67,25 +67,25 @@ class Replace extends AbstractFunction<String> {
 
         // [#861] Most dialects don't ship with a two-argument replace function:
         switch (configuration.family()) {
-            /* [pro] xx
-            xxxx xxxx x
-                xx xxxxxxxxxxxx xx xx x
-                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxxxxx
-                x
-                xxxx x
-                    xxxxxx xxxxxxxxxxxxxxxxxxxxxxx xxxxxxxx xxxxxx
-                x
-            x
 
-            xxxx xxxxxxx
-            xxxx xxxx
-            xxxx xxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             case FIREBIRD:
             case HSQLDB:
             case MARIADB:

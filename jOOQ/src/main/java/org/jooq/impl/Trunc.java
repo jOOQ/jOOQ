@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -46,7 +46,7 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.zero;
-import static org.jooq.impl.Utils.extractVal;
+import static org.jooq.impl.Tools.extractVal;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -77,10 +77,10 @@ class Trunc<T> extends AbstractFunction<T> {
     @Override
     final Field<T> getFunction0(Configuration configuration) {
         switch (configuration.family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-            xxxx xxxx
-            xx [/pro] */
+
+
+
+
             case DERBY: {
                 Field<BigDecimal> power;
 
@@ -111,23 +111,23 @@ class Trunc<T> extends AbstractFunction<T> {
             case POSTGRES:
                 return field("{trunc}({0}, {1})", SQLDataType.NUMERIC, field.cast(BigDecimal.class), decimals).cast(field.getDataType());
 
-            /* [pro] xx
-            xx xxxx xxx xxx xxxxxxxx xxxxx xxxxxxxx xxx xx xxxx xx xxxxxxxxx
-            xxxx xxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxx xxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxx
 
-            xxxx xxxxxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxx xxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxx xxxxxxx
 
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxx
 
-            xx xxxxxx xxxxx xxxx xxx xxxxx xxxxxxxxx xxx xx xxxxx xxxx xx xx xxx
-            xx xxxxxxxxxxx xxxxxxxxx xx xxx xxxxxxxx xxxxxxxxx
-            xxxx xxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             case CUBRID:
             case HSQLDB:
             default:

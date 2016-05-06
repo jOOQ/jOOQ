@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -41,6 +41,7 @@
 
 package org.jooq.util.mysql;
 
+import static java.util.Arrays.asList;
 import static org.jooq.util.hsqldb.information_schema.Tables.PARAMETERS;
 
 import java.util.regex.Matcher;
@@ -104,6 +105,7 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
                     Parameters.PARAMETER_NAME,
                     Parameters.PARAMETER_MODE,
                     Parameters.DATA_TYPE,
+                    Parameters.DTD_IDENTIFIER,
                     Parameters.CHARACTER_MAXIMUM_LENGTH,
                     Parameters.NUMERIC_PRECISION,
                     Parameters.NUMERIC_SCALE
@@ -116,11 +118,21 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
                 .fetch()) {
 
             String inOut = record.getValue(Parameters.PARAMETER_MODE);
+            String dataType = record.getValue(Parameters.DATA_TYPE);
+
+            // [#519] Some types have unsigned versions
+            if (getDatabase().supportsUnsignedTypes()) {
+                if (asList("tinyint", "smallint", "mediumint", "int", "bigint").contains(dataType.toLowerCase())) {
+                    if (record.getValue(Parameters.DTD_IDENTIFIER).toLowerCase().contains("unsigned")) {
+                        dataType += "unsigned";
+                    }
+                }
+            }
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 getSchema(),
-                record.getValue(Parameters.DATA_TYPE),
+                dataType,
                 record.getValue(Parameters.CHARACTER_MAXIMUM_LENGTH),
                 record.getValue(Parameters.NUMERIC_PRECISION),
                 record.getValue(Parameters.NUMERIC_SCALE),

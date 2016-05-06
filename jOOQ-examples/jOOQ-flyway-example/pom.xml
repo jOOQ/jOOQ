@@ -19,15 +19,15 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.springframework.version>3.2.6.RELEASE</org.springframework.version>
-        <org.jooq.version>3.7.2</org.jooq.version>
+        <org.jooq.version>3.7.4</org.jooq.version>
         <org.h2.version>1.4.181</org.h2.version>
 
         <db.url>jdbc:h2:~/flyway-test</db.url>
         <db.username>sa</db.username>
     </properties>
-    
+
     <dependencies>
-    
+
         <!-- Database access -->
         <dependency>
             <groupId>org.jooq</groupId>

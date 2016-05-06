@@ -7,7 +7,7 @@
   <element name="configuration">
     <complexType>
       <all>
-        
+
         <!--
           The JDBC configuration element contains information about how
           to set up the database connection used for source code generation
@@ -95,7 +95,7 @@
         -->
       <element name="name" type="string" minOccurs="0" maxOccurs="1"
         default="org.jooq.util.DefaultGeneratorStrategy" />
-      
+
       <!--
         The matcher strategy configuration used when applying an
         XML-based strategy
@@ -103,37 +103,37 @@
       <element name="matchers" type="tns:Matchers" minOccurs="0" maxOccurs="1"/>
     </choice>
   </complexType>
-  
+
   <!--
     Matchers can be used to provide a naming strategy by regular expression configuration.
     -->
   <complexType name="Matchers">
     <sequence>
-      
+
       <!--
         Specify 0..n schema matchers in order to provide a naming strategy for objects
         created from schemas.
         -->
       <element name="schemas" type="tns:MatchersSchemasType" minOccurs="0" maxOccurs="1"/>
-    
+
       <!--
         Specify 0..n table matchers in order to provide a naming strategy for objects
         created from database tables.
         -->
       <element name="tables" type="tns:MatchersTablesType" minOccurs="0" maxOccurs="1"/>
-      
+
       <!--
         Specify 0..n field matchers in order to provide a naming strategy for objects
         created from table fields.
         -->
       <element name="fields" type="tns:MatchersFieldsType" minOccurs="0" maxOccurs="1"/>
-      
+
       <!--
         Specify 0..n routine matchers in order to provide a naming strategy for objects
         created from routines.
         -->
       <element name="routines" type="tns:MatchersRoutinesType" minOccurs="0" maxOccurs="1"/>
-      
+
       <!--
         Specify 0..n sequence matchers in order to provide a naming strategy for objects
         created from sequences.
@@ -141,22 +141,22 @@
       <element name="sequences" type="tns:MatchersSequencesType" minOccurs="0" maxOccurs="1"/>
     </sequence>
   </complexType>
-  
+
   <complexType name="MatchersSchemasType">
     <sequence>
       <element name="schema" type="tns:MatchersSchemaType" minOccurs="1" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
-  
+
   <complexType name="MatchersSchemaType">
     <all>
-      
+
       <!--
         This schema matcher applies to all unqualified or qualified schema names
         matched by this expression. If left empty, this matcher applies to all schemas.
         -->
       <element name="expression" type="string" minOccurs="0" maxOccurs="1"/>
-      
+
       <!--
         These elements influence the naming of a generated org.jooq.Schema object.
         -->
@@ -165,13 +165,13 @@
       <element name="schemaImplements" type="string" minOccurs="0" maxOccurs="1" />
     </all>
   </complexType>
-  
+
   <complexType name="MatchersTablesType">
     <sequence>
       <element name="table" type="tns:MatchersTableType" minOccurs="1" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
-  
+
   <complexType name="MatchersTableType">
     <all>
 
@@ -180,7 +180,7 @@
         matched by this expression. If left empty, this matcher applies to all tables.
         -->
       <element name="expression" type="string" minOccurs="0" maxOccurs="1"/>
-      
+
       <!--
         These elements influence the naming of a generated org.jooq.Table object.
         -->
@@ -193,20 +193,20 @@
         -->
       <element name="recordClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
       <element name="recordImplements" type="string" minOccurs="0" maxOccurs="1"/>
-      
+
       <!--
         These elements influence the naming of a generated interface, implemented by
         generated org.jooq.Record objects and by generated POJOs.
         -->
       <element name="interfaceClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
       <element name="interfaceImplements" type="string" minOccurs="0" maxOccurs="1"/>
-      
+
       <!--
         These elements influence the naming of a generated org.jooq.DAO object.
         -->
       <element name="daoClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
       <element name="daoImplements" type="string" minOccurs="0" maxOccurs="1"/>
-      
+
       <!--
         These elements influence the naming of a generated POJO object.
         -->
@@ -215,22 +215,22 @@
       <element name="pojoImplements" type="string" minOccurs="0" maxOccurs="1"/>
     </all>
   </complexType>
-  
+
   <complexType name="MatchersFieldsType">
     <sequence>
       <element name="field" type="tns:MatchersFieldType" minOccurs="1" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
-  
+
   <complexType name="MatchersFieldType">
     <all>
-    
+
       <!--
         This field matcher applies to all unqualified or qualified field names
         matched by this expression. If left empty, this matcher applies to all fields.
         -->
       <element name="expression" type="string" minOccurs="0" maxOccurs="1"/>
-      
+
       <!--
         These elements influence the naming of a generated org.jooq.Field object.
         -->
@@ -240,22 +240,22 @@
       <element name="fieldGetter" type="tns:MatcherRule" minOccurs="0" maxOccurs="1"/>
     </all>
   </complexType>
-  
+
   <complexType name="MatchersRoutinesType">
     <sequence>
       <element name="routine" type="tns:MatchersRoutineType" minOccurs="1" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
-  
+
   <complexType name="MatchersRoutineType">
     <all>
-    
+
       <!--
         This routine matcher applies to all unqualified or qualified routine names
         matched by this expression. If left empty, this matcher applies to all routines.
         -->
       <element name="expression" type="string" minOccurs="0" maxOccurs="1"/>
-      
+
       <!--
         These elements influence the naming of a generated org.jooq.Routine object.
         -->
@@ -264,13 +264,13 @@
       <element name="routineImplements" type="string" minOccurs="0" maxOccurs="1"/>
     </all>
   </complexType>
-  
+
   <complexType name="MatchersSequencesType">
     <sequence>
       <element name="sequence" type="tns:MatchersSequenceType" minOccurs="1" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
-  
+
   <complexType name="MatchersSequenceType">
     <all>
 
@@ -279,21 +279,21 @@
         matched by this expression. If left empty, this matcher applies to all sequences.
         -->
       <element name="expression" type="string" minOccurs="0" maxOccurs="1"/>
-      
+
       <!--
         These elements influence the naming of the generated Sequences class.
         -->
       <element name="sequenceIdentifier" type="tns:MatcherRule" minOccurs="0" maxOccurs="1" />
     </all>
   </complexType>
-  
+
   <complexType name="MatcherRule">
     <all>
       <element name="transform" type="tns:MatcherTransformType" minOccurs="0" maxOccurs="1"/>
       <element name="expression" type="string" minOccurs="1" maxOccurs="1"/>
     </all>
   </complexType>
-  
+
   <simpleType name="MatcherTransformType">
     <restriction base="string">
       <enumeration value="AS_IS"/>
@@ -303,13 +303,13 @@
       <enumeration value="PASCAL"/>
     </restriction>
   </simpleType>
-  
+
   <complexType name="Database">
     <all>
       <!--
         The database dialect from jooq-meta. Available dialects are
         named org.util.[database].[database]Database.
-        
+
         Natively supported values are:
 
             org.jooq.util.ase.ASEDatabase
@@ -328,31 +328,31 @@
             org.jooq.util.sqlite.SQLiteDatabaes
             org.jooq.util.sqlserver.SQLServerDatabase
             org.jooq.util.sybase.SybaseDatabase
-        
+
         This value can be used to reverse-engineer generic JDBC DatabaseMetaData (e.g. for MS Access)
-        
+
             org.jooq.util.jdbc.JDBCDatabase
-            
+
         This value can be used to reverse-engineer standard jOOQ-meta XML formats
-        
+
             org.jooq.util.xml.XMLDatabase
 
         You can also provide your own org.jooq.util.Database implementation
         here, if your database is currently not supported
         -->
       <element name="name" type="string" minOccurs="1" maxOccurs="1" />
-      
+
       <!--
         The properties that will be passed to the Database instance as configured above.
-        
+
         Known supported properties include:
-        
+
             org.jooq.util.xml.XMLDatabase
-            
+
                 dialect=ORACLE
                 xml-file=C:\path\to\database.xml
                 xsl-files=C:\path\to\1.xsl,C:\path\to\2.xsl
-                
+
         -->
       <element name="properties" type="tns:Properties" minOccurs="0" maxOccurs="1" />
 
@@ -361,10 +361,10 @@
         Use the pipe to separate several expressions) Watch out for
         case-sensitivity. Depending on your database, this might be
         important!
-        
+
         You can create case-insensitive regular expressions
         using this syntax: (?i:expr)
-        
+
         Whitespace is ignored and comments are possible.
         -->
       <element name="includes" type="string" default=".*" minOccurs="0" maxOccurs="1" />
@@ -395,31 +395,31 @@
         See UpdatableRecord.store() and UpdatableRecord.delete() for details
         -->
       <element name="recordTimestampFields" type="string" default="" minOccurs="0" maxOccurs="1" />
-      
+
       <!--
         A regular expression matching all columns that participate in "synthetic" primary keys,
         which should be placed on generated UpdatableRecords, to be used with
-        
+
         - UpdatableRecord.store()
         - UpdatableRecord.update()
         - UpdatableRecord.delete()
         - UpdatableRecord.refresh()
-        
+
         Synthetic primary keys will override existing primary keys.
         -->
       <element name="syntheticPrimaryKeys" type="string" default="" minOccurs="0" maxOccurs="1" />
-      
+
       <!--
         All (UNIQUE) key names that should be used instead of primary keys on
         generated UpdatableRecords, to be used with
-        
+
         - UpdatableRecord.store()
         - UpdatableRecord.update()
         - UpdatableRecord.delete()
         - UpdatableRecord.refresh()
-        
+
         If several keys match, a warning is emitted and the first one encountered will be used.
-        
+
         This flag will also replace synthetic primary keys, if it matches.
         -->
       <element name="overridePrimaryKeys" type="string" default="" minOccurs="0" maxOccurs="1" />
@@ -444,19 +444,19 @@
         For backwards compatibility, this defaults to jdbc/schema
         -->
       <element name="inputSchema" type="string" default="" minOccurs="0" maxOccurs="1" />
-      
+
       <!--
         A custom version number that, if available, will be used to assess whether the above
         <inputSchema/> will need to be regenerated.
-        
+
         There are three operation modes for this element:
-        
+
         - The value is a class that can be found on the classpath and that implements
           org.jooq.util.SchemaVersionProvider. Such classes must provide a default constructor
         - The value is a SELECT statement that returns one record with one column. The
           SELECT statement may contain a named variable called :schema_name
         - The value is a constant, such as a Maven property
-        
+
         Schema versions will be generated into the javax.annotation.Generated annotation on
         generated artefacts.
         -->
@@ -467,7 +467,7 @@
         production schema. Use this to override your local development
         schema name for source code generation. If not specified, this
         will be the same as the input-schema.
-        
+
         This will be ignored if outputSchemaToDefault is set to true
         -->
       <element name="outputSchema" type="string" minOccurs="0" maxOccurs="1" />
@@ -553,7 +553,7 @@
     <all>
       <!-- The name of the custom type -->
       <element name="name" type="string" minOccurs="1" maxOccurs="1" />
-      
+
       <!-- The type of the custom type - e.g. java.time.LocalDateTime.
            For backwards-compatibility reasons, this information is optional. If left undefined,
            the "type" value will default to the "name" value. -->
@@ -593,7 +593,7 @@
         The same as expression. This is kept for backwards compatibility reasons.
         -->
       <element name="expressions" type="string" minOccurs="0" maxOccurs="1" />
-      
+
       <!--
         A Java regular expression matching data types to be forced to have this
         type. If provided, both "expressions" and "types" must match.
@@ -634,7 +634,7 @@
         Generate POJOs for usage of the ResultQuery.fetchInto(Class) API
         -->
       <element name="pojos" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
-      
+
       <!--
         Generate basic equals() and hashCode() methods in POJOs
         -->
@@ -668,28 +668,28 @@
         Annotate POJOs and Records with JSR-303 validation annotations
         -->
       <element name="validationAnnotations" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
-      
+
       <!--
         Allow to turn off the generation of global object references, which include
-        
+
         - Tables.java
         - Sequences.java
         - UDTs.java
-        
+
         Turning off the generation of the above files may be necessary for very
         large schemas, which exceed the amount of allowed constants in a class's
         constant pool (64k) or, whose static initialiser would exceed 64k of
         byte code
         -->
       <element name="globalObjectReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
-      
+
       <!--
         Generate fluent setters in
-        
+
         - records
         - pojos
         - interfaces
-        
+
         Fluent setters are against the JavaBeans specification, but can be quite
         useful to those users who do not depend on EL, JSP, JSF, etc.
         -->
@@ -702,7 +702,7 @@
       <!--
         The destination package of your generated classes (within the
         destination directory)
-           
+
         jOOQ may append the schema name to this package if generating multiple schemas,
         e.g. org.jooq.generated.schema1
              org.jooq.generated.schema2

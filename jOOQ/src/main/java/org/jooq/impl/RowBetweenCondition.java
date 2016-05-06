@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -689,7 +689,7 @@ implements
 
     @Override
     public final Condition and(Record record) {
-        RowN r = new RowImpl(Utils.fields(record.intoArray(), record.fields()));
+        RowN r = new RowImpl(Tools.fields(record.intoArray(), record.fields()));
         return and(r);
     }
 

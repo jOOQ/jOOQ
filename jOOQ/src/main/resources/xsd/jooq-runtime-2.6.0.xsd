@@ -39,7 +39,7 @@
 
       <!-- Whether store() and delete() methods should be executed with optimistic locking -->
       <element name="executeWithOptimisticLocking" type="boolean" minOccurs="0" maxOccurs="1" default="false"/>
-      
+
       <!-- Whether fetched records should be attached to the fetching configuration -->
       <element name="attachRecords" type="boolean" minOccurs="0" maxOccurs="1" default="true"/>
     </all>

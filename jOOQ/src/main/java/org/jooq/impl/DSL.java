@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -70,15 +70,14 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.impl.Term.ROW_NUMBER;
-import static org.jooq.impl.Utils.combine;
-import static org.jooq.impl.Utils.configuration;
+import static org.jooq.impl.Tools.combine;
+import static org.jooq.impl.Tools.configuration;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -371,7 +370,7 @@ public class DSL {
             return using(new DefaultConnectionProvider(connection, true), JDBCUtils.dialect(connection));
         }
         catch (SQLException e) {
-            throw Utils.translate("Error when initialising Connection", e);
+            throw Tools.translate("Error when initialising Connection", e);
         }
     }
 
@@ -402,7 +401,7 @@ public class DSL {
             return using(new DefaultConnectionProvider(connection, true), JDBCUtils.dialect(connection));
         }
         catch (SQLException e) {
-            throw Utils.translate("Error when initialising Connection", e);
+            throw Tools.translate("Error when initialising Connection", e);
         }
     }
 
@@ -432,7 +431,7 @@ public class DSL {
             return using(new DefaultConnectionProvider(connection, true), JDBCUtils.dialect(connection));
         }
         catch (SQLException e) {
-            throw Utils.translate("Error when initialising Connection", e);
+            throw Tools.translate("Error when initialising Connection", e);
         }
     }
 
@@ -4555,7 +4554,7 @@ public class DSL {
      *
      * @see DSLContext#createTemporaryTable(String)
      */
-    @Support({ POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static CreateTableAsStep<Record> createTemporaryTable(String table) {
         return using(new DefaultConfiguration()).createTemporaryTable(table);
     }
@@ -4565,7 +4564,7 @@ public class DSL {
      *
      * @see DSLContext#createTemporaryTable(Name)
      */
-    @Support({ POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static CreateTableAsStep<Record> createTemporaryTable(Name table) {
         return using(new DefaultConfiguration()).createTemporaryTable(table);
     }
@@ -4575,7 +4574,7 @@ public class DSL {
      *
      * @see DSLContext#createTemporaryTable(Table)
      */
-    @Support({ POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static CreateTableAsStep<Record> createTemporaryTable(Table<?> table) {
         return using(new DefaultConfiguration()).createTemporaryTable(table);
     }
@@ -4585,7 +4584,7 @@ public class DSL {
      *
      * @see DSLContext#createGlobalTemporaryTable(String)
      */
-    @Support({ POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static CreateTableAsStep<Record> createGlobalTemporaryTable(String table) {
         return using(new DefaultConfiguration()).createGlobalTemporaryTable(table);
     }
@@ -4595,7 +4594,7 @@ public class DSL {
      *
      * @see DSLContext#createGlobalTemporaryTable(Name)
      */
-    @Support({ POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static CreateTableAsStep<Record> createGlobalTemporaryTable(Name table) {
         return using(new DefaultConfiguration()).createGlobalTemporaryTable(table);
     }
@@ -4605,7 +4604,7 @@ public class DSL {
      *
      * @see DSLContext#createGlobalTemporaryTable(Table)
      */
-    @Support({ POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static CreateTableAsStep<Record> createGlobalTemporaryTable(Table<?> table) {
         return using(new DefaultConfiguration()).createGlobalTemporaryTable(table);
     }
@@ -5289,18 +5288,18 @@ public class DSL {
         return table(val(array));
     }
 
-    /* [pro] xx
-    xxx
-     x x xxxxxxx xxx xxxxxx xxxxxxxxxxxxxxxxxxxxxx
-     x
-     x xxxx xxxxxxxxxxxxxxxxxxxx
-     xx
-    xxxxxxxxxxxxxxxx
-    xxxxxx xxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxx
-    x
 
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
     /**
      * A synonym for {@link #unnest(Field)}.
      *
@@ -5345,19 +5344,19 @@ public class DSL {
         return unnest(val(array));
     }
 
-    /* [pro] xx
-    xxx
-     x xxxxxx x xxxxx xxxx xx xxxxx xx xxxxxxx
-     x xxx
-     x xxxx xxxxx xxx xxxxxxxx xxxxx xx x xxxxxxxxxxxxxxxxxx xxxxxxxx xxx
-     x xxxxxxx xxxxxxxxxx xxxx xxxxxx xxxxx xxxxx xxxxxx
-     xx
-    xxxxxxxxxxxxxxxx
-    xxxxxx xxxxxx xxxxxxxx xxxxxxxxxxxxxxxxxxxxx xxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxx
-    x
 
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Create a table from a field.
      * <p>
@@ -5391,18 +5390,18 @@ public class DSL {
             return new FunctionTable<Record>(cursor);
         }
 
-        /* [pro] xx
-        xx xxx xxxxx xx xx xxxxxxxxxxxx xxxxxx xxxxxxxx
-        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxx xxx xxxxxxxxxxxxxxxxxxx
-        x
 
-        xx xxx xxxxx xx xx xxxxxxxxxxxx xxxxxx xxxxx
-        xxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx x
-            xxxxxx xxx xxxxxxxxxxxxxxxxxxx
-        x
 
-        xx [/pro] */
+
+
+
+
+
+
+
+
+
+
         // The field is a regular array
         else if (cursor.getType().isArray() && cursor.getType() != byte[].class) {
             return new ArrayTable(cursor);
@@ -6136,35 +6135,35 @@ public class DSL {
         return new QualifiedField<T>(name, type);
     }
 
-    /* [pro] xx
-    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    xx xxxx xxxxxxxx xxxxx
-    xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-    xxx
-     x xxxxxx x xxxxxxxx xxxx xxxxxxxxxx
-     xx
-    xxxxxxxxxxxxxxxx
-    xxxxxx xxxxxx xxxx xxxxxxxxxxx xxxxx x
-        xxxxxx xxxxxxxxxx xxxxxx
-    x
 
-    xxx
-     x xxxxxx x xxxxxxxx xxxx xxxxxxxxxx
-     xx
-    xxxxxxxxxxxxxxxx
-    xxxxxx xxxxxx xxxx xxxxxxxxxxx xxxxx xxxxxx xxxxxxx x
-        xxxxxx xxx xxxxxxxxxxxxxx xxxxxxxx
-    x
 
-    xxx
-     x xxxxxx x xxxxxxxx xxxx xxxxxxxxxx
-     xx
-    xxxxxxxxxxxxxxxx
-    xxxxxx xxxxxx xxxx xxxxxxxxx xxxxx x
-        xxxxxx xxx xxxxxxxxxxxxxxx
-    x
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // XXX Plain SQL object factory
@@ -6618,11 +6617,6 @@ public class DSL {
      * String sql = "SELECT * FROM USER_TABLES WHERE OWNER = 'MY_SCHEMA'";
      * </pre></code>
      * <p>
-     * The provided SQL must evaluate as a table whose type can be dynamically
-     * discovered using JDBC's {@link ResultSetMetaData} methods. That way, you
-     * can be sure that calling methods, such as {@link Table#fieldsRow()} will
-     * list the actual fields returned from your result set.
-     * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
@@ -6650,11 +6644,6 @@ public class DSL {
      * <code><pre>
      * String sql = "SELECT * FROM USER_TABLES WHERE OWNER = 'MY_SCHEMA'";
      * </pre></code>
-     * <p>
-     * The provided SQL must evaluate as a table whose type can be dynamically
-     * discovered using JDBC's {@link ResultSetMetaData} methods. That way, you
-     * can be sure that calling methods, such as {@link Table#fieldsRow()} will
-     * list the actual fields returned from your result set.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -6687,11 +6676,6 @@ public class DSL {
      * Object[] bindings = new Object[] { "MY_SCHEMA" };
      * </pre></code>
      * <p>
-     * The provided SQL must evaluate as a table whose type can be dynamically
-     * discovered using JDBC's {@link ResultSetMetaData} methods. That way, you
-     * can be sure that calling methods, such as {@link Table#fieldsRow()} will
-     * list the actual fields returned from your result set.
-     * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
@@ -6720,11 +6704,6 @@ public class DSL {
      * String sql = "SELECT * FROM USER_TABLES WHERE {0}";
      * QueryPart[] parts = new QueryPart[] { USER_TABLES.OWNER.equal("MY_SCHEMA") };
      * </pre></code>
-     * <p>
-     * The provided SQL must evaluate as a table whose type can be dynamically
-     * discovered using JDBC's {@link ResultSetMetaData} methods. That way, you
-     * can be sure that calling methods, such as {@link Table#fieldsRow()} will
-     * list the actual fields returned from your result set.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -7370,7 +7349,7 @@ public class DSL {
      */
     @Support
     public static Condition condition(Boolean value) {
-        return condition(Utils.field(value, Boolean.class));
+        return condition(Tools.field(value, Boolean.class));
     }
 
     /**
@@ -7530,7 +7509,7 @@ public class DSL {
     @Deprecated
     @Support
     public static Field<Boolean> not(Boolean value) {
-        return not(Utils.field(value, Boolean.class));
+        return not(Tools.field(value, Boolean.class));
     }
 
     /**
@@ -7569,6 +7548,424 @@ public class DSL {
     // [jooq-tools] START [row-field]
 
     /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row1)} as a replacement.
+     *
+     * @see #rowField(Row1)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1> Field<Record1<T1>> field(Row1<T1> row) {
+        return new RowField<Row1<T1>, Record1<T1>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row2)} as a replacement.
+     *
+     * @see #rowField(Row2)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2> Field<Record2<T1, T2>> field(Row2<T1, T2> row) {
+        return new RowField<Row2<T1, T2>, Record2<T1, T2>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row3)} as a replacement.
+     *
+     * @see #rowField(Row3)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3> Field<Record3<T1, T2, T3>> field(Row3<T1, T2, T3> row) {
+        return new RowField<Row3<T1, T2, T3>, Record3<T1, T2, T3>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row4)} as a replacement.
+     *
+     * @see #rowField(Row4)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4> Field<Record4<T1, T2, T3, T4>> field(Row4<T1, T2, T3, T4> row) {
+        return new RowField<Row4<T1, T2, T3, T4>, Record4<T1, T2, T3, T4>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row5)} as a replacement.
+     *
+     * @see #rowField(Row5)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5> Field<Record5<T1, T2, T3, T4, T5>> field(Row5<T1, T2, T3, T4, T5> row) {
+        return new RowField<Row5<T1, T2, T3, T4, T5>, Record5<T1, T2, T3, T4, T5>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row6)} as a replacement.
+     *
+     * @see #rowField(Row6)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6> Field<Record6<T1, T2, T3, T4, T5, T6>> field(Row6<T1, T2, T3, T4, T5, T6> row) {
+        return new RowField<Row6<T1, T2, T3, T4, T5, T6>, Record6<T1, T2, T3, T4, T5, T6>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row7)} as a replacement.
+     *
+     * @see #rowField(Row7)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7> Field<Record7<T1, T2, T3, T4, T5, T6, T7>> field(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
+        return new RowField<Row7<T1, T2, T3, T4, T5, T6, T7>, Record7<T1, T2, T3, T4, T5, T6, T7>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row8)} as a replacement.
+     *
+     * @see #rowField(Row8)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7, T8> Field<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> field(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
+        return new RowField<Row8<T1, T2, T3, T4, T5, T6, T7, T8>, Record8<T1, T2, T3, T4, T5, T6, T7, T8>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row9)} as a replacement.
+     *
+     * @see #rowField(Row9)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7, T8, T9> Field<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> field(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row) {
+        return new RowField<Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9>, Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row10)} as a replacement.
+     *
+     * @see #rowField(Row10)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Field<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> field(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row) {
+        return new RowField<Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>, Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row11)} as a replacement.
+     *
+     * @see #rowField(Row11)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Field<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> field(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row) {
+        return new RowField<Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>, Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row12)} as a replacement.
+     *
+     * @see #rowField(Row12)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Field<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> field(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row) {
+        return new RowField<Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>, Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row13)} as a replacement.
+     *
+     * @see #rowField(Row13)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Field<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> field(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row) {
+        return new RowField<Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>, Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row14)} as a replacement.
+     *
+     * @see #rowField(Row14)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Field<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> field(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row) {
+        return new RowField<Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>, Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row15)} as a replacement.
+     *
+     * @see #rowField(Row15)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Field<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> field(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row) {
+        return new RowField<Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>, Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row16)} as a replacement.
+     *
+     * @see #rowField(Row16)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Field<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> field(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row) {
+        return new RowField<Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>, Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row17)} as a replacement.
+     *
+     * @see #rowField(Row17)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Field<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> field(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row) {
+        return new RowField<Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>, Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row18)} as a replacement.
+     *
+     * @see #rowField(Row18)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Field<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> field(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row) {
+        return new RowField<Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>, Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row19)} as a replacement.
+     *
+     * @see #rowField(Row19)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Field<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> field(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row) {
+        return new RowField<Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>, Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row20)} as a replacement.
+     *
+     * @see #rowField(Row20)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Field<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> field(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row) {
+        return new RowField<Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>, Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row21)} as a replacement.
+     *
+     * @see #rowField(Row21)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Field<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> field(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row) {
+        return new RowField<Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>, Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row22)} as a replacement.
+     *
+     * @see #rowField(Row22)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Field<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> field(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row) {
+        return new RowField<Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>, Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>>(row);
+    }
+
+    /**
      * EXPERIMENTAL: Turn a row value expression of degree <code>1</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
@@ -7577,7 +7974,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1> Field<Record1<T1>> field(Row1<T1> row) {
+    public static <T1> Field<Record1<T1>> rowField(Row1<T1> row) {
         return new RowField<Row1<T1>, Record1<T1>>(row);
     }
 
@@ -7590,7 +7987,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2> Field<Record2<T1, T2>> field(Row2<T1, T2> row) {
+    public static <T1, T2> Field<Record2<T1, T2>> rowField(Row2<T1, T2> row) {
         return new RowField<Row2<T1, T2>, Record2<T1, T2>>(row);
     }
 
@@ -7603,7 +8000,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3> Field<Record3<T1, T2, T3>> field(Row3<T1, T2, T3> row) {
+    public static <T1, T2, T3> Field<Record3<T1, T2, T3>> rowField(Row3<T1, T2, T3> row) {
         return new RowField<Row3<T1, T2, T3>, Record3<T1, T2, T3>>(row);
     }
 
@@ -7616,7 +8013,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4> Field<Record4<T1, T2, T3, T4>> field(Row4<T1, T2, T3, T4> row) {
+    public static <T1, T2, T3, T4> Field<Record4<T1, T2, T3, T4>> rowField(Row4<T1, T2, T3, T4> row) {
         return new RowField<Row4<T1, T2, T3, T4>, Record4<T1, T2, T3, T4>>(row);
     }
 
@@ -7629,7 +8026,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5> Field<Record5<T1, T2, T3, T4, T5>> field(Row5<T1, T2, T3, T4, T5> row) {
+    public static <T1, T2, T3, T4, T5> Field<Record5<T1, T2, T3, T4, T5>> rowField(Row5<T1, T2, T3, T4, T5> row) {
         return new RowField<Row5<T1, T2, T3, T4, T5>, Record5<T1, T2, T3, T4, T5>>(row);
     }
 
@@ -7642,7 +8039,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6> Field<Record6<T1, T2, T3, T4, T5, T6>> field(Row6<T1, T2, T3, T4, T5, T6> row) {
+    public static <T1, T2, T3, T4, T5, T6> Field<Record6<T1, T2, T3, T4, T5, T6>> rowField(Row6<T1, T2, T3, T4, T5, T6> row) {
         return new RowField<Row6<T1, T2, T3, T4, T5, T6>, Record6<T1, T2, T3, T4, T5, T6>>(row);
     }
 
@@ -7655,7 +8052,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7> Field<Record7<T1, T2, T3, T4, T5, T6, T7>> field(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7> Field<Record7<T1, T2, T3, T4, T5, T6, T7>> rowField(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
         return new RowField<Row7<T1, T2, T3, T4, T5, T6, T7>, Record7<T1, T2, T3, T4, T5, T6, T7>>(row);
     }
 
@@ -7668,7 +8065,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7, T8> Field<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> field(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7, T8> Field<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> rowField(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
         return new RowField<Row8<T1, T2, T3, T4, T5, T6, T7, T8>, Record8<T1, T2, T3, T4, T5, T6, T7, T8>>(row);
     }
 
@@ -7681,7 +8078,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> Field<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> field(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> Field<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> rowField(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row) {
         return new RowField<Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9>, Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>>(row);
     }
 
@@ -7694,7 +8091,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Field<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> field(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Field<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> rowField(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row) {
         return new RowField<Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>, Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>>(row);
     }
 
@@ -7707,7 +8104,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Field<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> field(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Field<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> rowField(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row) {
         return new RowField<Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>, Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>>(row);
     }
 
@@ -7720,7 +8117,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Field<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> field(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Field<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> rowField(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row) {
         return new RowField<Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>, Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>>(row);
     }
 
@@ -7733,7 +8130,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Field<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> field(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Field<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> rowField(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row) {
         return new RowField<Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>, Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>>(row);
     }
 
@@ -7746,7 +8143,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Field<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> field(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Field<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> rowField(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row) {
         return new RowField<Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>, Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>>(row);
     }
 
@@ -7759,7 +8156,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Field<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> field(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Field<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> rowField(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row) {
         return new RowField<Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>, Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>>(row);
     }
 
@@ -7772,7 +8169,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Field<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> field(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Field<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> rowField(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row) {
         return new RowField<Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>, Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>>(row);
     }
 
@@ -7785,7 +8182,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Field<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> field(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Field<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> rowField(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row) {
         return new RowField<Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>, Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>>(row);
     }
 
@@ -7798,7 +8195,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Field<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> field(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Field<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> rowField(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row) {
         return new RowField<Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>, Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>>(row);
     }
 
@@ -7811,7 +8208,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Field<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> field(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Field<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> rowField(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row) {
         return new RowField<Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>, Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>>(row);
     }
 
@@ -7824,7 +8221,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Field<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> field(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Field<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> rowField(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row) {
         return new RowField<Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>, Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>>(row);
     }
 
@@ -7837,7 +8234,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Field<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> field(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Field<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> rowField(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row) {
         return new RowField<Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>, Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>>(row);
     }
 
@@ -7850,7 +8247,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Field<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> field(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Field<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> rowField(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row) {
         return new RowField<Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>, Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>>(row);
     }
 
@@ -7861,7 +8258,10 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> field(Select<? extends Record1<T>> select) {
-        return select.<T>asField();
+        if (select == null)
+            return (Field) NULL();
+        else
+            return select.<T>asField();
     }
 
     /**
@@ -8005,7 +8405,7 @@ public class DSL {
      */
     @Support
     public static <Z, T> Field<Z> decode(T value, T search, Z result, Object... more) {
-        return decode(Utils.field(value), Utils.field(search), Utils.field(result), Utils.fields(more).toArray(new Field[0]));
+        return decode(Tools.field(value), Tools.field(search), Tools.field(result), Tools.fields(more).toArray(new Field[0]));
     }
 
     /**
@@ -8062,7 +8462,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> coerce(Object value, Field<T> as) {
-        return Utils.field(value).coerce(as);
+        return Tools.field(value).coerce(as);
     }
 
     /**
@@ -8072,7 +8472,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> coerce(Object value, Class<T> as) {
-        return Utils.field(value).coerce(as);
+        return Tools.field(value).coerce(as);
     }
 
     /**
@@ -8082,7 +8482,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> coerce(Object value, DataType<T> as) {
-        return Utils.field(value).coerce(as);
+        return Tools.field(value).coerce(as);
     }
 
     /**
@@ -8197,7 +8597,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> cast(Object value, Field<T> as) {
-        return Utils.field(value, as).cast(as);
+        return Tools.field(value, as).cast(as);
     }
 
     /**
@@ -8235,7 +8635,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> cast(Object value, Class<T> type) {
-        return Utils.field(value, type).cast(type);
+        return Tools.field(value, type).cast(type);
     }
 
     /**
@@ -8273,7 +8673,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> cast(Object value, DataType<T> type) {
-        return Utils.field(value).cast(type);
+        return Tools.field(value).cast(type);
     }
 
     /**
@@ -8326,7 +8726,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> coalesce(T value, T... values) {
-        return coalesce0(Utils.field(value), Utils.fields(values).toArray(new Field[0]));
+        return coalesce0(Tools.field(value), Tools.fields(values).toArray(new Field[0]));
     }
 
     /**
@@ -8336,7 +8736,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> coalesce(Field<T> field, T value) {
-        return coalesce0(field, Utils.field(value, field));
+        return coalesce0(field, Tools.field(value, field));
     }
 
     /**
@@ -8400,7 +8800,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> nvl(T value, T defaultValue) {
-        return nvl0(Utils.field(value), Utils.field(defaultValue));
+        return nvl0(Tools.field(value), Tools.field(defaultValue));
     }
 
     /**
@@ -8410,7 +8810,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> nvl(T value, Field<T> defaultValue) {
-        return nvl0(Utils.field(value), nullSafe(defaultValue));
+        return nvl0(Tools.field(value), nullSafe(defaultValue));
     }
 
     /**
@@ -8420,7 +8820,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> nvl(Field<T> value, T defaultValue) {
-        return nvl0(nullSafe(value), Utils.field(defaultValue));
+        return nvl0(nullSafe(value), Tools.field(defaultValue));
     }
 
     /**
@@ -8469,7 +8869,7 @@ public class DSL {
      */
     @Support
     public static <Z> Field<Z> nvl2(Field<?> value, Z valueIfNotNull, Z valueIfNull) {
-        return nvl20(nullSafe(value), Utils.field(valueIfNotNull), Utils.field(valueIfNull));
+        return nvl20(nullSafe(value), Tools.field(valueIfNotNull), Tools.field(valueIfNull));
     }
 
     /**
@@ -8479,7 +8879,7 @@ public class DSL {
      */
     @Support
     public static <Z> Field<Z> nvl2(Field<?> value, Z valueIfNotNull, Field<Z> valueIfNull) {
-        return nvl20(nullSafe(value), Utils.field(valueIfNotNull), nullSafe(valueIfNull));
+        return nvl20(nullSafe(value), Tools.field(valueIfNotNull), nullSafe(valueIfNull));
     }
 
     /**
@@ -8489,7 +8889,7 @@ public class DSL {
      */
     @Support
     public static <Z> Field<Z> nvl2(Field<?> value, Field<Z> valueIfNotNull, Z valueIfNull) {
-        return nvl20(nullSafe(value), nullSafe(valueIfNotNull), Utils.field(valueIfNull));
+        return nvl20(nullSafe(value), nullSafe(valueIfNotNull), Tools.field(valueIfNull));
     }
 
     /**
@@ -8522,7 +8922,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> nullif(T value, T other) {
-        return nullif0(Utils.field(value), Utils.field(other));
+        return nullif0(Tools.field(value), Tools.field(other));
     }
 
     /**
@@ -8532,7 +8932,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> nullif(T value, Field<T> other) {
-        return nullif0(Utils.field(value), nullSafe(other));
+        return nullif0(Tools.field(value), nullSafe(other));
     }
 
     /**
@@ -8542,7 +8942,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> nullif(Field<T> value, T other) {
-        return nullif0(nullSafe(value), Utils.field(other));
+        return nullif0(nullSafe(value), Tools.field(other));
     }
 
     /**
@@ -8577,7 +8977,7 @@ public class DSL {
      */
     @Support
     public static Field<String> upper(String value) {
-        return upper(Utils.field(value));
+        return upper(Tools.field(value));
     }
 
     /**
@@ -8598,7 +8998,7 @@ public class DSL {
      */
     @Support
     public static Field<String> lower(String value) {
-        return lower(Utils.field(value, String.class));
+        return lower(Tools.field(value, String.class));
     }
 
     /**
@@ -8619,7 +9019,7 @@ public class DSL {
      */
     @Support
     public static Field<String> trim(String value) {
-        return trim(Utils.field(value, String.class));
+        return trim(Tools.field(value, String.class));
     }
 
     /**
@@ -8641,7 +9041,7 @@ public class DSL {
      */
     @Support
     public static Field<String> rtrim(String value) {
-        return rtrim(Utils.field(value));
+        return rtrim(Tools.field(value));
     }
 
     /**
@@ -8662,7 +9062,7 @@ public class DSL {
      */
     @Support
     public static Field<String> ltrim(String value) {
-        return ltrim(Utils.field(value, String.class));
+        return ltrim(Tools.field(value, String.class));
     }
 
     /**
@@ -8683,7 +9083,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> rpad(Field<String> field, int length) {
-        return rpad(nullSafe(field), Utils.field(length));
+        return rpad(nullSafe(field), Tools.field(length));
     }
 
     /**
@@ -8717,7 +9117,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> rpad(Field<String> field, int length, String character) {
-        return rpad(nullSafe(field), Utils.field(length), Utils.field(character, String.class));
+        return rpad(nullSafe(field), Tools.field(length), Tools.field(character, String.class));
     }
 
     /**
@@ -8744,7 +9144,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> lpad(Field<String> field, int length) {
-        return lpad(nullSafe(field), Utils.field(length));
+        return lpad(nullSafe(field), Tools.field(length));
     }
 
     /**
@@ -8778,7 +9178,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> lpad(Field<String> field, int length, String character) {
-        return lpad(nullSafe(field), Utils.field(length), Utils.field(character, String.class));
+        return lpad(nullSafe(field), Tools.field(length), Tools.field(character, String.class));
     }
 
     /**
@@ -8805,7 +9205,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> repeat(String field, int count) {
-        return repeat(Utils.field(field, String.class), Utils.field(count));
+        return repeat(Tools.field(field, String.class), Tools.field(count));
     }
 
     /**
@@ -8815,7 +9215,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> repeat(String field, Field<? extends Number> count) {
-        return repeat(Utils.field(field, String.class), nullSafe(count));
+        return repeat(Tools.field(field, String.class), nullSafe(count));
     }
 
     /**
@@ -8825,7 +9225,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> repeat(Field<String> field, int count) {
-        return repeat(nullSafe(field), Utils.field(count));
+        return repeat(nullSafe(field), Tools.field(count));
     }
 
     /**
@@ -8933,7 +9333,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> replace(Field<String> field, String search) {
-        return replace(nullSafe(field), Utils.field(search, String.class));
+        return replace(nullSafe(field), Tools.field(search, String.class));
     }
 
     /**
@@ -8957,7 +9357,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> replace(Field<String> field, String search, String replace) {
-        return replace(nullSafe(field), Utils.field(search, String.class), Utils.field(replace, String.class));
+        return replace(nullSafe(field), Tools.field(search, String.class), Tools.field(replace, String.class));
     }
 
     /**
@@ -8979,7 +9379,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> position(String in, String search) {
-        return position(Utils.field(in, String.class), Utils.field(search, String.class));
+        return position(Tools.field(in, String.class), Tools.field(search, String.class));
     }
 
     /**
@@ -8989,7 +9389,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> position(String in, Field<String> search) {
-        return position(Utils.field(in, String.class), nullSafe(search));
+        return position(Tools.field(in, String.class), nullSafe(search));
     }
 
     /**
@@ -8999,7 +9399,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> position(Field<String> in, String search) {
-        return position(nullSafe(in), Utils.field(search, String.class));
+        return position(nullSafe(in), Tools.field(search, String.class));
     }
 
     /**
@@ -9024,7 +9424,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> ascii(String field) {
-        return ascii(Utils.field(field, String.class));
+        return ascii(Tools.field(field, String.class));
     }
 
     /**
@@ -9045,7 +9445,7 @@ public class DSL {
      */
     @Support
     public static Field<String> concat(Field<String> field, String value) {
-        return concat(nullSafe(field), Utils.field(value, String.class));
+        return concat(nullSafe(field), Tools.field(value, String.class));
     }
 
     /**
@@ -9055,7 +9455,7 @@ public class DSL {
      */
     @Support
     public static Field<String> concat(String value, Field<String> field) {
-        return concat(Utils.field(value, String.class), nullSafe(field));
+        return concat(Tools.field(value, String.class), nullSafe(field));
     }
 
     /**
@@ -9065,7 +9465,7 @@ public class DSL {
      */
     @Support
     public static Field<String> concat(String... values) {
-        return concat(Utils.fields(values).toArray(new Field[0]));
+        return concat(Tools.fields(values).toArray(new Field[0]));
     }
 
     /**
@@ -9090,7 +9490,7 @@ public class DSL {
      */
     @Support
     public static Field<String> substring(Field<String> field, int startingPosition) {
-        return substring(nullSafe(field), Utils.field(startingPosition));
+        return substring(nullSafe(field), Tools.field(startingPosition));
     }
 
     /**
@@ -9112,7 +9512,7 @@ public class DSL {
      */
     @Support
     public static Field<String> substring(Field<String> field, int startingPosition, int length) {
-        return substring(nullSafe(field), Utils.field(startingPosition), Utils.field(length));
+        return substring(nullSafe(field), Tools.field(startingPosition), Tools.field(length));
     }
 
     /**
@@ -9134,7 +9534,7 @@ public class DSL {
      */
     @Support
     public static Field<String> mid(Field<String> field, int startingPosition, int length) {
-        return substring(nullSafe(field), Utils.field(startingPosition), Utils.field(length));
+        return substring(nullSafe(field), Tools.field(startingPosition), Tools.field(length));
     }
 
     /**
@@ -9159,7 +9559,7 @@ public class DSL {
      */
     @Support
     public static Field<String> left(String field, int length) {
-        return left(Utils.field(field), Utils.field(length));
+        return left(Tools.field(field), Tools.field(length));
     }
 
     /**
@@ -9172,7 +9572,7 @@ public class DSL {
      */
     @Support
     public static Field<String> left(String field, Field<? extends Number> length) {
-        return left(Utils.field(field), nullSafe(length));
+        return left(Tools.field(field), nullSafe(length));
     }
 
     /**
@@ -9185,7 +9585,7 @@ public class DSL {
      */
     @Support
     public static Field<String> left(Field<String> field, int length) {
-        return left(nullSafe(field), Utils.field(length));
+        return left(nullSafe(field), Tools.field(length));
     }
 
     /**
@@ -9211,7 +9611,7 @@ public class DSL {
      */
     @Support
     public static Field<String> right(String field, int length) {
-        return right(Utils.field(field), Utils.field(length));
+        return right(Tools.field(field), Tools.field(length));
     }
 
     /**
@@ -9224,7 +9624,7 @@ public class DSL {
      */
     @Support
     public static Field<String> right(String field, Field<? extends Number> length) {
-        return right(Utils.field(field), nullSafe(length));
+        return right(Tools.field(field), nullSafe(length));
     }
 
     /**
@@ -9237,7 +9637,7 @@ public class DSL {
      */
     @Support
     public static Field<String> right(Field<String> field, int length) {
-        return right(nullSafe(field), Utils.field(length));
+        return right(nullSafe(field), Tools.field(length));
     }
 
     /**
@@ -9261,7 +9661,7 @@ public class DSL {
      */
     @Support
     public static Field<Integer> length(String value) {
-        return length(Utils.field(value, String.class));
+        return length(Tools.field(value, String.class));
     }
 
     /**
@@ -9282,7 +9682,7 @@ public class DSL {
      */
     @Support
     public static Field<Integer> charLength(String value) {
-        return charLength(Utils.field(value));
+        return charLength(Tools.field(value));
     }
 
     /**
@@ -9302,7 +9702,7 @@ public class DSL {
      */
     @Support
     public static Field<Integer> bitLength(String value) {
-        return bitLength(Utils.field(value));
+        return bitLength(Tools.field(value));
     }
 
     /**
@@ -9322,7 +9722,7 @@ public class DSL {
      */
     @Support
     public static Field<Integer> octetLength(String value) {
-        return octetLength(Utils.field(value, String.class));
+        return octetLength(Tools.field(value, String.class));
     }
 
     /**
@@ -9363,7 +9763,7 @@ public class DSL {
      */
     @Support({ MARIADB, MYSQL })
     public static Field<String> md5(String string) {
-        return md5(Utils.field(string));
+        return md5(Tools.field(string));
     }
 
     /**
@@ -9436,7 +9836,7 @@ public class DSL {
      */
     @Support
     public static Field<Integer> dateDiff(Date date1, Date date2) {
-        return dateDiff(Utils.field(date1), Utils.field(date2));
+        return dateDiff(Tools.field(date1), Tools.field(date2));
     }
 
     /**
@@ -9448,7 +9848,7 @@ public class DSL {
      */
     @Support
     public static Field<Integer> dateDiff(Field<Date> date1, Date date2) {
-        return dateDiff(nullSafe(date1), Utils.field(date2));
+        return dateDiff(nullSafe(date1), Tools.field(date2));
     }
 
     /**
@@ -9460,7 +9860,7 @@ public class DSL {
      */
     @Support
     public static Field<Date> dateAdd(Date date, Number interval) {
-        return dateAdd(Utils.field(date), Utils.field(interval));
+        return dateAdd(Tools.field(date), Tools.field(interval));
     }
 
     /**
@@ -9482,7 +9882,7 @@ public class DSL {
      */
     @Support
     public static Field<Date> dateAdd(Date date, Number interval, DatePart datePart) {
-        return dateAdd(Utils.field(date), Utils.field(interval), datePart);
+        return dateAdd(Tools.field(date), Tools.field(interval), datePart);
     }
 
     /**
@@ -9492,7 +9892,7 @@ public class DSL {
      */
     @Support
     public static Field<Date> dateAdd(Date date, Field<? extends Number> interval, DatePart datePart) {
-        return dateAdd(Utils.field(date), nullSafe(interval), datePart);
+        return dateAdd(Tools.field(date), nullSafe(interval), datePart);
     }
 
     /**
@@ -9502,7 +9902,7 @@ public class DSL {
      */
     @Support
     public static Field<Date> dateAdd(Field<Date> date, Number interval, DatePart datePart) {
-        return dateAdd(nullSafe(date), Utils.field(interval), datePart);
+        return dateAdd(nullSafe(date), Tools.field(interval), datePart);
     }
 
     /**
@@ -9524,7 +9924,7 @@ public class DSL {
      */
     @Support
     public static Field<Date> dateSub(Date date, Number interval) {
-        return dateSub(Utils.field(date), Utils.field(interval));
+        return dateSub(Tools.field(date), Tools.field(interval));
     }
 
     /**
@@ -9546,7 +9946,7 @@ public class DSL {
      */
     @Support
     public static Field<Date> dateSub(Date date, Number interval, DatePart datePart) {
-        return dateSub(Utils.field(date), Utils.field(interval), datePart);
+        return dateSub(Tools.field(date), Tools.field(interval), datePart);
     }
 
     /**
@@ -9556,7 +9956,7 @@ public class DSL {
      */
     @Support
     public static Field<Date> dateSub(Date date, Field<? extends Number> interval, DatePart datePart) {
-        return dateSub(Utils.field(date), nullSafe(interval), datePart);
+        return dateSub(Tools.field(date), nullSafe(interval), datePart);
     }
 
     /**
@@ -9566,7 +9966,7 @@ public class DSL {
      */
     @Support
     public static Field<Date> dateSub(Field<Date> date, Number interval, DatePart datePart) {
-        return dateSub(nullSafe(date), Utils.field(interval), datePart);
+        return dateSub(nullSafe(date), Tools.field(interval), datePart);
     }
 
     /**
@@ -9588,7 +9988,7 @@ public class DSL {
      */
     @Support
     public static Field<Integer> dateDiff(Date date1, Field<Date> date2) {
-        return dateDiff(Utils.field(date1), nullSafe(date2));
+        return dateDiff(Tools.field(date1), nullSafe(date2));
     }
 
     /**
@@ -9612,7 +10012,7 @@ public class DSL {
      */
     @Support
     public static Field<Timestamp> timestampAdd(Timestamp timestamp, Number interval) {
-        return timestampAdd(Utils.field(timestamp), Utils.field(interval));
+        return timestampAdd(Tools.field(timestamp), Tools.field(interval));
     }
 
     /**
@@ -9634,7 +10034,7 @@ public class DSL {
      */
     @Support
     public static Field<Timestamp> timestampAdd(Timestamp date, Number interval, DatePart datePart) {
-        return new DateAdd<Timestamp>(Utils.field(date), Utils.field(interval), datePart);
+        return new DateAdd<Timestamp>(Tools.field(date), Tools.field(interval), datePart);
     }
 
     /**
@@ -9644,7 +10044,7 @@ public class DSL {
      */
     @Support
     public static Field<Timestamp> timestampAdd(Timestamp date, Field<? extends Number> interval, DatePart datePart) {
-        return new DateAdd<Timestamp>(Utils.field(date), nullSafe(interval), datePart);
+        return new DateAdd<Timestamp>(Tools.field(date), nullSafe(interval), datePart);
     }
 
     /**
@@ -9654,7 +10054,7 @@ public class DSL {
      */
     @Support
     public static Field<Timestamp> timestampAdd(Field<Timestamp> date, Number interval, DatePart datePart) {
-        return new DateAdd<Timestamp>(nullSafe(date), Utils.field(interval), datePart);
+        return new DateAdd<Timestamp>(nullSafe(date), Tools.field(interval), datePart);
     }
 
     /**
@@ -9677,7 +10077,7 @@ public class DSL {
      */
     @Support
     public static Field<DayToSecond> timestampDiff(Timestamp timestamp1, Timestamp timestamp2) {
-        return timestampDiff(Utils.field(timestamp1), Utils.field(timestamp2));
+        return timestampDiff(Tools.field(timestamp1), Tools.field(timestamp2));
     }
 
     /**
@@ -9690,7 +10090,7 @@ public class DSL {
      */
     @Support
     public static Field<DayToSecond> timestampDiff(Field<Timestamp> timestamp1, Timestamp timestamp2) {
-        return timestampDiff(nullSafe(timestamp1), Utils.field(timestamp2));
+        return timestampDiff(nullSafe(timestamp1), Tools.field(timestamp2));
     }
 
     /**
@@ -9703,7 +10103,7 @@ public class DSL {
      */
     @Support
     public static Field<DayToSecond> timestampDiff(Timestamp timestamp1, Field<Timestamp> timestamp2) {
-        return timestampDiff(Utils.field(timestamp1), nullSafe(timestamp2));
+        return timestampDiff(Tools.field(timestamp1), nullSafe(timestamp2));
     }
 
     /**
@@ -9732,7 +10132,7 @@ public class DSL {
      */
     @Support({ CUBRID, H2, HSQLDB, POSTGRES })
     public static Field<Date> trunc(Date date, DatePart part) {
-        return trunc(Utils.field(date), part);
+        return trunc(Tools.field(date), part);
     }
 
     /**
@@ -9748,7 +10148,7 @@ public class DSL {
      */
     @Support({ CUBRID, H2, HSQLDB, POSTGRES })
     public static Field<Timestamp> trunc(Timestamp timestamp, DatePart part) {
-        return trunc(Utils.field(timestamp), part);
+        return trunc(Tools.field(timestamp), part);
     }
 
     /**
@@ -9776,7 +10176,7 @@ public class DSL {
      */
     @Support
     public static Field<Integer> extract(java.util.Date value, DatePart datePart) {
-        return extract(Utils.field(value), datePart);
+        return extract(Tools.field(value), datePart);
     }
 
     /**
@@ -9926,7 +10326,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Date> date(String value) {
-        return Utils.field(Convert.convert(value, Date.class), Date.class);
+        return Tools.field(Convert.convert(value, Date.class), Date.class);
     }
 
     /**
@@ -9934,7 +10334,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Date> date(java.util.Date value) {
-        return date(Utils.field(value));
+        return date(Tools.field(value));
     }
 
     /**
@@ -9950,7 +10350,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Time> time(String value) {
-        return Utils.field(Convert.convert(value, Time.class), Time.class);
+        return Tools.field(Convert.convert(value, Time.class), Time.class);
     }
 
     /**
@@ -9958,7 +10358,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Time> time(java.util.Date value) {
-        return time(Utils.field(value));
+        return time(Tools.field(value));
     }
 
     /**
@@ -9974,7 +10374,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Timestamp> timestamp(String value) {
-        return Utils.field(Convert.convert(value, Timestamp.class), Timestamp.class);
+        return Tools.field(Convert.convert(value, Timestamp.class), Timestamp.class);
     }
 
     /**
@@ -9982,7 +10382,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Timestamp> timestamp(java.util.Date value) {
-        return timestamp(Utils.field(value));
+        return timestamp(Tools.field(value));
     }
 
     /**
@@ -10232,7 +10632,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> bitCount(Number value) {
-        return bitCount(Utils.field(value));
+        return bitCount(Tools.field(value));
     }
 
     /**
@@ -10264,7 +10664,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitNot(T value) {
-        return bitNot(Utils.field(value));
+        return bitNot(Tools.field(value));
     }
 
     /**
@@ -10285,7 +10685,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitAnd(T value1, T value2) {
-        return bitAnd(Utils.field(value1), Utils.field(value2));
+        return bitAnd(Tools.field(value1), Tools.field(value2));
     }
 
     /**
@@ -10295,7 +10695,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitAnd(T value1, Field<T> value2) {
-        return bitAnd(Utils.field(value1), nullSafe(value2));
+        return bitAnd(Tools.field(value1), nullSafe(value2));
     }
 
     /**
@@ -10305,7 +10705,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitAnd(Field<T> value1, T value2) {
-        return bitAnd(nullSafe(value1), Utils.field(value2));
+        return bitAnd(nullSafe(value1), Tools.field(value2));
     }
 
     /**
@@ -10331,7 +10731,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitNand(T value1, T value2) {
-        return bitNand(Utils.field(value1), Utils.field(value2));
+        return bitNand(Tools.field(value1), Tools.field(value2));
     }
 
     /**
@@ -10342,7 +10742,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitNand(T value1, Field<T> value2) {
-        return bitNand(Utils.field(value1), nullSafe(value2));
+        return bitNand(Tools.field(value1), nullSafe(value2));
     }
 
     /**
@@ -10353,7 +10753,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitNand(Field<T> value1, T value2) {
-        return bitNand(nullSafe(value1), Utils.field(value2));
+        return bitNand(nullSafe(value1), Tools.field(value2));
     }
 
     /**
@@ -10380,7 +10780,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitOr(T value1, T value2) {
-        return bitOr(Utils.field(value1), Utils.field(value2));
+        return bitOr(Tools.field(value1), Tools.field(value2));
     }
 
     /**
@@ -10390,7 +10790,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitOr(T value1, Field<T> value2) {
-        return bitOr(Utils.field(value1), nullSafe(value2));
+        return bitOr(Tools.field(value1), nullSafe(value2));
     }
 
     /**
@@ -10400,7 +10800,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitOr(Field<T> value1, T value2) {
-        return bitOr(nullSafe(value1), Utils.field(value2));
+        return bitOr(nullSafe(value1), Tools.field(value2));
     }
 
     /**
@@ -10426,7 +10826,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitNor(T value1, T value2) {
-        return bitNor(Utils.field(value1), Utils.field(value2));
+        return bitNor(Tools.field(value1), Tools.field(value2));
     }
     /**
      * The bitwise not or operator.
@@ -10436,7 +10836,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitNor(T value1, Field<T> value2) {
-        return bitNor(Utils.field(value1), nullSafe(value2));
+        return bitNor(Tools.field(value1), nullSafe(value2));
     }
     /**
      * The bitwise not or operator.
@@ -10446,7 +10846,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitNor(Field<T> value1, T value2) {
-        return bitNor(nullSafe(value1), Utils.field(value2));
+        return bitNor(nullSafe(value1), Tools.field(value2));
     }
 
     /**
@@ -10473,7 +10873,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitXor(T value1, T value2) {
-        return bitXor(Utils.field(value1), Utils.field(value2));
+        return bitXor(Tools.field(value1), Tools.field(value2));
     }
 
     /**
@@ -10483,7 +10883,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitXor(T value1, Field<T> value2) {
-        return bitXor(Utils.field(value1), nullSafe(value2));
+        return bitXor(Tools.field(value1), nullSafe(value2));
     }
 
     /**
@@ -10493,7 +10893,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitXor(Field<T> value1, T value2) {
-        return bitXor(nullSafe(value1), Utils.field(value2));
+        return bitXor(nullSafe(value1), Tools.field(value2));
     }
 
     /**
@@ -10519,7 +10919,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitXNor(T value1, T value2) {
-        return bitXNor(Utils.field(value1), Utils.field(value2));
+        return bitXNor(Tools.field(value1), Tools.field(value2));
     }
 
     /**
@@ -10530,7 +10930,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitXNor(T value1, Field<T> value2) {
-        return bitXNor(Utils.field(value1), nullSafe(value2));
+        return bitXNor(Tools.field(value1), nullSafe(value2));
     }
 
     /**
@@ -10541,7 +10941,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitXNor(Field<T> value1, T value2) {
-        return bitXNor(nullSafe(value1), Utils.field(value2));
+        return bitXNor(nullSafe(value1), Tools.field(value2));
     }
 
     /**
@@ -10567,7 +10967,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> shl(T value1, Number value2) {
-        return shl(Utils.field(value1), Utils.field(value2));
+        return shl(Tools.field(value1), Tools.field(value2));
     }
 
     /**
@@ -10578,7 +10978,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> shl(T value1, Field<? extends Number> value2) {
-        return shl(Utils.field(value1), nullSafe(value2));
+        return shl(Tools.field(value1), nullSafe(value2));
     }
 
     /**
@@ -10588,8 +10988,8 @@ public class DSL {
      * @see #power(Field, Number)
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static <T extends Number> Field<T> shl(Field<T>value1, Number value2) {
-        return shl(nullSafe(value1), Utils.field(value2));
+    public static <T extends Number> Field<T> shl(Field<T> value1, Number value2) {
+        return shl(nullSafe(value1), Tools.field(value2));
     }
 
     /**
@@ -10614,7 +11014,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> shr(T value1, Number value2) {
-        return shr(Utils.field(value1), Utils.field(value2));
+        return shr(Tools.field(value1), Tools.field(value2));
     }
 
     /**
@@ -10625,7 +11025,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> shr(T value1, Field<? extends Number> value2) {
-        return shr(Utils.field(value1), nullSafe(value2));
+        return shr(Tools.field(value1), nullSafe(value2));
     }
 
     /**
@@ -10636,7 +11036,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> shr(Field<T> value1, Number value2) {
-        return shr(nullSafe(value1), Utils.field(value2));
+        return shr(nullSafe(value1), Tools.field(value2));
     }
 
     /**
@@ -10678,7 +11078,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> greatest(T value, T... values) {
-        return greatest(Utils.field(value), Utils.fields(values).toArray(new Field[0]));
+        return greatest(Tools.field(value), Tools.fields(values).toArray(new Field[0]));
     }
 
     /**
@@ -10708,7 +11108,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> least(T value, T... values) {
-        return least(Utils.field(value), Utils.fields(values).toArray(new Field[0]));
+        return least(Tools.field(value), Tools.fields(values).toArray(new Field[0]));
     }
 
     /**
@@ -10732,7 +11132,7 @@ public class DSL {
      */
     @Support
     public static Field<Integer> sign(Number value) {
-        return sign(Utils.field(value));
+        return sign(Tools.field(value));
     }
 
     /**
@@ -10759,7 +11159,7 @@ public class DSL {
      */
     @Support
     public static <T extends Number> Field<T> abs(T value) {
-        return abs(Utils.field(value));
+        return abs(Tools.field(value));
     }
 
     /**
@@ -10780,7 +11180,7 @@ public class DSL {
      */
     @Support
     public static <T extends Number> Field<T> round(T value) {
-        return round(Utils.field(value));
+        return round(Tools.field(value));
     }
 
     /**
@@ -10803,7 +11203,7 @@ public class DSL {
      */
     @Support
     public static <T extends Number> Field<T> round(T value, int decimals) {
-        return round(Utils.field(value), decimals);
+        return round(Tools.field(value), decimals);
     }
 
     /**
@@ -10825,7 +11225,7 @@ public class DSL {
      */
     @Support
     public static <T extends Number> Field<T> floor(T value) {
-        return floor(Utils.field(value));
+        return floor(Tools.field(value));
     }
 
     /**
@@ -10848,7 +11248,7 @@ public class DSL {
      */
     @Support
     public static <T extends Number> Field<T> ceil(T value) {
-        return ceil(Utils.field(value));
+        return ceil(Tools.field(value));
     }
 
     /**
@@ -10872,7 +11272,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T extends Number> Field<T> trunc(T number) {
-        return trunc(Utils.field(number), inline(0));
+        return trunc(Tools.field(number), inline(0));
     }
 
     /**
@@ -10882,7 +11282,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T extends Number> Field<T> trunc(T number, int decimals) {
-        return trunc(Utils.field(number), inline(decimals));
+        return trunc(Tools.field(number), inline(decimals));
     }
 
     /**
@@ -10902,7 +11302,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T extends Number> Field<T> trunc(T number, Field<Integer> decimals) {
-        return trunc(Utils.field(number), nullSafe(decimals));
+        return trunc(Tools.field(number), nullSafe(decimals));
     }
 
     /**
@@ -10960,7 +11360,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> sqrt(Number value) {
-        return sqrt(Utils.field(value));
+        return sqrt(Tools.field(value));
     }
 
     /**
@@ -10983,7 +11383,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> exp(Number value) {
-        return exp(Utils.field(value));
+        return exp(Tools.field(value));
     }
 
     /**
@@ -11004,7 +11404,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> ln(Number value) {
-        return ln(Utils.field(value));
+        return ln(Tools.field(value));
     }
 
     /**
@@ -11026,7 +11426,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> log(Number value, int base) {
-        return log(Utils.field(value), base);
+        return log(Tools.field(value), base);
     }
 
     /**
@@ -11049,7 +11449,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> power(Number value, Number exponent) {
-        return power(Utils.field(value), Utils.field(exponent));
+        return power(Tools.field(value), Tools.field(exponent));
     }
 
     /**
@@ -11059,7 +11459,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> power(Field<? extends Number> field, Number exponent) {
-        return power(nullSafe(field), Utils.field(exponent));
+        return power(nullSafe(field), Tools.field(exponent));
     }
 
     /**
@@ -11069,7 +11469,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> power(Number value, Field<? extends Number> exponent) {
-        return power(Utils.field(value), nullSafe(exponent));
+        return power(Tools.field(value), nullSafe(exponent));
     }
 
     /**
@@ -11092,7 +11492,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> acos(Number value) {
-        return acos(Utils.field(value));
+        return acos(Tools.field(value));
     }
 
     /**
@@ -11113,7 +11513,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> asin(Number value) {
-        return asin(Utils.field(value));
+        return asin(Tools.field(value));
     }
 
     /**
@@ -11134,7 +11534,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> atan(Number value) {
-        return atan(Utils.field(value));
+        return atan(Tools.field(value));
     }
 
     /**
@@ -11155,7 +11555,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> atan2(Number x, Number y) {
-        return atan2(Utils.field(x), Utils.field(y));
+        return atan2(Tools.field(x), Tools.field(y));
     }
 
     /**
@@ -11165,7 +11565,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> atan2(Number x, Field<? extends Number> y) {
-        return atan2(Utils.field(x), nullSafe(y));
+        return atan2(Tools.field(x), nullSafe(y));
     }
 
     /**
@@ -11175,7 +11575,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> atan2(Field<? extends Number> x, Number y) {
-        return atan2(nullSafe(x), Utils.field(y));
+        return atan2(nullSafe(x), Tools.field(y));
     }
 
     /**
@@ -11197,7 +11597,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> cos(Number value) {
-        return cos(Utils.field(value));
+        return cos(Tools.field(value));
     }
 
     /**
@@ -11218,7 +11618,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> sin(Number value) {
-        return sin(Utils.field(value));
+        return sin(Tools.field(value));
     }
 
     /**
@@ -11239,7 +11639,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> tan(Number value) {
-        return tan(Utils.field(value));
+        return tan(Tools.field(value));
     }
 
     /**
@@ -11260,7 +11660,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> cot(Number value) {
-        return cot(Utils.field(value));
+        return cot(Tools.field(value));
     }
 
     /**
@@ -11282,7 +11682,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> sinh(Number value) {
-        return sinh(Utils.field(value));
+        return sinh(Tools.field(value));
     }
 
     /**
@@ -11304,7 +11704,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> cosh(Number value) {
-        return cosh(Utils.field(value));
+        return cosh(Tools.field(value));
     }
 
     /**
@@ -11326,7 +11726,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> tanh(Number value) {
-        return tanh(Utils.field(value));
+        return tanh(Tools.field(value));
     }
 
     /**
@@ -11349,7 +11749,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> coth(Number value) {
-        return coth(Utils.field(value));
+        return coth(Tools.field(value));
     }
 
     /**
@@ -11371,7 +11771,7 @@ public class DSL {
      */
     @Support
     public static Field<BigDecimal> deg(Number value) {
-        return deg(Utils.field(value));
+        return deg(Tools.field(value));
     }
 
     /**
@@ -11393,7 +11793,7 @@ public class DSL {
      */
     @Support
     public static Field<BigDecimal> rad(Number value) {
-        return rad(Utils.field(value));
+        return rad(Tools.field(value));
     }
 
     /**
@@ -11621,7 +12021,7 @@ public class DSL {
      */
     @Support({ H2, HSQLDB, POSTGRES })
     public static <T> Field<T[]> array(T... values) {
-        return array(Utils.fields(values));
+        return array(Tools.fields(values));
     }
 
     /**
@@ -11646,9 +12046,9 @@ public class DSL {
      * </tr>
      * </table>
      */
-    
+
     @SafeVarargs
-    
+
     @Support({ H2, HSQLDB, POSTGRES })
     public static <T> Field<T[]> array(Field<T>... fields) {
         return array(Arrays.asList(fields));
@@ -12375,7 +12775,7 @@ public class DSL {
      */
     @Support({ CUBRID, POSTGRES })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, T defaultValue) {
-        return lead(nullSafe(field), offset, Utils.field(defaultValue));
+        return lead(nullSafe(field), offset, Tools.field(defaultValue));
     }
 
     /**
@@ -12411,7 +12811,7 @@ public class DSL {
      */
     @Support({ CUBRID, POSTGRES })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, T defaultValue) {
-        return lag(nullSafe(field), offset, Utils.field(defaultValue));
+        return lag(nullSafe(field), offset, Tools.field(defaultValue));
     }
 
     /**
@@ -12557,7 +12957,7 @@ public class DSL {
      */
     @Support
     public static <T> Param<T> param(String name, T value) {
-        return new Val<T>(value, Utils.field(value).getDataType(), name);
+        return new Val<T>(value, Tools.field(value).getDataType(), name);
     }
 
     /**
@@ -12814,12 +13214,12 @@ public class DSL {
         if (value instanceof UDTRecord) {
             return new UDTConstant((UDTRecord) value);
         }
-        /* [pro] xx
-        xxxx xx xxxxxx xxxxxxxxxx xxxxxxxxxxxx x
-            xxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx
-        x
 
-        xx [/pro] */
+
+
+
+
+
         // The default behaviour
         else {
             T converted = type.convert(value);
@@ -12873,7 +13273,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1> Row1<T1> row(T1 t1) {
-        return row(Utils.field(t1));
+        return row(Tools.field(t1));
     }
 
     /**
@@ -12886,7 +13286,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2> Row2<T1, T2> row(T1 t1, T2 t2) {
-        return row(Utils.field(t1), Utils.field(t2));
+        return row(Tools.field(t1), Tools.field(t2));
     }
 
     /**
@@ -12899,7 +13299,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3> Row3<T1, T2, T3> row(T1 t1, T2 t2, T3 t3) {
-        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3));
+        return row(Tools.field(t1), Tools.field(t2), Tools.field(t3));
     }
 
     /**
@@ -12912,7 +13312,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4> Row4<T1, T2, T3, T4> row(T1 t1, T2 t2, T3 t3, T4 t4) {
-        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4));
+        return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4));
     }
 
     /**
@@ -12925,7 +13325,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5> Row5<T1, T2, T3, T4, T5> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
-        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5));
+        return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5));
     }
 
     /**
@@ -12938,7 +13338,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6> Row6<T1, T2, T3, T4, T5, T6> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
-        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6));
+        return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6));
     }
 
     /**
@@ -12951,7 +13351,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7> Row7<T1, T2, T3, T4, T5, T6, T7> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) {
-        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7));
+        return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7));
     }
 
     /**
@@ -12964,7 +13364,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8> Row8<T1, T2, T3, T4, T5, T6, T7, T8> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) {
-        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8));
+        return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8));
     }
 
     /**
@@ -12977,7 +13377,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9) {
-        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9));
+        return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8), Tools.field(t9));
     }
 
     /**
@@ -12990,7 +13390,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10) {
-        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10));
+        return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8), Tools.field(t9), Tools.field(t10));
     }
 
     /**
@@ -13003,7 +13403,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11) {
-        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11));
+        return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8), Tools.field(t9), Tools.field(t10), Tools.field(t11));
     }
 
     /**
@@ -13016,7 +13416,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12) {
-        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12));
+        return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8), Tools.field(t9), Tools.field(t10), Tools.field(t11), Tools.field(t12));
     }
 
     /**
@@ -13029,7 +13429,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13) {
-        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12), Utils.field(t13));
+        return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8), Tools.field(t9), Tools.field(t10), Tools.field(t11), Tools.field(t12), Tools.field(t13));
     }
 
     /**
@@ -13042,7 +13442,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14) {
-        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12), Utils.field(t13), Utils.field(t14));
+        return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8), Tools.field(t9), Tools.field(t10), Tools.field(t11), Tools.field(t12), Tools.field(t13), Tools.field(t14));
     }
 
     /**
@@ -13055,7 +13455,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15) {
-        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12), Utils.field(t13), Utils.field(t14), Utils.field(t15));
+        return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8), Tools.field(t9), Tools.field(t10), Tools.field(t11), Tools.field(t12), Tools.field(t13), Tools.field(t14), Tools.field(t15));
     }
 
     /**
@@ -13068,7 +13468,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16) {
-        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12), Utils.field(t13), Utils.field(t14), Utils.field(t15), Utils.field(t16));
+        return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8), Tools.field(t9), Tools.field(t10), Tools.field(t11), Tools.field(t12), Tools.field(t13), Tools.field(t14), Tools.field(t15), Tools.field(t16));
     }
 
     /**
@@ -13081,7 +13481,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17) {
-        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12), Utils.field(t13), Utils.field(t14), Utils.field(t15), Utils.field(t16), Utils.field(t17));
+        return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8), Tools.field(t9), Tools.field(t10), Tools.field(t11), Tools.field(t12), Tools.field(t13), Tools.field(t14), Tools.field(t15), Tools.field(t16), Tools.field(t17));
     }
 
     /**
@@ -13094,7 +13494,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18) {
-        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12), Utils.field(t13), Utils.field(t14), Utils.field(t15), Utils.field(t16), Utils.field(t17), Utils.field(t18));
+        return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8), Tools.field(t9), Tools.field(t10), Tools.field(t11), Tools.field(t12), Tools.field(t13), Tools.field(t14), Tools.field(t15), Tools.field(t16), Tools.field(t17), Tools.field(t18));
     }
 
     /**
@@ -13107,7 +13507,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19) {
-        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12), Utils.field(t13), Utils.field(t14), Utils.field(t15), Utils.field(t16), Utils.field(t17), Utils.field(t18), Utils.field(t19));
+        return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8), Tools.field(t9), Tools.field(t10), Tools.field(t11), Tools.field(t12), Tools.field(t13), Tools.field(t14), Tools.field(t15), Tools.field(t16), Tools.field(t17), Tools.field(t18), Tools.field(t19));
     }
 
     /**
@@ -13120,7 +13520,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20) {
-        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12), Utils.field(t13), Utils.field(t14), Utils.field(t15), Utils.field(t16), Utils.field(t17), Utils.field(t18), Utils.field(t19), Utils.field(t20));
+        return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8), Tools.field(t9), Tools.field(t10), Tools.field(t11), Tools.field(t12), Tools.field(t13), Tools.field(t14), Tools.field(t15), Tools.field(t16), Tools.field(t17), Tools.field(t18), Tools.field(t19), Tools.field(t20));
     }
 
     /**
@@ -13133,7 +13533,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21) {
-        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12), Utils.field(t13), Utils.field(t14), Utils.field(t15), Utils.field(t16), Utils.field(t17), Utils.field(t18), Utils.field(t19), Utils.field(t20), Utils.field(t21));
+        return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8), Tools.field(t9), Tools.field(t10), Tools.field(t11), Tools.field(t12), Tools.field(t13), Tools.field(t14), Tools.field(t15), Tools.field(t16), Tools.field(t17), Tools.field(t18), Tools.field(t19), Tools.field(t20), Tools.field(t21));
     }
 
     /**
@@ -13146,7 +13546,7 @@ public class DSL {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22) {
-        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12), Utils.field(t13), Utils.field(t14), Utils.field(t15), Utils.field(t16), Utils.field(t17), Utils.field(t18), Utils.field(t19), Utils.field(t20), Utils.field(t21), Utils.field(t22));
+        return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8), Tools.field(t9), Tools.field(t10), Tools.field(t11), Tools.field(t12), Tools.field(t13), Tools.field(t14), Tools.field(t15), Tools.field(t16), Tools.field(t17), Tools.field(t18), Tools.field(t19), Tools.field(t20), Tools.field(t21), Tools.field(t22));
     }
 
 // [jooq-tools] END [row-value]
@@ -13160,7 +13560,7 @@ public class DSL {
      */
     @Support
     public static RowN row(Object... values) {
-        return row(Utils.fields(values).toArray(new Field[0]));
+        return row(Tools.fields(values).toArray(new Field[0]));
     }
 
 // [jooq-tools] START [row-expression]

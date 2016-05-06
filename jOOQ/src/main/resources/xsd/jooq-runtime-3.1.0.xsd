@@ -30,16 +30,16 @@
       <element name="renderFormatted" type="boolean" minOccurs="0" maxOccurs="1" default="false"/>
 
       <!-- Whether rendered bind values should be rendered as:
-      
+
            - question marks
            - named parameters
            - inlined values
-           
-           This value is overridden by statementType == STATIC_STATEMENT, in 
+
+           This value is overridden by statementType == STATIC_STATEMENT, in
            case of which, this defaults to INLINED
         -->
       <element name="paramType" type="jooq-runtime:ParamType" minOccurs="0" maxOccurs="1" default="INDEXED"/>
-      
+
       <!-- The type of statement that is to be executed -->
       <element name="statementType" type="jooq-runtime:StatementType" minOccurs="0" maxOccurs="1" default="PREPARED_STATEMENT"/>
 
@@ -48,7 +48,7 @@
 
       <!-- Whether store() and delete() methods should be executed with optimistic locking -->
       <element name="executeWithOptimisticLocking" type="boolean" minOccurs="0" maxOccurs="1" default="false"/>
-      
+
       <!-- Whether fetched records should be attached to the fetching configuration -->
       <element name="attachRecords" type="boolean" minOccurs="0" maxOccurs="1" default="true"/>
     </all>

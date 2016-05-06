@@ -33,22 +33,22 @@
            Oracle 11g (and potentially, other databases too) implements scalar subquery caching. With this flag
            set to true, users can automatically profit from this feature in all SQL statements. -->
       <element name="renderScalarSubqueriesForStoredFunctions" type="boolean" minOccurs="0" maxOccurs="1" default="false"/>
-      
+
       <!-- Whether string literals should be escaped with backslash. -->
       <element name="backslashEscaping" type="jooq-runtime:BackslashEscaping" minOccurs="0" maxOccurs="1" default="DEFAULT"/>
 
       <!-- Whether rendered bind values should be rendered as:
-      
+
            - question marks
            - named parameters
            - named or inlined parameters
            - inlined parameters
-           
+
            This value is overridden by statementType == STATIC_STATEMENT, in
            case of which, this defaults to INLINED
         -->
       <element name="paramType" type="jooq-runtime:ParamType" minOccurs="0" maxOccurs="1" default="INDEXED"/>
-      
+
       <!-- The type of statement that is to be executed -->
       <element name="statementType" type="jooq-runtime:StatementType" minOccurs="0" maxOccurs="1" default="PREPARED_STATEMENT"/>
 
@@ -57,20 +57,20 @@
 
       <!-- Whether store() and delete() methods should be executed with optimistic locking -->
       <element name="executeWithOptimisticLocking" type="boolean" minOccurs="0" maxOccurs="1" default="false"/>
-      
+
       <!-- Whether fetched records should be attached to the fetching configuration -->
       <element name="attachRecords" type="boolean" minOccurs="0" maxOccurs="1" default="true"/>
-      
+
       <!-- Whether primary key values are deemed to be "updatable" in jOOQ
-      
+
            Setting this to "true" will allow for updating primary key values through
            UpdatableRecord.store() and UpdatableRecord.update()
         -->
       <element name="updatablePrimaryKeys" type="boolean" minOccurs="0" maxOccurs="1" default="false"/>
-      
+
       <!-- Whether reflection information should be cached in the configuration -->
       <element name="reflectionCaching" type="boolean" minOccurs="0" maxOccurs="1" default="true"/>
-      
+
       <!-- Whether warnings should be fetched after each query execution -->
       <element name="fetchWarnings" type="boolean" minOccurs="0" maxOccurs="1" default="true"/>
     </all>
@@ -132,7 +132,7 @@
 
       <!-- Execute statements with named parameters -->
       <enumeration value="NAMED"/>
-      
+
       <!-- Execute statements with named parameters, if a name is given, or inlined parameters otherwise -->
       <enumeration value="NAMED_OR_INLINED"/>
 
@@ -203,14 +203,14 @@
 
       <!-- Use the JDBC connection's setting for backslash escaping. In most databases, this
            is the same as OFF. In MySQL and MariaDB, the actual setting is extracted.
-           
+
            This is not yet implemented, as the JDBC connection might not be available to the renderer
       <enumeration value="AUTO"/>
         -->
-        
+
       <!-- Use the database's most sensible default value for ON (MySQL, MariaDB) / OFF (all other databases) -->
       <enumeration value="DEFAULT"/>
-      
+
       <!-- Always escape backslashes. -->
       <enumeration value="ON"/>
 

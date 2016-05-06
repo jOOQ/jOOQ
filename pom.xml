@@ -12,7 +12,7 @@
 
     <groupId>org.jooq</groupId>
     <artifactId>jooq-parent</artifactId>
-    <version>3.7.2</version>
+    <version>3.7.4</version>
     <packaging>pom</packaging>
 
     <name>jOOQ Parent</name>
@@ -30,13 +30,13 @@
             <url>http://www.jooq.org/inc/LICENSE.txt</url>
             <distribution>repo</distribution>
         </license>
-        <!-- [pro] xxx
-        xxxxxxxxx
-            xxxxxxxxxx xxxxxxx xxx xxxxxxxxxxx xxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxx
-        xxxx [/pro] -->
+
+
+
+
+
+
+
     </licenses>
 
     <scm>
@@ -166,18 +166,18 @@
         <module>jOOQ-meta-extensions</module>
         <module>jOOQ-scala</module>
 
-        <!-- [pro] xxx
-        xxxx xxxxxxx xxx
-        xxxx
-        xxxxx xxxxxxx xxxx x xxxx x xxxxxxxxxxx xxxxx xx xxxxxxxxx xxx xxxxxxxx xxx xxxxxxxxx
-        xxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxx xxxxxxxx xxx
-        xxxx [/pro] -->
+
+
+
+
+
+
+
+
+
+
+
     </modules>
 
     <profiles>
@@ -261,201 +261,201 @@
             </build>
         </profile>
 
-        <!-- [pro] xxx
-        xxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxx
-            xxxxxxx
-                xxxxxxxxx
-                    xxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxx
-                            xxxxxxxxxxx
-                                xxxxxxxxxxxxxxxxxxxxxxx
-                                xxxxxxxxxxxxxxxxxxxxxx
-                                xxxxxxx
-                                    xxxxxxxxxxxxxxxx
-                                xxxxxxxx
-                            xxxxxxxxxxxx
-                        xxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxx
 
-                            xxxx xxxxx xxxxxxx xxxx xxxx xxx xxxx xxxxxxxxxxx xxxxxxx xxxxxx xxx
-                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxx
-                    xxxxxxxxx
-                xxxxxxxxxx
-            xxxxxxxx
-        xxxxxxxxxx
 
-        xxxxxxxxx
-            xxxx xxxx xxxx xxxxxxx xx xxxx xxxx xxx xxxxx xxxxxxxxxxxxxxxxxx xxxxxxx xxx
-            xxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxx
-            xxxxxxx
-                xxxxxxxxx
-                    xxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxx
-                            xxxxxxxxxxx
-                                xxxxxxxxxxxxxxxxxxxxxxx
-                                xxxxxxx
-                                    xxxxxxxxxxxxxxxx
-                                xxxxxxxx
-                            xxxxxxxxxxxx
-                        xxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxx
-                    xxxxxxxxx
 
-                    xxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxx
-                            xxxxxxxxxxx
-                                xxxxxxxxxxxxxxxxxxxxxxx
-                                xxxxxxxxxxxxxxxxxxxxxx
-                                xxxxxxx
-                                    xxxxxxxxxxxxxxxx
-                                xxxxxxxx
-                            xxxxxxxxxxxx
-                        xxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxx
-                            xxxxxxxx
-                            xxxxxxxxx
-                                xxxxxxx xxxxxxxxxxxxxxxxxxxxxxx
-                                  xxx xxxx x xxxx xx xxx
-                                  xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx
-                                  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                                  xxxxxxxxxxx x
-                                    xxx xx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxx x xxxxxxxxxxxxxxxxxx xxxxxxxx x xxxxx
-                                    xxxxxx x xxxxxxxxx xx xxxxxxxxxxxxxxxxxxxxxxxxxx x xxxxxxxxxxxxx x xxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                                    xxx x x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxx
-                                  xxxxx
-                                xxxxxxxxx
-                            xxx
-                            xxxxxxxxx
 
-                            xxxx xxxxx xxxxxxx xxxx xxxx xxx xxxx xxxxxxxxxxx xxxxxxx xxxxxx xxx
-                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxx
-                    xxxxxxxxx
-                xxxxxxxxxx
-            xxxxxxxx
-        xxxxxxxxxx
 
-        xxxxxxxxx
-            xxxx xxxx xxxx xxxxxxx xx xxxx xxxx xxx xxxxx xxxxxxxxxxx xxxxxxx xxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxx
-            xxxxxxx
-                xxxxxxxxx
-                    xxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                            xxxx xxxxxxx xxxx xxxxxxxx xxxxxxxx x xxx xxxx xxxxxxx
-                                 xxx xxxxx xxxx xxxxx xxx
-                            xxxxxxxxxxxxxx
-                                xxxxxxxxxxxxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxx
 
-                            xxxx xxxxxx xxxx xx xxxx xxxxxxxxxxxxx xxxx
-                            xxxxxxxxx
-                                xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                                xxxxxxxxxxxx
-                                    xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                                xxxxxxxxxxxxx
-                            xxxxxxxxxx
-                            xxx
 
-                            xxxx xxxx xxxxxxx xxxx xx xxxx xxx xx xxxxxxxx xxxx xx xxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                             xxx
-                        xxxxxxxxxxxxxxxx
-                    xxxxxxxxx
 
-                    xxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxx
-                            xxxxxxxxxxx
-                                xxxxxxxxxxxxxxxxxxxxxxx
-                                xxxxxxx
-                                    xxxxxxxxxxxxxxxx
-                                xxxxxxxx
-                            xxxxxxxxxxxx
-                        xxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxx
-                    xxxxxxxxx
 
-                    xxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxx
-                            xxxxxxxxxxx
-                                xxxxxxxxxxxxxxxxxxxxxxx
-                                xxxxxxxxxxxxxxxxxxxxxx
-                                xxxxxxx
-                                    xxxxxxxxxxxxxxxx
-                                xxxxxxxx
-                            xxxxxxxxxxxx
-                        xxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxxx
-                            xxxxxxxxxxxxxxxxxxxxx
 
-                            xxxx xxxxx xxxxxxx xxxx xxxx xxx xxxx xxxxxxxxxxx xxxxxxx xxxxxx xxx
-                            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                        xxxxxxxxxxxxxxxx
-                    xxxxxxxxx
-                xxxxxxxxxx
-            xxxxxxxx
-        xxxxxxxxxx
-        xxxx [/pro] -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </profiles>
 </project>

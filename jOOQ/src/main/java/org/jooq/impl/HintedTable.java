@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -60,7 +60,7 @@ class HintedTable<R extends Record> extends AbstractTable<R> {
     private final QueryPartList<Name> arguments;
 
     HintedTable(AbstractTable<R> delegate, String keywords, String... arguments) {
-        this(delegate, keywords, new QueryPartList<Name>(Utils.names(arguments)));
+        this(delegate, keywords, new QueryPartList<Name>(Tools.names(arguments)));
     }
 
     HintedTable(AbstractTable<R> delegate, String keywords, QueryPartList<Name> arguments) {

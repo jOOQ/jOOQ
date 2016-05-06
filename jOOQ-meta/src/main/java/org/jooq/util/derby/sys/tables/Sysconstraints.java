@@ -27,37 +27,37 @@ public class Sysconstraints extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	}
 
 	/**
-	 * The column <code>SYS.SYSCONSTRAINTS.CONSTRAINTID</code>. 
+	 * The column <code>SYS.SYSCONSTRAINTS.CONSTRAINTID</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> CONSTRAINTID = createField("CONSTRAINTID", org.jooq.impl.SQLDataType.CHAR, SYSCONSTRAINTS);
 
 	/**
-	 * The column <code>SYS.SYSCONSTRAINTS.TABLEID</code>. 
+	 * The column <code>SYS.SYSCONSTRAINTS.TABLEID</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> TABLEID = createField("TABLEID", org.jooq.impl.SQLDataType.CHAR, SYSCONSTRAINTS);
 
 	/**
-	 * The column <code>SYS.SYSCONSTRAINTS.CONSTRAINTNAME</code>. 
+	 * The column <code>SYS.SYSCONSTRAINTS.CONSTRAINTNAME</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> CONSTRAINTNAME = createField("CONSTRAINTNAME", org.jooq.impl.SQLDataType.VARCHAR, SYSCONSTRAINTS);
 
 	/**
-	 * The column <code>SYS.SYSCONSTRAINTS.TYPE</code>. 
+	 * The column <code>SYS.SYSCONSTRAINTS.TYPE</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> TYPE = createField("TYPE", org.jooq.impl.SQLDataType.CHAR, SYSCONSTRAINTS);
 
 	/**
-	 * The column <code>SYS.SYSCONSTRAINTS.SCHEMAID</code>. 
+	 * The column <code>SYS.SYSCONSTRAINTS.SCHEMAID</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> SCHEMAID = createField("SCHEMAID", org.jooq.impl.SQLDataType.CHAR, SYSCONSTRAINTS);
 
 	/**
-	 * The column <code>SYS.SYSCONSTRAINTS.STATE</code>. 
+	 * The column <code>SYS.SYSCONSTRAINTS.STATE</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> STATE = createField("STATE", org.jooq.impl.SQLDataType.CHAR, SYSCONSTRAINTS);
 
 	/**
-	 * The column <code>SYS.SYSCONSTRAINTS.REFERENCECOUNT</code>. 
+	 * The column <code>SYS.SYSCONSTRAINTS.REFERENCECOUNT</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.Integer> REFERENCECOUNT = createField("REFERENCECOUNT", org.jooq.impl.SQLDataType.INTEGER, SYSCONSTRAINTS);
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -51,17 +51,17 @@ package org.jooq;
  */
 public interface PivotForStep {
 
-    /* [pro] xx
-    xxx
-     x xxx x xxxx xx xxxxxx xx xxx xxxxxxxxxxxxxxxxxx xxxxxxx xxxxxxxxx xxx
-     x xxxxxxx xxxx xxxx xxxxx xx xxxxxxxxxxxxxxxxx xxx xxxxxxxxxxxxxxxx xx x
-     x xxxxxxxx xxxx xx xxxx xxx xxxxxx xx xxxxx xxxxxxxxxxxxxxx xx xxxxx
-     x xxxxxxx
-     x
-     x xxxxxx xxxxx xxx xxxxxxxx xxxxx
-     x xxxxxxx x xxx xxxxxx xx xxxxxx xxx xxxxxxxxxxxxxxxxxx xxxxxxxxxx
-     xx
-    xxxxxxxxxx xxxxxxxxxx xxxxxxxxx xx
-    xxx xxxxxxxxxxxxxx xxxxxxxxxxx xxxxxxx
-    xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

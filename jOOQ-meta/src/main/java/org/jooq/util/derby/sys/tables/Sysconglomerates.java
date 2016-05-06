@@ -27,42 +27,42 @@ public class Sysconglomerates extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	}
 
 	/**
-	 * The column <code>SYS.SYSCONGLOMERATES.SCHEMAID</code>. 
+	 * The column <code>SYS.SYSCONGLOMERATES.SCHEMAID</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> SCHEMAID = createField("SCHEMAID", org.jooq.impl.SQLDataType.CHAR, SYSCONGLOMERATES);
 
 	/**
-	 * The column <code>SYS.SYSCONGLOMERATES.TABLEID</code>. 
+	 * The column <code>SYS.SYSCONGLOMERATES.TABLEID</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> TABLEID = createField("TABLEID", org.jooq.impl.SQLDataType.CHAR, SYSCONGLOMERATES);
 
 	/**
-	 * The column <code>SYS.SYSCONGLOMERATES.CONGLOMERATENUMBER</code>. 
+	 * The column <code>SYS.SYSCONGLOMERATES.CONGLOMERATENUMBER</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.Long> CONGLOMERATENUMBER = createField("CONGLOMERATENUMBER", org.jooq.impl.SQLDataType.BIGINT, SYSCONGLOMERATES);
 
 	/**
-	 * The column <code>SYS.SYSCONGLOMERATES.CONGLOMERATENAME</code>. 
+	 * The column <code>SYS.SYSCONGLOMERATES.CONGLOMERATENAME</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> CONGLOMERATENAME = createField("CONGLOMERATENAME", org.jooq.impl.SQLDataType.VARCHAR, SYSCONGLOMERATES);
 
 	/**
-	 * The column <code>SYS.SYSCONGLOMERATES.ISINDEX</code>. 
+	 * The column <code>SYS.SYSCONGLOMERATES.ISINDEX</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.Boolean> ISINDEX = createField("ISINDEX", org.jooq.impl.SQLDataType.BOOLEAN, SYSCONGLOMERATES);
 
 	/**
-	 * The column <code>SYS.SYSCONGLOMERATES.DESCRIPTOR</code>. 
+	 * The column <code>SYS.SYSCONGLOMERATES.DESCRIPTOR</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> DESCRIPTOR = createField("DESCRIPTOR", org.jooq.impl.SQLDataType.CLOB, SYSCONGLOMERATES);
 
 	/**
-	 * The column <code>SYS.SYSCONGLOMERATES.ISCONSTRAINT</code>. 
+	 * The column <code>SYS.SYSCONGLOMERATES.ISCONSTRAINT</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.Boolean> ISCONSTRAINT = createField("ISCONSTRAINT", org.jooq.impl.SQLDataType.BOOLEAN, SYSCONGLOMERATES);
 
 	/**
-	 * The column <code>SYS.SYSCONGLOMERATES.CONGLOMERATEID</code>. 
+	 * The column <code>SYS.SYSCONGLOMERATES.CONGLOMERATEID</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.Record, java.lang.String> CONGLOMERATEID = createField("CONGLOMERATEID", org.jooq.impl.SQLDataType.CHAR, SYSCONGLOMERATES);
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -70,21 +70,21 @@ class NotField extends AbstractField<Boolean> {
             case CUBRID:
             case FIREBIRD:
 
-            /* [pro] xx
-            xx xxxxx xx
-            xxxx xxxx
-            xxxx xxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
                 ctx.visit(field(not(condition(field))));
                 break;
 
-            /* [pro] xx
-            xxxx xxxx
-            xx [/pro] */
+
+
+
 
             // Native support
             case DERBY:

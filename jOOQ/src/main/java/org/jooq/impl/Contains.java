@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -102,13 +102,13 @@ class Contains<T> extends AbstractCondition {
             Field<String> concat;
 
             if (rhs == null) {
-                concat = DSL.concat(inline("%"), Utils.escapeForLike(value, configuration), inline("%"));
+                concat = DSL.concat(inline("%"), Tools.escapeForLike(value, configuration), inline("%"));
             }
             else {
-                concat = DSL.concat(inline("%"), Utils.escapeForLike(rhs, configuration), inline("%"));
+                concat = DSL.concat(inline("%"), Tools.escapeForLike(rhs, configuration), inline("%"));
             }
 
-            return lhs.like(concat, Utils.ESCAPE);
+            return lhs.like(concat, Tools.ESCAPE);
         }
     }
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -98,7 +98,7 @@ import org.jooq.impl.DSL
 
 /**
  * jOOQ type conversions used to enhance the jOOQ Java API with Xtend operators.
- * 
+ *
  * @author Lukas Eder
  * @see <a href="http://www.eclipse.org/xtend/documentation.html#operators">http://www.eclipse.org/xtend/documentation.html#operators</a>
  */

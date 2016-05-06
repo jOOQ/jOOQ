@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -295,16 +295,16 @@ public class GenerationTool {
                     schema.setOutputSchema(trim(schema.getInputSchema()));
                 }
 
-                /* [pro] xx
-                xx xxxxxxx xxxxxx xxxxxxxx xxxx xxxxx xxxxxxxxxxxxxxxx xxxxxx xxxxxx
-                xx xxxxxxxxx xxxxxxxxxx xxxxxxxxxxxxxxx x
-                    xx xxxxxxxxxxxxxxxxxxxxxxxx xx xxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                    xx xxxxxxxxxxxxxxxxxxxxxxxxx xx xxxxx
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                x
-                xx [/pro] */
+
+
+
+
+
+
+
+
+
             }
 
             if (schemata.size() == 1) {

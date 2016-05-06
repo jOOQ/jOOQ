@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -82,11 +82,11 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractDMLQuery<R> 
 
     @Override
     public final <T> void addValue(Field<T> field, T value) {
-        getValues().put(field, Utils.field(value, field));
+        getValues().put(field, Tools.field(value, field));
     }
 
     @Override
     public final <T> void addValue(Field<T> field, Field<T> value) {
-        getValues().put(field, Utils.field(value, field));
+        getValues().put(field, Tools.field(value, field));
     }
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -95,26 +95,26 @@ class LeadLag<T> extends Function<T> {
         }
         else {
             switch (ctx.family()) {
-                /* [pro] xx
-                xxxx xxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxx
-                       xxxxxxxxxx
 
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxx
 
-                    xxxxxxxxxx xx
-                       xxxxxxxxxxxxxxxxxxxx
-                       xxxxxxxxxx
-                    xxxxxx
 
-                xx xx xxxxxxxx xxx xxxxxxxxxxxx xxxx xx x xxxxxxxx
-                xxxx xxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxx
-                    xxxxxx
 
-                xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 default:
                     super.accept(ctx);

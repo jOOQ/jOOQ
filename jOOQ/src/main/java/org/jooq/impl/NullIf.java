@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -67,10 +67,10 @@ public class NullIf<T> extends AbstractFunction<T> {
     @Override
     final QueryPart getFunction0(Configuration configuration) {
         switch (configuration.dialect().family()) {
-            /* [pro] xx
-            xxxx xxxxxxx
-                xxxxxx xxxxxxxxxxxxxxxxxxxx x xxxx xxxxx xxxxxx xxxxxxxxxxxxxx xxxxx xxxxxx
-            xx [/pro] */
+
+
+
+
 
             default:
                 return DSL.field("{nullif}({0}, {1})", getDataType(), arg1, arg2);

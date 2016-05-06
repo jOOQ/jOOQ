@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -40,62 +40,62 @@
  */
 package org.jooq.impl;
 
-/* [pro] xx
-xxxxxx xxxxxxxxxxxxxxxxx
-xxxxxx xxxxxxxxxxxxxx
-xxxxxx xxxxxxxxxxxxxxxx
-xxxxxx xxxxxxxxxxxxxxx
 
-xxx
- x xxxxxxx xxxxx xxxx
- xx
-xxxxx xxxxxxxxxxxxx xxxxxxx xxxxxxx xxxxxxx xxxxxxxxxxxxxxxx x
 
-    xxx
-     x xxxxxxxxx xxx
-     xx
-    xxxxxxx xxxxxx xxxxx xxxx      xxxxxxxxxxxxxxxx x xxxxxxxxxxxxxxxxxxxxxx
 
-    xxxxxxx xxxxx xxxxxxxxxxxxxxxx xxxxxxxxx
-    xxxxxxx xxxxx xxxx             xxxxx
 
-    xxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxx xxxx xxxxx x
-        xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxx
 
-        xxxxxxxxxxxxx x xxxxxxxxx
-        xxxxxxxxx x xxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxx xxxxxxxxxxxxxxxx x
-        xxxxxx xxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxx xxxxxxxxxxxxxxxxx xxxx x
-        xxxxxxxxxxxxxxxxxxx
-           xxxxxxxxx
-           xxxxxxxxxxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxx xxxxxxx xx xxxxxxxxxxxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxx xxxxxxxxx xxxxxx x
-        xxxxxx xxx xxxxxxxxxxxxxxxxxxx xxxxxxx
-    x
 
-    xxxxxxxxx
-    xxxxxx xxxxx xxxxxxxx xxxxxxxxx xxxxxx xxxxxxxxx xxxxxxxxxxxxx x
-        xxxxxx xxx xxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxx
-    x
 
-    xxxxxxxxx
-    xxxxx xxxxxxxxx xxxxxxxxx x
-        xxxxxx xxxxxxxxxxxxxxxxxxx
-    x
-x
-xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

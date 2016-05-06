@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -138,13 +138,13 @@ class DateAdd<T extends java.util.Date> extends AbstractFunction<T> {
                 return field("{dateadd}({0}, {1}, {2})", getDataType(), inline(keyword), interval, date);
             }
 
-            /* [pro] xx
-            xx xx xxxxxxx xxxx xxxxx xxxxxxxx xxxxxxxxxx xx xxxxxxxxxxx xxxx
-            xx xxxxx xxxxxxx xx xxxxxxxx xx xxxxxxxxxxx xxxxx
-            xx x xxxxxxxxxxxxxxx xx xxxx xxxxxxxxxxxxx x xxxxxxxxxx
-            xx x xxxx xxxxxxxxxxxx x xx xxxxxxxxxxxxxxx x xxxxxxxxxx xxxxxxxxxx
-            xxxx xxxxxxxxx
-            xx [/pro] */
+
+
+
+
+
+
+
             case POSTGRES: {
                 switch (datePart) {
                     case YEAR:   keyword = " year";   break;
@@ -178,113 +178,113 @@ class DateAdd<T extends java.util.Date> extends AbstractFunction<T> {
                 return field("{datetime}({0}, '+' || {1} || {2})", getDataType(), date, interval, inline(keyword));
             }
 
-            /* [pro] xx
-            xxxx xxxxxxx x
-                xxxxxx xxxxxxxxxx x
-                    xxxx xxxxx   xxxxxxx x xxxxxxx xxxxxx
-                    xxxx xxxxxx  xxxxxxx x xxxx    xxxxxx
-                    xxxx xxxx    xxxxxxx x xxxx    xxxxxx
-                    xxxx xxxxx   xxxxxxx x xxxx    xxxxxx
-                    xxxx xxxxxxx xxxxxxx x xxxx    xxxxxx
-                    xxxx xxxxxxx xxxxxxx x xxxx    xxxxxx
-                    xxxxxxxx xxxxxxxxxxxxxxxxxxx
-                x
 
-                xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxx xxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xxxxxxxxx xxxxxx
-            x
 
-            xxxx xxxx
-            xxxx xxxxxxx
-            xxxx xxxxxxxxxx x
-                xxxxxx xxxxxxxxxx x
-                    xxxx xxxxx   xxxxxxx x xxxxx xxxxxx
-                    xxxx xxxxxx  xxxxxxx x xxxxx xxxxxx
-                    xxxx xxxx    xxxxxxx x xxxxx xxxxxx
-                    xxxx xxxxx   xxxxxxx x xxxxx xxxxxx
-                    xxxx xxxxxxx xxxxxxx x xxxxx xxxxxx
-                    xxxx xxxxxxx xxxxxxx x xxxxx xxxxxx
-                    xxxxxxxx xxxxxxxxxxxxxxxxxxx
-                x
 
-                xxxxxx xxxxxxxxxxxxxxxxxxxxx xxxx xxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxxxxxx xxxxxx
-            x
 
-            xxxx xxxxx x
-                xxxxxx xxxxxxxxxx x xxxxx
 
-                xxxxxx xxxxxxxxxx x
-                    xxxx xxxxx   xxxxxxx x xxxxxxxxxxxx                        xxxxxx
-                    xxxx xxxxxx  xxxxxxx x xxxxxxxxxxxxx                       xxxxxx
-                    xxxx xxxx    xxxxxxx x xxxxxxxxxxx                         xxxxxx
-                    xxxx xxxxx   xxxxxxx x xxxxxxxxxxxxxx xxxxxxxxxx x xxxxxxx xxxxxx
-                    xxxx xxxxxxx xxxxxxx x xxxxxxxxxxxxxx xxxxxxxxxx x xxxxx   xxxxxx
-                    xxxx xxxxxxx xxxxxxx x xxxxxxxxxxxxxx                      xxxxxx
-                    xxxxxxxx xxxxxxxxxxxxxxxxxxx
-                x
 
-                xx xxxxxxxxxxx xx xxxxx
-                    xxxxxx xxxxxxxxxxxxxxx xxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxx xxxxxxxxxx
-                xxxx
-                    xxxxxx xxxxxxxxxxxxxxx xxx x xxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxxx xxxxxxxxx xxxxxxxxxxxxxxxxx
-            x
 
-            xxxx xxxxxxxxx x
-                xxxxxx xxxxxxxxxx x
-                    xxxx xxxxx   xxxxxxx x xxxxxxx   xxxxxx
-                    xxxx xxxxxx  xxxxxxx x xxxxxxxx  xxxxxx
-                    xxxx xxxx    xxxxxxx x xxxxxx    xxxxxx
-                    xxxx xxxxx   xxxxxxx x xxxxxxx   xxxxxx
-                    xxxx xxxxxxx xxxxxxx x xxxxxxxxx xxxxxx
-                    xxxx xxxxxxx xxxxxxx x xxxxxxxxx xxxxxx
-                    xxxxxxxx xxxxxxxxxxxxxxxxxxx
-                x
 
-                xxxxxx xxxxxxxxxxxxxxxxxxx xxxxxxx xxxxx xxxxxxxxx xxxxxxxxxxxxxxxxxxx
-            x
 
-            xxxx xxxx x
-                xxxxxx xxxxxxxxxx x
-                    xxxx xxxxx   xxxxxxx x xxxxxxx   xxxxxx
-                    xxxx xxxxxx  xxxxxxx x xxxxxxxx  xxxxxx
-                    xxxx xxxx    xxxxxxx x xxxxxx    xxxxxx
-                    xxxx xxxxx   xxxxxxx x xxxxxxx   xxxxxx
-                    xxxx xxxxxxx xxxxxxx x xxxxxxxxx xxxxxx
-                    xxxx xxxxxxx xxxxxxx x xxxxxxxxx xxxxxx
-                    xxxxxxxx xxxxxxxxxxxxxxxxxxx
-                x
 
-                xxxxxx xxxxxxxxxxxxxxxxxxx xxxxx xxxxxxxxx xxxxxxxxxxxxxxxxxxx
-            x
 
-            xxxx xxxxxxx x
-                xxxxxx xxxxxxxxxx x
 
-                    xx xxxxxxx xx xxxxxx xxx xxxxxxxxxxxxxxx xxxxxxxx xx xxxxxx
-                    xx xxxx xxxxx xxxxxxxxx xx xxxx xxxx xxxxxxxx xxxxxxx xxxxx
-                    xxxx xxxxx   xxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx
-                    xxxx xxxxxx  xxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxx xxxxxxxxxx
-                    xxxx xxxx    xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxx xxxxxxxxxxxxxxxx
-                    xxxx xxxxx   xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxx xxxxxxxxxxxxxxxxx
-                    xxxx xxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxx xxxxxxxxxxxxxxxxxxx
-                    xxxx xxxxxxx xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxx xxxxxxxxx xxxxxxxxxxxxxxxxxxx
-                    xxxxxxxx xxxxxxxxxxxxxxxxxxx
-                x
-            x
 
-            xxxx xxxxxxxx x
-                xxxxxx xxxxxxxxxx x
-                    xxxx xxxxx   xxxxxxx x xxxxxxx   xxxxxx
-                    xxxx xxxxxx  xxxxxxx x xxxxxxxx  xxxxxx
-                    xxxx xxxx    xxxxxxx x xxxxxx    xxxxxx
-                    xxxx xxxxx   xxxxxxx x xxxxxxx   xxxxxx
-                    xxxx xxxxxxx xxxxxxx x xxxxxxxxx xxxxxx
-                    xxxx xxxxxxx xxxxxxx x xxxxxxxxx xxxxxx
-                    xxxxxxxx xxxxxxxxxxxxxxxxxxx
-                x
 
-                xxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxx xxxxxxxxxx xxxxxx xxxxxxxxx xxxxxxxxxxxxxxxxxxx
-            x
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
 
         return null;

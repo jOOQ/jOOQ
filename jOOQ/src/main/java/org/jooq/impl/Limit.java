@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -82,32 +82,32 @@ class Limit extends AbstractQueryPart {
 
             // True LIMIT / OFFSET support provided by the following dialects
             // -----------------------------------------------------------------
-            /* [pro] xx
-            xxxx xxxxxxxx x
 
-                xx xxxxxxx xxxxxxxxxxxxxxxxxxxxxx xxxxxx x xx xxxxx x xxxxxx xx xxx xxxxxxxxx xxx xxxxxxxxxxx
-                xx xx xxxxxxx xxxx xxxxxxx xxxxxxx xxxxxxx xxxxxxxxxxx xx xxxxx xx xxxxxx
-                xx xxxxxxx xx xxxxxxx xxxxxx xx xxxxxxx xxxxxxx
-                xx xxxxxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                xxxxxxxxxxxxxxxxxxxxxxx
-                       xxxxxxxxxxxxxxxxxx
-                       xxxxxxxxxxxxxxxxx
-                       xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
 
-                xx xxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx
-                           xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
 
-                xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                xx xxxxxxxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                xxxxxx
-            x
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             case MARIADB:
             case MYSQL:
@@ -159,11 +159,11 @@ class Limit extends AbstractQueryPart {
                 break;
             }
 
-            /* [pro] xx
-            xxxx xxxxxxxxxx
-            xxxx xxxxxxxxxxxxxx
-            xxxx xxxxxxxxxxxxxx
-            xx [/pro] */
+
+
+
+
+
             case DERBY: {
 
                 // Casts are not supported here...
@@ -179,95 +179,95 @@ class Limit extends AbstractQueryPart {
                 break;
             }
 
-            /* [pro] xx
-            xxxx xxxxxxx x
 
-                xx xxxxxx xxxxxxx xxxxx xxxx xxxxxxxxx xx xxx
-                xx xxxxxx x xxxxx xxxxx x xxxx xxxx xxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxx
-                       xxxxxxxxxxxxxxxxxx
-                       xxxxxxxxxxxxxxxxxx
-                       xxxxxx xxxxxxxxxxxxxxxxxxxxxx
-                       xxxxxx xxxxxxxxxxxxxxxxx xxxxxxx
-                       xxxxxx xxxxxxxxxxxxxxxxxxxxxx
-                       xxxxxx xxxxxxxxxxxxxxxx xxxxxx
-                       xxxxxxxxxxxxxxxxxxxxxx
 
-                xxxxxx
-            x
 
-            xx xxxx xxxx xx xxxxx xxxxxxx
-            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxx xxxxxxxxx x
-                xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                xx xxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxxxxxxxxxxxx
-                           xxxxxx xxxxxxxxxxxxxxxxxxxxxx
-                           xxxxxx xxx
 
-                xxxxxxxxxxxxxxxxxxxxxxxx
-                       xxxxxx xxxxxxxxxxxxxxxxxxxxxx
-                       xxxxxxxxxxxxxxxxxxxxxx
 
-                xxxxxx
-            x
 
-            xx xxxx xxx xx xxxxx xx xxxxxxx
-            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxx xxxxxxx x
-                xxxxxxxxxxxxxxxxxxxxxxxxxx
-                       xxxxxxxxxxxxxxx
-                       xxxxxx xxxxxxxxxxxxxxxxxxxxxxx
 
-                xx xxxxxxxxxxxxxxx
-                    xxxxxxxxxxxxx xxxxxxxxxxxxxxxxx xxxx
-                           xxxxxx xxxxxxxxxxxxxxxxxxxxxxxx
 
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                xxxxxx
-            x
 
-            xx xxxx xxxxx xxxxxxx xxxxxxxx xx xxx xxxxxxxxx xxxxxxxxx
-            xx xxxxxxxx xxxxxxx xx xxxxxxxx xxxx xxxxxx xxxxxxx
-            xx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxx xxxx
-            xxxx xxxxxx
-            xxxx xxxxxxx x
-                xx xxxxxxx xx xxxxx x
-                    xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxx xxxx xxx xxxxxxx xxxxxxx xx xxxxx xxxxx xxxx xxxx xxxxxxxxx
-                x
 
-                xx xxx xxxxxxx xxxxx xxxx xxxxxxxxx xxxxx xxxxxxx xx xxx xxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxx
-                       xxxxxxxxxxxxxxxxxx
-                       xxxxxxxxxxxxxxx xxxxxxx
-                       xxxxxx xxxxxxxxxxxxxxxxxxxxxx
-                       xxxxxx xxxxxxxxxxxxxxxx xxxxxx
-                       xxxxxxxxxxxxxxxxxxxxxx
 
-                xxxxxx
-            x
 
-            xxxx xxxxxxx
-            xxxx xxxxxxxxxxx
-            xxxx xxxx
-            xxxx xxxxxxxxxxxxxx x
-                xx xxxxxxx xx xxxxx x
-                    xxxxx xxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx xx xxx xxxxxx xxx xxxxxxxxxxxx
-                x
 
-                xx xxx xxxxxx xxx xxxxxx xxxxx xxxxx xxxx xxxxxxxxx xx xxx xxx x xxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxx
-                       xxxxxxxxxxxxxxx
-                       xxxxxx xxxxxxxxxxxxxxxxxxxxxx
-                       xxxxxxxxxxxxxxxxxxxxxx
 
-                xxxxxx
-            x
 
-            xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             // A default implementation is necessary for hashCode() and toString()
             default: {
                 context.castMode(NEVER)

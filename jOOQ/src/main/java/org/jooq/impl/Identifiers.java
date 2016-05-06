@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2015, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -84,28 +84,28 @@ class Identifiers {
                     });
                     break;
 
-                /* [pro] xx
-                xx xxxxx xxxxxxxxx xxx xxxxxxxx
-                xxxx xxxxxxx
-                xxxx xxxx
-                xxxx xxxxxxxxxx
-                xxxx xxxxxxx
-                    xxxxxxxxxxxxxxxxxx xxx xxxxxxxxxx x
-                        x xxx xx
-                        x xxx xx
-                        x xxxx x
-                    xxx
-                    xxxxxx
 
-                xx [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
                 // Most dialects implement the SQL standard, using double quotes
-                /* [pro] xx
-                xxxx xxxx
-                xxxx xxxxxxxxx
-                xxxx xxxxxxx
-                xxxx xxxxxxx
-                xxxx xxxxxxxxx
-                xx [/pro] */
+
+
+
+
+
+
+
                 case CUBRID:
                 case DERBY:
                 case FIREBIRD:

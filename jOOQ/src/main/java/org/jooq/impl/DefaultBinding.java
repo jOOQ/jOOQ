@@ -521,6 +521,22 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                       .sql('\'');
             }
 
+            // [#5249] Special inlining of special floating point values
+            else if (Double.class.isAssignableFrom(type) && ((Double) val).isNaN()) {
+                if (POSTGRES == family)
+                    render.visit(inline("NaN")).sql("::").keyword("float8");
+                else
+                    render.sql(((Number) val).toString());
+            }
+
+            // [#5249] Special inlining of special floating point values
+            else if (Float.class.isAssignableFrom(type) && ((Float) val).isNaN()) {
+                if (POSTGRES == family)
+                    render.visit(inline("NaN")).sql("::").keyword("float4");
+                else
+                    render.sql(((Number) val).toString());
+            }
+
             else if (Number.class.isAssignableFrom(type)) {
                 render.sql(((Number) val).toString());
             }

@@ -6,7 +6,7 @@ To install and run this example, simply check it out and run the following Maven
 ```
 $ pwd
 /path/to/checkout/dir
-$ cd jOOQ-examples/jOOQ-flyway-example
+$ cd jOOQ-examples/jOOQ-checker-framework-example
 ...
 $ mvn clean install
 ```

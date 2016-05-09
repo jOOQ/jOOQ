@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.jooq</groupId>
+        <artifactId>jooq-parent</artifactId>
+        <version>3.9.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>org.jooq</groupId>
+    <artifactId>jooq-checker</artifactId>
+    <name>jOOQ Checker</name>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.jooq.org/inc/LICENSE.txt</url>
+            <distribution>repo</distribution>
+        </license>
+
+
+
+
+
+
+
+    </licenses>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.checkerframework</groupId>
+            <artifactId>checker</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+    </dependencies>
+
+</project>

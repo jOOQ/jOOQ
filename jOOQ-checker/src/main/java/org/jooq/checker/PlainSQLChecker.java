@@ -41,33 +41,29 @@
 package org.jooq.checker;
 
 import static com.sun.source.util.TreePath.getPath;
-import static java.util.Arrays.asList;
 import static org.checkerframework.javacutil.TreeUtils.elementFromDeclaration;
 import static org.checkerframework.javacutil.TreeUtils.elementFromUse;
 import static org.checkerframework.javacutil.TreeUtils.enclosingMethod;
 
 import java.io.PrintWriter;
-import java.util.EnumSet;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 
 import org.jooq.Allow;
-import org.jooq.Require;
-import org.jooq.SQLDialect;
-import org.jooq.Support;
+import org.jooq.PlainSQL;
 
 import org.checkerframework.framework.source.SourceVisitor;
 
 import com.sun.source.tree.MethodInvocationTree;
 
 /**
- * A checker to compare {@link SQLDialect} from a use-site {@link Require}
- * annotation with a declaration-site {@link Support} annotation.
+ * A checker to disallow usage of {@link PlainSQL} API, except where allowed
+ * explicitly.
  *
  * @author Lukas Eder
  */
-public class SQLDialectChecker extends AbstractChecker {
+public class PlainSQLChecker extends AbstractChecker {
 
     @Override
     protected SourceVisitor<Void, Void> createSourceVisitor() {
@@ -77,44 +73,26 @@ public class SQLDialectChecker extends AbstractChecker {
             public Void visitMethodInvocation(MethodInvocationTree node, Void p) {
                 try {
                     ExecutableElement elementFromUse = elementFromUse(node);
-                    Support support = elementFromUse.getAnnotation(Support.class);
+                    PlainSQL plainSQL = elementFromUse.getAnnotation(PlainSQL.class);
 
-                    // In the absence of a @Support annotation, or if no SQLDialect is supplied,
+                    // In the absence of a @PlainSQL annotation,
                     // all jOOQ API method calls will type check.
-                    if (support != null && support.value().length > 0) {
+                    if (plainSQL != null) {
                         Element enclosing = elementFromDeclaration(enclosingMethod(getPath(root, node)));
+                        boolean allowed = false;
 
-                        EnumSet<SQLDialect> supported = EnumSet.copyOf(asList(support.value()));
-                        EnumSet<SQLDialect> allowed = EnumSet.noneOf(SQLDialect.class);
-                        EnumSet<SQLDialect> required = EnumSet.allOf(SQLDialect.class);
-                        EnumSet<SQLDialect> x;
-
+                        moveUpEnclosingLoop:
                         while (enclosing != null) {
-                            Allow allow = enclosing.getAnnotation(Allow.class);
-                            Require require = enclosing.getAnnotation(Require.class);
-
-                            if (allow != null)
-                                allowed.addAll(asList(allow.value()));
-
-                            if (require != null)
-                                required.retainAll(asList(require.value()));
+                            if (enclosing.getAnnotation(Allow.PlainSQL.class) != null) {
+                                allowed = true;
+                                break moveUpEnclosingLoop;
+                            }
 
                             enclosing = enclosing.getEnclosingElement();
                         }
 
-                        if (allowed.isEmpty())
-                            error(node, "No jOOQ API usage is allowed at current scope. Use @Allow.");
-
-                        if (required.isEmpty())
-                            error(node, "No jOOQ API usage is allowed at current scope due to conflicting @Require specification.");
-
-                        x = EnumSet.copyOf(allowed);
-                        x.retainAll(supported);
-                        if (x.isEmpty())
-                            error(node, "None of the supported dialects (" + supported + ") are allowed in the current scope (" + allowed + ")");
-
-                        if (!supported.containsAll(required))
-                            error(node, "Not all of the required dialects (" + required + ") from the current scope are supported (" + supported + ")");
+                        if (!allowed)
+                            error(node, "Plain SQL usage not allowed at current scope. Use @Allow.PlainSQL.");
                     }
                 }
                 catch (final Exception e) {

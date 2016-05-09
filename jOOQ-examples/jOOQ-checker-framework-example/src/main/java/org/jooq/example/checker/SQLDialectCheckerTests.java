@@ -10,7 +10,7 @@ import org.jooq.impl.DSL;
 // The class requires both H2 and MySQL
 // The inherited @Allow annotation from the package allows only MySQL, though.
 @Require({ SQLDialect.H2, SQLDialect.MYSQL })
-public class CheckerTests {
+public class SQLDialectCheckerTests {
 
     // @Allow = MySQL (inherited from package)
     // @Require = { H2, MySQL } (inherited from class)

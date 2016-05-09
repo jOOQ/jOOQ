@@ -130,6 +130,9 @@ import java.lang.annotation.Target;
  * {@link SQLDialect#predecessor()}, and its {@link SQLDialect#family()} are
  * allowed.</li>
  * </ul>
+ * <p>
+ * Apart from the above main purpose, the {@link Allow} annotation also serves
+ * as a semantic namespace for other annotations, such as {@link Allow.PlainSQL}
  *
  * @author Lukas Eder
  * @see Require
@@ -172,4 +175,20 @@ public @interface Allow {
         POSTGRES,
         SQLITE,
     };
+
+    /**
+     * This annotation allows {@link PlainSQL} API usage within the scope of
+     * where it is placed.
+     * <p>
+     * Type checking for these annotations can be supplied by
+     * <code>org.jooq.checker.PlainSQLChecker</code> from the jOOQ-checker
+     * module.
+     *
+     * @author Lukas Eder
+     */
+    @Target({ METHOD, CONSTRUCTOR, TYPE, PACKAGE })
+    @Retention(RUNTIME)
+    @Documented
+    @Inherited
+    @interface PlainSQL {}
 }

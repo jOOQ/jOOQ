@@ -156,6 +156,15 @@ public interface DAO<R extends TableRecord<R>, P, T> {
     void update(Collection<P> objects) throws DataAccessException;
 
     /**
+     * Performs a <code>DELETE</code> statement for a POJO
+     *
+     * @param object The POJO to be deleted
+     * @throws DataAccessException if something went wrong executing the query
+     * @see #delete(Collection)
+     */
+    void delete(P object) throws DataAccessException;
+
+    /**
      * Performs a <code>DELETE</code> statement for a given set of POJOs
      *
      * @param objects The POJOs to be deleted

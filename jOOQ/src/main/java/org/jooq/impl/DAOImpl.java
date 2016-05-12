@@ -191,6 +191,11 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         }
     }
 
+    @Override
+    public /* non-final */ void delete(P object) {
+        delete(singletonList(object));
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public /* non-final */ void delete(P... objects) {

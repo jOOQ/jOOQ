@@ -199,13 +199,16 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
 
     @Override
     public /* non-final */ void delete(Collection<P> objects) {
-        List<T> ids = new ArrayList<T>();
 
-        for (P object : objects) {
-            ids.add(getId(object));
+        // Execute a batch DELETE
+        if (objects.size() > 1) {
+            using(configuration).batchDelete(records(objects, true)).execute();
         }
 
-        deleteById(ids);
+        // Execute a regular DELETE
+        else if (objects.size() == 1) {
+            records(objects, true).get(0).delete();
+        }
     }
 
     @SuppressWarnings("unchecked")

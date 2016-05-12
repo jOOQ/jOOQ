@@ -482,6 +482,9 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
             if (table.fields().length > 0)
                 returned = returned.into(table);
 
+            result = returned.size();
+            ctx.rows(result);
+
             return result;
         }
     }

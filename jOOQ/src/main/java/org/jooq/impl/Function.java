@@ -275,10 +275,6 @@ class Function<T> extends AbstractField<T> implements
 
 
 
-
-
-
-
     /**
      * [#1275] <code>LIST_AGG</code> emulation for Postgres, Sybase
      */
@@ -286,25 +282,20 @@ class Function<T> extends AbstractField<T> implements
         toSQLFunctionName(ctx);
         ctx.sql('(');
 
-        if (distinct) {
+        if (distinct)
             ctx.keyword("distinct").sql(' ');
-        }
 
         // The explicit cast is needed in Postgres
         ctx.visit(((Field<?>) arguments.get(0)).cast(String.class));
 
-        if (arguments.size() > 1) {
-            ctx.sql(", ");
-            ctx.visit(arguments.get(1));
-        }
-        else {
+        if (arguments.size() > 1)
+            ctx.sql(", ").visit(arguments.get(1));
+        else
             ctx.sql(", ''");
-        }
 
-        if (!withinGroupOrderBy.isEmpty()) {
+        if (!withinGroupOrderBy.isEmpty())
             ctx.sql(' ').keyword("order by").sql(' ')
                    .visit(withinGroupOrderBy);
-        }
 
         ctx.sql(')');
     }
@@ -315,22 +306,15 @@ class Function<T> extends AbstractField<T> implements
     final void toSQLGroupConcat(Context<?> ctx) {
         toSQLFunctionName(ctx);
         ctx.sql('(');
+        toSQLArguments0(ctx);
 
-        if (distinct) {
-            ctx.keyword("distinct").sql(' ');
-        }
-
-        ctx.visit(arguments.get(0));
-
-        if (!withinGroupOrderBy.isEmpty()) {
+        if (!withinGroupOrderBy.isEmpty())
             ctx.sql(' ').keyword("order by").sql(' ')
-                   .visit(withinGroupOrderBy);
-        }
+               .visit(withinGroupOrderBy);
 
-        if (arguments.size() > 1) {
+        if (arguments.size() > 1)
             ctx.sql(' ').keyword("separator").sql(' ')
-                   .visit(arguments.get(1));
-        }
+               .visit(arguments.get(1));
 
         ctx.sql(')');
     }
@@ -358,7 +342,6 @@ class Function<T> extends AbstractField<T> implements
         if (term == ROW_NUMBER && ctx.configuration().dialect() == HSQLDB)
             return;
 
-
         ctx.sql(' ')
            .keyword("over")
            .sql(' ')
@@ -380,9 +363,8 @@ class Function<T> extends AbstractField<T> implements
 
         // [#531] Inline window specifications if the WINDOW clause is not supported
         if (windowName != null) {
-            if (asList(POSTGRES).contains(ctx.family())) {
+            if (asList(POSTGRES).contains(ctx.family()))
                 return windowName;
-            }
 
             Map<Object, Object> map = (Map<Object, Object>) ctx.data(DATA_LOCALLY_SCOPED_DATA_MAP);
             QueryPartList<WindowDefinition> windows = (QueryPartList<WindowDefinition>) map.get(DATA_WINDOW_DEFINITIONS);
@@ -437,7 +419,11 @@ class Function<T> extends AbstractField<T> implements
     final void toSQLArguments(Context<?> ctx) {
         toSQLFunctionName(ctx);
         ctx.sql('(');
+        toSQLArguments0(ctx);
+        ctx.sql(')');
+    }
 
+    final void toSQLArguments0(Context<?> ctx) {
         if (distinct) {
             ctx.keyword("distinct");
 
@@ -457,19 +443,16 @@ class Function<T> extends AbstractField<T> implements
             else {
                 QueryPartList<Field<?>> expressions = new QueryPartList<Field<?>>();
 
-                for (QueryPart argument : arguments) {
+                for (QueryPart argument : arguments)
                     expressions.add(DSL.when(filter, argument == ASTERISK ? one() : argument));
-                }
 
                 ctx.visit(expressions);
             }
         }
 
-        if (distinct) {
-            if (ctx.family() == POSTGRES && arguments.size() > 1) {
+        if (distinct)
+            if (ctx.family() == POSTGRES && arguments.size() > 1)
                 ctx.sql(')');
-            }
-        }
 
         if (ignoreNulls) {
 
@@ -477,10 +460,7 @@ class Function<T> extends AbstractField<T> implements
 
 
 
-
-            {
                 ctx.sql(' ').keyword("ignore nulls");
-            }
         }
         else if (respectNulls) {
 
@@ -488,25 +468,17 @@ class Function<T> extends AbstractField<T> implements
 
 
 
-
-            {
                 ctx.sql(' ').keyword("respect nulls");
-            }
         }
-
-        ctx.sql(')');
     }
 
     final void toSQLFunctionName(Context<?> ctx) {
-        if (name != null) {
+        if (name != null)
             ctx.visit(name);
-        }
-        else if (term != null) {
+        else if (term != null)
             ctx.sql(term.translate(ctx.configuration().dialect()));
-        }
-        else {
+        else
             ctx.sql(getName());
-        }
     }
 
     // -------------------------------------------------------------------------

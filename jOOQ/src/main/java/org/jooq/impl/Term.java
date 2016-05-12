@@ -121,6 +121,14 @@ enum Term {
             return "char_length";
         }
     },
+
+
+
+
+
+
+
+
     LIST_AGG {
         @Override
         public String translate(SQLDialect dialect) {
@@ -277,6 +285,11 @@ enum Term {
     },
 
     ;
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 
     /**
      * Translate the term to its dialect-specific variant

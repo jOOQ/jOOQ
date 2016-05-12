@@ -2080,6 +2080,25 @@ final class Tools {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Return a non-negative hash code for a {@link QueryPart}, taking into
      * account FindBugs' <code>RV_ABSOLUTE_VALUE_OF_HASHCODE</code> pattern

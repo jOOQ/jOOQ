@@ -285,7 +285,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
     }
 
-    private final void generate(CatalogDefinition catalog) {
+    private void generate(CatalogDefinition catalog) {
         String newVersion = catalog.getDatabase().getCatalogVersionProvider().version(catalog);
 
         if (StringUtils.isBlank(newVersion)) {
@@ -320,7 +320,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
     }
 
-    private final void generate(SchemaDefinition schema) {
+    private void generate(SchemaDefinition schema) {
         String newVersion = schema.getDatabase().getSchemaVersionProvider().version(schema);
 
         if (StringUtils.isBlank(newVersion)) {
@@ -940,7 +940,7 @@ public class JavaGenerator extends AbstractGenerator {
                 }
                 else {
                     out.tab(1).overrideIf(generateInterfaces() && !generateImmutablePojos() && !isUDT);
-                    out.tab(1).println("public %s %s(%s value) {", setterReturnType, setter, type);
+                    out.tab(1).println("public %s %s(%s value) {", setterReturnType, setter, varargsIfArray(type));
                     out.tab(2).println("set(%s, value);", i);
                     if (fluentSetters())
                         out.tab(2).println("return this;");
@@ -969,7 +969,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.tab(1).println("}");
                 }
                 else {
-                    out.tab(1).println("public %s %s(%s value) {", setterReturnType, setter, columnTypeInterface);
+                    out.tab(1).println("public %s %s(%s value) {", setterReturnType, setter, varargsIfArray(columnTypeInterface));
                     out.tab(2).println("if (value == null)");
                     out.tab(3).println("set(%s, null);", i);
 
@@ -1156,7 +1156,7 @@ public class JavaGenerator extends AbstractGenerator {
                 }
                 else {
                     out.tab(1).overrideInherit();
-                    out.tab(1).println("public %s value%s(%s value) {", className, i, colType);
+                    out.tab(1).println("public %s value%s(%s value) {", className, i, varargsIfArray(colType));
                     out.tab(2).println("%s(value);", colSetter);
                     out.tab(2).println("return this;");
                     out.tab(1).println("}");
@@ -1289,7 +1289,7 @@ public class JavaGenerator extends AbstractGenerator {
         printClassJavadoc(out, table);
     }
 
-    private final String refRowType(JavaWriter out, Collection<? extends TypedElementDefinition<?>> columns) {
+    private String refRowType(JavaWriter out, Collection<? extends TypedElementDefinition<?>> columns) {
         StringBuilder result = new StringBuilder();
         String separator = "";
 
@@ -1373,7 +1373,7 @@ public class JavaGenerator extends AbstractGenerator {
                 if (scala)
                 	out.tab(1).println("def %s(value : %s) : %s", setter, type, setterReturnType);
                 else
-                    out.tab(1).println("public %s %s(%s value);", setterReturnType, setter, type);
+                    out.tab(1).println("public %s %s(%s value);", setterReturnType, setter, varargsIfArray(type));
             }
 
             out.tab(1).javadoc("Getter for <code>%s</code>.%s", name, defaultIfBlank(" " + comment, ""));
@@ -2740,7 +2740,7 @@ public class JavaGenerator extends AbstractGenerator {
                     }
                     else {
                         out.tab(1).overrideIf(generateInterfaces() && !isUDT);
-                        out.tab(1).println("public %s %s(%s %s) {", columnSetterReturnType, columnSetter, columnType, columnMember);
+                        out.tab(1).println("public %s %s(%s %s) {", columnSetterReturnType, columnSetter, varargsIfArray(columnType), columnMember);
                         out.tab(2).println("this.%s = %s;", columnMember, columnMember);
                         if (fluentSetters())
                             out.tab(2).println("return this;");
@@ -2770,7 +2770,7 @@ public class JavaGenerator extends AbstractGenerator {
                     }
                     else {
                         out.tab(1).override();
-                        out.tab(1).println("public %s %s(%s %s) {", columnSetterReturnType, columnSetter, columnTypeInterface, columnMember);
+                        out.tab(1).println("public %s %s(%s %s) {", columnSetterReturnType, columnSetter, varargsIfArray(columnTypeInterface), columnMember);
                         out.tab(2).println("if (%s == null)", columnMember);
                         out.tab(3).println("this.%s = null;", columnMember);
 
@@ -4083,7 +4083,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.tab(1).println("}");
             }
             else {
-                out.tab(1).println("public void %s(%s %s) {", setter, refNumberType(out, parameter.getType()), paramName);
+                out.tab(1).println("public void %s(%s %s) {", setter, varargsIfArray(refNumberType(out, parameter.getType())), paramName);
                 out.tab(2).println("set%s(%s, %s);", numberValue, paramId, paramName);
                 out.tab(1).println("}");
             }
@@ -4727,7 +4727,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("@%s({ \"all\", \"unchecked\", \"rawtypes\" })", out.ref("java.lang.SuppressWarnings"));
     }
 
-    private final String readVersion(File file, String type) {
+    private String readVersion(File file, String type) {
         String result = null;
 
         try {
@@ -5195,11 +5195,20 @@ public class JavaGenerator extends AbstractGenerator {
         return result;
     }
 
-    private final String classOf(String string) {
+    private String classOf(String string) {
         if (scala)
             return "classOf[" + string + "]";
         else
             return string + ".class";
+    }
+
+    private static final Pattern SQUARE_BRACKETS = Pattern.compile("\\[\\]$");
+
+    private String varargsIfArray(String type) {
+        if (scala)
+            return type;
+        else
+            return SQUARE_BRACKETS.matcher(type).replaceFirst("...");
     }
 
     // [#3880] Users may need to call this method

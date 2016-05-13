@@ -395,6 +395,13 @@ public enum SQLDialect {
     }
 
     /**
+     * Whether this dialect is a {@link #family()}.
+     */
+    public final boolean isFamily() {
+        return this == family;
+    }
+
+    /**
      * The predecessor dialect.
      * <p>
      * If this is a dialect version (e.g. {@link #POSTGRES_9_4}) within a family

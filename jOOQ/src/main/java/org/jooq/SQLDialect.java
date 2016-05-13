@@ -463,6 +463,30 @@ public enum SQLDialect {
     }
 
     /**
+     * Check whether this dialect supports another one.
+     * <p>
+     * This is:
+     * <ul>
+     * <li><code>false</code> if dialects don't belong to the same family</li>
+     * <li><code>true</code> if either dialect {@link #isFamily()}</li>
+     * <li><code>true</code> if <code>other</code> dialect precedes this
+     * dialect</li>
+     * </ul>
+     * <p>
+     * The <code>other</code> argument dialect is typically referenced from a
+     * {@link Support} annotation, whereas this dialect is the user dialect.
+     */
+    public final boolean supports(SQLDialect other) {
+        if (family != other.family)
+            return false;
+
+        if (isFamily() || other.isFamily())
+            return true;
+
+        return other.precedes(this);
+    }
+
+    /**
      * The name of this dialect as it appears in related class names.
      */
     public final String getName() {

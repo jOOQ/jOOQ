@@ -8035,6 +8035,424 @@ public class DSL {
     // [jooq-tools] START [row-field]
 
     /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row1)} as a replacement.
+     *
+     * @see #rowField(Row1)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1> Field<Record1<T1>> field(Row1<T1> row) {
+        return new RowField<Row1<T1>, Record1<T1>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row2)} as a replacement.
+     *
+     * @see #rowField(Row2)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2> Field<Record2<T1, T2>> field(Row2<T1, T2> row) {
+        return new RowField<Row2<T1, T2>, Record2<T1, T2>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row3)} as a replacement.
+     *
+     * @see #rowField(Row3)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3> Field<Record3<T1, T2, T3>> field(Row3<T1, T2, T3> row) {
+        return new RowField<Row3<T1, T2, T3>, Record3<T1, T2, T3>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row4)} as a replacement.
+     *
+     * @see #rowField(Row4)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4> Field<Record4<T1, T2, T3, T4>> field(Row4<T1, T2, T3, T4> row) {
+        return new RowField<Row4<T1, T2, T3, T4>, Record4<T1, T2, T3, T4>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row5)} as a replacement.
+     *
+     * @see #rowField(Row5)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5> Field<Record5<T1, T2, T3, T4, T5>> field(Row5<T1, T2, T3, T4, T5> row) {
+        return new RowField<Row5<T1, T2, T3, T4, T5>, Record5<T1, T2, T3, T4, T5>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row6)} as a replacement.
+     *
+     * @see #rowField(Row6)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6> Field<Record6<T1, T2, T3, T4, T5, T6>> field(Row6<T1, T2, T3, T4, T5, T6> row) {
+        return new RowField<Row6<T1, T2, T3, T4, T5, T6>, Record6<T1, T2, T3, T4, T5, T6>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row7)} as a replacement.
+     *
+     * @see #rowField(Row7)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7> Field<Record7<T1, T2, T3, T4, T5, T6, T7>> field(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
+        return new RowField<Row7<T1, T2, T3, T4, T5, T6, T7>, Record7<T1, T2, T3, T4, T5, T6, T7>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row8)} as a replacement.
+     *
+     * @see #rowField(Row8)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7, T8> Field<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> field(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
+        return new RowField<Row8<T1, T2, T3, T4, T5, T6, T7, T8>, Record8<T1, T2, T3, T4, T5, T6, T7, T8>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row9)} as a replacement.
+     *
+     * @see #rowField(Row9)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7, T8, T9> Field<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> field(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row) {
+        return new RowField<Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9>, Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row10)} as a replacement.
+     *
+     * @see #rowField(Row10)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Field<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> field(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row) {
+        return new RowField<Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>, Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row11)} as a replacement.
+     *
+     * @see #rowField(Row11)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Field<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> field(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row) {
+        return new RowField<Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>, Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row12)} as a replacement.
+     *
+     * @see #rowField(Row12)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Field<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> field(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row) {
+        return new RowField<Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>, Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row13)} as a replacement.
+     *
+     * @see #rowField(Row13)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Field<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> field(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row) {
+        return new RowField<Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>, Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row14)} as a replacement.
+     *
+     * @see #rowField(Row14)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Field<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> field(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row) {
+        return new RowField<Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>, Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row15)} as a replacement.
+     *
+     * @see #rowField(Row15)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Field<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> field(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row) {
+        return new RowField<Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>, Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row16)} as a replacement.
+     *
+     * @see #rowField(Row16)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Field<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> field(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row) {
+        return new RowField<Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>, Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row17)} as a replacement.
+     *
+     * @see #rowField(Row17)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Field<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> field(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row) {
+        return new RowField<Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>, Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row18)} as a replacement.
+     *
+     * @see #rowField(Row18)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Field<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> field(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row) {
+        return new RowField<Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>, Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row19)} as a replacement.
+     *
+     * @see #rowField(Row19)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Field<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> field(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row) {
+        return new RowField<Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>, Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row20)} as a replacement.
+     *
+     * @see #rowField(Row20)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Field<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> field(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row) {
+        return new RowField<Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>, Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row21)} as a replacement.
+     *
+     * @see #rowField(Row21)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Field<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> field(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row) {
+        return new RowField<Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>, Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>>(row);
+    }
+
+    /**
+     * Experimental method removed again.
+     * <p>
+     * Due to a JDK 8 compiler regression, this overload can cause severe performance issues
+     * with any other single-parameter field() overload. This is why this method has now been
+     * removed again from the public API.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/5233">https://github.com/jOOQ/jOOQ/issues/5233</a>.
+     * <p>
+     * Use {@link #rowField(Row22)} as a replacement.
+     *
+     * @see #rowField(Row22)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    private static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Field<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> field(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row) {
+        return new RowField<Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>, Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>>(row);
+    }
+
+    /**
      * EXPERIMENTAL: Turn a row value expression of degree <code>1</code> into a {@code Field}.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
@@ -8043,7 +8461,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1> Field<Record1<T1>> field(Row1<T1> row) {
+    public static <T1> Field<Record1<T1>> rowField(Row1<T1> row) {
         return new RowField<Row1<T1>, Record1<T1>>(row);
     }
 
@@ -8056,7 +8474,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2> Field<Record2<T1, T2>> field(Row2<T1, T2> row) {
+    public static <T1, T2> Field<Record2<T1, T2>> rowField(Row2<T1, T2> row) {
         return new RowField<Row2<T1, T2>, Record2<T1, T2>>(row);
     }
 
@@ -8069,7 +8487,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3> Field<Record3<T1, T2, T3>> field(Row3<T1, T2, T3> row) {
+    public static <T1, T2, T3> Field<Record3<T1, T2, T3>> rowField(Row3<T1, T2, T3> row) {
         return new RowField<Row3<T1, T2, T3>, Record3<T1, T2, T3>>(row);
     }
 
@@ -8082,7 +8500,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4> Field<Record4<T1, T2, T3, T4>> field(Row4<T1, T2, T3, T4> row) {
+    public static <T1, T2, T3, T4> Field<Record4<T1, T2, T3, T4>> rowField(Row4<T1, T2, T3, T4> row) {
         return new RowField<Row4<T1, T2, T3, T4>, Record4<T1, T2, T3, T4>>(row);
     }
 
@@ -8095,7 +8513,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5> Field<Record5<T1, T2, T3, T4, T5>> field(Row5<T1, T2, T3, T4, T5> row) {
+    public static <T1, T2, T3, T4, T5> Field<Record5<T1, T2, T3, T4, T5>> rowField(Row5<T1, T2, T3, T4, T5> row) {
         return new RowField<Row5<T1, T2, T3, T4, T5>, Record5<T1, T2, T3, T4, T5>>(row);
     }
 
@@ -8108,7 +8526,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6> Field<Record6<T1, T2, T3, T4, T5, T6>> field(Row6<T1, T2, T3, T4, T5, T6> row) {
+    public static <T1, T2, T3, T4, T5, T6> Field<Record6<T1, T2, T3, T4, T5, T6>> rowField(Row6<T1, T2, T3, T4, T5, T6> row) {
         return new RowField<Row6<T1, T2, T3, T4, T5, T6>, Record6<T1, T2, T3, T4, T5, T6>>(row);
     }
 
@@ -8121,7 +8539,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7> Field<Record7<T1, T2, T3, T4, T5, T6, T7>> field(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7> Field<Record7<T1, T2, T3, T4, T5, T6, T7>> rowField(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
         return new RowField<Row7<T1, T2, T3, T4, T5, T6, T7>, Record7<T1, T2, T3, T4, T5, T6, T7>>(row);
     }
 
@@ -8134,7 +8552,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7, T8> Field<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> field(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7, T8> Field<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> rowField(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
         return new RowField<Row8<T1, T2, T3, T4, T5, T6, T7, T8>, Record8<T1, T2, T3, T4, T5, T6, T7, T8>>(row);
     }
 
@@ -8147,7 +8565,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> Field<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> field(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> Field<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> rowField(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row) {
         return new RowField<Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9>, Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>>(row);
     }
 
@@ -8160,7 +8578,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Field<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> field(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Field<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> rowField(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row) {
         return new RowField<Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>, Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>>(row);
     }
 
@@ -8173,7 +8591,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Field<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> field(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Field<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> rowField(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row) {
         return new RowField<Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>, Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>>(row);
     }
 
@@ -8186,7 +8604,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Field<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> field(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Field<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> rowField(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row) {
         return new RowField<Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>, Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>>(row);
     }
 
@@ -8199,7 +8617,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Field<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> field(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Field<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> rowField(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row) {
         return new RowField<Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>, Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>>(row);
     }
 
@@ -8212,7 +8630,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Field<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> field(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Field<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> rowField(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row) {
         return new RowField<Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>, Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>>(row);
     }
 
@@ -8225,7 +8643,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Field<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> field(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Field<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> rowField(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row) {
         return new RowField<Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>, Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>>(row);
     }
 
@@ -8238,7 +8656,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Field<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> field(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Field<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> rowField(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row) {
         return new RowField<Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>, Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>>(row);
     }
 
@@ -8251,7 +8669,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Field<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> field(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Field<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> rowField(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row) {
         return new RowField<Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>, Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>>(row);
     }
 
@@ -8264,7 +8682,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Field<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> field(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Field<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> rowField(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row) {
         return new RowField<Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>, Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>>(row);
     }
 
@@ -8277,7 +8695,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Field<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> field(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Field<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> rowField(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row) {
         return new RowField<Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>, Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>>(row);
     }
 
@@ -8290,7 +8708,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Field<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> field(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Field<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> rowField(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row) {
         return new RowField<Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>, Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>>(row);
     }
 
@@ -8303,7 +8721,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Field<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> field(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Field<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> rowField(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row) {
         return new RowField<Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>, Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>>(row);
     }
 
@@ -8316,7 +8734,7 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Field<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> field(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row) {
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Field<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> rowField(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row) {
         return new RowField<Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>, Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>>(row);
     }
 

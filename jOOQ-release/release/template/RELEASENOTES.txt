@@ -10,6 +10,28 @@ http://www.jooq.org/notes
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.8.1 - May 13, 2016
+================================================================================
+
+This is a patch release with some useful fixes for the 3.8 branch
+
+Features and Improvements
+-------------------------
+#5248 - Deprecate SQLDialect.POSTGRESPLUS
+
+
+Breaking changes
+----------------
+#5235 - Remove DSL.field(Row[N]) to speed up client side compilation time
+
+
+Bug Fixes
+---------
+#5237 - Cannot select null values for enums
+#5250 - Bad inlining of Double.NaN in PostgreSQL
+#5252 - Oracle PIPELINED functions in packages are erroneously reported as AGGREGATE functions by the code generator
+#5258 - DAO.delete() should delete via UpdatableRecord.delete(), not via a bulk delete
+#5261 - Wrong update count when running UPDATE .. RETURNING in PostgreSQL and Firebird
 
 
 Version 3.8.0 - May 03, 2016

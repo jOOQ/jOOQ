@@ -86,18 +86,25 @@ public class SQLDialectChecker extends AbstractChecker {
 
                         EnumSet<SQLDialect> supported = EnumSet.copyOf(asList(support.value()));
                         EnumSet<SQLDialect> allowed = EnumSet.noneOf(SQLDialect.class);
-                        EnumSet<SQLDialect> required = EnumSet.allOf(SQLDialect.class);
-                        EnumSet<SQLDialect> x;
+                        EnumSet<SQLDialect> required = EnumSet.noneOf(SQLDialect.class);
 
+                        boolean evaluateRequire = true;
                         while (enclosing != null) {
                             Allow allow = enclosing.getAnnotation(Allow.class);
-                            Require require = enclosing.getAnnotation(Require.class);
 
                             if (allow != null)
                                 allowed.addAll(asList(allow.value()));
 
-                            if (require != null)
-                                required.retainAll(asList(require.value()));
+                            if (evaluateRequire) {
+                                Require require = enclosing.getAnnotation(Require.class);
+
+                                if (require != null) {
+                                    evaluateRequire = false;
+
+                                    required.clear();
+                                    required.addAll(asList(require.value()));
+                                }
+                            }
 
                             enclosing = enclosing.getEnclosingElement();
                         }
@@ -108,13 +115,33 @@ public class SQLDialectChecker extends AbstractChecker {
                         if (required.isEmpty())
                             error(node, "No jOOQ API usage is allowed at current scope due to conflicting @Require specification.");
 
-                        x = EnumSet.copyOf(allowed);
-                        x.retainAll(supported);
-                        if (x.isEmpty())
-                            error(node, "None of the supported dialects (" + supported + ") are allowed in the current scope (" + allowed + ")");
+                        boolean allowedFail = true;
+                        allowedLoop:
+                        for (SQLDialect a : allowed) {
+                            for (SQLDialect s : supported) {
+                                if (a.supports(s)) {
+                                    allowedFail = false;
+                                    break allowedLoop;
+                                }
+                            }
+                        }
 
-                        if (!supported.containsAll(required))
-                            error(node, "Not all of the required dialects (" + required + ") from the current scope are supported (" + supported + ")");
+                        if (allowedFail)
+                            error(node, "The allowed dialects in scope " + allowed + " do not include any of the supported dialects: " + supported);
+
+                        boolean requiredFail = false;
+                        requiredLoop:
+                        for (SQLDialect r : required) {
+                            for (SQLDialect s : supported)
+                                if (r.supports(s))
+                                    continue requiredLoop;
+
+                            requiredFail = true;
+                            break requiredLoop;
+                        }
+
+                        if (requiredFail)
+                            error(node, "Not all of the required dialects " + required + " from the current scope are supported " + supported);
                     }
                 }
                 catch (final Exception e) {

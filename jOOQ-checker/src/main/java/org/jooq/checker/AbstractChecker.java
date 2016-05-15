@@ -58,6 +58,10 @@ abstract class AbstractChecker extends SourceChecker {
         getChecker().report(Result.failure(message, node), node);
     }
 
+    void warn(Object node, String message) {
+        getChecker().report(Result.warning(message, node), node);
+    }
+
     void print(Printer printer) {
         try (PrintWriter writer = new PrintWriter(new FileWriter("error.txt"))){
             writer.println("This is probably a bug in jOOQ-checker.");

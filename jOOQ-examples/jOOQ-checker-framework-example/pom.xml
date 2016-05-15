@@ -60,7 +60,7 @@
                     <fork>true</fork>
                     <annotationProcessors>
                         <annotationProcessor>org.jooq.checker.SQLDialectChecker</annotationProcessor>
-                        <annotationProcessor>org.jooq.checker.PlainSQLChecker</annotationProcessor>
+                        <!-- <annotationProcessor>org.jooq.checker.PlainSQLChecker</annotationProcessor> -->
                     </annotationProcessors>
                     <compilerArgs>
                         <arg>-Xbootclasspath/p:1.8</arg>

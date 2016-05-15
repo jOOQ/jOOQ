@@ -122,8 +122,8 @@ import java.lang.annotation.Target;
  * <ul>
  * <li>In the absence of any {@link Allow} annotation, no jOOQ API usage is
  * allowed.</li>
- * <li>The combination of all {@link Allow} and {@link Require} annotations is
- * applied for any given scope.</li>
+ * <li>The combination of all {@link Allow} annotations and of the inner-most
+ * {@link Require} annotation is applied for any given scope.</li>
  * <li>Nested packages are not creating nested scopes.</li>
  * <li>If a versioned {@link SQLDialect} is allowed (rather than a
  * {@link SQLDialect#family()}), then the allowed version, all of its

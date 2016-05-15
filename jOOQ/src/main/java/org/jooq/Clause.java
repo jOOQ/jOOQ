@@ -945,6 +945,17 @@ public enum Clause {
     ALTER_SEQUENCE_RESTART,
 
     /**
+     * A <code>RENAME</code> clause within an {@link #ALTER_SEQUENCE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>RENAME TO</code> keywords</li>
+     * <li>the new sequence name</li>
+     * </ul>
+     */
+    ALTER_SEQUENCE_RENAME,
+
+    /**
      * A complete <code>ALTER TABLE</code> statement.
      */
     ALTER_TABLE,

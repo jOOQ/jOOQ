@@ -79,7 +79,7 @@ import java.util.stream.Stream;
 import javax.annotation.Generated;
 import javax.sql.DataSource;
 
-import org.jooq.AlterSequenceRestartStep;
+import org.jooq.AlterSequenceStep;
 import org.jooq.AlterTableStep;
 import org.jooq.Attachable;
 import org.jooq.Batch;
@@ -2510,17 +2510,17 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public AlterSequenceRestartStep<BigInteger> alterSequence(String sequence) {
+    public AlterSequenceStep<BigInteger> alterSequence(String sequence) {
         return alterSequence(name(sequence));
     }
 
     @Override
-    public AlterSequenceRestartStep<BigInteger> alterSequence(Name sequence) {
+    public AlterSequenceStep<BigInteger> alterSequence(Name sequence) {
         return alterSequence(sequence(sequence));
     }
 
     @Override
-    public <T extends Number> AlterSequenceRestartStep<T> alterSequence(Sequence<T> sequence) {
+    public <T extends Number> AlterSequenceStep<T> alterSequence(Sequence<T> sequence) {
         return new AlterSequenceImpl<T>(configuration(), sequence);
     }
 

@@ -99,7 +99,7 @@ import javax.annotation.Generated;
 import javax.sql.DataSource;
 
 import org.jooq.AggregateFunction;
-import org.jooq.AlterSequenceRestartStep;
+import org.jooq.AlterSequenceStep;
 import org.jooq.AlterTableStep;
 import org.jooq.ArrayAggOrderByStep;
 // ...
@@ -5121,7 +5121,7 @@ public class DSL {
      * @see DSLContext#alterSequence(String)
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
-    public static AlterSequenceRestartStep<BigInteger> alterSequence(String sequence) {
+    public static AlterSequenceStep<BigInteger> alterSequence(String sequence) {
         return using(new DefaultConfiguration()).alterSequence(sequence);
     }
 
@@ -5131,7 +5131,7 @@ public class DSL {
      * @see DSLContext#alterSequence(Name)
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
-    public static AlterSequenceRestartStep<BigInteger> alterSequence(Name sequence) {
+    public static AlterSequenceStep<BigInteger> alterSequence(Name sequence) {
         return using(new DefaultConfiguration()).alterSequence(sequence);
     }
 
@@ -5141,7 +5141,7 @@ public class DSL {
      * @see DSLContext#alterSequence(Sequence)
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
-    public static <T extends Number> AlterSequenceRestartStep<T> alterSequence(Sequence<T> sequence) {
+    public static <T extends Number> AlterSequenceStep<T> alterSequence(Sequence<T> sequence) {
         return using(new DefaultConfiguration()).alterSequence(sequence);
     }
 

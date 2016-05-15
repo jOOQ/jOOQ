@@ -42,6 +42,7 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static org.jooq.Clause.ALTER_SEQUENCE;
+import static org.jooq.Clause.ALTER_SEQUENCE_RENAME;
 import static org.jooq.Clause.ALTER_SEQUENCE_RESTART;
 import static org.jooq.Clause.ALTER_SEQUENCE_SEQUENCE;
 import static org.jooq.SQLDialect.CUBRID;
@@ -49,10 +50,11 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 
 import org.jooq.AlterSequenceFinalStep;
-import org.jooq.AlterSequenceRestartStep;
+import org.jooq.AlterSequenceStep;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.Name;
 import org.jooq.Sequence;
 
 /**
@@ -61,7 +63,7 @@ import org.jooq.Sequence;
 final class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
 
     // Cascading interface implementations for AlterSequence behaviour
-    AlterSequenceRestartStep<T>,
+    AlterSequenceStep<T>,
     AlterSequenceFinalStep {
 
     /**
@@ -72,6 +74,7 @@ final class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
 
     private final Sequence<T>     sequence;
     private T                     restartWith;
+    private Sequence<?>           renameTo;
 
     AlterSequenceImpl(Configuration configuration, Sequence<T> sequence) {
         super(configuration);
@@ -92,6 +95,22 @@ final class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
     public final AlterSequenceFinalStep restartWith(T value) {
         restartWith = value;
         return this;
+    }
+
+    @Override
+    public final AlterSequenceFinalStep renameTo(Sequence<?> newName) {
+        renameTo = newName;
+        return this;
+    }
+
+    @Override
+    public final AlterSequenceFinalStep renameTo(Name newName) {
+        return renameTo(DSL.sequence(newName));
+    }
+
+    @Override
+    public final AlterSequenceFinalStep renameTo(String newName) {
+        return renameTo(DSL.name(newName));
     }
 
     // ------------------------------------------------------------------------
@@ -125,29 +144,43 @@ final class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
             }
         }
 
-        ctx.end(ALTER_SEQUENCE_SEQUENCE)
-           .start(ALTER_SEQUENCE_RESTART);
+        ctx.end(ALTER_SEQUENCE_SEQUENCE);
 
-        T with = restartWith;
-        if (with == null) {
+        if (renameTo != null) {
+            boolean qualify = ctx.qualify();
 
-
-
-
-
-
-                ctx.sql(' ').keyword("restart");
+            ctx.start(ALTER_SEQUENCE_RENAME)
+               .sql(' ').keyword("rename to")
+               .sql(' ')
+               .qualify(false)
+               .visit(renameTo)
+               .qualify(qualify)
+               .end(ALTER_SEQUENCE_RENAME);
         }
         else {
-            if (ctx.family() == CUBRID)
-                ctx.sql(' ').keyword("start with")
-                   .sql(' ').sql(with.toString());
-            else
-                ctx.sql(' ').keyword("restart with")
-                   .sql(' ').sql(with.toString());
-        }
+            ctx.start(ALTER_SEQUENCE_RESTART);
 
-        ctx.end(ALTER_SEQUENCE_RESTART);
+            T with = restartWith;
+            if (with == null) {
+
+
+
+
+
+
+                    ctx.sql(' ').keyword("restart");
+            }
+            else {
+                if (ctx.family() == CUBRID)
+                    ctx.sql(' ').keyword("start with")
+                       .sql(' ').sql(with.toString());
+                else
+                    ctx.sql(' ').keyword("restart with")
+                       .sql(' ').sql(with.toString());
+            }
+
+            ctx.end(ALTER_SEQUENCE_RESTART);
+        }
     }
 
     @Override

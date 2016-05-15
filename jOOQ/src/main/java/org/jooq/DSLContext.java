@@ -7191,7 +7191,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#alterSequence(String)
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
-    AlterSequenceRestartStep<BigInteger> alterSequence(String sequence);
+    AlterSequenceStep<BigInteger> alterSequence(String sequence);
 
     /**
      * Create a new DSL <code>ALTER SEQUENCE</code> statement.
@@ -7199,7 +7199,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#alterSequence(Name)
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
-    AlterSequenceRestartStep<BigInteger> alterSequence(Name sequence);
+    AlterSequenceStep<BigInteger> alterSequence(Name sequence);
 
     /**
      * Create a new DSL <code>ALTER SEQUENCE</code> statement.
@@ -7207,7 +7207,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#alterSequence(Sequence)
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
-    <T extends Number> AlterSequenceRestartStep<T> alterSequence(Sequence<T> sequence);
+    <T extends Number> AlterSequenceStep<T> alterSequence(Sequence<T> sequence);
 
     /**
      * Create a new DSL <code>ALTER TABLE</code> statement.

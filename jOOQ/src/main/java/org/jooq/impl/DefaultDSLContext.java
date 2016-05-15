@@ -81,6 +81,7 @@ import javax.sql.DataSource;
 
 import org.jooq.AlterSequenceStep;
 import org.jooq.AlterTableStep;
+import org.jooq.AlterViewStep;
 import org.jooq.Attachable;
 import org.jooq.Batch;
 import org.jooq.BatchBindStep;
@@ -2537,6 +2538,21 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public AlterTableStep alterTable(Table<?> table) {
         return new AlterTableImpl(configuration(), table);
+    }
+
+    @Override
+    public AlterViewStep alterView(String table) {
+        return alterView(name(table));
+    }
+
+    @Override
+    public AlterViewStep alterView(Name table) {
+        return alterView(table(table));
+    }
+
+    @Override
+    public AlterViewStep alterView(Table<?> table) {
+        return new AlterViewImpl(configuration(), table);
     }
 
     @Override

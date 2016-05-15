@@ -101,6 +101,7 @@ import javax.sql.DataSource;
 import org.jooq.AggregateFunction;
 import org.jooq.AlterSequenceStep;
 import org.jooq.AlterTableStep;
+import org.jooq.AlterViewStep;
 import org.jooq.ArrayAggOrderByStep;
 // ...
 import org.jooq.Case;
@@ -5173,6 +5174,36 @@ public class DSL {
     @Support
     public static AlterTableStep alterTable(Table<?> table) {
         return using(new DefaultConfiguration()).alterTable(table);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER VIEW</code> statement.
+     *
+     * @see DSLContext#alterView(String)
+     */
+    @Support
+    public static AlterViewStep alterView(String view) {
+        return using(new DefaultConfiguration()).alterView(view);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER VIEW</code> statement.
+     *
+     * @see DSLContext#alterView(Name)
+     */
+    @Support
+    public static AlterViewStep alterView(Name view) {
+        return using(new DefaultConfiguration()).alterView(view);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER VIEW</code> statement.
+     *
+     * @see DSLContext#alterView(Table)
+     */
+    @Support
+    public static AlterViewStep alterView(Table<?> view) {
+        return using(new DefaultConfiguration()).alterView(view);
     }
 
     /**

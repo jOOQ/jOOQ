@@ -7234,6 +7234,30 @@ public interface DSLContext extends Scope , AutoCloseable  {
     AlterTableStep alterTable(Table<?> table);
 
     /**
+     * Create a new DSL <code>ALTER VIEW</code> statement.
+     *
+     * @see DSL#alterView(String)
+     */
+    @Support
+    AlterViewStep alterView(String view);
+
+    /**
+     * Create a new DSL <code>ALTER VIEW</code> statement.
+     *
+     * @see DSL#alterView(Name)
+     */
+    @Support
+    AlterViewStep alterView(Name view);
+
+    /**
+     * Create a new DSL <code>ALTER VIEW</code> statement.
+     *
+     * @see DSL#alterView(Table)
+     */
+    @Support
+    AlterViewStep alterView(Table<?> view);
+
+    /**
      * Create a new DSL <code>DROP VIEW</code> statement.
      *
      * @see DSL#dropView(String)

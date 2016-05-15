@@ -1055,6 +1055,33 @@ public enum Clause {
     ALTER_TABLE_DROP,
 
     /**
+     * A complete <code>ALTER VIEW</code> statement.
+     */
+    ALTER_VIEW,
+
+    /**
+     * A <code>TABLE</code> clause within an {@link #ALTER_VIEW} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>ALTER VIEW</code> keywords</li>
+     * <li>the view that is being altered</li>
+     * </ul>
+     */
+    ALTER_VIEW_VIEW,
+
+    /**
+     * A <code>RENAME TO</code> clause within an {@link #ALTER_VIEW} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>RENAME TO</code> keywords</li>
+     * <li>the new view name</li>
+     * </ul>
+     */
+    ALTER_VIEW_RENAME,
+
+    /**
      * A complete <code>DROP VIEW</code> statement.
      */
     DROP_VIEW,

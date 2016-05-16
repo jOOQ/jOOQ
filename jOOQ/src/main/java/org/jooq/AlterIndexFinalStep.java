@@ -40,33 +40,12 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.POSTGRES;
 
 /**
- * The step in the <code>ALTER VIEW</code> where the action can be decided.
+ * The final step in the <code>ALTER INDEX</code> DSL.
  *
  * @author Lukas Eder
  */
-public interface AlterViewStep {
+public interface AlterIndexFinalStep extends DDLQuery {
 
-    /**
-     * Add a <code>RENAME TO</code> clause to the <code>ALTER VIEW</code>
-     * statement.
-     */
-    @Support({ POSTGRES })
-    AlterViewFinalStep renameTo(Table<?> newName);
-
-    /**
-     * Add a <code>RENAME TO</code> clause to the <code>ALTER VIEW</code>
-     * statement.
-     */
-    @Support({ POSTGRES })
-    AlterViewFinalStep renameTo(Name newName);
-
-    /**
-     * Add a <code>RENAME TO</code> clause to the <code>ALTER VIEW</code>
-     * statement.
-     */
-    @Support({ POSTGRES })
-    AlterViewFinalStep renameTo(String newName);
 }

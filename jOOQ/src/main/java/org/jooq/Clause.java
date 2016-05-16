@@ -1082,6 +1082,33 @@ public enum Clause {
     ALTER_VIEW_RENAME,
 
     /**
+     * A complete <code>ALTER INDEX</code> statement.
+     */
+    ALTER_INDEX,
+
+    /**
+     * An <code>INDEX</code> clause within an {@link #ALTER_INDEX} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>ALTER INDEX</code> keywords</li>
+     * <li>the index that is being altered</li>
+     * </ul>
+     */
+    ALTER_INDEX_INDEX,
+
+    /**
+     * A <code>RENAME TO</code> clause within an {@link #ALTER_INDEX} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>RENAME TO</code> keywords</li>
+     * <li>the new index name</li>
+     * </ul>
+     */
+    ALTER_INDEX_RENAME,
+
+    /**
      * A complete <code>DROP VIEW</code> statement.
      */
     DROP_VIEW,

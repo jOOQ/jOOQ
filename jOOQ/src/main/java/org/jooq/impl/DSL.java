@@ -99,6 +99,7 @@ import javax.annotation.Generated;
 import javax.sql.DataSource;
 
 import org.jooq.AggregateFunction;
+import org.jooq.AlterIndexStep;
 import org.jooq.AlterSequenceStep;
 import org.jooq.AlterTableStep;
 import org.jooq.AlterViewStep;
@@ -5204,6 +5205,26 @@ public class DSL {
     @Support
     public static AlterViewStep alterView(Table<?> view) {
         return using(new DefaultConfiguration()).alterView(view);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER INDEX</code> statement.
+     *
+     * @see DSLContext#alterIndex(String)
+     */
+    @Support
+    public static AlterIndexStep alterIndex(String index) {
+        return using(new DefaultConfiguration()).alterIndex(index);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER INDEX</code> statement.
+     *
+     * @see DSLContext#alterIndex(Name)
+     */
+    @Support
+    public static AlterIndexStep alterIndex(Name index) {
+        return using(new DefaultConfiguration()).alterIndex(index);
     }
 
     /**

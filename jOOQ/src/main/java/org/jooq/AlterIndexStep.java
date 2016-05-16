@@ -43,30 +43,23 @@ package org.jooq;
 import static org.jooq.SQLDialect.POSTGRES;
 
 /**
- * The step in the <code>ALTER VIEW</code> where the action can be decided.
+ * The step in the <code>ALTER INDEX</code> where the action can be decided.
  *
  * @author Lukas Eder
  */
-public interface AlterViewStep {
+public interface AlterIndexStep {
 
     /**
-     * Add a <code>RENAME TO</code> clause to the <code>ALTER VIEW</code>
+     * Add a <code>RENAME TO</code> clause to the <code>ALTER INDEX</code>
      * statement.
      */
     @Support({ POSTGRES })
-    AlterViewFinalStep renameTo(Table<?> newName);
+    AlterIndexFinalStep renameTo(Name newName);
 
     /**
-     * Add a <code>RENAME TO</code> clause to the <code>ALTER VIEW</code>
+     * Add a <code>RENAME TO</code> clause to the <code>ALTER INDEX</code>
      * statement.
      */
     @Support({ POSTGRES })
-    AlterViewFinalStep renameTo(Name newName);
-
-    /**
-     * Add a <code>RENAME TO</code> clause to the <code>ALTER VIEW</code>
-     * statement.
-     */
-    @Support({ POSTGRES })
-    AlterViewFinalStep renameTo(String newName);
+    AlterIndexFinalStep renameTo(String newName);
 }

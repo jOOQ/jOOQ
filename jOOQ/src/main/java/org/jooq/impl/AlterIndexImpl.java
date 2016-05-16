@@ -40,41 +40,40 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.ALTER_VIEW;
-import static org.jooq.Clause.ALTER_VIEW_RENAME;
-import static org.jooq.Clause.ALTER_VIEW_VIEW;
+import static org.jooq.Clause.ALTER_INDEX;
+import static org.jooq.Clause.ALTER_INDEX_INDEX;
+import static org.jooq.Clause.ALTER_INDEX_RENAME;
 import static org.jooq.impl.DSL.name;
 
-import org.jooq.AlterViewFinalStep;
-import org.jooq.AlterViewStep;
+import org.jooq.AlterIndexFinalStep;
+import org.jooq.AlterIndexStep;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Name;
-import org.jooq.Table;
 
 /**
  * @author Lukas Eder
  */
-final class AlterViewImpl extends AbstractQuery implements
+final class AlterIndexImpl extends AbstractQuery implements
 
-    // Cascading interface implementations for ALTER VIEW behaviour
-    AlterViewStep,
-    AlterViewFinalStep {
+    // Cascading interface implementations for ALTER INDEX behaviour
+    AlterIndexStep,
+    AlterIndexFinalStep {
 
     /**
      * Generated UID
      */
     private static final long     serialVersionUID = 8904572826501186329L;
-    private static final Clause[] CLAUSES          = { ALTER_VIEW };
+    private static final Clause[] CLAUSES          = { ALTER_INDEX };
 
-    private final Table<?>        view;
-    private Table<?>              renameTo;
+    private final Name            index;
+    private Name                  renameTo;
 
-    AlterViewImpl(Configuration configuration, Table<?> view) {
+    AlterIndexImpl(Configuration configuration, Name index) {
         super(configuration);
 
-        this.view = view;
+        this.index = index;
     }
 
     // ------------------------------------------------------------------------
@@ -82,18 +81,13 @@ final class AlterViewImpl extends AbstractQuery implements
     // ------------------------------------------------------------------------
 
     @Override
-    public final AlterViewImpl renameTo(Table<?> newName) {
+    public final AlterIndexImpl renameTo(Name newName) {
         this.renameTo = newName;
         return this;
     }
 
     @Override
-    public final AlterViewImpl renameTo(Name newName) {
-        return renameTo(DSL.table(newName));
-    }
-
-    @Override
-    public final AlterViewImpl renameTo(String newName) {
+    public final AlterIndexImpl renameTo(String newName) {
         return renameTo(name(newName));
     }
 
@@ -103,20 +97,20 @@ final class AlterViewImpl extends AbstractQuery implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.start(ALTER_VIEW_VIEW)
-           .keyword("alter view").sql(' ').visit(view)
-           .end(ALTER_VIEW_VIEW)
+        ctx.start(ALTER_INDEX_INDEX)
+           .keyword("alter index").sql(' ').visit(index)
+           .end(ALTER_INDEX_INDEX)
            .formatIndentStart()
            .formatSeparator();
 
         if (renameTo != null) {
             boolean qualify = ctx.qualify();
 
-            ctx.start(ALTER_VIEW_RENAME)
+            ctx.start(ALTER_INDEX_RENAME)
                .qualify(false)
                .keyword("rename to").sql(' ').visit(renameTo)
                .qualify(qualify)
-               .end(ALTER_VIEW_RENAME);
+               .end(ALTER_INDEX_RENAME);
         }
 
         ctx.formatIndentEnd();

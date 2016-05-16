@@ -7258,6 +7258,22 @@ public interface DSLContext extends Scope , AutoCloseable  {
     AlterViewStep alterView(Table<?> view);
 
     /**
+     * Create a new DSL <code>ALTER INDEX</code> statement.
+     *
+     * @see DSL#alterIndex(String)
+     */
+    @Support
+    AlterIndexStep alterIndex(String index);
+
+    /**
+     * Create a new DSL <code>ALTER INDEX</code> statement.
+     *
+     * @see DSL#alterIndex(Name)
+     */
+    @Support
+    AlterIndexStep alterIndex(Name index);
+
+    /**
      * Create a new DSL <code>DROP VIEW</code> statement.
      *
      * @see DSL#dropView(String)

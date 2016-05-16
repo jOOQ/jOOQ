@@ -56,7 +56,6 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-@SuppressWarnings({ "rawtypes", "unchecked" })
 final class AlterViewImpl extends AbstractQuery implements
 
     // Cascading interface implementations for ALTER TABLE behaviour

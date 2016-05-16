@@ -2527,6 +2527,21 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public AlterSequenceStep<BigInteger> alterSequenceIfExists(String sequence) {
+        return alterSequenceIfExists(name(sequence));
+    }
+
+    @Override
+    public AlterSequenceStep<BigInteger> alterSequenceIfExists(Name sequence) {
+        return alterSequenceIfExists(sequence(sequence));
+    }
+
+    @Override
+    public <T extends Number> AlterSequenceStep<T> alterSequenceIfExists(Sequence<T> sequence) {
+        return new AlterSequenceImpl<T>(configuration(), sequence, true);
+    }
+
+    @Override
     public AlterTableStep alterTable(String table) {
         return alterTable(name(table));
     }
@@ -2539,6 +2554,21 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public AlterTableStep alterTable(Table<?> table) {
         return new AlterTableImpl(configuration(), table);
+    }
+
+    @Override
+    public AlterTableStep alterTableIfExists(String table) {
+        return alterTableIfExists(name(table));
+    }
+
+    @Override
+    public AlterTableStep alterTableIfExists(Name table) {
+        return alterTableIfExists(table(table));
+    }
+
+    @Override
+    public AlterTableStep alterTableIfExists(Table<?> table) {
+        return new AlterTableImpl(configuration(), table, true);
     }
 
     @Override
@@ -2557,6 +2587,21 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public AlterViewStep alterViewIfExists(String table) {
+        return alterViewIfExists(name(table));
+    }
+
+    @Override
+    public AlterViewStep alterViewIfExists(Name table) {
+        return alterViewIfExists(table(table));
+    }
+
+    @Override
+    public AlterViewStep alterViewIfExists(Table<?> table) {
+        return new AlterViewImpl(configuration(), table, true);
+    }
+
+    @Override
     public AlterIndexStep alterIndex(String index) {
         return alterIndex(name(index));
     }
@@ -2564,6 +2609,16 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public AlterIndexStep alterIndex(Name index) {
         return new AlterIndexImpl(configuration(), index);
+    }
+
+    @Override
+    public AlterIndexStep alterIndexIfExists(String index) {
+        return alterIndexIfExists(name(index));
+    }
+
+    @Override
+    public AlterIndexStep alterIndexIfExists(Name index) {
+        return new AlterIndexImpl(configuration(), index, true);
     }
 
     @Override

@@ -7210,6 +7210,30 @@ public interface DSLContext extends Scope , AutoCloseable  {
     <T extends Number> AlterSequenceStep<T> alterSequence(Sequence<T> sequence);
 
     /**
+     * Create a new DSL <code>ALTER SEQUENCE</code> statement.
+     *
+     * @see DSL#alterSequenceIfExists(String)
+     */
+    @Support({ POSTGRES })
+    AlterSequenceStep<BigInteger> alterSequenceIfExists(String sequence);
+
+    /**
+     * Create a new DSL <code>ALTER SEQUENCE</code> statement.
+     *
+     * @see DSL#alterSequenceIfExists(Name)
+     */
+    @Support({ POSTGRES })
+    AlterSequenceStep<BigInteger> alterSequenceIfExists(Name sequence);
+
+    /**
+     * Create a new DSL <code>ALTER SEQUENCE</code> statement.
+     *
+     * @see DSL#alterSequenceIfExists(Sequence)
+     */
+    @Support({ POSTGRES })
+    <T extends Number> AlterSequenceStep<T> alterSequenceIfExists(Sequence<T> sequence);
+
+    /**
      * Create a new DSL <code>ALTER TABLE</code> statement.
      *
      * @see DSL#alterTable(String)
@@ -7232,6 +7256,30 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     @Support
     AlterTableStep alterTable(Table<?> table);
+
+    /**
+     * Create a new DSL <code>ALTER TABLE</code> statement.
+     *
+     * @see DSL#alterTableIfExists(String)
+     */
+    @Support
+    AlterTableStep alterTableIfExists(String table);
+
+    /**
+     * Create a new DSL <code>ALTER TABLE</code> statement.
+     *
+     * @see DSL#alterTableIfExists(Name)
+     */
+    @Support
+    AlterTableStep alterTableIfExists(Name table);
+
+    /**
+     * Create a new DSL <code>ALTER TABLE</code> statement.
+     *
+     * @see DSL#alterTableIfExists(Table)
+     */
+    @Support
+    AlterTableStep alterTableIfExists(Table<?> table);
 
     /**
      * Create a new DSL <code>ALTER VIEW</code> statement.
@@ -7258,11 +7306,35 @@ public interface DSLContext extends Scope , AutoCloseable  {
     AlterViewStep alterView(Table<?> view);
 
     /**
+     * Create a new DSL <code>ALTER VIEW</code> statement.
+     *
+     * @see DSL#alterViewIfExists(String)
+     */
+    @Support
+    AlterViewStep alterViewIfExists(String view);
+
+    /**
+     * Create a new DSL <code>ALTER VIEW</code> statement.
+     *
+     * @see DSL#alterViewIfExists(Name)
+     */
+    @Support
+    AlterViewStep alterViewIfExists(Name view);
+
+    /**
+     * Create a new DSL <code>ALTER VIEW</code> statement.
+     *
+     * @see DSL#alterViewIfExists(Table)
+     */
+    @Support
+    AlterViewStep alterViewIfExists(Table<?> view);
+
+    /**
      * Create a new DSL <code>ALTER INDEX</code> statement.
      *
      * @see DSL#alterIndex(String)
      */
-    @Support
+    @Support({ POSTGRES })
     AlterIndexStep alterIndex(String index);
 
     /**
@@ -7270,8 +7342,24 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterIndex(Name)
      */
-    @Support
+    @Support({ POSTGRES })
     AlterIndexStep alterIndex(Name index);
+
+    /**
+     * Create a new DSL <code>ALTER INDEX</code> statement.
+     *
+     * @see DSL#alterIndexIfExists(String)
+     */
+    @Support({ POSTGRES })
+    AlterIndexStep alterIndexIfExists(String index);
+
+    /**
+     * Create a new DSL <code>ALTER INDEX</code> statement.
+     *
+     * @see DSL#alterIndexIfExists(Name)
+     */
+    @Support({ POSTGRES })
+    AlterIndexStep alterIndexIfExists(Name index);
 
     /**
      * Create a new DSL <code>DROP VIEW</code> statement.

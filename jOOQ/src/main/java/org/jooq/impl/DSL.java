@@ -5148,6 +5148,36 @@ public class DSL {
     }
 
     /**
+     * Create a new DSL <code>ALTER SEQUENCE</code> statement.
+     *
+     * @see DSLContext#alterSequenceIfExists(String)
+     */
+    @Support({ POSTGRES })
+    public static AlterSequenceStep<BigInteger> alterSequenceIfExists(String sequence) {
+        return using(new DefaultConfiguration()).alterSequenceIfExists(sequence);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER SEQUENCE</code> statement.
+     *
+     * @see DSLContext#alterSequenceIfExists(Name)
+     */
+    @Support({ POSTGRES })
+    public static AlterSequenceStep<BigInteger> alterSequenceIfExists(Name sequence) {
+        return using(new DefaultConfiguration()).alterSequenceIfExists(sequence);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER SEQUENCE</code> statement.
+     *
+     * @see DSLContext#alterSequenceIfExists(Sequence)
+     */
+    @Support({ POSTGRES })
+    public static <T extends Number> AlterSequenceStep<T> alterSequenceIfExists(Sequence<T> sequence) {
+        return using(new DefaultConfiguration()).alterSequenceIfExists(sequence);
+    }
+
+    /**
      * Create a new DSL <code>ALTER TABLE</code> statement.
      *
      * @see DSLContext#alterTable(String)
@@ -5175,6 +5205,36 @@ public class DSL {
     @Support
     public static AlterTableStep alterTable(Table<?> table) {
         return using(new DefaultConfiguration()).alterTable(table);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER TABLE</code> statement.
+     *
+     * @see DSLContext#alterTableIfExists(String)
+     */
+    @Support
+    public static AlterTableStep alterTableIfExists(String table) {
+        return using(new DefaultConfiguration()).alterTableIfExists(table);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER TABLE</code> statement.
+     *
+     * @see DSLContext#alterTableIfExists(Name)
+     */
+    @Support
+    public static AlterTableStep alterTableIfExists(Name table) {
+        return using(new DefaultConfiguration()).alterTableIfExists(table);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER TABLE</code> statement.
+     *
+     * @see DSLContext#alterTableIfExists(Table)
+     */
+    @Support
+    public static AlterTableStep alterTableIfExists(Table<?> table) {
+        return using(new DefaultConfiguration()).alterTableIfExists(table);
     }
 
     /**
@@ -5208,11 +5268,41 @@ public class DSL {
     }
 
     /**
+     * Create a new DSL <code>ALTER VIEW</code> statement.
+     *
+     * @see DSLContext#alterViewIfExists(String)
+     */
+    @Support
+    public static AlterViewStep alterViewIfExists(String view) {
+        return using(new DefaultConfiguration()).alterViewIfExists(view);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER VIEW</code> statement.
+     *
+     * @see DSLContext#alterViewIfExists(Name)
+     */
+    @Support
+    public static AlterViewStep alterViewIfExists(Name view) {
+        return using(new DefaultConfiguration()).alterViewIfExists(view);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER VIEW</code> statement.
+     *
+     * @see DSLContext#alterViewIfExists(Table)
+     */
+    @Support
+    public static AlterViewStep alterViewIfExists(Table<?> view) {
+        return using(new DefaultConfiguration()).alterViewIfExists(view);
+    }
+
+    /**
      * Create a new DSL <code>ALTER INDEX</code> statement.
      *
      * @see DSLContext#alterIndex(String)
      */
-    @Support
+    @Support({ POSTGRES })
     public static AlterIndexStep alterIndex(String index) {
         return using(new DefaultConfiguration()).alterIndex(index);
     }
@@ -5222,9 +5312,29 @@ public class DSL {
      *
      * @see DSLContext#alterIndex(Name)
      */
-    @Support
+    @Support({ POSTGRES })
     public static AlterIndexStep alterIndex(Name index) {
         return using(new DefaultConfiguration()).alterIndex(index);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER INDEX</code> statement.
+     *
+     * @see DSLContext#alterIndexIfExists(String)
+     */
+    @Support({ POSTGRES })
+    public static AlterIndexStep alterIndexIfExists(String index) {
+        return using(new DefaultConfiguration()).alterIndexIfExists(index);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER INDEX</code> statement.
+     *
+     * @see DSLContext#alterIndexIfExists(Name)
+     */
+    @Support({ POSTGRES })
+    public static AlterIndexStep alterIndexIfExists(Name index) {
+        return using(new DefaultConfiguration()).alterIndexIfExists(index);
     }
 
     /**

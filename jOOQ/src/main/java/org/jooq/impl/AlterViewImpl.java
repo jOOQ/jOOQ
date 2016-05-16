@@ -69,12 +69,18 @@ final class AlterViewImpl extends AbstractQuery implements
     private static final Clause[] CLAUSES          = { ALTER_VIEW };
 
     private final Table<?>        view;
+    private final boolean         ifExists;
     private Table<?>              renameTo;
 
     AlterViewImpl(Configuration configuration, Table<?> view) {
+        this(configuration, view, false);
+    }
+
+    AlterViewImpl(Configuration configuration, Table<?> view, boolean ifExists) {
         super(configuration);
 
         this.view = view;
+        this.ifExists = ifExists;
     }
 
     // ------------------------------------------------------------------------
@@ -104,7 +110,12 @@ final class AlterViewImpl extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         ctx.start(ALTER_VIEW_VIEW)
-           .keyword("alter view").sql(' ').visit(view)
+           .keyword("alter view");
+
+        if (ifExists)
+            ctx.sql(' ').keyword("if exists");
+
+        ctx.sql(' ').visit(view)
            .end(ALTER_VIEW_VIEW)
            .formatIndentStart()
            .formatSeparator();

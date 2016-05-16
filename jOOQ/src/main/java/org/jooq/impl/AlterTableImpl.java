@@ -100,6 +100,7 @@ final class AlterTableImpl extends AbstractQuery implements
     private static final Clause[] CLAUSES          = { ALTER_TABLE };
 
     private final Table<?>        table;
+    private final boolean         ifExists;
     private Table<?>              renameTo;
     private Field<?>              renameColumn;
     private Field<?>              renameColumnTo;
@@ -116,9 +117,14 @@ final class AlterTableImpl extends AbstractQuery implements
     private Constraint            dropConstraint;
 
     AlterTableImpl(Configuration configuration, Table<?> table) {
+        this(configuration, table, false);
+    }
+
+    AlterTableImpl(Configuration configuration, Table<?> table, boolean ifExists) {
         super(configuration);
 
         this.table = table;
+        this.ifExists = ifExists;
     }
 
     // ------------------------------------------------------------------------
@@ -390,12 +396,18 @@ final class AlterTableImpl extends AbstractQuery implements
         boolean omitAlterTable =
             family == HSQLDB && renameConstraint != null;
 
-        if (!omitAlterTable)
+        if (!omitAlterTable) {
             ctx.start(ALTER_TABLE_TABLE)
-               .keyword("alter table").sql(' ').visit(table)
+               .keyword("alter table");
+
+            if (ifExists)
+                ctx.sql(' ').keyword("if exists");
+
+            ctx.sql(' ').visit(table)
                .end(ALTER_TABLE_TABLE)
                .formatIndentStart()
                .formatSeparator();
+        }
 
         if (renameTo != null) {
             boolean qualify = ctx.qualify();

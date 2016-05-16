@@ -68,12 +68,18 @@ final class AlterIndexImpl extends AbstractQuery implements
     private static final Clause[] CLAUSES          = { ALTER_INDEX };
 
     private final Name            index;
+    private final boolean         ifExists;
     private Name                  renameTo;
 
     AlterIndexImpl(Configuration configuration, Name index) {
+        this(configuration, index, false);
+    }
+
+    AlterIndexImpl(Configuration configuration, Name index, boolean ifExists) {
         super(configuration);
 
         this.index = index;
+        this.ifExists = ifExists;
     }
 
     // ------------------------------------------------------------------------
@@ -98,7 +104,12 @@ final class AlterIndexImpl extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         ctx.start(ALTER_INDEX_INDEX)
-           .keyword("alter index").sql(' ').visit(index)
+           .keyword("alter index");
+
+        if (ifExists)
+            ctx.sql(' ').keyword("if exists");
+
+        ctx.sql(' ').visit(index)
            .end(ALTER_INDEX_INDEX)
            .formatIndentStart()
            .formatSeparator();

@@ -73,13 +73,19 @@ final class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
     private static final Clause[] CLAUSES          = { ALTER_SEQUENCE };
 
     private final Sequence<T>     sequence;
+    private final boolean         ifExists;
     private T                     restartWith;
     private Sequence<?>           renameTo;
 
     AlterSequenceImpl(Configuration configuration, Sequence<T> sequence) {
+        this(configuration, sequence, false);
+    }
+
+    AlterSequenceImpl(Configuration configuration, Sequence<T> sequence, boolean ifExists) {
         super(configuration);
 
         this.sequence = sequence;
+        this.ifExists = ifExists;
     }
 
     // ------------------------------------------------------------------------
@@ -122,8 +128,10 @@ final class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
         ctx.start(ALTER_SEQUENCE_SEQUENCE)
            .keyword("alter")
            .sql(' ')
-           .keyword(ctx.family() == CUBRID ? "serial" : "sequence")
-           .sql(' ');
+           .keyword(ctx.family() == CUBRID ? "serial" : "sequence");
+
+        if (ifExists)
+            ctx.sql(' ').keyword("if exists");
 
         switch (ctx.family()) {
 
@@ -139,7 +147,7 @@ final class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
 
 
             default: {
-                ctx.visit(sequence);
+                ctx.sql(' ').visit(sequence);
                 break;
             }
         }

@@ -54,14 +54,18 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
 
+import java.util.Collection;
+
 import org.jooq.Clause;
+import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
-import org.jooq.CreateIndexFinalStep;
 import org.jooq.CreateIndexStep;
+import org.jooq.CreateIndexWhereStep;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.QueryPart;
+import org.jooq.SQL;
 import org.jooq.Table;
 
 /**
@@ -71,7 +75,7 @@ final class CreateIndexImpl extends AbstractQuery implements
 
     // Cascading interface implementations for CREATE INDEX behaviour
     CreateIndexStep,
-    CreateIndexFinalStep {
+    CreateIndexWhereStep {
 
     /**
      * Generated UID
@@ -84,6 +88,9 @@ final class CreateIndexImpl extends AbstractQuery implements
     private final boolean         ifNotExists;
     private Table<?>              table;
     private Field<?>[]            fields;
+
+
+
 
     CreateIndexImpl(Configuration configuration, Name index, boolean unique, boolean ifNotExists) {
         super(configuration);
@@ -98,7 +105,7 @@ final class CreateIndexImpl extends AbstractQuery implements
     // ------------------------------------------------------------------------
 
     @Override
-    public final CreateIndexFinalStep on(Table<?> t, Field<?>... f) {
+    public final CreateIndexImpl on(Table<?> t, Field<?>... f) {
         this.table = t;
         this.fields = f;
 
@@ -106,7 +113,7 @@ final class CreateIndexImpl extends AbstractQuery implements
     }
 
     @Override
-    public final CreateIndexFinalStep on(String tableName, String... fieldNames) {
+    public final CreateIndexImpl on(String tableName, String... fieldNames) {
         Field<?>[] f = new Field[fieldNames.length];
 
         for (int i = 0; i < f.length; i++)
@@ -114,6 +121,45 @@ final class CreateIndexImpl extends AbstractQuery implements
 
         return on(table(name(tableName)), f);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // ------------------------------------------------------------------------
     // XXX: QueryPart API
@@ -160,6 +206,11 @@ final class CreateIndexImpl extends AbstractQuery implements
            .visit(new QueryPartList<QueryPart>(fields))
            .qualify(true)
            .sql(')');
+
+
+
+
+
     }
 
     @Override

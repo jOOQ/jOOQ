@@ -52,6 +52,7 @@ import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Param;
+import org.jooq.ParamMode;
 import org.jooq.UDTRecord;
 import org.jooq.conf.ParamType;
 import org.jooq.tools.StringUtils;
@@ -169,5 +170,10 @@ abstract class AbstractParam<T> extends AbstractField<T> implements Param<T> {
              ? INDEXED
              : NAMED
              ;
+    }
+
+    @Override
+    public final ParamMode getParamMode() {
+        return ParamMode.IN;
     }
 }

@@ -125,4 +125,9 @@ public interface Param<T> extends Field<T> {
      * The parameter type.
      */
     ParamType getParamType();
+
+    /**
+     * The parameter mode.
+     */
+    ParamMode getParamMode();
 }

@@ -45,6 +45,7 @@ import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.schema;
 import static org.jooq.impl.DSL.sequence;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
@@ -94,6 +95,7 @@ import org.jooq.ConnectionCallable;
 import org.jooq.ConnectionProvider;
 import org.jooq.ConnectionRunnable;
 import org.jooq.CreateIndexStep;
+import org.jooq.CreateSchemaFinalStep;
 import org.jooq.CreateSequenceFinalStep;
 import org.jooq.CreateTableAsStep;
 import org.jooq.CreateViewAsStep;
@@ -2379,6 +2381,21 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Field<?>... fields) {
         return new CreateViewImpl<Record>(configuration(), view, fields, true);
+    }
+
+    @Override
+    public CreateSchemaFinalStep createSchema(String schema) {
+        return createSchema(name(schema));
+    }
+
+    @Override
+    public CreateSchemaFinalStep createSchema(Name schema) {
+        return createSchema(schema(schema));
+    }
+
+    @Override
+    public CreateSchemaFinalStep createSchema(Schema schema) {
+        return new CreateSchemaImpl(configuration(), schema);
     }
 
     @Override

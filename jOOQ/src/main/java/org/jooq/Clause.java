@@ -870,6 +870,21 @@ public enum Clause {
     CREATE_TABLE_CONSTRAINTS,
 
     /**
+     * A complete <code>CREATE SCHEMA</code> statement.
+     */
+    CREATE_SCHEMA,
+
+    /**
+     * A view name clause within a {@link #CREATE_SCHEMA} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>The schema name</li>
+     * </ul>
+     */
+    CREATE_SCHEMA_NAME,
+
+    /**
      * A complete <code>CREATE VIEW</code> statement.
      */
     CREATE_VIEW,

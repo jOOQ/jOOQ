@@ -6930,6 +6930,30 @@ public interface DSLContext extends Scope , AutoCloseable  {
     // -------------------------------------------------------------------------
 
     /**
+     * Create a new DSL <code>CREATE SCHEMA</code> statement.
+     *
+     * @see DSL#createSchema(String)
+     */
+    @Support({ POSTGRES })
+    CreateSchemaFinalStep createSchema(String schema);
+
+    /**
+     * Create a new DSL <code>CREATE SCHEMA</code> statement.
+     *
+     * @see DSL#createSchema(Name)
+     */
+    @Support({ POSTGRES })
+    CreateSchemaFinalStep createSchema(Name schema);
+
+    /**
+     * Create a new DSL <code>CREATE SCHEMA</code> statement.
+     *
+     * @see DSL#createSchema(Schema)
+     */
+    @Support({ POSTGRES })
+    CreateSchemaFinalStep createSchema(Schema schema);
+
+    /**
      * Create a new DSL <code>CREATE TABLE</code> statement.
      *
      * @see DSL#createTable(String)

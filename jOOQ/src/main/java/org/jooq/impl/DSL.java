@@ -115,6 +115,7 @@ import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
 import org.jooq.ConstraintTypeStep;
 import org.jooq.CreateIndexStep;
+import org.jooq.CreateSchemaFinalStep;
 import org.jooq.CreateSequenceFinalStep;
 import org.jooq.CreateTableAsStep;
 import org.jooq.CreateViewAsStep;
@@ -4796,6 +4797,37 @@ public class DSL {
     // -------------------------------------------------------------------------
     // XXX DDL Statements
     // -------------------------------------------------------------------------
+
+    /**
+     * Create a new DSL <code>CREATE SCHEMA</code> statement.
+     *
+     * @see DSLContext#createSchema(String)
+     */
+    @Support({ POSTGRES })
+    public static CreateSchemaFinalStep createSchema(String schema) {
+        return using(new DefaultConfiguration()).createSchema(schema);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE SCHEMA</code> statement.
+     *
+     * @see DSLContext#createSchema(Name)
+     */
+    @Support({ POSTGRES })
+    public static CreateSchemaFinalStep createSchema(Name table) {
+        return using(new DefaultConfiguration()).createSchema(table);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE SCHEMA</code> statement.
+     *
+     * @see DSLContext#createSchema(Schema)
+     */
+    @Support({ POSTGRES })
+    public static CreateSchemaFinalStep createSchema(Schema schema) {
+        return using(new DefaultConfiguration()).createSchema(schema);
+    }
+
 
     /**
      * Create a new DSL <code>CREATE TABLE</code> statement.

@@ -126,6 +126,7 @@ import org.jooq.Delete;
 import org.jooq.DeleteWhereStep;
 import org.jooq.DerivedColumnList;
 import org.jooq.DropIndexOnStep;
+import org.jooq.DropSchemaStep;
 import org.jooq.DropSequenceFinalStep;
 import org.jooq.DropTableStep;
 import org.jooq.DropViewFinalStep;
@@ -4828,6 +4829,36 @@ public class DSL {
         return using(new DefaultConfiguration()).createSchema(schema);
     }
 
+    /**
+     * Create a new DSL <code>CREATE SCHEMA</code> statement.
+     *
+     * @see DSLContext#createSchemaIfNotExists(String)
+     */
+    @Support({ POSTGRES })
+    public static CreateSchemaFinalStep createSchemaIfNotExists(String schema) {
+        return using(new DefaultConfiguration()).createSchemaIfNotExists(schema);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE SCHEMA</code> statement.
+     *
+     * @see DSLContext#createSchemaIfNotExists(Name)
+     */
+    @Support({ POSTGRES })
+    public static CreateSchemaFinalStep createSchemaIfNotExists(Name table) {
+        return using(new DefaultConfiguration()).createSchemaIfNotExists(table);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE SCHEMA</code> statement.
+     *
+     * @see DSLContext#createSchemaIfNotExists(Schema)
+     */
+    @Support({ POSTGRES })
+    public static CreateSchemaFinalStep createSchemaIfNotExists(Schema schema) {
+        return using(new DefaultConfiguration()).createSchemaIfNotExists(schema);
+    }
+
 
     /**
      * Create a new DSL <code>CREATE TABLE</code> statement.
@@ -5367,6 +5398,66 @@ public class DSL {
     @Support({ POSTGRES })
     public static AlterIndexStep alterIndexIfExists(Name index) {
         return using(new DefaultConfiguration()).alterIndexIfExists(index);
+    }
+
+    /**
+     * Create a new DSL <code>DROP SCHEMA</code> statement.
+     *
+     * @see DSLContext#dropSchema(String)
+     */
+    @Support({ POSTGRES })
+    public static DropSchemaStep dropSchema(String schema){
+        return using(new DefaultConfiguration()).dropSchema(schema);
+    }
+
+    /**
+     * Create a new DSL <code>DROP SCHEMA</code> statement.
+     *
+     * @see DSLContext#dropSchema(Name)
+     */
+    @Support({ POSTGRES })
+    public static DropSchemaStep dropSchema(Name schema){
+        return using(new DefaultConfiguration()).dropSchema(schema);
+    }
+
+    /**
+     * Create a new DSL <code>DROP SCHEMA</code> statement.
+     *
+     * @see DSLContext#dropSchema(Schema)
+     */
+    @Support({ POSTGRES })
+    public static DropSchemaStep dropSchema(Schema schema){
+        return using(new DefaultConfiguration()).dropSchema(schema);
+    }
+
+    /**
+     * Create a new DSL <code>DROP SCHEMA</code> statement.
+     *
+     * @see DSLContext#dropSchemaIfExists(String)
+     */
+    @Support({ POSTGRES })
+    public static DropSchemaStep dropSchemaIfExists(String schema){
+        return using(new DefaultConfiguration()).dropSchemaIfExists(schema);
+    }
+
+    /**
+     * Create a new DSL <code>DROP SCHEMA</code> statement.
+     *
+     * @see DSLContext#dropSchemaIfExists(Name)
+     */
+    @Support({ POSTGRES })
+    public static DropSchemaStep dropSchemaIfExists(Name schema){
+        return using(new DefaultConfiguration()).dropSchemaIfExists(schema);
+    }
+
+    /**
+     * Create a new DSL <code>DROP SCHEMA</code> statement.
+     *
+     * @see DSLContext#dropSchemaIfExists(Schema)
+     */
+    @Support({ POSTGRES })
+    public static DropSchemaStep dropSchemaIfExists(Schema schema){
+        return using(new DefaultConfiguration()).dropSchemaIfExists(schema);
     }
 
     /**

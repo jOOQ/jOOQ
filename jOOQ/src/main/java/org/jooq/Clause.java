@@ -1124,6 +1124,22 @@ public enum Clause {
     ALTER_INDEX_RENAME,
 
     /**
+     * A complete <code>DROP SCHEMA</code> statement.
+     */
+    DROP_SCHEMA,
+
+    /**
+     * A <code>SCHEMA</code> clause within an {@link #DROP_SCHEMA} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>DROP SCHEMA</code> keywords</li>
+     * <li>the schema that is being dropped</li>
+     * </ul>
+     */
+    DROP_SCHEMA_SCHEMA,
+
+    /**
      * A complete <code>DROP VIEW</code> statement.
      */
     DROP_VIEW,

@@ -6954,6 +6954,30 @@ public interface DSLContext extends Scope , AutoCloseable  {
     CreateSchemaFinalStep createSchema(Schema schema);
 
     /**
+     * Create a new DSL <code>CREATE SCHEMA</code> statement.
+     *
+     * @see DSL#createSchemaIfNotExists(String)
+     */
+    @Support({ POSTGRES })
+    CreateSchemaFinalStep createSchemaIfNotExists(String schema);
+
+    /**
+     * Create a new DSL <code>CREATE SCHEMA</code> statement.
+     *
+     * @see DSL#createSchemaIfNotExists(Name)
+     */
+    @Support({ POSTGRES })
+    CreateSchemaFinalStep createSchemaIfNotExists(Name schema);
+
+    /**
+     * Create a new DSL <code>CREATE SCHEMA</code> statement.
+     *
+     * @see DSL#createSchemaIfNotExists(Schema)
+     */
+    @Support({ POSTGRES })
+    CreateSchemaFinalStep createSchemaIfNotExists(Schema schema);
+
+    /**
      * Create a new DSL <code>CREATE TABLE</code> statement.
      *
      * @see DSL#createTable(String)
@@ -7384,6 +7408,54 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     @Support({ POSTGRES })
     AlterIndexStep alterIndexIfExists(Name index);
+
+    /**
+     * Create a new DSL <code>DROP SCHEMA</code> statement.
+     *
+     * @see DSL#dropSchema(String)
+     */
+    @Support({ POSTGRES })
+    DropSchemaStep dropSchema(String schema);
+
+    /**
+     * Create a new DSL <code>DROP SCHEMA</code> statement.
+     *
+     * @see DSL#dropSchema(Name)
+     */
+    @Support({ POSTGRES })
+    DropSchemaStep dropSchema(Name schema);
+
+    /**
+     * Create a new DSL <code>DROP SCHEMA</code> statement.
+     *
+     * @see DSL#dropSchema(Schema)
+     */
+    @Support({ POSTGRES })
+    DropSchemaStep dropSchema(Schema schema);
+
+    /**
+     * Create a new DSL <code>DROP SCHEMA</code> statement.
+     *
+     * @see DSL#dropSchemaIfExists(String)
+     */
+    @Support({ POSTGRES })
+    DropSchemaStep dropSchemaIfExists(String schema);
+
+    /**
+     * Create a new DSL <code>DROP SCHEMA</code> statement.
+     *
+     * @see DSL#dropSchemaIfExists(Name)
+     */
+    @Support({ POSTGRES })
+    DropSchemaStep dropSchemaIfExists(Name schema);
+
+    /**
+     * Create a new DSL <code>DROP SCHEMA</code> statement.
+     *
+     * @see DSL#dropSchemaIfExists(Schema)
+     */
+    @Support({ POSTGRES })
+    DropSchemaStep dropSchemaIfExists(Schema schema);
 
     /**
      * Create a new DSL <code>DROP VIEW</code> statement.

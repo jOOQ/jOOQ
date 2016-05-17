@@ -106,6 +106,7 @@ import org.jooq.DataType;
 import org.jooq.DeleteQuery;
 import org.jooq.DeleteWhereStep;
 import org.jooq.DropIndexOnStep;
+import org.jooq.DropSchemaStep;
 import org.jooq.DropSequenceFinalStep;
 import org.jooq.DropTableStep;
 import org.jooq.DropViewFinalStep;
@@ -2395,7 +2396,22 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateSchemaFinalStep createSchema(Schema schema) {
-        return new CreateSchemaImpl(configuration(), schema);
+        return new CreateSchemaImpl(configuration(), schema, false);
+    }
+
+    @Override
+    public CreateSchemaFinalStep createSchemaIfNotExists(String schema) {
+        return createSchemaIfNotExists(name(schema));
+    }
+
+    @Override
+    public CreateSchemaFinalStep createSchemaIfNotExists(Name schema) {
+        return createSchemaIfNotExists(schema(schema));
+    }
+
+    @Override
+    public CreateSchemaFinalStep createSchemaIfNotExists(Schema schema) {
+        return new CreateSchemaImpl(configuration(), schema, true);
     }
 
     @Override
@@ -2636,6 +2652,36 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public AlterIndexStep alterIndexIfExists(Name index) {
         return new AlterIndexImpl(configuration(), index, true);
+    }
+
+    @Override
+    public DropSchemaStep dropSchema(String schema) {
+        return dropSchema(name(schema));
+    }
+
+    @Override
+    public DropSchemaStep dropSchema(Name schema) {
+        return dropSchema(schema(schema));
+    }
+
+    @Override
+    public DropSchemaStep dropSchema(Schema schema) {
+        return new DropSchemaImpl(configuration(), schema);
+    }
+
+    @Override
+    public DropSchemaStep dropSchemaIfExists(String schema) {
+        return dropSchemaIfExists(name(schema));
+    }
+
+    @Override
+    public DropSchemaStep dropSchemaIfExists(Name schema) {
+        return dropSchemaIfExists(schema(schema));
+    }
+
+    @Override
+    public DropSchemaStep dropSchemaIfExists(Schema schema) {
+        return new DropSchemaImpl(configuration(), schema, true);
     }
 
     @Override

@@ -38,21 +38,27 @@
  *
  *
  */
-package org.jooq.impl;
+package org.jooq;
 
 /**
+ * The step in the <code>DROP SCHEMA</code> DSL used to specify
+ * <code>DROP</code> behaviour.
+ *
  * @author Lukas Eder
  */
-enum DDLStatementType {
-    CREATE_INDEX,
-    CREATE_SEQUENCE,
-    CREATE_TABLE,
-    CREATE_VIEW,
-    CREATE_SCHEMA,
+public interface DropSchemaStep extends DropSchemaFinalStep {
 
-    DROP_INDEX,
-    DROP_SEQUENCE,
-    DROP_TABLE,
-    DROP_VIEW,
-    DROP_SCHEMA
+    /**
+     * Add a <code>CASCADE</code> clause to the <code>DROP SCHEMA</code>
+     * statement.
+     */
+    @Support
+    DropSchemaFinalStep cascade();
+
+    /**
+     * Add a <code>RESTRICT</code> clause to the <code>DROP SCHEMA</code>
+     * statement.
+     */
+    @Support
+    DropSchemaFinalStep restrict();
 }

@@ -38,21 +38,13 @@
  *
  *
  */
-package org.jooq.impl;
+package org.jooq;
 
 /**
+ * The final step in the <code>DROP SCHEMA</code> DSL.
+ *
  * @author Lukas Eder
  */
-enum DDLStatementType {
-    CREATE_INDEX,
-    CREATE_SEQUENCE,
-    CREATE_TABLE,
-    CREATE_VIEW,
-    CREATE_SCHEMA,
+public interface DropSchemaFinalStep extends DDLQuery {
 
-    DROP_INDEX,
-    DROP_SEQUENCE,
-    DROP_TABLE,
-    DROP_VIEW,
-    DROP_SCHEMA
 }

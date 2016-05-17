@@ -40,60 +40,106 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.CREATE_SCHEMA;
-import static org.jooq.Clause.CREATE_SCHEMA_NAME;
+import static java.util.Arrays.asList;
+import static org.jooq.Clause.DROP_SCHEMA;
+import static org.jooq.Clause.DROP_SCHEMA_SCHEMA;
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+// ...
+// ...
+// ...
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
-import org.jooq.CreateSchemaFinalStep;
-import org.jooq.Record;
+import org.jooq.DropSchemaFinalStep;
+import org.jooq.DropSchemaStep;
 import org.jooq.Schema;
+
 
 /**
  * @author Lukas Eder
  */
-final class CreateSchemaImpl<R extends Record> extends AbstractQuery implements
+final class DropSchemaImpl extends AbstractQuery implements
 
-    // Cascading interface implementations for CREATE SCHEMA behaviour
-    CreateSchemaFinalStep {
-
+    // Cascading interface implementations for DROP VIEW behaviour
+    DropSchemaStep {
 
     /**
      * Generated UID
      */
     private static final long     serialVersionUID = 8904572826501186329L;
-    private static final Clause[] CLAUSES          = { CREATE_SCHEMA };
+    private static final Clause[] CLAUSES          = { DROP_SCHEMA };
 
     private final Schema          schema;
-    private final boolean         ifNotExists;
+    private final boolean         ifExists;
+    private boolean               cascade;
 
-    CreateSchemaImpl(Configuration configuration, Schema schema, boolean ifNotExists) {
+    DropSchemaImpl(Configuration configuration, Schema schema) {
+        this(configuration, schema, false);
+    }
+
+    DropSchemaImpl(Configuration configuration, Schema schema, boolean ifExists) {
         super(configuration);
 
         this.schema = schema;
-        this.ifNotExists = ifNotExists;
+        this.ifExists = ifExists;
     }
 
     // ------------------------------------------------------------------------
     // XXX: DSL API
     // ------------------------------------------------------------------------
 
+    @Override
+    public final DropSchemaFinalStep cascade() {
+        cascade = true;
+        return this;
+    }
+
+    @Override
+    public final DropSchemaFinalStep restrict() {
+        cascade = false;
+        return this;
+    }
+
     // ------------------------------------------------------------------------
     // XXX: QueryPart API
     // ------------------------------------------------------------------------
 
+    private final boolean supportsIfExists(Context<?> ctx) {
+        return !asList(DERBY, FIREBIRD).contains(ctx.family());
+    }
+
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.start(CREATE_SCHEMA_NAME)
-           .keyword("create schema");
-
-        if (ifNotExists)
-            ctx.sql(' ').keyword("if not exists");
-
-        ctx.sql(' ').visit(schema)
-           .end(CREATE_SCHEMA_NAME);
+        if (ifExists && !supportsIfExists(ctx)) {
+            Tools.executeImmediateBegin(ctx, DDLStatementType.DROP_SCHEMA);
+            accept0(ctx);
+            Tools.executeImmediateEnd(ctx, DDLStatementType.DROP_SCHEMA);
+        }
+        else {
+            accept0(ctx);
+        }
     }
+
+    private void accept0(Context<?> ctx) {
+        ctx.start(DROP_SCHEMA_SCHEMA)
+           .keyword("drop schema");
+
+        if (ifExists && supportsIfExists(ctx))
+            ctx.sql(' ').keyword("if exists");
+
+        ctx.sql(' ').visit(schema);
+
+        if (cascade)
+            ctx.sql(' ').keyword("cascade");
+
+        ctx.end(DROP_SCHEMA_SCHEMA);
+    }
+
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {

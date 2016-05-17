@@ -7515,7 +7515,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     DropViewFinalStep dropViewIfExists(Table<?> view);
 
     /**
-     * Create a new DSL <code>ALTER TABLE</code> statement.
+     * Create a new DSL <code>DROP TABLE</code> statement.
      *
      * @see DSL#dropTable(String)
      */
@@ -7523,7 +7523,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     DropTableStep dropTable(String table);
 
     /**
-     * Create a new DSL <code>ALTER TABLE</code> statement.
+     * Create a new DSL <code>DROP TABLE</code> statement.
      *
      * @see DSL#dropTable(Name)
      */
@@ -7539,7 +7539,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     DropTableStep dropTable(Table<?> table);
 
     /**
-     * Create a new DSL <code>ALTER TABLE IF EXISTS</code> statement.
+     * Create a new DSL <code>DROP TABLE IF EXISTS</code> statement.
      * <p>
      * If your database doesn't natively support <code>IF EXISTS</code>, this is
      * emulated by catching (and ignoring) the relevant {@link SQLException}.
@@ -7550,7 +7550,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     DropTableStep dropTableIfExists(String table);
 
     /**
-     * Create a new DSL <code>ALTER TABLE IF EXISTS</code> statement.
+     * Create a new DSL <code>DROP TABLE IF EXISTS</code> statement.
      * <p>
      * If your database doesn't natively support <code>IF EXISTS</code>, this is
      * emulated by catching (and ignoring) the relevant {@link SQLException}.

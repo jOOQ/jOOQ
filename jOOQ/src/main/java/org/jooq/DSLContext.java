@@ -7330,6 +7330,54 @@ public interface DSLContext extends Scope , AutoCloseable  {
     AlterTableStep alterTableIfExists(Table<?> table);
 
     /**
+     * Create a new DSL <code>ALTER SCHEMA</code> statement.
+     *
+     * @see DSL#alterSchema(String)
+     */
+    @Support({ POSTGRES })
+    AlterSchemaStep alterSchema(String schema);
+
+    /**
+     * Create a new DSL <code>ALTER SCHEMA</code> statement.
+     *
+     * @see DSL#alterSchema(Name)
+     */
+    @Support({ POSTGRES })
+    AlterSchemaStep alterSchema(Name schema);
+
+    /**
+     * Create a new DSL <code>ALTER SCHEMA</code> statement.
+     *
+     * @see DSL#alterSchema(Schema)
+     */
+    @Support({ POSTGRES })
+    AlterSchemaStep alterSchema(Schema schema);
+
+    /**
+     * Create a new DSL <code>ALTER SCHEMA</code> statement.
+     *
+     * @see DSL#alterSchemaIfExists(String)
+     */
+    @Support({ POSTGRES })
+    AlterSchemaStep alterSchemaIfExists(String schema);
+
+    /**
+     * Create a new DSL <code>ALTER SCHEMA</code> statement.
+     *
+     * @see DSL#alterSchemaIfExists(Name)
+     */
+    @Support({ POSTGRES })
+    AlterSchemaStep alterSchemaIfExists(Name schema);
+
+    /**
+     * Create a new DSL <code>ALTER SCHEMA</code> statement.
+     *
+     * @see DSL#alterSchemaIfExists(Schema)
+     */
+    @Support({ POSTGRES })
+    AlterSchemaStep alterSchemaIfExists(Schema schema);
+
+    /**
      * Create a new DSL <code>ALTER VIEW</code> statement.
      *
      * @see DSL#alterView(String)

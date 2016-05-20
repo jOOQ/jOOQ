@@ -100,6 +100,7 @@ import javax.sql.DataSource;
 
 import org.jooq.AggregateFunction;
 import org.jooq.AlterIndexStep;
+import org.jooq.AlterSchemaStep;
 import org.jooq.AlterSequenceStep;
 import org.jooq.AlterTableStep;
 import org.jooq.AlterViewStep;
@@ -5298,6 +5299,66 @@ public class DSL {
     @Support
     public static AlterTableStep alterTableIfExists(Table<?> table) {
         return using(new DefaultConfiguration()).alterTableIfExists(table);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER SCHEMA</code> statement.
+     *
+     * @see DSLContext#alterSchema(String)
+     */
+    @Support
+    public static AlterSchemaStep alterSchema(String schema) {
+        return using(new DefaultConfiguration()).alterSchema(schema);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER SCHEMA</code> statement.
+     *
+     * @see DSLContext#alterSchema(Name)
+     */
+    @Support
+    public static AlterSchemaStep alterSchema(Name schema) {
+        return using(new DefaultConfiguration()).alterSchema(schema);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER SCHEMA</code> statement.
+     *
+     * @see DSLContext#alterSchema(Schema)
+     */
+    @Support
+    public static AlterSchemaStep alterSchema(Schema schema) {
+        return using(new DefaultConfiguration()).alterSchema(schema);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER SCHEMA</code> statement.
+     *
+     * @see DSLContext#alterSchemaIfExists(String)
+     */
+    @Support
+    public static AlterSchemaStep alterSchemaIfExists(String schema) {
+        return using(new DefaultConfiguration()).alterSchemaIfExists(schema);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER SCHEMA</code> statement.
+     *
+     * @see DSLContext#alterSchemaIfExists(Name)
+     */
+    @Support
+    public static AlterSchemaStep alterSchemaIfExists(Name schema) {
+        return using(new DefaultConfiguration()).alterSchemaIfExists(schema);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER SCHEMA</code> statement.
+     *
+     * @see DSLContext#alterSchemaIfExists(Schema)
+     */
+    @Support
+    public static AlterSchemaStep alterSchemaIfExists(Schema schema) {
+        return using(new DefaultConfiguration()).alterSchemaIfExists(schema);
     }
 
     /**

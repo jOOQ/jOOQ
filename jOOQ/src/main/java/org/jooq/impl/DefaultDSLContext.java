@@ -81,6 +81,7 @@ import javax.annotation.Generated;
 import javax.sql.DataSource;
 
 import org.jooq.AlterIndexStep;
+import org.jooq.AlterSchemaStep;
 import org.jooq.AlterSequenceStep;
 import org.jooq.AlterTableStep;
 import org.jooq.AlterViewStep;
@@ -2602,6 +2603,36 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public AlterTableStep alterTableIfExists(Table<?> table) {
         return new AlterTableImpl(configuration(), table, true);
+    }
+
+    @Override
+    public AlterSchemaStep alterSchema(String schema) {
+        return alterSchema(name(schema));
+    }
+
+    @Override
+    public AlterSchemaStep alterSchema(Name schema) {
+        return alterSchema(schema(schema));
+    }
+
+    @Override
+    public AlterSchemaStep alterSchema(Schema schema) {
+        return new AlterSchemaImpl(configuration(), schema);
+    }
+
+    @Override
+    public AlterSchemaStep alterSchemaIfExists(String schema) {
+        return alterSchemaIfExists(name(schema));
+    }
+
+    @Override
+    public AlterSchemaStep alterSchemaIfExists(Name schema) {
+        return alterSchemaIfExists(schema(schema));
+    }
+
+    @Override
+    public AlterSchemaStep alterSchemaIfExists(Schema schema) {
+        return new AlterSchemaImpl(configuration(), schema, true);
     }
 
     @Override

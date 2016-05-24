@@ -60,4 +60,14 @@ final class QueriesImpl implements Queries {
     public final Query[] queries() {
         return queries.toArray(new Query[0]);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        for (Query query : queries)
+            sb.append(query).append(";\n");
+
+        return sb.toString();
+    }
 }

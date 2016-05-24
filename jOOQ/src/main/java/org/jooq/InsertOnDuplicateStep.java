@@ -51,6 +51,8 @@ import static org.jooq.SQLDialect.POSTGRES_9_5;
 // ...
 // ...
 
+import java.util.Collection;
+
 /**
  * This type is used for the {@link Insert}'s DSL API.
  * <p>
@@ -69,6 +71,18 @@ import static org.jooq.SQLDialect.POSTGRES_9_5;
  * @author Lukas Eder
  */
 public interface InsertOnDuplicateStep<R extends Record> extends InsertReturningStep<R> {
+
+    /**
+     * Add an <code>ON CONFLICT</code> clause to this insert query.
+     */
+    @Support({ POSTGRES_9_5 })
+    InsertOnConflictDoUpdateStep<R> onConflict(Field<?>... keys);
+
+    /**
+     * Add an <code>ON CONFLICT</code> clause to this insert query.
+     */
+    @Support({ POSTGRES_9_5 })
+    InsertOnConflictDoUpdateStep<R> onConflict(Collection<? extends Field<?>> keys);
 
     /**
      * Add an <code>ON DUPLICATE KEY UPDATE</code> clause to this insert query.

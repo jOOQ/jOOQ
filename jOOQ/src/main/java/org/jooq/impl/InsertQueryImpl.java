@@ -59,6 +59,7 @@ import static org.jooq.impl.Tools.fieldNames;
 import static org.jooq.impl.Tools.DataKey.DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Map;
 
 import org.jooq.Clause;
@@ -91,6 +92,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     private boolean                  defaultValues;
     private boolean                  onDuplicateKeyUpdate;
     private boolean                  onDuplicateKeyIgnore;
+    private QueryPartList<Field<?>>  onConflict;
 
     InsertQueryImpl(Configuration configuration, WithImpl with, Table<R> into) {
         super(configuration, with, into);
@@ -116,15 +118,28 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     }
 
     @Override
+    public final void onConflict(Field<?>... fields) {
+        onConflict(Arrays.asList(fields));
+    }
+
+    @Override
+    public final void onConflict(Collection<? extends Field<?>> fields) {
+        onDuplicateKeyUpdate(true);
+        this.onConflict = new QueryPartList<Field<?>>(fields);
+    }
+
+    @Override
     public final void onDuplicateKeyUpdate(boolean flag) {
         this.onDuplicateKeyIgnore = false;
         this.onDuplicateKeyUpdate = flag;
+        this.onConflict = null;
     }
 
     @Override
     public final void onDuplicateKeyIgnore(boolean flag) {
         this.onDuplicateKeyUpdate = false;
         this.onDuplicateKeyIgnore = flag;
+        this.onConflict = null;
     }
 
     @Override
@@ -190,7 +205,14 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                        .keyword("on conflict")
                        .sql(" (");
 
-                    if (table.getPrimaryKey() == null) {
+                    if (onConflict != null && onConflict.size() > 0) {
+                        boolean qualify = ctx.qualify();
+
+                        ctx.qualify(false)
+                           .visit(onConflict)
+                           .qualify(qualify);
+                    }
+                    else if (table.getPrimaryKey() == null) {
                         ctx.sql("[unknown primary key]");
                     }
                     else {

@@ -97,6 +97,30 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
     void addRecord(R record);
 
     /**
+     * Whether a <code>ON CONFLICT</code> clause should be added to
+     * this <code>INSERT</code> statement.
+     * <p>
+     * When setting this flag to <code>true</code>, be sure to also add values
+     * "for update" using the {@link #addValueForUpdate(Field, Field)} methods.
+     *
+     * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
+     */
+    @Support({ POSTGRES_9_5 })
+    void onConflict(Field<?>... fields);
+
+    /**
+     * Whether a <code>ON CONFLICT</code> clause should be added to
+     * this <code>INSERT</code> statement.
+     * <p>
+     * When setting this flag to <code>true</code>, be sure to also add values
+     * "for update" using the {@link #addValueForUpdate(Field, Field)} methods.
+     *
+     * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
+     */
+    @Support({ POSTGRES_9_5 })
+    void onConflict(Collection<? extends Field<?>> fields);
+
+    /**
      * Whether a <code>ON DUPLICATE KEY UPDATE</code> clause should be added to
      * this <code>INSERT</code> statement.
      * <p>

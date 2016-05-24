@@ -1336,7 +1336,8 @@ implements
         else {
             ctx.visit(insertInto(table, getUpsertFields())
                .values(getUpsertValues())
-               .onDuplicateKeyUpdate()
+               .onConflict(getUpsertKeys())
+               .doUpdate()
                .set(map));
         }
     }

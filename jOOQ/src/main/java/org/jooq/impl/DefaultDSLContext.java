@@ -167,6 +167,7 @@ import org.jooq.MergeUsingStep;
 import org.jooq.Meta;
 import org.jooq.Name;
 import org.jooq.Param;
+// ...
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.QueryPart;
@@ -351,6 +352,13 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     // -------------------------------------------------------------------------
     // XXX Convenience methods accessing the underlying Connection
     // -------------------------------------------------------------------------
+
+
+
+
+
+
+
 
     @Override
     public Meta meta() {

@@ -184,6 +184,13 @@ public interface DSLContext extends Scope , AutoCloseable  {
     // XXX Convenience methods accessing the underlying Connection
     // -------------------------------------------------------------------------
 
+
+
+
+
+
+
+
     /**
      * Access the database meta data.
      * <p>

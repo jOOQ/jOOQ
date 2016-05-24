@@ -41,6 +41,8 @@
 package org.jooq.util;
 
 
+import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
 import static org.jooq.tools.StringUtils.defaultString;
 import static org.jooq.util.AbstractGenerator.Language.JAVA;
@@ -5075,12 +5077,24 @@ public class JavaGenerator extends AbstractGenerator {
                 if (!dataType.nullable())
                     sb.append(".nullable(false)");
 
-                if (dataType.defaulted())
-                    sb.append(".defaultValue(org.jooq.impl.DSL.field(\"")
-                      .append(escapeString(d))
-                      .append("\", ")
+                // [#5291] Some dialects report valid SQL expresions (e.g. PostgreSQL), others
+                //         report actual values (e.g. MySQL).
+                if (dataType.defaulted()) {
+                    sb.append(".defaultValue(");
+
+                    if (asList(MYSQL).contains(db.getDialect().family()))
+                        sb.append("org.jooq.impl.DSL.inline(\"")
+                          .append(escapeString(d))
+                          .append("\"");
+                    else
+                        sb.append("org.jooq.impl.DSL.field(\"")
+                          .append(escapeString(d))
+                          .append("\"");
+
+                    sb.append(", ")
                       .append(sqlDataTypeRef)
                       .append("))");
+                }
             }
 
             // Otherwise, reference the dialect-specific DataType itself.

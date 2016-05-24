@@ -211,6 +211,10 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
         }
     }
 
+    public Table<R> rename(String rename) {
+        return new TableImpl<R>(rename, getSchema());
+    }
+
     /**
      * Subclasses must override this method if they use the generic type
      * parameter <R> for other types than {@link Record}

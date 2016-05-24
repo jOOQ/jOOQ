@@ -41,6 +41,8 @@
 package org.jooq.impl;
 
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.stream.Stream;
 
 import org.jooq.Queries;
 import org.jooq.Query;
@@ -60,6 +62,20 @@ final class QueriesImpl implements Queries {
     public final Query[] queries() {
         return queries.toArray(new Query[0]);
     }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final Iterator<Query> iterator() {
+        return (Iterator) queries.iterator();
+    }
+
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final Stream<Query> stream() {
+        return (Stream) queries.stream();
+    }
+
 
     @Override
     public String toString() {

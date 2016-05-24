@@ -40,15 +40,24 @@
  */
 package org.jooq;
 
+import java.util.stream.Stream;
+
 /**
  * A wrapper for a collection of queries.
  *
  * @author Lukas Eder
  */
-public interface Queries {
+public interface Queries extends Iterable<Query> {
 
     /**
      * The wrapped collection of queries.
      */
     Query[] queries();
+
+
+    /**
+     * The wrapped collection of queries.
+     */
+    Stream<Query> stream();
+
 }

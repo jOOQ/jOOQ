@@ -364,6 +364,21 @@ public interface Database {
     <D extends Definition> List<D> filterExcludeInclude(List<D> definitions);
 
     /**
+     * Retrieve all included objects.
+     */
+    List<Definition> getIncluded();
+
+    /**
+     * Retrieve all excluded objects.
+     */
+    List<Definition> getExcluded();
+
+    /**
+     * Retrieve all objects.
+     */
+    List<Definition> getAll();
+
+    /**
      * The regular expression flags that should be applied when using regular expressions.
      */
     void setRegexFlags(List<RegexFlag> regexFlags);

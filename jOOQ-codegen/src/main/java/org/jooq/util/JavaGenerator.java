@@ -267,8 +267,12 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (generateImmutablePojos && generateInterfaces)
             log.info("  immutable pojos", "Immutable POJOs do not have any setters. Hence, setters are also missing from interfaces");
-        else
-            log.info("  none");
+
+        if (contains(db.getIncludes(), ',') && db.getIncluded().isEmpty())
+            log.info("  includes", "The <includes/> element takes a Java regular expression, not a comma-separated list. This might be why no objects were included.");
+
+        if (contains(db.getExcludes(), ',') && db.getExcluded().isEmpty())
+            log.info("  excludes", "The <excludes/> element takes a Java regular expression, not a comma-separated list. This might be why no objects were excluded.");
 
         log.info("");
         log.info("----------------------------------------------------------");
@@ -285,6 +289,34 @@ public class JavaGenerator extends AbstractGenerator {
                 throw new GeneratorException("Error generating code for catalog " + catalog, e);
             }
         }
+    }
+
+    private boolean isEmpty(Database db) {
+        for (SchemaDefinition schema : db.getSchemata()) {
+            for (TableDefinition table : db.getTables(schema))
+                return false;
+            for (SequenceDefinition sequence : db.getSequences(schema))
+                return false;
+            for (PackageDefinition pkg : db.getPackages(schema))
+                return false;
+            for (RoutineDefinition routine : db.getRoutines(schema))
+                return false;
+            for (UDTDefinition udt : db.getUDTs(schema))
+                return false;
+        }
+
+        return true;
+    }
+
+    private boolean contains(String[] array, char c) {
+        if (array == null)
+            return false;
+
+        for (String string : array)
+            if (string != null && string.indexOf(c) > -1)
+                return true;
+
+        return false;
     }
 
     private void generate(CatalogDefinition catalog) {

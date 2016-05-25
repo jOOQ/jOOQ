@@ -168,6 +168,9 @@ public abstract class AbstractDatabase implements Database {
     private transient boolean                                                initialised;
 
     // Other caches
+    private final List<Definition>                                           all;
+    private final List<Definition>                                           included;
+    private final List<Definition>                                           excluded;
     private final Map<Table<?>, Boolean>                                     exists;
     private final Map<String, Pattern>                                       patterns;
 
@@ -175,6 +178,9 @@ public abstract class AbstractDatabase implements Database {
         exists = new HashMap<Table<?>, Boolean>();
         patterns = new HashMap<String, Pattern>();
         filters = new ArrayList<Filter>();
+        all = new ArrayList<Definition>();
+        included = new ArrayList<Definition>();
+        excluded = new ArrayList<Definition>();
     }
 
     @Override
@@ -877,6 +883,7 @@ public abstract class AbstractDatabase implements Database {
                 try {
                     List<SequenceDefinition> s = getSequences0();
 
+                    all.addAll(s);
                     sequences = filterExcludeInclude(s);
                     log.info("Sequences fetched", fetchedSize(s, sequences));
                 }
@@ -979,6 +986,7 @@ public abstract class AbstractDatabase implements Database {
                 try {
                     List<TableDefinition> t = getTables0();
 
+                    all.addAll(t);
                     tables = filterExcludeInclude(t);
                     log.info("Tables fetched", fetchedSize(t, tables));
                 }
@@ -1238,6 +1246,7 @@ public abstract class AbstractDatabase implements Database {
                 try {
                     List<RoutineDefinition> r = getRoutines0();
 
+                    all.addAll(r);
                     routines = filterExcludeInclude(r);
                     log.info("Routines fetched", fetchedSize(r, routines));
                 }
@@ -1264,6 +1273,7 @@ public abstract class AbstractDatabase implements Database {
                 try {
                     List<PackageDefinition> p = getPackages0();
 
+                    all.addAll(p);
                     packages = filterExcludeInclude(p);
                     log.info("Packages fetched", fetchedSize(p, packages));
                 }
@@ -1311,11 +1321,9 @@ public abstract class AbstractDatabase implements Database {
         else {
             List<T> result = new ArrayList<T>();
 
-            for (T definition : definitions) {
-                if (definition.getSchema().equals(schema)) {
+            for (T definition : definitions)
+                if (definition.getSchema().equals(schema))
                     result.add(definition);
-                }
-            }
 
             return result;
         }
@@ -1323,7 +1331,29 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions) {
-        return filterExcludeInclude(definitions, excludes, includes, filters);
+        List<T> result = filterExcludeInclude(definitions, excludes, includes, filters);
+
+        this.all.addAll(definitions);
+        this.included.addAll(result);
+        this.excluded.addAll(definitions);
+        this.excluded.removeAll(result);
+
+        return result;
+    }
+
+    @Override
+    public final List<Definition> getIncluded() {
+        return Collections.unmodifiableList(included);
+    }
+
+    @Override
+    public final List<Definition> getExcluded() {
+        return Collections.unmodifiableList(excluded);
+    }
+
+    @Override
+    public final List<Definition> getAll() {
+        return Collections.unmodifiableList(all);
     }
 
     protected final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions, String[] e, String[] i, List<Filter> f) {

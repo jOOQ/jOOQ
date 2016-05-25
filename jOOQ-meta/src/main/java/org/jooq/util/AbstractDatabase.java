@@ -883,7 +883,6 @@ public abstract class AbstractDatabase implements Database {
                 try {
                     List<SequenceDefinition> s = getSequences0();
 
-                    all.addAll(s);
                     sequences = filterExcludeInclude(s);
                     log.info("Sequences fetched", fetchedSize(s, sequences));
                 }
@@ -986,7 +985,6 @@ public abstract class AbstractDatabase implements Database {
                 try {
                     List<TableDefinition> t = getTables0();
 
-                    all.addAll(t);
                     tables = filterExcludeInclude(t);
                     log.info("Tables fetched", fetchedSize(t, tables));
                 }
@@ -1246,7 +1244,6 @@ public abstract class AbstractDatabase implements Database {
                 try {
                     List<RoutineDefinition> r = getRoutines0();
 
-                    all.addAll(r);
                     routines = filterExcludeInclude(r);
                     log.info("Routines fetched", fetchedSize(r, routines));
                 }
@@ -1273,7 +1270,6 @@ public abstract class AbstractDatabase implements Database {
                 try {
                     List<PackageDefinition> p = getPackages0();
 
-                    all.addAll(p);
                     packages = filterExcludeInclude(p);
                     log.info("Packages fetched", fetchedSize(p, packages));
                 }

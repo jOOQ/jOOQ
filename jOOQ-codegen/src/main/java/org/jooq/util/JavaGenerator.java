@@ -291,23 +291,6 @@ public class JavaGenerator extends AbstractGenerator {
         }
     }
 
-    private boolean isEmpty(Database db) {
-        for (SchemaDefinition schema : db.getSchemata()) {
-            for (TableDefinition table : db.getTables(schema))
-                return false;
-            for (SequenceDefinition sequence : db.getSequences(schema))
-                return false;
-            for (PackageDefinition pkg : db.getPackages(schema))
-                return false;
-            for (RoutineDefinition routine : db.getRoutines(schema))
-                return false;
-            for (UDTDefinition udt : db.getUDTs(schema))
-                return false;
-        }
-
-        return true;
-    }
-
     private boolean contains(String[] array, char c) {
         if (array == null)
             return false;

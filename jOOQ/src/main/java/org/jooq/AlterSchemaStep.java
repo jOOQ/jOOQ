@@ -48,7 +48,7 @@ import static org.jooq.SQLDialect.POSTGRES;
  *
  * @author Lukas Eder
  */
-public interface AlterSchemaStep extends AlterSchemaFinalStep {
+public interface AlterSchemaStep {
 
     /**
      * Add a <code>RENAME TO</code> clause to the <code>ALTER SCHEMA</code>

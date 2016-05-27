@@ -790,8 +790,16 @@ final class Tools {
         return result;
     }
 
+    static final Field<?>[] fieldsByName(Collection<String> fieldNames) {
+        return fieldsByName(null, fieldNames.toArray(new String[0]));
+    }
+
     static final Field<?>[] fieldsByName(String[] fieldNames) {
         return fieldsByName(null, fieldNames);
+    }
+
+    static final Field<?>[] fieldsByName(String tableName, Collection<String> fieldNames) {
+        return fieldsByName(tableName, fieldNames.toArray(new String[0]));
     }
 
     static final Field<?>[] fieldsByName(String tableName, String[] fieldNames) {

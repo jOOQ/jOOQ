@@ -45,6 +45,7 @@ import static org.jooq.Clause.ALTER_SCHEMA_RENAME;
 import static org.jooq.Clause.ALTER_SCHEMA_SCHEMA;
 import static org.jooq.impl.DSL.name;
 
+import org.jooq.AlterSchemaFinalStep;
 import org.jooq.AlterSchemaStep;
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -58,7 +59,8 @@ import org.jooq.Schema;
 final class AlterSchemaImpl extends AbstractQuery implements
 
     // Cascading interface implementations for ALTER SCHEMA behaviour
-    AlterSchemaStep {
+    AlterSchemaStep,
+    AlterSchemaFinalStep {
 
     /**
      * Generated UID

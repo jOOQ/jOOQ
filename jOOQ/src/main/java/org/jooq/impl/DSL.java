@@ -5245,10 +5245,7 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL <code>DROP TABLE IF EXISTS</code> statement.
-     * <p>
-     * If your database doesn't natively support <code>IF EXISTS</code>, this is
-     * emulated by catching (and ignoring) the relevant {@link SQLException}.
+     * Create a new DSL <code>DROP TABLE</code> statement.
      *
      * @see DSLContext#dropTable(String)
      */
@@ -5258,10 +5255,7 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL <code>DROP TABLE IF EXISTS</code> statement.
-     * <p>
-     * If your database doesn't natively support <code>IF EXISTS</code>, this is
-     * emulated by catching (and ignoring) the relevant {@link SQLException}.
+     * Create a new DSL <code>DROP TABLE</code> statement.
      *
      * @see DSLContext#dropTable(Name)
      */
@@ -5281,9 +5275,12 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL <code>DROP TABLE</code> statement.
+     * Create a new DSL <code>DROP TABLE IF EXISTS</code> statement.
+     * <p>
+     * If your database doesn't natively support <code>IF EXISTS</code>, this is
+     * emulated by catching (and ignoring) the relevant {@link SQLException}.
      *
-     * @see DSLContext#dropTable(String)
+     * @see DSLContext#dropTableIfExists(String)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static DropTableStep dropTableIfExists(String table) {
@@ -5291,9 +5288,12 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL <code>DROP TABLE</code> statement.
+     * Create a new DSL <code>DROP TABLE IF EXISTS</code> statement.
+     * <p>
+     * If your database doesn't natively support <code>IF EXISTS</code>, this is
+     * emulated by catching (and ignoring) the relevant {@link SQLException}.
      *
-     * @see DSLContext#dropTable(Name)
+     * @see DSLContext#dropTableIfExists(Name)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static DropTableStep dropTableIfExists(Name table) {

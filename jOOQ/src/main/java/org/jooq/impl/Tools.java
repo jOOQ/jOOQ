@@ -76,6 +76,7 @@ import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
 import static org.jooq.impl.Identifiers.QUOTE_START_DELIMITER;
 import static org.jooq.tools.reflect.Reflect.accessible;
 
+import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -2290,7 +2291,7 @@ final class Tools {
          * @return The cached value or the outcome of the cached operation.
          */
         @SuppressWarnings("unchecked")
-        static final <V> V run(Configuration configuration, CachedOperation<V> operation, String type, Object... keys) {
+        static final <V> V run(Configuration configuration, CachedOperation<V> operation, String type, Serializable... keys) {
 
             // If no configuration is provided take the default configuration that loads the default Settings
             if (configuration == null)
@@ -2340,7 +2341,7 @@ final class Tools {
         /**
          * Create a single-value or multi-value key for caching.
          */
-        private static final Object key(final Object... key) {
+        private static final Object key(final Serializable... key) {
             if (key == null || key.length == 0)
                 return key;
 
@@ -2353,11 +2354,14 @@ final class Tools {
         /**
          * A multi-value key for caching.
          */
-        private static class Key {
+        private static class Key implements Serializable {
+            /**
+             * Generated UID.
+             */
+            private static final long    serialVersionUID = 5822370287443922993L;
+            private final Serializable[] key;
 
-            private final Object[] key;
-
-            Key(Object[] key) {
+            Key(Serializable[] key) {
                 this.key = key;
             }
 

@@ -115,19 +115,16 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
     public String getJavaIdentifier(Definition definition) {
 
         // [#1473] Identity identifiers should not be renamed by custom strategies
-        if (definition instanceof IdentityDefinition) {
+        if (definition instanceof IdentityDefinition)
             return "IDENTITY_" + getJavaIdentifier(((IdentityDefinition) definition).getColumn().getContainer());
-        }
 
         // [#2032] Intercept default Catalog
-        else if (definition instanceof CatalogDefinition && ((CatalogDefinition) definition).isDefaultCatalog()) {
+        else if (definition instanceof CatalogDefinition && ((CatalogDefinition) definition).isDefaultCatalog())
             return "DEFAULT_CATALOG";
-        }
 
         // [#2089] Intercept default schema
-        else if (definition instanceof SchemaDefinition && ((SchemaDefinition) definition).isDefaultSchema()) {
+        else if (definition instanceof SchemaDefinition && ((SchemaDefinition) definition).isDefaultSchema())
             return "DEFAULT_SCHEMA";
-        }
 
         String identifier = convertToIdentifier(delegate.getJavaIdentifier(definition), language);
 
@@ -137,14 +134,19 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
 
             TypedElementDefinition<?> e = (TypedElementDefinition<?>) definition;
 
-            if (identifier.equals(getJavaIdentifier(e.getContainer()))) {
+            if (identifier.equals(getJavaIdentifier(e.getContainer())))
                 return identifier + "_";
-            }
 
             // [#2781] Disambiguate collisions with the leading package name
-            if (identifier.equals(getJavaPackageName(e.getContainer()).replaceAll("\\..*", ""))) {
+            if (identifier.equals(getJavaPackageName(e.getContainer()).replaceAll("\\..*", "")))
                 return identifier + "_";
-            }
+        }
+
+        else if (definition instanceof TableDefinition) {
+            SchemaDefinition schema = definition.getSchema();
+
+            if (identifier.equals(getJavaIdentifier(schema)))
+                return identifier + "_";
         }
 
         return identifier;

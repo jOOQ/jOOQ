@@ -84,6 +84,7 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Table;
+import org.jooq.exception.DataAccessException;
 
 /**
  * @author Lukas Eder
@@ -139,6 +140,10 @@ implements
     private Action                onUpdate;
     private Condition             check;
 
+    ConstraintImpl() {
+        this(null);
+    }
+
     ConstraintImpl(Name name) {
         this.name = name;
     }
@@ -151,16 +156,20 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         if (ctx.data(DATA_CONSTRAINT_REFERENCE) != null) {
+            if (name == null)
+                throw new DataAccessException("Cannot ALTER or DROP CONSTRAINT without name");
+
             ctx.visit(name);
         }
         else {
             boolean qualify = ctx.qualify();
 
-            ctx.keyword("constraint")
-               .sql(' ')
-               .visit(name)
-               .formatIndentStart()
-               .formatSeparator();
+            if (name != null)
+                ctx.keyword("constraint")
+                   .sql(' ')
+                   .visit(name)
+                   .formatIndentStart()
+                   .formatSeparator();
 
             if (unique != null) {
                 ctx.keyword("unique")

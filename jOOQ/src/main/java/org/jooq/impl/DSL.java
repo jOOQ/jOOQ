@@ -4781,6 +4781,14 @@ public class DSL {
     // -------------------------------------------------------------------------
 
     /**
+     * Create an unnamed (system named) <code>CONSTRAINT</code> specification.
+     */
+    @Support
+    public static ConstraintTypeStep constraint() {
+        return new ConstraintImpl();
+    }
+
+    /**
      * Create a <code>CONSTRAINT</code> specification.
      */
     @Support

@@ -14084,7 +14084,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with an <code>ORDER BY</code> clause.
      */
     @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
-    public static WindowSpecificationOrderByStep orderBy(Field<?>... fields) {
+    public static WindowSpecificationRowsStep orderBy(Field<?>... fields) {
         return new WindowSpecificationImpl().orderBy(fields);
     }
 

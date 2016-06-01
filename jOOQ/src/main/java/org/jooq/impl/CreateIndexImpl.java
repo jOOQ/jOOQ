@@ -66,6 +66,7 @@ import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.SQL;
+import org.jooq.SortField;
 import org.jooq.Table;
 
 /**
@@ -88,6 +89,7 @@ final class CreateIndexImpl extends AbstractQuery implements
     private final boolean         ifNotExists;
     private Table<?>              table;
     private Field<?>[]            fields;
+    private SortField<?>[]        sortFields;
 
 
 
@@ -103,6 +105,14 @@ final class CreateIndexImpl extends AbstractQuery implements
     // ------------------------------------------------------------------------
     // XXX: DSL API
     // ------------------------------------------------------------------------
+
+    @Override
+    public final CreateIndexImpl on(Table<?> t, SortField<?>... f) {
+        this.table = t;
+        this.sortFields = f;
+
+        return this;
+    }
 
     @Override
     public final CreateIndexImpl on(Table<?> t, Field<?>... f) {
@@ -203,7 +213,7 @@ final class CreateIndexImpl extends AbstractQuery implements
            .visit(table)
            .sql('(')
            .qualify(false)
-           .visit(new QueryPartList<QueryPart>(fields))
+           .visit(fields != null ? new QueryPartList<QueryPart>(fields) : new QueryPartList<QueryPart>(sortFields))
            .qualify(true)
            .sql(')');
 

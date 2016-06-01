@@ -146,6 +146,7 @@ import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.SelectField;
+import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
@@ -746,6 +747,17 @@ final class Tools {
     // ------------------------------------------------------------------------
     // XXX: General utility methods
     // ------------------------------------------------------------------------
+
+    static final SortField<?>[] sortFields(Field<?>[] fields) {
+        if (fields == null)
+            return null;
+
+        SortField<?>[] result = new SortField[fields.length];
+        for (int i = 0; i < fields.length; i++)
+            result[i] = fields[i].asc();
+
+        return result;
+    }
 
     static final String[] fieldNames(int length) {
         String[] result = new String[length];

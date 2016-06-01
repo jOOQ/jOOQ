@@ -351,12 +351,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // Add precision / scale on BigDecimals
             int scale = ((BigDecimal) converted).scale();
-            int precision = scale + ((BigDecimal) converted).precision();
+            int precision = ((BigDecimal) converted).precision();
 
-            // Firebird's max precision is 18
-            if (family == FIREBIRD) {
-                precision = Math.min(precision, 18);
-            }
+            // [#5323] BigDecimal precision is always 1 for BigDecimals smaller than 1.0
+            if (scale >= precision)
+                precision = scale + 1;
 
             toSQLCast(ctx, converted, dataType, 0, precision, scale);
         }

@@ -1,0 +1,95 @@
+@namespace epub "http://www.idpf.org/2007/ops";
+
+body {
+    color: rgb(0,0,0);
+    font-family: calibri,arial,helvetica, sans-serif;
+    background-color: rgb(255,255,255);
+    margin: 0.5em 1em 0 0.5em;
+    border: 0;
+    padding: 0
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-align: center;
+}
+
+h2 {
+    page-break-before: always;
+    padding-top: 1em
+}
+
+h3 {
+	page-break-before: always;
+}
+
+.subhd {
+	display: block;
+	margin-top: 0.5em;
+}
+
+span[epub|type~='bridgehead'] {
+    font-weight: bold;
+}
+
+div[epub|type~='z3998:author'] {
+	font-size: small;
+	font-weight: bold;
+	text-align: center;
+}
+
+p {
+    margin-top: 0.75em;
+    text-align: justify;
+    text-indent: 1.25em;
+    margin-bottom: 0.75em
+}
+
+
+.intro {
+	font-family: Calibri,Arial,sans-serif;
+    margin: 0.75em 2em;
+    text-align: justify;
+}
+
+.center {
+    text-align: center
+}
+
+.smcap {
+    font-variant: small-caps
+}
+
+.poem {
+    margin-left: 30%;
+    margin-right: 10%;
+    text-align: left
+}
+
+.line {
+	display: block;
+}
+
+span.c8 {
+	display: block;
+    margin-left: 1em
+}
+
+span[epub|type~='pagebreak'] {
+    font-size: smaller;
+    color: rgb(180,180,180);
+	text-align: center;
+	border: 1px solid rgb(180,180,180);
+	padding: 0.1em 0.3em;
+}
+
+aside[epub|type~='annotation'] {
+	margin-top: 1.5em;
+	border-top: 0.1em solid rgb(100,100,100);
+	font-size: 0.7em;
+	width: 50%;
+}
+
+.hidden {
+	display: none;
+	visibility: hidden;
+}

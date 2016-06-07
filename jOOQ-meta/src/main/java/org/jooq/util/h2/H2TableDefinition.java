@@ -41,6 +41,7 @@
 package org.jooq.util.h2;
 
 import static org.jooq.util.h2.information_schema.tables.Columns.COLUMNS;
+import static org.jooq.tools.StringUtils.defaultString;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -103,7 +104,8 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 record.get(Columns.COLUMN_NAME),
                 record.get(Columns.ORDINAL_POSITION),
                 type,
-                null != record.get(Columns.SEQUENCE_NAME),
+                null != record.get(Columns.SEQUENCE_NAME)
+		    || defaultString(record.get(COLUMNS.COLUMN_DEFAULT)).startsWith("NEXTVAL"),
                 record.get(Columns.REMARKS));
 
             result.add(column);

@@ -92,6 +92,24 @@ extends AbstractDefinition {
                 Database db = getDatabase();
                 List<E> e = getElements0();
 
+                // [#5335] Warn if a table definition contains several identity columns
+                if (this instanceof TableDefinition) {
+                    boolean hasIdentity = false;
+
+                    for (E c : e) {
+                        boolean isIdentity = ((ColumnDefinition) c).isIdentity();
+
+                        if (isIdentity) {
+                            if (hasIdentity) {
+                                log.warn("Multiple identities", "Table " + getOutputName() + " has multiple identity columns. Only the first one is considered.");
+                                break;
+                            }
+
+                            hasIdentity = true;
+                        }
+                    }
+                }
+
                 // [#2603] Filter exclude / include also for table columns
                 if (this instanceof TableDefinition && db.getIncludeExcludeColumns()) {
                     elements = db.filterExcludeInclude(e);

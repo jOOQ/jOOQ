@@ -40,8 +40,8 @@
  */
 package org.jooq.util.h2;
 
-import static org.jooq.util.h2.information_schema.tables.Columns.COLUMNS;
 import static org.jooq.tools.StringUtils.defaultString;
+import static org.jooq.util.h2.information_schema.tables.Columns.COLUMNS;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -60,8 +60,8 @@ import org.jooq.util.h2.information_schema.tables.Columns;
  * H2 table definition
  *
  * @author Espen Stromsnes
+ * @author Oliver Flege
  */
-
 public class H2TableDefinition extends AbstractTableDefinition {
 
     public H2TableDefinition(SchemaDefinition schema, String name, String comment) {
@@ -104,8 +104,12 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 record.get(Columns.COLUMN_NAME),
                 record.get(Columns.ORDINAL_POSITION),
                 type,
+
+                // [#5331] AUTO_INCREMENT (MySQL style)
                 null != record.get(Columns.SEQUENCE_NAME)
-		    || defaultString(record.get(COLUMNS.COLUMN_DEFAULT)).startsWith("NEXTVAL"),
+
+                // [#5331] DEFAULT nextval('sequence') (PostgreSQL style)
+             || defaultString(record.get(Columns.COLUMN_DEFAULT)).trim().toLowerCase().startsWith("nextval"),
                 record.get(Columns.REMARKS));
 
             result.add(column);

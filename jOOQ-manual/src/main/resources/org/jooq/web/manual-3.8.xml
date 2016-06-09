@@ -5786,6 +5786,15 @@ FROM AUTHOR
 WHERE 50 < (
   SELECT COUNT(*) FROM BOOK
   WHERE BOOK.AUTHOR_ID = AUTHOR.ID
+);
+
+CREATE TABLE IF NOT EXISTS MEDIEVAL_AUTHOR (
+  ID INT,
+  FIRST_NAME VARCHAR(50),
+  LAST_NAME VARCHAR(50),
+
+  CONSTRAINT PK_AUTHOR PRIMARY KEY (ID),
+  CONSTRAINT UK_AUTHOR UNIQUE (FIRST_NAME, LAST_NAME)
 );]]></sql>
 <java><![CDATA[create.createTable(AUTHOR)
       .column(AUTHOR.ID, SQLDataType.INTEGER)
@@ -5805,7 +5814,16 @@ create.createTable("TOP_AUTHORS").as(
       .where(val(50).lt(
          selectCount().from(BOOK)
         .where(BOOK.AUTHOR_ID.eq(AUTHOR.ID))
-      ))).execute();]]></java>
+      ))).execute();
+      
+create.createTableIfNotExists("MEDIEVAL_AUTHORS")
+      .column(AUTHOR.ID, SQLDataType.INTEGER)
+      .column(AUTHOR.FIRST_NAME, SQLDataType.VARCHAR.length(50))
+      .column(AUTHOR.LAST_NAME, SQLDataType.VARCHAR.length(50))
+      .constraints(
+          constraint("PK_AUTHOR").primaryKey(AUTHOR.ID),
+          constraint("UK_AUTHOR").unique(FIRST_NAME, LAST_NAME))
+      .execute();]]></java>
 </code-pair><html>
 
                                     <h3>Views</h3>

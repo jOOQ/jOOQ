@@ -109,7 +109,9 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 null != record.get(Columns.SEQUENCE_NAME)
 
                 // [#5331] DEFAULT nextval('sequence') (PostgreSQL style)
-             || defaultString(record.get(Columns.COLUMN_DEFAULT)).trim().toLowerCase().startsWith("nextval"),
+             || defaultString(record.get(Columns.COLUMN_DEFAULT)).trim().toLowerCase().startsWith("nextval")
+                // [#5331] DEFAULT RANDOM_UUID()
+             || defaultString(record.get(Columns.COLUMN_DEFAULT)).trim().toLowerCase().equals("random_uuid()"),
                 record.get(Columns.REMARKS));
 
             result.add(column);

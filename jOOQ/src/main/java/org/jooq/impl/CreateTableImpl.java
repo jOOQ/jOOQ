@@ -253,7 +253,9 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
                    .sql(' ');
                 Tools.toSQLDDLTypeDeclaration(ctx, type);
 
-                if (asList().contains(ctx.family()))
+                // [#5356] Some dialects require the DEFAULT clause prior to the
+                //         NULL constraints clause
+                if (asList(HSQLDB).contains(ctx.family()))
                     acceptDefault(ctx, type);
 
                 if (type.nullable()) {
@@ -266,7 +268,7 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
                     ctx.sql(' ').keyword("not null");
                 }
 
-                if (!asList().contains(ctx.family()))
+                if (!asList(HSQLDB).contains(ctx.family()))
                     acceptDefault(ctx, type);
 
                 if (i < columnFields.size() - 1)

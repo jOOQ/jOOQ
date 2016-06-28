@@ -5410,7 +5410,7 @@ create.alterSequence(S_AUTHOR_ID).restartWith(n).execute();]]></java>
 </html><code-pair>
 <sql><![CDATA[CREATE TABLE AUTHOR (
   ID INT,
-  FIRST_NAME VARCHAR(50),
+  FIRST_NAME VARCHAR(50) NOT NULL,
   LAST_NAME VARCHAR(50)
 );
 
@@ -5426,7 +5426,7 @@ WHERE 50 < (
 );]]></sql>
 <java><![CDATA[create.createTable(AUTHOR)
       .column(AUTHOR.ID, SQLDataType.INTEGER)
-      .column(AUTHOR.FIRST_NAME, SQLDataType.VARCHAR.length(50))
+      .column(AUTHOR.FIRST_NAME, SQLDataType.VARCHAR.length(50).nullable(false))
       .column(AUTHOR_LAST_NAME, SQLDataType.VARCHAR.length(50))
       .execute();
 

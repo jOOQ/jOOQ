@@ -42,6 +42,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.one;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -51,31 +52,43 @@ import org.jooq.Field;
  */
 final class Position extends AbstractFunction<Integer> {
 
-    private static final long   serialVersionUID = 3544690069533526544L;
+    private static final long             serialVersionUID = 3544690069533526544L;
 
-    private final Field<String> search;
-    private final Field<?>      in;
+    private final Field<String>           search;
+    private final Field<String>           in;
+    private final Field<? extends Number> startIndex;
 
-    Position(Field<String> search, Field<?> in) {
-        super("position", SQLDataType.INTEGER, search, in);
+    Position(Field<String> search, Field<String> in) {
+        this(search, in, null);
+    }
+
+    Position(Field<String> search, Field<String> in, Field<? extends Number> startIndex) {
+        super("position", SQLDataType.INTEGER, search, in, startIndex);
 
         this.search = search;
         this.in = in;
+        this.startIndex = startIndex;
     }
 
     @Override
     final Field<Integer> getFunction0(Configuration configuration) {
-        switch (configuration.dialect().family()) {
-
-
-
-            case DERBY:
-                return field("{locate}({0}, {1})", SQLDataType.INTEGER, search, in);
+        if (startIndex != null)
+            switch (configuration.family()) {
 
 
 
 
 
+                default:
+                    return DSL.position(DSL.substring(in, startIndex), search).add(startIndex).sub(one());
+            }
+        else
+            switch (configuration.family()) {
+
+
+
+                case DERBY:
+                    return field("{locate}({0}, {1})", SQLDataType.INTEGER, search, in);
 
 
 
@@ -85,11 +98,16 @@ final class Position extends AbstractFunction<Integer> {
 
 
 
-            case SQLITE:
-                return field("{instr}({0}, {1})", SQLDataType.INTEGER, in, search);
 
-            default:
-                return field("{position}({0} {in} {1})", SQLDataType.INTEGER, search, in);
-        }
+
+
+
+
+                case SQLITE:
+                    return field("{instr}({0}, {1})", SQLDataType.INTEGER, in, search);
+
+                default:
+                    return field("{position}({0} {in} {1})", SQLDataType.INTEGER, search, in);
+            }
     }
 }

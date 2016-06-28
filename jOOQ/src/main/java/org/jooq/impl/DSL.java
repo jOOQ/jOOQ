@@ -10780,6 +10780,96 @@ public class DSL {
     }
 
     /**
+     * Get the position(in, search, startindex) function.
+     *
+     * @see #position(Field, Field, Field)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> position(String in, String search, int startIndex) {
+        return position(Tools.field(in, String.class), Tools.field(search, String.class), Tools.field(startIndex));
+    }
+
+    /**
+     * Get the position(in, search, startindex) function.
+     *
+     * @see #position(Field, Field, Field)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> position(String in, Field<String> search, int startIndex) {
+        return position(Tools.field(in, String.class), nullSafe(search), Tools.field(startIndex));
+    }
+
+    /**
+     * Get the position(in, search, startindex) function.
+     *
+     * @see #position(Field, Field)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> position(Field<String> in, String search, int startIndex) {
+        return position(nullSafe(in), Tools.field(search, String.class), Tools.field(startIndex));
+    }
+
+    /**
+     * Get the position(in, search, startindex) function.
+     * <p>
+     * This renders the position or any equivalent function:
+     * <code><pre>position([search] in [in]) or
+     * locate([in], [search]) or
+     * locate([search], [in]) or
+     * instr([in], [search]) or
+     * charindex([search], [in])</pre></code>
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> position(Field<String> in, Field<String> search, int startIndex) {
+        return position(nullSafe(search), nullSafe(in), Tools.field(startIndex));
+    }
+
+    /**
+     * Get the position(in, search, startindex) function.
+     *
+     * @see #position(Field, Field, Field)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> position(String in, String search, Field<? extends Number> startIndex) {
+        return position(Tools.field(in, String.class), Tools.field(search, String.class), nullSafe(startIndex));
+    }
+
+    /**
+     * Get the position(in, search, startindex) function.
+     *
+     * @see #position(Field, Field, Field)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> position(String in, Field<String> search, Field<? extends Number> startIndex) {
+        return position(Tools.field(in, String.class), nullSafe(search), nullSafe(startIndex));
+    }
+
+    /**
+     * Get the position(in, search, startindex) function.
+     *
+     * @see #position(Field, Field)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> position(Field<String> in, String search, Field<? extends Number> startIndex) {
+        return position(nullSafe(in), Tools.field(search, String.class), nullSafe(startIndex));
+    }
+
+    /**
+     * Get the position(in, search, startindex) function.
+     * <p>
+     * This renders the position or any equivalent function:
+     * <code><pre>position([search] in [in]) or
+     * locate([in], [search]) or
+     * locate([search], [in]) or
+     * instr([in], [search]) or
+     * charindex([search], [in])</pre></code>
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Integer> position(Field<String> in, Field<String> search, Field<? extends Number> startIndex) {
+        return new Position(nullSafe(search), nullSafe(in), nullSafe(startIndex));
+    }
+
+    /**
      * Get the ascii(field) function.
      *
      * @see #ascii(Field)

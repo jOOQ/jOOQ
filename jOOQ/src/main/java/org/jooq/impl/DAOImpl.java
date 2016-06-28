@@ -44,6 +44,7 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.using;
+import static org.jooq.impl.Tools.EMPTY_RECORD;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -371,7 +372,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
 
         // [#2573] Composite key T types are of type Record[N]
         else {
-            return row(pk).in(ids.toArray(new Record[0]));
+            return row(pk).in(ids.toArray(EMPTY_RECORD));
         }
     }
 

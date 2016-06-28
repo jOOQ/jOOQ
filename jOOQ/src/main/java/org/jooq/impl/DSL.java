@@ -71,6 +71,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.impl.Term.ROW_NUMBER;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.combine;
 import static org.jooq.impl.Tools.configuration;
 
@@ -9726,7 +9727,7 @@ public class DSL {
      */
     @Support
     public static <Z, T> Field<Z> decode(T value, T search, Z result, Object... more) {
-        return decode(Tools.field(value), Tools.field(search), Tools.field(result), Tools.fields(more).toArray(new Field[0]));
+        return decode(Tools.field(value), Tools.field(search), Tools.field(result), Tools.fields(more).toArray(EMPTY_FIELD));
     }
 
     /**
@@ -9738,7 +9739,7 @@ public class DSL {
      */
     @Support
     public static <Z, T> Field<Z> decode(Field<T> value, Field<T> search, Field<Z> result) {
-        return decode(nullSafe(value), nullSafe(search), nullSafe(result), new Field[0]);
+        return decode(nullSafe(value), nullSafe(search), nullSafe(result), EMPTY_FIELD);
     }
 
     /**
@@ -10047,7 +10048,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> coalesce(T value, T... values) {
-        return coalesce0(Tools.field(value), Tools.fields(values).toArray(new Field[0]));
+        return coalesce0(Tools.field(value), Tools.fields(values).toArray(EMPTY_FIELD));
     }
 
     /**
@@ -10826,7 +10827,7 @@ public class DSL {
      */
     @Support
     public static Field<String> concat(String... values) {
-        return concat(Tools.fields(values).toArray(new Field[0]));
+        return concat(Tools.fields(values).toArray(EMPTY_FIELD));
     }
 
     /**
@@ -12527,7 +12528,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> greatest(T value, T... values) {
-        return greatest(Tools.field(value), Tools.fields(values).toArray(new Field[0]));
+        return greatest(Tools.field(value), Tools.fields(values).toArray(EMPTY_FIELD));
     }
 
     /**
@@ -12557,7 +12558,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> least(T value, T... values) {
-        return least(Tools.field(value), Tools.fields(values).toArray(new Field[0]));
+        return least(Tools.field(value), Tools.fields(values).toArray(EMPTY_FIELD));
     }
 
     /**
@@ -16576,7 +16577,7 @@ public class DSL {
      */
     @Support
     public static RowN row(Object... values) {
-        return row(Tools.fields(values).toArray(new Field[0]));
+        return row(Tools.fields(values).toArray(EMPTY_FIELD));
     }
 
 // [jooq-tools] START [row-expression]
@@ -17738,7 +17739,7 @@ public class DSL {
      */
     protected static Field<?>[] nullSafe(Field<?>... fields) {
         if (fields == null)
-            return new Field[0];
+            return EMPTY_FIELD;
 
         Field<?>[] result = new Field<?>[fields.length];
 

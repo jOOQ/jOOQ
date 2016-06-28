@@ -60,6 +60,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.DataKey.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 
 import java.util.ArrayList;
@@ -197,7 +198,7 @@ final class RowSubqueryCondition extends AbstractCondition {
             }
 
             Select<Record> subselect =
-            select().from(right.asTable(table, names.toArray(new String[0])))
+            select().from(right.asTable(table, names.toArray(EMPTY_STRING)))
                     .where(condition);
 
             switch (comparator) {

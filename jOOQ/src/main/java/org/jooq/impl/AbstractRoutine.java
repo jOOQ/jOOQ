@@ -53,6 +53,8 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.consumeExceptions;
 import static org.jooq.impl.Tools.settings;
 
@@ -981,7 +983,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             names.add(pkg.getName());
         }
         names.add(name);
-        return (AggregateFunction<T>) function(DSL.name(names.toArray(new String[0])), type, array);
+        return (AggregateFunction<T>) function(DSL.name(names.toArray(EMPTY_STRING)), type, array);
     }
 
     /**
@@ -1183,7 +1185,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                     fields.add(getInValues().get(parameter));
             }
 
-            Field<T> result = function(local.render(), getDataType(), fields.toArray(new Field[0]));
+            Field<T> result = function(local.render(), getDataType(), fields.toArray(EMPTY_FIELD));
 
 
             // [#3592] Decrease SQL -> PL/SQL context switches with Oracle Scalar Subquery Caching

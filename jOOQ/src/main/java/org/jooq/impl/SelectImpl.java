@@ -44,6 +44,7 @@ import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 
 import java.sql.ResultSet;
 import java.util.Arrays;

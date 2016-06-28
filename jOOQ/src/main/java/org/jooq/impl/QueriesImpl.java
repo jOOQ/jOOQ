@@ -40,6 +40,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.EMPTY_QUERY;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.stream.Stream;
@@ -60,7 +62,7 @@ final class QueriesImpl implements Queries {
 
     @Override
     public final Query[] queries() {
-        return queries.toArray(new Query[0]);
+        return queries.toArray(EMPTY_QUERY);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

@@ -41,6 +41,7 @@
 package org.jooq.impl;
 
 import static org.jooq.Converters.inverse;
+import static org.jooq.impl.Tools.EMPTY_CLASS;
 import static org.jooq.tools.StringUtils.rightPad;
 
 import java.util.ArrayList;
@@ -185,7 +186,7 @@ public class DefaultConverterProvider implements ConverterProvider {
             synchronized (paths) {
                 StringBuilder sb = new StringBuilder();
 
-                Class<?>[] classes = vertices.toArray(new Class[0]);
+                Class<?>[] classes = vertices.toArray(EMPTY_CLASS);
                 Arrays.sort(classes, new Comparator<Class<?>>() {
                     @Override
                     public int compare(Class<?> o1, Class<?> o2) {

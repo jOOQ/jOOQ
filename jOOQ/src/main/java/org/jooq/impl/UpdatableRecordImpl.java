@@ -50,6 +50,7 @@ import static org.jooq.impl.RecordDelegate.RecordLifecycleType.DELETE;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.REFRESH;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.STORE;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.UPDATE;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.settings;
 
 import java.math.BigInteger;
@@ -142,7 +143,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
     @Override
     public final int store(Collection<? extends Field<?>> storeFields) {
-        return store(storeFields.toArray(new Field[0]));
+        return store(storeFields.toArray(EMPTY_FIELD));
     }
 
     @Override
@@ -157,7 +158,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
     @Override
     public final int update(Collection<? extends Field<?>> storeFields) {
-        return update(storeFields.toArray(new Field[0]));
+        return update(storeFields.toArray(EMPTY_FIELD));
     }
 
     private final int store0(Field<?>[] storeFields) {
@@ -345,7 +346,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
     @Override
     public final void refresh(Collection<? extends Field<?>> refreshFields) {
-        refresh(refreshFields.toArray(new Field[0]));
+        refresh(refreshFields.toArray(EMPTY_FIELD));
     }
 
     @Override

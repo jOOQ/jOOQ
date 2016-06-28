@@ -42,6 +42,7 @@ package org.jooq.impl;
 
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executeStaticStatements;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.dataTypes;
 import static org.jooq.impl.Tools.fields;
 import static org.jooq.impl.Tools.visitAll;
@@ -60,7 +61,6 @@ import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
-import org.jooq.Field;
 import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.exception.ControlFlowSignal;
@@ -203,7 +203,7 @@ final class BatchSingle implements BatchBindStep {
         for (Entry<String, Param<?>> entry : collector.resultList)
             params.add(entry.getValue());
 
-        DataType<?>[] paramTypes = dataTypes(params.toArray(new Field[0]));
+        DataType<?>[] paramTypes = dataTypes(params.toArray(EMPTY_FIELD));
 
         try {
             listener.renderStart(ctx);

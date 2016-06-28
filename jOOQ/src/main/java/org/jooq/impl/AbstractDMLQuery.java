@@ -49,6 +49,7 @@ import static java.util.Arrays.asList;
 import static org.jooq.conf.RenderNameStyle.LOWER;
 import static org.jooq.conf.RenderNameStyle.UPPER;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.fieldArray;
 import static org.jooq.impl.Tools.unqualify;
 import static org.jooq.util.sqlite.SQLiteDSL.rowid;
@@ -312,7 +313,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                             names.add(field.getName());
                     }
 
-                    ctx.statement(connection.prepareStatement(ctx.sql(), names.toArray(new String[0])));
+                    ctx.statement(connection.prepareStatement(ctx.sql(), names.toArray(EMPTY_STRING)));
                     return;
                 }
             }

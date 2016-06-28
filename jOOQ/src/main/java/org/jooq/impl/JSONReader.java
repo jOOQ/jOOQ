@@ -40,6 +40,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.EMPTY_STRING;
+
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.IOException;
@@ -108,7 +110,7 @@ final class JSONReader implements Closeable {
                 String asString = value == null ? null : String.valueOf(value);
                 v.add(asString);
             }
-            records.add(v.toArray(new String[0]));
+            records.add(v.toArray(EMPTY_STRING));
         }
 
         return records;

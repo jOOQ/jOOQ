@@ -46,6 +46,8 @@ import static java.util.Arrays.asList;
 // ...
 // ...
 import static org.jooq.conf.ParamType.INDEXED;
+import static org.jooq.impl.Tools.EMPTY_CLAUSE;
+import static org.jooq.impl.Tools.EMPTY_QUERYPART;
 import static org.jooq.impl.Tools.DataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION;
 
 import java.sql.PreparedStatement;
@@ -293,7 +295,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
         @Override
         public final Clause[] clauses() {
-            return visitClauses.toArray(new Clause[0]);
+            return visitClauses.toArray(EMPTY_CLAUSE);
         }
 
         @Override
@@ -314,7 +316,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
         @Override
         public final QueryPart[] queryParts() {
-            return visitParts.toArray(new QueryPart[0]);
+            return visitParts.toArray(EMPTY_QUERYPART);
         }
 
         @Override

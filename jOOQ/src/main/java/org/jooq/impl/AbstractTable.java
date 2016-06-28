@@ -57,6 +57,7 @@ import static org.jooq.JoinType.STRAIGHT_JOIN;
 // ...
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;

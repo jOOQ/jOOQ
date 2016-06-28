@@ -62,6 +62,8 @@ import static org.jooq.impl.ExpressionOperator.ADD;
 import static org.jooq.impl.ExpressionOperator.DIVIDE;
 import static org.jooq.impl.ExpressionOperator.MULTIPLY;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.tools.Convert.FALSE_VALUES;
 import static org.jooq.tools.Convert.TRUE_VALUES;
 import static org.jooq.tools.StringUtils.defaultString;
@@ -644,7 +646,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         Class<?> type = getType();
 
         if (type == String.class)
-            return ((Field<String>) this).in(Tools.inline(TRUE_VALUES.toArray(new String[0])));
+            return ((Field<String>) this).in(Tools.inline(TRUE_VALUES.toArray(EMPTY_STRING)));
         else if (Number.class.isAssignableFrom(type))
             return ((Field<Number>) this).equal(inline((Number) getDataType().convert(1)));
         else if (Boolean.class.isAssignableFrom(type))
@@ -659,13 +661,13 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         Class<?> type = getType();
 
         if (type == String.class)
-            return ((Field<String>) this).in(Tools.inline(FALSE_VALUES.toArray(new String[0])));
+            return ((Field<String>) this).in(Tools.inline(FALSE_VALUES.toArray(EMPTY_STRING)));
         else if (Number.class.isAssignableFrom(type))
             return ((Field<Number>) this).equal(inline((Number) getDataType().convert(0)));
         else if (Boolean.class.isAssignableFrom(type))
             return ((Field<Boolean>) this).equal(inline(false));
         else
-            return cast(String.class).in(Tools.inline(FALSE_VALUES.toArray(new String[0])));
+            return cast(String.class).in(Tools.inline(FALSE_VALUES.toArray(EMPTY_STRING)));
     }
 
     @Override
@@ -822,7 +824,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         if (isAccidentalCollection(values))
             return in((Collection<?>) values[0]);
 
-        return in(Tools.fields(values, this).toArray(new Field<?>[0]));
+        return in(Tools.fields(values, this).toArray(EMPTY_FIELD));
     }
 
     @Override
@@ -837,7 +839,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         for (Object value : values)
             fields.add(Tools.field(value, this));
 
-        return in(fields.toArray(new Field<?>[0]));
+        return in(fields.toArray(EMPTY_FIELD));
     }
 
     @Override
@@ -862,7 +864,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         if (isAccidentalCollection(values))
             return notIn((Collection<?>) values[0]);
 
-        return notIn(Tools.fields(values, this).toArray(new Field<?>[0]));
+        return notIn(Tools.fields(values, this).toArray(EMPTY_FIELD));
     }
 
     @Override
@@ -877,7 +879,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         for (Object value : values)
             fields.add(Tools.field(value, this));
 
-        return notIn(fields.toArray(new Field<?>[0]));
+        return notIn(fields.toArray(EMPTY_FIELD));
     }
 
     @Override
@@ -1787,7 +1789,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     @Override
     @Deprecated
     public final Field<String> concat(String... values) {
-        return DSL.concat(Tools.combine(this, Tools.fields(values).toArray(new Field[0])));
+        return DSL.concat(Tools.combine(this, Tools.fields(values).toArray(EMPTY_FIELD)));
     }
 
     @Override
@@ -1850,7 +1852,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     @SafeVarargs
 
     public final Field<T> greatest(T... others) {
-        return DSL.greatest(this, Tools.fields(others).toArray(new Field[0]));
+        return DSL.greatest(this, Tools.fields(others).toArray(EMPTY_FIELD));
     }
 
     @Override
@@ -1865,7 +1867,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     @SafeVarargs
 
     public final Field<T> least(T... others) {
-        return DSL.least(this, Tools.fields(others).toArray(new Field[0]));
+        return DSL.least(this, Tools.fields(others).toArray(EMPTY_FIELD));
     }
 
     @Override
@@ -1940,7 +1942,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     @SafeVarargs
 
     public final Field<T> coalesce(T option, T... options) {
-        return DSL.coalesce(this, Tools.combine(Tools.field(option), Tools.fields(options).toArray(new Field[0])));
+        return DSL.coalesce(this, Tools.combine(Tools.field(option), Tools.fields(options).toArray(EMPTY_FIELD)));
     }
 
     @Override

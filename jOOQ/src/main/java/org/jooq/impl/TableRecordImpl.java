@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.impl.RecordDelegate.delegate;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.INSERT;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.indexOrFail;
 import static org.jooq.impl.Tools.DataKey.DATA_OMIT_RETURNING_CLAUSE;
 
@@ -141,7 +142,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
 
     @Override
     public final int insert(Collection<? extends Field<?>> storeFields) {
-        return insert(storeFields.toArray(new Field[0]));
+        return insert(storeFields.toArray(EMPTY_FIELD));
     }
 
     final int storeInsert(final Field<?>[] storeFields) {
@@ -215,7 +216,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
 
             // [#1859] In some databases, not all fields can be fetched via getGeneratedKeys()
             if (asList(DERBY, H2, MARIADB, MYSQL).contains(configuration().family()) && this instanceof UpdatableRecord)
-                ((UpdatableRecord<?>) this).refresh(key.toArray(new Field[0]));
+                ((UpdatableRecord<?>) this).refresh(key.toArray(EMPTY_FIELD));
         }
     }
 

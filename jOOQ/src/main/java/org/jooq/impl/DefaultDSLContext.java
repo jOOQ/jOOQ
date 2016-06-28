@@ -50,6 +50,9 @@ import static org.jooq.impl.DSL.sequence;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.trueCondition;
+import static org.jooq.impl.Tools.EMPTY_QUERY;
+import static org.jooq.impl.Tools.EMPTY_TABLE_RECORD;
+import static org.jooq.impl.Tools.EMPTY_UPDATABLE_RECORD;
 import static org.jooq.impl.Tools.blocking;
 import static org.jooq.impl.Tools.list;
 import static org.jooq.tools.Convert.convert;
@@ -2272,7 +2275,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Batch batch(Collection<? extends Query> queries) {
-        return batch(queries.toArray(new Query[0]));
+        return batch(queries.toArray(EMPTY_QUERY));
     }
 
     @Override
@@ -2302,7 +2305,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Batch batchStore(Collection<? extends UpdatableRecord<?>> records) {
-        return batchStore(records.toArray(new UpdatableRecord[0]));
+        return batchStore(records.toArray(EMPTY_UPDATABLE_RECORD));
     }
 
     @Override
@@ -2312,7 +2315,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Batch batchInsert(Collection<? extends TableRecord<?>> records) {
-        return batchInsert(records.toArray(new TableRecord[0]));
+        return batchInsert(records.toArray(EMPTY_TABLE_RECORD));
     }
 
     @Override
@@ -2322,7 +2325,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Batch batchUpdate(Collection<? extends UpdatableRecord<?>> records) {
-        return batchUpdate(records.toArray(new UpdatableRecord[0]));
+        return batchUpdate(records.toArray(EMPTY_UPDATABLE_RECORD));
     }
 
     @Override
@@ -2332,7 +2335,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Batch batchDelete(Collection<? extends UpdatableRecord<?>> records) {
-        return batchDelete(records.toArray(new UpdatableRecord[0]));
+        return batchDelete(records.toArray(EMPTY_UPDATABLE_RECORD));
     }
 
     // -------------------------------------------------------------------------

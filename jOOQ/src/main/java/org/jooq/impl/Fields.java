@@ -41,6 +41,7 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.indexOrFail;
 
 import java.sql.SQLWarning;
@@ -74,7 +75,7 @@ final class Fields<R extends Record> extends AbstractQueryPart implements Record
     }
 
     Fields(Collection<? extends Field<?>> fields) {
-        this.fields = fields.toArray(new Field[0]);
+        this.fields = fields.toArray(EMPTY_FIELD);
     }
 
     @Override

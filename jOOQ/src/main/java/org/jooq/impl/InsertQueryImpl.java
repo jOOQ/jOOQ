@@ -54,6 +54,7 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.aliasedFields;
 import static org.jooq.impl.Tools.fieldNames;
 import static org.jooq.impl.Tools.DataKey.DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST;
@@ -439,11 +440,11 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             //         re-used.
 
             Select<Record> rows = null;
-            String[] aliases = fieldNames(insertMaps.getMap().keySet().toArray(new Field[0]));
+            String[] aliases = fieldNames(insertMaps.getMap().keySet().toArray(EMPTY_FIELD));
 
             for (FieldMapForInsert map : insertMaps.insertMaps) {
                 Select<Record> row =
-                    select(aliasedFields(map.values().toArray(new Field[0]), aliases))
+                    select(aliasedFields(map.values().toArray(EMPTY_FIELD), aliases))
                     .whereNotExists(
                         selectOne()
                         .from(table)

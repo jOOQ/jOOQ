@@ -41,6 +41,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
+import static org.jooq.impl.Tools.EMPTY_EXECUTE_LISTENER;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,7 +97,7 @@ final class ExecuteListeners implements ExecuteListener {
             result.add(new StopWatchListener());
         }
 
-        return result.toArray(new ExecuteListener[0]);
+        return result.toArray(EMPTY_EXECUTE_LISTENER);
     }
 
     @Override

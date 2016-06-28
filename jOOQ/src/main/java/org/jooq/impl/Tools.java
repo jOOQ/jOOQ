@@ -135,6 +135,7 @@ import org.jooq.ExecuteListener;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Param;
+import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RecordType;
@@ -148,6 +149,7 @@ import org.jooq.Schema;
 import org.jooq.SelectField;
 import org.jooq.SortField;
 import org.jooq.Table;
+import org.jooq.TableRecord;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
@@ -173,7 +175,24 @@ import org.jooq.types.UShort;
  */
 final class Tools {
 
-    static final JooqLogger log = JooqLogger.getLogger(Tools.class);
+    static final JooqLogger           log                    = JooqLogger.getLogger(Tools.class);
+
+    // ------------------------------------------------------------------------
+    // Empty arrays for use with Collection.toArray()
+    // ------------------------------------------------------------------------
+
+    static final Class<?>[]           EMPTY_CLASS            = {};
+    static final Clause[]             EMPTY_CLAUSE           = {};
+    static final Collection<?>[]      EMPTY_COLLECTION       = {};
+    static final ExecuteListener[]    EMPTY_EXECUTE_LISTENER = {};
+    static final Field<?>[]           EMPTY_FIELD            = {};
+    static final Param<?>[]           EMPTY_PARAM            = {};
+    static final Query[]              EMPTY_QUERY            = {};
+    static final QueryPart[]          EMPTY_QUERYPART        = {};
+    static final Record[]             EMPTY_RECORD           = {};
+    static final String[]             EMPTY_STRING           = {};
+    static final TableRecord<?>[]     EMPTY_TABLE_RECORD     = {};
+    static final UpdatableRecord<?>[] EMPTY_UPDATABLE_RECORD = {};
 
     // ------------------------------------------------------------------------
     // Some constants for use with Context.data()
@@ -639,7 +658,7 @@ final class Tools {
     }
 
     static final Field<?>[] fieldArray(Collection<? extends Field<?>> fields) {
-        return fields == null ? null : fields.toArray(new Field[0]);
+        return fields == null ? null : fields.toArray(EMPTY_FIELD);
     }
 
     // ------------------------------------------------------------------------
@@ -803,7 +822,7 @@ final class Tools {
     }
 
     static final Field<?>[] fieldsByName(Collection<String> fieldNames) {
-        return fieldsByName(null, fieldNames.toArray(new String[0]));
+        return fieldsByName(null, fieldNames.toArray(EMPTY_STRING));
     }
 
     static final Field<?>[] fieldsByName(String[] fieldNames) {
@@ -811,7 +830,7 @@ final class Tools {
     }
 
     static final Field<?>[] fieldsByName(String tableName, Collection<String> fieldNames) {
-        return fieldsByName(tableName, fieldNames.toArray(new String[0]));
+        return fieldsByName(tableName, fieldNames.toArray(EMPTY_STRING));
     }
 
     static final Field<?>[] fieldsByName(String tableName, String[] fieldNames) {
@@ -3000,7 +3019,7 @@ final class Tools {
                     result.add(fieldNames(col.size()));
             }
 
-            result.add(col.toArray(new String[0]));
+            result.add(col.toArray(EMPTY_STRING));
         }
 
         return result;

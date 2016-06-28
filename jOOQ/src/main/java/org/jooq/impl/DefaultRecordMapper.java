@@ -43,6 +43,7 @@ package org.jooq.impl;
 import static java.util.Collections.nCopies;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.getAnnotatedGetter;
 import static org.jooq.impl.Tools.getAnnotatedMembers;
 import static org.jooq.impl.Tools.getAnnotatedSetters;
@@ -552,7 +553,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
                         Field<?>[] f = nestedFields.get(prefix);
                         if (f == null) {
-                            f = nCopies(fields.length, field("")).toArray(new Field[0]);
+                            f = nCopies(fields.length, field("")).toArray(EMPTY_FIELD);
                             nestedFields.put(prefix, f);
                         }
 

@@ -57,6 +57,7 @@ import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.nullSafe;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.DataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 
 import java.util.ArrayList;
@@ -711,10 +712,10 @@ implements
         // syntax, in case of which, the USING() was not added
         if (using == null) {
             upsertStyle = true;
-            getUpsertValues().addAll(Tools.fields(values, getUpsertFields().toArray(new Field[0])));
+            getUpsertValues().addAll(Tools.fields(values, getUpsertFields().toArray(EMPTY_FIELD)));
         }
         else {
-            Field<?>[] fields = notMatchedInsert.keySet().toArray(new Field[0]);
+            Field<?>[] fields = notMatchedInsert.keySet().toArray(EMPTY_FIELD);
             notMatchedInsert.putValues(Tools.fields(values, fields));
         }
 

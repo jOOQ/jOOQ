@@ -40,6 +40,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.EMPTY_FIELD;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -541,7 +543,7 @@ final class LoaderImpl<R extends Record> implements
 
     @Override
     public final LoaderImpl<R> fields(Collection<? extends Field<?>> f) {
-        return fields(f.toArray(new Field[0]));
+        return fields(f.toArray(EMPTY_FIELD));
     }
 
     @Override

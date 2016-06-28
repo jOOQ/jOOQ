@@ -43,6 +43,7 @@ package org.jooq.impl;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.using;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -201,7 +202,7 @@ implements
                     .select(aliasedGroupingFields)
                     .select(aggregationSelects)
                     .from(pivot)
-                    .where(pivot.field(on).in(in.toArray(new Field[0])))
+                    .where(pivot.field(on).in(in.toArray(EMPTY_FIELD)))
                     .groupBy(aliasedGroupingFields)
                     .asTable();
 

@@ -247,7 +247,9 @@ public class JavaGenerator extends AbstractGenerator {
             + ((!generatePojos && generateDaos) ? " (forced to true because of <daos/>)" :
               ((!generatePojos && generateImmutablePojos) ? " (forced to true because of <immutablePojos/>)" : "")));
         log.info("  immutable pojos", generateImmutablePojos());
-        log.info("  interfaces", generateInterfaces());
+        log.info("  interfaces", generateInterfaces()
+            + ((!generateInterfaces && generateImmutableInterfaces) ? " (forced to true because of <immutableInterfaces/>)" : ""));
+        log.info("  immutable interfaces", generateInterfaces());
         log.info("  daos", generateDaos());
         log.info("  relations", generateRelations()
             + ((!generateRelations && generateDaos) ? " (forced to true because of <daos/>)" : ""));
@@ -265,9 +267,6 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("");
         log.info("Generation remarks");
         log.info("----------------------------------------------------------");
-
-        if (generateImmutablePojos && generateInterfaces)
-            log.info("  immutable pojos", "Immutable POJOs do not have any setters. Hence, setters are also missing from interfaces");
 
         if (contains(db.getIncludes(), ',') && db.getIncluded().isEmpty())
             log.info("  includes", "The <includes/> element takes a Java regular expression, not a comma-separated list. This might be why no objects were included.");
@@ -957,7 +956,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.tab(1).println("}");
                 }
                 else {
-                    out.tab(1).overrideIf(generateInterfaces() && !generateImmutablePojos() && !isUDT);
+                    out.tab(1).overrideIf(generateInterfaces() && !generateImmutableInterfaces() && !isUDT);
                     out.tab(1).println("public %s %s(%s value) {", setterReturnType, setter, varargsIfArray(type));
                     out.tab(2).println("set(%s, value);", i);
                     if (fluentSetters())
@@ -967,7 +966,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
 
             // [#3117] Avoid covariant setters for UDTs when generating interfaces
-            if (generateInterfaces() && !generateImmutablePojos() && (isUDT || isArray)) {
+            if (generateInterfaces() && !generateImmutableInterfaces() && (isUDT || isArray)) {
                 final String columnType = out.ref(getJavaType(column.getType(), Mode.RECORD));
                 final String columnTypeInterface = out.ref(getJavaType(column.getType(), Mode.INTERFACE));
 
@@ -1220,7 +1219,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
 
-        if (generateInterfaces() && !generateImmutablePojos()) {
+        if (generateInterfaces()) {
             printFromAndInto(out, tableOrUdt);
         }
 
@@ -1385,7 +1384,7 @@ public class JavaGenerator extends AbstractGenerator {
             final String type = out.ref(getJavaType(column.getType(), Mode.INTERFACE));
             final String name = column.getQualifiedOutputName();
 
-            if (!generateImmutablePojos()) {
+            if (!generateImmutableInterfaces()) {
                 out.tab(1).javadoc("Setter for <code>%s</code>.%s", name, defaultIfBlank(" " + comment, ""));
 
                 if (scala)
@@ -1407,7 +1406,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.tab(1).println("public %s %s();", type, getter);
         }
 
-        if (!generateImmutablePojos()) {
+        if (!generateImmutableInterfaces()) {
             String local = getStrategy().getJavaClassName(tableOrUDT, Mode.INTERFACE);
             String qualified = out.ref(getStrategy().getFullJavaClassName(tableOrUDT, Mode.INTERFACE));
 
@@ -2757,7 +2756,7 @@ public class JavaGenerator extends AbstractGenerator {
                         out.tab(1).println("}");
                     }
                     else {
-                        out.tab(1).overrideIf(generateInterfaces() && !isUDT);
+                        out.tab(1).overrideIf(generateInterfaces() && !generateImmutableInterfaces() && !isUDT);
                         out.tab(1).println("public %s %s(%s %s) {", columnSetterReturnType, columnSetter, varargsIfArray(columnType), columnMember);
                         out.tab(2).println("this.%s = %s;", columnMember, columnMember);
                         if (fluentSetters())
@@ -3724,7 +3723,7 @@ public class JavaGenerator extends AbstractGenerator {
         String qualified = out.ref(getStrategy().getFullJavaClassName(tableOrUDT, Mode.INTERFACE));
 
         out.tab(1).header("FROM and INTO");
-        out.tab(1).overrideInherit();
+        out.tab(1).overrideInheritIf(generateInterfaces() && !generateImmutableInterfaces());
         out.tab(1).println("public void from(%s from) {", qualified);
 
         for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
@@ -3739,18 +3738,20 @@ public class JavaGenerator extends AbstractGenerator {
 
         out.tab(1).println("}");
 
-        if (scala) {
-        	out.tab(1).println("public <E extends %s> E into(E into) {", qualified);
-            out.tab(2).println("into.from(this)");
-            out.tab(2).println("return into");
-            out.tab(1).println("}");
-        }
-        else {
-            out.tab(1).overrideInherit();
-            out.tab(1).println("public <E extends %s> E into(E into) {", qualified);
-            out.tab(2).println("into.from(this);");
-            out.tab(2).println("return into;");
-            out.tab(1).println("}");
+        if (generateInterfaces() && !generateImmutableInterfaces()) {
+            if (scala) {
+            	out.tab(1).println("public <E extends %s> E into(E into) {", qualified);
+                out.tab(2).println("into.from(this)");
+                out.tab(2).println("return into");
+                out.tab(1).println("}");
+            }
+            else {
+                out.tab(1).overrideInherit();
+                out.tab(1).println("public <E extends %s> E into(E into) {", qualified);
+                out.tab(2).println("into.from(this);");
+                out.tab(2).println("return into;");
+                out.tab(1).println("}");
+            }
         }
     }
 

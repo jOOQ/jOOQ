@@ -163,6 +163,16 @@ public interface Generator {
     void setGenerateInterfaces(boolean generateInterfaces);
 
     /**
+     * Whether immutable interfaces should be generated in addition to records
+     */
+    boolean generateImmutableInterfaces();
+
+    /**
+     * Whether immutable interfaces should be generated in addition to records
+     */
+    void setGenerateImmutableInterfaces(boolean generateImmutableInterfaces);
+
+    /**
      * Whether DAO's should be generated in addition to pojos
      */
     boolean generateDaos();

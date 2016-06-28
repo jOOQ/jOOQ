@@ -64,6 +64,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generatePojosToString            = true;
     boolean                            generateImmutablePojos           = false;
     boolean                            generateInterfaces               = false;
+    boolean                            generateImmutableInterfaces      = false;
     boolean                            generateDaos                     = false;
     boolean                            generateJPAAnnotations           = false;
     boolean                            generateValidationAnnotations    = false;
@@ -217,12 +218,22 @@ abstract class AbstractGenerator implements Generator {
 
     @Override
     public boolean generateInterfaces() {
-        return generateInterfaces;
+        return generateInterfaces || generateImmutableInterfaces;
     }
 
     @Override
     public void setGenerateInterfaces(boolean generateInterfaces) {
         this.generateInterfaces = generateInterfaces;
+    }
+
+    @Override
+    public boolean generateImmutableInterfaces() {
+        return generateImmutableInterfaces || (generateInterfaces && generateImmutablePojos);
+    }
+
+    @Override
+    public void setGenerateImmutableInterfaces(boolean generateImmutableInterfaces) {
+        this.generateImmutableInterfaces = generateImmutableInterfaces;
     }
 
     @Override

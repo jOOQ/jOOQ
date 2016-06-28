@@ -54,6 +54,10 @@ import java.io.PrintWriter;
 public class TextWriter extends GeneratorWriter<TextWriter> {
 
     protected TextWriter(File file) {
-        super(file);
+        this(file, null);
+    }
+
+    protected TextWriter(File file, String encoding) {
+        super(file, encoding);
     }
 }

@@ -54,8 +54,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.lang.reflect.TypeVariable;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -207,31 +205,9 @@ public class JavaGenerator extends AbstractGenerator {
         this.database.setIncludeRelations(generateRelations());
         this.database.setTableValuedFunctions(generateTableValuedFunctions());
 
-        String url = "";
-        try {
-            Connection connection = database.getConnection();
-
-            if (connection != null)
-                url = connection.getMetaData().getURL();
-        }
-        catch (SQLException ignore) {}
-
-        log.info("License parameters");
-        log.info("----------------------------------------------------------");
-        log.info("  Thank you for using jOOQ and jOOQ's code generator");
+        logDatabaseParameters(db);
         log.info("");
-        log.info("Database parameters");
-        log.info("----------------------------------------------------------");
-        log.info("  dialect", database.getDialect());
-        log.info("  URL", url);
-        log.info("  target dir", getTargetDirectory());
-        log.info("  target package", getTargetPackage());
-        log.info("  includes", Arrays.asList(database.getIncludes()));
-        log.info("  excludes", Arrays.asList(database.getExcludes()));
-        log.info("  includeExcludeColumns", database.getIncludeExcludeColumns());
-        log.info("----------------------------------------------------------");
-        log.info("");
-        log.info("DefaultGenerator parameters");
+        log.info("JavaGenerator parameters");
         log.info("----------------------------------------------------------");
         log.info("  strategy", strategy.delegate.getClass());
         log.info("  deprecated", generateDeprecated());
@@ -265,14 +241,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         log.info("");
-        log.info("Generation remarks");
-        log.info("----------------------------------------------------------");
-
-        if (contains(db.getIncludes(), ',') && db.getIncluded().isEmpty())
-            log.info("  includes", "The <includes/> element takes a Java regular expression, not a comma-separated list. This might be why no objects were included.");
-
-        if (contains(db.getExcludes(), ',') && db.getExcluded().isEmpty())
-            log.info("  excludes", "The <excludes/> element takes a Java regular expression, not a comma-separated list. This might be why no objects were excluded.");
+        logGenerationRemarks(db);
 
         log.info("");
         log.info("----------------------------------------------------------");
@@ -289,17 +258,6 @@ public class JavaGenerator extends AbstractGenerator {
                 throw new GeneratorException("Error generating code for catalog " + catalog, e);
             }
         }
-    }
-
-    private boolean contains(String[] array, char c) {
-        if (array == null)
-            return false;
-
-        for (String string : array)
-            if (string != null && string.indexOf(c) > -1)
-                return true;
-
-        return false;
     }
 
     private void generate(CatalogDefinition catalog) {

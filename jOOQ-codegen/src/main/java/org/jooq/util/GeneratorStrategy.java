@@ -329,6 +329,12 @@ public interface GeneratorStrategy {
     File getFile(Definition definition, Mode mode);
 
     /**
+     * @return The Java class file name representing this object, e.g.
+     *         [C:\org\jooq\generated\fileName]
+     */
+    File getFile(String fileName);
+
+    /**
      * @return The overload suffix to be applied when generating overloaded
      *         routine artefacts, e.g.
      *         <code>"_OverloadIndex_" + overloadIndex</code>

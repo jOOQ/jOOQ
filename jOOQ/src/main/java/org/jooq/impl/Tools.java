@@ -443,6 +443,25 @@ final class Tools {
         "{ts "
     };
 
+    /**
+     * "Suffixes" that are placed behind a "?" character to form an operator,
+     * rather than a JDBC bind variable. This is particularly useful to prevent
+     * parsing PostgreSQL operators as bind variables, as can be seen here:
+     * <a href=
+     * "https://www.postgresql.org/docs/9.5/static/functions-json.html">https://www.postgresql.org/docs/9.5/static/functions-json.html</a>
+     * <p>
+     * Known PostgreSQL JSON operators:
+     * <ul>
+     * <li>?|</li>
+     * <li>?&</li>
+     * </ul>
+     */
+    private static final String[] NON_BIND_VARIABLE_SUFFIXES                   = {
+        "?",
+        "|",
+        "&"
+    };
+
     // ------------------------------------------------------------------------
     // XXX: Record constructors and related methods
     // ------------------------------------------------------------------------
@@ -1530,6 +1549,7 @@ final class Tools {
         // [#3630] Depending on this setting, we need to consider backslashes as escape characters within string literals.
         boolean needsBackslashEscaping = needsBackslashEscaping(ctx.configuration());
 
+        characterLoop:
         for (int i = 0; i < sqlChars.length; i++) {
 
             // [#1797] Skip content inside of single-line comments, e.g.
@@ -1652,7 +1672,20 @@ final class Tools {
                           && i + 1 < sqlChars.length && isJavaIdentifierPart(sqlChars[i + 1])
                           &&(i - 1 < 0               || sqlChars[i - 1] != ':')))) {
 
-                // [#4131] Consume the named bind variable
+                // [#5307] Consume PostgreSQL style operators. These aren't bind variables!
+                if (sqlChars[i] == '?' && i + 1 < sqlChars.length) {
+                    for (String suffix : NON_BIND_VARIABLE_SUFFIXES) {
+                        if (peek(sqlChars, i + 1, suffix)) {
+                            for (int j = i; i - j <= suffix.length(); i++)
+                                render.sql(sqlChars[i]);
+
+                            render.sql(sqlChars[i]);
+                            continue characterLoop;
+                        }
+                    }
+                }
+
+                    // [#4131] Consume the named bind variable
                 if (sqlChars[i] == ':')
                     while (++i < sqlChars.length && isJavaIdentifierPart(sqlChars[i]));
 

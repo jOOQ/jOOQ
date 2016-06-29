@@ -43,6 +43,7 @@ package org.jooq.impl;
 import static org.jooq.Clause.ALTER_VIEW;
 import static org.jooq.Clause.ALTER_VIEW_RENAME;
 import static org.jooq.Clause.ALTER_VIEW_VIEW;
+import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.impl.DSL.name;
 
 import org.jooq.AlterViewFinalStep;
@@ -110,7 +111,8 @@ final class AlterViewImpl extends AbstractQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         ctx.start(ALTER_VIEW_VIEW)
-           .keyword("alter view");
+           .keyword("alter").sql(' ')
+           .keyword(ctx.family() == HSQLDB ? "table" : "view");
 
         if (ifExists)
             ctx.sql(' ').keyword("if exists");

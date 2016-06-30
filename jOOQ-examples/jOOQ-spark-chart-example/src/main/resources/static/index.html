@@ -1,0 +1,312 @@
+
+<html>
+<head>
+<title>jOOQ Chart.js SparkJava Example</title>
+
+<!-- Everything is immediately more beautiful with Open Sans -->
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:100,200,300,400" rel="stylesheet" type="text/css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="Chart.js"></script>
+<script>
+// Global chart settings
+Chart.defaults.global.responsive = true;
+Chart.defaults.global.maintainAspectRatio = true;
+Chart.defaults.global.defaultFontFamily = "'Open Sans', sans-serif";
+
+// TODO (which means: never), rewrite this using Angular
+// TODO (which means: never), learn Angular and TypeScript
+$(document).ready(function() {
+    var red = [
+            'rgba(127,   0,   0, 1)',
+            'rgba(159,  63,  63, 1)',
+            'rgba(181, 127, 127, 1)',
+            'rgba(213, 181, 181, 1)',
+            'rgba(255, 255, 255, 1)'
+        ],
+        green = [
+            'rgba(  0, 127,   0, 1)',
+            'rgba( 63, 159,  63, 1)',
+            'rgba(127, 181, 127, 1)',
+            'rgba(181, 213, 181, 1)',
+            'rgba(255, 255, 255, 1)'
+        ],
+        blue = [
+            'rgba(  0,   0, 127, 1)',
+            'rgba( 63,  63, 159, 1)',
+            'rgba(127, 127, 181, 1)',
+            'rgba(181, 181, 213, 1)',
+            'rgba(255, 255, 255, 1)'
+        ],
+        cumulativeEarnings = $('#cumulativeEarnings'),
+        cumulativeEarningsChart,
+        rentalsPerCategory = $('#rentalsPerCategory'),
+        rentalsPerCategoryChart,
+        rentalsPerCountry = $('#rentalsPerCountry'),
+        rentalsPerCountryChart,
+        storeId = $('#storeId'),
+        storeIds,
+        countryId = $('#countryId'),
+        countryIds,
+
+        labelsFromJson = function(json) {
+            return $.unique($.map(json.records, function(rec) { return rec[1]; }));
+        },
+
+        dataFromLabels = function(labels, json, retainLastOnGap) {
+            return $.map(storeIds.records, function(storeIdsRec) {
+                var last = 0;
+
+                return [ $.map(
+                    labels,
+                    function(label) {
+                        var rec = $.grep(
+                            json.records,
+                            function(rec) { return rec[0] == storeIdsRec[0] && rec[1] == label; }
+                        );
+
+                        last = rec.length > 0
+                             ? rec[0][2]
+                             : retainLastOnGap
+                             ? last
+                             : 0;
+
+                        return last;
+                    }
+                ) ];
+            });
+        },
+
+        cumulativeEarningsHandler = function(json) {
+            var labels  = labelsFromJson(json),
+                data    = dataFromLabels(labels, json, true);
+
+            if (cumulativeEarningsChart)
+                cumulativeEarningsChart.destroy();
+
+            cumulativeEarningsChart = new Chart(cumulativeEarnings, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: $.map(storeIds.records, function(rec, index) {
+                        return {
+                            label: rec[1],
+                            data: data[index],
+                            borderWidth: 1,
+                            backgroundColor: red[index]
+                        };
+                    }),
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            },
+                            stacked: true
+                        }]
+                    },
+                    title: {
+                        display: true,
+                        text: 'Cumulative Earnings per DVD Store'
+                    }
+                }
+            });
+        },
+
+        rentalsPerCategoryHandler = function(json) {
+            var labels  = $.unique($.map(json.records, function(rec) { return rec[1]; })),
+                data    = dataFromLabels(labels, json);
+
+            if (rentalsPerCategoryChart)
+                rentalsPerCategoryChart.destroy();
+
+            rentalsPerCategoryChart = new Chart(rentalsPerCategory, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: $.map(storeIds.records, function(rec, index) {
+                        return {
+                            label: rec[1],
+                            data: data[index],
+                            borderWidth: 1,
+                            backgroundColor: green[index]
+                        };
+                    }),
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            stacked: true
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            },
+                            stacked: true
+                        }]
+                    },
+                    title: {
+                        display: true,
+                        text: 'Rentals per Category and DVD Store'
+                    }
+                }
+            });
+        },
+
+        rentalsPerCountryHandler = function(json) {
+            var labels  = $.unique($.map(json.records, function(rec) { return rec[1]; })),
+                data    = dataFromLabels(labels, json);
+
+            if (rentalsPerCountryChart)
+                rentalsPerCountryChart.destroy();
+
+            rentalsPerCountryChart = new Chart(rentalsPerCountry, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: $.map(storeIds.records, function(rec, index) {
+                        return {
+                            label: rec[1],
+                            data: data[index],
+                            borderWidth: 1,
+                            backgroundColor: blue[index]
+                        };
+                    }),
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            stacked: true
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            },
+                            stacked: true
+                        }]
+                    },
+                    title: {
+                        display: true,
+                        text: 'Rentals per Country and DVD Store'
+                    }
+                }
+            });
+        },
+
+        refreshCumulativeEarnings = function() {
+            $.ajax({
+                url: '/cumulativeEarnings?x=x'
+                        + (storeId.val()   == '' ? '' : '&storeId='   + storeId.val())
+                        + (countryId.val() == '' ? '' : '&countryId=' + countryId.val()),
+                dataType: 'json',
+                success: cumulativeEarningsHandler
+            });
+        },
+        refreshRentalsPerCategory = function() {
+            $.ajax({
+                url: '/rentalsPerCategory?x=x'
+                        + (storeId.val()   == '' ? '' : '&storeId='   + storeId.val())
+                        + (countryId.val() == '' ? '' : '&countryId=' + countryId.val()),
+                dataType: 'json',
+                success: rentalsPerCategoryHandler
+            });
+        },
+        refreshRentalsPerCountry = function() {
+            $.ajax({
+                url: '/rentalsPerCountry' + (storeId.val() == '' ? '' : '?storeId=' + storeId.val()),
+                dataType: 'json',
+                success: rentalsPerCountryHandler
+            });
+        },
+        storeIdHandler = function(json) {
+            storeIds = json;
+
+            $.each(storeIds.records, function(i, rec) {
+                storeId.append($('<option>').attr('value', rec[0]).text(rec[1]));
+            });
+        },
+        countryIdHandler = function(json) {
+            countryIds = json;
+
+            $.each(countryIds.records, function(i, rec) {
+                countryId.append($('<option>').attr('value', rec[0]).text(rec[1]));
+            });
+        },
+        dummy;
+
+    // Initialise all form objects
+    $.ajax({
+        url: '/storeIds',
+        dataType: 'json',
+        success: storeIdHandler
+    }).done(function() {
+        $.ajax({
+            url: '/countryIds',
+            dataType: 'json',
+            success: countryIdHandler
+        }).done(refreshCumulativeEarnings)
+          .done(refreshRentalsPerCountry)
+          .done(refreshRentalsPerCategory);
+    })
+
+    storeId.change(refreshCumulativeEarnings)
+           .change(refreshRentalsPerCountry)
+           .change(refreshRentalsPerCategory);
+
+    countryId.change(refreshCumulativeEarnings)
+             .change(refreshRentalsPerCategory);
+});
+</script>
+</head>
+<body style="
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 300;">
+
+<!-- Yeah, blame me for using tables.
+     I'm not a hipster HTML developer who knows how to do CSS, OK?
+     I'm a SQL person. SQL. Tables. Ring a bell?
+     Deal with it.
+  -->
+
+<table cellpadding="2" cellspacing="0" border="0" width="100%">
+<tr>
+    <th colspan="2">Sakila DVD rental sales dashboard</th>
+</tr>
+<tr>
+    <td width="200">Store</td>
+    <td>
+        <select id="storeId" style="width: 200px">
+            <option value="" selected="selected">ALL</option>
+        </select>
+    </td>
+</tr>
+<tr>
+    <td width="100">Customer country</td>
+    <td>
+        <select id="countryId" style="width: 200px">
+            <option value="" selected="selected">ALL</option>
+        </select>
+    </td>
+</tr>
+</table>
+
+<table cellpadding="2" cellspacing="0" border="0" width="100%">
+<tr>
+    <td width="50%">
+        <canvas id="cumulativeEarnings" width="500" height="300"></canvas>
+    </td>
+    <td width="50%">
+        <canvas id="rentalsPerCategory" width="500" height="300"></canvas>
+    </td>
+</tr>
+<tr>
+    <td width="100%" colspan="2">
+        <canvas id="rentalsPerCountry" width="500" height="150"></canvas>
+    </td>
+</tr>
+</table>
+
+</body>
+</html>

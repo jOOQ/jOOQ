@@ -10,6 +10,10 @@ This example uses
 3. chart.js as an HTML5 charting library
 4. jOOQ for reporting
 
+The whole thing then looks like this:
+
+![animation](http://i.imgur.com/W8u29Zn.gif)
+
 ### Installation
 
 To install and run this example, simply check it out and follow these steps

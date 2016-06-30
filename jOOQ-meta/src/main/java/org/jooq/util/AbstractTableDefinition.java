@@ -50,6 +50,7 @@ import java.util.List;
 
 import org.jooq.Record;
 import org.jooq.Table;
+import org.jooq.tools.JooqLogger;
 
 /**
  * A base implementation for table definitions.
@@ -59,6 +60,8 @@ import org.jooq.Table;
 public abstract class AbstractTableDefinition
 extends AbstractElementContainerDefinition<ColumnDefinition>
 implements TableDefinition {
+
+    private static final JooqLogger log = JooqLogger.getLogger(AbstractTableDefinition.class);
 
     private List<ParameterDefinition>       parameters;
     private TableDefinition                 parentTable;
@@ -174,5 +177,19 @@ implements TableDefinition {
 
     protected List<ParameterDefinition> getParameters0() {
         return Collections.emptyList();
+    }
+
+    protected ColumnDefinition applySyntheticIdentities(ColumnDefinition columnDefinition) {
+        if (!columnDefinition.isIdentity() && getDatabase().isSyntheticIdentity(columnDefinition)) {
+            log.info("Synthetic Identity: " + columnDefinition.getQualifiedName());
+            return new DefaultColumnDefinition(
+                    columnDefinition.getContainer(),
+                    columnDefinition.getName(),
+                    columnDefinition.getPosition(),
+                    columnDefinition.getType(),
+                    true,
+                    columnDefinition.getComment());
+        }
+        return columnDefinition;
     }
 }

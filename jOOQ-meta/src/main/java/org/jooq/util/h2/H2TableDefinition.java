@@ -112,7 +112,7 @@ public class H2TableDefinition extends AbstractTableDefinition {
              || defaultString(record.get(Columns.COLUMN_DEFAULT)).trim().toLowerCase().startsWith("nextval"),
                 record.get(Columns.REMARKS));
 
-            result.add(column);
+            result.add(applySyntheticIdentities(column));
         }
 
         return result;

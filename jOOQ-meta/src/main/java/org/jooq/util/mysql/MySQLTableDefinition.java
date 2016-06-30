@@ -122,7 +122,7 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
 			    record.get(Columns.COLUMN_COMMENT)
 		    );
 
-			result.add(column);
+			result.add(applySyntheticIdentities(column));
 		}
 
 		return result;

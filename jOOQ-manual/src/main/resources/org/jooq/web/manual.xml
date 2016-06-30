@@ -956,7 +956,7 @@ ON (LAST_NAME = 'Hitchcock')
 WHEN MATCHED THEN UPDATE SET FIRST_NAME = 'John'
 WHEN NOT MATCHED THEN INSERT (LAST_NAME)
                       VALUES ('Hitchcock')</sql><java>create.mergeInto(T_AUTHOR)
-      .using(create().selectOne())
+      .using(create.selectOne())
       .on(T_AUTHOR.LAST_NAME.equal("Hitchcock"))
       .whenMatchedThenUpdate()
       .set(T_AUTHOR.FIRST_NAME, "John")

@@ -5562,7 +5562,7 @@ WHEN MATCHED THEN UPDATE SET FIRST_NAME = 'John'
 WHEN NOT MATCHED THEN INSERT (LAST_NAME) VALUES ('Hitchcock');
 ]]>&#160;</sql>
 <java>create.mergeInto(AUTHOR)
-      .using(create().selectOne())
+      .using(create.selectOne())
       .on(AUTHOR.LAST_NAME.equal("Hitchcock"))
       .whenMatchedThenUpdate()
       .set(AUTHOR.FIRST_NAME, "John")
@@ -14170,7 +14170,7 @@ implements IBook {
 
     // Navigation methods
     public AuthorRecord fetchAuthor() {
-        return create().selectFrom(AUTHOR).where(AUTHOR.ID.equal(getValue(BOOK.AUTHOR_ID))).fetchOne();
+        return create.selectFrom(AUTHOR).where(AUTHOR.ID.equal(getValue(BOOK.AUTHOR_ID))).fetchOne();
     }
 
     // [...]
@@ -15931,7 +15931,7 @@ FROM t</sql><html>
 </html><java><![CDATA[Routines r1 = ROUTINES.as("r1");
 Routines r2 = ROUTINES.as("r2");
 
-for (Record record : create().select(
+for (Record record : create.select(
         r1.ROUTINE_SCHEMA,
         r1.ROUTINE_NAME,
         r1.SPECIFIC_NAME,

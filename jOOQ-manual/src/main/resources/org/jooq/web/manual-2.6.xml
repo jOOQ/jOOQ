@@ -2618,7 +2618,7 @@ USING (SELECT 1 FROM DUAL)
 ON (LAST_NAME = 'Hitchcock')
 WHEN MATCHED THEN UPDATE SET FIRST_NAME = 'John'
 WHEN NOT MATCHED THEN INSERT (LAST_NAME) VALUES ('Hitchcock')</sql><java>create.mergeInto(AUTHOR)
-      .using(create().selectOne())
+      .using(create.selectOne())
       .on(AUTHOR.LAST_NAME.equal("Hitchcock"))
       .whenMatchedThenUpdate()
       .set(AUTHOR.FIRST_NAME, "John")
@@ -8328,7 +8328,7 @@ implements IBook {
 
     // Navigation methods
     public AuthorRecord fetchAuthor() {
-        return create().selectFrom(AUTHOR).where(AUTHOR.ID.equal(getValue(BOOK.AUTHOR_ID))).fetchOne();
+        return create.selectFrom(AUTHOR).where(AUTHOR.ID.equal(getValue(BOOK.AUTHOR_ID))).fetchOne();
     }
 
     // [...]

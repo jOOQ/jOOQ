@@ -51,6 +51,7 @@ import java.io.StringWriter;
 import java.sql.Connection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executor;
 
 import javax.sql.DataSource;
 import javax.xml.bind.JAXB;
@@ -59,13 +60,20 @@ import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
 import org.jooq.ConverterProvider;
 import org.jooq.DSLContext;
+import org.jooq.ExecuteListener;
 import org.jooq.ExecuteListenerProvider;
 import org.jooq.ExecutorProvider;
+import org.jooq.Record;
+import org.jooq.RecordListener;
 import org.jooq.RecordListenerProvider;
+import org.jooq.RecordMapper;
 import org.jooq.RecordMapperProvider;
+import org.jooq.RecordType;
 import org.jooq.SQLDialect;
+import org.jooq.TransactionListener;
 import org.jooq.TransactionListenerProvider;
 import org.jooq.TransactionProvider;
+import org.jooq.VisitListener;
 import org.jooq.VisitListenerProvider;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
@@ -446,33 +454,21 @@ public class DefaultConfiguration implements Configuration {
     // XXX: Deriving configurations
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final Configuration derive() {
         return new DefaultConfiguration(this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final Configuration derive(Connection newConnection) {
         return derive(new DefaultConnectionProvider(newConnection));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final Configuration derive(DataSource newDataSource) {
         return derive(new DataSourceConnectionProvider(newDataSource));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final Configuration derive(ConnectionProvider newConnectionProvider) {
         return new DefaultConfiguration(
@@ -491,9 +487,11 @@ public class DefaultConfiguration implements Configuration {
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
+    public final Configuration derive(final Executor newExecutor) {
+        return derive(new ExecutorWrapper(newExecutor));
+    }
+
     @Override
     public final Configuration derive(ExecutorProvider newExecutorProvider) {
         return new DefaultConfiguration(
@@ -512,9 +510,6 @@ public class DefaultConfiguration implements Configuration {
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final Configuration derive(TransactionProvider newTransactionProvider) {
         return new DefaultConfiguration(
@@ -533,9 +528,11 @@ public class DefaultConfiguration implements Configuration {
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
+    public final Configuration derive(final RecordMapper<?, ?> newRecordMapper) {
+        return derive(new RecordMapperWrapper(newRecordMapper));
+    }
+
     @Override
     public final Configuration derive(RecordMapperProvider newRecordMapperProvider) {
         return new DefaultConfiguration(
@@ -554,9 +551,11 @@ public class DefaultConfiguration implements Configuration {
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
+    public final Configuration derive(RecordListener... newRecordListeners) {
+        return derive(DefaultRecordListenerProvider.providers(newRecordListeners));
+    }
+
     @Override
     public final Configuration derive(RecordListenerProvider... newRecordListenerProviders) {
         return new DefaultConfiguration(
@@ -575,9 +574,11 @@ public class DefaultConfiguration implements Configuration {
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
+    public final Configuration derive(ExecuteListener... newExecuteListeners) {
+        return derive(DefaultExecuteListenerProvider.providers(newExecuteListeners));
+    }
+
     @Override
     public final Configuration derive(ExecuteListenerProvider... newExecuteListenerProviders) {
         return new DefaultConfiguration(
@@ -596,9 +597,11 @@ public class DefaultConfiguration implements Configuration {
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
+    public final Configuration derive(VisitListener... newVisitListeners) {
+        return derive(DefaultVisitListenerProvider.providers(newVisitListeners));
+    }
+
     @Override
     public final Configuration derive(VisitListenerProvider... newVisitListenerProviders) {
         return new DefaultConfiguration(
@@ -617,9 +620,11 @@ public class DefaultConfiguration implements Configuration {
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
+    public final Configuration derive(TransactionListener... newTransactionListeners) {
+        return derive(DefaultTransactionListenerProvider.providers(newTransactionListeners));
+    }
+
     @Override
     public final Configuration derive(TransactionListenerProvider... newTransactionListenerProviders) {
         return new DefaultConfiguration(
@@ -638,9 +643,6 @@ public class DefaultConfiguration implements Configuration {
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final Configuration derive(ConverterProvider newConverterProvider) {
         return new DefaultConfiguration(
@@ -659,9 +661,6 @@ public class DefaultConfiguration implements Configuration {
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final Configuration derive(SQLDialect newDialect) {
         return new DefaultConfiguration(
@@ -680,9 +679,6 @@ public class DefaultConfiguration implements Configuration {
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final Configuration derive(Settings newSettings) {
         return new DefaultConfiguration(
@@ -705,25 +701,16 @@ public class DefaultConfiguration implements Configuration {
     // XXX: Changing configurations
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final Configuration set(Connection newConnection) {
         return set(new DefaultConnectionProvider(newConnection));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final Configuration set(DataSource newDataSource) {
         return set(new DataSourceConnectionProvider(newDataSource));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final Configuration set(ConnectionProvider newConnectionProvider) {
         this.connectionProvider = newConnectionProvider != null
@@ -733,18 +720,17 @@ public class DefaultConfiguration implements Configuration {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
+    public final Configuration set(Executor newExecutor) {
+        return set(new ExecutorWrapper(newExecutor));
+    }
+
     @Override
     public final Configuration set(ExecutorProvider newExecutorProvider) {
         this.executorProvider = newExecutorProvider;
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final Configuration set(TransactionProvider newTransactionProvider) {
         this.transactionProvider = newTransactionProvider != null
@@ -754,18 +740,22 @@ public class DefaultConfiguration implements Configuration {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
+    public Configuration set(RecordMapper<?, ?> newRecordMapper) {
+        return set(new RecordMapperWrapper(newRecordMapper));
+    }
+
     @Override
     public final Configuration set(RecordMapperProvider newRecordMapperProvider) {
         this.recordMapperProvider = newRecordMapperProvider;
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
+    public final Configuration set(RecordListener... newRecordListeners) {
+        return set(DefaultRecordListenerProvider.providers(newRecordListeners));
+    }
+
     @Override
     public final Configuration set(RecordListenerProvider... newRecordListenerProviders) {
         this.recordListenerProviders = newRecordListenerProviders != null
@@ -775,9 +765,11 @@ public class DefaultConfiguration implements Configuration {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
+    public final Configuration set(ExecuteListener... newExecuteListeners) {
+        return set(DefaultExecuteListenerProvider.providers(newExecuteListeners));
+    }
+
     @Override
     public final Configuration set(ExecuteListenerProvider... newExecuteListenerProviders) {
         this.executeListenerProviders = newExecuteListenerProviders != null
@@ -787,9 +779,11 @@ public class DefaultConfiguration implements Configuration {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
+    public final Configuration set(VisitListener... newVisitListeners) {
+        return set(DefaultVisitListenerProvider.providers(newVisitListeners));
+    }
+
     @Override
     public final Configuration set(VisitListenerProvider... newVisitListenerProviders) {
         this.visitListenerProviders = newVisitListenerProviders != null
@@ -799,9 +793,11 @@ public class DefaultConfiguration implements Configuration {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
+    public final Configuration set(TransactionListener... newTransactionListeners) {
+        return set(DefaultTransactionListenerProvider.providers(newTransactionListeners));
+    }
+
     @Override
     public final Configuration set(TransactionListenerProvider... newTransactionListenerProviders) {
         this.transactionListenerProviders = newTransactionListenerProviders != null
@@ -820,18 +816,12 @@ public class DefaultConfiguration implements Configuration {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final Configuration set(SQLDialect newDialect) {
         this.dialect = newDialect;
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final Configuration set(Settings newSettings) {
         this.settings = newSettings != null
@@ -934,9 +924,6 @@ public class DefaultConfiguration implements Configuration {
     // XXX: Getters
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final ConnectionProvider connectionProvider() {
 
@@ -946,9 +933,6 @@ public class DefaultConfiguration implements Configuration {
         return transactional == null ? connectionProvider : transactional;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final ExecutorProvider executorProvider() {
         return executorProvider != null
@@ -956,9 +940,6 @@ public class DefaultConfiguration implements Configuration {
              : new DefaultExecutorProvider();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final TransactionProvider transactionProvider() {
 
@@ -971,9 +952,6 @@ public class DefaultConfiguration implements Configuration {
         return transactionProvider;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final RecordMapperProvider recordMapperProvider() {
 
@@ -984,97 +962,61 @@ public class DefaultConfiguration implements Configuration {
              : new DefaultRecordMapperProvider(this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final RecordListenerProvider[] recordListenerProviders() {
         return recordListenerProviders;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final ExecuteListenerProvider[] executeListenerProviders() {
         return executeListenerProviders;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final VisitListenerProvider[] visitListenerProviders() {
         return visitListenerProviders;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final TransactionListenerProvider[] transactionListenerProviders() {
         return transactionListenerProviders;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final ConverterProvider converterProvider() {
         return converterProvider;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final SQLDialect dialect() {
         return dialect;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final SQLDialect family() {
         return dialect.family();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final Settings settings() {
         return settings;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final ConcurrentHashMap<Object, Object> data() {
         return data;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final Object data(Object key) {
         return data.get(key);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final Object data(Object key, Object value) {
         return data.put(key, value);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     @Deprecated
     public final org.jooq.SchemaMapping schemaMapping() {
@@ -1146,5 +1088,32 @@ public class DefaultConfiguration implements Configuration {
         visitListenerProviders = (VisitListenerProvider[]) ois.readObject();
         transactionListenerProviders = (TransactionListenerProvider[]) ois.readObject();
         converterProvider = (ConverterProvider) ois.readObject();
+    }
+
+    private final class ExecutorWrapper implements ExecutorProvider {
+        private final Executor newExecutor;
+
+        private ExecutorWrapper(Executor newExecutor) {
+            this.newExecutor = newExecutor;
+        }
+
+        @Override
+        public Executor provide() {
+            return newExecutor;
+        }
+    }
+
+    private final class RecordMapperWrapper implements RecordMapperProvider {
+        private final RecordMapper<?, ?> newRecordMapper;
+
+        private RecordMapperWrapper(RecordMapper<?, ?> newRecordMapper) {
+            this.newRecordMapper = newRecordMapper;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public <R extends Record, E> RecordMapper<R, E> provide(RecordType<R> recordType, Class<? extends E> type) {
+            return (RecordMapper<R, E>) newRecordMapper;
+        }
     }
 }

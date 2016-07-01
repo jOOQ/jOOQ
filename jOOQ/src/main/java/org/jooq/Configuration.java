@@ -52,9 +52,14 @@ import javax.sql.DataSource;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DataSourceConnectionProvider;
 import org.jooq.impl.DefaultConnectionProvider;
+import org.jooq.impl.DefaultExecuteListenerProvider;
+import org.jooq.impl.DefaultExecutorProvider;
+import org.jooq.impl.DefaultRecordListenerProvider;
 import org.jooq.impl.DefaultRecordMapper;
 import org.jooq.impl.DefaultRecordMapperProvider;
+import org.jooq.impl.DefaultTransactionListenerProvider;
 import org.jooq.impl.DefaultTransactionProvider;
+import org.jooq.impl.DefaultVisitListenerProvider;
 import org.jooq.tools.LoggerListener;
 import org.jooq.tools.StopWatchListener;
 
@@ -393,6 +398,21 @@ public interface Configuration extends Serializable {
     Configuration set(ExecutorProvider newExecutorProvider);
 
     /**
+     * Change this configuration to hold a new executor.
+     * <p>
+     * This will wrap the argument {@link Executor} in a
+     * {@link DefaultExecutorProvider} for convenience.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newExecutorProvider The new executor to be contained in the
+     *            changed configuration.
+     * @return The changed configuration.
+     */
+    Configuration set(Executor newExecutor);
+
+    /**
      * Change this configuration to hold a new connection wrapped in a
      * {@link DefaultConnectionProvider}.
      * <p>
@@ -431,6 +451,21 @@ public interface Configuration extends Serializable {
     Configuration set(TransactionProvider newTransactionProvider);
 
     /**
+     * Change this configuration to hold a new record mapper.
+     * <p>
+     * This will wrap the argument {@link RecordMapper} in a
+     * {@link DefaultRecordMapperProvider} for convenience.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newRecordMapperProvider The new record mapper to be contained in
+     *            the changed configuration.
+     * @return The changed configuration.
+     */
+    Configuration set(RecordMapper<?, ?> newRecordMapper);
+
+    /**
      * Change this configuration to hold a new record mapper provider.
      * <p>
      * This method is not thread-safe and should not be used in globally
@@ -441,6 +476,21 @@ public interface Configuration extends Serializable {
      * @return The changed configuration.
      */
     Configuration set(RecordMapperProvider newRecordMapperProvider);
+
+    /**
+     * Change this configuration to hold a new record listeners.
+     * <p>
+     * This will wrap the argument {@link RecordListener} in a
+     * {@link DefaultRecordListenerProvider} for convenience.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newRecordListeners The new record listener to be contained
+     *            in the changed configuration.
+     * @return The changed configuration.
+     */
+    Configuration set(RecordListener... newRecordListeners);
 
     /**
      * Change this configuration to hold a new record listener providers.
@@ -455,6 +505,21 @@ public interface Configuration extends Serializable {
     Configuration set(RecordListenerProvider... newRecordListenerProviders);
 
     /**
+     * Change this configuration to hold a new execute listeners.
+     * <p>
+     * This will wrap the argument {@link ExecuteListener} in a
+     * {@link DefaultExecuteListenerProvider} for convenience.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newExecuteListeners The new execute listeners to be contained in
+     *            the changed configuration.
+     * @return The changed configuration.
+     */
+    Configuration set(ExecuteListener... newExecuteListeners);
+
+    /**
      * Change this configuration to hold a new execute listener providers.
      * <p>
      * This method is not thread-safe and should not be used in globally
@@ -467,6 +532,21 @@ public interface Configuration extends Serializable {
     Configuration set(ExecuteListenerProvider... newExecuteListenerProviders);
 
     /**
+     * Change this configuration to hold a new visit listeners.
+     * <p>
+     * This will wrap the argument {@link VisitListener} in a
+     * {@link DefaultVisitListenerProvider} for convenience.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newVisitListeners The new visit listeners to be contained
+     *            in the changed configuration.
+     * @return The changed configuration.
+     */
+    Configuration set(VisitListener... newVisitListeners);
+
+    /**
      * Change this configuration to hold a new visit listener providers.
      * <p>
      * This method is not thread-safe and should not be used in globally
@@ -477,6 +557,21 @@ public interface Configuration extends Serializable {
      * @return The changed configuration.
      */
     Configuration set(VisitListenerProvider... newVisitListenerProviders);
+
+    /**
+     * Change this configuration to hold a new transaction listeners.
+     * <p>
+     * This will wrap the argument {@link TransactionListener} in a
+     * {@link DefaultTransactionListenerProvider} for convenience.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newTransactionListeners The new transaction listeners to be
+     *            contained in the changed configuration.
+     * @return The changed configuration.
+     */
+    Configuration set(TransactionListener... newTransactionListeners);
 
     /**
      * Change this configuration to hold a new transaction listener providers.
@@ -542,26 +637,6 @@ public interface Configuration extends Serializable {
 
     /**
      * Create a derived configuration from this one, with a new connection
-     * provider.
-     *
-     * @param newConnectionProvider The new connection provider to be contained
-     *            in the derived configuration.
-     * @return The derived configuration.
-     */
-    Configuration derive(ConnectionProvider newConnectionProvider);
-
-    /**
-     * Create a derived configuration from this one, with a new executor
-     * provider.
-     *
-     * @param newExecutorProvider The new executor provider to be contained in
-     *            the derived configuration.
-     * @return The derived configuration.
-     */
-    Configuration derive(ExecutorProvider newExecutorProvider);
-
-    /**
-     * Create a derived configuration from this one, with a new connection
      * wrapped in a {@link DefaultConnectionProvider}.
      *
      * @param newConnection The new connection to be contained in the derived
@@ -581,6 +656,38 @@ public interface Configuration extends Serializable {
     Configuration derive(DataSource newDataSource);
 
     /**
+     * Create a derived configuration from this one, with a new connection
+     * provider.
+     *
+     * @param newConnectionProvider The new connection provider to be contained
+     *            in the derived configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(ConnectionProvider newConnectionProvider);
+
+    /**
+     * Create a derived configuration from this one, with a new executor.
+     * <p>
+     * This will wrap the argument {@link Executor} in a
+     * {@link DefaultExecutorProvider} for convenience.
+     *
+     * @param newExecutor The new executor to be contained in the derived
+     *            configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(Executor newExecutor);
+
+    /**
+     * Create a derived configuration from this one, with a new executor
+     * provider.
+     *
+     * @param newExecutorProvider The new executor provider to be contained in
+     *            the derived configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(ExecutorProvider newExecutorProvider);
+
+    /**
      * Create a derived configuration from this one, with a new transaction
      * provider.
      *
@@ -589,6 +696,18 @@ public interface Configuration extends Serializable {
      * @return The derived configuration.
      */
     Configuration derive(TransactionProvider newTransactionProvider);
+
+    /**
+     * Create a derived configuration from this one, with a new record mapper.
+     * <p>
+     * This will wrap the argument {@link RecordMapper} in a
+     * {@link DefaultRecordMapperProvider} for convenience.
+     *
+     * @param newRecordMapper The new record mapper to be contained in the
+     *            derived configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(RecordMapper<?, ?> newRecordMapper);
 
     /**
      * Create a derived configuration from this one, with a new record mapper
@@ -601,6 +720,18 @@ public interface Configuration extends Serializable {
     Configuration derive(RecordMapperProvider newRecordMapperProvider);
 
     /**
+     * Create a derived configuration from this one, with new record listeners.
+     * <p>
+     * This will wrap the argument {@link RecordListener} in a
+     * {@link DefaultRecordListenerProvider} for convenience.
+     *
+     * @param newRecordListeners The new record listeners to be contained in the
+     *            derived configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(RecordListener... newRecordListeners);
+
+    /**
      * Create a derived configuration from this one, with new record listener
      * providers.
      *
@@ -609,6 +740,18 @@ public interface Configuration extends Serializable {
      * @return The derived configuration.
      */
     Configuration derive(RecordListenerProvider... newRecordListenerProviders);
+
+    /**
+     * Create a derived configuration from this one, with new execute listeners.
+     * <p>
+     * This will wrap the argument {@link ExecuteListener} in a
+     * {@link DefaultExecuteListenerProvider} for convenience.
+     *
+     * @param newExecuteListeners The new execute listener to be contained in
+     *            the derived configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(ExecuteListener... newExecuteListeners);
 
     /**
      * Create a derived configuration from this one, with new execute listener
@@ -621,6 +764,18 @@ public interface Configuration extends Serializable {
     Configuration derive(ExecuteListenerProvider... newExecuteListenerProviders);
 
     /**
+     * Create a derived configuration from this one, with new visit listeners.
+     * <p>
+     * This will wrap the argument {@link VisitListener} in a
+     * {@link DefaultVisitListenerProvider} for convenience.
+     *
+     * @param newVisitListeners The new visit listeners to be contained in the
+     *            derived configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(VisitListener... newVisitListeners);
+
+    /**
      * Create a derived configuration from this one, with new visit listener
      * providers.
      *
@@ -629,6 +784,19 @@ public interface Configuration extends Serializable {
      * @return The derived configuration.
      */
     Configuration derive(VisitListenerProvider... newVisitListenerProviders);
+
+    /**
+     * Create a derived configuration from this one, with new transaction
+     * listeners.
+     * <p>
+     * This will wrap the argument {@link TransactionListener} in a
+     * {@link DefaultTransactionListenerProvider} for convenience.
+     *
+     * @param newTransactionListeners The new transaction listeners to be
+     *            contained in the derived configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(TransactionListener... newTransactionListeners);
 
     /**
      * Create a derived configuration from this one, with new transaction

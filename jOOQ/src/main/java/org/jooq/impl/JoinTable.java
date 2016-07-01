@@ -57,6 +57,7 @@ import static org.jooq.Clause.TABLE_JOIN_OUTER_LEFT;
 import static org.jooq.Clause.TABLE_JOIN_OUTER_RIGHT;
 import static org.jooq.Clause.TABLE_JOIN_PARTITION_BY;
 import static org.jooq.Clause.TABLE_JOIN_SEMI_LEFT;
+import static org.jooq.Clause.TABLE_JOIN_STRAIGHT;
 import static org.jooq.Clause.TABLE_JOIN_USING;
 import static org.jooq.JoinType.CROSS_APPLY;
 import static org.jooq.JoinType.CROSS_JOIN;
@@ -289,6 +290,7 @@ final class JoinTable extends AbstractTable<Record> implements TableOptionalOnSt
             case OUTER_APPLY:              return TABLE_JOIN_OUTER_APPLY;
             case LEFT_SEMI_JOIN:           return TABLE_JOIN_SEMI_LEFT;
             case LEFT_ANTI_JOIN:           return TABLE_JOIN_ANTI_LEFT;
+            case STRAIGHT_JOIN:            return TABLE_JOIN_STRAIGHT;
             default: throw new IllegalArgumentException("Bad join type: " + translatedType);
         }
     }

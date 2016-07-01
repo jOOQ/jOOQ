@@ -242,7 +242,8 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
             // [#1547] Try fetching the Record again first, and compare this
             // Record's original values with the ones in the database
-            else {
+            // [#5384] Do this only if the exclusion flag for unversioned records is off
+            else if (isExecuteWithOptimisticLockingIncludeUnversioned()) {
                 checkIfChanged(keys);
             }
         }
@@ -297,7 +298,8 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
                 // [#1547] Try fetching the Record again first, and compare this
                 // Record's original values with the ones in the database
-                else {
+                // [#5384] Do this only if the exclusion flag for unversioned records is off
+                else if (isExecuteWithOptimisticLockingIncludeUnversioned()) {
                     checkIfChanged(keys);
                 }
             }
@@ -385,11 +387,18 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         Configuration configuration = configuration();
 
         // This can be null when the current record is detached
-        if (configuration != null) {
-            return TRUE.equals(configuration.settings().isExecuteWithOptimisticLocking());
-        }
+        return configuration != null
+            ? TRUE.equals(configuration.settings().isExecuteWithOptimisticLocking())
+            : false;
+    }
 
-        return false;
+    private final boolean isExecuteWithOptimisticLockingIncludeUnversioned() {
+        Configuration configuration = configuration();
+
+        // This can be null when the current record is detached
+        return configuration != null
+            ? !TRUE.equals(configuration.settings().isExecuteWithOptimisticLockingExcludeUnversioned())
+            : true;
     }
 
     @SuppressWarnings("deprecation")

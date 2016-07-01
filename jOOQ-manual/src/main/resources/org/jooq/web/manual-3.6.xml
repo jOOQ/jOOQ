@@ -595,7 +595,7 @@ String sql = create.select(field("BOOK.TITLE"), field("AUTHOR.FIRST_NAME"), fiel
                    .getSQL();]]></java><html>
 
                    					<p>
-                   						The SQL string built with the jOOQ query DSL can then be executed using JDBC directly, using Spring's JdbcTemplate, using Apache DbUtils and many other tools.
+                   						The SQL string built with the jOOQ query DSL can then be executed using JDBC directly, using Spring's JdbcTemplate, using Apache DbUtils and many other tools (note that since jOOQ uses <code>PreparedStatement</code> by default, this will generate a bind variable for "1948". <reference id="bind-values" title="Read more about bind variables here"/>).
                    					</p>
                    					<p>
                    						If you wish to use jOOQ only as a SQL builder, the following sections of the manual will be of interest to you:

@@ -84,11 +84,13 @@ import javax.annotation.Generated;
 import org.jooq.conf.ParamType;
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
+import org.jooq.exception.ConfigurationException;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
 import org.jooq.exception.TooManyRowsException;
 import org.jooq.impl.DSL;
+import org.jooq.impl.ThreadLocalTransactionProvider;
 import org.jooq.tools.jdbc.MockCallable;
 import org.jooq.tools.jdbc.MockDataProvider;
 import org.jooq.tools.jdbc.MockRunnable;
@@ -215,6 +217,18 @@ public interface DSLContext extends Scope , AutoCloseable  {
     <T> T transactionResult(TransactionalCallable<T> transactional);
 
     /**
+     * Run a {@link ThreadLocalTransactionalRunnable} in the context of this
+     * <code>DSLContext</code>'s underlying {@link #configuration()}'s
+     * {@link ThreadLocalTransactionProvider}.
+     *
+     * @param transactional The transactional code
+     * @throws ConfigurationException if the underlying
+     *             {@link Configuration#transactionProvider()} is not a
+     *             {@link ThreadLocalTransactionProvider}.
+     */
+    <T> T transactionResult(ThreadLocalTransactionalCallable<T> transactional) throws ConfigurationException;
+
+    /**
      * Run a {@link TransactionalRunnable} in the context of this
      * <code>DSLContext</code>'s underlying {@link #configuration()}'s
      * {@link Configuration#transactionProvider()}.
@@ -223,6 +237,18 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     void transaction(TransactionalRunnable transactional);
 
+    /**
+     * Run a {@link ThreadLocalTransactionalRunnable} in the context of this
+     * <code>DSLContext</code>'s underlying {@link #configuration()}'s
+     * {@link ThreadLocalTransactionProvider}.
+     *
+     * @param transactional The transactional code
+     * @throws ConfigurationException if the underlying
+     *             {@link Configuration#transactionProvider()} is not a
+     *             {@link ThreadLocalTransactionProvider}.
+     */
+    void transaction(ThreadLocalTransactionalRunnable transactional) throws ConfigurationException;
+
 
 
     /**
@@ -238,8 +264,9 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param transactional The transactional code
      * @return The transactional outcome
+     * @throws ConfigurationException If this is run with a {@link ThreadLocalTransactionProvider}.
      */
-    <T> CompletionStage<T> transactionResultAsync(TransactionalCallable<T> transactional);
+    <T> CompletionStage<T> transactionResultAsync(TransactionalCallable<T> transactional) throws ConfigurationException;
 
     /**
      * Run a {@link TransactionalRunnable} asynchronously.
@@ -253,8 +280,9 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link Configuration#executorProvider()}.
      *
      * @param transactional The transactional code
+     * @throws ConfigurationException If this is run with a {@link ThreadLocalTransactionProvider}.
      */
-    CompletionStage<Void> transactionAsync(TransactionalRunnable transactional);
+    CompletionStage<Void> transactionAsync(TransactionalRunnable transactional) throws ConfigurationException;
 
     /**
      * Run a {@link TransactionalCallable} asynchronously.
@@ -268,8 +296,9 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param transactional The transactional code
      * @return The transactional outcome
+     * @throws ConfigurationException If this is run with a {@link ThreadLocalTransactionProvider}.
      */
-    <T> CompletionStage<T> transactionResultAsync(Executor executor, TransactionalCallable<T> transactional);
+    <T> CompletionStage<T> transactionResultAsync(Executor executor, TransactionalCallable<T> transactional) throws ConfigurationException;
 
     /**
      * Run a {@link TransactionalRunnable} asynchronously.
@@ -282,8 +311,9 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link Executor}.
      *
      * @param transactional The transactional code
+     * @throws ConfigurationException If this is run with a {@link ThreadLocalTransactionProvider}.
      */
-    CompletionStage<Void> transactionAsync(Executor executor, TransactionalRunnable transactional);
+    CompletionStage<Void> transactionAsync(Executor executor, TransactionalRunnable transactional) throws ConfigurationException;
 
 
 

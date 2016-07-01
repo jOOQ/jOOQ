@@ -214,6 +214,8 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.TableRecord;
+import org.jooq.ThreadLocalTransactionalCallable;
+import org.jooq.ThreadLocalTransactionalRunnable;
 import org.jooq.TransactionProvider;
 import org.jooq.TransactionalCallable;
 import org.jooq.TransactionalRunnable;
@@ -248,6 +250,7 @@ import org.jooq.WithAsStep8;
 import org.jooq.WithAsStep9;
 import org.jooq.WithStep;
 import org.jooq.conf.Settings;
+import org.jooq.exception.ConfigurationException;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.SQLDialectNotSupportedException;
@@ -373,7 +376,26 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     // -------------------------------------------------------------------------
 
     @Override
+    public <T> T transactionResult(final ThreadLocalTransactionalCallable<T> transactional) {
+        TransactionProvider tp = configuration().transactionProvider();
+
+        if (!(tp instanceof ThreadLocalTransactionProvider))
+            throw new ConfigurationException("Cannot use ThreadLocalTransactionalCallable with TransactionProvider of type " + tp.getClass());
+
+        return transactionResult0(new TransactionalCallable<T>() {
+            @Override
+            public T run(Configuration c) throws Exception {
+                return transactional.run();
+            }
+        }, ((ThreadLocalTransactionProvider) tp).configuration(configuration()), true);
+    }
+
+    @Override
     public <T> T transactionResult(TransactionalCallable<T> transactional) {
+        return transactionResult0(transactional, configuration(), false);
+    }
+
+    private static <T> T transactionResult0(TransactionalCallable<T> transactional, Configuration configuration, boolean threadLocal) {
 
         // If used in a Java 8 Stream, a transaction should always be executed
         // in a ManagedBlocker context, just in case Stream.parallel() is called
@@ -387,7 +409,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
             T result = null;
 
-            DefaultTransactionContext ctx = new DefaultTransactionContext(configuration().derive());
+            DefaultTransactionContext ctx = new DefaultTransactionContext(configuration.derive());
             TransactionProvider provider = ctx.configuration().transactionProvider();
             TransactionListeners listeners = new TransactionListeners(ctx.configuration());
 
@@ -437,8 +459,19 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
             return result;
 
 
-        }).get();
+        }, threadLocal).get();
 
+    }
+
+    @Override
+    public void transaction(final ThreadLocalTransactionalRunnable transactional) {
+        transactionResult(new ThreadLocalTransactionalCallable<Void>() {
+            @Override
+            public Void run() throws Exception {
+                transactional.run();
+                return null;
+            }
+        });
     }
 
     @Override
@@ -461,6 +494,9 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CompletionStage<Void> transactionAsync(Executor executor, TransactionalRunnable transactional) {
+        if (configuration().transactionProvider() instanceof ThreadLocalTransactionProvider)
+            throw new ConfigurationException("Cannot use TransactionalCallable with ThreadLocalTransactionProvider");
+
         return ExecutorProviderCompletionStage.of(CompletableFuture.supplyAsync(
             () -> { transaction(transactional); return null; }, executor),
             () -> executor
@@ -474,6 +510,9 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <T> CompletionStage<T> transactionResultAsync(Executor executor, TransactionalCallable<T> transactional) {
+        if (configuration().transactionProvider() instanceof ThreadLocalTransactionProvider)
+            throw new ConfigurationException("Cannot use TransactionalCallable with ThreadLocalTransactionProvider");
+
         return ExecutorProviderCompletionStage.of(CompletableFuture.supplyAsync(
             () -> transactionResult(transactional), executor),
             () -> executor

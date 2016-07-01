@@ -3242,7 +3242,16 @@ final class Tools {
 
 
     static <T> Supplier<T> blocking(Supplier<T> supplier) {
-        return new Supplier<T>() {
+        return blocking(supplier, false);
+    }
+
+    static <T> Supplier<T> blocking(Supplier<T> supplier, boolean threadLocal) {
+
+        // [#5377] In ThreadLocal contexts (e.g. when using ThreadLocalTransactionprovider),
+        //         no ManagedBlocker is needed as we're guaranteed by API contract to always
+        //         remain on the same thread.
+
+        return threadLocal ? supplier : new Supplier<T>() {
             volatile T asyncResult;
 
             @Override

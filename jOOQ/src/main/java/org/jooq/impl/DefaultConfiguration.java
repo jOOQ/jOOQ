@@ -77,6 +77,7 @@ import org.jooq.VisitListener;
 import org.jooq.VisitListenerProvider;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
+import org.jooq.exception.ConfigurationException;
 
 /**
  * A default implementation for configurations within a {@link DSLContext}, if no
@@ -713,9 +714,16 @@ public class DefaultConfiguration implements Configuration {
 
     @Override
     public final Configuration set(ConnectionProvider newConnectionProvider) {
-        this.connectionProvider = newConnectionProvider != null
-            ? newConnectionProvider
-            : new NoConnectionProvider();
+        if (newConnectionProvider != null) {
+            if (transactionProvider instanceof ThreadLocalTransactionProvider &&
+              !(newConnectionProvider instanceof ThreadLocalConnectionProvider))
+                throw new ConfigurationException("Cannot override ConnectionProvider when Configuration contains a ThreadLocalTransactionProvider");
+
+            this.connectionProvider = newConnectionProvider;
+        }
+        else {
+            this.connectionProvider = new NoConnectionProvider();
+        }
 
         return this;
     }
@@ -733,9 +741,15 @@ public class DefaultConfiguration implements Configuration {
 
     @Override
     public final Configuration set(TransactionProvider newTransactionProvider) {
-        this.transactionProvider = newTransactionProvider != null
-            ? newTransactionProvider
-            : new NoTransactionProvider();
+        if (newTransactionProvider != null) {
+            this.transactionProvider = newTransactionProvider;
+
+            if (newTransactionProvider instanceof ThreadLocalTransactionProvider)
+                this.connectionProvider = ((ThreadLocalTransactionProvider) newTransactionProvider).connection;
+        }
+        else {
+            this.transactionProvider = new NoTransactionProvider();
+        }
 
         return this;
     }
@@ -927,9 +941,13 @@ public class DefaultConfiguration implements Configuration {
     @Override
     public final ConnectionProvider connectionProvider() {
 
-        // [#3229] If we're currently in a transaction, return that transaction's
+        // [#3229] [#5377] If we're currently in a transaction, return that transaction's
         // local DefaultConnectionProvider, not the one from this configuration
-        ConnectionProvider transactional = (ConnectionProvider) data(DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION);
+        TransactionProvider tp = transactionProvider();
+        ConnectionProvider transactional = tp instanceof ThreadLocalTransactionProvider
+            ? ((ThreadLocalTransactionProvider) tp).connection
+            : (ConnectionProvider) data(DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION);
+
         return transactional == null ? connectionProvider : transactional;
     }
 

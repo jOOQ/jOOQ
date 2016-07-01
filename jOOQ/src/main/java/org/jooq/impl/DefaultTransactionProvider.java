@@ -105,6 +105,10 @@ public class DefaultTransactionProvider implements TransactionProvider {
         return nested;
     }
 
+    final int nestingLevel(Configuration configuration) {
+        return savepoints(configuration).size();
+    }
+
     @SuppressWarnings("unchecked")
     private final Deque<Savepoint> savepoints(Configuration configuration) {
         Deque<Savepoint> savepoints = (Deque<Savepoint>) configuration.data(DATA_DEFAULT_TRANSACTION_PROVIDER_SAVEPOINTS);
@@ -155,7 +159,7 @@ public class DefaultTransactionProvider implements TransactionProvider {
         savepoints.push(savepoint);
     }
 
-    private Savepoint setSavepoint(Configuration configuration) {
+    private final Savepoint setSavepoint(Configuration configuration) {
         if (!nested())
             return IGNORED_SAVEPOINT;
 
@@ -231,7 +235,7 @@ public class DefaultTransactionProvider implements TransactionProvider {
      * Ensure an <code>autoCommit</code> value on the connection, if it was set
      * to <code>true</code>, originally.
      */
-    private void brace(Configuration configuration, boolean start) {
+    private final void brace(Configuration configuration, boolean start) {
         DefaultConnectionProvider connection = connection(configuration);
 
         try {

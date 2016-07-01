@@ -389,15 +389,33 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
             DefaultTransactionContext ctx = new DefaultTransactionContext(configuration().derive());
             TransactionProvider provider = ctx.configuration().transactionProvider();
+            TransactionListeners listeners = new TransactionListeners(ctx.configuration());
 
             try {
-                provider.begin(ctx);
+                try {
+                    listeners.beginStart(ctx);
+                    provider.begin(ctx);
+                }
+                finally {
+                    listeners.beginEnd(ctx);
+                }
+
                 result = transactional.run(ctx.configuration());
-                provider.commit(ctx);
+
+                try {
+                    listeners.commitStart(ctx);
+                    provider.commit(ctx);
+                }
+                finally {
+                    listeners.commitEnd(ctx);
+                }
             }
             catch (Exception cause) {
+                ctx.cause(cause);
+
+                listeners.rollbackStart(ctx);
                 try {
-                    provider.rollback(ctx.cause(cause));
+                    provider.rollback(ctx);
                 }
 
                 // [#3718] Use reflection to support also JDBC 4.0
@@ -406,6 +424,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
                     cause.addSuppressed(suppress);
 
                 }
+                listeners.rollbackEnd(ctx);
 
                 if (cause instanceof RuntimeException) {
                     throw (RuntimeException) cause;

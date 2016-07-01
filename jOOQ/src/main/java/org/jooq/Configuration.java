@@ -263,6 +263,12 @@ public interface Configuration extends Serializable {
     TransactionProvider transactionProvider();
 
     /**
+     * Get the configured <code>TransactionListenerProvider</code>s from this
+     * configuration.
+     */
+    TransactionListenerProvider[] transactionListenerProviders();
+
+    /**
      * Get this configuration's underlying record mapper provider.
      */
     RecordMapperProvider recordMapperProvider();
@@ -473,6 +479,18 @@ public interface Configuration extends Serializable {
     Configuration set(VisitListenerProvider... newVisitListenerProviders);
 
     /**
+     * Change this configuration to hold a new transaction listener providers.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newTransactionListenerProviders The new transaction listener
+     *            providers to be contained in the changed configuration.
+     * @return The changed configuration.
+     */
+    Configuration set(TransactionListenerProvider... newTransactionListenerProviders);
+
+    /**
      * Change this configuration to hold a new converter provider.
      * <p>
      * This method is not thread-safe and should not be used in globally
@@ -611,6 +629,16 @@ public interface Configuration extends Serializable {
      * @return The derived configuration.
      */
     Configuration derive(VisitListenerProvider... newVisitListenerProviders);
+
+    /**
+     * Create a derived configuration from this one, with new transaction
+     * listener providers.
+     *
+     * @param newTransactionListenerProviders The new transaction listener
+     *            providers to be contained in the derived configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(TransactionListenerProvider... newTransactionListenerProviders);
 
     /**
      * Create a derived configuration from this one, with new converter

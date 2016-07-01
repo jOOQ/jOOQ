@@ -73,9 +73,8 @@ public class DefaultVisitListenerProvider implements VisitListenerProvider, Seri
     public static VisitListenerProvider[] providers(VisitListener... listeners) {
         VisitListenerProvider[] result = new VisitListenerProvider[listeners.length];
 
-        for (int i = 0; i < listeners.length; i++) {
+        for (int i = 0; i < listeners.length; i++)
             result[i] = new DefaultVisitListenerProvider(listeners[i]);
-        }
 
         return result;
     }

@@ -42,18 +42,18 @@ package org.jooq.impl;
 
 import java.io.Serializable;
 
-import org.jooq.ExecuteListener;
-import org.jooq.ExecuteListenerProvider;
+import org.jooq.TransactionListener;
+import org.jooq.TransactionListenerProvider;
 
 /**
- * A default implementation for {@link ExecuteListenerProvider}.
+ * A default implementation for {@link TransactionListenerProvider}.
  * <p>
- * This implementation just wraps an instance of {@link ExecuteListener}, always
+ * This implementation just wraps an instance of {@link TransactionListener}, always
  * providing the same.
  *
  * @author Lukas Eder
  */
-public class DefaultExecuteListenerProvider implements ExecuteListenerProvider, Serializable {
+public class DefaultTransactionListenerProvider implements TransactionListenerProvider, Serializable {
 
     /**
      * Generated UID.
@@ -63,18 +63,18 @@ public class DefaultExecuteListenerProvider implements ExecuteListenerProvider, 
     /**
      * The delegate listener.
      */
-    private final ExecuteListener listener;
+    private final TransactionListener listener;
 
     /**
      * Convenience method to construct an array of
-     * <code>DefaultExecuteListenerProvider</code> from an array of
-     * <code>ExecuteListener</code> instances.
+     * <code>DefaultTransactionListenerProvider</code> from an array of
+     * <code>TransactionListener</code> instances.
      */
-    public static ExecuteListenerProvider[] providers(ExecuteListener... listeners) {
-        ExecuteListenerProvider[] result = new ExecuteListenerProvider[listeners.length];
+    public static TransactionListenerProvider[] providers(TransactionListener... listeners) {
+        TransactionListenerProvider[] result = new TransactionListenerProvider[listeners.length];
 
         for (int i = 0; i < listeners.length; i++)
-            result[i] = new DefaultExecuteListenerProvider(listeners[i]);
+            result[i] = new DefaultTransactionListenerProvider(listeners[i]);
 
         return result;
     }
@@ -84,7 +84,7 @@ public class DefaultExecuteListenerProvider implements ExecuteListenerProvider, 
      *
      * @param listener The argument listener.
      */
-    public DefaultExecuteListenerProvider(ExecuteListener listener) {
+    public DefaultTransactionListenerProvider(TransactionListener listener) {
         this.listener = listener;
     }
 
@@ -92,7 +92,7 @@ public class DefaultExecuteListenerProvider implements ExecuteListenerProvider, 
      * {@inheritDoc}
      */
     @Override
-    public final ExecuteListener provide() {
+    public final TransactionListener provide() {
         return listener;
     }
 

@@ -73,9 +73,8 @@ public class DefaultRecordListenerProvider implements RecordListenerProvider, Se
     public static RecordListenerProvider[] providers(RecordListener... listeners) {
         RecordListenerProvider[] result = new RecordListenerProvider[listeners.length];
 
-        for (int i = 0; i < listeners.length; i++) {
+        for (int i = 0; i < listeners.length; i++)
             result[i] = new DefaultRecordListenerProvider(listeners[i]);
-        }
 
         return result;
     }

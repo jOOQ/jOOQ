@@ -42,18 +42,25 @@ package org.jooq.tools.jdbc;
 
 import java.sql.Connection;
 import java.util.Map;
+import java.util.concurrent.Executor;
 
 import javax.sql.DataSource;
 
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
 import org.jooq.ConverterProvider;
+import org.jooq.ExecuteListener;
 import org.jooq.ExecuteListenerProvider;
 import org.jooq.ExecutorProvider;
+import org.jooq.RecordListener;
 import org.jooq.RecordListenerProvider;
+import org.jooq.RecordMapper;
 import org.jooq.RecordMapperProvider;
 import org.jooq.SQLDialect;
+import org.jooq.TransactionListener;
+import org.jooq.TransactionListenerProvider;
 import org.jooq.TransactionProvider;
+import org.jooq.VisitListener;
 import org.jooq.VisitListenerProvider;
 import org.jooq.conf.Settings;
 
@@ -133,6 +140,11 @@ public class MockConfiguration implements Configuration {
     }
 
     @Override
+    public TransactionListenerProvider[] transactionListenerProviders() {
+        return delegate.transactionListenerProviders();
+    }
+
+    @Override
     public ConverterProvider converterProvider() {
         return delegate.converterProvider();
     }
@@ -173,6 +185,11 @@ public class MockConfiguration implements Configuration {
     }
 
     @Override
+    public Configuration set(Executor newExecutor) {
+        return delegate.set(newExecutor);
+    }
+
+    @Override
     public Configuration set(ExecutorProvider newExecutorProvider) {
         return delegate.set(newExecutorProvider);
     }
@@ -183,8 +200,18 @@ public class MockConfiguration implements Configuration {
     }
 
     @Override
+    public Configuration set(RecordMapper<?, ?> newRecordMapper) {
+        return delegate.set(newRecordMapper);
+    }
+
+    @Override
     public Configuration set(RecordMapperProvider newRecordMapperProvider) {
         return delegate.set(newRecordMapperProvider);
+    }
+
+    @Override
+    public Configuration set(RecordListener... newRecordListeners) {
+        return delegate.set(newRecordListeners);
     }
 
     @Override
@@ -193,13 +220,33 @@ public class MockConfiguration implements Configuration {
     }
 
     @Override
+    public Configuration set(ExecuteListener... newExecuteListeners) {
+        return delegate.set(newExecuteListeners);
+    }
+
+    @Override
     public Configuration set(ExecuteListenerProvider... newExecuteListenerProviders) {
         return delegate.set(newExecuteListenerProviders);
     }
 
     @Override
+    public Configuration set(VisitListener... newVisitListeners) {
+        return delegate.set(newVisitListeners);
+    }
+
+    @Override
     public Configuration set(VisitListenerProvider... newVisitListenerProviders) {
         return delegate.set(newVisitListenerProviders);
+    }
+
+    @Override
+    public Configuration set(TransactionListener... newTransactionListeners) {
+        return delegate.set(newTransactionListeners);
+    }
+
+    @Override
+    public Configuration set(TransactionListenerProvider... newTransactionListenerProviders) {
+        return delegate.set(newTransactionListenerProviders);
     }
 
     @Override
@@ -223,16 +270,6 @@ public class MockConfiguration implements Configuration {
     }
 
     @Override
-    public Configuration derive(ConnectionProvider newConnectionProvider) {
-        return delegate.derive(newConnectionProvider);
-    }
-
-    @Override
-    public Configuration derive(ExecutorProvider newExecutorProvider) {
-        return delegate.derive(newExecutorProvider);
-    }
-
-    @Override
     public Configuration derive(Connection newConnection) {
         return delegate.derive(newConnection);
     }
@@ -243,8 +280,28 @@ public class MockConfiguration implements Configuration {
     }
 
     @Override
+    public Configuration derive(ConnectionProvider newConnectionProvider) {
+        return delegate.derive(newConnectionProvider);
+    }
+
+    @Override
+    public Configuration derive(Executor newExecutor) {
+        return delegate.derive(newExecutor);
+    }
+
+    @Override
+    public Configuration derive(ExecutorProvider newExecutorProvider) {
+        return delegate.derive(newExecutorProvider);
+    }
+
+    @Override
     public Configuration derive(TransactionProvider newTransactionProvider) {
         return delegate.derive(newTransactionProvider);
+    }
+
+    @Override
+    public Configuration derive(RecordMapper<?, ?> newRecordMapper) {
+        return delegate.derive(newRecordMapper);
     }
 
     @Override
@@ -253,8 +310,18 @@ public class MockConfiguration implements Configuration {
     }
 
     @Override
+    public Configuration derive(RecordListener... newRecordListeners) {
+        return delegate.derive(newRecordListeners);
+    }
+
+    @Override
     public Configuration derive(RecordListenerProvider... newRecordListenerProviders) {
         return delegate.derive(newRecordListenerProviders);
+    }
+
+    @Override
+    public Configuration derive(ExecuteListener... newExecuteListeners) {
+        return delegate.derive(newExecuteListeners);
     }
 
     @Override
@@ -263,8 +330,23 @@ public class MockConfiguration implements Configuration {
     }
 
     @Override
+    public Configuration derive(VisitListener... newVisitListeners) {
+        return delegate.derive(newVisitListeners);
+    }
+
+    @Override
     public Configuration derive(VisitListenerProvider... newVisitListenerProviders) {
         return delegate.derive(newVisitListenerProviders);
+    }
+
+    @Override
+    public Configuration derive(TransactionListener... newTransactionListeners) {
+        return delegate.derive(newTransactionListeners);
+    }
+
+    @Override
+    public Configuration derive(TransactionListenerProvider... newTransactionListenerProviders) {
+        return delegate.derive(newTransactionListenerProviders);
     }
 
     @Override

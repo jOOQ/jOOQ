@@ -717,7 +717,7 @@ public class DefaultConfiguration implements Configuration {
         if (newConnectionProvider != null) {
             if (transactionProvider instanceof ThreadLocalTransactionProvider &&
               !(newConnectionProvider instanceof ThreadLocalConnectionProvider))
-                throw new ConfigurationException("Cannot override ConnectionProvider when Configuration contains a ThreadLocalTransactionProvider");
+                throw new ConfigurationException("Cannot specify custom ConnectionProvider when Configuration contains a ThreadLocalTransactionProvider");
 
             this.connectionProvider = newConnectionProvider;
         }

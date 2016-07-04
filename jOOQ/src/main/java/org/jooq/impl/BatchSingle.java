@@ -184,9 +184,13 @@ final class BatchSingle implements BatchBindStep {
     }
 
     private final void checkBindValues() {
-        for (int i = 0; i < allBindValues.size(); i++)
-            if (allBindValues.get(i).length != expectedBindValues)
-                log.info("Bind value count", "Batch bind value set " + i + " has " + allBindValues.get(i).length + " values when " + expectedBindValues + " values were expected");
+
+        // [#4071] Help users debug cases where bind value counts don't match the expected number
+        // [#5362] Don't do this for plain SQL queries
+        if (expectedBindValues > 0)
+            for (int i = 0; i < allBindValues.size(); i++)
+                if (allBindValues.get(i).length != expectedBindValues)
+                    log.info("Bind value count", "Batch bind value set " + i + " has " + allBindValues.get(i).length + " values when " + expectedBindValues + " values were expected");
     }
 
     private final int[] executePrepared() {

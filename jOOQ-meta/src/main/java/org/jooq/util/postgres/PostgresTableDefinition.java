@@ -122,7 +122,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
 			    record.get(COLUMNS.COLUMN_NAME),
 			    record.get(COLUMNS.ORDINAL_POSITION, int.class),
 			    type,
-			    defaultString(record.get(COLUMNS.COLUMN_DEFAULT)).startsWith("nextval"),
+			    defaultString(record.get(COLUMNS.COLUMN_DEFAULT)).trim().toLowerCase().startsWith("nextval"),
 			    record.get(PG_DESCRIPTION.DESCRIPTION)
 		    );
 

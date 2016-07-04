@@ -2069,6 +2069,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         switch (type) {
             case JOIN:
+            case STRAIGHT_JOIN:
             case LEFT_SEMI_JOIN:
             case LEFT_ANTI_JOIN:
             case FULL_OUTER_JOIN: {
@@ -2099,6 +2100,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
                 joined = getFrom().get(index).join(table, type);
                 break;
+
+            default: throw new IllegalArgumentException("Bad join type: " + type);
         }
 
         getFrom().set(index, joined);

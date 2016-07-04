@@ -43,6 +43,7 @@ package org.jooq.util;
 
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
 import static org.jooq.tools.StringUtils.defaultString;
 import static org.jooq.util.AbstractGenerator.Language.JAVA;
@@ -4965,7 +4966,8 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         // [#3942] PostgreSQL treats UDTs and table types in similar ways
-        else if (db.getTable(schema, u) != null) {
+        // [#5334] In MySQL, the user type is (ab)used for synthetic enum types. This can lead to accidental matches here
+        else if (db.getDialect().family() == POSTGRES && db.getTable(schema, u) != null) {
             type = getStrategy().getFullJavaClassName(db.getTable(schema, u), udtMode);
         }
 
@@ -5022,7 +5024,8 @@ public class JavaGenerator extends AbstractGenerator {
             sb.append(".getDataType()");
         }
         // [#3942] PostgreSQL treats UDTs and table types in similar ways
-        else if (db.getTable(schema, u) != null) {
+        // [#5334] In MySQL, the user type is (ab)used for synthetic enum types. This can lead to accidental matches here
+        else if (db.getDialect().family() == POSTGRES && db.getTable(schema, u) != null) {
             sb.append(getStrategy().getFullJavaIdentifier(db.getTable(schema, u)));
             sb.append(".getDataType()");
         }

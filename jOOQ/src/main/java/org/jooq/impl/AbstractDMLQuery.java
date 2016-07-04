@@ -482,8 +482,11 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
             if (table.fields().length > 0)
                 returned = returned.into(table);
 
-            result = returned.size();
-            ctx.rows(result);
+            // [#5366] HSQLDB currently doesn't support fetching updated records in UPDATE statements.
+            if (returned.size() > 0) {
+                result = returned.size();
+                ctx.rows(result);
+            }
 
             return result;
         }

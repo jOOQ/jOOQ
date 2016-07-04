@@ -52,6 +52,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import static java.util.Collections.singletonList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -120,6 +121,7 @@ public abstract class AbstractDatabase implements Database {
     private String[]                                                         recordVersionFields;
     private String[]                                                         recordTimestampFields;
     private String[]                                                         syntheticPrimaryKeys;
+    private String[]                                                         syntheticIdentities;
     private String[]                                                         overridePrimaryKeys;
     private boolean                                                          supportsUnsignedTypes;
     private boolean                                                          ignoreProcedureReturnValues;
@@ -686,6 +688,21 @@ public abstract class AbstractDatabase implements Database {
         }
 
         return syntheticPrimaryKeys;
+    }
+
+    @Override
+    public void setSyntheticIdentities(String[] syntheticIdentities) {
+        if (syntheticIdentities.length > 0 && !syntheticIdentities[0].isEmpty()) {
+            this.syntheticIdentities = syntheticIdentities;
+        }
+    }
+
+    @Override
+    public final boolean isSyntheticIdentity(ColumnDefinition columnDefinition) {
+        if (syntheticIdentities == null) {
+            return false;
+        }
+        return !filterExcludeInclude(singletonList(columnDefinition), null, syntheticIdentities, filters).isEmpty();
     }
 
     @Override

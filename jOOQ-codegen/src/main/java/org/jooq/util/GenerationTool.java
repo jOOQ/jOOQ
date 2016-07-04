@@ -373,6 +373,7 @@ public class GenerationTool {
             database.setRecordTimestampFields(new String[] { defaultString(d.getRecordTimestampFields()) });
             database.setSyntheticPrimaryKeys(new String[] { defaultString(d.getSyntheticPrimaryKeys()) });
             database.setOverridePrimaryKeys(new String[] { defaultString(d.getOverridePrimaryKeys()) });
+            database.setSyntheticIdentities(new String[] { defaultString(d.getSyntheticIdentities()) });
             database.setConfiguredCustomTypes(d.getCustomTypes());
             database.setConfiguredEnumTypes(d.getEnumTypes());
             database.setConfiguredForcedTypes(d.getForcedTypes());

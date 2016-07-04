@@ -425,6 +425,18 @@ public interface Database {
     String[] getSyntheticPrimaryKeys();
 
     /**
+     * Columns matching these regular expressions will be considered as identity
+     * columns in generated code.
+     */
+    void setSyntheticIdentities(String[] syntheticIdentityPattern);
+
+    /**
+     * Returns true if the given column is considered a synthetic identity column
+     * as defined by the pattern(s) passed to setSyntheticIdentities [#5360]
+     */
+    boolean isSyntheticIdentity(ColumnDefinition columnDefinition);
+
+    /**
      * Unique keys matching these regular expressions will be considered as
      * primary keys in generated code.
      */

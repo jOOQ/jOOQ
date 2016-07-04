@@ -187,7 +187,7 @@ public class PostgresMaterializedViewDefinition extends AbstractTableDefinition 
 			    record.get(PG_DESCRIPTION.DESCRIPTION)
 		    );
 
-			result.add(column);
+			result.add(applySyntheticIdentities(column));
 		}
 
 		return result;

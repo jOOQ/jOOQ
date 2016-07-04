@@ -10,6 +10,44 @@ http://www.jooq.org/notes
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.8.3 - July 4, 2016
+================================================================================
+
+This is a patch release with some useful fixes for the 3.8 branch
+
+Features and Improvements
+-------------------------
+#5338 - Log a warning in the code generator if a table is reported to have two identity columns
+
+Bug Fixes
+---------
+#5324 - Wrong precision generated in automatic CAST for DB2 and other databases
+#5336 - Column default expressions using sequences are not treated as identity columns in H2
+#5339 - Nested record generated when TABLE.COLUMN "overlaps" with a table called TABLE_COLUMN for MySQL
+#5359 - Incorrect order of HSQL column definition tokens: "DEFAULT" and "NULL"
+#5365 - Avoid parsing ? in plain SQL if followed immediately by another operator-like character in PostgreSQL
+#5367 - Record.update() produces wrong update counts in HSQLDB
+#5369 - Plain SQL batches produce wrong INFO messages about bind value count mismatches
+#5381 - MySQL STRAIGHT_JOIN is not implemented correctly
+#5386 - Excessive WARN log level when a generated object has no name
+
+Version 3.8.2 - May 27, 2016
+================================================================================
+
+This is a patch release with some useful fixes for the 3.8 branch
+
+Features and Improvements
+-------------------------
+#5287 - Add more meaningful error handling when Maven code generator is not configured correctly
+
+Bug Fixes
+---------
+#5270 - Compile error when a schema has the same name as a table within that schema
+#5281 - Bad Javadoc on dropTable() statements
+#5292 - Internal Cache$Key is not Serializable
+#5300 - Bad DataType.defaultValue() call generated for MySQL tables
+#5304 - Code generator aborts catalog browsing on SQL Server as soon as user is denied access to a single catalog
+
 Version 3.8.1 - May 13, 2016
 ================================================================================
 

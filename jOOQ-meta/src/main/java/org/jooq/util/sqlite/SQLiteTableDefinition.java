@@ -108,7 +108,7 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
                 null
             );
 
-            result.add(applySyntheticIdentities(column));
+            result.add(column);
         }
 
         return result;

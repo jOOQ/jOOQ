@@ -198,8 +198,8 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
 			    null
 		    );
 
-            result.add(applySyntheticIdentities(column));
-        }
+			result.add(column);
+		}
 
 		return result;
 	}

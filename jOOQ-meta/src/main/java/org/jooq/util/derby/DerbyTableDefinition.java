@@ -110,7 +110,7 @@ public class DerbyTableDefinition extends AbstractTableDefinition {
                 null
             );
 
-			result.add(applySyntheticIdentities(column));
+			result.add(column);
 		}
 
 		return result;

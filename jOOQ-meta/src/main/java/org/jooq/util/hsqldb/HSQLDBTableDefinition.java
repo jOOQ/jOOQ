@@ -118,7 +118,7 @@ public class HSQLDBTableDefinition extends AbstractTableDefinition {
 			    null
 		    );
 
-			result.add(applySyntheticIdentities(column));
+			result.add(column);
 		}
 
 		return result;

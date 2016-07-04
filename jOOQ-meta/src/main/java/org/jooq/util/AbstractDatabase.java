@@ -52,7 +52,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
-import static java.util.Collections.singletonList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -121,8 +120,8 @@ public abstract class AbstractDatabase implements Database {
     private String[]                                                         recordVersionFields;
     private String[]                                                         recordTimestampFields;
     private String[]                                                         syntheticPrimaryKeys;
-    private String[]                                                         syntheticIdentities;
     private String[]                                                         overridePrimaryKeys;
+    private String[]                                                         syntheticIdentities;
     private boolean                                                          supportsUnsignedTypes;
     private boolean                                                          ignoreProcedureReturnValues;
     private boolean                                                          dateAsTimestamp;
@@ -691,21 +690,6 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
-    public void setSyntheticIdentities(String[] syntheticIdentities) {
-        if (syntheticIdentities.length > 0 && !syntheticIdentities[0].isEmpty()) {
-            this.syntheticIdentities = syntheticIdentities;
-        }
-    }
-
-    @Override
-    public final boolean isSyntheticIdentity(ColumnDefinition columnDefinition) {
-        if (syntheticIdentities == null) {
-            return false;
-        }
-        return !filterExcludeInclude(singletonList(columnDefinition), null, syntheticIdentities, filters).isEmpty();
-    }
-
-    @Override
     public void setOverridePrimaryKeys(String[] overridePrimaryKeys) {
         this.overridePrimaryKeys = overridePrimaryKeys;
     }
@@ -717,6 +701,19 @@ public abstract class AbstractDatabase implements Database {
         }
 
         return overridePrimaryKeys;
+    }
+
+    @Override
+    public void setSyntheticIdentities(String[] syntheticIdentities) {
+        this.syntheticIdentities = syntheticIdentities;
+    }
+
+    @Override
+    public final String[] getSyntheticIdentities() {
+        if (syntheticIdentities == null) {
+            syntheticIdentities = new String[0];
+        }
+        return syntheticIdentities;
     }
 
     @Override

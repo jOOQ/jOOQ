@@ -41,6 +41,8 @@
 
 package org.jooq.util;
 
+import static java.util.Collections.singletonList;
+
 import java.util.List;
 
 /**
@@ -61,7 +63,13 @@ public class DefaultColumnDefinition
         super(table, name, position, type, comment);
 
         this.position = position;
-        this.isIdentity = isIdentity;
+        this.isIdentity = isIdentity || isSyntheticIdentity(this);
+    }
+
+    private static boolean isSyntheticIdentity(DefaultColumnDefinition column) {
+        AbstractDatabase db = (AbstractDatabase) column.getDatabase();
+        String[] syntheticIdentities = db.getSyntheticIdentities();
+        return !db.filterExcludeInclude(singletonList(column), null, syntheticIdentities, db.getFilters()).isEmpty();
     }
 
     @Override

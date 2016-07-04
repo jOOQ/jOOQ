@@ -126,7 +126,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
 			    record.get(PG_DESCRIPTION.DESCRIPTION)
 		    );
 
-			result.add(applySyntheticIdentities(column));
+			result.add(column);
 		}
 
 		return result;

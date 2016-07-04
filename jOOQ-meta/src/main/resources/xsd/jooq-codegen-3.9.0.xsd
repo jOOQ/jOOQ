@@ -439,12 +439,6 @@
       <element name="recordTimestampFields" type="string" default="" minOccurs="0" maxOccurs="1" />
 
       <!--
-        A regular expression matching all columns that represent identities
-        To be used if columns are not detected as automatically as identities
-      -->
-      <element name="syntheticIdentities" type="string" default="" minOccurs="0" maxOccurs="1"/>
-
-      <!--
         A regular expression matching all columns that participate in "synthetic" primary keys,
         which should be placed on generated UpdatableRecords, to be used with
 
@@ -471,6 +465,12 @@
         This flag will also replace synthetic primary keys, if it matches.
         -->
       <element name="overridePrimaryKeys" type="string" default="" minOccurs="0" maxOccurs="1" />
+
+      <!--
+        A regular expression matching all columns that represent identities
+        To be used if columns are not detected as automatically as identities.
+        -->
+      <element name="syntheticIdentities" type="string" default="" minOccurs="0" maxOccurs="1"/>
 
       <!--
         Generate java.sql.Timestamp fields for DATE columns. This is

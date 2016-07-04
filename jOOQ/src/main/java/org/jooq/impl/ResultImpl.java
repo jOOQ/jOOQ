@@ -86,6 +86,7 @@ import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.JSONFormat;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -125,6 +126,7 @@ import org.jooq.exception.InvalidResultException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.MockResultSet;
+import org.jooq.tools.json.JSONArray;
 import org.jooq.tools.json.JSONObject;
 
 import org.w3c.dom.Document;
@@ -871,56 +873,97 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
     }
 
     @Override
+    public final String formatJSON(JSONFormat format) {
+        StringWriter writer = new StringWriter();
+        formatJSON(writer, format);
+        return writer.toString();
+    }
+
+    @Override
     public final void formatJSON(OutputStream stream) {
         formatJSON(new OutputStreamWriter(stream));
     }
 
     @Override
+    public final void formatJSON(OutputStream stream, JSONFormat format) {
+        formatJSON(new OutputStreamWriter(stream), format);
+    }
+
+    @Override
     public final void formatJSON(Writer writer) {
+        formatJSON(writer, new JSONFormat());
+    }
+
+    @Override
+    public final void formatJSON(Writer writer, JSONFormat format) {
         try {
-            List<Map<String, String>> f = new ArrayList<Map<String, String>>();
-            List<List<Object>> r = new ArrayList<List<Object>>();
+            List<Map<String, String>> f = null;
+            List<Object> r = new ArrayList<Object>();
 
-            Map<String, String> fieldMap;
-            for (Field<?> field : fields.fields) {
-                fieldMap = new LinkedHashMap<String, String>();
+            if (format.header()) {
+                f = new ArrayList<Map<String, String>>();
 
-                if (field instanceof TableField) {
-                    Table<?> table = ((TableField<?, ?>) field).getTable();
+                for (Field<?> field : fields.fields) {
+                    Map<String, String> fieldMap = new LinkedHashMap<String, String>();
 
-                    if (table != null) {
-                        Schema schema = table.getSchema();
+                    if (field instanceof TableField) {
+                        Table<?> table = ((TableField<?, ?>) field).getTable();
 
-                        if (schema != null) {
-                            fieldMap.put("schema", schema.getName());
+                        if (table != null) {
+                            Schema schema = table.getSchema();
+
+                            if (schema != null)
+                                fieldMap.put("schema", schema.getName());
+
+                            fieldMap.put("table", table.getName());
                         }
-
-                        fieldMap.put("table", table.getName());
                     }
+
+                    fieldMap.put("name", field.getName());
+                    fieldMap.put("type", field.getDataType().getTypeName().toUpperCase());
+
+                    f.add(fieldMap);
                 }
-
-                fieldMap.put("name", field.getName());
-                fieldMap.put("type", field.getDataType().getTypeName().toUpperCase());
-
-                f.add(fieldMap);
             }
 
-            for (Record record : this) {
-                List<Object> list = new ArrayList<Object>();
+            switch (format.recordFormat()) {
+                case ARRAY:
+                    for (Record record : this) {
+                        List<Object> list = new ArrayList<Object>();
 
-                for (int index = 0; index < fields.fields.length; index++) {
-                    list.add(formatJSON0(record.get(index)));
-                }
+                        for (int index = 0; index < fields.fields.length; index++)
+                            list.add(formatJSON0(record.get(index)));
 
-                r.add(list);
+                        r.add(list);
+                    }
+
+                    break;
+                case OBJECT:
+                    for (Record record : this) {
+                        Map<String, Object> map = new LinkedHashMap<String, Object>();
+
+                        for (int index = 0; index < fields.fields.length; index++)
+                            map.put(record.field(index).getName(), formatJSON0(record.get(index)));
+
+                        r.add(map);
+                    }
+
+                    break;
+                default:
+                    throw new IllegalArgumentException("Format not supported: " + format);
             }
 
-            Map<String, List<?>> map = new LinkedHashMap<String, List<?>>();
+            if (f == null) {
+                writer.append(JSONArray.toJSONString(r));
+            }
+            else {
+                Map<String, List<?>> map = new LinkedHashMap<String, List<?>>();
 
-            map.put("fields", f);
-            map.put("records", r);
+                map.put("fields", f);
+                map.put("records", r);
 
-            writer.append(JSONObject.toJSONString(map));
+                writer.append(JSONObject.toJSONString(map));
+            }
 
             writer.flush();
         }

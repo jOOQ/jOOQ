@@ -608,6 +608,15 @@ public interface Result<R extends Record> extends List<R>, Attachable {
     String formatJSON();
 
     /**
+     * Get a simple formatted representation of this result as a JSON data
+     * structure, according to the format.
+     *
+     * @return The formatted result
+     * @see JSONFormat
+     */
+    String formatJSON(JSONFormat format);
+
+    /**
      * Get this result formatted as XML.
      *
      * @see <a
@@ -712,6 +721,13 @@ public interface Result<R extends Record> extends List<R>, Attachable {
     void formatJSON(OutputStream stream) throws IOException;
 
     /**
+     * Like {@link #formatJSON(JSONFormat)}, but the data is output onto an {@link OutputStream}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatJSON(OutputStream stream, JSONFormat format) throws IOException;
+
+    /**
      * Like {@link #formatXML()}, but the data is output onto an {@link OutputStream}.
      *
      * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
@@ -808,6 +824,13 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
      */
     void formatJSON(Writer writer) throws IOException;
+
+    /**
+     * Like {@link #formatJSON(JSONFormat)}, but the data is output onto a {@link Writer}.
+     *
+     * @throws IOException - an unchecked wrapper for {@link java.io.IOException}, if anything goes wrong.
+     */
+    void formatJSON(Writer writer, JSONFormat format) throws IOException;
 
     /**
      * Like {@link #formatXML()}, but the data is output onto a {@link Writer}.

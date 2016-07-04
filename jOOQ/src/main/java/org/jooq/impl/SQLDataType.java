@@ -109,9 +109,23 @@ public final class SQLDataType {
     public static final DataType<String> VARCHAR = new DefaultDataType<String>(null, String.class, "varchar");
 
     /**
+     * The {@link Types#VARCHAR} type.
+     */
+    public static final DataType<String> VARCHAR(int length) {
+        return VARCHAR.length(length);
+    }
+
+    /**
      * The {@link Types#CHAR} type.
      */
     public static final DataType<String> CHAR = new DefaultDataType<String>(null, String.class, "char");
+
+    /**
+     * The {@link Types#CHAR} type.
+     */
+    public static final DataType<String> CHAR(int length) {
+        return CHAR.length(length);
+    }
 
     /**
      * The {@link Types#LONGVARCHAR} type.
@@ -119,9 +133,23 @@ public final class SQLDataType {
     public static final DataType<String> LONGVARCHAR = new DefaultDataType<String>(null, String.class, "longvarchar");
 
     /**
+     * The {@link Types#LONGVARCHAR} type.
+     */
+    public static final DataType<String> LONGVARCHAR(int length) {
+        return LONGVARCHAR.length(length);
+    }
+
+    /**
      * The {@link Types#CLOB} type.
      */
     public static final DataType<String> CLOB = new DefaultDataType<String>(null, String.class, "clob");
+
+    /**
+     * The {@link Types#CLOB} type.
+     */
+    public static final DataType<String> CLOB(int length) {
+        return CLOB.length(length);
+    }
 
     /**
      * The {@link Types#NVARCHAR} type.
@@ -129,9 +157,23 @@ public final class SQLDataType {
     public static final DataType<String> NVARCHAR = new DefaultDataType<String>(null, String.class, "nvarchar");
 
     /**
+     * The {@link Types#NVARCHAR} type.
+     */
+    public static final DataType<String> NVARCHAR(int length) {
+        return NVARCHAR.length(length);
+    }
+
+    /**
      * The {@link Types#NCHAR} type.
      */
     public static final DataType<String> NCHAR = new DefaultDataType<String>(null, String.class, "nchar");
+
+    /**
+     * The {@link Types#NCHAR} type.
+     */
+    public static final DataType<String> NCHAR(int length) {
+        return NCHAR.length(length);
+    }
 
     /**
      * The {@link Types#LONGNVARCHAR} type.
@@ -139,9 +181,23 @@ public final class SQLDataType {
     public static final DataType<String> LONGNVARCHAR = new DefaultDataType<String>(null, String.class, "longnvarchar");
 
     /**
+     * The {@link Types#LONGNVARCHAR} type.
+     */
+    public static final DataType<String> LONGNVARCHAR(int length) {
+        return LONGNVARCHAR.length(length);
+    }
+
+    /**
      * The {@link Types#NCLOB} type.
      */
     public static final DataType<String> NCLOB = new DefaultDataType<String>(null, String.class, "nclob");
+
+    /**
+     * The {@link Types#NCLOB} type.
+     */
+    public static final DataType<String> NCLOB(int length) {
+        return NCLOB.length(length);
+    }
 
     // -------------------------------------------------------------------------
     // Boolean types
@@ -239,9 +295,37 @@ public final class SQLDataType {
     public static final DataType<BigDecimal> NUMERIC = new DefaultDataType<BigDecimal>(null, BigDecimal.class, "numeric");
 
     /**
+     * The {@link Types#NUMERIC} type.
+     */
+    public static final DataType<BigDecimal> NUMERIC(int precision) {
+        return NUMERIC.precision(precision);
+    }
+
+    /**
+     * The {@link Types#NUMERIC} type.
+     */
+    public static final DataType<BigDecimal> NUMERIC(int precision, int scale) {
+        return NUMERIC.precision(precision, scale);
+    }
+
+    /**
      * The {@link Types#DECIMAL} type.
      */
     public static final DataType<BigDecimal> DECIMAL = new DefaultDataType<BigDecimal>(null, BigDecimal.class, "decimal");
+
+    /**
+     * The {@link Types#DECIMAL} type.
+     */
+    public static final DataType<BigDecimal> DECIMAL(int precision) {
+        return DECIMAL.precision(precision);
+    }
+
+    /**
+     * The {@link Types#DECIMAL} type.
+     */
+    public static final DataType<BigDecimal> DECIMAL(int precision, int scale) {
+        return DECIMAL.precision(precision, scale);
+    }
 
     // -------------------------------------------------------------------------
     // Datetime types
@@ -327,9 +411,23 @@ public final class SQLDataType {
     public static final DataType<byte[]> BINARY = new DefaultDataType<byte[]>(null, byte[].class, "binary");
 
     /**
+     * The {@link Types#BINARY} type.
+     */
+    public static final DataType<byte[]> BINARY(int length) {
+        return BINARY.length(length);
+    }
+
+    /**
      * The {@link Types#VARBINARY} type.
      */
     public static final DataType<byte[]> VARBINARY = new DefaultDataType<byte[]>(null, byte[].class, "varbinary");
+
+    /**
+     * The {@link Types#VARBINARY} type.
+     */
+    public static final DataType<byte[]> VARBINARY(int length) {
+        return VARBINARY.length(length);
+    }
 
     /**
      * The {@link Types#LONGVARBINARY} type.
@@ -337,9 +435,23 @@ public final class SQLDataType {
     public static final DataType<byte[]> LONGVARBINARY = new DefaultDataType<byte[]>(null, byte[].class, "longvarbinary");
 
     /**
+     * The {@link Types#LONGVARBINARY} type.
+     */
+    public static final DataType<byte[]> LONGVARBINARY(int length) {
+        return LONGVARBINARY.length(length);
+    }
+
+    /**
      * The {@link Types#BLOB} type.
      */
     public static final DataType<byte[]> BLOB = new DefaultDataType<byte[]>(null, byte[].class, "blob");
+
+    /**
+     * The {@link Types#BLOB} type.
+     */
+    public static final DataType<byte[]> BLOB(int length) {
+        return BLOB.length(length);
+    }
 
     // -------------------------------------------------------------------------
     // Other types

@@ -86,7 +86,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
 
     private static String protectName(String table, String name, int position) {
         if (name == null) {
-            log.warn("Missing name", "Object " + table + " holds a column without a name at position " + position);
+            log.info("Missing name", "Object " + table + " holds a column without a name at position " + position);
             return "_" + position;
         }
 

@@ -45,6 +45,8 @@ import static java.util.Collections.singletonList;
 
 import java.util.List;
 
+import org.jooq.tools.JooqLogger;
+
 /**
  * A base implementation for column definitions.
  *
@@ -54,8 +56,9 @@ public class DefaultColumnDefinition
     extends AbstractTypedElementDefinition<TableDefinition>
     implements ColumnDefinition {
 
-    private final int                  position;
-    private final boolean              isIdentity;
+    private static final JooqLogger log = JooqLogger.getLogger(DefaultColumnDefinition.class);
+    private final int               position;
+    private final boolean           isIdentity;
 
     public DefaultColumnDefinition(TableDefinition table, String name, int position, DataTypeDefinition type,
         boolean isIdentity, String comment) {
@@ -69,7 +72,12 @@ public class DefaultColumnDefinition
     private static boolean isSyntheticIdentity(DefaultColumnDefinition column) {
         AbstractDatabase db = (AbstractDatabase) column.getDatabase();
         String[] syntheticIdentities = db.getSyntheticIdentities();
-        return !db.filterExcludeInclude(singletonList(column), null, syntheticIdentities, db.getFilters()).isEmpty();
+        boolean match = !db.filterExcludeInclude(singletonList(column), null, syntheticIdentities, db.getFilters()).isEmpty();
+
+        if (match)
+            log.info("Synthetic Identity: " + column.getQualifiedName());
+
+        return match;
     }
 
     @Override

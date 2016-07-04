@@ -366,7 +366,7 @@
         You can also provide your own org.jooq.util.Database implementation
         here, if your database is currently not supported
         -->
-      <element name="name" type="string" minOccurs="1" maxOccurs="1" />
+      <element name="name" type="string" minOccurs="0" maxOccurs="1" />
 
       <!--
         The properties that will be passed to the Database instance as configured above.
@@ -898,10 +898,10 @@
       <element name="packageName" type="string" default="org.jooq.generated" minOccurs="0" maxOccurs="1" />
 
       <!-- The destination directory of your generated classes -->
-      <element name="directory" type="string" default="target/generated-sources/jooq" />
+      <element name="directory" type="string" default="target/generated-sources/jooq" minOccurs="0" maxOccurs="1"/>
 
       <!-- The file encoding to be used with all output files. -->
-      <element name="encoding" type="string" default="UTF-8"/>
+      <element name="encoding" type="string" default="UTF-8" minOccurs="0" maxOccurs="1"/>
     </all>
   </complexType>
 

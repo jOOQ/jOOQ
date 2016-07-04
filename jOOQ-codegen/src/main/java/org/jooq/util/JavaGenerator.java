@@ -3356,7 +3356,7 @@ public class JavaGenerator extends AbstractGenerator {
         // [#2921] With instance fields, tables can be renamed.
         else if (generateInstanceFields()) {
             out.tab(1).javadoc("Rename this table");
-            out.override();
+            out.tab(1).override();
             out.tab(1).println("public %s rename(%s name) {", className, String.class);
 
             if (table.isTableValuedFunction())

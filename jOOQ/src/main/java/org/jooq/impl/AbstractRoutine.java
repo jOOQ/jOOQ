@@ -41,6 +41,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
+import static java.util.Arrays.asList;
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_FUNCTION;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -881,6 +882,12 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         return overloaded;
     }
 
+    private final boolean pgArgNeedsCasting(Parameter<?> parameter) {
+        // [#5264] Overloaded methods always need casting for overload resolution
+        //         Some data types also need casting because expressions are automatically promoted to a "higher" type
+        return isOverloaded() || asList(Byte.class, Short.class).contains(parameter.getType());
+    }
+
 
 
 
@@ -1152,6 +1159,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                   : AbstractRoutine.this.type);
         }
 
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         @Override
         public void accept(Context<?> ctx) {
             RenderContext local = create(ctx).renderContext();
@@ -1165,22 +1173,19 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                     continue;
 
                 // Disambiguate overloaded function signatures
-                if (ctx.family() == POSTGRES) {
+                if (ctx.family() == POSTGRES)
 
                     // [#4920] In case there are any unnamed parameters, we mustn't
-                    if (hasUnnamedParameters()) {
-                        if (isOverloaded())
-                            fields.add(getInValues().get(parameter).cast(parameter.getType()));
+                    if (hasUnnamedParameters())
+                        if (pgArgNeedsCasting(parameter))
+                            fields.add(new Cast(getInValues().get(parameter), parameter.getDataType()));
                         else
                             fields.add(getInValues().get(parameter));
-                    }
-                    else {
-                        if (isOverloaded())
-                            fields.add(field("{0} := {1}", name(parameter.getName()), getInValues().get(parameter).cast(parameter.getType())));
+                    else
+                        if (pgArgNeedsCasting(parameter))
+                            fields.add(field("{0} := {1}", name(parameter.getName()), new Cast(getInValues().get(parameter), parameter.getDataType())));
                         else
                             fields.add(field("{0} := {1}", name(parameter.getName()), getInValues().get(parameter)));
-                    }
-                }
                 else
                     fields.add(getInValues().get(parameter));
             }
@@ -1189,9 +1194,8 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
 
             // [#3592] Decrease SQL -> PL/SQL context switches with Oracle Scalar Subquery Caching
-            if (TRUE.equals(settings(ctx.configuration()).isRenderScalarSubqueriesForStoredFunctions())) {
+            if (TRUE.equals(settings(ctx.configuration()).isRenderScalarSubqueriesForStoredFunctions()))
                 result = DSL.select(result).asField();
-            }
 
             ctx.visit(result);
         }

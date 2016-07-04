@@ -69,9 +69,10 @@ import org.jooq.TransactionProvider;
  */
 public class ThreadLocalTransactionProvider implements TransactionProvider {
 
-    final DefaultTransactionProvider        transaction;
-    final ThreadLocalConnectionProvider     connection;
-    final ThreadLocal<Deque<Configuration>> configuration;
+    final DefaultTransactionProvider        delegateTransactionProvider;
+    final ThreadLocalConnectionProvider     localConnectionProvider;
+    final ThreadLocal<Connection>           localTxConnection;
+    final ThreadLocal<Deque<Configuration>> localConfigurations;
 
     public ThreadLocalTransactionProvider(ConnectionProvider provider) {
         this(provider, true);
@@ -81,34 +82,35 @@ public class ThreadLocalTransactionProvider implements TransactionProvider {
      * @param nested Whether nested transactions via {@link Savepoint}s are
      *            supported.
      */
-    public ThreadLocalTransactionProvider(ConnectionProvider provider, boolean nested) {
-        this.connection = new ThreadLocalConnectionProvider(provider);
-        this.transaction = new DefaultTransactionProvider(connection, nested);
-        this.configuration = new ThreadLocal<Deque<Configuration>>();
+    public ThreadLocalTransactionProvider(ConnectionProvider connectionProvider, boolean nested) {
+        this.localConnectionProvider = new ThreadLocalConnectionProvider(connectionProvider);
+        this.delegateTransactionProvider = new DefaultTransactionProvider(localConnectionProvider, nested);
+        this.localConfigurations = new ThreadLocal<Deque<Configuration>>();
+        this.localTxConnection = new ThreadLocal<Connection>();
     }
 
     @Override
     public void begin(TransactionContext ctx) {
-        transaction.begin(ctx);
+        delegateTransactionProvider.begin(ctx);
         configurations().push(ctx.configuration());
-        if (transaction.nestingLevel(ctx.configuration()) == 1)
-            connection.tl.set(((DefaultConnectionProvider) ctx.configuration().data(DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION)).connection);
+        if (delegateTransactionProvider.nestingLevel(ctx.configuration()) == 1)
+            localTxConnection.set(((DefaultConnectionProvider) ctx.configuration().data(DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION)).connection);
     }
 
     @Override
     public void commit(TransactionContext ctx) {
-        if (transaction.nestingLevel(ctx.configuration()) == 1)
-            connection.tl.remove();
+        if (delegateTransactionProvider.nestingLevel(ctx.configuration()) == 1)
+            localTxConnection.remove();
         configurations().pop();
-        transaction.commit(ctx);
+        delegateTransactionProvider.commit(ctx);
     }
 
     @Override
     public void rollback(TransactionContext ctx) {
-        if (transaction.nestingLevel(ctx.configuration()) == 1)
-            connection.tl.remove();
+        if (delegateTransactionProvider.nestingLevel(ctx.configuration()) == 1)
+            localTxConnection.remove();
         configurations().pop();
-        transaction.rollback(ctx);
+        delegateTransactionProvider.rollback(ctx);
     }
 
     Configuration configuration(Configuration fallback) {
@@ -117,13 +119,43 @@ public class ThreadLocalTransactionProvider implements TransactionProvider {
     }
 
     private Deque<Configuration> configurations() {
-        Deque<Configuration> result = configuration.get();
+        Deque<Configuration> result = localConfigurations.get();
 
         if (result == null) {
             result = new ArrayDeque<Configuration>();
-            configuration.set(result);
+            localConfigurations.set(result);
         }
 
         return result;
+    }
+
+    final class ThreadLocalConnectionProvider implements ConnectionProvider {
+
+        final ConnectionProvider delegateConnectionProvider;
+
+        public ThreadLocalConnectionProvider(ConnectionProvider delegate) {
+            this.delegateConnectionProvider = delegate;
+        }
+
+        @Override
+        public final Connection acquire() {
+            Connection local = localTxConnection.get();
+
+            if (local == null)
+                return delegateConnectionProvider.acquire();
+            else
+                return local;
+        }
+
+        @Override
+        public final void release(Connection connection) {
+            Connection local = localTxConnection.get();
+
+            if (local == null)
+                delegateConnectionProvider.release(connection);
+            else if (local != connection)
+                throw new IllegalStateException(
+                    "A different connection was released than the thread-bound one that was expected");
+        }
     }
 }

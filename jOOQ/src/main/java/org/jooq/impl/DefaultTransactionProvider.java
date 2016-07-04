@@ -85,19 +85,19 @@ public class DefaultTransactionProvider implements TransactionProvider {
      */
     private static final Savepoint IGNORED_SAVEPOINT     = new DefaultSavepoint();
 
-    private final ConnectionProvider provider;
+    private final ConnectionProvider connectionProvider;
     private final boolean            nested;
 
-    public DefaultTransactionProvider(ConnectionProvider provider) {
-        this(provider, true);
+    public DefaultTransactionProvider(ConnectionProvider connectionProvider) {
+        this(connectionProvider, true);
     }
 
     /**
      * @param nested Whether nested transactions via {@link Savepoint}s are
      *            supported.
      */
-    public DefaultTransactionProvider(ConnectionProvider provider, boolean nested) {
-        this.provider = provider;
+    public DefaultTransactionProvider(ConnectionProvider connectionProvider, boolean nested) {
+        this.connectionProvider = connectionProvider;
         this.nested = nested;
     }
 
@@ -136,7 +136,7 @@ public class DefaultTransactionProvider implements TransactionProvider {
         DefaultConnectionProvider connectionWrapper = (DefaultConnectionProvider) configuration.data(DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION);
 
         if (connectionWrapper == null) {
-            connectionWrapper = new DefaultConnectionProvider(provider.acquire());
+            connectionWrapper = new DefaultConnectionProvider(connectionProvider.acquire());
             configuration.data(DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION, connectionWrapper);
         }
 
@@ -251,7 +251,7 @@ public class DefaultTransactionProvider implements TransactionProvider {
         //         try-finally will ensure that the ConnectionProvider.release() call is made
         finally {
             if (!start) {
-                provider.release(connection.connection);
+                connectionProvider.release(connection.connection);
                 configuration.data().remove(DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION);
             }
         }

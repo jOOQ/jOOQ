@@ -78,6 +78,7 @@ import org.jooq.VisitListenerProvider;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ConfigurationException;
+import org.jooq.impl.ThreadLocalTransactionProvider.ThreadLocalConnectionProvider;
 
 /**
  * A default implementation for configurations within a {@link DSLContext}, if no
@@ -715,6 +716,8 @@ public class DefaultConfiguration implements Configuration {
     @Override
     public final Configuration set(ConnectionProvider newConnectionProvider) {
         if (newConnectionProvider != null) {
+
+            // TODO Factor out this API in a more formal contract between TransactionProvider and ConnectionProvider
             if (transactionProvider instanceof ThreadLocalTransactionProvider &&
               !(newConnectionProvider instanceof ThreadLocalConnectionProvider))
                 throw new ConfigurationException("Cannot specify custom ConnectionProvider when Configuration contains a ThreadLocalTransactionProvider");
@@ -745,7 +748,7 @@ public class DefaultConfiguration implements Configuration {
             this.transactionProvider = newTransactionProvider;
 
             if (newTransactionProvider instanceof ThreadLocalTransactionProvider)
-                this.connectionProvider = ((ThreadLocalTransactionProvider) newTransactionProvider).connection;
+                this.connectionProvider = ((ThreadLocalTransactionProvider) newTransactionProvider).localConnectionProvider;
         }
         else {
             this.transactionProvider = new NoTransactionProvider();
@@ -945,7 +948,7 @@ public class DefaultConfiguration implements Configuration {
         // local DefaultConnectionProvider, not the one from this configuration
         TransactionProvider tp = transactionProvider();
         ConnectionProvider transactional = tp instanceof ThreadLocalTransactionProvider
-            ? ((ThreadLocalTransactionProvider) tp).connection
+            ? ((ThreadLocalTransactionProvider) tp).localConnectionProvider
             : (ConnectionProvider) data(DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION);
 
         return transactional == null ? connectionProvider : transactional;

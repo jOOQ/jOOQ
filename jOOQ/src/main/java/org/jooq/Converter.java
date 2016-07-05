@@ -107,4 +107,22 @@ public interface Converter<T, U> extends Serializable {
      * The user type
      */
     Class<U> toType();
+
+
+
+    /**
+     * Inverse this converter.
+     */
+    default Converter<U, T> inverse() {
+        return Converters.inverse(this);
+    }
+
+    /**
+     * Chain a converter to this converter.
+     */
+    default <X> Converter<T, X> andThen(Converter<? super U, X> converter) {
+        return Converters.of(this, converter);
+    }
+
+
 }

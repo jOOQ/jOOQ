@@ -110,21 +110,21 @@ public class Converters<T, U> implements Converter<T, U> {
     /**
      * Chain two converters.
      */
-    public static <T, X1, U> Converter<T, U> of(Converter<T, X1> c1, Converter<X1, U> c2) {
+    public static <T, X1, U> Converter<T, U> of(Converter<T, ? extends X1> c1, Converter<? super X1, U> c2) {
         return new Converters(c1, c2);
     }
 
     /**
      * Chain three converters.
      */
-    public static <T, X1, X2, U> Converter<T, U> of(Converter<T, X1> c1, Converter<X1, X2> c2, Converter<X2, U> c3) {
+    public static <T, X1, X2, U> Converter<T, U> of(Converter<T, ? extends X1> c1, Converter<? super X1, ? extends X2> c2, Converter<? super X2, U> c3) {
         return new Converters(c1, c2, c3);
     }
 
     /**
      * Chain four converters.
      */
-    public static <T, X1, X2, X3, U> Converter<T, U> of(Converter<T, X1> c1, Converter<X1, X2> c2, Converter<X2, X3> c3, Converter<X3, U> c4) {
+    public static <T, X1, X2, X3, U> Converter<T, U> of(Converter<T, ? extends X1> c1, Converter<? super X1, ? extends X2> c2, Converter<? super X2, ? extends X3> c3, Converter<? super X3, U> c4) {
         return new Converters(c1, c2, c3, c4);
     }
 

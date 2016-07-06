@@ -304,8 +304,11 @@ public final class Convert {
      * @return The target type object
      * @throws DataTypeException - When the conversion is not possible
      */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static final <U> U convert(Object from, Converter<?, ? extends U> converter) throws DataTypeException {
-        return convert0(from, converter);
+
+        // Raw type cast necessary because of javac compiler bug in 1.8.0_74 (still used by travis)
+        return (U) convert0(from, (Converter) converter);
     }
 
     /**
@@ -405,8 +408,11 @@ public final class Convert {
      * @throws DataTypeException - When the conversion is not possible
      * @see #convert(Object, Converter)
      */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static final <U> List<U> convert(Collection<?> collection, Converter<?, ? extends U> converter) throws DataTypeException {
-        return convert0(collection, converter);
+
+        // Raw type cast necessary because of javac compiler bug in 1.8.0_74 (still used by travis)
+        return convert0(collection, (Converter) converter);
     }
 
     /**

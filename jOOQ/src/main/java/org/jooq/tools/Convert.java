@@ -304,19 +304,15 @@ public final class Convert {
      * @return The target type object
      * @throws DataTypeException - When the conversion is not possible
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static final <U> U convert(Object from, Converter<?, ? extends U> converter) throws DataTypeException {
-
-        // Raw type cast necessary because of javac compiler bug in 1.8.0_74 (still used by travis)
-        return (U) convert0(from, (Converter) converter);
+        return convert0(from, converter);
     }
 
     /**
      * Conversion type-safety
      */
-    @SuppressWarnings("unchecked")
-    private static final <T, U> U convert0(Object from, Converter<? super T, ? extends U> converter) throws DataTypeException {
-        ConvertAll<T> all = new ConvertAll<T>((Class<T>) converter.fromType());
+    private static final <T, U> U convert0(Object from, Converter<T, ? extends U> converter) throws DataTypeException {
+        ConvertAll<T> all = new ConvertAll<T>(converter.fromType());
         return converter.from(all.from(from));
     }
 
@@ -408,19 +404,15 @@ public final class Convert {
      * @throws DataTypeException - When the conversion is not possible
      * @see #convert(Object, Converter)
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static final <U> List<U> convert(Collection<?> collection, Converter<?, ? extends U> converter) throws DataTypeException {
-
-        // Raw type cast necessary because of javac compiler bug in 1.8.0_74 (still used by travis)
-        return convert0(collection, (Converter) converter);
+        return convert0(collection, converter);
     }
 
     /**
      * Type safe conversion
      */
-    @SuppressWarnings("unchecked")
-    private static final <T, U> List<U> convert0(Collection<?> collection, Converter<? super T, ? extends U> converter) throws DataTypeException {
-        ConvertAll<T> all = new ConvertAll<T>((Class<T>) converter.fromType());
+    private static final <T, U> List<U> convert0(Collection<?> collection, Converter<T, ? extends U> converter) throws DataTypeException {
+        ConvertAll<T> all = new ConvertAll<T>(converter.fromType());
         List<U> result = new ArrayList<U>(collection.size());
 
         for (Object o : collection) {

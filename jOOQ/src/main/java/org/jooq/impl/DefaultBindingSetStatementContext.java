@@ -80,7 +80,7 @@ class DefaultBindingSetStatementContext<U> extends AbstractScope implements Bind
     }
 
     @Override
-    public final <T> BindingSetStatementContext<T> convert(Converter<T, U> converter) {
+    public final <T> BindingSetStatementContext<T> convert(Converter<? extends T, ? super U> converter) {
         return new DefaultBindingSetStatementContext<T>(configuration, data, statement, index, converter.to(value));
     }
 

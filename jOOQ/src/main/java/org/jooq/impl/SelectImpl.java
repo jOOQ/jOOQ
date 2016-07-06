@@ -2755,7 +2755,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final <T, U> List<U> fetch(Field<T> field, Converter<? super T, U> converter) {
+    public final <T, U> List<U> fetch(Field<T> field, Converter<? super T, ? extends U> converter) {
         return getDelegate().fetch(field, converter);
     }
 
@@ -2770,7 +2770,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final <U> List<U> fetch(int fieldIndex, Converter<?, U> converter) {
+    public final <U> List<U> fetch(int fieldIndex, Converter<?, ? extends U> converter) {
         return getDelegate().fetch(fieldIndex, converter);
     }
 
@@ -2785,7 +2785,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final <U> List<U> fetch(String fieldName, Converter<?, U> converter) {
+    public final <U> List<U> fetch(String fieldName, Converter<?, ? extends U> converter) {
         return getDelegate().fetch(fieldName, converter);
     }
 
@@ -2800,7 +2800,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final <U> List<U> fetch(Name fieldName, Converter<?, U> converter) {
+    public final <U> List<U> fetch(Name fieldName, Converter<?, ? extends U> converter) {
         return getDelegate().fetch(fieldName, converter);
     }
 
@@ -2815,7 +2815,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final <T, U> U fetchOne(Field<T> field, Converter<? super T, U> converter) {
+    public final <T, U> U fetchOne(Field<T> field, Converter<? super T, ? extends U> converter) {
         return getDelegate().fetchOne(field, converter);
     }
 
@@ -2830,7 +2830,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final <U> U fetchOne(int fieldIndex, Converter<?, U> converter) {
+    public final <U> U fetchOne(int fieldIndex, Converter<?, ? extends U> converter) {
         return getDelegate().fetchOne(fieldIndex, converter);
     }
 
@@ -2845,7 +2845,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final <U> U fetchOne(String fieldName, Converter<?, U> converter) {
+    public final <U> U fetchOne(String fieldName, Converter<?, ? extends U> converter) {
         return getDelegate().fetchOne(fieldName, converter);
     }
 
@@ -2860,7 +2860,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final <U> U fetchOne(Name fieldName, Converter<?, U> converter) {
+    public final <U> U fetchOne(Name fieldName, Converter<?, ? extends U> converter) {
         return getDelegate().fetchOne(fieldName, converter);
     }
 
@@ -2906,7 +2906,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final <T, U> Optional<U> fetchOptional(Field<T> field, Converter<? super T, U> converter) {
+    public final <T, U> Optional<U> fetchOptional(Field<T> field, Converter<? super T, ? extends U> converter) {
         return getDelegate().fetchOptional(field, converter);
     }
 
@@ -2921,7 +2921,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final <U> Optional<U> fetchOptional(int fieldIndex, Converter<?, U> converter) {
+    public final <U> Optional<U> fetchOptional(int fieldIndex, Converter<?, ? extends U> converter) {
         return getDelegate().fetchOptional(fieldIndex, converter);
     }
 
@@ -2936,7 +2936,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final <U> Optional<U> fetchOptional(String fieldName, Converter<?, U> converter) {
+    public final <U> Optional<U> fetchOptional(String fieldName, Converter<?, ? extends U> converter) {
         return getDelegate().fetchOptional(fieldName, converter);
     }
 
@@ -2951,7 +2951,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final <U> Optional<U> fetchOptional(Name fieldName, Converter<?, U> converter) {
+    public final <U> Optional<U> fetchOptional(Name fieldName, Converter<?, ? extends U> converter) {
         return getDelegate().fetchOptional(fieldName, converter);
     }
 
@@ -2997,7 +2997,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final <T, U> U fetchAny(Field<T> field, Converter<? super T, U> converter) {
+    public final <T, U> U fetchAny(Field<T> field, Converter<? super T, ? extends U> converter) {
         return getDelegate().fetchAny(field, converter);
     }
 
@@ -3012,7 +3012,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final <U> U fetchAny(int fieldIndex, Converter<?, U> converter) {
+    public final <U> U fetchAny(int fieldIndex, Converter<?, ? extends U> converter) {
         return getDelegate().fetchAny(fieldIndex, converter);
     }
 
@@ -3027,7 +3027,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final <U> U fetchAny(String fieldName, Converter<?, U> converter) {
+    public final <U> U fetchAny(String fieldName, Converter<?, ? extends U> converter) {
         return getDelegate().fetchAny(fieldName, converter);
     }
 
@@ -3042,7 +3042,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final <U> U fetchAny(Name fieldName, Converter<?, U> converter) {
+    public final <U> U fetchAny(Name fieldName, Converter<?, ? extends U> converter) {
         return getDelegate().fetchAny(fieldName, converter);
     }
 
@@ -3472,7 +3472,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final <U> U[] fetchArray(int fieldIndex, Converter<?, U> converter) {
+    public final <U> U[] fetchArray(int fieldIndex, Converter<?, ? extends U> converter) {
         return getDelegate().fetchArray(fieldIndex, converter);
     }
 
@@ -3487,7 +3487,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final <U> U[] fetchArray(String fieldName, Converter<?, U> converter) {
+    public final <U> U[] fetchArray(String fieldName, Converter<?, ? extends U> converter) {
         return getDelegate().fetchArray(fieldName, converter);
     }
 
@@ -3502,7 +3502,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final <U> U[] fetchArray(Name fieldName, Converter<?, U> converter) {
+    public final <U> U[] fetchArray(Name fieldName, Converter<?, ? extends U> converter) {
         return getDelegate().fetchArray(fieldName, converter);
     }
 
@@ -3517,7 +3517,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final <T, U> U[] fetchArray(Field<T> field, Converter<? super T, U> converter) {
+    public final <T, U> U[] fetchArray(Field<T> field, Converter<? super T, ? extends U> converter) {
         return getDelegate().fetchArray(field, converter);
     }
 
@@ -3532,7 +3532,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final <U> Set<U> fetchSet(int fieldIndex, Converter<?, U> converter) {
+    public final <U> Set<U> fetchSet(int fieldIndex, Converter<?, ? extends U> converter) {
         return getDelegate().fetchSet(fieldIndex, converter);
     }
 
@@ -3547,7 +3547,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final <U> Set<U> fetchSet(String fieldName, Converter<?, U> converter) {
+    public final <U> Set<U> fetchSet(String fieldName, Converter<?, ? extends U> converter) {
         return getDelegate().fetchSet(fieldName, converter);
     }
 
@@ -3562,7 +3562,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final <U> Set<U> fetchSet(Name fieldName, Converter<?, U> converter) {
+    public final <U> Set<U> fetchSet(Name fieldName, Converter<?, ? extends U> converter) {
         return getDelegate().fetchSet(fieldName, converter);
     }
 
@@ -3577,7 +3577,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final <T, U> Set<U> fetchSet(Field<T> field, Converter<? super T, U> converter) {
+    public final <T, U> Set<U> fetchSet(Field<T> field, Converter<? super T, ? extends U> converter) {
         return getDelegate().fetchSet(field, converter);
     }
 

@@ -68,5 +68,5 @@ public interface BindingGetStatementContext<U> extends Scope {
     /**
      * Create a new context from this one using a converter.
      */
-    <T> BindingGetStatementContext<T> convert(Converter<T, U> converter);
+    <T> BindingGetStatementContext<T> convert(Converter<? super T, ? extends U> converter);
 }

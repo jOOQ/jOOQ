@@ -83,7 +83,7 @@ class DefaultBindingGetStatementContext<U> extends AbstractScope implements Bind
     }
 
     @Override
-    public final <T> BindingGetStatementContext<T> convert(final Converter<T, U> converter) {
+    public final <T> BindingGetStatementContext<T> convert(final Converter<? super T, ? extends U> converter) {
         return new DefaultBindingGetStatementContext<T>(configuration, data, statement, index) {
             @Override
             public void value(T v) {

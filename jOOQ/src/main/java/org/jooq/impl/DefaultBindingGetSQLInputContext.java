@@ -76,7 +76,7 @@ class DefaultBindingGetSQLInputContext<U> extends AbstractScope implements Bindi
     }
 
     @Override
-    public final <T> BindingGetSQLInputContext<T> convert(final Converter<T, U> converter) {
+    public final <T> BindingGetSQLInputContext<T> convert(final Converter<? super T, ? extends U> converter) {
         return new DefaultBindingGetSQLInputContext<T>(configuration, data, input) {
             @Override
             public void value(T v) {

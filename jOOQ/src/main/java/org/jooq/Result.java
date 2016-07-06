@@ -324,7 +324,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
      */
-    <T, U> List<U> getValues(Field<T> field, Converter<? super T, U> converter) throws IllegalArgumentException;
+    <T, U> List<U> getValues(Field<T> field, Converter<? super T, ? extends U> converter) throws IllegalArgumentException;
 
     /**
      * Convenience method to fetch all values for a given field. This is
@@ -367,7 +367,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    <U> List<U> getValues(int fieldIndex, Converter<?, U> converter) throws IllegalArgumentException, DataTypeException;
+    <U> List<U> getValues(int fieldIndex, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Convenience method to fetch all values for a given field. This is
@@ -410,7 +410,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    <U> List<U> getValues(String fieldName, Converter<?, U> converter) throws IllegalArgumentException,
+    <U> List<U> getValues(String fieldName, Converter<?, ? extends U> converter) throws IllegalArgumentException,
         DataTypeException;
 
     /**
@@ -454,7 +454,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    <U> List<U> getValues(Name fieldName, Converter<?, U> converter) throws IllegalArgumentException,
+    <U> List<U> getValues(Name fieldName, Converter<?, ? extends U> converter) throws IllegalArgumentException,
         DataTypeException;
 
     /**
@@ -2392,7 +2392,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    <U> U[] intoArray(int fieldIndex, Converter<?, U> converter) throws IllegalArgumentException, DataTypeException;
+    <U> U[] intoArray(int fieldIndex, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Return all values for a field name from the result.
@@ -2437,7 +2437,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    <U> U[] intoArray(String fieldName, Converter<?, U> converter) throws IllegalArgumentException, DataTypeException;
+    <U> U[] intoArray(String fieldName, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Return all values for a field name from the result.
@@ -2482,7 +2482,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    <U> U[] intoArray(Name fieldName, Converter<?, U> converter) throws IllegalArgumentException, DataTypeException;
+    <U> U[] intoArray(Name fieldName, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Return all values for a field from the result.
@@ -2525,7 +2525,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    <T, U> U[] intoArray(Field<T> field, Converter<? super T, U> converter) throws IllegalArgumentException,
+    <T, U> U[] intoArray(Field<T> field, Converter<? super T, ? extends U> converter) throws IllegalArgumentException,
         DataTypeException;
 
     /**
@@ -2562,7 +2562,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    <U> Set<U> intoSet(int fieldIndex, Converter<?, U> converter) throws IllegalArgumentException, DataTypeException;
+    <U> Set<U> intoSet(int fieldIndex, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Return all values for a field name from the result.
@@ -2598,7 +2598,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    <U> Set<U> intoSet(String fieldName, Converter<?, U> converter) throws IllegalArgumentException, DataTypeException;
+    <U> Set<U> intoSet(String fieldName, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Return all values for a field name from the result.
@@ -2634,7 +2634,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    <U> Set<U> intoSet(Name fieldName, Converter<?, U> converter) throws IllegalArgumentException, DataTypeException;
+    <U> Set<U> intoSet(Name fieldName, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Return all values for a field from the result.
@@ -2668,7 +2668,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    <T, U> Set<U> intoSet(Field<T> field, Converter<? super T, U> converter) throws IllegalArgumentException,
+    <T, U> Set<U> intoSet(Field<T> field, Converter<? super T, ? extends U> converter) throws IllegalArgumentException,
         DataTypeException;
 
     /**

@@ -64,5 +64,5 @@ public interface BindingRegisterContext<U> extends Scope {
     /**
      * Create a new context from this one using a converter.
      */
-    <T> BindingRegisterContext<T> convert(Converter<T, U> converter);
+    <T> BindingRegisterContext<T> convert(Converter<? super T, ? extends U> converter);
 }

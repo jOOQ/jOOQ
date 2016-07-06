@@ -1479,7 +1479,7 @@ public interface Record extends Attachable, Comparable<Record> {
      *
      * @see #get(Field, Converter)
      */
-    <T, U> U getValue(Field<T> field, Converter<? super T, U> converter) throws IllegalArgumentException,
+    <T, U> U getValue(Field<T> field, Converter<? super T, ? extends U> converter) throws IllegalArgumentException,
         DataTypeException;
 
     /**
@@ -1500,7 +1500,7 @@ public interface Record extends Attachable, Comparable<Record> {
      * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
      */
     @Deprecated
-    <T, U> U getValue(Field<T> field, Converter<? super T, U> converter, U defaultValue)
+    <T, U> U getValue(Field<T> field, Converter<? super T, ? extends U> converter, U defaultValue)
         throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -1567,7 +1567,7 @@ public interface Record extends Attachable, Comparable<Record> {
      *
      * @see {@link #get(String, Converter)}
      */
-    <U> U getValue(String fieldName, Converter<?, U> converter) throws IllegalArgumentException, DataTypeException;
+    <U> U getValue(String fieldName, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a converted value from this record, providing a field name.
@@ -1586,7 +1586,7 @@ public interface Record extends Attachable, Comparable<Record> {
      * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
      */
     @Deprecated
-    <U> U getValue(String fieldName, Converter<?, U> converter, U defaultValue) throws IllegalArgumentException,
+    <U> U getValue(String fieldName, Converter<?, ? extends U> converter, U defaultValue) throws IllegalArgumentException,
         DataTypeException;
 
     /**
@@ -1619,7 +1619,7 @@ public interface Record extends Attachable, Comparable<Record> {
      *
      * @see #get(Name, Converter)
      */
-    <U> U getValue(Name fieldName, Converter<?, U> converter) throws IllegalArgumentException, DataTypeException;
+    <U> U getValue(Name fieldName, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this record, providing a field index.
@@ -1685,7 +1685,7 @@ public interface Record extends Attachable, Comparable<Record> {
      *
      * @see #get(int, Converter)
      */
-    <U> U getValue(int index, Converter<?, U> converter) throws IllegalArgumentException, DataTypeException;
+    <U> U getValue(int index, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a converted value from this record, providing a field index.
@@ -1704,7 +1704,7 @@ public interface Record extends Attachable, Comparable<Record> {
      * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
      */
     @Deprecated
-    <U> U getValue(int index, Converter<?, U> converter, U defaultValue) throws IllegalArgumentException,
+    <U> U getValue(int index, Converter<?, ? extends U> converter, U defaultValue) throws IllegalArgumentException,
         DataTypeException;
 
     /**
@@ -1727,5 +1727,5 @@ public interface Record extends Attachable, Comparable<Record> {
      *
      * @see #set(Field, Object, Converter)
      */
-    <T, U> void setValue(Field<T> field, U value, Converter<T, ? super U> converter);
+    <T, U> void setValue(Field<T> field, U value, Converter<? extends T, ? super U> converter);
 }

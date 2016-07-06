@@ -63,5 +63,5 @@ public interface BindingGetSQLInputContext<U> extends Scope {
     /**
      * Create a new context from this one using a converter.
      */
-    <T> BindingGetSQLInputContext<T> convert(Converter<T, U> converter);
+    <T> BindingGetSQLInputContext<T> convert(Converter<? super T, ? extends U> converter);
 }

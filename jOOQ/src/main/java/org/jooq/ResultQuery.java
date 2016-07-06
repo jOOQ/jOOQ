@@ -281,7 +281,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      * @see Record#get(Field, Converter)
      */
-    <T, U> List<U> fetch(Field<T> field, Converter<? super T, U> converter) throws DataAccessException;
+    <T, U> List<U> fetch(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field index from the
@@ -319,7 +319,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      * @see Record#get(int, Converter)
      */
-    <U> List<U> fetch(int fieldIndex, Converter<?, U> converter) throws DataAccessException;
+    <U> List<U> fetch(int fieldIndex, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field name from the
@@ -357,7 +357,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      * @see Record#get(String, Converter)
      */
-    <U> List<U> fetch(String fieldName, Converter<?, U> converter) throws DataAccessException;
+    <U> List<U> fetch(String fieldName, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field name from the
@@ -395,7 +395,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      * @see Record#get(Name, Converter)
      */
-    <U> List<U> fetch(Name fieldName, Converter<?, U> converter) throws DataAccessException;
+    <U> List<U> fetch(Name fieldName, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -437,7 +437,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
-    <T, U> U fetchOne(Field<T> field, Converter<? super T, U> converter) throws DataAccessException, TooManyRowsException;
+    <T, U> U fetchOne(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -479,7 +479,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
-    <U> U fetchOne(int fieldIndex, Converter<?, U> converter) throws DataAccessException, TooManyRowsException;
+    <U> U fetchOne(int fieldIndex, Converter<?, ? extends U> converter) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -521,7 +521,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
-    <U> U fetchOne(String fieldName, Converter<?, U> converter) throws DataAccessException, TooManyRowsException;
+    <U> U fetchOne(String fieldName, Converter<?, ? extends U> converter) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -563,7 +563,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
-    <U> U fetchOne(Name fieldName, Converter<?, U> converter) throws DataAccessException, TooManyRowsException;
+    <U> U fetchOne(Name fieldName, Converter<?, ? extends U> converter) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting record.
@@ -705,7 +705,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
-    <T, U> Optional<U> fetchOptional(Field<T> field, Converter<? super T, U> converter) throws DataAccessException, TooManyRowsException;
+    <T, U> Optional<U> fetchOptional(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -744,7 +744,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
-    <U> Optional<U> fetchOptional(int fieldIndex, Converter<?, U> converter) throws DataAccessException, TooManyRowsException;
+    <U> Optional<U> fetchOptional(int fieldIndex, Converter<?, ? extends U> converter) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -783,7 +783,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
-    <U> Optional<U> fetchOptional(String fieldName, Converter<?, U> converter) throws DataAccessException, TooManyRowsException;
+    <U> Optional<U> fetchOptional(String fieldName, Converter<?, ? extends U> converter) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -822,7 +822,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
-    <U> Optional<U> fetchOptional(Name fieldName, Converter<?, U> converter) throws DataAccessException, TooManyRowsException;
+    <U> Optional<U> fetchOptional(Name fieldName, Converter<?, ? extends U> converter) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting record.
@@ -947,7 +947,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *         records.
      * @throws DataAccessException if something went wrong executing the query
      */
-    <T, U> U fetchAny(Field<T> field, Converter<? super T, U> converter) throws DataAccessException;
+    <T, U> U fetchAny(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException;
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -986,7 +986,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *         records.
      * @throws DataAccessException if something went wrong executing the query
      */
-    <U> U fetchAny(int fieldIndex, Converter<?, U> converter) throws DataAccessException;
+    <U> U fetchAny(int fieldIndex, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -1025,7 +1025,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *         records.
      * @throws DataAccessException if something went wrong executing the query
      */
-    <U> U fetchAny(String fieldName, Converter<?, U> converter) throws DataAccessException;
+    <U> U fetchAny(String fieldName, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -1064,7 +1064,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      *         records.
      * @throws DataAccessException if something went wrong executing the query
      */
-    <U> U fetchAny(Name fieldName, Converter<?, U> converter) throws DataAccessException;
+    <U> U fetchAny(Name fieldName, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
      * Execute the query and return at most one resulting record.
@@ -2774,7 +2774,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(int, Converter)
      */
-    <U> U[] fetchArray(int fieldIndex, Converter<?, U> converter) throws DataAccessException;
+    <U> U[] fetchArray(int fieldIndex, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field name from the
@@ -2816,7 +2816,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(String, Class)
      */
-    <U> U[] fetchArray(String fieldName, Converter<?, U> converter) throws DataAccessException;
+    <U> U[] fetchArray(String fieldName, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field name from the
@@ -2858,7 +2858,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Name, Class)
      */
-    <U> U[] fetchArray(Name fieldName, Converter<?, U> converter) throws DataAccessException;
+    <U> U[] fetchArray(Name fieldName, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field from the generated
@@ -2897,7 +2897,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Field, Converter)
      */
-    <T, U> U[] fetchArray(Field<T> field, Converter<? super T, U> converter) throws DataAccessException;
+    <T, U> U[] fetchArray(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field index from the
@@ -2927,7 +2927,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(int, Converter)
      */
-    <U> Set<U> fetchSet(int fieldIndex, Converter<?, U> converter) throws DataAccessException;
+    <U> Set<U> fetchSet(int fieldIndex, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field name from the
@@ -2957,7 +2957,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(String, Class)
      */
-    <U> Set<U> fetchSet(String fieldName, Converter<?, U> converter) throws DataAccessException;
+    <U> Set<U> fetchSet(String fieldName, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field name from the
@@ -2987,7 +2987,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Name, Class)
      */
-    <U> Set<U> fetchSet(Name fieldName, Converter<?, U> converter) throws DataAccessException;
+    <U> Set<U> fetchSet(Name fieldName, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field from the generated
@@ -3017,7 +3017,7 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Field, Converter)
      */
-    <T, U> Set<U> fetchSet(Field<T> field, Converter<? super T, U> converter) throws DataAccessException;
+    <T, U> Set<U> fetchSet(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException;
 
     /**
      * Map resulting records onto a custom type.

@@ -1137,13 +1137,13 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
-    public final <T, U> U getValue(Field<T> field, Converter<? super T, U> converter) {
+    public final <T, U> U getValue(Field<T> field, Converter<? super T, ? extends U> converter) {
         return get(field, converter);
     }
 
     @Override
     @Deprecated
-    public final <T, U> U getValue(Field<T> field, Converter<? super T, U> converter, U defaultValue) {
+    public final <T, U> U getValue(Field<T> field, Converter<? super T, ? extends U> converter, U defaultValue) {
         final U result = get(field, converter);
         return result == null ? defaultValue : result;
     }
@@ -1173,13 +1173,13 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
-    public final <U> U getValue(int index, Converter<?, U> converter) {
+    public final <U> U getValue(int index, Converter<?, ? extends U> converter) {
         return get(index, converter);
     }
 
     @Override
     @Deprecated
-    public final <U> U getValue(int index, Converter<?, U> converter, U defaultValue) {
+    public final <U> U getValue(int index, Converter<?, ? extends U> converter, U defaultValue) {
         final U result = get(index, converter);
         return result == null ? defaultValue : result;
     }
@@ -1208,13 +1208,13 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
-    public final <U> U getValue(String fieldName, Converter<?, U> converter) {
+    public final <U> U getValue(String fieldName, Converter<?, ? extends U> converter) {
         return get(fieldName, converter);
     }
 
     @Override
     @Deprecated
-    public final <U> U getValue(String fieldName, Converter<?, U> converter, U defaultValue) {
+    public final <U> U getValue(String fieldName, Converter<?, ? extends U> converter, U defaultValue) {
         final U result = get(fieldName, converter);
         return result == null ? defaultValue : result;
     }
@@ -1230,7 +1230,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
-    public final <U> U getValue(Name fieldName, Converter<?, U> converter) {
+    public final <U> U getValue(Name fieldName, Converter<?, ? extends U> converter) {
         return get(fieldName, converter);
     }
 
@@ -1240,7 +1240,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
-    public final <T, U> void setValue(Field<T> field, U value, Converter<T, ? super U> converter) {
+    public final <T, U> void setValue(Field<T> field, U value, Converter<? extends T, ? super U> converter) {
         set(field, value, converter);
     }
 

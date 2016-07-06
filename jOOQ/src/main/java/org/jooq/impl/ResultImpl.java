@@ -332,7 +332,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
     }
 
     @Override
-    public final <T, U> List<U> getValues(Field<T> field, Converter<? super T, U> converter) {
+    public final <T, U> List<U> getValues(Field<T> field, Converter<? super T, ? extends U> converter) {
         return Convert.convert(getValues(field), converter);
     }
 
@@ -353,7 +353,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
     }
 
     @Override
-    public final <U> List<U> getValues(int fieldIndex, Converter<?, U> converter) {
+    public final <U> List<U> getValues(int fieldIndex, Converter<?, ? extends U> converter) {
         return Convert.convert(getValues(fieldIndex), converter);
     }
 
@@ -368,7 +368,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
     }
 
     @Override
-    public final <U> List<U> getValues(String fieldName, Converter<?, U> converter) {
+    public final <U> List<U> getValues(String fieldName, Converter<?, ? extends U> converter) {
         return Convert.convert(getValues(fieldName), converter);
     }
 
@@ -383,7 +383,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
     }
 
     @Override
-    public final <U> List<U> getValues(Name fieldName, Converter<?, U> converter) {
+    public final <U> List<U> getValues(Name fieldName, Converter<?, ? extends U> converter) {
         return Convert.convert(getValues(fieldName), converter);
     }
 
@@ -1922,7 +1922,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
     }
 
     @Override
-    public final <U> U[] intoArray(int fieldIndex, Converter<?, U> converter) {
+    public final <U> U[] intoArray(int fieldIndex, Converter<?, ? extends U> converter) {
         return Convert.convertArray(intoArray(fieldIndex), converter);
     }
 
@@ -1939,7 +1939,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
     }
 
     @Override
-    public final <U> U[] intoArray(String fieldName, Converter<?, U> converter) {
+    public final <U> U[] intoArray(String fieldName, Converter<?, ? extends U> converter) {
         return Convert.convertArray(intoArray(fieldName), converter);
     }
 
@@ -1956,7 +1956,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
     }
 
     @Override
-    public final <U> U[] intoArray(Name fieldName, Converter<?, U> converter) {
+    public final <U> U[] intoArray(Name fieldName, Converter<?, ? extends U> converter) {
         return Convert.convertArray(intoArray(fieldName), converter);
     }
 
@@ -1971,7 +1971,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
     }
 
     @Override
-    public final <T, U> U[] intoArray(Field<T> field, Converter<? super T, U> converter) {
+    public final <T, U> U[] intoArray(Field<T> field, Converter<? super T, ? extends U> converter) {
         return Convert.convertArray(intoArray(field), converter);
     }
 
@@ -1986,7 +1986,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
     }
 
     @Override
-    public final <U> Set<U> intoSet(int fieldIndex, Converter<?, U> converter) {
+    public final <U> Set<U> intoSet(int fieldIndex, Converter<?, ? extends U> converter) {
         return new LinkedHashSet<U>(getValues(fieldIndex, converter));
     }
 
@@ -2001,7 +2001,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
     }
 
     @Override
-    public final <U> Set<U> intoSet(String fieldName, Converter<?, U> converter) {
+    public final <U> Set<U> intoSet(String fieldName, Converter<?, ? extends U> converter) {
         return new LinkedHashSet<U>(getValues(fieldName, converter));
     }
 
@@ -2016,7 +2016,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
     }
 
     @Override
-    public final <U> Set<U> intoSet(Name fieldName, Converter<?, U> converter) {
+    public final <U> Set<U> intoSet(Name fieldName, Converter<?, ? extends U> converter) {
         return new LinkedHashSet<U>(getValues(fieldName, converter));
     }
 
@@ -2031,7 +2031,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
     }
 
     @Override
-    public final <T, U> Set<U> intoSet(Field<T> field, Converter<? super T, U> converter) {
+    public final <T, U> Set<U> intoSet(Field<T> field, Converter<? super T, ? extends U> converter) {
         return new LinkedHashSet<U>(getValues(field, converter));
     }
 

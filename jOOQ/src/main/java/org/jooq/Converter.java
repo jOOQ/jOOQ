@@ -172,5 +172,47 @@ public interface Converter<T, U> extends Serializable {
         };
     }
 
+    /**
+     * Construct a new converter from functions.
+     * <p>
+     * This works like {@link Converter#of(Class, Class, Function, Function)},
+     * except that both conversion {@link Function}s are decorated with a
+     * function that always returns <code>null</code> for <code>null</code>
+     * inputs.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * Converter<String, Integer> converter =
+     *   Converter.ofNullable(String.class, Integer.class, Integer::parseInt, Object::toString);
+     *
+     * // No exceptions thrown
+     * assertNull(converter.from(null));
+     * assertNull(converter.to(null));
+     * </pre></code>
+     *
+     * @param <T> the database type
+     * @param <U> the user type
+     * @param fromType The database type
+     * @param toType The user type
+     * @param from A function converting from T to U
+     * @param to A function converting from U to T
+     * @return The converter.
+     * @see Converter
+     */
+    static <T, U> Converter<T, U> ofNullable(
+        Class<T> fromType,
+        Class<U> toType,
+        Function<? super T, ? extends U> from,
+        Function<? super U, ? extends T> to
+    ) {
+        return of(
+            fromType,
+            toType,
+            t -> t == null ? null : from.apply(t),
+            u -> u == null ? null : to.apply(u)
+        );
+    }
+
 
 }

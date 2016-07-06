@@ -41,6 +41,7 @@
 package org.jooq;
 
 import java.io.Serializable;
+import java.util.function.Function;
 
 import org.jooq.impl.SQLDataType;
 
@@ -122,6 +123,53 @@ public interface Converter<T, U> extends Serializable {
      */
     default <X> Converter<T, X> andThen(Converter<? super U, X> converter) {
         return Converters.of(this, converter);
+    }
+
+    /**
+     * Construct a new converter from functions.
+     *
+     * @param <T> the database type
+     * @param <U> the user type
+     * @param fromType The database type
+     * @param toType The user type
+     * @param from A function converting from T to U
+     * @param to A function converting from U to T
+     * @return The converter.
+     * @see Converter
+     */
+    static <T, U> Converter<T, U> of(
+        Class<T> fromType,
+        Class<U> toType,
+        Function<? super T, ? extends U> from,
+        Function<? super U, ? extends T> to
+    ) {
+        return new Converter<T, U>() {
+
+            /**
+             * Generated UID
+             */
+            private static final long serialVersionUID = 8782437631959970693L;
+
+            @Override
+            public final U from(T t) {
+                return from.apply(t);
+            }
+
+            @Override
+            public final T to(U u) {
+                return to.apply(u);
+            }
+
+            @Override
+            public final Class<T> fromType() {
+                return fromType;
+            }
+
+            @Override
+            public final Class<U> toType() {
+                return toType;
+            }
+        };
     }
 
 

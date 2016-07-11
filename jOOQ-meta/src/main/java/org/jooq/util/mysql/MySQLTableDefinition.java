@@ -96,7 +96,7 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
 		    if (getDatabase().supportsUnsignedTypes()) {
     		    if (asList("tinyint", "smallint", "mediumint", "int", "bigint").contains(dataType.toLowerCase())) {
     	            if (record.get(Columns.COLUMN_TYPE).toLowerCase().contains("unsigned")) {
-    	                dataType += "unsigned";
+    	                dataType += " unsigned";
     	            }
     		    }
 		    }

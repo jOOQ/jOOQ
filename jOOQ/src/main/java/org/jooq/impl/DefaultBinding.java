@@ -1311,16 +1311,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-
-
-
-
-
-
-
-
-
-
         else if (EnumType.class.isAssignableFrom(type)) {
             ctx.output().writeString(((EnumType) value).getLiteral());
         }
@@ -1331,6 +1321,34 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             throw new UnsupportedOperationException("Type " + type + " is not supported");
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @SuppressWarnings("unchecked")
     @Override
@@ -1888,6 +1906,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         ctx.value(converter.from(result));
     }
+
+
+
+
 
 
 

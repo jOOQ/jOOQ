@@ -45,6 +45,7 @@ import static org.jooq.tools.StringUtils.isBlank;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.EnumSet;
 
 import javax.persistence.Entity;
 
@@ -56,8 +57,8 @@ import org.jooq.util.h2.H2Database;
 
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.boot.spi.MetadataImplementor;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
+import org.hibernate.tool.schema.TargetType;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
@@ -89,6 +90,7 @@ public class JPADatabase extends H2Database {
                 MetadataSources metadata = new MetadataSources(
                     new StandardServiceRegistryBuilder()
                         .applySetting("hibernate.dialect", "org.hibernate.dialect.H2Dialect")
+                        .applySetting("javax.persistence.schema-generation-connection", connection)
                         .build()
                 );
 
@@ -96,16 +98,18 @@ public class JPADatabase extends H2Database {
                     new ClassPathScanningCandidateComponentProvider(true);
 
                 scanner.addIncludeFilter(new AnnotationTypeFilter(Entity.class));
-                for (String pkg : packages.split(",")) {
-                    for (BeanDefinition def : scanner.findCandidateComponents(defaultIfBlank(pkg, "").trim())) {
+                for (String pkg : packages.split(","))
+                    for (BeanDefinition def : scanner.findCandidateComponents(defaultIfBlank(pkg, "").trim()))
                         metadata.addAnnotatedClass(Class.forName(def.getBeanClassName()));
-                    }
-                }
 
                 // This seems to be the way to do this in idiomatic Hibernate 5.0 API
                 // See also: http://stackoverflow.com/q/32178041/521799
-                SchemaExport export = new SchemaExport((MetadataImplementor) metadata.buildMetadata(), connection);
-                export.create(true, true);
+                // SchemaExport export = new SchemaExport((MetadataImplementor) metadata.buildMetadata(), connection);
+                // export.create(true, true);
+
+                // Hibernate 5.2 broke 5.0 API again. Here's how to do this now:
+                SchemaExport export = new SchemaExport();
+                export.create(EnumSet.of(TargetType.DATABASE), metadata.buildMetadata());
             }
             catch (Exception e) {
                 throw new DataAccessException("Error while exporting schema", e);

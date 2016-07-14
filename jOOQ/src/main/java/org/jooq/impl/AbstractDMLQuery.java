@@ -183,6 +183,13 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
 
 
 
+
+
+
+
+
+
+
         {
             accept0(ctx);
         }
@@ -430,6 +437,13 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
                 }
 
                 // These dialects have full JDBC support
+
+
+
+
+
+
+
 
 
 

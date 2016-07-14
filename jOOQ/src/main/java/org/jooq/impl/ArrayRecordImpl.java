@@ -401,6 +401,4 @@ package org.jooq.impl;
 
 
 
-
-
             

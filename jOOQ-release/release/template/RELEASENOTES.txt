@@ -10,6 +10,18 @@ http://www.jooq.org/notes
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.8.4 - July 14, 2016
+================================================================================
+
+This is a patch release with some useful fixes for the 3.8 branch
+
+Bug Fixes
+---------
+#5391 - Wrong defaults for <tableValuedFunctions/> in jOOQ Open Source Edition
+#5406 - Exceptions when calling Oracle functions / procedures with TABLE of TABLE type arguments
+#5409 - Optimistic locking doesn't work for PostgreSQL, Firebird
+#5417 - Bad update count on Oracle UPDATE .. RETURNING emulation
+
 Version 3.8.3 - July 4, 2016
 ================================================================================
 

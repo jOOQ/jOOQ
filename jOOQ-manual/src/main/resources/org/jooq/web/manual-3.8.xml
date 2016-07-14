@@ -934,8 +934,8 @@ CREATE TABLE `author` (
       <!-- The destination package of your generated classes (within the destination directory) -->
       <packageName>test.generated</packageName>
 
-      <!-- The destination directory of your generated classes -->
-      <directory>C:/workspace/MySQLTest/src</directory>
+      <!-- The destination directory of your generated classes. Using Maven directory layout here -->
+      <directory>C:/workspace/MySQLTest/src/main/java</directory>
     </target>
   </generator>
 </configuration>]]></xml><html>
@@ -2748,10 +2748,10 @@ DSL.using(sql.connection)
                         <title>jOOQ and Kotlin</title>
                         <content><html>
                             <p>
-                                As any other library, jOOQ can be easily used in Groovy, taking advantage of the many Groovy language features such as for example:
+                                As any other library, jOOQ can be easily used in Kotlin, taking advantage of the many Kotlin language features such as for example:
                             </p>
                             <ul>
-                                <li>Optional ";" at the end of a Groovy statement</li>
+                                <li>Optional ";" at the end of a Kotlin statement</li>
                                 <li>Type inference for local variables</li>
                             </ul>
 
@@ -2772,7 +2772,7 @@ import org.jooq.example.db.h2.Tables.*
 fun main(args: Array<String>) {
 
     val properties = Properties();
-    properties.load(javaClass<Properties>().getResourceAsStream("/config.properties"));
+    properties.load(Properties::class.java.getResourceAsStream("/config.properties"));
 
     DSL.using(
         properties.getProperty("db.url"),
@@ -2783,13 +2783,15 @@ fun main(args: Array<String>) {
     // See also: https://github.com/JetBrains/kotlin/pull/807
     ).use {
         val ctx = it
+        val a = AUTHOR
+        val b = BOOK
 
-        ctx.select(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME, BOOK.TITLE)
-           .from(AUTHOR)
-           .join(BOOK).on(AUTHOR.ID.eq(BOOK.AUTHOR_ID))
+        ctx.select(a.FIRST_NAME, a.LAST_NAME, b.TITLE)
+           .from(a)
+           .join(b).on(a.ID.eq(b.AUTHOR_ID))
            .orderBy(1, 2, 3)
            .forEach {
-               println("${it.value3()} by ${it.value1()} ${it.value2()}")
+               println("${it[b.TITLE]} by ${it[a.FIRST_NAME]} ${it[a.LAST_NAME]}")
            }
     }
 }]]></groovy><html>
@@ -15273,76 +15275,7 @@ public class Book {
                         <content><html>
                             <h3>Run generation with Gradle</h3>
                             <p>
-                                While some third-party Gradle plugins exist (e.g. the one by <a href="https://github.com/etiennestuder/gradle-jooq-plugin">Etienne Studer from Gradleware</a>), we generally recommend new users to use jOOQ's standalone code generator for simplicity. The following working example build.gradle script should work out of the box:
-                            </p>
-
-</html><java><![CDATA[
-// Configure the Java plugin and the dependencies
-// ----------------------------------------------
-apply plugin: 'java'
-
-repositories {
-    mavenLocal()
-    mavenCentral()
-}
-
-dependencies {
-    compile 'org.jooq:jooq:{jooq-version}'
-
-    runtime 'com.h2database:h2:1.4.177'
-    testCompile 'junit:junit:4.11'
-}
-
-buildscript {
-    repositories {
-        mavenLocal()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'org.jooq:jooq-codegen:{jooq-version}'
-        classpath 'com.h2database:h2:1.4.177'
-    }
-}
-
-// Use your favourite XML builder to construct the code generation configuration file
-// ----------------------------------------------------------------------------------
-def writer = new StringWriter()
-def xml = new groovy.xml.MarkupBuilder(writer)
-.configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd') {
-    jdbc() {
-        driver('org.h2.Driver')
-        url('jdbc:h2:~/test-gradle')
-        user('sa')
-        password('')
-    }
-    generator() {
-        database() {
-        }
-
-        // Watch out for this caveat when using MarkupBuilder with "reserved names"
-        // - https://github.com/jOOQ/jOOQ/issues/4797
-        // - http://stackoverflow.com/a/11389034/521799
-        // - https://groups.google.com/forum/#!topic/jooq-user/wi4S9rRxk4A
-        generate([:]) {
-            pojos true
-            daos true
-        }
-        target() {
-            packageName('org.jooq.example.gradle.db')
-            directory('src/main/java')
-        }
-    }
-}
-
-// Run the code generator
-// ----------------------
-org.jooq.util.GenerationTool.generate(
-    javax.xml.bind.JAXB.unmarshal(new StringReader(writer.toString()), org.jooq.util.jaxb.Configuration.class)
-)
-]]></java><html>
-                            <p>
-                                This example is frequently updated on GitHub: <a href="https://github.com/jOOQ/jOOQ/tree/master/jOOQ-examples/jOOQ-codegen-gradle">https://github.com/jOOQ/jOOQ/tree/master/jOOQ-examples/jOOQ-codegen-gradle</a>
+                                We recommend using the Gradle plugin by <a href="https://github.com/etiennestuder/gradle-jooq-plugin">Etienne Studer from Gradle Inc.</a>). It provides a concise DSL that allows you to tune all configuration properties supported by each jOOQ version.
                             </p>
                         </html></content>
                     </section>

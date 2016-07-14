@@ -840,8 +840,8 @@ CREATE TABLE `posts` (
       <!-- The destination package of your generated classes (within the destination directory) -->
       <packageName>test.generated</packageName>
 
-      <!-- The destination directory of your generated classes -->
-      <directory>C:/workspace/MySQLTest/src</directory>
+      <!-- The destination directory of your generated classes. Using Maven directory layout here -->
+      <directory>C:/workspace/MySQLTest/src/main/java</directory>
     </target>
   </generator>
 </configuration>]]></xml><html>

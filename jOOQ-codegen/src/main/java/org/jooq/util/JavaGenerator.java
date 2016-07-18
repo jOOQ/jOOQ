@@ -895,6 +895,7 @@ public class JavaGenerator extends AbstractGenerator {
             final String setterReturnType = fluentSetters() ? className : tokenVoid;
             final String setter = getStrategy().getJavaSetterName(column, Mode.RECORD);
             final String getter = getStrategy().getJavaGetterName(column, Mode.RECORD);
+            final String scalaAccessorName = getStrategy().getJavaMethodName(column, Mode.RECORD);
             final String type = out.ref(getJavaType(column.getType()));
             final String name = column.getQualifiedOutputName();
             final boolean isUDT = column.getType().isUDT();
@@ -912,6 +913,9 @@ public class JavaGenerator extends AbstractGenerator {
                     if (fluentSetters())
                         out.tab(2).println("this");
                     out.tab(1).println("}");
+
+                    out.tab(1).javadoc("Scala-Style Setter for <code>%s</code>.%s", name, defaultIfBlank(" " + comment, ""));
+                    out.tab(1).println("def %s_=(value: %s): %s = %s(value)", scalaAccessorName, type, setterReturnType, setter);
                 }
                 else {
                     out.tab(1).overrideIf(generateInterfaces() && !generateImmutableInterfaces() && !isUDT);
@@ -942,6 +946,9 @@ public class JavaGenerator extends AbstractGenerator {
                     if (fluentSetters())
                         out.tab(2).println("this");
                     out.tab(1).println("}");
+
+                    out.tab(1).javadoc("Scala-Style Setter for <code>%s</code>.%s", name, defaultIfBlank(" " + comment, ""));
+                    out.tab(1).println("def %s_=(value: %s): %s = %s(value)", scalaAccessorName, columnTypeInterface, setterReturnType, setter);
                 }
                 else {
                     out.tab(1).println("public %s %s(%s value) {", setterReturnType, setter, varargsIfArray(columnTypeInterface));
@@ -989,6 +996,9 @@ public class JavaGenerator extends AbstractGenerator {
                 out.tab(2).println("val r = get(%s)", i);
                 out.tab(2).println("if (r == null) null else r.asInstanceOf[%s]", type);
                 out.tab(1).println("}");
+
+                out.tab(1).javadoc("Scala-Style Getter for <code>%s</code>.%s", name, defaultIfBlank(" " + comment, ""));
+                out.tab(1).println("def %s: %s = %s", scalaAccessorName, type, getter);
             }
             else {
                 out.tab(1).overrideIf(generateInterfaces());

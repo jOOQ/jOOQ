@@ -174,23 +174,24 @@ class GenerationUtil {
 
         StringBuilder sb = new StringBuilder();
 
-        if ("".equals(literal)) {
+        if ("".equals(literal))
             return "_";
-        }
 
         for (int i = 0; i < literal.length(); i++) {
             char c = literal.charAt(i);
 
-            if (!Character.isJavaIdentifierPart(c)) {
-                sb.append(escape(c));
-            }
-            else if (i == 0 && !Character.isJavaIdentifierStart(literal.charAt(0))) {
-                sb.append("_");
+            if (!Character.isJavaIdentifierPart(c))
+
+                // [#5424] Scala setters, by convention, end in "property_="
+                if (language == SCALA && c == '=' && i == literal.length() - 1)
+                    sb.append(c);
+                else
+                    sb.append(escape(c));
+            else if (i == 0 && !Character.isJavaIdentifierStart(literal.charAt(0)))
+                sb.append("_")
+                  .append(c);
+            else
                 sb.append(c);
-            }
-            else {
-                sb.append(c);
-            }
         }
 
         return sb.toString();

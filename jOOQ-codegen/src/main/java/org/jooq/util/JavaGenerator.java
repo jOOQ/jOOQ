@@ -895,7 +895,6 @@ public class JavaGenerator extends AbstractGenerator {
             final String setterReturnType = fluentSetters() ? className : tokenVoid;
             final String setter = getStrategy().getJavaSetterName(column, Mode.RECORD);
             final String getter = getStrategy().getJavaGetterName(column, Mode.RECORD);
-            final String scalaAccessorName = getStrategy().getJavaMethodName(column, Mode.RECORD);
             final String type = out.ref(getJavaType(column.getType()));
             final String name = column.getQualifiedOutputName();
             final boolean isUDT = column.getType().isUDT();
@@ -913,11 +912,7 @@ public class JavaGenerator extends AbstractGenerator {
                     if (fluentSetters())
                         out.tab(2).println("this");
                     out.tab(1).println("}");
-
-                    out.tab(1).javadoc("Scala-Style Setter for <code>%s</code>.%s", name, defaultIfBlank(" " + comment, ""));
-                    out.tab(1).println("def %s_=(value: %s): %s = %s(value)", scalaAccessorName, type, setterReturnType, setter);
                 }
-
                 else {
                     out.tab(1).overrideIf(generateInterfaces() && !generateImmutableInterfaces() && !isUDT);
                     out.tab(1).println("public %s %s(%s value) {", setterReturnType, setter, varargsIfArray(type));
@@ -947,9 +942,6 @@ public class JavaGenerator extends AbstractGenerator {
                     if (fluentSetters())
                         out.tab(2).println("this");
                     out.tab(1).println("}");
-
-                    out.tab(1).javadoc("Scala-Style Setter for <code>%s</code>.%s", name, defaultIfBlank(" " + comment, ""));
-                    out.tab(1).println("def %s_=(value: %s): %s = %s(value)", scalaAccessorName, columnTypeInterface, setterReturnType, setter);
                 }
                 else {
                     out.tab(1).println("public %s %s(%s value) {", setterReturnType, setter, varargsIfArray(columnTypeInterface));
@@ -997,9 +989,6 @@ public class JavaGenerator extends AbstractGenerator {
                 out.tab(2).println("val r = get(%s)", i);
                 out.tab(2).println("if (r == null) null else r.asInstanceOf[%s]", type);
                 out.tab(1).println("}");
-
-                out.tab(1).javadoc("Scala-Style Getter for <code>%s</code>.%s", name, defaultIfBlank(" " + comment, ""));
-                out.tab(1).println("def %s: %s = %s", scalaAccessorName, type, getter);
             }
             else {
                 out.tab(1).overrideIf(generateInterfaces());
@@ -1910,7 +1899,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
 
             out.println();
-            out.tab(1).println("def values(): %s[%s] = %s(",
+            out.tab(1).println("def values: %s[%s] = %s(",
                 out.ref("scala.Array"),
                 className,
                 out.ref("scala.Array"));
@@ -2601,7 +2590,7 @@ public class JavaGenerator extends AbstractGenerator {
                         // Avoid ambiguities between a single-T-value constructor
                         // and the copy constructor
                         if (size == 1)
-                            nulls.add("null : " + out.ref(getJavaType(column.getType(), Mode.POJO)));
+                            nulls.add("null: " + out.ref(getJavaType(column.getType(), Mode.POJO)));
                         else
                             nulls.add("null");
 
@@ -2699,7 +2688,7 @@ public class JavaGenerator extends AbstractGenerator {
             printValidationAnnotation(out, column);
 
             if (scala) {
-                out.tab(1).println("def %s: %s = {", columnGetter, columnType);
+                out.tab(1).println("def %s : %s = {", columnGetter, columnType);
                 out.tab(2).println("this.%s", columnMember);
                 out.tab(1).println("}");
             }

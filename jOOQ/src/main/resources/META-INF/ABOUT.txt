@@ -12,6 +12,7 @@ Authors and contributors of jOOQ or parts of jOOQ in alphabetical order:
 - Brett Meyer
 - Christopher Deckers
 - Ed Schaller
+- Eric Peters
 - Espen Stromsnes
 - Gonzalo Ortiz Jaureguizar
 - Gregory Hlavac

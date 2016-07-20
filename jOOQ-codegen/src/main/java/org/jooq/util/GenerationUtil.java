@@ -152,8 +152,91 @@ class GenerationUtil {
         "var",
         "while",
         "with",
-        "yield"
+        "yield"/*,
+        "_",
+        ":",
+        "=",
+        "=>",
+        "<-",
+        "<:",
+        "<%",
+        ">:",
+        "#",
+        "@"*/
     )));
+
+    private static Set<Character> SCALA_WHITESPACE = unmodifiableSet(new HashSet<Character>(asList(
+        (char)0x0020,
+        (char)0x0009,
+        (char)0x000D,
+        (char)0x000A
+    )));
+
+    private static Set<Character> SCALA_PARENTHESES = unmodifiableSet(new HashSet<Character>(asList(
+        '(',
+        ')',
+        '[',
+        ']',
+        '{',
+        '}'
+    )));
+
+    private static Set<Character> SCALA_DELIMITER = unmodifiableSet(new HashSet<Character>(asList(
+        '`',
+        '\'',
+        '"',
+        '.',
+        ';',
+        ','
+    )));
+
+    /**
+     * Take a character and determine if it's a valid "Scala Letter"
+     * http://www.scala-lang.org/files/archive/spec/2.11/01-lexical-syntax.html
+     *
+     * These consist of all printable ASCII characters \u0020 - \u007F which are in none of the sets above, mathematical symbols (Sm) and other symbols (So).
+     *
+     */
+    private static Boolean isScalaOperator(char c) {
+        return (c >= 0x0020 && c <= 0x007F && !Character.isLetter(c) && !Character.isDigit(c) && !SCALA_DELIMITER.contains(c) && !SCALA_PARENTHESES.contains(c) && !SCALA_WHITESPACE.contains(c)) || Character.getType(c) == Character.MATH_SYMBOL /* Sm */ || Character.getType(c) == Character.OTHER_SYMBOL /* So */;
+    }
+
+    /**
+     * Take a character and determine if it's a valid "Scala Letter"
+     * http://www.scala-lang.org/files/archive/spec/2.11/01-lexical-syntax.html
+     *
+     * Letters, which include lower case letters (Ll), upper case letters (Lu), titlecase letters (Lt), other letters (Lo), letter numerals (Nl) and the two characters \u0024 ‘$’ and \u005F ‘_’, which both count as upper case letters.
+     *
+     * Character.isLetter handles the Ll, Lu, Lt, Lo, and Nl, supplement with _ and $
+     *
+     */
+    private static Boolean isScalaLetter(char c) {
+        return Character.isLetter(c) || c == '_' || c == '$';
+    }
+
+    /**
+     * Take a character and determine if its a valid start of a scala identifier
+     * http://www.scala-lang.org/files/archive/spec/2.11/01-lexical-syntax.html
+     *
+     * Defines as a "scala letter", we're ignoring any identifiers that might starts with an operational character
+     *
+     */
+    private static Boolean isScalaIdentifierStart(char c) {
+        return isScalaLetter(c);
+    }
+
+    /**
+     * Take a character and determine if its a valid start of a scala identifier
+     * http://www.scala-lang.org/files/archive/spec/2.11/01-lexical-syntax.html
+     *
+     * Letters, which include lower case letters (Ll), upper case letters (Lu), titlecase letters (Lt), other letters (Lo), letter numerals (Nl) and the two characters \u0024 ‘$’ and \u005F ‘_’, which both count as upper case letters.
+     *
+     * Character.isLetter handles the Ll, Lu, Lt, Lo, and Nl, supplement with _ and $
+     *
+     */
+    private static Boolean isScalaIdentifierPart(char c) {
+        return isScalaIdentifierStart(c) || Character.isDigit(c);
+    }
 
     /**
      * Take a literal (e.g. database column) and make it a Java identifier to be
@@ -175,26 +258,38 @@ class GenerationUtil {
         StringBuilder sb = new StringBuilder();
 
         if ("".equals(literal))
-            return "_";
+            if (language == SCALA)
+                return "`_`";
+            else
+                return "_";
 
         for (int i = 0; i < literal.length(); i++) {
             char c = literal.charAt(i);
 
-            if (!Character.isJavaIdentifierPart(c))
-
-                // [#5424] Scala setters, by convention, end in "property_="
-                if (language == SCALA && c == '=' && i == literal.length() - 1)
-                    sb.append(c);
-                else
-                    sb.append(escape(c));
-            else if (i == 0 && !Character.isJavaIdentifierStart(literal.charAt(0)))
-                sb.append("_")
-                  .append(c);
+            // [#5424] Scala setters, by convention, end in "property_=", where "=" is an operator and "_" precedes it
+            if (language == SCALA && i == literal.length() - 1 && literal.length() >= 2 && literal.charAt(i - 1) == '_' && isScalaOperator(c))
+                sb.append(c);
+            else if (language == SCALA && !isScalaIdentifierPart(c))
+                sb.append(escape(c));
+            else if (language == JAVA && !Character.isJavaIdentifierPart(c))
+                sb.append(escape(c));
+            else if (language == SCALA && i == 0 && !isScalaIdentifierStart(c))
+                sb.append("_").append(c);
+            else if (language == JAVA && i == 0 && !Character.isJavaIdentifierStart(c))
+                sb.append("_").append(c);
             else
                 sb.append(c);
         }
 
-        return sb.toString();
+        String ret = sb.toString();
+
+        // In scala, _ should not be at the end of the identifier incase you have def foo_: Foo, so escape to def `foo_`: Foo
+        if (language == SCALA && ret.charAt(ret.length() - 1) == '_') {
+            return "`" + ret + "`";
+        } else {
+            return ret;
+        }
+
     }
 
     /**

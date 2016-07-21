@@ -139,7 +139,7 @@ public class SakilaReportService {
             .select(
                 STORE.STORE_ID,
                 PAYMENT.PAYMENT_DATE.cast(DATE).as(PAYMENT.PAYMENT_DATE),
-                sum(sum(PAYMENT.AMOUNT)).over(orderBy(PAYMENT.PAYMENT_DATE.cast(DATE))).as(PAYMENT.AMOUNT)
+                sum(sum(PAYMENT.AMOUNT)).over(partitionBy(STORE.STORE_ID).orderBy(PAYMENT.PAYMENT_DATE.cast(DATE))).as(PAYMENT.AMOUNT)
             )
             .from(STORE)
             .join(INVENTORY).using(INVENTORY.STORE_ID)

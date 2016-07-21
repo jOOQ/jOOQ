@@ -59,6 +59,14 @@ public final class Mock {
      * Create a new {@link MockDataProvider} that always returns a single record
      * for all queries.
      */
+    public static final MockDataProvider of(int rows) {
+        return of(new MockResult(rows, null));
+    }
+
+    /**
+     * Create a new {@link MockDataProvider} that always returns a single record
+     * for all queries.
+     */
     public static final MockDataProvider of(Record record) {
         return of(result(record));
     }

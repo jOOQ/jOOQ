@@ -340,6 +340,34 @@ public interface Table<R extends Record> extends TableLike<R> {
     @Support
     Table<R> as(String alias, String... fieldAliases);
 
+    /**
+     * Create an alias for this table based on another table's name.
+     * <p>
+     * Note that the case-sensitivity of the returned table depends on
+     * {@link Settings#getRenderNameStyle()}. By default, table aliases are
+     * quoted, and thus case-sensitive!
+     *
+     * @param otherTable The other table whose name this table is aliased with.
+     * @return The table alias.
+     */
+    @Support
+    Table<R> as(Table<?> otherTable);
+
+    /**
+     * Create an alias for this table based on another table's name.
+     * <p>
+     * Note that the case-sensitivity of the returned table depends on
+     * {@link Settings#getRenderNameStyle()}. By default, table aliases are
+     * quoted, and thus case-sensitive!
+     *
+     * @param otherTable The other table whose name this table is aliased with.
+     * @param otherFields The other fields whose field name this table's fields
+     *            are aliased with.
+     * @return The table alias.
+     */
+    @Support
+    Table<R> as(Table<?> otherTable, Field<?>... otherFields);
+
     // -------------------------------------------------------------------------
     // XXX: JOIN clauses on tables
     // -------------------------------------------------------------------------

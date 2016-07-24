@@ -690,6 +690,20 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // ------------------------------------------------------------------------
     // XXX: DIVISION API
     // ------------------------------------------------------------------------

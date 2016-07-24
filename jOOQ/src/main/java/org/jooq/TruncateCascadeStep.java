@@ -40,6 +40,7 @@
  */
 package org.jooq;
 
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 
 /**
@@ -53,13 +54,13 @@ public interface TruncateCascadeStep<R extends Record> extends TruncateFinalStep
      * Add the <code>CASCADE</code> clause to the <code>TRUNCATE</code>
      * statement.
      */
-    @Support(POSTGRES)
+    @Support({ POSTGRES })
     TruncateFinalStep<R> cascade();
 
     /**
      * Add the <code>RESTRICT</code> clause to the <code>TRUNCATE</code>
      * statement.
      */
-    @Support(POSTGRES)
+    @Support({ POSTGRES })
     TruncateFinalStep<R> restrict();
 }

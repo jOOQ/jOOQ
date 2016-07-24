@@ -42,6 +42,7 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.TRUNCATE;
 import static org.jooq.Clause.TRUNCATE_TRUNCATE;
+// ...
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -127,16 +128,22 @@ final class TruncateImpl<R extends Record> extends AbstractQuery implements
 
 
 
-
-                if (restartIdentity != null) {
+                if (restartIdentity != null)
                     ctx.formatSeparator()
                        .keyword(restartIdentity ? "restart identity" : "continue identity");
-                }
 
-                if (cascade != null) {
-                    ctx.formatSeparator()
-                       .keyword(cascade ? "cascade" : "restrict");
-                }
+                if (cascade != null)
+
+
+
+
+
+
+
+
+
+                        ctx.formatSeparator()
+                           .keyword(cascade ? "cascade" : "restrict");
 
                 ctx.end(TRUNCATE_TRUNCATE);
                 break;

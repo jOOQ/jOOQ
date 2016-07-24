@@ -498,8 +498,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
-
                 // By default, render the dialect's limit clause
                 default: {
                     toSQLReferenceLimitDefault(context);

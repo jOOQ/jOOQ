@@ -389,7 +389,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     private final InformationSchema informationSchema0(List<Schema> schemas) {
-        return InformationSchemaExport.export(schemas);
+        return InformationSchemaExport.export(configuration(), schemas);
     }
 
     // -------------------------------------------------------------------------

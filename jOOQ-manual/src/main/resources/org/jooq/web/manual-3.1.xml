@@ -10398,9 +10398,13 @@ create.selectFrom(AUTHOR)
 					<section id="jdbc-mocking">
 						<title>JDBC mocking for unit testing</title>
 						<content><html>
-							<p>
-								When writing unit tests for your data access layer, you have probably used some generic mocking tool offered by popular providers like <a href="http://code.google.com/p/mockito/">Mockito</a>, <a href="http://jmock.org/">jmock</a>, <a href="http://mockrunner.sourceforge.net/">mockrunner</a>, or even <a href="http://www.dbunit.org/">DBUnit</a>. With jOOQ, you can take advantage of the built-in JDBC mock API that allows you to emulate a database on the JDBC level for precisely those SQL/JDBC use cases supported by jOOQ.
-							</p>
+                            <p>
+                                When writing unit tests for your data access layer, you have probably used some generic mocking tool offered by popular providers like <a href="http://code.google.com/p/mockito/">Mockito</a>, <a href="http://jmock.org/">jmock</a>, <a href="http://mockrunner.sourceforge.net/">mockrunner</a>, or even <a href="http://www.dbunit.org/">DBUnit</a>. With jOOQ, you can take advantage of the built-in JDBC mock API that allows you to emulate a simple database on the JDBC level for precisely those SQL/JDBC use cases supported by jOOQ.
+                            </p>
+
+                            <p>
+                                <strong>Disclaimer: </strong> The general idea of mocking a JDBC connection with this jOOQ API is to provide quick workarounds, injection points, etc. using a very simple JDBC abstraction. It is <em>NOT RECOMMENDED</em> to emulate an entire database (including complex state transitions, transactions, locking, etc.) using this mock API. Once you have this requirement, please consider using an actual database instead for integration testing, rather than implementing your test database inside of a <code>MockDataProvider</code>.
+                            </p>
 
 							<h3>Mocking the JDBC API</h3>
 							<p>

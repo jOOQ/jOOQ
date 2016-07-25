@@ -43,6 +43,7 @@ package org.jooq.util;
 import static org.jooq.util.GenerationUtil.convertToIdentifier;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -234,9 +235,8 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
      * class hierarchy of a generated class
      */
     private Set<String> reservedColumns(Class<?> clazz) {
-        if (clazz == null) {
+        if (clazz == null)
             return Collections.emptySet();
-        }
 
         Set<String> result = reservedColumns.get(clazz);
 
@@ -246,17 +246,18 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
 
             // Recurse up in class hierarchy
             result.addAll(reservedColumns(clazz.getSuperclass()));
-            for (Class<?> c : clazz.getInterfaces()) {
+            for (Class<?> c : clazz.getInterfaces())
                 result.addAll(reservedColumns(c));
-            }
 
-            for (Method m : clazz.getDeclaredMethods()) {
-                String name = m.getName();
+            for (Method m : clazz.getDeclaredMethods())
+                if (m.getParameterTypes().length == 0)
+                    result.add(m.getName());
 
-                if (name.startsWith("get") && m.getParameterTypes().length == 0) {
-                    result.add(name);
-                }
-            }
+            // [#5457] In Scala, we must not "override" any inherited members, even if they're private
+            //         or package private, and thus not visible
+            if (language == Language.SCALA)
+                for (Field f : clazz.getDeclaredFields())
+                    result.add(f.getName());
         }
 
         return result;

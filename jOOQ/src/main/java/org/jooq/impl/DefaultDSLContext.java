@@ -261,6 +261,7 @@ import org.jooq.tools.jdbc.MockCallable;
 import org.jooq.tools.jdbc.MockConfiguration;
 import org.jooq.tools.jdbc.MockDataProvider;
 import org.jooq.tools.jdbc.MockRunnable;
+import org.jooq.util.xml.jaxb.InformationSchema;
 
 /**
  * A default implementation for {@link DSLContext}.
@@ -369,6 +370,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public Meta meta() {
         return new MetaImpl(configuration());
+    }
+
+    @Override
+    public Meta meta(InformationSchema schema) {
+        return new InformationSchemaMetaImpl(configuration(), schema);
     }
 
     // -------------------------------------------------------------------------

@@ -5,25 +5,21 @@
     xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:annox="http://annox.dev.java.net"
-    xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
     version="2.1">
 
     <jaxb:globalBindings>
 
         <!-- Force all classes implements Serializable -->
-        <xjc:serializable uid="390" />
+        <xjc:serializable uid="354" />
+
+        <!-- [#2401] Trim unnecessary whitespace from configuration -->
+        <xjc:javaType name="java.lang.String" xmlType="xs:string" adapter="org.jooq.util.jaxb.tools.StringAdapter"/>
     </jaxb:globalBindings>
 
-    <!-- [#2928] Regular expressions -->
-    <jaxb:bindings schemaLocation="../xsd/jooq-runtime-3.9.0.xsd" multiple="true" node="//xs:element[@name='inputExpression']">
-        <xjc:javaType name="java.util.regex.Pattern" adapter="org.jooq.conf.RegexAdapter"/>
-    </jaxb:bindings>
 
     <!-- Annotate the following classes with @SuppressWarnings -->
-    <jaxb:bindings schemaLocation="../xsd/jooq-runtime-3.9.0.xsd" multiple="true" node="//xs:complexType">
-        <inheritance:extends>org.jooq.conf.SettingsBase</inheritance:extends>
-		<inheritance:implements>java.lang.Cloneable</inheritance:implements>
+    <jaxb:bindings schemaLocation="../../xsd/jooq-meta-3.5.4.xsd" multiple="true" node="//xs:complexType">
         <annox:annotate>
         	<annox:annotate annox:class="java.lang.SuppressWarnings" value="all" />
         </annox:annotate>

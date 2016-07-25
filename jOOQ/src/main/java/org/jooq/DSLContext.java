@@ -94,6 +94,7 @@ import org.jooq.impl.ThreadLocalTransactionProvider;
 import org.jooq.tools.jdbc.MockCallable;
 import org.jooq.tools.jdbc.MockDataProvider;
 import org.jooq.tools.jdbc.MockRunnable;
+import org.jooq.util.xml.jaxb.InformationSchema;
 
 /**
  * A contextual DSL providing "attached" implementations to the
@@ -200,6 +201,11 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * connection's database meta data.
      */
     Meta meta();
+
+    /**
+     * Access the databse meta data from its serialised form.
+     */
+    Meta meta(InformationSchema schema);
 
     // -------------------------------------------------------------------------
     // XXX APIs for creating scope for transactions, mocking, batching, etc.

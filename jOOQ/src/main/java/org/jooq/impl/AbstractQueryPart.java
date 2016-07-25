@@ -93,45 +93,7 @@ abstract class AbstractQueryPart implements QueryPartInternal {
     // The QueryPart and QueryPart internal API
     // -------------------------------------------------------------------------
 
-    /**
-     * Subclasses may override this
-     */
-    @Override
-    public boolean declaresFields() {
-        return false;
-    }
-
-    /**
-     * Subclasses may override this
-     */
-    @Override
-    public boolean declaresTables() {
-        return false;
-    }
-
-    /**
-     * Subclasses may override this
-     */
-    @Override
-    public boolean declaresWindows() {
-        return false;
-    }
-
-    /**
-     * Subclasses may override this
-     */
-    @Override
-    public boolean declaresCTE() {
-        return false;
-    }
-
-    /**
-     * Subclasses may override this
-     */
-    @Override
-    public boolean generatesCast() {
-        return false;
-    }
+    
 
     // -------------------------------------------------------------------------
     // The Object API

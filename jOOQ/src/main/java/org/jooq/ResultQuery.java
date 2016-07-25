@@ -3168,7 +3168,9 @@ public interface ResultQuery<R extends Record> extends Query, Iterable<R> {
     /**
      * The record type produced by this query.
      */
-    Class<? extends R> getRecordType();
+    default Class<? extends R> getRecordType() {
+	    return null;
+	}
 
     /**
      * {@inheritDoc}

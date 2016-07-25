@@ -2262,17 +2262,15 @@ final class Tools {
             /**
              * This callback is executed if {@link #unguarded()} has already been executed on the current stack.
              */
-            V guarded();
+            default V guarded() {
+			    return null;
+			}
         }
 
         /**
          * A default implementation for {@link GuardedOperation#guarded()}.
          */
         abstract static class AbstractGuardedOperation<V> implements GuardedOperation<V> {
-            @Override
-            public V guarded() {
-                return null;
-            }
         }
 
         /**

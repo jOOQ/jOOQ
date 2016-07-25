@@ -122,11 +122,6 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         return Tools.configuration(configuration()).dialect();
     }
 
-    @Override
-    public /* non-final */ SQLDialect family() {
-        return dialect().family();
-    }
-
     /**
      * {@inheritDoc}
      * <p>

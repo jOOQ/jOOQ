@@ -85,7 +85,9 @@ public interface RoutineDefinition extends Definition {
      * @return Whether this routine can be used in SQL (a function without OUT
      *         parameters)
      */
-    boolean isSQLUsable();
+    default boolean isSQLUsable() {
+	    return getReturnValue() != null && getOutParameters().isEmpty();
+	}
 
     /**
      * @return Whether this routine is an aggregate function

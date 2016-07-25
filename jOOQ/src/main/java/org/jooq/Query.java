@@ -127,7 +127,9 @@ public interface Query extends QueryPart, Attachable , AutoCloseable  {
      * Calling {@link #execute()} on such queries has no effect, but beware that
      * {@link #getSQL()} may not render valid SQL!
      */
-    boolean isExecutable();
+    default boolean isExecutable() {
+	    return true;
+	}
 
     /**
      * Retrieve the SQL code rendered by this Query.

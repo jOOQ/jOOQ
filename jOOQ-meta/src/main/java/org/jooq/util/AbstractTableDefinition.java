@@ -163,11 +163,6 @@ implements TableDefinition {
     }
 
     @Override
-    public /* non-final */ boolean isTableValuedFunction() {
-        return false;
-    }
-
-    @Override
     protected List<ColumnDefinition> getElements0() throws SQLException {
         return null;
     }

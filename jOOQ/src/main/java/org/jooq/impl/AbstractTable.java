@@ -76,7 +76,6 @@ import org.jooq.DataType;
 import org.jooq.DivideByOnStep;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Identity;
 import org.jooq.JoinType;
 // ...
 import org.jooq.Name;
@@ -93,7 +92,6 @@ import org.jooq.TableLike;
 import org.jooq.TableOnStep;
 import org.jooq.TableOptionalOnStep;
 import org.jooq.TablePartitionByStep;
-import org.jooq.UniqueKey;
 // ...
 // ...
 import org.jooq.tools.StringUtils;
@@ -293,26 +291,6 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     /**
      * {@inheritDoc}
      * <p>
-     * Subclasses should override this method
-     */
-    @Override
-    public Identity<R, ?> getIdentity() {
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Subclasses may override this method
-     */
-    @Override
-    public UniqueKey<R> getPrimaryKey() {
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     * <p>
      * Subclasses may override this method
      */
     @Override
@@ -332,30 +310,10 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
 
     /**
      * {@inheritDoc}
-     * <p>
-     * Subclasses should override this method
-     */
-    @Override
-    public List<UniqueKey<R>> getKeys() {
-        return Collections.emptyList();
-    }
-
-    /**
-     * {@inheritDoc}
      */
     @Override
     public final <O extends Record> List<ForeignKey<O, R>> getReferencesFrom(Table<O> other) {
         return other.getReferencesTo(this);
-    }
-
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Subclasses should override this method
-     */
-    @Override
-    public List<ForeignKey<R, ?>> getReferences() {
-        return Collections.emptyList();
     }
 
     /**

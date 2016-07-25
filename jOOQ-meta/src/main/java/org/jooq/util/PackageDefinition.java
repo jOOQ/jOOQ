@@ -40,6 +40,7 @@
  */
 package org.jooq.util;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -57,5 +58,7 @@ public interface PackageDefinition extends Definition {
     /**
      * Fetch all constants from the package.
      */
-    List<AttributeDefinition> getConstants();
+    default List<AttributeDefinition> getConstants() {
+	    return Collections.emptyList();
+	}
 }

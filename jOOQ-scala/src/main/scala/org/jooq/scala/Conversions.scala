@@ -134,16 +134,15 @@ object Conversions {
     def fetchOneOption[R <: Record]          (query : ResultQuery[R])                  : Option[R]      = Option(ctx.fetchOne(query))
     def fetchOneOption                       (rs : ResultSet)                          : Option[Record] = Option(ctx.fetchOne(rs))
 
-//  Varargs overloading is not possible in Scala, as varargs T* translate to Seq[T]
-//  --> type erasure. Overloaded varargs arguments might be made available by emulating
-//      union types using implicit conversion. See http://stackoverflow.com/a/3508555/521799
-
-//  def fetchOneOption                       (rs : ResultSet, types : Class[_]*)       : Option[Record] = Option(ctx.fetchOne(rs, types:_*))
-//  def fetchOneOption                       (rs : ResultSet, types : DataType[_]*)    : Option[Record] = Option(ctx.fetchOne(rs, types:_*))
-//  def fetchOneOption                       (rs : ResultSet, fields : Field[_]*)      : Option[Record] = Option(ctx.fetchOne(rs, fields:_*))
+    def fetchOneOption                       (rs : ResultSet, types : Class[_]*)       : Option[Record] = Option(ctx.fetchOne(rs, types:_*))
+    def fetchOneOption                       (rs : ResultSet, types : DataType[_]*)
+      (implicit d: DummyImplicit)                                                      : Option[Record] = Option(ctx.fetchOne(rs, types:_*))
+    def fetchOneOption                       (rs : ResultSet, fields : Field[_]*)
+      (implicit d1: DummyImplicit, d2: DummyImplicit)                                  : Option[Record] = Option(ctx.fetchOne(rs, fields:_*))
     def fetchOneOption                       (sql : String)                            : Option[Record] = Option(ctx.fetchOne(sql))
     def fetchOneOption                       (sql : String, bindings : AnyRef*)        : Option[Record] = Option(ctx.fetchOne(sql, bindings:_*))
-//  def fetchOneOption                       (sql : String, parts : QueryPart*)        : Option[Record] = Option(ctx.fetchOne(sql, parts:_*))
+    def fetchOneOption                       (sql : String, parts : QueryPart*)
+      (implicit d: DummyImplicit)                                                      : Option[Record] = Option(ctx.fetchOne(sql, parts:_*))
     def fetchOneOption[R <: Record]          (table : Table[R])                        : Option[R]      = Option(ctx.fetchOne(table))
     def fetchOneOption[R <: Record]          (table : Table[R], condition : Condition) : Option[R]      = Option(ctx.fetchOne(table, condition))
 
@@ -154,7 +153,8 @@ object Conversions {
     def fetchValueOption[T]                  (rs : ResultSet, field : Field[T])        : Option[T]      = Option(ctx.fetchValue(rs, field))
     def fetchValueOption                     (sql : String)                            : Option[AnyRef] = Option(ctx.fetchValue(sql))
     def fetchValueOption                     (sql : String, bindings : AnyRef*)        : Option[AnyRef] = Option(ctx.fetchValue(sql, bindings:_*))
-//  def fetchValueOption                     (sql : String, parts : QueryPart*)        : Option[AnyRef] = Option(ctx.fetchValue(sql, parts:_*))
+    def fetchValueOption                     (sql : String, parts : QueryPart*)
+      (implicit d: DummyImplicit)                                                      : Option[AnyRef] = Option(ctx.fetchValue(sql, parts:_*))
   }
 
   implicit class ScalaResultQuery[R <: Record](val query : ResultQuery[R]) {

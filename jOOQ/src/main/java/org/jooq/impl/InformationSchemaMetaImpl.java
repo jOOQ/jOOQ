@@ -239,6 +239,11 @@ final class InformationSchemaMetaImpl implements Meta {
     }
 
     @Override
+    public final List<Sequence<?>> getSequences() {
+        return unmodifiableList(sequences);
+    }
+
+    @Override
     public final List<UniqueKey<?>> getPrimaryKeys() {
         return unmodifiableList(primaryKeys);
     }

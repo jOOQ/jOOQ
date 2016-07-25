@@ -40,15 +40,31 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+// ...
+import static org.jooq.SQLDialect.HSQLDB;
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
+// ...
+
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.exception.DataAccessException;
+import org.jooq.util.xml.jaxb.InformationSchema;
 
 /**
- * A wrapping object for {@link DatabaseMetaData}
+ * A wrapping object for {@link DatabaseMetaData} or for other sources of
+ * database meta information (e.g. {@link InformationSchema})
  * <p>
  * This object can be obtained through {@link DSLContext#meta()} in order to
  * provide convenient access to your database meta data. This abstraction has
@@ -98,6 +114,15 @@ public interface Meta {
      */
     @Support
     List<Table<?>> getTables() throws DataAccessException;
+
+    /**
+     * Get all sequence objects from the underlying {@link DatabaseMetaData}.
+     *
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    List<Sequence<?>> getSequences() throws DataAccessException;
 
     /**
      * Get all primary keys from the underlying {@link DatabaseMetaData}.

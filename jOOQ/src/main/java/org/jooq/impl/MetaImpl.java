@@ -116,6 +116,7 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
+import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -184,15 +185,13 @@ final class MetaImpl implements Meta, Serializable {
                 }
             });
 
-            for (String name : catalogs.getValues(0, String.class)) {
+            for (String name : catalogs.getValues(0, String.class))
                 result.add(new MetaCatalog(name));
-            }
         }
 
         // There should always be at least one (empty) catalog in a database
-        if (result.isEmpty()) {
+        if (result.isEmpty())
             result.add(new MetaCatalog(""));
-        }
 
         return result;
     }
@@ -201,9 +200,8 @@ final class MetaImpl implements Meta, Serializable {
     public final List<Schema> getSchemas() {
         List<Schema> result = new ArrayList<Schema>();
 
-        for (Catalog catalog : getCatalogs()) {
+        for (Catalog catalog : getCatalogs())
             result.addAll(catalog.getSchemas());
-        }
 
         return result;
     }
@@ -212,9 +210,18 @@ final class MetaImpl implements Meta, Serializable {
     public final List<Table<?>> getTables() {
         List<Table<?>> result = new ArrayList<Table<?>>();
 
-        for (Schema schema : getSchemas()) {
+        for (Schema schema : getSchemas())
             result.addAll(schema.getTables());
-        }
+
+        return result;
+    }
+
+    @Override
+    public final List<Sequence<?>> getSequences() {
+        List<Sequence<?>> result = new ArrayList<Sequence<?>>();
+
+        for (Schema schema : getSchemas())
+            result.addAll(schema.getSequences());
 
         return result;
     }
@@ -226,9 +233,8 @@ final class MetaImpl implements Meta, Serializable {
         for (Table<?> table : getTables()) {
             UniqueKey<?> pk = table.getPrimaryKey();
 
-            if (pk != null) {
+            if (pk != null)
                 result.add(pk);
-            }
         }
 
         return result;

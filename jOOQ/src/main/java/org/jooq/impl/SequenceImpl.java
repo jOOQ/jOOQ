@@ -49,6 +49,7 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.select;
 
+import org.jooq.Catalog;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -94,6 +95,11 @@ public class SequenceImpl<T extends Number> extends AbstractQueryPart implements
     @Override
     public final String getName() {
         return name;
+    }
+
+    @Override
+    public final Catalog getCatalog() {
+        return getSchema() == null ? null : getSchema().getCatalog();
     }
 
     @Override

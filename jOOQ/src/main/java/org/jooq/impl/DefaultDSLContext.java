@@ -378,6 +378,20 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return new InformationSchemaMetaImpl(configuration(), schema);
     }
 
+    @Override
+    public InformationSchema informationSchema(Catalog catalog) {
+        return informationSchema0(catalog.getSchemas());
+    }
+
+    @Override
+    public InformationSchema informationSchema(Schema schema) {
+        return informationSchema0(Arrays.asList(schema));
+    }
+
+    private final InformationSchema informationSchema0(List<Schema> schemas) {
+        return InformationSchemaExport.export(schemas);
+    }
+
     // -------------------------------------------------------------------------
     // XXX APIs for creating scope for transactions, mocking, batching, etc.
     // -------------------------------------------------------------------------

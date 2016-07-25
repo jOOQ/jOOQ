@@ -67,6 +67,11 @@ public interface Sequence<T extends Number> extends QueryPart {
     String getName();
 
     /**
+     * Get the sequence catalog.
+     */
+    Catalog getCatalog();
+
+    /**
      * Get the sequence schema
      */
     Schema getSchema();

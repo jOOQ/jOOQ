@@ -66,6 +66,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jooq.Binding;
+import org.jooq.Catalog;
 import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Condition;
@@ -268,6 +269,11 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     // ------------------------------------------------------------------------
     // XXX: Table API
     // ------------------------------------------------------------------------
+
+    @Override
+    public final Catalog getCatalog() {
+        return getSchema() == null ? null : getSchema().getCatalog();
+    }
 
     @Override
     public /* non-final */ Schema getSchema() {

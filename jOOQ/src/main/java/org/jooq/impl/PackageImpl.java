@@ -40,6 +40,7 @@
  */
 package org.jooq.impl;
 
+import org.jooq.Catalog;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Package;
@@ -70,6 +71,11 @@ public class PackageImpl extends AbstractQueryPart implements Package {
     public PackageImpl(String name, Schema schema) {
         this.schema = schema;
         this.name = name;
+    }
+
+    @Override
+    public final Catalog getCatalog() {
+        return getSchema() == null ? null : getSchema().getCatalog();
     }
 
     @Override

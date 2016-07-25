@@ -65,6 +65,12 @@ public interface EnumType {
     String getLiteral();
 
     /**
+     * The catalog of the enum type, if applicable. Otherwise, this returns
+     * <code>null</code>
+     */
+    Catalog getCatalog();
+
+    /**
      * The schema of the enum type, if applicable (Postgres schema-scope enum
      * type only). Otherwise, this returns <code>null</code>
      */

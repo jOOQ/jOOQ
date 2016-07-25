@@ -126,6 +126,11 @@ public interface UDT<R extends UDTRecord<R>> extends QueryPart {
     Field<?>[] fields(int... fieldIndexes);
 
     /**
+     * Get the UDT catalog.
+     */
+    Catalog getCatalog();
+
+    /**
      * Get the UDT schema
      */
     Schema getSchema();

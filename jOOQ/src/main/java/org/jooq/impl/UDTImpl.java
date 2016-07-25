@@ -41,6 +41,7 @@
 package org.jooq.impl;
 
 import org.jooq.Binding;
+import org.jooq.Catalog;
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Converter;
@@ -74,6 +75,11 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
         this.fields = new Fields<R>();
         this.name = name;
         this.schema = schema;
+    }
+
+    @Override
+    public final Catalog getCatalog() {
+        return getSchema() == null ? null : getSchema().getCatalog();
     }
 
     @Override

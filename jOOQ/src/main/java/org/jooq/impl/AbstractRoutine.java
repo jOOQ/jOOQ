@@ -75,6 +75,7 @@ import org.jooq.AggregateFunction;
 import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
 import org.jooq.Binding;
+import org.jooq.Catalog;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -852,6 +853,11 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     @Override
     public final List<Parameter<?>> getParameters() {
         return Collections.unmodifiableList(allParameters);
+    }
+
+    @Override
+    public final Catalog getCatalog() {
+        return getSchema() == null ? null : getSchema().getCatalog();
     }
 
     @Override

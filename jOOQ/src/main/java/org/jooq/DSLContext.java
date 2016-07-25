@@ -207,6 +207,22 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     Meta meta(InformationSchema schema);
 
+    /**
+     * Export a catalog to the {@link InformationSchema} format.
+     * <p>
+     * This allows for serialising schema meta information as XML using JAXB.
+     * See also {@link Constants#XSD_META} for details.
+     */
+    InformationSchema informationSchema(Catalog catalog);
+
+    /**
+     * Export a schema to the {@link InformationSchema} format.
+     * <p>
+     * This allows for serialising schema meta information as XML using JAXB.
+     * See also {@link Constants#XSD_META} for details.
+     */
+    InformationSchema informationSchema(Schema schema);
+
     // -------------------------------------------------------------------------
     // XXX APIs for creating scope for transactions, mocking, batching, etc.
     // -------------------------------------------------------------------------

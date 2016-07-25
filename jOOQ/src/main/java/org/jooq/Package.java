@@ -50,6 +50,11 @@ package org.jooq;
 public interface Package extends QueryPart {
 
     /**
+     * Get the package catalog.
+     */
+    Catalog getCatalog();
+
+    /**
      * Get the package schema
      */
     Schema getSchema();

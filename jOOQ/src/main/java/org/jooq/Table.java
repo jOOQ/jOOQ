@@ -80,6 +80,11 @@ import org.jooq.impl.DSL;
 public interface Table<R extends Record> extends TableLike<R> {
 
     /**
+     * Get the table catalog.
+     */
+    Catalog getCatalog();
+
+    /**
      * Get the table schema.
      */
     Schema getSchema();

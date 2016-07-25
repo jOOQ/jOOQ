@@ -94,6 +94,11 @@ public interface Routine<T> extends QueryPart {
     // -------------------------------------------------------------------------
 
     /**
+     * Get the routine catalog.
+     */
+    Catalog getCatalog();
+
+    /**
      * Get the routine schema
      */
     Schema getSchema();

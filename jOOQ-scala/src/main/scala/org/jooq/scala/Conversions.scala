@@ -85,6 +85,7 @@ import _root_.scala.collection.convert.WrapAsScala
  * </pre></code>
  *
  * @author Lukas Eder
+ * @author Eric Peters
  */
 object Conversions {
 

@@ -56,6 +56,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Meta;
 import org.jooq.Record;
 import org.jooq.Schema;
+import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
 import org.jooq.exception.SQLDialectNotSupportedException;
@@ -67,15 +68,17 @@ import org.jooq.util.xml.jaxb.InformationSchema;
  */
 final class InformationSchemaMetaImpl implements Meta {
 
-    private final Configuration               configuration;
-    private final List<Catalog>               catalogs;
-    private final List<Schema>                schemas;
-    private final Map<String, Schema>         schemasByName;
-    private final Map<Catalog, List<Schema>>  schemasPerCatalog;
-    private final List<Table<?>>              tables;
-    private final Map<String, Table<?>>       tablesByName;
-    private final Map<Schema, List<Table<?>>> tablesPerSchema;
-    private final List<UniqueKey<?>>          primaryKeys;
+    private final Configuration                  configuration;
+    private final List<Catalog>                  catalogs;
+    private final List<Schema>                   schemas;
+    private final Map<String, Schema>            schemasByName;
+    private final Map<Catalog, List<Schema>>     schemasPerCatalog;
+    private final List<Table<?>>                 tables;
+    private final Map<String, Table<?>>          tablesByName;
+    private final Map<Schema, List<Table<?>>>    tablesPerSchema;
+    private final List<Sequence<?>>              sequences;
+    private final Map<Schema, List<Sequence<?>>> sequencesPerSchema;
+    private final List<UniqueKey<?>>             primaryKeys;
 
     InformationSchemaMetaImpl(Configuration configuration, InformationSchema schema) {
         this.configuration = configuration;
@@ -86,6 +89,8 @@ final class InformationSchemaMetaImpl implements Meta {
         this.tables = new ArrayList<Table<?>>();
         this.tablesByName = new HashMap<String, Table<?>>();
         this.tablesPerSchema = new HashMap<Schema, List<Table<?>>>();
+        this.sequences = new ArrayList<Sequence<?>>();
+        this.sequencesPerSchema = new HashMap<Schema, List<Sequence<?>>>();
         this.primaryKeys = new ArrayList<UniqueKey<?>>();
 
         init(schema);
@@ -109,6 +114,23 @@ final class InformationSchemaMetaImpl implements Meta {
             InformationSchemaTable it = new InformationSchemaTable(xt.getTableName(), schemasByName.get(xt.getTableSchema()));
             tables.add(it);
             tablesByName.put(xt.getTableName(), it);
+        }
+
+        for (org.jooq.util.xml.jaxb.Sequence xs : meta.getSequences()) {
+            String typeName = xs.getDataType();
+            int length = xs.getCharacterMaximumLength() == null ? 0 : xs.getCharacterMaximumLength();
+            int precision = xs.getNumericPrecision() == null ? 0 : xs.getNumericPrecision();
+            int scale = xs.getNumericScale() == null ? 0 : xs.getNumericScale();
+            boolean nullable = true;
+
+            @SuppressWarnings({ "rawtypes", "unchecked" })
+            InformationSchemaSequence is = new InformationSchemaSequence(
+                xs.getSequenceName(),
+                schemasByName.get(xs.getSequenceSchema()),
+                type(typeName, length, precision, scale, nullable)
+            );
+
+            sequences.add(is);
         }
 
         List<Column> columns = new ArrayList<Column>(meta.getColumns());
@@ -136,25 +158,12 @@ final class InformationSchemaMetaImpl implements Meta {
             int scale = xc.getNumericScale() == null ? 0 : xc.getNumericScale();
             boolean nullable = xc.isIsNullable() == null ? true : xc.isIsNullable();
 
-            if (precision == 0)
-                precision = xc.getCharacterMaximumLength() == null ? 0 : xc.getCharacterMaximumLength();
-
             // TODO: Exception handling should be moved inside SQLDataType
-            DataType<?> type = null;
-            try {
-                type = DefaultDataType.getDataType(configuration.family(), typeName);
-                type = type.nullable(nullable);
-
-                if (length != 0)
-                    type = type.length(length);
-                else if (precision != 0 || scale != 0)
-                    type = type.precision(precision, scale);
-            }
-            catch (SQLDialectNotSupportedException e) {
-                type = SQLDataType.OTHER;
-            }
-
-            AbstractTable.createField(xc.getColumnName(), type, tablesByName.get(xc.getTableName()));
+            AbstractTable.createField(
+                xc.getColumnName(),
+                type(typeName, length, precision, scale, nullable),
+                tablesByName.get(xc.getTableName())
+            );
         }
 
         // Initialise indexes
@@ -181,6 +190,37 @@ final class InformationSchemaMetaImpl implements Meta {
 
             list.add(t);
         }
+
+        for (Sequence<?> q : sequences) {
+            Schema s = q.getSchema();
+            List<Sequence<?>> list = sequencesPerSchema.get(s);
+
+            if (list == null) {
+                list = new ArrayList<Sequence<?>>();
+                sequencesPerSchema.put(s, list);
+            }
+
+            list.add(q);
+        }
+    }
+
+    private final DataType<?> type(String typeName, int length, int precision, int scale, boolean nullable) {
+        DataType<?> type = null;
+
+        try {
+            type = DefaultDataType.getDataType(configuration.family(), typeName);
+            type = type.nullable(nullable);
+
+            if (length != 0)
+                type = type.length(length);
+            else if (precision != 0 || scale != 0)
+                type = type.precision(precision, scale);
+        }
+        catch (SQLDialectNotSupportedException e) {
+            type = SQLDataType.OTHER;
+        }
+
+        return type;
     }
 
     @Override
@@ -235,6 +275,11 @@ final class InformationSchemaMetaImpl implements Meta {
         public final List<Table<?>> getTables() {
             return unmodifiableList(tablesPerSchema.get(this));
         }
+
+        @Override
+        public final List<Sequence<?>> getSequences() {
+            return unmodifiableList(sequencesPerSchema.get(this));
+        }
     }
 
     private final class InformationSchemaTable extends TableImpl<Record> {
@@ -261,6 +306,18 @@ final class InformationSchemaMetaImpl implements Meta {
         @Override
         public List<ForeignKey<Record, ?>> getReferences() {
             return super.getReferences();
+        }
+    }
+
+    private final class InformationSchemaSequence<N extends Number> extends SequenceImpl<N> {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = -1246697252597049756L;
+
+        InformationSchemaSequence(String name, Schema schema, DataType<N> type) {
+            super(name, schema, type);
         }
     }
 }

@@ -365,10 +365,9 @@ public interface Generator {
      * @deprecated - Use {@link #generateFullyQualifiedTypes()} instead.
      */
     @Deprecated
-	default
-    String fullyQualifiedTypes() {
-	    return generateFullyQualifiedTypes();
-	}
+    default String fullyQualifiedTypes() {
+        return generateFullyQualifiedTypes();
+    }
 
     /**
      * A regular expression matching all the types in generated code that should
@@ -378,10 +377,9 @@ public interface Generator {
      *             instead.
      */
     @Deprecated
-	default
-    void setFullyQualifiedTypes(String fullyQualifiedTypes) {
-	    setGenerateFullyQualifiedTypes(fullyQualifiedTypes);
-	}
+    default void setFullyQualifiedTypes(String fullyQualifiedTypes) {
+        setGenerateFullyQualifiedTypes(fullyQualifiedTypes);
+    }
 
     /**
      * A regular expression matching all the types in generated code that should

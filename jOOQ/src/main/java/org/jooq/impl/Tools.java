@@ -2321,8 +2321,8 @@ final class Tools {
              * This callback is executed if {@link #unguarded()} has already been executed on the current stack.
              */
             default V guarded() {
-			    return null;
-			}
+                return null;
+            }
         }
 
         /**

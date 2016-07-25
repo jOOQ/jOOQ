@@ -118,8 +118,8 @@ public interface QueryPartInternal extends QueryPart {
      * Subclasses may override the default implementation.
      */
     default boolean declaresFields() {
-	    return false;
-	}
+        return false;
+    }
 
     /**
      * Check whether this {@link QueryPart} is able to declare tables in a
@@ -133,8 +133,8 @@ public interface QueryPartInternal extends QueryPart {
      * Subclasses may override the default implementation.
      */
     default boolean declaresTables() {
-	    return false;
-	}
+        return false;
+    }
 
     /**
      * Check whether this {@link QueryPart} is able to declare windows in a
@@ -148,8 +148,8 @@ public interface QueryPartInternal extends QueryPart {
      * Subclasses may override the default implementation.
      */
     default boolean declaresWindows() {
-	    return false;
-	}
+        return false;
+    }
 
     /**
      * Check whether this {@link QueryPart} is able to declare common table
@@ -163,8 +163,8 @@ public interface QueryPartInternal extends QueryPart {
      * Subclasses may override the default implementation.
      */
     default boolean declaresCTE() {
-	    return false;
-	}
+        return false;
+    }
 
     /**
      * Check whether this {@link QueryPart} is able to generate
@@ -178,6 +178,6 @@ public interface QueryPartInternal extends QueryPart {
      * Subclasses may override the default implementation.
      */
     default boolean generatesCast() {
-	    return false;
-	}
+        return false;
+    }
 }

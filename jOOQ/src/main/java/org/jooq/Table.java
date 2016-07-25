@@ -150,8 +150,8 @@ public interface Table<R extends Record> extends TableLike<R> {
      *         <code>null</code>, if no such information is available.
      */
     default Identity<R, ?> getIdentity() {
-	    return null;
-	}
+        return null;
+    }
     /**
      * Retrieve the table's primary key
      * <p>
@@ -161,8 +161,8 @@ public interface Table<R extends Record> extends TableLike<R> {
      *         table.
      */
     default UniqueKey<R> getPrimaryKey() {
-	    return null;
-	}
+        return null;
+    }
 
     /**
      * A "version" field holding record version information used for optimistic
@@ -224,8 +224,8 @@ public interface Table<R extends Record> extends TableLike<R> {
      *         method returns an unmodifiable list.
      */
     default List<UniqueKey<R>> getKeys() {
-	    return Collections.emptyList();
-	}
+        return Collections.emptyList();
+    }
 
     /**
      * Get a list of <code>FOREIGN KEY</code>'s of a specific table, referencing
@@ -248,8 +248,8 @@ public interface Table<R extends Record> extends TableLike<R> {
      *         <code>null</code>.
      */
     default List<ForeignKey<R, ?>> getReferences() {
-	    return Collections.emptyList();
-	}
+        return Collections.emptyList();
+    }
 
     /**
      * Get a list of <code>FOREIGN KEY</code>'s of this table, referencing a

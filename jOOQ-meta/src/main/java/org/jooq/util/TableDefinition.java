@@ -123,7 +123,7 @@ public interface TableDefinition extends Definition {
      * Whether this table is a table-valued function.
      */
     default boolean isTableValuedFunction() {
-	    return false;
-	}
+        return false;
+    }
 
 }

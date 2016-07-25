@@ -61,8 +61,8 @@ public interface Definition {
      * @return The catalog of this object.
      */
     default CatalogDefinition getCatalog() {
-	    return getSchema().getCatalog();
-	}
+        return getSchema().getCatalog();
+    }
 
     /**
      * @return The schema of this object or <code>null</code> if this object is
@@ -89,8 +89,8 @@ public interface Definition {
      *         table rewriting is applied.
      */
     default String getOutputName() {
-	    return getInputName();
-	}
+        return getInputName();
+    }
 
     /**
      * @return The comment of this object
@@ -102,13 +102,13 @@ public interface Definition {
      *         <code>[schema].[package].[routine].[parameter]</code>
      */
     default List<Definition> getDefinitionPath() {
-	    List<Definition> result = new ArrayList<Definition>();
-	
-	    result.addAll(getSchema().getDefinitionPath());
-	    result.add(this);
-	
-	    return result;
-	}
+        List<Definition> result = new ArrayList<Definition>();
+    
+        result.addAll(getSchema().getDefinitionPath());
+        result.add(this);
+    
+        return result;
+    }
 
     /**
      * @return A qualified name for this object (corresponding to

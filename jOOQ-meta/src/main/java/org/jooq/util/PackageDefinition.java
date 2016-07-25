@@ -59,6 +59,6 @@ public interface PackageDefinition extends Definition {
      * Fetch all constants from the package.
      */
     default List<AttributeDefinition> getConstants() {
-	    return Collections.emptyList();
-	}
+        return Collections.emptyList();
+    }
 }

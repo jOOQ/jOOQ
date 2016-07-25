@@ -93,8 +93,8 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * <code>configuration().dialect().family()</code>.
      */
     default SQLDialect family() {
-	    return dialect().family();
-	}
+        return dialect().family();
+    }
 
     /**
      * Expose the {@link RecordMapper} that is used internally by this

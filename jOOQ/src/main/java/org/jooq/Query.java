@@ -130,8 +130,8 @@ public interface Query extends QueryPart, Attachable , AutoCloseable  {
      * Subclasses may override the default implementation of this method.
      */
     default boolean isExecutable() {
-	    return true;
-	}
+        return true;
+    }
 
     /**
      * Retrieve the SQL code rendered by this Query.

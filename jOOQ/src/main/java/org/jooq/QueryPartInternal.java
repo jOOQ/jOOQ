@@ -114,6 +114,8 @@ public interface QueryPartInternal extends QueryPart {
      * clause should be rendered.
      * <p>
      * This method is for JOOQ INTERNAL USE only. Do not reference directly
+     * <p>
+     * Subclasses may override the default implementation.
      */
     default boolean declaresFields() {
 	    return false;
@@ -127,6 +129,8 @@ public interface QueryPartInternal extends QueryPart {
      * clause should be rendered.
      * <p>
      * This method is for JOOQ INTERNAL USE only. Do not reference directly
+     * <p>
+     * Subclasses may override the default implementation.
      */
     default boolean declaresTables() {
 	    return false;
@@ -140,6 +144,8 @@ public interface QueryPartInternal extends QueryPart {
      * clause should be rendered.
      * <p>
      * This method is for JOOQ INTERNAL USE only. Do not reference directly
+     * <p>
+     * Subclasses may override the default implementation.
      */
     default boolean declaresWindows() {
 	    return false;
@@ -153,6 +159,8 @@ public interface QueryPartInternal extends QueryPart {
      * clause should be rendered.
      * <p>
      * This method is for JOOQ INTERNAL USE only. Do not reference directly
+     * <p>
+     * Subclasses may override the default implementation.
      */
     default boolean declaresCTE() {
 	    return false;
@@ -166,6 +174,8 @@ public interface QueryPartInternal extends QueryPart {
      * clause should be rendered.
      * <p>
      * This method is for JOOQ INTERNAL USE only. Do not reference directly
+     * <p>
+     * Subclasses may override the default implementation.
      */
     default boolean generatesCast() {
 	    return false;

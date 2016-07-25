@@ -42,14 +42,17 @@ package org.jooq.impl;
 
 import static org.jooq.DDLFlag.FOREIGN_KEY;
 import static org.jooq.DDLFlag.PRIMARY_KEY;
+import static org.jooq.DDLFlag.SCHEMA;
 import static org.jooq.DDLFlag.TABLE;
 import static org.jooq.DDLFlag.UNIQUE;
 import static org.jooq.impl.DSL.constraint;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 
+import org.jooq.Catalog;
 import org.jooq.Constraint;
 import org.jooq.DDLFlag;
 import org.jooq.DSLContext;
@@ -105,6 +108,9 @@ final class DDL {
     final Queries queries(Schema schema) {
         List<Query> queries = new ArrayList<Query>();
 
+        if (flags.contains(SCHEMA))
+            queries.add(ctx.createSchema(schema.getName()));
+
         if (flags.contains(TABLE)) {
             for (Table<?> table : schema.getTables()) {
                 List<Constraint> constraints = new ArrayList<Constraint>();
@@ -131,6 +137,15 @@ final class DDL {
                     for (ForeignKey<?, ?> key : table.getReferences())
                         queries.add(ctx.alterTable(table).add(constraint(key.getName()).foreignKey(key.getFieldsArray()).references(key.getKey().getTable(), key.getKey().getFieldsArray())));
         }
+
+        return DSL.queries(queries);
+    }
+
+    final Queries queries(Catalog catalog) {
+        List<Query> queries = new ArrayList<Query>();
+
+        for (Schema schema : catalog.getSchemas())
+            queries.addAll(Arrays.asList(queries(schema).queries()));
 
         return DSL.queries(queries);
     }

@@ -46,6 +46,11 @@ package org.jooq;
 public enum DDLFlag {
 
     /**
+     * Whether <code>CREATE SCHEMA</code> statements should be generated.
+     */
+    SCHEMA,
+
+    /**
      * Whether <code>CREATE TABLE</code> statements should be generated.
      */
     TABLE,

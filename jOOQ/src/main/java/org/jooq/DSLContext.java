@@ -6917,6 +6917,34 @@ public interface DSLContext extends Scope , AutoCloseable  {
     // -------------------------------------------------------------------------
 
     /**
+     * Generate the complete creation script for the entire catalog.
+     *
+     * @see #ddl(Catalog, DDLFlag...)
+     */
+    Queries ddl(Catalog catalog);
+
+    /**
+     * Generate a partial creation script for the entire catalog.
+     * <p>
+     * The following {@link DDLFlag} can be set:
+     * <ul>
+     * <li>{@link DDLFlag#SCHEMA}: If set, the catalog's <code>SCHEMA</code>
+     * specification will be generated.</li>
+     * <li>{@link DDLFlag#TABLE}: If set, the schema's <code>TABLE</code>
+     * specification will be generated.</li>
+     * <li>{@link DDLFlag#PRIMARY_KEY}: If set, a potential
+     * <code>PRIMARY KEY</code> constraint is specified inline with the table.
+     * </li>
+     * <li>{@link DDLFlag#UNIQUE}: If set, any potential <code>UNIQUE</code>
+     * constraint is specified inline with the table.</li>
+     * <li>{@link DDLFlag#FOREIGN_KEY}: If set, any potential
+     * <code>FOREIGN KEY</code> constraint is specified after all the tables, as
+     * a separate <code>ALTER TABLE .. ADD CONSTRAINT</code> statement.</li>
+     * </ul>
+     */
+    Queries ddl(Catalog schema, DDLFlag... flags);
+
+    /**
      * Generate the complete creation script for the entire schema.
      *
      * @see #ddl(Schema, DDLFlag...)

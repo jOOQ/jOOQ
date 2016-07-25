@@ -92,6 +92,7 @@ import org.jooq.Attachable;
 import org.jooq.Batch;
 import org.jooq.BatchBindStep;
 import org.jooq.BindContext;
+import org.jooq.Catalog;
 import org.jooq.CommonTableExpression;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -2405,6 +2406,16 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     // -------------------------------------------------------------------------
     // XXX DDL Statements from existing meta data
     // -------------------------------------------------------------------------
+
+    @Override
+    public Queries ddl(Catalog catalog) {
+        return ddl(catalog, DDLFlag.values());
+    }
+
+    @Override
+    public Queries ddl(Catalog schema, DDLFlag... flags) {
+        return new DDL(this, flags).queries(schema);
+    }
 
     @Override
     public Queries ddl(Schema schema) {

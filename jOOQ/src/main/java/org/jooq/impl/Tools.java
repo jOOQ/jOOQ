@@ -2326,12 +2326,6 @@ final class Tools {
         }
 
         /**
-         * A default implementation for {@link GuardedOperation#guarded()}.
-         */
-        abstract static class AbstractGuardedOperation<V> implements GuardedOperation<V> {
-        }
-
-        /**
          * Run an operation using a guard.
          */
         static final <V> V run(Guard guard, GuardedOperation<V> operation) {

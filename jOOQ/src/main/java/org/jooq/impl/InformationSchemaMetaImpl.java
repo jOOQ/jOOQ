@@ -43,6 +43,8 @@ package org.jooq.impl;
 import static java.util.Collections.unmodifiableList;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -109,21 +111,44 @@ final class InformationSchemaMetaImpl implements Meta {
             tablesByName.put(xt.getTableName(), it);
         }
 
-        for (Column xc : meta.getColumns()) {
+        List<Column> columns = new ArrayList<Column>(meta.getColumns());
+        Collections.sort(columns, new Comparator<Column>() {
+            @Override
+            public int compare(Column o1, Column o2) {
+                Integer p1 = o1.getOrdinalPosition();
+                Integer p2 = o2.getOrdinalPosition();
+
+                if (p1 == p2)
+                    return 0;
+                if (p1 == null)
+                    return -1;
+                if (p2 == null)
+                    return 1;
+
+                return p1.compareTo(p2);
+            }
+        });
+
+        for (Column xc : columns) {
             String typeName = xc.getDataType();
+            int length = xc.getCharacterMaximumLength() == null ? 0 : xc.getCharacterMaximumLength();
             int precision = xc.getNumericPrecision() == null ? 0 : xc.getNumericPrecision();
             int scale = xc.getNumericScale() == null ? 0 : xc.getNumericScale();
             boolean nullable = xc.isIsNullable() == null ? true : xc.isIsNullable();
 
+            if (precision == 0)
+                precision = xc.getCharacterMaximumLength() == null ? 0 : xc.getCharacterMaximumLength();
+
             // TODO: Exception handling should be moved inside SQLDataType
             DataType<?> type = null;
             try {
-                type = DefaultDataType.getDataType(configuration.family(), typeName, precision, scale);
-
-                // JDBC doesn't distinguish between precision and length
-                type = type.precision(precision, scale);
-                type = type.length(precision);
+                type = DefaultDataType.getDataType(configuration.family(), typeName);
                 type = type.nullable(nullable);
+
+                if (length != 0)
+                    type = type.length(length);
+                else if (precision != 0 || scale != 0)
+                    type = type.precision(precision, scale);
             }
             catch (SQLDialectNotSupportedException e) {
                 type = SQLDataType.OTHER;

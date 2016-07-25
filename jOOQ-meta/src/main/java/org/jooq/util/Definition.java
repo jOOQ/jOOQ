@@ -83,6 +83,7 @@ public interface Definition {
     String getInputName();
 
     /**
+     * Subclasses may override the default implementation of this method
      * @return The name of this object, e.g. [my_table], as defined for the
      *         target database. This may differ from the input name if schema /
      *         table rewriting is applied.

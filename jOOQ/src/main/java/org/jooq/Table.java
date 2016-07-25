@@ -143,6 +143,8 @@ public interface Table<R extends Record> extends TableLike<R> {
      * <p>
      * Note: Unfortunately, this is not supported in the Oracle dialect, where
      * identities emulated by triggers cannot be formally detected.
+     * <p>
+     * Subclasses should override the default implementation of this method
      *
      * @return The table's <code>IDENTITY</code> information, or
      *         <code>null</code>, if no such information is available.
@@ -152,6 +154,8 @@ public interface Table<R extends Record> extends TableLike<R> {
 	}
     /**
      * Retrieve the table's primary key
+     * <p>
+     * Subclasses may override the default implementation of this method
      *
      * @return The primary key. This is never <code>null</code> for an updatable
      *         table.
@@ -212,6 +216,8 @@ public interface Table<R extends Record> extends TableLike<R> {
 
     /**
      * Retrieve all of the table's unique keys.
+     * <p>
+     * Subclasses should override the default implementation of this method
      *
      * @return All keys. This is never <code>null</code>. This is never empty
      *         for a {@link Table} with a {@link Table#getPrimaryKey()}. This
@@ -235,6 +241,8 @@ public interface Table<R extends Record> extends TableLike<R> {
 
     /**
      * Get the list of <code>FOREIGN KEY</code>'s of this table
+     * <p>
+     * Subclasses should override the default implementation of this method
      *
      * @return This table's <code>FOREIGN KEY</code>'s. This is never
      *         <code>null</code>.

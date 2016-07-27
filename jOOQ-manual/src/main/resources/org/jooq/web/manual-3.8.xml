@@ -5559,7 +5559,7 @@ RETURNING TITLE]]></sql>
 </code-pair><html>
 
 									<p>
-										The <code>UPDATE .. RETURNING</code> clause is currently not emulated for other databases. Future versions might execute an additional <reference id="select-statement" title="SELECT statement"/> to fetch results.
+										The <code>UPDATE .. RETURNING</code> clause is emulated for DB2 using the SQL standard <code>SELECT .. FROM FINAL TABLE(UPDATE ..)</code> construct, and in Oracle, using the PL/SQL <code>UPDATE .. RETURNING</code> statement.
 									</p>
 								</html></content>
 							</section>

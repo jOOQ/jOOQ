@@ -1890,6 +1890,7 @@ public class JavaGenerator extends AbstractGenerator {
         printClassAnnotations(out, e.getSchema());
 
 
+        boolean enumHasNoSchema = e.isSynthetic() || !(e.getDatabase() instanceof PostgresDatabase);
         if (scala) {
             out.println("object %s {", className);
             out.println();
@@ -1923,10 +1924,15 @@ public class JavaGenerator extends AbstractGenerator {
             out.println();
             out.println("sealed trait %s extends %s[[before= with ][%s]] {", className, EnumType.class, interfaces);
 
+            if (enumHasNoSchema)
+                out.tab(1).println("override def getCatalog : %s = null", Catalog.class);
+            else
+                out.tab(1).println("override def getCatalog : %s = if (getSchema == null) null else getSchema().getCatalog()", Catalog.class);
+
             // [#2135] Only the PostgreSQL database supports schema-scoped enum types
             out.tab(1).println("override def getSchema : %s = %s",
                 Schema.class,
-                (e.isSynthetic() || !(e.getDatabase() instanceof PostgresDatabase))
+                enumHasNoSchema
                     ? "null"
                     : out.ref(getStrategy().getFullJavaIdentifier(e.getSchema()), 2));
             out.tab(1).println("override def getName : %s = %s",
@@ -1961,11 +1967,21 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(2).println("this.literal = literal;");
             out.tab(1).println("}");
 
+            out.tab(1).overrideInherit();
+            out.tab(1).println("public %s getCatalog() {", Catalog.class);
+
+            if (enumHasNoSchema)
+                out.tab(2).println("return null;");
+            else
+                out.tab(2).println("return getSchema() == null ? null : getSchema().getCatalog();");
+
+            out.tab(1).println("}");
+
             // [#2135] Only the PostgreSQL database supports schema-scoped enum types
             out.tab(1).overrideInherit();
             out.tab(1).println("public %s getSchema() {", Schema.class);
             out.tab(2).println("return %s;",
-                (e.isSynthetic() || !(e.getDatabase() instanceof PostgresDatabase))
+                enumHasNoSchema
                     ? "null"
                     : out.ref(getStrategy().getFullJavaIdentifier(e.getSchema()), 2));
             out.tab(1).println("}");

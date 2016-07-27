@@ -606,19 +606,19 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
         return new HintedTable<R>(this, "force index for group by", indexes);
     }
 
+    // ------------------------------------------------------------------------
+    // XXX: aliasing API
+    // ------------------------------------------------------------------------
 
+    @Override
+    public final Table<R> as(Table<?> otherTable) {
+        return as(otherTable.getName());
+    }
 
-
-
-
-
-
-
-
-
-
-
-
+    @Override
+    public final Table<R> as(Table<?> otherTable, Field<?>... otherFields) {
+        return as(otherTable.getName(), Tools.fieldNames(otherFields));
+    }
 
 
 

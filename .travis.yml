@@ -1,6 +1,7 @@
 # GitHub's Travis installation uses Java 1.8.0_31 which doesn't compile jOOQ
 # for the time being, we turned off Travis (on GitHub)
 # --------------------------------------------------------------------------
+
 language: java
 jdk:
   - oraclejdk8

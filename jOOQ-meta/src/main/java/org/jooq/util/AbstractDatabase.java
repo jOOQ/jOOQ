@@ -153,8 +153,6 @@ public abstract class AbstractDatabase implements Database {
     private List<PackageDefinition>                                          packages;
     private Relations                                                        relations;
     private boolean                                                          includeRelations     = true;
-    private boolean                                                          includeEmptyCatalogs = false;
-    private boolean                                                          includeEmptySchemas  = false;
     private boolean                                                          tableValuedFunctions = true;
 
     private transient Map<SchemaDefinition, List<SequenceDefinition>>        sequencesBySchema;
@@ -366,19 +364,14 @@ public abstract class AbstractDatabase implements Database {
                 log.error("Could not load catalogs", e);
             }
 
-            Iterator<CatalogDefinition> it = catalogs.iterator();
-            while (it.hasNext()) {
-                CatalogDefinition catalog = it.next();
-
-                // [#4794] Add support for schema mapping
-                // if (!getInputSchemata().contains(catalog.getName()))
-                //    it.remove();
-
-                if (!includeEmptyCatalogs() && getSchemata(catalog).isEmpty()) {
-                    log.info("Excluding empty catalog", catalog);
-                    it.remove();
-                }
-            }
+//            Iterator<CatalogDefinition> it = catalogs.iterator();
+//            while (it.hasNext()) {
+//                CatalogDefinition catalog = it.next();
+//
+//                // [#4794] Add support for schema mapping
+//                // if (!getInputSchemata().contains(catalog.getName()))
+//                //    it.remove();
+//            }
         }
 
         return catalogs;
@@ -411,19 +404,8 @@ public abstract class AbstractDatabase implements Database {
             while (it.hasNext()) {
                 SchemaDefinition schema = it.next();
 
-                if (!getInputSchemata().contains(schema.getName())) {
+                if (!getInputSchemata().contains(schema.getName()))
                     it.remove();
-                }
-                else if (!includeEmptySchemas()
-                        && getArrays(schema).isEmpty()
-                        && getEnums(schema).isEmpty()
-                        && getPackages(schema).isEmpty()
-                        && getRoutines(schema).isEmpty()
-                        && getTables(schema).isEmpty()
-                        && getUDTs(schema).isEmpty()) {
-                    log.info("Excluding empty schema", schema);
-                    it.remove();
-                }
             }
 
             if (schemata.isEmpty())
@@ -895,26 +877,6 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final boolean includeRelations() {
         return includeRelations;
-    }
-
-    @Override
-    public final void setIncludeEmptyCatalogs(boolean includeEmptyCatalogs) {
-        this.includeEmptyCatalogs = includeEmptyCatalogs;
-    }
-
-    @Override
-    public final boolean includeEmptyCatalogs() {
-        return includeEmptyCatalogs;
-    }
-
-    @Override
-    public final void setIncludeEmptySchemas(boolean includeEmptySchemas) {
-        this.includeEmptySchemas = includeEmptySchemas;
-    }
-
-    @Override
-    public final boolean includeEmptySchemas() {
-        return includeEmptySchemas;
     }
 
     @Override

@@ -203,8 +203,6 @@ public class JavaGenerator extends AbstractGenerator {
         this.database = db;
         this.database.addFilter(new AvoidAmbiguousClassesFilter());
         this.database.setIncludeRelations(generateRelations());
-        this.database.setIncludeEmptyCatalogs(generateEmptyCatalogs());
-        this.database.setIncludeEmptySchemas(generateEmptySchemas());
         this.database.setTableValuedFunctions(generateTableValuedFunctions());
 
         logDatabaseParameters(db);
@@ -254,12 +252,45 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating catalogs", "Total: " + database.getCatalogs().size());
         for (CatalogDefinition catalog : database.getCatalogs()) {
             try {
-                generate(catalog);
+                if (generateCatalogIfEmpty(catalog))
+                    generate(catalog);
+                else
+                    log.info("Excluding empty catalog", catalog);
             }
             catch (Exception e) {
                 throw new GeneratorException("Error generating code for catalog " + catalog, e);
             }
         }
+    }
+
+    private boolean generateCatalogIfEmpty(CatalogDefinition catalog) {
+        if (generateEmptyCatalogs())
+            return true;
+
+        List<SchemaDefinition> schemas = catalog.getSchemata();
+        if (schemas.isEmpty())
+            return false;
+
+        for (SchemaDefinition schema : schemas)
+            if (generateSchemaIfEmpty(schema))
+                return true;
+
+        return false;
+    }
+
+    private boolean generateSchemaIfEmpty(SchemaDefinition schema) {
+        if (generateEmptySchemas())
+            return true;
+
+        if (database.getArrays(schema).isEmpty()
+            && database.getEnums(schema).isEmpty()
+            && database.getPackages(schema).isEmpty()
+            && database.getRoutines(schema).isEmpty()
+            && database.getTables(schema).isEmpty()
+            && database.getUDTs(schema).isEmpty())
+            return false;
+
+        return true;
     }
 
     private void generate(CatalogDefinition catalog) {
@@ -289,7 +320,10 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating schemata", "Total: " + catalog.getSchemata().size());
         for (SchemaDefinition schema : catalog.getSchemata()) {
             try {
-                generate(schema);
+                if (generateSchemaIfEmpty(schema))
+                    generate(schema);
+                else
+                    log.info("Excluding empty schema", schema);
             }
             catch (Exception e) {
                 throw new GeneratorException("Error generating code for schema " + schema, e);

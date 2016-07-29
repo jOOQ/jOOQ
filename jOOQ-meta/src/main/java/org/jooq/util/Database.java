@@ -577,26 +577,6 @@ public interface Database {
     boolean includeRelations();
 
     /**
-     * [#5472] Whether empty catalogs should be included in this database.
-     */
-    void setIncludeEmptyCatalogs(boolean includeEmptyCatalogs);
-
-    /**
-     * [#5472] Whether empty catalogs should be included in this database.
-     */
-    boolean includeEmptyCatalogs();
-
-    /**
-     * [#5472] Whether empty schemas should be included in this database.
-     */
-    void setIncludeEmptySchemas(boolean includeEmptySchemas);
-
-    /**
-     * [#5472] Whether empty schemas should be included in this database.
-     */
-    boolean includeEmptySchemas();
-
-    /**
      * [#4838] Whether table-valued functions should be reported as tables.
      */
     void setTableValuedFunctions(boolean tableValuedFunctions);

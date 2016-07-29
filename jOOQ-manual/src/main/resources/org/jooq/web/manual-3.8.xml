@@ -13497,7 +13497,7 @@ result.forEach((Object[] entities) -> {
        generated artefacts. -->
   <schemaVersionProvider>SELECT :schema_name || '_' || MAX("version") FROM "schema_version"</schemaVersionProvider>
 
-  <!-- A configuration element to configure custom data types -->
+  <!-- A configuration element to configure reusable custom data types -->
   <customTypes>...</customTypes>
 
   <!-- A configuration element to configure type overrides for generated
@@ -14654,6 +14654,56 @@ public class Book implements java.io.Serializable
 								When using a custom type in jOOQ, you need to let jOOQ know about its associated <reference class="org.jooq.Converter"/>. Ad-hoc usages of such converters has been discussed in the chapter about <reference id="data-type-conversion" title="data type conversion"/>. However, when mapping a custom type onto a standard JDBC type, a more common use-case is to let jOOQ know about custom types at code generation time (if you're using non-standard JDBC types, like for example JSON or HSTORE, see the <reference id="custom-data-type-bindings" title="manual's section about custom data type bindings"/>). Use the following configuration elements to specify, that you'd like to use GregorianCalendar for all database fields that start with DATE_OF_
       						</p>
 
+                            <p>
+                                There's a simple configuration using only <code>&lt;forcedTypes/></code> configuration elements, and an advanced configuration using both <code>&lt;forcedTypes/></code> and <code>&lt;customTypes/></code> elements, which allow for greater reuse.
+                            </p>
+
+                            <h3>Simple configuration</h3>
+
+                            <p>
+                                The simple configuration is most useful in most situations as it can do only by specifying <code>&lt;forcedTypes/></code>:
+                            </p>
+
+</html><xml><![CDATA[<database>
+
+  <!-- Then, associate custom types with database columns -->
+  <forcedTypes>
+    <forcedType>
+
+      <!-- Specify the Java type of your custom type. This corresponds to the Converter's <U> type. -->
+      <userType>java.util.GregorianCalendar</userType>
+
+      <!-- Associate that custom type with your converter. -->
+      <converter>com.example.CalendarConverter</converter>
+
+      <!-- Add a Java regular expression matching fully-qualified columns. Use the pipe to separate several expressions.
+
+           If provided, both "expressions" and "types" must match. -->
+      <expression>.*\.DATE_OF_.*</expression>
+
+      <!-- Add a Java regular expression matching data types to be forced to
+           have this type.
+
+           Data types may be reported by your database as:
+           - NUMBER              regexp suggestion: NUMBER
+           - NUMBER(5)           regexp suggestion: NUMBER\(5\)
+           - NUMBER(5, 2)        regexp suggestion: NUMBER\(5,\s*2\)
+           - any other form
+
+           It is thus recommended to use defensive regexes for types.
+
+           If provided, both "expressions" and "types" must match. -->
+      <types>.*</types>
+    </forcedType>
+  </forcedTypes>
+</database>]]></xml><html>
+
+                            <h3>Advanced configuration</h3>
+
+                            <p>
+                                The advanced configuration allows for specifying <code>&lt;customTypes/></code>, which can be used to reuse configuration elements for user type / converter / binding combinations by giving them a name:
+                            </p>
+
 </html><xml><![CDATA[<database>
   <!-- First, register your custom types here -->
   <customTypes>
@@ -14818,25 +14868,15 @@ public class PostgresJSONGsonBinding implements Binding<Object, JsonElement> {
                             </p>
 
 </html><xml><![CDATA[<database>
-  <!-- First, register your custom types here -->
-  <customTypes>
-    <customType>
-      <!-- Specify the name of your custom type. Avoid using names from org.jooq.impl.SQLDataType -->
-      <name>JsonElement</name>
+  <!-- Optionally, reuse your configuration via a <customType/>, first -->
+  <forcedTypes>
+    <forcedType>
 
       <!-- Specify the Java type of your custom type. This corresponds to the Binding's <U> type. -->
-      <type>com.google.gson.JsonElement</type>
+      <userType>com.google.gson.JsonElement</userType>
 
       <!-- Associate that custom type with your binding. -->
       <binding>com.example.PostgresJSONGsonBinding</binding>
-    </customType>
-  </customTypes>
-
-  <!-- Then, associate custom types with database columns -->
-  <forcedTypes>
-    <forcedType>
-      <!-- Specify the name of your custom type -->
-      <name>JsonElement</name>
 
       <!-- Add a Java regular expression matching fully-qualified columns. Use the pipe to separate several expressions.
 
@@ -15742,16 +15782,10 @@ public final void sql(BindingSQLContext<Timestamp> ctx) throws SQLException {
   <dateAsTimestamp>true</dateAsTimestamp>
 
   <!-- Define a custom binding for such DATE as TIMESTAMP columns -->
-  <customTypes>
-    <customType>
-      <name>org.jooq.impl.DateAsTimestampBinding</name>
-      <type>java.sql.Timestamp</type>
-      <binding>org.jooq.impl.DateAsTimestampBinding</binding>
-    </customType>
-  </customTypes>
   <forcedTypes>
     <forcedType>
-      <name>org.jooq.impl.DateAsTimestampBinding</name>
+      <userType>java.sql.Timestamp</userType>
+      <binding>org.jooq.impl.DateAsTimestampBinding</binding>
       <types>DATE</types>
     </forcedType>
   </forcedTypes>

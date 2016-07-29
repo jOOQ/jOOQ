@@ -3577,9 +3577,12 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("public static final %s %s = new %s();", className, catalogId, className);
         }
 
+        List<SchemaDefinition> schemas = new ArrayList<SchemaDefinition>();
         if (generateGlobalObjectReferences() && generateGlobalSchemaReferences()) {
             for (SchemaDefinition schema : catalog.getSchemata()) {
                 if (generateSchemaIfEmpty(schema)) {
+                    schemas.add(schema);
+
                     final String schemaClassName = out.ref(getStrategy().getFullJavaClassName(schema));
                     final String schemaId = getStrategy().getJavaIdentifier(schema);
                     final String schemaFullId = getStrategy().getFullJavaIdentifier(schema);
@@ -3606,7 +3609,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("}");
         }
 
-        printReferences(out, database.getSchemata(catalog), Schema.class, false);
+        printReferences(out, schemas, Schema.class, false);
 
         generateCatalogClassFooter(catalog, out);
         out.println("}");

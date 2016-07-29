@@ -3579,19 +3579,21 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (generateGlobalObjectReferences() && generateGlobalSchemaReferences()) {
             for (SchemaDefinition schema : catalog.getSchemata()) {
-                final String schemaClassName = out.ref(getStrategy().getFullJavaClassName(schema));
-                final String schemaId = getStrategy().getJavaIdentifier(schema);
-                final String schemaFullId = getStrategy().getFullJavaIdentifier(schema);
-                final String schemaComment = !StringUtils.isBlank(schema.getComment())
-                    ? schema.getComment()
-                    : "The schema <code>" + schema.getQualifiedOutputName() + "</code>.";
+                if (generateSchemaIfEmpty(schema)) {
+                    final String schemaClassName = out.ref(getStrategy().getFullJavaClassName(schema));
+                    final String schemaId = getStrategy().getJavaIdentifier(schema);
+                    final String schemaFullId = getStrategy().getFullJavaIdentifier(schema);
+                    final String schemaComment = !StringUtils.isBlank(schema.getComment())
+                        ? schema.getComment()
+                        : "The schema <code>" + schema.getQualifiedOutputName() + "</code>.";
 
-                out.tab(1).javadoc(schemaComment);
+                    out.tab(1).javadoc(schemaComment);
 
-                if (scala)
-                    out.tab(1).println("val %s = %s", schemaId, schemaFullId);
-                else
-                    out.tab(1).println("public final %s %s = %s;", schemaClassName, schemaId, schemaFullId);
+                    if (scala)
+                        out.tab(1).println("val %s = %s", schemaId, schemaFullId);
+                    else
+                        out.tab(1).println("public final %s %s = %s;", schemaClassName, schemaId, schemaFullId);
+                }
             }
         }
 

@@ -203,6 +203,8 @@ public class JavaGenerator extends AbstractGenerator {
         this.database = db;
         this.database.addFilter(new AvoidAmbiguousClassesFilter());
         this.database.setIncludeRelations(generateRelations());
+        this.database.setIncludeEmptyCatalogs(generateEmptyCatalogs());
+        this.database.setIncludeEmptySchemas(generateEmptySchemas());
         this.database.setTableValuedFunctions(generateTableValuedFunctions());
 
         logDatabaseParameters(db);

@@ -90,6 +90,8 @@ abstract class AbstractGenerator implements Generator {
     boolean                            fluentSetters                    = false;
     String                             generateFullyQualifiedTypes      = "";
     boolean                            generateTableValuedFunctions     = false;
+    boolean                            generateEmptyCatalogs            = false;
+    boolean                            generateEmptySchemas             = false;
 
     protected GeneratorStrategyWrapper strategy;
     protected String                   targetEncoding                   = "UTF-8";
@@ -491,6 +493,26 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateFullyQualifiedTypes(String generateFullyQualifiedTypes) {
         this.generateFullyQualifiedTypes = generateFullyQualifiedTypes;
+    }
+
+    @Override
+    public boolean generateEmptyCatalogs() {
+        return generateEmptyCatalogs;
+    }
+
+    @Override
+    public void setGenerateEmptyCatalogs(boolean generateEmptyCatalogs) {
+        this.generateEmptyCatalogs = generateEmptyCatalogs;
+    }
+
+    @Override
+    public boolean generateEmptySchemas() {
+        return generateEmptySchemas;
+    }
+
+    @Override
+    public void setGenerateEmptySchemas(boolean generateEmptySchemas) {
+        this.generateEmptySchemas = generateEmptySchemas;
     }
 
     // ----

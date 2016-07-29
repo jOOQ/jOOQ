@@ -511,6 +511,11 @@ public class GenerationTool {
                 generator.setGeneratePojosToString(g.getGenerate().isPojosToString());
             if (g.getGenerate().getFullyQualifiedTypes() != null)
                 generator.setGenerateFullyQualifiedTypes(g.getGenerate().getFullyQualifiedTypes());
+            if (g.getGenerate().isEmptyCatalogs() != null)
+                generator.setGenerateEmptyCatalogs(g.getGenerate().isEmptyCatalogs());
+            if (g.getGenerate().isEmptySchemas() != null)
+                generator.setGenerateEmptySchemas(g.getGenerate().isEmptySchemas());
+
 
             // [#3669] Optional Database element
             if (g.getDatabase() == null)

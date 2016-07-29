@@ -390,6 +390,26 @@ public interface Generator {
     void setGenerateFullyQualifiedTypes(String generateFullyQualifiedTypes);
 
     /**
+     * Whether empty catalogs should still be generated.
+     */
+    boolean generateEmptyCatalogs();
+
+    /**
+     * Whether empty catalogs should still be generated.
+     */
+    void setGenerateEmptyCatalogs(boolean generateEmptyCatalogs);
+
+    /**
+     * Whether empty schemas should still be generated.
+     */
+    boolean generateEmptySchemas();
+
+    /**
+     * Whether empty schemas should still be generated.
+     */
+    void setGenerateEmptySchemas(boolean generateEmptySchemas);
+
+    /**
      * The target directory
      */
     String getTargetDirectory();

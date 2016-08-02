@@ -44,12 +44,15 @@ import static java.util.Collections.unmodifiableList;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.util.xml.jaxb.TableConstraintType.PRIMARY_KEY;
 
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.xml.bind.JAXB;
 
 import org.jooq.Catalog;
 import org.jooq.Configuration;
@@ -67,6 +70,7 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.util.xml.jaxb.Column;
 import org.jooq.util.xml.jaxb.InformationSchema;
 import org.jooq.util.xml.jaxb.KeyColumnUsage;
+import org.jooq.util.xml.jaxb.ReferentialConstraint;
 import org.jooq.util.xml.jaxb.TableConstraint;
 
 /**
@@ -75,6 +79,8 @@ import org.jooq.util.xml.jaxb.TableConstraint;
 final class InformationSchemaMetaImpl implements Meta {
 
     private final Configuration                             configuration;
+    private final InformationSchema                         source;
+
     private final List<Catalog>                             catalogs;
     private final List<Schema>                              schemas;
     private final Map<Name, Schema>                         schemasByName;
@@ -84,10 +90,13 @@ final class InformationSchemaMetaImpl implements Meta {
     private final Map<Schema, List<InformationSchemaTable>> tablesPerSchema;
     private final List<Sequence<?>>                         sequences;
     private final Map<Schema, List<Sequence<?>>>            sequencesPerSchema;
-    private final List<UniqueKey<?>>                        primaryKeys;
+    private final List<UniqueKeyImpl<Record>>               primaryKeys;
+    private final Map<Name, UniqueKeyImpl<Record>>          uniqueKeysByName;
+    private final Map<Name, Name>                           referentialKeys;
 
-    InformationSchemaMetaImpl(Configuration configuration, InformationSchema schema) {
+    InformationSchemaMetaImpl(Configuration configuration, InformationSchema source) {
         this.configuration = configuration;
+        this.source = source;
         this.catalogs = new ArrayList<Catalog>();
         this.schemas = new ArrayList<Schema>();
         this.schemasByName = new HashMap<Name, Schema>();
@@ -97,14 +106,21 @@ final class InformationSchemaMetaImpl implements Meta {
         this.tablesPerSchema = new HashMap<Schema, List<InformationSchemaTable>>();
         this.sequences = new ArrayList<Sequence<?>>();
         this.sequencesPerSchema = new HashMap<Schema, List<Sequence<?>>>();
-        this.primaryKeys = new ArrayList<UniqueKey<?>>();
+        this.primaryKeys = new ArrayList<UniqueKeyImpl<Record>>();
+        this.uniqueKeysByName = new HashMap<Name, UniqueKeyImpl<Record>>();
+        this.referentialKeys = new HashMap<Name, Name>();
 
-        init(schema);
+        init(source);
     }
-
+public static void main(String[] args) {
+    System.out.println(String.format("x y %0$s", "abc"));
+}
     private final void init(InformationSchema meta) {
 
-        // Initialise base collections
+        List<String> errors = new ArrayList<String>();
+
+        // Catalogs / Schemas
+        // -------------------------------------------------------------------------------------------------------------
         for (org.jooq.util.xml.jaxb.Schema xs : meta.getSchemata()) {
             InformationSchemaCatalog catalog = new InformationSchemaCatalog(xs.getCatalogName());
 
@@ -116,12 +132,25 @@ final class InformationSchemaMetaImpl implements Meta {
             schemasByName.put(name(xs.getCatalogName(), xs.getSchemaName()), is);
         }
 
+        // Tables
+        // -------------------------------------------------------------------------------------------------------------
+        tableLoop:
         for (org.jooq.util.xml.jaxb.Table xt : meta.getTables()) {
-            InformationSchemaTable it = new InformationSchemaTable(xt.getTableName(), schemasByName.get(name(xt.getTableCatalog(), xt.getTableSchema())));
+            Name schemaName = name(xt.getTableCatalog(), xt.getTableSchema());
+            Schema schema = schemasByName.get(schemaName);
+
+            if (schema == null) {
+                errors.add(String.format("Schema " + schemaName + " not defined for table " + xt.getTableName()));
+                continue tableLoop;
+            }
+
+            InformationSchemaTable it = new InformationSchemaTable(xt.getTableName(), schema);
             tables.add(it);
             tablesByName.put(name(xt.getTableCatalog(), xt.getTableSchema(), xt.getTableName()), it);
         }
 
+        // Columns
+        // -------------------------------------------------------------------------------------------------------------
         List<Column> columns = new ArrayList<Column>(meta.getColumns());
         Collections.sort(columns, new Comparator<Column>() {
             @Override
@@ -140,6 +169,7 @@ final class InformationSchemaMetaImpl implements Meta {
             }
         });
 
+        columnLoop:
         for (Column xc : columns) {
             String typeName = xc.getDataType();
             int length = xc.getCharacterMaximumLength() == null ? 0 : xc.getCharacterMaximumLength();
@@ -148,52 +178,85 @@ final class InformationSchemaMetaImpl implements Meta {
             boolean nullable = xc.isIsNullable() == null ? true : xc.isIsNullable();
 
             // TODO: Exception handling should be moved inside SQLDataType
+            Name tableName = name(xc.getTableCatalog(), xc.getTableSchema(), xc.getTableName());
+            InformationSchemaTable table = tablesByName.get(tableName);
+
+            if (table == null) {
+                errors.add(String.format("Table " + tableName + " not defined for column " + xc.getColumnName()));
+                continue columnLoop;
+            }
+
             AbstractTable.createField(
                 xc.getColumnName(),
                 type(typeName, length, precision, scale, nullable),
-                tablesByName.get(name(xc.getTableCatalog(), xc.getTableSchema(), xc.getTableName()))
+                table
             );
         }
 
+        // Constraints
+        // -------------------------------------------------------------------------------------------------------------
         Map<Name, List<TableField<Record, ?>>> columnsByConstraint = new HashMap<Name, List<TableField<Record, ?>>>();
         List<KeyColumnUsage> keyColumnUsages = new ArrayList<KeyColumnUsage>(meta.getKeyColumnUsages());
         Collections.sort(keyColumnUsages, new Comparator<KeyColumnUsage>() {
             @Override
             public int compare(KeyColumnUsage o1, KeyColumnUsage o2) {
-                Integer p1 = o1.getOrdinalPosition();
-                Integer p2 = o2.getOrdinalPosition();
+                int p1 = o1.getOrdinalPosition();
+                int p2 = o2.getOrdinalPosition();
 
-                if (p1 == p2)
-                    return 0;
-                if (p1 == null)
-                    return -1;
-                if (p2 == null)
-                    return 1;
-
-                return p1.compareTo(p2);
+                return (p1 < p2) ? -1 : ((p1 == p2) ? 0 : 1);
             }
         });
 
+        keyColumnLoop:
         for (KeyColumnUsage xc : keyColumnUsages) {
-            Name name = name(xc.getConstraintCatalog(), xc.getConstraintSchema(), xc.getConstraintName());
-            List<TableField<Record, ?>> fields = columnsByConstraint.get(name);
+            Name constraintName = name(xc.getConstraintCatalog(), xc.getConstraintSchema(), xc.getConstraintName());
+            List<TableField<Record, ?>> fields = columnsByConstraint.get(constraintName);
 
             if (fields == null) {
                 fields = new ArrayList<TableField<Record, ?>>();
-                columnsByConstraint.put(name, fields);
+                columnsByConstraint.put(constraintName, fields);
             }
 
-            InformationSchemaTable table = tablesByName.get(name(xc.getTableCatalog(), xc.getTableSchema(), xc.getTableName()));
-            fields.add((TableField<Record, ?>) table.field(xc.getColumnName()));
+            Name tableName = name(xc.getTableCatalog(), xc.getTableSchema(), xc.getTableName());
+            InformationSchemaTable table = tablesByName.get(tableName);
+
+            if (table == null) {
+                errors.add(String.format("Table " + tableName + " not defined for constraint " + constraintName));
+                continue keyColumnLoop;
+            }
+
+            TableField<Record, ?> field = (TableField<Record, ?>) table.field(xc.getColumnName());
+
+            if (field == null) {
+                errors.add(String.format("Column " + xc.getColumnName() + " not defined for table " + tableName));
+                continue keyColumnLoop;
+            }
+
+            fields.add(field);
         }
 
+        tableConstraintLoop:
         for (TableConstraint xc : meta.getTableConstraints()) {
             switch (xc.getConstraintType()) {
                 case PRIMARY_KEY:
                 case UNIQUE: {
-                    InformationSchemaTable table = tablesByName.get(name(xc.getTableCatalog(), xc.getTableSchema(), xc.getTableName()));
-                    List<TableField<Record, ?>> c = columnsByConstraint.get(name(xc.getConstraintCatalog(), xc.getConstraintSchema(), xc.getConstraintName()));
-                    UniqueKey<Record> key = AbstractKeys.createUniqueKey(table, xc.getConstraintName(), c.toArray(new TableField[0]));
+                    Name tableName = name(xc.getTableCatalog(), xc.getTableSchema(), xc.getTableName());
+                    Name constraintName = name(xc.getConstraintCatalog(), xc.getConstraintSchema(), xc.getConstraintName());
+                    InformationSchemaTable table = tablesByName.get(tableName);
+
+                    if (table == null) {
+                        errors.add(String.format("Table " + tableName + " not defined for constraint " + constraintName));
+                        continue tableConstraintLoop;
+                    }
+
+                    List<TableField<Record, ?>> c = columnsByConstraint.get(constraintName);
+
+                    if (c == null || c.isEmpty()) {
+                        errors.add(String.format("No columns defined for constraint " + constraintName));
+                        continue tableConstraintLoop;
+                    }
+
+                    UniqueKeyImpl<Record> key = (UniqueKeyImpl<Record>) AbstractKeys.createUniqueKey(table, xc.getConstraintName(), c.toArray(new TableField[0]));
 
                     if (xc.getConstraintType() == PRIMARY_KEY) {
                         table.primaryKey = key;
@@ -201,13 +264,65 @@ final class InformationSchemaMetaImpl implements Meta {
                     }
 
                     table.uniqueKeys.add(key);
-
+                    uniqueKeysByName.put(constraintName, key);
                     break;
                 }
             }
         }
 
+        for (ReferentialConstraint xr : meta.getReferentialConstraints()) {
+            referentialKeys.put(
+                name(xr.getConstraintCatalog(), xr.getConstraintSchema(), xr.getConstraintName()),
+                name(xr.getUniqueConstraintCatalog(), xr.getUniqueConstraintSchema(), xr.getUniqueConstraintName())
+            );
+        }
+
+        tableConstraintLoop:
+        for (TableConstraint xc : meta.getTableConstraints()) {
+            switch (xc.getConstraintType()) {
+                case FOREIGN_KEY: {
+                    Name tableName = name(xc.getTableCatalog(), xc.getTableSchema(), xc.getTableName());
+                    Name constraintName = name(xc.getConstraintCatalog(), xc.getConstraintSchema(), xc.getConstraintName());
+                    InformationSchemaTable table = tablesByName.get(tableName);
+
+                    if (table == null) {
+                        errors.add(String.format("Table " + tableName + " not defined for constraint " + constraintName));
+                        continue tableConstraintLoop;
+                    }
+
+                    List<TableField<Record, ?>> c = columnsByConstraint.get(constraintName);
+
+                    if (c == null || c.isEmpty()) {
+                        errors.add(String.format("No columns defined for constraint " + constraintName));
+                        continue tableConstraintLoop;
+                    }
+
+                    UniqueKeyImpl<Record> uniqueKey = uniqueKeysByName.get(referentialKeys.get(constraintName));
+
+                    if (uniqueKey == null) {
+                        errors.add(String.format("No unique key defined for foreign key " + constraintName));
+                        continue tableConstraintLoop;
+                    }
+
+                    ForeignKey<Record, Record> key = AbstractKeys.createForeignKey(uniqueKey, table, xc.getConstraintName(), c.toArray(new TableField[0]));
+                    table.foreignKeys.add(key);
+                    break;
+                }
+            }
+        }
+
+        // Sequences
+        // -------------------------------------------------------------------------------------------------------------
+        sequenceLoop:
         for (org.jooq.util.xml.jaxb.Sequence xs : meta.getSequences()) {
+            Name schemaName = name(xs.getSequenceCatalog(), xs.getSequenceSchema());
+            Schema schema = schemasByName.get(schemaName);
+
+            if (schema == null) {
+                errors.add(String.format("Schema " + schemaName + " not defined for sequence " + xs.getSequenceName()));
+                continue sequenceLoop;
+            }
+
             String typeName = xs.getDataType();
             int length = xs.getCharacterMaximumLength() == null ? 0 : xs.getCharacterMaximumLength();
             int precision = xs.getNumericPrecision() == null ? 0 : xs.getNumericPrecision();
@@ -217,14 +332,15 @@ final class InformationSchemaMetaImpl implements Meta {
             @SuppressWarnings({ "rawtypes", "unchecked" })
             InformationSchemaSequence is = new InformationSchemaSequence(
                 xs.getSequenceName(),
-                schemasByName.get(name(xs.getSequenceCatalog(), xs.getSequenceSchema())),
+                schema,
                 type(typeName, length, precision, scale, nullable)
             );
 
             sequences.add(is);
         }
 
-        // Initialise indexes
+        // Lookups
+        // -------------------------------------------------------------------------------------------------------------
         for (Schema s : schemas) {
             Catalog c = s.getCatalog();
             List<Schema> list = schemasPerCatalog.get(c);
@@ -260,6 +376,9 @@ final class InformationSchemaMetaImpl implements Meta {
 
             list.add(q);
         }
+
+        if (!errors.isEmpty())
+            throw new IllegalArgumentException(errors.toString());
     }
 
     private final DataType<?> type(String typeName, int length, int precision, int scale, boolean nullable) {
@@ -350,10 +469,11 @@ final class InformationSchemaMetaImpl implements Meta {
         /**
          * Generated UID
          */
-        private static final long serialVersionUID = 4314110578549768267L;
+        private static final long              serialVersionUID = 4314110578549768267L;
 
-        UniqueKey<Record>         primaryKey;
-        List<UniqueKey<Record>>   uniqueKeys       = new ArrayList<UniqueKey<Record>>();
+        UniqueKey<Record>                      primaryKey;
+        final List<UniqueKey<Record>>          uniqueKeys       = new ArrayList<UniqueKey<Record>>();
+        final List<ForeignKey<Record, Record>> foreignKeys      = new ArrayList<ForeignKey<Record, Record>>();
 
         public InformationSchemaTable(String name, Schema schema) {
             super(name, schema);
@@ -371,7 +491,7 @@ final class InformationSchemaMetaImpl implements Meta {
 
         @Override
         public List<ForeignKey<Record, ?>> getReferences() {
-            return super.getReferences();
+            return Collections.unmodifiableList(foreignKeys);
         }
     }
 
@@ -385,5 +505,12 @@ final class InformationSchemaMetaImpl implements Meta {
         InformationSchemaSequence(String name, Schema schema, DataType<N> type) {
             super(name, schema, type);
         }
+    }
+
+    @Override
+    public String toString() {
+        StringWriter writer = new StringWriter();
+        JAXB.marshal(source, writer);
+        return writer.toString();
     }
 }

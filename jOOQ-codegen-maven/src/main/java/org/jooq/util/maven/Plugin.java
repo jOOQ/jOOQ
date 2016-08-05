@@ -46,6 +46,7 @@ import static org.jooq.Constants.XSD_CODEGEN;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.StringWriter;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -138,6 +139,14 @@ public class Plugin extends AbstractMojo {
             }
             catch (Exception e) {
                 throw new RuntimeException(e);
+            }
+            finally {
+                if (in != null) {
+                    try {
+                        in.close();
+                    }
+                    catch (IOException ignore) {}
+                }
             }
         }
 

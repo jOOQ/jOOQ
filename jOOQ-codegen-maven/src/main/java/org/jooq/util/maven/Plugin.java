@@ -45,6 +45,7 @@ import static org.apache.maven.plugins.annotations.ResolutionScope.TEST;
 import static org.jooq.Constants.XSD_CODEGEN;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.StringWriter;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -85,6 +86,12 @@ public class Plugin extends AbstractMojo {
     private MavenProject                 project;
 
     /**
+     * An external configuration file that overrides anything in the Maven configuration
+     */
+    @Parameter
+    private String                       configurationFile;
+
+    /**
      * Whether to skip the execution of the Maven Plugin for this module.
      */
     @Parameter
@@ -113,6 +120,25 @@ public class Plugin extends AbstractMojo {
         if (skip) {
             getLog().info("Skipping jOOQ code generation");
             return;
+        }
+
+        if (configurationFile != null) {
+            getLog().info("Reading external configuration");
+            File file = new File(configurationFile);
+
+            if (!file.isAbsolute())
+                file = new File(project.getBasedir(), configurationFile);
+
+            FileInputStream in = null;
+            try {
+                in = new FileInputStream(file);
+                Configuration configuration = GenerationTool.load(in);
+                generator = configuration.getGenerator();
+                jdbc = configuration.getJdbc();
+            }
+            catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
 
         // [#5286] There are a variety of reasons why the generator isn't set up

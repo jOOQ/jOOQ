@@ -5665,81 +5665,76 @@ VALUES ('John', 'Hitchcock')</sql>
                                         jOOQ currently supports the following <code>ALTER</code> statements (SQL examples in PostgreSQL syntax):
                                     </p>
 
+                                    <h3>Indexes</h3>
+
+</html><java><![CDATA[// Renaming the index
+create.alterIndex("old_index").renameTo("new_index").execute();]]></java><html>
+
+                                    <h3>Schemas</h3>
+
+</html><java><![CDATA[// Renaming the schema
+create.alterSchema("old_schema").renameTo("new_schema").execute();]]></java><html>
+
+                                    <h3>Sequences</h3>
+
+</html><java><![CDATA[// Renaming the sequence
+create.alterSequence("old_sequence").renameTo("new_sequence").execute();
+
+// Restarting the sequence
+create.alterSequence(S_AUTHOR_ID).restart().execute();
+create.alterSequence(S_AUTHOR_ID).restartWith(n).execute();]]></java><html>
+
                                     <h3>Tables</h3>
+
+                                    <p>
+                                        These statements alter the table itself:
+                                    </p>
+
+</html><java><![CDATA[// Renaming the table
+create.alterTable("old_table").renameTo("new_table").execute();]]></java><html>
 
                                     <p>
                                         These statements alter / add / drop columns and their types:
                                     </p>
 
-</html><code-pair>
-<sql><![CDATA[ALTER TABLE AUTHOR
-  ADD TITLE VARCHAR(5) NULL;
-ALTER TABLE AUTHOR
-  ADD TITLE VARCHAR(5) NOT NULL;
+</html><java><![CDATA[// Adding columns
+create.alterTable(AUTHOR).add(AUTHOR.TITLE, VARCHAR.length(5)).execute();
+create.alterTable(AUTHOR).add(AUTHOR.TITLE, VARCHAR.length(5).nullable(false)).execute();
 
-ALTER TABLE AUTHOR
-  ALTER TITLE SET DEFAULT 'no title';
-ALTER TABLE AUTHOR
-  ALTER TITLE TYPE VARCHAR(5);
-ALTER TABLE AUTHOR
-  ALTER TITLE TYPE VARCHAR(5) NOT NULL;
+// Altering columns
+create.alterTable(AUTHOR).alter(TITLE).defaultValue("no title").execute();
+create.alterTable(AUTHOR).alter(TITLE).set(VARCHAR.length(5)).execute();
+create.alterTable(AUTHOR).alter(TITLE).set(VARCHAR.length(5).nullable(false)).execute();
+create.alterTable(AUTHOR).renameColumn("old_column").to("new_column").execute();
 
-ALTER TABLE AUTHOR DROP TITLE;]]></sql>
-<java><![CDATA[create.alterTable(AUTHOR)
-  .add(AUTHOR.TITLE, VARCHAR.length(5)).execute();
-create.alterTable(AUTHOR)
-  .add(AUTHOR.TITLE, VARCHAR.length(5).nullable(false)).execute();
-
-create.alterTable(AUTHOR)
-  .alter(TITLE).defaultValue("no title").execute();
-create.alterTable(AUTHOR)
-  .alter(TITLE).set(VARCHAR.length(5)).execute();
-create.alterTable(AUTHOR)
-  .alter(TITLE).set(VARCHAR.length(5).nullable(false)).execute();
-
-create.alterTable(AUTHOR).drop(TITLE).execute();]]></java>
-</code-pair><html>
+// Dropping columns
+create.alterTable(AUTHOR).drop(TITLE).execute();]]></java><html>
 
                                     <p>
                                         These statements alter / add / drop constraints:
                                     </p>
 
-</html><code-pair>
-<sql><![CDATA[ALTER TABLE BOOK
-  ADD CONSTRAINT PK_BOOK PRIMARY KEY (ID);
-ALTER TABLE BOOK
-  ADD CONSTRAINT UK_TITLE UNIQUE (TITLE);
-ALTER TABLE BOOK
-  ADD CONSTRAINT FK_AUTHOR_ID FOREIGN KEY (AUTHOR_ID)
-  REFERENCES AUTHOR (ID);
-ALTER TABLE BOOK
-  ADD CONSTRAINT CHECK_PUBLISHED_IN
-  CHECK PUBLISHED_IN BETWEEN 1900 AND 2000;
+</html><java><![CDATA[// Adding constraints
+create.alterTable(BOOK).add(constraint("PK_BOOK").primaryKey(BOOK.ID)).execute();
+create.alterTable(BOOK).add(constraint("UK_TITLE").unique(BOOK.TITLE)).execute();
+create.alterTable(BOOK).add(
+   constraint("FK_AUTHOR_ID")
+  .foreignKey(BOOK.AUTHOR_ID)
+  .references(AUTHOR, AUTHOR.ID)).execute();
+create.alterTable(BOOK).add(
+   constraint("CHECK_PUBLISHED_IN")
+  .check(BOOK.PUBLISHED_IN.between(1900).and(2000))).execute();
 
-ALTER TABLE AUTHOR DROP CONSTRAINT UK_TITLE;]]></sql>
-<java><![CDATA[create.alterTable(BOOK)
-  .add(constraint("PK_BOOK").primaryKey(BOOK.ID)).execute();
-create.alterTable(BOOK)
-  .add(constraint("UK_TITLE").unique(BOOK.TITLE)).execute();
-create.alterTable(BOOK)
-  .add(constraint("FK_AUTHOR_ID").foreignKey(BOOK.AUTHOR_ID)
-      .references(AUTHOR, AUTHOR.ID)).execute();
-create.alterTable(BOOK)
-  .add(constraint("CHECK_PUBLISHED_IN")
-      .check(BOOK.PUBLISHED_IN.between(1900).and(2000))).execute();
+// Altering constraints
+create.alterTable(BOOK).renameConstraint("old_constraint").to("new_constraint").execute();
 
-create.alterTable(AUTHOR).dropConstraint("UK_TITLE").execute();]]></java>
-</code-pair><html>
+// Dropping constraints
+create.alterTable(AUTHOR).dropConstraint("UK_TITLE").execute();]]></java><html>
 
+                                    <h3>Views</h3>
 
-                                    <h3>Sequences</h3>
-
-</html><code-pair>
-<sql><![CDATA[ALTER SEQUENCE S_AUTHOR_ID RESTART;
-ALTER SEQUENCE S_AUTHOR_ID RESTART WITH n;]]></sql>
-<java><![CDATA[create.alterSequence(S_AUTHOR_ID).restart().execute();
-create.alterSequence(S_AUTHOR_ID).restartWith(n).execute();]]></java>
-</code-pair><html>
+</html><java><![CDATA[// Renaming the view
+create.alterView("old_view").renameTo("new_view").execute();]]></java><html>
 
                                 </html></content>
                             </section>
@@ -5754,12 +5749,16 @@ create.alterSequence(S_AUTHOR_ID).restartWith(n).execute();]]></java>
 
                                     <h3>Indexes</h3>
 
-</html><code-pair>
-<sql><![CDATA[CREATE INDEX I_AUTHOR_LAST_NAME
-  ON AUTHOR(LAST_NAME);]]></sql>
-<java><![CDATA[create.createIndex("I_AUTHOR_LAST_NAME")
-      .on(AUTHOR, AUTHOR.LAST_NAME).execute();]]></java>
-</code-pair><html>
+</html><java><![CDATA[// Create a non-unique index
+create.createIndex("I_AUTHOR_LAST_NAME").on(AUTHOR, AUTHOR.LAST_NAME).execute();
+
+// Create a unique index
+create.createUniqueIndex("I_AUTHOR_LAST_NAME").on(AUTHOR, AUTHOR.LAST_NAME).execute();]]></java><html>
+
+                                    <h3>Schemas</h3>
+
+</html><java><![CDATA[// Create a schema
+create.createSchema("new_schema").execute();]]></java><html>
 
                                     <h3>Sequences</h3>
 
@@ -5770,27 +5769,8 @@ create.alterSequence(S_AUTHOR_ID).restartWith(n).execute();]]></java>
 
                                     <h3>Tables</h3>
 
-</html><code-pair>
-<sql><![CDATA[CREATE TABLE AUTHOR (
-  ID INT,
-  FIRST_NAME VARCHAR(50) NOT NULL,
-  LAST_NAME VARCHAR(50),
-
-  CONSTRAINT PK_AUTHOR PRIMARY KEY (ID),
-  CONSTRAINT UK_AUTHOR UNIQUE (FIRST_NAME, LAST_NAME)
-);
-
-CREATE TABLE TOP_AUTHORS AS
-SELECT
-  ID,
-  FIRST_NAME,
-  LAST_NAME
-FROM AUTHOR
-WHERE 50 < (
-  SELECT COUNT(*) FROM BOOK
-  WHERE BOOK.AUTHOR_ID = AUTHOR.ID
-);]]></sql>
-<java><![CDATA[create.createTable(AUTHOR)
+</html><java><![CDATA[// Creating a table with columns and inline constraints
+create.createTable(AUTHOR)
       .column(AUTHOR.ID, SQLDataType.INTEGER)
       .column(AUTHOR.FIRST_NAME, SQLDataType.VARCHAR.length(50).nullable(false))
       .column(AUTHOR.LAST_NAME, SQLDataType.VARCHAR.length(50))
@@ -5799,6 +5779,7 @@ WHERE 50 < (
           constraint("UK_AUTHOR").unique(FIRST_NAME, LAST_NAME))
       .execute();
 
+// Creating a table from a SELECT statement
 create.createTable("TOP_AUTHORS").as(
        select(
          AUTHOR.ID,
@@ -5808,23 +5789,11 @@ create.createTable("TOP_AUTHORS").as(
       .where(val(50).lt(
          selectCount().from(BOOK)
         .where(BOOK.AUTHOR_ID.eq(AUTHOR.ID))
-      ))).execute();]]></java>
-</code-pair><html>
+      ))).execute();]]></java><html>
 
                                     <h3>Views</h3>
 
-</html><code-pair>
-<sql><![CDATA[CREATE VIEW V_TOP_AUTHORS AS
-SELECT
-  ID,
-  FIRST_NAME,
-  LAST_NAME
-FROM AUTHOR
-WHERE 50 < (
-  SELECT COUNT(*) FROM BOOK
-  WHERE BOOK.AUTHOR_ID = AUTHOR.ID
-);]]></sql>
-<java><![CDATA[create.createView("V_TOP_AUTHORS").as(
+</html><java><![CDATA[create.createView("V_TOP_AUTHORS").as(
        select(
          AUTHOR.ID,
          AUTHOR.FIRST_NAME,
@@ -5833,8 +5802,7 @@ WHERE 50 < (
       .where(val(50).lt(
          selectCount().from(BOOK)
         .where(BOOK.AUTHOR_ID.eq(AUTHOR.ID))
-      ))).execute();]]></java>
-</code-pair><html>
+      ))).execute();]]></java><html>
                                 </html></content>
                             </section>
 
@@ -5848,39 +5816,23 @@ WHERE 50 < (
 
                                     <h3>Indexes</h3>
 
-</html><code-pair>
-<sql><![CDATA[DROP INDEX I_AUTHOR_LAST_NAME;
-DROP INDEX IF EXISTS I_AUTHOR_LAST_NAME;]]></sql>
-<java><![CDATA[create.dropIndex("I_AUTHOR_LAST_NAME").execute();
-create.dropIndexIfExists("I_AUTHOR_LAST_NAME").execute();]]></java>
-</code-pair><html>
+</html><java><![CDATA[create.dropIndex("I_AUTHOR_LAST_NAME").execute();]]></java><html>
+
+                                    <h3>Schemas</h3>
+
+</html><java><![CDATA[create.dropSchema("schema").execute();]]></java><html>
 
                                     <h3>Sequences</h3>
 
-</html><code-pair>
-<sql><![CDATA[DROP SEQUENCE S_AUTHOR_ID;
-DROP SEQUENCE IF EXISTS S_AUTHOR_ID;]]></sql>
-<java><![CDATA[create.dropSequence(S_AUTHOR_ID).execute();
-create.dropSequenceIfExists(S_AUTHOR_ID).execute();]]></java>
-</code-pair><html>
+</html><java><![CDATA[create.dropSequence(S_AUTHOR_ID).execute();]]></java><html>
 
                                     <h3>Tables</h3>
 
-</html><code-pair>
-<sql><![CDATA[DROP TABLE AUTHOR;
-DROP TABLE IF EXISTS AUTHOR;]]></sql>
-<java><![CDATA[create.dropTable(AUTHOR).execute();
-create.dropTableIfExists(AUTHOR).execute();]]></java>
-</code-pair><html>
+</html><java><![CDATA[create.dropTable(AUTHOR).execute();]]></java><html>
 
                                     <h3>Views</h3>
 
-</html><code-pair>
-<sql><![CDATA[DROP VIEW V_AUTHOR;
-DROP VIEW IF EXISTS V_AUTHOR;]]></sql>
-<java><![CDATA[create.dropView(V_AUTHOR).execute();
-create.dropViewIfExists(V_AUTHOR).execute();]]></java>
-</code-pair><html>
+</html><java><![CDATA[create.dropView(V_AUTHOR).execute();]]></java><html>
                                 </html></content>
                             </section>
 
@@ -5895,10 +5847,7 @@ create.dropViewIfExists(V_AUTHOR).execute();]]></java>
                                         The <code>TRUNCATE</code> syntax is trivial:
                                     </p>
 
-</html><code-pair>
-    <sql>TRUNCATE TABLE AUTHOR;</sql>
-    <java>create.truncate(AUTHOR).execute();</java>
-</code-pair><html>
+</html><java>create.truncate(AUTHOR).execute();</java><html>
 
                                     <p>
                                         <code>TRUNCATE</code> is not supported by Ingres and SQLite. jOOQ will execute a <code>DELETE FROM AUTHOR</code> statement instead.

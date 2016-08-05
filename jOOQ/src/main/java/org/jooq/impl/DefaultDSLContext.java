@@ -380,7 +380,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public InformationSchema informationSchema(Catalog catalog) {
-        return informationSchema0(catalog.getSchemas());
+        return InformationSchemaExport.exportSchemas(configuration(), catalog.getSchemas());
     }
 
     @Override
@@ -390,21 +390,27 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         for (Catalog catalog : catalogs)
             schemas.addAll(catalog.getSchemas());
 
-        return informationSchema0(schemas);
+        return InformationSchemaExport.exportSchemas(configuration(), schemas);
     }
 
     @Override
     public InformationSchema informationSchema(Schema schema) {
-        return informationSchema0(Arrays.asList(schema));
+        return InformationSchemaExport.exportSchemas(configuration(), Arrays.asList(schema));
     }
 
     @Override
     public InformationSchema informationSchema(Schema... schemas) {
-        return informationSchema0(Arrays.asList(schemas));
+        return InformationSchemaExport.exportSchemas(configuration(), Arrays.asList(schemas));
     }
 
-    private final InformationSchema informationSchema0(List<Schema> schemas) {
-        return InformationSchemaExport.export(configuration(), schemas);
+    @Override
+    public InformationSchema informationSchema(Table<?> table) {
+        return InformationSchemaExport.exportTables(configuration(), Arrays.asList(table));
+    }
+
+    @Override
+    public InformationSchema informationSchema(Table<?>... tables) {
+        return InformationSchemaExport.exportTables(configuration(), Arrays.asList(tables));
     }
 
     // -------------------------------------------------------------------------

@@ -40,7 +40,9 @@
  */
 package org.jooq.impl;
 
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -56,90 +58,116 @@ import org.jooq.util.xml.jaxb.InformationSchema;
  */
 final class InformationSchemaExport {
 
-    static final InformationSchema export(Configuration configuration, List<Schema> schemas) {
+    static final InformationSchema exportTables(Configuration configuration, List<Table<?>> tables) {
+        InformationSchema result = new InformationSchema();
+
+        Set<Schema> schemas = new LinkedHashSet<Schema>();
+        for (Table<?> t : tables)
+            schemas.add(t.getSchema());
+
+        for (Schema s : schemas)
+            exportSchema0(result, s);
+
+        for (Table<?> t : tables)
+            exportTable0(configuration, result, t);
+
+        return result;
+    }
+
+    static final InformationSchema exportSchemas(Configuration configuration, List<Schema> schemas) {
         InformationSchema result = new InformationSchema();
 
         for (Schema s : schemas) {
-            org.jooq.util.xml.jaxb.Schema is = new org.jooq.util.xml.jaxb.Schema();
+            exportSchema0(result, s);
 
-            if (!StringUtils.isBlank(s.getCatalog().getName()))
-                is.setCatalogName(s.getCatalog().getName());
+            for (Table<?> t : s.getTables())
+                exportTable0(configuration, result, t);
 
-            if (!StringUtils.isBlank(s.getName())) {
-                is.setSchemaName(s.getName());
-                result.getSchemata().add(is);
-            }
-
-            for (Table<?> t : s.getTables()) {
-                org.jooq.util.xml.jaxb.Table it = new org.jooq.util.xml.jaxb.Table();
-
-                if (!StringUtils.isBlank(t.getCatalog().getName()))
-                    it.setTableCatalog(t.getCatalog().getName());
-
-                if (!StringUtils.isBlank(t.getSchema().getName()))
-                    it.setTableSchema(t.getSchema().getName());
-
-                it.setTableName(t.getName());
-                result.getTables().add(it);
-
-                Field<?>[] fields = t.fields();
-                for (int i = 0; i < fields.length; i++) {
-                    Field<?> f = fields[i];
-                    Column ic = new Column();
-
-                    if (!StringUtils.isBlank(t.getCatalog().getName()))
-                        ic.setTableCatalog(t.getCatalog().getName());
-
-                    if (!StringUtils.isBlank(t.getSchema().getName()))
-                        ic.setTableSchema(t.getSchema().getName());
-
-                    ic.setTableName(t.getName());
-                    ic.setColumnName(t.getName());
-                    ic.setDataType(f.getDataType().getTypeName(configuration));
-
-                    if (f.getDataType().hasLength())
-                        ic.setCharacterMaximumLength(f.getDataType().length());
-
-                    if (f.getDataType().hasPrecision())
-                        ic.setNumericPrecision(f.getDataType().precision());
-
-                    if (f.getDataType().hasScale())
-                        ic.setNumericScale(f.getDataType().scale());
-
-                    ic.setColumnDefault(DSL.using(configuration).render(f.getDataType().defaultValue()));
-                    ic.setIsNullable(f.getDataType().nullable());
-                    ic.setOrdinalPosition(i + 1);
-
-                    result.getColumns().add(ic);
-                }
-            }
-
-            for (Sequence<?> q : s.getSequences()) {
-                org.jooq.util.xml.jaxb.Sequence iq = new org.jooq.util.xml.jaxb.Sequence();
-
-                if (!StringUtils.isBlank(q.getCatalog().getName()))
-                    iq.setSequenceCatalog(q.getCatalog().getName());
-
-                if (!StringUtils.isBlank(q.getSchema().getName()))
-                    iq.setSequenceSchema(q.getSchema().getName());
-
-                iq.setSequenceName(q.getName());
-                iq.setDataType(q.getDataType().getTypeName(configuration));
-
-                if (q.getDataType().hasLength())
-                    iq.setCharacterMaximumLength(q.getDataType().length());
-
-                if (q.getDataType().hasPrecision())
-                    iq.setNumericPrecision(q.getDataType().precision());
-
-                if (q.getDataType().hasScale())
-                    iq.setNumericScale(q.getDataType().scale());
-
-                result.getSequences().add(iq);
-            }
+            for (Sequence<?> q : s.getSequences())
+                exportSequences0(configuration, result, q);
         }
 
         return result;
+    }
+
+    private static void exportSequences0(Configuration configuration, InformationSchema result, Sequence<?> q) {
+        org.jooq.util.xml.jaxb.Sequence iq = new org.jooq.util.xml.jaxb.Sequence();
+
+        if (!StringUtils.isBlank(q.getCatalog().getName()))
+            iq.setSequenceCatalog(q.getCatalog().getName());
+
+        if (!StringUtils.isBlank(q.getSchema().getName()))
+            iq.setSequenceSchema(q.getSchema().getName());
+
+        iq.setSequenceName(q.getName());
+        iq.setDataType(q.getDataType().getTypeName(configuration));
+
+        if (q.getDataType().hasLength())
+            iq.setCharacterMaximumLength(q.getDataType().length());
+
+        if (q.getDataType().hasPrecision())
+            iq.setNumericPrecision(q.getDataType().precision());
+
+        if (q.getDataType().hasScale())
+            iq.setNumericScale(q.getDataType().scale());
+
+        result.getSequences().add(iq);
+    }
+
+    private static void exportTable0(Configuration configuration, InformationSchema result, Table<?> t) {
+        org.jooq.util.xml.jaxb.Table it = new org.jooq.util.xml.jaxb.Table();
+
+        if (!StringUtils.isBlank(t.getCatalog().getName()))
+            it.setTableCatalog(t.getCatalog().getName());
+
+        if (!StringUtils.isBlank(t.getSchema().getName()))
+            it.setTableSchema(t.getSchema().getName());
+
+        it.setTableName(t.getName());
+        result.getTables().add(it);
+
+        Field<?>[] fields = t.fields();
+        for (int i = 0; i < fields.length; i++) {
+            Field<?> f = fields[i];
+            Column ic = new Column();
+
+            if (!StringUtils.isBlank(t.getCatalog().getName()))
+                ic.setTableCatalog(t.getCatalog().getName());
+
+            if (!StringUtils.isBlank(t.getSchema().getName()))
+                ic.setTableSchema(t.getSchema().getName());
+
+            ic.setTableName(t.getName());
+            ic.setColumnName(t.getName());
+            ic.setDataType(f.getDataType().getTypeName(configuration));
+
+            if (f.getDataType().hasLength())
+                ic.setCharacterMaximumLength(f.getDataType().length());
+
+            if (f.getDataType().hasPrecision())
+                ic.setNumericPrecision(f.getDataType().precision());
+
+            if (f.getDataType().hasScale())
+                ic.setNumericScale(f.getDataType().scale());
+
+            ic.setColumnDefault(DSL.using(configuration).render(f.getDataType().defaultValue()));
+            ic.setIsNullable(f.getDataType().nullable());
+            ic.setOrdinalPosition(i + 1);
+
+            result.getColumns().add(ic);
+        }
+    }
+
+    private static final void exportSchema0(InformationSchema result, Schema s) {
+        org.jooq.util.xml.jaxb.Schema is = new org.jooq.util.xml.jaxb.Schema();
+
+        if (!StringUtils.isBlank(s.getCatalog().getName()))
+            is.setCatalogName(s.getCatalog().getName());
+
+        if (!StringUtils.isBlank(s.getName())) {
+            is.setSchemaName(s.getName());
+            result.getSchemata().add(is);
+        }
     }
 
     private InformationSchemaExport() {}

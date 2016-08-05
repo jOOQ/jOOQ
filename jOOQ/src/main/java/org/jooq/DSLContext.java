@@ -239,6 +239,28 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     InformationSchema informationSchema(Schema... schemas);
 
+    /**
+     * Export a table to the {@link InformationSchema} format.
+     * <p>
+     * Exporting a single table will not include any foreign key definitions in
+     * the exported data.
+     * <p>
+     * This allows for serialising schema meta information as XML using JAXB.
+     * See also {@link Constants#XSD_META} for details.
+     */
+    InformationSchema informationSchema(Table<?> table);
+
+    /**
+     * Export a set of tables to the {@link InformationSchema} format.
+     * <p>
+     * Only those foreign keys whose referenced table is also included in the
+     * export will be exported.
+     * <p>
+     * This allows for serialising schema meta information as XML using JAXB.
+     * See also {@link Constants#XSD_META} for details.
+     */
+    InformationSchema informationSchema(Table<?>... table);
+
     // -------------------------------------------------------------------------
     // XXX APIs for creating scope for transactions, mocking, batching, etc.
     // -------------------------------------------------------------------------

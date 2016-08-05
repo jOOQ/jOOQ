@@ -384,8 +384,23 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public InformationSchema informationSchema(Catalog... catalogs) {
+        List<Schema> schemas = new ArrayList<Schema>();
+
+        for (Catalog catalog : catalogs)
+            schemas.addAll(catalog.getSchemas());
+
+        return informationSchema0(schemas);
+    }
+
+    @Override
     public InformationSchema informationSchema(Schema schema) {
         return informationSchema0(Arrays.asList(schema));
+    }
+
+    @Override
+    public InformationSchema informationSchema(Schema... schemas) {
+        return informationSchema0(Arrays.asList(schemas));
     }
 
     private final InformationSchema informationSchema0(List<Schema> schemas) {

@@ -1313,7 +1313,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
 
         for (R record : this)
             if (map.put((K) record.get(kIndex), (V) record.get(vIndex)) != null)
-                throw new InvalidResultException("Key " + kIndex + " is not unique in Result for " + this);
+                throw new InvalidResultException("Key " + record.get(kIndex) + " is not unique in Result for " + this);
 
         return map;
     }

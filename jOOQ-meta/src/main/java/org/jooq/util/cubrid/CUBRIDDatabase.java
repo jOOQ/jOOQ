@@ -59,7 +59,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Condition;
-import org.jooq.ConnectionProvider;
+import org.jooq.ConnectionRunnable;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Record3;
@@ -134,45 +134,39 @@ public class CUBRIDDatabase extends AbstractDatabase {
     }
 
     @Override
-    protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
-        ConnectionProvider provider = create().configuration().connectionProvider();
-        Connection connection = null;
+    protected void loadForeignKeys(final DefaultRelations relations) throws SQLException {
+        create().connection(new ConnectionRunnable() {
+            @Override
+            public void run(Connection connection) throws SQLException {
+                DatabaseMetaData meta = connection.getMetaData();
 
-        try {
-            connection = provider.acquire();
-            DatabaseMetaData meta = connection.getMetaData();
+                for (String table : create()
+                        .selectDistinct(DB_INDEX.CLASS_NAME)
+                        .from(DB_INDEX)
+                        .where(DB_INDEX.IS_FOREIGN_KEY.isTrue())
+                        .fetch(DB_INDEX.CLASS_NAME)) {
 
-            for (String table : create()
-                    .selectDistinct(DB_INDEX.CLASS_NAME)
-                    .from(DB_INDEX)
-                    .where(DB_INDEX.IS_FOREIGN_KEY.isTrue())
-                    .fetch(DB_INDEX.CLASS_NAME)) {
+                    for (Record record : create().fetch(meta.getImportedKeys(null, null, table))) {
+                        String foreignKeyName =
+                            record.get("FKTABLE_NAME", String.class) +
+                            "__" +
+                            record.get("FK_NAME", String.class);
+                        String foreignKeyTableName = record.get("FKTABLE_NAME", String.class);
+                        String foreignKeyColumnName = record.get("FKCOLUMN_NAME", String.class);
+                        String uniqueKeyName =
+                            record.get("PKTABLE_NAME", String.class) +
+                            "__" +
+                            record.get("PK_NAME", String.class);
 
-                for (Record record : create().fetch(meta.getImportedKeys(null, null, table))) {
-                    String foreignKeyName =
-                        record.get("FKTABLE_NAME", String.class) +
-                        "__" +
-                        record.get("FK_NAME", String.class);
-                    String foreignKeyTableName = record.get("FKTABLE_NAME", String.class);
-                    String foreignKeyColumnName = record.get("FKCOLUMN_NAME", String.class);
-                    String uniqueKeyName =
-                        record.get("PKTABLE_NAME", String.class) +
-                        "__" +
-                        record.get("PK_NAME", String.class);
-
-                    TableDefinition referencingTable = getTable(getSchemata().get(0), foreignKeyTableName);
-                    if (referencingTable != null) {
-                        ColumnDefinition column = referencingTable.getColumn(foreignKeyColumnName);
-                        relations.addForeignKey(foreignKeyName, uniqueKeyName, column, getSchemata().get(0));
+                        TableDefinition referencingTable = getTable(getSchemata().get(0), foreignKeyTableName);
+                        if (referencingTable != null) {
+                            ColumnDefinition column = referencingTable.getColumn(foreignKeyColumnName);
+                            relations.addForeignKey(foreignKeyName, uniqueKeyName, column, getSchemata().get(0));
+                        }
                     }
                 }
             }
-        }
-        finally {
-            if (connection != null) {
-                provider.release(connection);
-            }
-        }
+        });
     }
 
     @Override

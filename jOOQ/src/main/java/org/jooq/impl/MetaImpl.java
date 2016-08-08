@@ -104,7 +104,7 @@ import java.util.Map.Entry;
 
 import org.jooq.Catalog;
 import org.jooq.Configuration;
-import org.jooq.ConnectionProvider;
+import org.jooq.ConnectionCallable;
 import org.jooq.Constraint;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
@@ -120,7 +120,6 @@ import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
-import org.jooq.exception.DataAccessException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 
 /**
@@ -138,12 +137,12 @@ final class MetaImpl implements Meta, Serializable {
      */
     private static final long                   serialVersionUID = 3582980783173033809L;
 
-    private final DSLContext                    create;
+    private final DSLContext                    ctx;
     private final Configuration                 configuration;
     private final boolean                       inverseSchemaCatalog;
 
     MetaImpl(Configuration configuration) {
-        this.create = DSL.using(configuration);
+        this.ctx = DSL.using(configuration);
         this.configuration = configuration;
         this.inverseSchemaCatalog = asList(MYSQL, MARIADB).contains(configuration.family());
     }
@@ -153,20 +152,12 @@ final class MetaImpl implements Meta, Serializable {
     }
 
     private final Result<Record> meta(MetaFunction consumer) {
-        ConnectionProvider provider = configuration.connectionProvider();
-        Connection connection = null;
-
-        try {
-            connection = provider.acquire();
-            return consumer.run(connection.getMetaData());
-        }
-        catch (SQLException e) {
-            throw new DataAccessException("Error while accessing DatabaseMetaData", e);
-        }
-        finally {
-            if (connection != null)
-                provider.release(connection);
-        }
+        return ctx.connectionResult(new ConnectionCallable<Result<Record>>() {
+            @Override
+            public Result<Record> run(Connection connection) throws SQLException {
+                return consumer.run(connection.getMetaData());
+            }
+        });
     }
 
     @Override
@@ -178,7 +169,7 @@ final class MetaImpl implements Meta, Serializable {
             Result<Record> catalogs = meta(new MetaFunction() {
                 @Override
                 public Result<Record> run(DatabaseMetaData meta) throws SQLException {
-                    return create.fetch(
+                    return ctx.fetch(
                         meta.getCatalogs(),
                         SQLDataType.VARCHAR // TABLE_CATALOG
                     );
@@ -268,7 +259,7 @@ final class MetaImpl implements Meta, Serializable {
                 Result<Record> schemas = meta(new MetaFunction() {
                     @Override
                     public Result<Record> run(DatabaseMetaData meta) throws SQLException {
-                        return create.fetch(
+                        return ctx.fetch(
                             meta.getSchemas(),
 
                             // [#2681] Work around a flaw in the MySQL JDBC driver
@@ -288,7 +279,7 @@ final class MetaImpl implements Meta, Serializable {
                 Result<Record> schemas = meta(new MetaFunction() {
                     @Override
                     public Result<Record> run(DatabaseMetaData meta) throws SQLException {
-                        return create.fetch(
+                        return ctx.fetch(
                             meta.getCatalogs(),
                             SQLDataType.VARCHAR  // TABLE_CATALOG
                         );
@@ -372,7 +363,7 @@ final class MetaImpl implements Meta, Serializable {
                         rs = meta.getTables(getName(), null, "%", types);
                     }
 
-                    return create.fetch(
+                    return ctx.fetch(
                         rs,
 
                         // [#2681] Work around a flaw in the MySQL JDBC driver
@@ -455,7 +446,7 @@ final class MetaImpl implements Meta, Serializable {
                         rs = meta.getColumns(schema, null, table, "%");
                     }
 
-                    return create.fetch(
+                    return ctx.fetch(
                         rs,
 
                         // Work around a bug in the SQL Server JDBC driver by
@@ -528,7 +519,7 @@ final class MetaImpl implements Meta, Serializable {
                     }
 
                     return
-                    create.fetch(
+                    ctx.fetch(
                         rs,
                         String.class, // TABLE_CAT
                         String.class, // TABLE_SCHEM
@@ -554,7 +545,7 @@ final class MetaImpl implements Meta, Serializable {
                 public Result<Record> run(DatabaseMetaData meta) throws SQLException {
                     ResultSet rs = meta.getImportedKeys(null, getSchema().getName(), getName());
                     return
-                    create.fetch(
+                    ctx.fetch(
                         rs,
                         String.class,  // PKTABLE_CAT
                         String.class,  // PKTABLE_SCHEM
@@ -758,7 +749,7 @@ final class MetaImpl implements Meta, Serializable {
                 public Result<Record> run(DatabaseMetaData meta) throws SQLException {
                     ResultSet rs = meta.getExportedKeys(null, pkTable.getSchema().getName(), pkTable.getName());
 
-                    return create.fetch(
+                    return ctx.fetch(
                         rs,
                         String.class,  // PKTABLE_CAT
                         String.class,  // PKTABLE_SCHEM

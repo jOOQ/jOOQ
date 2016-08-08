@@ -40,16 +40,17 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Tools.EMPTY_STRING;
-
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.jooq.tools.json.ContainerFactory;
 import org.jooq.tools.json.JSONParser;
@@ -60,86 +61,100 @@ import org.jooq.tools.json.ParseException;
  *
  * @author Johannes Bühler
  */
-@SuppressWarnings({ "rawtypes", "unchecked" })
+@SuppressWarnings({ "unchecked" })
 final class JSONReader implements Closeable {
 
     private final BufferedReader br;
     private final JSONParser     parser;
-    private String[]             fieldMetaData;
+    private String[]             fieldNames;
+    private Map<String, Integer> fieldIndexes;
     private List<String[]>       records;
 
-    public JSONReader(Reader reader) {
+    JSONReader(Reader reader) {
         this.br = new BufferedReader(reader);
         this.parser = new JSONParser();
     }
 
-    public List<String[]> readAll() throws IOException {
-        if (this.records != null) {
-            return this.records;
+    final List<String[]> readAll() throws IOException {
+        if (records == null) {
+            try {
+                LinkedHashMap<String, LinkedList<?>> jsonRoot = getJsonRoot();
+
+                readFields(jsonRoot);
+                readRecords(jsonRoot);
+            }
+            catch (ParseException ex) {
+                throw new RuntimeException(ex);
+            }
         }
-        try {
-            LinkedHashMap jsonRoot = getJsonRoot();
-            readFields(jsonRoot);
-            records = readRecords(jsonRoot);
-        }
-        catch (ParseException ex) {
-            throw new RuntimeException(ex);
-        }
+
         return records;
     }
 
-    public String[] getFields() throws IOException {
-        if (fieldMetaData == null) {
+    final String[] getFields() throws IOException {
+        if (fieldNames == null)
             readAll();
-        }
-        return fieldMetaData;
+
+        return fieldNames;
     }
 
     @Override
-    public void close() throws IOException {
+    public final void close() throws IOException {
         br.close();
     }
 
-    private List<String[]> readRecords(LinkedHashMap jsonRoot) {
-        LinkedList jsonRecords = (LinkedList) jsonRoot.get("records");
-        records = new ArrayList();
-        for (Object record : jsonRecords) {
-            LinkedList values = (LinkedList) record;
-            List<String> v = new ArrayList<String>();
-            for (Object value : values) {
-                String asString = value == null ? null : String.valueOf(value);
-                v.add(asString);
-            }
-            records.add(v.toArray(EMPTY_STRING));
-        }
+    private final void readRecords(LinkedHashMap<String, LinkedList<?>> jsonRoot) {
+        records = new ArrayList<String[]>();
 
-        return records;
+        for (Object record : jsonRoot.get("records")) {
+            String[] v = new String[fieldNames.length];
+            int i = 0;
+
+            // [#5372] Serialisation mode ARRAY
+            if (record instanceof LinkedList)
+                for (Object value : (LinkedList<Object>) record)
+                    v[i++] = value == null ? null : String.valueOf(value);
+
+            // [#5372] Serialisation mode OBJECT
+            else if (record instanceof LinkedHashMap)
+                for (Entry<String, Object> entry : ((LinkedHashMap<String, Object>) record).entrySet())
+                    v[fieldIndexes.get(entry.getKey())] = entry.getValue() == null ? null : String.valueOf(entry.getValue());
+
+            else
+                throw new IllegalArgumentException("Ill formed JSON : " + jsonRoot);
+
+            records.add(v);
+        }
     }
 
-    private LinkedHashMap getJsonRoot() throws IOException, ParseException {
+    private LinkedHashMap<String, LinkedList<?>> getJsonRoot() throws IOException, ParseException {
         Object parse = parser.parse(br, new ContainerFactory() {
             @Override
-            public LinkedHashMap createObjectContainer() {
-                return new LinkedHashMap();
+            public LinkedHashMap<String, Object> createObjectContainer() {
+                return new LinkedHashMap<String, Object>();
             }
 
             @Override
-            public List createArrayContainer() {
-                return new LinkedList();
+            public List<Object> createArrayContainer() {
+                return new LinkedList<Object>();
             }
         });
-        return (LinkedHashMap) parse;
+        return (LinkedHashMap<String, LinkedList<?>>) parse;
     }
 
-    private void readFields(LinkedHashMap jsonRoot) {
-        if (fieldMetaData != null) {
-            return;
-        }
-        LinkedList fieldEntries = (LinkedList) jsonRoot.get("fields");
-        fieldMetaData = new String[fieldEntries.size()];
+    private final void readFields(LinkedHashMap<String, LinkedList<?>> jsonRoot) {
+        LinkedList<LinkedHashMap<String, String>> fieldEntries =
+            (LinkedList<LinkedHashMap<String, String>>) jsonRoot.get("fields");
+
+        fieldNames = new String[fieldEntries.size()];
+        fieldIndexes = new HashMap<String, Integer>();
         int i = 0;
-        for (Object key : fieldEntries) {
-            fieldMetaData[i] = (String) ((LinkedHashMap) key).get("name");
+        for (LinkedHashMap<String, String> key : fieldEntries) {
+            String name = key.get("name");
+
+            fieldNames[i] = name;
+            fieldIndexes.put(name, i);
+
             i++;
         }
     }

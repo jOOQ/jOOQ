@@ -64,6 +64,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 import org.jooq.Binding;
 import org.jooq.Catalog;
@@ -265,6 +267,18 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     public final Table<R> asTable(String alias, String... fieldAliases) {
         return as(alias, fieldAliases);
     }
+
+
+    @Override
+    public final Table<R> asTable(String alias, Function<? super Field<?>, ? extends String> aliasFunction) {
+        return as(alias, aliasFunction);
+    }
+
+    @Override
+    public final Table<R> as(String alias, Function<? super Field<?>, ? extends String> aliasFunction) {
+        return as(alias, Stream.of(fields()).map(aliasFunction).toArray(String[]::new));
+    }
+
 
     // ------------------------------------------------------------------------
     // XXX: Table API
@@ -619,6 +633,13 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     public final Table<R> as(Table<?> otherTable, Field<?>... otherFields) {
         return as(otherTable.getName(), Tools.fieldNames(otherFields));
     }
+
+
+    @Override
+    public final Table<R> as(Table<?> otherTable, Function<? super Field<?>, ? extends Field<?>> aliasFunction) {
+        return as(otherTable.getName(), f -> aliasFunction.apply(f).getName());
+    }
+
 
 
 

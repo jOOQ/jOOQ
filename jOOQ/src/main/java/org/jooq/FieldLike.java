@@ -40,6 +40,8 @@
  */
 package org.jooq;
 
+import java.util.function.Function;
+
 import org.jooq.conf.Settings;
 
 /**
@@ -50,7 +52,7 @@ import org.jooq.conf.Settings;
 public interface FieldLike {
 
     /**
-     * The underlying field representation of this object
+     * The underlying field representation of this object.
      * <p>
      * This method is useful for things like
      * <code>SELECT y.*, (SELECT a FROM x) FROM y</code>
@@ -60,7 +62,7 @@ public interface FieldLike {
     <T> Field<T> asField();
 
     /**
-     * The underlying field representation of this object
+     * The underlying field representation of this object.
      * <p>
      * This method is useful for things like
      * <code>SELECT y.*, (SELECT a FROM x) [alias] FROM y</code>
@@ -72,5 +74,34 @@ public interface FieldLike {
      * @return This result provider as a Field&lt;?&gt; object
      */
     <T> Field<T> asField(String alias);
+
+
+    /**
+     * The underlying field representation of this object.
+     * <p>
+     * This method is useful for things like
+     * <code>SELECT y.*, (SELECT a FROM x) [alias] FROM y</code>
+     * <p>
+     * Note that the case-sensitivity of the returned field depends on
+     * {@link Settings#getRenderNameStyle()}. By default, field aliases are
+     * quoted, and thus case-sensitive!
+     * <p>
+     * This works like {@link #asField(String)}, except that field aliases are
+     * provided by a function. This is useful, for instance, to prefix all
+     * columns with a common prefix (on {@link Table#as(String, Function)}):
+     * <p>
+     * <code><pre>
+     * MY_TABLE.as("t1", f -> "prefix_" + f.getName());
+     * </pre></code>
+     * <p>
+     * And then to use the same function also for individual fields:
+     * <p>
+     * <code><pre>
+     * MY_TABLE.MY_COLUMN.as(f -> "prefix_" + f.getName());
+     * </pre></code>
+     */
+    @Support
+    <T> Field<T> asField(Function<? super Field<T>, ? extends String> aliasFunction);
+
 
 }

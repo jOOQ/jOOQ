@@ -77,6 +77,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Function;
 
 import org.jooq.BetweenAndStep;
 import org.jooq.Binding;
@@ -153,6 +154,11 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     @Override
     public final Field<T> as(Field<?> otherField) {
         return as(otherField.getName());
+    }
+
+    @Override
+    public final Field<T> as(Function<? super Field<T>, ? extends String> aliasFunction) {
+        return as(aliasFunction.apply(this));
     }
 
     @Override

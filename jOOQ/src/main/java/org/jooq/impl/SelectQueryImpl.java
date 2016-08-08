@@ -117,6 +117,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 import org.jooq.Clause;
 import org.jooq.Condition;
@@ -266,6 +267,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         return this.<T> asField().as(alias);
     }
 
+
+    @Override
+    public <T> Field<T> asField(Function<? super Field<T>, ? extends String> aliasFunction) {
+        return this.<T> asField().as(aliasFunction);
+    }
+
+
     @Override
     public final Row fieldsRow() {
         return asTable().fieldsRow();
@@ -362,6 +370,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     public final Table<R> asTable(String alias, String... fieldAliases) {
         return new DerivedTable<R>(this).as(alias, fieldAliases);
     }
+
+
+    @Override
+    public final Table<R> asTable(String alias, Function<? super Field<?>, ? extends String> aliasFunction) {
+        return new DerivedTable<R>(this).as(alias, aliasFunction);
+    }
+
 
     @Override
     protected final Field<?>[] getFields(ResultSetMetaData meta) {

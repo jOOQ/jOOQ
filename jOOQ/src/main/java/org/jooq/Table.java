@@ -67,6 +67,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
@@ -292,7 +293,7 @@ public interface Table<R extends Record> extends TableLike<R> {
     Table<R> as(String alias);
 
     /**
-     * Create an alias for this table and its fields
+     * Create an alias for this table and its fields.
      * <p>
      * Note that the case-sensitivity of the returned table and columns depends
      * on {@link Settings#getRenderNameStyle()}. By default, table aliases are
@@ -345,6 +346,26 @@ public interface Table<R extends Record> extends TableLike<R> {
     @Support
     Table<R> as(String alias, String... fieldAliases);
 
+
+    /**
+     * Create an alias for this table and its fields.
+     * <p>
+     * This works like {@link #as(String, String...)}, except that field aliases
+     * are provided by a function. This is useful, for instance, to prefix all
+     * columns with a common prefix:
+     * <p>
+     * <code><pre>
+     * MY_TABLE.as("t1", f -> "prefix_" + f.getName());
+     * </pre></code>
+     *
+     * @param alias The alias name
+     * @param aliasFunction The function providing field aliases.
+     * @return The table alias
+     */
+    @Support
+    Table<R> as(String alias, Function<? super Field<?>, ? extends String> aliasFunction);
+
+
     /**
      * Create an alias for this table based on another table's name.
      * <p>
@@ -372,6 +393,26 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     @Support
     Table<R> as(Table<?> otherTable, Field<?>... otherFields);
+
+
+    /**
+     * Create an alias for this table and its fields.
+     * <p>
+     * This works like {@link #as(String, String...)}, except that field aliases
+     * are provided by a function. This is useful, for instance, to prefix all
+     * columns with a common prefix:
+     * <p>
+     * <code><pre>
+     * MY_TABLE.as(MY_OTHER_TABLE, f -> MY_OTHER_TABLE.field(f));
+     * </pre></code>
+     *
+     * @param alias The alias name
+     * @param aliasFunction The function providing field aliases.
+     * @return The table alias
+     */
+    @Support
+    Table<R> as(Table<?> otherTable, Function<? super Field<?>, ? extends Field<?>> aliasFunction);
+
 
     // -------------------------------------------------------------------------
     // XXX: JOIN clauses on tables

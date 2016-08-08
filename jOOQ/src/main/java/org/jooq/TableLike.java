@@ -40,6 +40,8 @@
  */
 package org.jooq;
 
+import java.util.function.Function;
+
 /**
  * An object that can behave like a table (a table-like object)
  *
@@ -192,4 +194,15 @@ public interface TableLike<R extends Record> extends QueryPart {
      */
     @Support
     Table<R> asTable(String alias, String... fieldAliases);
+
+
+
+    /**
+     * The underlying aliased table representation of this object
+     *
+     * @see Table#as(String, Function)
+     */
+    @Support
+    Table<R> asTable(String alias, Function<? super Field<?>, ? extends String> aliasFunction);
+
 }

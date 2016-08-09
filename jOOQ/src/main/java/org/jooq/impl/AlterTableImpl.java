@@ -69,6 +69,7 @@ import org.jooq.AlterTableFinalStep;
 import org.jooq.AlterTableRenameColumnToStep;
 import org.jooq.AlterTableRenameConstraintToStep;
 import org.jooq.AlterTableStep;
+import org.jooq.AlterTableUsingIndexStep;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Constraint;
@@ -90,6 +91,7 @@ final class AlterTableImpl extends AbstractQuery implements
     AlterTableStep,
     AlterTableDropStep,
     AlterTableAlterStep,
+    AlterTableUsingIndexStep,
     AlterTableRenameColumnToStep,
     AlterTableRenameConstraintToStep {
 
@@ -109,6 +111,9 @@ final class AlterTableImpl extends AbstractQuery implements
     private Field<?>              addColumn;
     private DataType<?>           addColumnType;
     private Constraint            addConstraint;
+
+
+
     private Field<?>              alterColumn;
     private DataType<?>           alterColumnType;
     private Field<?>              alterColumnDefault;
@@ -251,6 +256,19 @@ final class AlterTableImpl extends AbstractQuery implements
         addConstraint = constraint;
         return this;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public final <T> AlterTableImpl alter(Field<T> field) {
@@ -519,6 +537,14 @@ final class AlterTableImpl extends AbstractQuery implements
                .qualify(false)
                .visit(addConstraint)
                .qualify(qualify);
+
+
+
+
+
+
+
+
 
             ctx.end(ALTER_TABLE_ADD);
         }

@@ -64,7 +64,8 @@ import org.jooq.impl.DSL;
 
 
 /**
- * The step in the <code>ALTER TABLE</code> where the action can be decided.
+ * The step in the <code>ALTER TABLE</code> statement where the action can be
+ * decided.
  *
  * @author Lukas Eder
  */
@@ -234,7 +235,7 @@ public interface AlterTableStep {
      * statement.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    AlterTableFinalStep add(Constraint constraint);
+    AlterTableUsingIndexStep add(Constraint constraint);
 
     /**
      * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>

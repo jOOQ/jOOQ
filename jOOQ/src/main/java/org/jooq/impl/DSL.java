@@ -5576,7 +5576,7 @@ public class DSL {
      * @see DSLContext#createView(Name, Name...)
      */
     @Support
-    public static CreateViewAsStep createView(Name view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
+    public static CreateViewAsStep createView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
         return using(new DefaultConfiguration()).createView(view, fieldNameFunction);
     }
 
@@ -5590,7 +5590,7 @@ public class DSL {
      * @see DSLContext#createView(Table, Field...)
      */
     @Support
-    public static CreateViewAsStep createView(Table<?> view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
+    public static CreateViewAsStep createView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
         return using(new DefaultConfiguration()).createView(view, fieldNameFunction);
     }
 
@@ -5650,7 +5650,7 @@ public class DSL {
      * @see DSLContext#createViewIfNotExists(Name, Name...)
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static CreateViewAsStep createViewIfNotExists(Name view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
+    public static CreateViewAsStep createViewIfNotExists(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
         return using(new DefaultConfiguration()).createViewIfNotExists(view, fieldNameFunction);
     }
 
@@ -5664,7 +5664,7 @@ public class DSL {
      * @see DSLContext#createViewIfNotExists(Table, Field...)
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    public static CreateViewAsStep createViewIfNotExists(Table<?> view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
+    public static CreateViewAsStep createViewIfNotExists(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
         return using(new DefaultConfiguration()).createViewIfNotExists(view, fieldNameFunction);
     }
 

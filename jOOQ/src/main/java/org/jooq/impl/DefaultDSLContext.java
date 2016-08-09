@@ -78,6 +78,7 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -1393,6 +1394,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return new WithImpl(configuration(), false).with(alias, fieldNameFunction);
     }
 
+    @Override
+    public WithAsStep with(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction) {
+        return new WithImpl(configuration(), false).with(alias, fieldNameFunction);
+    }
+
 
     // [jooq-tools] START [with]
 
@@ -1548,6 +1554,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public WithAsStep withRecursive(String alias, Function<? super Field<?>, ? extends String> fieldNameFunction) {
+        return new WithImpl(configuration(), true).with(alias, fieldNameFunction);
+    }
+
+    @Override
+    public WithAsStep withRecursive(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction) {
         return new WithImpl(configuration(), true).with(alias, fieldNameFunction);
     }
 
@@ -2509,16 +2520,31 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateViewAsStep<Record> createView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
-        return createView(table(name(view)), fieldNameFunction);
+        return createView(table(name(view)), (f, i) -> field(name(fieldNameFunction.apply(f))));
     }
 
     @Override
-    public CreateViewAsStep<Record> createView(Name view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
-        return createView(table(view), fieldNameFunction);
+    public CreateViewAsStep<Record> createView(String view, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction) {
+        return createView(table(name(view)), (f, i) -> field(name(fieldNameFunction.apply(f, i))));
     }
 
     @Override
-    public CreateViewAsStep<Record> createView(Table<?> view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
+    public CreateViewAsStep<Record> createView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
+        return createView(table(view), (f, i) -> field(fieldNameFunction.apply(f)));
+    }
+
+    @Override
+    public CreateViewAsStep<Record> createView(Name view, BiFunction<? super Field<?>, ? super Integer, ? extends Name> fieldNameFunction) {
+        return createView(table(view), (f, i) -> field(fieldNameFunction.apply(f, i)));
+    }
+
+    @Override
+    public CreateViewAsStep<Record> createView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
+        return createView(view, (f, i) -> fieldNameFunction.apply(f));
+    }
+
+    @Override
+    public CreateViewAsStep<Record> createView(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction) {
         return new CreateViewImpl<Record>(configuration(), view, fieldNameFunction, false);
     }
 
@@ -2541,16 +2567,31 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateViewAsStep<Record> createViewIfNotExists(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
-        return createView(table(name(view)), fieldNameFunction);
+        return createViewIfNotExists(table(name(view)), (f, i) -> field(name(fieldNameFunction.apply(f))));
     }
 
     @Override
-    public CreateViewAsStep<Record> createViewIfNotExists(Name view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
-        return createView(table(view), fieldNameFunction);
+    public CreateViewAsStep<Record> createViewIfNotExists(String view, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction) {
+        return createViewIfNotExists(table(name(view)), (f, i) -> field(name(fieldNameFunction.apply(f, i))));
     }
 
     @Override
-    public CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
+    public CreateViewAsStep<Record> createViewIfNotExists(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
+        return createViewIfNotExists(table(view), (f, i) -> field(fieldNameFunction.apply(f)));
+    }
+
+    @Override
+    public CreateViewAsStep<Record> createViewIfNotExists(Name view, BiFunction<? super Field<?>, ? super Integer, ? extends Name> fieldNameFunction) {
+        return createViewIfNotExists(table(view), (f, i) -> field(fieldNameFunction.apply(f, i)));
+    }
+
+    @Override
+    public CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
+        return createViewIfNotExists(view, (f, i) -> fieldNameFunction.apply(f));
+    }
+
+    @Override
+    public CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction) {
         return new CreateViewImpl<Record>(configuration(), view, fieldNameFunction, true);
     }
 

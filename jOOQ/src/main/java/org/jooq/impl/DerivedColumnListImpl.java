@@ -42,7 +42,8 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.name;
 
-import java.util.function.Function;
+import java.util.List;
+import java.util.function.BiFunction;
 
 import org.jooq.Clause;
 import org.jooq.CommonTableExpression;
@@ -110,12 +111,12 @@ implements
     /**
      * Gemerated UID
      */
-    private static final long                          serialVersionUID = -369633206858851863L;
+    private static final long                                             serialVersionUID = -369633206858851863L;
 
-    final String                                       name;
-    final String[]                                     fieldNames;
+    final String                                                          name;
+    final String[]                                                        fieldNames;
 
-    final Function<? super Field<?>, ? extends String> fieldNameFunction;
+    final BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction;
 
 
     DerivedColumnListImpl(String name, String[] fieldNames) {
@@ -127,7 +128,7 @@ implements
     }
 
 
-    DerivedColumnListImpl(String name, Function<? super Field<?>, ? extends String> fieldNameFunction) {
+    DerivedColumnListImpl(String name, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction) {
         this.name = name;
         this.fieldNames = null;
         this.fieldNameFunction = fieldNameFunction;
@@ -141,10 +142,11 @@ implements
 
 
         if (fieldNameFunction != null) {
-            return new CommonTableExpressionImpl(
-                new DerivedColumnListImpl(name, s.getSelect().stream().map(fieldNameFunction).toArray(String[]::new)),
-                s
-            );
+            List<Field<?>> source = s.getSelect();
+            String[] names = new String[source.size()];
+            for (int i = 0; i < names.length; i++)
+                names[i] = fieldNameFunction.apply(source.get(i), i);
+            return new CommonTableExpressionImpl(new DerivedColumnListImpl(name, names), s);
         }
 
 

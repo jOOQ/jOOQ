@@ -54,12 +54,11 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.conf.ParamType.INLINED;
-import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.table;
 
-import java.util.function.Function;
+import java.util.List;
+import java.util.function.BiFunction;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -85,25 +84,30 @@ final class CreateViewImpl<R extends Record> extends AbstractQuery implements
     /**
      * Generated UID
      */
-    private static final long                                  serialVersionUID = 8904572826501186329L;
-    private static final Clause[]                              CLAUSES          = { CREATE_VIEW };
+    private static final long                                                       serialVersionUID = 8904572826501186329L;
+    private static final Clause[]                                                   CLAUSES          = { CREATE_VIEW };
 
-    private final boolean                                      ifNotExists;
-    private final Table<?>                                     view;
-    private final Function<? super Field<?>, ? extends String> fieldNameFunction;
-    private Field<?>[]                                         fields;
-    private Select<?>                                          select;
+    private final boolean                                                           ifNotExists;
+    private final Table<?>                                                          view;
+
+    private final BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction;
+
+    private Field<?>[]                                                              fields;
+    private Select<?>                                                               select;
 
     CreateViewImpl(Configuration configuration, Table<?> view, Field<?>[] fields, boolean ifNotExists) {
         super(configuration);
 
         this.view = view;
         this.fields = fields;
+
         this.fieldNameFunction = null;
+
         this.ifNotExists = ifNotExists;
     }
 
-    CreateViewImpl(Configuration configuration, Table<?> view, Function<? super Field<?>, ? extends String> fieldNameFunction, boolean ifNotExists) {
+
+    CreateViewImpl(Configuration configuration, Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction, boolean ifNotExists) {
         super(configuration);
 
         this.view = view;
@@ -111,6 +115,7 @@ final class CreateViewImpl<R extends Record> extends AbstractQuery implements
         this.fieldNameFunction = fieldNameFunction;
         this.ifNotExists = ifNotExists;
     }
+
 
     // ------------------------------------------------------------------------
     // XXX: DSL API
@@ -121,11 +126,12 @@ final class CreateViewImpl<R extends Record> extends AbstractQuery implements
         this.select = s;
 
 
-        if (fieldNameFunction != null)
-            fields = s.getSelect()
-                      .stream()
-                      .map(f -> field(name(fieldNameFunction.apply(f)), f.getDataType()))
-                      .toArray(Field[]::new);
+        if (fieldNameFunction != null) {
+            List<Field<?>> source = s.getSelect();
+            fields = new Field[source.size()];
+            for (int i = 0; i < fields.length; i++)
+                fields[i] = fieldNameFunction.apply(source.get(i), i);
+        }
 
 
         return this;

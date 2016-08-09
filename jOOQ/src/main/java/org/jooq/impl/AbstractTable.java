@@ -64,6 +64,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -275,8 +276,22 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     }
 
     @Override
+    public final Table<R> asTable(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction) {
+        return as(alias, aliasFunction);
+    }
+
+    @Override
     public final Table<R> as(String alias, Function<? super Field<?>, ? extends String> aliasFunction) {
         return as(alias, Stream.of(fields()).map(aliasFunction).toArray(String[]::new));
+    }
+
+    @Override
+    public final Table<R> as(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction) {
+        Field<?>[] fields = fields();
+        String[] names = new String[fields.length];
+        for (int i = 0; i < fields.length; i++)
+            names[i] = aliasFunction.apply(fields[i], i);
+        return as(alias, names);
     }
 
 
@@ -638,6 +653,11 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     @Override
     public final Table<R> as(Table<?> otherTable, Function<? super Field<?>, ? extends Field<?>> aliasFunction) {
         return as(otherTable.getName(), f -> aliasFunction.apply(f).getName());
+    }
+
+    @Override
+    public final Table<R> as(Table<?> otherTable, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> aliasFunction) {
+        return as(otherTable.getName(), (f, i) -> aliasFunction.apply(f, i).getName());
     }
 
 

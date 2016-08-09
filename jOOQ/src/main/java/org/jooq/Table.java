@@ -67,6 +67,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import org.jooq.conf.Settings;
@@ -365,6 +366,24 @@ public interface Table<R extends Record> extends TableLike<R> {
     @Support
     Table<R> as(String alias, Function<? super Field<?>, ? extends String> aliasFunction);
 
+    /**
+     * Create an alias for this table and its fields.
+     * <p>
+     * This works like {@link #as(String, String...)}, except that field aliases
+     * are provided by a function. This is useful, for instance, to prefix all
+     * columns with a common prefix:
+     * <p>
+     * <code><pre>
+     * MY_TABLE.as("t1", (f, i) -> "column" + i);
+     * </pre></code>
+     *
+     * @param alias The alias name
+     * @param aliasFunction The function providing field aliases.
+     * @return The table alias
+     */
+    @Support
+    Table<R> as(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction);
+
 
     /**
      * Create an alias for this table based on another table's name.
@@ -412,6 +431,24 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     @Support
     Table<R> as(Table<?> otherTable, Function<? super Field<?>, ? extends Field<?>> aliasFunction);
+
+    /**
+     * Create an alias for this table and its fields.
+     * <p>
+     * This works like {@link #as(String, String...)}, except that field aliases
+     * are provided by a function. This is useful, for instance, to prefix all
+     * columns with a common prefix:
+     * <p>
+     * <code><pre>
+     * MY_TABLE.as("t1", (f, i) -> "column" + i);
+     * </pre></code>
+     *
+     * @param alias The alias name
+     * @param aliasFunction The function providing field aliases.
+     * @return The table alias
+     */
+    @Support
+    Table<R> as(Table<?> otherTable, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> aliasFunction);
 
 
     // -------------------------------------------------------------------------

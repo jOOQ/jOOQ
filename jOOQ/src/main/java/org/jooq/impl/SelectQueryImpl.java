@@ -117,6 +117,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import org.jooq.Clause;
@@ -374,6 +375,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final Table<R> asTable(String alias, Function<? super Field<?>, ? extends String> aliasFunction) {
+        return new DerivedTable<R>(this).as(alias, aliasFunction);
+    }
+
+    @Override
+    public final Table<R> asTable(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction) {
         return new DerivedTable<R>(this).as(alias, aliasFunction);
     }
 

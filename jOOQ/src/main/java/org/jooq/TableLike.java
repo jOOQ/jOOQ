@@ -40,6 +40,7 @@
  */
 package org.jooq;
 
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
@@ -51,7 +52,7 @@ import java.util.function.Function;
 public interface TableLike<R extends Record> extends QueryPart {
 
     /**
-     * Get this table's fields as a {@link Row}
+     * Get this table's fields as a {@link Row}.
      */
     Row fieldsRow();
 
@@ -171,7 +172,7 @@ public interface TableLike<R extends Record> extends QueryPart {
     Field<?>[] fields(int... fieldIndexes);
 
     /**
-     * The underlying table representation of this object
+     * The underlying table representation of this object.
      * <p>
      * This method is useful for things like
      * <code>SELECT * FROM (SELECT * FROM x WHERE x.a = '1') WHERE ... </code>
@@ -180,7 +181,7 @@ public interface TableLike<R extends Record> extends QueryPart {
     Table<R> asTable();
 
     /**
-     * The underlying aliased table representation of this object
+     * The underlying aliased table representation of this object.
      *
      * @see Table#as(String)
      */
@@ -188,7 +189,7 @@ public interface TableLike<R extends Record> extends QueryPart {
     Table<R> asTable(String alias);
 
     /**
-     * The underlying aliased table representation of this object
+     * The underlying aliased table representation of this object.
      *
      * @see Table#as(String, String...)
      */
@@ -196,13 +197,20 @@ public interface TableLike<R extends Record> extends QueryPart {
     Table<R> asTable(String alias, String... fieldAliases);
 
 
-
     /**
-     * The underlying aliased table representation of this object
+     * The underlying aliased table representation of this object.
      *
      * @see Table#as(String, Function)
      */
     @Support
     Table<R> asTable(String alias, Function<? super Field<?>, ? extends String> aliasFunction);
+
+    /**
+     * The underlying aliased table representation of this object.
+     *
+     * @see Table#as(String, BiFunction)
+     */
+    @Support
+    Table<R> asTable(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction);
 
 }

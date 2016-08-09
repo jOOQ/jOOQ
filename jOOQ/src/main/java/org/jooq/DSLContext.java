@@ -77,6 +77,7 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -3397,6 +3398,25 @@ public interface DSLContext extends Scope , AutoCloseable  {
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     WithAsStep with(String alias, Function<? super Field<?>, ? extends String> fieldNameFunction);
 
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE and
+     * {@link #withRecursive(String, String...)} for strictly recursive CTE.
+     * <p>
+     * This works in a similar way as {@link #with(String, String...)}, except
+     * that all column names are produced by a function that receives the CTE's
+     * {@link Select} columns and their column indexes as input.
+     */
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    WithAsStep with(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
+
 
     // [jooq-tools] START [with]
 
@@ -3861,6 +3881,29 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     WithAsStep withRecursive(String alias, Function<? super Field<?>, ? extends String> fieldNameFunction);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     * <p>
+     * Note that the {@link SQLDialect#H2} database only supports single-table,
+     * <code>RECURSIVE</code> common table expression lists.
+     * <p>
+     * This works in a similar way as {@link #with(String, String...)}, except
+     * that all column names are produced by a function that receives the CTE's
+     * {@link Select} columns and their column indexes as input.
+     */
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
+    WithAsStep withRecursive(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
 
     // [jooq-tools] START [with-recursive]
@@ -7313,6 +7356,18 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new DSL <code>CREATE VIEW</code> statement.
      * <p>
+     * This works like {@link #createView(String, String...)} except that the
+     * view's field names are derived from the view's {@link Select} statement
+     * using a function.
+     *
+     * @see DSL#createView(String, String...)
+     */
+    @Support
+    CreateViewAsStep<Record> createView(String view, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
+
+    /**
+     * Create a new DSL <code>CREATE VIEW</code> statement.
+     * <p>
      * This works like {@link #createView(Name, Name...)} except that the
      * view's field names are derived from the view's {@link Select} statement
      * using a function.
@@ -7320,7 +7375,19 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#createView(String, String...)
      */
     @Support
-    CreateViewAsStep<Record> createView(Name view, Function<? super Field<?>, ? extends String> fieldNameFunction);
+    CreateViewAsStep<Record> createView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction);
+
+    /**
+     * Create a new DSL <code>CREATE VIEW</code> statement.
+     * <p>
+     * This works like {@link #createView(Name, Name...)} except that the
+     * view's field names are derived from the view's {@link Select} statement
+     * using a function.
+     *
+     * @see DSL#createView(String, String...)
+     */
+    @Support
+    CreateViewAsStep<Record> createView(Name view, BiFunction<? super Field<?>, ? super Integer, ? extends Name> fieldNameFunction);
 
     /**
      * Create a new DSL <code>CREATE VIEW</code> statement.
@@ -7332,7 +7399,19 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#createView(String, String...)
      */
     @Support
-    CreateViewAsStep<Record> createView(Table<?> view, Function<? super Field<?>, ? extends String> fieldNameFunction);
+    CreateViewAsStep<Record> createView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction);
+
+    /**
+     * Create a new DSL <code>CREATE VIEW</code> statement.
+     * <p>
+     * This works like {@link #createView(Table, Field...)} except that the
+     * view's field names are derived from the view's {@link Select} statement
+     * using a function.
+     *
+     * @see DSL#createView(String, String...)
+     */
+    @Support
+    CreateViewAsStep<Record> createView(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction);
 
 
     /**
@@ -7375,6 +7454,18 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new DSL <code>CREATE VIEW</code> statement.
      * <p>
+     * This works like {@link #createViewIfNotExists(String, String...)} except that the
+     * view's field names are derived from the view's {@link Select} statement
+     * using a function.
+     *
+     * @see DSL#createViewIfNotExists(String, String...)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    CreateViewAsStep<Record> createViewIfNotExists(String view, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
+
+    /**
+     * Create a new DSL <code>CREATE VIEW</code> statement.
+     * <p>
      * This works like {@link #createViewIfNotExists(Name, Name...)} except that the
      * view's field names are derived from the view's {@link Select} statement
      * using a function.
@@ -7382,7 +7473,19 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#createViewIfNotExists(String, String...)
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    CreateViewAsStep<Record> createViewIfNotExists(Name view, Function<? super Field<?>, ? extends String> fieldNameFunction);
+    CreateViewAsStep<Record> createViewIfNotExists(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction);
+
+    /**
+     * Create a new DSL <code>CREATE VIEW</code> statement.
+     * <p>
+     * This works like {@link #createViewIfNotExists(Name, Name...)} except that the
+     * view's field names are derived from the view's {@link Select} statement
+     * using a function.
+     *
+     * @see DSL#createViewIfNotExists(String, String...)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    CreateViewAsStep<Record> createViewIfNotExists(Name view, BiFunction<? super Field<?>, ? super Integer, ? extends Name> fieldNameFunction);
 
     /**
      * Create a new DSL <code>CREATE VIEW</code> statement.
@@ -7394,7 +7497,19 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#createViewIfNotExists(String, String...)
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Function<? super Field<?>, ? extends String> fieldNameFunction);
+    CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction);
+
+    /**
+     * Create a new DSL <code>CREATE VIEW</code> statement.
+     * <p>
+     * This works like {@link #createViewIfNotExists(Table, Field...)} except that the
+     * view's field names are derived from the view's {@link Select} statement
+     * using a function.
+     *
+     * @see DSL#createViewIfNotExists(String, String...)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction);
 
 
     /**

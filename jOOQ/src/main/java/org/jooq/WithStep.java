@@ -51,6 +51,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 
 import java.util.Collection;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import javax.annotation.Generated;
@@ -103,6 +104,16 @@ public interface WithStep extends QueryPart {
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     WithAsStep with(String alias, Function<? super Field<?>, ? extends String> fieldNameFunction);
+
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     * <p>
+     * This works in a similar way as {@link #with(String, String...)}, except
+     * that all column names are produced by a function that receives the CTE's
+     * {@link Select} columns and their column indexes as input.
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    WithAsStep with(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
 
     // [jooq-tools] START [with]

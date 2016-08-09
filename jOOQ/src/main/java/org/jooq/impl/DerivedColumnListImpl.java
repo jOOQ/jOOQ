@@ -42,6 +42,8 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.name;
 
+import java.util.function.Function;
+
 import org.jooq.Clause;
 import org.jooq.CommonTableExpression;
 import org.jooq.Context;
@@ -68,6 +70,7 @@ import org.jooq.DerivedColumnList6;
 import org.jooq.DerivedColumnList7;
 import org.jooq.DerivedColumnList8;
 import org.jooq.DerivedColumnList9;
+import org.jooq.Field;
 import org.jooq.Select;
 
 /**
@@ -107,20 +110,45 @@ implements
     /**
      * Gemerated UID
      */
-    private static final long serialVersionUID = -369633206858851863L;
+    private static final long                          serialVersionUID = -369633206858851863L;
 
-    final String              name;
-    final String[]            fieldNames;
+    final String                                       name;
+    final String[]                                     fieldNames;
+
+    final Function<? super Field<?>, ? extends String> fieldNameFunction;
+
 
     DerivedColumnListImpl(String name, String[] fieldNames) {
         this.name = name;
         this.fieldNames = fieldNames;
+
+        this.fieldNameFunction = null;
+
     }
+
+
+    DerivedColumnListImpl(String name, Function<? super Field<?>, ? extends String> fieldNameFunction) {
+        this.name = name;
+        this.fieldNames = null;
+        this.fieldNameFunction = fieldNameFunction;
+    }
+
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final CommonTableExpression as(Select select) {
-        return new CommonTableExpressionImpl(this, select);
+        Select<?> s = select;
+
+
+        if (fieldNameFunction != null) {
+            return new CommonTableExpressionImpl(
+                new DerivedColumnListImpl(name, s.getSelect().stream().map(fieldNameFunction).toArray(String[]::new)),
+                s
+            );
+        }
+
+
+        return new CommonTableExpressionImpl(this, s);
     }
 
     @Override

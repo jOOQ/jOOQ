@@ -52,6 +52,7 @@ import static org.jooq.impl.DSL.zero;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -158,17 +159,20 @@ implements
     /**
      * Generated UID
      */
-    private static final long               serialVersionUID = -1813359431778402705L;
-    private static final Clause[]           CLAUSES          = { WITH };
+    private static final long                            serialVersionUID = -1813359431778402705L;
+    private static final Clause[]                        CLAUSES          = { WITH };
 
-    private final CommonTableExpressionList cte;
-    private final boolean                   recursive;
-    private Configuration                   configuration;
+    private final CommonTableExpressionList              cte;
+    private final boolean                                recursive;
+    private Configuration                                configuration;
 
     // Intermediary properties for CTE construction
 
-    private String                          alias;
-    private String[]                        fieldAliases;
+    private String                                       alias;
+    private String[]                                     fieldAliases;
+
+    private Function<? super Field<?>, ? extends String> fieldNameFunction;
+
 
     WithImpl(Configuration configuration, boolean recursive) {
         this.configuration = configuration;
@@ -205,10 +209,19 @@ implements
 
     @Override
     public final WithStep as(Select select) {
-        cte.add(name(alias).fields(fieldAliases).as(select));
+
+
+        if (fieldNameFunction != null)
+            cte.add(name(alias).fields(fieldNameFunction).as(select));
+        else
+
+            cte.add(name(alias).fields(fieldAliases).as(select));
 
         this.alias = null;
         this.fieldAliases = null;
+
+        this.fieldNameFunction = null;
+
 
         return this;
     }
@@ -225,6 +238,16 @@ implements
 
         return this;
     }
+
+
+    @Override
+    public final WithAsStep with(String a, Function<? super Field<?>, ? extends String> f) {
+        this.alias = a;
+        this.fieldNameFunction = f;
+
+        return this;
+    }
+
 
     // [jooq-tools] START [with]
 

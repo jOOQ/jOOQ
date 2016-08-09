@@ -57,11 +57,11 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
     /**
      * Generated UID
      */
-    private static final long         serialVersionUID = 2520235151216758958L;
+    private static final long           serialVersionUID = 2520235151216758958L;
 
     private final DerivedColumnListImpl name;
-    private final Select<R>           select;
-    private final Fields<R>           fields;
+    private final Select<R>             select;
+    private final Fields<R>             fields;
 
     CommonTableExpressionImpl(DerivedColumnListImpl name, Select<R> select) {
         super(name.name);

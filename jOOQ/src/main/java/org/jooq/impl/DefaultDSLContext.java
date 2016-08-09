@@ -1387,6 +1387,13 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return new WithImpl(configuration(), false).with(alias, fieldAliases);
     }
 
+
+    @Override
+    public WithAsStep with(String alias, Function<? super Field<?>, ? extends String> fieldNameFunction) {
+        return new WithImpl(configuration(), false).with(alias, fieldNameFunction);
+    }
+
+
     // [jooq-tools] START [with]
 
     @Generated("This method was generated using jOOQ-tools")
@@ -1537,6 +1544,13 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public WithAsStep withRecursive(String alias, String... fieldAliases) {
         return new WithImpl(configuration(), true).with(alias, fieldAliases);
     }
+
+
+    @Override
+    public WithAsStep withRecursive(String alias, Function<? super Field<?>, ? extends String> fieldNameFunction) {
+        return new WithImpl(configuration(), true).with(alias, fieldNameFunction);
+    }
+
 
     // [jooq-tools] START [with-recursive]
 

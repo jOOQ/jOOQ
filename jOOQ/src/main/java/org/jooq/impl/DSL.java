@@ -14450,6 +14450,22 @@ public class DSL {
     }
 
     /**
+     * The <code>ratio_to_report([expression]) over ([analytic clause])</code> function.
+     */
+    @Support({ CUBRID, POSTGRES })
+    public static WindowOverStep<BigDecimal> ratioToReport(Number number) {
+        return ratioToReport(Tools.field(number));
+    }
+
+    /**
+     * The <code>ratio_to_report([expression]) over ([analytic clause])</code> function.
+     */
+    @Support({ CUBRID, POSTGRES })
+    public static WindowOverStep<BigDecimal> ratioToReport(Field<? extends Number> field) {
+        return new RatioToReport(nullSafe(field));
+    }
+
+    /**
      * The <code>first_value(field) over ([analytic clause])</code> function.
      */
     @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })

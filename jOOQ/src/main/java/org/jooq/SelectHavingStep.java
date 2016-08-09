@@ -161,6 +161,7 @@ public interface SelectHavingStep<R extends Record> extends SelectWindowStep<R> 
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#condition(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see SQL
      */
     @Support
@@ -176,6 +177,7 @@ public interface SelectHavingStep<R extends Record> extends SelectWindowStep<R> 
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#condition(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
     @Support

@@ -185,6 +185,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see Table#join(String, Object...)
      * @see #innerJoin(String, Object...)
      * @see SQL
@@ -206,6 +207,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see Table#join(String, QueryPart...)
      * @see #innerJoin(String, QueryPart...)
      * @see SQL
@@ -283,6 +285,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see Table#innerJoin(String, Object...)
      * @see SQL
      */
@@ -301,6 +304,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see Table#innerJoin(String, QueryPart...)
      * @see SQL
      */
@@ -404,6 +408,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see Table#crossJoin(String, Object...)
      * @see SQL
      */
@@ -429,6 +434,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see Table#crossJoin(String, QueryPart...)
      * @see SQL
      */
@@ -522,6 +528,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see Table#leftOuterJoin(String, Object...)
      * @see #leftOuterJoin(String, Object...)
      * @see SQL
@@ -543,6 +550,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see Table#leftOuterJoin(String, QueryPart...)
      * @see #leftOuterJoin(String, QueryPart...)
      * @see SQL
@@ -622,6 +630,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see Table#leftOuterJoin(String, Object...)
      * @see SQL
      */
@@ -640,6 +649,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see Table#leftOuterJoin(String, QueryPart...)
      * @see SQL
      */
@@ -734,6 +744,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see Table#rightOuterJoin(String, Object...)
      * @see #rightOuterJoin(String, Object...)
      * @see SQL
@@ -757,6 +768,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see Table#rightOuterJoin(String, QueryPart...)
      * @see #rightOuterJoin(String, QueryPart...)
      * @see SQL
@@ -846,6 +858,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see Table#rightOuterJoin(String, Object...)
      * @see SQL
      */
@@ -866,6 +879,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see Table#rightOuterJoin(String, QueryPart...)
      * @see SQL
      */
@@ -951,6 +965,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see Table#fullOuterJoin(String, Object...)
      * @see SQL
      */
@@ -971,6 +986,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see Table#fullOuterJoin(String, QueryPart...)
      * @see SQL
      */
@@ -1060,6 +1076,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see Table#naturalJoin(String, Object...)
      * @see SQL
      */
@@ -1081,6 +1098,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see Table#naturalJoin(String, QueryPart...)
      * @see SQL
      */
@@ -1171,6 +1189,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see Table#naturalLeftOuterJoin(String, Object...)
      * @see SQL
      */
@@ -1192,6 +1211,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see Table#naturalLeftOuterJoin(String, QueryPart...)
      * @see SQL
      */
@@ -1282,6 +1302,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see Table#naturalRightOuterJoin(String, Object...)
      * @see SQL
      */
@@ -1303,6 +1324,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see Table#naturalRightOuterJoin(String, QueryPart...)
      * @see SQL
      */
@@ -1427,6 +1449,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see Table#crossApply(String, Object...)
      * @see SQL
      */
@@ -1443,6 +1466,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see Table#crossApply(String, QueryPart...)
      * @see SQL
      */
@@ -1508,6 +1532,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see Table#outerApply(String, Object...)
      * @see SQL
      */
@@ -1524,6 +1549,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see Table#outerApply(String, QueryPart...)
      * @see SQL
      */
@@ -1587,6 +1613,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see Table#straightJoin(String, Object...)
      */
     @Support({ MYSQL })
@@ -1602,6 +1629,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see Table#straightJoin(String, QueryPart...)
      */
     @Support({ MYSQL })

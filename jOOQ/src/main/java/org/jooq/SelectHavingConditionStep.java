@@ -158,6 +158,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#condition(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see SQL
      */
     @Support
@@ -174,6 +175,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#condition(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
     @Support
@@ -294,6 +296,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#condition(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see SQL
      */
     @Support
@@ -310,6 +313,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#condition(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
     @Support

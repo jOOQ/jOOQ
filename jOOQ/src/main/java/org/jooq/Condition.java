@@ -137,6 +137,7 @@ public interface Condition extends QueryPart {
      * @param bindings The bindings
      * @return The combined condition
      * @see DSL#condition(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see SQL
      */
     @Support
@@ -158,6 +159,7 @@ public interface Condition extends QueryPart {
      *            {numbered placeholder} locations
      * @return The combined condition
      * @see DSL#condition(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
     @Support
@@ -308,6 +310,7 @@ public interface Condition extends QueryPart {
      * @param bindings The bindings
      * @return The combined condition
      * @see DSL#condition(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see SQL
      */
     @Support
@@ -329,6 +332,7 @@ public interface Condition extends QueryPart {
      *            {numbered placeholder} locations
      * @return The combined condition
      * @see DSL#condition(String, Object...)
+     * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
     @Support

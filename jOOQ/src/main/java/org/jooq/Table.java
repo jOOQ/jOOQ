@@ -487,6 +487,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see #innerJoin(String, Object...)
      * @see SQL
      */
@@ -505,6 +506,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see #innerJoin(String, QueryPart...)
      * @see SQL
      */
@@ -569,6 +571,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see SQL
      */
     @Support
@@ -584,6 +587,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
     @Support
@@ -655,6 +659,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see #leftOuterJoin(String, Object...)
      * @see SQL
      */
@@ -673,6 +678,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see #leftOuterJoin(String, QueryPart...)
      * @see SQL
      */
@@ -736,6 +742,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see SQL
      */
     @Support
@@ -751,6 +758,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
     @Support
@@ -831,6 +839,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see #rightOuterJoin(String, Object...)
      * @see SQL
      */
@@ -851,6 +860,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see #rightOuterJoin(String, QueryPart...)
      * @see SQL
      */
@@ -924,6 +934,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see SQL
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
@@ -941,6 +952,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
@@ -1010,6 +1022,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see SQL
      */
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
@@ -1027,6 +1040,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
@@ -1116,6 +1130,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see SQL
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -1138,6 +1153,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -1216,6 +1232,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see SQL
      */
     @Support
@@ -1245,6 +1262,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
     @Support
@@ -1308,6 +1326,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see SQL
      */
     @Support
@@ -1326,6 +1345,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
     @Support
@@ -1401,6 +1421,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see SQL
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
@@ -1419,6 +1440,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
@@ -1485,6 +1507,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see SQL
      */
     @Support({ POSTGRES_9_3 })
@@ -1500,6 +1523,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
     @Support({ POSTGRES_9_3 })
@@ -1559,6 +1583,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see SQL
      */
     @Support({ POSTGRES_9_3 })
@@ -1574,6 +1599,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
     @Support({ POSTGRES_9_3 })
@@ -1633,6 +1659,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see SQL
      */
     @Support({ MYSQL })
@@ -1648,6 +1675,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#table(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
     @Support({ MYSQL })

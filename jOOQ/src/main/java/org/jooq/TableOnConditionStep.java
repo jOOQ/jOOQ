@@ -124,6 +124,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#condition(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see SQL
      */
     @Support
@@ -140,6 +141,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#condition(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
     @Support
@@ -260,6 +262,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#condition(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see SQL
      */
     @Support
@@ -276,6 +279,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#condition(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
     @Support

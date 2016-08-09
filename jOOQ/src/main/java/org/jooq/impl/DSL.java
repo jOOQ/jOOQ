@@ -7501,6 +7501,17 @@ public class DSL {
      * contain user-defined plain SQL, because sometimes it is easier to express
      * things directly in SQL.
      * <p>
+     * This overload takes a set of {@link QueryPart} arguments which are
+     * replaced into the SQL string template at the appropriate index. Example:
+     * <p>
+     * <code><pre>
+     * // Argument QueryParts are replaced into the SQL string at the appropriate index
+     * sql("select {0}, {1} from {2}", TABLE.COL1, TABLE.COL2, TABLE);
+     *
+     * // Bind variables are supported as well, for backwards compatibility
+     * sql("select col1, col2 from table where col1 = ?", val(1));
+     * </pre></code>
+     * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
@@ -7512,6 +7523,7 @@ public class DSL {
      *            {numbered placeholder} locations
      * @return A query part wrapping the plain SQL
      * @see SQL
+     * @see DSL#sql(String, QueryPart...)
      */
     @Support
     @PlainSQL
@@ -7527,6 +7539,13 @@ public class DSL {
      * things directly in SQL. There must be as many binding variables contained
      * in the SQL, as passed in the bindings parameter
      * <p>
+     * This overload takes a set of bind value arguments which are replaced our
+     * bound into the SQL string template at the appropriate index. Example:
+     * <p>
+     * <code><pre>
+     * sql("select col1, col2 from table where col1 = ?", 1);
+     * </pre></code>
+     * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
@@ -7535,6 +7554,7 @@ public class DSL {
      * @param sql The SQL
      * @return A query part wrapping the plain SQL
      * @see SQL
+     * @see DSL#sql(String, Object...)
      */
     @Support
     @PlainSQL
@@ -7585,6 +7605,7 @@ public class DSL {
      * @return A query part wrapping the plain SQL
      * @deprecated - 3.6.0 - [#3854] - Use {@link #sql(String, QueryPart...)} instead
      * @see SQL
+     * @see DSL#sql(String, QueryPart...)
      */
     @Deprecated
     @Support
@@ -7610,6 +7631,7 @@ public class DSL {
      * @return A query part wrapping the plain SQL
      * @deprecated - 3.6.0 - [#3854] - Use {@link #sql(String, Object...)} instead
      * @see SQL
+     * @see DSL#sql(String, Object...)
      */
     @Deprecated
     @Support
@@ -7688,6 +7710,7 @@ public class DSL {
      * @param bindings The bindings
      * @return A query wrapping the plain SQL
      * @see SQL
+     * @see DSL#sql(String, Object...)
      */
     @Support
     @PlainSQL
@@ -7721,6 +7744,7 @@ public class DSL {
      *            {numbered placeholder} locations
      * @return A query wrapping the plain SQL
      * @see SQL
+     * @see DSL#sql(String, QueryPart...)
      */
     @Support
     @PlainSQL
@@ -7867,6 +7891,7 @@ public class DSL {
      * @param bindings The bindings
      * @return A query wrapping the plain SQL
      * @see SQL
+     * @see DSL#sql(String, Object...)
      */
     @Support
     @PlainSQL
@@ -7900,6 +7925,7 @@ public class DSL {
      *            {numbered placeholder} locations
      * @return A query wrapping the plain SQL
      * @see SQL
+     * @see DSL#sql(String, QueryPart...)
      */
     @Support
     @PlainSQL
@@ -7987,6 +8013,7 @@ public class DSL {
      * @param sql The SQL
      * @return A table wrapping the plain SQL
      * @see SQL
+     * @see DSL#sql(String, Object...)
      */
     @Support
     @PlainSQL
@@ -8019,6 +8046,7 @@ public class DSL {
      *            {numbered placeholder} locations
      * @return A table wrapping the plain SQL
      * @see SQL
+     * @see DSL#sql(String, QueryPart...)
      */
     @Support
     @PlainSQL
@@ -8163,6 +8191,7 @@ public class DSL {
      * @param bindings The bindings for the field
      * @return A field wrapping the plain SQL
      * @see SQL
+     * @see DSL#sql(String, Object...)
      */
     @Support
     @PlainSQL
@@ -8254,6 +8283,7 @@ public class DSL {
      * @param bindings The bindings for the field
      * @return A field wrapping the plain SQL
      * @see SQL
+     * @see DSL#sql(String, Object...)
      */
     @Support
     @PlainSQL
@@ -8345,6 +8375,7 @@ public class DSL {
      * @param bindings The bindings for the field
      * @return A field wrapping the plain SQL
      * @see SQL
+     * @see DSL#sql(String, Object...)
      */
     @Support
     @PlainSQL
@@ -8381,6 +8412,7 @@ public class DSL {
      *            {numbered placeholder} locations
      * @return A field wrapping the plain SQL
      * @see SQL
+     * @see DSL#sql(String, QueryPart...)
      */
     @Support
     @PlainSQL
@@ -8417,6 +8449,7 @@ public class DSL {
      *            {numbered placeholder} locations
      * @return A field wrapping the plain SQL
      * @see SQL
+     * @see DSL#sql(String, QueryPart...)
      */
     @Support
     @PlainSQL
@@ -8454,6 +8487,7 @@ public class DSL {
      *            {numbered placeholder} locations
      * @return A field wrapping the plain SQL
      * @see SQL
+     * @see DSL#sql(String, QueryPart...)
      */
     @Support
     @PlainSQL
@@ -8598,6 +8632,7 @@ public class DSL {
      * @param bindings The bindings
      * @return A condition wrapping the plain SQL
      * @see SQL
+     * @see DSL#sql(String, Object...)
      */
     @Support
     @PlainSQL
@@ -8629,6 +8664,7 @@ public class DSL {
      *            {numbered placeholder} locations
      * @return A condition wrapping the plain SQL
      * @see SQL
+     * @see DSL#sql(String, QueryPart...)
      */
     @Support
     @PlainSQL

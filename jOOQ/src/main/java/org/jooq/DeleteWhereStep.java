@@ -132,6 +132,7 @@ public interface DeleteWhereStep<R extends Record> extends DeleteFinalStep<R>, D
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#condition(String, Object...)
+     * @see DSL#sql(String, Object...)
      * @see SQL
      */
     @Support
@@ -147,6 +148,7 @@ public interface DeleteWhereStep<R extends Record> extends DeleteFinalStep<R>, D
      * escape literals when concatenated into SQL clauses!
      *
      * @see DSL#condition(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
     @Support

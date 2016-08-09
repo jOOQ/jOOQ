@@ -632,6 +632,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @param bindings The bindings
      * @return A query wrapping the plain SQL
      * @see SQL
+     * @see DSL#sql(String, Object...)
      */
     @Support
     @PlainSQL
@@ -663,6 +664,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *            {numbered placeholder} locations
      * @return A query wrapping the plain SQL
      * @see SQL
+     * @see DSL#sql(String, QueryPart...)
      */
     @Support
     @PlainSQL
@@ -747,6 +749,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @return The results from the executed query. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see SQL
+     * @see DSL#sql(String, Object...)
      */
     @Support
     @PlainSQL
@@ -780,6 +783,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see SQL
+     * @see DSL#sql(String, QueryPart...)
      */
     @Support
     @PlainSQL
@@ -880,6 +884,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @return The cursor. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see SQL
+     * @see DSL#sql(String, Object...)
      */
     @Support
     @PlainSQL
@@ -918,6 +923,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @return The cursor. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see SQL
+     * @see DSL#sql(String, QueryPart...)
      */
     @Support
     @PlainSQL
@@ -1014,6 +1020,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @return The completion stage. The completed result will never be
      *         <code>null</code>.
      * @see SQL
+     * @see DSL#sql(String, Object...)
      */
     @Support
     @PlainSQL
@@ -1050,6 +1057,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @return The completion stage. The completed result will never be
      *         <code>null</code>.
      * @see SQL
+     * @see DSL#sql(String, QueryPart...)
      */
     @Support
     @PlainSQL
@@ -1135,6 +1143,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @return The completion stage. The completed result will never be
      *         <code>null</code>.
      * @see SQL
+     * @see DSL#sql(String, Object...)
      */
     @Support
     @PlainSQL
@@ -1168,6 +1177,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @return The completion stage. The completed result will never be
      *         <code>null</code>.
      * @see SQL
+     * @see DSL#sql(String, QueryPart...)
      */
     @Support
     @PlainSQL
@@ -1274,6 +1284,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *         {@link ResultSet}
      * @throws DataAccessException if something went wrong executing the query
      * @see SQL
+     * @see DSL#sql(String, Object...)
      */
     @Support
     @PlainSQL
@@ -1314,6 +1325,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *         {@link ResultSet}
      * @throws DataAccessException if something went wrong executing the query
      * @see SQL
+     * @see DSL#sql(String, QueryPart...)
      */
     @Support
     @PlainSQL
@@ -1388,6 +1400,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @return The results. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see SQL
+     * @see DSL#sql(String, Object...)
      */
     @Support
     @PlainSQL
@@ -1421,6 +1434,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @return The results. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see SQL
+     * @see DSL#sql(String, QueryPart...)
      */
     @Support
     @PlainSQL
@@ -1506,6 +1520,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      * @see SQL
+     * @see DSL#sql(String, Object...)
      */
     @Support
     @PlainSQL
@@ -1539,6 +1554,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      * @see SQL
+     * @see DSL#sql(String, QueryPart...)
      */
     @Support
     @PlainSQL
@@ -1625,6 +1641,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      * @see SQL
+     * @see DSL#sql(String, Object...)
      */
     @Support
     @PlainSQL
@@ -1658,6 +1675,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      * @see SQL
+     * @see DSL#sql(String, QueryPart...)
      */
     @Support
     @PlainSQL
@@ -1750,6 +1768,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @throws InvalidResultException if the query returned a record with more
      *             than one value
      * @see SQL
+     * @see DSL#sql(String, Object...)
      */
     @Support
     @PlainSQL
@@ -1785,6 +1804,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @throws InvalidResultException if the query returned a record with more
      *             than one value
      * @see SQL
+     * @see DSL#sql(String, QueryPart...)
      */
     @Support
     @PlainSQL
@@ -1877,6 +1897,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @throws InvalidResultException if the query returned a record with more
      *             than one value
      * @see SQL
+     * @see DSL#sql(String, Object...)
      */
     @Support
     @PlainSQL
@@ -1912,6 +1933,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @throws InvalidResultException if the query returned a record with more
      *             than one value
      * @see SQL
+     * @see DSL#sql(String, QueryPart...)
      */
     @Support
     @PlainSQL
@@ -1995,6 +2017,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @return The values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see SQL
+     * @see DSL#sql(String, Object...)
      */
     @Support
     @PlainSQL
@@ -2027,6 +2050,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @return The values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see SQL
+     * @see DSL#sql(String, QueryPart...)
      */
     @Support
     @PlainSQL
@@ -2082,6 +2106,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @return The results from the executed query
      * @throws DataAccessException if something went wrong executing the query
      * @see SQL
+     * @see DSL#sql(String, Object...)
      */
     @Support
     @PlainSQL
@@ -2114,6 +2139,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @return The results from the executed query
      * @throws DataAccessException if something went wrong executing the query
      * @see SQL
+     * @see DSL#sql(String, QueryPart...)
      */
     @Support
     @PlainSQL
@@ -2254,6 +2280,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @param bindings The bindings
      * @return A query wrapping the plain SQL
      * @see SQL
+     * @see DSL#sql(String, Object...)
      */
     @Support
     @PlainSQL
@@ -2285,6 +2312,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *            {numbered placeholder} locations
      * @return A query wrapping the plain SQL
      * @see SQL
+     * @see DSL#sql(String, QueryPart...)
      */
     @Support
     @PlainSQL

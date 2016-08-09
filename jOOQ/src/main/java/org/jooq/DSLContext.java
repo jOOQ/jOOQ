@@ -77,6 +77,7 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
@@ -7250,6 +7251,44 @@ public interface DSLContext extends Scope , AutoCloseable  {
     @Support
     CreateViewAsStep<Record> createView(Table<?> view, Field<?>... fields);
 
+
+    /**
+     * Create a new DSL <code>CREATE VIEW</code> statement.
+     * <p>
+     * This works like {@link #createView(String, String...)} except that the
+     * view's field names are derived from the view's {@link Select} statement
+     * using a function.
+     *
+     * @see DSL#createView(String, String...)
+     */
+    @Support
+    CreateViewAsStep<Record> createView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction);
+
+    /**
+     * Create a new DSL <code>CREATE VIEW</code> statement.
+     * <p>
+     * This works like {@link #createView(Name, Name...)} except that the
+     * view's field names are derived from the view's {@link Select} statement
+     * using a function.
+     *
+     * @see DSL#createView(String, String...)
+     */
+    @Support
+    CreateViewAsStep<Record> createView(Name view, Function<? super Field<?>, ? extends String> fieldNameFunction);
+
+    /**
+     * Create a new DSL <code>CREATE VIEW</code> statement.
+     * <p>
+     * This works like {@link #createView(Table, Field...)} except that the
+     * view's field names are derived from the view's {@link Select} statement
+     * using a function.
+     *
+     * @see DSL#createView(String, String...)
+     */
+    @Support
+    CreateViewAsStep<Record> createView(Table<?> view, Function<? super Field<?>, ? extends String> fieldNameFunction);
+
+
     /**
      * Create a new DSL <code>CREATE VIEW</code> statement.
      *
@@ -7273,6 +7312,44 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Field<?>... fields);
+
+
+    /**
+     * Create a new DSL <code>CREATE VIEW</code> statement.
+     * <p>
+     * This works like {@link #createViewIfNotExists(String, String...)} except that the
+     * view's field names are derived from the view's {@link Select} statement
+     * using a function.
+     *
+     * @see DSL#createViewIfNotExists(String, String...)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    CreateViewAsStep<Record> createViewIfNotExists(String view, Function<? super Field<?>, ? extends String> fieldNameFunction);
+
+    /**
+     * Create a new DSL <code>CREATE VIEW</code> statement.
+     * <p>
+     * This works like {@link #createViewIfNotExists(Name, Name...)} except that the
+     * view's field names are derived from the view's {@link Select} statement
+     * using a function.
+     *
+     * @see DSL#createViewIfNotExists(String, String...)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    CreateViewAsStep<Record> createViewIfNotExists(Name view, Function<? super Field<?>, ? extends String> fieldNameFunction);
+
+    /**
+     * Create a new DSL <code>CREATE VIEW</code> statement.
+     * <p>
+     * This works like {@link #createViewIfNotExists(Table, Field...)} except that the
+     * view's field names are derived from the view's {@link Select} statement
+     * using a function.
+     *
+     * @see DSL#createViewIfNotExists(String, String...)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Function<? super Field<?>, ? extends String> fieldNameFunction);
+
 
     /**
      * Create a new DSL <code>CREATE INDEX</code> statement.

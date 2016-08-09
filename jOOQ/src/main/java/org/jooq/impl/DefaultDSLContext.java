@@ -78,6 +78,7 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
@@ -2491,6 +2492,23 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return new CreateViewImpl<Record>(configuration(), view, fields, false);
     }
 
+
+    @Override
+    public CreateViewAsStep<Record> createView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
+        return createView(table(name(view)), fieldNameFunction);
+    }
+
+    @Override
+    public CreateViewAsStep<Record> createView(Name view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
+        return createView(table(view), fieldNameFunction);
+    }
+
+    @Override
+    public CreateViewAsStep<Record> createView(Table<?> view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
+        return new CreateViewImpl<Record>(configuration(), view, fieldNameFunction, false);
+    }
+
+
     @Override
     public CreateViewAsStep<Record> createViewIfNotExists(String view, String... fields) {
         return createViewIfNotExists(table(name(view)), Tools.fieldsByName(view, fields));
@@ -2505,6 +2523,23 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Field<?>... fields) {
         return new CreateViewImpl<Record>(configuration(), view, fields, true);
     }
+
+
+    @Override
+    public CreateViewAsStep<Record> createViewIfNotExists(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
+        return createView(table(name(view)), fieldNameFunction);
+    }
+
+    @Override
+    public CreateViewAsStep<Record> createViewIfNotExists(Name view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
+        return createView(table(view), fieldNameFunction);
+    }
+
+    @Override
+    public CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
+        return new CreateViewImpl<Record>(configuration(), view, fieldNameFunction, true);
+    }
+
 
     @Override
     public CreateSchemaFinalStep createSchema(String schema) {

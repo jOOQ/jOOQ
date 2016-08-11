@@ -38,7 +38,6 @@
  *
  *
  */
-
 package org.jooq.impl;
 
 import static org.jooq.Clause.CONDITION;

@@ -57,6 +57,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface InsertOnDuplicateSetMoreStep<R extends Record> extends InsertOnDuplicateSetStep<R>, InsertFinalStep<R> {
+public interface InsertOnDuplicateSetMoreStep<R extends Record> extends InsertOnDuplicateSetStep<R>, InsertReturningStep<R> {
 
 }

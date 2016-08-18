@@ -6969,6 +6969,37 @@ public class DSL {
     }
 
     // -------------------------------------------------------------------------
+    // XXX Names
+    // -------------------------------------------------------------------------
+
+    /**
+     * Create a new SQL identifier using a qualified name.
+     * <p>
+     * Use this method to construct syntax-safe, SQL-injection-safe SQL
+     * identifiers for use in plain SQL where {@link QueryPart} objects are
+     * accepted. For instance, this can be used with any of these methods:
+     * <ul>
+     * <li> {@link #field(String, QueryPart...)}</li>
+     * <li> {@link #field(String, Class, QueryPart...)}</li>
+     * <li> {@link #field(String, DataType, QueryPart...)}</li>
+     * </ul>
+     * <p>
+     * An example: <code><pre>
+     * // This qualified name here
+     * name("book", "title");
+     *
+     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
+     * [book].[title]
+     * </pre></code>
+     *
+     * @param qualifiedName The SQL identifier's qualified name parts
+     * @return A {@link QueryPart} that will render the SQL identifier
+     */
+    public static Name name(String... qualifiedName) {
+        return new NameImpl(qualifiedName);
+    }
+
+    // -------------------------------------------------------------------------
     // XXX QueryPart composition
     // -------------------------------------------------------------------------
 
@@ -7031,33 +7062,6 @@ public class DSL {
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T> Field<T> defaultValue(Field<T> field) {
         return new SQLField<T>(field.getDataType(), keyword("default"));
-    }
-
-    /**
-     * Create a new SQL identifier using a qualified name.
-     * <p>
-     * Use this method to construct syntax-safe, SQL-injection-safe SQL
-     * identifiers for use in plain SQL where {@link QueryPart} objects are
-     * accepted. For instance, this can be used with any of these methods:
-     * <ul>
-     * <li> {@link #field(String, QueryPart...)}</li>
-     * <li> {@link #field(String, Class, QueryPart...)}</li>
-     * <li> {@link #field(String, DataType, QueryPart...)}</li>
-     * </ul>
-     * <p>
-     * An example: <code><pre>
-     * // This qualified name here
-     * name("book", "title");
-     *
-     * // ... will render this SQL on SQL Server with RenderNameStyle.QUOTED set
-     * [book].[title]
-     * </pre></code>
-     *
-     * @param qualifiedName The SQL identifier's qualified name parts
-     * @return A {@link QueryPart} that will render the SQL identifier
-     */
-    public static Name name(String... qualifiedName) {
-        return new NameImpl(qualifiedName);
     }
 
     /**

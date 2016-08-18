@@ -9472,17 +9472,59 @@ class ToChar extends CustomField<String> {
 									</p>
 
 </html><java><![CDATA[// Plain SQL using bind values. The value 5 is bound to the first variable, "Animal Farm" to the second variable:
-create.selectFrom(BOOK).where("BOOK.ID = ? AND TITLE = ?", 5, "Animal Farm").fetch();
+create.selectFrom(BOOK).where(
+    "BOOK.ID = ? AND TITLE = ?",     // The SQL string containing bind value placeholders ("?")
+    5,                               // The bind value at index 1
+    "Animal Farm"                    // The bind value at index 2
+).fetch();
 
-// Plain SQL using placeholders (counting from zero).
-// The QueryPart "id" is substituted for the placeholder {0}, the QueryPart "title" for {1}
+// Plain SQL using embeddable QueryPart placeholders (counting from zero).
+// The QueryPart "index" is substituted for the placeholder {0}, the QueryPart "title" for {1}
 Field<Integer> id   = val(5);
 Field<String> title = val("Animal Farm");
-create.selectFrom(BOOK).where("BOOK.ID = {0} AND TITLE = {1}", id, title).fetch();]]></java><html>
+create.selectFrom(BOOK).where(
+    "BOOK.ID = {0} AND TITLE = {1}", // The SQL string containing QueryPart placeholders ("{N}")
+    id,                              // The QueryPart at index 0
+    title                            // The QueryPart at index 1
+).fetch();]]></java><html>
 
 									<p>
-										The above technique allows for creating rather complex SQL clauses that are currently not supported by jOOQ, without extending any of the <reference id="custom-queryparts" title="custom QueryParts"/> as indicated in the previous chapter.
+										Note that for historic reasons the two API usages can also be mixed, although this is not recommended and the exact behaviour is unspecified.
 									</p>
+
+                                    <h3>Plain SQL templating specification</h3>
+
+                                    <p>
+                                        Templating with QueryPart placeholders (or bind value placeholders) requires a simple parsing logic to be applied to SQL strings. The jOOQ template parser behaves according to the following rules:
+                                    </p>
+
+                                    <ul>
+                                        <li>Single-line comments (starting with <code>--</code> in all databases (or <code>#</code>) in MySQL) are rendered without modification. Any bind variable or QueryPart placeholders in such comments are ignored.</li>
+                                        <li>Multi-line comments (starting with <code>/*</code> and ending with <code>*/</code> in all databases) are rendered without modification. Any bind variable or QueryPart placeholders in such comments are ignored.</li>
+                                        <li>String literals (starting and ending with <code>'</code> in all databases, where all databases support escaping of the quote character by duplication as such: <code>''</code>, or in MySQL by escaping as such: <code>\'</code> (if <reference class="org.jooq.conf.Settings" anchor="#backslashEscaping" title="Settings.backslashEscaping"/> is turned on)) are rendered without modification. Any bind variable or QueryPart placeholders in such comments are ignored.</li>
+                                        <li>Quoted names (starting and ending with <code>"</code> in most databases, with <code>`</code> in MySQL, or with <code>[</code> and <code>]</code> in T-SQL databases) are rendered without modification. Any bind variable or QueryPart placeholders in such comments are ignored.</li>
+                                        <li>JDBC escape syntax (<code>{fn ...}</code>, <code>{d ...}</code>, <code>{t ...}</code>, <code>{ts ...}</code>) is rendered without modification. Any bind variable or QueryPart placeholders in such comments are ignored.</li>
+                                        <li>Bind variable placeholders (<code>?</code> or <code>:name</code> for named bind variables) are replaced by the matching bind value in case inlining is activated, e.g. through <reference class="org.jooq.conf.Settings" anchor="#statementType" title="Settings.statementType == STATIC_STATEMENT"/>.</li>
+                                        <li>QueryPart placeholders (<code>{number}</code>) are replaced by the matching QueryPart.</li>
+                                        <li>Keywords (<code>{identifier}</code>) are treated like keywords and rendered in the correct case according to <reference class="org.jooq.conf.Settings" anchor="#renderKeywordStyle" title="Settings.renderKeywordStyle"/>.</li>
+                                    </ul>
+
+                                    <h3>Tools for templating</h3>
+
+                                    <p>
+                                        A variety of API is provided to create template elements that are intended for use with the above templating mechanism. These tools can be found in <reference class="org.jooq.impl.DSL"/>
+                                    </p>
+
+</html><java><![CDATA[// Keywords (which are rendered according to Settings.renderKeywordStyle) can be specified as such:
+public static Keyword keyword(String keyword) { ... }
+
+// Identifiers / names (which are rendered according to Settings.renderNameStyle) can be specified as such:
+public static Name name(String... qualifiedName) { ... }
+
+// QueryPart lists (e.g. IN-lists for the IN predicate) can be generated via these methods:
+public static QueryPart list(QueryPart... parts) { ... }
+public static QueryPart list(Collection<? extends QueryPart> parts) { ... }
+]]></java><html>
 								</html></content>
 							</section>
 

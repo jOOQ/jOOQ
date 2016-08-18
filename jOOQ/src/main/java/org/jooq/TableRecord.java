@@ -113,4 +113,16 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
      * @see ForeignKey#fetchParents(Record...)
      */
     <O extends UpdatableRecord<O>> O fetchParent(ForeignKey<R, O> key) throws DataAccessException;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    <T> R with(Field<T> field, T value);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    <T, U> R with(Field<T> field, U value, Converter<? extends T, ? super U> converter);
 }

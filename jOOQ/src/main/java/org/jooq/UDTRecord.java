@@ -55,4 +55,16 @@ public interface UDTRecord<R extends UDTRecord<R>> extends Record, SQLData {
      */
     UDT<R> getUDT();
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    <T> R with(Field<T> field, T value);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    <T, U> R with(Field<T> field, U value, Converter<? extends T, ? super U> converter);
+
 }

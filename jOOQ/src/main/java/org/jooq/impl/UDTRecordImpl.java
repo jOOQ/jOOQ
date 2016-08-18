@@ -49,6 +49,7 @@ import java.sql.SQLOutput;
 import java.util.Map;
 
 import org.jooq.Configuration;
+import org.jooq.Converter;
 import org.jooq.Field;
 import org.jooq.Row;
 import org.jooq.UDT;
@@ -133,6 +134,18 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
 
     private final <T> void set(Configuration configuration, Map<Object, Object> data, SQLOutput stream, Field<T> field) throws SQLException {
         field.getBinding().set(new DefaultBindingSetSQLOutputContext<T>(configuration, data, stream, get(field)));
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final <T> R with(Field<T> field, T value) {
+        return (R) super.with(field, value);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final <T, U> R with(Field<T> field, U value, Converter<? extends T, ? super U> converter) {
+        return (R) super.with(field, value, converter);
     }
 
     @Override

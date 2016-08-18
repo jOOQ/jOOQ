@@ -348,6 +348,18 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         set(field, converter.to(value));
     }
 
+    @Override
+    public /* non-final */ <T> Record with(Field<T> field, T value) {
+        set(field, value);
+        return this;
+    }
+
+    @Override
+    public <T, U> Record with(Field<T> field, U value, Converter<? extends T, ? super U> converter) {
+        set(field, value, converter);
+        return this;
+    }
+
     final void setValues(Field<?>[] fields, AbstractRecord record) {
         fetched = record.fetched;
 
@@ -549,6 +561,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     // [jooq-tools] START [into-fields]
+
     @Override
     public final <T1> Record1<T1> into(Field<T1> field1) {
         return (Record1) into(new Field[] { field1 });

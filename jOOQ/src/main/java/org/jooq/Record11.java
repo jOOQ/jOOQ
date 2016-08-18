@@ -245,4 +245,17 @@ public interface Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> extends 
      */
     Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> values(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11);
 
+//  [#4695] [#5501] The following covariant overrides cannot be published yet for implementation reasons (see #4695)
+//
+//  /**
+//   * {@inheritDoc}
+//   */
+//  @Override
+//  <T> Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> with(Field<T> field, T value);
+//
+//  /**
+//   * {@inheritDoc}
+//   */
+//  @Override
+//  <T, U> Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> with(Field<T> field, U value, Converter<? extends T, ? super U> converter);
 }

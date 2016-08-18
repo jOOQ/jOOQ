@@ -400,6 +400,22 @@ public interface Record extends Attachable, Comparable<Record> {
     <T, U> void set(Field<T> field, U value, Converter<? extends T, ? super U> converter);
 
     /**
+     * Set a value into this record.
+     * <p>
+     * Like {@link #set(Field, Object)} but returning <code>this</code> for
+     * fluent setting of multiple values.
+     */
+    <T> Record with(Field<T> field, T value);
+
+    /**
+     * Set a value into this record.
+     * <p>
+     * Like {@link #set(Field, Object, Converter)} but returning
+     * <code>this</code> for fluent setting of multiple values.
+     */
+    <T, U> Record with(Field<T> field, U value, Converter<? extends T, ? super U> converter);
+
+    /**
      * Get the number of fields of this record.
      */
     int size();
@@ -661,6 +677,7 @@ public interface Record extends Attachable, Comparable<Record> {
     Record into(Field<?>... fields);
 
     // [jooq-tools] START [into-fields]
+
     /**
      * Copy this record into a new record holding only a subset of the previous
      * fields.

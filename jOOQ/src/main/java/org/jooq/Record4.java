@@ -140,4 +140,17 @@ public interface Record4<T1, T2, T3, T4> extends Record {
      */
     Record4<T1, T2, T3, T4> values(T1 t1, T2 t2, T3 t3, T4 t4);
 
+//  [#4695] [#5501] The following covariant overrides cannot be published yet for implementation reasons (see #4695)
+//
+//  /**
+//   * {@inheritDoc}
+//   */
+//  @Override
+//  <T> Record4<T1, T2, T3, T4> with(Field<T> field, T value);
+//
+//  /**
+//   * {@inheritDoc}
+//   */
+//  @Override
+//  <T, U> Record4<T1, T2, T3, T4> with(Field<T> field, U value, Converter<? extends T, ? super U> converter);
 }

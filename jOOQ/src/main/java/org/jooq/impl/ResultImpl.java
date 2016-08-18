@@ -2046,6 +2046,7 @@ final class ResultImpl<R extends Record> implements Result<R>, AttachableInterna
     }
 
     // [jooq-tools] START [into-fields]
+
     @Override
     public final <T1> Result<Record1<T1>> into(Field<T1> field1) {
         return (Result) into(new Field[] { field1 });

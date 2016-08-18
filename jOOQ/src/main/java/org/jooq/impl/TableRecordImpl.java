@@ -59,6 +59,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 
+import org.jooq.Converter;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -94,6 +95,18 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         super(table.fields());
 
         this.table = table;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final <T> R with(Field<T> field, T value) {
+        return (R) super.with(field, value);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final <T, U> R with(Field<T> field, U value, Converter<? extends T, ? super U> converter) {
+        return (R) super.with(field, value, converter);
     }
 
     @Override

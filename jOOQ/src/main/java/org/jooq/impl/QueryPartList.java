@@ -99,14 +99,14 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
                 ctx.sql(separator);
 
                 if (i > 0 || indent)
-                    ctx.formatNewLine();
+                    ctx.formatSeparator();
 
                 ctx.visit(get(i));
-                separator = ", ";
+                separator = ",";
             }
 
             if (indent)
-                ctx.formatIndentEnd().formatNewLine();
+                ctx.formatIndentEnd();
         }
     }
 

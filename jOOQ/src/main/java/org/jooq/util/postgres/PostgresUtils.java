@@ -52,6 +52,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.Converter;
 import org.jooq.Record;
 import org.jooq.exception.DataTypeException;
 import org.jooq.tools.reflect.Reflect;
@@ -465,7 +466,9 @@ public class PostgresUtils {
         sb.append("(");
 
         String separator = "";
-        for (Object a : r.intoArray()) {
+        for (int i = 0; i < r.size(); i++) {
+            @SuppressWarnings({ "unchecked", "rawtypes" })
+            Object a = ((Converter) r.field(i).getConverter()).to(r.get(i));
             sb.append(separator);
 
             // [#753] null must not be set as a literal

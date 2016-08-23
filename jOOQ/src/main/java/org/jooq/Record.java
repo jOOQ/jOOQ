@@ -660,7 +660,7 @@ public interface Record extends Attachable, Comparable<Record> {
 
 
     /**
-     * Convert this record into aa stream.
+     * Convert this record into a stream.
      * <p>
      * The resulting stream has the same number of elements as this record has
      * fields. The resulting stream contains data as such:

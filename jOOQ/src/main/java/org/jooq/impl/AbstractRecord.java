@@ -63,6 +63,8 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
+import java.util.stream.Stream;
 
 import org.jooq.Attachable;
 import org.jooq.Converter;
@@ -538,6 +540,13 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     public final List<Object> intoList() {
         return Arrays.asList(intoArray());
     }
+
+
+    @Override
+    public final Stream<Object> intoStream() {
+        return into(Stream.class);
+    }
+
 
     @Override
     public final Map<String, Object> intoMap() {

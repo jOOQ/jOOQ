@@ -48,6 +48,7 @@ import java.sql.SQLData;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 import javax.persistence.Column;
@@ -656,6 +657,20 @@ public interface Record extends Attachable, Comparable<Record> {
      * This is the same as calling <code>Arrays.asList(intoArray())</code>
      */
     List<Object> intoList();
+
+
+    /**
+     * Convert this record into aa stream.
+     * <p>
+     * The resulting stream has the same number of elements as this record has
+     * fields. The resulting stream contains data as such:
+     * <p>
+     * This is the same as calling <code>into(Stream.class)</code>
+     *
+     * @return This record as a stream
+     */
+    Stream<Object> intoStream();
+
 
     /**
      * Return this record as a name/value map.

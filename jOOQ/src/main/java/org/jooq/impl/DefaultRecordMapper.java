@@ -72,6 +72,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Stream;
 
 import javax.persistence.Column;
 
@@ -242,6 +243,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
      * The record type.
      */
     private final Field<?>[]         fields;
+    private final RecordType<R>      rowType;
 
     /**
      * The target type.
@@ -273,6 +275,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
     }
 
     DefaultRecordMapper(RecordType<R> rowType, Class<? extends E> type, E instance, Configuration configuration) {
+        this.rowType = rowType;
         this.fields = rowType.fields();
         this.type = type;
         this.configuration = configuration;
@@ -287,6 +290,14 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             delegate = new ArrayMapper(instance);
             return;
         }
+
+
+        if (Stream.class.isAssignableFrom(type)) {
+            DefaultRecordMapper<R, Object[]> local = new DefaultRecordMapper<>(rowType, Object[].class, configuration);
+            delegate = r -> (E) Stream.of(local.map(r));
+            return;
+        }
+
 
         // [#3212] [#5154] "Value types" can be mapped from single-field Record1
         //                 types for convenience

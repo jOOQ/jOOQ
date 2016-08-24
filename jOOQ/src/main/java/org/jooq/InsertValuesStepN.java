@@ -91,5 +91,5 @@ public interface InsertValuesStepN<R extends Record> extends InsertOnDuplicateSt
      * {@link DSLContext#insertInto(Table, Collection)}
      */
     @Support
-    InsertReturningStep<R> select(Select<?> select);
+    InsertOnDuplicateStep<R> select(Select<?> select);
 }

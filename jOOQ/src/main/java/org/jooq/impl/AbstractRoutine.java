@@ -387,7 +387,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
         List<Field<?>> fields = new ArrayList<Field<?>>();
         if (returnParameter != null)
-            fields.add(DSL.field(DSL.name(getName()), returnParameDSL.field(tDataType()));
+            fields.add(DSL.field(DSL.name(getName()), returnParameter.getDataType()));
         for (Parameter<?> p : outParameters)
             fields.add(DSL.field(DSL.name(p.getName()), p.getDataType()));
 

@@ -40,8 +40,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
-
 import org.jooq.Configuration;
 import org.jooq.Field;
 
@@ -79,16 +77,16 @@ final class Nvl<T> extends AbstractFunction<T> {
 
             case H2:
             case HSQLDB:
-                return field("{nvl}({0}, {1})", getDataType(), arg1, arg2);
+                return DSL.field("{nvl}({0}, {1})", getDataType(), arg1, arg2);
 
             case DERBY:
             case POSTGRES:
-                return field("{coalesce}({0}, {1})", getDataType(), arg1, arg2);
+                return DSL.field("{coalesce}({0}, {1})", getDataType(), arg1, arg2);
 
             case MARIADB:
             case MYSQL:
             case SQLITE:
-                return field("{ifnull}({0}, {1})", getDataType(), arg1, arg2);
+                return DSL.field("{ifnull}({0}, {1})", getDataType(), arg1, arg2);
 
             default:
                 return DSL.when(arg1.isNotNull(), arg1).otherwise(arg2);

@@ -40,7 +40,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.one;
 
 import java.math.BigDecimal;
@@ -75,7 +74,7 @@ final class Asin extends AbstractFunction<BigDecimal> {
 
 
             default:
-                return field("{asin}({0})", getDataType(), arg);
+                return DSL.field("{asin}({0})", getDataType(), arg);
         }
     }
 }

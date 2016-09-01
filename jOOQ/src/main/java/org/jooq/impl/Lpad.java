@@ -40,7 +40,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 
@@ -110,7 +109,7 @@ final class Lpad extends AbstractFunction<String> {
             // According to the Firebird documentation, LPAD outcomes should be
             // cast to truncate large results...
             case FIREBIRD: {
-                return field("cast(lpad({0}, {1}, {2}) as varchar(4000))", SQLDataType.VARCHAR, field, length, character);
+                return DSL.field("cast(lpad({0}, {1}, {2}) as varchar(4000))", SQLDataType.VARCHAR, field, length, character);
             }
 
             default: {

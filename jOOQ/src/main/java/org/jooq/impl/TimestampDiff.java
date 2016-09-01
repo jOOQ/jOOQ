@@ -40,7 +40,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.SQLDataType.INTEGER;
 
@@ -109,33 +108,33 @@ final class TimestampDiff extends AbstractFunction<DayToSecond> {
 
                 // [#4481] Parentheses are important in case this expression is
                 //         placed in the context of other arithmetic
-                return field("({0} - {1})", getDataType(), timestamp1, timestamp2);
+                return DSL.field("({0} - {1})", getDataType(), timestamp1, timestamp2);
 
             // CUBRID's datetime operations operate on a millisecond level
             case CUBRID:
                 return (Field) timestamp1.sub(timestamp2);
 
             case DERBY:
-                return (Field) field("1000 * {fn {timestampdiff}({sql_tsi_second}, {0}, {1}) }", INTEGER, timestamp2, timestamp1);
+                return (Field) DSL.field("1000 * {fn {timestampdiff}({sql_tsi_second}, {0}, {1}) }", INTEGER, timestamp2, timestamp1);
 
 
 
 
 
             case FIREBIRD:
-                return field("{datediff}(millisecond, {0}, {1})", getDataType(), timestamp2, timestamp1);
+                return DSL.field("{datediff}(millisecond, {0}, {1})", getDataType(), timestamp2, timestamp1);
 
             case H2:
             case HSQLDB:
-                return field("{datediff}('ms', {0}, {1})", getDataType(), timestamp2, timestamp1);
+                return DSL.field("{datediff}('ms', {0}, {1})", getDataType(), timestamp2, timestamp1);
 
             // MySQL's datetime operations operate on a microsecond level
             case MARIADB:
             case MYSQL:
-                return field("{timestampdiff}(microsecond, {0}, {1}) / 1000", getDataType(), timestamp2, timestamp1);
+                return DSL.field("{timestampdiff}(microsecond, {0}, {1}) / 1000", getDataType(), timestamp2, timestamp1);
 
             case SQLITE:
-                return field("({strftime}('%s', {0}) - {strftime}('%s', {1})) * 1000", getDataType(), timestamp1, timestamp2);
+                return DSL.field("({strftime}('%s', {0}) - {strftime}('%s', {1})) * 1000", getDataType(), timestamp1, timestamp2);
 
 
 

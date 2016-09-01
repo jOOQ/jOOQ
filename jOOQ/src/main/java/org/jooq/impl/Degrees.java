@@ -40,7 +40,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.pi;
 
@@ -83,7 +82,7 @@ final class Degrees extends AbstractFunction<BigDecimal> {
                 return argument.cast(BigDecimal.class).mul(inline(180)).div(pi());
 
             default:
-                return field("{degrees}({0})", SQLDataType.NUMERIC, argument);
+                return DSL.field("{degrees}({0})", SQLDataType.NUMERIC, argument);
         }
     }
 }

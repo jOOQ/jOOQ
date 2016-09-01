@@ -40,10 +40,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.function;
-import static org.jooq.impl.DSL.inline;
-
 import org.jooq.Configuration;
 import org.jooq.Field;
 
@@ -84,12 +80,12 @@ final class CurrentUser extends AbstractFunction<String> {
             case FIREBIRD:
             case HSQLDB:
             case POSTGRES:
-                return field("{current_user}", String.class);
+                return DSL.field("{current_user}", String.class);
 
             case SQLITE:
-                return inline("");
+                return DSL.inline("");
         }
 
-        return function("current_user", SQLDataType.VARCHAR);
+        return DSL.function("current_user", SQLDataType.VARCHAR);
     }
 }

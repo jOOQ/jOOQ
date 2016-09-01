@@ -40,7 +40,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
 
 import java.sql.Date;
@@ -76,20 +75,20 @@ final class DateDiff extends AbstractFunction<Integer> {
                 return function("datediff", getDataType(), date1, date2);
 
             case DERBY:
-                return field("{fn {timestampdiff}({sql_tsi_day}, {0}, {1}) }", getDataType(), date2, date1);
+                return DSL.field("{fn {timestampdiff}({sql_tsi_day}, {0}, {1}) }", getDataType(), date2, date1);
 
             case FIREBIRD:
-                return field("{datediff}(day, {0}, {1})", getDataType(), date2, date1);
+                return DSL.field("{datediff}(day, {0}, {1})", getDataType(), date2, date1);
 
             case H2:
             case HSQLDB:
 
 
 
-                return field("{datediff}('day', {0}, {1})", getDataType(), date2, date1);
+                return DSL.field("{datediff}('day', {0}, {1})", getDataType(), date2, date1);
 
             case SQLITE:
-                return field("({strftime}('%s', {0}) - {strftime}('%s', {1})) / 86400", getDataType(), date1, date2);
+                return DSL.field("({strftime}('%s', {0}) - {strftime}('%s', {1})) / 86400", getDataType(), date1, date2);
 
 
 
@@ -99,7 +98,7 @@ final class DateDiff extends AbstractFunction<Integer> {
 
                 // [#4481] Parentheses are important in case this expression is
                 //         placed in the context of other arithmetic
-                return field("({0} - {1})", getDataType(), date1, date2);
+                return DSL.field("({0} - {1})", getDataType(), date1, date2);
 
 
 

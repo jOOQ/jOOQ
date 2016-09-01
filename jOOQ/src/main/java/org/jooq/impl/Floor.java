@@ -40,8 +40,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
-
 import org.jooq.Configuration;
 import org.jooq.Field;
 
@@ -75,7 +73,7 @@ final class Floor<T extends Number> extends AbstractFunction<T> {
                 return DSL.round(argument.sub(0.499999999999999));
 
             default:
-                return field("{floor}({0})", getDataType(), argument);
+                return DSL.field("{floor}({0})", getDataType(), argument);
         }
     }
 }

@@ -40,8 +40,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
-
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -80,10 +78,10 @@ final class Rollup extends AbstractField<Object> {
             case CUBRID:
             case MARIADB:
             case MYSQL:
-                return field("{0} {with rollup}", arguments);
+                return DSL.field("{0} {with rollup}", arguments);
 
             default:
-                return field("{rollup}({0})", Object.class, arguments);
+                return DSL.field("{rollup}({0})", Object.class, arguments);
         }
     }
 }

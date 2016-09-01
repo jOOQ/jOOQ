@@ -40,8 +40,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
-
 import org.jooq.Configuration;
 import org.jooq.Field;
 
@@ -72,7 +70,7 @@ final class Ascii extends AbstractFunction<Integer> {
 
 
             case FIREBIRD:
-                return field("{ascii_val}({0})", SQLDataType.INTEGER, string);
+                return DSL.field("{ascii_val}({0})", SQLDataType.INTEGER, string);
 
             // TODO [#862] [#864] emulate this for some dialects
 
@@ -82,7 +80,7 @@ final class Ascii extends AbstractFunction<Integer> {
             case SQLITE:
 
             default:
-                return field("{ascii}({0})", SQLDataType.INTEGER, string);
+                return DSL.field("{ascii}({0})", SQLDataType.INTEGER, string);
         }
     }
 }

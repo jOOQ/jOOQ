@@ -41,7 +41,6 @@
 
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.one;
 
 import org.jooq.Configuration;
@@ -88,7 +87,7 @@ final class Position extends AbstractFunction<Integer> {
 
 
                 case DERBY:
-                    return field("{locate}({0}, {1})", SQLDataType.INTEGER, search, in);
+                    return DSL.field("{locate}({0}, {1})", SQLDataType.INTEGER, search, in);
 
 
 
@@ -104,10 +103,10 @@ final class Position extends AbstractFunction<Integer> {
 
 
                 case SQLITE:
-                    return field("{instr}({0}, {1})", SQLDataType.INTEGER, in, search);
+                    return DSL.field("{instr}({0}, {1})", SQLDataType.INTEGER, in, search);
 
                 default:
-                    return field("{position}({0} {in} {1})", SQLDataType.INTEGER, search, in);
+                    return DSL.field("{position}({0} {in} {1})", SQLDataType.INTEGER, search, in);
             }
     }
 }

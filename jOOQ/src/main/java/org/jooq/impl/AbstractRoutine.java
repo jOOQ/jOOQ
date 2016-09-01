@@ -48,7 +48,6 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
-import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
@@ -388,7 +387,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
         List<Field<?>> fields = new ArrayList<Field<?>>();
         if (returnParameter != null)
-            fields.add(DSL.field(DSL.name(getName()), returnParameter.getDataType()));
+            fields.add(DSL.field(DSL.name(getName()), returnParameDSL.field(tDataType()));
         for (Parameter<?> p : outParameters)
             fields.add(DSL.field(DSL.name(p.getName()), p.getDataType()));
 
@@ -1189,9 +1188,9 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                             fields.add(getInValues().get(parameter));
                     else
                         if (pgArgNeedsCasting(parameter))
-                            fields.add(field("{0} := {1}", name(parameter.getName()), new Cast(getInValues().get(parameter), parameter.getDataType())));
+                            fields.add(DSL.field("{0} := {1}", name(parameter.getName()), new Cast(getInValues().get(parameter), parameter.getDataType())));
                         else
-                            fields.add(field("{0} := {1}", name(parameter.getName()), getInValues().get(parameter)));
+                            fields.add(DSL.field("{0} := {1}", name(parameter.getName()), getInValues().get(parameter)));
                 else
                     fields.add(getInValues().get(parameter));
             }

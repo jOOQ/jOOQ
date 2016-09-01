@@ -40,7 +40,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.two;
 
@@ -76,7 +75,7 @@ final class Acos extends AbstractFunction<BigDecimal> {
 
 
             default:
-                return field("{acos}({0})", getDataType(), arg);
+                return DSL.field("{acos}({0})", getDataType(), arg);
         }
     }
 }

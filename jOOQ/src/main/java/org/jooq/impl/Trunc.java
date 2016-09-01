@@ -41,7 +41,6 @@
 package org.jooq.impl;
 
 import static java.math.BigDecimal.TEN;
-import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.one;
@@ -104,12 +103,12 @@ final class Trunc<T> extends AbstractFunction<T> {
             case H2:
             case MARIADB:
             case MYSQL:
-                return field("{truncate}({0}, {1})", field.getDataType(), field, decimals);
+                return DSL.field("{truncate}({0}, {1})", field.getDataType(), field, decimals);
 
             // Postgres TRUNC() only takes NUMERIC arguments, no
             // DOUBLE PRECISION ones
             case POSTGRES:
-                return field("{trunc}({0}, {1})", SQLDataType.NUMERIC, field.cast(BigDecimal.class), decimals).cast(field.getDataType());
+                return DSL.field("{trunc}({0}, {1})", SQLDataType.NUMERIC, field.cast(BigDecimal.class), decimals).cast(field.getDataType());
 
 
 
@@ -131,7 +130,7 @@ final class Trunc<T> extends AbstractFunction<T> {
             case CUBRID:
             case HSQLDB:
             default:
-                return field("{trunc}({0}, {1})", field.getDataType(), field, decimals);
+                return DSL.field("{trunc}({0}, {1})", field.getDataType(), field, decimals);
         }
     }
 }

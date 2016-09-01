@@ -40,7 +40,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
 
 import java.sql.Timestamp;
@@ -93,7 +92,7 @@ final class CurrentTimestamp extends AbstractFunction<Timestamp> {
             case HSQLDB:
             case POSTGRES:
             case SQLITE:
-                return field("{current_timestamp}", SQLDataType.TIMESTAMP);
+                return DSL.field("{current_timestamp}", SQLDataType.TIMESTAMP);
         }
 
         return function("current_timestamp", SQLDataType.TIMESTAMP);

@@ -40,7 +40,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 
@@ -84,18 +83,18 @@ final class CurrentSchema extends AbstractFunction<String> {
                 return inline("");
 
             case DERBY:
-                return field("{current schema}", String.class);
+                return DSL.field("{current schema}", String.class);
 
             case H2:
-                return field("{schema}()", String.class);
+                return DSL.field("{schema}()", String.class);
 
             case MARIADB:
             case MYSQL:
-                return field("{database}()", String.class);
+                return DSL.field("{database}()", String.class);
 
             case HSQLDB:
             case POSTGRES:
-                return field("{current_schema}", String.class);
+                return DSL.field("{current_schema}", String.class);
         }
 
         return function("current_schema", String.class);

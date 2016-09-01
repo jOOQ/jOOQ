@@ -40,7 +40,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 
 import org.jooq.Configuration;
@@ -91,7 +90,7 @@ final class Left extends AbstractFunction<String> {
             case MYSQL:
             case POSTGRES:
             default:
-                return field("{left}({0}, {1})", field, length);
+                return DSL.field("{left}({0}, {1})", field, length);
         }
     }
 }

@@ -40,7 +40,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 
 import java.sql.Date;
@@ -90,7 +89,7 @@ final class TruncDate<T extends java.util.Date> extends AbstractFunction<T> {
                     default: throwUnsupported();
                 }
 
-                return field("{trunc}({0}, {1})", getDataType(), date, inline(keyword));
+                return DSL.field("{trunc}({0}, {1})", getDataType(), date, inline(keyword));
             }
 
             case H2: {
@@ -104,7 +103,7 @@ final class TruncDate<T extends java.util.Date> extends AbstractFunction<T> {
                     default: throwUnsupported();
                 }
 
-                return field("{parsedatetime}({formatdatetime}({0}, {1}), {1})", getDataType(), date, inline(format));
+                return DSL.field("{parsedatetime}({formatdatetime}({0}, {1}), {1})", getDataType(), date, inline(format));
             }
 
 // These don't work yet and need better integration-testing:
@@ -112,12 +111,12 @@ final class TruncDate<T extends java.util.Date> extends AbstractFunction<T> {
 //            case MARIADB:
 //            case MYSQL: {
 //                switch (part) {
-//                    case YEAR:   return field("{str_to_date}({date_format}({0}, '%Y-00-00 00:00:00.0'), '%Y-%m-%d %H:%i:%s.0')", getDataType(), date);
-//                    case MONTH:  return field("{str_to_date}({date_format}({0}, '%Y-%m-00 00:00:00.0'), '%Y-%m-%d %H:%i:%s.0')", getDataType(), date);
-//                    case DAY:    return field("{str_to_date}({date_format}({0}, '%Y-%m-%d 00:00:00.0'), '%Y-%m-%d %H:%i:%s.0')", getDataType(), date);
-//                    case HOUR:   return field("{str_to_date}({date_format}({0}, '%Y-%m-%d %H:00:00.0'), '%Y-%m-%d %H:%i:%s.0')", getDataType(), date);
-//                    case MINUTE: return field("{str_to_date}({date_format}({0}, '%Y-%m-%d %H:%i:00.0'), '%Y-%m-%d %H:%i:%s.0')", getDataType(), date);
-//                    case SECOND: return field("{str_to_date}({date_format}({0}, '%Y-%m-%d %H:%i:%s.0'), '%Y-%m-%d %H:%i:%s.0')", getDataType(), date);
+//                    case YEAR:   return DSL.field("{str_to_date}({date_format}({0}, '%Y-00-00 00:00:00.0'), '%Y-%m-%d %H:%i:%s.0')", getDataType(), date);
+//                    case MONTH:  return DSL.field("{str_to_date}({date_format}({0}, '%Y-%m-00 00:00:00.0'), '%Y-%m-%d %H:%i:%s.0')", getDataType(), date);
+//                    case DAY:    return DSL.field("{str_to_date}({date_format}({0}, '%Y-%m-%d 00:00:00.0'), '%Y-%m-%d %H:%i:%s.0')", getDataType(), date);
+//                    case HOUR:   return DSL.field("{str_to_date}({date_format}({0}, '%Y-%m-%d %H:00:00.0'), '%Y-%m-%d %H:%i:%s.0')", getDataType(), date);
+//                    case MINUTE: return DSL.field("{str_to_date}({date_format}({0}, '%Y-%m-%d %H:%i:00.0'), '%Y-%m-%d %H:%i:%s.0')", getDataType(), date);
+//                    case SECOND: return DSL.field("{str_to_date}({date_format}({0}, '%Y-%m-%d %H:%i:%s.0'), '%Y-%m-%d %H:%i:%s.0')", getDataType(), date);
 //                    default: throwUnsupported();
 //                }
 //            }
@@ -138,19 +137,19 @@ final class TruncDate<T extends java.util.Date> extends AbstractFunction<T> {
                     default: throwUnsupported();
                 }
 
-                return field("{date_trunc}({0}, {1})", getDataType(), inline(keyword), date);
+                return DSL.field("{date_trunc}({0}, {1})", getDataType(), inline(keyword), date);
             }
 
 // These don't work yet and need better integration-testing:
 // ---------------------------------------------------------
 //            case SQLITE: {
 //                switch (part) {
-//                    case YEAR:   return field("{strftime}({0}, '%Y-00-00 00:00:00.0')", getDataType(), date);
-//                    case MONTH:  return field("{strftime}({0}, '%Y-%m-00 00:00:00.0')", getDataType(), date);
-//                    case DAY:    return field("{strftime}({0}, '%Y-%m-%d 00:00:00.0')", getDataType(), date);
-//                    case HOUR:   return field("{strftime}({0}, '%Y-%m-%d %H:00:00.0')", getDataType(), date);
-//                    case MINUTE: return field("{strftime}({0}, '%Y-%m-%d %H:%i:00.0')", getDataType(), date);
-//                    case SECOND: return field("{strftime}({0}, '%Y-%m-%d %H:%i:%s.0')", getDataType(), date);
+//                    case YEAR:   return DSL.field("{strftime}({0}, '%Y-00-00 00:00:00.0')", getDataType(), date);
+//                    case MONTH:  return DSL.field("{strftime}({0}, '%Y-%m-00 00:00:00.0')", getDataType(), date);
+//                    case DAY:    return DSL.field("{strftime}({0}, '%Y-%m-%d 00:00:00.0')", getDataType(), date);
+//                    case HOUR:   return DSL.field("{strftime}({0}, '%Y-%m-%d %H:00:00.0')", getDataType(), date);
+//                    case MINUTE: return DSL.field("{strftime}({0}, '%Y-%m-%d %H:%i:00.0')", getDataType(), date);
+//                    case SECOND: return DSL.field("{strftime}({0}, '%Y-%m-%d %H:%i:%s.0')", getDataType(), date);
 //                    default: throwUnsupported();
 //                }
 //            }
@@ -227,7 +226,7 @@ final class TruncDate<T extends java.util.Date> extends AbstractFunction<T> {
 
 
             default:
-                return field("{trunc}({0}, {1})", getDataType(), date, inline(part.name()));
+                return DSL.field("{trunc}({0}, {1})", getDataType(), date, inline(part.name()));
         }
     }
 

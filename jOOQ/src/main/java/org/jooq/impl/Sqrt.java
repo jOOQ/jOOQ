@@ -40,8 +40,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
-
 import java.math.BigDecimal;
 
 import org.jooq.Configuration;
@@ -77,7 +75,7 @@ final class Sqrt extends AbstractFunction<BigDecimal> {
                 return DSL.power(argument, 0.5);
 
             default:
-                return field("{sqrt}({0})", SQLDataType.NUMERIC, argument);
+                return DSL.field("{sqrt}({0})", SQLDataType.NUMERIC, argument);
         }
     }
 }

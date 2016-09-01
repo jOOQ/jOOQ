@@ -40,8 +40,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
-
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.QueryPart;
@@ -72,7 +70,7 @@ final class Lower extends AbstractFunction<String> {
 
 
             default:
-                return field("{lower}({0})", getDataType(), field);
+                return DSL.field("{lower}({0})", getDataType(), field);
         }
     }
 }

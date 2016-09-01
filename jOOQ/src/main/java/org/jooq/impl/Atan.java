@@ -40,8 +40,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
-
 import java.math.BigDecimal;
 
 import org.jooq.Configuration;
@@ -74,7 +72,7 @@ final class Atan extends AbstractFunction<BigDecimal> {
 
 
             default:
-                return field("{atan}({0})", getDataType(), arg);
+                return DSL.field("{atan}({0})", getDataType(), arg);
         }
     }
 }

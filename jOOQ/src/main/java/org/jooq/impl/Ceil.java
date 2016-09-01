@@ -40,8 +40,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
-
 import org.jooq.Configuration;
 import org.jooq.Field;
 
@@ -81,10 +79,10 @@ final class Ceil<T extends Number> extends AbstractFunction<T> {
 
 
             case H2:
-                return field("{ceiling}({0})", getDataType(), argument);
+                return DSL.field("{ceiling}({0})", getDataType(), argument);
 
             default:
-                return field("{ceil}({0})", getDataType(), argument);
+                return DSL.field("{ceil}({0})", getDataType(), argument);
         }
     }
 }

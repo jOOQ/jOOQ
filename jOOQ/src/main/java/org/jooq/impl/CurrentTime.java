@@ -40,9 +40,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.function;
-
 import java.sql.Time;
 
 import org.jooq.Configuration;
@@ -85,7 +82,7 @@ final class CurrentTime extends AbstractFunction<Time> {
             case HSQLDB:
             case POSTGRES:
             case SQLITE:
-                return field("{current_time}", SQLDataType.TIME);
+                return DSL.field("{current_time}", SQLDataType.TIME);
 
 
 
@@ -96,6 +93,6 @@ final class CurrentTime extends AbstractFunction<Time> {
 
         }
 
-        return function("current_time", SQLDataType.TIME);
+        return DSL.function("current_time", SQLDataType.TIME);
     }
 }

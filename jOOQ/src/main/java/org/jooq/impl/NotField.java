@@ -43,7 +43,6 @@ package org.jooq.impl;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_NOT;
 import static org.jooq.impl.DSL.condition;
-import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.not;
 
 import org.jooq.Clause;
@@ -79,7 +78,7 @@ final class NotField extends AbstractField<Boolean> {
 
 
 
-                ctx.visit(field(not(condition(field))));
+                ctx.visit(DSL.field(not(condition(field))));
                 break;
 
 
@@ -95,7 +94,7 @@ final class NotField extends AbstractField<Boolean> {
             case POSTGRES:
             case SQLITE:
             default:
-                ctx.visit(field("{not}({0})", getDataType(), field));
+                ctx.visit(DSL.field("{not}({0})", getDataType(), field));
                 break;
         }
     }

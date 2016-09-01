@@ -40,7 +40,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.sql;
@@ -92,7 +91,7 @@ final class DateAdd<T extends java.util.Date> extends AbstractFunction<T> {
                     default: throwUnsupported();
                 }
 
-                return field("{date_add}({0}, {interval} {1} {2})", getDataType(), date, interval, keyword(keyword));
+                return DSL.field("{date_add}({0}, {interval} {1} {2})", getDataType(), date, interval, keyword(keyword));
             }
 
             case DERBY:
@@ -107,7 +106,7 @@ final class DateAdd<T extends java.util.Date> extends AbstractFunction<T> {
                     default: throwUnsupported();
                 }
 
-                return field("{fn {timestampadd}({0}, {1}, {2}) }", getDataType(), keyword(keyword), interval, date);
+                return DSL.field("{fn {timestampadd}({0}, {1}, {2}) }", getDataType(), keyword(keyword), interval, date);
             }
 
             case FIREBIRD: {
@@ -121,7 +120,7 @@ final class DateAdd<T extends java.util.Date> extends AbstractFunction<T> {
                     default: throwUnsupported();
                 }
 
-                return field("{dateadd}({0}, {1}, {2})", getDataType(), keyword(keyword), interval, date);
+                return DSL.field("{dateadd}({0}, {1}, {2})", getDataType(), keyword(keyword), interval, date);
             }
 
             case H2: {
@@ -135,7 +134,7 @@ final class DateAdd<T extends java.util.Date> extends AbstractFunction<T> {
                     default: throwUnsupported();
                 }
 
-                return field("{dateadd}({0}, {1}, {2})", getDataType(), inline(keyword), interval, date);
+                return DSL.field("{dateadd}({0}, {1}, {2})", getDataType(), inline(keyword), interval, date);
             }
 
 
@@ -159,9 +158,9 @@ final class DateAdd<T extends java.util.Date> extends AbstractFunction<T> {
                 // [#3824] Ensure that the output for DATE arithmetic will also
                 // be of type DATE, not TIMESTAMP
                 if (getDataType().getType() == Date.class)
-                    return field("({0} + ({1} || {2})::interval)::date", getDataType(), date, interval, inline(keyword));
+                    return DSL.field("({0} + ({1} || {2})::interval)::date", getDataType(), date, interval, inline(keyword));
                 else
-                    return field("({0} + ({1} || {2})::interval)", getDataType(), date, interval, inline(keyword));
+                    return DSL.field("({0} + ({1} || {2})::interval)", getDataType(), date, interval, inline(keyword));
             }
 
             case SQLITE: {
@@ -175,7 +174,7 @@ final class DateAdd<T extends java.util.Date> extends AbstractFunction<T> {
                     default: throwUnsupported();
                 }
 
-                return field("{datetime}({0}, '+' || {1} || {2})", getDataType(), date, interval, inline(keyword));
+                return DSL.field("{datetime}({0}, '+' || {1} || {2})", getDataType(), date, interval, inline(keyword));
             }
 
 

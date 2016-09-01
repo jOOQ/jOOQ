@@ -40,8 +40,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
-
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.QueryPart;
@@ -72,7 +70,7 @@ final class Upper extends AbstractFunction<String> {
 
 
             default:
-                return field("{upper}({0})", getDataType(), field);
+                return DSL.field("{upper}({0})", getDataType(), field);
         }
     }
 }

@@ -40,9 +40,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.function;
-
 import org.jooq.Configuration;
 import org.jooq.Field;
 
@@ -68,10 +65,10 @@ final class LTrim extends AbstractFunction<String> {
     final Field<String> getFunction0(Configuration configuration) {
         switch (configuration.family()) {
             case FIREBIRD:
-                return field("{trim}({leading} {from} {0})", SQLDataType.VARCHAR, argument);
+                return DSL.field("{trim}({leading} {from} {0})", SQLDataType.VARCHAR, argument);
 
             default:
-                return function("ltrim", SQLDataType.VARCHAR, argument);
+                return DSL.function("ltrim", SQLDataType.VARCHAR, argument);
         }
     }
 }

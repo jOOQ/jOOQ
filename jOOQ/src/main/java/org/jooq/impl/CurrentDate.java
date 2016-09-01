@@ -40,7 +40,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
 
 import java.sql.Date;
@@ -93,7 +92,7 @@ final class CurrentDate extends AbstractFunction<Date> {
             case HSQLDB:
             case POSTGRES:
             case SQLITE:
-                return field("{current_date}", SQLDataType.DATE);
+                return DSL.field("{current_date}", SQLDataType.DATE);
         }
 
         return function("current_date", SQLDataType.DATE);

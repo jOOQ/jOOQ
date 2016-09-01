@@ -41,7 +41,6 @@
 
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
 
 import java.sql.Timestamp;
@@ -74,17 +73,17 @@ final class Extract extends AbstractFunction<Integer> {
             case SQLITE:
                 switch (datePart) {
                     case YEAR:
-                        return field("{strftime}('%Y', {0})", SQLDataType.INTEGER, field);
+                        return DSL.field("{strftime}('%Y', {0})", SQLDataType.INTEGER, field);
                     case MONTH:
-                        return field("{strftime}('%m', {0})", SQLDataType.INTEGER, field);
+                        return DSL.field("{strftime}('%m', {0})", SQLDataType.INTEGER, field);
                     case DAY:
-                        return field("{strftime}('%d', {0})", SQLDataType.INTEGER, field);
+                        return DSL.field("{strftime}('%d', {0})", SQLDataType.INTEGER, field);
                     case HOUR:
-                        return field("{strftime}('%H', {0})", SQLDataType.INTEGER, field);
+                        return DSL.field("{strftime}('%H', {0})", SQLDataType.INTEGER, field);
                     case MINUTE:
-                        return field("{strftime}('%M', {0})", SQLDataType.INTEGER, field);
+                        return DSL.field("{strftime}('%M', {0})", SQLDataType.INTEGER, field);
                     case SECOND:
-                        return field("{strftime}('%S', {0})", SQLDataType.INTEGER, field);
+                        return DSL.field("{strftime}('%S', {0})", SQLDataType.INTEGER, field);
                     default:
                         throw new SQLDialectNotSupportedException("DatePart not supported: " + datePart);
                 }
@@ -196,7 +195,7 @@ final class Extract extends AbstractFunction<Integer> {
 
             // A default implementation is necessary for hashCode() and toString()
             default:
-                return field("{extract}({" + datePart.toSQL() + " from} {0})", SQLDataType.INTEGER, field);
+                return DSL.field("{extract}({" + datePart.toSQL() + " from} {0})", SQLDataType.INTEGER, field);
         }
     }
 }

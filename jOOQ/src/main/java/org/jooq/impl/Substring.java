@@ -40,7 +40,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 
@@ -70,10 +69,10 @@ final class Substring extends AbstractFunction<String> {
             // [#430] Firebird has its own syntax
             case FIREBIRD: {
                 if (getArguments().length == 2) {
-                    return field("{substring}({0} {from} {1})", SQLDataType.VARCHAR, getArguments());
+                    return DSL.field("{substring}({0} {from} {1})", SQLDataType.VARCHAR, getArguments());
                 }
                 else {
-                    return field("{substring}({0} {from} {1} {for} {2})", SQLDataType.VARCHAR, getArguments());
+                    return DSL.field("{substring}({0} {from} {1} {for} {2})", SQLDataType.VARCHAR, getArguments());
                 }
             }
 

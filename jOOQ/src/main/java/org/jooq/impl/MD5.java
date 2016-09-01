@@ -40,8 +40,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.field;
-
 import org.jooq.Configuration;
 import org.jooq.Field;
 
@@ -74,7 +72,7 @@ final class MD5 extends AbstractFunction<String> {
             case MARIADB:
             case MYSQL:
             default:
-                return field("{md5}({0})", SQLDataType.VARCHAR, argument);
+                return DSL.field("{md5}({0})", SQLDataType.VARCHAR, argument);
         }
     }
 }

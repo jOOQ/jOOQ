@@ -300,21 +300,21 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
     /**
      * Get a reference to a {@link Class}.
      */
-    protected String ref(Class<?> clazz) {
+    public String ref(Class<?> clazz) {
         return clazz == null ? null : ref(clazz.getName());
     }
 
     /**
      * Get a reference to a {@link Class}.
      */
-    protected String ref(String clazzOrId) {
+    public String ref(String clazzOrId) {
         return clazzOrId == null ? null : ref(Arrays.asList(clazzOrId), 1).get(0);
     }
 
     /**
      * Get a reference to a list of {@link Class}.
      */
-    protected String[] ref(String[] clazzOrId) {
+    public String[] ref(String[] clazzOrId) {
         return clazzOrId == null ? new String[0] : ref(Arrays.asList(clazzOrId), 1).toArray(new String[clazzOrId.length]);
     }
 
@@ -323,7 +323,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
      * <p>
      * Subtypes may override this to generate import statements.
      */
-    protected List<String> ref(List<String> clazzOrId) {
+    public List<String> ref(List<String> clazzOrId) {
         return clazzOrId == null ? Collections.<String>emptyList() : ref(clazzOrId, 1);
     }
 

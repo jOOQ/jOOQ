@@ -2257,4 +2257,23 @@ public interface Table<R extends Record> extends TableLike<R> {
 
 
 
+
+    // ------------------------------------------------------------------------
+    // [#5518] Record method inversions, e.g. for use as method references
+    // ------------------------------------------------------------------------
+
+    /**
+     * The inverse operation of {@link Record#into(Table)}.
+     * <p>
+     * This method can be used in its method reference form conveniently on a
+     * generated table, for instance, when mapping records in a stream:
+     * <code><pre>
+     * DSL.using(configuration)
+     *    .fetch("select * from t")
+     *    .stream()
+     *    .map(MY_TABLE::into)
+     *    .forEach(System.out::println);
+     * </pre></code>
+     */
+    R from(Record record);
 }

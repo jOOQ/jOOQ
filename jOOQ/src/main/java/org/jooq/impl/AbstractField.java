@@ -93,6 +93,7 @@ import org.jooq.DataType;
 import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.QuantifiedSelect;
+import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Result;
 import org.jooq.Select;
@@ -140,6 +141,45 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     @Override
     public Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
+    }
+
+    // ------------------------------------------------------------------------
+    // [#5518] Record method inversions, e.g. for use as method references
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final Field<T> field(Record record) {
+        return record.field(this);
+    }
+
+    @Override
+    public final T get(Record record) {
+        return record.get(this);
+    }
+
+    @Override
+    public final T getValue(Record record) {
+        return record.getValue(this);
+    }
+
+    @Override
+    public final T original(Record record) {
+        return record.original(this);
+    }
+
+    @Override
+    public final boolean changed(Record record) {
+        return record.changed(this);
+    }
+
+    @Override
+    public final void reset(Record record) {
+        record.reset(this);
+    }
+
+    @Override
+    public final Record1<T> from(Record record) {
+        return record.into(this);
     }
 
     // ------------------------------------------------------------------------

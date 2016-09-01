@@ -143,6 +143,15 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     }
 
     // ------------------------------------------------------------------------
+    // [#5518] Record method inversions, e.g. for use as method references
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final R from(Record record) {
+        return record.into(this);
+    }
+
+    // ------------------------------------------------------------------------
     // XXX: TableLike API
     // ------------------------------------------------------------------------
 

@@ -71,13 +71,18 @@ final class ArrayTable extends AbstractTable<Record> {
     private final Field<?>       array;
     private final Fields<Record> field;
     private final String         alias;
+    private final String[]       fieldAliases;
 
     ArrayTable(Field<?> array) {
         this(array, "array_table");
     }
 
-    @SuppressWarnings({ "unchecked" })
     ArrayTable(Field<?> array, String alias) {
+        this(array, alias, new String[] { "COLUMN_VALUE" });
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    ArrayTable(Field<?> array, String alias, String[] fieldAliases) {
         super(alias);
 
         Class<?> arrayType;
@@ -109,19 +114,11 @@ final class ArrayTable extends AbstractTable<Record> {
 
         this.array = array;
         this.alias = alias;
-        this.field = init(alias, arrayType);
-
-        init(alias, arrayType);
+        this.fieldAliases = fieldAliases;
+        this.field = init(arrayType, alias, fieldAliases);
     }
 
-    @SuppressWarnings("unused")
-    ArrayTable(Field<?> array, String alias, String[] fieldAliases) {
-        super(alias);
-
-        throw new UnsupportedOperationException("This constructor is not yet implemented");
-    }
-
-    private static final Fields<Record> init(String alias, Class<?> arrayType) {
+    private static final Fields<Record> init(Class<?> arrayType, String alias, String[] fieldAliases) {
         List<Field<?>> result = new ArrayList<Field<?>>();
 
         // [#1114] VARRAY/TABLE of OBJECT have more than one field
@@ -182,25 +179,19 @@ final class ArrayTable extends AbstractTable<Record> {
 
 
 
-
-
-
-            case H2: {
+            case H2:
                 return new H2ArrayTable().as(alias);
-            }
 
             // [#756] These dialects need special care when aliasing unnested
             // arrays
             case HSQLDB:
-            case POSTGRES: {
-                return new PostgresHSQLDBTable().as(alias);
-            }
+            case POSTGRES:
+                return new PostgresHSQLDBTable().as(alias, fieldAliases);
 
             // Other dialects can simulate unnested arrays using UNION ALL
-            default: {
-                if (array.getDataType().getType().isArray() && array instanceof Param) {
+            default:
+                if (array.getDataType().getType().isArray() && array instanceof Param)
                     return emulate();
-                }
 
 
 
@@ -209,11 +200,8 @@ final class ArrayTable extends AbstractTable<Record> {
 
 
 
-
-                else {
+                else
                     return DSL.table("{0}", array).as(alias);
-                }
-            }
         }
     }
 
@@ -226,10 +214,7 @@ final class ArrayTable extends AbstractTable<Record> {
 
         @Override
         public final void accept(Context<?> ctx) {
-            ctx.sql('(').keyword("select").sql(" * ")
-               .keyword("from").sql(' ').keyword("unnest").sql('(').visit(array).sql(") ")
-               .keyword("as").sql(' ').literal(alias)
-               .sql('(').literal("COLUMN_VALUE").sql("))");
+            ctx.keyword("unnest").sql('(').visit(array).sql(")");
         }
     }
 
@@ -242,17 +227,17 @@ final class ArrayTable extends AbstractTable<Record> {
 
         @Override
         public final void accept(Context<?> ctx) {
-            ctx.keyword("table(").sql("COLUMN_VALUE ");
+            ctx.keyword("table")
+               .sql('(')
+               .visit(name(fieldAliases == null || fieldAliases.length == 0 ? "COLUMN_VALUE" : fieldAliases[0]))
+               .sql(' ');
 
             // If the array type is unknown (e.g. because it's returned from
-            // a stored function
-            // Then the best choice for arbitrary types is varchar
-            if (array.getDataType().getType() == Object[].class) {
+            // a stored function), then a reasonable choice for arbitrary types is varchar
+            if (array.getDataType().getType() == Object[].class)
                 ctx.keyword(H2DataType.VARCHAR.getTypeName());
-            }
-            else {
+            else
                 ctx.keyword(array.getDataType().getTypeName());
-            }
 
             ctx.sql(" = ").visit(array).sql(')');
         }

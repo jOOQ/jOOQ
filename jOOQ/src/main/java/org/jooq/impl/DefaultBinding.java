@@ -63,6 +63,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.using;
@@ -670,7 +671,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 }
 
                 else if (family == POSTGRES) {
-                    render.visit(inline(PostgresUtils.toPGArrayString((Object[]) val)));
+                    render.visit(cast(inline(PostgresUtils.toPGArrayString((Object[]) val)), type));
                 }
 
                 // By default, render HSQLDB / POSTGRES syntax

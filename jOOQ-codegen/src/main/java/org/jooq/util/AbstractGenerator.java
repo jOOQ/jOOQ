@@ -66,6 +66,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            useSchemaVersionProvider         = false;
     boolean                            useCatalogVersionProvider        = false;
     boolean                            generateRoutines                 = true;
+    boolean                            generateTables                   = true;
     boolean                            generateRecords                  = true;
     boolean                            generatePojos                    = false;
     boolean                            generatePojosEqualsAndHashCode   = false;
@@ -178,7 +179,7 @@ abstract class AbstractGenerator implements Generator {
     public boolean generateRelations() {
 
         // [#2294] When DAOs are generated, relations must be generated, too
-        return generateRelations || generateDaos;
+        return generateRelations || generateTables || generateDaos;
     }
 
     @Override
@@ -247,6 +248,18 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateRoutines(boolean generateRoutines) {
         this.generateRoutines = generateRoutines;
+    }
+
+    @Override
+    public boolean generateTables() {
+
+        // [#5525] When DAOs or records are generated, tables must be generated, too
+        return generateTables || generateRecords || generateDaos;
+    }
+
+    @Override
+    public void setGenerateTables(boolean generateTables) {
+        this.generateTables = generateTables;
     }
 
     @Override

@@ -218,6 +218,9 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("  validation annotations", generateValidationAnnotations());
         log.info("  instance fields", generateInstanceFields());
         log.info("  routines", generateRoutines());
+        log.info("  tables", generateTables()
+            + ((!generateTables && generateRecords) ? " (forced to true because of <records/>)" :
+              ((!generateTables && generateDaos) ? " (forced to true because of <daos/>)" : "")));
         log.info("  records", generateRecords()
             + ((!generateRecords && generateDaos) ? " (forced to true because of <daos/>)" : ""));
         log.info("  pojos", generatePojos()
@@ -229,7 +232,8 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("  immutable interfaces", generateInterfaces());
         log.info("  daos", generateDaos());
         log.info("  relations", generateRelations()
-            + ((!generateRelations && generateDaos) ? " (forced to true because of <daos/>)" : ""));
+            + ((!generateRelations && generateTables) ? " (forced to true because of <tables/>)" :
+              ((!generateRelations && generateDaos) ? " (forced to true because of <daos/>)" : "")));
         log.info("  table-valued functions", generateTableValuedFunctions());
         log.info("  global references", generateGlobalObjectReferences());
         log.info("----------------------------------------------------------");
@@ -363,7 +367,7 @@ public class JavaGenerator extends AbstractGenerator {
             generateSequences(schema);
         }
 
-        if (database.getTables(schema).size() > 0) {
+        if (generateTables() && database.getTables(schema).size() > 0) {
             generateTables(schema);
         }
 
@@ -375,7 +379,7 @@ public class JavaGenerator extends AbstractGenerator {
             generateDaos(schema);
         }
 
-        if (generateGlobalObjectReferences() && generateGlobalTableReferences() && database.getTables(schema).size() > 0) {
+        if (generateTables() && generateGlobalObjectReferences() && generateGlobalTableReferences() && database.getTables(schema).size() > 0) {
             generateTableReferences(schema);
         }
 
@@ -3670,7 +3674,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).javadoc("The reference instance of <code>%s</code>", schemaName);
             out.tab(1).println("public static final %s %s = new %s();", className, schemaId, className);
 
-            if (generateGlobalObjectReferences() && generateGlobalTableReferences()) {
+            if (generateTables() && generateGlobalObjectReferences() && generateGlobalTableReferences()) {
                 for (TableDefinition table : schema.getTables()) {
                     final String tableClassName = out.ref(getStrategy().getFullJavaClassName(table));
                     final String tableId = getStrategy().getJavaIdentifier(table);
@@ -3688,9 +3692,8 @@ public class JavaGenerator extends AbstractGenerator {
 
                     // [#3797] Table-valued functions generate two different literals in
                     // globalObjectReferences
-                    if (table.isTableValuedFunction()) {
+                    if (table.isTableValuedFunction())
                         printTableValuedFunction(out, table, getStrategy().getJavaIdentifier(table));
-                    }
                 }
             }
 
@@ -3712,11 +3715,12 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         // [#2255] Avoid referencing sequence literals, if they're not generated
-        if (generateGlobalObjectReferences() && generateGlobalSequenceReferences()) {
+        if (generateGlobalObjectReferences() && generateGlobalSequenceReferences())
             printReferences(out, database.getSequences(schema), Sequence.class, true);
-        }
 
-        printReferences(out, database.getTables(schema), Table.class, true);
+        if (generateTables() && generateGlobalObjectReferences() && generateGlobalTableReferences())
+            printReferences(out, database.getTables(schema), Table.class, true);
+
         printReferences(out, database.getUDTs(schema), UDT.class, true);
 
         generateSchemaClassFooter(schema, out);

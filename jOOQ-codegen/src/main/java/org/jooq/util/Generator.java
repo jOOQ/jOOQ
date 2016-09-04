@@ -131,6 +131,16 @@ public interface Generator {
     void setGenerateRoutines(boolean generateRoutines);
 
     /**
+     * Whether Tables should be generated
+     */
+    boolean generateTables();
+
+    /**
+     * Whether Tables should be generated
+     */
+    void setGenerateTables(boolean generateTables);
+
+    /**
      * Whether TableRecords should be generated in addition to tables
      */
     boolean generateRecords();

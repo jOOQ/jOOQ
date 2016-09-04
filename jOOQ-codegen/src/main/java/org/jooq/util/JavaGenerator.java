@@ -217,6 +217,7 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("  JPA annotations", generateJPAAnnotations());
         log.info("  validation annotations", generateValidationAnnotations());
         log.info("  instance fields", generateInstanceFields());
+        log.info("  routines", generateRoutines());
         log.info("  records", generateRecords()
             + ((!generateRecords && generateDaos) ? " (forced to true because of <daos/>)" : ""));
         log.info("  pojos", generatePojos()
@@ -406,7 +407,7 @@ public class JavaGenerator extends AbstractGenerator {
             generateUDTInterfaces(schema);
         }
 
-        if (database.getUDTs(schema).size() > 0) {
+        if (generateRoutines() && database.getUDTs(schema).size() > 0) {
             generateUDTRoutines(schema);
         }
 
@@ -426,7 +427,7 @@ public class JavaGenerator extends AbstractGenerator {
             generateDomains(schema);
         }
 
-        if (generateGlobalObjectReferences() && generateGlobalRoutineReferences() && database.getRoutines(schema).size() > 0 || hasTableValuedFunctions(schema)) {
+        if (generateRoutines() && (database.getRoutines(schema).size() > 0 || hasTableValuedFunctions(schema))) {
             generateRoutines(schema);
         }
 
@@ -2095,34 +2096,38 @@ public class JavaGenerator extends AbstractGenerator {
     protected void generateRoutines(SchemaDefinition schema) {
         log.info("Generating routines and table-valued functions");
 
-        JavaWriter out = newJavaWriter(new File(getStrategy().getFile(schema).getParentFile(), "Routines.java"));
-        printPackage(out, schema);
-        printClassJavadoc(out, "Convenience access to all stored procedures and functions in " + schema.getOutputName());
-        printClassAnnotations(out, schema);
+        if (generateGlobalObjectReferences() && generateGlobalRoutineReferences()) {
+            JavaWriter out = newJavaWriter(new File(getStrategy().getFile(schema).getParentFile(), "Routines.java"));
+            printPackage(out, schema);
+            printClassJavadoc(out, "Convenience access to all stored procedures and functions in " + schema.getOutputName());
+            printClassAnnotations(out, schema);
 
-        if (scala)
-        	 out.println("object Routines {");
-        else
-            out.println("public class Routines {");
+            if (scala)
+                out.println("object Routines {");
+            else
+                out.println("public class Routines {");
+
+            for (RoutineDefinition routine : database.getRoutines(schema))
+                printRoutine(out, routine);
+
+            for (TableDefinition table : database.getTables(schema)) {
+                if (table.isTableValuedFunction()) {
+                    printTableValuedFunction(out, table, getStrategy().getJavaMethodName(table, Mode.DEFAULT));
+                }
+            }
+
+            out.println("}");
+            closeJavaWriter(out);
+        }
 
         for (RoutineDefinition routine : database.getRoutines(schema)) {
-            printRoutine(out, routine);
-
             try {
                 generateRoutine(schema, routine);
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 log.error("Error while generating routine " + routine, e);
             }
         }
-
-        for (TableDefinition table : database.getTables(schema)) {
-            if (table.isTableValuedFunction()) {
-                printTableValuedFunction(out, table, getStrategy().getJavaMethodName(table, Mode.DEFAULT));
-            }
-        }
-
-        out.println("}");
-        closeJavaWriter(out);
 
         watch.splitInfo("Routines generated");
     }

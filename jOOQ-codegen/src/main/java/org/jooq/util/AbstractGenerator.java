@@ -65,6 +65,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateGeneratedAnnotation      = true;
     boolean                            useSchemaVersionProvider         = false;
     boolean                            useCatalogVersionProvider        = false;
+    boolean                            generateRoutines                 = true;
     boolean                            generateRecords                  = true;
     boolean                            generatePojos                    = false;
     boolean                            generatePojosEqualsAndHashCode   = false;
@@ -236,6 +237,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setUseCatalogVersionProvider(boolean useCatalogVersionProvider) {
         this.useCatalogVersionProvider = useCatalogVersionProvider;
+    }
+
+    @Override
+    public boolean generateRoutines() {
+        return generateRoutines;
+    }
+
+    @Override
+    public void setGenerateRoutines(boolean generateRoutines) {
+        this.generateRoutines = generateRoutines;
     }
 
     @Override

@@ -726,6 +726,11 @@
       <element name="generatedAnnotation" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
 
       <!--
+        Generate Routine classes.
+        -->
+      <element name="routines" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+
+      <!--
         Generate TableRecord classes. Disable this when you don't
         need the additional type-safety
         -->

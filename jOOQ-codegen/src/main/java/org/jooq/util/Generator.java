@@ -121,6 +121,16 @@ public interface Generator {
     void setUseCatalogVersionProvider(boolean useCatalogVersionProvider);
 
     /**
+     * Whether Routines should be generated.
+     */
+    boolean generateRoutines();
+
+    /**
+     * Whether Routines should be generated.
+     */
+    void setGenerateRoutines(boolean generateRoutines);
+
+    /**
      * Whether TableRecords should be generated in addition to tables
      */
     boolean generateRecords();

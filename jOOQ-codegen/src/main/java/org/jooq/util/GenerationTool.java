@@ -461,6 +461,8 @@ public class GenerationTool {
                 generator.setGenerateInstanceFields(g.getGenerate().isInstanceFields());
             if (g.getGenerate().isGeneratedAnnotation() != null)
                 generator.setGenerateGeneratedAnnotation(g.getGenerate().isGeneratedAnnotation());
+            if (g.getGenerate().isRoutines() != null)
+                generator.setGenerateRoutines(g.getGenerate().isRoutines());
             if (g.getGenerate().isRecords() != null)
                 generator.setGenerateRecords(g.getGenerate().isRecords());
             if (g.getGenerate().isPojos() != null)

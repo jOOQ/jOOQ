@@ -463,6 +463,8 @@ public class GenerationTool {
                 generator.setGenerateGeneratedAnnotation(g.getGenerate().isGeneratedAnnotation());
             if (g.getGenerate().isRoutines() != null)
                 generator.setGenerateRoutines(g.getGenerate().isRoutines());
+            if (g.getGenerate().isSequences() != null)
+                generator.setGenerateSequences(g.getGenerate().isSequences());
             if (g.getGenerate().isTables() != null)
                 generator.setGenerateTables(g.getGenerate().isTables());
             if (g.getGenerate().isRecords() != null)

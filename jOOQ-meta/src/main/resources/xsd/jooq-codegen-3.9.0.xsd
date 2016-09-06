@@ -731,6 +731,11 @@
       <element name="routines" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
 
       <!--
+        Generate Sequence classes.
+        -->
+      <element name="sequences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+
+      <!--
         Generate Table classes.
         -->
       <element name="tables" type="boolean" default="true" minOccurs="0" maxOccurs="1" />

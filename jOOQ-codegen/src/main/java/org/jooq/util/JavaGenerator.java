@@ -217,6 +217,7 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("  JPA annotations", generateJPAAnnotations());
         log.info("  validation annotations", generateValidationAnnotations());
         log.info("  instance fields", generateInstanceFields());
+        log.info("  sequences", generateSequences());
         log.info("  routines", generateRoutines());
         log.info("  tables", generateTables()
             + ((!generateTables && generateRecords) ? " (forced to true because of <records/>)" :
@@ -363,7 +364,7 @@ public class JavaGenerator extends AbstractGenerator {
         // ----------------------------------------------------------------------
         generateSchema(schema);
 
-        if (generateGlobalObjectReferences() && generateGlobalSequenceReferences() && database.getSequences(schema).size() > 0) {
+        if (generateSequences() && generateGlobalObjectReferences() && generateGlobalSequenceReferences() && database.getSequences(schema).size() > 0) {
             generateSequences(schema);
         }
 

@@ -66,6 +66,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            useSchemaVersionProvider         = false;
     boolean                            useCatalogVersionProvider        = false;
     boolean                            generateRoutines                 = true;
+    boolean                            generateSequences                = true;
     boolean                            generateTables                   = true;
     boolean                            generateRecords                  = true;
     boolean                            generatePojos                    = false;
@@ -248,6 +249,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateRoutines(boolean generateRoutines) {
         this.generateRoutines = generateRoutines;
+    }
+
+    @Override
+    public boolean generateSequences() {
+        return generateSequences;
+    }
+
+    @Override
+    public void setGenerateSequences(boolean generateSequences) {
+        this.generateSequences = generateSequences;
     }
 
     @Override

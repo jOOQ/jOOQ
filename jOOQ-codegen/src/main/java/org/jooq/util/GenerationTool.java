@@ -135,11 +135,15 @@ public class GenerationTool {
     }
 
     public static void main(String[] args) throws Exception {
-        if (args.length < 1)
-            error();
+        if (args.length < 1) {
+            log.error("Usage : GenerationTool <configuration-file>");
+            System.exit(-1);
+            return;
+        }
 
-        argsLoop: for (String arg : args) {
+        for (String arg : args) {
             InputStream in = GenerationTool.class.getResourceAsStream(arg);
+
             try {
 
                 // [#2932] Retry loading the file, if it wasn't found. This may be helpful
@@ -158,23 +162,22 @@ public class GenerationTool {
                     log.error("  - on the classpath and qualified as a classpath location.");
                     log.error("  - in the local directory or at a global path in the file system.");
 
-                    continue argsLoop;
+                    System.exit(-1);
+                    return;
                 }
 
                 log.info("Initialising properties", arg);
-
                 generate(load(in));
             }
             catch (Exception e) {
-                log.error("Cannot read " + arg + ". Error : " + e.getMessage());
-                e.printStackTrace();
+                log.error("Cannot read " + arg + ". Error : " + e.getMessage(), e);
 
-                continue argsLoop;
+                System.exit(-1);
+                return;
             }
             finally {
-                if (in != null) {
+                if (in != null)
                     in.close();
-                }
             }
         }
     }
@@ -222,7 +225,8 @@ public class GenerationTool {
 
         Jdbc j = configuration.getJdbc();
         org.jooq.util.jaxb.Generator g = configuration.getGenerator();
-        errorIfNull(g, "The <generator/> tag is mandatory.");
+        if (g == null)
+            throw new GeneratorException("The <generator/> tag is mandatory. For details, see " + Constants.NS_CODEGEN);
 
         // Some default values for optional elements to avoid NPE's
         if (g.getStrategy() == null)
@@ -305,12 +309,10 @@ public class GenerationTool {
                 schemata.add(schema);
             }
             else {
-                if (!StringUtils.isBlank(d.getInputSchema())) {
+                if (!StringUtils.isBlank(d.getInputSchema()))
                     log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/inputSchema and /configuration/generator/database/schemata");
-                }
-                if (!StringUtils.isBlank(d.getOutputSchema())) {
+                if (!StringUtils.isBlank(d.getOutputSchema()))
                     log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/outputSchema and /configuration/generator/database/schemata");
-                }
             }
 
             for (Schema schema : schemata) {
@@ -325,18 +327,14 @@ public class GenerationTool {
                 // [#3018] Prior to <outputSchemaToDefault/>, empty <outputSchema/> elements meant that
                 // the outputSchema should be the default schema. This is a bit too clever, and doesn't
                 // work when Maven parses the XML configurations.
-                if ("".equals(schema.getOutputSchema())) {
+                if ("".equals(schema.getOutputSchema()))
                     log.warn("WARNING: Empty <outputSchema/> should no longer be used to model default outputSchemas. Use <outputSchemaToDefault>true</outputSchemaToDefault>, instead. See also: https://github.com/jOOQ/jOOQ/issues/3018");
-                }
 
                 // [#3018] If users want the output schema to be "" then, ignore the actual <outputSchema/> configuration
-                if (TRUE.equals(schema.isOutputSchemaToDefault())) {
+                if (TRUE.equals(schema.isOutputSchemaToDefault()))
                     schema.setOutputSchema("");
-                }
-
-                else if (schema.getOutputSchema() == null) {
+                else if (schema.getOutputSchema() == null)
                     schema.setOutputSchema(trim(schema.getInputSchema()));
-                }
 
 
 
@@ -350,11 +348,9 @@ public class GenerationTool {
 
             }
 
-            if (schemata.size() == 1) {
-                if (StringUtils.isBlank(schemata.get(0).getInputSchema())) {
+            if (schemata.size() == 1)
+                if (StringUtils.isBlank(schemata.get(0).getInputSchema()))
                     log.info("No <inputSchema/> was provided. Generating ALL available schemata instead!");
-                }
-            }
 
             database.setConnection(connection);
             database.setConfiguredSchemata(schemata);
@@ -550,24 +546,20 @@ public class GenerationTool {
 
 
             generator.generate(database);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        } finally {
+        }
+        finally {
 
             // Close connection only if it was created by the GenerationTool
-            if (close && connection != null) {
+            if (close && connection != null)
                 connection.close();
-            }
         }
     }
 
     private Properties properties(List<Property> properties) {
         Properties result = new Properties();
 
-        for (Property p : properties) {
+        for (Property p : properties)
             result.put(p.getKey(), p.getValue());
-        }
 
         return result;
     }
@@ -592,13 +584,13 @@ public class GenerationTool {
             return databaseClass(c.getMetaData().getURL());
         }
         catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new GeneratorException("Error when reading URL from JDBC connection", e);
         }
     }
 
     private Class<? extends Database> databaseClass(String url) {
         if (isBlank(url))
-            throw new RuntimeException("No JDBC URL configured.");
+            throw new GeneratorException("No JDBC URL configured.");
 
         Class<? extends Database> result = Databases.databaseClass(JDBCUtils.dialect(url));
         log.info("Database", "Inferring database " + result.getName() + " from URL " + url);
@@ -640,18 +632,6 @@ public class GenerationTool {
 
     private static String trim(String string) {
         return (string == null ? null : string.trim());
-    }
-
-    private static void errorIfNull(Object o, String message) {
-        if (o == null) {
-            log.error(message + " For details, see " + Constants.NS_CODEGEN);
-            System.exit(-1);
-        }
-    }
-
-    private static void error() {
-        log.error("Usage : GenerationTool <configuration-file>");
-        System.exit(-1);
     }
 
     /**
@@ -716,7 +696,7 @@ public class GenerationTool {
             return (Configuration) unmarshaller.unmarshal(new StringReader(xml));
         }
         catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new GeneratorException("Error while reading XML configuration", e);
         }
     }
 }

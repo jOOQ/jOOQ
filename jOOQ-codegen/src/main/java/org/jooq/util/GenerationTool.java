@@ -465,6 +465,8 @@ public class GenerationTool {
                 generator.setGenerateRoutines(g.getGenerate().isRoutines());
             if (g.getGenerate().isSequences() != null)
                 generator.setGenerateSequences(g.getGenerate().isSequences());
+            if (g.getGenerate().isUdts() != null)
+                generator.setGenerateUDTs(g.getGenerate().isUdts());
             if (g.getGenerate().isTables() != null)
                 generator.setGenerateTables(g.getGenerate().isTables());
             if (g.getGenerate().isRecords() != null)

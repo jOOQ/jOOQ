@@ -736,6 +736,21 @@
       <element name="sequences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
 
       <!--
+        Generate UDT classes.
+        -->
+      <element name="udts" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+
+      <!--
+        Allow to turn off the generation of queue related code
+        -->
+      <element name="queues" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+
+      <!--
+        Allow to turn off the generation of link related code
+        -->
+      <element name="links" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+
+      <!--
         Generate Table classes.
         -->
       <element name="tables" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
@@ -865,16 +880,6 @@
         Allow to turn off the generation of global link references in Links.java
         -->
       <element name="globalLinkReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
-
-      <!--
-        Allow to turn off the generation of queue related code
-        -->
-      <element name="queues" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
-
-      <!--
-        Allow to turn off the generation of link related code
-        -->
-      <element name="links" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
 
       <!--
         Generate fluent setters in

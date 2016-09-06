@@ -141,6 +141,16 @@ public interface Generator {
     void setGenerateSequences(boolean generateSequences);
 
     /**
+     * Whether UDTs should be generated.
+     */
+    boolean generateUDTs();
+
+    /**
+     * Whether UDTs should be generated.
+     */
+    void setGenerateUDTs(boolean generateUDTs);
+
+    /**
      * Whether Tables should be generated
      */
     boolean generateTables();

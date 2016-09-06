@@ -67,6 +67,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            useCatalogVersionProvider        = false;
     boolean                            generateRoutines                 = true;
     boolean                            generateSequences                = true;
+    boolean                            generateUDTs                     = true;
     boolean                            generateTables                   = true;
     boolean                            generateRecords                  = true;
     boolean                            generatePojos                    = false;
@@ -262,6 +263,16 @@ abstract class AbstractGenerator implements Generator {
     }
 
     @Override
+    public boolean generateUDTs() {
+        return generateUDTs;
+    }
+
+    @Override
+    public void setGenerateUDTs(boolean generateUDTs) {
+        this.generateUDTs = generateUDTs;
+    }
+
+    @Override
     public boolean generateTables() {
 
         // [#5525] When DAOs or records are generated, tables must be generated, too
@@ -380,7 +391,7 @@ abstract class AbstractGenerator implements Generator {
 
     @Override
     public boolean generateGlobalCatalogReferences() {
-        return generateGlobalCatalogReferences;
+        return generateGlobalObjectReferences() && generateGlobalCatalogReferences;
     }
 
     @Override
@@ -390,7 +401,7 @@ abstract class AbstractGenerator implements Generator {
 
     @Override
     public boolean generateGlobalSchemaReferences() {
-        return generateGlobalSchemaReferences;
+        return generateGlobalObjectReferences() && generateGlobalSchemaReferences;
     }
 
     @Override
@@ -400,7 +411,7 @@ abstract class AbstractGenerator implements Generator {
 
     @Override
     public boolean generateGlobalRoutineReferences() {
-        return generateGlobalRoutineReferences;
+        return generateRoutines() && generateGlobalObjectReferences() && generateGlobalRoutineReferences;
     }
 
     @Override
@@ -410,7 +421,7 @@ abstract class AbstractGenerator implements Generator {
 
     @Override
     public boolean generateGlobalSequenceReferences() {
-        return generateGlobalSequenceReferences;
+        return generateSequences() && generateGlobalObjectReferences() && generateGlobalSequenceReferences;
     }
 
     @Override
@@ -420,7 +431,7 @@ abstract class AbstractGenerator implements Generator {
 
     @Override
     public boolean generateGlobalTableReferences() {
-        return generateGlobalTableReferences;
+        return generateTables() && generateGlobalObjectReferences() && generateGlobalTableReferences;
     }
 
     @Override
@@ -430,7 +441,7 @@ abstract class AbstractGenerator implements Generator {
 
     @Override
     public boolean generateGlobalUDTReferences() {
-        return generateGlobalUDTReferences;
+        return generateUDTs() && generateGlobalObjectReferences() && generateGlobalUDTReferences;
     }
 
     @Override
@@ -440,7 +451,7 @@ abstract class AbstractGenerator implements Generator {
 
     @Override
     public boolean generateGlobalQueueReferences() {
-        return generateQueues && generateGlobalQueueReferences;
+        return generateQueues() && generateGlobalObjectReferences() && generateGlobalQueueReferences;
     }
 
     @Override
@@ -450,7 +461,7 @@ abstract class AbstractGenerator implements Generator {
 
     @Override
     public boolean generateGlobalLinkReferences() {
-        return generateLinks && generateGlobalLinkReferences;
+        return generateLinks() && generateGlobalObjectReferences() && generateGlobalLinkReferences;
     }
 
     @Override

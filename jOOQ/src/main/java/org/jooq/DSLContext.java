@@ -4405,6 +4405,9 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
      * </pre></code>
+     * <p>
+     * Note that passing an empty collection conveniently produces
+     * <code>SELECT *</code> semantics.
      *
      * @see DSL#select(Collection)
      */
@@ -4430,6 +4433,9 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *       .orderBy(field2)
      *       .execute();
      * </pre></code>
+     * <p>
+     * Note that passing an empty array (e.g. by not passing any vararg
+     * argument) conveniently produces <code>SELECT *</code> semantics.
      *
      * @see DSL#select(Field...)
      */
@@ -5118,6 +5124,9 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
      * </pre></code>
+     * <p>
+     * Note that passing an empty collection conveniently produces
+     * <code>SELECT DISTINCT *</code> semantics.
      *
      * @see DSL#selectDistinct(Collection)
      */
@@ -5142,6 +5151,9 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
      * </pre></code>
+     * <p>
+     * Note that passing an empty array (e.g. by not passing any vararg
+     * argument) conveniently produces <code>SELECT DISTINCT *</code> semantics.
      *
      * @see DSL#selectDistinct(Field...)
      */

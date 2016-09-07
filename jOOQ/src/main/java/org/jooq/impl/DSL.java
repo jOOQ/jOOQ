@@ -1800,6 +1800,9 @@ public class DSL {
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
      * </pre></code>
+     * <p>
+     * Note that passing an empty collection conveniently produces
+     * <code>SELECT *</code> semantics.
      *
      * @see DSLContext#select(Collection)
      */
@@ -1831,6 +1834,9 @@ public class DSL {
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
      * </pre></code>
+     * <p>
+     * Note that passing an empty array (e.g. by not passing any vararg
+     * argument) conveniently produces <code>SELECT *</code> semantics.
      *
      * @see DSLContext#select(SelectField...)
      */
@@ -2702,6 +2708,9 @@ public class DSL {
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
      * </pre></code>
+     * <p>
+     * Note that passing an empty collection conveniently produces
+     * <code>SELECT DISTINCT *</code> semantics.
      *
      * @see DSLContext#selectDistinct(Collection)
      */
@@ -2733,6 +2742,9 @@ public class DSL {
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
      * </pre></code>
+     * <p>
+     * Note that passing an empty array (e.g. by not passing any vararg
+     * argument) conveniently produces <code>SELECT DISTINCT *</code> semantics.
      *
      * @see DSLContext#selectDistinct(SelectField...)
      */

@@ -10964,6 +10964,10 @@ try (ResultQuery<Record> query = create.selectOne().keepStatement(true)) {
     ResultQuery<R> resultSetType(int resultSetType);
     ResultQuery<R> resultSetHoldability(int resultSetHoldability);
 
+    // The buffer size for JDBC cursors
+    // -----------------------------------------------------------
+    ResultQuery<R> fetchSize(int size);
+
     // The maximum number of rows to be fetched by JDBC
     // -----------------------------------------------------------
     ResultQuery<R> maxRows(int rows);

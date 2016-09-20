@@ -191,6 +191,19 @@ final class CursorImpl<R extends Record> implements Cursor<R> {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final RecordType<R> recordType() {

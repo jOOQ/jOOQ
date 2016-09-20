@@ -64,6 +64,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.impl.DSL.nullSafe;
 import static org.jooq.impl.DSL.val;
 
 import org.jooq.BetweenAndStep;
@@ -100,14 +101,14 @@ final class BetweenCondition<T> extends AbstractCondition implements BetweenAndS
 
     @Override
     public final Condition and(T value) {
-        return and(val(value));
+        return and(val(value, field.getDataType()));
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public final Condition and(Field f) {
         if (maxValue == null) {
-            this.maxValue = f;
+            this.maxValue = nullSafe(f, field.getDataType());
             return this;
         }
         else {

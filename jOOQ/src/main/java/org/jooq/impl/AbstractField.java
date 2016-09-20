@@ -399,7 +399,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
      */
     @Override
     public Field<T> add(Field<?> value) {
-        return new Expression<T>(ADD, this, nullSafe(value));
+        return new Expression<T>(ADD, this, nullSafe(value, getDataType()));
     }
 
     @Override
@@ -409,7 +409,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Field<T> sub(Field<?> value) {
-        return new Expression<T>(SUBTRACT, this, nullSafe(value));
+        return new Expression<T>(SUBTRACT, this, nullSafe(value, getDataType()));
     }
 
     @Override
@@ -423,7 +423,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
      */
     @Override
     public Field<T> mul(Field<? extends Number> value) {
-        return new Expression<T>(MULTIPLY, this, nullSafe(value));
+        return new Expression<T>(MULTIPLY, this, nullSafe(value, getDataType()));
     }
 
     @Override
@@ -433,7 +433,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Field<T> div(Field<? extends Number> value) {
-        return new Expression<T>(DIVIDE, this, nullSafe(value));
+        return new Expression<T>(DIVIDE, this, nullSafe(value, getDataType()));
     }
 
     @Override
@@ -443,7 +443,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Field<T> mod(Field<? extends Number> value) {
-        return new Mod<T>(this, nullSafe(value));
+        return new Mod<T>(this, nullSafe(value, getDataType()));
     }
 
     // ------------------------------------------------------------------------
@@ -728,12 +728,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition like(Field<String> field) {
-        return new CompareCondition(this, nullSafe(field), LIKE);
+        return new CompareCondition(this, nullSafe(field, getDataType()), LIKE);
     }
 
     @Override
     public final Condition like(Field<String> field, char escape) {
-        return new CompareCondition(this, nullSafe(field), LIKE, escape);
+        return new CompareCondition(this, nullSafe(field, getDataType()), LIKE, escape);
     }
 
     @Override
@@ -748,12 +748,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition likeIgnoreCase(Field<String> field) {
-        return new CompareCondition(this, nullSafe(field), LIKE_IGNORE_CASE);
+        return new CompareCondition(this, nullSafe(field, getDataType()), LIKE_IGNORE_CASE);
     }
 
     @Override
     public final Condition likeIgnoreCase(Field<String> field, char escape) {
-        return new CompareCondition(this, nullSafe(field), LIKE_IGNORE_CASE, escape);
+        return new CompareCondition(this, nullSafe(field, getDataType()), LIKE_IGNORE_CASE, escape);
     }
 
     @Override
@@ -763,7 +763,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition likeRegex(Field<String> pattern) {
-        return new RegexpLike(this, nullSafe(pattern));
+        return new RegexpLike(this, nullSafe(pattern, getDataType()));
     }
 
     @Override
@@ -778,12 +778,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition notLike(Field<String> field) {
-        return new CompareCondition(this, nullSafe(field), NOT_LIKE);
+        return new CompareCondition(this, nullSafe(field, getDataType()), NOT_LIKE);
     }
 
     @Override
     public final Condition notLike(Field<String> field, char escape) {
-        return new CompareCondition(this, nullSafe(field), NOT_LIKE, escape);
+        return new CompareCondition(this, nullSafe(field, getDataType()), NOT_LIKE, escape);
     }
 
     @Override
@@ -798,12 +798,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition notLikeIgnoreCase(Field<String> field) {
-        return new CompareCondition(this, nullSafe(field), NOT_LIKE_IGNORE_CASE);
+        return new CompareCondition(this, nullSafe(field, getDataType()), NOT_LIKE_IGNORE_CASE);
     }
 
     @Override
     public final Condition notLikeIgnoreCase(Field<String> field, char escape) {
-        return new CompareCondition(this, nullSafe(field), NOT_LIKE_IGNORE_CASE, escape);
+        return new CompareCondition(this, nullSafe(field, getDataType()), NOT_LIKE_IGNORE_CASE, escape);
     }
 
     @Override
@@ -945,7 +945,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition between(Field<T> minValue, Field<T> maxValue) {
-        return between(nullSafe(minValue)).and(nullSafe(maxValue));
+        return between(nullSafe(minValue, getDataType())).and(nullSafe(maxValue, getDataType()));
     }
 
     @Override
@@ -955,7 +955,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition betweenSymmetric(Field<T> minValue, Field<T> maxValue) {
-        return betweenSymmetric(nullSafe(minValue)).and(nullSafe(maxValue));
+        return betweenSymmetric(nullSafe(minValue, getDataType())).and(nullSafe(maxValue, getDataType()));
     }
 
     @Override
@@ -965,7 +965,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition notBetween(Field<T> minValue, Field<T> maxValue) {
-        return notBetween(nullSafe(minValue)).and(nullSafe(maxValue));
+        return notBetween(nullSafe(minValue, getDataType())).and(nullSafe(maxValue, getDataType()));
     }
 
     @Override
@@ -975,7 +975,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition notBetweenSymmetric(Field<T> minValue, Field<T> maxValue) {
-        return notBetweenSymmetric(nullSafe(minValue)).and(nullSafe(maxValue));
+        return notBetweenSymmetric(nullSafe(minValue, getDataType())).and(nullSafe(maxValue, getDataType()));
     }
 
     @Override
@@ -985,7 +985,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final BetweenAndStep<T> between(Field<T> minValue) {
-        return new BetweenCondition<T>(this, nullSafe(minValue), false, false);
+        return new BetweenCondition<T>(this, nullSafe(minValue, getDataType()), false, false);
     }
 
     @Override
@@ -995,7 +995,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final BetweenAndStep<T> betweenSymmetric(Field<T> minValue) {
-        return new BetweenCondition<T>(this, nullSafe(minValue), false, true);
+        return new BetweenCondition<T>(this, nullSafe(minValue, getDataType()), false, true);
     }
 
     @Override
@@ -1005,7 +1005,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final BetweenAndStep<T> notBetween(Field<T> minValue) {
-        return new BetweenCondition<T>(this, nullSafe(minValue), true, false);
+        return new BetweenCondition<T>(this, nullSafe(minValue, getDataType()), true, false);
     }
 
     @Override
@@ -1015,7 +1015,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final BetweenAndStep<T> notBetweenSymmetric(Field<T> minValue) {
-        return new BetweenCondition<T>(this, nullSafe(minValue), true, true);
+        return new BetweenCondition<T>(this, nullSafe(minValue, getDataType()), true, true);
     }
 
     @Override
@@ -1145,7 +1145,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition equal(Field<T> field) {
-        return compare(EQUALS, nullSafe(field));
+        return compare(EQUALS, nullSafe(field, getDataType()));
     }
 
     @Override
@@ -1175,7 +1175,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition notEqual(Field<T> field) {
-        return compare(NOT_EQUALS, nullSafe(field));
+        return compare(NOT_EQUALS, nullSafe(field, getDataType()));
     }
 
     @Override
@@ -1205,7 +1205,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition lessThan(Field<T> field) {
-        return compare(LESS, nullSafe(field));
+        return compare(LESS, nullSafe(field, getDataType()));
     }
 
     @Override
@@ -1225,7 +1225,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition lessOrEqual(Field<T> field) {
-        return compare(LESS_OR_EQUAL, nullSafe(field));
+        return compare(LESS_OR_EQUAL, nullSafe(field, getDataType()));
     }
 
     @Override
@@ -1245,7 +1245,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition greaterThan(Field<T> field) {
-        return compare(GREATER, nullSafe(field));
+        return compare(GREATER, nullSafe(field, getDataType()));
     }
 
     @Override
@@ -1265,7 +1265,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition greaterOrEqual(Field<T> field) {
-        return compare(GREATER_OR_EQUAL, nullSafe(field));
+        return compare(GREATER_OR_EQUAL, nullSafe(field, getDataType()));
     }
 
     @Override
@@ -1288,10 +1288,10 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         switch (comparator) {
             case IS_DISTINCT_FROM:
             case IS_NOT_DISTINCT_FROM:
-                return new IsDistinctFrom<T>(this, nullSafe(field), comparator);
+                return new IsDistinctFrom<T>(this, nullSafe(field, getDataType()), comparator);
 
             default:
-                return new CompareCondition(this, nullSafe(field), comparator);
+                return new CompareCondition(this, nullSafe(field, getDataType()), comparator);
         }
     }
 

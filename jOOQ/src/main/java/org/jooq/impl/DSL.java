@@ -18034,6 +18034,13 @@ public class DSL {
     /**
      * Null-safety of a field.
      */
+    protected static <T> Field<T> nullSafe(Field<T> field, DataType<?> type) {
+        return field == null ? (Field<T>) val((T) null, type) : field;
+    }
+
+    /**
+     * Null-safety of a field.
+     */
     protected static Field<?>[] nullSafe(Field<?>... fields) {
         if (fields == null)
             return EMPTY_FIELD;

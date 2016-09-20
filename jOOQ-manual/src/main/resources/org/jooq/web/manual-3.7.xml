@@ -9192,6 +9192,9 @@ public class PostgresJSONGsonBinding implements Binding<Object, JsonElement> {
     // Rending a bind variable for the binding context's value and casting it to the json type
     @Override
     public void sql(BindingSQLContext<JsonElement> ctx) throws SQLException {
+        // Depending on how you generate your SQL, you may need to explicitly distinguish
+        // between jOOQ generating bind variables or inlined literals. If so, use this check:
+        // ctx.render().paramType() == INLINED
         ctx.render().visit(DSL.val(ctx.convert(converter()).value())).sql("::json");
     }
 
@@ -14651,6 +14654,9 @@ public class PostgresJSONGsonBinding implements Binding<Object, JsonElement> {
     // Rending a bind variable for the binding context's value and casting it to the json type
     @Override
     public void sql(BindingSQLContext<JsonElement> ctx) throws SQLException {
+        // Depending on how you generate your SQL, you may need to explicitly distinguish
+        // between jOOQ generating bind variables or inlined literals. If so, use this check:
+        // ctx.render().paramType() == INLINED
         ctx.render().visit(DSL.val(ctx.convert(converter()).value())).sql("::json");
     }
 

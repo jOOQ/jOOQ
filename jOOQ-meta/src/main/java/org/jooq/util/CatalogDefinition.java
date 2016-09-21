@@ -77,7 +77,7 @@ public class CatalogDefinition extends AbstractDefinition {
 	@SuppressWarnings("deprecation")
     @Override
     public final String getOutputName() {
-	    return getDatabase().getOutputSchema(getInputName());
+	    return getDatabase().getOutputCatalog(getInputName());
     }
 
     @Override

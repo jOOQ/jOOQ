@@ -73,6 +73,7 @@ import org.jooq.tools.JooqLogger;
 import org.jooq.tools.JooqLogger.Level;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
+import org.jooq.util.jaxb.Catalog;
 import org.jooq.util.jaxb.Configuration;
 import org.jooq.util.jaxb.Generate;
 import org.jooq.util.jaxb.Jdbc;
@@ -297,62 +298,100 @@ public class GenerationTool {
             Database database = databaseClass.newInstance();
             database.setProperties(properties(d.getProperties()));
 
+            List<Catalog> catalogs = d.getCatalogs();
             List<Schema> schemata = d.getSchemata();
 
-            // For convenience and backwards-compatibility, the schema configuration can be set also directly
-            // in the <database/> element
-            if (schemata.isEmpty()) {
-                Schema schema = new Schema();
-                schema.setInputSchema(trim(d.getInputSchema()));
-                schema.setOutputSchema(trim(d.getOutputSchema()));
-                schema.setOutputSchemaToDefault(d.isOutputSchemaToDefault());
-                schemata.add(schema);
+            boolean catalogsEmpty = catalogs.isEmpty();
+            boolean schemataEmpty = schemata.isEmpty();
+
+            // For convenience, the catalog configuration can be set also directly in the <database/> element
+            if (catalogsEmpty) {
+                Catalog catalog = new Catalog();
+                catalog.setInputCatalog(trim(d.getInputCatalog()));
+                catalog.setOutputCatalog(trim(d.getOutputCatalog()));
+                catalog.setOutputCatalogToDefault(d.isOutputCatalogToDefault());
+                catalogs.add(catalog);
+
+                // For convenience and backwards-compatibility, the schema configuration can be set also directly
+                // in the <database/> element
+                if (schemataEmpty) {
+                    Schema schema = new Schema();
+                    schema.setInputSchema(trim(d.getInputSchema()));
+                    schema.setOutputSchema(trim(d.getOutputSchema()));
+                    schema.setOutputSchemaToDefault(d.isOutputSchemaToDefault());
+                    catalog.getSchemata().add(schema);
+                }
+                else {
+                    if (!StringUtils.isBlank(d.getInputSchema()))
+                        log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/inputSchema and /configuration/generator/database/schemata");
+                    if (!StringUtils.isBlank(d.getOutputSchema()))
+                        log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/outputSchema and /configuration/generator/database/schemata");
+                }
             }
             else {
-                if (!StringUtils.isBlank(d.getInputSchema()))
-                    log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/inputSchema and /configuration/generator/database/schemata");
-                if (!StringUtils.isBlank(d.getOutputSchema()))
-                    log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/outputSchema and /configuration/generator/database/schemata");
+                if (!StringUtils.isBlank(d.getInputCatalog()))
+                    log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/inputCatalog and /configuration/generator/database/catalogs");
+                if (!StringUtils.isBlank(d.getOutputCatalog()))
+                    log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/outputCatalog and /configuration/generator/database/catalogs");
+                if (!schemataEmpty)
+                    log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/catalogs and /configuration/generator/database/schemata");
             }
 
-            for (Schema schema : schemata) {
-                if (StringUtils.isBlank(schema.getInputSchema())) {
-                    if (!StringUtils.isBlank(j.getSchema())) {
-                        log.warn("WARNING: The configuration property jdbc.Schema is deprecated and will be removed in the future. Use /configuration/generator/database/inputSchema instead");
+            for (Catalog catalog : catalogs) {
+                if ("".equals(catalog.getOutputCatalog()))
+                    log.warn("WARNING: Empty <outputCatalog/> should not be used to model default outputCatalogs. Use <outputCatalogToDefault>true</outputCatalogToDefault>, instead. See also: https://github.com/jOOQ/jOOQ/issues/3018");
+
+                // [#3018] If users want the output catalog to be "" then, ignore the actual <outputCatalog/> configuration
+                if (TRUE.equals(catalog.isOutputCatalogToDefault()))
+                    catalog.setOutputCatalog("");
+                else if (catalog.getOutputCatalog() == null)
+                    catalog.setOutputCatalog(trim(catalog.getInputCatalog()));
+
+
+
+
+
+
+                for (Schema schema : catalog.getSchemata()) {
+                    if (catalogsEmpty && schemataEmpty && StringUtils.isBlank(schema.getInputSchema())) {
+                        if (!StringUtils.isBlank(j.getSchema()))
+                            log.warn("WARNING: The configuration property jdbc.Schema is deprecated and will be removed in the future. Use /configuration/generator/database/inputSchema instead");
+
+                        schema.setInputSchema(trim(j.getSchema()));
                     }
 
-                    schema.setInputSchema(trim(j.getSchema()));
+                    // [#3018] Prior to <outputSchemaToDefault/>, empty <outputSchema/> elements meant that
+                    // the outputSchema should be the default schema. This is a bit too clever, and doesn't
+                    // work when Maven parses the XML configurations.
+                    if ("".equals(schema.getOutputSchema()))
+                        log.warn("WARNING: Empty <outputSchema/> should not be used to model default outputSchemas. Use <outputSchemaToDefault>true</outputSchemaToDefault>, instead. See also: https://github.com/jOOQ/jOOQ/issues/3018");
+
+                    // [#3018] If users want the output schema to be "" then, ignore the actual <outputSchema/> configuration
+                    if (TRUE.equals(schema.isOutputSchemaToDefault()))
+                        schema.setOutputSchema("");
+                    else if (schema.getOutputSchema() == null)
+                        schema.setOutputSchema(trim(schema.getInputSchema()));
+
+
+
+
+
+
+
+
+
+
+
                 }
-
-                // [#3018] Prior to <outputSchemaToDefault/>, empty <outputSchema/> elements meant that
-                // the outputSchema should be the default schema. This is a bit too clever, and doesn't
-                // work when Maven parses the XML configurations.
-                if ("".equals(schema.getOutputSchema()))
-                    log.warn("WARNING: Empty <outputSchema/> should no longer be used to model default outputSchemas. Use <outputSchemaToDefault>true</outputSchemaToDefault>, instead. See also: https://github.com/jOOQ/jOOQ/issues/3018");
-
-                // [#3018] If users want the output schema to be "" then, ignore the actual <outputSchema/> configuration
-                if (TRUE.equals(schema.isOutputSchemaToDefault()))
-                    schema.setOutputSchema("");
-                else if (schema.getOutputSchema() == null)
-                    schema.setOutputSchema(trim(schema.getInputSchema()));
-
-
-
-
-
-
-
-
-
-
-
             }
 
-            if (schemata.size() == 1)
-                if (StringUtils.isBlank(schemata.get(0).getInputSchema()))
-                    log.info("No <inputSchema/> was provided. Generating ALL available schemata instead!");
+            if (catalogsEmpty)
+                log.info("No <inputCatalog/> was provided. Generating ALL available catalogs instead.");
+            if (catalogsEmpty && schemataEmpty)
+                log.info("No <inputSchema/> was provided. Generating ALL available schemata instead.");
 
             database.setConnection(connection);
+            database.setConfiguredCatalogs(catalogs);
             database.setConfiguredSchemata(schemata);
             database.setIncludes(new String[] { defaultString(d.getIncludes()) });
             database.setExcludes(new String[] { defaultString(d.getExcludes()) });

@@ -496,8 +496,32 @@
       <element name="unsignedTypes" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
 
       <!--
+        The catalog that is used locally as a source for meta information.
+
+        This cannot be combined with the catalogs element.
+        If left empty (and without any catalogs element), jOOQ will generate all available catalogs.
+        -->
+      <element name="inputCatalog" type="string" default="" minOccurs="0" maxOccurs="1" />
+
+      <!--
+        The catalog that is used in generated source code. This will be the
+        production catalog. Use this to override your local development
+        catalog name for source code generation. If not specified, this
+        will be the same as the input-catalog.
+
+        This will be ignored if outputCatalogToDefault is set to true
+        -->
+      <element name="outputCatalog" type="string" minOccurs="0" maxOccurs="1" />
+
+      <!--
+        A flag to indicate that the outputCatalog should be the "default" catalog,
+        which generates catalog-less, unqualified tables, procedures, etc.
+        -->
+      <element name="outputCatalogToDefault" type="boolean" minOccurs="0" maxOccurs="1" default="false" />
+
+      <!--
         The schema that is used locally as a source for meta information.
-        This could be your development schema or the production schema, etc
+
         This cannot be combined with the schemata element.
         If left empty (and without any schemata element), jOOQ will generate all available schemata.
         For backwards compatibility, this defaults to jdbc/schema
@@ -556,8 +580,22 @@
 
       <!--
         A configuration element to configure several input and/or output
+        catalogs for jooq-meta, in case you're using jooq-meta in a multi-
+        catalog environment.
+
+        This element cannot be used at the same time as the schemata element.
+        -->
+      <element name="catalogs" type="tns:Catalogs" minOccurs="0" maxOccurs="1"/>
+
+      <!--
+        A configuration element to configure several input and/or output
         schemata for jooq-meta, in case you're using jooq-meta in a multi-
-        schema environment
+        schema environment.
+
+        Using this configuration element in an enviroment that supports multiple
+        catalogs means that all catalogs are generated.
+
+        This element cannot be used at the same time as the catalogs element.
         -->
       <element name="schemata" type="tns:Schemata" minOccurs="0" maxOccurs="1"/>
 
@@ -591,6 +629,32 @@
         for Oracle.
         -->
       <element name="tableValuedFunctions" type="boolean" minOccurs="0" maxOccurs="1" />
+    </all>
+  </complexType>
+
+  <complexType name="Catalogs">
+    <sequence>
+      <!--
+        A configuration element for a single catalog in multi-catalog
+        environments
+        -->
+      <element name="catalog" type="tns:Catalog" minOccurs="1" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="Catalog">
+    <all>
+      <!-- See also database/inputCatalog -->
+      <element name="inputCatalog" type="string" default="" minOccurs="1" maxOccurs="1" />
+
+      <!-- See also database/outputCatalog -->
+      <element name="outputCatalog" type="string" minOccurs="0" maxOccurs="1" />
+
+      <!-- See also database/outputCatalogDefault -->
+      <element name="outputCatalogToDefault" type="boolean" minOccurs="0" maxOccurs="1" default="false" />
+
+      <!-- The configuration of schemas inside of this catalog, if any. -->
+      <element name="schemata" type="tns:Schemata" minOccurs="0" maxOccurs="1" />
     </all>
   </complexType>
 

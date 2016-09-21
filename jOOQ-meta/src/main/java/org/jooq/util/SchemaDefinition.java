@@ -77,7 +77,7 @@ public class SchemaDefinition extends AbstractDefinition {
 	@SuppressWarnings("deprecation")
     @Override
     public final String getOutputName() {
-	    return getDatabase().getOutputSchema(getInputName());
+	    return getDatabase().getOutputSchema(getCatalog().getInputName(), getInputName());
     }
 
     @Override

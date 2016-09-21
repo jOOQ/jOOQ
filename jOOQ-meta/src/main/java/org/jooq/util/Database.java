@@ -48,6 +48,7 @@ import java.util.Properties;
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
+import org.jooq.util.jaxb.Catalog;
 import org.jooq.util.jaxb.CustomType;
 import org.jooq.util.jaxb.EnumType;
 import org.jooq.util.jaxb.ForcedType;
@@ -213,9 +214,39 @@ public interface Database {
     Connection getConnection();
 
     /**
-     * The input schemata are the schemata that jooq-meta is reading data from.
+     * The input catalogs are the catalogs that jooq-meta is reading data from.
+     */
+    List<String> getInputCatalogs();
+
+    /**
+     * The input schemata are the schemata from all catalogs that jooq-meta is
+     * reading data from.
+     * <p>
+     * This will combine the schemata from all catalogs in a single list. If
+     * you're working with a multi-catalog environment, you may want to call
+     * {@link #getInputSchemata(String)} instead to disambiguate schema names
+     * (e.g. in SQL Server, there are multiple "dbo" schemas).
      */
     List<String> getInputSchemata();
+
+    /**
+     * The input schemata are the schemata from a given catalog that jooq-meta is reading data from.
+     */
+    List<String> getInputSchemata(CatalogDefinition catalog);
+
+    /**
+     * The input schemata are the schemata from a given catalog that jooq-meta is reading data from.
+     */
+    List<String> getInputSchemata(String catalog);
+
+    /**
+     * The output catalog is the catalog used by jooq-codegen in class names.
+     *
+     * @deprecated - 2.0.5 - This will be implemented in each
+     *             {@link Definition#getOutputName()}
+     */
+    @Deprecated
+    String getOutputCatalog(String inputCatalog);
 
     /**
      * The output schema is the schema used by jooq-codegen in class names.
@@ -225,6 +256,20 @@ public interface Database {
      */
     @Deprecated
     String getOutputSchema(String inputSchema);
+
+    /**
+     * The output schema is the schema used by jooq-codegen in class names.
+     *
+     * @deprecated - 2.0.5 - This will be implemented in each
+     *             {@link Definition#getOutputName()}
+     */
+    @Deprecated
+    String getOutputSchema(String inputCatalog, String inputSchema);
+
+    /**
+     * The input and output catalogs.
+     */
+    void setConfiguredCatalogs(List<Catalog> catalogs);
 
     /**
      * The input and output schemata.

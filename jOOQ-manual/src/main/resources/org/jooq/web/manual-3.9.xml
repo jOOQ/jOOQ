@@ -13347,6 +13347,9 @@ result.forEach((Object[] entities) -> {
         <name>org.jooq.util.postgres.PostgresDatabase</name>
         <includes>.*</includes>
         <excludes></excludes>
+        <!-- In case your database supports catalogs, e.g. SQL Server:
+        <inputCatalog>public</inputCatalog>
+          -->
         <inputSchema>public</inputSchema>
       </database>
       <target>
@@ -13435,22 +13438,42 @@ result.forEach((Object[] entities) -> {
        Defaults to true -->
   <unsignedTypes>true</unsignedTypes>
 
-  <!-- The schema that is used in generated source code. This will be the
-       production schema. Use this to override your local development
+  <!-- The catalog / schema that is used in generated source code. This will be the
+       production catalog / schema. Use this to override your local development
        schema name for source code generation. If not specified, this
-       will be the same as the input-schema.
+       will be the same as the input catalog / schema.
 
-       This will be ignored if outputSchemaToDefault is set to true -->
-  <outputSchema>[your database schema / owner / name]</outputSchema>
+       This will be ignored if outputCatalogToDefault or outputSchemaToDefault is set to true -->
+  <outputCatalog>[your database catalog]</outputCatalog>
+  <outputSchema>[your database schema]</outputSchema>
 
-  <!-- A flag to indicate that the outputSchema should be the "default" schema,
-       which generates schema-less, unqualified tables, procedures, etc. -->
+  <!-- A flag to indicate that the outputCatalog / outputSchema should be the "default" catalog / schema,
+       which generates catalog / schema less, unqualified tables, procedures, etc. -->
+  <outputCatalogToDefault>false</outputCatalogToDefault>
   <outputSchemaToDefault>false</outputSchemaToDefault>
+
+  <!-- A configuraiton element to configure several input and/or output
+       catalogs for jooq-meta, in case you're using jooq-meta in a multi-
+       catalog environment.
+       This cannot be combined with the above inputCatalog / outputCatalog
+       or with the below schemata -->
+  <catalogs>
+    <catalog>
+      <inputCatalog>...</inputCatalog>
+      <outputCatalog>...</outputCatalog>
+      <outputCatalogToDefault>...</outputCatalogToDefault>
+      <schemata>
+        ...
+      </schemata>
+    </catalog>
+    [ <catalog>...</catalog> ... ]
+  </catalogs>
 
   <!-- A configuration element to configure several input and/or output
        schemata for jooq-meta, in case you're using jooq-meta in a multi-
        schema environment.
-       This cannot be combined with the above inputSchema / outputSchema -->
+       This cannot be combined with the above inputSchema / outputSchema
+       or with the above catalogs -->
   <schemata>
     <schema>
       <inputSchema>...</inputSchema>
@@ -14902,11 +14925,17 @@ public class PostgresJSONGsonBinding implements Binding<Object, JsonElement> {
 
 
 				    <section id="schema-mapping">
-						<title>Mapping generated schemata and tables</title>
+						<title>Mapping generated catalogs and schemas</title>
 						<content><html>
 							<p>
-								We've seen previously in the chapter about <reference id="runtime-schema-mapping" title="runtime schema mapping"/>, that schemata and tables can be mapped at runtime to other names. But you can also hard-wire schema mapping in generated artefacts at code generation time, e.g. when you have 5 developers with their own dedicated developer databases, and a common integration database. In the code generation configuration, you would then write.
+								We've seen previously in the chapter about <reference id="runtime-schema-mapping" title="runtime schema mapping"/>, that catalogs, schemata and tables can be mapped at runtime to other names. But you can also hard-wire catalog and schema mapping in generated artefacts at code generation time, e.g. when you have 5 developers with their own dedicated developer databases, and a common integration database. In the code generation configuration, you would then write.
 							</p>
+
+                            <h3>Schema mapping</h3>
+
+                            <p>
+                                The following configuration applies mapping only for schemata, not for catalogs. The <code>&lt;schemata/></code> element is a standalone element that can be put in the code generator's <code>&lt;database/></code> configuration element:
+                            </p>
 
 </html><xml><![CDATA[<schemata>
   <schema>
@@ -14917,6 +14946,25 @@ public class PostgresJSONGsonBinding implements Binding<Object, JsonElement> {
     <outputSchema>PROD</outputSchema>
   </schema>
 </schemata>]]></xml>
+
+                            <p>
+                                The following configuration applies mapping for catalogs and their schemata. The <code>&lt;catalogs/></code> element is a standalone element that can be put in the code generator's <code>&lt;database/></code> configuration element:
+                            </p>
+
+</html><xml><![CDATA[<catalogs>
+  <catalog>
+    <!-- Use this as the developer's catalog: -->
+    <inputCatalog>LUKAS_DEV_CATALOG</inputCatalog>
+
+    <!-- Use this as the integration / production database: -->
+    <outputCatalog>PROD</outputCatalog>
+
+    <!-- Optionally, nest also schema mapping configurations: -->
+    <schemata>
+      ...
+    </schemata>
+  </catalog>
+</catalogs>]]></xml>
 
 						</content>
 					</section>

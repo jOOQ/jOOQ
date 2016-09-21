@@ -150,6 +150,14 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
                 return identifier + "_";
         }
 
+        // [#5557] Once more, this causes issues...
+        else if (definition instanceof SchemaDefinition) {
+            CatalogDefinition catalog = definition.getCatalog();
+
+            if (identifier.equals(getJavaIdentifier(catalog)))
+                return identifier + "_";
+        }
+
         return identifier;
     }
 

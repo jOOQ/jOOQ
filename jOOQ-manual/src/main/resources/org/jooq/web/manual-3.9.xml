@@ -13489,13 +13489,15 @@ result.forEach((Object[] entities) -> {
        There are three operation modes for this element:
 
        - The value is a class that can be found on the classpath and that implements
+         org.jooq.util.CatalogVersionProvider or, respectively,
          org.jooq.util.SchemaVersionProvider. Such classes must provide a default constructor
        - The value is a SELECT statement that returns one record with one column. The
-         SELECT statement may contain a named variable called :schema_name
+         SELECT statement may contain a named variable called :catalog_name or :schema_name respectively
        - The value is a constant, such as a Maven property
 
        Schema versions will be generated into the javax.annotation.Generated annotation on
        generated artefacts. -->
+  <catalogVersionProvider>SELECT :catalog_name || '_' || MAX("version") FROM "schema_version"</catalogVersionProvider>
   <schemaVersionProvider>SELECT :schema_name || '_' || MAX("version") FROM "schema_version"</schemaVersionProvider>
 
   <!-- A configuration element to configure reusable custom data types -->

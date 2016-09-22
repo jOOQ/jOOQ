@@ -607,18 +607,29 @@ abstract class AbstractGenerator implements Generator {
      */
     protected void empty(File file, String suffix, Set<File> keep) {
         if (file != null) {
+
+            // Just a Murphy's Law safeguard in case a user misconfigures their config...
+            if (file.getParentFile() == null) {
+                log.warn("WARNING: Root directory configured for code generation. Not deleting anything from previous generations!");
+                return;
+            }
+
             if (file.isDirectory()) {
                 File[] children = file.listFiles();
 
-                if (children != null) {
-                    for (File child : children) {
+                if (children != null)
+                    for (File child : children)
                         empty(child, suffix, keep);
-                    }
-                }
-            } else {
-                if (file.getName().endsWith(suffix) && !keep.contains(file)) {
+
+                File[] childrenAfterDeletion = file.listFiles();
+
+                // [#5556] Delete directory if empty after content was removed.
+                //         Useful if a catalog / schema was dropped, or removed from code generation, or renamed
+                if (childrenAfterDeletion != null && childrenAfterDeletion.length == 0)
                     file.delete();
-                }
+            }
+            else if (file.getName().endsWith(suffix) && !keep.contains(file)) {
+                file.delete();
             }
         }
     }

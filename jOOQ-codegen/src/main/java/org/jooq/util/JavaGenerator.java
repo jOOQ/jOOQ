@@ -257,10 +257,7 @@ public class JavaGenerator extends AbstractGenerator {
         // XXX Generating catalogs
         // ----------------------------------------------------------------------
         log.info("Generating catalogs", "Total: " + database.getCatalogs().size());
-        CatalogDefinition last = null;
         for (CatalogDefinition catalog : database.getCatalogs()) {
-            last = catalog;
-
             try {
                 if (generateCatalogIfEmpty(catalog))
                     generate(catalog);
@@ -273,11 +270,9 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         // [#5556] Clean up common parent directory
-        if (last != null) {
-            log.info("Removing excess files");
-            empty(getStrategy().getFile(last).getParentFile(), (scala ? ".scala" : ".java"), files);
-            files.clear();
-        }
+        log.info("Removing excess files");
+        empty(getStrategy().getFileRoot(), (scala ? ".scala" : ".java"), files);
+        files.clear();
     }
 
     private boolean generateCatalogIfEmpty(CatalogDefinition catalog) {

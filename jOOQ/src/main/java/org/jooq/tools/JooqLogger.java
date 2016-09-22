@@ -40,6 +40,8 @@
  */
 package org.jooq.tools;
 
+import org.jooq.Log;
+
 /**
  * The jOOQ logger abstraction.
  * <p>
@@ -56,42 +58,42 @@ package org.jooq.tools;
  *
  * @author Lukas Eder
  */
-public final class JooqLogger {
+public final class JooqLogger implements Log {
 
     /**
      * The global logger threshold.
      */
-    private static volatile Level    globalThreshold = Level.TRACE;
+    private static volatile Log.Level globalThreshold = Log.Level.TRACE;
 
     /**
      * The SLF4j Logger instance, if available.
      */
-    private org.slf4j.Logger         slf4j;
+    private org.slf4j.Logger          slf4j;
 
     /**
      * The log4j Logger instance, if available.
      */
-    private org.apache.log4j.Logger  log4j;
+    private org.apache.log4j.Logger   log4j;
 
     /**
      * The JDK Logger instance, if available.
      */
-    private java.util.logging.Logger util;
+    private java.util.logging.Logger  util;
 
     /**
      * Whether calls to {@link #trace(Object)} are possible.
      */
-    private boolean                  supportsTrace = true;
+    private boolean                   supportsTrace   = true;
 
     /**
      * Whether calls to {@link #debug(Object)} are possible.
      */
-    private boolean                  supportsDebug = true;
+    private boolean                   supportsDebug   = true;
 
     /**
      * Whether calls to {@link #info(Object)} are possible.
      */
-    private boolean                  supportsInfo  = true;
+    private boolean                   supportsInfo    = true;
 
     /**
      * Get a logger wrapper for a class.
@@ -147,8 +149,9 @@ public final class JooqLogger {
     /**
      * Check if <code>TRACE</code> level logging is enabled.
      */
+    @Override
     public boolean isTraceEnabled() {
-        if (!globalThreshold.supports(Level.TRACE))
+        if (!globalThreshold.supports(Log.Level.TRACE))
             return false;
         else if (!supportsTrace)
             return false;
@@ -165,6 +168,7 @@ public final class JooqLogger {
      *
      * @param message The log message
      */
+    @Override
     public void trace(Object message) {
         trace(message, (Object) null);
     }
@@ -175,8 +179,9 @@ public final class JooqLogger {
      * @param message The log message
      * @param details The message details (padded to a constant-width message)
      */
+    @Override
     public void trace(Object message, Object details) {
-        if (!globalThreshold.supports(Level.TRACE))
+        if (!globalThreshold.supports(Log.Level.TRACE))
             return;
         else if (slf4j != null)
             slf4j.trace(getMessage(message, details));
@@ -193,6 +198,7 @@ public final class JooqLogger {
      * @param throwable An exception whose stacktrace is logged along with the
      *            message
      */
+    @Override
     public void trace(Object message, Throwable throwable) {
         trace(message, null, throwable);
     }
@@ -205,8 +211,9 @@ public final class JooqLogger {
      * @param throwable An exception whose stacktrace is logged along with the
      *            message
      */
+    @Override
     public void trace(Object message, Object details, Throwable throwable) {
-        if (!globalThreshold.supports(Level.TRACE))
+        if (!globalThreshold.supports(Log.Level.TRACE))
             return;
         else if (slf4j != null)
             slf4j.trace(getMessage(message, details), throwable);
@@ -219,8 +226,9 @@ public final class JooqLogger {
     /**
      * Check if <code>DEBUG</code> level logging is enabled.
      */
+    @Override
     public boolean isDebugEnabled() {
-        if (!globalThreshold.supports(Level.DEBUG))
+        if (!globalThreshold.supports(Log.Level.DEBUG))
             return false;
         else if (!supportsDebug)
             return false;
@@ -237,6 +245,7 @@ public final class JooqLogger {
      *
      * @param message The log message
      */
+    @Override
     public void debug(Object message) {
         debug(message, (Object) null);
     }
@@ -247,8 +256,9 @@ public final class JooqLogger {
      * @param message The log message
      * @param details The message details (padded to a constant-width message)
      */
+    @Override
     public void debug(Object message, Object details) {
-        if (!globalThreshold.supports(Level.DEBUG))
+        if (!globalThreshold.supports(Log.Level.DEBUG))
             return;
         else if (slf4j != null)
             slf4j.debug(getMessage(message, details));
@@ -265,6 +275,7 @@ public final class JooqLogger {
      * @param throwable An exception whose stacktrace is logged along with the
      *            message
      */
+    @Override
     public void debug(Object message, Throwable throwable) {
         debug(message, null, throwable);
     }
@@ -277,8 +288,9 @@ public final class JooqLogger {
      * @param throwable An exception whose stacktrace is logged along with the
      *            message
      */
+    @Override
     public void debug(Object message, Object details, Throwable throwable) {
-        if (!globalThreshold.supports(Level.DEBUG))
+        if (!globalThreshold.supports(Log.Level.DEBUG))
             return;
         else if (slf4j != null)
             slf4j.debug(getMessage(message, details), throwable);
@@ -291,8 +303,9 @@ public final class JooqLogger {
     /**
      * Check if <code>INFO</code> level logging is enabled.
      */
+    @Override
     public boolean isInfoEnabled() {
-        if (!globalThreshold.supports(Level.INFO))
+        if (!globalThreshold.supports(Log.Level.INFO))
             return false;
         if (!supportsInfo)
             return false;
@@ -309,6 +322,7 @@ public final class JooqLogger {
      *
      * @param message The log message
      */
+    @Override
     public void info(Object message) {
         info(message, (Object) null);
     }
@@ -319,8 +333,9 @@ public final class JooqLogger {
      * @param message The log message
      * @param details The message details (padded to a constant-width message)
      */
+    @Override
     public void info(Object message, Object details) {
-        if (!globalThreshold.supports(Level.INFO))
+        if (!globalThreshold.supports(Log.Level.INFO))
             return;
         else if (slf4j != null)
             slf4j.info(getMessage(message, details));
@@ -337,6 +352,7 @@ public final class JooqLogger {
      * @param throwable An exception whose stacktrace is logged along with the
      *            message
      */
+    @Override
     public void info(Object message, Throwable throwable) {
         info(message, null, throwable);
     }
@@ -349,8 +365,9 @@ public final class JooqLogger {
      * @param throwable An exception whose stacktrace is logged along with the
      *            message
      */
+    @Override
     public void info(Object message, Object details, Throwable throwable) {
-        if (!globalThreshold.supports(Level.INFO))
+        if (!globalThreshold.supports(Log.Level.INFO))
             return;
         else if (slf4j != null)
             slf4j.info(getMessage(message, details), throwable);
@@ -365,6 +382,7 @@ public final class JooqLogger {
      *
      * @param message The log message
      */
+    @Override
     public void warn(Object message) {
         warn(message, (Object) null);
     }
@@ -375,8 +393,9 @@ public final class JooqLogger {
      * @param message The log message
      * @param details The message details (padded to a constant-width message)
      */
+    @Override
     public void warn(Object message, Object details) {
-        if (!globalThreshold.supports(Level.WARN))
+        if (!globalThreshold.supports(Log.Level.WARN))
             return;
         else if (slf4j != null)
             slf4j.warn(getMessage(message, details));
@@ -393,6 +412,7 @@ public final class JooqLogger {
      * @param throwable An exception whose stacktrace is logged along with the
      *            message
      */
+    @Override
     public void warn(Object message, Throwable throwable) {
         warn(message, null, throwable);
     }
@@ -405,8 +425,9 @@ public final class JooqLogger {
      * @param throwable An exception whose stacktrace is logged along with the
      *            message
      */
+    @Override
     public void warn(Object message, Object details, Throwable throwable) {
-        if (!globalThreshold.supports(Level.WARN))
+        if (!globalThreshold.supports(Log.Level.WARN))
             return;
         else if (slf4j != null)
             slf4j.warn(getMessage(message, details), throwable);
@@ -421,6 +442,7 @@ public final class JooqLogger {
      *
      * @param message The log message
      */
+    @Override
     public void error(Object message) {
         error(message, (Object) null);
     }
@@ -431,8 +453,9 @@ public final class JooqLogger {
      * @param message The log message
      * @param details The message details (padded to a constant-width message)
      */
+    @Override
     public void error(Object message, Object details) {
-        if (!globalThreshold.supports(Level.ERROR))
+        if (!globalThreshold.supports(Log.Level.ERROR))
             return;
         else if (slf4j != null)
             slf4j.error(getMessage(message, details));
@@ -449,6 +472,7 @@ public final class JooqLogger {
      * @param throwable An exception whose stacktrace is logged along with the
      *            message
      */
+    @Override
     public void error(Object message, Throwable throwable) {
         error(message, null, throwable);
     }
@@ -461,8 +485,9 @@ public final class JooqLogger {
      * @param throwable An exception whose stacktrace is logged along with the
      *            message
      */
+    @Override
     public void error(Object message, Object details, Throwable throwable) {
-        if (!globalThreshold.supports(Level.ERROR))
+        if (!globalThreshold.supports(Log.Level.ERROR))
             return;
         else if (slf4j != null)
             slf4j.error(getMessage(message, details), throwable);
@@ -492,12 +517,29 @@ public final class JooqLogger {
      * Set a global level threshold to all JooqLoggers.
      */
     public static void globalThreshold(Level level) {
+        switch (level) {
+            case TRACE: globalThreshold(Log.Level.TRACE); break;
+            case DEBUG: globalThreshold(Log.Level.DEBUG); break;
+            case INFO:  globalThreshold(Log.Level.INFO);  break;
+            case WARN:  globalThreshold(Log.Level.WARN);  break;
+            case ERROR: globalThreshold(Log.Level.ERROR); break;
+            case FATAL: globalThreshold(Log.Level.FATAL); break;
+        }
+    }
+
+    /**
+     * Set a global level threshold to all JooqLoggers.
+     */
+    public static void globalThreshold(Log.Level level) {
         globalThreshold = level;
     }
 
     /**
      * The log level.
+     *
+     * @deprecated - Use {@link org.jooq.Log.Level} instead
      */
+    @Deprecated
     public static enum Level {
 
         TRACE,

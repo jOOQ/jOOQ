@@ -75,8 +75,8 @@ public class BufferedLog implements Log {
         JooqLogger delegate = JooqLogger.getLogger(BufferedLog.class);
 
         if (!messages.isEmpty()) {
-            delegate.info("Buffered warning and error messages:");
-            delegate.info("------------------------------------");
+            delegate.warn("Buffered warning and error messages:");
+            delegate.warn("------------------------------------");
         }
 
         for (Message m : messages)

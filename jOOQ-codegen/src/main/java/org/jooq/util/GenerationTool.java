@@ -322,6 +322,8 @@ public class GenerationTool {
                     catalog.getSchemata().add(schema);
                 }
                 else {
+                    catalog.getSchemata().addAll(schemata);
+
                     if (!StringUtils.isBlank(d.getInputSchema()))
                         log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/inputSchema and /configuration/generator/database/schemata");
                     if (!StringUtils.isBlank(d.getOutputSchema()))

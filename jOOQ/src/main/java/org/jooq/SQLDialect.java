@@ -354,17 +354,17 @@ public enum SQLDialect {
     private SQLDialect                predecessor;
     private final ThirdParty          thirdParty;
 
-    private SQLDialect(String name, SQLDialectExecutor runnable, boolean commercial) {
-        this(name, runnable, commercial, null, null);
+    private SQLDialect(String name, SQLDialectExecutor executor, boolean commercial) {
+        this(name, executor, commercial, null, null);
     }
 
-    private SQLDialect(String name, SQLDialectExecutor runnable, boolean commercial, SQLDialect family) {
-        this(name, runnable, commercial, family, null);
+    private SQLDialect(String name, SQLDialectExecutor executor, boolean commercial, SQLDialect family) {
+        this(name, executor, commercial, family, null);
     }
 
-    private SQLDialect(String name, SQLDialectExecutor runnable, boolean commercial, SQLDialect family, SQLDialect predecessor) {
+    private SQLDialect(String name, SQLDialectExecutor executor, boolean commercial, SQLDialect family, SQLDialect predecessor) {
         this.name = name;
-        this.executor = runnable;
+        this.executor = executor;
         this.commercial = commercial;
         this.family = family == null ? this : family;
         this.predecessor = predecessor == null ? this : predecessor;

@@ -73,6 +73,7 @@ import org.jooq.ExecuteListener;
 import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.RenderContext;
+import org.jooq.SQLDialectSupplier;
 import org.jooq.Select;
 import org.jooq.conf.ParamType;
 import org.jooq.conf.SettingsTools;
@@ -281,101 +282,106 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
         if (isExecutable()) {
 
             // Get the attached configuration of this query
-            Configuration c = configuration();
+            final Configuration c = configuration();
+            return c.dialect().executor().submit(new SQLDialectSupplier<Integer>() {
+                @Override
+                public Integer get() {
+                    // [#1191] The following triggers a start event on all listeners.
+                    //         This may be used to provide jOOQ with a JDBC connection,
+                    //         in case this Query / Configuration was previously
+                    //         deserialised
+                    DefaultExecuteContext ctx = new DefaultExecuteContext(c, AbstractQuery.this);
+                    ExecuteListener listener = new ExecuteListeners(ctx);
 
-            // [#1191] The following triggers a start event on all listeners.
-            //         This may be used to provide jOOQ with a JDBC connection,
-            //         in case this Query / Configuration was previously
-            //         deserialised
-            DefaultExecuteContext ctx = new DefaultExecuteContext(c, this);
-            ExecuteListener listener = new ExecuteListeners(ctx);
+                    int result = 0;
+                    try {
 
-            int result = 0;
-            try {
+                        // [#385] If a statement was previously kept open
+                        if (keepStatement() && statement != null) {
+                            ctx.sql(rendered.sql);
+                            ctx.statement(statement);
 
-                // [#385] If a statement was previously kept open
-                if (keepStatement() && statement != null) {
-                    ctx.sql(rendered.sql);
-                    ctx.statement(statement);
+                            // [#3191] Pre-initialise the ExecuteContext with a previous connection, if available.
+                            ctx.connection(c.connectionProvider(), statement.getConnection());
+                        }
 
-                    // [#3191] Pre-initialise the ExecuteContext with a previous connection, if available.
-                    ctx.connection(c.connectionProvider(), statement.getConnection());
-                }
+                        // [#385] First time statement preparing
+                        else {
+                            listener.renderStart(ctx);
+                            rendered = getSQL0(ctx);
+                            ctx.sql(rendered.sql);
+                            listener.renderEnd(ctx);
+                            rendered.sql = ctx.sql();
 
-                // [#385] First time statement preparing
-                else {
-                    listener.renderStart(ctx);
-                    rendered = getSQL0(ctx);
-                    ctx.sql(rendered.sql);
-                    listener.renderEnd(ctx);
-                    rendered.sql = ctx.sql();
+                            // [#3234] Defer initialising of a connection until the prepare step
+                            // This optimises unnecessary ConnectionProvider.acquire() calls when
+                            // ControlFlowSignals are thrown
+                            if (ctx.connection() == null) {
+                                throw new DetachedException("Cannot execute query. No Connection configured");
+                            }
 
-                    // [#3234] Defer initialising of a connection until the prepare step
-                    // This optimises unnecessary ConnectionProvider.acquire() calls when
-                    // ControlFlowSignals are thrown
-                    if (ctx.connection() == null) {
-                        throw new DetachedException("Cannot execute query. No Connection configured");
+                            listener.prepareStart(ctx);
+                            prepare(ctx);
+                            listener.prepareEnd(ctx);
+
+                            statement = ctx.statement();
+                        }
+
+                        // [#1856] [#4753] Set the query timeout onto the Statement
+                        int t = SettingsTools.getQueryTimeout(timeout, ctx.settings());
+                        if (t != 0) {
+                            ctx.statement().setQueryTimeout(t);
+                        }
+
+                        if (
+
+                            // [#1145] Bind variables only for true prepared statements
+                            // [#2414] Even if parameters are inlined here, child
+                            //         QueryParts may override this behaviour!
+                            executePreparedStatements(c.settings()) &&
+
+                            // [#1520] Renderers may enforce static statements, too
+                            !Boolean.TRUE.equals(ctx.data(DATA_FORCE_STATIC_STATEMENT))) {
+
+                            listener.bindStart(ctx);
+                            if (rendered.bindValues != null)
+                                using(c).bindContext(ctx.statement()).visit(rendered.bindValues);
+                            listener.bindEnd(ctx);
+                        }
+
+                        result = execute(ctx, listener);
+                        return result;
                     }
 
-                    listener.prepareStart(ctx);
-                    prepare(ctx);
-                    listener.prepareEnd(ctx);
+                    // [#3427] ControlFlowSignals must not be passed on to ExecuteListners
+                    catch (ControlFlowSignal e) {
+                        throw e;
+                    }
+                    catch (RuntimeException e) {
+                        ctx.exception(e);
+                        listener.exception(ctx);
+                        throw ctx.exception();
+                    }
+                    catch (SQLException e) {
+                        ctx.sqlException(e);
+                        listener.exception(ctx);
+                        throw ctx.exception();
+                    }
+                    finally {
 
-                    statement = ctx.statement();
+                        // [#2385] Successful fetchLazy() needs to keep open resources
+                        if (!keepResultSet() || ctx.exception() != null) {
+                            Tools.safeClose(listener, ctx, keepStatement());
+                        }
+
+                        if (!keepStatement()) {
+                            statement = null;
+                            rendered = null;
+                        }
+                    }
                 }
+            });
 
-                // [#1856] [#4753] Set the query timeout onto the Statement
-                int t = SettingsTools.getQueryTimeout(timeout, ctx.settings());
-                if (t != 0) {
-                    ctx.statement().setQueryTimeout(t);
-                }
-
-                if (
-
-                    // [#1145] Bind variables only for true prepared statements
-                    // [#2414] Even if parameters are inlined here, child
-                    //         QueryParts may override this behaviour!
-                    executePreparedStatements(c.settings()) &&
-
-                    // [#1520] Renderers may enforce static statements, too
-                    !Boolean.TRUE.equals(ctx.data(DATA_FORCE_STATIC_STATEMENT))) {
-
-                    listener.bindStart(ctx);
-                    if (rendered.bindValues != null)
-                        using(c).bindContext(ctx.statement()).visit(rendered.bindValues);
-                    listener.bindEnd(ctx);
-                }
-
-                result = execute(ctx, listener);
-                return result;
-            }
-
-            // [#3427] ControlFlowSignals must not be passed on to ExecuteListners
-            catch (ControlFlowSignal e) {
-                throw e;
-            }
-            catch (RuntimeException e) {
-                ctx.exception(e);
-                listener.exception(ctx);
-                throw ctx.exception();
-            }
-            catch (SQLException e) {
-                ctx.sqlException(e);
-                listener.exception(ctx);
-                throw ctx.exception();
-            }
-            finally {
-
-                // [#2385] Successful fetchLazy() needs to keep open resources
-                if (!keepResultSet() || ctx.exception() != null) {
-                    Tools.safeClose(listener, ctx, keepStatement());
-                }
-
-                if (!keepStatement()) {
-                    statement = null;
-                    rendered = null;
-                }
-            }
         }
         else {
             if (log.isDebugEnabled())

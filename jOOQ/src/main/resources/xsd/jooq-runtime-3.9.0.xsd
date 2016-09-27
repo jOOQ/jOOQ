@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema
   xmlns="http://www.w3.org/2001/XMLSchema"
-  xmlns:jooq-runtime="http://www.jooq.org/xsd/jooq-runtime-3.8.0.xsd"
-  targetNamespace="http://www.jooq.org/xsd/jooq-runtime-3.8.0.xsd"
+  xmlns:jooq-runtime="http://www.jooq.org/xsd/jooq-runtime-3.9.0.xsd"
+  targetNamespace="http://www.jooq.org/xsd/jooq-runtime-3.9.0.xsd"
   elementFormDefault="qualified">
 
   <element name="settings" type="jooq-runtime:Settings"/>
@@ -111,6 +111,9 @@
       <!-- The default JDBC fetchSize property that should be applied to all
            jOOQ queries, for which no specific fetchSize value was specified -->
       <element name="fetchSize" type="int" minOccurs="0" maxOccurs="1" default="0"/>
+
+      <!-- [#5570] Whether exception stack traces should be enhanced with additional debug information -->
+      <element name="debugInfoOnStackTrace" type="boolean" minOccurs="0" maxOccurs="1" default="true" />
     </all>
   </complexType>
 

@@ -56,7 +56,6 @@ import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
 import org.jooq.Query;
-import org.jooq.SQLDialectSupplier;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.exception.ControlFlowSignal;
@@ -91,18 +90,15 @@ final class BatchCRUD implements Batch {
 
     @Override
     public final int[] execute() throws DataAccessException {
-        return configuration.dialect().executor().submit(new SQLDialectSupplier<int[]>() {
-            @Override
-            public int[] get() {
 
-                // [#1180] Run batch queries with BatchMultiple, if no bind variables
-                // should be used...
-                if (executeStaticStatements(configuration.settings()))
-                    return executeStatic();
-                else
-                    return executePrepared();
-            }
-        });
+        // [#1180] Run batch queries with BatchMultiple, if no bind variables
+        // should be used...
+        if (executeStaticStatements(configuration.settings())) {
+            return executeStatic();
+        }
+        else {
+            return executePrepared();
+        }
     }
 
     private final int[] executePrepared() {

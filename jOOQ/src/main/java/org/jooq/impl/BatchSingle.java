@@ -63,7 +63,6 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Param;
 import org.jooq.Query;
-import org.jooq.SQLDialectSupplier;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.tools.JooqLogger;
 
@@ -163,29 +162,25 @@ final class BatchSingle implements BatchBindStep {
 
     @Override
     public final int[] execute() {
-        return configuration.dialect().executor().submit(new SQLDialectSupplier<int[]>() {
-            @Override
-            public int[] get() {
-                // [#4554] If no variables are bound this should be treated like a
-                // BatchMultiple as the intention was most likely to call the varargs
-                // version of DSLContext#batch(Query... queries) with a single parameter.
-                if (allBindValues.isEmpty()) {
-                    log.info("Single batch", "No bind variables have been provided with a single statement batch execution. This may be due to accidental API misuse");
-                    return BatchMultiple.execute(configuration, new Query[] { query });
-                }
 
-                checkBindValues();
+        // [#4554] If no variables are bound this should be treated like a
+        // BatchMultiple as the intention was most likely to call the varargs
+        // version of DSLContext#batch(Query... queries) with a single parameter.
+        if (allBindValues.isEmpty()) {
+            log.info("Single batch", "No bind variables have been provided with a single statement batch execution. This may be due to accidental API misuse");
+            return BatchMultiple.execute(configuration, new Query[] { query });
+        }
 
-                // [#1180] Run batch queries with BatchMultiple, if no bind variables
-                // should be used...
-                if (executeStaticStatements(configuration.settings())) {
-                    return executeStatic();
-                }
-                else {
-                    return executePrepared();
-                }
-            }
-        });
+        checkBindValues();
+
+        // [#1180] Run batch queries with BatchMultiple, if no bind variables
+        // should be used...
+        if (executeStaticStatements(configuration.settings())) {
+            return executeStatic();
+        }
+        else {
+            return executePrepared();
+        }
     }
 
     private final void checkBindValues() {

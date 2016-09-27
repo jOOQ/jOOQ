@@ -92,7 +92,6 @@ import org.jooq.Result;
 import org.jooq.Results;
 import org.jooq.Routine;
 import org.jooq.SQLDialect;
-import org.jooq.SQLDialectSupplier;
 import org.jooq.Schema;
 import org.jooq.UDTField;
 import org.jooq.UDTRecord;
@@ -285,25 +284,22 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
     @Override
     public final int execute() {
-        return configuration.dialect().executor().submit(new SQLDialectSupplier<Integer>() {
-            @Override
-            public Integer get() {
-                SQLDialect family = configuration.family();
+        SQLDialect family = configuration.family();
 
-                results.clear();
-                outValues.clear();
+        results.clear();
+        outValues.clear();
 
-                // [#4254] In PostgreSQL, there are only functions, no procedures. Some
-                // functions cannot be called using a CallableStatement, e.g. those with
-                // DEFAULT parameters
-                if (family == POSTGRES) {
-                    return executeSelectFromPOSTGRES();
-                }
+        // [#4254] In PostgreSQL, there are only functions, no procedures. Some
+        // functions cannot be called using a CallableStatement, e.g. those with
+        // DEFAULT parameters
+        if (family == POSTGRES) {
+            return executeSelectFromPOSTGRES();
+        }
 
-                // Procedures (no return value) are always executed as CallableStatement
-                else if (type == null) {
-                    return executeCallableStatement();
-                }
+        // Procedures (no return value) are always executed as CallableStatement
+        else if (type == null) {
+            return executeCallableStatement();
+        }
 
 
 
@@ -314,42 +310,40 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
 
 
-                else {
-                    switch (family) {
+        else {
+            switch (family) {
 
-                        // [#852] Some RDBMS don't allow for using JDBC procedure escape
-                        // syntax for functions. Select functions from DUAL instead
-                        case HSQLDB:
+                // [#852] Some RDBMS don't allow for using JDBC procedure escape
+                // syntax for functions. Select functions from DUAL instead
+                case HSQLDB:
 
-                            // [#692] HSQLDB cannot SELECT f() FROM [...] when f()
-                            // returns a cursor. Instead, SELECT * FROM table(f()) works
-                            if (SQLDataType.RESULT.equals(type.getSQLDataType())) {
-                                return executeSelectFromHSQLDB();
-                            }
-
-                            // Fall through
-                            else {
-                            }
-
-                        case H2:
-
-
-
-
-
-
-
-                            return executeSelect();
-
-                        // [#773] If JDBC escape syntax is available for functions, use
-                        // it to prevent transactional issues when functions issue
-                        // DML statements
-                        default:
-                            return executeCallableStatement();
+                    // [#692] HSQLDB cannot SELECT f() FROM [...] when f()
+                    // returns a cursor. Instead, SELECT * FROM table(f()) works
+                    if (SQLDataType.RESULT.equals(type.getSQLDataType())) {
+                        return executeSelectFromHSQLDB();
                     }
-                }
+
+                    // Fall through
+                    else {
+                    }
+
+                case H2:
+
+
+
+
+
+
+
+                    return executeSelect();
+
+                // [#773] If JDBC escape syntax is available for functions, use
+                // it to prevent transactional issues when functions issue
+                // DML statements
+                default:
+                    return executeCallableStatement();
             }
-        });
+        }
     }
 
 

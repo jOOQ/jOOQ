@@ -116,4 +116,11 @@ public class DataAccessException extends RuntimeException {
 
         return SQLStateSubclass.NONE;
     }
+
+    @Override
+    public StackTraceElement[] getStackTrace() {
+        return super.getStackTrace();
+    }
+
+
 }

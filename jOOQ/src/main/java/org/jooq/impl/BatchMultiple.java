@@ -48,7 +48,6 @@ import org.jooq.Configuration;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Query;
-import org.jooq.SQLDialectSupplier;
 import org.jooq.exception.ControlFlowSignal;
 
 /**
@@ -76,12 +75,7 @@ final class BatchMultiple implements Batch {
 
     @Override
     public final int[] execute() {
-        return configuration.dialect().executor().submit(new SQLDialectSupplier<int[]>() {
-            @Override
-            public int[] get() {
-                return execute(configuration, queries);
-            }
-        });
+        return execute(configuration, queries);
     }
 
     static int[] execute(final Configuration configuration, final Query[] queries) {

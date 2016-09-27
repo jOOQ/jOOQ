@@ -66,7 +66,7 @@ public enum SQLDialect {
      *             pseudo-dialect.
      */
     @Deprecated
-    SQL99("", new SQLDialectExecutors.SQL99(), false),
+    SQL99("", false),
 
     /**
      * The default SQL dialect.
@@ -75,7 +75,7 @@ public enum SQLDialect {
      * not intended to be used with any actual database as it may combined
      * dialect-specific things from various dialects.
      */
-    DEFAULT("", new SQLDialectExecutors.Default(), false),
+    DEFAULT("", false),
 
     // -------------------------------------------------------------------------
     // SQL dialects for free usage
@@ -84,47 +84,47 @@ public enum SQLDialect {
     /**
      * The CUBRID dialect family.
      */
-    CUBRID("CUBRID", new SQLDialectExecutors.Cubrid(), false),
+    CUBRID("CUBRID", false),
 
     /**
      * The Apache Derby dialect family.
      */
-    DERBY("Derby", new SQLDialectExecutors.Derby(), false),
+    DERBY("Derby", false),
 
     /**
      * The Firebird dialect family.
      */
-    FIREBIRD("Firebird", new SQLDialectExecutors.Firebird(), false),
+    FIREBIRD("Firebird", false),
 
     /**
      * The Firebird 2.5 dialect.
      */
-    FIREBIRD_2_5("Firebird", new SQLDialectExecutors.Firebird_2_5(), false, FIREBIRD, null),
+    FIREBIRD_2_5("Firebird", false, FIREBIRD, null),
 
     /**
      * The Firebird 3.0 dialect.
      */
-    FIREBIRD_3_0("Firebird", new SQLDialectExecutors.Firebird_3_0(), false, FIREBIRD, FIREBIRD_2_5),
+    FIREBIRD_3_0("Firebird", false, FIREBIRD, FIREBIRD_2_5),
 
     /**
      * The H2 dialect family.
      */
-    H2("H2", new SQLDialectExecutors.H2(), false),
+    H2("H2", false),
 
     /**
      * The Hypersonic dialect family.
      */
-    HSQLDB("HSQLDB", new SQLDialectExecutors.HSQLDB(), false),
+    HSQLDB("HSQLDB", false),
 
     /**
      * The MariaDB dialect family.
      */
-    MARIADB("MariaDB", new SQLDialectExecutors.MariaDB(), false),
+    MARIADB("MariaDB", false),
 
     /**
      * The MySQL dialect family.
      */
-    MYSQL("MySQL", new SQLDialectExecutors.MySQL(), false),
+    MYSQL("MySQL", false),
 
     /**
      * The PostgreSQL dialect family.
@@ -133,7 +133,7 @@ public enum SQLDialect {
      * extent on Amazon RedShift as well, we strongly suggest you use the
      * official {@link #REDSHIFT} support, instead.
      */
-    POSTGRES("Postgres", new SQLDialectExecutors.Postgres(), false),
+    POSTGRES("Postgres", false),
 
     /**
      * The PostgreSQL 9.3 dialect.
@@ -142,7 +142,7 @@ public enum SQLDialect {
      * extent on Amazon RedShift as well, we strongly suggest you use the
      * official {@link #REDSHIFT} support, instead.
      */
-    POSTGRES_9_3("Postgres", new SQLDialectExecutors.Postgres_9_3(), false, POSTGRES, null),
+    POSTGRES_9_3("Postgres", false, POSTGRES, null),
 
     /**
      * The PostgreSQL 9.4 dialect.
@@ -151,7 +151,7 @@ public enum SQLDialect {
      * extent on Amazon RedShift as well, we strongly suggest you use the
      * official {@link #REDSHIFT} support, instead.
      */
-    POSTGRES_9_4("Postgres", new SQLDialectExecutors.Postgres_9_4(), false, POSTGRES, POSTGRES_9_3),
+    POSTGRES_9_4("Postgres", false, POSTGRES, POSTGRES_9_3),
 
     /**
      * The PostgreSQL 9.5 dialect.
@@ -160,12 +160,12 @@ public enum SQLDialect {
      * extent on Amazon RedShift as well, we strongly suggest you use the
      * official {@link #REDSHIFT} support, instead.
      */
-    POSTGRES_9_5("Postgres", new SQLDialectExecutors.Postgres_9_5(), false, POSTGRES, POSTGRES_9_4),
+    POSTGRES_9_5("Postgres", false, POSTGRES, POSTGRES_9_4),
 
     /**
      * The SQLite dialect family.
      */
-    SQLITE("SQLite", new SQLDialectExecutors.SQLite(), false),
+    SQLITE("SQLite", false),
 
     // -------------------------------------------------------------------------
     // SQL dialects for commercial usage
@@ -348,23 +348,21 @@ public enum SQLDialect {
     }
 
     private final String              name;
-    private final SQLDialectExecutor  executor;
     private final boolean             commercial;
     private final SQLDialect          family;
     private SQLDialect                predecessor;
     private final ThirdParty          thirdParty;
 
-    private SQLDialect(String name, SQLDialectExecutor executor, boolean commercial) {
-        this(name, executor, commercial, null, null);
+    private SQLDialect(String name, boolean commercial) {
+        this(name, commercial, null, null);
     }
 
-    private SQLDialect(String name, SQLDialectExecutor executor, boolean commercial, SQLDialect family) {
-        this(name, executor, commercial, family, null);
+    private SQLDialect(String name, boolean commercial, SQLDialect family) {
+        this(name, commercial, family, null);
     }
 
-    private SQLDialect(String name, SQLDialectExecutor executor, boolean commercial, SQLDialect family, SQLDialect predecessor) {
+    private SQLDialect(String name, boolean commercial, SQLDialect family, SQLDialect predecessor) {
         this.name = name;
-        this.executor = executor;
         this.commercial = commercial;
         this.family = family == null ? this : family;
         this.predecessor = predecessor == null ? this : predecessor;
@@ -373,13 +371,6 @@ public enum SQLDialect {
             family.predecessor = this;
 
         this.thirdParty = new ThirdParty();
-    }
-
-    /**
-     * Get the executor that runs {@link SQLDialectSupplier}'s in the context of this dialect.
-     */
-    public final SQLDialectExecutor executor() {
-        return executor;
     }
 
     /**

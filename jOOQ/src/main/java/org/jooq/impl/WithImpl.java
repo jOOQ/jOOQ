@@ -190,7 +190,7 @@ implements
         ctx.keyword("with")
            .sql(' ');
 
-        if (recursive && !asList().contains(ctx.family()))
+        if (recursive && !asList().contains(ctx.configuration().dialect().family()))
             ctx.keyword("recursive")
                .sql(' ');
 

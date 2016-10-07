@@ -101,28 +101,37 @@ final class Fields<R extends Record> extends AbstractQueryPart implements Record
 
         // [#4283] table / column matches are better than only column matches
         Field<?> columnMatch = null;
+        Field<?> columnMatch2 = null;
 
         String tableName = tableName(field);
         String fieldName = field.getName();
 
         for (Field<?> f : fields) {
+            String fName = f.getName();
+
             if (tableName != null) {
                 String tName = tableName(f);
 
-                if (tName != null && tableName.equals(tName) && f.getName().equals(fieldName))
+                if (tName != null && tableName.equals(tName) && fName.equals(fieldName))
                     return (Field<T>) f;
             }
 
             // In case no exact match was found, return the first field with matching name
-            if (f.getName().equals(fieldName)) {
+            if (fName.equals(fieldName)) {
                 if (columnMatch == null)
                     columnMatch = f;
                 else
                     // [#4476] [#4477] This might be unintentional from a user
-                    // perspective, e.g. when ambiguous ID columns are present.
-                    log.info("Ambiguous match found for " + fieldName + ". Both " + columnMatch + " and " + f + " match.", new SQLWarning());
+                    //                 perspective, e.g. when ambiguous ID columns are present.
+                    // [#5578] Finish the loop, though, as we might have an exact match
+                    //         despite some ambiguity
+                    columnMatch2 = f;
             }
         }
+
+        if (columnMatch2 != null)
+            if (log.isInfoEnabled())
+                log.info("Ambiguous match found for " + fieldName + ". Both " + columnMatch + " and " + columnMatch2 + " match.", new SQLWarning());
 
         return (Field<T>) columnMatch;
     }

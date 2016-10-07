@@ -33,6 +33,7 @@ Authors and contributors of jOOQ or parts of jOOQ in alphabetical order:
 - Sean Wellington
 - Sergey Epik
 - Stanislas Nanchen
+- Stephan Schroevers
 - Sugiharto Lim
 - Sven Jacobs
 - Szymon Jachim

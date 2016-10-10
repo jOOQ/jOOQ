@@ -100,6 +100,11 @@ public interface DataType<T> extends Serializable {
      */
     DataType<T[]> getArrayDataType();
 
+    /**
+     * Retrieve the data type for single value of this data type.
+     */
+    DataType<?> getElementType();
+
 
 
 

@@ -40,9 +40,12 @@
  */
 package org.jooq.util.postgres;
 
-import static java.lang.Integer.toOctalString;
-import static org.jooq.tools.StringUtils.leftPad;
-import static org.jooq.tools.reflect.Reflect.on;
+import org.jooq.Converter;
+import org.jooq.Record;
+import org.jooq.exception.DataTypeException;
+import org.jooq.tools.reflect.Reflect;
+import org.jooq.types.DayToSecond;
+import org.jooq.types.YearToMonth;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -53,12 +56,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.jooq.Converter;
-import org.jooq.Record;
-import org.jooq.exception.DataTypeException;
-import org.jooq.tools.reflect.Reflect;
-import org.jooq.types.DayToSecond;
-import org.jooq.types.YearToMonth;
+import static java.lang.Integer.toOctalString;
+import static org.jooq.tools.StringUtils.leftPad;
+import static org.jooq.tools.reflect.Reflect.on;
 
 /**
  * A collection of utilities to cover the Postgres JDBC driver's missing
@@ -288,7 +288,7 @@ public class PostgresUtils {
      */
     @SuppressWarnings("null")
     private static List<String> toPGObjectOrArray(String input, char open, char close) {
-        List<String> values = new ArrayList<String>();
+        List<String> values = new ArrayList<>();
         int i = 0;
         int state = PG_OBJECT_INIT;
         StringBuilder sb = null;
@@ -434,6 +434,9 @@ public class PostgresUtils {
      * Create a Postgres string representation of an array
      */
     public static String toPGArrayString(Object[] value) {
+        if (value.length == 0) {
+            return "{}";
+        }
         StringBuilder sb = new StringBuilder();
         sb.append("{");
 
@@ -480,11 +483,15 @@ public class PostgresUtils {
      * Create a PostgreSQL string representation of a record.
      */
     public static String toPGString(Record r) {
+        final int len = r.size();
+        if (len == 0) {
+            return "()";
+        }
         StringBuilder sb = new StringBuilder();
         sb.append("(");
 
         String separator = "";
-        for (int i = 0; i < r.size(); i++) {
+        for (int i = 0; i < len; i++) {
             @SuppressWarnings({ "unchecked", "rawtypes" })
             Object a = ((Converter) r.field(i).getConverter()).to(r.get(i));
             sb.append(separator);
@@ -510,6 +517,9 @@ public class PostgresUtils {
      * Create a PostgreSQL string representation of a binary.
      */
     public static String toPGString(byte[] binary) {
+        if (binary.length == 0) {
+            return "";
+        }
         StringBuilder sb = new StringBuilder();
 
         for (byte b : binary) {

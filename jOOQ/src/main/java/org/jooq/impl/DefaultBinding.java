@@ -1355,6 +1355,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     @SuppressWarnings("unchecked")
     @Override
     public void get(BindingGetResultSetContext<U> ctx) throws SQLException {
+        _get(ctx, type, converter);
+    }
+
+
+    @SuppressWarnings("unchecked")
+    private static <T,U> void _get(BindingGetResultSetContext<U> ctx, final Class<T> type, final Converter<T, U> converter) throws SQLException {
         T result = null;
 
         if (type == Blob.class) {
@@ -1546,19 +1552,19 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
 
-    private final LocalDate localDate(Date date) {
+    private static LocalDate localDate(Date date) {
         return date == null ? null : date.toLocalDate();
     }
 
-    private final LocalTime localTime(Time time) {
+    private static LocalTime localTime(Time time) {
         return time == null ? null : time.toLocalTime();
     }
 
-    private final LocalDateTime localDateTime(Timestamp timestamp) {
+    private static LocalDateTime localDateTime(Timestamp timestamp) {
         return timestamp == null ? null : timestamp.toLocalDateTime();
     }
 
-    private final OffsetTime offsetTime(String string) {
+    private static OffsetTime offsetTime(String string) {
         if (string == null)
             return null;
 
@@ -1569,7 +1575,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         return OffsetTime.parse(string);
     }
 
-    private final OffsetDateTime offsetDateTime(String string) {
+    private static OffsetDateTime offsetDateTime(String string) {
         if (string == null)
             return null;
 
@@ -2096,13 +2102,20 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     // interfaces. Instead, a string representation of a UDT has to be parsed
     // -------------------------------------------------------------------------
 
-    private static final <T> T pgFromString(Class<T> type, String string) {
-        return pgFromString(Converters.identity(type), string);
-    }
+    // PGobject parsing state machine
+    private static final int    PG_OBJECT_BEFORE_VALUE       = 1;
+    private static final int    PG_OBJECT_QUOTED_VALUE       = 2;
+    private static final int    PG_OBJECT_UNQUOTED_VALUE     = 3;
+    private static final int    PG_OBJECT_AFTER_VALUE        = 4;
+
+    // quotation stack markers
+    private static final int UNQUOTED = 0;
+    private static final int QUOTED = 1;
 
     @SuppressWarnings("unchecked")
-    private static final <T> T pgFromString(Converter<?, T> converter, String string) {
-        Class<T> type = converter.toType();
+    private static <T> T pgFromString(final Field<?> field, String string, ParseContext ctx) {
+        final Converter converter = field.getConverter();
+        Class<?> type = converter.toType();
 
         if (string == null) {
             return null;
@@ -2155,6 +2168,21 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else if (type == Timestamp.class) {
             return (T) Timestamp.valueOf(string);
         }
+        else if (type == LocalTime.class) {
+            return (T) LocalTime.parse(string);
+        }
+        else if (type == LocalDate.class) {
+            return (T) LocalDate.parse(string);
+        }
+        else if (type == LocalDateTime.class) {
+            return (T) LocalDateTime.parse(string);
+        }
+        else if (type == OffsetTime.class) {
+            return (T) offsetTime(string);
+        }
+        else if (type == OffsetDateTime.class) {
+            return (T) offsetDateTime(string);
+        }
         else if (type == UByte.class) {
             return (T) UByte.valueOf(string);
         }
@@ -2171,25 +2199,109 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return (T) UUID.fromString(string);
         }
         else if (type.isArray()) {
-            return (T) pgNewArray(type, string);
+            return (T) pgNewArray(field, type, string, 0, string.length(), ctx);
         }
-
-
-
-
-
         else if (EnumType.class.isAssignableFrom(type)) {
             return (T) getEnumType((Class<EnumType>) type, string);
         }
         else if (Record.class.isAssignableFrom(type)) {
-            return (T) pgNewRecord(type, null, string);
+            return (T) pgNewRecord(type, null, string, 0, string.length(), ctx);
         }
         else if (type == Object.class) {
             return (T) string;
         }
         else {
-            Converter<Object, T> c = (Converter<Object, T>) converter;
-            return c.from(pgFromString(c.fromType(), string));
+            type = converter.fromType();
+            if (type == Blob.class) {
+                // Not supported
+            }
+            else if (type == Boolean.class) {
+                return (T) converter.from(Convert.convert(string, Boolean.class));
+            }
+            else if (type == BigInteger.class) {
+                return (T) converter.from(new BigInteger(string));
+            }
+            else if (type == BigDecimal.class) {
+                return (T) converter.from(new BigDecimal(string));
+            }
+            else if (type == Byte.class) {
+                return (T) converter.from(Byte.valueOf(string));
+            }
+            else if (type == byte[].class) {
+                return (T) converter.from(PostgresUtils.toBytes(string));
+            }
+            else if (type == Clob.class) {
+                // Not supported
+            }
+            else if (type == Date.class) {
+                return (T) converter.from(Date.valueOf(string));
+            }
+            else if (type == Double.class) {
+                return (T) converter.from(Double.valueOf(string));
+            }
+            else if (type == Float.class) {
+                return (T) converter.from(Float.valueOf(string));
+            }
+            else if (type == Integer.class) {
+                return (T) converter.from(Integer.valueOf(string));
+            }
+            else if (type == Long.class) {
+                return (T) converter.from(Long.valueOf(string));
+            }
+            else if (type == Short.class) {
+                return (T) converter.from(Short.valueOf(string));
+            }
+            else if (type == String.class) {
+                return (T) converter.from(string);
+            }
+            else if (type == Time.class) {
+                return (T) converter.from(Time.valueOf(string));
+            }
+            else if (type == Timestamp.class) {
+                return (T) converter.from(Timestamp.valueOf(string));
+            }
+            else if (type == LocalTime.class) {
+                return (T) converter.from(LocalTime.parse(string));
+            }
+            else if (type == LocalDate.class) {
+                return (T) converter.from(LocalDate.parse(string));
+            }
+            else if (type == LocalDateTime.class) {
+                return (T) converter.from(LocalDateTime.parse(string));
+            }
+            else if (type == OffsetTime.class) {
+                return (T) converter.from(offsetTime(string));
+            }
+            else if (type == OffsetDateTime.class) {
+                return (T) converter.from(offsetDateTime(string));
+            }
+            else if (type == UByte.class) {
+                return (T) converter.from(UByte.valueOf(string));
+            }
+            else if (type == UShort.class) {
+                return (T) converter.from(UShort.valueOf(string));
+            }
+            else if (type == UInteger.class) {
+                return (T) converter.from(UInteger.valueOf(string));
+            }
+            else if (type == ULong.class) {
+                return (T) converter.from(ULong.valueOf(string));
+            }
+            else if (type == UUID.class) {
+                return (T) converter.from(UUID.fromString(string));
+            }
+            else if (type.isArray()) {
+                return (T) converter.from(pgNewArray(field, type, string, 0, string.length(), ctx));
+            }
+            else if (EnumType.class.isAssignableFrom(type)) {
+                return (T) converter.from(getEnumType((Class<EnumType>) type, string));
+            }
+            else if (Record.class.isAssignableFrom(type)) {
+                return (T) converter.from(pgNewRecord(type, null, string, 0, string.length(), ctx));
+            }
+            else if (type == Object.class) {
+                return (T) converter.from(string);
+            }
         }
 
         throw new UnsupportedOperationException("Class " + type + " is not supported");
@@ -2202,31 +2314,31 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
      * support by the PostGreSQL JDBC driver has been postponed for a long time.
      *
      * @param object An object of type PGobject. The actual argument type cannot
-     *            be expressed in the method signature, as no explicit
-     *            dependency to postgres logic is desired
+     *               be expressed in the method signature, as no explicit
+     *               dependency to postgres logic is desired
      * @return The converted {@link UDTRecord}
      */
-    @SuppressWarnings("unchecked")
     static final Record pgNewRecord(Class<?> type, Field<?>[] fields, final Object object) {
         if (object == null) {
             return null;
         }
+        final String input = object.toString();
+        return pgNewRecord(type, fields, input, 0, input.length(), new ParseContext());
+    }
 
+    @SuppressWarnings("unchecked")
+    private static Record pgNewRecord(final Class<?> type, final Field<?>[] fields, final String input, final int offset,
+            final int len, final ParseContext ctx) {
         return Tools.newRecord(true, (Class<Record>) type, fields)
-                    .operate(new RecordOperation<Record, RuntimeException>() {
-
-                @Override
-                public Record operate(Record record) {
-                    List<String> values = PostgresUtils.toPGObject(object.toString());
-
-                    Row row = record.fieldsRow();
-                    for (int i = 0; i < row.size(); i++) {
-                        pgSetValue(record, row.field(i), values.get(i));
+                .operate(record -> {
+                    if ("()".regionMatches(0, input, offset, len)) {
+                        ctx.i += 2;
+                        return record;
                     }
-
+                    final Field<?>[] _fields = record.fields();
+                    toPGObject(record, ctx, input, offset, len, _fields);
                     return record;
-                }
-            });
+                });
     }
 
     /**
@@ -2266,7 +2378,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                     while (arrayRs.next()) {
                         DefaultBindingGetResultSetContext<T> out = new DefaultBindingGetResultSetContext<T>(ctx.configuration(), ctx.data(), arrayRs, 2);
-                        new DefaultBinding<T, T>(Converters.identity((Class<T>) type.getComponentType()), false).get(out);
+                        final Class<T> componentType = (Class<T>)type.getComponentType();
+                        DefaultBinding._get(out, componentType, Converters.identity(componentType));
                         result.add(out.value());
                     }
                 }
@@ -2302,37 +2415,24 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
      * Unfortunately, this feature is very poorly documented and true UDT
      * support by the PostGreSQL JDBC driver has been postponed for a long time.
      *
-     * @param string A String representation of an array
+     * @param input A String representation of an array
      * @return The converted array
      */
-    private static final Object[] pgNewArray(Class<?> type, String string) {
-        if (string == null) {
-            return null;
-        }
-
+    @SuppressWarnings("unchecked")
+    private static Object[] pgNewArray(final Field<?> field, Class<?> type, String input, final int offset, final int len, final ParseContext ctx) {
         try {
-            Class<?> component = type.getComponentType();
-            List<String> values = PostgresUtils.toPGArray(string);
-
-            if (values.isEmpty()) {
-                return (Object[]) java.lang.reflect.Array.newInstance(component, 0);
+            final Class<?> component = type.getComponentType();
+            final Object[] empty = (Object[]) java.lang.reflect.Array.newInstance(component, 0);
+            if ("{}".equals(input)) {
+                return empty;
             }
-            else {
-                Object[] result = (Object[]) java.lang.reflect.Array.newInstance(component, values.size());
-
-                for (int i = 0; i < values.size(); i++)
-                    result[i] = pgFromString(type.getComponentType(), values.get(i));
-
-                return result;
-            }
+            final List<Object> values = new ArrayList<>();
+            toPGArray(ctx, values, input, offset, len, field);
+            return values.toArray(empty);
         }
         catch (Exception e) {
             throw new DataTypeException("Error while creating array", e);
         }
-    }
-
-    static final <T> void pgSetValue(Record record, Field<T> field, String value) {
-        record.set(field, pgFromString(field.getConverter(), value));
     }
 
     private static final void pgRenderEnumCast(RenderContext render, Class<?> type) {
@@ -2363,6 +2463,286 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         if (type.isArray())
             render.sql("[]");
+    }
+
+    /**
+     * Tokenize a PG array
+     */
+    private static void toPGArray(final ParseContext ctx, final List<Object> values, final String input, int i, final int len,
+            final Field<?> field) {
+        final DataType<?> dataType = field.getDataType().getElementType();
+        if (input.charAt(i) != '{') {
+            return;
+        }
+        ++i;
+        if (i == len) {
+            return;
+        }
+        else {
+            final char c = input.charAt(i);
+            if (c == '"') {
+                ctx.push(QUOTED);
+                ++i;
+            }
+            else {
+                ctx.push(UNQUOTED);
+            }
+        }
+        int depth = 0;
+        char n;
+        boolean quoted = false;
+        while (i < len) {
+            char c = input.charAt(i);
+            switch (c) {
+                case '\\':
+                case '"':
+                    unquote(ctx, input, i, len);
+                    i = ctx.i;
+                    c = input.charAt(i);
+            }
+            switch (c) {
+                case '"':
+                    unquote(ctx, input, i + 1, len);
+                    n = input.charAt(ctx.i);
+                    switch (n) {
+                        case '"':
+                            ctx.sb.append(c);
+                            i = ctx.i;
+                            break;
+
+                        default:
+                            quoted = !quoted;
+                    }
+                    break;
+
+                case '{':
+                    if (depth != 0) {
+                        if (dataType.isArray()) {
+                            values.add(pgNewArray(field, dataType.getType(), input, i, len - i, ctx));
+                            i = ctx.i;
+                        } else {
+                            ctx.sb.append(c);
+                        }
+                    }
+                    ++depth;
+                    break;
+
+                case '}':
+                    --depth;
+                    if (depth != 0) {
+                        if (!dataType.isArray()) {
+                            ctx.sb.append(c);
+                        }
+                    } else {
+                        values.add(pgFromString(field, ctx.getValue(), ctx));
+                        ctx.i = i + 1;
+                        ctx.pop();
+                        return;
+                    }
+                    break;
+
+                case '(':
+                    values.add(pgNewRecord(dataType.getType(), null, input, i, len - i, ctx));
+                    i = ctx.i;
+                    continue;
+
+                case ',':
+                    if (depth == 1) {
+                        values.add(pgFromString(field, ctx.getValue(), ctx));
+                    } else if (!dataType.isArray()) {
+                        ctx.sb.append(c);
+                    }
+                    break;
+
+                default:
+                    ctx.sb.append(c);
+            }
+
+            ++i;
+        }
+
+        ctx.i = i;
+        ctx.pop();
+    }
+
+    /**
+     * Tokenize a PGObject input string
+     */
+    private static void toPGObject(final Record record, final ParseContext ctx, final String input, int i, final int len, final Field<?>[] fields) {
+        if ('(' != input.charAt(i)) {
+            return;
+        }
+        ++i;
+        if (i == len) {
+            return;
+        }
+        else {
+            final char c = input.charAt(i);
+            if (c == '"') {
+                ctx.push(QUOTED);
+                ++i;
+            }
+            else {
+                ctx.push(UNQUOTED);
+            }
+        }
+        int fieldIdx = 0, depth = 0, state = PG_OBJECT_BEFORE_VALUE;
+        char n;
+        boolean quoted = false;
+        Field field = fields[fieldIdx];
+        DataType<?> dataType = field.getDataType();
+
+        while (i < len) {
+            char c = input.charAt(i);
+            switch (c) {
+                case '\\':
+                case '"':
+                    unquote(ctx, input, i, len);
+                    i = ctx.i;
+                    c = input.charAt(i);
+            }
+
+            switch (c) {
+                case '"':
+                    unquote(ctx, input, i + 1, len);
+                    n = input.charAt(ctx.i);
+                    switch (n) {
+                        case '"':
+                            ctx.sb.append(c);
+                            i = ctx.i;
+                            break;
+
+                        default:
+                            quoted = !quoted;
+                    }
+                    break;
+
+                case '(':
+                    record.setValue(field, pgNewRecord(dataType.getType(), null, input, i, len - i, ctx));
+                    i = ctx.i;
+                    state = PG_OBJECT_AFTER_VALUE;
+                    break;
+
+                case ')':
+                    record.setValue(field, pgFromString(field, ctx.getValue(), ctx));
+                    ctx.i = i + 1;
+                    ctx.pop();
+                    return;
+
+                case '{':
+                    if (dataType.isArray()) {
+                        record.setValue(field, pgNewArray(field, dataType.getType(), input, i, len - i, ctx));
+                        i = ctx.i;
+                        state = PG_OBJECT_AFTER_VALUE;
+                    } else {
+                        ++depth;
+                        ctx.sb.append(c);
+                    }
+                    break;
+
+                case '}':
+                    if (!dataType.isArray()) {
+                        --depth;
+                        ctx.sb.append(c);
+                    }
+                    break;
+
+                case ',':
+                    if (depth == 0 && !quoted) {
+                        record.setValue(field, pgFromString(field, ctx.getValue(), ctx));
+                        field = fields[++fieldIdx];
+                        dataType = field.getDataType();
+                        state = PG_OBJECT_BEFORE_VALUE;
+                    } else {
+                        ctx.sb.append(c);
+                    }
+                    break;
+
+                case 'n':
+                case 'N':
+                    if (state == PG_OBJECT_BEFORE_VALUE
+                            && input.regionMatches(true, i, "null", 0, 4)) {
+                        record.setValue(field, pgFromString(field, null, ctx));
+                        i += 3;
+                        state = PG_OBJECT_AFTER_VALUE;
+                    } else {
+                        ctx.sb.append(c);
+                    }
+                    break;
+
+                default:
+                    ctx.sb.append(c);
+            }
+            i++;
+        }
+
+        ctx.i = i;
+        ctx.pop();
+    }
+
+    private static void unquote(final ParseContext ctx, final String input, int i, final int len) {
+        for (final int max = Math.min(len, i + ((2 * ctx.quotes) - 1)); i < max; ++i) {
+            char c = input.charAt(i);
+            switch (c) {
+                case '\\':
+                case '"':
+                    continue;
+
+                default:
+                    break;
+            }
+        }
+        ctx.i = i;
+    }
+
+    private static final class ParseContext {
+        /**
+         * Builder for the current value
+         */
+        final StringBuilder sb = new StringBuilder();
+        /**
+         * Used to store the position off the stack
+         */
+        int i;
+        /**
+         * These is used to work out what to expect in the way of quoting.
+         * Arrays will quote things inside them by backslash escaping both quotes and backslashes inside them.
+         * Objects will quote things by doubling the number of both quotes and backslashes inside them.
+         * Both will only quote things if they need to, if they are quoting the first character in the
+         * object or array will be " which will mean we then have to double the expected number of escapes.
+         */
+        int[] stack = new int[8];
+        int quotes = 0;
+        int depth = 0;
+
+        void push(final int type) {
+            if (type == QUOTED || this.quotes > 0) {
+                ++this.quotes;
+            }
+            final int d = this.depth;
+            int[] stack = this.stack;
+            if (d >= stack.length) {
+                this.stack = new int[stack.length * 2];
+                System.arraycopy(stack, 0, this.stack, 0, d);
+            }
+            this.stack[this.depth = d + 1] = type;
+        }
+
+        void pop() {
+            --this.depth;
+            if (this.quotes > 0) {
+                --this.quotes;
+            }
+        }
+
+        String getValue() {
+            if (this.sb.length() == 0) {
+                return null;
+            }
+            final String ret = sb.toString();
+            sb.setLength(0);
+            return ret;
+        }
     }
 }
 

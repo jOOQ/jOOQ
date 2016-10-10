@@ -649,6 +649,11 @@ public class DefaultDataType<T> implements DataType<T> {
         return new ArrayDataType<T>(this);
     }
 
+    @Override
+    public DataType<?> getElementType() {
+        return this;
+    }
+
 
 
 

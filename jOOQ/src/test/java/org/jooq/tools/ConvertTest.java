@@ -28,8 +28,15 @@ public class ConvertTest {
 	@Test
 	public void testFromCollection(){
 		List<String> list = asList("Hello", "world", "!");
-
-		String[] arr = new Convert.ConvertAll<>(String[].class).from(list);
+		String[] arr = Convert.convertCollection(list, String[].class);
 		assertEquals(list, asList(arr));
+
+		String[] numStrings = new String[]{"1", "2", "3"};
+		List<Integer> integerList = asList(1, 2, 3);
+
+		String[] convertedNumString = Convert.convertCollection(integerList, String[].class);
+		assertTrue(Arrays.equals(numStrings, convertedNumString));
+
+		assertTrue(Arrays.equals(new String[0], Convert.convertCollection(new LinkedList<Integer>(), String[].class)));
 	}
 }

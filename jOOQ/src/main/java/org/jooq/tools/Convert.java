@@ -296,6 +296,10 @@ public final class Convert {
         }
     }
 
+    public static final <U> U[] convertCollection(Collection from, Class<? extends U[]> to){
+        return new ConvertAll<U[]>(to).from(from);
+    }
+
     /**
      * Convert an object to a type.
      *
@@ -430,7 +434,7 @@ public final class Convert {
     /**
      * The converter to convert them all.
      */
-    static class ConvertAll<U> implements Converter<Object, U> {
+    private static class ConvertAll<U> implements Converter<Object, U> {
 
         /**
          * Generated UID
@@ -496,6 +500,7 @@ public final class Convert {
                 else if (fromClass.isArray()) {
                     Object[] fromArray = (Object[]) from;
 
+                    // [#3062] Default collections if no specific collection type was requested
                     if (Collection.class.isAssignableFrom(toClass) &&
                             toClass.isAssignableFrom(ArrayList.class)) {
                         return (U) new ArrayList(Arrays.asList(fromArray));
@@ -517,7 +522,18 @@ public final class Convert {
                 else if (toClass.isArray()
                         && Collection.class.isAssignableFrom(fromClass)){
                     Collection f = (Collection) from;
-                    return (U) f.toArray();
+                    Class componentType = toClass.getComponentType();
+
+                    Object[] dest = (Object[]) Array.newInstance(componentType, f.size());
+                    Object[] list = f.stream()
+                            .map(e -> {
+                                if (!componentType.isAssignableFrom(e.getClass()))
+                                    return convert(e, componentType);
+                                return e;
+                            }).toArray();
+                    System.arraycopy(list, 0, dest, 0, dest.length);
+
+                    return (U) dest;
                 }
 
                 else if (toClass == Optional.class) {

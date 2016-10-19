@@ -41,6 +41,7 @@
 package org.jooq.util;
 
 import static org.jooq.util.GenerationUtil.convertToIdentifier;
+import static org.jooq.util.GenerationUtil.escapeWindowsForbiddenNames;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -322,6 +323,7 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
         className = delegate.getJavaClassName(definition, mode);
         className = overload(definition, mode, className);
         className = convertToIdentifier(className, language);
+        className = escapeWindowsForbiddenNames(className);
 
         return className;
     }
@@ -338,6 +340,7 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
 
         for (int i = 0; i < split.length; i++) {
             split[i] = convertToIdentifier(split[i], language);
+            split[i] = escapeWindowsForbiddenNames(split[i]);
         }
 
         return StringUtils.join(split, ".");

@@ -191,6 +191,32 @@ class GenerationUtil {
         ','
     )));
 
+    private static Set<String> WINDOWS_FORBIDDEN = unmodifiableSet(new HashSet<String>(asList(
+        "CON",
+        "PRN",
+        "AUX",
+        "CLOCK$",
+        "NUL",
+        "COM1",
+        "COM2",
+        "COM3",
+        "COM4",
+        "COM5",
+        "COM6",
+        "COM7",
+        "COM8",
+        "COM9",
+        "LPT1",
+        "LPT2",
+        "LPT3",
+        "LPT4",
+        "LPT5",
+        "LPT6",
+        "LPT7",
+        "LPT8",
+        "LPT9"
+    )));
+
     /**
      * Take a character and determine if it's a valid "Scala Letter"
      * http://www.scala-lang.org/files/archive/spec/2.11/01-lexical-syntax.html
@@ -233,10 +259,23 @@ class GenerationUtil {
      * Letters, which include lower case letters (Ll), upper case letters (Lu), titlecase letters (Lt), other letters (Lo), letter numerals (Nl) and the two characters \u0024 ‘$’ and \u005F ‘_’, which both count as upper case letters.
      *
      * Character.isLetter handles the Ll, Lu, Lt, Lo, and Nl, supplement with _ and $
-     *
      */
     private static Boolean isScalaIdentifierPart(char c) {
         return isScalaIdentifierStart(c) || Character.isDigit(c);
+    }
+
+    /**
+     * Take a name and escape it if it is a Windows forbidden name like
+     * <code>CON</code> or <code>AUX</code>.
+     *
+     * @see <a href="https://github.com/jOOQ/jOOQ/issues/5596">#5596</a>
+     */
+    public static String escapeWindowsForbiddenNames(String name) {
+        return name == null
+             ? null
+             : WINDOWS_FORBIDDEN.contains(name.toUpperCase())
+             ? name + "_"
+             : name;
     }
 
     /**

@@ -405,7 +405,7 @@
       <!--
         All elements that are excluded from your schema (A Java regular expression.
         Use the pipe to separate several expressions). Excludes match before
-        includes
+        includes, i.e. excludes have a higher priority.
         -->
       <element name="excludes" type="string" default="" minOccurs="0" maxOccurs="1" />
 

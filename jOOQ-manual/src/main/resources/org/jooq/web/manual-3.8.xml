@@ -906,7 +906,7 @@ CREATE TABLE `author` (
 
       <!-- All elements that are excluded from your schema
            (A Java regular expression. Use the pipe to separate several expressions).
-           Excludes match before includes -->
+           Excludes match before includes, i.e. excludes have a higher priority -->
       <excludes></excludes>
     </database>
 
@@ -13187,7 +13187,7 @@ result.forEach((Object[] entities) -> {
 
       <!-- All elements that are excluded from your schema (A Java regular expression.
            Use the pipe to separate several expressions). Excludes match before
-           includes -->
+           includes, i.e. excludes have a higher priority -->
       <excludes>
            UNUSED_TABLE                # This table (unqualified name) should not be generated
          | PREFIX_.*                   # Objects with a given prefix should not be generated

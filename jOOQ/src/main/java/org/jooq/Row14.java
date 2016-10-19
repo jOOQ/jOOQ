@@ -58,6 +58,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 
 import org.jooq.Comparator;
+import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 
 import java.util.Collection;
@@ -1223,6 +1224,19 @@ public interface Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * such predicates natively: <code>(A, B) IN ((1, 2), (3, 4))</code> is
      * equivalent to <code>((A, B) = (1, 2)) OR ((A, B) = (3, 4))</code>, which
      * is equivalent to <code>(A = 1 AND B = 2) OR (A = 3 AND B = 4)</code>
+     * <p>
+     * Note that generating dynamic SQL with arbitrary-length
+     * <code>IN</code> predicates can cause cursor cache contention in some
+     * databases that use unique SQL strings as a statement identifier (e.g.
+     * {@link SQLDialect#ORACLE}). In order to prevent such problems, you could
+     * use {@link Settings#isInListPadding()} to produce less distinct SQL
+     * strings (see also
+     * <a href="https://github.com/jOOQ/jOOQ/issues/5600">[#5600]</a>), or you
+     * could avoid <code>IN</code> lists, and replace them with:
+     * <ul>
+     * <li><code>IN</code> predicates on temporary tables</li>
+     * <li><code>IN</code> predicates on unnested array bind variables</li>
+     * </ul>
      */
     @Support
     Condition in(Collection<? extends Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> rows);
@@ -1235,6 +1249,19 @@ public interface Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * such predicates natively: <code>(A, B) IN ((1, 2), (3, 4))</code> is
      * equivalent to <code>((A, B) = (1, 2)) OR ((A, B) = (3, 4))</code>, which
      * is equivalent to <code>(A = 1 AND B = 2) OR (A = 3 AND B = 4)</code>
+     * <p>
+     * Note that generating dynamic SQL with arbitrary-length
+     * <code>IN</code> predicates can cause cursor cache contention in some
+     * databases that use unique SQL strings as a statement identifier (e.g.
+     * {@link SQLDialect#ORACLE}). In order to prevent such problems, you could
+     * use {@link Settings#isInListPadding()} to produce less distinct SQL
+     * strings (see also
+     * <a href="https://github.com/jOOQ/jOOQ/issues/5600">[#5600]</a>), or you
+     * could avoid <code>IN</code> lists, and replace them with:
+     * <ul>
+     * <li><code>IN</code> predicates on temporary tables</li>
+     * <li><code>IN</code> predicates on unnested array bind variables</li>
+     * </ul>
      */
     @Support
     Condition in(Result<? extends Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> result);
@@ -1242,6 +1269,19 @@ public interface Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     /**
      * Compare this row value expression with a set of row value expressions for
      * equality.
+     * <p>
+     * Note that generating dynamic SQL with arbitrary-length
+     * <code>IN</code> predicates can cause cursor cache contention in some
+     * databases that use unique SQL strings as a statement identifier (e.g.
+     * {@link SQLDialect#ORACLE}). In order to prevent such problems, you could
+     * use {@link Settings#isInListPadding()} to produce less distinct SQL
+     * strings (see also
+     * <a href="https://github.com/jOOQ/jOOQ/issues/5600">[#5600]</a>), or you
+     * could avoid <code>IN</code> lists, and replace them with:
+     * <ul>
+     * <li><code>IN</code> predicates on temporary tables</li>
+     * <li><code>IN</code> predicates on unnested array bind variables</li>
+     * </ul>
      *
      * @see #in(Collection)
      */
@@ -1250,6 +1290,19 @@ public interface Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with a set of records for equality.
+     * <p>
+     * Note that generating dynamic SQL with arbitrary-length
+     * <code>IN</code> predicates can cause cursor cache contention in some
+     * databases that use unique SQL strings as a statement identifier (e.g.
+     * {@link SQLDialect#ORACLE}). In order to prevent such problems, you could
+     * use {@link Settings#isInListPadding()} to produce less distinct SQL
+     * strings (see also
+     * <a href="https://github.com/jOOQ/jOOQ/issues/5600">[#5600]</a>), or you
+     * could avoid <code>IN</code> lists, and replace them with:
+     * <ul>
+     * <li><code>IN</code> predicates on temporary tables</li>
+     * <li><code>IN</code> predicates on unnested array bind variables</li>
+     * </ul>
      *
      * @see #in(Collection)
      */
@@ -1273,6 +1326,19 @@ public interface Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * <code>(A, B) NOT IN ((1, 2), (3, 4))</code> is equivalent to
      * <code>NOT(((A, B) = (1, 2)) OR ((A, B) = (3, 4)))</code>, which is
      * equivalent to <code>NOT((A = 1 AND B = 2) OR (A = 3 AND B = 4))</code>
+     * <p>
+     * Note that generating dynamic SQL with arbitrary-length
+     * <code>NOT IN</code> predicates can cause cursor cache contention in some
+     * databases that use unique SQL strings as a statement identifier (e.g.
+     * {@link SQLDialect#ORACLE}). In order to prevent such problems, you could
+     * use {@link Settings#isInListPadding()} to produce less distinct SQL
+     * strings (see also
+     * <a href="https://github.com/jOOQ/jOOQ/issues/5600">[#5600]</a>), or you
+     * could avoid <code>IN</code> lists, and replace them with:
+     * <ul>
+     * <li><code>NOT IN</code> predicates on temporary tables</li>
+     * <li><code>NOT IN</code> predicates on unnested array bind variables</li>
+     * </ul>
      */
     @Support
     Condition notIn(Collection<? extends Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> rows);
@@ -1286,6 +1352,19 @@ public interface Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * <code>(A, B) NOT IN ((1, 2), (3, 4))</code> is equivalent to
      * <code>NOT(((A, B) = (1, 2)) OR ((A, B) = (3, 4)))</code>, which is
      * equivalent to <code>NOT((A = 1 AND B = 2) OR (A = 3 AND B = 4))</code>
+     * <p>
+     * Note that generating dynamic SQL with arbitrary-length
+     * <code>NOT IN</code> predicates can cause cursor cache contention in some
+     * databases that use unique SQL strings as a statement identifier (e.g.
+     * {@link SQLDialect#ORACLE}). In order to prevent such problems, you could
+     * use {@link Settings#isInListPadding()} to produce less distinct SQL
+     * strings (see also
+     * <a href="https://github.com/jOOQ/jOOQ/issues/5600">[#5600]</a>), or you
+     * could avoid <code>IN</code> lists, and replace them with:
+     * <ul>
+     * <li><code>NOT IN</code> predicates on temporary tables</li>
+     * <li><code>NOT IN</code> predicates on unnested array bind variables</li>
+     * </ul>
      */
     @Support
     Condition notIn(Result<? extends Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> result);
@@ -1293,6 +1372,19 @@ public interface Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     /**
      * Compare this row value expression with a set of row value expressions for
      * equality.
+     * <p>
+     * Note that generating dynamic SQL with arbitrary-length
+     * <code>NOT IN</code> predicates can cause cursor cache contention in some
+     * databases that use unique SQL strings as a statement identifier (e.g.
+     * {@link SQLDialect#ORACLE}). In order to prevent such problems, you could
+     * use {@link Settings#isInListPadding()} to produce less distinct SQL
+     * strings (see also
+     * <a href="https://github.com/jOOQ/jOOQ/issues/5600">[#5600]</a>), or you
+     * could avoid <code>IN</code> lists, and replace them with:
+     * <ul>
+     * <li><code>NOT IN</code> predicates on temporary tables</li>
+     * <li><code>NOT IN</code> predicates on unnested array bind variables</li>
+     * </ul>
      *
      * @see #notIn(Collection)
      */
@@ -1301,6 +1393,19 @@ public interface Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with a set of records for non-equality.
+     * <p>
+     * Note that generating dynamic SQL with arbitrary-length
+     * <code>NOT IN</code> predicates can cause cursor cache contention in some
+     * databases that use unique SQL strings as a statement identifier (e.g.
+     * {@link SQLDialect#ORACLE}). In order to prevent such problems, you could
+     * use {@link Settings#isInListPadding()} to produce less distinct SQL
+     * strings (see also
+     * <a href="https://github.com/jOOQ/jOOQ/issues/5600">[#5600]</a>), or you
+     * could avoid <code>IN</code> lists, and replace them with:
+     * <ul>
+     * <li><code>NOT IN</code> predicates on temporary tables</li>
+     * <li><code>NOT IN</code> predicates on unnested array bind variables</li>
+     * </ul>
      *
      * @see #notIn(Collection)
      */

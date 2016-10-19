@@ -1468,6 +1468,19 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * Create a condition to check this field against several values.
      * <p>
      * SQL: <code>this in (values...)</code>
+     * <p>
+     * Note that generating dynamic SQL with arbitrary-length <code>IN</code>
+     * predicates can cause cursor cache contention in some databases that use
+     * unique SQL strings as a statement identifier (e.g.
+     * {@link SQLDialect#ORACLE}). In order to prevent such problems, you could
+     * use {@link Settings#isInListPadding()} to produce less distinct SQL
+     * strings (see also
+     * <a href="https://github.com/jOOQ/jOOQ/issues/5600">[#5600]</a>), or you
+     * could avoid <code>IN</code> lists, and replace them with:
+     * <ul>
+     * <li><code>IN</code> predicates on temporary tables</li>
+     * <li><code>IN</code> predicates on unnested array bind variables</li>
+     * </ul>
      */
     @Support
     Condition in(Collection<?> values);
@@ -1477,6 +1490,19 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * previous query.
      * <p>
      * SQL: <code>this in (values...)</code>
+     * <p>
+     * Note that generating dynamic SQL with arbitrary-length <code>IN</code>
+     * predicates can cause cursor cache contention in some databases that use
+     * unique SQL strings as a statement identifier (e.g.
+     * {@link SQLDialect#ORACLE}). In order to prevent such problems, you could
+     * use {@link Settings#isInListPadding()} to produce less distinct SQL
+     * strings (see also
+     * <a href="https://github.com/jOOQ/jOOQ/issues/5600">[#5600]</a>), or you
+     * could avoid <code>IN</code> lists, and replace them with:
+     * <ul>
+     * <li><code>IN</code> predicates on temporary tables</li>
+     * <li><code>IN</code> predicates on unnested array bind variables</li>
+     * </ul>
      */
     Condition in(Result<? extends Record1<T>> result);
 
@@ -1484,6 +1510,19 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * Create a condition to check this field against several values.
      * <p>
      * SQL: <code>this in (values...)</code>
+     * <p>
+     * Note that generating dynamic SQL with arbitrary-length <code>IN</code>
+     * predicates can cause cursor cache contention in some databases that use
+     * unique SQL strings as a statement identifier (e.g.
+     * {@link SQLDialect#ORACLE}). In order to prevent such problems, you could
+     * use {@link Settings#isInListPadding()} to produce less distinct SQL
+     * strings (see also
+     * <a href="https://github.com/jOOQ/jOOQ/issues/5600">[#5600]</a>), or you
+     * could avoid <code>IN</code> lists, and replace them with:
+     * <ul>
+     * <li><code>IN</code> predicates on temporary tables</li>
+     * <li><code>IN</code> predicates on unnested array bind variables</li>
+     * </ul>
      */
     @Support
     Condition in(T... values);
@@ -1516,6 +1555,19 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * the dialect) as well. This is standard SQL behaviour.
      * <p>
      * SQL: <code>this not in (values...)</code>
+     * <p>
+     * Note that generating dynamic SQL with arbitrary-length
+     * <code>NOT IN</code> predicates can cause cursor cache contention in some
+     * databases that use unique SQL strings as a statement identifier (e.g.
+     * {@link SQLDialect#ORACLE}). In order to prevent such problems, you could
+     * use {@link Settings#isInListPadding()} to produce less distinct SQL
+     * strings (see also
+     * <a href="https://github.com/jOOQ/jOOQ/issues/5600">[#5600]</a>), or you
+     * could avoid <code>IN</code> lists, and replace them with:
+     * <ul>
+     * <li><code>NOT IN</code> predicates on temporary tables</li>
+     * <li><code>NOT IN</code> predicates on unnested array bind variables</li>
+     * </ul>
      */
     @Support
     Condition notIn(Collection<?> values);
@@ -1529,6 +1581,19 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * the dialect) as well. This is standard SQL behaviour.
      * <p>
      * SQL: <code>this in (values...)</code>
+     * <p>
+     * Note that generating dynamic SQL with arbitrary-length
+     * <code>NOT IN</code> predicates can cause cursor cache contention in some
+     * databases that use unique SQL strings as a statement identifier (e.g.
+     * {@link SQLDialect#ORACLE}). In order to prevent such problems, you could
+     * use {@link Settings#isInListPadding()} to produce less distinct SQL
+     * strings (see also
+     * <a href="https://github.com/jOOQ/jOOQ/issues/5600">[#5600]</a>), or you
+     * could avoid <code>IN</code> lists, and replace them with:
+     * <ul>
+     * <li><code>NOT IN</code> predicates on temporary tables</li>
+     * <li><code>NOT IN</code> predicates on unnested array bind variables</li>
+     * </ul>
      */
     Condition notIn(Result<? extends Record1<T>> result);
 
@@ -1540,6 +1605,19 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * the dialect) as well. This is standard SQL behaviour.
      * <p>
      * SQL: <code>this not in (values...)</code>
+     * <p>
+     * Note that generating dynamic SQL with arbitrary-length
+     * <code>NOT IN</code> predicates can cause cursor cache contention in some
+     * databases that use unique SQL strings as a statement identifier (e.g.
+     * {@link SQLDialect#ORACLE}). In order to prevent such problems, you could
+     * use {@link Settings#isInListPadding()} to produce less distinct SQL
+     * strings (see also
+     * <a href="https://github.com/jOOQ/jOOQ/issues/5600">[#5600]</a>), or you
+     * could avoid <code>IN</code> lists, and replace them with:
+     * <ul>
+     * <li><code>NOT IN</code> predicates on temporary tables</li>
+     * <li><code>NOT IN</code> predicates on unnested array bind variables</li>
+     * </ul>
      */
     @Support
     Condition notIn(T... values);

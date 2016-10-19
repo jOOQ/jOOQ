@@ -188,6 +188,13 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
         return new RowImpl(fields0());
     }
 
+
+    @Override
+    public final Stream<Field<?>> fieldStream() {
+        return Stream.of(fields());
+    }
+
+
     @Override
     public final <T> Field<T> field(Field<T> field) {
         return fieldsRow().field(field);

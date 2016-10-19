@@ -45,6 +45,7 @@ import static org.jooq.Clause.CATALOG_REFERENCE;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.jooq.Catalog;
 import org.jooq.Clause;
@@ -114,6 +115,13 @@ public class CatalogImpl extends AbstractQueryPart implements Catalog {
     public List<Schema> getSchemas() {
         return Collections.emptyList();
     }
+
+
+    @Override
+    public final Stream<Schema> schemaStream() {
+        return getSchemas().stream();
+    }
+
 
     // ------------------------------------------------------------------------
     // XXX: Object API

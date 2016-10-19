@@ -40,6 +40,7 @@
  */
 package org.jooq;
 
+import java.util.stream.Stream;
 
 /**
  * A model type for a row value expression.
@@ -56,6 +57,13 @@ public interface Row extends FieldOrRow {
      * Get the degree of this row value expression.
      */
     int size();
+
+
+    /**
+     * Get the fields from this row as a {@link Stream}.
+     */
+    Stream<Field<?>> fieldStream();
+
 
     /**
      * Get a specific field from this row.

@@ -42,6 +42,7 @@ package org.jooq;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 /**
  * An object that can behave like a table (a table-like object)
@@ -55,6 +56,13 @@ public interface TableLike<R extends Record> extends QueryPart {
      * Get this table's fields as a {@link Row}.
      */
     Row fieldsRow();
+
+
+    /**
+     * Get this table's fields as a {@link Stream}.
+     */
+    Stream<Field<?>> fieldStream();
+
 
     /**
      * Get a specific field from this table.

@@ -42,6 +42,7 @@
 package org.jooq;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * An object representing a database schema.
@@ -61,6 +62,13 @@ public interface Schema extends QueryPart {
     String getName();
 
     /**
+     * Stream all tables contained in this schema.
+     */
+
+    Stream<Table<?>> tableStream();
+
+
+    /**
      * List all tables contained in this schema.
      */
     List<Table<?>> getTables();
@@ -70,6 +78,13 @@ public interface Schema extends QueryPart {
      * <code>null</code> if no such table exists.
      */
     Table<?> getTable(String name);
+
+
+    /**
+     * Stream all UDTs contained in this schema.
+     */
+    Stream<UDT<?>> udtStream();
+
 
     /**
      * List all UDTs contained in this schema.
@@ -81,6 +96,13 @@ public interface Schema extends QueryPart {
      * <code>null</code> if no such UDT exists.
      */
     UDT<?> getUDT(String name);
+
+    /**
+     * Stream all sequences contained in this schema.
+     */
+
+    Stream<Sequence<?>> sequenceStream();
+
 
     /**
      * List all sequences contained in this schema.

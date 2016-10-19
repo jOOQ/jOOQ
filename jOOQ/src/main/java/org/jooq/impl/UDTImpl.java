@@ -40,6 +40,8 @@
  */
 package org.jooq.impl;
 
+import java.util.stream.Stream;
+
 import org.jooq.Binding;
 import org.jooq.Catalog;
 import org.jooq.Clause;
@@ -97,6 +99,13 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
     public final Row fieldsRow() {
         return new RowImpl(fields);
     }
+
+
+    @Override
+    public final Stream<Field<?>> fieldStream() {
+        return Stream.of(fields());
+    }
+
 
     @Override
     public final <T> Field<T> field(Field<T> field) {

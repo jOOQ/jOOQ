@@ -40,7 +40,7 @@
  */
 package org.jooq;
 
-
+import java.util.stream.Stream;
 
 /**
  * UDT definition
@@ -54,6 +54,13 @@ public interface UDT<R extends UDTRecord<R>> extends QueryPart {
      * Get this UDT's fields as a {@link Row}
      */
     Row fieldsRow();
+
+
+    /**
+     * Get this table's fields as a {@link Stream}.
+     */
+    Stream<Field<?>> fieldStream();
+
 
     /**
      * Get a specific field from this UDT.

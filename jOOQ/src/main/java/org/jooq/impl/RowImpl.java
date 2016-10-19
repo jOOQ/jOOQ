@@ -46,6 +46,7 @@ import static org.jooq.impl.DSL.row;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -225,6 +226,13 @@ implements
     public final int size() {
         return fields.size();
     }
+
+
+    @Override
+    public final Stream<Field<?>> fieldStream() {
+        return Stream.of(fields());
+    }
+
 
     @Override
     public final <T> Field<T> field(Field<T> field) {

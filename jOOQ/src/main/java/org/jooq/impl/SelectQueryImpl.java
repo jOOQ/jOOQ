@@ -119,6 +119,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 import org.jooq.Clause;
 import org.jooq.Condition;
@@ -279,6 +280,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     public final Row fieldsRow() {
         return asTable().fieldsRow();
     }
+
+
+    @Override
+    public final Stream<Field<?>> fieldStream() {
+        return Stream.of(fields());
+    }
+
 
     @Override
     public final <T> Field<T> field(Field<T> field) {

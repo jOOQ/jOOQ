@@ -41,13 +41,21 @@
 
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
+import static java.util.Arrays.asList;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_IN;
 import static org.jooq.Clause.CONDITION_NOT_IN;
 import static org.jooq.Comparator.IN;
+import static org.jooq.SQLDialect.FIREBIRD;
+// ...
+// ...
+// ...
+import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.trueCondition;
 
+import java.util.AbstractList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -55,20 +63,22 @@ import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.tools.JooqLogger;
 
 /**
  * @author Lukas Eder
  */
 final class InCondition<T> extends AbstractCondition {
 
-    private static final long     serialVersionUID = -1653924248576930761L;
-    private static final int      IN_LIMIT         = 1000;
-    private static final Clause[] CLAUSES_IN       = { CONDITION, CONDITION_IN };
-    private static final Clause[] CLAUSES_IN_NOT   = { CONDITION, CONDITION_NOT_IN };
+    private static final JooqLogger log              = JooqLogger.getLogger(InCondition.class);
+    private static final long       serialVersionUID = -1653924248576930761L;
+    private static final int        IN_LIMIT         = 1000;
+    private static final Clause[]   CLAUSES_IN       = { CONDITION, CONDITION_IN };
+    private static final Clause[]   CLAUSES_IN_NOT   = { CONDITION, CONDITION_NOT_IN };
 
-    private final Field<T>        field;
-    private final Field<?>[]      values;
-    private final Comparator      comparator;
+    private final Field<T>          field;
+    private final Field<?>[]        values;
+    private final Comparator        comparator;
 
     InCondition(Field<T> field, Field<?>[] values, Comparator comparator) {
         this.field = field;
@@ -122,7 +132,7 @@ final class InCondition<T> extends AbstractCondition {
                             }
                         }
 
-                        toSQLSubValues(ctx, list.subList(i, Math.min(i + IN_LIMIT, list.size())));
+                        toSQLSubValues(ctx, padded(ctx, list.subList(i, Math.min(i + IN_LIMIT, list.size()))));
                     }
 
                     ctx.formatIndentEnd()
@@ -139,8 +149,16 @@ final class InCondition<T> extends AbstractCondition {
             }
         }
         else {
-            toSQLSubValues(ctx, list);
+            toSQLSubValues(ctx, padded(ctx, list));
         }
+    }
+
+    private static List<Field<?>> padded(Context<?> ctx, List<Field<?>> list) {
+        return ctx.paramType() == INDEXED && TRUE.equals(ctx.settings().isInListPadding())
+            ? new PaddedList<Field<?>>(list, asList(FIREBIRD).contains(ctx.family())
+                ? IN_LIMIT
+                : Integer.MAX_VALUE)
+            : list;
     }
 
     /**
@@ -172,5 +190,61 @@ final class InCondition<T> extends AbstractCondition {
         }
 
         ctx.sql(')');
+    }
+
+    private static class PaddedList<T> extends AbstractList<T> {
+        private final List<T> delegate;
+        private final int     realSize;
+        private final int     padSize;
+
+        PaddedList(List<T> delegate, int maxPadding) {
+            this.delegate = delegate;
+            this.realSize = delegate.size();
+            this.padSize = Math.min(maxPadding,
+                  realSize <= 0x00000000 ? 0x00000000
+                : realSize <= 0x00000001 ? 0x00000001
+                : realSize <= 0x00000002 ? 0x00000002
+                : realSize <= 0x00000004 ? 0x00000004
+                : realSize <= 0x00000008 ? 0x00000008
+                : realSize <= 0x00000010 ? 0x00000010
+                : realSize <= 0x00000020 ? 0x00000020
+                : realSize <= 0x00000040 ? 0x00000040
+                : realSize <= 0x00000080 ? 0x00000080
+                : realSize <= 0x00000100 ? 0x00000100
+                : realSize <= 0x00000200 ? 0x00000200
+                : realSize <= 0x00000400 ? 0x00000400
+                : realSize <= 0x00000800 ? 0x00000800
+                : realSize <= 0x00001000 ? 0x00001000
+                : realSize <= 0x00002000 ? 0x00002000
+                : realSize <= 0x00004000 ? 0x00004000
+                : realSize <= 0x00008000 ? 0x00008000
+                : realSize <= 0x00010000 ? 0x00010000
+                : realSize <= 0x00020000 ? 0x00020000
+                : realSize <= 0x00040000 ? 0x00040000
+                : realSize <= 0x00080000 ? 0x00080000
+                : realSize <= 0x00100000 ? 0x00100000
+                : realSize <= 0x00200000 ? 0x00200000
+                : realSize <= 0x00400000 ? 0x00400000
+                : realSize <= 0x00800000 ? 0x00800000
+                : realSize <= 0x01000000 ? 0x01000000
+                : realSize <= 0x02000000 ? 0x02000000
+                : realSize <= 0x04000000 ? 0x04000000
+                : realSize <= 0x08000000 ? 0x08000000
+                : realSize <= 0x10000000 ? 0x10000000
+                : realSize <= 0x20000000 ? 0x20000000
+                : realSize <= 0x40000000 ? 0x40000000
+                : realSize <= 0x80000000 ? 0x80000000
+                : realSize);
+        }
+
+        @Override
+        public T get(int index) {
+            return index < realSize ? delegate.get(index) : delegate.get(realSize - 1);
+        }
+
+        @Override
+        public int size() {
+            return padSize;
+        }
     }
 }

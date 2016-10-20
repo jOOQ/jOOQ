@@ -97,6 +97,19 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
     @Override
     public String getJavaIdentifier(Definition definition) {
+
+        // [#1473] Identity identifiers should not be renamed by custom strategies
+        if (definition instanceof IdentityDefinition)
+            return "IDENTITY_" + getJavaIdentifier(((IdentityDefinition) definition).getColumn().getContainer());
+
+        // [#2032] Intercept default Catalog
+        else if (definition instanceof CatalogDefinition && ((CatalogDefinition) definition).isDefaultCatalog())
+            return "DEFAULT_CATALOG";
+
+        // [#2089] Intercept default schema
+        else if (definition instanceof SchemaDefinition && ((SchemaDefinition) definition).isDefaultSchema())
+            return "DEFAULT_SCHEMA";
+
         return definition.getOutputName().toUpperCase();
     }
 
@@ -127,6 +140,17 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
     @Override
     public String getJavaClassName(Definition definition, Mode mode) {
+
+        // [#2032] Intercept default catalog
+        if (definition instanceof CatalogDefinition && ((CatalogDefinition) definition).isDefaultCatalog()) {
+            return "DefaultCatalog";
+        }
+
+        // [#2089] Intercept default schema
+        else if (definition instanceof SchemaDefinition && ((SchemaDefinition) definition).isDefaultSchema()) {
+            return "DefaultSchema";
+        }
+
         return getJavaClassName0(definition, mode);
     }
 

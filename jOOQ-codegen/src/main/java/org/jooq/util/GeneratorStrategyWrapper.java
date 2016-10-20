@@ -115,19 +115,6 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
 
     @Override
     public String getJavaIdentifier(Definition definition) {
-
-        // [#1473] Identity identifiers should not be renamed by custom strategies
-        if (definition instanceof IdentityDefinition)
-            return "IDENTITY_" + getJavaIdentifier(((IdentityDefinition) definition).getColumn().getContainer());
-
-        // [#2032] Intercept default Catalog
-        else if (definition instanceof CatalogDefinition && ((CatalogDefinition) definition).isDefaultCatalog())
-            return "DEFAULT_CATALOG";
-
-        // [#2089] Intercept default schema
-        else if (definition instanceof SchemaDefinition && ((SchemaDefinition) definition).isDefaultSchema())
-            return "DEFAULT_SCHEMA";
-
         String identifier = convertToIdentifier(delegate.getJavaIdentifier(definition), language);
 
         // [#1212] Don't trust custom strategies and disambiguate identifiers here
@@ -308,16 +295,6 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
             return Record.class.getSimpleName();
         }
 
-        // [#2032] Intercept default catalog
-        else if (definition instanceof CatalogDefinition && ((CatalogDefinition) definition).isDefaultCatalog()) {
-            return "DefaultCatalog";
-        }
-
-        // [#2089] Intercept default schema
-        else if (definition instanceof SchemaDefinition && ((SchemaDefinition) definition).isDefaultSchema()) {
-            return "DefaultSchema";
-        }
-
         String className;
 
         className = delegate.getJavaClassName(definition, mode);
@@ -343,7 +320,10 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
             split[i] = escapeWindowsForbiddenNames(split[i]);
         }
 
-        return StringUtils.join(split, ".");
+        return StringUtils
+            .join(split, ".")
+            // [#4168] In JDK 9, _ is no longer allowed as an identifier
+            .replaceAll("\\._?\\.", ".");
     }
 
     @Override

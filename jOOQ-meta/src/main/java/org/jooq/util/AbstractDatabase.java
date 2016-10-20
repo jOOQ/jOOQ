@@ -480,9 +480,9 @@ public abstract class AbstractDatabase implements Database {
             inputSchemata = new ArrayList<String>();
             inputSchemataPerCatalog = new LinkedHashMap<String, List<String>>();
 
-            // [#1312] Allow for ommitting inputSchema configuration. Generate
-            // All schemata instead
-            if (configuredSchemata.size() == 1 && StringUtils.isBlank(configuredSchemata.get(0).getInputSchema())) {
+            // [#1312] [#5609] Allow for ommitting inputSchema configuration. Generate all schemata instead.
+            if (configuredSchemata.size() == 0 ||
+               (configuredSchemata.size() == 1 && StringUtils.isBlank(configuredSchemata.get(0).getInputSchema()))) {
                 try {
                     for (SchemaDefinition schema : getSchemata0()) {
                         inputSchemata.add(schema.getName());

@@ -21,8 +21,8 @@ CREATE TABLE actor (
   first_name VARCHAR(45) NOT NULL,
   last_name VARCHAR(45) NOT NULL,
   last_update DATE NOT NULL,
-  PRIMARY KEY  (actor_id)
-  );
+  CONSTRAINT pk_actor PRIMARY KEY  (actor_id)
+);
 
 CREATE  INDEX idx_actor_last_name ON actor(last_name);
 /
@@ -61,7 +61,7 @@ CREATE TABLE country (
   country_id SMALLINT NOT NULL,
   country VARCHAR(50) NOT NULL,
   last_update DATE,
-  PRIMARY KEY  (country_id)
+  CONSTRAINT pk_country PRIMARY KEY (country_id)
 );
 
 ---DROP SEQUENCE country_sequence;
@@ -98,7 +98,7 @@ CREATE TABLE city (
   city VARCHAR(50) NOT NULL,
   country_id SMALLINT NOT NULL,
   last_update DATE NOT NULL,
-  PRIMARY KEY  (city_id),
+  CONSTRAINT pk_city PRIMARY KEY (city_id),
   CONSTRAINT fk_city_country FOREIGN KEY (country_id) REFERENCES country (country_id)
 );
 
@@ -142,7 +142,7 @@ CREATE TABLE address (
   postal_code VARCHAR(10) DEFAULT NULL,
   phone VARCHAR(20) NOT NULL,
   last_update DATE NOT NULL,
-  PRIMARY KEY  (address_id)
+  CONSTRAINT pk_address PRIMARY KEY (address_id)
 );
 
 CREATE  INDEX idx_fk_city_id ON address(city_id);
@@ -182,7 +182,7 @@ CREATE TABLE language (
   language_id SMALLINT NOT NULL ,
   name CHAR(20) NOT NULL,
   last_update DATE NOT NULL,
-  PRIMARY KEY (language_id)
+  CONSTRAINT pk_language PRIMARY KEY (language_id)
 );
 
 ---DROP SEQUENCE language_sequence;
@@ -216,7 +216,7 @@ CREATE TABLE category (
   category_id SMALLINT NOT NULL,
   name VARCHAR(25) NOT NULL,
   last_update DATE NOT NULL,
-  PRIMARY KEY  (category_id)
+  CONSTRAINT pk_category PRIMARY KEY  (category_id)
 );
 
 ---DROP SEQUENCE category_sequence;
@@ -256,7 +256,7 @@ CREATE TABLE customer (
   active CHAR(1) DEFAULT 'Y' NOT NULL,
   create_date DATE NOT NULL,
   last_update DATE NOT NULL,
-  PRIMARY KEY  (customer_id),
+  CONSTRAINT pk_customer PRIMARY KEY  (customer_id),
   CONSTRAINT fk_customer_address FOREIGN KEY (address_id) REFERENCES address(address_id)
 );
 
@@ -306,7 +306,7 @@ CREATE TABLE film (
   rating VARCHAR(10) DEFAULT 'G',
   special_features VARCHAR(100) DEFAULT NULL,
   last_update DATE NOT NULL,
-  PRIMARY KEY  (film_id),
+  CONSTRAINT pk_film PRIMARY KEY  (film_id),
   CONSTRAINT fk_film_language FOREIGN KEY (language_id) REFERENCES language (language_id) ,
   CONSTRAINT fk_film_language_original FOREIGN KEY (original_language_id) REFERENCES language (language_id)
 );
@@ -355,7 +355,7 @@ CREATE TABLE film_actor (
   actor_id INT NOT NULL,
   film_id  INT NOT NULL,
   last_update DATE NOT NULL,
-  PRIMARY KEY  (actor_id,film_id),
+  CONSTRAINT pk_film_actor PRIMARY KEY  (actor_id,film_id),
   CONSTRAINT fk_film_actor_actor FOREIGN KEY (actor_id) REFERENCES actor (actor_id),
   CONSTRAINT fk_film_actor_film FOREIGN KEY (film_id) REFERENCES film (film_id)
 );
@@ -388,7 +388,7 @@ CREATE TABLE film_category (
   film_id INT NOT NULL,
   category_id SMALLINT  NOT NULL,
   last_update DATE NOT NULL,
-  PRIMARY KEY (film_id, category_id),
+  CONSTRAINT pk_film_category PRIMARY KEY (film_id, category_id),
   CONSTRAINT fk_film_category_film FOREIGN KEY (film_id) REFERENCES film (film_id),
   CONSTRAINT fk_film_category_category FOREIGN KEY (category_id) REFERENCES category (category_id)
 );
@@ -419,7 +419,7 @@ CREATE TABLE film_text (
   film_id SMALLINT NOT NULL,
   title VARCHAR(255) NOT NULL,
   description CLOB,
-  PRIMARY KEY  (film_id)
+  CONSTRAINT pk_film_text PRIMARY KEY  (film_id)
 );
 
 --
@@ -431,7 +431,7 @@ CREATE TABLE inventory (
   film_id INT NOT NULL,
   store_id INT NOT NULL,
   last_update DATE NOT NULL,
-  PRIMARY KEY  (inventory_id),
+  CONSTRAINT pk_inventory PRIMARY KEY  (inventory_id),
   CONSTRAINT fk_inventory_film FOREIGN KEY (film_id) REFERENCES film (film_id)
 );
 
@@ -479,7 +479,7 @@ CREATE TABLE staff (
   username VARCHAR(16) NOT NULL,
   password VARCHAR(40) DEFAULT NULL,
   last_update DATE NOT NULL,
-  PRIMARY KEY  (staff_id),
+  CONSTRAINT pk_staff PRIMARY KEY  (staff_id),
   CONSTRAINT fk_staff_address FOREIGN KEY (address_id) REFERENCES address (address_id)
 );
 
@@ -521,7 +521,7 @@ CREATE TABLE store (
   manager_staff_id SMALLINT NOT NULL,
   address_id INT NOT NULL,
   last_update DATE NOT NULL,
-  PRIMARY KEY  (store_id),
+  CONSTRAINT pk_store PRIMARY KEY  (store_id),
   CONSTRAINT fk_store_staff FOREIGN KEY (manager_staff_id) REFERENCES staff (staff_id) ,
   CONSTRAINT fk_store_address FOREIGN KEY (address_id) REFERENCES address (address_id)
 );
@@ -569,7 +569,7 @@ CREATE TABLE payment (
   amount DECIMAL(5,2) NOT NULL,
   payment_date DATE NOT NULL,
   last_update DATE NOT NULL,
-  PRIMARY KEY  (payment_id),
+  CONSTRAINT pk_payment PRIMARY KEY  (payment_id),
   CONSTRAINT fk_payment_customer FOREIGN KEY (customer_id) REFERENCES customer (customer_id) ,
   CONSTRAINT fk_payment_staff FOREIGN KEY (staff_id) REFERENCES staff (staff_id)
 );
@@ -610,7 +610,7 @@ CREATE TABLE rental (
   return_date DATE DEFAULT NULL,
   staff_id SMALLINT  NOT NULL,
   last_update DATE NOT NULL,
-  PRIMARY KEY (rental_id),
+  CONSTRAINT pk_rental PRIMARY KEY (rental_id),
   CONSTRAINT fk_rental_staff FOREIGN KEY (staff_id) REFERENCES staff (staff_id) ,
   CONSTRAINT fk_rental_inventory FOREIGN KEY (inventory_id) REFERENCES inventory (inventory_id) ,
   CONSTRAINT fk_rental_customer FOREIGN KEY (customer_id) REFERENCES customer (customer_id)

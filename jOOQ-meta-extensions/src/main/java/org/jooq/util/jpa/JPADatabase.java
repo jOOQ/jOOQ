@@ -45,7 +45,11 @@ import static org.jooq.tools.StringUtils.isBlank;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.persistence.Entity;
 
@@ -53,6 +57,7 @@ import org.jooq.DSLContext;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.tools.JooqLogger;
+import org.jooq.util.SchemaDefinition;
 import org.jooq.util.h2.H2Database;
 
 import org.hibernate.boot.MetadataSources;
@@ -117,5 +122,19 @@ public class JPADatabase extends H2Database {
         }
 
         return DSL.using(connection);
+    }
+
+    @Override
+    protected List<SchemaDefinition> getSchemata0() throws SQLException {
+        List<SchemaDefinition> result = new ArrayList<SchemaDefinition>(super.getSchemata0());
+
+        // [#5608] The H2-specific INFORMATION_SCHEMA is undesired in the JPADatabase's output
+        //         we're explicitly omitting it here for user convenience.
+        Iterator<SchemaDefinition> it = result.iterator();
+        while (it.hasNext())
+            if ("INFORMATION_SCHEMA".equals(it.next().getName()))
+                it.remove();
+
+        return result;
     }
 }

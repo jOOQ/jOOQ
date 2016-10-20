@@ -103,13 +103,16 @@ public class H2Database extends AbstractDatabase {
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("PRIMARY KEY")) {
             SchemaDefinition schema = getSchema(record.get(Constraints.TABLE_SCHEMA));
-            String tableName = record.get(Constraints.TABLE_NAME);
-            String primaryKey = record.get(Constraints.CONSTRAINT_NAME);
-            String columnName = record.get(Indexes.COLUMN_NAME);
 
-            TableDefinition table = getTable(schema, tableName);
-            if (table != null) {
-                relations.addPrimaryKey(primaryKey, table.getColumn(columnName));
+            if (schema != null) {
+                String tableName = record.get(Constraints.TABLE_NAME);
+                String primaryKey = record.get(Constraints.CONSTRAINT_NAME);
+                String columnName = record.get(Indexes.COLUMN_NAME);
+
+                TableDefinition table = getTable(schema, tableName);
+                if (table != null) {
+                    relations.addPrimaryKey(primaryKey, table.getColumn(columnName));
+                }
             }
         }
     }
@@ -118,13 +121,16 @@ public class H2Database extends AbstractDatabase {
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("UNIQUE")) {
             SchemaDefinition schema = getSchema(record.get(Constraints.TABLE_SCHEMA));
-            String tableName = record.get(Constraints.TABLE_NAME);
-            String primaryKey = record.get(Constraints.CONSTRAINT_NAME);
-            String columnName = record.get(Indexes.COLUMN_NAME);
 
-            TableDefinition table = getTable(schema, tableName);
-            if (table != null) {
-                relations.addUniqueKey(primaryKey, table.getColumn(columnName));
+            if (schema != null) {
+                String tableName = record.get(Constraints.TABLE_NAME);
+                String primaryKey = record.get(Constraints.CONSTRAINT_NAME);
+                String columnName = record.get(Indexes.COLUMN_NAME);
+
+                TableDefinition table = getTable(schema, tableName);
+                if (table != null) {
+                    relations.addUniqueKey(primaryKey, table.getColumn(columnName));
+                }
             }
         }
     }
@@ -174,16 +180,18 @@ public class H2Database extends AbstractDatabase {
             SchemaDefinition foreignKeySchema = getSchema(record.get(CrossReferences.FKTABLE_SCHEMA));
             SchemaDefinition uniqueKeySchema = getSchema(record.get(Constraints.CONSTRAINT_SCHEMA));
 
-            String foreignKeyTableName = record.get(CrossReferences.FKTABLE_NAME);
-            String foreignKeyColumn = record.get(CrossReferences.FKCOLUMN_NAME);
-            String foreignKey = record.get(CrossReferences.FK_NAME);
-            String uniqueKey = record.get(Constraints.CONSTRAINT_NAME);
+            if (foreignKeySchema != null && uniqueKeySchema != null) {
+                String foreignKeyTableName = record.get(CrossReferences.FKTABLE_NAME);
+                String foreignKeyColumn = record.get(CrossReferences.FKCOLUMN_NAME);
+                String foreignKey = record.get(CrossReferences.FK_NAME);
+                String uniqueKey = record.get(Constraints.CONSTRAINT_NAME);
 
-            TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
-            if (foreignKeyTable != null) {
-                ColumnDefinition referencingColumn = foreignKeyTable.getColumn(foreignKeyColumn);
+                TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
+                if (foreignKeyTable != null) {
+                    ColumnDefinition referencingColumn = foreignKeyTable.getColumn(foreignKeyColumn);
 
-                relations.addForeignKey(foreignKey, uniqueKey, referencingColumn, uniqueKeySchema);
+                    relations.addForeignKey(foreignKey, uniqueKey, referencingColumn, uniqueKeySchema);
+                }
             }
         }
     }
@@ -215,15 +223,18 @@ public class H2Database extends AbstractDatabase {
             .fetch()) {
 
             SchemaDefinition schema = getSchema(record.get(Constraints.TABLE_SCHEMA));
-            TableDefinition table = getTable(schema, record.get(Constraints.TABLE_NAME));
 
-            if (table != null) {
-                relations.addCheckConstraint(table, new DefaultCheckConstraintDefinition(
-                    schema,
-                    table,
-                    record.get(Constraints.CONSTRAINT_NAME),
-                    record.get(Constraints.CHECK_EXPRESSION)
-                ));
+            if (schema != null) {
+                TableDefinition table = getTable(schema, record.get(Constraints.TABLE_NAME));
+
+                if (table != null) {
+                    relations.addCheckConstraint(table, new DefaultCheckConstraintDefinition(
+                        schema,
+                        table,
+                        record.get(Constraints.CONSTRAINT_NAME),
+                        record.get(Constraints.CHECK_EXPRESSION)
+                    ));
+                }
             }
         }
     }
@@ -268,15 +279,18 @@ public class H2Database extends AbstractDatabase {
                 .fetch()) {
 
             SchemaDefinition schema = getSchema(record.get(Sequences.SEQUENCE_SCHEMA));
-            String name = record.get(Sequences.SEQUENCE_NAME);
 
-            DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(
-                this,
-                schema,
-                H2DataType.BIGINT.getTypeName()
-            );
+            if (schema != null) {
+                String name = record.get(Sequences.SEQUENCE_NAME);
 
-            result.add(new DefaultSequenceDefinition(schema, name, type));
+                DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(
+                    this,
+                    schema,
+                    H2DataType.BIGINT.getTypeName()
+                );
+
+                result.add(new DefaultSequenceDefinition(schema, name, type));
+            }
         }
 
         return result;
@@ -298,11 +312,14 @@ public class H2Database extends AbstractDatabase {
                 .fetch()) {
 
             SchemaDefinition schema = getSchema(record.get(Tables.TABLE_SCHEMA));
-            String name = record.get(Tables.TABLE_NAME);
-            String comment = record.get(Tables.REMARKS);
 
-            H2TableDefinition table = new H2TableDefinition(schema, name, comment);
-            result.add(table);
+            if (schema != null) {
+                String name = record.get(Tables.TABLE_NAME);
+                String comment = record.get(Tables.REMARKS);
+
+                H2TableDefinition table = new H2TableDefinition(schema, name, comment);
+                result.add(table);
+            }
         }
 
         return result;
@@ -333,13 +350,16 @@ public class H2Database extends AbstractDatabase {
                 .orderBy(FunctionAliases.ALIAS_NAME).fetch()) {
 
             SchemaDefinition schema = getSchema(record.get(FunctionAliases.ALIAS_SCHEMA));
-            String name = record.get(FunctionAliases.ALIAS_NAME);
-            String comment = record.get(FunctionAliases.REMARKS);
-            String typeName = record.get(TypeInfo.TYPE_NAME);
-            Integer precision = record.get(TypeInfo.PRECISION);
-            Short scale = record.get(TypeInfo.MAXIMUM_SCALE);
 
-            result.add(new H2RoutineDefinition(schema, name, comment, typeName, precision, scale));
+            if (schema != null) {
+                String name = record.get(FunctionAliases.ALIAS_NAME);
+                String comment = record.get(FunctionAliases.REMARKS);
+                String typeName = record.get(TypeInfo.TYPE_NAME);
+                Integer precision = record.get(TypeInfo.PRECISION);
+                Short scale = record.get(TypeInfo.MAXIMUM_SCALE);
+
+                result.add(new H2RoutineDefinition(schema, name, comment, typeName, precision, scale));
+            }
         }
 
         return result;

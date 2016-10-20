@@ -62,6 +62,8 @@ import org.jooq.util.h2.H2Database;
 
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.AvailableSettings;
+import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.hibernate.tool.schema.TargetType;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -79,6 +81,7 @@ public class JPADatabase extends H2Database {
 
     private Connection              connection;
 
+    @SuppressWarnings("serial")
     @Override
     protected DSLContext create0() {
         if (connection == null) {
@@ -96,6 +99,30 @@ public class JPADatabase extends H2Database {
                     new StandardServiceRegistryBuilder()
                         .applySetting("hibernate.dialect", "org.hibernate.dialect.H2Dialect")
                         .applySetting("javax.persistence.schema-generation-connection", connection)
+
+                        // [#5607] JPADatabase causes warnings - This prevents them
+                        .applySetting(AvailableSettings.CONNECTION_PROVIDER, new ConnectionProvider() {
+                            @SuppressWarnings("rawtypes")
+                            @Override
+                            public boolean isUnwrappableAs(Class unwrapType) {
+                                return false;
+                            }
+                            @Override
+                            public <T> T unwrap(Class<T> unwrapType) {
+                                return null;
+                            }
+                            @Override
+                            public Connection getConnection() {
+                                return connection;
+                            }
+                            @Override
+                            public void closeConnection(Connection conn) throws SQLException {}
+
+                            @Override
+                            public boolean supportsAggressiveRelease() {
+                                return true;
+                            }
+                        })
                         .build()
                 );
 

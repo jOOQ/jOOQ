@@ -480,25 +480,13 @@ public abstract class AbstractDatabase implements Database {
             inputSchemata = new ArrayList<String>();
             inputSchemataPerCatalog = new LinkedHashMap<String, List<String>>();
 
-            // [#1312] [#5609] Allow for ommitting inputSchema configuration. Generate all schemata instead.
-            if (configuredSchemata.size() == 0 ||
-               (configuredSchemata.size() == 1 && StringUtils.isBlank(configuredSchemata.get(0).getInputSchema()))) {
-                try {
-                    for (SchemaDefinition schema : getSchemata0()) {
-                        inputSchemata.add(schema.getName());
-                        List<String> list = inputSchemataPerCatalog.get(schema.getCatalog().getName());
-
-                        if (list == null) {
-                            list = new ArrayList<String>();
-                            inputSchemataPerCatalog.put(schema.getCatalog().getName(), list);
-                        }
-
-                        list.add(schema.getName());
-                    }
-                }
-                catch (Exception e) {
-                    log.error("Could not load schemata", e);
-                }
+            // [#1312] Allow for ommitting inputSchema configuration. Generate all schemata instead.
+            if (configuredSchemata.size() == 1 && StringUtils.isBlank(configuredSchemata.get(0).getInputSchema())) {
+                initAllSchemata();
+            }
+            else if (configuredCatalogs.size() == 1 && StringUtils.isBlank(configuredCatalogs.get(0).getInputCatalog())
+                  && configuredCatalogs.get(0).getSchemata().size() == 1 && StringUtils.isBlank(configuredCatalogs.get(0).getSchemata().get(0).getInputSchema())) {
+                initAllSchemata();
             }
             else if (configuredCatalogs.isEmpty()) {
                 inputSchemataPerCatalog.put("", inputSchemata);
@@ -549,6 +537,25 @@ public abstract class AbstractDatabase implements Database {
         }
 
         return inputSchemata;
+    }
+
+    private void initAllSchemata() {
+        try {
+            for (SchemaDefinition schema : getSchemata0()) {
+                inputSchemata.add(schema.getName());
+                List<String> list = inputSchemataPerCatalog.get(schema.getCatalog().getName());
+
+                if (list == null) {
+                    list = new ArrayList<String>();
+                    inputSchemataPerCatalog.put(schema.getCatalog().getName(), list);
+                }
+
+                list.add(schema.getName());
+            }
+        }
+        catch (Exception e) {
+            log.error("Could not load schemata", e);
+        }
     }
 
     @Override

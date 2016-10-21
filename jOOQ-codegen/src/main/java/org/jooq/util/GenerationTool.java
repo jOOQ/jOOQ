@@ -312,6 +312,9 @@ public class GenerationTool {
                 catalog.setOutputCatalogToDefault(d.isOutputCatalogToDefault());
                 catalogs.add(catalog);
 
+                if (!StringUtils.isBlank(catalog.getInputCatalog()))
+                    catalogsEmpty = false;
+
                 // For convenience and backwards-compatibility, the schema configuration can be set also directly
                 // in the <database/> element
                 if (schemataEmpty) {
@@ -320,6 +323,9 @@ public class GenerationTool {
                     schema.setOutputSchema(trim(d.getOutputSchema()));
                     schema.setOutputSchemaToDefault(d.isOutputSchemaToDefault());
                     catalog.getSchemata().add(schema);
+
+                    if (!StringUtils.isBlank(schema.getInputSchema()))
+                        schemataEmpty = false;
                 }
                 else {
                     catalog.getSchemata().addAll(schemata);

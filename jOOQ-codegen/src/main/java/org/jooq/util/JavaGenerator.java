@@ -178,9 +178,16 @@ public class JavaGenerator extends AbstractGenerator {
     private Map<CatalogDefinition, String> catalogVersions;
 
     /**
-     * All files modified by this generator
+     * All files modified by this generator.
      */
     private Set<File>                      files                        = new LinkedHashSet<File>();
+
+    /**
+     * These directories were not modified by this generator, but flagged as not
+     * for removal (e.g. because of {@link #schemaVersions} or
+     * {@link #catalogVersions}).
+     */
+    private Set<File>                      directoriesNotForRemoval     = new LinkedHashSet<File>();
 
     private final boolean                  scala;
     private final String                   tokenVoid;
@@ -286,6 +293,12 @@ public class JavaGenerator extends AbstractGenerator {
                 throw new GeneratorException("Error generating code for catalog " + catalog, e);
             }
         }
+
+        // [#5556] Clean up common parent directory
+        log.info("Removing excess files");
+        empty(getStrategy().getFileRoot(), (scala ? ".scala" : ".java"), files, directoriesNotForRemoval);
+        directoriesNotForRemoval.clear();
+        files.clear();
     }
 
     private final void generate(CatalogDefinition catalog) {
@@ -306,6 +319,10 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else {
                 log.info("Existing version " + oldVersion + " is up to date with " + newVersion + " for catalog " + catalog.getInputName() + ". Ignoring catalog.");
+
+                // [#5614] If a catalog is not regenerated, we must flag it as "not for removal", because its contents
+                //         will not be listed in the files directory.
+                directoriesNotForRemoval.add(getStrategy().getFile(catalog).getParentFile());
                 return;
             }
         }
@@ -341,6 +358,10 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else {
                 log.info("Existing version " + oldVersion + " is up to date with " + newVersion + " for schema " + schema.getInputName() + ". Ignoring schema.");
+
+                // [#5614] If a schema is not regenerated, we must flag it as "not for removal", because its contents
+                //         will not be listed in the files directory.
+                directoriesNotForRemoval.add(getStrategy().getFile(schema).getParentFile());
                 return;
             }
         }
@@ -433,10 +454,6 @@ public class JavaGenerator extends AbstractGenerator {
 
 
 
-
-        log.info("Removing excess files");
-        empty(getStrategy().getFile(schema).getParentFile(), (scala ? ".scala" : ".java"), files);
-        files.clear();
 
         // XXX [#651] Refactoring-cursor
         watch.splitInfo("Generation finished: " + schema.getQualifiedName());

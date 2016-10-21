@@ -317,6 +317,12 @@ public interface GeneratorStrategy {
     String getFileName(Definition definition, Mode mode);
 
     /**
+     * @return The directory containing all Java objects, e.g.
+     *         [C:\org\jooq\generated]
+     */
+    File getFileRoot();
+
+    /**
      * @return The Java class file name representing this object, e.g.
      *         [C:\org\jooq\generated\MyTable.java]
      */

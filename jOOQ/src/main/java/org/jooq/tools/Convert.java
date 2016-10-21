@@ -490,8 +490,8 @@ public final class Convert {
                 // Regular checks
                 else if (fromClass == byte[].class) {
 
-                    // This may not make much sense. Any other options?
-                    return convert(Arrays.toString((byte[]) from), toClass);
+                    // [#5569] Binary data is expected to be in JVM's default encoding
+                    return convert(new String((byte[]) from), toClass);
                 }
                 else if (fromClass.isArray()) {
 
@@ -517,6 +517,11 @@ public final class Convert {
                     }
 
                     return (U) from.toString();
+                }
+
+                // [#5569] It should be possible, at least, to convert an empty string to an empty (var)binary.
+                else if (toClass == byte[].class) {
+                    return (U) from.toString().getBytes();
                 }
 
                 // Various number types are converted between each other via String

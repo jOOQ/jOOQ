@@ -226,10 +226,9 @@ final class ArrayTable extends AbstractTable<Record> {
 
         @Override
         public final void accept(Context<?> ctx) {
-            ctx.sql('(').keyword("select").sql(" * ")
-               .keyword("from").sql(' ').keyword("unnest").sql('(').visit(array).sql(") ")
-               .keyword("as").sql(' ').literal(alias)
-               .sql('(').literal("COLUMN_VALUE").sql("))");
+            ctx.keyword("unnest").sql('(')
+               .visit(array)
+               .sql(")");
         }
     }
 

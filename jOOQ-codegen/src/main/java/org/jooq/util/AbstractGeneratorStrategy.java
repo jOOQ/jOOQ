@@ -68,6 +68,13 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
     }
 
     @Override
+    public final File getFileRoot() {
+        String dir = getTargetDirectory();
+        String pkg = getTargetPackage().replaceAll("\\.", "/");
+        return new File(dir + "/" + pkg);
+    }
+
+    @Override
     public final File getFile(Definition definition) {
         return getFile(definition, Mode.DEFAULT);
     }

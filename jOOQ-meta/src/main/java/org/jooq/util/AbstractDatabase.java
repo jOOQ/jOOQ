@@ -758,21 +758,31 @@ public abstract class AbstractDatabase implements Database {
 
             if (StringUtils.isBlank(type.getName())) {
                 if (StringUtils.isBlank(type.getUserType())) {
-                    StringWriter writer = new StringWriter();
-                    JAXB.marshal(type, writer);
-                    log.warn("Bad configuration for <forcedType/>. Either <name/> or <userType/> is required: " + writer.toString());
+                    log.warn("Bad configuration for <forcedType/>. Either <name/> or <userType/> is required: " + toString(type));
 
                     it2.remove();
                     continue;
                 }
 
                 if (StringUtils.isBlank(type.getBinding()) && StringUtils.isBlank(type.getConverter())) {
-                    StringWriter writer = new StringWriter();
-                    JAXB.marshal(type, writer);
-                    log.warn("Bad configuration for <forcedType/>. Either <binding/> or <converter/> is required: " + writer);
+                    log.warn("Bad configuration for <forcedType/>. Either <binding/> or <converter/> is required: " + toString(type));
 
                     it2.remove();
                     continue;
+                }
+            }
+            else {
+                if (!StringUtils.isBlank(type.getUserType())) {
+                    log.warn("Bad configuration for <forcedType/>. <userType/> is not allowed when <name/> is provided: " + toString(type));
+                    type.setUserType(null);
+                }
+                if (!StringUtils.isBlank(type.getBinding())) {
+                    log.warn("Bad configuration for <forcedType/>. <binding/> is not allowed when <name/> is provided: " + toString(type));
+                    type.setBinding(null);
+                }
+                if (!StringUtils.isBlank(type.getConverter())) {
+                    log.warn("Bad configuration for <forcedType/>. <converter/> is not allowed when <name/> is provided: " + toString(type));
+                    type.setConverter(null);
                 }
             }
 
@@ -782,6 +792,12 @@ public abstract class AbstractDatabase implements Database {
         }
 
         return null;
+    }
+
+    private final String toString(ForcedType type) {
+        StringWriter writer = new StringWriter();
+        JAXB.marshal(type, writer);
+        return writer.toString();
     }
 
     @Override

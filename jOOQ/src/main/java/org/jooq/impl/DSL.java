@@ -1719,6 +1719,9 @@ public class DSL {
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
      * </pre></code>
+     * <p>
+     * Note that passing an empty collection conveniently produces
+     * <code>SELECT *</code> semantics.
      *
      * @see DSLContext#select(Collection)
      */
@@ -1750,6 +1753,9 @@ public class DSL {
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
      * </pre></code>
+     * <p>
+     * Note that passing an empty array (e.g. by not passing any vararg
+     * argument) conveniently produces <code>SELECT *</code> semantics.
      *
      * @see DSLContext#select(SelectField...)
      */
@@ -2621,6 +2627,9 @@ public class DSL {
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
      * </pre></code>
+     * <p>
+     * Note that passing an empty collection conveniently produces
+     * <code>SELECT DISTINCT *</code> semantics.
      *
      * @see DSLContext#selectDistinct(Collection)
      */
@@ -2652,6 +2661,9 @@ public class DSL {
      *  .where(field1.greaterThan(100))
      *  .orderBy(field2);
      * </pre></code>
+     * <p>
+     * Note that passing an empty array (e.g. by not passing any vararg
+     * argument) conveniently produces <code>SELECT DISTINCT *</code> semantics.
      *
      * @see DSLContext#selectDistinct(SelectField...)
      */
@@ -6180,7 +6192,7 @@ public class DSL {
      * @deprecated - [#3843] - 3.6.0 - use {@link #sequence(Name)} instead
      */
     @Deprecated
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     public static Sequence<BigInteger> sequenceByName(String... qualifiedName) {
         return sequenceByName(BigInteger.class, qualifiedName);
     }
@@ -6209,7 +6221,7 @@ public class DSL {
      * @deprecated - [#3843] - 3.6.0 - use {@link #sequence(Name, Class)} instead
      */
     @Deprecated
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     public static <T extends Number> Sequence<T> sequenceByName(Class<T> type, String... qualifiedName) {
         return sequenceByName(getDataType(type), qualifiedName);
     }
@@ -6238,7 +6250,7 @@ public class DSL {
      * @deprecated - [#3843] - 3.6.0 - use {@link #sequence(Name, DataType)} instead
      */
     @Deprecated
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     public static <T extends Number> Sequence<T> sequenceByName(DataType<T> type, String... qualifiedName) {
         if (qualifiedName == null)
             throw new NullPointerException();
@@ -6269,7 +6281,7 @@ public class DSL {
      * [MY_SCHEMA].[MY_SEQUENCE]
      * </pre></code>
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     public static Sequence<BigInteger> sequence(Name name) {
         return sequence(name, BigInteger.class);
     }
@@ -6291,7 +6303,7 @@ public class DSL {
      * [MY_SCHEMA].[MY_SEQUENCE]
      * </pre></code>
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     public static <T extends Number> Sequence<T> sequence(Name name, Class<T> type) {
         return sequence(name, getDataType(type));
     }
@@ -6313,7 +6325,7 @@ public class DSL {
      * [MY_SCHEMA].[MY_SEQUENCE]
      * </pre></code>
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     public static <T extends Number> Sequence<T> sequence(Name name, DataType<T> type) {
         if (name == null)
             throw new NullPointerException();
@@ -7203,7 +7215,7 @@ public class DSL {
      * @return A field wrapping the plain SQL
      * @see SQL
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
     public static Sequence<BigInteger> sequence(String sql) {
         return sequence(sql, BigInteger.class);
@@ -7222,7 +7234,7 @@ public class DSL {
      * @return A field wrapping the plain SQL
      * @see SQL
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
     public static <T extends Number> Sequence<T> sequence(String sql, Class<T> type) {
         return sequence(sql, getDataType(type));
@@ -7241,7 +7253,7 @@ public class DSL {
      * @return A field wrapping the plain SQL
      * @see SQL
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
     public static <T extends Number> Sequence<T> sequence(String sql, DataType<T> type) {
         return new SequenceImpl<T>(sql, null, type, true);

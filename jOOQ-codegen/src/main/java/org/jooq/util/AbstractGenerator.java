@@ -44,6 +44,8 @@ import java.io.File;
 import java.util.Collections;
 import java.util.Set;
 
+import org.jooq.tools.JooqLogger;
+
 
 /**
  * A common base implementation for {@link Generator} objects
@@ -51,6 +53,8 @@ import java.util.Set;
  * @author Lukas Eder
  */
 abstract class AbstractGenerator implements Generator {
+
+    private static final JooqLogger    log                              = JooqLogger.getLogger(AbstractGenerator.class);
 
     boolean                            generateDeprecated               = true;
     boolean                            generateRelations                = true;
@@ -464,27 +468,43 @@ abstract class AbstractGenerator implements Generator {
      * If file is a file, delete it.
      */
     protected void empty(File file, String suffix) {
-        empty(file, suffix, Collections.<File>emptySet());
+        empty(file, suffix, Collections.<File>emptySet(), Collections.<File>emptySet());
     }
 
     /**
      * If file is a directory, recursively empty its children.
      * If file is a file, delete it, except if it is in the list of files to keep.
      */
-    protected void empty(File file, String suffix, Set<File> keep) {
+    protected void empty(File file, String suffix, Set<File> keep, Set<File> ignore) {
         if (file != null) {
+
+            // Just a Murphy's Law safeguard in case a user misconfigures their config...
+            if (file.getParentFile() == null) {
+                log.warn("WARNING: Root directory configured for code generation. Not deleting anything from previous generations!");
+                return;
+            }
+
+            // [#5614] Don't go into these directories
+            for (File i : ignore)
+                if (file.getAbsolutePath().startsWith(i.getAbsolutePath()))
+                    return;
+
             if (file.isDirectory()) {
                 File[] children = file.listFiles();
 
-                if (children != null) {
-                    for (File child : children) {
-                        empty(child, suffix, keep);
-                    }
-                }
-            } else {
-                if (file.getName().endsWith(suffix) && !keep.contains(file)) {
+                if (children != null)
+                    for (File child : children)
+                        empty(child, suffix, keep, ignore);
+
+                File[] childrenAfterDeletion = file.listFiles();
+
+                // [#5556] Delete directory if empty after content was removed.
+                //         Useful if a catalog / schema was dropped, or removed from code generation, or renamed
+                if (childrenAfterDeletion != null && childrenAfterDeletion.length == 0)
                     file.delete();
-                }
+            }
+            else if (file.getName().endsWith(suffix) && !keep.contains(file)) {
+                file.delete();
             }
         }
     }

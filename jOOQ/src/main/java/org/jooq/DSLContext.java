@@ -4190,6 +4190,9 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
      * </pre></code>
+     * <p>
+     * Note that passing an empty collection conveniently produces
+     * <code>SELECT *</code> semantics.
      *
      * @see DSL#select(Collection)
      */
@@ -4215,6 +4218,9 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *       .orderBy(field2)
      *       .execute();
      * </pre></code>
+     * <p>
+     * Note that passing an empty array (e.g. by not passing any vararg
+     * argument) conveniently produces <code>SELECT *</code> semantics.
      *
      * @see DSL#select(Field...)
      */
@@ -4903,6 +4909,9 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
      * </pre></code>
+     * <p>
+     * Note that passing an empty collection conveniently produces
+     * <code>SELECT DISTINCT *</code> semantics.
      *
      * @see DSL#selectDistinct(Collection)
      */
@@ -4927,6 +4936,9 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *       .where(field1.greaterThan(100))
      *       .orderBy(field2);
      * </pre></code>
+     * <p>
+     * Note that passing an empty array (e.g. by not passing any vararg
+     * argument) conveniently produces <code>SELECT DISTINCT *</code> semantics.
      *
      * @see DSL#selectDistinct(Field...)
      */
@@ -6723,7 +6735,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Create a batch statement to execute a set of <code>INSERT</code> and
-     * <code>UPDATE</code> queries in batch mode (with bind values).
+     * <code>UPDATE</code> queries in batch mode (with bind values) according to
+     * {@link UpdatableRecord#store()} semantics.
      * <p>
      * This batch operation can be executed in two modes:
      * <p>
@@ -6760,6 +6773,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * the order of records is preserved entirely, and jOOQ can guarantee that
      * only a single batch statement is serialised to the database.
      *
+     * @see UpdatableRecord#store()
      * @see Statement#executeBatch()
      */
     @Support
@@ -6767,9 +6781,11 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Create a batch statement to execute a set of <code>INSERT</code> and
-     * <code>UPDATE</code> queries in batch mode (with bind values).
+     * <code>UPDATE</code> queries in batch mode (with bind values) according to
+     * {@link UpdatableRecord#store()} semantics.
      *
      * @see #batchStore(UpdatableRecord...)
+     * @see UpdatableRecord#store()
      * @see Statement#executeBatch()
      */
     @Support
@@ -6777,9 +6793,11 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Create a batch statement to execute a set of <code>INSERT</code> queries
-     * in batch mode (with bind values).
+     * in batch mode (with bind values) according to
+     * {@link TableRecord#insert()} semantics.
      *
      * @see #batchStore(UpdatableRecord...)
+     * @see TableRecord#insert()
      * @see Statement#executeBatch()
      */
     @Support
@@ -6787,7 +6805,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Create a batch statement to execute a set of <code>INSERT</code> queries
-     * in batch mode (with bind values).
+     * in batch mode (with bind values) according to
+     * {@link TableRecord#insert()} semantics.
      *
      * @see #batchStore(UpdatableRecord...)
      * @see Statement#executeBatch()
@@ -6797,9 +6816,11 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Create a batch statement to execute a set of <code>UPDATE</code> queries
-     * in batch mode (with bind values).
+     * in batch mode (with bind values) according to
+     * {@link UpdatableRecord#update()} semantics.
      *
      * @see #batchStore(UpdatableRecord...)
+     * @see UpdatableRecord#update()
      * @see Statement#executeBatch()
      */
     @Support
@@ -6807,9 +6828,11 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Create a batch statement to execute a set of <code>UPDATE</code> queries
-     * in batch mode (with bind values).
+     * in batch mode (with bind values) according to
+     * {@link UpdatableRecord#update()} semantics.
      *
      * @see #batchStore(UpdatableRecord...)
+     * @see UpdatableRecord#update()
      * @see Statement#executeBatch()
      */
     @Support
@@ -6817,7 +6840,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Create a batch statement to execute a set of <code>DELETE</code> queries
-     * in batch mode (with bind values).
+     * in batch mode (with bind values) according to
+     * {@link UpdatableRecord#delete()} sematics.
      * <p>
      * This batch operation can be executed in two modes:
      * <p>
@@ -6854,16 +6878,19 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * the order of records is preserved entirely, and jOOQ can guarantee that
      * only a single batch statement is serialised to the database.
      *
+     * @see UpdatableRecord#delete()
      * @see Statement#executeBatch()
      */
     @Support
     Batch batchDelete(UpdatableRecord<?>... records);
 
     /**
-     * Create a batch statement to execute a set of <code>DELETE</code> in batch
-     * mode (with bind values).
+     * Create a batch statement to execute a set of <code>DELETE</code> queries
+     * in batch mode (with bind values) according to
+     * {@link UpdatableRecord#delete()} sematics.
      *
      * @see #batchDelete(UpdatableRecord...)
+     * @see UpdatableRecord#delete()
      * @see Statement#executeBatch()
      */
     @Support

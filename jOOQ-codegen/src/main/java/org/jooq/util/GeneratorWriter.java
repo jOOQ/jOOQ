@@ -285,7 +285,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
             return true;
         }
         catch (IOException e) {
-            throw new GeneratorException("Error writing " + file.getAbsolutePath());
+            throw new GeneratorException("Error writing " + file.getAbsolutePath(), e);
         }
     }
 

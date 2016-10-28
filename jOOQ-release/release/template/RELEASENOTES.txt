@@ -10,6 +10,44 @@ http://www.jooq.org/notes
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.8.5 - October 21, 2016
+================================================================================
+
+This is a patch release with some useful fixes for the 3.8 branch
+
+Features and Improvements
+-------------------------
+
+#5454 - Add a big disclaimer to the Mock API not to mock an entire database
+#5534 - Mention the possibility of running SELECT * by keeping an empty select() field list
+#5565 - Log warnings when users misconfigure forceType / customType elements
+#5566 - Improve DSLContext.batchStore() Javadoc
+#5606 - Code generator should delete catalog and schema directories when no longer configured
+
+Bug Fixes
+---------
+
+#5427 - Don't escape Scala-style setter names produced by naming strategies in ScalaGenerator
+#5447 - Unnecessarily costly query to check for Oracle version in code generation
+#5458 - "overriding method fields in class AbstractRecord" compilation error when using ScalaGenerator on tables containing columns like "fields", "configuration", etc.
+#5465 - Wrong @Support annotations on DSL.sequence() constructors
+#5482 - ResultImpl#intoMap produces an incorrect error message on duplicate key
+#5496 - NotSerializableException thrown when AbstractXMLasObjectBinding is applied on a column
+#5500 - Cannot apply Binding to PostgreSQL UDT arrays
+#5523 - Bad SQL generated for PostgreSQL when inlining arrays
+#5531 - Don't System.exit(-1) from within GenerationTool. Throw an exception instead
+#5548 - Work around an ojdbc7 driver bug producing a NPE for Oracle 12c INSERT .. RETURNING statements
+#5560 - Compilation error when generated catalog and one of its contained schemas have the same name
+#5572 - DataTypeException: Cannot convert from String to class [B when generated code contains VARBINARY type with default value
+#5579 - Incorrect ambiguity warning when column name appears in 3+ joined tables
+#5580 - NullPointerException when generating Oracle AQs with payload types outside of the included schemas
+#5598 - Code generator IOExceptions are not logged when error appears during closing of file
+#5599 - Error on code generation when schema name is a Windows reserved name like CON, AUX
+#5610 - JPADatabase includes undesired INFORMATION_SCHEMA by default
+#5611 - JPADatabase causes warnings
+#5615 - SchemaVersionProvider might cause deletion of schemas that were not updated
+
+
 Version 3.8.4 - July 14, 2016
 ================================================================================
 

@@ -86,6 +86,7 @@ import org.jooq.Table;
 import org.jooq.conf.SettingsTools;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.jdbc.MockResultSet;
 
 /**
  * A query that returns a {@link Result}
@@ -274,17 +275,19 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
         // Fetch a single result set
         if (!many) {
-            if (ctx.resultSet() != null) {
-                Field<?>[] fields = getFields(ctx.resultSet().getMetaData());
-                cursor = new CursorImpl<R>(ctx, listener, fields, intern.internIndexes(fields), keepStatement(), keepResultSet(), getRecordType(), SettingsTools.getMaxRows(maxRows, ctx.settings()));
 
-                if (!lazy) {
-                    result = cursor.fetch();
-                    cursor = null;
-                }
-            }
-            else {
-                result = new ResultImpl<R>(ctx.configuration());
+            // [#5617] This may happen when using plain SQL API or a MockConnection and expecting a result set where
+            //         there is none. The cursor / result is patched into the ctx only for single result sets, where
+            //         access to the cursor / result is possible.
+            if (ctx.resultSet() == null)
+                ctx.resultSet(new MockResultSet(new ResultImpl<R>(ctx.configuration())));
+
+            Field<?>[] fields = getFields(ctx.resultSet().getMetaData());
+            cursor = new CursorImpl<R>(ctx, listener, fields, intern.internIndexes(fields), keepStatement(), keepResultSet(), getRecordType(), SettingsTools.getMaxRows(maxRows, ctx.settings()));
+
+            if (!lazy) {
+                result = cursor.fetch();
+                cursor = null;
             }
         }
 

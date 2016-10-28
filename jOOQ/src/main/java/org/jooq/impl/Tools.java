@@ -186,6 +186,7 @@ final class Tools {
     static final Collection<?>[]      EMPTY_COLLECTION       = {};
     static final ExecuteListener[]    EMPTY_EXECUTE_LISTENER = {};
     static final Field<?>[]           EMPTY_FIELD            = {};
+    static final int[]                EMPTY_INT              = {};
     static final Param<?>[]           EMPTY_PARAM            = {};
     static final Query[]              EMPTY_QUERY            = {};
     static final QueryPart[]          EMPTY_QUERYPART        = {};

@@ -1494,10 +1494,12 @@ public class JavaGenerator extends AbstractGenerator {
 
     protected void generateUDT(UDTDefinition udt, JavaWriter out) {
         final SchemaDefinition schema = udt.getSchema();
+        final PackageDefinition pkg = udt.getPackage();
         final String className = getStrategy().getJavaClassName(udt);
         final String recordType = out.ref(getStrategy().getFullJavaClassName(udt, Mode.RECORD));
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(udt, Mode.DEFAULT));
         final String schemaId = out.ref(getStrategy().getFullJavaIdentifier(schema), 2);
+        final String packageId = pkg == null ? null : out.ref(getStrategy().getFullJavaIdentifier(pkg), 2);
         final String udtId = out.ref(getStrategy().getJavaIdentifier(udt), 2);
 
         printPackage(out, udt);
@@ -1527,7 +1529,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (scala) {
-            out.println("class %s extends %s[%s](\"%s\", null, %s)[[before= with ][separator= with ][%s]] {", className, UDTImpl.class, recordType, udt.getOutputName(), udt.getPackage() == null, interfaces);
+            out.println("class %s extends %s[%s](\"%s\", null[[before=, ][%s]])[[before= with ][separator= with ][%s]] {", className, UDTImpl.class, recordType, udt.getOutputName(), list(packageId), interfaces);
         }
         else {
             out.println("public class %s extends %s<%s>[[before= implements ][%s]] {", className, UDTImpl.class, recordType, interfaces);
@@ -1589,7 +1591,7 @@ public class JavaGenerator extends AbstractGenerator {
         else {
             out.tab(1).javadoc(NO_FURTHER_INSTANCES_ALLOWED);
             out.tab(1).println("private %s() {", className);
-            out.tab(2).println("super(\"%s\", null, %s);", udt.getOutputName(), udt.getPackage() == null);
+            out.tab(2).println("super(\"%s\", null[[before=, ][%s]]);", udt.getOutputName(), list(packageId));
             out.tab(1).println("}");
         }
 

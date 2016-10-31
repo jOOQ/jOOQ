@@ -459,4 +459,9 @@ public interface DataType<T> extends Serializable {
      * Whether this data type is an array type.
      */
     boolean isArray();
+
+    /**
+     * Whether this data type is a UDT type.
+     */
+    boolean isUDT();
 }

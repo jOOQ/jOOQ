@@ -427,4 +427,15 @@ public interface Name extends QueryPart {
     DerivedColumnList22 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13, String fieldName14, String fieldName15, String fieldName16, String fieldName17, String fieldName18, String fieldName19, String fieldName20, String fieldName21, String fieldName22);
 
 // [jooq-tools] END [fields]
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    boolean equals(Object other);
+
+    /**
+     * Compare this name with another one ignoring case.
+     */
+    boolean equalsIgnoreCase(Name other);
 }

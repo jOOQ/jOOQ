@@ -317,16 +317,39 @@ final class NameImpl extends AbstractQueryPart implements Name {
 
     @Override
     public boolean equals(Object that) {
-        if (this == that) {
+        if (this == that)
             return true;
-        }
 
         // [#1626] NameImpl equality can be decided without executing the
         // rather expensive implementation of AbstractQueryPart.equals()
-        if (that instanceof NameImpl) {
+        if (that instanceof NameImpl)
             return Arrays.equals(getName(), (((NameImpl) that).getName()));
-        }
 
         return super.equals(that);
+    }
+
+    @Override
+    public final boolean equalsIgnoreCase(Name that) {
+        if (this == that)
+            return true;
+
+        String[] thisName = getName();
+        String[] thatName = that.getName();
+
+        if (thisName.length != thatName.length)
+            return false;
+
+        for (int i = 0; i < thisName.length; i++) {
+            if (thisName[i] == null && thatName[i] == null)
+                continue;
+
+            if (thisName[i] == null || thatName[i] == null)
+                return false;
+
+            if (!thisName[i].equalsIgnoreCase(thatName[i]))
+                return false;
+        }
+
+        return true;
     }
 }

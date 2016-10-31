@@ -254,7 +254,13 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
         // [#799] UDT's are also packages
         else if (definition instanceof UDTDefinition) {
-            return "udt";
+            UDTDefinition udt = (UDTDefinition) definition;
+
+            // [#330] A UDT inside of a package is a PL/SQL RECORD type
+            if (udt.getPackage() == null)
+                return "udt";
+            else
+                return "packages." + getJavaIdentifier(udt.getPackage()).toLowerCase();
         }
         else if (definition instanceof PackageDefinition) {
             return "packages";

@@ -59,7 +59,7 @@ import org.jooq.util.SchemaDefinition;
 public class PostgresUDTDefinition extends AbstractUDTDefinition {
 
     public PostgresUDTDefinition(SchemaDefinition schema, String name, String comment) {
-        super(schema, name, comment);
+        super(schema, null, name, comment);
     }
 
     @Override

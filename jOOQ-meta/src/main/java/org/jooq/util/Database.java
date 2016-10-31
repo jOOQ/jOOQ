@@ -46,6 +46,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.jooq.DSLContext;
+import org.jooq.Name;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.util.jaxb.Catalog;
@@ -133,6 +134,16 @@ public interface Database {
     TableDefinition getTable(SchemaDefinition schema, String name, boolean ignoreCase);
 
     /**
+     * Get a table in this database by name.
+     */
+    TableDefinition getTable(SchemaDefinition schema, Name name);
+
+    /**
+     * Get a table in this database by name.
+     */
+    TableDefinition getTable(SchemaDefinition schema, Name name, boolean ignoreCase);
+
+    /**
      * The enum UDTs defined in this database.
      */
     List<EnumDefinition> getEnums(SchemaDefinition schema);
@@ -146,6 +157,16 @@ public interface Database {
      * Get an enum UDT defined in this database by name.
      */
     EnumDefinition getEnum(SchemaDefinition schema, String name, boolean ignoreCase);
+
+    /**
+     * Get an enum UDT defined in this database by name.
+     */
+    EnumDefinition getEnum(SchemaDefinition schema, Name name);
+
+    /**
+     * Get an enum UDT defined in this database by name.
+     */
+    EnumDefinition getEnum(SchemaDefinition schema, Name name, boolean ignoreCase);
 
     /**
      * The domain UDTs defined in this database.
@@ -163,6 +184,16 @@ public interface Database {
     DomainDefinition getDomain(SchemaDefinition schema, String name, boolean ignoreCase);
 
     /**
+     * Get an domain UDT defined in this database by name.
+     */
+    DomainDefinition getDomain(SchemaDefinition schema, Name name);
+
+    /**
+     * Get an domain UDT defined in this database by name.
+     */
+    DomainDefinition getDomain(SchemaDefinition schema, Name name, boolean ignoreCase);
+
+    /**
      * The UDTs defined in this database.
      */
     List<UDTDefinition> getUDTs(SchemaDefinition schema);
@@ -176,6 +207,21 @@ public interface Database {
      * Get a UDT defined in this database by name.
      */
     UDTDefinition getUDT(SchemaDefinition schema, String name, boolean ignoreCase);
+
+    /**
+     * Get a UDT defined in this database by name.
+     */
+    UDTDefinition getUDT(SchemaDefinition schema, Name name);
+
+    /**
+     * Get a UDT defined in this database by name.
+     */
+    UDTDefinition getUDT(SchemaDefinition schema, Name name, boolean ignoreCase);
+
+    /**
+     * The UDTs defined in this database.
+     */
+    List<UDTDefinition> getUDTs(PackageDefinition pkg);
 
     /**
      * The Arrays defined in this database.
@@ -193,6 +239,16 @@ public interface Database {
     ArrayDefinition getArray(SchemaDefinition schema, String name, boolean ignoreCase);
 
     /**
+     * Get a ARRAY defined in this database by name.
+     */
+    ArrayDefinition getArray(SchemaDefinition schema, Name name);
+
+    /**
+     * Get a ARRAY defined in this database by name.
+     */
+    ArrayDefinition getArray(SchemaDefinition schema, Name name, boolean ignoreCase);
+
+    /**
      * The stored routines (procedures and functions) contained in this
      * database.
      */
@@ -202,6 +258,11 @@ public interface Database {
      * The packages contained in this database.
      */
     List<PackageDefinition> getPackages(SchemaDefinition schema);
+
+    /**
+     * Get a package defined in this database by name.
+     */
+    PackageDefinition getPackage(SchemaDefinition schema, String inputName);
 
     /**
      * Initialise a connection to this database.

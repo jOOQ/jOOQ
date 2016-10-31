@@ -67,6 +67,7 @@ import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListenerProvider;
+import org.jooq.Name;
 import org.jooq.Query;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
@@ -434,11 +435,9 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final SchemaDefinition getSchema(String inputName) {
-        for (SchemaDefinition schema : getSchemata()) {
-            if (schema.getName().equals(inputName)) {
+        for (SchemaDefinition schema : getSchemata())
+            if (schema.getName().equals(inputName))
                 return schema;
-            }
-        }
 
         return null;
     }
@@ -1165,6 +1164,16 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public final TableDefinition getTable(SchemaDefinition schema, Name name) {
+        return getTable(schema, name, false);
+    }
+
+    @Override
+    public final TableDefinition getTable(SchemaDefinition schema, Name name, boolean ignoreCase) {
+        return getDefinition(getTables(schema), name, ignoreCase);
+    }
+
+    @Override
     public final List<EnumDefinition> getEnums(SchemaDefinition schema) {
         if (enums == null) {
             enums = new ArrayList<EnumDefinition>();
@@ -1267,6 +1276,16 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public final EnumDefinition getEnum(SchemaDefinition schema, Name name) {
+        return getEnum(schema, name, false);
+    }
+
+    @Override
+    public final EnumDefinition getEnum(SchemaDefinition schema, Name name, boolean ignoreCase) {
+        return getDefinition(getEnums(schema), name, ignoreCase);
+    }
+
+    @Override
     public final List<DomainDefinition> getDomains(SchemaDefinition schema) {
         if (domains == null) {
             domains = new ArrayList<DomainDefinition>();
@@ -1292,6 +1311,16 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final DomainDefinition getDomain(SchemaDefinition schema, String name, boolean ignoreCase) {
+        return getDefinition(getDomains(schema), name, ignoreCase);
+    }
+
+    @Override
+    public final DomainDefinition getDomain(SchemaDefinition schema, Name name) {
+        return getDomain(schema, name, false);
+    }
+
+    @Override
+    public final DomainDefinition getDomain(SchemaDefinition schema, Name name, boolean ignoreCase) {
         return getDefinition(getDomains(schema), name, ignoreCase);
     }
 
@@ -1332,7 +1361,16 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
-    public final List<UDTDefinition> getUDTs(SchemaDefinition schema) {
+    public final ArrayDefinition getArray(SchemaDefinition schema, Name name) {
+        return getArray(schema, name, false);
+    }
+
+    @Override
+    public final ArrayDefinition getArray(SchemaDefinition schema, Name name, boolean ignoreCase) {
+        return getDefinition(getArrays(schema), name, ignoreCase);
+    }
+
+    private final List<UDTDefinition> getAllUDTs(SchemaDefinition schema) {
         if (udts == null) {
             udts = new ArrayList<UDTDefinition>();
 
@@ -1357,6 +1395,21 @@ public abstract class AbstractDatabase implements Database {
         return filterSchema(udts, schema, udtsBySchema);
     }
 
+    private final List<UDTDefinition> ifInPackage(List<UDTDefinition> allUDTs, boolean expected) {
+        List<UDTDefinition> result = new ArrayList<UDTDefinition>();
+
+        for (UDTDefinition u : allUDTs)
+            if ((u.getPackage() != null) == expected)
+                result.add(u);
+
+        return result;
+    }
+
+    @Override
+    public final List<UDTDefinition> getUDTs(SchemaDefinition schema) {
+        return getAllUDTs(schema);
+    }
+
     @Override
     public final UDTDefinition getUDT(SchemaDefinition schema, String name) {
         return getUDT(schema, name, false);
@@ -1365,6 +1418,21 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final UDTDefinition getUDT(SchemaDefinition schema, String name, boolean ignoreCase) {
         return getDefinition(getUDTs(schema), name, ignoreCase);
+    }
+
+    @Override
+    public final UDTDefinition getUDT(SchemaDefinition schema, Name name) {
+        return getUDT(schema, name, false);
+    }
+
+    @Override
+    public final UDTDefinition getUDT(SchemaDefinition schema, Name name, boolean ignoreCase) {
+        return getDefinition(getUDTs(schema), name, ignoreCase);
+    }
+
+    @Override
+    public final List<UDTDefinition> getUDTs(PackageDefinition pkg) {
+        return ifInPackage(getAllUDTs(pkg.getSchema()), true);
     }
 
     @Override
@@ -1439,10 +1507,31 @@ public abstract class AbstractDatabase implements Database {
         return filterSchema(packages, schema, packagesBySchema);
     }
 
+    @Override
+    public PackageDefinition getPackage(SchemaDefinition schema, String inputName) {
+        for (PackageDefinition pkg : getPackages(schema))
+            if (pkg.getName().equals(inputName))
+                return pkg;
+
+        return null;
+    }
+
     protected static final <D extends Definition> D getDefinition(List<D> definitions, String name, boolean ignoreCase) {
         for (D definition : definitions) {
             if ((ignoreCase && definition.getName().equalsIgnoreCase(name)) ||
                 (!ignoreCase && definition.getName().equals(name))) {
+
+                return definition;
+            }
+        }
+
+        return null;
+    }
+
+    protected static final <D extends Definition> D getDefinition(List<D> definitions, Name name, boolean ignoreCase) {
+        for (D definition : definitions) {
+            if ((ignoreCase && definition.getQualifiedNamePart().equalsIgnoreCase(name)) ||
+                (!ignoreCase && definition.getQualifiedNamePart().equals(name))) {
 
                 return definition;
             }

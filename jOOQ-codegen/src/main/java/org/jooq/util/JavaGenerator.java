@@ -44,6 +44,7 @@ package org.jooq.util;
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
 import static org.jooq.tools.StringUtils.defaultString;
 import static org.jooq.util.AbstractGenerator.Language.JAVA;
@@ -81,6 +82,7 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
 // ...
+import org.jooq.Name;
 import org.jooq.Package;
 import org.jooq.Parameter;
 import org.jooq.Record;
@@ -959,7 +961,7 @@ public class JavaGenerator extends AbstractGenerator {
             final String name = column.getQualifiedOutputName();
             final boolean isUDT = column.getType().isUDT();
             final boolean isArray = column.getType().isArray();
-            final boolean isUDTArray = column.getType().isArray() && database.getArray(column.getType().getSchema(), column.getType().getUserType()).getElementType().isUDT();
+            final boolean isUDTArray = column.getType().isArray() && database.getArray(column.getType().getSchema(), column.getType().getQualifiedUserType()).getElementType().isUDT();
 
 
             // We cannot have covariant setters for arrays because of type erasure
@@ -1013,7 +1015,7 @@ public class JavaGenerator extends AbstractGenerator {
                         out.tab(3).println("set(%s, value.into(new %s()));", i, type);
                     }
                     else if (isArray) {
-                        final ArrayDefinition array = database.getArray(column.getType().getSchema(), column.getType().getUserType());
+                        final ArrayDefinition array = database.getArray(column.getType().getSchema(), column.getType().getQualifiedUserType());
                         final String componentType = out.ref(getJavaType(array.getElementType(), Mode.RECORD));
                         final String componentTypeInterface = out.ref(getJavaType(array.getElementType(), Mode.INTERFACE));
 
@@ -2757,7 +2759,7 @@ public class JavaGenerator extends AbstractGenerator {
             final String columnGetter = getStrategy().getJavaGetterName(column, Mode.POJO);
             final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
             final boolean isUDT = column.getType().isUDT();
-            final boolean isUDTArray = column.getType().isArray() && database.getArray(column.getType().getSchema(), column.getType().getUserType()).getElementType().isUDT();
+            final boolean isUDTArray = column.getType().isArray() && database.getArray(column.getType().getSchema(), column.getType().getQualifiedUserType()).getElementType().isUDT();
 
             // Getter
             out.println();
@@ -2834,7 +2836,7 @@ public class JavaGenerator extends AbstractGenerator {
                             out.tab(3).println("this.%s = %s.into(new %s());", columnMember, columnMember, columnType);
                         }
                         else if (isUDTArray) {
-                            final ArrayDefinition array = database.getArray(column.getType().getSchema(), column.getType().getUserType());
+                            final ArrayDefinition array = database.getArray(column.getType().getSchema(), column.getType().getQualifiedUserType());
                             final String componentType = out.ref(getJavaType(array.getElementType(), Mode.POJO));
                             final String componentTypeInterface = out.ref(getJavaType(array.getElementType(), Mode.INTERFACE));
 
@@ -4949,7 +4951,7 @@ public class JavaGenerator extends AbstractGenerator {
                 type.getLength(),
                 type.isNullable(),
                 type.getDefaultValue(),
-                type.getUserType()
+                type.getQualifiedUserType()
             );
         }
     }
@@ -4965,17 +4967,33 @@ public class JavaGenerator extends AbstractGenerator {
             type.getType(),
             type.getPrecision(),
             type.getScale(),
-            type.getUserType(),
+            type.getQualifiedUserType(),
             type.getJavaType(),
             Object.class.getName(),
             udtMode);
     }
 
+    /**
+     * @deprecated - 3.9.0 - [#330]  - Use {@link #getType(Database, SchemaDefinition, String, int, int, Name, String, String)} instead.
+     */
+    @Deprecated
     protected String getType(Database db, SchemaDefinition schema, String t, int p, int s, String u, String javaType, String defaultType) {
+        return getType(db, schema, t, p, s, name(u), javaType, defaultType);
+    }
+
+    protected String getType(Database db, SchemaDefinition schema, String t, int p, int s, Name u, String javaType, String defaultType) {
         return getType(db, schema, t, p, s, u, javaType, defaultType, Mode.RECORD);
     }
 
+    /**
+     * @deprecated - 3.9.0 - [#330]  - Use {@link #getType(Database, SchemaDefinition, String, int, int, Name, String, String, Mode)} instead.
+     */
+    @Deprecated
     protected String getType(Database db, SchemaDefinition schema, String t, int p, int s, String u, String javaType, String defaultType, Mode udtMode) {
+        return getType(db, schema, t, p, s, name(u), javaType, defaultType, udtMode);
+    }
+
+    protected String getType(Database db, SchemaDefinition schema, String t, int p, int s, Name u, String javaType, String defaultType, Mode udtMode) {
         String type = defaultType;
 
         // Custom types
@@ -4987,7 +5005,7 @@ public class JavaGenerator extends AbstractGenerator {
         else if (db.isArrayType(t)) {
 
             // [#4388] TODO: Improve array handling
-            String baseType = GenerationUtil.getArrayBaseType(db.getDialect(), t, u);
+            String baseType = GenerationUtil.getArrayBaseType(db.getDialect(), t, u == null ? null : u.last());
 
             if (scala)
                 type = "scala.Array[" + getType(db, schema, baseType, p, s, baseType, javaType, defaultType, udtMode) + "]";
@@ -5033,8 +5051,8 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         // Check for custom types
-        else if (db.getConfiguredCustomType(u) != null) {
-            type = u;
+        else if (u != null && db.getConfiguredCustomType(u.last()) != null) {
+            type = u.last();
         }
 
         // Try finding a basic standard SQL type according to the current dialect
@@ -5070,7 +5088,15 @@ public class JavaGenerator extends AbstractGenerator {
         return type;
     }
 
+    /**
+     * @deprecated - Use {@link #getTypeReference(Database, SchemaDefinition, String, int, int, int, boolean, String, Name)} instead.
+     */
+    @Deprecated
     protected String getTypeReference(Database db, SchemaDefinition schema, String t, int p, int s, int l, boolean n, String d, String u) {
+        return getTypeReference(db, schema, t, p, s, l, n, d, name(u));
+    }
+
+    protected String getTypeReference(Database db, SchemaDefinition schema, String t, int p, int s, int l, boolean n, String d, Name u) {
         StringBuilder sb = new StringBuilder();
         if (db.getArray(schema, u) != null) {
             ArrayDefinition array = database.getArray(schema, u);

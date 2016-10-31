@@ -40,6 +40,7 @@
  */
 package org.jooq.util;
 
+import org.jooq.Name;
 
 /**
  * A definition for a data type object.
@@ -84,6 +85,11 @@ public interface DataTypeDefinition {
      * The user type, if applicable.
      */
     String getUserType();
+
+    /**
+     * The qualified user type, if applicable.
+     */
+    Name getQualifiedUserType();
 
     /**
      * The custom Java type to represent this data type, if applicable.

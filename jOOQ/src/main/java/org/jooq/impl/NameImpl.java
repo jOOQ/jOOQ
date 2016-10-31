@@ -69,10 +69,34 @@ final class NameImpl extends AbstractQueryPart implements Name {
      */
     private static final long serialVersionUID = 8562325639223483938L;
 
-    private String[]          qualifiedName;
+    private final String[]    qualifiedName;
 
     NameImpl(String[] qualifiedName) {
-        this.qualifiedName = qualifiedName;
+        this.qualifiedName = nonEmpty(qualifiedName);
+    }
+
+    private static final String[] nonEmpty(String[] qualifiedName) {
+        String[] result;
+        int nulls = 0;
+
+        for (int i = 0; i < qualifiedName.length; i++)
+            if (StringUtils.isEmpty(qualifiedName[i]))
+                nulls++;
+
+        if (nulls > 0) {
+            result = new String[qualifiedName.length - nulls];
+
+            for (int i = qualifiedName.length - 1; i >= 0; i--)
+                if (StringUtils.isEmpty(qualifiedName[i]))
+                    nulls--;
+                else
+                    result[i - nulls] = qualifiedName[i];
+        }
+        else {
+            result = qualifiedName.clone();
+        }
+
+        return result;
     }
 
     @Override
@@ -83,10 +107,8 @@ final class NameImpl extends AbstractQueryPart implements Name {
             String separator = "";
 
             for (String name : qualifiedName) {
-                if (!StringUtils.isEmpty(name)) {
-                    ctx.sql(separator).literal(name);
-                    separator = ".";
-                }
+                ctx.sql(separator).literal(name);
+                separator = ".";
             }
         }
         else {
@@ -101,35 +123,17 @@ final class NameImpl extends AbstractQueryPart implements Name {
 
     @Override
     public final String first() {
-        for (int i = 0; i < qualifiedName.length; i++)
-            if (qualifiedName[i] != null)
-                return qualifiedName[i];
-
-        return null;
+        return qualifiedName.length > 0 ? qualifiedName[0] : null;
     }
 
     @Override
     public final String last() {
-        for (int i = qualifiedName.length - 1; i >= 0; i--)
-            if (qualifiedName[i] != null)
-                return qualifiedName[i];
-
-        return null;
+        return qualifiedName.length > 0 ? qualifiedName[qualifiedName.length - 1] : null;
     }
 
     @Override
     public final boolean qualified() {
-        int nonNull = 0;
-
-        for (String name : qualifiedName) {
-            if (name != null)
-                nonNull++;
-
-            if (nonNull > 1)
-                return true;
-        }
-
-        return false;
+        return qualifiedName.length > 1;
     }
 
     @Override

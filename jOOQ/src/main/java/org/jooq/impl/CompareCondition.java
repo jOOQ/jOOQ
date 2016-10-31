@@ -59,15 +59,17 @@ import static org.jooq.impl.DSL.inline;
 
 import org.jooq.Clause;
 import org.jooq.Comparator;
+import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.LikeEscapeStep;
 import org.jooq.SQLDialect;
 import org.jooq.conf.ParamType;
 
 /**
  * @author Lukas Eder
  */
-final class CompareCondition extends AbstractCondition {
+final class CompareCondition extends AbstractCondition implements LikeEscapeStep {
 
     private static final long     serialVersionUID = -747240442279619486L;
     private static final Clause[] CLAUSES          = { CONDITION, CONDITION_COMPARISON };
@@ -75,17 +77,18 @@ final class CompareCondition extends AbstractCondition {
     private final Field<?>        field1;
     private final Field<?>        field2;
     private final Comparator      comparator;
-    private final Character       escape;
+    private Character             escape;
 
     CompareCondition(Field<?> field1, Field<?> field2, Comparator comparator) {
-        this(field1, field2, comparator, null);
-    }
-
-    CompareCondition(Field<?> field1, Field<?> field2, Comparator comparator, Character escape) {
         this.field1 = field1;
         this.field2 = field2;
         this.comparator = comparator;
-        this.escape = escape;
+    }
+
+    @Override
+    public final Condition escape(char c) {
+        this.escape = c;
+        return this;
     }
 
     @Override

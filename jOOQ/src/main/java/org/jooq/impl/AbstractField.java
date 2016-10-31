@@ -92,6 +92,7 @@ import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.DatePart;
 import org.jooq.Field;
+import org.jooq.LikeEscapeStep;
 import org.jooq.QuantifiedSelect;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -717,7 +718,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    public final Condition like(String value) {
+    public final LikeEscapeStep like(String value) {
         return like(Tools.field(value, String.class));
     }
 
@@ -727,17 +728,17 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    public final Condition like(Field<String> field) {
+    public final LikeEscapeStep like(Field<String> field) {
         return new CompareCondition(this, nullSafe(field, getDataType()), LIKE);
     }
 
     @Override
     public final Condition like(Field<String> field, char escape) {
-        return new CompareCondition(this, nullSafe(field, getDataType()), LIKE, escape);
+        return like(field).escape(escape);
     }
 
     @Override
-    public final Condition likeIgnoreCase(String value) {
+    public final LikeEscapeStep likeIgnoreCase(String value) {
         return likeIgnoreCase(Tools.field(value, String.class));
     }
 
@@ -747,13 +748,13 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    public final Condition likeIgnoreCase(Field<String> field) {
+    public final LikeEscapeStep likeIgnoreCase(Field<String> field) {
         return new CompareCondition(this, nullSafe(field, getDataType()), LIKE_IGNORE_CASE);
     }
 
     @Override
     public final Condition likeIgnoreCase(Field<String> field, char escape) {
-        return new CompareCondition(this, nullSafe(field, getDataType()), LIKE_IGNORE_CASE, escape);
+        return likeIgnoreCase(field).escape(escape);
     }
 
     @Override
@@ -767,7 +768,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    public final Condition notLike(String value) {
+    public final LikeEscapeStep notLike(String value) {
         return notLike(Tools.field(value, String.class));
     }
 
@@ -777,17 +778,17 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    public final Condition notLike(Field<String> field) {
+    public final LikeEscapeStep notLike(Field<String> field) {
         return new CompareCondition(this, nullSafe(field, getDataType()), NOT_LIKE);
     }
 
     @Override
     public final Condition notLike(Field<String> field, char escape) {
-        return new CompareCondition(this, nullSafe(field, getDataType()), NOT_LIKE, escape);
+        return notLike(field).escape(escape);
     }
 
     @Override
-    public final Condition notLikeIgnoreCase(String value) {
+    public final LikeEscapeStep notLikeIgnoreCase(String value) {
         return notLikeIgnoreCase(Tools.field(value, String.class));
     }
 
@@ -797,13 +798,13 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
-    public final Condition notLikeIgnoreCase(Field<String> field) {
+    public final LikeEscapeStep notLikeIgnoreCase(Field<String> field) {
         return new CompareCondition(this, nullSafe(field, getDataType()), NOT_LIKE_IGNORE_CASE);
     }
 
     @Override
     public final Condition notLikeIgnoreCase(Field<String> field, char escape) {
-        return new CompareCondition(this, nullSafe(field, getDataType()), NOT_LIKE_IGNORE_CASE, escape);
+        return notLikeIgnoreCase(field).escape(escape);
     }
 
     @Override

@@ -1200,12 +1200,14 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * SQL: <code>this like value</code>
      */
     @Support
-    Condition like(Field<String> value);
+    LikeEscapeStep like(Field<String> value);
 
     /**
      * Create a condition to pattern-check this field against a value.
      * <p>
      * SQL: <code>this like value escape 'e'</code>
+     *
+     * @see LikeEscapeStep#escape(char)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition like(Field<String> value, char escape);
@@ -1216,12 +1218,14 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * SQL: <code>this like value</code>
      */
     @Support
-    Condition like(String value);
+    LikeEscapeStep like(String value);
 
     /**
      * Create a condition to pattern-check this field against a value.
      * <p>
      * SQL: <code>this like value escape 'e'</code>
+     *
+     * @see LikeEscapeStep#escape(char)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition like(String value, char escape);
@@ -1235,7 +1239,7 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * <code>lower(this) like lower(field)</code> in all other dialects.
      */
     @Support
-    Condition likeIgnoreCase(Field<String> field);
+    LikeEscapeStep likeIgnoreCase(Field<String> field);
 
     /**
      * Create a condition to case-insensitively pattern-check this field against
@@ -1244,6 +1248,8 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * This translates to <code>this ilike field</code> in
      * {@link SQLDialect#POSTGRES}, or to
      * <code>lower(this) like lower(field)</code> in all other dialects.
+     *
+     * @see LikeEscapeStep#escape(char)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition likeIgnoreCase(Field<String> field, char escape);
@@ -1257,7 +1263,7 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * <code>lower(this) like lower(value)</code> in all other dialects.
      */
     @Support
-    Condition likeIgnoreCase(String value);
+    LikeEscapeStep likeIgnoreCase(String value);
 
     /**
      * Create a condition to case-insensitively pattern-check this field against
@@ -1266,6 +1272,8 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * This translates to <code>this ilike value</code> in
      * {@link SQLDialect#POSTGRES}, or to
      * <code>lower(this) like lower(value)</code> in all other dialects.
+     *
+     * @see LikeEscapeStep#escape(char)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition likeIgnoreCase(String value, char escape);
@@ -1276,12 +1284,14 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * SQL: <code>this not like field</code>
      */
     @Support
-    Condition notLike(Field<String> field);
+    LikeEscapeStep notLike(Field<String> field);
 
     /**
      * Create a condition to pattern-check this field against a field.
      * <p>
      * SQL: <code>this not like field escape 'e'</code>
+     *
+     * @see LikeEscapeStep#escape(char)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition notLike(Field<String> field, char escape);
@@ -1292,12 +1302,14 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * SQL: <code>this not like value</code>
      */
     @Support
-    Condition notLike(String value);
+    LikeEscapeStep notLike(String value);
 
     /**
      * Create a condition to pattern-check this field against a value.
      * <p>
      * SQL: <code>this not like value escape 'e'</code>
+     *
+     * @see LikeEscapeStep#escape(char)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition notLike(String value, char escape);
@@ -1311,7 +1323,7 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * <code>lower(this) not like lower(field)</code> in all other dialects.
      */
     @Support
-    Condition notLikeIgnoreCase(Field<String> field);
+    LikeEscapeStep notLikeIgnoreCase(Field<String> field);
 
     /**
      * Create a condition to case-insensitively pattern-check this field against
@@ -1320,6 +1332,8 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * This translates to <code>this not ilike field</code> in
      * {@link SQLDialect#POSTGRES}, or to
      * <code>lower(this) not like lower(field)</code> in all other dialects.
+     *
+     * @see LikeEscapeStep#escape(char)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition notLikeIgnoreCase(Field<String> field, char escape);
@@ -1333,7 +1347,7 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * <code>lower(this) not like lower(value)</code> in all other dialects.
      */
     @Support
-    Condition notLikeIgnoreCase(String value);
+    LikeEscapeStep notLikeIgnoreCase(String value);
 
     /**
      * Create a condition to case-insensitively pattern-check this field against
@@ -1342,6 +1356,8 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
      * This translates to <code>this not ilike value</code> in
      * {@link SQLDialect#POSTGRES}, or to
      * <code>lower(this) not like lower(value)</code> in all other dialects.
+     *
+     * @see LikeEscapeStep#escape(char)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition notLikeIgnoreCase(String value, char escape);

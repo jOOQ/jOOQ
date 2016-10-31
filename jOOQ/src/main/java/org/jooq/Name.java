@@ -82,6 +82,13 @@ public interface Name extends QueryPart {
     String last();
 
     /**
+     * Whether this is a qualified name.
+     * <p>
+     * This is <code>true</code> as soon as {@link #getName()} has a length of more than <code>1</code>.
+     */
+    boolean qualified();
+
+    /**
      * The qualified name of this SQL identifier.
      */
     String[] getName();

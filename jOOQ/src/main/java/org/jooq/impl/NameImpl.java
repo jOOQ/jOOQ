@@ -118,6 +118,21 @@ final class NameImpl extends AbstractQueryPart implements Name {
     }
 
     @Override
+    public final boolean qualified() {
+        int nonNull = 0;
+
+        for (String name : qualifiedName) {
+            if (name != null)
+                nonNull++;
+
+            if (nonNull > 1)
+                return true;
+        }
+
+        return false;
+    }
+
+    @Override
     public final String[] getName() {
         return qualifiedName;
     }

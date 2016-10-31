@@ -51,7 +51,7 @@ import java.util.stream.Stream;
 public interface UDT<R extends UDTRecord<R>> extends QueryPart {
 
     /**
-     * Get this UDT's fields as a {@link Row}
+     * Get this UDT's fields as a {@link Row}.
      */
     Row fieldsRow();
 
@@ -138,17 +138,22 @@ public interface UDT<R extends UDTRecord<R>> extends QueryPart {
     Catalog getCatalog();
 
     /**
-     * Get the UDT schema
+     * Get the UDT schema.
      */
     Schema getSchema();
 
     /**
-     * The name of this UDT
+     * Get the UDT package.
+     */
+    Package getPackage();
+
+    /**
+     * The name of this UDT.
      */
     String getName();
 
     /**
-     * @return The record type produced by this table
+     * @return The record type produced by this table.
      */
     Class<R> getRecordType();
 

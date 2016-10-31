@@ -93,11 +93,13 @@ import org.jooq.Results;
 import org.jooq.Routine;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
+import org.jooq.UDT;
 import org.jooq.UDTField;
 import org.jooq.UDTRecord;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.MappingException;
 import org.jooq.tools.Convert;
+import org.jooq.tools.reflect.Reflect;
 
 /**
  * A common base class for stored procedures
@@ -129,6 +131,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     private ResultsImpl                       results;
     private boolean                           overloaded;
     private boolean                           hasUnnamedParameters;
+
 
 
 
@@ -553,10 +556,29 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     private final void bind1(BindContext context, Parameter<?> parameter, boolean bindAsIn, boolean bindAsOut) {
         int index = context.peekIndex();
 
-        if (bindAsOut)
+        if (bindAsOut) {
             resultIndexes.put(parameter, index);
 
+
+
+
+
+        }
+
         if (bindAsIn) {
+
+
+
+
+
+
+
+
+
+
+
+
+
             context.visit(getInValues().get(parameter));
 
             // [#391] This happens when null literals are used as IN/OUT
@@ -564,7 +586,16 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             // be registered as OUT parameter
             if (index == context.peekIndex() && bindAsOut)
                 context.nextIndex();
+
+
+
+
         }
+
+
+
+
+
 
         // Skip one index for OUT parameters
         else {
@@ -636,12 +667,21 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
 
 
+
+
         {
             context.sql(" }");
         }
     }
 
     private final void toSQLDeclare(RenderContext context) {
+
+
+
+
+
+
+
 
 
 
@@ -682,10 +722,163 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
 
 
+
+
+
+
+
+
+
+
+
+
+
         {
             context.sql("{ ");
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final void toSQLAssign(RenderContext context) {
 
@@ -726,10 +919,14 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
 
 
+
+
         context.sql('?');
     }
 
     private final void toSQLInParam(RenderContext context, Parameter<?> parameter, int index, Field<?> value) {
+
+
 
 
 
@@ -776,15 +973,27 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final <U> void fetchOutParameter(ExecuteContext ctx, Parameter<U> parameter) throws SQLException {
-        DefaultBindingGetStatementContext<U> out = new DefaultBindingGetStatementContext<U>(
-            ctx.configuration(),
-            ctx.data(),
-            (CallableStatement) ctx.statement(),
-            resultIndexes.get(parameter)
-        );
 
-        parameter.getBinding().get(out);
-        outValues.put(parameter, out.value());
+
+
+
+
+
+
+
+
+
+        {
+            DefaultBindingGetStatementContext<U> out = new DefaultBindingGetStatementContext<U>(
+                ctx.configuration(),
+                ctx.data(),
+                (CallableStatement) ctx.statement(),
+                resultIndexes.get(parameter)
+            );
+
+            parameter.getBinding().get(out);
+            outValues.put(parameter, out.value());
+        }
     }
 
     private final void registerOutParameters(ExecuteContext ctx) throws SQLException {
@@ -800,6 +1009,12 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final <U> void registerOutParameter(Configuration c, Map<Object, Object> data, CallableStatement statement, Parameter<U> parameter) throws SQLException {
+
+
+
+
+
+
         parameter.getBinding().register(new DefaultBindingRegisterContext<U>(c, data, statement, resultIndexes.get(parameter)));
     }
 
@@ -916,6 +1131,10 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
 
 
+
+
+
+
     private final boolean hasUnnamedParameters() {
         return hasUnnamedParameters;
     }
@@ -928,7 +1147,27 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
 
 
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final boolean resultParameter(Parameter<?> parameter) {
         return parameter.equals(getReturnParameter()) || getOutParameters().contains(parameter);

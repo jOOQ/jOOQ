@@ -90,12 +90,30 @@ final class NameImpl extends AbstractQueryPart implements Name {
             }
         }
         else {
-            ctx.literal(qualifiedName[qualifiedName.length - 1]);
+            ctx.literal(last());
         }
     }
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
+        return null;
+    }
+
+    @Override
+    public final String first() {
+        for (int i = 0; i < qualifiedName.length; i++)
+            if (qualifiedName[i] != null)
+                return qualifiedName[i];
+
+        return null;
+    }
+
+    @Override
+    public final String last() {
+        for (int i = qualifiedName.length - 1; i >= 0; i--)
+            if (qualifiedName[i] != null)
+                return qualifiedName[i];
+
         return null;
     }
 
@@ -120,7 +138,7 @@ final class NameImpl extends AbstractQueryPart implements Name {
         if (qualifiedName.length != 1)
             throw new IllegalStateException("Cannot create a DerivedColumnList from a qualified name : " + Arrays.asList(qualifiedName));
 
-        return new DerivedColumnListImpl(qualifiedName[0], fieldNames);
+        return new DerivedColumnListImpl(first(), fieldNames);
     }
 
 
@@ -132,7 +150,7 @@ final class NameImpl extends AbstractQueryPart implements Name {
 
     @Override
     public final DerivedColumnListImpl fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction) {
-        return new DerivedColumnListImpl(qualifiedName[0], fieldNameFunction);
+        return new DerivedColumnListImpl(first(), fieldNameFunction);
     }
 
 

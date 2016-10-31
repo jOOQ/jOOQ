@@ -72,6 +72,16 @@ import org.jooq.conf.Settings;
 public interface Name extends QueryPart {
 
     /**
+     * Get the first segment of the qualified name (usually a {@link Catalog} or {@link Schema} name).
+     */
+    String first();
+
+    /**
+     * Get the last segment of the qualified name (usually a {@link Table}, {@link Field}, or {@link Parameter} name).
+     */
+    String last();
+
+    /**
      * The qualified name of this SQL identifier.
      */
     String[] getName();

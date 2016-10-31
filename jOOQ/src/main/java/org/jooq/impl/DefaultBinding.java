@@ -809,6 +809,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         Configuration configuration = ctx.configuration();
         int sqlType = DefaultDataType.getDataType(ctx.dialect(), type).getSQLType();
 
+        if (log.isTraceEnabled())
+            log.trace("Registering variable " + ctx.index(), "" + type);
+
         switch (configuration.family()) {
 
 

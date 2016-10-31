@@ -160,7 +160,12 @@ public interface UDT<R extends UDTRecord<R>> extends QueryPart {
     R newRecord();
 
     /**
-     * The UDT's data type as known to the database
+     * The UDT's data type as known to the database.
      */
     DataType<R> getDataType();
+
+    /**
+     * Whether this data type can be used from SQL statements.
+     */
+    boolean isSQLUsable();
 }

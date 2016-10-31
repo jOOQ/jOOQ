@@ -1527,7 +1527,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (scala) {
-            out.println("class %s extends %s[%s](\"%s\", null)[[before= with ][separator= with ][%s]] {", className, UDTImpl.class, recordType, udt.getOutputName(), interfaces);
+            out.println("class %s extends %s[%s](\"%s\", null, %s)[[before= with ][separator= with ][%s]] {", className, UDTImpl.class, recordType, udt.getOutputName(), udt.getPackage() == null, interfaces);
         }
         else {
             out.println("public class %s extends %s<%s>[[before= implements ][%s]] {", className, UDTImpl.class, recordType, interfaces);
@@ -1589,7 +1589,7 @@ public class JavaGenerator extends AbstractGenerator {
         else {
             out.tab(1).javadoc(NO_FURTHER_INSTANCES_ALLOWED);
             out.tab(1).println("private %s() {", className);
-            out.tab(2).println("super(\"%s\", null);", udt.getOutputName());
+            out.tab(2).println("super(\"%s\", null, %s);", udt.getOutputName(), udt.getPackage() == null);
             out.tab(1).println("}");
         }
 

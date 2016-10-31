@@ -71,12 +71,18 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
     private final Schema          schema;
     private final String          name;
     private final Fields<R>       fields;
+    private final boolean         isSQLUsable;
     private transient DataType<R> type;
 
     public UDTImpl(String name, Schema schema) {
+        this(name, schema, true);
+    }
+
+    protected UDTImpl(String name, Schema schema, boolean isSQLUsable) {
         this.fields = new Fields<R>();
         this.name = name;
         this.schema = schema;
+        this.isSQLUsable = isSQLUsable;
     }
 
     @Override
@@ -163,6 +169,11 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
     @Override
     public Class<R> getRecordType() {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public final boolean isSQLUsable() {
+        return isSQLUsable;
     }
 
     @Override

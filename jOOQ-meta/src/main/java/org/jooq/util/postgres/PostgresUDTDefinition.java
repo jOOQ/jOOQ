@@ -40,6 +40,7 @@
  */
 package org.jooq.util.postgres;
 
+import static org.jooq.impl.DSL.name;
 import static org.jooq.util.postgres.information_schema.Tables.ATTRIBUTES;
 
 import java.sql.SQLException;
@@ -98,7 +99,10 @@ public class PostgresUDTDefinition extends AbstractUDTDefinition {
                 record.get(ATTRIBUTES.NUMERIC_SCALE),
                 record.get(ATTRIBUTES.IS_NULLABLE, boolean.class),
                 record.get(ATTRIBUTES.ATTRIBUTE_DEFAULT),
-                record.get(ATTRIBUTES.ATTRIBUTE_UDT_NAME)
+                name(
+                    record.get(ATTRIBUTES.ATTRIBUTE_UDT_SCHEMA),
+                    record.get(ATTRIBUTES.ATTRIBUTE_UDT_NAME)
+                )
             );
 
             AttributeDefinition column = new DefaultAttributeDefinition(

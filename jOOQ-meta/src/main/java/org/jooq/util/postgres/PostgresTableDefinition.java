@@ -41,6 +41,7 @@
 
 package org.jooq.util.postgres;
 
+import static org.jooq.impl.DSL.name;
 import static org.jooq.tools.StringUtils.defaultString;
 import static org.jooq.util.postgres.PostgresDSL.oid;
 import static org.jooq.util.postgres.information_schema.Tables.COLUMNS;
@@ -65,13 +66,13 @@ import org.jooq.util.SchemaDefinition;
  */
 public class PostgresTableDefinition extends AbstractTableDefinition {
 
-	public PostgresTableDefinition(SchemaDefinition schema, String name, String comment) {
-		super(schema, name, comment);
-	}
+    public PostgresTableDefinition(SchemaDefinition schema, String name, String comment) {
+        super(schema, name, comment);
+    }
 
-	@Override
-	public List<ColumnDefinition> getElements0() throws SQLException {
-		List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
+    @Override
+    public List<ColumnDefinition> getElements0() throws SQLException {
+        List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
 
         for (Record record : create().select(
                 COLUMNS.COLUMN_NAME,
@@ -114,21 +115,24 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 record.get(COLUMNS.NUMERIC_SCALE),
                 record.get(COLUMNS.IS_NULLABLE, boolean.class),
                 record.get(COLUMNS.COLUMN_DEFAULT),
-                record.get(COLUMNS.UDT_NAME)
+                name(
+                    record.get(COLUMNS.UDT_SCHEMA),
+                    record.get(COLUMNS.UDT_NAME)
+                )
             );
 
-			ColumnDefinition column = new DefaultColumnDefinition(
-			    getDatabase().getTable(getSchema(), getName()),
-			    record.get(COLUMNS.COLUMN_NAME),
-			    record.get(COLUMNS.ORDINAL_POSITION, int.class),
-			    type,
-			    defaultString(record.get(COLUMNS.COLUMN_DEFAULT)).trim().toLowerCase().startsWith("nextval"),
-			    record.get(PG_DESCRIPTION.DESCRIPTION)
-		    );
+            ColumnDefinition column = new DefaultColumnDefinition(
+                getDatabase().getTable(getSchema(), getName()),
+                record.get(COLUMNS.COLUMN_NAME),
+                record.get(COLUMNS.ORDINAL_POSITION, int.class),
+                type,
+                defaultString(record.get(COLUMNS.COLUMN_DEFAULT)).trim().toLowerCase().startsWith("nextval"),
+                record.get(PG_DESCRIPTION.DESCRIPTION)
+            );
 
-			result.add(column);
-		}
+            result.add(column);
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

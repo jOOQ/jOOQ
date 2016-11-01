@@ -42,12 +42,14 @@ package org.jooq.util;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableSet;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.util.AbstractGenerator.Language.JAVA;
 import static org.jooq.util.AbstractGenerator.Language.SCALA;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import org.jooq.Name;
 import org.jooq.SQLDialect;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.util.AbstractGenerator.Language;
@@ -355,7 +357,7 @@ class GenerationUtil {
     /**
      * Gets the base type for an array type, depending on the RDBMS dialect
      */
-    static String getArrayBaseType(SQLDialect dialect, String t, String u) {
+    static Name getArrayBaseType(SQLDialect dialect, String t, Name u) {
 
         // [#4388] TODO: Improve array handling
         switch (dialect.family()) {
@@ -365,8 +367,10 @@ class GenerationUtil {
             case POSTGRES: {
 
                 // The convention is to prepend a "_" to a type to get an array type
-                if (u != null && u.startsWith("_")) {
-                    return u.substring(1);
+                if (u != null && u.last().startsWith("_")) {
+                    String[] name = u.getName();
+                    name[name.length - 1] = name[name.length - 1].substring(1);
+                    return name(name);
                 }
 
                 // But there are also arrays with a "vector" suffix
@@ -376,7 +380,7 @@ class GenerationUtil {
             }
 
             case H2: {
-                return H2DataType.OTHER.getTypeName();
+                return name(H2DataType.OTHER.getTypeName());
             }
 
 
@@ -387,12 +391,12 @@ class GenerationUtil {
                 // In HSQLDB 2.2.5, there has been an incompatible INFORMATION_SCHEMA change around the
                 // ELEMENT_TYPES view. Arrays are now described much more explicitly
                 if ("ARRAY".equalsIgnoreCase(t)) {
-                    return "OTHER";
+                    return name("OTHER");
                 }
 
                 // This is for backwards compatibility
                 else {
-                    return t.replace(" ARRAY", "");
+                    return name(t.replace(" ARRAY", ""));
                 }
             }
         }

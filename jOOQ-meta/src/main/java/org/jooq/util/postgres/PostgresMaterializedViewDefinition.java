@@ -44,6 +44,7 @@ package org.jooq.util.postgres;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.not;
 import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.when;
@@ -82,17 +83,17 @@ import org.jooq.util.postgres.pg_catalog.tables.PgType;
  */
 public class PostgresMaterializedViewDefinition extends AbstractTableDefinition {
 
-	public PostgresMaterializedViewDefinition(SchemaDefinition schema, String name, String comment) {
-		super(schema, name, comment);
-	}
+    public PostgresMaterializedViewDefinition(SchemaDefinition schema, String name, String comment) {
+        super(schema, name, comment);
+    }
 
-	@Override
-	public List<ColumnDefinition> getElements0() throws SQLException {
-		List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
+    @Override
+    public List<ColumnDefinition> getElements0() throws SQLException {
+        List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
 
-		Columns col = COLUMNS;
-		PgAttribute a = PG_ATTRIBUTE.as("a");
-		PgAttrdef ad = PG_ATTRDEF.as("ad");
+        Columns col = COLUMNS;
+        PgAttribute a = PG_ATTRIBUTE.as("a");
+        PgAttrdef ad = PG_ATTRDEF.as("ad");
         PgType t = PG_TYPE.as("t");
         PgType bt = PG_TYPE.as("bt");
         PgClass c = PG_CLASS.as("c");
@@ -103,29 +104,29 @@ public class PostgresMaterializedViewDefinition extends AbstractTableDefinition 
         PgNamespace nco = PG_NAMESPACE.as("nco");
 
         for (Record record : create().select(
-		        field("({0})::information_schema.sql_identifier", col.COLUMN_NAME.getDataType(), a.ATTNAME).as(col.COLUMN_NAME),
-		        field("({0})::information_schema.cardinal_number", col.ORDINAL_POSITION.getDataType(), a.ATTNUM).as(col.ORDINAL_POSITION),
-		        field("({0})::information_schema.character_data", col.DATA_TYPE.getDataType(),
-		            when(t.TYPTYPE.eq(inline("d")),
-		                when(bt.TYPELEM.ne(inline(0L)).and(bt.TYPLEN.eq(inline((short) -1))), inline("ARRAY"))
-		               .when(nbt.NSPNAME.eq(inline("pg_catalog")), field("format_type({0}, NULL::integer)", String.class, t.TYPBASETYPE))
-		               .otherwise(inline("USER-DEFINED")))
-		           .otherwise(
-		                when(t.TYPELEM.ne(inline(0L)).and(t.TYPLEN.eq(inline((short) -1))), inline("ARRAY"))
-		               .when(nt.NSPNAME.eq(inline("pg_catalog")), field("format_type({0}, NULL::integer)", String.class, a.ATTTYPID))
-		               .otherwise(inline("USER-DEFINED")))).as(col.DATA_TYPE),
+                field("({0})::information_schema.sql_identifier", col.COLUMN_NAME.getDataType(), a.ATTNAME).as(col.COLUMN_NAME),
+                field("({0})::information_schema.cardinal_number", col.ORDINAL_POSITION.getDataType(), a.ATTNUM).as(col.ORDINAL_POSITION),
+                field("({0})::information_schema.character_data", col.DATA_TYPE.getDataType(),
+                    when(t.TYPTYPE.eq(inline("d")),
+                        when(bt.TYPELEM.ne(inline(0L)).and(bt.TYPLEN.eq(inline((short) -1))), inline("ARRAY"))
+                       .when(nbt.NSPNAME.eq(inline("pg_catalog")), field("format_type({0}, NULL::integer)", String.class, t.TYPBASETYPE))
+                       .otherwise(inline("USER-DEFINED")))
+                   .otherwise(
+                        when(t.TYPELEM.ne(inline(0L)).and(t.TYPLEN.eq(inline((short) -1))), inline("ARRAY"))
+                       .when(nt.NSPNAME.eq(inline("pg_catalog")), field("format_type({0}, NULL::integer)", String.class, a.ATTTYPID))
+                       .otherwise(inline("USER-DEFINED")))).as(col.DATA_TYPE),
                 field("(information_schema._pg_char_max_length(information_schema._pg_truetypid(a.*, t.*), information_schema._pg_truetypmod(a.*, t.*)))::information_schema.cardinal_number", col.CHARACTER_MAXIMUM_LENGTH.getDataType()).as(col.CHARACTER_MAXIMUM_LENGTH),
                 field("(information_schema._pg_numeric_precision(information_schema._pg_truetypid(a.*, t.*), information_schema._pg_truetypmod(a.*, t.*)))::information_schema.cardinal_number", col.NUMERIC_PRECISION.getDataType()).as(col.NUMERIC_PRECISION),
                 field("(information_schema._pg_numeric_scale(information_schema._pg_truetypid(a.*, t.*), information_schema._pg_truetypmod(a.*, t.*)))::information_schema.cardinal_number", col.NUMERIC_SCALE.getDataType()).as(col.NUMERIC_SCALE),
-		        field("({0})::information_schema.yes_or_no", col.IS_NULLABLE.getDataType(),
-		            when(condition(a.ATTNOTNULL).or(t.TYPTYPE.eq(inline("d")).and(t.TYPNOTNULL)), inline("NO"))
-		           .otherwise(inline("YES"))).as(col.IS_NULLABLE),
-		        field("(pg_get_expr({0}, {1}))::information_schema.character_data", col.COLUMN_DEFAULT.getDataType(), ad.ADBIN, ad.ADRELID).as(col.COLUMN_DEFAULT),
-		        field("({0})::information_schema.sql_identifier", col.UDT_SCHEMA.getDataType(),
-		            nvl(nbt.NSPNAME, nt.NSPNAME)).as(col.UDT_SCHEMA),
-		        field("({0})::information_schema.sql_identifier", col.UDT_NAME.getDataType(),
-		            nvl(bt.TYPNAME, t.TYPNAME)).as(col.UDT_NAME),
-		        PG_DESCRIPTION.DESCRIPTION)
+                field("({0})::information_schema.yes_or_no", col.IS_NULLABLE.getDataType(),
+                    when(condition(a.ATTNOTNULL).or(t.TYPTYPE.eq(inline("d")).and(t.TYPNOTNULL)), inline("NO"))
+                   .otherwise(inline("YES"))).as(col.IS_NULLABLE),
+                field("(pg_get_expr({0}, {1}))::information_schema.character_data", col.COLUMN_DEFAULT.getDataType(), ad.ADBIN, ad.ADRELID).as(col.COLUMN_DEFAULT),
+                field("({0})::information_schema.sql_identifier", col.UDT_SCHEMA.getDataType(),
+                    nvl(nbt.NSPNAME, nt.NSPNAME)).as(col.UDT_SCHEMA),
+                field("({0})::information_schema.sql_identifier", col.UDT_NAME.getDataType(),
+                    nvl(bt.TYPNAME, t.TYPNAME)).as(col.UDT_NAME),
+                PG_DESCRIPTION.DESCRIPTION)
             .from(a
                 .leftJoin(ad)
                     .on(a.ATTRELID.eq(ad.ADRELID))
@@ -175,21 +176,24 @@ public class PostgresMaterializedViewDefinition extends AbstractTableDefinition 
                 record.get(COLUMNS.NUMERIC_SCALE),
                 record.get(COLUMNS.IS_NULLABLE, boolean.class),
                 record.get(COLUMNS.COLUMN_DEFAULT),
-                record.get(COLUMNS.UDT_NAME)
+                name(
+                    record.get(COLUMNS.UDT_SCHEMA),
+                    record.get(COLUMNS.UDT_NAME)
+                )
             );
 
-			ColumnDefinition column = new DefaultColumnDefinition(
-			    getDatabase().getTable(getSchema(), getName()),
-			    record.get(COLUMNS.COLUMN_NAME),
-			    record.get(COLUMNS.ORDINAL_POSITION, int.class),
-			    type,
-			    defaultString(record.get(COLUMNS.COLUMN_DEFAULT)).startsWith("nextval"),
-			    record.get(PG_DESCRIPTION.DESCRIPTION)
-		    );
+            ColumnDefinition column = new DefaultColumnDefinition(
+                getDatabase().getTable(getSchema(), getName()),
+                record.get(COLUMNS.COLUMN_NAME),
+                record.get(COLUMNS.ORDINAL_POSITION, int.class),
+                type,
+                defaultString(record.get(COLUMNS.COLUMN_DEFAULT)).startsWith("nextval"),
+                record.get(PG_DESCRIPTION.DESCRIPTION)
+            );
 
-			result.add(column);
-		}
+            result.add(column);
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

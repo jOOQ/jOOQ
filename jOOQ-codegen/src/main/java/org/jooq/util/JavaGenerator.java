@@ -4930,11 +4930,11 @@ public class JavaGenerator extends AbstractGenerator {
 
         // [#4388] TODO: Improve array handling
         if (database.isArrayType(type.getType())) {
-            String baseType = GenerationUtil.getArrayBaseType(db.getDialect(), type.getType(), type.getUserType());
+            Name baseType = GenerationUtil.getArrayBaseType(db.getDialect(), type.getType(), type.getQualifiedUserType());
             return getTypeReference(
                 db,
                 type.getSchema(),
-                baseType,
+                baseType.last(),
                 0,
                 0,
                 0,
@@ -5007,12 +5007,12 @@ public class JavaGenerator extends AbstractGenerator {
         else if (db.isArrayType(t)) {
 
             // [#4388] TODO: Improve array handling
-            String baseType = GenerationUtil.getArrayBaseType(db.getDialect(), t, u == null ? null : u.last());
+            Name baseType = GenerationUtil.getArrayBaseType(db.getDialect(), t, u);
 
             if (scala)
-                type = "scala.Array[" + getType(db, schema, baseType, p, s, baseType, javaType, defaultType, udtMode) + "]";
+                type = "scala.Array[" + getType(db, schema, baseType.last(), p, s, baseType, javaType, defaultType, udtMode) + "]";
             else
-                type = getType(db, schema, baseType, p, s, baseType, javaType, defaultType, udtMode) + "[]";
+                type = getType(db, schema, baseType.last(), p, s, baseType, javaType, defaultType, udtMode) + "[]";
         }
 
         // Check for Oracle-style VARRAY types

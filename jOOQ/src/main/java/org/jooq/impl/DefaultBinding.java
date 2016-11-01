@@ -2312,18 +2312,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         try {
             Class<?> component = type.getComponentType();
-            String values = string.replaceAll("^\\{(.*)\\}$", "$1");
+            List<String> values = PostgresUtils.toPGArray(string);
 
-            if ("".equals(values)) {
+            if (values.isEmpty()) {
                 return (Object[]) java.lang.reflect.Array.newInstance(component, 0);
             }
             else {
-                String[] split = values.split(",");
-                Object[] result = (Object[]) java.lang.reflect.Array.newInstance(component, split.length);
+                Object[] result = (Object[]) java.lang.reflect.Array.newInstance(component, values.size());
 
-                for (int i = 0; i < split.length; i++) {
-                    result[i] = pgFromString(type.getComponentType(), split[i]);
-                }
+                for (int i = 0; i < values.size(); i++)
+                    result[i] = pgFromString(type.getComponentType(), values.get(i));
 
                 return result;
             }

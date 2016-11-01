@@ -127,6 +127,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Scope;
 import org.jooq.UDTRecord;
+import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.MappingException;
 import org.jooq.exception.SQLDialectNotSupportedException;
@@ -2245,7 +2246,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // Try fetching a Java Object[]. That's gonna work for non-UDT types
             try {
-                return (T) convertArray(array, (Class<? extends Object[]>) type);
+
+                // [#5633] Special treatment for this type.
+                // [#5586] [#5613] TODO: Improve PostgreSQL array deserialisation.
+                if (byte[][].class == type)
+                    throw new ControlFlowSignal("GOTO the next array deserialisation strategy");
+                else
+                    return (T) convertArray(array, (Class<? extends Object[]>) type);
             }
 
             // This might be a UDT (not implemented exception...)

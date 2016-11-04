@@ -10,6 +10,21 @@ http://www.jooq.org/notes
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.8.6 - November 4, 2016
+================================================================================
+
+This is a patch release with some useful fixes for the 3.8 branch
+
+Features and Improvements
+-------------------------
+#5628 - Added hint for m2e to behave
+#5635 - Further improve select() Javadoc for empty argument lists
+
+Bug Fixes
+---------
+#5634 - Regression when reading PostgreSQL bytea[] type
+
+
 Version 3.8.5 - October 21, 2016
 ================================================================================
 

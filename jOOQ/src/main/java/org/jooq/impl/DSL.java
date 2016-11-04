@@ -1721,7 +1721,13 @@ public class DSL {
      * </pre></code>
      * <p>
      * Note that passing an empty collection conveniently produces
-     * <code>SELECT *</code> semantics.
+     * <code>SELECT *</code> semantics, i.e. it:
+     * <ul>
+     * <li>Renders <code>SELECT tab1.col1, tab1.col2, ..., tabN.colN</code> if
+     * all columns are known</li>
+     * <li>Renders <code>SELECT *</code> if not all columns are known, e.g. when
+     * using plain SQL</li>
+     * </ul>
      *
      * @see DSLContext#select(Collection)
      */
@@ -1754,8 +1760,14 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      * <p>
-     * Note that passing an empty array (e.g. by not passing any vararg
-     * argument) conveniently produces <code>SELECT *</code> semantics.
+     * Note that passing an empty collection conveniently produces
+     * <code>SELECT *</code> semantics, i.e. it:
+     * <ul>
+     * <li>Renders <code>SELECT tab1.col1, tab1.col2, ..., tabN.colN</code> if
+     * all columns are known</li>
+     * <li>Renders <code>SELECT *</code> if not all columns are known, e.g. when
+     * using plain SQL</li>
+     * </ul>
      *
      * @see DSLContext#select(SelectField...)
      */
@@ -2629,7 +2641,13 @@ public class DSL {
      * </pre></code>
      * <p>
      * Note that passing an empty collection conveniently produces
-     * <code>SELECT DISTINCT *</code> semantics.
+     * <code>SELECT DISTINCT *</code> semantics, i.e. it:
+     * <ul>
+     * <li>Renders <code>SELECT DISTINCT tab1.col1, tab1.col2, ..., tabN.colN</code> if
+     * all columns are known</li>
+     * <li>Renders <code>SELECT DISTINCT *</code> if not all columns are known, e.g. when
+     * using plain SQL</li>
+     * </ul>
      *
      * @see DSLContext#selectDistinct(Collection)
      */
@@ -2662,8 +2680,14 @@ public class DSL {
      *  .orderBy(field2);
      * </pre></code>
      * <p>
-     * Note that passing an empty array (e.g. by not passing any vararg
-     * argument) conveniently produces <code>SELECT DISTINCT *</code> semantics.
+     * Note that passing an empty collection conveniently produces
+     * <code>SELECT DISTINCT *</code> semantics, i.e. it:
+     * <ul>
+     * <li>Renders <code>SELECT DISTINCT tab1.col1, tab1.col2, ..., tabN.colN</code> if
+     * all columns are known</li>
+     * <li>Renders <code>SELECT DISTINCT *</code> if not all columns are known, e.g. when
+     * using plain SQL</li>
+     * </ul>
      *
      * @see DSLContext#selectDistinct(SelectField...)
      */

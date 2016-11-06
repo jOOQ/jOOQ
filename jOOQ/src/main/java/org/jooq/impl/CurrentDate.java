@@ -58,7 +58,7 @@ final class CurrentDate extends AbstractFunction<Date> {
     private static final long serialVersionUID = -7273879239726265322L;
 
     CurrentDate() {
-        super("current_user", SQLDataType.DATE);
+        super("current_date", SQLDataType.DATE);
     }
 
     @Override

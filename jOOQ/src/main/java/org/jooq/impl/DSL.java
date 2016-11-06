@@ -11882,6 +11882,26 @@ public class DSL {
         return trunc(Tools.field(date), part);
     }
 
+
+
+    /**
+     * Truncate a date to the beginning of the day.
+     */
+    @Support({ CUBRID, H2, HSQLDB, POSTGRES })
+    public static Field<LocalDate> trunc(LocalDate date) {
+        return trunc(date, DatePart.DAY);
+    }
+
+    /**
+     * Truncate a date to a given datepart.
+     */
+    @Support({ CUBRID, H2, HSQLDB, POSTGRES })
+    public static Field<LocalDate> trunc(LocalDate date, DatePart part) {
+        return trunc(Tools.field(date), part);
+    }
+
+
+
     /**
      * Truncate a timestamp to the beginning of the day.
      */
@@ -11898,11 +11918,31 @@ public class DSL {
         return trunc(Tools.field(timestamp), part);
     }
 
+
+
+    /**
+     * Truncate a timestamp to the beginning of the day.
+     */
+    @Support({ CUBRID, H2, HSQLDB, POSTGRES })
+    public static Field<LocalDateTime> trunc(LocalDateTime timestamp) {
+        return trunc(timestamp, DatePart.DAY);
+    }
+
+    /**
+     * Truncate a timestamp to a given datepart.
+     */
+    @Support({ CUBRID, H2, HSQLDB, POSTGRES })
+    public static Field<LocalDateTime> trunc(LocalDateTime timestamp, DatePart part) {
+        return trunc(Tools.field(timestamp), part);
+    }
+
+
+
     /**
      * Truncate a date or a timestamp to the beginning of the day.
      */
     @Support({ CUBRID, H2, HSQLDB, POSTGRES })
-    public static <T extends java.util.Date> Field<T> trunc(Field<T> date) {
+    public static <T> Field<T> trunc(Field<T> date) {
         return trunc(date, DatePart.DAY);
     }
 
@@ -11910,7 +11950,7 @@ public class DSL {
      * Truncate a date or a timestamp to a given datepart.
      */
     @Support({ CUBRID, H2, HSQLDB, POSTGRES })
-    public static <T extends java.util.Date> Field<T> trunc(Field<T> date, DatePart part) {
+    public static <T> Field<T> trunc(Field<T> date, DatePart part) {
         return new TruncDate<T>(date, part);
     }
 

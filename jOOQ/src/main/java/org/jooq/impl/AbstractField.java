@@ -197,10 +197,14 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         return as(otherField.getName());
     }
 
+
+
     @Override
     public final Field<T> as(Function<? super Field<T>, ? extends String> aliasFunction) {
         return as(aliasFunction.apply(this));
     }
+
+
 
     @Override
     public final String getName() {

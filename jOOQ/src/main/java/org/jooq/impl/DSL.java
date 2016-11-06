@@ -89,6 +89,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
+import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -189,7 +190,6 @@ import org.jooq.InsertValuesStep9;
 import org.jooq.InsertValuesStepN;
 import org.jooq.Keyword;
 // ...
-import org.jooq.Merge;
 import org.jooq.MergeKeyStep1;
 import org.jooq.MergeKeyStep10;
 import org.jooq.MergeKeyStep11;
@@ -11926,13 +11926,27 @@ public class DSL {
         return extract(Tools.field(value), datePart);
     }
 
+
+
     /**
      * Get the extract(field, datePart) function.
      * <p>
      * This translates into any dialect
      */
     @Support
-    public static Field<Integer> extract(Field<? extends java.util.Date> field, DatePart datePart) {
+    public static Field<Integer> extract(Temporal value, DatePart datePart) {
+        return extract(Tools.field(value), datePart);
+    }
+
+
+
+    /**
+     * Get the extract(field, datePart) function.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<Integer> extract(Field<?> field, DatePart datePart) {
         return new Extract(nullSafe(field), datePart);
     }
 
@@ -11947,6 +11961,21 @@ public class DSL {
         return extract(value, DatePart.YEAR);
     }
 
+
+
+    /**
+     * Get the year part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Temporal, DatePart)}
+     * with {@link DatePart#YEAR}
+     */
+    @Support
+    public static Field<Integer> year(Temporal value) {
+        return extract(value, DatePart.YEAR);
+    }
+
+
+
     /**
      * Get the year part of a date.
      * <p>
@@ -11954,7 +11983,7 @@ public class DSL {
      * with {@link DatePart#YEAR}
      */
     @Support
-    public static Field<Integer> year(Field<? extends java.util.Date> field) {
+    public static Field<Integer> year(Field<?> field) {
         return extract(field, DatePart.YEAR);
     }
 
@@ -11969,6 +11998,21 @@ public class DSL {
         return extract(value, DatePart.MONTH);
     }
 
+
+
+    /**
+     * Get the month part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Temporal, DatePart)}
+     * with {@link DatePart#MONTH}
+     */
+    @Support
+    public static Field<Integer> month(Temporal value) {
+        return extract(value, DatePart.MONTH);
+    }
+
+
+
     /**
      * Get the month part of a date.
      * <p>
@@ -11976,7 +12020,7 @@ public class DSL {
      * with {@link DatePart#MONTH}
      */
     @Support
-    public static Field<Integer> month(Field<? extends java.util.Date> field) {
+    public static Field<Integer> month(Field<?> field) {
         return extract(field, DatePart.MONTH);
     }
 
@@ -11991,6 +12035,21 @@ public class DSL {
         return extract(value, DatePart.DAY);
     }
 
+
+
+    /**
+     * Get the day part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Temporal, DatePart)}
+     * with {@link DatePart#DAY}
+     */
+    @Support
+    public static Field<Integer> day(Temporal value) {
+        return extract(value, DatePart.DAY);
+    }
+
+
+
     /**
      * Get the day part of a date.
      * <p>
@@ -11998,7 +12057,7 @@ public class DSL {
      * with {@link DatePart#DAY}
      */
     @Support
-    public static Field<Integer> day(Field<? extends java.util.Date> field) {
+    public static Field<Integer> day(Field<?> field) {
         return extract(field, DatePart.DAY);
     }
 
@@ -12013,6 +12072,21 @@ public class DSL {
         return extract(value, DatePart.HOUR);
     }
 
+
+
+    /**
+     * Get the hour part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Temporal, DatePart)}
+     * with {@link DatePart#HOUR}
+     */
+    @Support
+    public static Field<Integer> hour(Temporal value) {
+        return extract(value, DatePart.HOUR);
+    }
+
+
+
     /**
      * Get the hour part of a date.
      * <p>
@@ -12020,7 +12094,7 @@ public class DSL {
      * with {@link DatePart#HOUR}
      */
     @Support
-    public static Field<Integer> hour(Field<? extends java.util.Date> field) {
+    public static Field<Integer> hour(Field<?> field) {
         return extract(field, DatePart.HOUR);
     }
 
@@ -12035,6 +12109,21 @@ public class DSL {
         return extract(value, DatePart.MINUTE);
     }
 
+
+
+    /**
+     * Get the minute part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Temporal, DatePart)}
+     * with {@link DatePart#MINUTE}
+     */
+    @Support
+    public static Field<Integer> minute(Temporal value) {
+        return extract(value, DatePart.MINUTE);
+    }
+
+
+
     /**
      * Get the minute part of a date.
      * <p>
@@ -12042,7 +12131,7 @@ public class DSL {
      * with {@link DatePart#MINUTE}
      */
     @Support
-    public static Field<Integer> minute(Field<? extends java.util.Date> field) {
+    public static Field<Integer> minute(Field<?> field) {
         return extract(field, DatePart.MINUTE);
     }
 
@@ -12057,6 +12146,21 @@ public class DSL {
         return extract(value, DatePart.SECOND);
     }
 
+
+
+    /**
+     * Get the second part of a date.
+     * <p>
+     * This is the same as calling {@link #extract(Temporal, DatePart)}
+     * with {@link DatePart#SECOND}
+     */
+    @Support
+    public static Field<Integer> second(Temporal value) {
+        return extract(value, DatePart.SECOND);
+    }
+
+
+
     /**
      * Get the second part of a date.
      * <p>
@@ -12064,7 +12168,7 @@ public class DSL {
      * with {@link DatePart#SECOND}
      */
     @Support
-    public static Field<Integer> second(Field<? extends java.util.Date> field) {
+    public static Field<Integer> second(Field<?> field) {
         return extract(field, DatePart.SECOND);
     }
 

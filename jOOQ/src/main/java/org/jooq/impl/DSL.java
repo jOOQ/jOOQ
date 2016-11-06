@@ -83,6 +83,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -12086,6 +12087,164 @@ public class DSL {
     public static Field<Timestamp> timestamp(Field<? extends java.util.Date> field) {
         return new DateOrTime<Timestamp>(field, SQLDataType.TIMESTAMP);
     }
+
+
+    /**
+     * Convert a string value to a <code>DATE</code>.
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<LocalDate> localDate(String value) {
+        return Tools.field(Convert.convert(value, LocalDate.class), LocalDate.class);
+    }
+
+    /**
+     * Convert a temporal value to a <code>DATE</code>.
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<LocalDate> localDate(LocalDate value) {
+        return localDate(Tools.field(value));
+    }
+
+    /**
+     * Convert a temporal value to a <code>DATE</code>.
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<LocalDate> localDate(Field<LocalDate> field) {
+        return new DateOrTime<LocalDate>(field, SQLDataType.LOCALDATE);
+    }
+
+    /**
+     * Convert a string value to a <code>TIME</code>.
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<LocalTime> localTime(String value) {
+        return Tools.field(Convert.convert(value, LocalTime.class), LocalTime.class);
+    }
+
+    /**
+     * Convert a temporal value to a <code>TIME</code>.
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<LocalTime> localTime(LocalTime value) {
+        return localTime(Tools.field(value));
+    }
+
+    /**
+     * Convert a temporal value to a <code>TIME</code>.
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<LocalTime> localTime(Field<LocalTime> field) {
+        return new DateOrTime<LocalTime>(field, SQLDataType.LOCALTIME);
+    }
+
+    /**
+     * Convert a string value to a <code>TIMESTAMP</code>.
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<LocalDateTime> localDateTime(String value) {
+        return Tools.field(Convert.convert(value, LocalDateTime.class), LocalDateTime.class);
+    }
+
+    /**
+     * Convert a temporal value to a <code>TIMESTAMP</code>.
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<LocalDateTime> localDateTime(LocalDateTime value) {
+        return localDateTime(Tools.field(value));
+    }
+
+    /**
+     * Convert a temporal value to a <code>TIMESTAMP</code>.
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<LocalDateTime> localDateTime(Field<LocalDateTime> field) {
+        return new DateOrTime<LocalDateTime>(field, SQLDataType.LOCALDATETIME);
+    }
+
+    /**
+     * Convert a string value to a <code>TIME WITH TIME ZONE</code>.
+     * <p>
+     * Depending on whether the database preserves the time zone information
+     * (e.g. {@link SQLDialect#ORACLE}) or not (e.g.
+     * {@link SQLDialect#POSTGRES}), the resulting value might be converted to
+     * UTC. Regardless of this fact, the result should be the same
+     * {@link Instant} (in UTC) as the input.
+     */
+    @Support({ POSTGRES })
+    public static Field<OffsetTime> offsetTime(String value) {
+        return Tools.field(Convert.convert(value, OffsetTime.class), OffsetTime.class);
+    }
+
+    /**
+     * Convert a temporal value to a <code>TIME WITH TIME ZONE</code>.
+     * <p>
+     * Depending on whether the database preserves the time zone information
+     * (e.g. {@link SQLDialect#ORACLE}) or not (e.g.
+     * {@link SQLDialect#POSTGRES}), the resulting value might be converted to
+     * UTC. Regardless of this fact, the result should be the same
+     * {@link Instant} (in UTC) as the input.
+     */
+    @Support({ POSTGRES })
+    public static Field<OffsetTime> offsetTime(OffsetTime value) {
+        return offsetTime(Tools.field(value));
+    }
+
+    /**
+     * Convert a temporal value to a <code>TIME WITH TIME ZONE</code>.
+     * <p>
+     * Depending on whether the database preserves the time zone information
+     * (e.g. {@link SQLDialect#ORACLE}) or not (e.g.
+     * {@link SQLDialect#POSTGRES}), the resulting value might be converted to
+     * UTC. Regardless of this fact, the result should be the same
+     * {@link Instant} (in UTC) as the input.
+     */
+    @Support({ POSTGRES })
+    public static Field<OffsetTime> offsetTime(Field<OffsetTime> field) {
+        return new DateOrTime<OffsetTime>(field, SQLDataType.OFFSETTIME);
+    }
+
+    /**
+     * Convert a string value to a <code>TIMESTAMP WITH TIME ZONE</code>.
+     * <p>
+     * Depending on whether the database preserves the time zone information
+     * (e.g. {@link SQLDialect#ORACLE}) or not (e.g.
+     * {@link SQLDialect#POSTGRES}), the resulting value might be converted to
+     * UTC. Regardless of this fact, the result should be the same
+     * {@link Instant} (in UTC) as the input.
+     */
+    @Support({ POSTGRES })
+    public static Field<OffsetDateTime> offsetDateTime(String value) {
+        return Tools.field(Convert.convert(value, OffsetDateTime.class), OffsetDateTime.class);
+    }
+
+    /**
+     * Convert a temporal value to a <code>TIMESTAMP WITH TIME ZONE</code>.
+     * <p>
+     * Depending on whether the database preserves the time zone information
+     * (e.g. {@link SQLDialect#ORACLE}) or not (e.g.
+     * {@link SQLDialect#POSTGRES}), the resulting value might be converted to
+     * UTC. Regardless of this fact, the result should be the same
+     * {@link Instant} (in UTC) as the input.
+     */
+    @Support({ POSTGRES })
+    public static Field<OffsetDateTime> offsetDateTime(OffsetDateTime value) {
+        return offsetDateTime(Tools.field(value));
+    }
+
+    /**
+     * Convert a temporal value to a <code>TIMESTAMP WITH TIME ZONE</code>.
+     * <p>
+     * Depending on whether the database preserves the time zone information
+     * (e.g. {@link SQLDialect#ORACLE}) or not (e.g.
+     * {@link SQLDialect#POSTGRES}), the resulting value might be converted to
+     * UTC. Regardless of this fact, the result should be the same
+     * {@link Instant} (in UTC) as the input.
+     */
+    @Support({ POSTGRES })
+    public static Field<OffsetDateTime> offsetDateTime(Field<OffsetDateTime> field) {
+        return new DateOrTime<OffsetDateTime>(field, SQLDataType.OFFSETDATETIME);
+    }
+
 
     /**
      * Parse a value to a <code>DATE</code>.

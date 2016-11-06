@@ -12386,6 +12386,98 @@ public class DSL {
         return DSL.field("{to_timestamp}({0}, {1})", SQLDataType.TIMESTAMP, nullSafe(value), nullSafe(format));
     }
 
+
+
+    /**
+     * Parse a value to a <code>DATE</code>.
+     *
+     * @param value The formatted <code>DATE</code> value.
+     * @param format The vendor-specific formatting string.
+     */
+    @Support({ H2, POSTGRES })
+    public static Field<LocalDate> toLocalDate(String value, String format) {
+        return toDate(value, format).coerce(SQLDataType.LOCALDATE);
+    }
+
+    /**
+     * Parse a value to a <code>DATE</code>.
+     *
+     * @param value The formatted <code>DATE</code> value.
+     * @param format The vendor-specific formatting string.
+     */
+    @Support({ H2, POSTGRES })
+    public static Field<LocalDate> toLocalDate(String value, Field<String> format) {
+        return toDate(value, format).coerce(SQLDataType.LOCALDATE);
+    }
+
+    /**
+     * Parse a value to a <code>DATE</code>.
+     *
+     * @param value The formatted <code>DATE</code> value.
+     * @param format The vendor-specific formatting string.
+     */
+    @Support({ H2, POSTGRES })
+    public static Field<LocalDate> toLocalDate(Field<String> value, String format) {
+        return toDate(value, format).coerce(SQLDataType.LOCALDATE);
+    }
+
+    /**
+     * Parse a value to a <code>DATE</code>.
+     *
+     * @param value The formatted <code>DATE</code> value.
+     * @param format The vendor-specific formatting string.
+     */
+    @Support({ H2, POSTGRES })
+    public static Field<LocalDate> toLocalDate(Field<String> value, Field<String> format) {
+        return toDate(value, format).coerce(SQLDataType.LOCALDATE);
+    }
+
+    /**
+     * Parse a value to a <code>TIMESTAMP</code>.
+     *
+     * @param value The formatted <code>TIMESTAMP</code> value.
+     * @param format The vendor-specific formatting string.
+     */
+    @Support({ H2, POSTGRES })
+    public static Field<LocalDateTime> toLocalDateTime(String value, String format) {
+        return toTimestamp(value, format).coerce(SQLDataType.LOCALDATETIME);
+    }
+
+    /**
+     * Parse a value to a <code>TIMESTAMP</code>.
+     *
+     * @param value The formatted <code>TIMESTAMP</code> value.
+     * @param format The vendor-specific formatting string.
+     */
+    @Support({ H2, POSTGRES })
+    public static Field<LocalDateTime> toLocalDateTime(String value, Field<String> format) {
+        return toTimestamp(value, format).coerce(SQLDataType.LOCALDATETIME);
+    }
+
+    /**
+     * Parse a value to a <code>TIMESTAMP</code>.
+     *
+     * @param value The formatted <code>TIMESTAMP</code> value.
+     * @param format The vendor-specific formatting string.
+     */
+    @Support({ H2, POSTGRES })
+    public static Field<LocalDateTime> toLocalDateTime(Field<String> value, String format) {
+        return toTimestamp(value, format).coerce(SQLDataType.LOCALDATETIME);
+    }
+
+    /**
+     * Parse a value to a <code>TIMESTAMP</code>.
+     *
+     * @param value The formatted <code>TIMESTAMP</code> value.
+     * @param format The vendor-specific formatting string.
+     */
+    @Support({ H2, POSTGRES })
+    public static Field<LocalDateTime> toLocalDateTime(Field<String> value, Field<String> format) {
+        return toTimestamp(value, format).coerce(SQLDataType.LOCALDATETIME);
+    }
+
+
+
     // ------------------------------------------------------------------------
     // XXX Construction of GROUPING SET functions
     // ------------------------------------------------------------------------

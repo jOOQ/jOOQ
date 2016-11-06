@@ -42,27 +42,26 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
 
-import java.sql.Date;
-
 import org.jooq.Configuration;
+import org.jooq.DataType;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-final class CurrentDate extends AbstractFunction<Date> {
+final class CurrentDate<T> extends AbstractFunction<T> {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = -7273879239726265322L;
 
-    CurrentDate() {
-        super("current_date", SQLDataType.DATE);
+    CurrentDate(DataType<T> type) {
+        super("current_date", type);
     }
 
     @Override
-    final Field<Date> getFunction0(Configuration configuration) {
+    final Field<T> getFunction0(Configuration configuration) {
         switch (configuration.family()) {
 
 
@@ -92,9 +91,9 @@ final class CurrentDate extends AbstractFunction<Date> {
             case HSQLDB:
             case POSTGRES:
             case SQLITE:
-                return DSL.field("{current_date}", SQLDataType.DATE);
+                return DSL.field("{current_date}", getDataType());
         }
 
-        return function("current_date", SQLDataType.DATE);
+        return function("current_date", getDataType());
     }
 }

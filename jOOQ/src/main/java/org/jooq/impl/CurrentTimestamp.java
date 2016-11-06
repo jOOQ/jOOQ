@@ -42,27 +42,26 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
 
-import java.sql.Timestamp;
-
 import org.jooq.Configuration;
+import org.jooq.DataType;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-final class CurrentTimestamp extends AbstractFunction<Timestamp> {
+final class CurrentTimestamp<T> extends AbstractFunction<T> {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = -7273879239726265322L;
 
-    CurrentTimestamp() {
-        super("current_timestamp", SQLDataType.TIMESTAMP);
+    CurrentTimestamp(DataType<T> type) {
+        super("current_timestamp", type);
     }
 
     @Override
-    final Field<Timestamp> getFunction0(Configuration configuration) {
+    final Field<T> getFunction0(Configuration configuration) {
         switch (configuration.family()) {
 
 
@@ -92,9 +91,9 @@ final class CurrentTimestamp extends AbstractFunction<Timestamp> {
             case HSQLDB:
             case POSTGRES:
             case SQLITE:
-                return DSL.field("{current_timestamp}", SQLDataType.TIMESTAMP);
+                return DSL.field("{current_timestamp}", getDataType());
         }
 
-        return function("current_timestamp", SQLDataType.TIMESTAMP);
+        return function("current_timestamp", getDataType());
     }
 }

@@ -11499,7 +11499,7 @@ public class DSL {
      */
     @Support
     public static Field<Date> currentDate() {
-        return new CurrentDate();
+        return new CurrentDate<Date>(SQLDataType.DATE);
     }
 
     /**
@@ -11509,7 +11509,7 @@ public class DSL {
      */
     @Support
     public static Field<Time> currentTime() {
-        return new CurrentTime();
+        return new CurrentTime<Time>(SQLDataType.TIME);
     }
 
     /**
@@ -11519,8 +11519,60 @@ public class DSL {
      */
     @Support
     public static Field<Timestamp> currentTimestamp() {
-        return new CurrentTimestamp();
+        return new CurrentTimestamp<Timestamp>(SQLDataType.TIMESTAMP);
     }
+
+
+    /**
+     * Get the current_date() function.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<LocalDate> currentLocalDate() {
+        return new CurrentDate<>(SQLDataType.LOCALDATE);
+    }
+
+    /**
+     * Get the current_time() function.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<LocalTime> currentLocalTime() {
+        return new CurrentTime<>(SQLDataType.LOCALTIME);
+    }
+
+    /**
+     * Get the current_timestamp() function.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<LocalDateTime> currentLocalDateTime() {
+        return new CurrentTimestamp<>(SQLDataType.LOCALDATETIME);
+    }
+
+    /**
+     * Get the current_time() function.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<OffsetTime> currentOffsetTime() {
+        return currentTime().cast(SQLDataType.OFFSETTIME);
+    }
+
+    /**
+     * Get the current_timestamp() function.
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<OffsetDateTime> currentOffsetDateTime() {
+        return currentTimestamp().cast(SQLDataType.OFFSETDATETIME);
+    }
+
 
     /**
      * Get the date difference in number of days.

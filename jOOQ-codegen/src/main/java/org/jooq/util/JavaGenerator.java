@@ -4750,18 +4750,27 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("@%s(", out.ref("javax.annotation.Generated"));
 
             if (useSchemaVersionProvider() || useCatalogVersionProvider()) {
+                boolean hasCatalogVersion = !StringUtils.isBlank(catalogVersions.get(catalog));
+                boolean hasSchemaVersion = !StringUtils.isBlank(schemaVersions.get(schema));
+
             	if (scala)
                     out.tab(1).println("value = %s(", out.ref("scala.Array"));
             	else
             	    out.tab(1).println("value = {");
 
                 out.tab(2).println("\"http://www.jooq.org\",");
-                out.tab(2).println("\"jOOQ version:%s\",", Constants.VERSION);
 
-                if (!StringUtils.isBlank(catalogVersions.get(catalog)))
-                    out.tab(2).println("\"catalog version:%s\",", catalogVersions.get(catalog).replace("\"", "\\\""));
-                if (!StringUtils.isBlank(schemaVersions.get(schema)))
-                    out.tab(2).println("\"schema version:%s\",", schemaVersions.get(schema).replace("\"", "\\\""));
+                if (hasCatalogVersion || hasSchemaVersion) {
+                    out.tab(2).println("\"jOOQ version:%s\",", Constants.VERSION);
+
+                    if (hasCatalogVersion)
+                        out.tab(2).println("\"catalog version:%s\"", catalogVersions.get(catalog).replace("\"", "\\\""));
+                    if (hasSchemaVersion)
+                        out.tab(2).println("\"schema version:%s\"", schemaVersions.get(schema).replace("\"", "\\\""));
+                }
+                else {
+                    out.tab(2).println("\"jOOQ version:%s\"", Constants.VERSION);
+                }
 
                 if (scala)
                     out.tab(1).println("),");

@@ -2390,5 +2390,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         if (type.isArray())
             render.sql("[]");
     }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Object API
+    // -----------------------------------------------------------------------------------------------------------------
+
+    @Override
+    public String toString() {
+        return "DefaultBinding [type=" + type + ", converter=" + converter + "]";
+    }
 }
 

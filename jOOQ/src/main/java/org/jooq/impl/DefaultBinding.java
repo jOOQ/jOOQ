@@ -101,6 +101,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 // ...
 import org.jooq.Attachable;
@@ -1569,20 +1571,44 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         return OffsetTime.parse(string);
     }
 
+    private static final Pattern LENIENT_OFFSET_PATTERN = Pattern.compile(
+        "(\\d{4}-\\d{2}-\\d{2})[T ](\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?)(?: +)?(([+-])(\\d)?(\\d)(:\\d{2}))?");
+
     private final OffsetDateTime offsetDateTime(String string) {
         if (string == null)
             return null;
 
-        // [#4338] [#5180] PostgreSQL is more lenient regarding the offset format
-        if (string.lastIndexOf('+') == string.length() - 3 || string.lastIndexOf('-') == string.length() - 3)
-            string = string + ":00";
+        Matcher m = LENIENT_OFFSET_PATTERN.matcher(string);
+        if (m.find()) {
+            StringBuilder sb = new StringBuilder(m.group(1));
 
-        // [#4338] SQL supports the alternative ISO 8601 date format, where a
-        // whitespace character separates date and time. java.time does not
-        if (string.charAt(10) == ' ')
-            string = string.substring(0, 10) + "T" + string.substring(11);
+            // [#4338] SQL supports the alternative ISO 8601 date format, where a
+            // whitespace character separates date and time. java.time does not
+            sb.append('T');
+            sb.append(m.group(2));
 
-        return OffsetDateTime.parse(string);
+            if (m.group(3) != null) {
+                sb.append(m.group(4));
+
+                // [#4965] Oracle might return a single-digit hour offset (and some spare space)
+                if (m.group(5) == null)
+                    sb.append('0');
+
+                sb.append(m.group(6));
+
+                // [#4338] [#5180] PostgreSQL is more lenient regarding the offset format
+                sb.append(m.group(7) == null ? ":00" : m.group(7));
+            }
+            else {
+                sb.append("+00:00");
+            }
+
+            return OffsetDateTime.parse(sb.toString());
+        }
+
+        // Probably a bug, let OffsetDateTime report it
+        else
+            return OffsetDateTime.parse(string);
     }
 
 

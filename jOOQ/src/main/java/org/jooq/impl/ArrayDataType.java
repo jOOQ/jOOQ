@@ -75,6 +75,11 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
         return getArrayType(configuration, castTypeName);
     }
 
+    @Override
+    public final DataType<?> getElementType() {
+        return this.elementType;
+    }
+
     private static String getArrayType(Configuration configuration, String dataType) {
         switch (configuration.family()) {
             case HSQLDB:

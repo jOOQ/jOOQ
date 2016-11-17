@@ -14781,7 +14781,7 @@ public class Book {
                         <content><html>
                             <h3>Run generation with Gradle</h3>
                             <p>
-                                We recommend using the Gradle plugin by <a href="https://github.com/etiennestuder/gradle-jooq-plugin">Etienne Studer from Gradle Inc.</a>). It provides a concise DSL that allows you to tune all configuration properties supported by each jOOQ version.
+                                We recommend using the Gradle plugin by <a href="https://github.com/etiennestuder/gradle-jooq-plugin">Etienne Studer (from Gradle Inc.)</a>. It provides a concise DSL that allows you to tune all configuration properties supported by each jOOQ version. Please direct any support questions or issues you may find directly to the third party plugin vendor.
                             </p>
                         </html></content>
                     </section>

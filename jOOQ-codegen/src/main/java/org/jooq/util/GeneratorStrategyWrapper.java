@@ -114,6 +114,11 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
     }
 
     @Override
+    public String getFileHeader(Definition definition, Mode mode) {
+        return delegate.getFileHeader(definition, mode);
+    }
+
+    @Override
     public String getJavaIdentifier(Definition definition) {
         String identifier = convertToIdentifier(delegate.getJavaIdentifier(definition), language);
 

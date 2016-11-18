@@ -94,6 +94,11 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
     }
 
     @Override
+    public final String getFileHeader(Definition definition) {
+        return getFileHeader(definition, Mode.DEFAULT);
+    }
+
+    @Override
     public final String getFullJavaIdentifier(Definition definition) {
         StringBuilder sb = new StringBuilder();
 

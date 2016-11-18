@@ -70,6 +70,8 @@ import org.jooq.VisitListener;
 import org.jooq.VisitListenerProvider;
 import org.jooq.conf.ParamType;
 import org.jooq.conf.Settings;
+import org.jooq.conf.SettingsTools;
+import org.jooq.conf.StatementType;
 
 /**
  * @author Lukas Eder
@@ -96,10 +98,11 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     private final Deque<QueryPart>    visitParts;
 
     // [#2694] Unified RenderContext and BindContext traversal
-    ParamType                         paramType      = ParamType.INDEXED;
-    boolean                           qualifySchema  = true;
-    boolean                           qualifyCatalog = true;
-    CastMode                          castMode       = CastMode.DEFAULT;
+    final ParamType                   forcedParamType;
+    ParamType                         paramType                = ParamType.INDEXED;
+    boolean                           qualifySchema            = true;
+    boolean                           qualifyCatalog           = true;
+    CastMode                          castMode                 = CastMode.DEFAULT;
 
     AbstractContext(Configuration configuration, PreparedStatement stmt) {
         super(configuration);
@@ -135,6 +138,10 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             this.visitParts = null;
             this.visitClauses = null;
         }
+
+        forcedParamType = SettingsTools.getStatementType(settings()) == StatementType.STATIC_STATEMENT
+            ? ParamType.INLINED
+            : null;
     }
 
     // ------------------------------------------------------------------------
@@ -191,9 +198,8 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
      * <code>AbstractContext</code>.
      */
     private final Clause[] clause(QueryPart part) {
-        if (part instanceof QueryPartInternal && data(DATA_OMIT_CLAUSE_EVENT_EMISSION) == null) {
+        if (part instanceof QueryPartInternal && data(DATA_OMIT_CLAUSE_EVENT_EMISSION) == null)
             return ((QueryPartInternal) part).clauses(this);
-        }
 
         return null;
     }
@@ -505,7 +511,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public final ParamType paramType() {
-        return paramType;
+        return forcedParamType != null ? forcedParamType : paramType;
     }
 
     @Override

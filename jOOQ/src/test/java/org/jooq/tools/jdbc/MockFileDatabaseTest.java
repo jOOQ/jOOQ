@@ -1,8 +1,6 @@
 package org.jooq.tools.jdbc;
 
 import org.jooq.exception.ErroneousRowSpecificationException;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -12,21 +10,13 @@ import java.io.IOException;
  */
 public class MockFileDatabaseTest{
 
-    @Before
-    public void setUp(){
-
-    }
-
-    @After
-    public void tearDown(){
-
-
-    }
-
 
     @Test
     public void testCorrectRowSpecification() throws IOException {
-        MockFileDatabase mockFileDatabase = new MockFileDatabase(this.getClass().getResourceAsStream("/mock-file-database-file-1.txt"));
+        //File contains one statement
+        MockFileDatabase mockFileDatabase1 = new MockFileDatabase(this.getClass().getResourceAsStream("/mock-file-database-file-1.txt"));
+        //File contains multiple statements
+        MockFileDatabase mockFileDatabase2 = new MockFileDatabase(this.getClass().getResourceAsStream("/mock-file-database-file-4.txt"));
     }
 
     @Test(expected = ErroneousRowSpecificationException.class)

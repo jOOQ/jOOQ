@@ -16,7 +16,7 @@ select 'A' from dual;
 > -
 > A
 # Statements should be followed by "&#64; rows: [N]" indicating the update count
-@ rows: 0
+@ rows: 1
 ###
 ### Query 3
 ###

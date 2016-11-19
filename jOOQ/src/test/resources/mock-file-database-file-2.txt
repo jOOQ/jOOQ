@@ -1,0 +1,6 @@
+select "TABLE1"."ID1", "TABLE1"."NAME1" from "TABLE1";
+> ID1 NAME1
+> --- -----
+> 1   X
+> 2   Y
+@ rows: 1

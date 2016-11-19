@@ -20,6 +20,7 @@ public class MockFileDatabaseTest{
     @After
     public void tearDown(){
 
+
     }
 
 
@@ -28,9 +29,13 @@ public class MockFileDatabaseTest{
         MockFileDatabase mockFileDatabase = new MockFileDatabase(this.getClass().getResourceAsStream("/mock-file-database-file-1.txt"));
     }
 
-    @Test(expected= ErroneousRowSpecificationException.class)
+    @Test(expected = ErroneousRowSpecificationException.class)
     public void testErroneousRowSpecification() throws IOException {
         MockFileDatabase mockFileDatabase = new MockFileDatabase(this.getClass().getResourceAsStream("/mock-file-database-file-2.txt"));
     }
 
+    @Test(expected = NumberFormatException.class)
+    public void testCorrectRowSpecificationValue() throws IOException {
+        MockFileDatabase mockFileDatabase = new MockFileDatabase(this.getClass().getResourceAsStream("/mock-file-database-file-3.txt"));
+    }
 }

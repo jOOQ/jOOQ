@@ -121,31 +121,31 @@ public class MockFileDatabase implements MockDataProvider {
     private final Map<Pattern, List<MockResult>> matchPattern;
     private final DSLContext                     create;
 
-    public MockFileDatabase(File file) throws IOException,ErroneousRowSpecificationException {
+    public MockFileDatabase(File file) throws IOException {
         this(file, "UTF-8");
     }
 
-    public MockFileDatabase(File file, String encoding) throws IOException,ErroneousRowSpecificationException {
+    public MockFileDatabase(File file, String encoding) throws IOException {
         this(new FileInputStream(file), encoding);
     }
 
-    public MockFileDatabase(InputStream stream) throws IOException,ErroneousRowSpecificationException {
+    public MockFileDatabase(InputStream stream) throws IOException {
         this(stream, "UTF-8");
     }
 
-    public MockFileDatabase(InputStream stream, String encoding) throws IOException,ErroneousRowSpecificationException {
+    public MockFileDatabase(InputStream stream, String encoding) throws IOException {
         this(new InputStreamReader(stream, encoding));
     }
 
-    public MockFileDatabase(Reader reader) throws IOException,ErroneousRowSpecificationException {
+    public MockFileDatabase(Reader reader) throws IOException {
         this(new LineNumberReader(reader));
     }
 
-    public MockFileDatabase(String string) throws IOException,ErroneousRowSpecificationException {
+    public MockFileDatabase(String string) throws IOException {
         this(new StringReader(string));
     }
 
-    private MockFileDatabase(LineNumberReader reader) throws IOException,ErroneousRowSpecificationException {
+    private MockFileDatabase(LineNumberReader reader) throws IOException {
         this.in = reader;
         this.matchExactly = new LinkedHashMap<String, List<MockResult>>();
         this.matchPattern = new LinkedHashMap<Pattern, List<MockResult>>();

@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * Created by deghou on 19/11/2016.
@@ -24,10 +23,14 @@ public class MockFileDatabaseTest{
     }
 
 
+    @Test
+    public void testCorrectRowSpecification() throws IOException {
+        MockFileDatabase mockFileDatabase = new MockFileDatabase(this.getClass().getResourceAsStream("/mock-file-database-file-1.txt"));
+    }
+
     @Test(expected= ErroneousRowSpecificationException.class)
-    public void test() throws IOException {
-        InputStream fileName = this.getClass().getResourceAsStream("/mock-file-database-file-2.txt");
-        MockFileDatabase mockFileDatabase = new MockFileDatabase(fileName);
+    public void testErroneousRowSpecification() throws IOException {
+        MockFileDatabase mockFileDatabase = new MockFileDatabase(this.getClass().getResourceAsStream("/mock-file-database-file-2.txt"));
     }
 
 }

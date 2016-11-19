@@ -40,15 +40,13 @@
  */
 package org.jooq.tools.jdbc;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.LineNumberReader;
-import java.io.Reader;
-import java.io.StringReader;
+import org.jooq.DSLContext;
+import org.jooq.SQLDialect;
+import org.jooq.exception.ErroneousRowSpecificationException;
+import org.jooq.impl.DSL;
+import org.jooq.tools.JooqLogger;
+
+import java.io.*;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.ArrayList;
@@ -57,11 +55,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
-
-import org.jooq.DSLContext;
-import org.jooq.SQLDialect;
-import org.jooq.impl.DSL;
-import org.jooq.tools.JooqLogger;
 
 /**
  * A file-based {@link MockDataProvider}.
@@ -128,31 +121,31 @@ public class MockFileDatabase implements MockDataProvider {
     private final Map<Pattern, List<MockResult>> matchPattern;
     private final DSLContext                     create;
 
-    public MockFileDatabase(File file) throws IOException {
+    public MockFileDatabase(File file) throws IOException,ErroneousRowSpecificationException {
         this(file, "UTF-8");
     }
 
-    public MockFileDatabase(File file, String encoding) throws IOException {
+    public MockFileDatabase(File file, String encoding) throws IOException,ErroneousRowSpecificationException {
         this(new FileInputStream(file), encoding);
     }
 
-    public MockFileDatabase(InputStream stream) throws IOException {
+    public MockFileDatabase(InputStream stream) throws IOException,ErroneousRowSpecificationException {
         this(stream, "UTF-8");
     }
 
-    public MockFileDatabase(InputStream stream, String encoding) throws IOException {
+    public MockFileDatabase(InputStream stream, String encoding) throws IOException,ErroneousRowSpecificationException {
         this(new InputStreamReader(stream, encoding));
     }
 
-    public MockFileDatabase(Reader reader) throws IOException {
+    public MockFileDatabase(Reader reader) throws IOException,ErroneousRowSpecificationException {
         this(new LineNumberReader(reader));
     }
 
-    public MockFileDatabase(String string) throws IOException {
+    public MockFileDatabase(String string) throws IOException,ErroneousRowSpecificationException {
         this(new StringReader(string));
     }
 
-    private MockFileDatabase(LineNumberReader reader) throws IOException {
+    private MockFileDatabase(LineNumberReader reader) throws IOException,ErroneousRowSpecificationException {
         this.in = reader;
         this.matchExactly = new LinkedHashMap<String, List<MockResult>>();
         this.matchPattern = new LinkedHashMap<Pattern, List<MockResult>>();
@@ -243,7 +236,6 @@ public class MockFileDatabase implements MockDataProvider {
 
             private void loadOneResult(String line) {
                 List<MockResult> results = matchExactly.get(previousSQL);
-
                 if (results == null) {
                     results = new ArrayList<MockResult>();
                     matchExactly.put(previousSQL, results);
@@ -261,7 +253,11 @@ public class MockFileDatabase implements MockDataProvider {
 
                 MockResult mock = parse(line);
                 results.add(mock);
-
+                if(mock.rows != mock.data.size()){
+                    //TODO This should happen probably here but differently
+                    //TODO Output correct message
+                    throw new ErroneousRowSpecificationException("");
+                }
                 if (log.isDebugEnabled()) {
                     String comment = "Loaded Result";
 
@@ -277,7 +273,6 @@ public class MockFileDatabase implements MockDataProvider {
                 if (rowString.startsWith("@ rows:")) {
                     rows = Integer.parseInt(rowString.substring(7).trim());
                 }
-
                 return new MockResult(rows, create.fetchFromTXT(currentResult.toString()));
             }
 

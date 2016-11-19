@@ -41,12 +41,10 @@
 package org.jooq.exception;
 
 import org.jooq.tools.jdbc.MockDataProvider;
-import org.jooq.tools.jdbc.MockResult;
 
 /**
- * An unexpected result was encountered while loading a {@link MockResult} from a
- * file-based {@link MockDataProvider}. This exception indicates that the number of rows
- * is not in accordance with the specified number of rows.
+ * An unexpected result can be encountered while loading a file-based {@link MockDataProvider}.
+ * This exception indicates that the number of rows is not in accordance with the specified number of rows.
  * <p>
  * It should for instance not be allowed for the file-based {@link MockDataProvider} to have this content:
  * select "TABLE2"."ID2", "TABLE2"."NAME2" from "TABLE2"
@@ -57,6 +55,7 @@ import org.jooq.tools.jdbc.MockResult;
  * > |2  |Y    |
  * > +---+-----+
  *@ rows: 1000
+ * (the table shows 2 results and the @ rows: line indicates 1000 results)
  * @author Samy Deghou
  */
 public class ErroneousRowSpecificationException extends DataAccessException {
@@ -68,7 +67,7 @@ public class ErroneousRowSpecificationException extends DataAccessException {
     private static long serialVersionUID;
 
     /**
-     * Constructor for InvalidResultException.
+     * Constructor for ErroneousRowSpecificationException.
      *
      * @param message the detail message
      */

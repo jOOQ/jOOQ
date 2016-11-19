@@ -253,10 +253,11 @@ public class MockFileDatabase implements MockDataProvider {
 
                 MockResult mock = parse(line);
                 results.add(mock);
+                //[#5639] We are throwing an exception if the numbers do not match
                 if(mock.rows != mock.data.size()){
-                    //TODO This should happen probably here but differently
-                    //TODO Output correct message
-                    throw new ErroneousRowSpecificationException("");
+                    String errorMessage = "Erroneous row number specification (specified " + mock.rows +
+                            " but found " + mock.data.size() + ")";
+                    throw new ErroneousRowSpecificationException(errorMessage);
                 }
                 if (log.isDebugEnabled()) {
                     String comment = "Loaded Result";

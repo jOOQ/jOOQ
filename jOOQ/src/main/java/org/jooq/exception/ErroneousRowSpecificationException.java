@@ -40,36 +40,32 @@
  */
 package org.jooq.exception;
 
-import org.jooq.Query;
-import org.jooq.ResultQuery;
-import org.jooq.TableRecord;
-import org.jooq.UpdatableRecord;
+import org.jooq.tools.jdbc.MockDataProvider;
+import org.jooq.tools.jdbc.MockResult;
 
 /**
- * An unexpected result was encountered after executing a {@link Query}. This
- * exception indicates wrong usage of jOOQ's various fetch methods, or an
- * integrity problem in your data.
+ * An unexpected result was encountered while loading a {@link MockResult} from a
+ * file-based {@link MockDataProvider}. This exception indicates that the number of rows
+ * is not in accordance with the specified number of rows.
  * <p>
- * This is typically the case in the following situations:
- * <ul>
- * <li>When you call methods such as {@link ResultQuery#fetchOne()} and the
- * database returns more than one record.</li>
- * <li>When you call methods such as
- * {@link ResultQuery#fetchMap(org.jooq.Field)} and the database returns several
- * records per key.</li>
- * <li>When you refresh a {@link TableRecord} using
- * {@link UpdatableRecord#refresh()}, and the record does not exist anymore in
- * the database.</li>
- * </ul>
- *
- * @author Lukas Eder
+ * It should for instance not be allowed for the file-based {@link MockDataProvider} to have this content:
+ * select "TABLE2"."ID2", "TABLE2"."NAME2" from "TABLE2"
+ * > +---+-----+
+ * > |ID2|NAME2|
+ * > +---+-----+
+ * > |1  |X    |
+ * > |2  |Y    |
+ * > +---+-----+
+ *@ rows: 1000
+ * @author Samy Deghou
  */
 public class ErroneousRowSpecificationException extends DataAccessException {
 
     /**
+     * TODO
      * Generated UID
      */
-    private static final long serialVersionUID = -6460945824599280420L;
+    private static long serialVersionUID;
 
     /**
      * Constructor for InvalidResultException.

@@ -188,7 +188,8 @@ public class MockStatement extends JDBC41Statement implements CallableStatement 
         );
 
         result = data.execute(context);
-        return result != null && result.length > 0 && result[resultIndex].data != null;
+
+        return localSql.startsWith("select");
     }
 
     private static final int[] unbox(List<Integer> list) {
@@ -229,7 +230,13 @@ public class MockStatement extends JDBC41Statement implements CallableStatement 
     @Override
     public int getUpdateCount() throws SQLException {
         checkNotClosed();
-        return (result != null && resultIndex < result.length) && result[resultIndex].data == null ? result[resultIndex].rows : -1;
+        if (result != null && resultIndex < result.length) {
+        	if (!sql.get(0).startsWith("select") && result[resultIndex].data != null && result[resultIndex].data.size() > 0) {
+        		return result[resultIndex].data.get(0).get(0, Integer.class);
+        	}
+        	return result[resultIndex].rows;
+        }
+        return -1;
     }
 
     @Override

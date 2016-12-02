@@ -768,7 +768,8 @@ for (AuthorRecord author : create.fetch(AUTHOR)) {
 
                                             <h3>Commercial Editions (Java 8+)</h3>
 
-</html><xml><![CDATA[<dependency>
+</html><xml><![CDATA[<!-- Note: These aren't hosted on Maven Central. Import them manually from your distribution -->
+<dependency>
   <groupId>org.jooq.pro</groupId>
   <artifactId>jooq</artifactId>
   <version>{jooq-version}</version>
@@ -786,7 +787,8 @@ for (AuthorRecord author : create.fetch(AUTHOR)) {
 
                                             <h3>Commercial Editions (Java 6+)</h3>
 
-</html><xml><![CDATA[<dependency>
+</html><xml><![CDATA[<!-- Note: These aren't hosted on Maven Central. Import them manually from your distribution -->
+<dependency>
   <groupId>org.jooq.pro-java-6</groupId>
   <artifactId>jooq</artifactId>
   <version>{jooq-version}</version>
@@ -804,7 +806,8 @@ for (AuthorRecord author : create.fetch(AUTHOR)) {
 
                                             <h3>Commercial Editions (Free Trial)</h3>
 
-</html><xml><![CDATA[<dependency>
+</html><xml><![CDATA[<!-- Note: These aren't hosted on Maven Central. Import them manually from your distribution -->
+<dependency>
   <groupId>org.jooq</groupId>
   <artifactId>jooq</artifactId>
   <version>{jooq-version}</version>
@@ -1200,10 +1203,13 @@ public class Main {
 
     <!-- Database access -->
     <dependency>
-        <!-- Use org.jooq            for the Open Source edition
+        <!-- Use org.jooq            for the Open Source Edition
                  org.jooq.pro        for commercial editions,
                  org.jooq.pro-java-6 for commercial editions with Java 6 support,
-                 org.jooq.trial      for the free trial edition -->
+                 org.jooq.trial      for the free trial edition
+
+             Note: Only the Open Source Edition is hosted on Maven Central.
+                   Import the others manually from your distribution -->
         <groupId>org.jooq</groupId>
         <artifactId>jooq</artifactId>
         <version>{jooq-version}</version>
@@ -1534,10 +1540,13 @@ public class TransactionTest {
 
 </html><xml><![CDATA[<!-- We'll add the latest version of jOOQ and our JDBC driver - in this case H2 -->
 <dependency>
-    <!-- Use org.jooq            for the Open Source edition
+    <!-- Use org.jooq            for the Open Source Edition
              org.jooq.pro        for commercial editions,
              org.jooq.pro-java-6 for commercial editions with Java 6 support,
-             org.jooq.trial      for the free trial edition -->
+             org.jooq.trial      for the free trial edition
+
+         Note: Only the Open Source Edition is hosted on Maven Central.
+               Import the others manually from your distribution -->
     <groupId>org.jooq</groupId>
     <artifactId>jooq</artifactId>
     <version>{jooq-version}</version>
@@ -1613,10 +1622,13 @@ public class TransactionTest {
 
 
 </html><xml><![CDATA[<plugin>
-    <!-- Use org.jooq            for the Open Source edition
+    <!-- Use org.jooq            for the Open Source Edition
              org.jooq.pro        for commercial editions,
              org.jooq.pro-java-6 for commercial editions with Java 6 support,
-             org.jooq.trial      for the free trial edition -->
+             org.jooq.trial      for the free trial edition
+
+         Note: Only the Open Source Edition is hosted on Maven Central.
+               Import the others manually from your distribution -->
     <groupId>org.jooq</groupId>
     <artifactId>jooq-codegen-maven</artifactId>
     <version>${org.jooq.version}</version>
@@ -1983,10 +1995,13 @@ $$ LANGUAGE PLPGSQL;
             </plugin>
 
             <plugin>
-                <!-- Use org.jooq            for the Open Source edition
+                <!-- Use org.jooq            for the Open Source Edition
                          org.jooq.pro        for commercial editions,
                          org.jooq.pro-java-6 for commercial editions with Java 6 support,
-                         org.jooq.trial      for the free trial edition -->
+                         org.jooq.trial      for the free trial edition
+
+                     Note: Only the Open Source Edition is hosted on Maven Central.
+                           Import the others manually from your distribution -->
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen-maven</artifactId>
                 <version>{jooq-version}</version>
@@ -2019,10 +2034,13 @@ $$ LANGUAGE PLPGSQL;
         </dependency>
 
         <dependency>
-            <!-- Use org.jooq            for the Open Source edition
+            <!-- Use org.jooq            for the Open Source Edition
                      org.jooq.pro        for commercial editions,
                      org.jooq.pro-java-6 for commercial editions with Java 6 support,
-                     org.jooq.trial      for the free trial edition -->
+                     org.jooq.trial      for the free trial edition
+
+                 Note: Only the Open Source Edition is hosted on Maven Central.
+                       Import the others manually from your distribution -->
             <groupId>org.jooq</groupId>
             <artifactId>jooq</artifactId>
             <version>{jooq-version}</version>
@@ -13213,10 +13231,13 @@ result.forEach((Object[] entities) -> {
 </html><xml><![CDATA[<plugin>
 
   <!-- Specify the maven code generator plugin -->
-  <!-- Use org.jooq            for the Open Source edition
+  <!-- Use org.jooq            for the Open Source Edition
            org.jooq.pro        for commercial editions,
            org.jooq.pro-java-6 for commercial editions with Java 6 support,
-           org.jooq.trial      for the free trial edition -->
+           org.jooq.trial      for the free trial edition
+
+       Note: Only the Open Source Edition is hosted on Maven Central.
+             Import the others manually from your distribution -->
   <groupId>org.jooq</groupId>
   <artifactId>jooq-codegen-maven</artifactId>
   <version>{jooq-version}</version>
@@ -14919,10 +14940,13 @@ public class Book {
                             </p>
 
 </html><xml><![CDATA[<dependency>
-    <!-- Use org.jooq            for the Open Source edition
+    <!-- Use org.jooq            for the Open Source Edition
              org.jooq.pro        for commercial editions,
              org.jooq.pro-java-6 for commercial editions with Java 6 support,
-             org.jooq.trial      for the free trial edition -->
+             org.jooq.trial      for the free trial edition
+
+         Note: Only the Open Source Edition is hosted on Maven Central.
+               Import the others manually from your distribution -->
     <groupId>org.jooq</groupId>
     <artifactId>jooq-meta-extensions</artifactId>
     <version>{jooq-version}</version>
@@ -15143,10 +15167,13 @@ public class Book {
       <!-- JDBC driver -->
     </dependency>
     <dependency>
-      <!-- Use org.jooq            for the Open Source edition
+      <!-- Use org.jooq            for the Open Source Edition
                org.jooq.pro        for commercial editions,
                org.jooq.pro-java-6 for commercial editions with Java 6 support,
-               org.jooq.trial      for the free trial edition -->
+               org.jooq.trial      for the free trial edition
+
+           Note: Only the Open Source Edition is hosted on Maven Central.
+                 Import the others manually from your distribution -->
       <groupId>org.jooq</groupId>
       <artifactId>jooq-codegen</artifactId>
       <version>{jooq-version}</version>

@@ -15371,11 +15371,12 @@ public class Book {
                     <section id="codegen-gradle">
                         <title>Running the code generator with Gradle</title>
                         <content><html>
-                            <h3>Run generation with Gradle</h3>
+                            <h3>Run generation with the Gradle plugin</h3>
                             <p>
                                 We recommend using the Gradle plugin by <a href="https://github.com/etiennestuder/gradle-jooq-plugin">Etienne Studer (from Gradle Inc.)</a>. It provides a concise DSL that allows you to tune all configuration properties supported by each jOOQ version. Please direct any support questions or issues you may find directly to the third party plugin vendor.
                             </p>
 
+                            <h3>Alternatively, the XML MarkupBuilder can be used</h3>
                             <p>
                                 If you don't want to use the above third party plugin, there's also the possibility to use jOOQ's standalone code generator for simplicity. The following working example build.gradle script should work out of the box:
                             </p>

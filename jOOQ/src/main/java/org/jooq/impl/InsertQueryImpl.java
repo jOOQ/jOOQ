@@ -54,10 +54,10 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.Tools.DataKey.DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.aliasedFields;
 import static org.jooq.impl.Tools.fieldNames;
-import static org.jooq.impl.Tools.DataKey.DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -140,7 +140,6 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     public final void onDuplicateKeyIgnore(boolean flag) {
         this.onDuplicateKeyUpdate = false;
         this.onDuplicateKeyIgnore = flag;
-        this.onConflict = null;
     }
 
     @Override
@@ -278,10 +277,16 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 case POSTGRES_9_5:
                 case POSTGRES: {
                     toSQLInsert(ctx);
-                    ctx.formatSeparator()
-                       .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
-                       .keyword("on conflict do nothing")
-                       .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
+                    ctx.formatSeparator().start(INSERT_ON_DUPLICATE_KEY_UPDATE).keyword("on conflict");
+
+                    if (onConflict != null && onConflict.size() > 0) {
+                        ctx.sql(" (");
+                        boolean qualify = ctx.qualify();
+                        ctx.qualify(false).visit(onConflict.get(0)).qualify(qualify);
+                        ctx.sql(") ");
+                    }
+
+                    ctx.keyword(" do nothing").end(INSERT_ON_DUPLICATE_KEY_UPDATE);
                     break;
                 }
 

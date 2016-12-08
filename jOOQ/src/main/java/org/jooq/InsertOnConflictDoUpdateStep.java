@@ -66,4 +66,10 @@ public interface InsertOnConflictDoUpdateStep<R extends Record> {
      */
     @Support({ POSTGRES_9_5 })
     InsertOnDuplicateSetStep<R> doUpdate();
+
+    /**
+     * Add the <code>DO IGNORE</code> clause.
+     */
+    @Support({ POSTGRES_9_5 })
+    InsertFinalStep<R> doNothing();
 }

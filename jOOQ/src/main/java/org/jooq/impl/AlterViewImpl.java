@@ -110,6 +110,45 @@ final class AlterViewImpl extends AbstractQuery implements
 
     @Override
     public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+            default:
+                accept0(ctx);
+                break;
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private final void accept0(Context<?> ctx) {
         ctx.start(ALTER_VIEW_VIEW)
            .keyword("alter").sql(' ')
            .keyword(ctx.family() == HSQLDB ? "table" : "view");

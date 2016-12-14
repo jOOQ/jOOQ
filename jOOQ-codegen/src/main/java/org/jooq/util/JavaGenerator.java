@@ -4878,7 +4878,8 @@ public class JavaGenerator extends AbstractGenerator {
         // [#5704] Do not allow certain HTML entities
         return comment
             .replace("&", "&amp;")
-            .replace("<", "&lt;");
+            .replace("<", "&lt;")
+            .replace(">", "&gt;");
     }
 
     protected void printClassJavadoc(JavaWriter out, Definition definition) {

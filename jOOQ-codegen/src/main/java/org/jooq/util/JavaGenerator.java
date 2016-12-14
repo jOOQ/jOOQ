@@ -1234,7 +1234,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         // We cannot have covariant setters for arrays because of type erasure
         if (!(generateInterfaces() && isArray)) {
-            out.tab(1).javadoc("Setter for <code>%s</code>.%s", name, defaultIfBlank(" " + comment, ""));
+            out.tab(1).javadoc("Setter for <code>%s</code>.%s", name, defaultIfBlank(" " + escapeEntities(comment), ""));
 
             if (scala) {
                 out.tab(1).println("def %s(value : %s) : %s = {", setter, type, setterReturnType);
@@ -1330,7 +1330,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String type = out.ref(getJavaType(column.getType()));
         final String name = column.getQualifiedOutputName();
 
-        out.tab(1).javadoc("Getter for <code>%s</code>.%s", name, defaultIfBlank(" " + comment, ""));
+        out.tab(1).javadoc("Getter for <code>%s</code>.%s", name, defaultIfBlank(" " + escapeEntities(comment), ""));
         if (column.getContainer() instanceof TableDefinition)
             printColumnJPAAnnotation(out, (ColumnDefinition) column);
         printValidationAnnotation(out, column);
@@ -1510,7 +1510,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String type = out.ref(getJavaType(column.getType(), Mode.INTERFACE));
         final String name = column.getQualifiedOutputName();
 
-        out.tab(1).javadoc("Setter for <code>%s</code>.%s", name, defaultIfBlank(" " + comment, ""));
+        out.tab(1).javadoc("Setter for <code>%s</code>.%s", name, defaultIfBlank(" " + escapeEntities(comment), ""));
 
         if (scala)
             out.tab(1).println("def %s(value : %s) : %s", setter, type, setterReturnType);
@@ -1538,7 +1538,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String type = out.ref(getJavaType(column.getType(), Mode.INTERFACE));
         final String name = column.getQualifiedOutputName();
 
-        out.tab(1).javadoc("Getter for <code>%s</code>.%s", name, defaultIfBlank(" " + comment, ""));
+        out.tab(1).javadoc("Getter for <code>%s</code>.%s", name, defaultIfBlank(" " + escapeEntities(comment), ""));
 
         if (column instanceof ColumnDefinition)
             printColumnJPAAnnotation(out, (ColumnDefinition) column);
@@ -1607,7 +1607,7 @@ public class JavaGenerator extends AbstractGenerator {
                 final String attrId = out.ref(getStrategy().getJavaIdentifier(attribute), 2);
                 final String attrComment = StringUtils.defaultString(attribute.getComment());
 
-                out.tab(1).javadoc("The attribute <code>%s</code>.%s", attribute.getQualifiedOutputName(), defaultIfBlank(" " + attrComment, ""));
+                out.tab(1).javadoc("The attribute <code>%s</code>.%s", attribute.getQualifiedOutputName(), defaultIfBlank(" " + escapeEntities(attrComment), ""));
                 out.tab(1).println("val %s = %s.%s", attrId, udtId, attrId);
             }
 
@@ -2421,7 +2421,7 @@ public class JavaGenerator extends AbstractGenerator {
             final String id = getStrategy().getJavaIdentifier(table);
             final String fullId = getStrategy().getFullJavaIdentifier(table);
             final String comment = !StringUtils.isBlank(table.getComment())
-                ? table.getComment()
+                ? escapeEntities(table.getComment())
                 : "The table <code>" + table.getQualifiedOutputName() + "</code>.";
 
             // [#4883] Scala doesn't have separate namespaces for val and def
@@ -3307,7 +3307,7 @@ public class JavaGenerator extends AbstractGenerator {
                 column.getType().getBinding()
             ));
 
-            out.tab(1).javadoc("The column <code>%s</code>.%s", column.getQualifiedOutputName(), defaultIfBlank(" " + columnComment, ""));
+            out.tab(1).javadoc("The column <code>%s</code>.%s", column.getQualifiedOutputName(), defaultIfBlank(" " + escapeEntities(columnComment), ""));
 
             if (scala) {
                 out.tab(1).println("val %s : %s[%s, %s] = createField(\"%s\", %s, \"%s\"[[before=, ][new %s()]])",
@@ -3660,6 +3660,9 @@ public class JavaGenerator extends AbstractGenerator {
 
     private String escapeString(String comment) {
 
+        if (comment == null)
+            return null;
+
         // [#3450] Escape also the escape sequence, among other things that break Java strings.
         return comment.replace("\\", "\\\\")
                       .replace("\"", "\\\"")
@@ -3762,7 +3765,7 @@ public class JavaGenerator extends AbstractGenerator {
                     final String schemaId = getStrategy().getJavaIdentifier(schema);
                     final String schemaFullId = getStrategy().getFullJavaIdentifier(schema);
                     final String schemaComment = !StringUtils.isBlank(schema.getComment())
-                        ? schema.getComment()
+                        ? escapeEntities(schema.getComment())
                         : "The schema <code>" + schema.getQualifiedOutputName() + "</code>.";
 
                     out.tab(1).javadoc(schemaComment);
@@ -3846,7 +3849,7 @@ public class JavaGenerator extends AbstractGenerator {
                     final String tableId = getStrategy().getJavaIdentifier(table);
                     final String tableFullId = getStrategy().getFullJavaIdentifier(table);
                     final String tableComment = !StringUtils.isBlank(table.getComment())
-                        ? table.getComment()
+                        ? escapeEntities(table.getComment())
                         : "The table <code>" + table.getQualifiedOutputName() + "</code>.";
 
                     out.tab(1).javadoc(tableComment);
@@ -4172,7 +4175,7 @@ public class JavaGenerator extends AbstractGenerator {
                         parameter.getType().getBinding()
                 ));
 
-                out.tab(1).javadoc("The parameter <code>%s</code>.%s", parameter.getQualifiedOutputName(), defaultIfBlank(" " + paramComment, ""));
+                out.tab(1).javadoc("The parameter <code>%s</code>.%s", parameter.getQualifiedOutputName(), defaultIfBlank(" " + escapeEntities(paramComment), ""));
 
                 out.tab(1).println("val %s : %s[%s] = %s.createParameter(\"%s\", %s, %s, %s[[before=, ][new %s]])",
                         paramId, Parameter.class, paramType, AbstractRoutine.class, paramName, paramTypeRef, isDefaulted, isUnnamed, converters);
@@ -4867,8 +4870,19 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("public static final %s %s = new %s();", className, identifier, className);
     }
 
+    protected final String escapeEntities(String comment) {
+
+        if (comment == null)
+            return null;
+
+        // [#5704] Do not allow certain HTML entities
+        return comment
+            .replace("&", "&amp;")
+            .replace("<", "&lt;");
+    }
+
     protected void printClassJavadoc(JavaWriter out, Definition definition) {
-        printClassJavadoc(out, definition.getComment());
+        printClassJavadoc(out, escapeEntities(definition.getComment()));
     }
 
     protected void printClassJavadoc(JavaWriter out, String comment) {

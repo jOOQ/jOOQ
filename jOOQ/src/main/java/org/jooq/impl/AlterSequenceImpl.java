@@ -125,6 +125,44 @@ final class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
 
     @Override
     public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+            default:
+                accept0(ctx);
+                break;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private final void accept0(Context<?> ctx) {
         ctx.start(ALTER_SEQUENCE_SEQUENCE)
            .keyword("alter")
            .sql(' ')

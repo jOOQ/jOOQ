@@ -161,7 +161,12 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
             }
 
             if (type != null) {
-                log.info("Forcing type", child + " with type " + definedType.getType() + " into " + type + (converter != null ? " using converter " + converter : ""));
+                log.info("Forcing type", child
+                    + " with type " + definedType.getType()
+                    + " into " + type
+                    + (converter != null ? " using converter " + converter : "")
+                    + (binding != null ? " using binding " + binding : ""));
+
                 DataType<?> forcedDataType = null;
 
                 boolean n = result.isNullable();

@@ -1,0 +1,5 @@
+select 'A', 'B' from dual;
+> A B
+> - -
+> A B
+@ rows: 1

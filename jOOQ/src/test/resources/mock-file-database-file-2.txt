@@ -1,0 +1,28 @@
+###
+### Query 1
+###
+select "TABLE1"."ID1", "TABLE1"."NAME1" from "TABLE1";
+> ID1 NAME1
+> --- -----
+> 1   X
+> 2   Y
+@ rows: 2
+###
+### Query 2
+###
+select 'A' from dual;
+# Statements may be followed by results, using >
+> A
+> -
+> A
+# Statements should be followed by "&#64; rows: [N]" indicating the update count
+@ rows: 0
+###
+### Query 3
+###
+# New statements can be listed int his file
+select 'A', 'B' from dual;
+> A B
+> - -
+> A B
+@ rows: 1

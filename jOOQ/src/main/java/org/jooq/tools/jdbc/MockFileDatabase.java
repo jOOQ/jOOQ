@@ -40,15 +40,13 @@
  */
 package org.jooq.tools.jdbc;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.LineNumberReader;
-import java.io.Reader;
-import java.io.StringReader;
+import org.jooq.DSLContext;
+import org.jooq.SQLDialect;
+import org.jooq.exception.ErroneousRowSpecificationException;
+import org.jooq.impl.DSL;
+import org.jooq.tools.JooqLogger;
+
+import java.io.*;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.ArrayList;
@@ -57,11 +55,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
-
-import org.jooq.DSLContext;
-import org.jooq.SQLDialect;
-import org.jooq.impl.DSL;
-import org.jooq.tools.JooqLogger;
 
 /**
  * A file-based {@link MockDataProvider}.
@@ -256,7 +249,6 @@ public class MockFileDatabase implements MockDataProvider {
 
             private void loadOneResult(String line) {
                 List<MockResult> results = matchExactly.get(previousSQL);
-
                 if (results == null) {
                     results = new ArrayList<MockResult>();
                     matchExactly.put(previousSQL, results);
@@ -274,7 +266,12 @@ public class MockFileDatabase implements MockDataProvider {
 
                 MockResult mock = parse(line);
                 results.add(mock);
-
+                //[#5639] We are throwing an exception if the numbers do not match
+                if(mock.rows != mock.data.size()){
+                    String errorMessage = "Erroneous row number specification (specified " + mock.rows +
+                            " but found " + mock.data.size() + ")";
+                    throw new ErroneousRowSpecificationException(errorMessage);
+                }
                 if (log.isDebugEnabled()) {
                     String comment = "Loaded Result";
 

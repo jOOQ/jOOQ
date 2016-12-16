@@ -42,6 +42,7 @@
 package org.jooq.util.postgres;
 
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.impl.DSL.row;
@@ -83,15 +84,15 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
     private final String                    specificName;
 
     public PostgresTableValuedFunction(SchemaDefinition schema, String name, String specificName, String comment) {
-		super(schema, name, comment);
+        super(schema, name, comment);
 
-		this.routine = new PostgresRoutineDefinition(schema.getDatabase(), schema.getInputName(), name, specificName);
-		this.specificName = specificName;
-	}
+        this.routine = new PostgresRoutineDefinition(schema.getDatabase(), schema.getInputName(), name, specificName);
+        this.specificName = specificName;
+    }
 
-	@Override
-	public List<ColumnDefinition> getElements0() throws SQLException {
-		List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
+    @Override
+    public List<ColumnDefinition> getElements0() throws SQLException {
+        List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
 
         Routines r = ROUTINES;
         Parameters p = PARAMETERS;
@@ -186,23 +187,26 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
                 record.get(p.NUMERIC_SCALE),
                 record.get(c.IS_NULLABLE, boolean.class),
                 record.get(c.COLUMN_DEFAULT),
-                record.get(p.UDT_NAME)
+                name(
+                    record.get(p.UDT_SCHEMA),
+                    record.get(p.UDT_NAME)
+                )
             );
 
-			ColumnDefinition column = new DefaultColumnDefinition(
-			    getDatabase().getTable(getSchema(), getName()),
-			    record.get(p.PARAMETER_NAME),
-			    record.get(p.ORDINAL_POSITION, int.class),
-			    type,
+            ColumnDefinition column = new DefaultColumnDefinition(
+                getDatabase().getTable(getSchema(), getName()),
+                record.get(p.PARAMETER_NAME),
+                record.get(p.ORDINAL_POSITION, int.class),
+                type,
                 defaultString(record.get(c.COLUMN_DEFAULT)).startsWith("nextval"),
-			    null
-		    );
+                null
+            );
 
-			result.add(column);
-		}
+            result.add(column);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
     @Override
     protected List<ParameterDefinition> getParameters0() {

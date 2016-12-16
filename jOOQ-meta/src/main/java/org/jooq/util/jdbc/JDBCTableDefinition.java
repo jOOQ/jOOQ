@@ -46,6 +46,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.Table;
 import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
@@ -82,7 +83,7 @@ public class JDBCTableDefinition extends AbstractTableDefinition {
                 field.getDataType().scale(),
                 field.getDataType().nullable(),
                 create().renderInlined(field.getDataType().defaultValue()),
-                null
+                (Name) null
             );
 
 			ColumnDefinition column = new DefaultColumnDefinition(

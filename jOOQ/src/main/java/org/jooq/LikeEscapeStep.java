@@ -38,62 +38,44 @@
  *
  *
  */
-package org.jooq.impl;
+package org.jooq;
 
-import static org.jooq.impl.DSL.function;
-
-import org.jooq.Configuration;
-import org.jooq.DataType;
-import org.jooq.Field;
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+// ...
+import static org.jooq.SQLDialect.HSQLDB;
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
+// ...
 
 /**
+ * A step in the creation of a <code>LIKE</code> predicate to which an
+ * <code>ESCAPE</code> clause can be appended.
+ *
  * @author Lukas Eder
  */
-final class CurrentDate<T> extends AbstractFunction<T> {
+public interface LikeEscapeStep extends Condition {
+
 
     /**
-     * Generated UID
+     * Add an <code>ESCAPE</code> clause to the <code>LIKE</code> predicate.
+     * <p>
+     * For example:
+     *
+     * <code><pre>
+     * some_column LIKE 'A!%%' ESCAPE '!'
+     * </pre></code>
      */
-    private static final long serialVersionUID = -7273879239726265322L;
-
-    CurrentDate(DataType<T> type) {
-        super("current_date", type);
-    }
-
-    @Override
-    final Field<T> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            case DERBY:
-            case FIREBIRD:
-            case HSQLDB:
-            case POSTGRES:
-            case SQLITE:
-                return DSL.field("{current_date}", getDataType());
-        }
-
-        return function("current_date", getDataType());
-    }
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    Condition escape(char c);
 }

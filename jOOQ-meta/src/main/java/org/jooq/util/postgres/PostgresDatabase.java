@@ -597,7 +597,10 @@ public class PostgresDatabase extends AbstractDatabase {
                     0, // ?
                    !record.get(d.TYPNOTNULL, boolean.class),
                     record.get(d.TYPDEFAULT),
-                    record.get(b.TYPNAME, String.class)
+                    name(
+                        record.get(n.NSPNAME),
+                        record.get(b.TYPNAME)
+                    )
                 );
 
                 DefaultDomainDefinition domain = new DefaultDomainDefinition(

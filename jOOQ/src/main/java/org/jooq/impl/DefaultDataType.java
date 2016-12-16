@@ -858,6 +858,11 @@ public class DefaultDataType<T> implements DataType<T> {
             (!isBinary() && type.isArray());
     }
 
+    @Override
+    public final boolean isUDT() {
+        return UDTRecord.class.isAssignableFrom(type);
+    }
+
     // ------------------------------------------------------------------------
     // The Object API
     // ------------------------------------------------------------------------

@@ -40,27 +40,26 @@
  */
 package org.jooq.impl;
 
-import java.sql.Time;
-
 import org.jooq.Configuration;
+import org.jooq.DataType;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-final class CurrentTime extends AbstractFunction<Time> {
+final class CurrentTime<T> extends AbstractFunction<T> {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = -7273879239726265322L;
 
-    CurrentTime() {
-        super("current_time", SQLDataType.TIME);
+    CurrentTime(DataType<T> type) {
+        super("current_time", type);
     }
 
     @Override
-    final Field<Time> getFunction0(Configuration configuration) {
+    final Field<T> getFunction0(Configuration configuration) {
         switch (configuration.family()) {
 
 
@@ -82,7 +81,7 @@ final class CurrentTime extends AbstractFunction<Time> {
             case HSQLDB:
             case POSTGRES:
             case SQLITE:
-                return DSL.field("{current_time}", SQLDataType.TIME);
+                return DSL.field("{current_time}", getDataType());
 
 
 
@@ -93,6 +92,6 @@ final class CurrentTime extends AbstractFunction<Time> {
 
         }
 
-        return DSL.function("current_time", SQLDataType.TIME);
+        return DSL.function("current_time", getDataType());
     }
 }

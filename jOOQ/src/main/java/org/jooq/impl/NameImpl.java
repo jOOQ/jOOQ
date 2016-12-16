@@ -69,10 +69,34 @@ final class NameImpl extends AbstractQueryPart implements Name {
      */
     private static final long serialVersionUID = 8562325639223483938L;
 
-    private String[]          qualifiedName;
+    private final String[]    qualifiedName;
 
     NameImpl(String[] qualifiedName) {
-        this.qualifiedName = qualifiedName;
+        this.qualifiedName = nonEmpty(qualifiedName);
+    }
+
+    private static final String[] nonEmpty(String[] qualifiedName) {
+        String[] result;
+        int nulls = 0;
+
+        for (int i = 0; i < qualifiedName.length; i++)
+            if (StringUtils.isEmpty(qualifiedName[i]))
+                nulls++;
+
+        if (nulls > 0) {
+            result = new String[qualifiedName.length - nulls];
+
+            for (int i = qualifiedName.length - 1; i >= 0; i--)
+                if (StringUtils.isEmpty(qualifiedName[i]))
+                    nulls--;
+                else
+                    result[i - nulls] = qualifiedName[i];
+        }
+        else {
+            result = qualifiedName.clone();
+        }
+
+        return result;
     }
 
     @Override
@@ -83,20 +107,33 @@ final class NameImpl extends AbstractQueryPart implements Name {
             String separator = "";
 
             for (String name : qualifiedName) {
-                if (!StringUtils.isEmpty(name)) {
-                    ctx.sql(separator).literal(name);
-                    separator = ".";
-                }
+                ctx.sql(separator).literal(name);
+                separator = ".";
             }
         }
         else {
-            ctx.literal(qualifiedName[qualifiedName.length - 1]);
+            ctx.literal(last());
         }
     }
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
         return null;
+    }
+
+    @Override
+    public final String first() {
+        return qualifiedName.length > 0 ? qualifiedName[0] : null;
+    }
+
+    @Override
+    public final String last() {
+        return qualifiedName.length > 0 ? qualifiedName[qualifiedName.length - 1] : null;
+    }
+
+    @Override
+    public final boolean qualified() {
+        return qualifiedName.length > 1;
     }
 
     @Override
@@ -120,7 +157,7 @@ final class NameImpl extends AbstractQueryPart implements Name {
         if (qualifiedName.length != 1)
             throw new IllegalStateException("Cannot create a DerivedColumnList from a qualified name : " + Arrays.asList(qualifiedName));
 
-        return new DerivedColumnListImpl(qualifiedName[0], fieldNames);
+        return new DerivedColumnListImpl(first(), fieldNames);
     }
 
 
@@ -132,7 +169,7 @@ final class NameImpl extends AbstractQueryPart implements Name {
 
     @Override
     public final DerivedColumnListImpl fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction) {
-        return new DerivedColumnListImpl(qualifiedName[0], fieldNameFunction);
+        return new DerivedColumnListImpl(first(), fieldNameFunction);
     }
 
 
@@ -284,16 +321,39 @@ final class NameImpl extends AbstractQueryPart implements Name {
 
     @Override
     public boolean equals(Object that) {
-        if (this == that) {
+        if (this == that)
             return true;
-        }
 
         // [#1626] NameImpl equality can be decided without executing the
         // rather expensive implementation of AbstractQueryPart.equals()
-        if (that instanceof NameImpl) {
+        if (that instanceof NameImpl)
             return Arrays.equals(getName(), (((NameImpl) that).getName()));
-        }
 
         return super.equals(that);
+    }
+
+    @Override
+    public final boolean equalsIgnoreCase(Name that) {
+        if (this == that)
+            return true;
+
+        String[] thisName = getName();
+        String[] thatName = that.getName();
+
+        if (thisName.length != thatName.length)
+            return false;
+
+        for (int i = 0; i < thisName.length; i++) {
+            if (thisName[i] == null && thatName[i] == null)
+                continue;
+
+            if (thisName[i] == null || thatName[i] == null)
+                return false;
+
+            if (!thisName[i].equalsIgnoreCase(thatName[i]))
+                return false;
+        }
+
+        return true;
     }
 }

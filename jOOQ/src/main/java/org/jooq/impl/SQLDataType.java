@@ -52,11 +52,13 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 import org.jooq.DataType;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.SQLDialect;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
@@ -378,11 +380,33 @@ public final class SQLDataType {
 
     /**
      * The {@link Types#TIME_WITH_TIMEZONE} type.
+     * <p>
+     * The behaviour of this data type is influenced by the JDBC driver and the
+     * database that is used. Some databases support actual time zones (as in
+     * {@link ZonedDateTime}), other databases support only offsets (as in
+     * {@link OffsetDateTime}). Some databases retain the actual time zone
+     * information that is stored and reproduce it with every fetch (e.g.
+     * {@link SQLDialect#ORACLE}), others use this type as a synonym for a
+     * timestamp in UTC (e.g. {@link SQLDialect#POSTGRES}), producing possibly a
+     * value in the current time zone of the database or the client. Please
+     * refer to your database for more information about the behaviour of this
+     * data type.
      */
     public static final DataType<OffsetTime> OFFSETTIME = new DefaultDataType<OffsetTime>(null, OffsetTime.class, "time with time zone");
 
     /**
      * The {@link Types#TIMESTAMP_WITH_TIMEZONE} type.
+     * <p>
+     * The behaviour of this data type is influenced by the JDBC driver and the
+     * database that is used. Some databases support actual time zones (as in
+     * {@link ZonedDateTime}), other databases support only offsets (as in
+     * {@link OffsetDateTime}). Some databases retain the actual time zone
+     * information that is stored and reproduce it with every fetch (e.g.
+     * {@link SQLDialect#ORACLE}), others use this type as a synonym for a
+     * timestamp in UTC (e.g. {@link SQLDialect#POSTGRES}), producing possibly a
+     * value in the current time zone of the database or the client. Please
+     * refer to your database for more information about the behaviour of this
+     * data type.
      */
     public static final DataType<OffsetDateTime> OFFSETDATETIME = new DefaultDataType<OffsetDateTime>(null, OffsetDateTime.class, "timestamp with time zone");
 

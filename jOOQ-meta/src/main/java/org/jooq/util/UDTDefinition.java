@@ -54,6 +54,11 @@ import java.util.List;
 public interface UDTDefinition extends PackageDefinition {
 
     /**
+     * The UDT's package. <code>null</code> if the UDT is not in a package
+     */
+    PackageDefinition getPackage();
+
+    /**
      * All attributes in the UDT
      */
     List<AttributeDefinition> getAttributes();

@@ -50,7 +50,48 @@ import org.jooq.conf.Settings;
  * <p>
  * The scope of the various objects contained in this type (e.g.
  * {@link #configuration()}, {@link #settings()}, etc.) are implementation
- * dependent and will be specified by the concrete subtype of <code>Scope</code>.
+ * dependent and will be specified by the concrete subtype of
+ * <code>Scope</code>. Examples of such scope types are:
+ * <ul>
+ * <li>{@link ExecuteContext}: A scope that covers a single execution of a
+ * {@link Query}</li>
+ * <li>{@link Context}: A scope that covers a single traversal of a
+ * {@link QueryPart} expression tree to produce a SQL string and / or a list of
+ * bind variables.</li>
+ * <li>{@link VisitContext}: A scope that that covers a single traversal of a
+ * {@link QueryPart} expression tree (just like {@link Context}), in the
+ * presence of at least one {@link VisitListener}.</li>
+ * <li>{@link RecordContext}: A scope that covers a single record operation,
+ * such as {@link UpdatableRecord#store()}.</li>
+ * <li>{@link TransactionContext}: A scope that covers the execution (or
+ * nesting) of a single transaction.</li>
+ * </ul>
+ * <p>
+ * One of <code>Scope</code>'s most interesting features for client code
+ * implementing any SPI is the {@link #data()} map, which provides access to a
+ * {@link Map} where client code can register user-defined values for the entire
+ * lifetime of a scope. For instance, in an {@link ExecuteListener}
+ * implementation that measures time for fetching data, it is perfectly possible
+ * to store timestamps in that map:
+ * <p>
+ * <code><pre>
+ * class FetchTimeMeasuringListener extends DefaultExecuteListener {
+ *     &#64;Override
+ *     public void fetchStart(ExecuteContext ctx) {
+ *
+ *         // Put any arbitrary object in this map:
+ *         ctx.data("org.jooq.example.fetch-start-time", System.nanoTime());
+ *     }
+ *
+ *     &#64;Override
+ *     public void fetchEnd(ExecuteContext ctx) {
+ *
+ *         // Retrieve that object again in a later step:
+ *         Long startTime = (Long) ctx.data("org.jooq.example.fetch-start-time");
+ *         System.out.println("Time taken: " + (System.nanoTime() - startTime) / 1000 / 1000.0 + " ms");
+ *     }
+ * }
+ * </pre></code>
  *
  * @author Lukas Eder
  */

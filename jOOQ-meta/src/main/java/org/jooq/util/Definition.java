@@ -43,6 +43,8 @@ package org.jooq.util;
 
 import java.util.List;
 
+import org.jooq.Name;
+
 /**
  * A general interface defining any database object, such as tables, views,
  * stored procedures, etc.
@@ -114,6 +116,24 @@ public interface Definition {
      *         {@link #getOutputName()})
      */
     String getQualifiedOutputName();
+
+    /**
+     * @return A qualified name for this object (corresponding to
+     *         {@link #getName()})
+     */
+    Name getQualifiedNamePart();
+
+    /**
+     * @return A qualified name for this object (corresponding to
+     *         {@link #getInputName()})
+     */
+    Name getQualifiedInputNamePart();
+
+    /**
+     * @return A qualified name for this object (corresponding to
+     *         {@link #getOutputName()})
+     */
+    Name getQualifiedOutputNamePart();
 
     /**
      * @return The overload suffix if applicable

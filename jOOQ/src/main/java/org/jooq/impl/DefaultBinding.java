@@ -101,6 +101,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 // ...
 import org.jooq.Attachable;
@@ -127,6 +129,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Scope;
 import org.jooq.UDTRecord;
+import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.MappingException;
 import org.jooq.exception.SQLDialectNotSupportedException;
@@ -808,6 +811,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     public void register(BindingRegisterContext<U> ctx) throws SQLException {
         Configuration configuration = ctx.configuration();
         int sqlType = DefaultDataType.getDataType(ctx.dialect(), type).getSQLType();
+
+        if (log.isTraceEnabled())
+            log.trace("Registering variable " + ctx.index(), "" + type);
 
         switch (configuration.family()) {
 
@@ -1565,20 +1571,44 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         return OffsetTime.parse(string);
     }
 
+    private static final Pattern LENIENT_OFFSET_PATTERN = Pattern.compile(
+        "(\\d{4}-\\d{2}-\\d{2})[T ](\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?)(?: +)?(([+-])(\\d)?(\\d)(:\\d{2}))?");
+
     private final OffsetDateTime offsetDateTime(String string) {
         if (string == null)
             return null;
 
-        // [#4338] [#5180] PostgreSQL is more lenient regarding the offset format
-        if (string.lastIndexOf('+') == string.length() - 3 || string.lastIndexOf('-') == string.length() - 3)
-            string = string + ":00";
+        Matcher m = LENIENT_OFFSET_PATTERN.matcher(string);
+        if (m.find()) {
+            StringBuilder sb = new StringBuilder(m.group(1));
 
-        // [#4338] SQL supports the alternative ISO 8601 date format, where a
-        // whitespace character separates date and time. java.time does not
-        if (string.charAt(10) == ' ')
-            string = string.substring(0, 10) + "T" + string.substring(11);
+            // [#4338] SQL supports the alternative ISO 8601 date format, where a
+            // whitespace character separates date and time. java.time does not
+            sb.append('T');
+            sb.append(m.group(2));
 
-        return OffsetDateTime.parse(string);
+            if (m.group(3) != null) {
+                sb.append(m.group(4));
+
+                // [#4965] Oracle might return a single-digit hour offset (and some spare space)
+                if (m.group(5) == null)
+                    sb.append('0');
+
+                sb.append(m.group(6));
+
+                // [#4338] [#5180] PostgreSQL is more lenient regarding the offset format
+                sb.append(m.group(7) == null ? ":00" : m.group(7));
+            }
+            else {
+                sb.append("+00:00");
+            }
+
+            return OffsetDateTime.parse(sb.toString());
+        }
+
+        // Probably a bug, let OffsetDateTime report it
+        else
+            return OffsetDateTime.parse(string);
     }
 
 
@@ -2242,7 +2272,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // Try fetching a Java Object[]. That's gonna work for non-UDT types
             try {
-                return (T) convertArray(array, (Class<? extends Object[]>) type);
+
+                // [#5633] Special treatment for this type.
+                // [#5586] [#5613] TODO: Improve PostgreSQL array deserialisation.
+                if (byte[][].class == type)
+                    throw new ControlFlowSignal("GOTO the next array deserialisation strategy");
+                else
+                    return (T) convertArray(array, (Class<? extends Object[]>) type);
             }
 
             // This might be a UDT (not implemented exception...)
@@ -2302,18 +2338,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         try {
             Class<?> component = type.getComponentType();
-            String values = string.replaceAll("^\\{(.*)\\}$", "$1");
+            List<String> values = PostgresUtils.toPGArray(string);
 
-            if ("".equals(values)) {
+            if (values.isEmpty()) {
                 return (Object[]) java.lang.reflect.Array.newInstance(component, 0);
             }
             else {
-                String[] split = values.split(",");
-                Object[] result = (Object[]) java.lang.reflect.Array.newInstance(component, split.length);
+                Object[] result = (Object[]) java.lang.reflect.Array.newInstance(component, values.size());
 
-                for (int i = 0; i < split.length; i++) {
-                    result[i] = pgFromString(type.getComponentType(), split[i]);
-                }
+                for (int i = 0; i < values.size(); i++)
+                    result[i] = pgFromString(type.getComponentType(), values.get(i));
 
                 return result;
             }
@@ -2355,6 +2389,15 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         if (type.isArray())
             render.sql("[]");
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Object API
+    // -----------------------------------------------------------------------------------------------------------------
+
+    @Override
+    public String toString() {
+        return "DefaultBinding [type=" + type + ", converter=" + converter + "]";
     }
 }
 

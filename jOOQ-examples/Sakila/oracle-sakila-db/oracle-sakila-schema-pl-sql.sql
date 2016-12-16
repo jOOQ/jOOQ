@@ -385,3 +385,27 @@ CREATE OR REPLACE PACKAGE BODY RENTALS AS
   
 END RENTALS;
 /
+
+CREATE PACKAGE customers AS
+  TYPE person IS RECORD (
+    first_name VARCHAR2(50),
+    last_name VARCHAR2(50)
+  );
+  
+  FUNCTION get_customer(p_customer_id NUMBER) RETURN person;
+END customers;
+/
+
+CREATE PACKAGE BODY customers AS
+  FUNCTION get_customer(p_customer_id NUMBER) RETURN person IS
+    v_person customers.person;
+  BEGIN
+    SELECT c.first_name, c.last_name
+    INTO v_person
+    FROM customer c
+    WHERE c.customer_id = p_customer_id;
+    
+    RETURN v_person;
+  END get_customer;
+END customers;
+/

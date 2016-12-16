@@ -41,8 +41,10 @@
 package org.jooq.util;
 
 
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DefaultDataType.normalise;
 
+import org.jooq.Name;
 import org.jooq.SQLDialect;
 // ...
 
@@ -55,7 +57,7 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     private final Database         database;
     private final SchemaDefinition schema;
     private final String           type;
-    private final String           userType;
+    private final Name             userType;
     private final String           javaType;
     private final String           converter;
     private final String           binding;
@@ -70,7 +72,7 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     }
 
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName) {
-        this(database, schema, typeName, null, null, null, null, (String) null, null);
+        this(database, schema, typeName, null, null, null, null, (String) null, (Name) null);
     }
 
     /**
@@ -93,7 +95,23 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         this(database, schema, typeName, length, precision, scale, nullable, defaultable, userType, null);
     }
 
+    /**
+     * @deprecated - [#330] - 3.9.0 - Use {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, Number, Number, Boolean, String, Name)}  instead.
+     */
+    @Deprecated
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, String userType) {
+        this(database, schema, typeName, length, precision, scale, nullable, defaultValue, name(userType));
+    }
+
+    /**
+     * @deprecated - [#330] - 3.9.0 - Use {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, Number, Number, Boolean, String, Name)}  instead.
+     */
+    @Deprecated
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, Boolean defaultValue, Name userType) {
+        this(database, schema, typeName, length, precision, scale, nullable, defaultValue(defaultValue), userType);
+    }
+
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, Name userType) {
         this(database, schema, typeName, length, precision, scale, nullable, defaultValue, userType, null);
     }
 
@@ -105,7 +123,15 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         this(database, schema, typeName, length, precision, scale, nullable, defaultable, userType, converter, null);
     }
 
+    /**
+     * @deprecated - [#330] - 3.9.0 - Use {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, Number, Number, Boolean, String, Name, String)}  instead.
+     */
+    @Deprecated
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, String userType, String converter) {
+        this(database, schema, typeName, length, precision, scale, nullable, defaultValue, name(userType), converter);
+    }
+
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, Name userType, String converter) {
         this(database, schema, typeName, length, precision, scale, nullable, defaultValue, userType, converter, null);
     }
 
@@ -117,7 +143,15 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         this(database, schema, typeName, length, precision, scale, nullable, defaultable, userType, converter, binding, null);
     }
 
+    /**
+     * @deprecated - [#330] - 3.9.0 - Use {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, Number, Number, Boolean, String, Name, String, String)}  instead.
+     */
+    @Deprecated
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, String userType, String converter, String binding) {
+        this(database, schema, typeName, length, precision, scale, nullable, defaultValue, name(userType), converter, binding, null);
+    }
+
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, Name userType, String converter, String binding) {
         this(database, schema, typeName, length, precision, scale, nullable, defaultValue, userType, converter, binding, null);
     }
 
@@ -129,7 +163,15 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         this(database, schema, typeName, length, precision, scale, nullable, defaultValue(defaultable), userType, converter, binding, javaType);
     }
 
+    /**
+     * @deprecated - [#330] - 3.9.0 - Use {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, Number, Number, Boolean, String, Name, String, String, String)}  instead.
+     */
+    @Deprecated
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, String userType, String converter, String binding, String javaType) {
+        this(database, schema, typeName, length, precision, scale, nullable, defaultValue, name(userType), converter, binding, javaType);
+    }
+
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, Name userType, String converter, String binding, String javaType) {
         this.database = database;
         this.schema = schema;
 
@@ -192,11 +234,17 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
 
     @Override
     public final boolean isUDT() {
+        if (userType == null)
+            return false;
+
         return getDatabase().getUDT(schema, userType) != null;
     }
 
     @Override
     public final boolean isArray() {
+        if (userType == null)
+            return false;
+
         return getDatabase().getArray(schema, userType) != null;
     }
 
@@ -232,6 +280,11 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
 
     @Override
     public final String getUserType() {
+        return userType != null ? userType.last() : null;
+    }
+
+    @Override
+    public final Name getQualifiedUserType() {
         return userType;
     }
 
@@ -272,10 +325,16 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         if (obj instanceof DefaultDataTypeDefinition) {
             DefaultDataTypeDefinition other = (DefaultDataTypeDefinition) obj;
 
-            if (normalise(type).equals(normalise(other.type)) &&
-                normalise(userType).equals(normalise(other.userType))) {
+            if (!normalise(type).equals(normalise(other.type)))
+                return false;
+
+            if (userType == null && other.userType == null)
                 return true;
-            }
+
+            if (userType == null || other.userType == null)
+                return false;
+
+            return normalise(userType.last()).equals(normalise(other.userType.last()));
         }
 
         return false;

@@ -57,7 +57,11 @@ implements
     private List<RoutineDefinition> routines;
 
     public AbstractUDTDefinition(SchemaDefinition schema, String name, String comment) {
-        super(schema, name, comment);
+        super(schema, null, name, comment);
+    }
+
+    public AbstractUDTDefinition(SchemaDefinition schema, PackageDefinition pkg, String name, String comment) {
+        super(schema, pkg, name, comment);
     }
 
     @Override

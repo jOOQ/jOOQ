@@ -120,6 +120,7 @@ public class MockFileDatabase implements MockDataProvider {
     private final Map<String, List<MockResult>>  matchExactly;
     private final Map<Pattern, List<MockResult>> matchPattern;
     private final DSLContext                     create;
+    private String                               nullLiteral;
 
     public MockFileDatabase(File file) throws IOException {
         this(file, "UTF-8");
@@ -143,6 +144,18 @@ public class MockFileDatabase implements MockDataProvider {
 
     public MockFileDatabase(String string) throws IOException {
         this(new StringReader(string));
+    }
+
+    /**
+     * Specify the <code>null</code> literal, i.e. the string that should be
+     * parsed as a <code>null</code> reference, rather than as the string
+     * itself.
+     *
+     * @see DSLContext#fetchFromTXT(String, String)
+     */
+    public MockFileDatabase nullLiteral(String literal) {
+        this.nullLiteral = literal;
+        return this;
     }
 
     private MockFileDatabase(LineNumberReader reader) throws IOException {
@@ -274,7 +287,12 @@ public class MockFileDatabase implements MockDataProvider {
                 if (rowString.startsWith("@ rows:")) {
                     rows = Integer.parseInt(rowString.substring(7).trim());
                 }
-                return new MockResult(rows, create.fetchFromTXT(currentResult.toString()));
+
+                return new MockResult(rows,
+                    nullLiteral == null
+                    ? create.fetchFromTXT(currentResult.toString())
+                    : create.fetchFromTXT(currentResult.toString(), nullLiteral)
+                );
             }
 
             private String readLine() throws IOException {

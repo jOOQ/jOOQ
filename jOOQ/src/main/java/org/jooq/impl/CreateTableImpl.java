@@ -268,6 +268,21 @@ final class CreateTableImpl<R extends Record> extends AbstractQuery implements
                     ctx.sql(' ').keyword("not null");
                 }
 
+                if (type.identity()) {
+
+                    // [#5062] H2's (and others') AUTO_INCREMENT flag is syntactically located *after* NULL flags.
+                    switch (ctx.family()) {
+
+
+
+
+
+                        case H2:
+                        case MARIADB:
+                        case MYSQL:  ctx.sql(' ').keyword("auto_increment"); break;
+                    }
+                }
+
                 if (!asList(HSQLDB).contains(ctx.family()))
                     acceptDefault(ctx, type);
 

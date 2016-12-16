@@ -189,15 +189,13 @@ public interface DSLContext extends Scope , AutoCloseable  {
     // XXX Convenience methods accessing the underlying Connection
     // -------------------------------------------------------------------------
 
-
-
-
-
-
-
-
-
-
+    /**
+     * Access the parser API.
+     *
+     * @deprecated - [#2303] This is experimental functionality.
+     */
+    @Deprecated
+    Parser parser();
 
     /**
      * Access the database meta data.

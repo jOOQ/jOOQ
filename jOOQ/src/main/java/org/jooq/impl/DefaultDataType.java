@@ -363,7 +363,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final DataType<T> nullable(boolean n) {
-        return new DefaultDataType<T>(this, precision, scale, length, n, identity, defaultValue);
+        return new DefaultDataType<T>(this, precision, scale, length, n, n ? false : identity, defaultValue);
     }
 
     @Override
@@ -373,7 +373,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final DataType<T> identity(boolean i) {
-        return new DefaultDataType<T>(this, precision, scale, length, nullable, i, defaultValue);
+        return new DefaultDataType<T>(this, precision, scale, length, i ? false : nullable, i, i ? null : defaultValue);
     }
 
     @Override
@@ -388,7 +388,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final DataType<T> defaultValue(Field<T> d) {
-        return new DefaultDataType<T>(this, precision, scale, length, nullable, identity, d);
+        return new DefaultDataType<T>(this, precision, scale, length, nullable, d != null ? false : identity, d);
     }
 
     @Override

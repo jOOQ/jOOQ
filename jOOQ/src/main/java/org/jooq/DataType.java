@@ -192,6 +192,8 @@ public interface DataType<T> extends Serializable {
 
     /**
      * Return a new data type like this, with a new nullability.
+     * <p>
+     * [#5709] A <code>nullable</code> column cannot have an {@link #identity()}.
      *
      * @param nullable The new nullability
      * @return The new data type
@@ -207,6 +209,9 @@ public interface DataType<T> extends Serializable {
 
     /**
      * Return a new data type like this, with a new identity flag.
+     * <p>
+     * [#5709] The IDENTITY flag imposes a NOT NULL constraint, and removes all
+     * DEFAULT values.
      *
      * @param identity The new identity flag
      * @return The new data type
@@ -223,6 +228,8 @@ public interface DataType<T> extends Serializable {
     /**
      * Specify an expression to be applied as the <code>DEFAULT</code> value for
      * this data type.
+     * <p>
+     * [#5709] A <code>defaulted</code> column cannot have an {@link #identity()}.
      *
      * @see #defaultValue(Field)
      */

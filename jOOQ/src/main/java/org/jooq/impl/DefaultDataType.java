@@ -205,6 +205,7 @@ public class DefaultDataType<T> implements DataType<T> {
     private final String                                 typeName;
 
     private final boolean                                nullable;
+    private final boolean                                identity;
     private final Field<T>                               defaultValue;
     private final int                                    precision;
     private final int                                    scale;
@@ -259,6 +260,10 @@ public class DefaultDataType<T> implements DataType<T> {
     }
 
     DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, String typeName, String castTypeName, int precision, int scale, int length, boolean nullable, Field<T> defaultValue) {
+        this(dialect, sqlDataType, type, binding, typeName, castTypeName, precision, scale, length, nullable, false, defaultValue);
+    }
+
+    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, String typeName, String castTypeName, int precision, int scale, int length, boolean nullable, boolean identity, Field<T> defaultValue) {
 
         // Initialise final instance members
         // ---------------------------------
@@ -274,6 +279,7 @@ public class DefaultDataType<T> implements DataType<T> {
         this.arrayType = (Class<T[]>) Array.newInstance(type, 0).getClass();
 
         this.nullable = nullable;
+        this.identity = identity;
         this.defaultValue = defaultValue;
         this.precision = precision0(type, precision);
         this.scale = scale;
@@ -317,7 +323,7 @@ public class DefaultDataType<T> implements DataType<T> {
     /**
      * [#3225] Performant constructor for creating derived types.
      */
-    private DefaultDataType(DefaultDataType<T> t, int precision, int scale, int length, boolean nullable, Field<T> defaultValue) {
+    private DefaultDataType(DefaultDataType<T> t, int precision, int scale, int length, boolean nullable, boolean identity, Field<T> defaultValue) {
         this.dialect = t.dialect;
         this.sqlDataType = t.sqlDataType;
         this.type = t.type;
@@ -327,6 +333,7 @@ public class DefaultDataType<T> implements DataType<T> {
         this.arrayType = t.arrayType;
 
         this.nullable = nullable;
+        this.identity = identity;
         this.defaultValue = defaultValue;
         this.precision = precision0(type, precision);
         this.scale = scale;
@@ -356,12 +363,22 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final DataType<T> nullable(boolean n) {
-        return new DefaultDataType<T>(this, precision, scale, length, n, defaultValue);
+        return new DefaultDataType<T>(this, precision, scale, length, n, identity, defaultValue);
     }
 
     @Override
     public final boolean nullable() {
         return nullable;
+    }
+
+    @Override
+    public final DataType<T> identity(boolean i) {
+        return new DefaultDataType<T>(this, precision, scale, length, nullable, i, defaultValue);
+    }
+
+    @Override
+    public final boolean identity() {
+        return identity;
     }
 
     @Override
@@ -371,7 +388,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final DataType<T> defaultValue(Field<T> d) {
-        return new DefaultDataType<T>(this, precision, scale, length, nullable, d);
+        return new DefaultDataType<T>(this, precision, scale, length, nullable, identity, d);
     }
 
     @Override
@@ -404,7 +421,7 @@ public class DefaultDataType<T> implements DataType<T> {
         else if (isLob())
             return this;
         else
-            return new DefaultDataType<T>(this, p, s, length, nullable, defaultValue);
+            return new DefaultDataType<T>(this, p, s, length, nullable, identity, defaultValue);
     }
 
     @Override
@@ -426,7 +443,7 @@ public class DefaultDataType<T> implements DataType<T> {
         if (isLob())
             return this;
         else
-            return new DefaultDataType<T>(this, precision, s, length, nullable, defaultValue);
+            return new DefaultDataType<T>(this, precision, s, length, nullable, identity, defaultValue);
     }
 
     @Override
@@ -448,7 +465,7 @@ public class DefaultDataType<T> implements DataType<T> {
         if (isLob())
             return this;
         else
-            return new DefaultDataType<T>(this, precision, scale, l, nullable, defaultValue);
+            return new DefaultDataType<T>(this, precision, scale, l, nullable, identity, defaultValue);
     }
 
     @Override

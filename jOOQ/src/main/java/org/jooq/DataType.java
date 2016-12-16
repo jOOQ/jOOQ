@@ -206,6 +206,21 @@ public interface DataType<T> extends Serializable {
     boolean nullable();
 
     /**
+     * Return a new data type like this, with a new identity flag.
+     *
+     * @param identity The new identity flag
+     * @return The new data type
+     */
+    DataType<T> identity(boolean identity);
+
+    /**
+     * Get the identity flag of this data type.
+     *
+     * @return The identity flag.
+     */
+    boolean identity();
+
+    /**
      * Specify an expression to be applied as the <code>DEFAULT</code> value for
      * this data type.
      *

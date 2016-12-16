@@ -60,6 +60,7 @@ import java.util.regex.Pattern;
 
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
+import org.jooq.exception.MockFileDatabaseException;
 import org.jooq.impl.DSL;
 import org.jooq.tools.JooqLogger;
 
@@ -118,6 +119,7 @@ import org.jooq.tools.JooqLogger;
  * This implementation is still very experimental and not officially supported!
  *
  * @author Lukas Eder
+ * @author Samy Deghou
  */
 public class MockFileDatabase implements MockDataProvider {
 
@@ -291,11 +293,16 @@ public class MockFileDatabase implements MockDataProvider {
                     rows = Integer.parseInt(rowString.substring(7).trim());
                 }
 
-                return new MockResult(rows,
+                MockResult result = new MockResult(rows,
                     nullLiteral == null
                     ? create.fetchFromTXT(currentResult.toString())
                     : create.fetchFromTXT(currentResult.toString(), nullLiteral)
                 );
+
+                if (rows != result.data.size())
+                    throw new MockFileDatabaseException("Rows mismatch. Declared: " + rows + ". Actual: " + result.data.size() + ".");
+
+                return result;
             }
 
             private String readLine() throws IOException {

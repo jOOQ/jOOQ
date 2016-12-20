@@ -85,6 +85,12 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
     InsertOnConflictDoUpdateStep<R> onConflict(Collection<? extends Field<?>> keys);
 
     /**
+     * Add an <code>ON CONFLICT DO NOTHING</code> clause to this insert query.
+     */
+    @Support({ POSTGRES_9_5 })
+    InsertFinalStep<R> onConflictDoNothing();
+
+    /**
      * Add an <code>ON DUPLICATE KEY UPDATE</code> clause to this insert query.
      * <p>
      * This will try to <code>INSERT</code> a record. If there is a primary key

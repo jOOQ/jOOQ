@@ -3507,14 +3507,15 @@ class ParserImpl implements Parser {
 
     private static final Field<?> parseWindowFunction(ParserContext ctx, WindowIgnoreNullsStep s1, WindowOverStep<?> s2) {
         if (s1 != null) {
-            boolean respectNulls = parseKeywordIf(ctx, "RESPECT NULLS");
-            boolean ignoreNulls = !respectNulls && parseKeywordIf(ctx, "IGNORE NULLS");
 
-            s2 = respectNulls
-                ? s1.respectNulls()
-                : ignoreNulls
-                ? s1.ignoreNulls()
-                : s1;
+
+
+
+
+
+
+
+                s2 = s1;
         }
 
         parseKeyword(ctx, "OVER");

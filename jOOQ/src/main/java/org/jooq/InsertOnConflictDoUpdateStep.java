@@ -58,6 +58,7 @@ import static org.jooq.SQLDialect.POSTGRES_9_5;
  * </pre></code>
  *
  * @author Lukas Eder
+ * @author Fabrice Le Roy
  */
 public interface InsertOnConflictDoUpdateStep<R extends Record> {
 

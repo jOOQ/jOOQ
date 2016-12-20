@@ -40,6 +40,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.tools.StringUtils.defaultIfNull;
+
 import java.util.Arrays;
 
 import org.jooq.Context;
@@ -68,7 +70,7 @@ final class QualifiedField<T> extends AbstractField<T> implements TableField<Rec
     private final Table<Record> table;
 
     QualifiedField(Name name, DataType<T> type) {
-        super(name.getName()[name.getName().length - 1], type);
+        super(defaultIfNull(name.last(), ""), type);
 
         this.name = name;
         this.table = name.getName().length > 1

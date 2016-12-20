@@ -90,9 +90,7 @@ final class CreateIndexImpl extends AbstractQuery implements
     private Table<?>              table;
     private Field<?>[]            fields;
     private SortField<?>[]        sortFields;
-
-
-
+    private Condition             where;
 
     CreateIndexImpl(Configuration configuration, Name index, boolean unique, boolean ifNotExists) {
         super(configuration);
@@ -132,44 +130,42 @@ final class CreateIndexImpl extends AbstractQuery implements
         return on(table(name(tableName)), f);
     }
 
+    @Override
+    public final CreateIndexImpl where(Condition... conditions) {
+        where = DSL.and(conditions);
+        return this;
+    }
 
+    @Override
+    public final CreateIndexImpl where(Collection<? extends Condition> conditions) {
+        where = DSL.and(conditions);
+        return this;
+    }
 
+    @Override
+    public final CreateIndexImpl where(Field<Boolean> field) {
+        return where(DSL.condition(field));
+    }
 
+    @Override
+    public final CreateIndexImpl where(SQL sql) {
+        return where(DSL.condition(sql));
+    }
 
+    @Override
+    public final CreateIndexImpl where(String sql) {
+        return where(DSL.condition(sql));
+    }
 
+    @Override
+    public final CreateIndexImpl where(String sql, Object... bindings) {
+        return where(DSL.condition(sql, bindings));
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @Override
+    public final CreateIndexImpl where(String sql, QueryPart... parts) {
+        return where(DSL.condition(sql, parts));
+    }
 
     // ------------------------------------------------------------------------
     // XXX: QueryPart API
@@ -217,10 +213,11 @@ final class CreateIndexImpl extends AbstractQuery implements
            .qualify(true)
            .sql(')');
 
-
-
-
-
+        if (where != null)
+            ctx.sql(' ')
+               .keyword("where")
+               .sql(' ')
+               .visit(where);
     }
 
     @Override

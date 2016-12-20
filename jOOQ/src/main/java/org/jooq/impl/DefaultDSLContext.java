@@ -363,12 +363,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     // XXX Convenience methods accessing the underlying Connection
     // -------------------------------------------------------------------------
 
-
-
-
-
-
-
+    @Override
+    @Deprecated
+    public Parser parser() {
+        return new ParserImpl(configuration());
+    }
 
     @Override
     public Meta meta() {

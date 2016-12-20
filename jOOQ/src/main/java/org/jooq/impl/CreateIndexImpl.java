@@ -217,7 +217,9 @@ final class CreateIndexImpl extends AbstractQuery implements
             ctx.sql(' ')
                .keyword("where")
                .sql(' ')
-               .visit(where);
+               .qualify(false)
+               .visit(where)
+               .qualify(true);
     }
 
     @Override

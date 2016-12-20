@@ -978,6 +978,14 @@
         be generated.
         -->
       <element name="emptySchemas" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
+
+      <!--
+        A flag indicating whether Java 8's java.time types should be used by the
+        source code generator, rather than JDBC's java.sql types.
+
+        This flag is ignored in the commercial Java 6 distribution of jOOQ 3.9+
+        -->
+      <element name="javaTimeTypes" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
     </all>
   </complexType>
 

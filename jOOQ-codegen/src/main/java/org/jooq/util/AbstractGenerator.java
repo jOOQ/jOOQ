@@ -93,6 +93,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateGlobalLinkReferences     = true;
     boolean                            fluentSetters                    = false;
     String                             generateFullyQualifiedTypes      = "";
+    boolean                            generateJavaTimeTypes            = false;
     boolean                            generateTableValuedFunctions     = false;
     boolean                            generateEmptyCatalogs            = false;
     boolean                            generateEmptySchemas             = false;
@@ -539,6 +540,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateFullyQualifiedTypes(String generateFullyQualifiedTypes) {
         this.generateFullyQualifiedTypes = generateFullyQualifiedTypes;
+    }
+
+    @Override
+    public boolean generateJavaTimeTypes() {
+        return generateJavaTimeTypes;
+    }
+
+    @Override
+    public void setGenerateJavaTimeTypes(boolean generateJavaTimeTypes) {
+        this.generateJavaTimeTypes = generateJavaTimeTypes;
     }
 
     @Override

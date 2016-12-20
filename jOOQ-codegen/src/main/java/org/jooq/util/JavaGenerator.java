@@ -54,13 +54,18 @@ import static org.jooq.util.GenerationUtil.convertToIdentifier;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.TypeVariable;
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -140,57 +145,78 @@ import org.jooq.util.postgres.PostgresDatabase;
  */
 public class JavaGenerator extends AbstractGenerator {
 
-    private static final JooqLogger        log                          = JooqLogger.getLogger(JavaGenerator.class);
+    private static final JooqLogger               log                          = JooqLogger.getLogger(JavaGenerator.class);
 
     /**
      * The Javadoc to be used for private constructors
      */
-    private static final String            NO_FURTHER_INSTANCES_ALLOWED = "No further instances allowed";
+    private static final String                   NO_FURTHER_INSTANCES_ALLOWED = "No further instances allowed";
 
     /**
      * [#1459] Prevent large static initialisers by splitting nested classes
      */
-    private static final int               INITIALISER_SIZE             = 500;
+    private static final int                      INITIALISER_SIZE             = 500;
+
+    /**
+     * [#4429] A map providing access to SQLDataType member literals
+     */
+    private static final Map<DataType<?>, String> SQLDATATYPE_LITERAL_LOOKUP;
 
     /**
      * An overall stop watch to measure the speed of source code generation
      */
-    private final StopWatch                watch                        = new StopWatch();
+    private final StopWatch                       watch                        = new StopWatch();
 
     /**
      * The underlying database of this generator
      */
-    private Database                       database;
+    private Database                              database;
 
     /**
      * The code generation date, if needed.
      */
-    private String                         isoDate;
+    private String                                isoDate;
 
     /**
      * The cached schema version numbers.
      */
-    private Map<SchemaDefinition, String>  schemaVersions;
+    private Map<SchemaDefinition, String>         schemaVersions;
 
     /**
      * The cached catalog version numbers.
      */
-    private Map<CatalogDefinition, String> catalogVersions;
+    private Map<CatalogDefinition, String>        catalogVersions;
 
     /**
      * All files modified by this generator.
      */
-    private Set<File>                      files                        = new LinkedHashSet<File>();
+    private Set<File>                             files                        = new LinkedHashSet<File>();
 
     /**
      * These directories were not modified by this generator, but flagged as not
      * for removal (e.g. because of {@link #schemaVersions} or
      * {@link #catalogVersions}).
      */
-    private Set<File>                      directoriesNotForRemoval     = new LinkedHashSet<File>();
+    private Set<File>                             directoriesNotForRemoval     = new LinkedHashSet<File>();
 
-    private final boolean                  scala;
-    private final String                   tokenVoid;
+    private final boolean                         scala;
+    private final String                          tokenVoid;
+
+    static {
+        SQLDATATYPE_LITERAL_LOOKUP = new IdentityHashMap<DataType<?>, String>();
+
+        try {
+            for (java.lang.reflect.Field f : SQLDataType.class.getFields()) {
+                if (Modifier.isPublic(f.getModifiers()) &&
+                    Modifier.isStatic(f.getModifiers()) &&
+                    Modifier.isFinal(f.getModifiers()))
+                    SQLDATATYPE_LITERAL_LOOKUP.put((DataType<?>) f.get(SQLDataType.class), f.getName());
+            }
+        }
+        catch (Exception e) {
+            log.warn(e);
+        }
+    }
 
     public JavaGenerator() {
         this(JAVA);
@@ -5233,7 +5259,7 @@ public class JavaGenerator extends AbstractGenerator {
         // Try finding a basic standard SQL type according to the current dialect
         else {
             try {
-                Class<?> clazz = DefaultDataType.getType(db.getDialect(), t, p, s);
+                Class<?> clazz = mapJavaTimeTypes(DefaultDataType.getDataType(db.getDialect(), t, p, s)).getType();
                 if (scala && clazz == byte[].class)
                     type = "scala.Array[scala.Byte]";
                 else
@@ -5306,7 +5332,7 @@ public class JavaGenerator extends AbstractGenerator {
             DataType<?> dataType = null;
 
             try {
-                dataType = DefaultDataType.getDataType(db.getDialect(), t, p, s).nullable(n);
+                dataType = mapJavaTimeTypes(DefaultDataType.getDataType(db.getDialect(), t, p, s)).nullable(n);
 
                 if (d != null)
                     dataType = dataType.defaultValue((Field) DSL.field(d, dataType));
@@ -5320,10 +5346,11 @@ public class JavaGenerator extends AbstractGenerator {
             // specific DataType t, then reference that one.
             if (dataType != null && dataType.getSQLDataType() != null) {
                 DataType<?> sqlDataType = dataType.getSQLDataType();
+                String literal = SQLDATATYPE_LITERAL_LOOKUP.get(sqlDataType);
                 String sqlDataTypeRef =
                     SQLDataType.class.getCanonicalName()
                   + '.'
-                  + DefaultDataType.normalise(sqlDataType.getTypeName());
+                  + literal;
 
                 sb.append(sqlDataTypeRef);
 
@@ -5387,7 +5414,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                     sb.append(typeName);
                     if (!type1.equals(type2)) {
-                        Class<?> clazz = DefaultDataType.getType(db.getDialect(), t, p, s);
+                        Class<?> clazz = mapJavaTimeTypes(DefaultDataType.getDataType(db.getDialect(), t, p, s)).getType();
 
                         sb.append(".asNumberDataType(");
                         sb.append(classOf(clazz.getCanonicalName()));
@@ -5418,6 +5445,22 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         return sb.toString();
+    }
+
+    private DataType<?> mapJavaTimeTypes(DataType<?> dataType) {
+        DataType<?> result = dataType;
+
+        // [#4429] [#5713] This logic should be implemented in Configuration
+        if (dataType.isDateTime() && generateJavaTimeTypes) {
+            if (dataType.getType() == Date.class)
+                result = SQLDataType.LOCALDATE;
+            else if (dataType.getType() == Time.class)
+                result = SQLDataType.LOCALTIME;
+            else if (dataType.getType() == Timestamp.class)
+                result = SQLDataType.LOCALDATETIME;
+        }
+
+        return result;
     }
 
     protected boolean match(DataTypeDefinition type1, DataTypeDefinition type2) {

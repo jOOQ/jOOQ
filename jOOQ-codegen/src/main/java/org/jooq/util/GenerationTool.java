@@ -562,6 +562,8 @@ public class GenerationTool {
                 generator.setGeneratePojosToString(g.getGenerate().isPojosToString());
             if (g.getGenerate().getFullyQualifiedTypes() != null)
                 generator.setGenerateFullyQualifiedTypes(g.getGenerate().getFullyQualifiedTypes());
+            if (g.getGenerate().isJavaTimeTypes() != null)
+                generator.setGenerateJavaTimeTypes(g.getGenerate().isJavaTimeTypes());
             if (g.getGenerate().isEmptyCatalogs() != null)
                 generator.setGenerateEmptyCatalogs(g.getGenerate().isEmptyCatalogs());
             if (g.getGenerate().isEmptySchemas() != null)
@@ -591,6 +593,15 @@ public class GenerationTool {
             // Generator properties that should in fact be strategy properties
             strategy.setInstanceFields(generator.generateInstanceFields());
 
+
+            if (true)
+                ;
+            else
+
+                if (g.getGenerate().isJavaTimeTypes() != null) {
+                    log.warn("INVALID CONFIG", "The java.time API cannot be used in the Java 6 distribution of jOOQ 3.9+");
+                    generator.setGenerateJavaTimeTypes(false);
+                }
 
             generator.generate(database);
         }

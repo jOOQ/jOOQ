@@ -311,7 +311,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         Timestamp result = null;
 
         if (isTimestampOrVersionAvailable()) {
-            TableField<R, ? extends java.util.Date> timestamp = getTable().getRecordTimestamp();
+            TableField<R, ?> timestamp = getTable().getRecordTimestamp();
 
             if (timestamp != null) {
 
@@ -331,10 +331,10 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         BigInteger result = null;
 
         if (isTimestampOrVersionAvailable()) {
-            TableField<R, ? extends Number> version = getTable().getRecordVersion();
+            TableField<R, ?> version = getTable().getRecordVersion();
 
             if (version != null) {
-                Number value = get(version);
+                Object value = get(version);
 
                 // Use BigInteger locally to avoid arithmetic overflows
                 if (value == null) {

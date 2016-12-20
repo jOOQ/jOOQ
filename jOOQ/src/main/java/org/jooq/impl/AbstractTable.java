@@ -361,7 +361,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
      * Subclasses may override this method
      */
     @Override
-    public TableField<R, ? extends Number> getRecordVersion() {
+    public TableField<R, ?> getRecordVersion() {
         return null;
     }
 
@@ -371,7 +371,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
      * Subclasses may override this method
      */
     @Override
-    public TableField<R, ? extends java.util.Date> getRecordTimestamp() {
+    public TableField<R, ?> getRecordTimestamp() {
         return null;
     }
 

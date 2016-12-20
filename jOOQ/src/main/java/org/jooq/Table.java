@@ -180,7 +180,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see UpdatableRecord#delete()
      * @see Settings#isExecuteWithOptimisticLocking()
      */
-    TableField<R, ? extends Number> getRecordVersion();
+    TableField<R, ?> getRecordVersion();
 
     /**
      * A "timestamp" field holding record timestamp information used for
@@ -205,7 +205,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see UpdatableRecord#delete()
      * @see Settings#isExecuteWithOptimisticLocking()
      */
-    TableField<R, ? extends java.util.Date> getRecordTimestamp();
+    TableField<R, ?> getRecordTimestamp();
 
     /**
      * Retrieve all of the table's unique keys.

@@ -42,7 +42,6 @@
 package org.jooq.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.jooq.Clause;
@@ -140,12 +139,12 @@ final class TableAlias<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public final TableField<R, ? extends Number> getRecordVersion() {
+    public final TableField<R, ?> getRecordVersion() {
         return alias.wrapped().getRecordVersion();
     }
 
     @Override
-    public final TableField<R, ? extends Date> getRecordTimestamp() {
+    public final TableField<R, ?> getRecordTimestamp() {
         return alias.wrapped().getRecordTimestamp();
     }
 

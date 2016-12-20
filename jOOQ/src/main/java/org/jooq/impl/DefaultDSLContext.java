@@ -173,7 +173,7 @@ import org.jooq.MergeUsingStep;
 import org.jooq.Meta;
 import org.jooq.Name;
 import org.jooq.Param;
-// ...
+import org.jooq.Parser;
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.QueryPart;

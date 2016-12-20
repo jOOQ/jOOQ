@@ -67,7 +67,7 @@ import static org.jooq.impl.DSL.cot;
 import static org.jooq.impl.DSL.coth;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.countDistinct;
-// ...
+import static org.jooq.impl.DSL.cube;
 import static org.jooq.impl.DSL.cumeDist;
 import static org.jooq.impl.DSL.currentDate;
 import static org.jooq.impl.DSL.currentSchema;
@@ -87,9 +87,9 @@ import static org.jooq.impl.DSL.firstValue;
 import static org.jooq.impl.DSL.floor;
 import static org.jooq.impl.DSL.foreignKey;
 import static org.jooq.impl.DSL.greatest;
-// ...
-// ...
-// ...
+import static org.jooq.impl.DSL.grouping;
+import static org.jooq.impl.DSL.groupingId;
+import static org.jooq.impl.DSL.groupingSets;
 import static org.jooq.impl.DSL.hour;
 import static org.jooq.impl.DSL.ifnull;
 import static org.jooq.impl.DSL.inline;
@@ -265,7 +265,7 @@ import org.jooq.MergeFinalStep;
 import org.jooq.MergeMatchedStep;
 import org.jooq.MergeNotMatchedStep;
 import org.jooq.Name;
-// ...
+import org.jooq.Parser;
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.Record;

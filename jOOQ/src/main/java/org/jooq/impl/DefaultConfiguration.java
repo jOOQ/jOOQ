@@ -717,7 +717,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration set(ConnectionProvider newConnectionProvider) {
         if (newConnectionProvider != null) {
 
-            // TODO Factor out this API in a more formal contract between TransactionProvider and ConnectionProvider
+            // [#5388] TODO Factor out this API in a more formal contract between TransactionProvider and ConnectionProvider
             if (transactionProvider instanceof ThreadLocalTransactionProvider &&
               !(newConnectionProvider instanceof ThreadLocalConnectionProvider))
                 throw new ConfigurationException("Cannot specify custom ConnectionProvider when Configuration contains a ThreadLocalTransactionProvider");

@@ -97,8 +97,8 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
 
     private void init55() {
 
-    	// [#742] In MySQL 5.5 and later, the INFORMATION_SCHEMA.PARAMETERS
-    	// table is available, which is much more reliable than mysql.proc
+        // [#742] In MySQL 5.5 and later, the INFORMATION_SCHEMA.PARAMETERS
+        // table is available, which is much more reliable than mysql.proc
         for (Record record : create()
                 .select(
                     Parameters.ORDINAL_POSITION,
@@ -158,9 +158,9 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
     private void init54() {
 
         // [#742] Before MySQL 5.5, the INFORMATION_SCHEMA.PARAMETERS table was
-    	// not yet available. Resort to mysql.proc and regex-pattern matching.
+        // not yet available. Resort to mysql.proc and regex-pattern matching.
 
-    	// [#738] Avoid matching commas that appear in types, for instance DECIMAL(2, 1)
+        // [#738] Avoid matching commas that appear in types, for instance DECIMAL(2, 1)
         String[] split = params.split(",(?!\\s*\\d+\\s*\\))");
 
         Matcher matcher = TYPE_PATTERN.matcher(returns);
@@ -216,7 +216,7 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
 
     private boolean is55() {
 
-    	// Check if this is a MySQL 5.5 or later database
+        // Check if this is a MySQL 5.5 or later database
         if (is55 == null) {
             try {
                 create().selectOne().from(PARAMETERS).limit(1).fetchOne();

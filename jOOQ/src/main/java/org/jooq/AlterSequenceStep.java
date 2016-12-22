@@ -78,21 +78,21 @@ public interface AlterSequenceStep<T extends Number> extends AlterSequenceRestar
      * Add a <code>RENAME TO</code> clause to the <code>ALTER SEQUENCE</code>
      * statement.
      */
-    @Support({ POSTGRES })
+    @Support({ HSQLDB, POSTGRES })
     AlterSequenceFinalStep renameTo(Sequence<?> newName);
 
     /**
      * Add a <code>RENAME TO</code> clause to the <code>ALTER SEQUENCE</code>
      * statement.
      */
-    @Support({ POSTGRES })
+    @Support({ HSQLDB, POSTGRES })
     AlterSequenceFinalStep renameTo(Name newName);
 
     /**
      * Add a <code>RENAME TO</code> clause to the <code>ALTER SEQUENCE</code>
      * statement.
      */
-    @Support({ POSTGRES })
+    @Support({ HSQLDB, POSTGRES })
     AlterSequenceFinalStep renameTo(String newName);
 
 }

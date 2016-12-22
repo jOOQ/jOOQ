@@ -16,7 +16,7 @@
 
     <properties>
         <scala.version>2.10.6</scala.version>
-        <org.h2.version>1.4.181</org.h2.version>
+        <org.h2.version>1.4.193</org.h2.version>
     </properties>
 
     <build>

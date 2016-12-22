@@ -306,7 +306,7 @@ class Function<T> extends AbstractField<T> implements
     final void toSQLGroupConcat(Context<?> ctx) {
         toSQLFunctionName(ctx);
         ctx.sql('(');
-        toSQLArguments0(ctx);
+        toSQLArguments1(ctx, new QueryPartList<QueryPart>(arguments.get(0)));
 
         if (!withinGroupOrderBy.isEmpty())
             ctx.sql(' ').keyword("order by").sql(' ')
@@ -424,11 +424,15 @@ class Function<T> extends AbstractField<T> implements
     }
 
     final void toSQLArguments0(Context<?> ctx) {
+        toSQLArguments1(ctx, arguments);
+    }
+
+    final void toSQLArguments1(Context<?> ctx, QueryPartList<QueryPart> args) {
         if (distinct) {
             ctx.keyword("distinct");
 
             // [#2883] PostgreSQL can use the DISTINCT keyword with formal row value expressions.
-            if (ctx.family() == POSTGRES && arguments.size() > 1) {
+            if (ctx.family() == POSTGRES && args.size() > 1) {
                 ctx.sql('(');
             }
             else {
@@ -436,14 +440,14 @@ class Function<T> extends AbstractField<T> implements
             }
         }
 
-        if (!arguments.isEmpty()) {
+        if (!args.isEmpty()) {
             if (filter == null || HSQLDB == ctx.family() || POSTGRES_9_4.precedes(ctx.dialect())) {
-                ctx.visit(arguments);
+                ctx.visit(args);
             }
             else {
                 QueryPartList<Field<?>> expressions = new QueryPartList<Field<?>>();
 
-                for (QueryPart argument : arguments)
+                for (QueryPart argument : args)
                     expressions.add(DSL.when(filter, argument == ASTERISK ? one() : argument));
 
                 ctx.visit(expressions);
@@ -451,7 +455,7 @@ class Function<T> extends AbstractField<T> implements
         }
 
         if (distinct)
-            if (ctx.family() == POSTGRES && arguments.size() > 1)
+            if (ctx.family() == POSTGRES && args.size() > 1)
                 ctx.sql(')');
 
         if (ignoreNulls) {

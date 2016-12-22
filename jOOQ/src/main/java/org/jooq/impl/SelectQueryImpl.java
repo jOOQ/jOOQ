@@ -1375,7 +1375,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         if (wrapQueryExpressionInDerivedTable)
             context.formatIndentEnd()
                    .formatNewLine()
-                   .sql(')');
+                   .sql(") x");
 
         if (context.data().containsKey(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE) && actualLimit.isApplicable())
             context.visit(actualLimit);

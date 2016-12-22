@@ -6031,7 +6031,7 @@ public class DSL {
      *
      * @see DSLContext#alterView(String)
      */
-    @Support
+    @Support({ HSQLDB, POSTGRES })
     public static AlterViewStep alterView(String view) {
         return using(new DefaultConfiguration()).alterView(view);
     }
@@ -6041,7 +6041,7 @@ public class DSL {
      *
      * @see DSLContext#alterView(Name)
      */
-    @Support
+    @Support({ HSQLDB, POSTGRES })
     public static AlterViewStep alterView(Name view) {
         return using(new DefaultConfiguration()).alterView(view);
     }
@@ -6051,7 +6051,7 @@ public class DSL {
      *
      * @see DSLContext#alterView(Table)
      */
-    @Support
+    @Support({ HSQLDB, POSTGRES })
     public static AlterViewStep alterView(Table<?> view) {
         return using(new DefaultConfiguration()).alterView(view);
     }
@@ -6061,7 +6061,7 @@ public class DSL {
      *
      * @see DSLContext#alterViewIfExists(String)
      */
-    @Support
+    @Support({ POSTGRES })
     public static AlterViewStep alterViewIfExists(String view) {
         return using(new DefaultConfiguration()).alterViewIfExists(view);
     }
@@ -6071,7 +6071,7 @@ public class DSL {
      *
      * @see DSLContext#alterViewIfExists(Name)
      */
-    @Support
+    @Support({ POSTGRES })
     public static AlterViewStep alterViewIfExists(Name view) {
         return using(new DefaultConfiguration()).alterViewIfExists(view);
     }
@@ -6081,7 +6081,7 @@ public class DSL {
      *
      * @see DSLContext#alterViewIfExists(Table)
      */
-    @Support
+    @Support({ POSTGRES })
     public static AlterViewStep alterViewIfExists(Table<?> view) {
         return using(new DefaultConfiguration()).alterViewIfExists(view);
     }

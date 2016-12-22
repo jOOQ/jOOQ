@@ -7873,7 +7873,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterIndex(String)
      */
-    @Support({ POSTGRES })
+    @Support({ H2, POSTGRES })
     AlterIndexStep alterIndex(String index);
 
     /**
@@ -7881,7 +7881,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterIndex(Name)
      */
-    @Support({ POSTGRES })
+    @Support({ H2, POSTGRES })
     AlterIndexStep alterIndex(Name index);
 
     /**
@@ -7889,7 +7889,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterIndexIfExists(String)
      */
-    @Support({ POSTGRES })
+    @Support({ H2, POSTGRES })
     AlterIndexStep alterIndexIfExists(String index);
 
     /**
@@ -7897,7 +7897,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterIndexIfExists(Name)
      */
-    @Support({ POSTGRES })
+    @Support({ H2, POSTGRES })
     AlterIndexStep alterIndexIfExists(Name index);
 
     /**

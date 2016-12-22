@@ -40,6 +40,7 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.POSTGRES;
 
 /**
@@ -53,13 +54,13 @@ public interface AlterIndexStep {
      * Add a <code>RENAME TO</code> clause to the <code>ALTER INDEX</code>
      * statement.
      */
-    @Support({ POSTGRES })
+    @Support({ H2, POSTGRES })
     AlterIndexFinalStep renameTo(Name newName);
 
     /**
      * Add a <code>RENAME TO</code> clause to the <code>ALTER INDEX</code>
      * statement.
      */
-    @Support({ POSTGRES })
+    @Support({ H2, POSTGRES })
     AlterIndexFinalStep renameTo(String newName);
 }

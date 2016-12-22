@@ -6091,7 +6091,7 @@ public class DSL {
      *
      * @see DSLContext#alterIndex(String)
      */
-    @Support({ POSTGRES })
+    @Support({ H2, POSTGRES })
     public static AlterIndexStep alterIndex(String index) {
         return using(new DefaultConfiguration()).alterIndex(index);
     }
@@ -6101,7 +6101,7 @@ public class DSL {
      *
      * @see DSLContext#alterIndex(Name)
      */
-    @Support({ POSTGRES })
+    @Support({ H2, POSTGRES })
     public static AlterIndexStep alterIndex(Name index) {
         return using(new DefaultConfiguration()).alterIndex(index);
     }
@@ -6111,7 +6111,7 @@ public class DSL {
      *
      * @see DSLContext#alterIndexIfExists(String)
      */
-    @Support({ POSTGRES })
+    @Support({ H2, POSTGRES })
     public static AlterIndexStep alterIndexIfExists(String index) {
         return using(new DefaultConfiguration()).alterIndexIfExists(index);
     }
@@ -6121,7 +6121,7 @@ public class DSL {
      *
      * @see DSLContext#alterIndexIfExists(Name)
      */
-    @Support({ POSTGRES })
+    @Support({ H2, POSTGRES })
     public static AlterIndexStep alterIndexIfExists(Name index) {
         return using(new DefaultConfiguration()).alterIndexIfExists(index);
     }

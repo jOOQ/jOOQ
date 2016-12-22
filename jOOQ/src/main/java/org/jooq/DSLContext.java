@@ -7905,7 +7905,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropSchema(String)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     DropSchemaStep dropSchema(String schema);
 
     /**
@@ -7913,7 +7913,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropSchema(Name)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     DropSchemaStep dropSchema(Name schema);
 
     /**
@@ -7921,7 +7921,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropSchema(Schema)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     DropSchemaStep dropSchema(Schema schema);
 
     /**
@@ -7929,7 +7929,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropSchemaIfExists(String)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     DropSchemaStep dropSchemaIfExists(String schema);
 
     /**
@@ -7937,7 +7937,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropSchemaIfExists(Name)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     DropSchemaStep dropSchemaIfExists(Name schema);
 
     /**
@@ -7945,7 +7945,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropSchemaIfExists(Schema)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     DropSchemaStep dropSchemaIfExists(Schema schema);
 
     /**

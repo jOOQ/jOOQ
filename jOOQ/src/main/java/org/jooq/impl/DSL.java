@@ -12448,7 +12448,7 @@ public class DSL {
      * @param value The formatted <code>DATE</code> value.
      * @param format The vendor-specific formatting string.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Date> toDate(String value, String format) {
         return toDate(Tools.field(value, SQLDataType.VARCHAR), Tools.field(format, SQLDataType.VARCHAR));
     }
@@ -12459,7 +12459,7 @@ public class DSL {
      * @param value The formatted <code>DATE</code> value.
      * @param format The vendor-specific formatting string.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Date> toDate(String value, Field<String> format) {
         return toDate(Tools.field(value, SQLDataType.VARCHAR), nullSafe(format));
     }
@@ -12470,7 +12470,7 @@ public class DSL {
      * @param value The formatted <code>DATE</code> value.
      * @param format The vendor-specific formatting string.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Date> toDate(Field<String> value, String format) {
         return toDate(nullSafe(value), Tools.field(format, SQLDataType.VARCHAR));
     }
@@ -12481,7 +12481,7 @@ public class DSL {
      * @param value The formatted <code>DATE</code> value.
      * @param format The vendor-specific formatting string.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Date> toDate(Field<String> value, Field<String> format) {
         return DSL.field("{to_date}({0}, {1})", SQLDataType.DATE, nullSafe(value), nullSafe(format));
     }
@@ -12492,7 +12492,7 @@ public class DSL {
      * @param value The formatted <code>TIMESTAMP</code> value.
      * @param format The vendor-specific formatting string.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Timestamp> toTimestamp(String value, String format) {
         return toTimestamp(Tools.field(value, SQLDataType.VARCHAR), Tools.field(format, SQLDataType.VARCHAR));
     }
@@ -12503,7 +12503,7 @@ public class DSL {
      * @param value The formatted <code>TIMESTAMP</code> value.
      * @param format The vendor-specific formatting string.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Timestamp> toTimestamp(String value, Field<String> format) {
         return toTimestamp(Tools.field(value, SQLDataType.VARCHAR), nullSafe(format));
     }
@@ -12514,7 +12514,7 @@ public class DSL {
      * @param value The formatted <code>TIMESTAMP</code> value.
      * @param format The vendor-specific formatting string.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Timestamp> toTimestamp(Field<String> value, String format) {
         return toTimestamp(nullSafe(value), Tools.field(format, SQLDataType.VARCHAR));
     }
@@ -12525,7 +12525,7 @@ public class DSL {
      * @param value The formatted <code>TIMESTAMP</code> value.
      * @param format The vendor-specific formatting string.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Timestamp> toTimestamp(Field<String> value, Field<String> format) {
         return DSL.field("{to_timestamp}({0}, {1})", SQLDataType.TIMESTAMP, nullSafe(value), nullSafe(format));
     }
@@ -12538,7 +12538,7 @@ public class DSL {
      * @param value The formatted <code>DATE</code> value.
      * @param format The vendor-specific formatting string.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<LocalDate> toLocalDate(String value, String format) {
         return toDate(value, format).coerce(SQLDataType.LOCALDATE);
     }
@@ -12549,7 +12549,7 @@ public class DSL {
      * @param value The formatted <code>DATE</code> value.
      * @param format The vendor-specific formatting string.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<LocalDate> toLocalDate(String value, Field<String> format) {
         return toDate(value, format).coerce(SQLDataType.LOCALDATE);
     }
@@ -12560,7 +12560,7 @@ public class DSL {
      * @param value The formatted <code>DATE</code> value.
      * @param format The vendor-specific formatting string.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<LocalDate> toLocalDate(Field<String> value, String format) {
         return toDate(value, format).coerce(SQLDataType.LOCALDATE);
     }
@@ -12571,7 +12571,7 @@ public class DSL {
      * @param value The formatted <code>DATE</code> value.
      * @param format The vendor-specific formatting string.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<LocalDate> toLocalDate(Field<String> value, Field<String> format) {
         return toDate(value, format).coerce(SQLDataType.LOCALDATE);
     }
@@ -12582,7 +12582,7 @@ public class DSL {
      * @param value The formatted <code>TIMESTAMP</code> value.
      * @param format The vendor-specific formatting string.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<LocalDateTime> toLocalDateTime(String value, String format) {
         return toTimestamp(value, format).coerce(SQLDataType.LOCALDATETIME);
     }
@@ -12593,7 +12593,7 @@ public class DSL {
      * @param value The formatted <code>TIMESTAMP</code> value.
      * @param format The vendor-specific formatting string.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<LocalDateTime> toLocalDateTime(String value, Field<String> format) {
         return toTimestamp(value, format).coerce(SQLDataType.LOCALDATETIME);
     }
@@ -12604,7 +12604,7 @@ public class DSL {
      * @param value The formatted <code>TIMESTAMP</code> value.
      * @param format The vendor-specific formatting string.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<LocalDateTime> toLocalDateTime(Field<String> value, String format) {
         return toTimestamp(value, format).coerce(SQLDataType.LOCALDATETIME);
     }
@@ -12615,7 +12615,7 @@ public class DSL {
      * @param value The formatted <code>TIMESTAMP</code> value.
      * @param format The vendor-specific formatting string.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<LocalDateTime> toLocalDateTime(Field<String> value, Field<String> format) {
         return toTimestamp(value, format).coerce(SQLDataType.LOCALDATETIME);
     }

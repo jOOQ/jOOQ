@@ -5971,7 +5971,7 @@ public class DSL {
      *
      * @see DSLContext#alterSchema(String)
      */
-    @Support
+    @Support({ HSQLDB, POSTGRES })
     public static AlterSchemaStep alterSchema(String schema) {
         return using(new DefaultConfiguration()).alterSchema(schema);
     }
@@ -5981,7 +5981,7 @@ public class DSL {
      *
      * @see DSLContext#alterSchema(Name)
      */
-    @Support
+    @Support({ HSQLDB, POSTGRES })
     public static AlterSchemaStep alterSchema(Name schema) {
         return using(new DefaultConfiguration()).alterSchema(schema);
     }
@@ -5991,7 +5991,7 @@ public class DSL {
      *
      * @see DSLContext#alterSchema(Schema)
      */
-    @Support
+    @Support({ HSQLDB, POSTGRES })
     public static AlterSchemaStep alterSchema(Schema schema) {
         return using(new DefaultConfiguration()).alterSchema(schema);
     }
@@ -6001,7 +6001,7 @@ public class DSL {
      *
      * @see DSLContext#alterSchemaIfExists(String)
      */
-    @Support
+    @Support({ POSTGRES })
     public static AlterSchemaStep alterSchemaIfExists(String schema) {
         return using(new DefaultConfiguration()).alterSchemaIfExists(schema);
     }
@@ -6011,7 +6011,7 @@ public class DSL {
      *
      * @see DSLContext#alterSchemaIfExists(Name)
      */
-    @Support
+    @Support({ POSTGRES })
     public static AlterSchemaStep alterSchemaIfExists(Name schema) {
         return using(new DefaultConfiguration()).alterSchemaIfExists(schema);
     }
@@ -6021,7 +6021,7 @@ public class DSL {
      *
      * @see DSLContext#alterSchemaIfExists(Schema)
      */
-    @Support
+    @Support({ POSTGRES })
     public static AlterSchemaStep alterSchemaIfExists(Schema schema) {
         return using(new DefaultConfiguration()).alterSchemaIfExists(schema);
     }

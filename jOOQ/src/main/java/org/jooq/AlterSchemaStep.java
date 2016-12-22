@@ -40,6 +40,7 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.POSTGRES;
 
 /**
@@ -54,21 +55,21 @@ public interface AlterSchemaStep {
      * Add a <code>RENAME TO</code> clause to the <code>ALTER SCHEMA</code>
      * statement.
      */
-    @Support({ POSTGRES })
+    @Support({ HSQLDB, POSTGRES })
     AlterSchemaFinalStep renameTo(Schema newName);
 
     /**
      * Add a <code>RENAME TO</code> clause to the <code>ALTER SCHEMA</code>
      * statement.
      */
-    @Support({ POSTGRES })
+    @Support({ HSQLDB, POSTGRES })
     AlterSchemaFinalStep renameTo(Name newName);
 
     /**
      * Add a <code>RENAME TO</code> clause to the <code>ALTER SCHEMA</code>
      * statement.
      */
-    @Support({ POSTGRES })
+    @Support({ HSQLDB, POSTGRES })
     AlterSchemaFinalStep renameTo(String newName);
 
 }

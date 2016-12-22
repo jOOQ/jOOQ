@@ -7777,7 +7777,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterSchema(String)
      */
-    @Support({ POSTGRES })
+    @Support({ HSQLDB, POSTGRES })
     AlterSchemaStep alterSchema(String schema);
 
     /**
@@ -7785,7 +7785,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterSchema(Name)
      */
-    @Support({ POSTGRES })
+    @Support({ HSQLDB, POSTGRES })
     AlterSchemaStep alterSchema(Name schema);
 
     /**
@@ -7793,7 +7793,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterSchema(Schema)
      */
-    @Support({ POSTGRES })
+    @Support({ HSQLDB, POSTGRES })
     AlterSchemaStep alterSchema(Schema schema);
 
     /**

@@ -40,6 +40,7 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.POSTGRES;
 
 /**
@@ -54,13 +55,13 @@ public interface DropSchemaStep extends DropSchemaFinalStep {
      * Add a <code>CASCADE</code> clause to the <code>DROP SCHEMA</code>
      * statement.
      */
-    @Support({ POSTGRES })
+    @Support({ HSQLDB, POSTGRES })
     DropSchemaFinalStep cascade();
 
     /**
      * Add a <code>RESTRICT</code> clause to the <code>DROP SCHEMA</code>
      * statement.
      */
-    @Support({ POSTGRES })
+    @Support({ HSQLDB, POSTGRES })
     DropSchemaFinalStep restrict();
 }

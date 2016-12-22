@@ -91,7 +91,7 @@ public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, 
     /**
      * Apply the <code>EXCEPT ALL</code> set operation.
      */
-    @Support({ CUBRID, DERBY, POSTGRES })
+    @Support({ CUBRID, DERBY, HSQLDB, POSTGRES })
     Select<R> exceptAll(Select<? extends R> select);
 
     /**
@@ -103,7 +103,7 @@ public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, 
     /**
      * Apply the <code>INTERSECT ALL</code> set operation.
      */
-    @Support({ CUBRID, DERBY, POSTGRES })
+    @Support({ CUBRID, DERBY, HSQLDB, POSTGRES })
     Select<R> intersectAll(Select<? extends R> select);
 
     /**

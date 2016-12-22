@@ -5731,7 +5731,7 @@ public class DSL {
      *
      * @see DSLContext#createIndexIfNotExists(String)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     public static CreateIndexStep createIndexIfNotExists(String index) {
         return using(new DefaultConfiguration()).createIndexIfNotExists(index);
     }
@@ -5741,7 +5741,7 @@ public class DSL {
      *
      * @see DSLContext#createIndexIfNotExists(Name)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     public static CreateIndexStep createIndexIfNotExists(Name index) {
         return using(new DefaultConfiguration()).createIndexIfNotExists(index);
     }
@@ -5771,7 +5771,7 @@ public class DSL {
      *
      * @see DSLContext#createUniqueIndexIfNotExists(String)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     public static CreateIndexStep createUniqueIndexIfNotExists(String index) {
         return using(new DefaultConfiguration()).createUniqueIndexIfNotExists(index);
     }
@@ -5781,7 +5781,7 @@ public class DSL {
      *
      * @see DSLContext#createUniqueIndexIfNotExists(Name)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     public static CreateIndexStep createUniqueIndexIfNotExists(Name index) {
         return using(new DefaultConfiguration()).createUniqueIndexIfNotExists(index);
     }

@@ -7585,7 +7585,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createIndexIfNotExists(String)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     CreateIndexStep createIndexIfNotExists(String index);
 
     /**
@@ -7593,7 +7593,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createIndexIfNotExists(Name)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     CreateIndexStep createIndexIfNotExists(Name index);
 
     /**
@@ -7617,7 +7617,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createIndex(String)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     CreateIndexStep createUniqueIndexIfNotExists(String index);
 
     /**
@@ -7625,7 +7625,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createIndex(Name)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     CreateIndexStep createUniqueIndexIfNotExists(Name index);
 
     /**

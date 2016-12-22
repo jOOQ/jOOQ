@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-  xmlns:tns="http://www.jooq.org/xsd/jooq-codegen-3.9.0.xsd"
-  targetNamespace="http://www.jooq.org/xsd/jooq-codegen-3.9.0.xsd"
+  xmlns:tns="http://www.jooq.org/xsd/jooq-codegen-3.8.0.xsd"
+  targetNamespace="http://www.jooq.org/xsd/jooq-codegen-3.8.0.xsd"
   elementFormDefault="qualified">
 
   <element name="configuration">
@@ -366,7 +366,7 @@
         You can also provide your own org.jooq.util.Database implementation
         here, if your database is currently not supported
         -->
-      <element name="name" type="string" minOccurs="0" maxOccurs="1" />
+      <element name="name" type="string" minOccurs="1" maxOccurs="1" />
 
       <!--
         The properties that will be passed to the Database instance as configured above.
@@ -405,7 +405,7 @@
       <!--
         All elements that are excluded from your schema (A Java regular expression.
         Use the pipe to separate several expressions). Excludes match before
-        includes, i.e. excludes have a higher priority.
+        includes
         -->
       <element name="excludes" type="string" default="" minOccurs="0" maxOccurs="1" />
 
@@ -467,12 +467,6 @@
       <element name="overridePrimaryKeys" type="string" default="" minOccurs="0" maxOccurs="1" />
 
       <!--
-        A regular expression matching all columns that represent identities
-        To be used if columns are not detected as automatically as identities.
-        -->
-      <element name="syntheticIdentities" type="string" default="" minOccurs="0" maxOccurs="1"/>
-
-      <!--
         Generate java.sql.Timestamp fields for DATE columns. This is
         particularly useful for Oracle databases
         -->
@@ -496,32 +490,8 @@
       <element name="unsignedTypes" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
 
       <!--
-        The catalog that is used locally as a source for meta information.
-
-        This cannot be combined with the catalogs element.
-        If left empty (and without any catalogs element), jOOQ will generate all available catalogs.
-        -->
-      <element name="inputCatalog" type="string" default="" minOccurs="0" maxOccurs="1" />
-
-      <!--
-        The catalog that is used in generated source code. This will be the
-        production catalog. Use this to override your local development
-        catalog name for source code generation. If not specified, this
-        will be the same as the input-catalog.
-
-        This will be ignored if outputCatalogToDefault is set to true
-        -->
-      <element name="outputCatalog" type="string" minOccurs="0" maxOccurs="1" />
-
-      <!--
-        A flag to indicate that the outputCatalog should be the "default" catalog,
-        which generates catalog-less, unqualified tables, procedures, etc.
-        -->
-      <element name="outputCatalogToDefault" type="boolean" minOccurs="0" maxOccurs="1" default="false" />
-
-      <!--
         The schema that is used locally as a source for meta information.
-
+        This could be your development schema or the production schema, etc
         This cannot be combined with the schemata element.
         If left empty (and without any schemata element), jOOQ will generate all available schemata.
         For backwards compatibility, this defaults to jdbc/schema
@@ -580,22 +550,8 @@
 
       <!--
         A configuration element to configure several input and/or output
-        catalogs for jooq-meta, in case you're using jooq-meta in a multi-
-        catalog environment.
-
-        This element cannot be used at the same time as the schemata element.
-        -->
-      <element name="catalogs" type="tns:Catalogs" minOccurs="0" maxOccurs="1"/>
-
-      <!--
-        A configuration element to configure several input and/or output
         schemata for jooq-meta, in case you're using jooq-meta in a multi-
-        schema environment.
-
-        Using this configuration element in an enviroment that supports multiple
-        catalogs means that all catalogs are generated.
-
-        This element cannot be used at the same time as the catalogs element.
+        schema environment
         -->
       <element name="schemata" type="tns:Schemata" minOccurs="0" maxOccurs="1"/>
 
@@ -629,32 +585,6 @@
         for Oracle.
         -->
       <element name="tableValuedFunctions" type="boolean" minOccurs="0" maxOccurs="1" />
-    </all>
-  </complexType>
-
-  <complexType name="Catalogs">
-    <sequence>
-      <!--
-        A configuration element for a single catalog in multi-catalog
-        environments
-        -->
-      <element name="catalog" type="tns:Catalog" minOccurs="1" maxOccurs="unbounded"/>
-    </sequence>
-  </complexType>
-
-  <complexType name="Catalog">
-    <all>
-      <!-- See also database/inputCatalog -->
-      <element name="inputCatalog" type="string" default="" minOccurs="1" maxOccurs="1" />
-
-      <!-- See also database/outputCatalog -->
-      <element name="outputCatalog" type="string" minOccurs="0" maxOccurs="1" />
-
-      <!-- See also database/outputCatalogDefault -->
-      <element name="outputCatalogToDefault" type="boolean" minOccurs="0" maxOccurs="1" default="false" />
-
-      <!-- The configuration of schemas inside of this catalog, if any. -->
-      <element name="schemata" type="tns:Schemata" minOccurs="0" maxOccurs="1" />
     </all>
   </complexType>
 
@@ -790,36 +720,6 @@
       <element name="generatedAnnotation" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
 
       <!--
-        Generate Routine classes.
-        -->
-      <element name="routines" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
-
-      <!--
-        Generate Sequence classes.
-        -->
-      <element name="sequences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
-
-      <!--
-        Generate UDT classes.
-        -->
-      <element name="udts" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
-
-      <!--
-        Allow to turn off the generation of queue related code
-        -->
-      <element name="queues" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
-
-      <!--
-        Allow to turn off the generation of link related code
-        -->
-      <element name="links" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
-
-      <!--
-        Generate Table classes.
-        -->
-      <element name="tables" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
-
-      <!--
         Generate TableRecord classes. Disable this when you don't
         need the additional type-safety
         -->
@@ -842,8 +742,7 @@
 
       <!--
         Generate immutable POJOs for usage of the ResultQuery.fetchInto(Class) API
-        This overrides any value set in <pojos/>.
-        This forces <immutableInterfaces/> to be true, if <interfaces/> is set.
+        This overrides any value set in <pojos/>
         -->
       <element name="immutablePojos" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
 
@@ -851,16 +750,8 @@
         Generate interfaces that will be implemented by records and/or pojos.
         You can also use these interfaces in Record.into(Class<?>) and similar
         methods, to let jOOQ return proxy objects for them.
-        This forces <immutableInterfaces/> to be true, if <immutablePojos/> is set.
         -->
       <element name="interfaces" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
-
-      <!--
-        Generate immutable interfaces.
-        Setting this to true will force <interfaces/> to be set to true.
-        This cannot be set to false when <immutablePojos/> is set to true.
-        -->
-      <element name="immutableInterfaces" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
 
       <!--
         Generate DAOs in addition to POJO classes
@@ -946,6 +837,16 @@
       <element name="globalLinkReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
 
       <!--
+        Allow to turn off the generation of queue related code
+        -->
+      <element name="queues" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+
+      <!--
+        Allow to turn off the generation of link related code
+        -->
+      <element name="links" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+
+      <!--
         Generate fluent setters in
 
         - records
@@ -966,26 +867,6 @@
         by specifying <fullyQualifiedTypes>java\.lang\..*</fullyQualifiedTypes>
         -->
       <element name="fullyQualifiedTypes" type="string" default="" minOccurs="0" maxOccurs="1" />
-
-      <!--
-        Whether empty catalogs (e.g. empty because of <excludes/> configurations) should still
-        be generated.
-        -->
-      <element name="emptyCatalogs" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
-
-      <!--
-        Whether empty schemas (e.g. empty because of <excludes/> configurations) should still
-        be generated.
-        -->
-      <element name="emptySchemas" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
-
-      <!--
-        A flag indicating whether Java 8's java.time types should be used by the
-        source code generator, rather than JDBC's java.sql types.
-
-        This flag is ignored in the commercial Java 6 distribution of jOOQ 3.9+
-        -->
-      <element name="javaTimeTypes" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
     </all>
   </complexType>
 
@@ -1002,10 +883,10 @@
       <element name="packageName" type="string" default="org.jooq.generated" minOccurs="0" maxOccurs="1" />
 
       <!-- The destination directory of your generated classes -->
-      <element name="directory" type="string" default="target/generated-sources/jooq" minOccurs="0" maxOccurs="1"/>
+      <element name="directory" type="string" default="target/generated-sources/jooq" />
 
       <!-- The file encoding to be used with all output files. -->
-      <element name="encoding" type="string" default="UTF-8" minOccurs="0" maxOccurs="1"/>
+      <element name="encoding" type="string" default="UTF-8"/>
     </all>
   </complexType>
 

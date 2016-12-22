@@ -7753,7 +7753,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterTableIfExists(String)
      */
-    @Support
+    @Support({ H2, POSTGRES })
     AlterTableStep alterTableIfExists(String table);
 
     /**
@@ -7761,7 +7761,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterTableIfExists(Name)
      */
-    @Support
+    @Support({ H2, POSTGRES })
     AlterTableStep alterTableIfExists(Name table);
 
     /**
@@ -7769,7 +7769,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterTableIfExists(Table)
      */
-    @Support
+    @Support({ H2, POSTGRES })
     AlterTableStep alterTableIfExists(Table<?> table);
 
     /**

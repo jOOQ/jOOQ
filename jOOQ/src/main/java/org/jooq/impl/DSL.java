@@ -5941,7 +5941,7 @@ public class DSL {
      *
      * @see DSLContext#alterTableIfExists(String)
      */
-    @Support
+    @Support({ H2, POSTGRES })
     public static AlterTableStep alterTableIfExists(String table) {
         return using(new DefaultConfiguration()).alterTableIfExists(table);
     }
@@ -5951,7 +5951,7 @@ public class DSL {
      *
      * @see DSLContext#alterTableIfExists(Name)
      */
-    @Support
+    @Support({ H2, POSTGRES })
     public static AlterTableStep alterTableIfExists(Name table) {
         return using(new DefaultConfiguration()).alterTableIfExists(table);
     }
@@ -5961,7 +5961,7 @@ public class DSL {
      *
      * @see DSLContext#alterTableIfExists(Table)
      */
-    @Support
+    @Support({ H2, POSTGRES })
     public static AlterTableStep alterTableIfExists(Table<?> table) {
         return using(new DefaultConfiguration()).alterTableIfExists(table);
     }

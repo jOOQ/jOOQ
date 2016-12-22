@@ -40,6 +40,8 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.POSTGRES;
+
 /**
  * The step in the <code>DROP SCHEMA</code> DSL used to specify
  * <code>DROP</code> behaviour.
@@ -52,13 +54,13 @@ public interface DropSchemaStep extends DropSchemaFinalStep {
      * Add a <code>CASCADE</code> clause to the <code>DROP SCHEMA</code>
      * statement.
      */
-    @Support
+    @Support({ POSTGRES })
     DropSchemaFinalStep cascade();
 
     /**
      * Add a <code>RESTRICT</code> clause to the <code>DROP SCHEMA</code>
      * statement.
      */
-    @Support
+    @Support({ POSTGRES })
     DropSchemaFinalStep restrict();
 }

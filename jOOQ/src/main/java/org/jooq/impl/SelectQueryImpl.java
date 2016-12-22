@@ -430,7 +430,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
             if (into != null
                     && context.data(DATA_OMIT_INTO_CLAUSE) == null
-                    && asList(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE).contains(family)) {
+                    && asList(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE).contains(family)) {
 
                 context.data(DATA_OMIT_INTO_CLAUSE, true);
                 context.visit(DSL.createTable(into).as(this));

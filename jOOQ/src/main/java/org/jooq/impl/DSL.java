@@ -6091,7 +6091,7 @@ public class DSL {
      *
      * @see DSLContext#alterIndex(String)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static AlterIndexStep alterIndex(String index) {
         return using(new DefaultConfiguration()).alterIndex(index);
     }
@@ -6101,7 +6101,7 @@ public class DSL {
      *
      * @see DSLContext#alterIndex(Name)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static AlterIndexStep alterIndex(Name index) {
         return using(new DefaultConfiguration()).alterIndex(index);
     }

@@ -42,6 +42,7 @@
 package org.jooq.util.mysql;
 
 import static java.util.Arrays.asList;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.util.mysql.information_schema.tables.Columns.COLUMNS;
 import static org.jooq.util.mysql.information_schema.tables.Columns.ORDINAL_POSITION;
 import static org.jooq.util.mysql.information_schema.tables.Columns.TABLE_NAME;
@@ -110,7 +111,7 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
                 record.get(Columns.NUMERIC_SCALE),
                 record.get(Columns.IS_NULLABLE, boolean.class),
                 record.get(Columns.COLUMN_DEFAULT),
-                getName() + "_" + record.get(Columns.COLUMN_NAME)
+                name(getSchema().getName(), getName() + "_" + record.get(Columns.COLUMN_NAME))
             );
 
             ColumnDefinition column = new DefaultColumnDefinition(

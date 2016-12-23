@@ -4719,7 +4719,7 @@ SELECT * FROM BOOK LIMIT 1 OFFSET 2
 -- CUBRID supports a MySQL variant of the LIMIT .. OFFSET clause
 SELECT * FROM BOOK LIMIT 2, 1
 
--- Derby, SQL Server 2012, Oracle 12c (syntax not yet supported by jOOQ), the SQL:2008 standard
+-- Derby, SQL Server 2012, Oracle 12c, the SQL:2008 standard
 SELECT * FROM BOOK OFFSET 2 ROWS FETCH NEXT 1 ROWS ONLY
 
 -- Informix has SKIP .. FIRST support
@@ -5665,17 +5665,26 @@ VALUES ('John', 'Hitchcock')</sql>
                                     <h3>Indexes</h3>
 
 </html><java><![CDATA[// Renaming the index
-create.alterIndex("old_index").renameTo("new_index").execute();]]></java><html>
+create.alterIndex("old_index").renameTo("new_index").execute();
+
+// Renaming the index only if it exists (not all databases support this)
+create.alterIndexIfExists("old_index").renameTo("new_index").execute();]]></java><html>
 
                                     <h3>Schemas</h3>
 
 </html><java><![CDATA[// Renaming the schema
-create.alterSchema("old_schema").renameTo("new_schema").execute();]]></java><html>
+create.alterSchema("old_schema").renameTo("new_schema").execute();
+
+// Renaming the schema only if it exists (not all databases support this)
+create.alterSchemaIfExists("old_schema").renameTo("new_schema").execute();]]></java><html>
 
                                     <h3>Sequences</h3>
 
 </html><java><![CDATA[// Renaming the sequence
 create.alterSequence("old_sequence").renameTo("new_sequence").execute();
+
+// Renaming the sequence only if it exists (not all databases support this)
+create.alterSequenceIfExists("old_sequence").renameTo("new_sequence").execute();
 
 // Restarting the sequence
 create.alterSequence(S_AUTHOR_ID).restart().execute();
@@ -5688,7 +5697,10 @@ create.alterSequence(S_AUTHOR_ID).restartWith(n).execute();]]></java><html>
                                     </p>
 
 </html><java><![CDATA[// Renaming the table
-create.alterTable("old_table").renameTo("new_table").execute();]]></java><html>
+create.alterTable("old_table").renameTo("new_table").execute();
+
+// Renaming the table only if it exists (not all databases support this)
+create.alterTableIfExists("old_table").renameTo("new_table").execute();]]></java><html>
 
                                     <p>
                                         These statements alter / add / drop columns and their types:
@@ -5731,7 +5743,10 @@ create.alterTable(AUTHOR).dropConstraint("UK_TITLE").execute();]]></java><html>
                                     <h3>Views</h3>
 
 </html><java><![CDATA[// Renaming the view
-create.alterView("old_view").renameTo("new_view").execute();]]></java><html>
+create.alterView("old_view").renameTo("new_view").execute();
+
+// Renaming the view only if it exists (not all databases support this)
+create.alterViewIfExists("old_view").renameTo("new_view").execute();]]></java><html>
 
                                 </html></content>
                             </section>
@@ -5749,20 +5764,30 @@ create.alterView("old_view").renameTo("new_view").execute();]]></java><html>
 </html><java><![CDATA[// Create a non-unique index
 create.createIndex("I_AUTHOR_LAST_NAME").on(AUTHOR, AUTHOR.LAST_NAME).execute();
 
+// Create an index only if it doesn't exist (not all databases support this)
+create.createIndexIfNotExists("I_AUTHOR_LAST_NAME").on(AUTHOR, AUTHOR.LAST_NAME).execute();
+
+// Create a partial index (not all databases support this)
+create.createIndex("I_AUTHOR_LAST_NAME").on(AUTHOR, AUTHOR.LAST_NAME).where(AUTHOR.LAST_NAME.like("A%")).execute();
+
 // Create a unique index
 create.createUniqueIndex("I_AUTHOR_LAST_NAME").on(AUTHOR, AUTHOR.LAST_NAME).execute();]]></java><html>
 
                                     <h3>Schemas</h3>
 
 </html><java><![CDATA[// Create a schema
-create.createSchema("new_schema").execute();]]></java><html>
+create.createSchema("new_schema").execute();
+
+// Create a schema only if it doesn't exists (not all databases support this)
+create.createSchemaIfNotExists("new_schema").execute();]]></java><html>
 
                                     <h3>Sequences</h3>
 
-</html><code-pair>
-<sql><![CDATA[CREATE SEQUENCE S_AUTHOR_ID;]]></sql>
-<java><![CDATA[create.createSequence(S_AUTHOR_ID).execute();]]></java>
-</code-pair><html>
+</html><java><![CDATA[// Create a sequence
+create.createSequence(S_AUTHOR_ID).execute();
+
+// Create a sequence only if it doesn't exists (not all databases support this)
+create.createSequence(S_AUTHOR_ID).execute();]]></java><html>
 
                                     <h3>Tables</h3>
 
@@ -5786,11 +5811,16 @@ create.createTable("TOP_AUTHORS").as(
       .where(val(50).lt(
          selectCount().from(BOOK)
         .where(BOOK.AUTHOR_ID.eq(AUTHOR.ID))
-      ))).execute();]]></java><html>
+      ))).execute();
+
+// Create a table only if it doesn't exists (not all databases support this)
+create.createTableIfNotExists("TOP_AUTHORS")
+      ...]]></java><html>
 
                                     <h3>Views</h3>
 
-</html><java><![CDATA[create.createView("V_TOP_AUTHORS").as(
+</html><java><![CDATA[// Create a view
+create.createView("V_TOP_AUTHORS").as(
        select(
          AUTHOR.ID,
          AUTHOR.FIRST_NAME,
@@ -5799,7 +5829,11 @@ create.createTable("TOP_AUTHORS").as(
       .where(val(50).lt(
          selectCount().from(BOOK)
         .where(BOOK.AUTHOR_ID.eq(AUTHOR.ID))
-      ))).execute();]]></java><html>
+      ))).execute();
+
+// Create a view only if it doesn't exists (not all databases support this)
+create.createTableIfNotExists("TOP_AUTHORS")
+      ...]]></java><html>
                                 </html></content>
                             </section>
 
@@ -5813,23 +5847,43 @@ create.createTable("TOP_AUTHORS").as(
 
                                     <h3>Indexes</h3>
 
-</html><java><![CDATA[create.dropIndex("I_AUTHOR_LAST_NAME").execute();]]></java><html>
+</html><java><![CDATA[// Drop an index
+create.dropIndex("I_AUTHOR_LAST_NAME").execute();
+
+// Drop an index only if it exists (not all databases support this)
+create.dropIndexIfExists("I_AUTHOR_LAST_NAME").execute();]]></java><html>
 
                                     <h3>Schemas</h3>
 
-</html><java><![CDATA[create.dropSchema("schema").execute();]]></java><html>
+</html><java><![CDATA[// Drop a schema
+create.dropSchema("schema").execute();
+
+// Drop a schema only if it exists (not all databases support this)
+create.dropSchemaIfExists("schema").execute();]]></java><html>
 
                                     <h3>Sequences</h3>
 
-</html><java><![CDATA[create.dropSequence(S_AUTHOR_ID).execute();]]></java><html>
+</html><java><![CDATA[// Drop a sequence
+create.dropSequence(S_AUTHOR_ID).execute();
+
+// Drop a sequence only if it exists (not all databases support this)
+create.dropSequenceIfExists(S_AUTHOR_ID).execute();]]></java><html>
 
                                     <h3>Tables</h3>
 
-</html><java><![CDATA[create.dropTable(AUTHOR).execute();]]></java><html>
+</html><java><![CDATA[// Drop a table
+create.dropTable(AUTHOR).execute();
+
+// Drop a table only if it exists (not all databases support this)
+create.dropTableIfExists(AUTHOR).execute();]]></java><html>
 
                                     <h3>Views</h3>
 
-</html><java><![CDATA[create.dropView(V_AUTHOR).execute();]]></java><html>
+</html><java><![CDATA[// Drop a view
+create.dropView(V_AUTHOR).execute();
+
+[// Drop a view only if it exists (not all databases support this)
+create.dropViewIfExists(V_AUTHOR).execute();]]></java><html>
                                 </html></content>
                             </section>
 
@@ -9667,6 +9721,36 @@ public class BindValueAbbreviator extends DefaultVisitListener {
 						</sections>
 					</section>
 
+                    <section id="sql-parser">
+                        <title>SQL Parser</title>
+                        <content><html>
+                            <p>
+                                jOOQ includes a SQL parser API (EXPERIMENTAL in jOOQ 3.9), which allows for parsing a SQL String into a <reference id="queryparts" title="QueryPart"/> of a specified type, including:
+                            </p>
+
+                            <ul>
+                                <li>A set of <reference class="org.jooq.Queries"/></li>
+                                <li>A single <reference class="org.jooq.Query"/></li>
+                                <li>A <reference class="org.jooq.Table"/></li>
+                                <li>A <reference class="org.jooq.Field"/></li>
+                                <li>A <reference class="org.jooq.Condition"/></li>
+                            </ul>
+
+                            <p>
+                                The current implementation of the parser is dialect agnostic and will try to parse any SQL dialect into a standard jOOQ expression tree, for instance:
+                            </p>
+
+</html><java><![CDATA[// These two are the same
+assertEquals(ctx.select(inline(1)), ctx.parser().parseQuery("select 1"));
+assertEquals(ctx.select(inline(1)), ctx.parser().parseQuery("select 1 from dual"));
+]]></java><html>
+
+                            <p>
+                                The value of such an API becomes immediately clear as the parser can consume any type of SQL string (as long as it can be represented using jOOQ API) and the generated expression tree can then be serialised again in any possible way. This can be very helpful when migrating from one database dialect to another, even without really using jOOQ as a database abstraction layer.
+                            </p>
+                        </html></content>
+                    </section>
+
 					<section id="scala-sql-building">
 						<title>SQL building in Scala</title>
 						<content><html>
@@ -13433,6 +13517,11 @@ result.forEach((Object[] entities) -> {
        Synthetic primary keys will override existing primary keys. -->
   <syntheticPrimaryKeys>SCHEMA\.TABLE\.COLUMN(1|2)</syntheticPrimaryKeys>
 
+  <!-- A regular expression matching all columns that are "synthetic" identities.
+
+       Synthetic identities will override existing identities. -->
+  <syntheticIdentities>SCHEMA\.TABLE\.COLUMN</syntheticIdentities>
+
   <!-- All (UNIQUE) key names that should be used instead of primary keys on
        generated UpdatableRecords, to be used with
 
@@ -15582,6 +15671,143 @@ Result<BookRecord> result = create.selectFrom(BOOK).where(BOOK.ID.equal(5)).fetc
 							</p>
 						</html></content>
 					</section>
+
+
+                    <section id="checker-framework">
+                        <title>API validation using the checker framework</title>
+                        <content><html>
+                            <p>
+                                Java 8 introduced JSR 308 (type annotations) and with it, the <a href="http://types.cs.washington.edu/checker-framework">checker framework</a> was born. The checker framework allows for implementing compiler plugins that run sophisticated checks on your Java AST to introduce rich annotation based type semantics, e.g.
+                            </p>
+
+</html><java><![CDATA[// This still compiles
+@Positive int value1 = 1;
+
+// This no longer compiles:
+@Positive int value2 = -1;]]></java><html>
+
+                            <p>
+                                jOOQ has two annotations that are very interesting for the checker framework to type check, namely:
+                            </p>
+
+                            <ul>
+                                <li><reference class="org.jooq.Support"/>: This annotation documents jOOQ DSL API with valuable information about which database supports a given SQL clause or function, etc. For instance, only CUBRID, Informix, and Oracle currently support <reference id="connect-by-clause" title="the CONNECT BY clause"/>.</li>
+                                <li><reference class="org.jooq.PlainSQL"/>: This annotation documents jOOQ DSL API which operates on <reference id="plain-sql" title="plain SQL"/>. Plain SQL being string-based SQL that is injected into a jOOQ expression tree, these API elements introduce a certain SQL injection risk (just like JDBC in general), if users are not careful.</li>
+                            </ul>
+
+                            <p>
+                                Using the optional <code>jooq-checker</code> module (available only from Maven Central), users can now type-check their code to work only with a given set of dialects, or to forbid access to plain SQL.
+                            </p>
+
+                            <h3>Example:</h3>
+
+                            <p>
+                                <a href="https://blog.jooq.org/2016/05/09/jsr-308-and-the-checker-framework-add-even-more-typesafety-to-jooq-3-9/">A detailed blog post shows how this works in depth</a>. By adding a simple dependency to your Maven build:
+                            </p>
+
+</html><xml><![CDATA[<dependency>
+  <!-- Use org.jooq            for the Open Source edition
+           org.jooq.pro        for commercial editions,
+           org.jooq.pro-java-6 for commercial editions with Java 6 support,
+           org.jooq.trial      for the free trial edition -->
+
+  <groupId>org.jooq</groupId>
+  <artifactId>jooq-checker</artifactId>
+  <version>{jooq-version}</version>
+</dependency>]]></xml><html>
+
+                            <p>
+                                ... you can now include one of the two checkers:
+                            </p>
+
+                            <h3>SQLDialectChecker</h3>
+
+                            <p>
+                                The SQLDialect checker reads all of the <reference class="org.jooq.Allow"/> and <reference class="org.jooq.Require"/> annotations in your source code and checks if the jOOQ API you're using is allowed and/or required in a given context, where that context can be any scope, including:
+                            </p>
+
+                            <ul>
+                                <li>A package</li>
+                                <li>A class</li>
+                                <li>A method</li>
+                            </ul>
+
+                            <p>
+                                Configure this compiler plugin:
+                            </p>
+
+</html><xml><![CDATA[<plugin>
+  <artifactId>maven-compiler-plugin</artifactId>
+  <version>3.3</version>
+  <configuration>
+    <source>1.8</source>
+    <target>1.8</target>
+    <fork>true</fork>
+    <annotationProcessors>
+      <annotationProcessor>org.jooq.checker.SQLDialectChecker</annotationProcessor>
+    </annotationProcessors>
+    <compilerArgs>
+      <arg>-Xbootclasspath/p:1.8</arg>
+    </compilerArgs>
+  </configuration>
+</plugin>]]></xml><html>
+
+                            <p>
+                                ... annotate your packages, e.g.
+                            </p>
+
+</html><java>// Scope: entire package (put in package-info.java)
+@Allow(ORACLE)
+package org.jooq.example.checker;</java><html>
+
+                            <p>
+                                And now, you'll no longer be able to use any SQL Server specific functionality that is not available in Oracle, for instance. Perfect!
+                            </p>
+
+                            <p>
+                                There are quite some delicate rules that play into this when you nest these annotations. <a href="https://blog.jooq.org/2016/05/09/jsr-308-and-the-checker-framework-add-even-more-typesafety-to-jooq-3-9/">Please refer to this blog post for details.</a>
+                            </p>
+
+                            <h3>PlainSQLChecker</h3>
+
+                            <p>
+                                This checker is much simpler. Just add the following compiler plugin to deactivate plain SQL usage by default:
+                            </p>
+
+</html><xml><![CDATA[<plugin>
+  <artifactId>maven-compiler-plugin</artifactId>
+  <version>3.3</version>
+  <configuration>
+    <source>1.8</source>
+    <target>1.8</target>
+    <fork>true</fork>
+    <annotationProcessors>
+      <annotationProcessor>org.jooq.checker.PlainSQLChecker</annotationProcessor>
+    </annotationProcessors>
+    <compilerArgs>
+      <arg>-Xbootclasspath/p:1.8</arg>
+    </compilerArgs>
+  </configuration>
+</plugin>]]></xml><html>
+
+                            <p>
+                                From now on, you won't risk any SQL injection in your jOOQ code anymore, because your compiler will reject all such API usage. If, however, you need to place an exception on a given package / class / method, simply add the <reference class="org.jooq.Allow.PlainSQL"/> annotation, as such:
+                            </p>
+
+</html><java><![CDATA[// Scope: Single method.
+@Allow.PlainSQL
+public List<Integer> iKnowWhatImDoing() {
+    return DSL.using(configuration)
+              .select(level())
+              .connectBy("level < ?", bindValue)
+              .fetch(0, int.class);
+}]]></java><html>
+
+                            <p>
+                                The <a href="http://types.cs.washington.edu/checker-framework">checker framework</a> does add some significant overhead in terms of compilation speed, and its IDE tooling is not yet at a level where such checks can be fed into IDEs for real user feedback, but the framework does work pretty well if you integrate it in your CI, nightly builds, etc.
+                            </p>
+                        </html></content>
+                    </section>
 
                     <section id="sql2jooq">
                         <title>SQL 2 jOOQ Parser</title>

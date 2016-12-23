@@ -42,6 +42,13 @@ package org.jooq;
 
 /**
  * An <code>FunctionalInterface</code> that wraps transactional code.
+ * <p>
+ * Transactional code should not depend on any captured scope, but use the
+ * argument {@link Configuration} passed to the {@link #run(Configuration)}
+ * method to derive its transaction context.
+ * <p>
+ * If transactional code needs to depend on captured scope ("context"), then
+ * {@link ContextTransactionalRunnable} is a better fit.
  *
  * @author Lukas Eder
  */

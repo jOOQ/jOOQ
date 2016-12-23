@@ -217,8 +217,8 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.TableRecord;
-import org.jooq.ThreadLocalTransactionalCallable;
-import org.jooq.ThreadLocalTransactionalRunnable;
+import org.jooq.ContextTransactionalCallable;
+import org.jooq.ContextTransactionalRunnable;
 import org.jooq.TransactionProvider;
 import org.jooq.TransactionalCallable;
 import org.jooq.TransactionalRunnable;
@@ -419,7 +419,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     // -------------------------------------------------------------------------
 
     @Override
-    public <T> T transactionResult(final ThreadLocalTransactionalCallable<T> transactional) {
+    public <T> T transactionResult(final ContextTransactionalCallable<T> transactional) {
         TransactionProvider tp = configuration().transactionProvider();
 
         if (!(tp instanceof ThreadLocalTransactionProvider))
@@ -507,8 +507,8 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public void transaction(final ThreadLocalTransactionalRunnable transactional) {
-        transactionResult(new ThreadLocalTransactionalCallable<Void>() {
+    public void transaction(final ContextTransactionalRunnable transactional) {
+        transactionResult(new ContextTransactionalCallable<Void>() {
             @Override
             public Void run() throws Exception {
                 transactional.run();

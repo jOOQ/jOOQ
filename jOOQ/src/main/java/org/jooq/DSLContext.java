@@ -273,6 +273,11 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * <code>DSLContext</code>'s underlying {@link #configuration()}'s
      * {@link Configuration#transactionProvider()}, and return the
      * <code>transactional</code>'s outcome.
+     * <p>
+     * The argument transactional code should not capture any scope but derive
+     * its {@link Configuration} from the
+     * {@link TransactionalCallable#run(Configuration)} argument in order to
+     * create new statements.
      *
      * @param transactional The transactional code
      * @return The transactional outcome
@@ -280,37 +285,56 @@ public interface DSLContext extends Scope , AutoCloseable  {
     <T> T transactionResult(TransactionalCallable<T> transactional);
 
     /**
-     * Run a {@link ThreadLocalTransactionalRunnable} in the context of this
+     * Run a {@link ContextTransactionalRunnable} in the context of this
      * <code>DSLContext</code>'s underlying {@link #configuration()}'s
-     * {@link ThreadLocalTransactionProvider}.
+     * {@link Configuration#transactionProvider()}, and return the
+     * <code>transactional</code>'s outcome.
+     * <p>
+     * The argument transactional code may capture scope to derive its
+     * {@link Configuration} from the "context" in order to create new
+     * statements. This context can be provided, for instance, by
+     * {@link ThreadLocalTransactionProvider} automatically.
      *
      * @param transactional The transactional code
+     * @return The transactional outcome
      * @throws ConfigurationException if the underlying
-     *             {@link Configuration#transactionProvider()} is not a
-     *             {@link ThreadLocalTransactionProvider}.
+     *             {@link Configuration#transactionProvider()} is not able to
+     *             provide context (i.e. currently, it is not a
+     *             {@link ThreadLocalTransactionProvider}).
      */
-    <T> T transactionResult(ThreadLocalTransactionalCallable<T> transactional) throws ConfigurationException;
+    <T> T transactionResult(ContextTransactionalCallable<T> transactional) throws ConfigurationException;
 
     /**
      * Run a {@link TransactionalRunnable} in the context of this
      * <code>DSLContext</code>'s underlying {@link #configuration()}'s
      * {@link Configuration#transactionProvider()}.
+     * <p>
+     * The argument transactional code should not capture any scope but derive
+     * its {@link Configuration} from the
+     * {@link TransactionalCallable#run(Configuration)} argument in order to
+     * create new statements.
      *
      * @param transactional The transactional code
      */
     void transaction(TransactionalRunnable transactional);
 
     /**
-     * Run a {@link ThreadLocalTransactionalRunnable} in the context of this
+     * Run a {@link ContextTransactionalRunnable} in the context of this
      * <code>DSLContext</code>'s underlying {@link #configuration()}'s
-     * {@link ThreadLocalTransactionProvider}.
+     * {@link Configuration#transactionProvider()}.
+     * <p>
+     * The argument transactional code may capture scope to derive its
+     * {@link Configuration} from the "context" in order to create new
+     * statements. This context can be provided, for instance, by
+     * {@link ThreadLocalTransactionProvider} automatically.
      *
      * @param transactional The transactional code
      * @throws ConfigurationException if the underlying
-     *             {@link Configuration#transactionProvider()} is not a
-     *             {@link ThreadLocalTransactionProvider}.
+     *             {@link Configuration#transactionProvider()} is not able to
+     *             provide context (i.e. currently, it is not a
+     *             {@link ThreadLocalTransactionProvider}).
      */
-    void transaction(ThreadLocalTransactionalRunnable transactional) throws ConfigurationException;
+    void transaction(ContextTransactionalRunnable transactional) throws ConfigurationException;
 
 
 
@@ -327,7 +351,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param transactional The transactional code
      * @return The transactional outcome
-     * @throws ConfigurationException If this is run with a {@link ThreadLocalTransactionProvider}.
+     * @throws ConfigurationException If this is run with a
+     *             {@link ThreadLocalTransactionProvider}.
      */
     <T> CompletionStage<T> transactionResultAsync(TransactionalCallable<T> transactional) throws ConfigurationException;
 
@@ -343,7 +368,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link Configuration#executorProvider()}.
      *
      * @param transactional The transactional code
-     * @throws ConfigurationException If this is run with a {@link ThreadLocalTransactionProvider}.
+     * @throws ConfigurationException If this is run with a
+     *             {@link ThreadLocalTransactionProvider}.
      */
     CompletionStage<Void> transactionAsync(TransactionalRunnable transactional) throws ConfigurationException;
 
@@ -359,7 +385,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @param transactional The transactional code
      * @return The transactional outcome
-     * @throws ConfigurationException If this is run with a {@link ThreadLocalTransactionProvider}.
+     * @throws ConfigurationException If this is run with a
+     *             {@link ThreadLocalTransactionProvider}.
      */
     <T> CompletionStage<T> transactionResultAsync(Executor executor, TransactionalCallable<T> transactional) throws ConfigurationException;
 
@@ -374,7 +401,8 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * {@link Executor}.
      *
      * @param transactional The transactional code
-     * @throws ConfigurationException If this is run with a {@link ThreadLocalTransactionProvider}.
+     * @throws ConfigurationException If this is run with a
+     *             {@link ThreadLocalTransactionProvider}.
      */
     CompletionStage<Void> transactionAsync(Executor executor, TransactionalRunnable transactional) throws ConfigurationException;
 

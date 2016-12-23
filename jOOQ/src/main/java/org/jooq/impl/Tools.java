@@ -68,6 +68,7 @@ import static org.jooq.impl.DSL.escape;
 import static org.jooq.impl.DSL.getDataType;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.nullSafe;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
 import static org.jooq.impl.Identifiers.QUOTES;
@@ -146,7 +147,9 @@ import org.jooq.Results;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
+import org.jooq.Select;
 import org.jooq.SelectField;
+import org.jooq.Sequence;
 import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableRecord;
@@ -3200,6 +3203,115 @@ final class Tools {
             }
 
             default:
+                break;
+        }
+    }
+
+    static final void executeImmediateIfExistsBegin(Context<?> ctx, DDLStatementType type, QueryPart object) {
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            default:
+                executeImmediateBegin(ctx, type);
+                break;
+        }
+    }
+
+    static final void executeImmediateIfExistsEnd(Context<?> ctx, DDLStatementType type, QueryPart object) {
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+            default:
+                executeImmediateEnd(ctx, type);
                 break;
         }
     }

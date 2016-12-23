@@ -40,10 +40,19 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 import static org.jooq.Clause.ALTER_VIEW;
 import static org.jooq.Clause.ALTER_VIEW_RENAME;
 import static org.jooq.Clause.ALTER_VIEW_VIEW;
+// ...
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.HSQLDB;
+// ...
+// ...
 import static org.jooq.impl.DSL.name;
 
 import org.jooq.AlterViewFinalStep;
@@ -108,8 +117,23 @@ final class AlterViewImpl extends AbstractQuery implements
     // XXX: QueryPart API
     // ------------------------------------------------------------------------
 
+    private final boolean supportsIfExists(Context<?> ctx) {
+        return !asList(CUBRID, DERBY, FIREBIRD).contains(ctx.family());
+    }
+
     @Override
     public final void accept(Context<?> ctx) {
+        if (ifExists && !supportsIfExists(ctx)) {
+            Tools.executeImmediateIfExistsBegin(ctx, DDLStatementType.ALTER_VIEW, view);
+            accept0(ctx);
+            Tools.executeImmediateIfExistsEnd(ctx, DDLStatementType.ALTER_VIEW, view);
+        }
+        else {
+            accept0(ctx);
+        }
+    }
+
+    private final void accept0(Context<?> ctx) {
         switch (ctx.family()) {
 
 
@@ -122,7 +146,7 @@ final class AlterViewImpl extends AbstractQuery implements
 
 
             default:
-                accept0(ctx);
+                accept1(ctx);
                 break;
         }
 
@@ -148,12 +172,12 @@ final class AlterViewImpl extends AbstractQuery implements
 
 
 
-    private final void accept0(Context<?> ctx) {
+    private final void accept1(Context<?> ctx) {
         ctx.start(ALTER_VIEW_VIEW)
            .keyword("alter").sql(' ')
            .keyword(ctx.family() == HSQLDB ? "table" : "view");
 
-        if (ifExists)
+        if (ifExists && supportsIfExists(ctx))
             ctx.sql(' ').keyword("if exists");
 
         ctx.sql(' ').visit(view)

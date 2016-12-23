@@ -45,7 +45,14 @@ import static org.jooq.Clause.ALTER_SEQUENCE;
 import static org.jooq.Clause.ALTER_SEQUENCE_RENAME;
 import static org.jooq.Clause.ALTER_SEQUENCE_RESTART;
 import static org.jooq.Clause.ALTER_SEQUENCE_SEQUENCE;
+// ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+// ...
+// ...
 // ...
 // ...
 
@@ -123,8 +130,23 @@ final class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
     // XXX: QueryPart API
     // ------------------------------------------------------------------------
 
+    private final boolean supportsIfExists(Context<?> ctx) {
+        return !asList(CUBRID, DERBY, FIREBIRD).contains(ctx.family());
+    }
+
     @Override
     public final void accept(Context<?> ctx) {
+        if (ifExists && !supportsIfExists(ctx)) {
+            Tools.executeImmediateIfExistsBegin(ctx, DDLStatementType.ALTER_SEQUENCE, sequence);
+            accept0(ctx);
+            Tools.executeImmediateIfExistsEnd(ctx, DDLStatementType.ALTER_SEQUENCE, sequence);
+        }
+        else {
+            accept0(ctx);
+        }
+    }
+
+    private final void accept0(Context<?> ctx) {
         switch (ctx.family()) {
 
 
@@ -137,7 +159,7 @@ final class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
 
 
             default:
-                accept0(ctx);
+                accept1(ctx);
                 break;
         }
     }
@@ -162,13 +184,13 @@ final class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
 
 
 
-    private final void accept0(Context<?> ctx) {
+    private final void accept1(Context<?> ctx) {
         ctx.start(ALTER_SEQUENCE_SEQUENCE)
            .keyword("alter")
            .sql(' ')
            .keyword(ctx.family() == CUBRID ? "serial" : "sequence");
 
-        if (ifExists)
+        if (ifExists && supportsIfExists(ctx))
             ctx.sql(' ').keyword("if exists");
 
         switch (ctx.family()) {

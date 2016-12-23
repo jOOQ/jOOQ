@@ -14968,7 +14968,7 @@ public class PostgresJSONGsonBinding implements Binding<Object, JsonElement> {
     <!-- Use this as the integration / production database: -->
     <outputSchema>PROD</outputSchema>
   </schema>
-</schemata>]]></xml>
+</schemata>]]></xml><html>
 
                             <p>
                                 The following configuration applies mapping for catalogs and their schemata. The <code>&lt;catalogs/></code> element is a standalone element that can be put in the code generator's <code>&lt;database/></code> configuration element:

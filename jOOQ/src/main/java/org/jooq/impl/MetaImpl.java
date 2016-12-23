@@ -151,7 +151,7 @@ final class MetaImpl implements Meta, Serializable {
         Result<Record> run(DatabaseMetaData meta) throws SQLException;
     }
 
-    private final Result<Record> meta(MetaFunction consumer) {
+    private final Result<Record> meta(final MetaFunction consumer) {
         return ctx.connectionResult(new ConnectionCallable<Result<Record>>() {
             @Override
             public Result<Record> run(Connection connection) throws SQLException {

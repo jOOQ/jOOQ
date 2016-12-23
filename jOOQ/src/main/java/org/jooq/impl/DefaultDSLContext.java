@@ -101,6 +101,8 @@ import org.jooq.Configuration;
 import org.jooq.ConnectionCallable;
 import org.jooq.ConnectionProvider;
 import org.jooq.ConnectionRunnable;
+import org.jooq.ContextTransactionalCallable;
+import org.jooq.ContextTransactionalRunnable;
 import org.jooq.CreateIndexStep;
 import org.jooq.CreateSchemaFinalStep;
 import org.jooq.CreateSequenceFinalStep;
@@ -217,8 +219,6 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.TableRecord;
-import org.jooq.ContextTransactionalCallable;
-import org.jooq.ContextTransactionalRunnable;
 import org.jooq.TransactionProvider;
 import org.jooq.TransactionalCallable;
 import org.jooq.TransactionalRunnable;
@@ -406,12 +406,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public InformationSchema informationSchema(Table<?> table) {
-        return InformationSchemaExport.exportTables(configuration(), Arrays.asList(table));
+        return InformationSchemaExport.exportTables(configuration(), Arrays.<Table<?>>asList(table));
     }
 
     @Override
     public InformationSchema informationSchema(Table<?>... tables) {
-        return InformationSchemaExport.exportTables(configuration(), Arrays.asList(tables));
+        return InformationSchemaExport.exportTables(configuration(), Arrays.<Table<?>>asList(tables));
     }
 
     // -------------------------------------------------------------------------

@@ -5450,6 +5450,7 @@ public class JavaGenerator extends AbstractGenerator {
     private DataType<?> mapJavaTimeTypes(DataType<?> dataType) {
         DataType<?> result = dataType;
 
+
         // [#4429] [#5713] This logic should be implemented in Configuration
         if (dataType.isDateTime() && generateJavaTimeTypes) {
             if (dataType.getType() == Date.class)
@@ -5459,6 +5460,7 @@ public class JavaGenerator extends AbstractGenerator {
             else if (dataType.getType() == Timestamp.class)
                 result = SQLDataType.LOCALDATETIME;
         }
+
 
         return result;
     }

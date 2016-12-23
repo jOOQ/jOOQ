@@ -402,27 +402,27 @@ public static void main(String[] args) {
 
     @Override
     public final List<Catalog> getCatalogs() {
-        return unmodifiableList(catalogs);
+        return Collections.<Catalog>unmodifiableList(catalogs);
     }
 
     @Override
     public final List<Schema> getSchemas() {
-        return unmodifiableList(schemas);
+        return Collections.<Schema>unmodifiableList(schemas);
     }
 
     @Override
     public final List<Table<?>> getTables() {
-        return unmodifiableList(tables);
+        return Collections.<Table<?>>unmodifiableList(tables);
     }
 
     @Override
     public final List<Sequence<?>> getSequences() {
-        return unmodifiableList(sequences);
+        return Collections.<Sequence<?>>unmodifiableList(sequences);
     }
 
     @Override
     public final List<UniqueKey<?>> getPrimaryKeys() {
-        return unmodifiableList(primaryKeys);
+        return Collections.<UniqueKey<?>>unmodifiableList(primaryKeys);
     }
 
     private final class InformationSchemaCatalog extends CatalogImpl {
@@ -455,12 +455,12 @@ public static void main(String[] args) {
 
         @Override
         public final List<Table<?>> getTables() {
-            return unmodifiableList(tablesPerSchema.get(this));
+            return Collections.<Table<?>>unmodifiableList(tablesPerSchema.get(this));
         }
 
         @Override
         public final List<Sequence<?>> getSequences() {
-            return unmodifiableList(sequencesPerSchema.get(this));
+            return Collections.<Sequence<?>>unmodifiableList(sequencesPerSchema.get(this));
         }
     }
 
@@ -486,12 +486,12 @@ public static void main(String[] args) {
 
         @Override
         public List<UniqueKey<Record>> getKeys() {
-            return Collections.unmodifiableList(uniqueKeys);
+            return Collections.<UniqueKey<Record>>unmodifiableList(uniqueKeys);
         }
 
         @Override
         public List<ForeignKey<Record, ?>> getReferences() {
-            return Collections.unmodifiableList(foreignKeys);
+            return Collections.<ForeignKey<Record, ?>>unmodifiableList(foreignKeys);
         }
     }
 

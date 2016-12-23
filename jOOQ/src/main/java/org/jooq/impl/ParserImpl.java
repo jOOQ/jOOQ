@@ -620,7 +620,7 @@ class ParserImpl implements Parser {
                 do {
                     parse(ctx, '(');
                     if (parseIf(ctx, ')')) {
-                        fieldSets.add(emptyList());
+                        fieldSets.add(Collections.<Field<?>>emptyList());
                     }
                     else {
                         fieldSets.add(parseFields(ctx));
@@ -3620,7 +3620,7 @@ class ParserImpl implements Parser {
             boolean distinct = parseSetQuantifier(ctx);
             List<Field<?>> fields = distinct
                 ? parseFields(ctx)
-                : Collections.singletonList(parseField(ctx));
+                : Collections.<Field<?>>singletonList(parseField(ctx));
             parse(ctx, ')');
 
             if (distinct)

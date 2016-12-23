@@ -102,11 +102,13 @@ API that creates a new Configuration is too confusing. This is why jOOQ 3.9 now
 introduces the ThreadLocalTransactionProvider implementation that allows for the
 simpler transaction API to be used:
 
+<pre>
 ctx.transaction(() -> {
   // Safe to re-use the "global" ctx here:
   ctx.insertInto(TABLE_A);
   ctx.update(TABLE_B);
 });
+</pre>
 
 Besides, we now support a new TransactionListener SPI, which allows for hooking
 into the transaction lifecycle and execute stuff prior to beginning / committing

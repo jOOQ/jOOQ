@@ -11,7 +11,7 @@
     <jaxb:globalBindings>
 
         <!-- Force all classes implements Serializable -->
-        <xjc:serializable uid="390" />
+        <xjc:serializable uid="31000" />
 
         <!-- [#2401] Trim unnecessary whitespace from configuration -->
         <xjc:javaType name="java.lang.String" xmlType="xs:string" adapter="org.jooq.util.jaxb.tools.StringAdapter"/>
@@ -19,7 +19,7 @@
 
 
     <!-- Annotate the following classes with @SuppressWarnings -->
-    <jaxb:bindings schemaLocation="../../xsd/jooq-codegen-3.9.0.xsd" multiple="true" node="//xs:complexType">
+    <jaxb:bindings schemaLocation="../../xsd/jooq-codegen-3.10.0.xsd" multiple="true" node="//xs:complexType">
         <annox:annotate>
         	<annox:annotate annox:class="java.lang.SuppressWarnings" value="all" />
         </annox:annotate>

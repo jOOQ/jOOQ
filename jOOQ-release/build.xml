@@ -93,21 +93,6 @@
             </fileset>
         </copy>
 
-        <mkdir dir="${dir.release}/${dir.version}/third-party/lib" />
-        <mkdir dir="${dir.release}/${dir.version}/third-party/src" />
-
-        <copy todir="${dir.release}/${dir.version}/third-party/lib" file="${user.home}/.m2/repository/org/slf4j/slf4j-api/1.6.1/slf4j-api-1.6.1.jar"/>
-        <copy todir="${dir.release}/${dir.version}/third-party/src" file="${user.home}/.m2/repository/org/slf4j/slf4j-api/1.6.1/slf4j-api-1.6.1-sources.jar"/>
-
-        <copy todir="${dir.release}/${dir.version}/third-party/lib" file="${user.home}/.m2/repository/log4j/log4j/1.2.16/log4j-1.2.16.jar"/>
-        <copy todir="${dir.release}/${dir.version}/third-party/src" file="${user.home}/.m2/repository/log4j/log4j/1.2.16/log4j-1.2.16-sources.jar"/>
-
-        <copy todir="${dir.release}/${dir.version}/third-party/lib" file="${user.home}/.m2/repository/javax/persistence/persistence-api/1.0/persistence-api-1.0.jar"/>
-        <copy todir="${dir.release}/${dir.version}/third-party/src" file="${user.home}/.m2/repository/javax/persistence/persistence-api/1.0/persistence-api-1.0-sources.jar"/>
-
-        <copy todir="${dir.release}/${dir.version}/third-party/lib" file="${user.home}/.m2/repository/javax/validation/validation-api/1.1.0.Alpha1/validation-api-1.1.0.Alpha1.jar"/>
-        <copy todir="${dir.release}/${dir.version}/third-party/src" file="${user.home}/.m2/repository/javax/validation/validation-api/1.1.0.Alpha1/validation-api-1.1.0.Alpha1-sources.jar"/>
-
         <zip destfile="${dir.release}/versions/jOOQ-${version-prefix}.zip">
             <fileset dir="${dir.release}">
                 <include name="${dir.version}/**"/>

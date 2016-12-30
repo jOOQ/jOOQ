@@ -439,6 +439,12 @@
       <element name="recordTimestampFields" type="string" default="" minOccurs="0" maxOccurs="1" />
 
       <!--
+        A regular expression matching all columns that represent identities
+        To be used if columns are not detected as automatically as identities.
+        -->
+      <element name="syntheticIdentities" type="string" default="" minOccurs="0" maxOccurs="1"/>
+
+      <!--
         A regular expression matching all columns that participate in "synthetic" primary keys,
         which should be placed on generated UpdatableRecords, to be used with
 
@@ -465,12 +471,6 @@
         This flag will also replace synthetic primary keys, if it matches.
         -->
       <element name="overridePrimaryKeys" type="string" default="" minOccurs="0" maxOccurs="1" />
-
-      <!--
-        A regular expression matching all columns that represent identities
-        To be used if columns are not detected as automatically as identities.
-        -->
-      <element name="syntheticIdentities" type="string" default="" minOccurs="0" maxOccurs="1"/>
 
       <!--
         Generate java.sql.Timestamp fields for DATE columns. This is
@@ -529,40 +529,6 @@
       <element name="inputSchema" type="string" default="" minOccurs="0" maxOccurs="1" />
 
       <!--
-        A custom version number that, if available, will be used to assess whether the above
-        <inputSchema/> will need to be regenerated.
-
-        There are three operation modes for this element:
-
-        - The value is a class that can be found on the classpath and that implements
-          org.jooq.util.SchemaVersionProvider. Such classes must provide a default constructor
-        - The value is a SELECT statement that returns one record with one column. The
-          SELECT statement may contain a named variable called :schema_name
-        - The value is a constant, such as a Maven property
-
-        Schema versions will be generated into the javax.annotation.Generated annotation on
-        generated artefacts.
-        -->
-      <element name="schemaVersionProvider" type="string" default="" minOccurs="0" maxOccurs="1"/>
-
-      <!--
-        A custom version number that, if available, will be used to assess whether the above
-        <inputSchema/> from a given catalog will need to be regenerated.
-
-        There are three operation modes for this element:
-
-        - The value is a class that can be found on the classpath and that implements
-          org.jooq.util.CatalogVersionProvider. Such classes must provide a default constructor
-        - The value is a SELECT statement that returns one record with one column. The
-          SELECT statement may contain a named variable called :catalog_name
-        - The value is a constant, such as a Maven property
-
-        Catalog versions will be generated into the javax.annotation.Generated annotation on
-        generated artefacts.
-        -->
-      <element name="catalogVersionProvider" type="string" default="" minOccurs="0" maxOccurs="1"/>
-
-      <!--
         The schema that is used in generated source code. This will be the
         production schema. Use this to override your local development
         schema name for source code generation. If not specified, this
@@ -598,6 +564,40 @@
         This element cannot be used at the same time as the catalogs element.
         -->
       <element name="schemata" type="tns:Schemata" minOccurs="0" maxOccurs="1"/>
+
+      <!--
+        A custom version number that, if available, will be used to assess whether the above
+        <inputSchema/> will need to be regenerated.
+
+        There are three operation modes for this element:
+
+        - The value is a class that can be found on the classpath and that implements
+          org.jooq.util.SchemaVersionProvider. Such classes must provide a default constructor
+        - The value is a SELECT statement that returns one record with one column. The
+          SELECT statement may contain a named variable called :schema_name
+        - The value is a constant, such as a Maven property
+
+        Schema versions will be generated into the javax.annotation.Generated annotation on
+        generated artefacts.
+        -->
+      <element name="schemaVersionProvider" type="string" default="" minOccurs="0" maxOccurs="1"/>
+
+      <!--
+        A custom version number that, if available, will be used to assess whether the above
+        <inputSchema/> from a given catalog will need to be regenerated.
+
+        There are three operation modes for this element:
+
+        - The value is a class that can be found on the classpath and that implements
+          org.jooq.util.CatalogVersionProvider. Such classes must provide a default constructor
+        - The value is a SELECT statement that returns one record with one column. The
+          SELECT statement may contain a named variable called :catalog_name
+        - The value is a constant, such as a Maven property
+
+        Catalog versions will be generated into the javax.annotation.Generated annotation on
+        generated artefacts.
+        -->
+      <element name="catalogVersionProvider" type="string" default="" minOccurs="0" maxOccurs="1"/>
 
       <!--
         A configuration element to configure custom types introduced to jOOQ

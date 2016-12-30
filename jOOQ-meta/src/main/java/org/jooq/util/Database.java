@@ -557,18 +557,27 @@ public interface Database {
     /**
      * Database objects matching any of these field names will be generated as
      * custom types.
+     *
+     * @deprecated - 3.10.0 - [#5750] - Use {@link #getConfiguredForcedTypes()} only.
      */
+    @Deprecated
     void setConfiguredCustomTypes(List<CustomType> types);
 
     /**
      * Database objects matching any of these field names will be generated as
      * custom types.
+     *
+     * @deprecated - 3.10.0 - [#5750] - Use {@link #getConfiguredForcedTypes()} only.
      */
+    @Deprecated
     List<CustomType> getConfiguredCustomTypes();
 
     /**
      * Get a specific configured custom type by its name.
+     *
+     * @deprecated - 3.10.0 - [#5750] - Use {@link #getConfiguredForcedTypes()} only.
      */
+    @Deprecated
     CustomType getConfiguredCustomType(String name);
 
     /**

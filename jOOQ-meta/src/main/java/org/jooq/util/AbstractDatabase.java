@@ -848,11 +848,16 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    @Deprecated
     public final void setConfiguredCustomTypes(List<CustomType> configuredCustomTypes) {
+        if (!configuredCustomTypes.isEmpty())
+            log.warn("DEPRECATION", "The <customTypes/> configuration element has been deprecated in jOOQ 3.10. Use <forcedTypes/> only, instead.");
+
         this.configuredCustomTypes = configuredCustomTypes;
     }
 
     @Override
+    @Deprecated
     public final List<CustomType> getConfiguredCustomTypes() {
         if (configuredCustomTypes == null) {
             configuredCustomTypes = new ArrayList<CustomType>();
@@ -862,6 +867,7 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    @Deprecated
     public final CustomType getConfiguredCustomType(String typeName) {
 
         // The user type name that is passed here can be null.

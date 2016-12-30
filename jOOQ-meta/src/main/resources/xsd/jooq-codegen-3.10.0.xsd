@@ -584,7 +584,7 @@
 
       <!--
         A custom version number that, if available, will be used to assess whether the above
-        <inputSchema/> from a given catalog will need to be regenerated.
+        <inputCatalog/> from a given catalog will need to be regenerated.
 
         There are three operation modes for this element:
 
@@ -601,7 +601,8 @@
 
       <!--
         A configuration element to configure custom types introduced to jOOQ
-        using converters
+        using converters.
+        This is DEPRECATED functionality. Use forcedTypes only!
         -->
       <element name="customTypes" type="tns:CustomTypes" minOccurs="0" maxOccurs="1"/>
 

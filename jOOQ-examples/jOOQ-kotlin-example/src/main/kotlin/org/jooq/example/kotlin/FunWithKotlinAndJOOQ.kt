@@ -1,7 +1,4 @@
 /**
- * Copyright (c) 2009-2016, Data Geekery GmbH (http://www.datageekery.com)
- * All rights reserved.
- *
  * This work is dual-licensed
  * - under the Apache Software License 2.0 (the "ASL")
  * - under the jOOQ License and Maintenance Agreement (the "jOOQ License")

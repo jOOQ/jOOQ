@@ -1981,6 +1981,10 @@ class ParserImpl implements Parser {
 
         Field<?> field;
         switch (ctx.character()) {
+            case ':':
+            case '?':
+                return parseBindVariable(ctx);
+
             case '\'':
                 return inline(parseStringLiteral(ctx));
 
@@ -3836,6 +3840,21 @@ class ParserImpl implements Parser {
         ctx.position = ctx.position + 1;
         parse(ctx, '\'');
         return c;
+    }
+
+    static final Field<?> parseBindVariable(ParserContext ctx) {
+        switch (ctx.character()) {
+            case '?':
+                parse(ctx, '?');
+                return DSL.val(null, Object.class);
+
+            case ':':
+                parse(ctx, ':');
+                return DSL.param(parseIdentifier(ctx));
+
+            default:
+                throw ctx.exception();
+        }
     }
 
     static final String parseStringLiteral(ParserContext ctx) {

@@ -198,6 +198,19 @@ public interface DSLContext extends Scope , AutoCloseable  {
     Parser parser();
 
     /**
+     * A JDBC connection that runs each statement through the {@link #parser()}
+     * first, prior to re-generating and running the SQL.
+     * <p>
+     * The resulting {@link Connection} wraps an underlying JDBC connection that
+     * has been obtained from {@link ConnectionProvider#acquire()} and must be
+     * released by calling {@link Connection#close()}.
+     *
+     * @deprecated - [#2303] This is experimental functionality.
+     */
+    @Deprecated
+    Connection parsingConnection();
+
+    /**
      * Access the database meta data.
      * <p>
      * This method returns a wrapper type that gives access to your JDBC

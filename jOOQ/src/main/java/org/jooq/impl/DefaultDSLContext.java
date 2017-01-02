@@ -370,6 +370,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public Connection parsingConnection() {
+        return new ParsingConnection(configuration());
+    }
+
+    @Override
     public Meta meta() {
         return new MetaImpl(configuration());
     }

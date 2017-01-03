@@ -78,6 +78,7 @@ import java.sql.Array;
 import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
@@ -131,6 +132,7 @@ import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.tools.jdbc.MockArray;
+import org.jooq.tools.jdbc.MockResultSet;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
 import org.jooq.types.UByte;
@@ -867,7 +869,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         // Setting null onto a prepared statement is subtly different for every
         // SQL dialect. See the following section for details
         if (value == null) {
-            int sqlType = DefaultDataType.getDataType(dialect, type).getSQLType();
+            int sqlType = DefaultDataType.getDataType(dialect, type).getSQLType(configuration);
+
 
 
 
@@ -1169,6 +1172,21 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             else if (EnumType.class.isAssignableFrom(actualType)) {
                 ctx.statement().setString(ctx.index(), ((EnumType) value).getLiteral());
             }
@@ -1178,7 +1196,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void set(BindingSetSQLOutputContext<U> ctx) throws SQLException {
         Configuration configuration = ctx.configuration();
@@ -1319,6 +1336,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             throw new UnsupportedOperationException("Type " + type + " is not supported");
         }
     }
+
+
+
+
+
+
+
+
 
 
 

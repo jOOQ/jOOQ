@@ -3631,22 +3631,25 @@ public class JavaGenerator extends AbstractGenerator {
                     printParameterDeclarations(out, table, parametersAsField);
                     out.println(") : %s = {", className);
 
-                    out.tab(2).print("return new %s(getName(), null, %s(", className, out.ref("scala.Array"));
-                    String separator = "";
+                    out.tab(2).println("return new %s(getName(), null, %s(", className, out.ref("scala.Array"));
+                    String separator = "  ";
                     for (ParameterDefinition parameter : table.getParameters()) {
-                        out.print(separator);
+                        final String paramArgName = getStrategy().getJavaMemberName(parameter);
+                        final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType());
+
+                        out.tab(3).print(separator);
 
                         if (parametersAsField) {
-                            out.print("%s", getStrategy().getJavaMemberName(parameter));
+                            out.println("%s", paramArgName);
                         }
                         else {
-                            out.print("%s.value(%s)", DSL.class, getStrategy().getJavaMemberName(parameter));
+                            out.println("%s.value(%s, %s)", DSL.class, paramArgName, paramTypeRef);
                         }
 
                         separator = ", ";
                     }
-                    out.println("));");
 
+                    out.tab(2).println("));");
                     out.tab(1).println("}");
                 }
                 else {
@@ -3654,22 +3657,25 @@ public class JavaGenerator extends AbstractGenerator {
                     printParameterDeclarations(out, table, parametersAsField);
                     out.println(") {");
 
-                    out.tab(2).print("return new %s(getName(), null, new %s[] { ", className, Field.class);
-                    String separator = "";
+                    out.tab(2).println("return new %s(getName(), null, new %s[] { ", className, Field.class);
+                    String separator = "  ";
                     for (ParameterDefinition parameter : table.getParameters()) {
-                        out.print(separator);
+                        final String paramArgName = getStrategy().getJavaMemberName(parameter);
+                        final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType());
+
+                        out.tab(3).print(separator);
 
                         if (parametersAsField) {
-                            out.print("%s", getStrategy().getJavaMemberName(parameter));
+                            out.println("%s", paramArgName);
                         }
                         else {
-                            out.print("%s.val(%s)", DSL.class, getStrategy().getJavaMemberName(parameter));
+                            out.println("%s.val(%s, %s)", DSL.class, paramArgName, paramTypeRef);
                         }
 
                         separator = ", ";
                     }
-                    out.println(" });");
 
+                    out.tab(2).println("});");
                     out.tab(1).println("}");
                 }
             }

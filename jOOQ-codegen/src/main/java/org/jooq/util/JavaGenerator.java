@@ -4504,11 +4504,13 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (scala) {
             out.println(") : %s = {", className);
-            out.tab(2).print("%s.call(", out.ref(getStrategy().getFullJavaIdentifier(function), 2));
+            // [#5765] To prevent name clashes, this identifier is not imported
+            out.tab(2).print("%s.call(", getStrategy().getFullJavaIdentifier(function));
         }
         else {
             out.println(") {");
-            out.tab(2).print("return %s.call(", out.ref(getStrategy().getFullJavaIdentifier(function), 2));
+            // [#5765] To prevent name clashes, this identifier is not imported
+            out.tab(2).print("return %s.call(", getStrategy().getFullJavaIdentifier(function));
         }
 
         String separator = "";
@@ -4842,12 +4844,18 @@ public class JavaGenerator extends AbstractGenerator {
         if (scala) {
             out.println(") : %s[%s] = {", Result.class, recordClassName);
             out.tab(2).print("%s.using(%s).selectFrom(%s.call(",
-                DSL.class, configurationArgument, out.ref(getStrategy().getFullJavaIdentifier(function), 2));
+                DSL.class,
+                configurationArgument,
+                // [#5765] To prevent name clashes, this identifier is not imported
+                getStrategy().getFullJavaIdentifier(function));
         }
         else {
             out.println(") {");
             out.tab(2).print("return %s.using(%s).selectFrom(%s.call(",
-                DSL.class, configurationArgument, out.ref(getStrategy().getFullJavaIdentifier(function), 2));
+                DSL.class,
+                configurationArgument,
+                // [#5765] To prevent name clashes, this identifier is not imported
+                getStrategy().getFullJavaIdentifier(function));
         }
 
         String separator = "";

@@ -15463,7 +15463,16 @@ public class Book implements java.io.Serializable {
       <fields>
         <field>
 
-          <!-- The field matcher regular expression. -->
+          <!-- The field matcher regular expression.
+               Note: The expression is tested against the unqualified object name
+               (org.jooq.util.Definition.getName()) first and if that fails, a second
+               match attempt is made against the fully qualified object name
+               (org.jooq.util.Definition.getQualifiedName()).
+               If your expression unintentionally matches against the table name, the
+               resulting generated field information might not be what is expected.
+               You can use an expression such as:
+               <expression>^.*?\.([^.]*)$</expression>
+               to avoid this behavior. -->
           <expression>MY_FIELD</expression>
 
           <!-- These elements influence the naming of a generated org.jooq.Field object. -->

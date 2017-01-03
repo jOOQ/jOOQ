@@ -70,6 +70,11 @@ public interface DataType<T> extends Serializable {
     int getSQLType();
 
     /**
+     * Get the dialect-specific JDBC {@link Types} value.
+     */
+    int getSQLType(Configuration configuration);
+
+    /**
      * Get the data type binding associated with this data type.
      */
     Binding<?, T> getBinding();

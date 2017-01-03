@@ -517,6 +517,11 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public /* final */ int getSQLType() {
+        return getSQLType(DSL.using(dialect).configuration());
+    }
+
+    @Override
+    public final int getSQLType(Configuration configuration) {
         // TODO [#1227] There is some confusion with these types, especially
         // when it comes to byte[] which can be mapped to BLOB, BINARY, VARBINARY
 
@@ -578,6 +583,15 @@ public class DefaultDataType<T> implements DataType<T> {
 
 
 
+
+
+
+
+
+
+
+
+
         else if (EnumType.class.isAssignableFrom(type)) {
             return Types.VARCHAR;
         }
@@ -585,7 +599,7 @@ public class DefaultDataType<T> implements DataType<T> {
             return Types.STRUCT;
         }
         else if (Result.class.isAssignableFrom(type)) {
-            switch (dialect.family()) {
+            switch (configuration.family()) {
 
 
 

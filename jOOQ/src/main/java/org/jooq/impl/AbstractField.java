@@ -826,6 +826,16 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
+    public final Condition notContains(T value) {
+        return contains(value).not();
+    }
+
+    @Override
+    public final Condition notContains(Field<T> value) {
+        return contains(value).not();
+    }
+
+    @Override
     public final Condition startsWith(T value) {
         Field<String> concat = DSL.concat(Tools.escapeForLike(value), inline("%"));
         return like(concat, Tools.ESCAPE);

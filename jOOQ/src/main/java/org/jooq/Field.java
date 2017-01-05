@@ -1411,6 +1411,18 @@ public interface Field<T> extends SelectField<T>, GroupField, FieldOrRow {
     Condition contains(Field<T> value);
 
     /**
+     * Inverse of {@link #contains(Object)}.
+     */
+    @Support
+    Condition notContains(T value);
+
+    /**
+     * Inverse of {@link #contains(Field)}.
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    Condition notContains(Field<T> value);
+
+    /**
      * Convenience method for {@link #like(String, char)} including proper
      * adding of wildcards and escaping.
      * <p>

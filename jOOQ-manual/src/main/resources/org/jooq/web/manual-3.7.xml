@@ -13813,21 +13813,20 @@ public class Book implements java.io.Serializable {
                                 In the <reference id="codegen-generatorstrategy" title="previous section"/>, we have seen how to override generator strategies programmatically. In this chapter, we'll see how such strategies can be configured in the XML or Maven <reference id="codegen-configuration" title="code generator configuration"/>. Instead of specifying a strategy name, you can also specify a <code>&lt;matchers/></code> element as such:
                             </p>
 
-                            <p>
+                            <ul>
+                                <strong>NOTE:</strong> All regular expressions that match object identifiers try to match identifiers first by unqualified name (<code>org.jooq.util.Definition.getName()</code>), then by qualified name (<code>org.jooq.util.Definition.getQualifiedName()</code>).
                                 <strong>NOTE:</strong> There had been an incompatible change between jOOQ 3.2 and jOOQ 3.3 in the configuration of these matcher strategies. See <a href="https://github.com/jOOQ/jOOQ/issues/3217">Issue #3217</a> for details.
-                            </p>
+                            </ul>
 
 </html><xml><![CDATA[<!-- These properties can be added directly to the generator element: -->
 <generator>
   <strategy>
     <matchers>
-      <!-- Specify 0..n schema matchers in order to provide a naming strategy for objects
-           created from schemas. -->
+      <!-- Specify 0..n schema matchers in order to provide a naming strategy for objects created from schemas. -->
       <schemas>
         <schema>
 
-          <!-- This schema matcher applies to all unqualified or qualified schema names
-               matched by this regular expression. If left empty, this matcher applies to all schemas. -->
+          <!-- Match unqualified or qualified schema names. If left empty, this matcher applies to all schemas. -->
           <expression>MY_SCHEMA</expression>
 
           <!-- These elements influence the naming of a generated org.jooq.Schema object. -->
@@ -13842,7 +13841,7 @@ public class Book implements java.io.Serializable {
       <tables>
         <table>
 
-          <!-- The table matcher regular expression. -->
+          <!-- Match unqualified or qualified table names. If left empty, this matcher applies to all tables. -->
           <expression>MY_TABLE</expression>
 
           <!-- These elements influence the naming of a generated org.jooq.Table object. -->
@@ -13875,7 +13874,7 @@ public class Book implements java.io.Serializable {
       <fields>
         <field>
 
-          <!-- The field matcher regular expression. -->
+          <!-- Match unqualified or qualified field names. If left empty, this matcher applies to all fields. -->
           <expression>MY_FIELD</expression>
 
           <!-- These elements influence the naming of a generated org.jooq.Field object. -->
@@ -13891,7 +13890,7 @@ public class Book implements java.io.Serializable {
       <routines>
         <routine>
 
-          <!-- The routine matcher regular expression. -->
+          <!-- Match unqualified or qualified routine names. If left empty, this matcher applies to all routines. -->
           <expression>MY_ROUTINE</expression>
 
           <!-- These elements influence the naming of a generated org.jooq.Routine object. -->
@@ -13906,7 +13905,7 @@ public class Book implements java.io.Serializable {
       <sequences>
         <sequence>
 
-          <!-- The sequence matcher regular expression. -->
+          <!-- Match unqualified or qualified sequence names. If left empty, this matcher applies to all sequences. -->
           <expression>MY_SEQUENCE</expression>
 
           <!-- These elements influence the naming of the generated Sequences class. -->

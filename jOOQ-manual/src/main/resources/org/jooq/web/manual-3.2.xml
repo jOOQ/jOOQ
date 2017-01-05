@@ -10247,87 +10247,95 @@ public class Book implements java.io.Serializable {
 <generator>
   <strategy>
     <matchers>
-      <!-- Specify 0..n schema matchers in order to provide a naming strategy for objects
-           created from schemas. -->
+      <!-- Specify 0..n schema matchers in order to provide a naming strategy for objects created from schemas. -->
       <schemas>
+        <schema>
 
-        <!-- This schema matcher applies to all unqualified or qualified schema names
-             matched by this regular expression. If left empty, this matcher applies to all schemas. -->
-        <expression>MY_SCHEMA</expression>
+          <!-- Match unqualified or qualified schema names. If left empty, this matcher applies to all schemas. -->
+          <expression>MY_SCHEMA</expression>
 
-        <!-- These elements influence the naming of a generated org.jooq.Schema object. -->
-        <schemaClass> --> MatcherRule </schemaClass>
-        <schemaIdentifier> --> MatcherRule </schemaIdentifier>
-        <schemaImplements>com.example.MyOptionalCustomInterface</schemaImplements>
+          <!-- These elements influence the naming of a generated org.jooq.Schema object. -->
+          <schemaClass> --> MatcherRule </schemaClass>
+          <schemaIdentifier> --> MatcherRule </schemaIdentifier>
+          <schemaImplements>com.example.MyOptionalCustomInterface</schemaImplements>
+        </schema>
       </schemas>
 
       <!-- Specify 0..n table matchers in order to provide a naming strategy for objects
            created from database tables. -->
       <tables>
+        <table>
 
-        <!-- The table matcher regular expression. -->
-        <expression>MY_TABLE</expression>
+          <!-- Match unqualified or qualified table names. If left empty, this matcher applies to all tables. -->
+          <expression>MY_TABLE</expression>
 
-        <!-- These elements influence the naming of a generated org.jooq.Table object. -->
-        <tableClass> --> MatcherRule </tableClass>
-        <tableIdentifier> --> MatcherRule </tableIdentifier>
-        <tableImplements>com.example.MyOptionalCustomInterface</tableImplements>
+          <!-- These elements influence the naming of a generated org.jooq.Table object. -->
+          <tableClass> --> MatcherRule </tableClass>
+          <tableIdentifier> --> MatcherRule </tableIdentifier>
+          <tableImplements>com.example.MyOptionalCustomInterface</tableImplements>
 
-        <!-- These elements influence the naming of a generated org.jooq.Record object. -->
-        <recordClass> --> MatcherRule </recordClass>
-        <recordImplements>com.example.MyOptionalCustomInterface</recordImplements>
+          <!-- These elements influence the naming of a generated org.jooq.Record object. -->
+          <recordClass> --> MatcherRule </recordClass>
+          <recordImplements>com.example.MyOptionalCustomInterface</recordImplements>
 
-        <!-- These elements influence the naming of a generated interface, implemented by
-             generated org.jooq.Record objects and by generated POJOs. -->
-        <interfaceClass> --> MatcherRule </interfaceClass>
-        <interfaceImplements>com.example.MyOptionalCustomInterface</interfaceImplements>
+          <!-- These elements influence the naming of a generated interface, implemented by
+               generated org.jooq.Record objects and by generated POJOs. -->
+          <interfaceClass> --> MatcherRule </interfaceClass>
+          <interfaceImplements>com.example.MyOptionalCustomInterface</interfaceImplements>
 
-        <!-- These elements influence the naming of a generated org.jooq.DAO object. -->
-        <daoClass> --> MatcherRule </daoClass>
-        <daoImplements>com.example.MyOptionalCustomInterface</daoImplements>
+          <!-- These elements influence the naming of a generated org.jooq.DAO object. -->
+          <daoClass> --> MatcherRule </daoClass>
+          <daoImplements>com.example.MyOptionalCustomInterface</daoImplements>
 
-        <!-- These elements influence the naming of a generated POJO object.  -->
-        <pojoClass> --> MatcherRule </pojoClass>
-        <pojoExtends>com.example.MyOptionalCustomBaseClass</pojoExtends>
-        <pojoImplements>com.example.MyOptionalCustomInterface</pojoImplements>
+          <!-- These elements influence the naming of a generated POJO object.  -->
+          <pojoClass> --> MatcherRule </pojoClass>
+          <pojoExtends>com.example.MyOptionalCustomBaseClass</pojoExtends>
+          <pojoImplements>com.example.MyOptionalCustomInterface</pojoImplements>
+        </table>
       </tables>
 
       <!-- Specify 0..n field matchers in order to provide a naming strategy for objects
            created from table fields. -->
       <fields>
+        <field>
 
-        <!-- The field matcher regular expression. -->
-        <expression>MY_FIELD</expression>
+          <!-- Match unqualified or qualified field names. If left empty, this matcher applies to all fields. -->
+          <expression>MY_FIELD</expression>
 
-        <!-- These elements influence the naming of a generated org.jooq.Field object. -->
-        <fieldIdentifier> --> MatcherRule </fieldIdentifier>
-        <fieldMember> --> MatcherRule </fieldMember>
-        <fieldSetter> --> MatcherRule </fieldSetter>
-        <fieldGetter> --> MatcherRule </fieldGetter>
+          <!-- These elements influence the naming of a generated org.jooq.Field object. -->
+          <fieldIdentifier> --> MatcherRule </fieldIdentifier>
+          <fieldMember> --> MatcherRule </fieldMember>
+          <fieldSetter> --> MatcherRule </fieldSetter>
+          <fieldGetter> --> MatcherRule </fieldGetter>
+        </field>
       </fields>
 
       <!-- Specify 0..n routine matchers in order to provide a naming strategy for objects
            created from routines. -->
       <routines>
+        <routine>
 
-        <!-- The routine matcher regular expression. -->
-        <expression>MY_ROUTINE</expression>
+          <!-- Match unqualified or qualified routine names. If left empty, this matcher applies to all routines. -->
+          <expression>MY_ROUTINE</expression>
 
-        <!-- These elements influence the naming of a generated org.jooq.Routine object. -->
-        <routineClass> --> MatcherRule </routineClass>
-        <routineMethod> --> MatcherRule </routineMethod>
-        <routineImplements>com.example.MyOptionalCustomInterface</routineImplements>
+          <!-- These elements influence the naming of a generated org.jooq.Routine object. -->
+          <routineClass> --> MatcherRule </routineClass>
+          <routineMethod> --> MatcherRule </routineMethod>
+          <routineImplements>com.example.MyOptionalCustomInterface</routineImplements>
+        </routine>
       </routines>
 
       <!-- Specify 0..n sequence matchers in order to provide a naming strategy for objects
            created from sequences. -->
       <sequences>
+        <sequence>
 
-        <!-- The sequence matcher regular expression. -->
-        <expression>MY_SEQUENCE</expression>
+          <!-- Match unqualified or qualified sequence names. If left empty, this matcher applies to all sequences. -->
+          <expression>MY_SEQUENCE</expression>
 
-        <!-- These elements influence the naming of the generated Sequences class. -->
-        <sequenceIdentifier> --> MatcherRule </sequenceIdentifier>
+          <!-- These elements influence the naming of the generated Sequences class. -->
+          <sequenceIdentifier> --> MatcherRule </sequenceIdentifier>
+        </sequence>
       </sequences>
     </matchers>
   </strategy>

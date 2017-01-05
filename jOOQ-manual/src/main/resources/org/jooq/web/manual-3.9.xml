@@ -15402,8 +15402,8 @@ public class Book implements java.io.Serializable {
                             </p>
 
                             <ul>
-                                <strong>NOTE:</strong> All regular expressions that match object identifiers try to match identifiers first by unqualified name (<code>org.jooq.util.Definition.getName()</code>), then by qualified name (<code>org.jooq.util.Definition.getQualifiedName()</code>).
-                                <strong>NOTE:</strong> There had been an incompatible change between jOOQ 3.2 and jOOQ 3.3 in the configuration of these matcher strategies. See <a href="https://github.com/jOOQ/jOOQ/issues/3217">Issue #3217</a> for details.
+                                <li><strong>NOTE:</strong> All regular expressions that match object identifiers try to match identifiers first by unqualified name (<code>org.jooq.util.Definition.getName()</code>), then by qualified name (<code>org.jooq.util.Definition.getQualifiedName()</code>).</li>
+                                <li><strong>NOTE:</strong> There had been an incompatible change between jOOQ 3.2 and jOOQ 3.3 in the configuration of these matcher strategies. See <a href="https://github.com/jOOQ/jOOQ/issues/3217">Issue #3217</a> for details.</li>
                             </ul>
 
 </html><xml><![CDATA[<!-- These properties can be added directly to the generator element: -->

@@ -166,7 +166,7 @@ public interface Converter<T, U> extends Serializable {
 
             @Override
             public String toString() {
-                return "Converter[T=" + fromType.getName() + ",U=" + toType.getName() + "]";
+                return "Converter [ " + fromType.getName() + " -> " + toType.getName() + " ]";
             }
         };
     }

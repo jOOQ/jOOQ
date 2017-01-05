@@ -163,6 +163,11 @@ public interface Converter<T, U> extends Serializable {
             public final Class<U> toType() {
                 return toType;
             }
+
+            @Override
+            public String toString() {
+                return "Converter[T=" + fromType.getName() + ",U=" + toType.getName() + "]";
+            }
         };
     }
 

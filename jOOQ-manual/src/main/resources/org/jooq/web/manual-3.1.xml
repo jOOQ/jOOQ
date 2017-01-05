@@ -5874,7 +5874,7 @@ create.select()
       .fetch();]]></java><html>
 
                             <p>
-                                The dynamic SQL building power may be one of the biggest advantages of using a runtime query model like the one offered by jOOQ. Queries can be created dynamically, of arbitrary complexity. In the above example, we've just constructed a dynamic <reference id="where-clause" title="WHERE clause"/>. The same can be done for any other clauses, including dynamic <reference id="from-clause" title="FROM clauses (dynamic JOINs)"/>, or adding additional <reference id="with-clause" title="WITH clauses"/> as needed.
+                                The dynamic SQL building power may be one of the biggest advantages of using a runtime query model like the one offered by jOOQ. Queries can be created dynamically, of arbitrary complexity. In the above example, we've just constructed a dynamic <reference id="where-clause" title="WHERE clause"/>. The same can be done for any other clauses, including dynamic <reference id="from-clause" title="FROM clauses (dynamic JOINs)"/> as needed.
                             </p>
                         </html></content>
                     </section>

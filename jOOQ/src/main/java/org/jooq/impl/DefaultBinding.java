@@ -326,15 +326,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
         }
 
-
-        if (type == OffsetTime.class || type == OffsetDateTime.class) {
-            switch (ctx.family()) {
-                case POSTGRES:
-                    return true;
-            }
-        }
-
-
         return false;
     }
 
@@ -540,14 +531,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 render.sql(((Number) val).toString());
             }
 
-            // [#1156] Date/Time data types should be inlined using JDBC
-            // escape syntax
-            else if (type == Date.class) {
+            // [#1156] DATE / TIME inlining is very vendor-specific
+            else if (type == Date.class || type == LocalDate.class) {
+                Date date = type == Date.class ? (Date) val : Date.valueOf((LocalDate) val);
 
                 // The SQLite JDBC driver does not implement the escape syntax
                 // [#1253] SQL Server and Sybase do not implement date literals
                 if (asList(SQLITE).contains(family)) {
-                    render.sql('\'').sql(escape(val, render)).sql('\'');
+                    render.sql('\'').sql(escape(date, render)).sql('\'');
                 }
 
 
@@ -563,25 +554,26 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // [#1253] Derby doesn't support the standard literal
                 else if (family == DERBY) {
-                    render.keyword("date('").sql(escape(val, render)).sql("')");
+                    render.keyword("date('").sql(escape(date, render)).sql("')");
                 }
 
                 // [#3648] Circumvent a MySQL bug related to date literals
                 else if (family == MYSQL) {
-                    render.keyword("{d '").sql(escape(val, render)).sql("'}");
+                    render.keyword("{d '").sql(escape(date, render)).sql("'}");
                 }
 
                 // Most dialects implement SQL standard date literals
                 else {
-                    render.keyword("date '").sql(escape(val, render)).sql('\'');
+                    render.keyword("date '").sql(escape(date, render)).sql('\'');
                 }
             }
-            else if (type == Timestamp.class) {
+            else if (type == Timestamp.class || type == LocalDateTime.class) {
+                Timestamp ts = type == Timestamp.class ? (Timestamp) val : Timestamp.valueOf((LocalDateTime) val);
 
                 // The SQLite JDBC driver does not implement the escape syntax
                 // [#1253] SQL Server and Sybase do not implement timestamp literals
                 if (asList(SQLITE).contains(family)) {
-                    render.sql('\'').sql(escape(val, render)).sql('\'');
+                    render.sql('\'').sql(escape(ts, render)).sql('\'');
                 }
 
 
@@ -596,30 +588,31 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // [#1253] Derby doesn't support the standard literal
                 else if (family == DERBY) {
-                    render.keyword("timestamp('").sql(escape(val, render)).sql("')");
+                    render.keyword("timestamp('").sql(escape(ts, render)).sql("')");
                 }
 
                 // CUBRID timestamps have no fractional seconds
                 else if (family == CUBRID) {
-                    render.keyword("datetime '").sql(escape(val, render)).sql('\'');
+                    render.keyword("datetime '").sql(escape(ts, render)).sql('\'');
                 }
 
                 // [#3648] Circumvent a MySQL bug related to date literals
                 else if (family == MYSQL) {
-                    render.keyword("{ts '").sql(escape(val, render)).sql("'}");
+                    render.keyword("{ts '").sql(escape(ts, render)).sql("'}");
                 }
 
                 // Most dialects implement SQL standard timestamp literals
                 else {
-                    render.keyword("timestamp '").sql(escape(val, render)).sql('\'');
+                    render.keyword("timestamp '").sql(escape(ts, render)).sql('\'');
                 }
             }
-            else if (type == Time.class) {
+            else if (type == Time.class || type == LocalTime.class) {
+                Time time = type == Time.class ? (Time) val : Time.valueOf((LocalTime) val);
 
                 // The SQLite JDBC driver does not implement the escape syntax
                 // [#1253] SQL Server and Sybase do not implement time literals
                 if (asList(SQLITE).contains(family)) {
-                    render.sql('\'').sql(new SimpleDateFormat("HH:mm:ss").format((Time) val)).sql('\'');
+                    render.sql('\'').sql(new SimpleDateFormat("HH:mm:ss").format(time)).sql('\'');
                 }
 
 
@@ -634,12 +627,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // [#1253] Derby doesn't support the standard literal
                 else if (family == DERBY) {
-                    render.keyword("time").sql("('").sql(escape(val, render)).sql("')");
+                    render.keyword("time").sql("('").sql(escape(time, render)).sql("')");
                 }
 
                 // [#3648] Circumvent a MySQL bug related to date literals
                 else if (family == MYSQL) {
-                    render.keyword("{t '").sql(escape(val, render)).sql("'}");
+                    render.keyword("{t '").sql(escape(time, render)).sql("'}");
                 }
 
 
@@ -650,9 +643,24 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // Most dialects implement SQL standard time literals
                 else {
-                    render.keyword("time").sql(" '").sql(escape(val, render)).sql('\'');
+                    render.keyword("time").sql(" '").sql(escape(time, render)).sql('\'');
                 }
             }
+
+
+            else if (type == OffsetDateTime.class) {
+
+                // Some dialects implement SQL standard time literals
+                render.keyword("timestamp with time zone").sql(" '").sql(escape(val, render)).sql('\'');
+            }
+
+            else if (type == OffsetTime.class) {
+
+                // Some dialects implement SQL standard time literals
+                render.keyword("time with time zone").sql(" '").sql(escape(val, render)).sql('\'');
+            }
+
+
             else if (type.isArray()) {
                 String separator = "";
 

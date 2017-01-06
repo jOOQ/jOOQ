@@ -90,6 +90,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -649,15 +650,36 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
             else if (type == OffsetDateTime.class) {
+                String string = format((OffsetDateTime) val);
+
+
+
+
+
+
+
 
                 // Some dialects implement SQL standard time literals
-                render.keyword("timestamp with time zone").sql(" '").sql(escape(val, render)).sql('\'');
+                {
+                    render.keyword("timestamp with time zone").sql(" '").sql(escape(string, render)).sql('\'');
+                }
             }
 
             else if (type == OffsetTime.class) {
+                String string = format((OffsetTime) val);
+
+
+
+
+
+
+
+
 
                 // Some dialects implement SQL standard time literals
-                render.keyword("time with time zone").sql(" '").sql(escape(val, render)).sql('\'');
+                {
+                    render.keyword("time with time zone").sql(" '").sql(escape(string, render)).sql('\'');
+                }
             }
 
 
@@ -1587,54 +1609,80 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         return timestamp == null ? null : timestamp.toLocalDateTime();
     }
 
+    private static final Pattern LENIENT_OFFSET_PATTERN = Pattern.compile(
+        "(?:(\\d{4}-\\d{2}-\\d{2})[T ])?(\\d{2}:\\d{2}(:\\d{2})?(?:\\.\\d+)?)(?: +)?(([+-])(\\d)?(\\d)(:\\d{2})?)?");
+
     private final OffsetTime offsetTime(String string) {
-        if (string == null)
-            return null;
-
-        // [#4338] [#5180] PostgreSQL is more lenient regarding the offset format
-        if (string.lastIndexOf('+') == string.length() - 3 || string.lastIndexOf('-') == string.length() - 3)
-            string = string + ":00";
-
-        return OffsetTime.parse(string);
+        return string == null ? null : OffsetTime.parse(preparse(string, false));
     }
 
-    private static final Pattern LENIENT_OFFSET_PATTERN = Pattern.compile(
-        "(\\d{4}-\\d{2}-\\d{2})[T ](\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?)(?: +)?(([+-])(\\d)?(\\d)(:\\d{2})?)?");
-
     private final OffsetDateTime offsetDateTime(String string) {
-        if (string == null)
-            return null;
+        return string == null ? null : OffsetDateTime.parse(preparse(string, true));
+    }
 
-        Matcher m = LENIENT_OFFSET_PATTERN.matcher(string);
+    private final String preparse(String formatted, boolean includeDate) {
+        Matcher m = LENIENT_OFFSET_PATTERN.matcher(formatted);
+
         if (m.find()) {
-            StringBuilder sb = new StringBuilder(m.group(1));
+            StringBuilder sb = new StringBuilder();
+            String group1 = m.group(1);
 
-            // [#4338] SQL supports the alternative ISO 8601 date format, where a
-            // whitespace character separates date and time. java.time does not
-            sb.append('T');
+            if (includeDate && group1 != null) {
+                sb.append(group1);
+
+                // [#4338] SQL supports the alternative ISO 8601 date format, where a
+                // whitespace character separates date and time. java.time does not
+                sb.append('T');
+            }
+
             sb.append(m.group(2));
 
-            if (m.group(3) != null) {
-                sb.append(m.group(4));
+            if (m.group(3) == null)
+                sb.append(":00");
+
+            if (m.group(4) != null) {
+                sb.append(m.group(5));
+
+                String group6 = m.group(6);
+                String group8 = m.group(8);
 
                 // [#4965] Oracle might return a single-digit hour offset (and some spare space)
-                sb.append(m.group(5) == null ? "0" : m.group(5));
-                sb.append(m.group(6));
+                sb.append(group6 == null ? "0" : group6);
+                sb.append(m.group(7));
 
                 // [#4338] [#5180] [#5776] PostgreSQL is more lenient regarding the offset format
-                sb.append(m.group(7) == null ? ":00" : m.group(7));
+                sb.append(group8 == null ? ":00" : group8);
             }
             else {
                 sb.append("+00:00");
             }
 
-            return OffsetDateTime.parse(sb.toString());
+            return sb.toString();
         }
 
-        // Probably a bug, let OffsetDateTime report it
-        else
-            return OffsetDateTime.parse(string);
+        // Probably a bug, let OffsetDateTime or OffsetTime report it
+        else {
+            return formatted;
+        }
     }
+
+    private final String replaceZ(String format) {
+
+        // Replace the ISO standard Z character for UTC, as some databases don't like that
+        return format.replace("Z", "+00:00");
+    }
+
+    private final String format(OffsetTime val) {
+        return replaceZ(val.format(DateTimeFormatter.ISO_OFFSET_TIME));
+    }
+
+    private final String format(OffsetDateTime val) {
+
+        // Remove the ISO standard T character, as some databases don't like that
+        String format = val.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+        return replaceZ(format.substring(0, 10) + ' ' + format.substring(11));
+    }
+
 
 
     @SuppressWarnings("unchecked")

@@ -114,7 +114,12 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
 
     @Override
     public String getJavaIdentifier(Definition definition) {
-        String identifier = convertToIdentifier(delegate.getJavaIdentifier(definition), language);
+        String identifier = getFixedJavaIdentifier(definition);
+
+        if (identifier != null)
+            return identifier;
+
+        identifier = convertToIdentifier(delegate.getJavaIdentifier(definition), language);
 
         // [#1212] Don't trust custom strategies and disambiguate identifiers here
         if (definition instanceof ColumnDefinition ||
@@ -288,11 +293,13 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
 
     @Override
     public String getJavaClassName(Definition definition, Mode mode) {
+        String name = getFixedJavaClassName(definition);
+        if (name != null)
+            return name;
 
         // [#1150] Intercept Mode.RECORD calls for tables
-        if (definition instanceof TableDefinition && !generator.generateRecords() && mode == Mode.RECORD) {
+        if (definition instanceof TableDefinition && !generator.generateRecords() && mode == Mode.RECORD)
             return Record.class.getSimpleName();
-        }
 
         String className;
 

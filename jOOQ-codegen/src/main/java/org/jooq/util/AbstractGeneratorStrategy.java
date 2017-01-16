@@ -252,4 +252,42 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
 
         return result;
     }
+
+    /**
+     * [#4168] [#5783] Some identifiers must not be modified by custom strategies.
+     */
+    final String getFixedJavaIdentifier(Definition definition) {
+
+        // [#1473] Identity identifiers should not be renamed by custom strategies
+        if (definition instanceof IdentityDefinition)
+            return "IDENTITY_" + getJavaIdentifier(((IdentityDefinition) definition).getColumn().getContainer());
+
+        // [#2032] Intercept default Catalog
+        else if (definition instanceof CatalogDefinition && ((CatalogDefinition) definition).isDefaultCatalog())
+            return "DEFAULT_CATALOG";
+
+        // [#2089] Intercept default schema
+        else if (definition instanceof SchemaDefinition && ((SchemaDefinition) definition).isDefaultSchema())
+            return "DEFAULT_SCHEMA";
+
+        else
+            return null;
+    }
+
+    /**
+     * [#4168] [#5783] Some class names must not be modified by custom strategies.
+     */
+    final String getFixedJavaClassName(Definition definition) {
+
+        // [#2032] Intercept default catalog
+        if (definition instanceof CatalogDefinition && ((CatalogDefinition) definition).isDefaultCatalog())
+            return "DefaultCatalog";
+
+        // [#2089] Intercept default schema
+        else if (definition instanceof SchemaDefinition && ((SchemaDefinition) definition).isDefaultSchema())
+            return "DefaultSchema";
+
+        else
+            return null;
+    }
 }

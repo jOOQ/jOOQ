@@ -533,8 +533,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
 
             // [#1156] DATE / TIME inlining is very vendor-specific
-            else if (type == Date.class || type == LocalDate.class) {
-                Date date = type == Date.class ? (Date) val : Date.valueOf((LocalDate) val);
+            else if (Tools.isDate(type)) {
+                Date date = getDate(type, val);
 
                 // The SQLite JDBC driver does not implement the escape syntax
                 // [#1253] SQL Server and Sybase do not implement date literals
@@ -568,8 +568,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     render.keyword("date '").sql(escape(date, render)).sql('\'');
                 }
             }
-            else if (type == Timestamp.class || type == LocalDateTime.class) {
-                Timestamp ts = type == Timestamp.class ? (Timestamp) val : Timestamp.valueOf((LocalDateTime) val);
+            else if (Tools.isTimestamp(type)) {
+                Timestamp ts = getTimestamp(type, val);
 
                 // The SQLite JDBC driver does not implement the escape syntax
                 // [#1253] SQL Server and Sybase do not implement timestamp literals
@@ -607,8 +607,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     render.keyword("timestamp '").sql(escape(ts, render)).sql('\'');
                 }
             }
-            else if (type == Time.class || type == LocalTime.class) {
-                Time time = type == Time.class ? (Time) val : Time.valueOf((LocalTime) val);
+            else if (Tools.isTime(type)) {
+                Time time = getTime(type, val);
 
                 // The SQLite JDBC driver does not implement the escape syntax
                 // [#1253] SQL Server and Sybase do not implement time literals
@@ -792,6 +792,18 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
+    private final Time getTime(Class<?> t, Object val) {
+        return  t == Time.class ?  (Time) val  : Time.valueOf((LocalTime) val) ;
+    }
+
+    private final Timestamp getTimestamp(Class<?> t, Object val) {
+        return  t == Timestamp.class ?  (Timestamp) val  : Timestamp.valueOf((LocalDateTime) val) ;
+    }
+
+    private final Date getDate(Class<?> t, Object val) {
+        return  t == Date.class ?  (Date) val  : Date.valueOf((LocalDate) val) ;
+    }
+
     /**
      * Escape a string literal by replacing <code>'</code> by <code>''</code>, and possibly also backslashes.
      */
@@ -836,7 +848,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     @Override
     public void register(BindingRegisterContext<U> ctx) throws SQLException {
         Configuration configuration = ctx.configuration();
-        int sqlType = DefaultDataType.getDataType(ctx.dialect(), type).getSQLType();
+        int sqlType = DefaultDataType.getDataType(ctx.dialect(), type).getSQLType(ctx.configuration());
 
         if (log.isTraceEnabled())
             log.trace("Registering variable " + ctx.index(), "" + type);
@@ -1044,8 +1056,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // There is potential for trouble when binding date time as such
             // -------------------------------------------------------------
-            else if (actualType == Date.class) {
-                Date date = (Date) value;
+            else if (Tools.isDate(actualType)) {
+                Date date = getDate(actualType, value);
 
                 if (dialect == SQLITE) {
                     ctx.statement().setString(ctx.index(), date.toString());
@@ -1062,8 +1074,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     ctx.statement().setDate(ctx.index(), date);
                 }
             }
-            else if (actualType == Time.class) {
-                Time time = (Time) value;
+            else if (Tools.isTime(actualType)) {
+                Time time = getTime(actualType, value);
 
                 if (dialect == SQLITE) {
                     ctx.statement().setString(ctx.index(), time.toString());
@@ -1072,8 +1084,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     ctx.statement().setTime(ctx.index(), time);
                 }
             }
-            else if (actualType == Timestamp.class) {
-                Timestamp timestamp = (Timestamp) value;
+            else if (Tools.isTimestamp(actualType)) {
+                Timestamp timestamp = getTimestamp(actualType, value);
 
                 if (dialect == SQLITE) {
                     ctx.statement().setString(ctx.index(), timestamp.toString());
@@ -1084,20 +1096,19 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
 
 
-            else if (actualType == LocalDate.class) {
-                ctx.statement().setDate(ctx.index(), Date.valueOf((LocalDate) value));
-            }
-            else if (actualType == LocalTime.class) {
-                ctx.statement().setTime(ctx.index(), Time.valueOf((LocalTime) value));
-            }
-            else if (actualType == LocalDateTime.class) {
-                ctx.statement().setTimestamp(ctx.index(), Timestamp.valueOf((LocalDateTime) value));
-            }
             else if (actualType == OffsetTime.class) {
-                ctx.statement().setString(ctx.index(), value.toString());
+                String string = format((OffsetTime) value);
+
+
+
+
+
+
+
+                ctx.statement().setString(ctx.index(), string);
             }
             else if (actualType == OffsetDateTime.class) {
-                ctx.statement().setString(ctx.index(), value.toString());
+                ctx.statement().setString(ctx.index(), format((OffsetDateTime) value));
             }
 
 
@@ -1712,7 +1723,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else if (type == Clob.class) {
             result = (T) ctx.statement().getClob(ctx.index());
         }
-        else if (type == Date.class) {
+        else if (Tools.isDate(type)) {
 
 
 
@@ -1723,6 +1734,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
             result = (T) ctx.statement().getDate(ctx.index());
+
+
+            if (result != null && type == LocalDate.class)
+                result = (T) ((Date) result).toLocalDate();
+
         }
         else if (type == Double.class) {
             result = (T) wasNull(ctx.statement(), Double.valueOf(ctx.statement().getDouble(ctx.index())));
@@ -1742,12 +1758,32 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else if (type == String.class) {
             result = (T) ctx.statement().getString(ctx.index());
         }
-        else if (type == Time.class) {
+        else if (Tools.isTime(type)) {
             result = (T) ctx.statement().getTime(ctx.index());
+
+
+            if (result != null && type == LocalTime.class)
+                result = (T) ((Time) result).toLocalTime();
+
         }
-        else if (type == Timestamp.class) {
+        else if (Tools.isTimestamp(type)) {
             result = (T) ctx.statement().getTimestamp(ctx.index());
+
+
+            if (result != null && type == LocalDateTime.class)
+                result = (T) ((Timestamp) result).toLocalDateTime();
+
         }
+
+
+        else if (type == OffsetTime.class) {
+            result = (T) offsetTime(ctx.statement().getString(ctx.index()));
+        }
+        else if (type == OffsetDateTime.class) {
+            result = (T) offsetDateTime(ctx.statement().getString(ctx.index()));
+        }
+
+
         else if (type == YearToMonth.class) {
             if (ctx.family() == POSTGRES) {
                 Object object = ctx.statement().getObject(ctx.index());

@@ -45,10 +45,9 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Blob;
 import java.sql.Clob;
-import java.sql.Date;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.sql.Types;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -546,8 +545,17 @@ public class DefaultDataType<T> implements DataType<T> {
         else if (type == Clob.class) {
             return Types.CLOB;
         }
-        else if (type == Date.class) {
-            return Types.DATE;
+        else if (Tools.isDate(type)) {
+            switch (configuration.family()) {
+
+
+
+
+
+
+                default:
+                    return Types.DATE;
+            }
         }
         else if (type == Double.class) {
             return Types.DOUBLE;
@@ -567,12 +575,22 @@ public class DefaultDataType<T> implements DataType<T> {
         else if (type == String.class) {
             return Types.VARCHAR;
         }
-        else if (type == Time.class) {
+        else if (Tools.isTime(type)) {
             return Types.TIME;
         }
-        else if (type == Timestamp.class) {
+        else if (Tools.isTimestamp(type)) {
             return Types.TIMESTAMP;
         }
+
+
+        // [#5779] Few JDBC drivers support the JDBC 4.2 TIME[STAMP]_WITH_TIMEZONE types.
+        else if (type == OffsetTime.class) {
+            return Types.VARCHAR;
+        }
+        else if (type == OffsetDateTime.class) {
+            return Types.VARCHAR;
+        }
+
 
         // The type byte[] is handled earlier.
         else if (type.isArray()) {

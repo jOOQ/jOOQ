@@ -86,6 +86,7 @@ import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.sql.Types;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -3434,5 +3435,26 @@ final class Tools {
                 throw new MappingException("Error while looking up Scala enum", e);
             }
         }
+    }
+
+    /**
+     * Whether a Java type is suitable for {@link Types#TIME}.
+     */
+    static final boolean isTime(Class<?> t) {
+        return t == Time.class  || t == LocalTime.class ;
+    }
+
+    /**
+     * Whether a Java type is suitable for {@link Types#TIMESTAMP}.
+     */
+    static final boolean isTimestamp(Class<?> t) {
+        return t == Timestamp.class  || t == LocalDateTime.class ;
+    }
+
+    /**
+     * Whether a Java type is suitable for {@link Types#DATE}.
+     */
+    static final boolean isDate(Class<?> t) {
+        return t == Date.class  || t == LocalDate.class ;
     }
 }

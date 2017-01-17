@@ -34,6 +34,7 @@
  */
 package org.jooq.impl;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import org.jooq.Configuration;
@@ -41,6 +42,7 @@ import org.jooq.ExecuteType;
 import org.jooq.Record;
 import org.jooq.RecordContext;
 import org.jooq.RecordType;
+import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.conf.Settings;
 
@@ -123,5 +125,17 @@ class DefaultRecordContext implements RecordContext {
     @Override
     public final Exception exception() {
         return exception;
+    }
+
+    @Override
+    public String toString() {
+        if (records != null && records.length > 0) {
+            Result<Record> result = DSL.using(configuration).newResult(records[0].fields());
+            result.addAll(Arrays.asList(records));
+            return result.toString();
+        }
+        else {
+            return "No Records";
+        }
     }
 }

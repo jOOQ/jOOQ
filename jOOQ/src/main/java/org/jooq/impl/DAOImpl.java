@@ -35,6 +35,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.jooq.impl.DSL.row;
@@ -156,14 +157,18 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     public /* non-final */ void insert(Collection<P> objects) {
 
         // Execute a batch INSERT
-        if (objects.size() > 1) {
-            using(configuration).batchInsert(records(objects, false)).execute();
-        }
+        if (objects.size() > 1)
+
+            // [#2536] [#3327] We cannot batch INSERT RETURNING calls yet
+            if (!FALSE.equals(configuration.settings().isReturnRecordToPojo()))
+                for (P object : objects)
+                    insert(object);
+            else
+                using(configuration).batchInsert(records(objects, false)).execute();
 
         // Execute a regular INSERT
-        else if (objects.size() == 1) {
+        else if (objects.size() == 1)
             records(objects, false).get(0).insert();
-        }
     }
 
     @Override
@@ -181,14 +186,19 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     public /* non-final */ void update(Collection<P> objects) {
 
         // Execute a batch UPDATE
-        if (objects.size() > 1) {
-            using(configuration).batchUpdate(records(objects, true)).execute();
-        }
+        if (objects.size() > 1)
+
+            // [#2536] [#3327] We cannot batch UPDATE RETURNING calls yet
+            if (!FALSE.equals(configuration.settings().isReturnRecordToPojo()) &&
+                 TRUE.equals(configuration.settings().isReturnAllOnUpdatableRecord()))
+                for (P object : objects)
+                    update(object);
+            else
+                using(configuration).batchUpdate(records(objects, true)).execute();
 
         // Execute a regular UPDATE
-        else if (objects.size() == 1) {
+        else if (objects.size() == 1)
             records(objects, true).get(0).update();
-        }
     }
 
     @Override
@@ -206,14 +216,19 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     public /* non-final */ void delete(Collection<P> objects) {
 
         // Execute a batch DELETE
-        if (objects.size() > 1) {
-            using(configuration).batchDelete(records(objects, true)).execute();
-        }
+        if (objects.size() > 1)
+
+            // [#2536] [#3327] We cannot batch DELETE RETURNING calls yet
+            if (!FALSE.equals(configuration.settings().isReturnRecordToPojo()) &&
+                 TRUE.equals(configuration.settings().isReturnAllOnUpdatableRecord()))
+                for (P object : objects)
+                    delete(object);
+            else
+                using(configuration).batchDelete(records(objects, true)).execute();
 
         // Execute a regular DELETE
-        else if (objects.size() == 1) {
+        else if (objects.size() == 1)
             records(objects, true).get(0).delete();
-        }
     }
 
     @SuppressWarnings("unchecked")

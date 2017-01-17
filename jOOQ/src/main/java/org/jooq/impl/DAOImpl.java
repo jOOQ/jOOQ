@@ -34,6 +34,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.jooq.impl.DSL.row;
@@ -41,6 +42,7 @@ import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.Tools.EMPTY_RECORD;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -48,8 +50,11 @@ import java.util.Optional;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.DAO;
+import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.RecordContext;
+import org.jooq.RecordListenerProvider;
 import org.jooq.RecordMapper;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
@@ -380,7 +385,16 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         Field<?>[] pk = pk();
 
         for (P object : objects) {
-            R record = using(configuration).newRecord(table, object);
+
+            // [#2536] Upon store(), insert(), update(), delete(), returned values in the record
+            //         are copied back to the relevant POJO using the RecordListener SPI
+            DSLContext ctx = using(
+                ! FALSE.equals(configuration.settings().isReturnRecordToPojo())
+                ? configuration.derive(providers(configuration.recordListenerProviders(), object))
+                : configuration
+            );
+
+            R record = ctx.newRecord(table, object);
 
             if (forUpdate && pk != null)
                 for (Field<?> field : pk)
@@ -389,6 +403,42 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
             Tools.resetChangedOnNotNull(record);
             result.add(record);
         }
+
+        return result;
+    }
+
+    private /* non-final */ RecordListenerProvider[] providers(final RecordListenerProvider[] providers, final Object object) {
+        RecordListenerProvider[] result = Arrays.copyOf(providers, providers.length + 1);
+
+        result[providers.length] = new DefaultRecordListenerProvider(new DefaultRecordListener() {
+            private final void end(RecordContext ctx) {
+                Record record = ctx.record();
+
+                // TODO: [#2536] Use mapper()
+                if (record != null)
+                    record.into(object);
+            }
+
+            @Override
+            public final void storeEnd(RecordContext ctx) {
+                end(ctx);
+            }
+
+            @Override
+            public final void insertEnd(RecordContext ctx) {
+                end(ctx);
+            }
+
+            @Override
+            public final void updateEnd(RecordContext ctx) {
+                end(ctx);
+            }
+
+            @Override
+            public final void deleteEnd(RecordContext ctx) {
+                end(ctx);
+            }
+        });
 
         return result;
     }

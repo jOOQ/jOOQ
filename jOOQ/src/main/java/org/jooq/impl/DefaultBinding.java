@@ -1572,7 +1572,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     private static final Pattern LENIENT_OFFSET_PATTERN = Pattern.compile(
-        "(\\d{4}-\\d{2}-\\d{2})[T ](\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?)(?: +)?(([+-])(\\d)?(\\d)(:\\d{2}))?");
+        "(\\d{4}-\\d{2}-\\d{2})[T ](\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?)(?: +)?(([+-])(\\d)?(\\d)(:\\d{2})?)?");
 
     private final OffsetDateTime offsetDateTime(String string) {
         if (string == null)
@@ -1591,12 +1591,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 sb.append(m.group(4));
 
                 // [#4965] Oracle might return a single-digit hour offset (and some spare space)
-                if (m.group(5) == null)
-                    sb.append('0');
-
+                sb.append(m.group(5) == null ? "0" : m.group(5));
                 sb.append(m.group(6));
 
-                // [#4338] [#5180] PostgreSQL is more lenient regarding the offset format
+                // [#4338] [#5180] [#5776] PostgreSQL is more lenient regarding the offset format
                 sb.append(m.group(7) == null ? ":00" : m.group(7));
             }
             else {

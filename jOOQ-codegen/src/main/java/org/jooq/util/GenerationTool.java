@@ -341,6 +341,10 @@ public class GenerationTool {
                     log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/inputCatalog and /configuration/generator/database/catalogs");
                 if (!StringUtils.isBlank(d.getOutputCatalog()))
                     log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/outputCatalog and /configuration/generator/database/catalogs");
+                if (!StringUtils.isBlank(d.getInputSchema()))
+                    log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/inputSchema and /configuration/generator/database/catalogs");
+                if (!StringUtils.isBlank(d.getOutputSchema()))
+                    log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/outputSchema and /configuration/generator/database/catalogs");
                 if (!schemataEmpty)
                     log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/catalogs and /configuration/generator/database/schemata");
             }

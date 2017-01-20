@@ -101,10 +101,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ForkJoinPool;
@@ -3328,5 +3330,17 @@ final class Tools {
                 throw new MappingException("Error while looking up Scala enum", e);
             }
         }
+    }
+
+    static final boolean hasAmbiguousNames(Collection<? extends Field<?>> fields) {
+        if (fields == null)
+            return false;
+
+        Set<String> names = new HashSet<String>();
+        for (Field<?> field : fields)
+            if (!names.add(field.getName()))
+                return true;
+
+        return false;
     }
 }

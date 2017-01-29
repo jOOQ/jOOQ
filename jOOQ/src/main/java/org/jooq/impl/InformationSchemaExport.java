@@ -162,7 +162,7 @@ final class InformationSchemaExport {
                 ic.setTableSchema(t.getSchema().getName());
 
             ic.setTableName(t.getName());
-            ic.setColumnName(t.getName());
+            ic.setColumnName(f.getName());
             ic.setDataType(f.getDataType().getTypeName(configuration));
 
             if (f.getDataType().hasLength())

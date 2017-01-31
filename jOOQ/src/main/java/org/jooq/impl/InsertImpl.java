@@ -34,6 +34,10 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.condition;
+import static org.jooq.impl.DSL.exists;
+import static org.jooq.impl.DSL.not;
+import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 
 import java.util.Arrays;
@@ -44,16 +48,26 @@ import java.util.Optional;
 
 import javax.annotation.Generated;
 
+import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.FieldLike;
-import org.jooq.InsertOnConflictDoUpdateStep;
 import org.jooq.InsertOnDuplicateSetMoreStep;
+import org.jooq.InsertOnConflictConditionStep;
+import org.jooq.InsertOnConflictDoUpdateStep;
 import org.jooq.InsertQuery;
 import org.jooq.InsertResultStep;
 import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
 import org.jooq.InsertValuesStep1;
+import org.jooq.InsertValuesStep2;
+import org.jooq.InsertValuesStep3;
+import org.jooq.InsertValuesStep4;
+import org.jooq.InsertValuesStep5;
+import org.jooq.InsertValuesStep6;
+import org.jooq.InsertValuesStep7;
+import org.jooq.InsertValuesStep8;
+import org.jooq.InsertValuesStep9;
 import org.jooq.InsertValuesStep10;
 import org.jooq.InsertValuesStep11;
 import org.jooq.InsertValuesStep12;
@@ -64,22 +78,17 @@ import org.jooq.InsertValuesStep16;
 import org.jooq.InsertValuesStep17;
 import org.jooq.InsertValuesStep18;
 import org.jooq.InsertValuesStep19;
-import org.jooq.InsertValuesStep2;
 import org.jooq.InsertValuesStep20;
 import org.jooq.InsertValuesStep21;
 import org.jooq.InsertValuesStep22;
-import org.jooq.InsertValuesStep3;
-import org.jooq.InsertValuesStep4;
-import org.jooq.InsertValuesStep5;
-import org.jooq.InsertValuesStep6;
-import org.jooq.InsertValuesStep7;
-import org.jooq.InsertValuesStep8;
-import org.jooq.InsertValuesStep9;
 import org.jooq.InsertValuesStepN;
+import org.jooq.Operator;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Result;
 import org.jooq.Select;
+import org.jooq.SQL;
 import org.jooq.Table;
 
 /**
@@ -119,6 +128,7 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     InsertSetMoreStep<R>,
     InsertOnDuplicateSetMoreStep<R>,
     InsertOnConflictDoUpdateStep<R>,
+    InsertOnConflictConditionStep<R>,
     InsertResultStep<R> {
 
     /**
@@ -656,6 +666,155 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     @Override
     public final InsertImpl set(Record record) {
         return set(Tools.mapOfChangedValues(record));
+    }
+
+    @Override
+    public final InsertImpl and(Condition condition) {
+        getDelegate().addConditions(condition);
+        return this;
+    }
+
+    @Override
+    public final InsertImpl and(Field<Boolean> condition) {
+        return and(condition(condition));
+    }
+
+    @Override
+    public final InsertImpl and(SQL sql) {
+        return and(condition(sql));
+    }
+
+    @Override
+    public final InsertImpl and(String sql) {
+        return and(condition(sql));
+    }
+
+    @Override
+    public final InsertImpl and(String sql, Object... bindings) {
+        return and(condition(sql, bindings));
+    }
+
+    @Override
+    public final InsertImpl and(String sql, QueryPart... parts) {
+        return and(condition(sql, parts));
+    }
+
+    @Override
+    public final InsertImpl andNot(Condition condition) {
+        return and(not(condition));
+    }
+
+    @Override
+    public final InsertImpl andNot(Field<Boolean> condition) {
+        return and(not(condition(condition)));
+    }
+
+    @Override
+    public final InsertImpl andExists(Select<?> select) {
+        return and(exists(select));
+    }
+
+    @Override
+    public final InsertImpl andNotExists(Select<?> select) {
+        return and(notExists(select));
+    }
+
+    @Override
+    public final InsertImpl or(Condition condition) {
+        getDelegate().addConditions(Operator.OR, condition);
+        return this;
+    }
+
+    @Override
+    public final InsertImpl or(Field<Boolean> condition) {
+        return or(condition(condition));
+    }
+
+    @Override
+    public final InsertImpl or(SQL sql) {
+        return or(condition(sql));
+    }
+
+    @Override
+    public final InsertImpl or(String sql) {
+        return or(condition(sql));
+    }
+
+    @Override
+    public final InsertImpl or(String sql, Object... bindings) {
+        return or(condition(sql, bindings));
+    }
+
+    @Override
+    public final InsertImpl or(String sql, QueryPart... parts) {
+        return or(condition(sql, parts));
+    }
+
+    @Override
+    public final InsertImpl orNot(Condition condition) {
+        return or(not(condition));
+    }
+
+    @Override
+    public final InsertImpl orNot(Field<Boolean> condition) {
+        return or(not(condition(condition)));
+    }
+
+    @Override
+    public final InsertImpl orExists(Select<?> select) {
+        return or(exists(select));
+    }
+
+    @Override
+    public final InsertImpl orNotExists(Select<?> select) {
+        return or(notExists(select));
+    }
+
+    @Override
+    public final InsertImpl where(Condition... conditions) {
+        getDelegate().addConditions(conditions);
+        return this;
+    }
+
+    @Override
+    public final InsertImpl where(Collection<? extends Condition> conditions) {
+        getDelegate().addConditions(conditions);
+        return this;
+    }
+
+    @Override
+    public final InsertImpl where(Field<Boolean> field) {
+        return where(condition(field));
+    }
+
+    @Override
+    public final InsertImpl where(SQL sql) {
+        return where(condition(sql));
+    }
+
+    @Override
+    public final InsertImpl where(String sql) {
+        return where(condition(sql));
+    }
+
+    @Override
+    public final InsertImpl where(String sql, Object... bindings) {
+        return where(condition(sql, bindings));
+    }
+
+    @Override
+    public final InsertImpl where(String sql, QueryPart... parts) {
+        return where(condition(sql, parts));
+    }
+
+    @Override
+    public final InsertImpl whereExists(Select<?> select) {
+        return where(exists(select));
+    }
+
+    @Override
+    public final InsertImpl whereNotExists(Select<?> select) {
+        return where(notExists(select));
     }
 
     @Override

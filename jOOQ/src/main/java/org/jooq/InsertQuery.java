@@ -217,6 +217,54 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
     void addValuesForUpdate(Map<? extends Field<?>, ?> map);
 
     /**
+     * Adds new conditions to the query, connecting them to existing conditions
+     * with {@link Operator#AND}.
+     * <p>
+     * This is for use with {@link SQLDialect#POSTGRES}'s
+     * {@link #onConflict(Field...)} clause.
+     *
+     * @param conditions The condition
+     */
+    @Support({ POSTGRES_9_5 })
+    void addConditions(Condition... conditions);
+
+    /**
+     * Adds new conditions to the query, connecting them to existing
+     * conditions with {@link Operator#AND}.
+     * <p>
+     * This is for use with {@link SQLDialect#POSTGRES}'s
+     * {@link #onConflict(Field...)} clause.
+     *
+     * @param conditions The condition
+     */
+    @Support({ POSTGRES_9_5 })
+    void addConditions(Collection<? extends Condition> conditions);
+
+    /**
+     * Adds new conditions to the query, connecting them to existing
+     * conditions with the provided operator.
+     * <p>
+     * This is for use with {@link SQLDialect#POSTGRES}'s
+     * {@link #onConflict(Field...)} clause.
+     *
+     * @param conditions The condition
+     */
+    @Support({ POSTGRES_9_5 })
+    void addConditions(Operator operator, Condition... conditions);
+
+    /**
+     * Adds new conditions to the query, connecting them to existing
+     * conditions with the provided operator.
+     * <p>
+     * This is for use with {@link SQLDialect#POSTGRES}'s
+     * {@link #onConflict(Field...)} clause.
+     *
+     * @param conditions The condition
+     */
+    @Support({ POSTGRES_9_5 })
+    void addConditions(Operator operator, Collection<? extends Condition> conditions);
+
+    /**
      * Set an empty record with the <code>DEFAULT VALUES</code> clause.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })

@@ -160,5 +160,5 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * </table>
      */
     @Support
-    InsertFinalStep<R> onDuplicateKeyIgnore();
+    InsertReturningStep<R> onDuplicateKeyIgnore();
 }
